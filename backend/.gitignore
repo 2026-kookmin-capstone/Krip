@@ -1,0 +1,16 @@
+__pycache__/
+.pytest_cache/
+mongodb-data/
+postgresql-data/
+.venv/
+
+.DS_Store
+.env
+*.log*
+
+# Coverage
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+coverage.json
