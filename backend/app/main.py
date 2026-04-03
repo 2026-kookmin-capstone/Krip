@@ -8,6 +8,7 @@ from app.middleware.tracking import (
     ErrorTrackingMiddleware,
     SecurityHeadersMiddleware,
 )
+from app.middleware.auth import BearerTokenMiddleware
 from app.core.logger import setup_logging, get_logger                                        
 from app.config.setting import settings
 from app.api.v1.router import api_router
@@ -54,6 +55,7 @@ def create_app() -> FastAPI:
 
     # 미들웨어 (등록 역순으로 실행됨 → RequestID가 가장 먼저 실행)
     app.add_middleware(SecurityHeadersMiddleware)
+    app.add_middleware(BearerTokenMiddleware)
     app.add_middleware(ErrorTrackingMiddleware)
     app.add_middleware(RequestIDMiddleware)
 
