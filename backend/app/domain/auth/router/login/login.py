@@ -103,7 +103,7 @@ async def login_callback(code: str = Query(...), state: str = Query(...)):
 
 @router.get("/read-cookie")
 def read_test_cookie(request: Request):
-    """발급된 테스트 쿠키 읽기"""
+    """발급된 로그인 쿠키 읽기"""
     login_token = request.cookies.get(settings.USER_LOGIN_COOKIE_NAME)
     if login_token is None:
         return {"message": "로그인 쿠키가 없습니다", "login_token": None}

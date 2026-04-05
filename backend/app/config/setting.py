@@ -11,8 +11,8 @@ class Settings(BaseSettings):
     PORT: int = Field(8000, description="서버 포트 번호") 
     
     # CORS 프론트 설정
-    FRONTEND_URL: str = Field("http://localhost:3000", description="관리자 프론트 URL")
-    LOCAL_FRONTEND_URL: str = Field("http://127.0.0.1:5500", description="테스트 사용자 운영 챗봇 프론트 URL")
+    FRONTEND_URL: str = Field("https://localhost:3000", description="서버 프론트 URL")
+    LOCAL_FRONTEND_URL: str = Field("https://krip.site", description="로컬 프론트 URL")
 
     # 환경
     ENVIRONMENT: str = Field("DEV", description="환경 (실서버, 개발서버)")
