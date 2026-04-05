@@ -11,7 +11,7 @@ def set_test_cookie(response: Response):
         value="test-cookie-value",
         httponly=True,
         secure=True,
-        samesite=None,
+        samesite="none", # 개발 단계 추후, None -> lax
         path="/",
         max_age=60 * 60, 
     )

@@ -81,7 +81,7 @@ async def login_callback(code: str = Query(...), state: str = Query(...)):
         value=token,
         httponly=True,
         secure=True,
-        samesite=None, # 개발 단계 추후, None -> lax
+        samesite="none", # 개발 단계 추후, None -> lax
         path="/",
         max_age=settings.USER_LOGIN_JWT_EXPIRATION_DAYS * 24 * 60 * 60,
     )
