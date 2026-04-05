@@ -7,9 +7,10 @@ from app.config.oauth import OAuthConfig, OAuthProvider
 
 
 class OAuthUser:
-    def __init__(self, email: str, provider: OAuthProvider, name: Optional[str] = None):
-        self.email = email
+    def __init__(self, id: str, provider: OAuthProvider, email: Optional[str] = None, name: Optional[str] = None):
+        self.id = id
         self.provider = provider
+        self.email = email
         self.name = name
 
 

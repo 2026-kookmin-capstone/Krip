@@ -26,7 +26,7 @@ class BearerTokenMiddleware(BaseHTTPMiddleware):
 
     # 인증을 건너뛸 경로 prefix
     EXCLUDE_PREFIXES: Sequence[str] = (
-        # "/api/auth/cookie-test",
+        "/api/auth/login",
     )
 
     def __init__(self, app: ASGIApp) -> None:

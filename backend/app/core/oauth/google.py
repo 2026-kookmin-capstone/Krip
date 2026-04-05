@@ -15,7 +15,8 @@ class GoogleOAuthClient(OAuthClient):
         
         user_data = response.json()
         return OAuthUser(
-            email=user_data["email"],
+            id=user_data["id"],
             provider=self.provider,
-            name=user_data.get("name")
+            email=user_data.get("email"),
+            name=user_data.get("name"),
         )

@@ -27,7 +27,7 @@ OAUTH_CONFIGS: Dict[OAuthProvider, OAuthConfig] = {
         authorize_url="https://accounts.google.com/o/oauth2/v2/auth",
         token_url="https://oauth2.googleapis.com/token",
         userinfo_url="https://www.googleapis.com/oauth2/v2/userinfo",
-        redirect_uri=f"{settings.OAUTH_REDIRECT_BASE_URL}/api/v1/auth/google/callback",
+        redirect_uri=f"{settings.OAUTH_REDIRECT_BASE_URL}/api/auth/login",
         scope="openid email profile"
     )
 }
