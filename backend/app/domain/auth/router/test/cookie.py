@@ -9,11 +9,10 @@ def set_test_cookie(response: Response):
     response.set_cookie(
         key="test_token",
         value="test-cookie-value",
-        httponly=False,
+        httponly=True,
         secure=True,
         samesite=None,
         path="/",
-        domain=None,
         max_age=60 * 60, 
     )
     return {"message": "테스트 쿠키가 발급되었습니다", "cookie_name": "test_token"}

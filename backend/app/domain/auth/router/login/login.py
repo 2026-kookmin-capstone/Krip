@@ -76,27 +76,15 @@ async def login_callback(code: str = Query(...), state: str = Query(...)):
     redirect_to = settings.FRONTEND_URL if redirect_url == 'server' else settings.LOCAL_FRONTEND_URL
     response = RedirectResponse(url=redirect_to)
 
-    # 개발 단계
     response.set_cookie(
         key=settings.USER_LOGIN_COOKIE_NAME,
         value=token,
-        httponly=False,
+        httponly=True,
         secure=True,
-        samesite=None,
+        samesite=None, # 개발 단계 추후, None -> lax
         path="/",
-        domain=None,
         max_age=settings.USER_LOGIN_JWT_EXPIRATION_DAYS * 24 * 60 * 60,
     )
-
-    # response.set_cookie(
-    #     key=settings.USER_LOGIN_COOKIE_NAME,
-    #     value=token,
-    #     httponly=True,
-    #     secure=settings.is_production,
-    #     samesite="lax",
-    #     max_age=settings.USER_LOGIN_JWT_EXPIRATION_DAYS * 24 * 60 * 60,
-    #     path="/",
-    # )
 
     return response
 
