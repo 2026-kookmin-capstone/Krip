@@ -52,7 +52,15 @@ def create_app() -> FastAPI:
         lifespan=lifespan,
     )
 
-    # CORS
+    # 미들웨어 (등록 역순으로 실행됨 → CORS가 가장 먼저 실행)
+    app.add_middleware(SecurityHeadersMiddleware)
+    app.add_middleware(RegisterCheckMiddleware)
+    app.add_middleware(LoginCookieMiddleware)
+    app.add_middleware(BearerTokenMiddleware)
+    app.add_middleware(ErrorTrackingMiddleware)
+    app.add_middleware(RequestIDMiddleware)
+
+    # CORS (가장 마지막에 등록 → 가장 바깥쪽에서 실행되어 모든 응답에 CORS 헤더 추가)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=[
@@ -63,14 +71,6 @@ def create_app() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
-
-    # 미들웨어 (등록 역순으로 실행됨 → RequestID가 가장 먼저 실행)
-    app.add_middleware(SecurityHeadersMiddleware)
-    app.add_middleware(RegisterCheckMiddleware)
-    app.add_middleware(LoginCookieMiddleware)
-    app.add_middleware(BearerTokenMiddleware)
-    app.add_middleware(ErrorTrackingMiddleware)
-    app.add_middleware(RequestIDMiddleware)
 
     # 라우터
     app.include_router(api_router)

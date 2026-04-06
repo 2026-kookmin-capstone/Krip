@@ -47,9 +47,6 @@ class BearerTokenMiddleware(BaseHTTPMiddleware):
 
 
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
-        if request.method == "OPTIONS":
-            return await call_next(request)
-
         if self._is_excluded(request.url.path):
             return await call_next(request)
 
