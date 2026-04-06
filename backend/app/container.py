@@ -2,6 +2,7 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, Asyn
 from dependency_injector import containers, providers
 
 from app.domain.auth.service.signup import SignupService
+from app.domain.auth.service.register import RegisterService
 from app.database.session import UnitOfWork
 from app.config.setting import settings
 
@@ -30,3 +31,4 @@ class Container(containers.DeclarativeContainer):
 
     # 서비스 계층 주입
     signup_service = providers.Factory(SignupService, uow=uow)
+    register_service = providers.Factory(RegisterService, uow=uow)

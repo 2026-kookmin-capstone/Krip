@@ -1,3 +1,4 @@
+from urllib.parse import urlencode
 from typing import Optional
 import jwt
 from fastapi import APIRouter, Query, HTTPException, Request, Depends
@@ -85,7 +86,14 @@ async def login_callback(
     token = jwt.encode(payload, settings.USER_LOGIN_JWT_SECRET_KEY, algorithm=settings.USER_LOGIN_JWT_ALGORITHM)
 
     redirect_to = settings.FRONTEND_URL if redirect_url == 'server' else settings.LOCAL_FRONTEND_URL
-    response = RedirectResponse(url=f"{redirect_to}?status={result.status.value}")
+
+    params = {"status": result.status.value}
+    if user_info.email:
+        params["email"] = user_info.email
+    if user_info.name:
+        params["name"] = user_info.name
+
+    response = RedirectResponse(url=f"{redirect_to}?{urlencode(params)}")
 
     response.set_cookie(
         key=settings.USER_LOGIN_COOKIE_NAME,
