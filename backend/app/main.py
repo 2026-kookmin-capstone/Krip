@@ -38,6 +38,7 @@ def create_app() -> FastAPI:
     container.wire(modules=[
         "app.domain.auth.router.login.login",
         "app.domain.auth.router.login.register",
+        "app.domain.auth.router.profile.me",
     ])
 
 

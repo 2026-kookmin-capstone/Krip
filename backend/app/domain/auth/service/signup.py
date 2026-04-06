@@ -1,7 +1,7 @@
 from app.domain.auth.repository.user_repository import UserRepository
 from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
 from app.domain.auth.model.user import User
-from app.domain.auth.dto.signup_dto import SignupStatus, SignupResult
+from app.domain.auth.dto.signup import SignupStatus, SignupResult
 from app.database.session import UnitOfWork
 
 
