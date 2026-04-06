@@ -1,13 +1,16 @@
 from typing import Optional
 import jwt
-from fastapi import APIRouter, Query, HTTPException, Request
+from fastapi import APIRouter, Query, HTTPException, Request, Depends
 from fastapi.responses import RedirectResponse
+from dependency_injector.wiring import Provide, inject
 from datetime import datetime, timedelta, timezone
 
-from app.config.oauth import OAuthProvider, OAUTH_CONFIGS
-from app.config.setting import settings
+from app.domain.auth.service.signup import SignupService
 from app.core.oauth.google import GoogleOAuthClient
 from app.core.logger import get_logger
+from app.container import Container
+from app.config.setting import settings
+from app.config.oauth import OAuthProvider, OAUTH_CONFIGS
 
 
 router = APIRouter(prefix="/login", tags=["로그인"])
@@ -40,7 +43,11 @@ async def login(type: OAuthProvider = Query(..., description="OAuth 제공자 �
 
 
 @router.get("/callback")
-async def login_callback(code: str = Query(...), state: str = Query(...)):
+@inject
+async def login_callback(
+    code: str = Query(...), state: str = Query(...),
+    signup_service: SignupService = Depends(Provide[Container.signup_service])
+):
     """OAuth 콜백 - 인증 코드로 사용자 정보를 가져와 JWT 쿠키 발급"""
     parts = state.rsplit(":", 1)
     if len(parts) != 2:
@@ -64,17 +71,21 @@ async def login_callback(code: str = Query(...), state: str = Query(...)):
         user_info = await client.get_user_info(access_token=access_token)
 
     logger.info(f"OAuth 로그인 성공: {user_info.id} / {user_info.email} / {user_info.name} / {provider.value}")
+    
+    result = await signup_service.check_and_register(
+        auth_provider=provider.value,
+        auth_provider_id=user_info.id,
+    )
 
     payload = {
-        "user_id": user_info.id,
-        "provider": provider.value,
+        "user_id": result.user_id,
         "exp": datetime.now(timezone.utc) + timedelta(days=settings.USER_LOGIN_JWT_EXPIRATION_DAYS),
         "iat": datetime.now(timezone.utc),
     }
     token = jwt.encode(payload, settings.USER_LOGIN_JWT_SECRET_KEY, algorithm=settings.USER_LOGIN_JWT_ALGORITHM)
 
     redirect_to = settings.FRONTEND_URL if redirect_url == 'server' else settings.LOCAL_FRONTEND_URL
-    response = RedirectResponse(url=redirect_to)
+    response = RedirectResponse(url=f"{redirect_to}?status={result.status.value}")
 
     response.set_cookie(
         key=settings.USER_LOGIN_COOKIE_NAME,

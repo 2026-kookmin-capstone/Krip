@@ -9,9 +9,12 @@ from app.middleware.tracking import (
     SecurityHeadersMiddleware,
 )
 from app.middleware.auth import BearerTokenMiddleware
+import app.database.model # Relation Lazy Load 문제 해결하기 위한 import! 
 from app.core.logger import setup_logging, get_logger                                        
 from app.config.setting import settings
+from app.container import Container
 from app.api.v1.router import api_router
+
 
 
 logger = get_logger("main")
@@ -29,6 +32,12 @@ def create_app() -> FastAPI:
         
         # shutdown
         logger.info("Application shutting down")
+
+    # DI Container 초기화 및 wiring
+    container = Container()
+    container.wire(modules=[
+        "app.domain.auth.router.login.login",
+    ])
 
 
     app = FastAPI(
@@ -61,6 +70,8 @@ def create_app() -> FastAPI:
 
     # 라우터
     app.include_router(api_router)
+    
+    app.container = container
     
     return app
     
