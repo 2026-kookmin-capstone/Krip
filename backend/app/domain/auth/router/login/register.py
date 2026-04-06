@@ -3,7 +3,10 @@ from dependency_injector.wiring import Provide, inject
 
 from app.domain.auth.service.register import RegisterService
 from app.domain.auth.schema.register import RegisterRequest, RegisterResponse
+from app.core.redis import RedisClient
 from app.core.logger import get_logger
+from app.core.cache.redis_cache import get_redis_cache_manager
+from app.core.cache.key_category import KeyCategory
 from app.container import Container
 
 
@@ -33,6 +36,10 @@ async def register(
         )
     except ValueError as e:
         raise HTTPException(status_code=409, detail=str(e))
+
+    # 2차 회원가입 완료 → Redis 캐시 세팅
+    cache = get_redis_cache_manager()
+    await cache.set_flag(f"{KeyCategory.REGISTERED}:{user_id}", RedisClient.DEFAULT_CACHE_TTL)
 
     logger.info(f"2차 회원가입 완료: {user_id} / {user_inform.email}")
     return RegisterResponse(message="회원가입이 완료되었습니다.")

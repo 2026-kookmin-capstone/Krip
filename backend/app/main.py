@@ -8,7 +8,7 @@ from app.middleware.tracking import (
     ErrorTrackingMiddleware,
     SecurityHeadersMiddleware,
 )
-from app.middleware.auth import BearerTokenMiddleware, LoginCookieMiddleware
+from app.middleware.auth import BearerTokenMiddleware, LoginCookieMiddleware, RegisterCheckMiddleware
 import app.database.model # Relation Lazy Load 문제 해결하기 위한 import! 
 from app.core.logger import setup_logging, get_logger                                        
 from app.config.setting import settings
@@ -65,6 +65,7 @@ def create_app() -> FastAPI:
 
     # 미들웨어 (등록 역순으로 실행됨 → RequestID가 가장 먼저 실행)
     app.add_middleware(SecurityHeadersMiddleware)
+    app.add_middleware(RegisterCheckMiddleware)
     app.add_middleware(LoginCookieMiddleware)
     app.add_middleware(BearerTokenMiddleware)
     app.add_middleware(ErrorTrackingMiddleware)
