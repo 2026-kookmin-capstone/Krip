@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Request, Depends
 from dependency_injector.wiring import Provide, inject
 
 from app.domain.auth.service.register import RegisterService
-from app.domain.auth.schema.register import RegisterRequest
+from app.domain.auth.schema.register import RegisterRequest, RegisterResponse
 from app.core.logger import get_logger
 from app.container import Container
 
@@ -17,7 +17,7 @@ async def register(
     request: Request,
     user_inform: RegisterRequest,
     register_service: RegisterService = Depends(Provide[Container.register_service]),
-):
+) -> RegisterResponse:
     """2차 회원가입 - 유저 상세 정보 및 여행 스타일 등록"""
     user_id: str = request.state.user_id
 
@@ -35,4 +35,4 @@ async def register(
         raise HTTPException(status_code=409, detail=str(e))
 
     logger.info(f"2차 회원가입 완료: {user_id} / {user_inform.email}")
-    return {"message": "회원가입이 완료되었습니다."}
+    return RegisterResponse(message="회원가입이 완료되었습니다.")

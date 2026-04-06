@@ -48,3 +48,11 @@ class RegisterRequest(BaseModel):
                 "travel_styles": ["activity", "food"],
             }
         }
+
+
+class RegisterResponse(BaseModel):
+    message: str = Field(
+        ...,
+        description="회원가입 결과 메시지",
+        examples=["회원가입이 완료되었습니다."],
+    )
