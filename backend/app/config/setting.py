@@ -11,8 +11,8 @@ class Settings(BaseSettings):
     PORT: int = Field(8000, description="서버 포트 번호") 
     
     # CORS 프론트 설정
-    FRONTEND_URL: str = Field("https://localhost:3000", description="서버 프론트 URL")
-    LOCAL_FRONTEND_URL: str = Field("https://krip.site", description="로컬 프론트 URL")
+    FRONTEND_URL: str = Field("https://krip.site", description="서버 프론트 URL")
+    LOCAL_FRONTEND_URL: str = Field("https://localhost:3000", description="로컬 프론트 URL")
 
     # 환경
     ENVIRONMENT: str = Field("DEV", description="환경 (실서버, 개발서버)")
@@ -21,8 +21,8 @@ class Settings(BaseSettings):
     LOG_LEVEL: str = Field("INFO", description="로그 레벨")
     LOG_FORMAT: str = Field("console", description="로그 포맷 (json/console)")
     LOG_FILE_PATH: Optional[str] = Field(None, description="로그 파일 경로")
-    LOG_ROTATION: str = Field("100 MB", description="로그 레벨")
-    LOG_RETENTION: str = Field("30 days", description="로그 파일 롤테이션 기준")
+    LOG_ROTATION: str = Field("100 MB", description="로그 로테이션")
+    LOG_RETENTION: str = Field("30 days", description="로그 보관 기준")
     LOG_COMPRESSION: str = Field("gz", description="로그 롤테이션 파일 압축")
     
     # POSTGRES 정보
