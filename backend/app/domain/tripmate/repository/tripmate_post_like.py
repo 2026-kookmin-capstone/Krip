@@ -26,6 +26,17 @@ class TripmatePostLikeRepository:
         return await self.session.get(TripmatePostLike, (user_id, post_id))
 
 
+    async def find_user_ids_by_post(self, post_id: str) -> list[str]:
+        """게시글에 좋아요 누른 유저 ID 목록 조회 (최신순)"""
+        stmt = (
+            select(TripmatePostLike.user_id)
+            .where(TripmatePostLike.post_id == post_id)
+            .order_by(TripmatePostLike.created_at.desc())
+        )
+        result = await self.session.execute(stmt)
+        return list(result.scalars().all())
+
+
     async def count_by_post(self, post_id: str) -> int:
         """게시글의 좋아요 수 조회"""
         stmt = select(func.count()).where(TripmatePostLike.post_id == post_id)

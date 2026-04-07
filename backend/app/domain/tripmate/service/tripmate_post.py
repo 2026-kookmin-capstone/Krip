@@ -1,0 +1,263 @@
+from typing import Optional, List
+from datetime import date
+
+from app.database.session import UnitOfWork
+from app.domain.tripmate.repository.tripmate_post import TripmatePostRepository, PAGE_SIZE
+from app.domain.tripmate.repository.tripmate_post_image import TripmatePostImageRepository
+from app.domain.tripmate.model.tripmate_post import TripmatePost, PreferredGender, CompanionType
+from app.domain.tripmate.model.tripmate_post_image import TripmatePostImage
+from app.domain.tripmate.dto.tripmate_post import TripmatePostData, TripmatePostListData
+
+
+class TripmatePostService:
+    def __init__(self, uow: UnitOfWork):
+        self.uow = uow
+
+
+    # ──────────────────── 게시글 생성 ────────────────────
+
+    async def create_post(
+        self,
+        user_id: str,
+        title: str,
+        content: str,
+        preferred_age_min: int,
+        preferred_age_max: int,
+        preferred_gender: PreferredGender,
+        region: str,
+        travel_start_date: date,
+        travel_end_date: date,
+        companion_type: CompanionType,
+        image_urls: Optional[List[str]] = None,
+    ) -> TripmatePostData:
+        """
+        여행 메이트 모집 게시글 생성
+
+        1. 게시글 저장
+        2. 첨부 이미지가 있으면 일괄 저장
+        3. DTO 변환 후 반환
+        """
+        async with self.uow as session:
+            post_repo = TripmatePostRepository(session)
+            image_repo = TripmatePostImageRepository(session)
+
+            post = TripmatePost(
+                user_id=user_id,
+                title=title,
+                content=content,
+                preferred_age_min=preferred_age_min,
+                preferred_age_max=preferred_age_max,
+                preferred_gender=preferred_gender,
+                region=region,
+                travel_start_date=travel_start_date,
+                travel_end_date=travel_end_date,
+                companion_type=companion_type,
+            )
+            await post_repo.save(post)
+
+            # 아직은 이미지 넣는 기능 비활성화
+            saved_urls = []
+            # if image_urls:
+            #     images = [
+            #         TripmatePostImage(post_id=post.post_id, image_url=url, image_order=idx)
+            #         for idx, url in enumerate(image_urls)
+            #     ]
+            #     await image_repo.save_all(images)
+            #     saved_urls = image_urls
+
+            return self._to_dto(post, like_count=0, is_liked=False, image_urls=saved_urls)
+
+
+    # ──────────────────── 게시글 단건 조회 ────────────────────
+
+    async def get_post(self, post_id: str, user_id: Optional[str] = None) -> TripmatePostData:
+        """
+        게시글 단건 조회 (이미지 + 좋아요 수 + is_liked 포함)
+        """
+        async with self.uow as session:
+            post_repo = TripmatePostRepository(session)
+
+            post = await post_repo.find_by_id_with_detail(post_id, user_id=user_id)
+            if post is None:
+                raise ValueError("존재하지 않는 게시글입니다.")
+
+            return self._to_dto(
+                post,
+                like_count=post.like_count,
+                is_liked=post.is_liked,
+                image_urls=[img.image_url for img in sorted(post.images, key=lambda i: i.image_order)],
+            )
+
+
+    # ──────────────────── 게시글 목록 조회 ────────────────────
+
+    async def get_posts(self, cursor: Optional[str] = None, user_id: Optional[str] = None) -> TripmatePostListData:
+        """
+        게시글 목록 조회 (최신순 30개, 커서 페이지네이션)
+        """
+        async with self.uow as session:
+            post_repo = TripmatePostRepository(session)
+
+            posts = await post_repo.find_all_displayed(cursor, user_id=user_id)
+            return self._to_list_dto(posts)
+
+
+    # ──────────────────── 게시글 검색 ────────────────────
+
+    async def search_posts(self, keyword: str, cursor: Optional[str] = None, user_id: Optional[str] = None) -> TripmatePostListData:
+        """
+        제목, 내용, 작성자 닉네임으로 검색
+        """
+        async with self.uow as session:
+            post_repo = TripmatePostRepository(session)
+
+            posts = await post_repo.search(keyword, cursor, user_id=user_id)
+            return self._to_list_dto(posts)
+
+
+    # ──────────────────── 게시글 수정 ────────────────────
+
+    async def update_post(
+        self,
+        post_id: str,
+        user_id: str,
+        title: str,
+        content: str,
+        preferred_age_min: int,
+        preferred_age_max: int,
+        preferred_gender: PreferredGender,
+        region: str,
+        travel_start_date: date,
+        travel_end_date: date,
+        companion_type: CompanionType,
+        image_urls: Optional[List[str]] = None,
+    ) -> TripmatePostData:
+        """
+        게시글 수정
+
+        1. 게시글 존재 및 작성자 검증
+        2. 필드 업데이트
+        3. 기존 이미지 삭제 후 새 이미지 저장
+        """
+        async with self.uow as session:
+            post_repo = TripmatePostRepository(session)
+            image_repo = TripmatePostImageRepository(session)
+
+            post = await post_repo.find_by_id(post_id)
+            if post is None:
+                raise ValueError("존재하지 않는 게시글입니다.")
+            if post.user_id != user_id:
+                raise PermissionError("게시글 수정 권한이 없습니다.")
+
+            post.title = title
+            post.content = content
+            post.preferred_age_min = preferred_age_min
+            post.preferred_age_max = preferred_age_max
+            post.preferred_gender = preferred_gender
+            post.region = region
+            post.travel_start_date = travel_start_date
+            post.travel_end_date = travel_end_date
+            post.companion_type = companion_type
+            await post_repo.update(post)
+
+            # 기존 이미지 삭제 후 새 이미지 저장
+            # 해당 기능은 현재 비활성화
+            saved_urls = []
+            # await image_repo.delete_by_post_id(post_id)
+            # if image_urls:
+            #     images = [
+            #         TripmatePostImage(post_id=post_id, image_url=url, image_order=idx)
+            #         for idx, url in enumerate(image_urls)
+            #     ]
+            #     await image_repo.save_all(images)
+            #     saved_urls = image_urls
+
+            # 수정 완료 후 좋아요 수 + is_liked + 이미지 포함하여 반환
+            updated = await post_repo.find_by_id_with_detail(post_id, user_id=user_id)
+            return self._to_dto(
+                updated,
+                like_count=updated.like_count,
+                is_liked=updated.is_liked,
+                image_urls=[img.image_url for img in sorted(updated.images, key=lambda i: i.image_order)],
+            )
+
+
+    # ──────────────────── 게시글 삭제 ────────────────────
+
+    async def delete_post(self, post_id: str, user_id: str) -> None:
+        """
+        게시글 삭제 (작성자 검증 후 삭제, CASCADE로 이미지·좋아요 자동 삭제)
+        """
+        async with self.uow as session:
+            post_repo = TripmatePostRepository(session)
+
+            post = await post_repo.find_by_id(post_id)
+            if post is None:
+                raise ValueError("존재하지 않는 게시글입니다.")
+            if post.user_id != user_id:
+                raise PermissionError("게시글 삭제 권한이 없습니다.")
+
+            await post_repo.delete(post)
+
+
+    # ──────────────────── 게시글 Display 토글 ────────────────────
+
+    async def toggle_display(self, post_id: str, user_id: str) -> bool:
+        """
+        게시글 표시 여부 토글 (활성화 ↔ 비활성화)
+
+        1. 게시글 존재 및 작성자 검증
+        2. is_displayed 반전
+        3. 변경된 is_displayed 값 반환
+        """
+        async with self.uow as session:
+            post_repo = TripmatePostRepository(session)
+
+            post = await post_repo.find_by_id(post_id)
+            if post is None:
+                raise ValueError("존재하지 않는 게시글입니다.")
+            if post.user_id != user_id:
+                raise PermissionError("게시글 표시 상태 변경 권한이 없습니다.")
+
+            post.is_displayed = not post.is_displayed
+            await post_repo.update(post)
+
+            return post.is_displayed
+
+
+    # ──────────────────── 내부 변환 유틸 ────────────────────
+
+    @staticmethod
+    def _to_dto(post: TripmatePost, like_count: int, is_liked: bool, image_urls: List[str]) -> TripmatePostData:
+        return TripmatePostData(
+            post_id=post.post_id,
+            user_id=post.user_id,
+            title=post.title,
+            content=post.content,
+            preferred_age_min=post.preferred_age_min,
+            preferred_age_max=post.preferred_age_max,
+            preferred_gender=post.preferred_gender,
+            region=post.region,
+            travel_start_date=post.travel_start_date,
+            travel_end_date=post.travel_end_date,
+            companion_type=post.companion_type,
+            is_displayed=post.is_displayed,
+            created_at=post.created_at,
+            updated_at=post.updated_at,
+            like_count=like_count,
+            is_liked=is_liked,
+            image_urls=image_urls,
+        )
+
+    def _to_list_dto(self, posts: list[TripmatePost]) -> TripmatePostListData:
+        post_dtos = [
+            self._to_dto(
+                post,
+                like_count=post.like_count,
+                is_liked=post.is_liked,
+                image_urls=[img.image_url for img in sorted(post.images, key=lambda i: i.image_order)],
+            )
+            for post in posts
+        ]
+        next_cursor = posts[-1].post_id if len(posts) == PAGE_SIZE else None
+        return TripmatePostListData(posts=post_dtos, next_cursor=next_cursor)
