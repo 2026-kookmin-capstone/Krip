@@ -20,6 +20,7 @@ class RegisterService:
         phone_number: str,
         age: int,
         gender: Gender,
+        nationality: str,
         travel_styles: List[TravelStyle],
     ) -> None:
         """
@@ -44,6 +45,7 @@ class RegisterService:
                 phone_number=phone_number,
                 age=age,
                 gender=gender,
+                nationality=nationality,
             )
             await detail_repo.save(detail)
 

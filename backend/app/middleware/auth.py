@@ -234,13 +234,13 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
             reg_logger.debug("2차 회원가입 캐시 히트")
             return await call_next(request)
 
-        # 2. DB 조회 (캐시 미스)
+        # 2. DB 조회 (캐시 미스) — 유저 존재 + 2차 회원가입 완료 여부를 한 번에 확인
         try:
             container = request.app.container
             async with container.uow() as session:
-                from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
-                detail_repo = UserDetailInformRepository(session)
-                detail = await detail_repo.find_by_user_id(user_id)
+                from app.domain.auth.repository.user_repository import UserRepository
+                user_repo = UserRepository(session)
+                user = await user_repo.find_by_id_with_profile(user_id)
         except Exception as e:
             reg_logger.error(f"DB 조회 실패: {e}")
             return JSONResponse(
@@ -248,7 +248,14 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
                 content={"detail": "회원가입 상태 확인 중 오류가 발생했습니다."},
             )
 
-        if detail is None:
+        if user is None:
+            reg_logger.warning("존재하지 않는 유저")
+            return JSONResponse(
+                status_code=401,
+                content={"detail": "존재하지 않는 유저입니다."},
+            )
+
+        if user.detail is None:
             reg_logger.warning("2차 회원가입 미완료")
             return JSONResponse(
                 status_code=403,

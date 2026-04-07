@@ -28,5 +28,6 @@ class ProfileService:
                 phone_number=user.detail.phone_number,
                 age=user.detail.age,
                 gender=user.detail.gender,
+                nationality=user.detail.nationality,
                 travel_styles=[s.style for s in user.travel_styles],
             )

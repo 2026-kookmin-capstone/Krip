@@ -46,12 +46,17 @@ class ProfileResponse(BaseModel):
         description="성별",
         examples=["male"],
     )
+    nationality: str = Field(
+        ...,
+        description="국적",
+        examples=["korea"],
+    )
     travel_styles: List[TravelStyle] = Field(
         ...,
         description="여행 스타일 목록",
         examples=[["activity", "food"]],
     )
-
+    
     class Config:
         json_schema_extra = {
             "example": {
@@ -63,6 +68,7 @@ class ProfileResponse(BaseModel):
                 "phone_number": "010-1234-5678",
                 "age": 26,
                 "gender": "male",
+                "nationality": "korea",
                 "travel_styles": ["activity", "food"],
             }
         }

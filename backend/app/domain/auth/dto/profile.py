@@ -17,4 +17,5 @@ class ProfileData:
     phone_number: str
     age: int
     gender: Gender
+    nationality: str
     travel_styles: List[TravelStyle]

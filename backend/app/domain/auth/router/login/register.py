@@ -32,6 +32,7 @@ async def register(
             phone_number=user_inform.phone_number,
             age=user_inform.age,
             gender=user_inform.gender,
+            nationality=user_inform.nationality,
             travel_styles=user_inform.travel_styles,
         )
     except ValueError as e:

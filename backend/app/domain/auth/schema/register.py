@@ -31,6 +31,11 @@ class RegisterRequest(BaseModel):
         description="성별 (male / female)",
         examples=["male"],
     )
+    nationality: str = Field(
+        ...,
+        description="국적",
+        examples=["korea"],
+    )
     travel_styles: List[TravelStyle] = Field(
         default_factory=list,
         description="여행 스타일 (복수 선택 가능)",
@@ -45,6 +50,7 @@ class RegisterRequest(BaseModel):
                 "phone_number": "010-1234-5678",
                 "age": 25,
                 "gender": "male",
+                "nationality": "korea",
                 "travel_styles": ["activity", "food"],
             }
         }
