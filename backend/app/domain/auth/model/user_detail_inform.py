@@ -17,8 +17,8 @@ class UserDetailInform(Base):
     email = Column(String(255), nullable=False, index=True)
     user_name = Column(String(100), nullable=False)
     phone_number = Column(String(20), nullable=True)
-    age = Column(Integer, nullable=True)
-    gender = Column(Enum(Gender), nullable=True)
+    age = Column(Integer, nullable=False)
+    gender = Column(Enum(Gender), nullable=False)
     nationality = Column(String(50), nullable=False)  # 국적
 
     user = relationship("User", back_populates="detail")

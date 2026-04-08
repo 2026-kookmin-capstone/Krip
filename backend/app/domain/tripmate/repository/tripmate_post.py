@@ -1,10 +1,11 @@
 from typing import Optional
-from sqlalchemy import select, func, or_, case, literal
+from sqlalchemy import select, func, or_, case, literal, exists
 from sqlalchemy.orm import joinedload
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.domain.tripmate.model.tripmate_post import TripmatePost
 from app.domain.tripmate.model.tripmate_post_like import TripmatePostLike
+from app.domain.auth.model.user import User
 from app.domain.auth.model.user_detail_inform import UserDetailInform
 
 
@@ -44,7 +45,10 @@ class TripmatePostRepository:
                 )).label("is_liked") if user_id else literal(0).label("is_liked"),
             )
             .outerjoin(TripmatePostLike, TripmatePost.post_id == TripmatePostLike.post_id)
-            .options(joinedload(TripmatePost.images))
+            .options(
+                joinedload(TripmatePost.images),
+                joinedload(TripmatePost.user).joinedload(User.detail),
+            )
             .where(TripmatePost.post_id == post_id)
             .group_by(TripmatePost.post_id)
         )
@@ -73,7 +77,10 @@ class TripmatePostRepository:
                 )).label("is_liked") if user_id else literal(0).label("is_liked"),
             )
             .outerjoin(TripmatePostLike, TripmatePost.post_id == TripmatePostLike.post_id)
-            .options(joinedload(TripmatePost.images))
+            .options(
+                joinedload(TripmatePost.images),
+                joinedload(TripmatePost.user).joinedload(User.detail),
+            )
             .where(TripmatePost.is_displayed == True)
         )
 
@@ -121,14 +128,21 @@ class TripmatePostRepository:
                 )).label("is_liked") if user_id else literal(0).label("is_liked"),
             )
             .outerjoin(TripmatePostLike, TripmatePost.post_id == TripmatePostLike.post_id)
-            .outerjoin(UserDetailInform, TripmatePost.user_id == UserDetailInform.user_id)
-            .options(joinedload(TripmatePost.images))
+            .options(
+                joinedload(TripmatePost.images),
+                joinedload(TripmatePost.user).joinedload(User.detail),
+            )
             .where(
                 TripmatePost.is_displayed == True,
                 or_(
                     TripmatePost.title.ilike(like_pattern),
                     TripmatePost.content.ilike(like_pattern),
-                    UserDetailInform.user_name.ilike(like_pattern),
+                    exists(
+                        select(UserDetailInform.user_id).where(
+                            UserDetailInform.user_id == TripmatePost.user_id,
+                            UserDetailInform.user_name.ilike(like_pattern),
+                        )
+                    ),
                 ),
             )
         )

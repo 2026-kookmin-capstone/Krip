@@ -6,7 +6,8 @@ from app.domain.tripmate.repository.tripmate_post import TripmatePostRepository,
 from app.domain.tripmate.repository.tripmate_post_image import TripmatePostImageRepository
 from app.domain.tripmate.model.tripmate_post import TripmatePost, PreferredGender, CompanionType
 from app.domain.tripmate.model.tripmate_post_image import TripmatePostImage
-from app.domain.tripmate.dto.tripmate_post import TripmatePostData, TripmatePostListData
+from app.domain.tripmate.dto.tripmate_post import TripmatePostCreateData, TripmatePostData, TripmatePostListData, PostAuthorData
+from app.domain.auth.model.user_detail_inform import Gender
 
 
 class TripmatePostService:
@@ -29,7 +30,7 @@ class TripmatePostService:
         travel_end_date: date,
         companion_type: CompanionType,
         image_urls: Optional[List[str]] = None,
-    ) -> TripmatePostData:
+    ) -> TripmatePostCreateData:
         """
         여행 메이트 모집 게시글 생성
 
@@ -65,7 +66,7 @@ class TripmatePostService:
             #     await image_repo.save_all(images)
             #     saved_urls = image_urls
 
-            return self._to_dto(post, like_count=0, is_liked=False, image_urls=saved_urls)
+            return self._to_create_dto(post, image_urls=saved_urls)
 
 
     # ──────────────────── 게시글 단건 조회 ────────────────────
@@ -228,10 +229,43 @@ class TripmatePostService:
     # ──────────────────── 내부 변환 유틸 ────────────────────
 
     @staticmethod
+    def _to_author_dto(post: TripmatePost) -> PostAuthorData:
+        detail = post.user.detail if post.user else None
+        if detail is None:
+            return PostAuthorData(user_name="anonymous", age=0, gender=Gender.MALE, nationality="")
+        return PostAuthorData(
+            user_name=detail.user_name,
+            age=detail.age,
+            gender=detail.gender,
+            nationality=detail.nationality,
+        )
+
+    @staticmethod
+    def _to_create_dto(post: TripmatePost, image_urls: List[str]) -> TripmatePostCreateData:
+        return TripmatePostCreateData(
+            post_id=post.post_id,
+            user_id=post.user_id,
+            title=post.title,
+            content=post.content,
+            preferred_age_min=post.preferred_age_min,
+            preferred_age_max=post.preferred_age_max,
+            preferred_gender=post.preferred_gender,
+            region=post.region,
+            travel_start_date=post.travel_start_date,
+            travel_end_date=post.travel_end_date,
+            companion_type=post.companion_type,
+            is_displayed=post.is_displayed,
+            created_at=post.created_at,
+            updated_at=post.updated_at,
+            image_urls=image_urls,
+        )
+
+    @staticmethod
     def _to_dto(post: TripmatePost, like_count: int, is_liked: bool, image_urls: List[str]) -> TripmatePostData:
         return TripmatePostData(
             post_id=post.post_id,
             user_id=post.user_id,
+            author=TripmatePostService._to_author_dto(post),
             title=post.title,
             content=post.content,
             preferred_age_min=post.preferred_age_min,
