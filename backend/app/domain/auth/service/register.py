@@ -4,14 +4,14 @@ from app.domain.auth.repository.user_detail_inform import UserDetailInformReposi
 from app.domain.auth.repository.user_travel_style_repository import UserTravelStyleRepository
 from app.domain.auth.model.user_travel_style import UserTravelStyle, TravelStyle
 from app.domain.auth.model.user_detail_inform import UserDetailInform, Gender
-from app.database.session import UnitOfWork
+from app.database.session import UnitOfWork, transactional
 
 
 class RegisterService:
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
 
-
+    @transactional
     async def register_detail(
         self,
         user_id: str,
@@ -30,27 +30,26 @@ class RegisterService:
         2. user_detail_inform 저장
         3. user_travel_style 저장 (복수)
         """
-        async with self.uow as session:
-            detail_repo = UserDetailInformRepository(session)
-            style_repo = UserTravelStyleRepository(session)
+        detail_repo = UserDetailInformRepository(self._session)
+        style_repo = UserTravelStyleRepository(self._session)
 
-            existing = await detail_repo.find_by_user_id(user_id)
-            if existing is not None:
-                raise ValueError("이미 2차 회원가입이 완료된 유저입니다.")
+        existing = await detail_repo.find_by_user_id(user_id)
+        if existing is not None:
+            raise ValueError("이미 2차 회원가입이 완료된 유저입니다.")
 
-            detail = UserDetailInform(
-                user_id=user_id,
-                email=email,
-                user_name=user_name,
-                phone_number=phone_number,
-                age=age,
-                gender=gender,
-                nationality=nationality,
-            )
-            await detail_repo.save(detail)
+        detail = UserDetailInform(
+            user_id=user_id,
+            email=email,
+            user_name=user_name,
+            phone_number=phone_number,
+            age=age,
+            gender=gender,
+            nationality=nationality,
+        )
+        await detail_repo.save(detail)
 
-            styles = [
-                UserTravelStyle(user_id=user_id, style=style)
-                for style in travel_styles
-            ]
-            await style_repo.save_all(styles)
+        styles = [
+            UserTravelStyle(user_id=user_id, style=style)
+            for style in travel_styles
+        ]
+        await style_repo.save_all(styles)
