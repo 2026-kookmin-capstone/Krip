@@ -1,6 +1,7 @@
 from typing import List
 
 from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
+from app.domain.auth.repository.user_repository import UserRepository
 from app.domain.auth.repository.user_travel_style_repository import UserTravelStyleRepository
 from app.domain.auth.model.user_travel_style import UserTravelStyle, TravelStyle
 from app.domain.auth.model.user_detail_inform import UserDetailInform, Gender
@@ -30,8 +31,13 @@ class RegisterService:
         2. user_detail_inform 저장
         3. user_travel_style 저장 (복수)
         """
+        user_repo = UserRepository(self._session)
         detail_repo = UserDetailInformRepository(self._session)
         style_repo = UserTravelStyleRepository(self._session)
+
+        user = await user_repo.find_by_id(user_id)
+        if user is None:
+            raise ValueError("존재하지 않는 유저입니다.")
 
         existing = await detail_repo.find_by_user_id(user_id)
         if existing is not None:
