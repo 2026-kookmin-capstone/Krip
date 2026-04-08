@@ -29,17 +29,13 @@ class TripmatePostDraftRepository:
 
     async def find_by_user_id(self, user_id: str) -> Optional[TripmatePostDraft]:
         """유저의 임시저장 조회"""
-        return await TripmatePostDraft.find_one(
-            TripmatePostDraft.user_id == user_id
-        )
+        return await TripmatePostDraft.find_one({"user_id": user_id})
 
 
     # ──────────────────── Delete ────────────────────
 
     async def delete_by_user_id(self, user_id: str) -> None:
         """유저의 임시저장 삭제 (게시글 발행 시 또는 수동 삭제 시 호출)"""
-        draft = await TripmatePostDraft.find_one(
-            TripmatePostDraft.user_id == user_id
-        )
+        draft = await TripmatePostDraft.find_one({"user_id": user_id})
         if draft:
             await draft.delete()
