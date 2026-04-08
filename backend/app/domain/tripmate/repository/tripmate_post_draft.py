@@ -1,5 +1,5 @@
 from typing import Optional
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 
 from pymongo import ReturnDocument
 
@@ -14,6 +14,11 @@ class TripmatePostDraftRepository:
         """임시저장 upsert — single atomic operation"""
         doc = draft.model_dump(exclude={"id"})
         doc["updated_at"] = datetime.now(timezone.utc)
+
+        # MongoDB(BSON)는 date를 지원하지 않으므로 datetime으로 변환
+        for key, value in doc.items():
+            if isinstance(value, date) and not isinstance(value, datetime):
+                doc[key] = datetime(value.year, value.month, value.day)
 
         result = await TripmatePostDraft.get_motor_collection().find_one_and_update(
             {"user_id": draft.user_id},
