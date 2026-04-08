@@ -4,11 +4,12 @@ from dependency_injector.wiring import Provide, inject
 
 from app.domain.tripmate.service.tripmate_post import TripmatePostService
 from app.domain.tripmate.service.tripmate_post_like import TripmatePostLikeService
+from app.domain.tripmate.service.tripmate_post_draft import TripmatePostDraftService
 from app.domain.tripmate.schema.tripmate_post import (
-    CreatePostRequest, UpdatePostRequest,
+    CreatePostRequest, UpdatePostRequest, SaveDraftRequest,
     PostCreateResponse, PostDetailResponse, PostListResponse,
     ToggleDisplayResponse, LikeResponse, LikedUsersResponse, MessageResponse,
-    AuthorResponse,
+    DraftResponse, AuthorResponse,
 )
 from app.core.logger import get_logger
 from app.container import Container
@@ -99,6 +100,63 @@ async def search_posts(
         next_cursor=result.next_cursor,
     )
 
+
+# ──────────────────── 임시저장 ────────────────────
+
+@router.put("/draft")
+@inject
+async def save_draft(
+    request: Request,
+    body: SaveDraftRequest,
+    draft_service: TripmatePostDraftService = Depends(Provide[Container.tripmate_post_draft_service]),
+) -> DraftResponse:
+    """게시글 임시저장 (30초마다 자동 호출)"""
+    user_id: str = request.state.user_id
+
+    result = await draft_service.save_draft(
+        user_id=user_id,
+        title=body.title,
+        content=body.content,
+        preferred_age_min=body.preferred_age_min,
+        preferred_age_max=body.preferred_age_max,
+        preferred_gender=body.preferred_gender,
+        region=body.region,
+        travel_start_date=body.travel_start_date,
+        travel_end_date=body.travel_end_date,
+        companion_type=body.companion_type,
+    )
+    return _to_draft_response(result)
+
+
+@router.get("/draft")
+@inject
+async def get_draft(
+    request: Request,
+    draft_service: TripmatePostDraftService = Depends(Provide[Container.tripmate_post_draft_service]),
+) -> Optional[DraftResponse]:
+    """임시저장 조회 (있으면 반환, 없으면 null)"""
+    user_id: str = request.state.user_id
+
+    result = await draft_service.get_draft(user_id)
+    if result is None:
+        return None
+    return _to_draft_response(result)
+
+
+@router.delete("/draft")
+@inject
+async def delete_draft(
+    request: Request,
+    draft_service: TripmatePostDraftService = Depends(Provide[Container.tripmate_post_draft_service]),
+) -> MessageResponse:
+    """임시저장 수동 삭제"""
+    user_id: str = request.state.user_id
+
+    await draft_service.delete_draft(user_id)
+    return MessageResponse(message="임시저장이 삭제되었습니다.")
+
+
+# ──────────────────── 게시글 단건/수정/삭제 ────────────────────
 
 @router.get("/{post_id}")
 @inject
@@ -273,4 +331,20 @@ def _to_post_response(dto) -> PostDetailResponse:
         like_count=dto.like_count,
         is_liked=dto.is_liked,
         image_urls=dto.image_urls,
+    )
+
+
+def _to_draft_response(draft) -> DraftResponse:
+    return DraftResponse(
+        user_id=draft.user_id,
+        title=draft.title,
+        content=draft.content,
+        preferred_age_min=draft.preferred_age_min,
+        preferred_age_max=draft.preferred_age_max,
+        preferred_gender=draft.preferred_gender,
+        region=draft.region,
+        travel_start_date=draft.travel_start_date,
+        travel_end_date=draft.travel_end_date,
+        companion_type=draft.companion_type,
+        updated_at=draft.updated_at,
     )

@@ -117,3 +117,31 @@ class LikedUsersResponse(BaseModel):
 
 class MessageResponse(BaseModel):
     message: str = Field(..., description="응답 메시지")
+
+
+# ──────────────────── Draft (임시저장) ────────────────────
+
+class SaveDraftRequest(BaseModel):
+    title: Optional[str] = Field(None, max_length=100, description="게시글 제목")
+    content: Optional[str] = Field(None, max_length=500, description="게시글 내용")
+    preferred_age_min: Optional[int] = Field(None, ge=1, description="선호 나이 하한")
+    preferred_age_max: Optional[int] = Field(None, ge=1, description="선호 나이 상한")
+    preferred_gender: Optional[str] = Field(None, description="선호 성별 (male / female / any)")
+    region: Optional[str] = Field(None, max_length=100, description="여행 지역")
+    travel_start_date: Optional[date] = Field(None, description="여행 시작일")
+    travel_end_date: Optional[date] = Field(None, description="여행 종료일")
+    companion_type: Optional[str] = Field(None, description="동행 타입 (friend / family / couple / sole)")
+
+
+class DraftResponse(BaseModel):
+    user_id: str = Field(..., description="작성자 ID")
+    title: Optional[str] = Field(None, description="게시글 제목")
+    content: Optional[str] = Field(None, description="게시글 내용")
+    preferred_age_min: Optional[int] = Field(None, description="선호 나이 하한")
+    preferred_age_max: Optional[int] = Field(None, description="선호 나이 상한")
+    preferred_gender: Optional[str] = Field(None, description="선호 성별")
+    region: Optional[str] = Field(None, description="여행 지역")
+    travel_start_date: Optional[date] = Field(None, description="여행 시작일")
+    travel_end_date: Optional[date] = Field(None, description="여행 종료일")
+    companion_type: Optional[str] = Field(None, description="동행 타입")
+    updated_at: datetime = Field(..., description="마지막 임시저장 시각")

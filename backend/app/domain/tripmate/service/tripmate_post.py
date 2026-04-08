@@ -4,16 +4,21 @@ from datetime import date
 from app.database.session import UnitOfWork, transactional
 from app.domain.tripmate.repository.tripmate_post import TripmatePostRepository, PAGE_SIZE
 from app.domain.tripmate.repository.tripmate_post_image import TripmatePostImageRepository
+from app.domain.tripmate.service.tripmate_post_draft import TripmatePostDraftService
 from app.domain.tripmate.model.tripmate_post import TripmatePost, PreferredGender, CompanionType
+from app.core.logger import get_logger
 from app.domain.tripmate.model.tripmate_post_image import TripmatePostImage
 from app.domain.tripmate.dto.tripmate_post import TripmatePostCreateData, TripmatePostData, TripmatePostListData, PostAuthorData
 from app.domain.auth.model.user_detail_inform import Gender
 
 
-class TripmatePostService:
-    def __init__(self, uow: UnitOfWork):
-        self.uow = uow
+logger = get_logger("tripmate.post.service")
 
+
+class TripmatePostService:
+    def __init__(self, uow: UnitOfWork, draft_service: TripmatePostDraftService):
+        self.uow = uow
+        self.draft_service = draft_service
 
     # ──────────────────── 게시글 생성 ────────────────────
 
@@ -65,6 +70,12 @@ class TripmatePostService:
         #     ]
         #     await image_repo.save_all(images)
         #     saved_urls = image_urls
+
+        # 게시글 발행 성공 → 임시저장 삭제 (실패해도 게시글 생성은 유지)
+        try:
+            await self.draft_service.delete_draft(user_id)
+        except Exception as e:
+            logger.warning(f"임시저장 삭제 실패 (user_id={user_id}): {e}")
 
         return self._to_create_dto(post, image_urls=saved_urls)
 

@@ -56,6 +56,7 @@ from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 from beanie import init_beanie
 
 from app.config.setting import settings
+from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
 
 
 class MongoDB:
@@ -75,7 +76,9 @@ class MongoDB:
         
         await init_beanie(
             database=self.database,
-            document_models=[]
+            document_models=[
+                TripmatePostDraft,
+            ]
         )
         
     async def disconnect(self):
