@@ -71,6 +71,7 @@ class MongoDB:
             settings.MONGODB_URL,
             maxPoolSize=100,
             minPoolSize=10,
+            tz_aware=True,
         )
         self.database = self.client[settings.MONGODB_NAME]
         
