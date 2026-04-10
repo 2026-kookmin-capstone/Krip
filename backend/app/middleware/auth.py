@@ -168,7 +168,7 @@ class LoginCookieMiddleware(BaseHTTPMiddleware):
             )
 
         request.state.user_id = user_id
-        cookie_logger.debug(f"쿠키 인증 성공: {user_id}")
+        cookie_logger.debug("쿠키 인증 성공: %s", user_id)
         return await call_next(request)
 
 
@@ -242,7 +242,7 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
                 user_repo = UserRepository(session)
                 user = await user_repo.find_by_id_with_profile(user_id)
         except Exception as e:
-            reg_logger.error(f"DB 조회 실패: {e}")
+            reg_logger.error("DB 조회 실패: %s", e)
             return JSONResponse(
                 status_code=500,
                 content={"detail": "회원가입 상태 확인 중 오류가 발생했습니다."},

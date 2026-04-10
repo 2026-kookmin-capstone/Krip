@@ -75,7 +75,7 @@ class TripmatePostService:
         try:
             await self.draft_service.delete_draft(user_id)
         except Exception as e:
-            logger.warning(f"임시저장 삭제 실패 (user_id={user_id}): {e}")
+            logger.warning("임시저장 삭제 실패 (user_id=%s): %s", user_id, e)
 
         return self._to_create_dto(post, image_urls=saved_urls)
 

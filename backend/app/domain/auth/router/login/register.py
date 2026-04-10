@@ -42,5 +42,5 @@ async def register(
     cache = get_redis_cache_manager()
     await cache.set_flag(f"{KeyCategory.REGISTERED}:{user_id}", RedisClient.DEFAULT_CACHE_TTL)
 
-    logger.info(f"2차 회원가입 완료: {user_id} / {user_inform.email}")
+    logger.info("2차 회원가입 완료: %s / %s", user_id, user_inform.email)
     return RegisterResponse(message="회원가입이 완료되었습니다.")

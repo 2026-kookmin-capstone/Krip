@@ -28,7 +28,7 @@ def create_app() -> FastAPI:
         # startup
         setup_logging()
         await init_mongodb()
-        logger.info(f"Starting application in {settings.ENVIRONMENT} mode")
+        logger.info("Starting application in %s mode", settings.ENVIRONMENT)
 
         yield
 

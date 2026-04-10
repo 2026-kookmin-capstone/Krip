@@ -30,7 +30,7 @@ class RedisCacheManager:
                 return json.loads(data)
             return None
         except Exception as e:
-            logger.error(f"카테고리 캐시 조회 실패: {e}")
+            logger.error("카테고리 캐시 조회 실패: %s", e)
             return None
 
 
@@ -44,7 +44,7 @@ class RedisCacheManager:
             )
             logger.debug("카테고리 캐시 저장 완료")
         except Exception as e:
-            logger.error(f"카테고리 캐시 저장 실패: {e}")
+            logger.error("카테고리 캐시 저장 실패: %s", e)
 
 
     async def invalidate(self, REDIS_KEY: str) -> None:
@@ -53,7 +53,7 @@ class RedisCacheManager:
             await self._redis_client.delete(REDIS_KEY)
             logger.info("카테고리 캐시 무효화 완료")
         except Exception as e:
-            logger.error(f"카테고리 캐시 무효화 실패: {e}")
+            logger.error("카테고리 캐시 무효화 실패: %s", e)
 
 
     async def exists(self, key: str) -> bool:
@@ -62,7 +62,7 @@ class RedisCacheManager:
             await self._ensure_redis_client()
             return await self._redis_client.exists(key) > 0
         except Exception as e:
-            logger.error(f"캐시 존재 여부 확인 실패: {e}")
+            logger.error("캐시 존재 여부 확인 실패: %s", e)
             return False
 
 
@@ -71,9 +71,9 @@ class RedisCacheManager:
         try:
             await self._ensure_redis_client()
             await self._redis_client.set(key, "1", ex=ttl)
-            logger.debug(f"플래그 캐시 저장: {key}")
+            logger.debug("플래그 캐시 저장: %s", key)
         except Exception as e:
-            logger.error(f"플래그 캐시 저장 실패: {e}")
+            logger.error("플래그 캐시 저장 실패: %s", e)
 
 
 @lru_cache(maxsize=1)

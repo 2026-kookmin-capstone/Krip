@@ -23,5 +23,5 @@ async def logout(request: Request):
         path="/",
     )
 
-    logger.debug(f"로그아웃: {user_id}")
+    logger.debug("로그아웃: %s", user_id)
     return response
