@@ -115,10 +115,6 @@ class LikedUsersResponse(BaseModel):
     user_ids: List[str] = Field(..., description="좋아요 누른 유저 ID 목록")
 
 
-class MessageResponse(BaseModel):
-    message: str = Field(..., description="응답 메시지")
-
-
 # ──────────────────── Draft (임시저장) ────────────────────
 
 class SaveDraftRequest(BaseModel):

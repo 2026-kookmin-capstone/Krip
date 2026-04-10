@@ -5,12 +5,14 @@ from dependency_injector.wiring import Provide, inject
 from app.domain.tripmate.service.tripmate_post import TripmatePostService
 from app.domain.tripmate.service.tripmate_post_like import TripmatePostLikeService
 from app.domain.tripmate.service.tripmate_post_draft import TripmatePostDraftService
+from app.domain.tripmate.service.tripmate_search_history import TripmateSearchHistoryService
 from app.domain.tripmate.schema.tripmate_post import (
     CreatePostRequest, UpdatePostRequest, SaveDraftRequest,
     PostCreateResponse, PostDetailResponse, PostListResponse,
-    ToggleDisplayResponse, LikeResponse, LikedUsersResponse, MessageResponse,
+    ToggleDisplayResponse, LikeResponse, LikedUsersResponse,
     DraftResponse, AuthorResponse,
 )
+from app.schema.common import MessageResponse
 from app.core.logger import get_logger
 from app.container import Container
 
@@ -90,9 +92,15 @@ async def search_posts(
     keyword: str = Query(..., min_length=1, description="검색 키워드 (제목, 내용, 작성자)"),
     cursor: Optional[str] = Query(None, description="다음 페이지 커서 (post_id)"),
     post_service: TripmatePostService = Depends(Provide[Container.tripmate_post_service]),
+    search_history_service: TripmateSearchHistoryService = Depends(Provide[Container.tripmate_search_history_service]),
 ) -> PostListResponse:
     """게시글 검색 (제목, 내용, 작성자 닉네임)"""
     user_id: str = request.state.user_id
+
+    try:
+        await search_history_service.save_search(user_id=user_id, search_name=keyword)
+    except Exception:
+        logger.warning(f"검색 기록 저장 실패: user_id={user_id}, keyword={keyword}")
 
     result = await post_service.search_posts(keyword=keyword, cursor=cursor, user_id=user_id)
     return PostListResponse(
