@@ -11,7 +11,7 @@ from app.core.logger import get_logger
 from app.container import Container
 
 
-router = APIRouter(prefix="/posts/search-history", tags=["여행 메이트 검색 기록"])
+router = APIRouter(prefix="/search-history", tags=["여행 메이트 검색 기록"])
 logger = get_logger("tripmate.search_history")
 
 
