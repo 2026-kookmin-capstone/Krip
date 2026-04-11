@@ -1,6 +1,7 @@
 from sqlalchemy import select, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.domain.tripmate.model.tripmate_post import TripmatePost
 from app.domain.tripmate.model.tripmate_post_image import TripmatePostImage
 
 
@@ -33,6 +34,17 @@ class TripmatePostImageRepository:
             select(TripmatePostImage)
             .where(TripmatePostImage.post_id == post_id)
             .order_by(TripmatePostImage.image_order.asc())
+        )
+        result = await self.session.execute(stmt)
+        return list(result.scalars().all())
+
+
+    async def find_urls_by_user_id(self, user_id: str) -> list[str]:
+        """유저의 게시글에 연결된 이미지 URL 전체 조회"""
+        stmt = (
+            select(TripmatePostImage.image_url)
+            .join(TripmatePost, TripmatePostImage.post_id == TripmatePost.post_id)
+            .where(TripmatePost.user_id == user_id)
         )
         result = await self.session.execute(stmt)
         return list(result.scalars().all())

@@ -4,9 +4,11 @@ from datetime import date
 from app.database.session import UnitOfWork, transactional
 from app.domain.tripmate.repository.tripmate_post import TripmatePostRepository, PAGE_SIZE
 from app.domain.tripmate.repository.tripmate_post_image import TripmatePostImageRepository
+from app.domain.tripmate.repository.tripmate_image import TripmateImageRepository
 from app.domain.tripmate.service.tripmate_post_draft import TripmatePostDraftService
 from app.domain.tripmate.model.tripmate_post import TripmatePost, PreferredGender, CompanionType
 from app.core.logger import get_logger
+from app.core.object_storage import get_object_storage
 from app.domain.tripmate.model.tripmate_post_image import TripmatePostImage
 from app.domain.tripmate.dto.tripmate_post import TripmatePostCreateData, TripmatePostData, TripmatePostListData, PostAuthorData
 from app.domain.auth.model.user_detail_inform import Gender
@@ -19,6 +21,8 @@ class TripmatePostService:
     def __init__(self, uow: UnitOfWork, draft_service: TripmatePostDraftService):
         self.uow = uow
         self.draft_service = draft_service
+        self.storage = get_object_storage()
+        self.mongo_image_repo = TripmateImageRepository()
 
     # ──────────────────── 게시글 생성 ────────────────────
 
@@ -61,15 +65,14 @@ class TripmatePostService:
         )
         await post_repo.save(post)
 
-        # 아직은 이미지 넣는 기능 비활성화
         saved_urls = []
-        # if image_urls:
-        #     images = [
-        #         TripmatePostImage(post_id=post.post_id, image_url=url, image_order=idx)
-        #         for idx, url in enumerate(image_urls)
-        #     ]
-        #     await image_repo.save_all(images)
-        #     saved_urls = image_urls
+        if image_urls:
+            images = [
+                TripmatePostImage(post_id=post.post_id, image_url=url, image_order=idx)
+                for idx, url in enumerate(image_urls)
+            ]
+            await image_repo.save_all(images)
+            saved_urls = image_urls
 
         # 게시글 발행 성공 → 임시저장 삭제 (실패해도 게시글 생성은 유지)
         try:
@@ -172,17 +175,27 @@ class TripmatePostService:
         post.companion_type = companion_type
         await post_repo.update(post)
 
-        # 기존 이미지 삭제 후 새 이미지 저장
-        # 해당 기능은 현재 비활성화
-        saved_urls = []
-        # await image_repo.delete_by_post_id(post_id)
-        # if image_urls:
-        #     images = [
-        #         TripmatePostImage(post_id=post_id, image_url=url, image_order=idx)
-        #         for idx, url in enumerate(image_urls)
-        #     ]
-        #     await image_repo.save_all(images)
-        #     saved_urls = image_urls
+        # 기존 이미지와 새 이미지의 차집합 계산 → 제거된 이미지만 정리
+        existing_images = await image_repo.find_by_post_id(post_id)
+        old_urls = {img.image_url for img in existing_images}
+        new_urls = set(image_urls) if image_urls else set()
+        removed_urls = old_urls - new_urls
+
+        await image_repo.delete_by_post_id(post_id)
+        if image_urls:
+            images = [
+                TripmatePostImage(post_id=post_id, image_url=url, image_order=idx)
+                for idx, url in enumerate(image_urls)
+            ]
+            await image_repo.save_all(images)
+
+        # 제거된 이미지 → Object Storage + MongoDB 정리
+        if removed_urls:
+            try:
+                await self.storage.delete_many(list(removed_urls))
+                await self.mongo_image_repo.delete_by_urls(list(removed_urls))
+            except Exception as e:
+                logger.warning("수정 시 이미지 정리 실패 (post_id=%s): %s", post_id, e)
 
         # 수정 완료 후 좋아요 수 + is_liked + 이미지 포함하여 반환
         updated = await post_repo.find_by_id_with_detail(post_id, user_id=user_id)
@@ -199,9 +212,15 @@ class TripmatePostService:
     @transactional
     async def delete_post(self, post_id: str, user_id: str) -> None:
         """
-        게시글 삭제 (작성자 검증 후 삭제, CASCADE로 이미지·좋아요 자동 삭제)
+        게시글 삭제
+
+        1. 작성자 검증
+        2. 삭제 전 이미지 URL 수집
+        3. 게시글 삭제 (CASCADE로 tripmate_post_image·좋아요 자동 삭제)
+        4. Object Storage 파일 + MongoDB 메타데이터 정리
         """
         post_repo = TripmatePostRepository(self._session)
+        image_repo = TripmatePostImageRepository(self._session)
 
         post = await post_repo.find_by_id(post_id)
         if post is None:
@@ -209,7 +228,22 @@ class TripmatePostService:
         if post.user_id != user_id:
             raise PermissionError("게시글 삭제 권한이 없습니다.")
 
+        # 삭제 전 이미지 URL 수집
+        post_images = await image_repo.find_by_post_id(post_id)
+        image_urls = [img.image_url for img in post_images]
+
+        # 게시글 삭제 (CASCADE)
         await post_repo.delete(post)
+
+        # Object Storage + MongoDB 정리
+        if image_urls:
+            try:
+                storage = get_object_storage()
+                mongo_image_repo = TripmateImageRepository()
+                await storage.delete_many(image_urls)
+                await mongo_image_repo.delete_by_urls(image_urls)
+            except Exception as e:
+                logger.warning("삭제 시 이미지 정리 실패 (post_id=%s): %s", post_id, e)
 
 
     # ──────────────────── 게시글 Display 토글 ────────────────────

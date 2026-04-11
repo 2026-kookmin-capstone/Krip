@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from datetime import date
 
 from app.domain.tripmate.repository.tripmate_post_draft import TripmatePostDraftRepository
@@ -24,6 +24,7 @@ class TripmatePostDraftService:
         travel_start_date: Optional[date] = None,
         travel_end_date: Optional[date] = None,
         companion_type: Optional[str] = None,
+        image_urls: Optional[List[str]] = None,
     ) -> TripmatePostDraft:
         """
         임시저장 upsert (30초마다 프론트에서 호출)
@@ -42,6 +43,7 @@ class TripmatePostDraftService:
             travel_start_date=travel_start_date,
             travel_end_date=travel_end_date,
             companion_type=companion_type,
+            image_urls=image_urls or [],
         )
         return await self.draft_repo.upsert(draft)
 

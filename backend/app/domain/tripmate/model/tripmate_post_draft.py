@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 from pydantic import Field
 from datetime import date, datetime, timezone
 from beanie import Document, Indexed
@@ -21,6 +21,7 @@ class TripmatePostDraft(Document):
     travel_start_date: Optional[date] = Field(None, description="여행 시작일")
     travel_end_date: Optional[date] = Field(None, description="여행 종료일")
     companion_type: Optional[str] = Field(None, description="동행 타입 (friend / family / couple / sole)")
+    image_urls: List[str] = Field(default_factory=list, description="업로드된 이미지 URL 목록")
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc), description="마지막 임시저장 시각")
 
     class Settings:

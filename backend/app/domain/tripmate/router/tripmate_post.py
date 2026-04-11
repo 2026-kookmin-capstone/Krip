@@ -45,6 +45,7 @@ async def create_post(
             travel_start_date=body.travel_start_date,
             travel_end_date=body.travel_end_date,
             companion_type=body.companion_type,
+            image_urls=body.image_urls,
         )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -132,6 +133,7 @@ async def save_draft(
         travel_start_date=body.travel_start_date,
         travel_end_date=body.travel_end_date,
         companion_type=body.companion_type,
+        image_urls=body.image_urls,
     )
     return _to_draft_response(result)
 
@@ -208,6 +210,7 @@ async def update_post(
             travel_start_date=body.travel_start_date,
             travel_end_date=body.travel_end_date,
             companion_type=body.companion_type,
+            image_urls=body.image_urls,
         )
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
@@ -354,5 +357,6 @@ def _to_draft_response(draft) -> DraftResponse:
         travel_start_date=draft.travel_start_date,
         travel_end_date=draft.travel_end_date,
         companion_type=draft.companion_type,
+        image_urls=draft.image_urls,
         updated_at=draft.updated_at,
     )

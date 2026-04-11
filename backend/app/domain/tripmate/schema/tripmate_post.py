@@ -18,6 +18,7 @@ class CreatePostRequest(BaseModel):
     travel_start_date: date = Field(..., description="여행 시작일")
     travel_end_date: date = Field(..., description="여행 종료일")
     companion_type: CompanionType = Field(..., description="동행 타입 (friend / family / couple / sole)")
+    image_urls: Optional[List[str]] = Field(None, description="첨부 이미지 URL 목록 (이미지 업로드 API로 받은 URL)")
 
     class Config:
         json_schema_extra = {
@@ -31,6 +32,7 @@ class CreatePostRequest(BaseModel):
                 "travel_start_date": "2026-07-10",
                 "travel_end_date": "2026-07-12",
                 "companion_type": "friend",
+                "image_urls": [],
             }
         }
 
@@ -45,6 +47,7 @@ class UpdatePostRequest(BaseModel):
     travel_start_date: date = Field(..., description="여행 시작일")
     travel_end_date: date = Field(..., description="여행 종료일")
     companion_type: CompanionType = Field(..., description="동행 타입 (friend / family / couple / sole)")
+    image_urls: Optional[List[str]] = Field(None, description="첨부 이미지 URL 목록 (이미지 업로드 API로 받은 URL)")
 
 
 # ──────────────────── Response ────────────────────
@@ -127,6 +130,7 @@ class SaveDraftRequest(BaseModel):
     travel_start_date: Optional[date] = Field(None, description="여행 시작일")
     travel_end_date: Optional[date] = Field(None, description="여행 종료일")
     companion_type: Optional[str] = Field(None, description="동행 타입 (friend / family / couple / sole)")
+    image_urls: Optional[List[str]] = Field(None, description="첨부 이미지 URL 목록")
 
 
 class DraftResponse(BaseModel):
@@ -140,4 +144,5 @@ class DraftResponse(BaseModel):
     travel_start_date: Optional[date] = Field(None, description="여행 시작일")
     travel_end_date: Optional[date] = Field(None, description="여행 종료일")
     companion_type: Optional[str] = Field(None, description="동행 타입")
+    image_urls: List[str] = Field(default_factory=list, description="첨부 이미지 URL 목록")
     updated_at: datetime = Field(..., description="마지막 임시저장 시각")

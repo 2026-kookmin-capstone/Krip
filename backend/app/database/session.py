@@ -58,6 +58,7 @@ from beanie import init_beanie
 from app.config.setting import settings
 from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
 from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHistory
+from app.domain.tripmate.model.tripmate_image import TripmateImage
 
 
 class MongoDB:
@@ -81,6 +82,7 @@ class MongoDB:
             document_models=[
                 TripmatePostDraft,
                 TripmateSearchHistory,
+                TripmateImage,
             ]
         )
         
