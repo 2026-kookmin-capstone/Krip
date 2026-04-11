@@ -67,6 +67,9 @@ class Settings(BaseSettings):
     S3_BUCKET_NAME: str = Field(..., description="Object Storage S3_BUCKET_NAME")
     S3_ENDPOINT_URL: str = Field(..., description="Object Storage S3_ENDPOINT_URL")
     
+    # LLM
+    GOOGLE_GEMINI_API_KEY: str = Field(..., description="구글 제미나이 API 키")
+    
     @property
     def POSTGRES_URL(self) -> str:
         return f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_NAME}"
