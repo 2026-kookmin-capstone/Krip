@@ -10,8 +10,8 @@ from app.config.setting import settings
 class ModelName(str, Enum):
     """사용 가능한 Gemini 모델 이름"""
     GEMINI_2_0_FLASH = "gemini-2.0-flash"
-    GEMINI_2_5_FLASH = "gemini-2.5-flash-preview-04-17"
-    GEMINI_2_5_PRO = "gemini-2.5-pro-preview-03-25"
+    GEMINI_2_5_FLASH = "gemini-2.5-flash"
+    GEMINI_2_5_PRO = "gemini-2.5-pro"
 
     @classmethod
     def values(cls) -> List[str]:

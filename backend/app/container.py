@@ -9,6 +9,7 @@ from app.domain.tripmate.service.tripmate_post_like import TripmatePostLikeServi
 from app.domain.tripmate.service.tripmate_post_draft import TripmatePostDraftService
 from app.domain.tripmate.service.tripmate_search_history import TripmateSearchHistoryService
 from app.domain.tripmate.service.tripmate_image import TripmateImageService
+from app.domain.menu_ai.service.menu_ocr import MenuOcrService
 from app.database.session import UnitOfWork
 from app.config.setting import settings
 
@@ -44,3 +45,6 @@ class Container(containers.DeclarativeContainer):
     tripmate_post_like_service = providers.Factory(TripmatePostLikeService, uow=uow)
     tripmate_search_history_service = providers.Factory(TripmateSearchHistoryService)
     tripmate_image_service = providers.Factory(TripmateImageService, uow=uow)
+
+    # 메뉴 AI
+    menu_ocr_service = providers.Factory(MenuOcrService)

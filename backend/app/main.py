@@ -15,6 +15,7 @@ from app.config.setting import settings
 from app.container import Container
 from app.api.v1.router import api_router
 from app.database.session import init_mongodb, close_mongodb
+from app.core.ai.menu_ocr.load import MenuOcr
 
 
 
@@ -28,6 +29,7 @@ def create_app() -> FastAPI:
         # startup
         setup_logging()
         await init_mongodb()
+        MenuOcr().load()
         logger.info("Starting application in %s mode", settings.ENVIRONMENT)
 
         yield
@@ -45,6 +47,7 @@ def create_app() -> FastAPI:
         "app.domain.tripmate.router.tripmate_post",
         "app.domain.tripmate.router.tripmate_search_history",
         "app.domain.tripmate.router.tripmate_image",
+        "app.domain.menu_ai.router.menu_ocr",
     ])
 
 
