@@ -14,3 +14,17 @@ def generate_travel_style_id() -> str:
     timestamp = int(datetime.now().timestamp())
     unique_part = uuid.uuid4().hex[:8]
     return f"TS_{timestamp}_{unique_part}"
+
+
+def generate_tripmate_post_id() -> str:
+    """여행 메이트 게시글 고유 ID 생성"""
+    timestamp = int(datetime.now().timestamp())
+    unique_part = uuid.uuid4().hex[:8]
+    return f"TMP_{timestamp}_{unique_part}"
+
+
+def generate_tripmate_image_id() -> str:
+    """여행 메이트 게시글 이미지 고유 ID 생성"""
+    timestamp = int(datetime.now().timestamp())
+    unique_part = uuid.uuid4().hex[:8]
+    return f"TMI_{timestamp}_{unique_part}"

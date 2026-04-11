@@ -14,6 +14,7 @@ from app.core.logger import setup_logging, get_logger
 from app.config.setting import settings
 from app.container import Container
 from app.api.v1.router import api_router
+from app.database.session import init_mongodb, close_mongodb
 
 
 
@@ -26,11 +27,13 @@ def create_app() -> FastAPI:
     async def lifespan(app: FastAPI):
         # startup
         setup_logging()
-        logger.info(f"Starting application in {settings.ENVIRONMENT} mode")
-        
+        await init_mongodb()
+        logger.info("Starting application in %s mode", settings.ENVIRONMENT)
+
         yield
-        
+
         # shutdown
+        await close_mongodb()
         logger.info("Application shutting down")
 
     # DI Container 초기화 및 wiring
@@ -39,6 +42,9 @@ def create_app() -> FastAPI:
         "app.domain.auth.router.login.login",
         "app.domain.auth.router.login.register",
         "app.domain.auth.router.profile.me",
+        "app.domain.tripmate.router.tripmate_post",
+        "app.domain.tripmate.router.tripmate_search_history",
+        "app.domain.tripmate.router.tripmate_image",
     ])
 
 

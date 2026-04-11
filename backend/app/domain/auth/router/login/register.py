@@ -32,6 +32,7 @@ async def register(
             phone_number=user_inform.phone_number,
             age=user_inform.age,
             gender=user_inform.gender,
+            nationality=user_inform.nationality,
             travel_styles=user_inform.travel_styles,
         )
     except ValueError as e:
@@ -41,5 +42,5 @@ async def register(
     cache = get_redis_cache_manager()
     await cache.set_flag(f"{KeyCategory.REGISTERED}:{user_id}", RedisClient.DEFAULT_CACHE_TTL)
 
-    logger.info(f"2차 회원가입 완료: {user_id} / {user_inform.email}")
+    logger.info("2차 회원가입 완료: %s / %s", user_id, user_inform.email)
     return RegisterResponse(message="회원가입이 완료되었습니다.")
