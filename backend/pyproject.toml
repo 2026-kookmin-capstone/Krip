@@ -29,6 +29,7 @@ dependencies = [
     "redis==6.4.0",
     "openpyxl==3.1.5",
     "pytest-cov==6.1.1",
+    "boto3==1.35.0",
 
     # AI
     "torch==2.10.0",

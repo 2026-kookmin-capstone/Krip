@@ -60,6 +60,13 @@ class Settings(BaseSettings):
     # OAuth Redirect Base URL
     OAUTH_REDIRECT_BASE_URL: str = Field(..., description="OAuth Redirect URL")
     
+    # NaverCloud S3 Object Storage 설정
+    S3_ACCESS_KEY_ID: str = Field(..., description="Object Storage S3_ACCESS_KEY_ID")
+    S3_SECRET_ACCESS_KEY: str = Field(..., description="Object Storage S3_SECRET_ACCESS_KEY")
+    S3_REGION: str = Field(..., description="Object Storage S3_REGION")
+    S3_BUCKET_NAME: str = Field(..., description="Object Storage S3_BUCKET_NAME")
+    S3_ENDPOINT_URL: str = Field(..., description="Object Storage S3_ENDPOINT_URL")
+    
     @property
     def POSTGRES_URL(self) -> str:
         return f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_NAME}"
