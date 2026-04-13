@@ -22,7 +22,8 @@ class PlaceReviewResponse(BaseModel):
     text: Optional[str] = Field(None, description="리뷰 본문")
 
 
-class PlaceResponse(BaseModel):
+class PlaceDetailResponse(BaseModel):
+    """장소 상세 정보 (공통 베이스)"""
     place_id: str = Field(..., description="Google Places 고유 ID")
     display_name: str = Field(..., description="장소 이름")
     category: str = Field(..., description="한글 카테고리명 (예: '한식당')")
@@ -48,6 +49,10 @@ class PlaceResponse(BaseModel):
     accessibility: Optional[List[str]] = Field(None, description="접근성 정보")
     parking: Optional[List[str]] = Field(None, description="주차 정보")
     reviews: List[PlaceReviewResponse] = Field(..., description="리뷰 목록")
+
+
+class PlaceResponse(PlaceDetailResponse):
+    """장소 조회 응답 (거리 + 즐겨찾기 포함)"""
     distance: float = Field(..., description="현재 위치로부터 거리 (미터)")
     is_favorite: Optional[bool] = Field(None, description="즐겨찾기 여부 (즐겨찾기 X - null, 즐겨찾기 O - true)")
 
@@ -55,3 +60,21 @@ class PlaceResponse(BaseModel):
 class PlaceListResponse(BaseModel):
     places: List[PlaceResponse] = Field(..., description="장소 목록")
     next_cursor: Optional[str] = Field(None, description="다음 페이지 커서 (마지막 페이지면 null)")
+
+
+# ──────────────────── 즐겨찾기 ────────────────────
+
+
+class FavoritePlaceRequest(BaseModel):
+    place_id: str = Field(..., description="Google Places 고유 ID")
+
+
+class FavoritePlaceResponse(BaseModel):
+    favorite_id: str = Field(..., description="즐겨찾기 고유 ID")
+    created_at: str = Field(..., description="즐겨찾기 등록 시각")
+    place: PlaceDetailResponse = Field(..., description="장소 상세 정보")
+
+
+class FavoritePlaceListResponse(BaseModel):
+    favorites: List[FavoritePlaceResponse] = Field(..., description="즐겨찾기 목록")
+    total_count: int = Field(..., description="즐겨찾기 총 개수")

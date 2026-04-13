@@ -76,15 +76,10 @@ class FavoritePlaceRepository:
 
     # ──────────────────── Delete ────────────────────
 
-    async def delete_by_user_and_place(self, user_id: str, place_id: str) -> int:
-        """특정 즐겨찾기 삭제, 삭제된 행 수 반환"""
-        stmt = (
-            delete(FavoritePlace)
-            .where(
-                FavoritePlace.user_id == user_id,
-                FavoritePlace.place_id == place_id,
-            )
-            .returning(FavoritePlace.favorite_id)
+    async def delete_by_user_and_place(self, user_id: str, place_id: str) -> None:
+        """특정 즐겨찾기 삭제"""
+        stmt = delete(FavoritePlace).where(
+            FavoritePlace.user_id == user_id,
+            FavoritePlace.place_id == place_id,
         )
-        result = await self.session.execute(stmt)
-        return result.rowcount
+        await self.session.execute(stmt)

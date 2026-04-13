@@ -3,13 +3,19 @@ from fastapi import APIRouter, HTTPException, Query, Depends, Request
 from dependency_injector.wiring import Provide, inject
 
 from app.domain.tour.service.place import PlaceService
+from app.domain.tour.service.favorite_place import FavoritePlaceService
 from app.domain.tour.schema.place import (
+    PlaceDetailResponse,
     PlaceResponse,
     PlaceListResponse,
     PlaceLocationResponse,
     PlacePriceRangeResponse,
     PlaceReviewResponse,
+    FavoritePlaceRequest,
+    FavoritePlaceResponse,
+    FavoritePlaceListResponse,
 )
+from app.schema.common import MessageResponse
 from app.core.logger import get_logger
 from app.container import Container
 
@@ -119,4 +125,110 @@ def _to_place_response(place) -> PlaceResponse:
         ],
         distance=place.distance,
         is_favorite=place.is_favorite,
+    )
+
+
+# ──────────────────── 즐겨찾기 ────────────────────
+
+
+@router.get("/favorites")
+@inject
+async def get_favorites(
+    request: Request,
+    favorite_place_service: FavoritePlaceService = Depends(Provide[Container.favorite_place_service]),
+) -> FavoritePlaceListResponse:
+    """내 즐겨찾기 장소 목록 조회 (최신순)"""
+    user_id: str = request.state.user_id
+
+    try:
+        result = await favorite_place_service.get_favorites(user_id=user_id)
+    except Exception as e:
+        logger.error("즐겨찾기 목록 조회 실패: %s", e)
+        raise HTTPException(status_code=500, detail="즐겨찾기 목록 조회에 실패했습니다.")
+
+    return FavoritePlaceListResponse(
+        favorites=[_to_favorite_response(f) for f in result.favorites],
+        total_count=result.total_count,
+    )
+
+
+@router.post("/favorites", status_code=201)
+@inject
+async def add_favorite(
+    request: Request,
+    body: FavoritePlaceRequest,
+    favorite_place_service: FavoritePlaceService = Depends(Provide[Container.favorite_place_service]),
+) -> MessageResponse:
+    """장소 즐겨찾기 추가"""
+    user_id: str = request.state.user_id
+
+    try:
+        await favorite_place_service.add_favorite(user_id=user_id, place_id=body.place_id)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    return MessageResponse(message="즐겨찾기에 추가되었습니다.")
+
+
+@router.delete("/favorites/{place_id}")
+@inject
+async def remove_favorite(
+    request: Request,
+    place_id: str,
+    favorite_place_service: FavoritePlaceService = Depends(Provide[Container.favorite_place_service]),
+) -> MessageResponse:
+    """장소 즐겨찾기 해제"""
+    user_id: str = request.state.user_id
+
+    try:
+        await favorite_place_service.remove_favorite(user_id=user_id, place_id=place_id)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    return MessageResponse(message="즐겨찾기가 해제되었습니다.")
+
+
+def _to_favorite_response(fav) -> FavoritePlaceResponse:
+    """FavoritePlaceData DTO → FavoritePlaceResponse 스키마 변환"""
+    place = fav.place
+    return FavoritePlaceResponse(
+        favorite_id=fav.favorite_id,
+        created_at=fav.created_at.isoformat(),
+        place=PlaceDetailResponse(
+            place_id=place.place_id,
+            display_name=place.display_name,
+            category=place.category,
+            types=place.types,
+            address=place.address,
+            short_address=place.short_address,
+            location=PlaceLocationResponse(lat=place.location.lat, lng=place.location.lng),
+            rating=place.rating,
+            rating_count=place.rating_count,
+            price_level=place.price_level,
+            price_range=PlacePriceRangeResponse(
+                min=place.price_range.min, max=place.price_range.max
+            ) if place.price_range else None,
+            editorial_summary=place.editorial_summary,
+            generative_summary=place.generative_summary,
+            review_summary=place.review_summary,
+            phone=place.phone,
+            phone_international=place.phone_international,
+            website=place.website,
+            google_maps_url=place.google_maps_url,
+            google_map_review_link=place.google_map_review_link,
+            opening_hours=place.opening_hours,
+            services=place.services,
+            payment=place.payment,
+            accessibility=place.accessibility,
+            parking=place.parking,
+            reviews=[
+                PlaceReviewResponse(
+                    author=r.author,
+                    rating=r.rating,
+                    relative_time=r.relative_time,
+                    text=r.text,
+                )
+                for r in place.reviews
+            ],
+        ),
     )
