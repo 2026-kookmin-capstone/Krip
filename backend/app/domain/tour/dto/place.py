@@ -26,8 +26,8 @@ class PlaceReviewData:
 
 
 @dataclass
-class PlaceData:
-    """장소 단건 DTO (거리 포함)"""
+class PlaceDetailData:
+    """장소 상세 DTO (공통 베이스)"""
 
     # 식별
     place_id: str
@@ -68,8 +68,16 @@ class PlaceData:
     # 리뷰
     reviews: List[PlaceReviewData]
 
+
+@dataclass
+class PlaceData(PlaceDetailData):
+    """장소 조회 DTO (거리 + 즐겨찾기 포함)"""
+
     # 거리 (미터 단위, $geoNear 계산값)
-    distance: float
+    distance: float = 0.0
+
+    # 즐겨찾기 여부 (즐겨찾기 O: True, X: None)
+    is_favorite: Optional[bool] = None
 
 
 @dataclass

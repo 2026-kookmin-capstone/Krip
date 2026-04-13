@@ -11,6 +11,7 @@ from app.domain.tripmate.service.tripmate_search_history import TripmateSearchHi
 from app.domain.tripmate.service.tripmate_image import TripmateImageService
 from app.domain.menu_ai.service.menu_ocr import MenuOcrService
 from app.domain.tour.service.place import PlaceService
+from app.domain.tour.service.favorite_place import FavoritePlaceService
 from app.database.session import UnitOfWork
 from app.config.setting import settings
 
@@ -51,4 +52,5 @@ class Container(containers.DeclarativeContainer):
     menu_ocr_service = providers.Factory(MenuOcrService)
 
     # 관광
-    place_service = providers.Factory(PlaceService)
+    place_service = providers.Factory(PlaceService, uow=uow)
+    favorite_place_service = providers.Factory(FavoritePlaceService, uow=uow)

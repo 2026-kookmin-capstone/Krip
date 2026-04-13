@@ -28,3 +28,10 @@ def generate_tripmate_image_id() -> str:
     timestamp = int(datetime.now().timestamp())
     unique_part = uuid.uuid4().hex[:8]
     return f"TMI_{timestamp}_{unique_part}"
+
+
+def generate_favorite_place_id() -> str:
+    """즐겨찾기 장소 고유 ID 생성"""
+    timestamp = int(datetime.now().timestamp())
+    unique_part = uuid.uuid4().hex[:8]
+    return f"FP_{timestamp}_{unique_part}"

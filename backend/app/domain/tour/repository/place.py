@@ -55,6 +55,16 @@ class PlaceRepository:
         }
         return await self._aggregate_nearby(lat, lng, query=query, cursor=cursor, max_distance=max_distance)
 
+    # ──────────────────── Read (place_id 배치 조회) ────────────────────
+
+    async def find_by_place_ids(self, place_ids: list[str]) -> list[dict]:
+        """place_id 목록으로 장소 배치 조회"""
+        if not place_ids:
+            return []
+        collection = Place.get_motor_collection()
+        cursor = collection.find({"place_id": {"$in": place_ids}})
+        return await cursor.to_list(length=len(place_ids))
+
     # ──────────────────── 내부 유틸 ────────────────────
 
     async def _aggregate_nearby(
