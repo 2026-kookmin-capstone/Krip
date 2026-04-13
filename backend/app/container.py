@@ -51,4 +51,4 @@ class Container(containers.DeclarativeContainer):
     menu_ocr_service = providers.Factory(MenuOcrService)
 
     # 관광
-    place_service = providers.Factory(PlaceService)
+    place_service = providers.Factory(PlaceService, uow=uow)

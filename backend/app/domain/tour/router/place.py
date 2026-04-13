@@ -1,5 +1,5 @@
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Query, Depends
+from fastapi import APIRouter, HTTPException, Query, Depends, Request
 from dependency_injector.wiring import Provide, inject
 
 from app.domain.tour.service.place import PlaceService
@@ -28,6 +28,7 @@ DEFAULT_LNG = 126.97688
 @router.get("")
 @inject
 async def get_places(
+    request: Request,
     lat: Optional[float] = Query(None, description="위도 (미입력 시 광화문 기준)"),
     lng: Optional[float] = Query(None, description="경도 (미입력 시 광화문 기준)"),
     keyword: Optional[str] = Query(None, min_length=1, description="검색 키워드 (장소명, 카테고리)"),
@@ -39,9 +40,11 @@ async def get_places(
 
     - 위도/경도 미입력 시 서울 광화문 기준
     - keyword 입력 시 장소명·카테고리 검색, 미입력 시 전체 조회
+    - 로그인 유저의 즐겨찾기 여부 포함
     """
     actual_lat = lat if lat is not None else DEFAULT_LAT
     actual_lng = lng if lng is not None else DEFAULT_LNG
+    user_id: str = request.state.user_id
 
     try:
         if keyword:
@@ -51,6 +54,7 @@ async def get_places(
                 keyword=keyword,
                 cursor=cursor,
                 max_distance=max_distance,
+                user_id=user_id,
             )
         else:
             result = await place_service.get_nearby_places(
@@ -58,6 +62,7 @@ async def get_places(
                 lng=actual_lng,
                 cursor=cursor,
                 max_distance=max_distance,
+                user_id=user_id,
             )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -113,4 +118,5 @@ def _to_place_response(place) -> PlaceResponse:
             for r in place.reviews
         ],
         distance=place.distance,
+        is_favorite=place.is_favorite,
     )

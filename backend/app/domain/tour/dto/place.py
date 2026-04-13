@@ -71,6 +71,9 @@ class PlaceData:
     # 거리 (미터 단위, $geoNear 계산값)
     distance: float
 
+    # 즐겨찾기 여부 (즐겨찾기 O: True, X: None)
+    is_favorite: Optional[bool] = None
+
 
 @dataclass
 class PlaceListData:

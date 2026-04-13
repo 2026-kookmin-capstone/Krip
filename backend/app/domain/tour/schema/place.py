@@ -49,6 +49,7 @@ class PlaceResponse(BaseModel):
     parking: Optional[List[str]] = Field(None, description="주차 정보")
     reviews: List[PlaceReviewResponse] = Field(..., description="리뷰 목록")
     distance: float = Field(..., description="현재 위치로부터 거리 (미터)")
+    is_favorite: Optional[bool] = Field(None, description="즐겨찾기 여부 (즐겨찾기 X - null, 즐겨찾기 O - true)")
 
 
 class PlaceListResponse(BaseModel):
