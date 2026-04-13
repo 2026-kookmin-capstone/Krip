@@ -48,6 +48,7 @@ def create_app() -> FastAPI:
         "app.domain.tripmate.router.tripmate_search_history",
         "app.domain.tripmate.router.tripmate_image",
         "app.domain.menu_ai.router.menu_ocr",
+        "app.domain.tour.router.place",
     ])
 
 
