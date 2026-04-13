@@ -62,7 +62,7 @@ class Place(Document):
     # ── 평가 ──
     rating: Optional[float] = Field(None, description="평균 별점 (1.0~5.0)")
     rating_count: Optional[int] = Field(None, description="리뷰 수")
-    price_level: Optional[int] = Field(None, description="가격 수준 (1~4)")
+    price_level: Optional[str] = Field(None, description="가격 수준 (예: '보통 ($$)')")
     price_range: Optional[PlacePriceRange] = Field(None, description="가격 범위 (KRW)")
 
     # ── 요약 ──
