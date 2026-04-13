@@ -95,7 +95,8 @@ async def load_places(mongodb_url: str, data_dir: Path):
     await collection.create_index("place_id", unique=True)     # 장소 고유 식별자
     await collection.create_index("category")                  # 카테고리 필터링용
     await collection.create_index([("location", GEOSPHERE)])   # 근처 장소 검색용
-    await collection.create_index([("rating", -1)])             # 별점 정렬용 (단일 필드 인덱스는 양방향 탐색 가능)
+    await collection.create_index([("rating", -1)])            # 별점 정렬용 (단일 필드 인덱스는 양방향 탐색 가능)
+    await collection.create_index("types")                     # 장소 타입 필터링용
     print(f"[연결 완료] {db_name}")
 
     # JSON 파일 수집 및 정렬
