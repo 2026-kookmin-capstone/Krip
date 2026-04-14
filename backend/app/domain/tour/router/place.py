@@ -188,6 +188,34 @@ async def remove_favorite(
     return MessageResponse(message="즐겨찾기가 해제되었습니다.")
 
 
+# ──────────────────── 장소 단건 조회 ────────────────────
+
+
+@router.get("/{place_id}")
+@inject
+async def get_place(
+    request: Request,
+    place_id: str,
+    place_service: PlaceService = Depends(Provide[Container.place_service]),
+) -> PlaceResponse:
+    """place_id로 장소 단건 조회, 거리는 제공되지 않으므로 0으로 나옴."""
+    user_id: str = request.state.user_id
+
+    try:
+        result = await place_service.get_place_by_id(place_id=place_id, user_id=user_id)
+    except Exception as e:
+        logger.error("장소 단건 조회 실패: %s", e)
+        raise HTTPException(status_code=500, detail="장소 조회에 실패했습니다.")
+
+    if result is None:
+        raise HTTPException(status_code=404, detail="장소를 찾을 수 없습니다.")
+
+    return _to_place_response(result)
+
+
+# ──────────────────── 내부 변환 유틸 (즐겨찾기) ────────────────────
+
+
 def _to_favorite_response(fav) -> FavoritePlaceResponse:
     """FavoritePlaceData DTO → FavoritePlaceResponse 스키마 변환"""
     place = fav.place

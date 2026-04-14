@@ -32,6 +32,21 @@ class PlaceService:
         favorited = await self._get_favorited_set(places, user_id)
         return self._to_list_dto(places, favorited)
 
+    # ──────────────────── place_id 단건 조회 ────────────────────
+
+    @transactional
+    async def get_place_by_id(
+        self,
+        place_id: str,
+        user_id: str = "",
+    ) -> PlaceData | None:
+        """place_id로 장소 단건 조회"""
+        raw = await self.place_repo.find_by_place_id(place_id)
+        if raw is None:
+            return None
+        favorited = await self._get_favorited_set([raw], user_id)
+        return self._to_dto(raw, favorited)
+
     # ──────────────────── 키워드 검색 + 거리순 ────────────────────
 
     @transactional

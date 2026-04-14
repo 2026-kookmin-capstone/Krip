@@ -57,6 +57,11 @@ class PlaceRepository:
 
     # ──────────────────── Read (place_id 배치 조회) ────────────────────
 
+    async def find_by_place_id(self, place_id: str) -> Optional[dict]:
+        """place_id로 장소 단건 조회"""
+        collection = Place.get_motor_collection()
+        return await collection.find_one({"place_id": place_id})
+
     async def find_by_place_ids(self, place_ids: list[str]) -> list[dict]:
         """place_id 목록으로 장소 배치 조회"""
         if not place_ids:
