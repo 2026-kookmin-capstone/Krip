@@ -60,6 +60,7 @@ from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
 from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHistory
 from app.domain.tripmate.model.tripmate_image import TripmateImage
 from app.domain.tour.model.place import Place
+from app.domain.tour.model.tour_search_history import TourSearchHistory
 
 
 class MongoDB:
@@ -85,6 +86,7 @@ class MongoDB:
                 TripmateSearchHistory,
                 TripmateImage,
                 Place,
+                TourSearchHistory,
             ]
         )
         
