@@ -1,7 +1,8 @@
 from fastapi import APIRouter
 
-from app.domain.tour.router import place
+from app.domain.tour.router import place, recommend
 
 
 tour_router = APIRouter(prefix="/tour")
 tour_router.include_router(place.router)
+tour_router.include_router(recommend.router)
