@@ -4,6 +4,7 @@ from dependency_injector.wiring import Provide, inject
 
 from app.domain.tour.service.place import PlaceService
 from app.domain.tour.service.favorite_place import FavoritePlaceService
+from app.domain.tour.service.tour_search_history import TourSearchHistoryService
 from app.domain.tour.schema.place import (
     PlaceDetailResponse,
     PlaceResponse,
@@ -41,6 +42,7 @@ async def get_places(
     cursor: Optional[str] = Query(None, description="다음 페이지 커서"),
     max_distance: Optional[float] = Query(None, gt=0, description="최대 검색 반경 (미터)"),
     place_service: PlaceService = Depends(Provide[Container.place_service]),
+    search_history_service: TourSearchHistoryService = Depends(Provide[Container.tour_search_history_service]),
 ) -> PlaceListResponse:
     """장소 조회 (거리순, 30개 페이지네이션)
 
@@ -54,6 +56,13 @@ async def get_places(
 
     try:
         if keyword:
+            # 검색어 저장 (첫 페이지 요청 시에만 저장)
+            if not cursor:
+                try:
+                    await search_history_service.save_search(user_id=user_id, search_name=keyword)
+                except Exception as e:
+                    logger.warning("검색어 저장 키워드(%s) 실패 (무시) - 에러: %s", keyword, e)
+
             result = await place_service.search_nearby_places(
                 lat=actual_lat,
                 lng=actual_lng,
@@ -186,6 +195,34 @@ async def remove_favorite(
         raise HTTPException(status_code=400, detail=str(e))
 
     return MessageResponse(message="즐겨찾기가 해제되었습니다.")
+
+
+# ──────────────────── 장소 단건 조회 ────────────────────
+
+
+@router.get("/{place_id}")
+@inject
+async def get_place(
+    request: Request,
+    place_id: str,
+    place_service: PlaceService = Depends(Provide[Container.place_service]),
+) -> PlaceResponse:
+    """place_id로 장소 단건 조회, 거리는 제공되지 않으므로 0으로 나옴."""
+    user_id: str = request.state.user_id
+
+    try:
+        result = await place_service.get_place_by_id(place_id=place_id, user_id=user_id)
+    except Exception as e:
+        logger.error("장소 단건 조회 실패: %s", e)
+        raise HTTPException(status_code=500, detail="장소 조회에 실패했습니다.")
+
+    if result is None:
+        raise HTTPException(status_code=404, detail="장소를 찾을 수 없습니다.")
+
+    return _to_place_response(result)
+
+
+# ──────────────────── 내부 변환 유틸 (즐겨찾기) ────────────────────
 
 
 def _to_favorite_response(fav) -> FavoritePlaceResponse:
