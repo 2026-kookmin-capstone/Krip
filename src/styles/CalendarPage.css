@@ -1,0 +1,249 @@
+.cal-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+/* ── Month Nav ── */
+.cal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: var(--card);
+}
+
+.cal-nav-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.2px;
+}
+
+.cal-nav-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--sky-ultra);
+  color: var(--sky-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.cal-nav-btn:active {
+  background: var(--sky-light);
+}
+
+/* ── Day Labels ── */
+.cal-day-names {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 10px 8px 4px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+}
+
+.cal-day-names span {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 4px 0;
+}
+
+.cal-day-names .sun { color: #F87171; }
+.cal-day-names .sat { color: #60A5FA; }
+
+/* ── Grid ── */
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 8px;
+  gap: 2px 0;
+  flex: 1;
+  background: var(--card);
+}
+
+.cal-cell {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 400;
+  border-radius: 0;
+}
+
+.cal-cell--empty {
+  cursor: default;
+}
+
+.cal-cell--past {
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.cal-cell--today .cal-cell-inner {
+  border: 2px solid var(--sky);
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sky-dark);
+  font-weight: 700;
+}
+
+.cal-cell--range {
+  background: var(--sky-light);
+  color: var(--sky-deep);
+  font-weight: 500;
+}
+
+.cal-cell--start,
+.cal-cell--end {
+  background: var(--sky-light);
+}
+
+.cal-cell--start .cal-cell-inner,
+.cal-cell--end .cal-cell-inner {
+  width: 34px;
+  height: 34px;
+  background: var(--sky);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 2px 10px rgba(56, 197, 240, 0.5);
+}
+
+/* Left half clear for start, right half clear for end */
+.cal-cell--start::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: var(--bg);
+}
+
+.cal-cell--end::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: var(--bg);
+}
+
+/* If start == end (single day), clear both halves */
+.cal-cell--start.cal-cell--end::before,
+.cal-cell--start.cal-cell--end::after {
+  display: none;
+}
+
+.cal-cell-inner {
+  position: relative;
+  z-index: 1;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Summary ── */
+.cal-summary {
+  padding: 20px 20px 40px;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+}
+
+.cal-summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.cal-summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.cal-summary-item--right {
+  align-items: flex-end;
+}
+
+.cal-summary-lbl {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.cal-summary-val {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+
+.cal-summary-middle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+}
+
+.cal-nights-badge {
+  background: var(--sky);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+  box-shadow: 0 2px 10px rgba(56, 197, 240, 0.35);
+}
+
+.cal-confirm-btn {
+  width: 100%;
+  padding: 17px;
+  border-radius: var(--radius);
+  background: var(--border);
+  color: var(--text-muted);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: not-allowed;
+  transition: all 0.2s ease;
+  letter-spacing: -0.2px;
+}
+
+.cal-confirm-btn--active {
+  background: var(--sky);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(56, 197, 240, 0.4);
+}
+
+.cal-confirm-btn--active:active {
+  transform: scale(0.98);
+  box-shadow: 0 3px 12px rgba(56, 197, 240, 0.3);
+}

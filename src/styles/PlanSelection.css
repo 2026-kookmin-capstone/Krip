@@ -1,0 +1,151 @@
+.ps-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+/* ── Hero ── */
+.ps-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 56px 28px 64px;
+  background: linear-gradient(148deg, #0284C7 0%, #38C5F0 55%, #7DD3FC 100%);
+}
+
+.ps-hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.18) 0%, transparent 50%),
+    radial-gradient(circle at 10% 80%, rgba(255,255,255,0.12) 0%, transparent 45%);
+}
+
+.ps-hero-content {
+  position: relative;
+  text-align: center;
+}
+
+.ps-hero-icon {
+  font-size: 52px;
+  margin-bottom: 14px;
+  display: block;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+}
+
+.ps-hero-title {
+  font-size: 30px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+.ps-hero-sub {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 400;
+}
+
+.ps-hero-wave {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 36px;
+  background: var(--bg);
+  border-radius: 50% 50% 0 0 / 36px 36px 0 0;
+}
+
+/* ── Section label ── */
+.ps-section-label {
+  padding: 20px 25px 4px;
+}
+
+.ps-section-label span {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* ── Cards ── */
+.ps-cards {
+  flex: 1;
+  padding: 12px 25px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ps-card {
+  position: relative;
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  text-align: left;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  overflow: hidden;
+}
+
+.ps-card:active {
+  transform: scale(0.975);
+}
+
+.ps-card--ai {
+  background-color: #ffffff;
+  border: 1.5px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.ps-card--manual {
+  background: #ffffff;
+  border: 1.5px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+
+.ps-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.ps-card-icon-wrap {
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+}
+
+.ps-card-icon-wrap--ai {
+  background: linear-gradient(135deg, #38C5F0, #0EA5E9);
+}
+
+.ps-card-icon-wrap--manual {
+  background: linear-gradient(135deg, #E0F6FE, #BAE0F5);
+}
+
+.ps-card-arrow {
+  color: var(--sky-dark);
+  opacity: 0.6;
+}
+
+.ps-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+  letter-spacing: -0.3px;
+}
+
+.ps-card-desc {
+  font-size: 13px;
+  color: var(--text-sub);
+  line-height: 1.6;
+}
+
