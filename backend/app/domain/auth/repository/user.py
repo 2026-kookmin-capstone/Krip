@@ -1,5 +1,5 @@
 from typing import Optional
-from sqlalchemy import select
+from sqlalchemy import select, delete
 from sqlalchemy.orm import joinedload
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -42,3 +42,18 @@ class UserRepository:
 
     async def delete(self, user: User) -> None:
         await self.session.delete(user)
+
+
+    async def hard_delete_by_id(self, user_id: str) -> bool:
+        """유저 하드 탈퇴 — DB CASCADE로 연관 데이터 전체 삭제
+
+        삭제 대상:
+            - user_detail_inform (프로필)
+            - user_travel_style (여행 스타일)
+            - tripmate_post (게시글) → tripmate_post_image, tripmate_post_like
+            - tripmate_post_like (좋아요)
+            - favorite_place (즐겨찾기)
+        """
+        stmt = delete(User).where(User.user_id == user_id)
+        result = await self.session.execute(stmt)
+        return result.rowcount > 0

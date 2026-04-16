@@ -190,11 +190,12 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
         "/openapi.json",
     )
 
-    # 검증을 건너뛸 경로 prefix (로그인, 회원가입, 로그아웃)
+    # 검증을 건너뛸 경로 prefix (로그인, 회원가입, 로그아웃, 탈퇴)
     EXCLUDE_PREFIXES: Sequence[str] = (
         "/api/auth/login",
         "/api/auth/register",
         "/api/auth/logout",
+        "/api/auth/withdraw",
     )
 
 
@@ -238,7 +239,7 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
         try:
             container = request.app.container
             async with container.uow() as session:
-                from app.domain.auth.repository.user_repository import UserRepository
+                from app.domain.auth.repository.user import UserRepository
                 user_repo = UserRepository(session)
                 user = await user_repo.find_by_id_with_profile(user_id)
         except Exception as e:
