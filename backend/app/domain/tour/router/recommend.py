@@ -68,7 +68,7 @@ async def recommend_tour(body: TourRecommendRequest) -> TourRecommendResponse:
             schedule_density=body.schedule_density,
         )
     except Exception as e:
-        logger.error("여행 추천 실패: %s", e)
+        logger.error("여행 추천 실패: {}", e)
         raise HTTPException(status_code=500, detail="여행 추천에 실패했습니다.")
 
     return TourRecommendResponse(

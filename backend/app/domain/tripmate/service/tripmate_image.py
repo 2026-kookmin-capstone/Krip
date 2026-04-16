@@ -43,7 +43,7 @@ class TripmateImageService:
         image_url = await self.storage.upload_perm(
             file, file_name, content_type, prefix=prefix,
         )
-        logger.info("이미지 업로드 완료 (user_id=%s, image_id=%s)", user_id, image_id)
+        logger.info("이미지 업로드 완료 (user_id={}, image_id={})", user_id, image_id)
 
         image = TripmateImage(
             user_id=user_id,
@@ -96,7 +96,7 @@ class TripmateImageService:
 
         await self.storage.delete(image.image_url)
         await self.image_repo.delete_by_image_id(image_id)
-        logger.info("이미지 삭제 완료 (user_id=%s, image_id=%s)", user_id, image_id)
+        logger.info("이미지 삭제 완료 (user_id={}, image_id={})", user_id, image_id)
 
 
     # ──────────────────── 고아 이미지 정리 ────────────────────
@@ -141,7 +141,7 @@ class TripmateImageService:
         await self.image_repo.delete_by_image_ids(orphaned_ids)
 
         logger.info(
-            "고아 이미지 정리 완료 (user_id=%s, 삭제=%d건)",
+            "고아 이미지 정리 완료 (user_id={}, 삭제={:d}건)",
             user_id, len(orphaned),
         )
         return len(orphaned)

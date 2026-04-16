@@ -53,7 +53,7 @@ class TourPlannerGraphOrchestrator:
         })
 
         logger.info(
-            "1차 권역 추천 완료: %d일 / %s",
+            "1차 권역 추천 완료: {:d}일 / {}",
             state["travel_days"],
             [r.cluster_name for r in result.recommendations],
         )
@@ -99,7 +99,7 @@ class TourPlannerGraphOrchestrator:
             })
 
             logger.info(
-                "MongoDB 검색 완료: Day %d (%s) → %d개 장소",
+                "MongoDB 검색 완료: Day {:d} ({}) → {:d}개 장소",
                 day_rec.day, day_rec.cluster_name, len(merged),
             )
 
@@ -121,7 +121,7 @@ class TourPlannerGraphOrchestrator:
         })
 
         logger.info(
-            "최종 여행 플랜 생성 완료: %d일 / 총 %d개 장소",
+            "최종 여행 플랜 생성 완료: {:d}일 / 총 {:d}개 장소",
             len(result.tour_plan),
             sum(len(day.places) for day in result.tour_plan),
         )
@@ -187,7 +187,7 @@ class TourPlannerGraphOrchestrator:
         response = await self._graph.ainvoke(input_data)
 
         elapsed = time.perf_counter() - start_time
-        logger.info("Tour Planner 완료: %.2f초", elapsed)
+        logger.info("Tour Planner 완료: {:.2f}초", elapsed)
 
         return response["tour_plan"]
 

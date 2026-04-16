@@ -71,7 +71,7 @@ async def login_callback(
         access_token = await client.get_access_token(code=code, user_type="callback")
         user_info = await client.get_user_info(access_token=access_token)
 
-    logger.info("OAuth 로그인 성공: %s / %s / %s / %s", user_info.id, user_info.email, user_info.name, provider.value)
+    logger.info("OAuth 로그인 성공: {} / {} / {} / {}", user_info.id, user_info.email, user_info.name, provider.value)
     
     result = await signup_service.check_and_register(
         auth_provider=provider.value,
