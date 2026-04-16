@@ -78,7 +78,7 @@ class TripmatePostService:
         try:
             await self.draft_service.delete_draft(user_id)
         except Exception as e:
-            logger.warning("임시저장 삭제 실패 (user_id=%s): %s", user_id, e)
+            logger.warning("임시저장 삭제 실패 (user_id={}): {}", user_id, e)
 
         return self._to_create_dto(post, image_urls=saved_urls)
 
@@ -195,7 +195,7 @@ class TripmatePostService:
                 await self.storage.delete_many(list(removed_urls))
                 await self.mongo_image_repo.delete_by_urls(list(removed_urls))
             except Exception as e:
-                logger.warning("수정 시 이미지 정리 실패 (post_id=%s): %s", post_id, e)
+                logger.warning("수정 시 이미지 정리 실패 (post_id={}): {}", post_id, e)
 
         # 수정 완료 후 좋아요 수 + is_liked + 이미지 포함하여 반환
         updated = await post_repo.find_by_id_with_detail(post_id, user_id=user_id)
@@ -243,7 +243,7 @@ class TripmatePostService:
                 await storage.delete_many(image_urls)
                 await mongo_image_repo.delete_by_urls(image_urls)
             except Exception as e:
-                logger.warning("삭제 시 이미지 정리 실패 (post_id=%s): %s", post_id, e)
+                logger.warning("삭제 시 이미지 정리 실패 (post_id={}): {}", post_id, e)
 
 
     # ──────────────────── 게시글 Display 토글 ────────────────────

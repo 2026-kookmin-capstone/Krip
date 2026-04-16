@@ -37,7 +37,7 @@ async def ocr_menu(
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
-        logger.error("메뉴 OCR 실패: %s", e)
+        logger.error("메뉴 OCR 실패: {}", e)
         raise HTTPException(status_code=500, detail="메뉴 인식에 실패했습니다.")
 
     return _to_ocr_response(result)
@@ -71,7 +71,7 @@ async def ocr_menu_batch(
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
-        logger.error("메뉴 OCR 배치 실패: %s", e)
+        logger.error("메뉴 OCR 배치 실패: {}", e)
         raise HTTPException(status_code=500, detail="메뉴 인식에 실패했습니다.")
 
     return MenuOcrBatchResponse(

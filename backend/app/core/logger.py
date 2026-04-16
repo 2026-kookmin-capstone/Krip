@@ -42,18 +42,18 @@ logger.bind(user_id=123, user_type="he").info("서비스 완료")
 
 
 포맷팅 컨벤션:
-  - f-string 대신 lazy formatting(%s) 사용
+  - f-string 대신 loguru의 {} 포맷 사용
   - 로그 레벨이 비활성화된 경우 문자열 조합을 건너뛰어 불필요한 연산 방지
 
   사용법:
-    logger.info("유저: %s", user_id)              # %s: 범용 (str() 호출)
-    logger.info("처리 시간: %.2f초", elapsed)      # %.2f: 소수점 2자리 실수
-    logger.debug("입력값: %r", some_input)         # %r: repr() 출력 (타입 확인용)
-    logger.info("개수: %d개", count)               # %d: 정수
+    logger.info("유저: {}", user_id)               # {} : 범용 (str() 호출)
+    logger.info("처리 시간: {:.2f}초", elapsed)     # {:.2f} : 소수점 2자리 실수
+    logger.debug("입력값: {!r}", some_input)        # {!r} : repr() 출력 (타입 확인용)
+    logger.info("개수: {:d}개", count)              # {:d} : 정수
 
   주의:
     logger.info(f"유저: {user_id}")                # (X) 레벨 비활성이어도 f-string 항상 평가됨
-    logger.info("유저: %s", user_id)               # (O) 레벨 비활성이면 포맷팅 생략
+    logger.info("유저: {}", user_id)               # (O) 레벨 비활성이면 포맷팅 생략
 """
 import sys
 import logging
@@ -132,7 +132,7 @@ def setup_logging() -> None:
     logging.getLogger("uvicorn.access").setLevel(logging.INFO)
     logging.getLogger("sqlalchemy.engine").setLevel(logging.WARNING)
     
-    logger.info("Logging system initialized with level: %s", settings.LOG_LEVEL)
+    logger.info("Logging system initialized with level: {}", settings.LOG_LEVEL)
 
 
 

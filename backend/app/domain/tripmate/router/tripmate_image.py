@@ -56,7 +56,7 @@ async def upload_images(
     try:
         results = await image_service.upload_images(user_id=user_id, files=file_tuples)
     except Exception as e:
-        logger.error("이미지 업로드 실패 (user_id=%s): %s", user_id, e)
+        logger.error("이미지 업로드 실패 (user_id={}): {}", user_id, e)
         raise HTTPException(status_code=500, detail="이미지 업로드에 실패했습니다.")
 
     return ImageUploadListResponse(
@@ -108,7 +108,7 @@ async def cleanup_orphaned_images(
     try:
         deleted_count = await image_service.cleanup_orphaned_images(user_id=user_id)
     except Exception as e:
-        logger.error("고아 이미지 정리 실패 (user_id=%s): %s", user_id, e)
+        logger.error("고아 이미지 정리 실패 (user_id={}): {}", user_id, e)
         raise HTTPException(status_code=500, detail="고아 이미지 정리에 실패했습니다.")
 
     return CleanupResponse(deleted_count=deleted_count)

@@ -31,7 +31,7 @@ def create_app() -> FastAPI:
         await init_mongodb()
         MenuOcr().load()
         await TourPlanner().load()
-        logger.info("Starting application in %s mode", settings.ENVIRONMENT)
+        logger.info("Starting application in {} mode", settings.ENVIRONMENT)
 
         yield
 

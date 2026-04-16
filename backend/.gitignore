@@ -14,6 +14,7 @@ postgresql-data/
 *.pt
 *.pth
 *.onnx
+**/fine_tuned_*/
 
 # Coverage
 .coverage

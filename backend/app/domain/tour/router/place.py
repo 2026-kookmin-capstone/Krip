@@ -61,7 +61,7 @@ async def get_places(
                 try:
                     await search_history_service.save_search(user_id=user_id, search_name=keyword)
                 except Exception as e:
-                    logger.warning("검색어 저장 키워드(%s) 실패 (무시) - 에러: %s", keyword, e)
+                    logger.warning("검색어 저장 키워드({}) 실패 (무시) - 에러: {}", keyword, e)
 
             result = await place_service.search_nearby_places(
                 lat=actual_lat,
@@ -82,7 +82,7 @@ async def get_places(
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
-        logger.error("장소 조회 실패: %s", e)
+        logger.error("장소 조회 실패: {}", e)
         raise HTTPException(status_code=500, detail="장소 조회에 실패했습니다.")
 
     return PlaceListResponse(
@@ -152,7 +152,7 @@ async def get_favorites(
     try:
         result = await favorite_place_service.get_favorites(user_id=user_id)
     except Exception as e:
-        logger.error("즐겨찾기 목록 조회 실패: %s", e)
+        logger.error("즐겨찾기 목록 조회 실패: {}", e)
         raise HTTPException(status_code=500, detail="즐겨찾기 목록 조회에 실패했습니다.")
 
     return FavoritePlaceListResponse(
@@ -213,7 +213,7 @@ async def get_place(
     try:
         result = await place_service.get_place_by_id(place_id=place_id, user_id=user_id)
     except Exception as e:
-        logger.error("장소 단건 조회 실패: %s", e)
+        logger.error("장소 단건 조회 실패: {}", e)
         raise HTTPException(status_code=500, detail="장소 조회에 실패했습니다.")
 
     if result is None:

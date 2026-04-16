@@ -90,7 +90,7 @@ class ObjectStorage:
         await asyncio.to_thread(self._copy, src_key, dst_key)
         await asyncio.to_thread(self._delete, src_key)
 
-        logger.info("파일 이동 완료: %s → %s", src_key, dst_key)
+        logger.info("파일 이동 완료: {} → {}", src_key, dst_key)
         return self._key_to_url(dst_key)
 
 
@@ -106,7 +106,7 @@ class ObjectStorage:
         """URL로 파일 삭제"""
         key = self._url_to_key(file_url)
         await asyncio.to_thread(self._delete, key)
-        logger.info("파일 삭제 완료: %s", key)
+        logger.info("파일 삭제 완료: {}", key)
 
 
     async def delete_many(self, file_urls: List[str]) -> None:
@@ -119,9 +119,9 @@ class ObjectStorage:
             await asyncio.to_thread(
                 self._client.delete_objects, Bucket=self.bucket, Delete={"Objects": objects},
             )
-            logger.info("파일 일괄 삭제 완료: %d건", len(objects))
+            logger.info("파일 일괄 삭제 완료: {:d}건", len(objects))
         except ClientError as e:
-            logger.error("파일 일괄 삭제 실패: %s", e)
+            logger.error("파일 일괄 삭제 실패: {}", e)
             raise
 
 
@@ -129,7 +129,7 @@ class ObjectStorage:
         """특정 경로(prefix) 하위 파일 전체 삭제 → 삭제 건수 반환"""
         full_prefix = f"{_PREFIX_PERM}/{prefix}"
         deleted = await asyncio.to_thread(self._delete_by_prefix_sync, full_prefix)
-        logger.info("prefix 삭제 완료: %s (%d건)", full_prefix, deleted)
+        logger.info("prefix 삭제 완료: {} ({:d}건)", full_prefix, deleted)
         return deleted
 
     # ──────────────────── 조회 ────────────────────
@@ -153,7 +153,7 @@ class ObjectStorage:
     def _url_to_key(self, url: str) -> str:
         base = f"{self.endpoint}/{self.bucket}/"
         if not url.startswith(base):
-            raise ValueError("올바르지 않은 Object Storage URL: %s" % url)
+            raise ValueError(f"올바르지 않은 Object Storage URL: {url}")
         return url[len(base):]
 
     def _upload(self, file: BinaryIO, key: str, content_type: str) -> str:
@@ -163,9 +163,9 @@ class ObjectStorage:
                 ExtraArgs={"ContentType": content_type, "ACL": "public-read"},
             )
         except ClientError as e:
-            logger.error("업로드 실패 (%s): %s", key, e)
+            logger.error("업로드 실패 ({}): {}", key, e)
             raise
-        logger.info("업로드 완료: %s", key)
+        logger.info("업로드 완료: {}", key)
         return self._key_to_url(key)
 
 
@@ -178,7 +178,7 @@ class ObjectStorage:
                 ACL="public-read",
             )
         except ClientError as e:
-            logger.error("복사 실패 (%s → %s): %s", src_key, dst_key, e)
+            logger.error("복사 실패 ({} → {}): {}", src_key, dst_key, e)
             raise
 
 
@@ -198,7 +198,7 @@ class ObjectStorage:
         try:
             self._client.delete_object(Bucket=self.bucket, Key=key)
         except ClientError as e:
-            logger.error("삭제 실패 (%s): %s", key, e)
+            logger.error("삭제 실패 ({}): {}", key, e)
             raise
 
 
