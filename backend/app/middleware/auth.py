@@ -190,11 +190,12 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
         "/openapi.json",
     )
 
-    # 검증을 건너뛸 경로 prefix (로그인, 회원가입, 로그아웃)
+    # 검증을 건너뛸 경로 prefix (로그인, 회원가입, 로그아웃, 탈퇴)
     EXCLUDE_PREFIXES: Sequence[str] = (
         "/api/auth/login",
         "/api/auth/register",
         "/api/auth/logout",
+        "/api/auth/withdraw",
     )
 
 
