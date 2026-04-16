@@ -8,6 +8,13 @@ postgresql-data/
 .env
 *.log*
 
+# AI model weights
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.onnx
+
 # Coverage
 .coverage
 .coverage.*
