@@ -49,7 +49,7 @@ const styles: Record<string, CSSProperties> = {
   page: {
     minHeight: "100dvh",
     padding: "24px 16px 0",
-    background: "#ffffff",
+    background: "transparent",
     fontFamily: "'Nunito', 'Apple SD Gothic Neo', sans-serif",
   },
   header: {
@@ -58,7 +58,7 @@ const styles: Record<string, CSSProperties> = {
   },
   eyebrow: {
     margin: 0,
-    color: "#8a8a8a",
+    color: "var(--brand-primary-deep)",
     fontSize: "0.78rem",
     fontWeight: 800,
     letterSpacing: "0.12em",
@@ -66,7 +66,7 @@ const styles: Record<string, CSSProperties> = {
   },
   title: {
     margin: "8px 0 0",
-    color: "#222222",
+    color: "var(--text-primary)",
     fontSize: "2rem",
   },
   segment: {
@@ -74,24 +74,25 @@ const styles: Record<string, CSSProperties> = {
     margin: "0 auto 14px",
     padding: 6,
     borderRadius: 18,
-    background: "#f7f7f7",
+    background: "rgba(255,255,255,0.88)",
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
     gap: 6,
-    border: "1px solid #ececec",
+    border: "1px solid var(--border-soft)",
+    boxShadow: "var(--shadow-soft)",
   },
   segmentButton: {
     border: "1px solid transparent",
     borderRadius: 14,
     minHeight: 44,
     background: "transparent",
-    color: "#777777",
+    color: "var(--neutral-700)",
     fontWeight: 800,
     cursor: "pointer",
   },
   segmentButtonActive: {
-    background: "#d9d9d9",
-    color: "#222222",
+    background: "linear-gradient(135deg, rgba(5,181,187,0.18), rgba(248,180,0,0.18))",
+    color: "var(--text-primary)",
   },
   list: {
     maxWidth: 720,
@@ -105,17 +106,18 @@ const styles: Record<string, CSSProperties> = {
     margin: "0 auto",
     padding: 22,
     borderRadius: 24,
-    background: "#f7f7f7",
-    border: "1px solid #ececec",
+    background: "rgba(255,255,255,0.88)",
+    border: "1px solid var(--border-soft)",
+    boxShadow: "var(--shadow-soft)",
   },
   emptyTitle: {
     margin: 0,
-    color: "#333333",
+    color: "var(--text-primary)",
     fontWeight: 800,
   },
   emptyCopy: {
     margin: "8px 0 0",
-    color: "#777777",
+    color: "var(--neutral-700)",
     lineHeight: 1.55,
   },
 };

@@ -65,7 +65,8 @@ function GoogleIcon() {
 const styles: Record<string, CSSProperties> = {
   wrapper: {
     position: "relative", width: "100vw", height: "100dvh",
-    background: "#ffffff",
+    background:
+      "radial-gradient(circle at top left, rgba(5,181,187,0.2), transparent 32%), radial-gradient(circle at top right, rgba(5,181,187,0.12), transparent 34%), linear-gradient(180deg, rgba(228,247,247,0.7), transparent 28%), var(--surface-base)",
     display: "flex", flexDirection: "column", alignItems: "center",
     justifyContent: "space-between", overflow: "hidden",
     fontFamily: "'Nunito', 'Apple SD Gothic Neo', sans-serif",
@@ -74,17 +75,36 @@ const styles: Record<string, CSSProperties> = {
     flex: 1, display: "flex", flexDirection: "column",
     alignItems: "center", justifyContent: "center", gap: 12,
   },
-  logo: { width: 110, height: 110, borderRadius: 24, boxShadow: "0 10px 24px rgba(0,0,0,0.08)" },
-  appName: { margin: 0, fontSize: "2.2rem", fontWeight: 800, color: "#222222", letterSpacing: "-0.5px" },
-  tagline: { margin: 0, fontSize: "0.9rem", color: "#7d7d7d", letterSpacing: "0.08em", textTransform: "uppercase" },
+  logo: {
+    width: 110,
+    height: 110,
+    borderRadius: 24,
+    boxShadow: "var(--shadow-soft)",
+    border: "1px solid rgba(5,181,187,0.12)",
+  },
+  appName: {
+    margin: 0,
+    fontSize: "2.2rem",
+    fontWeight: 800,
+    color: "var(--text-primary)",
+    letterSpacing: "-0.5px",
+  },
+  tagline: {
+    margin: 0,
+    fontSize: "0.9rem",
+    color: "var(--neutral-700)",
+    letterSpacing: "0.08em",
+    textTransform: "uppercase",
+  },
   bottom: {
     width: "100%", maxWidth: 400, padding: "0 24px 48px",
     display: "flex", flexDirection: "column", alignItems: "center", position: "relative", zIndex: 1,
   },
   googleBtn: {
     display: "flex", alignItems: "center", justifyContent: "center",
-    width: "100%", padding: "14px 0", borderRadius: 14, border: "1px solid #e5e5e5",
-    background: "#f1f1f1", color: "#222222", fontSize: "1rem", fontWeight: 700,
-    cursor: "pointer", boxShadow: "0 6px 18px rgba(0,0,0,0.06)",
+    width: "100%", padding: "14px 0", borderRadius: 18, border: "1px solid rgba(5,181,187,0.18)",
+    background: "linear-gradient(135deg, var(--brand-primary), #12c0c6)",
+    color: "#ffffff", fontSize: "1rem", fontWeight: 800,
+    cursor: "pointer", boxShadow: "0 12px 28px rgba(5,181,187,0.24)",
   },
 };

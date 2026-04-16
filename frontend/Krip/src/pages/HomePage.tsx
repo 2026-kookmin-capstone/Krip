@@ -28,13 +28,20 @@ const DEFAULT_LOCATION = { lat: 37.5665, lng: 126.978 };
 const DEFAULT_LOCATION_LABEL = "Central Seoul";
 const CURRENT_LOCATION_LABEL = "Using your current location";
 const SEARCH_SUGGESTION_LIMIT = 8;
+const ALL_CATEGORY = "All";
+const CATEGORY_GROUPS = {
+  FOOD_AND_DRINK: "Food & Drink",
+  STAY: "Stay",
+  SHOPPING: "Shopping",
+  ATTRACTIONS: "Attractions",
+  ESSENTIALS: "Essentials",
+  OTHER: "Other",
+} as const;
 
-const CATEGORY_FILTERS = ["All", "Attractions", "Food", "Activities"] as const;
 const SORT_FILTERS = ["Nearest", "Top Rated", "Most Reviewed", "Favorites"] as const;
 
-type CategoryFilter = (typeof CATEGORY_FILTERS)[number];
 type SortFilter = (typeof SORT_FILTERS)[number];
-type PlaceCategory = Exclude<CategoryFilter, "All">;
+type PlaceCategory = string;
 type PlaceTag = "Indoor" | "Outdoor" | "Crowded" | "Quiet";
 
 interface Place {
@@ -44,6 +51,7 @@ interface Place {
   initialIsFavorite?: boolean;
   name: string;
   category: PlaceCategory;
+  groupCategory: string;
   raw: TourPlaceApiItem;
   tags: PlaceTag[];
   description: string;
@@ -214,6 +222,123 @@ function sanitizeTags(value: unknown): PlaceTag[] {
     .filter((item): item is PlaceTag => Boolean(item));
 }
 
+function getBackendCategory(item: TourPlaceApiItem): PlaceCategory {
+  const category = item.category || item.type || item.place_type;
+  return String(category || "Other");
+}
+
+function getCategoryGroup(category: string): string {
+  const normalized = category.trim().toLowerCase();
+
+  if (
+    [
+      "식당",
+      "음식점",
+      "맛집",
+      "레스토랑",
+      "카페",
+      "커피",
+      "바",
+      "주점",
+      "베이커리",
+      "restaurant",
+      "food",
+      "cafe",
+      "coffee",
+      "bar",
+      "bakery",
+      "meal",
+      "meal_takeaway",
+    ].some((keyword) => normalized.includes(keyword))
+  ) {
+    return CATEGORY_GROUPS.FOOD_AND_DRINK;
+  }
+
+  if (
+    [
+      "호텔",
+      "모텔",
+      "게스트하우스",
+      "리조트",
+      "숙소",
+      "lodging",
+      "hotel",
+      "hostel",
+      "guesthouse",
+      "resort",
+    ].some((keyword) => normalized.includes(keyword))
+  ) {
+    return CATEGORY_GROUPS.STAY;
+  }
+
+  if (
+    [
+      "쇼핑",
+      "일반매장",
+      "마트",
+      "상점",
+      "기념품",
+      "백화점",
+      "쇼핑몰",
+      "shopping",
+      "store",
+      "mall",
+      "department_store",
+      "supermarket",
+    ].some((keyword) => normalized.includes(keyword))
+  ) {
+    return CATEGORY_GROUPS.SHOPPING;
+  }
+
+  if (
+    [
+      "편의점",
+      "약국",
+      "병원",
+      "atm",
+      "환전",
+      "편의시설",
+      "convenience",
+      "pharmacy",
+      "drugstore",
+      "exchange",
+      "bank",
+    ].some((keyword) => normalized.includes(keyword))
+  ) {
+    return CATEGORY_GROUPS.ESSENTIALS;
+  }
+
+  if (
+    [
+      "관광",
+      "명소",
+      "공원",
+      "박물관",
+      "미술관",
+      "전시",
+      "체험",
+      "공연",
+      "놀이",
+      "activity",
+      "amusement",
+      "museum",
+      "park",
+      "gallery",
+      "tourist",
+      "attraction",
+      "landmark",
+      "movie_theater",
+      "stadium",
+      "spa",
+      "gym",
+    ].some((keyword) => normalized.includes(keyword))
+  ) {
+    return CATEGORY_GROUPS.ATTRACTIONS;
+  }
+
+  return CATEGORY_GROUPS.OTHER;
+}
+
 function toNumber(value: unknown, fallback: number): number {
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : fallback;
@@ -235,10 +360,8 @@ function mapTourPlace(item: TourPlaceApiItem): Place {
     id: String(item.id || item.place_id || crypto.randomUUID()),
     initialIsFavorite: item.is_favorite === true,
     name: String(item.display_name || item.name || item.title || "Unnamed place"),
-    category: toPlaceCategory(
-      item.category || item.type || item.place_type,
-      item.types
-    ),
+    category: getBackendCategory(item),
+    groupCategory: getCategoryGroup(getBackendCategory(item)),
     raw: item,
     tags: sanitizeTags(item.tags),
     description: String(description),
@@ -335,7 +458,7 @@ export default function HomePage() {
   const [searchDraft, setSearchDraft] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [activeCategory, setActiveCategory] =
-    useState<CategoryFilter>("All");
+    useState<string>(ALL_CATEGORY);
   const [activeSort, setActiveSort] = useState<SortFilter>("Nearest");
   const [isFetchingMore, setIsFetchingMore] = useState(false);
   const [favoriteActionIds, setFavoriteActionIds] = useState<string[]>([]);
@@ -494,18 +617,38 @@ export default function HomePage() {
     [currentLocation, favoritePlaces]
   );
 
+  const categoryFilters = useMemo<string[]>(() => {
+    const source = activeSort === "Favorites" ? favoritePlacesWithMeta : places;
+    const categories = Array.from(
+      new Set(
+        source
+          .map((place) => place.groupCategory.trim())
+          .filter(Boolean)
+      )
+    ).sort((left, right) => left.localeCompare(right, "ko"));
+
+    return [ALL_CATEGORY, ...categories];
+  }, [activeSort, favoritePlacesWithMeta, places]);
+
+  useEffect(() => {
+    if (!categoryFilters.includes(activeCategory)) {
+      setActiveCategory(ALL_CATEGORY);
+    }
+  }, [activeCategory, categoryFilters]);
+
   const filteredPlaces = useMemo<PlaceWithMeta[]>(() => {
     const source = activeSort === "Favorites" ? favoritePlacesWithMeta : places;
 
     const nextPlaces = source.filter((place) => {
       const matchesCategory =
-        activeCategory === "All" || place.category === activeCategory;
+        activeCategory === ALL_CATEGORY || place.groupCategory === activeCategory;
 
       const matchesSearch =
         !deferredSearch ||
         place.name.toLowerCase().includes(deferredSearch) ||
         place.description.toLowerCase().includes(deferredSearch) ||
-        place.category.toLowerCase().includes(deferredSearch);
+        place.category.toLowerCase().includes(deferredSearch) ||
+        place.groupCategory.toLowerCase().includes(deferredSearch);
 
       const matchesFavorite =
         activeSort !== "Favorites" || place.isFavorite;
@@ -542,7 +685,12 @@ export default function HomePage() {
   const suggestionPool = useMemo(() => {
     return Array.from(
       new Set(
-        placesSource.flatMap((place) => [place.name, place.category, ...place.tags])
+        placesSource.flatMap((place) => [
+          place.name,
+          place.category,
+          place.groupCategory,
+          ...place.tags,
+        ])
       )
     );
   }, [placesSource]);
@@ -698,7 +846,7 @@ export default function HomePage() {
             <p style={styles.eyebrow}>Trip Finder</p>
             <h1 style={styles.headerTitle}>Explore Nearby Places</h1>
             <p style={styles.headerCopy}>
-              Places, restaurants, and activities curated for {user.user_name}.
+              Nearby places curated for {user.user_name}.
             </p>
           </div>
           <button style={styles.logoutButton} onClick={handleLogout}>
@@ -717,7 +865,7 @@ export default function HomePage() {
                   event.target.blur();
                   openSearchSheet();
                 }}
-                placeholder="Search attractions, food, or activities"
+                placeholder="Search places by name or keyword"
                 style={styles.searchInput}
                 readOnly
               />
@@ -742,7 +890,7 @@ export default function HomePage() {
 
         <section style={styles.filtersSection}>
           <div style={styles.filterGroup}>
-            {CATEGORY_FILTERS.map((category) => {
+            {categoryFilters.map((category) => {
               const isActive = activeCategory === category;
               return (
                 <button
@@ -1028,7 +1176,7 @@ export default function HomePage() {
                       submitSearch();
                     }
                   }}
-                  placeholder="Search attractions, food, or activities"
+                  placeholder="Search places by name or keyword"
                   style={styles.searchSheetInput}
                 />
               </label>
@@ -1173,7 +1321,7 @@ const styles: Record<string, CSSProperties> = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    background: "#ffffff",
+    background: "transparent",
     fontFamily: "'Nunito', 'Apple SD Gothic Neo', sans-serif",
   },
   loadingShell: {
@@ -1181,26 +1329,26 @@ const styles: Record<string, CSSProperties> = {
     flexDirection: "column",
     alignItems: "center",
     gap: 16,
-    color: "#444444",
+    color: "var(--text-secondary)",
   },
   loadingText: {
     margin: 0,
     fontSize: "0.95rem",
-    color: "#777777",
+    color: "var(--neutral-700)",
   },
   spinner: {
     display: "block",
     width: 42,
     height: 42,
     borderRadius: "50%",
-    border: "4px solid rgba(180, 180, 180, 0.28)",
-    borderTop: "4px solid #8c8c8c",
+    border: "4px solid rgba(5, 181, 187, 0.16)",
+    borderTop: "4px solid var(--brand-primary)",
     animation: "spin 0.8s linear infinite",
   },
   page: {
     minHeight: "100dvh",
     padding: "24px 16px 40px",
-    background: "#ffffff",
+    background: "transparent",
     fontFamily: "'Nunito', 'Apple SD Gothic Neo', sans-serif",
   },
   shell: {
@@ -1220,7 +1368,7 @@ const styles: Record<string, CSSProperties> = {
   },
   eyebrow: {
     margin: 0,
-    color: "#8a8a8a",
+    color: "var(--brand-primary-deep)",
     fontSize: "0.78rem",
     fontWeight: 800,
     letterSpacing: "0.14em",
@@ -1230,31 +1378,32 @@ const styles: Record<string, CSSProperties> = {
     margin: "6px 0 8px",
     fontSize: "clamp(1.9rem, 5vw, 2.4rem)",
     lineHeight: 1.05,
-    color: "#222222",
+    color: "var(--text-primary)",
   },
   headerCopy: {
     maxWidth: 440,
     margin: 0,
     fontSize: "0.95rem",
     lineHeight: 1.5,
-    color: "#777777",
+    color: "var(--neutral-700)",
   },
   logoutButton: {
-    border: "1px solid #dfdfdf",
+    border: "1px solid rgba(248,180,0,0.22)",
     borderRadius: 999,
     padding: "12px 16px",
-    background: "#f2f2f2",
-    color: "#444444",
+    background: "linear-gradient(135deg, rgba(248,180,0,0.18), rgba(255,255,255,0.96))",
+    color: "var(--text-primary)",
     fontWeight: 700,
     cursor: "pointer",
-    boxShadow: "0 8px 18px rgba(0, 0, 0, 0.05)",
+    boxShadow: "var(--shadow-soft)",
   },
   searchPanel: {
     padding: 20,
     borderRadius: 28,
-    background: "#f7f7f7",
-    border: "1px solid #ececec",
-    boxShadow: "0 10px 24px rgba(0, 0, 0, 0.05)",
+    background:
+      "linear-gradient(180deg, rgba(5,181,187,0.1), rgba(255,255,255,0.96) 44%)",
+    border: "1px solid rgba(5,181,187,0.14)",
+    boxShadow: "var(--shadow-soft)",
   },
   searchRow: {
     display: "flex",
@@ -1269,9 +1418,9 @@ const styles: Record<string, CSSProperties> = {
     padding: "0 14px",
     minHeight: 56,
     borderRadius: 20,
-    border: "1.5px solid #dfdfdf",
-    background: "#ffffff",
-    color: "#666666",
+    border: "1.5px solid rgba(5,181,187,0.16)",
+    background: "rgba(255,255,255,0.92)",
+    color: "var(--neutral-700)",
   },
   searchInput: {
     width: "100%",
@@ -1279,20 +1428,20 @@ const styles: Record<string, CSSProperties> = {
     outline: "none",
     background: "transparent",
     fontSize: "1rem",
-    color: "#222222",
+    color: "var(--text-primary)",
     fontFamily: "inherit",
   },
   searchAction: {
     width: 54,
     height: 54,
     borderRadius: "50%",
-    border: "1px solid #d8d8d8",
+    border: "1px solid rgba(5,181,187,0.2)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    background: "#d9d9d9",
-    color: "#333333",
-    boxShadow: "0 8px 18px rgba(0, 0, 0, 0.07)",
+    background: "linear-gradient(135deg, var(--brand-primary), #12c0c6)",
+    color: "#ffffff",
+    boxShadow: "0 12px 24px rgba(5,181,187,0.22)",
     flexShrink: 0,
     cursor: "pointer",
   },
@@ -1306,13 +1455,13 @@ const styles: Record<string, CSSProperties> = {
   locationBadge: {
     padding: "8px 12px",
     borderRadius: 999,
-    background: "#ebebeb",
-    color: "#555555",
+    background: "var(--brand-primary-soft)",
+    color: "var(--brand-primary-deep)",
     fontSize: "0.82rem",
     fontWeight: 700,
   },
   locationHint: {
-    color: "#7a7a7a",
+    color: "var(--neutral-700)",
     fontSize: "0.86rem",
   },
   filtersSection: {
@@ -1327,32 +1476,32 @@ const styles: Record<string, CSSProperties> = {
     justifyContent: "center",
   },
   filterChip: {
-    border: "1px solid #dfdfdf",
+    border: "1px solid rgba(248,180,0,0.18)",
     borderRadius: 999,
     padding: "12px 18px",
-    background: "#f3f3f3",
-    color: "#555555",
+    background: "rgba(255,255,255,0.86)",
+    color: "var(--neutral-700)",
     fontWeight: 800,
     fontSize: "0.98rem",
     cursor: "pointer",
   },
   filterChipActive: {
-    background: "#d9d9d9",
-    color: "#222222",
-    boxShadow: "0 8px 18px rgba(0, 0, 0, 0.05)",
+    background: "linear-gradient(135deg, rgba(248,180,0,0.2), rgba(255,233,179,0.92))",
+    color: "var(--text-primary)",
+    boxShadow: "0 12px 24px rgba(248,180,0,0.14)",
   },
   secondaryChip: {
-    border: "1px solid #dfdfdf",
+    border: "1px solid rgba(5,181,187,0.18)",
     borderRadius: 999,
     padding: "10px 16px",
-    background: "#f3f3f3",
-    color: "#666666",
+    background: "rgba(255,255,255,0.86)",
+    color: "var(--neutral-700)",
     fontWeight: 700,
     cursor: "pointer",
   },
   secondaryChipActive: {
-    background: "#d9d9d9",
-    color: "#222222",
+    background: "linear-gradient(135deg, rgba(5,181,187,0.18), rgba(228,247,247,0.96))",
+    color: "var(--text-primary)",
   },
   listSection: {
     display: "flex",
@@ -1365,9 +1514,9 @@ const styles: Record<string, CSSProperties> = {
     gap: 16,
     padding: 16,
     borderRadius: 28,
-    background: "#fbfbfb",
-    border: "1px solid #ececec",
-    boxShadow: "0 8px 18px rgba(0, 0, 0, 0.04)",
+    background: "rgba(255,255,255,0.92)",
+    border: "1px solid var(--border-soft)",
+    boxShadow: "var(--shadow-soft)",
     cursor: "pointer",
   },
   thumbnail: {
@@ -1378,13 +1527,13 @@ const styles: Record<string, CSSProperties> = {
     justifyContent: "flex-start",
     padding: 12,
     boxSizing: "border-box",
-    background: "#e9e9e9",
+    background: "linear-gradient(160deg, rgba(5,181,187,0.18), rgba(248,180,0,0.14))",
   },
   thumbnailLabel: {
     padding: "6px 10px",
     borderRadius: 999,
-    background: "#d3d3d3",
-    color: "#444444",
+    background: "rgba(255,255,255,0.74)",
+    color: "var(--text-secondary)",
     fontSize: "0.75rem",
     fontWeight: 800,
     letterSpacing: "0.08em",
@@ -1404,13 +1553,13 @@ const styles: Record<string, CSSProperties> = {
   },
   cardCategory: {
     margin: 0,
-    color: "#777777",
+    color: "var(--brand-primary-deep)",
     fontSize: "0.82rem",
     fontWeight: 800,
   },
   cardTitle: {
     margin: "2px 0 0",
-    color: "#222222",
+    color: "var(--text-primary)",
     fontSize: "1.35rem",
     fontWeight: 800,
     lineHeight: 1.08,
@@ -1419,10 +1568,10 @@ const styles: Record<string, CSSProperties> = {
     width: 40,
     height: 40,
     borderRadius: "50%",
-    border: "1px solid #dfdfdf",
+    border: "1px solid rgba(5,181,187,0.14)",
     display: "grid",
     placeItems: "center",
-    background: "#efefef",
+    background: "rgba(255,255,255,0.9)",
     cursor: "pointer",
     flexShrink: 0,
   },
@@ -1432,7 +1581,7 @@ const styles: Record<string, CSSProperties> = {
   },
   cardDescription: {
     margin: 0,
-    color: "#666666",
+    color: "var(--neutral-700)",
     lineHeight: 1.5,
     fontSize: "0.95rem",
   },
@@ -1451,8 +1600,8 @@ const styles: Record<string, CSSProperties> = {
   inlineTag: {
     padding: "7px 10px",
     borderRadius: 999,
-    background: "#ededed",
-    color: "#5c5c5c",
+    background: "var(--brand-primary-soft)",
+    color: "var(--brand-primary-deep)",
     fontSize: "0.78rem",
     fontWeight: 700,
   },
@@ -1463,27 +1612,28 @@ const styles: Record<string, CSSProperties> = {
     gap: 4,
   },
   distance: {
-    color: "#222222",
+    color: "var(--text-primary)",
     fontWeight: 800,
     fontSize: "0.96rem",
   },
   reviewText: {
-    color: "#7a7a7a",
+    color: "var(--neutral-700)",
     fontSize: "0.8rem",
   },
   emptyState: {
     padding: "48px 20px",
     textAlign: "center",
     borderRadius: 28,
-    background: "#f7f7f7",
-    color: "#777777",
-    border: "1px solid #ececec",
+    background: "rgba(255,255,255,0.88)",
+    color: "var(--neutral-700)",
+    border: "1px solid var(--border-soft)",
+    boxShadow: "var(--shadow-soft)",
   },
   emptyTitle: {
     margin: 0,
     fontSize: "1.05rem",
     fontWeight: 800,
-    color: "#333333",
+    color: "var(--text-primary)",
   },
   emptyCopy: {
     margin: "8px 0 0",
@@ -1493,7 +1643,7 @@ const styles: Record<string, CSSProperties> = {
     minHeight: 28,
     padding: "12px 0 4px",
     textAlign: "center",
-    color: "#888888",
+    color: "var(--neutral-700)",
     fontSize: "0.9rem",
     fontWeight: 700,
   },
@@ -1501,7 +1651,7 @@ const styles: Record<string, CSSProperties> = {
     position: "fixed",
     inset: 0,
     padding: "16px 16px 0",
-    background: "rgba(0, 0, 0, 0.4)",
+    background: "rgba(24, 26, 32, 0.42)",
     display: "flex",
     alignItems: "flex-end",
     justifyContent: "center",
@@ -1515,8 +1665,8 @@ const styles: Record<string, CSSProperties> = {
     maxHeight: "88dvh",
     overflowY: "auto",
     borderRadius: "32px 32px 0 0",
-    background: "#ffffff",
-    boxShadow: "0 24px 64px rgba(0, 0, 0, 0.16)",
+    background: "var(--surface-panel)",
+    boxShadow: "0 28px 72px rgba(24, 26, 32, 0.18)",
     animation: "slideUpModal 280ms cubic-bezier(0.22, 1, 0.36, 1)",
   },
   modalHero: {
@@ -1526,7 +1676,7 @@ const styles: Record<string, CSSProperties> = {
     flexDirection: "column",
     justifyContent: "space-between",
     borderRadius: "32px 32px 0 0",
-    background: "#d9d9d9",
+    background: "linear-gradient(160deg, rgba(5,181,187,0.2), rgba(248,180,0,0.18))",
   },
   modalHeroTop: {
     display: "flex",
@@ -1537,18 +1687,18 @@ const styles: Record<string, CSSProperties> = {
   modalCategory: {
     padding: "8px 12px",
     borderRadius: 999,
-    background: "rgba(255,255,255,0.42)",
+    background: "rgba(255,255,255,0.7)",
     fontSize: "0.8rem",
     fontWeight: 800,
-    color: "#444444",
+    color: "var(--text-secondary)",
   },
   modalCloseButton: {
     width: 38,
     height: 38,
-    border: "1px solid rgba(255,255,255,0.4)",
+    border: "1px solid rgba(255,255,255,0.6)",
     borderRadius: "50%",
-    background: "rgba(255,255,255,0.54)",
-    color: "#444444",
+    background: "rgba(255,255,255,0.82)",
+    color: "var(--text-secondary)",
     fontSize: "1.5rem",
     lineHeight: 1,
     cursor: "pointer",
@@ -1558,12 +1708,12 @@ const styles: Record<string, CSSProperties> = {
     fontSize: "2rem",
     fontWeight: 800,
     lineHeight: 1.05,
-    color: "#222222",
+    color: "var(--text-primary)",
   },
   modalDistance: {
     marginTop: 10,
     fontSize: "0.92rem",
-    color: "#555555",
+    color: "var(--text-secondary)",
   },
   modalBody: {
     padding: 22,
@@ -1573,7 +1723,7 @@ const styles: Record<string, CSSProperties> = {
   },
   modalDescription: {
     margin: 0,
-    color: "#555555",
+    color: "var(--text-secondary)",
     lineHeight: 1.65,
     fontSize: "0.98rem",
   },
@@ -1608,18 +1758,18 @@ const styles: Record<string, CSSProperties> = {
   modalInfoCard: {
     padding: 16,
     borderRadius: 20,
-    background: "#f3f3f3",
+    background: "var(--surface-muted)",
     display: "flex",
     flexDirection: "column",
     gap: 6,
   },
   modalInfoLabel: {
-    color: "#777777",
+    color: "var(--neutral-700)",
     fontSize: "0.82rem",
     fontWeight: 700,
   },
   modalInfoValue: {
-    color: "#333333",
+    color: "var(--text-primary)",
     fontSize: "0.98rem",
   },
   detailSection: {
@@ -1629,7 +1779,7 @@ const styles: Record<string, CSSProperties> = {
   },
   sectionLabel: {
     margin: 0,
-    color: "#666666",
+    color: "var(--text-secondary)",
     fontSize: "0.86rem",
     fontWeight: 800,
   },
@@ -1639,7 +1789,7 @@ const styles: Record<string, CSSProperties> = {
     gap: 12,
   },
   detailLink: {
-    color: "#333333",
+    color: "var(--brand-primary-deep)",
     textDecoration: "none",
     fontWeight: 700,
     fontSize: "0.92rem",
@@ -1652,29 +1802,29 @@ const styles: Record<string, CSSProperties> = {
   reviewCard: {
     padding: "14px 16px",
     borderRadius: 18,
-    background: "#f3f3f3",
+    background: "var(--surface-muted)",
   },
   reviewHeader: {
     display: "flex",
     justifyContent: "space-between",
     gap: 12,
     marginBottom: 8,
-    color: "#666666",
+    color: "var(--neutral-700)",
     fontSize: "0.82rem",
   },
   reviewBody: {
     margin: 0,
-    color: "#3f3f3f",
+    color: "var(--text-secondary)",
     lineHeight: 1.6,
     fontSize: "0.9rem",
   },
   modalFavoriteButton: {
     width: "100%",
-    border: "1px solid #d8d8d8",
+    border: "1px solid rgba(248,180,0,0.26)",
     borderRadius: 18,
     padding: "15px 18px",
-    background: "#d9d9d9",
-    color: "#222222",
+    background: "linear-gradient(135deg, var(--brand-secondary), #ffc730)",
+    color: "var(--text-primary)",
     fontWeight: 800,
     fontSize: "1rem",
     cursor: "pointer",
@@ -1684,8 +1834,8 @@ const styles: Record<string, CSSProperties> = {
     maxWidth: 760,
     minHeight: "56dvh",
     borderRadius: "30px 30px 0 0",
-    background: "#ffffff",
-    boxShadow: "0 24px 64px rgba(0, 0, 0, 0.16)",
+    background: "var(--surface-panel)",
+    boxShadow: "0 28px 72px rgba(24, 26, 32, 0.18)",
     padding: "10px 18px 26px",
     animation: "slideUpModal 280ms cubic-bezier(0.22, 1, 0.36, 1)",
   },
@@ -1693,7 +1843,7 @@ const styles: Record<string, CSSProperties> = {
     width: 56,
     height: 6,
     borderRadius: 999,
-    background: "#d8d8d8",
+    background: "rgba(5,181,187,0.24)",
     margin: "4px auto 16px",
   },
   searchSheetHeader: {
@@ -1709,21 +1859,21 @@ const styles: Record<string, CSSProperties> = {
     padding: "0 14px",
     minHeight: 54,
     borderRadius: 18,
-    background: "#f3f3f3",
-    color: "#666666",
+    background: "var(--surface-muted)",
+    color: "var(--neutral-700)",
   },
   searchSheetInput: {
     width: "100%",
     border: "none",
     outline: "none",
     background: "transparent",
-    color: "#222222",
+    color: "var(--text-primary)",
     fontSize: "1rem",
   },
   searchSheetClose: {
     border: "none",
     background: "transparent",
-    color: "#666666",
+    color: "var(--neutral-700)",
     fontWeight: 700,
     cursor: "pointer",
     padding: "10px 4px",
@@ -1742,14 +1892,14 @@ const styles: Record<string, CSSProperties> = {
   },
   searchSheetTitle: {
     margin: 0,
-    color: "#444444",
+    color: "var(--text-secondary)",
     fontWeight: 800,
     fontSize: "0.96rem",
   },
   linkButton: {
     border: "none",
     background: "transparent",
-    color: "#555555",
+    color: "var(--brand-primary-deep)",
     fontWeight: 800,
     cursor: "pointer",
     padding: 0,
@@ -1763,8 +1913,8 @@ const styles: Record<string, CSSProperties> = {
     border: "1px solid #dfdfdf",
     borderRadius: 999,
     padding: "11px 14px",
-    background: "#efefef",
-    color: "#444444",
+    background: "rgba(248,180,0,0.12)",
+    color: "var(--text-secondary)",
     fontWeight: 700,
     cursor: "pointer",
   },
@@ -1780,13 +1930,13 @@ const styles: Record<string, CSSProperties> = {
     gap: 10,
     padding: "12px 14px",
     borderRadius: 16,
-    background: "#f7f7f7",
-    border: "1px solid #ececec",
+    background: "rgba(255,255,255,0.82)",
+    border: "1px solid var(--border-soft)",
   },
   recentKeywordButton: {
     border: "none",
     background: "transparent",
-    color: "#333333",
+    color: "var(--text-primary)",
     fontWeight: 700,
     padding: 0,
     cursor: "pointer",
@@ -1796,15 +1946,15 @@ const styles: Record<string, CSSProperties> = {
     height: 28,
     border: "none",
     borderRadius: "50%",
-    background: "#e3e3e3",
-    color: "#666666",
+    background: "rgba(248,180,0,0.16)",
+    color: "var(--text-secondary)",
     fontSize: "1rem",
     lineHeight: 1,
     cursor: "pointer",
   },
   searchEmpty: {
     margin: 0,
-    color: "#777777",
+    color: "var(--neutral-700)",
     lineHeight: 1.5,
   },
 };

@@ -39,7 +39,8 @@ export default function MyPage() {
         : "",
   ]
     .filter(Boolean)
-    .join(" · ");
+    .join(" / ");
+
   const infoItems = [
     { label: "Email", value: profile?.email ?? "" },
     { label: "Phone", value: profile?.phone_number ?? "" },
@@ -52,10 +53,7 @@ export default function MyPage() {
             ? "Female"
             : "",
     },
-    {
-      label: "Nationality",
-      value: profile?.nationality ?? "",
-    },
+    { label: "Nationality", value: profile?.nationality ?? "" },
   ].filter((item) => item.value);
 
   return (
@@ -83,8 +81,14 @@ export default function MyPage() {
         <section style={styles.section}>
           <h2 style={styles.sectionTitle}>Basic Information</h2>
           <div style={styles.infoList}>
-            {infoItems.map((item) => (
-              <div key={item.label} style={styles.infoRow}>
+            {infoItems.map((item, index) => (
+              <div
+                key={item.label}
+                style={{
+                  ...styles.infoRow,
+                  ...(index === infoItems.length - 1 ? styles.infoRowLast : {}),
+                }}
+              >
                 <span style={styles.infoLabel}>{item.label}</span>
                 <span style={styles.infoValue}>{item.value}</span>
               </div>
@@ -104,20 +108,22 @@ const styles: Record<string, CSSProperties> = {
   page: {
     minHeight: "100dvh",
     padding: "24px 16px 0",
-    background: "#ffffff",
+    background: "transparent",
     fontFamily: "'Nunito', 'Apple SD Gothic Neo', sans-serif",
   },
   profileCard: {
     maxWidth: 720,
     margin: "0 auto",
-    padding: 24,
-    borderRadius: 30,
-    background: "#f6f6f6",
+    padding: 28,
+    borderRadius: 32,
+    background:
+      "linear-gradient(180deg, rgba(5,181,187,0.12), rgba(255,255,255,0.98) 38%)",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     textAlign: "center",
-    border: "1px solid #ececec",
+    border: "1px solid rgba(5,181,187,0.14)",
+    boxShadow: "var(--shadow-soft)",
   },
   avatar: {
     width: 88,
@@ -125,27 +131,28 @@ const styles: Record<string, CSSProperties> = {
     borderRadius: "50%",
     display: "grid",
     placeItems: "center",
-    background: "#d9d9d9",
-    color: "#444444",
+    background: "linear-gradient(135deg, var(--brand-primary), var(--brand-primary-deep))",
+    color: "#ffffff",
     fontWeight: 800,
     fontSize: "1.6rem",
+    boxShadow: "0 12px 24px rgba(5,181,187,0.24)",
   },
   name: {
     margin: "14px 0 0",
-    color: "#222222",
+    color: "var(--text-primary)",
     fontSize: "1.6rem",
   },
   meta: {
     margin: "8px 0 0",
-    color: "#666666",
+    color: "var(--neutral-700)",
   },
   section: {
     maxWidth: 720,
-    margin: "16px auto 0",
+    margin: "18px auto 0",
   },
   sectionTitle: {
     margin: "0 0 10px",
-    color: "#333333",
+    color: "var(--text-primary)",
     fontSize: "1rem",
     fontWeight: 800,
   },
@@ -157,16 +164,18 @@ const styles: Record<string, CSSProperties> = {
   tag: {
     padding: "8px 12px",
     borderRadius: 999,
-    background: "#efefef",
-    color: "#555555",
+    background: "var(--brand-primary-soft)",
+    color: "var(--brand-primary-deep)",
     fontSize: "0.86rem",
     fontWeight: 700,
+    border: "1px solid rgba(5,181,187,0.08)",
   },
   infoList: {
-    borderRadius: 20,
-    background: "#f6f6f6",
-    border: "1px solid #ececec",
+    borderRadius: 24,
+    background: "rgba(255,255,255,0.88)",
+    border: "1px solid var(--border-soft)",
     overflow: "hidden",
+    boxShadow: "var(--shadow-soft)",
   },
   infoRow: {
     display: "flex",
@@ -174,14 +183,17 @@ const styles: Record<string, CSSProperties> = {
     justifyContent: "space-between",
     gap: 16,
     padding: "14px 16px",
-    borderBottom: "1px solid #e9e9e9",
+    borderBottom: "1px solid var(--neutral-200)",
+  },
+  infoRowLast: {
+    borderBottom: "none",
   },
   infoLabel: {
-    color: "#777777",
+    color: "var(--neutral-700)",
     fontSize: "0.9rem",
   },
   infoValue: {
-    color: "#333333",
+    color: "var(--text-secondary)",
     fontWeight: 700,
     textAlign: "right",
   },
@@ -189,13 +201,14 @@ const styles: Record<string, CSSProperties> = {
     display: "block",
     width: "100%",
     maxWidth: 720,
-    margin: "16px auto 0",
-    border: "1px solid #d8d8d8",
+    margin: "18px auto 0",
+    border: "1px solid rgba(5,181,187,0.18)",
     borderRadius: 18,
     padding: "15px 16px",
-    background: "#d9d9d9",
-    color: "#333333",
+    background: "linear-gradient(135deg, var(--brand-primary), #12c0c6)",
+    color: "#ffffff",
     fontWeight: 800,
     cursor: "pointer",
+    boxShadow: "0 12px 24px rgba(5,181,187,0.22)",
   },
 };

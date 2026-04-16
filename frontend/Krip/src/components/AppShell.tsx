@@ -38,7 +38,7 @@ export default function AppShell() {
 const styles: Record<string, CSSProperties> = {
   shell: {
     minHeight: "100dvh",
-    background: "#ffffff",
+    background: "transparent",
   },
   content: {
     minHeight: "100dvh",
@@ -54,14 +54,15 @@ const styles: Record<string, CSSProperties> = {
     gap: 8,
     padding: 10,
     borderRadius: 24,
-    background: "rgba(255,255,255,0.98)",
-    boxShadow: "0 12px 28px rgba(0, 0, 0, 0.08)",
-    border: "1px solid #ebebeb",
+    background: "rgba(255,255,255,0.94)",
+    boxShadow: "var(--shadow-soft)",
+    border: "1px solid var(--border-soft)",
+    backdropFilter: "blur(16px)",
     zIndex: 15,
   },
   navItem: {
     textDecoration: "none",
-    color: "#767676",
+    color: "var(--neutral-700)",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -73,8 +74,9 @@ const styles: Record<string, CSSProperties> = {
     fontWeight: 800,
   },
   navItemActive: {
-    background: "#d9d9d9",
-    color: "#222222",
+    background:
+      "linear-gradient(135deg, rgba(5, 181, 187, 0.16), rgba(248, 180, 0, 0.18))",
+    color: "var(--text-primary)",
   },
   navIcon: {
     fontSize: "1rem",
