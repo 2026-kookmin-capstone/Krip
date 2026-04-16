@@ -219,7 +219,7 @@ function Field({
           {
             fontSize: "0.8rem",
             fontWeight: 600,
-            color: "#666666",
+            color: "var(--neutral-700)",
             letterSpacing: "0.03em",
           } as CSSProperties
         }
@@ -234,7 +234,8 @@ function Field({
 const s: Record<string, CSSProperties> = {
   wrapper: {
     minHeight: "100dvh",
-    background: "#ffffff",
+    background:
+      "radial-gradient(circle at top left, rgba(5,181,187,0.16), transparent 32%), radial-gradient(circle at top right, rgba(5,181,187,0.1), transparent 34%), linear-gradient(180deg, rgba(228,247,247,0.68), transparent 28%), var(--surface-base)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -242,48 +243,48 @@ const s: Record<string, CSSProperties> = {
     fontFamily: "'Nunito', 'Apple SD Gothic Neo', sans-serif",
   },
   card: {
-    background: "#ffffff",
+    background: "rgba(255,255,255,0.94)",
     borderRadius: 24,
     padding: "32px 28px",
     width: "100%",
     maxWidth: 420,
-    boxShadow: "0 12px 32px rgba(0,0,0,0.07)",
-    border: "1px solid #ededed",
+    boxShadow: "var(--shadow-soft)",
+    border: "1px solid var(--border-soft)",
   },
   header: { marginBottom: 24 },
-  step: { fontSize: "0.75rem", fontWeight: 700, color: "#8a8a8a", textTransform: "uppercase", letterSpacing: "0.1em" },
-  title: { margin: "6px 0 4px", fontSize: "1.5rem", fontWeight: 800, color: "#222222" },
-  sub: { margin: 0, fontSize: "0.85rem", color: "#777777" },
+  step: { fontSize: "0.75rem", fontWeight: 700, color: "var(--brand-primary-deep)", textTransform: "uppercase", letterSpacing: "0.1em" },
+  title: { margin: "6px 0 4px", fontSize: "1.5rem", fontWeight: 800, color: "var(--text-primary)" },
+  sub: { margin: 0, fontSize: "0.85rem", color: "var(--neutral-700)" },
   fields: { display: "flex", flexDirection: "column", gap: 16 },
   input: {
     width: "100%", padding: "11px 14px", borderRadius: 10,
-    border: "1.5px solid #dfdfdf", fontSize: "0.95rem",
-    outline: "none", background: "#f7f7f7", color: "#222222",
+    border: "1.5px solid rgba(5,181,187,0.16)", fontSize: "0.95rem",
+    outline: "none", background: "var(--surface-muted)", color: "var(--text-primary)",
     boxSizing: "border-box",
   },
   genderBtn: {
     flex: 1, padding: "11px 0", borderRadius: 10,
-    border: "1.5px solid #dfdfdf", background: "#f3f3f3",
-    color: "#666666", fontWeight: 700, cursor: "pointer", fontSize: "0.9rem",
+    border: "1.5px solid rgba(5,181,187,0.14)", background: "rgba(255,255,255,0.86)",
+    color: "var(--neutral-700)", fontWeight: 700, cursor: "pointer", fontSize: "0.9rem",
   },
   genderBtnActive: {
-    background: "#d9d9d9", border: "1.5px solid #d9d9d9", color: "#222222",
+    background: "linear-gradient(135deg, rgba(5,181,187,0.2), rgba(228,247,247,0.96))", border: "1.5px solid rgba(5,181,187,0.12)", color: "var(--text-primary)",
   },
   styleGrid: { display: "flex", flexWrap: "wrap", gap: 8 },
   styleBtn: {
     padding: "8px 14px", borderRadius: 20,
-    border: "1.5px solid #dfdfdf", background: "#f3f3f3",
-    color: "#555555", fontWeight: 600, cursor: "pointer", fontSize: "0.85rem",
+    border: "1.5px solid rgba(5,181,187,0.14)", background: "rgba(255,255,255,0.86)",
+    color: "var(--neutral-700)", fontWeight: 600, cursor: "pointer", fontSize: "0.85rem",
   },
   styleBtnActive: {
-    background: "#d9d9d9", border: "1.5px solid #d9d9d9", color: "#222222",
+    background: "linear-gradient(135deg, rgba(5,181,187,0.18), rgba(228,247,247,0.96))", border: "1.5px solid rgba(5,181,187,0.12)", color: "var(--text-primary)",
   },
   error: { margin: "12px 0 0", color: "#e05555", fontSize: "0.85rem", textAlign: "center" },
   submitBtn: {
     marginTop: 24, width: "100%", padding: "14px 0",
-    borderRadius: 14, border: "1px solid #d8d8d8",
-    background: "#d9d9d9",
-    color: "#222222", fontSize: "1rem", fontWeight: 800,
-    cursor: "pointer", boxShadow: "0 6px 18px rgba(0,0,0,0.06)",
+    borderRadius: 14, border: "1px solid rgba(5,181,187,0.18)",
+    background: "linear-gradient(135deg, var(--brand-primary), #12c0c6)",
+    color: "#ffffff", fontSize: "1rem", fontWeight: 800,
+    cursor: "pointer", boxShadow: "0 12px 24px rgba(5,181,187,0.22)",
   },
 };
