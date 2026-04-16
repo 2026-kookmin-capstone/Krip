@@ -239,7 +239,7 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
         try:
             container = request.app.container
             async with container.uow() as session:
-                from app.domain.auth.repository.user_repository import UserRepository
+                from app.domain.auth.repository.user import UserRepository
                 user_repo = UserRepository(session)
                 user = await user_repo.find_by_id_with_profile(user_id)
         except Exception as e:

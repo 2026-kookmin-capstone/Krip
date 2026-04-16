@@ -1,4 +1,4 @@
-from app.domain.auth.repository.user_repository import UserRepository
+from app.domain.auth.repository.user import UserRepository
 from app.domain.auth.dto.profile import ProfileData
 from app.database.session import UnitOfWork, transactional
 

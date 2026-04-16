@@ -1,4 +1,4 @@
-from app.domain.auth.repository.user_repository import UserRepository
+from app.domain.auth.repository.user import UserRepository
 from app.domain.tripmate.model.tripmate_image import TripmateImage
 from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
 from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHistory
