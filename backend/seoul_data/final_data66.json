@@ -1,15 +1,15 @@
 [
   {
     "place_id": "ChIJ3x1BjCWjfDURfiN84ZXtnJU",
-    "display_name": "채홍갤러리",
-    "category": "미술관",
+    "display_name": "Chaehong Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 충신동 번지 708호 62-2 CS타워 S타워",
-    "short_address": "종로구 충신동 번지 708호 62-2 CS타워 S타워",
+    "address": "CS Tower S Tower, #708, 62-2, Chungsin-dong, Jongno-gu, Seoul, Republic of Korea",
+    "short_address": "CS Tower S Tower, #708, 62-2, Chungsin-dong, Jongno-gu",
     "location": {
       "lat": 37.575043799999996,
       "lng": 127.0040367
@@ -29,7 +29,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3258c411ddf:0x959ced95e17c237e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -39,15 +39,15 @@
   },
   {
     "place_id": "ChIJc9zqQy-jfDURBaBqY3tgZWg",
-    "display_name": "예강갤러리",
-    "category": "미술관",
+    "display_name": "Yegang Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 이화동 130번지 종로구 서울특별시 KR",
-    "short_address": "이화동 130번지 종로구 서울특별시 KR",
+    "address": "130 Ihwa-dong, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "130 Ihwa-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5763956,
       "lng": 127.0035353
@@ -67,7 +67,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32f43eadc73:0x6865607b636aa005!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -77,15 +77,15 @@
   },
   {
     "place_id": "ChIJUXPwIxOjfDURjx1ziTfOeHs",
-    "display_name": "뭐든지 아트하우스",
-    "category": "문화센터",
+    "display_name": "Anything art house",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신길 119",
-    "short_address": "종로구 창신길 119",
+    "address": "119 Changsin-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "119 Changsin-gil, Jongno-gu",
     "location": {
       "lat": 37.5766591,
       "lng": 127.0100051
@@ -105,27 +105,27 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca31323f07351:0x7b78ce3789731d8f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "여울",
+        "author": "ford",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       },
       {
-        "author": "채준배",
+        "author": "Chae Jun-bae",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -144,15 +144,15 @@
   },
   {
     "place_id": "ChIJORPUviGjfDUR4HhwW1uDL5A",
-    "display_name": "(주)나무종",
-    "category": "공원",
+    "display_name": "Namujong Co., Ltd.",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 주교동 번지 지하층 19-1 53호",
-    "short_address": "중구 주교동 번지 지하층 19-1 53호",
+    "address": "Room 53, Basement 19-1, Juju-dong, Jung-gu, Seoul, Republic of Korea",
+    "short_address": "#53, Basement 19-1, Jooju-dong, Jung-gu",
     "location": {
       "lat": 37.568683899999996,
       "lng": 127.00079110000001
@@ -180,16 +180,16 @@
   },
   {
     "place_id": "ChIJORPUviGjfDURjBjpkJ9xN1o",
-    "display_name": "산들KMT",
-    "category": "자연보호구역",
+    "display_name": "Sandeul KMT",
+    "category": "nature reserve",
     "types": [
       "nature_preserve",
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 번지 A 동 1층 1182호 KR 서울특별시 중구 주교동 19-1",
-    "short_address": "번지 A 동 KR 서울특별시 중구 주교동 19-1 1층 1182호",
+    "address": "Room 1182, 1st floor, Building A, Seoul, Republic of Korea KR 19-1 Juju-dong, Jung-gu, Seoul",
+    "short_address": "Address Building A KR Room 1182, 1st floor, 19-1 Juju-dong, Jung-gu, Seoul",
     "location": {
       "lat": 37.568683899999996,
       "lng": 127.00079110000001
@@ -217,15 +217,15 @@
   },
   {
     "place_id": "ChIJ2fB8hx-jfDURuhb9DlSRI1g",
-    "display_name": "메가그린",
-    "category": "공원",
+    "display_name": "Mega Green",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 주교동 230",
-    "short_address": "중구 주교동 230",
+    "address": "230 Juju-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "230 Juju-dong, Jung-gu",
     "location": {
       "lat": 37.5678847,
       "lng": 126.9993019
@@ -254,14 +254,14 @@
   {
     "place_id": "ChIJs1wkDgCjfDURhdjUTorQYA4",
     "display_name": "DONGGUK Univ. Station",
-    "category": "공원",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 주교동 132",
-    "short_address": "중구 주교동 132",
+    "address": "132 Juju-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "132 Juju-dong, Jung-gu",
     "location": {
       "lat": 37.5685425,
       "lng": 126.99797
@@ -282,7 +282,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -291,16 +291,16 @@
   },
   {
     "place_id": "ChIJs_6P9yCjfDURyOVy1TS5QS8",
-    "display_name": "일봉",
-    "category": "자연보호구역",
+    "display_name": "daily salary",
+    "category": "nature reserve",
     "types": [
       "nature_preserve",
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로4가 148번지 종로구 서울특별시 KR",
-    "short_address": "종로4가 148번지 종로구 서울특별시 KR",
+    "address": "148 Jongno 4-ga, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "148 Jongno 4-ga, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5704172,
       "lng": 126.99905629999999
@@ -328,23 +328,23 @@
         "author": "moon kiss",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "회 신선하고 맛있어요 ~~~~~^^"
+        "relative_time": "1 year ago",
+        "text": "Sashimi is fresh and delicious ~~~~~^^"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJwZAjlZijfDURo1QsiYOKfrI",
-    "display_name": "문숙공 윤관 대원수",
-    "category": "공원",
+    "display_name": "Moon Suk-gong Yun Gwan Grand Marshal",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 을지로동 40-3",
-    "short_address": "중구 을지로동 40-3",
+    "address": "40-3 Euljiro-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "40-3, Euljiro-dong, Jung-gu",
     "location": {
       "lat": 37.5673404,
       "lng": 127.00377250000001
@@ -363,16 +363,16 @@
     "google_maps_url": "https://maps.google.com/?cid=12861869883363447971",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca398952390c1:0xb27e8a83892c54a3!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": null,
     "accessibility": null,
@@ -382,8 +382,8 @@
         "author": "Alexandreia Michelle",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "DDP 근처 공원"
+        "relative_time": "7 years ago",
+        "text": "Park near DDP"
       }
     ],
     "photos": [
@@ -401,16 +401,16 @@
   },
   {
     "place_id": "ChIJOSiaPCOjfDUR6o2AY_9IeSI",
-    "display_name": "동대문 패션타운 둘레길",
-    "category": "하이킹코스",
+    "display_name": "Dongdaemun Fashion Town Dulle-gil",
+    "category": "Hiking course",
     "types": [
       "hiking_area",
       "sports_activity_location",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 을지로동 51-1",
-    "short_address": "중구 을지로동 51-1",
+    "address": "51-1 Euljiro-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "51-1 Euljiro-dong, Jung-gu",
     "location": {
       "lat": 37.5669513,
       "lng": 127.0031159
@@ -429,13 +429,13 @@
     "google_maps_url": "https://maps.google.com/?cid=2484096931194768874",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3233c9a2839:0x227948ff63808dea!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": null,
@@ -446,8 +446,8 @@
         "author": "C C",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1년 전",
-        "text": "길가에 아름다운 장미들이 활짝 피어 있습니다."
+        "relative_time": "1 year ago",
+        "text": "Beautiful roses are in full bloom along the roadside."
       }
     ],
     "photos": [
@@ -465,15 +465,15 @@
   },
   {
     "place_id": "ChIJA2NLUwCjfDURsWaDsComxDs",
-    "display_name": "연지물놀이터",
-    "category": "공원",
+    "display_name": "Yeonji Water Playground",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 1-38",
-    "short_address": "종로구 연지동 1-38",
+    "address": "1-38 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "1-38 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.575727,
       "lng": 127.000671
@@ -493,33 +493,33 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca300534b6303:0x3bc4262ab08366b1!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "지연",
+        "author": "delay",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "한여름 더위를 피해 아이들과 함께 방문했습니다. 종로 도심 한가운데 이렇게 잘 만들어진 “무료 물놀이터”가 있다는 게 놀라웠어요. 놀이시설이 다양하고 바닥 분수, 미스트 존, 워터건 구역까지 잘 구성되어 있어서\n아이들이 한참 동안 뛰어놀며 시원하게 즐길 수 있었습니다. 관리 상태도 깨끗했고, 안전요원분들이 계속 순찰하면서 아이들을 살펴주셔서 안심이 됐습니다. 그늘막 자리와 벤치가 있어 보호자들도 쉬기 좋았고, 근처에 공영주차장과 편의점이 있어 편리했습니다.\n\n다만 인기 시간대(오후 1~3시)는 다소 붐볐고, 물놀이용 신발과 타월, 여벌 옷은 꼭 챙기시는 게 좋아요."
+        "relative_time": "5 months ago",
+        "text": "I visited with my children to escape the midsummer heat. I was surprised that there was such a well-made “free water park” in the middle of downtown Jongno. The play facilities are diverse and well-organized, including a floor fountain, mist zone, and water gun area.\nThe children were able to run around and play for a while and have fun. The management was clean, and I felt reassured that the safety guards were constantly patrolling and watching over the children. There were shaded areas and benches so it was good for guardians to rest, and there was a public parking lot and a convenience store nearby, so it was convenient.\n\nHowever, it was a bit crowded during popular times (1-3 p.m.), so it's a good idea to bring water shoes, a towel, and a change of clothes."
       },
       {
         "author": "Ruin trip",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "어린이 공원입니다. 공용 화장실이 마련되어 있습니다. 규모는 크지 않습니다. 남쪽에는 HMM 본사가 있습니다. HMM은 한국의 해운 회사입니다. 북쪽에는 홍익대학교 대학로 캠퍼스와 아트센터가 있습니다. 주차는 불가능합니다. HMM 주차장을 이용하면 주차가 가능하지만, HMM의 허가가 필요합니다. 과거에는 낡은 운동 기구와 컨테이너 창고 두 채가 있던 곳이었으나, 2024년에 새롭게 단장하여 어린이 공원으로 탈바꿈했습니다."
+        "relative_time": "1 year ago",
+        "text": "It is a children's park. There is a shared toilet. The scale is not large. To the south is HMM headquarters. HMM is a Korean shipping company. To the north is Hongik University's Daehakro campus and art center. Parking is not possible. Parking is possible in the HMM car park, but a permit from HMM is required. In the past, it was home to old exercise equipment and two container warehouses, but was renovated in 2024 and transformed into a children's park."
       },
       {
         "author": "Melinde Choi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
+        "relative_time": "8 months ago",
         "text": null
       }
     ],
@@ -535,15 +535,15 @@
   },
   {
     "place_id": "ChIJ06aoBlCjfDURQgeKXC7ovFg",
-    "display_name": "연지어린이공원",
-    "category": "공원",
+    "display_name": "Yeonji Children’s Park",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 136-92",
-    "short_address": "종로구 연지동 136-92",
+    "address": "136-92 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "136-92 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5741327,
       "lng": 127.0010307
@@ -563,12 +563,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca35006a8a6d3:0x58bce82e5c8a0742!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합",
-      "반려견동반"
+      "Suitable for children",
+      "Accompanied by dogs"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
@@ -576,8 +576,8 @@
         "author": "Ruin trip",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "리뉴얼 됨"
+        "relative_time": "2 years ago",
+        "text": "Renewed"
       }
     ],
     "photos": [
@@ -590,15 +590,15 @@
   },
   {
     "place_id": "ChIJ87Jk-majfDURrQ4rHKexiys",
-    "display_name": "종로구 자연생태학습장",
-    "category": "공원",
+    "display_name": "Jongno-gu Natural Ecology Learning Center",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연건동 번지 지상 190-19 1층",
-    "short_address": "종로구 연건동 번지 지상 190-19 1층",
+    "address": "1st floor, 190-19 above ground, Yeongeon-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "1st floor, 190-19 above ground, Yeongeon-dong, Jongno-gu",
     "location": {
       "lat": 37.5755001,
       "lng": 127.0023816
@@ -630,16 +630,16 @@
   },
   {
     "place_id": "ChIJXwtOtSajfDURH_LhKX6k82M",
-    "display_name": "스페이스 111",
-    "category": "공연예술 극장",
+    "display_name": "space 111",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로33길 15",
-    "short_address": "종로구 종로33길 15",
+    "address": "15 Jongno 33-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "15 Jongno 33-gil, Jongno-gu",
     "location": {
       "lat": 37.5717571,
       "lng": 127.0009843
@@ -659,11 +659,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca326b54e0b5f:0x63f3a47e29e1f21f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -672,28 +672,28 @@
         "author": "Yeong-Jun JEONG",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "작품성과 시설 모두 좋으나 의자를 좀더…"
+        "relative_time": "5 years ago",
+        "text": "The workmanship and facilities are both good, but the chairs could have been better…"
       },
       {
-        "author": "강은진 (Rookie Tomato)",
+        "author": "Eunjin Kang (Rookie Tomato)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       },
       {
         "author": "YS Na",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       },
       {
         "author": "hongshik kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       }
     ],
@@ -701,16 +701,16 @@
   },
   {
     "place_id": "ChIJ8e8yliajfDURltHFyFFTeCE",
-    "display_name": "(주)엘로힘프로덕션",
-    "category": "공연예술 극장",
+    "display_name": "Elohim Production Co., Ltd.",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 136-46",
-    "short_address": "종로구 연지동 136-46",
+    "address": "136-46 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "136-46 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5728842,
       "lng": 127.00160659999999
@@ -730,34 +730,34 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3269632eff1:0x21785351c8c5d196!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "권건수",
+        "author": "Geonsu Kwon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "예술이얌"
+        "relative_time": "6 years ago",
+        "text": "It's art"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJ1d1x-wqjfDURQMfH5yGq83Y",
-    "display_name": "열림홀",
-    "category": "공연예술 극장",
+    "display_name": "opening hall",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 대학로3길 9",
-    "short_address": "종로구 연지동 대학로3길 9",
+    "address": "9 Daehakro 3-gil, Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "9 Daehakro 3-gil, Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5738297,
       "lng": 127.00132119999999
@@ -777,45 +777,45 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca30afb71ddd5:0x76f3aa21e7c7c740!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "정영준",
+        "author": "Youngjun Jeong",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "4년 전",
-        "text": "무대 객석 모두 좀 부족한 곳"
+        "relative_time": "4 years ago",
+        "text": "The stage and audience are all a bit lacking."
       },
       {
-        "author": "임쭈",
+        "author": "Imjju",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "4년 전",
-        "text": "의자랑 조명이 낡았어요"
+        "relative_time": "4 years ago",
+        "text": "The chairs and lights are old."
       },
       {
         "author": "Yeong-Jun JEONG",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "5년 전",
-        "text": "의자가 그닥…"
+        "relative_time": "5 years ago",
+        "text": "The chair is so..."
       },
       {
-        "author": "해리쌤TV",
+        "author": "Harry Teacher TV",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8달 전",
+        "relative_time": "8 months ago",
         "text": null
       },
       {
         "author": "KIHEE CHO",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -823,16 +823,16 @@
   },
   {
     "place_id": "ChIJx695FP2jfDUR2YxP2P7zBic",
-    "display_name": "더 씨어터",
-    "category": "공연예술 극장",
+    "display_name": "The Theater",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 대학로3길 10",
-    "short_address": "종로구 대학로3길 10",
+    "address": "10 Daehak-ro 3-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "10 Daehak-ro 3-gil, Jongno-gu",
     "location": {
       "lat": 37.5740299,
       "lng": 127.00162879999999
@@ -852,28 +852,28 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fd1479afc7:0x2706f3fed84f8cd9!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "배우",
+        "author": "actor",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "대학로에 있는 「The Theater」를 방문했습니다. 장소는 조금 은신처적이었고, 주위의 번잡함으로부터 떨어져 조용한 분위기가 인상적이었습니다. 극장은 작지만 매우 아늑한 공간이었습니다. 무대와 관객석의 거리가 가까워서 배우의 표정과 목소리의 섬세한 뉘앙스까지 느낄 수 있었습니다. 좌석도 쾌적하고, 관극에 적합한 공간이라고 느꼈습니다.\n\n대학로의 다른 극장과는 또 다른 매력이 있어 기회가 있으면 꼭 다시 방문하고 싶습니다."
+        "relative_time": "1 year ago",
+        "text": "I visited “The Theater” in Daehakro. The place was a bit secluded, and the quiet atmosphere was impressive, away from the hustle and bustle of the surroundings. The theater was small but very cozy. Because the distance between the stage and the audience was close, I was able to feel the delicate nuances of the actors' expressions and voices. The seats were comfortable and I felt it was a suitable space for a theater performance.\n\nIt has a different charm from other theaters in Daehakro, so I would definitely visit again if I have the chance."
       },
       {
-        "author": "조은",
+        "author": "Jo Eun",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       }
     ],
@@ -886,16 +886,16 @@
   },
   {
     "place_id": "ChIJ6fLRai-jfDUR3yX_FOGTEvg",
-    "display_name": "JTN 아트홀",
-    "category": "공연예술 극장",
+    "display_name": "JTN Art Hall",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 이화장길 26",
-    "short_address": "종로구 이화장길 26",
+    "address": "26 Ihwajang-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "26 Ihwajang-gil, Jongno-gu",
     "location": {
       "lat": 37.5767579,
       "lng": 127.0039115
@@ -914,62 +914,62 @@
     "google_maps_url": "https://maps.google.com/?cid=17875512465916110303",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32f6ad1f2e9:0xf81293e114ff25df!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:30 ~ 오후 6:00",
-      "화요일: 오전 9:30 ~ 오후 9:30",
-      "수요일: 오전 9:30 ~ 오후 10:00",
-      "목요일: 오전 9:30 ~ 오후 10:00",
-      "금요일: 오전 9:30 ~ 오후 10:00",
-      "토요일: 오후 1:00~8:30",
-      "일요일: 오후 1:00~7:00"
+      "Monday: 9:30 AM - 6:00 PM",
+      "Tuesday: 9:30 AM - 9:30 PM",
+      "Wednesday: 9:30 AM - 10:00 PM",
+      "Thursday: 9:30 AM - 10:00 PM",
+      "Friday: 9:30 AM - 10:00 PM",
+      "Saturday: 1:00-8:30 PM",
+      "Sunday: 1:00-7:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실"
+      "Wheelchair entrance",
+      "wheelchair restroom"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "만평",
+        "author": "cartoon",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2달 전",
-        "text": "간간히 방문하는 대학로에 나름 괴안은\n공연장을 방문했습니다.\n물론 공연의 질과 재미가 더 우선이겠지만\n나름 깨끗하고 넓은 공간에서 쾌적하게\n공연 관람 가능했습니다.\n주차장은 방통대 주차장 이용했는데\n평상시에는 한참 기다려야 하니 맞은편\n홍익아트홀을 이용하시는 것도 나쁘지\n않고요.\n공연장 가까운 곳에(20미터) 주차장이 있지만\n가격이 시간당 9천원 정도 합니다.\n여유되시는 분들은 이용 하셔도 될 듯합니다.\n(비싸서 그런지 나름 한가합니다.ㅋㅎ)"
+        "relative_time": "2 months ago",
+        "text": "Daehakro, which I occasionally visit, has its own peculiarities.\nI visited the concert venue.\nOf course, the quality and fun of the performance are more important.\nComfortable in a clean and spacious space\nIt was possible to watch the performance.\nI used the parking lot of the Korea Communications University.\nUsually, you have to wait a long time, so go to the opposite side.\nIt’s not a bad idea to use Hongik Art Hall.\nNo.\nThere is a parking lot close to the venue (20 meters).\nThe price is about 9,000 won per hour.\nIf you have the time, you may want to use it.\n(Maybe because it’s expensive, but it’s quite leisurely. haha)"
       },
       {
         "author": "Jinsu Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "연말억 뮤지컬 써니텐 봤는데 최근본 대학로 뮤지컬중 가장 돈아깝지 않고 음악과 함께 즐기기 좋은 공연이었어요"
+        "relative_time": "3 months ago",
+        "text": "I saw Sunny Ten, the year-end musical. It was the best musical I've seen in Daehakro recently, and it was a good show to enjoy with music."
       },
       {
         "author": "MIN",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7달 전",
-        "text": "3가족이 오백에삼십 언극관람하러 다녀왔는데 주차는 방통대주차장에 했고\n도보로 10분 정도 떨어져있음\n대학로 중심지역이 아닌 반대쪽이라 근처에 암것도 없지만 시설 자체는 쾌적하고\n아주 좋았음\n그리고 연극은 초반에 좀 루즈했는데 집주인\n나오면서 공기의 흐름이 바뀌며 정말 재밌게 관람했음"
+        "relative_time": "7 months ago",
+        "text": "A family of three went to see a 500-30 panoramic play and parked in the Bangtongdae parking lot.\nIt's about 10 minutes away on foot.\nIt's on the opposite side of Daehakro, not the central area, so there's nothing nearby, but the facility itself is comfortable.\nVery good\nAnd the play was a bit loose in the beginning, but the landlord\nAs I came out, the air flow changed and it was really fun to watch."
       },
       {
-        "author": "황슨생돌돌돌감자",
+        "author": "Hwangson Raw Dol Dol Dol Dol Dol Dol Dol Dol Dol Dol Dol Dol Dol Dol Dol Dol Dol Dol Dol Dol Dol Dol Dol Dol Dol Dol Potato",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "극장도 소극장치고 꽤 큰편이고 관람하기 편안하고 좋네요\n3관 5백에 30 잘 봤습니다ㅎㅎ"
+        "relative_time": "2 months ago",
+        "text": "The theater is also quite large and comfortable to watch.\nI got 30 out of 500 in 3 tubes."
       },
       {
         "author": "xxunzz",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "대학로에서 가족끼리 볼 수 있는 연극 찾는다면 추천 드립니다!\n탄탄한 스토리와 2인극임에도 비어보이지 않는 무대까지 재미와 감동까지 선사하는 내용이라 재밌네요!\n뷰티풀라이프 추천~~\n노부부 이야기로 시작해 청년 시절의 이야기까지 시간이 역행으로 흘러가는 내용인데 재밌어욜"
+        "relative_time": "1 year ago",
+        "text": "I recommend this if you are looking for a play that you can see with your family in Daehakro!\nIt's fun because it has a solid story and a stage that doesn't look empty even though it's a two-person play, providing fun and emotion!\nBeautiful Life Recommendation~~\nIt's fun because it starts with the story of an old couple and goes back in time to the story of their youth."
       }
     ],
     "photos": [
@@ -987,16 +987,16 @@
   },
   {
     "place_id": "ChIJpRmhUi-jfDURcR2dPMr9wrQ",
-    "display_name": "대학로극장",
-    "category": "공연예술 극장",
+    "display_name": "Daehakro Theater",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 대학로 60",
-    "short_address": "종로구 대학로 60",
+    "address": "60 Daehak-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "60 Daehak-ro, Jongno-gu",
     "location": {
       "lat": 37.576522,
       "lng": 127.00258590000001
@@ -1016,52 +1016,52 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32f52a119a5:0xb4c2fdca3c9d1d71!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "감자",
+        "author": "potato",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
-        "text": "이곳에서는 난타를 배울수있습니다.저도이곳을다니는 수강생이고요.일주일에 한번씩가는데 스트레스풀기에아주 좋습니다.한번씩 방문해 보는것도 나쁘지 않은것같아요."
+        "relative_time": "8 years ago",
+        "text": "You can learn Nanta here. I am also a student here. I go once a week and it is very good for relieving stress. I don't think it is a bad idea to visit once in a while."
       },
       {
-        "author": "김델타",
+        "author": "Delta Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "다른 곳이 더 놀기에 좋아. 쾌적한 곳이 아냐."
+        "relative_time": "6 years ago",
+        "text": "Other places are better for playing. It's not a pleasant place."
       },
       {
-        "author": "김성훈",
+        "author": "Seonghun Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9년 전",
-        "text": "우연히 들러서 본 김광석님 전시회 감동이었음"
+        "relative_time": "9 years ago",
+        "text": "I happened to stop by and see Kim Gwang-seok's exhibition and was impressed."
       },
       {
         "author": "Skywalker fran",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
-        "text": "다시 가고싶은곳"
+        "relative_time": "7 years ago",
+        "text": "A place I want to go again"
       },
       {
         "author": "bumsuk hong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "역쉬 젊음이 느껴진다"
+        "relative_time": "6 years ago",
+        "text": "I feel young again"
       }
     ],
     "photos": [
@@ -1079,16 +1079,16 @@
   },
   {
     "place_id": "ChIJZ5aKHCujfDURmmFSTvYWgSs",
-    "display_name": "벨라뮤즈(주)",
-    "category": "공연예술 극장",
+    "display_name": "Bellamuse Co., Ltd.",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 이화동 이화장길 30",
-    "short_address": "종로구 이화동 이화장길 30",
+    "address": "30 Ihwajang-gil, Ihwa-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "30 Ihwajang-gil, Ihwa-dong, Jongno-gu",
     "location": {
       "lat": 37.5767644,
       "lng": 127.0052152
@@ -1108,10 +1108,10 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32b1c8a9667:0x2b8116f64e52619a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1120,7 +1120,7 @@
         "author": "JINS LEE",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -1128,16 +1128,16 @@
   },
   {
     "place_id": "ChIJecbVa4qjfDURqwdzwUFaNoU",
-    "display_name": "뭐든지 소극장",
-    "category": "공연예술 극장",
+    "display_name": "Anything small theater",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신길 119 지하 1층",
-    "short_address": "종로구 창신길 119 지하 1층",
+    "address": "Basement 1, 119 Changsin-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "Basement 1, 119 Changsin-gil, Jongno-gu",
     "location": {
       "lat": 37.57669310000001,
       "lng": 127.0100098
@@ -1157,10 +1157,10 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca38a6bd5c679:0x85365a41c17307ab!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1170,14 +1170,14 @@
   {
     "place_id": "ChIJVV47yH-jfDURkgOeL8q0JCU",
     "display_name": "MoMo Station(Fun Game)",
-    "category": "오락실",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 동호로 403-13",
-    "short_address": "종로구 동호로 403-13",
+    "address": "403-13 Dongho-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "403-13 Dongho-ro, Jongno-gu",
     "location": {
       "lat": 37.5703187,
       "lng": 127.00139209999999
@@ -1197,12 +1197,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca37fc83b5e55:0x2524b4ca2f9e0392!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실",
-      "어린이적합"
+      "restroom",
+      "Suitable for children"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1212,14 +1212,14 @@
         "author": "外国人を守る",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "4달 전",
-        "text": "절대 시도하지 마세요"
+        "relative_time": "4 months ago",
+        "text": "never try this"
       },
       {
         "author": "N",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "3주 전",
+        "relative_time": "3 weeks ago",
         "text": null
       }
     ],
@@ -1231,15 +1231,15 @@
   },
   {
     "place_id": "ChIJJ60hlB-jfDURpEbR9Cvfpnw",
-    "display_name": "다모아",
-    "category": "노래방",
+    "display_name": "Damoa",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 을지로4가 109-1",
-    "short_address": "중구 을지로4가 109-1",
+    "address": "109-1 Euljiro 4-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "109-1 Euljiro 4-ga, Jung-gu",
     "location": {
       "lat": 37.567169899999996,
       "lng": 126.9987443
@@ -1259,11 +1259,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca31f9421ad27:0x7ca6df2bf4d146a4!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1272,15 +1272,15 @@
   },
   {
     "place_id": "ChIJFd_NJyGjfDURIcA0EbqKHjY",
-    "display_name": "아싸노래방",
-    "category": "노래방",
+    "display_name": "Assa Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로5가 115번지 종로구 서울특별시 KR",
-    "short_address": "종로5가 115번지 종로구 서울특별시 KR",
+    "address": "115 Jongno 5-ga, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "115 Jongno 5-ga, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5716859,
       "lng": 126.9999155
@@ -1300,11 +1300,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32127cddf15:0x361e8aba1134c021!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1313,15 +1313,15 @@
   },
   {
     "place_id": "ChIJMT4o5CCjfDURye08FjUbA10",
-    "display_name": "골프장",
-    "category": "노래방",
+    "display_name": "golf course",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로4가 8",
-    "short_address": "종로구 종로4가 8",
+    "address": "8 Jongno 4-ga, Jongno-gu, Seoul, South Korea",
+    "short_address": "8 Jongno 4-ga, Jongno-gu",
     "location": {
       "lat": 37.571082,
       "lng": 126.99930129999998
@@ -1341,11 +1341,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca320e4283e31:0x5d031b35163cedc9!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1354,14 +1354,14 @@
         "author": "Roy Byeon",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "3층에 있는 다국적 노래방. 1시간 8만원 맥주포함"
+        "relative_time": "6 years ago",
+        "text": "Multinational karaoke on the 3rd floor. 80,000 won per hour, beer included"
       },
       {
         "author": "白正賢",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       }
     ],
@@ -1371,15 +1371,15 @@
   },
   {
     "place_id": "ChIJ7aXNsiajfDURnA0Vgy7qBcE",
-    "display_name": "연지노래광장",
-    "category": "노래방",
+    "display_name": "Yeonji Song Square",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 효제동 318-1",
-    "short_address": "종로구 효제동 318-1",
+    "address": "318-1 Hyoje-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "318-1 Hyoje-dong, Jongno-gu",
     "location": {
       "lat": 37.5716799,
       "lng": 127.0016499
@@ -1399,11 +1399,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca326b2cda5ed:0xc105ea2e83150d9c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1412,15 +1412,15 @@
   },
   {
     "place_id": "ChIJSUPgVCGjfDUR6mHn35LcXqA",
-    "display_name": "차차차노래방",
-    "category": "노래방",
+    "display_name": "Chachacha Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로5가 77번지 2층 종로구 서울특별시 KR",
-    "short_address": "종로5가 77번지 2층 종로구 서울특별시 KR",
+    "address": "2nd floor, 77 Jongno 5-ga, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "2nd floor, 77 Jongno 5-ga, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5713662,
       "lng": 127.00227779999999
@@ -1440,20 +1440,20 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32154e04349:0xa05edc92dfe761ea!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "석균혁",
+        "author": "Seok Gyunhyuk",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       }
     ],
@@ -1461,15 +1461,15 @@
   },
   {
     "place_id": "ChIJwZCCCCSjfDURPguNfFuppbg",
-    "display_name": "나이스노래바",
-    "category": "노래방",
+    "display_name": "Nice song bar",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로5가 50-3번지 2층 종로구 서울특별시 KR",
-    "short_address": "종로5가 50-3번지 2층 종로구 서울특별시 KR",
+    "address": "2nd floor, 50-3 Jongno 5-ga, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "2nd floor, 50-3 Jongno 5-ga, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5713085,
       "lng": 127.0031276
@@ -1490,8 +1490,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1500,15 +1500,15 @@
   },
   {
     "place_id": "ChIJeztXDSejfDURWdwKnWaqF-0",
-    "display_name": "애플",
-    "category": "노래방",
+    "display_name": "apple",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 원남동 66-75",
-    "short_address": "종로구 원남동 66-75",
+    "address": "66-75 Wonnam-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "66-75 Wonnam-dong, Jongno-gu",
     "location": {
       "lat": 37.5745968,
       "lng": 126.9984921
@@ -1528,12 +1528,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3270d573b7b:0xed17aa669d0adc59!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "배달",
-      "매장식사"
+      "delivery",
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1542,15 +1542,15 @@
   },
   {
     "place_id": "ChIJmy3ycS-jfDUR-gs-AgVsODY",
-    "display_name": "영광노래방",
-    "category": "노래방",
+    "display_name": "Yeonggwang Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 이화동 97-4번지 종로구 서울특별시 KR",
-    "short_address": "이화동 97-4번지 종로구 서울특별시 KR",
+    "address": "97-4 Ihwa-dong, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "97-4 Ihwa-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5760733,
       "lng": 127.00453239999999
@@ -1570,11 +1570,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32f71f22d9b:0x36386c05023e0bfa!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1583,16 +1583,16 @@
   },
   {
     "place_id": "ChIJIWpJ7CCjfDURI_9vrWlIlY0",
-    "display_name": "잼엔와치",
-    "category": "실내 놀이터",
+    "display_name": "Jam&Watch",
+    "category": "indoor playground",
     "types": [
       "indoor_playground",
       "playground",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 인의동 48-2번지 155호 효성주얼리시티 1층 종로구 서울특별시 KR",
-    "short_address": "인의동 48-2번지 155호 효성주얼리시티 1층 종로구 서울특별시 KR",
+    "address": "1st floor, Hyosung Jewelry City, #155, 48-2 Inui-dong, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "#155, 48-2 Inui-dong, 1st floor, Hyosung Jewelry City, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5711959,
       "lng": 126.99866209999999
@@ -1613,8 +1613,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1624,8 +1624,8 @@
   },
   {
     "place_id": "ChIJ50Q64iOjfDURw1p1eGol0o8",
-    "display_name": "타올프라자",
-    "category": "교회",
+    "display_name": "Towel Plaza",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1633,8 +1633,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로5가 182-8번지 1층 1호 종로구 서울특별시 KR",
-    "short_address": "종로5가 182-8번지 1층 1호 종로구 서울특별시 KR",
+    "address": "#1, 1st floor, 182-8 Jongno 5-ga, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "#1, 1st floor, 182-8 Jongno 5-ga, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.570519,
       "lng": 127.00257210000001
@@ -1654,7 +1654,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca323e23a44e7:0x8fd2256a78755ac3!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1664,8 +1664,8 @@
   },
   {
     "place_id": "ChIJ5c7YJwCjfDURtECbSw1zolQ",
-    "display_name": "새일중앙교회",
-    "category": "교회",
+    "display_name": "Saeil Central Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1673,8 +1673,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로34길 6",
-    "short_address": "종로구 종로34길 6",
+    "address": "6 Jongno 34-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "6 Jongno 34-gil, Jongno-gu",
     "location": {
       "lat": 37.570588799999996,
       "lng": 127.0026193
@@ -1694,7 +1694,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca30027d8cee5:0x54a2730d4b9b40b4!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1704,8 +1704,8 @@
   },
   {
     "place_id": "ChIJIR25xCajfDUR3wdWvNh__q8",
-    "display_name": "한국교회부활절연합예배위원회",
-    "category": "교회",
+    "display_name": "Korean Church Easter Joint Worship Committee",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1713,8 +1713,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 136-56",
-    "short_address": "종로구 연지동 136-56",
+    "address": "136-56 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "136-56 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5728955,
       "lng": 127.00049489999999
@@ -1734,7 +1734,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca326c4b91d21:0xaffe7fd8bc5607df!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1744,7 +1744,7 @@
         "author": "Sangbok Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "10년 전",
+        "relative_time": "10 years ago",
         "text": null
       }
     ],
@@ -1752,8 +1752,8 @@
   },
   {
     "place_id": "ChIJIR25xCajfDURjZKPg_SJNnI",
-    "display_name": "장로신보",
-    "category": "교회",
+    "display_name": "Presbyterian Newspaper",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1761,8 +1761,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 136-56",
-    "short_address": "종로구 연지동 136-56",
+    "address": "136-56 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "136-56 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5728955,
       "lng": 127.00049489999999
@@ -1782,7 +1782,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca326c4b91d21:0x723689f4838f928d!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1792,8 +1792,8 @@
   },
   {
     "place_id": "ChIJIR25xCajfDURj2aE5ZkzLYA",
-    "display_name": "남선교회",
-    "category": "교회",
+    "display_name": "South Mission Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1801,8 +1801,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 136-56",
-    "short_address": "종로구 연지동 136-56",
+    "address": "136-56 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "136-56 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5728955,
       "lng": 127.00049489999999
@@ -1822,11 +1822,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca326c4b91d21:0x802d3399e584668f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": null,
@@ -1834,8 +1834,8 @@
   },
   {
     "place_id": "ChIJIR25xCajfDURvo0VMyPIQIM",
-    "display_name": "한국교육자선교회",
-    "category": "교회",
+    "display_name": "Korean Educational Mission Society",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1843,8 +1843,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 136-56",
-    "short_address": "종로구 연지동 136-56",
+    "address": "136-56 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "136-56 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5728955,
       "lng": 127.00049489999999
@@ -1864,24 +1864,24 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca326c4b91d21:0x8340c82333158dbe!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "한창훈",
+        "author": "Han Chang-hoon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       },
       {
         "author": "Sy Park",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       }
     ],
@@ -1889,8 +1889,8 @@
   },
   {
     "place_id": "ChIJIR25xCajfDUR0MRH0_kKAFs",
-    "display_name": "우리교회",
-    "category": "교회",
+    "display_name": "Our church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1898,8 +1898,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 136-56",
-    "short_address": "종로구 연지동 136-56",
+    "address": "136-56 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "136-56 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5728955,
       "lng": 127.00049489999999
@@ -1919,7 +1919,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca326c4b91d21:0x5b000af9d347c4d0!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1929,8 +1929,8 @@
   },
   {
     "place_id": "ChIJIR25xCajfDURRADh17bl-g4",
-    "display_name": "한국기독교장로회총회유지재단",
-    "category": "교회",
+    "display_name": "Korean Christian Presbyterian Church General Assembly Maintenance Foundation",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1938,8 +1938,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 136-56",
-    "short_address": "종로구 연지동 136-56",
+    "address": "136-56 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "136-56 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5728955,
       "lng": 127.00049489999999
@@ -1959,17 +1959,17 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca326c4b91d21:0xefae5b6d7e10044!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "권냥집사",
+        "author": "Recommend butler",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -1977,8 +1977,8 @@
   },
   {
     "place_id": "ChIJRZJHwSajfDUR6nXek7EWK0k",
-    "display_name": "한국교회언론위원회",
-    "category": "교회",
+    "display_name": "Korean Church Media Committee",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1986,8 +1986,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 136-56",
-    "short_address": "종로구 연지동 136-56",
+    "address": "136-56 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "136-56 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5728976,
       "lng": 127.00084679999998
@@ -2007,11 +2007,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca326c1479245:0x492b16b193de75ea!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": null,
@@ -2019,8 +2019,8 @@
   },
   {
     "place_id": "ChIJRZJHwSajfDURAK_fREnA_k0",
-    "display_name": "평북노회 (대한예수교장로회)",
-    "category": "교회",
+    "display_name": "Pyeongbuk Presbytery (Presbyterian Church of Korea)",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2028,8 +2028,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 136-56",
-    "short_address": "종로구 연지동 136-56",
+    "address": "136-56 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "136-56 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5728976,
       "lng": 127.00084679999998
@@ -2048,20 +2048,20 @@
     "google_maps_url": "https://maps.google.com/?cid=5620140805925613312",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca326c1479245:0x4dfec04944dfaf00!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 5:00",
-      "화요일: 오전 9:00 ~ 오후 5:00",
-      "수요일: 오전 9:00 ~ 오후 5:00",
-      "목요일: 오전 9:00 ~ 오후 5:00",
-      "금요일: 오전 9:00 ~ 오후 5:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 5:00 PM",
+      "Tuesday: 9:00 AM - 5:00 PM",
+      "Wednesday: 9:00 AM - 5:00 PM",
+      "Thursday: 9:00 AM - 5:00 PM",
+      "Friday: 9:00 AM - 5:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -2069,21 +2069,21 @@
         "author": "Jiwon Bae",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8년 전",
-        "text": "대한예수교장로회(통합) 평북노회"
+        "relative_time": "8 years ago",
+        "text": "Presbyterian Church of Korea (consolidated) Pyeongbuk Presbytery"
       },
       {
         "author": "yunsup choi",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "좋아요"
+        "relative_time": "6 years ago",
+        "text": "great"
       },
       {
-        "author": "김창겸",
+        "author": "Kim Chang-gyeom",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -2096,8 +2096,8 @@
   },
   {
     "place_id": "ChIJRZJHwSajfDURfNo6OAW_DUI",
-    "display_name": "서울서노회",
-    "category": "교회",
+    "display_name": "Seoul Presbytery",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2105,8 +2105,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 김상옥로 30",
-    "short_address": "종로구 김상옥로 30",
+    "address": "30 Kimsangok-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "30 Kimsangok-ro, Jongno-gu",
     "location": {
       "lat": 37.5728976,
       "lng": 127.00084679999998
@@ -2125,29 +2125,29 @@
     "google_maps_url": "https://maps.google.com/?cid=4759670410339605116",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca326c1479245:0x420dbf05383ada7c!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:30 ~ 오후 5:00",
-      "화요일: 오전 9:30 ~ 오후 5:00",
-      "수요일: 오전 9:30 ~ 오후 5:00",
-      "목요일: 오전 9:30 ~ 오후 5:00",
-      "금요일: 오전 9:30 ~ 오후 5:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:30 AM - 5:00 PM",
+      "Tuesday: 9:30 AM - 5:00 PM",
+      "Wednesday: 9:30 AM - 5:00 PM",
+      "Thursday: 9:30 AM - 5:00 PM",
+      "Friday: 9:30 AM - 5:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "김상식",
+        "author": "Kim Sang-sik",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9달 전",
+        "relative_time": "9 months ago",
         "text": null
       }
     ],
@@ -2155,8 +2155,8 @@
   },
   {
     "place_id": "ChIJIR25xCajfDURjWg4Z4wU2-A",
-    "display_name": "평양노회",
-    "category": "교회",
+    "display_name": "Pyongyang Presbytery",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2164,8 +2164,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 김상옥로 30",
-    "short_address": "종로구 김상옥로 30",
+    "address": "30 Kimsangok-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "30 Kimsangok-ro, Jongno-gu",
     "location": {
       "lat": 37.5728976,
       "lng": 127.00084679999998
@@ -2184,26 +2184,26 @@
     "google_maps_url": "https://maps.google.com/?cid=16202566677655218317",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca326c4b91d21:0xe0db148c6738688d!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 7:30 ~ 오후 5:30",
-      "화요일: 오전 7:00 ~ 오후 5:30",
-      "수요일: 오전 7:30 ~ 오후 5:00",
-      "목요일: 오전 7:30 ~ 오후 5:30",
-      "금요일: 오전 7:30 ~ 오후 5:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 7:30 AM - 5:30 PM",
+      "Tuesday: 7:00 AM - 5:30 PM",
+      "Wednesday: 7:30 AM - 5:00 PM",
+      "Thursday: 7:30 AM - 5:30 PM",
+      "Friday: 7:30 AM - 5:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김창겸",
+        "author": "Kim Chang-gyeom",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -2211,8 +2211,8 @@
   },
   {
     "place_id": "ChIJY8goliajfDURzQ2b0hhjkA0",
-    "display_name": "(재단)대한기독교서회",
-    "category": "교회",
+    "display_name": "(Foundation) Korean Christian Literature Association",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2220,8 +2220,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 136-56",
-    "short_address": "종로구 연지동 136-56",
+    "address": "136-56 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "136-56 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5728976,
       "lng": 127.00084679999998
@@ -2241,7 +2241,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3269628c863:0xd906318d29b0dcd!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2253,8 +2253,8 @@
   },
   {
     "place_id": "ChIJz_k9-cmjfDURX3b8zF9JV1o",
-    "display_name": "용천노회",
-    "category": "교회",
+    "display_name": "Yongcheon Presbytery",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2262,8 +2262,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 김상옥로 30",
-    "short_address": "종로구 김상옥로 30",
+    "address": "30 Kimsangok-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "30 Kimsangok-ro, Jongno-gu",
     "location": {
       "lat": 37.5729123,
       "lng": 127.00088799999999
@@ -2282,16 +2282,16 @@
     "google_maps_url": "https://maps.google.com/?cid=6509752462197159519",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3c9f93df9cf:0x5a57495fccfc765f!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 5:00",
-      "화요일: 오전 9:00 ~ 오후 5:00",
-      "수요일: 오전 9:00 ~ 오후 5:00",
-      "목요일: 오전 9:00 ~ 오후 5:00",
-      "금요일: 오전 9:00 ~ 오후 5:00",
-      "토요일: 오전 9:00 ~ 오후 5:00",
-      "일요일: 오전 9:00 ~ 오후 5:00"
+      "Monday: 9:00 AM - 5:00 PM",
+      "Tuesday: 9:00 AM - 5:00 PM",
+      "Wednesday: 9:00 AM - 5:00 PM",
+      "Thursday: 9:00 AM - 5:00 PM",
+      "Friday: 9:00 AM - 5:00 PM",
+      "Saturday: 9:00 AM - 5:00 PM",
+      "Sunday: 9:00 AM - 5:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2301,8 +2301,8 @@
   },
   {
     "place_id": "ChIJmZPSdCOjfDURcBOvbip3gO8",
-    "display_name": "함해노회",
-    "category": "교회",
+    "display_name": "Hamhae Presbytery",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2310,8 +2310,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 김상옥로 30",
-    "short_address": "종로구 김상옥로 30",
+    "address": "30 Kimsangok-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "30 Kimsangok-ro, Jongno-gu",
     "location": {
       "lat": 37.5729123,
       "lng": 127.00088799999999
@@ -2331,7 +2331,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32374d29399:0xef80772a6eaf1370!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2343,8 +2343,8 @@
   },
   {
     "place_id": "ChIJSyLwKwCjfDURDiktjMJIfCs",
-    "display_name": "한남제일교회 광야교회",
-    "category": "교회",
+    "display_name": "Hannam Jeil Church Gwangya Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2352,8 +2352,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 김상옥로 30",
-    "short_address": "종로구 김상옥로 30",
+    "address": "30 Kimsangok-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "30 Kimsangok-ro, Jongno-gu",
     "location": {
       "lat": 37.5728843,
       "lng": 127.00107969999999
@@ -2373,7 +2373,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3002bf0224b:0x2b7c48c28c2d290e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2385,8 +2385,8 @@
   },
   {
     "place_id": "ChIJBc9ITSGjfDURTluSaYKoMbo",
-    "display_name": "쉼터선교회",
-    "category": "교회",
+    "display_name": "Shelter Mission Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2394,8 +2394,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 효제동 318-2",
-    "short_address": "종로구 효제동 318-2",
+    "address": "318-2 Hyoje-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "318-2 Hyoje-dong, Jongno-gu",
     "location": {
       "lat": 37.5716179,
       "lng": 127.00171710000001
@@ -2415,7 +2415,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3214d48cf05:0xba31a88269925b4e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2425,8 +2425,8 @@
   },
   {
     "place_id": "ChIJZzY4TSGjfDURqzfsbVBeXcQ",
-    "display_name": "기독교전도대학",
-    "category": "교회",
+    "display_name": "Christian Evangelism University",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2434,8 +2434,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 효제동 318-2",
-    "short_address": "종로구 효제동 318-2",
+    "address": "318-2 Hyoje-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "318-2 Hyoje-dong, Jongno-gu",
     "location": {
       "lat": 37.5716636,
       "lng": 127.0017531
@@ -2455,17 +2455,17 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3214d383667:0xc45d5e506dec37ab!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "박소윤",
+        "author": "Park So-yoon",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "9년 전",
+        "relative_time": "9 years ago",
         "text": null
       }
     ],
@@ -2473,8 +2473,8 @@
   },
   {
     "place_id": "ChIJoXUGliajfDURVALKU_jcRQw",
-    "display_name": "예장바른목회실천협의회",
-    "category": "교회",
+    "display_name": "Presumptuous Pastoral Practice Council",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2482,8 +2482,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 136-46",
-    "short_address": "종로구 연지동 136-46",
+    "address": "136-46 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "136-46 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5729233,
       "lng": 127.00146710000001
@@ -2503,7 +2503,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca326960675a1:0xc45dcf853ca0254!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2513,8 +2513,8 @@
   },
   {
     "place_id": "ChIJoXUGliajfDURN4o9KU3S95g",
-    "display_name": "기독교새생명선교회",
-    "category": "교회",
+    "display_name": "Christian New Life Mission",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2522,8 +2522,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 136-46",
-    "short_address": "종로구 연지동 136-46",
+    "address": "136-46 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "136-46 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5729233,
       "lng": 127.00146710000001
@@ -2543,7 +2543,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca326960675a1:0x98f7d24d293d8a37!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2553,8 +2553,8 @@
   },
   {
     "place_id": "ChIJoXUGliajfDURhxGDupVQdz4",
-    "display_name": "한국복음회",
-    "category": "교회",
+    "display_name": "Korean Gospel Association",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2562,8 +2562,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 136-46",
-    "short_address": "종로구 연지동 136-46",
+    "address": "136-46 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "136-46 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5729233,
       "lng": 127.00146710000001
@@ -2583,7 +2583,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca326960675a1:0x3e775095ba831187!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2594,7 +2594,7 @@
   {
     "place_id": "ChIJTRNsCIWjfDUR0cooK3rixBg",
     "display_name": "Seoul Union Church",
-    "category": "교회",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2602,8 +2602,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 대학로 19",
-    "short_address": "종로구 연지동 대학로 19",
+    "address": "19 Daehak-ro, Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "19 Daehak-ro, Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5728842,
       "lng": 127.00160659999999
@@ -2622,16 +2622,16 @@
     "google_maps_url": "https://maps.google.com/?cid=1784800366683540177",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca385086c134d:0x18c4e27a2b28cad1!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 6:00 ~ 오전 12:00",
-      "화요일: 오전 6:00 ~ 오전 12:00",
-      "수요일: 오전 6:00 ~ 오전 12:00",
-      "목요일: 오전 6:00 ~ 오전 12:00",
-      "금요일: 오전 6:00 ~ 오전 12:00",
-      "토요일: 오전 6:00 ~ 오전 12:00",
-      "일요일: 오전 6:00 ~ 오전 12:00"
+      "Monday: 6:00 AM - 12:00 AM",
+      "Tuesday: 6:00 AM - 12:00 AM",
+      "Wednesday: 6:00 AM - 12:00 AM",
+      "Thursday: 6:00 AM - 12:00 AM",
+      "Friday: 6:00 AM - 12:00 AM",
+      "Saturday: 6:00 AM - 12:00 AM",
+      "Sunday: 6:00 AM - 12:00 AM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2641,35 +2641,35 @@
         "author": "Maria Ngo",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7달 전",
-        "text": "따뜻하게 환영하는 교회입니다. 예배 후에는 간단한 친교 점심 식사와 소그룹 성경 공부가 이어집니다. 오늘 초청 설교자가 오셨습니다.\n교회 건물 앞에는 교회 이름이 없습니다. 2층에 있습니다. 아래층에는 \"Hello Hellas\"라고 적힌 커피숍이 있습니다."
+        "relative_time": "7 months ago",
+        "text": "This is a warmly welcoming church. The service will be followed by a light fellowship lunch and small group Bible study. A guest preacher came today.\nThere is no church name on the front of the church building. It's on the 2nd floor. Downstairs there is a coffee shop with \"Hello Hellas\" written on it."
       },
       {
         "author": "Jungie Soriano",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "오늘 아내와 저는 서울 유니온 교회에 참석했는데, 여행 계획에 포함시킨 것이 정말 큰 축복이었습니다. 로버트 헤일 목사님과 부인 엘렌, 그리고 교회 서기 이영희께서 따뜻하게 맞아주셨습니다. 다음에 한국을 방문할 때 하나님의 뜻대로 다시 뵙겠습니다."
+        "relative_time": "1 year ago",
+        "text": "Today my wife and I attended Seoul Union Church, and it was such a blessing to include it in our travel plans. Pastor Robert Hale, his wife Ellen, and church secretary Younghee Lee welcomed us warmly. I will see you again next time I visit Korea, God willing."
       },
       {
         "author": "Joel Holt",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "이곳은 규모는 작지만 공동체 의식이 강한 교회입니다. 저는 약 4주 전부터 이 교회에 다니기 시작했는데, 갈 ​​때마다 소중하게 여겨지고 환영받는다는 느낌을 받습니다. 이 교회는 문을 들어서는 모든 사람에게 하나님의 사랑을 보여줍니다."
+        "relative_time": "1 year ago",
+        "text": "This is a small church with a strong sense of community. I started attending this church about 4 weeks ago, and every time I go I feel valued and welcomed. This church shows God's love to everyone who walks through its doors."
       },
       {
         "author": "Jaya Rao",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "9달 전",
-        "text": "주님께 찬양을 드립니다. 하나님께서 여러분 모두의 가족과 사역을 축복해 주시기를 바랍니다."
+        "relative_time": "9 months ago",
+        "text": "I give praise to the Lord. May God bless each and every one of your families and ministries."
       },
       {
         "author": "David Yunusansar",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -2683,8 +2683,8 @@
   },
   {
     "place_id": "ChIJbRoXftajfDURGWdXgMlM0fA",
-    "display_name": "만나교회",
-    "category": "교회",
+    "display_name": "Manna Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2692,8 +2692,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 대학로 18",
-    "short_address": "종로구 대학로 18",
+    "address": "18 Daehak-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "18 Daehak-ro, Jongno-gu",
     "location": {
       "lat": 37.573105399999996,
       "lng": 127.0022492
@@ -2713,17 +2713,17 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3d67e171a6d:0xf0d14cc980576719!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이종우",
+        "author": "Jongwoo Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       }
     ],
@@ -2736,8 +2736,8 @@
   },
   {
     "place_id": "ChIJ3XNbIACjfDURRTxsfjY5IXA",
-    "display_name": "열방전파찬양교회",
-    "category": "교회",
+    "display_name": "All Nations Praise Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2745,8 +2745,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 대학로 20 지하1층",
-    "short_address": "종로구 대학로 20 지하1층",
+    "address": "Basement 1, 20 Daehak-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "Basement 1, 20 Daehak-ro, Jongno-gu",
     "location": {
       "lat": 37.572998,
       "lng": 127.0021312
@@ -2766,7 +2766,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca300205b73dd:0x702139367e6c3c45!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2778,8 +2778,8 @@
   },
   {
     "place_id": "ChIJEev-WCGjfDUR4WBMB1ZDWoU",
-    "display_name": "새생명교회",
-    "category": "교회",
+    "display_name": "New Life Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2787,7 +2787,7 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5707014,
@@ -2808,7 +2808,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32158feeb11:0x855a4356074c60e1!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2818,16 +2818,16 @@
         "author": "Kim Max",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "동대문역 3번출구를 나와서 270발자국 즈음 걷다보면 서울새생면교회가 2층에 있더라구요, 교회는 작지만 목사님 말씀이 사는데 너무 힘이됩니다. 오는 12월부터 지도목사님께서는 지도목사님께서는 연세가 있으시고 하셔서 쉬시는데 부목사님께서 목회를 하신다고 합니다. 이에 대해 기도 부탁드립니다."
+        "relative_time": "7 years ago",
+        "text": "If you leave Exit 3 of Dongdaemun Station and walk about 270 steps, you will find Seoul Saesaengmyeon Church on the second floor. The church is small, but the pastor's words are very helpful for living. Starting this December, the leading pastor is said to be taking a break due to his age, but the assistant pastor will be taking charge of the ministry. Please pray about this."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJY8goliajfDURWTqs30yEjvc",
-    "display_name": "바울학회",
-    "category": "교회",
+    "display_name": "Paul Society",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2835,8 +2835,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 136-46",
-    "short_address": "종로구 연지동 136-46",
+    "address": "136-46 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "136-46 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5728842,
       "lng": 127.00160659999999
@@ -2856,7 +2856,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3269628c863:0xf78e844cdfac3a59!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2866,8 +2866,8 @@
   },
   {
     "place_id": "ChIJY8goliajfDURMDbih5BKR3Q",
-    "display_name": "한국여교역자연합선교회",
-    "category": "교회",
+    "display_name": "Korea Women Ministers' Association",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2875,8 +2875,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 136-46",
-    "short_address": "종로구 연지동 136-46",
+    "address": "136-46 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "136-46 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5728842,
       "lng": 127.00160659999999
@@ -2896,7 +2896,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3269628c863:0x74474a9087e23630!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2906,8 +2906,8 @@
   },
   {
     "place_id": "ChIJY8goliajfDURzJ64aT1l5-8",
-    "display_name": "범양선교회",
-    "category": "교회",
+    "display_name": "Beomyang Mission Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2915,8 +2915,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 136-46",
-    "short_address": "종로구 연지동 136-46",
+    "address": "136-46 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "136-46 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5728842,
       "lng": 127.00160659999999
@@ -2936,7 +2936,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3269628c863:0xefe7653d69b89ecc!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2946,8 +2946,8 @@
   },
   {
     "place_id": "ChIJDYL9_UK8fDURFWU5frc4x1M",
-    "display_name": "수유제일교회",
-    "category": "교회",
+    "display_name": "Suyu Jeil Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2955,8 +2955,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 대학로3길 29",
-    "short_address": "종로구 대학로3길 29",
+    "address": "29 Daehak-ro 3-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "29 Daehakro 3-gil, Jongno-gu",
     "location": {
       "lat": 37.5729402,
       "lng": 127.0016274
@@ -2976,12 +2976,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbc42fdfd820d:0x53c738b77e396515!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": null,
@@ -2989,8 +2989,8 @@
   },
   {
     "place_id": "ChIJXeDWWEOjfDURk8sy1La4Ui8",
-    "display_name": "한국장로교총연합회",
-    "category": "교회",
+    "display_name": "Korean Presbyterian Church Association",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2998,8 +2998,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 대학로 19",
-    "short_address": "종로구 대학로 19",
+    "address": "19 Daehak-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "19 Daehak-ro, Jongno-gu",
     "location": {
       "lat": 37.5729155,
       "lng": 127.0016073
@@ -3018,20 +3018,20 @@
     "google_maps_url": "https://maps.google.com/?cid=3409990963256544147",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca34358d6e05d:0x2f52b8b6d432cb93!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": null,
@@ -3039,8 +3039,8 @@
   },
   {
     "place_id": "ChIJubjfrSejfDUR2LUBIQVktuE",
-    "display_name": "한국종교사이비대책상담소",
-    "category": "교회",
+    "display_name": "Korean Religious Anti-Corruption Counseling Center",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3048,8 +3048,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 1-1",
-    "short_address": "종로구 연지동 1-1",
+    "address": "1-1 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "1-1 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5752841,
       "lng": 126.9994394
@@ -3069,7 +3069,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca327addfb8b9:0xe1b664052101b5d8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3079,16 +3079,16 @@
         "author": "Dae guen Park",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "5년 전",
-        "text": "여기가 사이비 종교군"
+        "relative_time": "5 years ago",
+        "text": "This is a pseudo religion"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJubjfrSejfDURLseql_YQkto",
-    "display_name": "95희년대성회",
-    "category": "교회",
+    "display_name": "95 Jubilee Crusade",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3096,8 +3096,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 1-1",
-    "short_address": "종로구 연지동 1-1",
+    "address": "1-1 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "1-1 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5752841,
       "lng": 126.9994394
@@ -3125,8 +3125,8 @@
   },
   {
     "place_id": "ChIJ8-t3bQCjfDURdxe9BtNStjY",
-    "display_name": "라이프처치 - 라이프교회",
-    "category": "교회",
+    "display_name": "Life Church - Life Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3134,8 +3134,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 율곡로 190",
-    "short_address": "종로구 율곡로 190",
+    "address": "190 Yulgok-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "190 Yulgok-ro, Jongno-gu",
     "location": {
       "lat": 37.575418299999995,
       "lng": 126.99949799999999
@@ -3154,20 +3154,20 @@
     "google_maps_url": "https://maps.google.com/?cid=3942429590114080631",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3006d77ebf3:0x36b652d306bd1777!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오후 1:00~5:00",
-      "수요일: 오후 1:00~5:00",
-      "목요일: 휴무일",
-      "금요일: 오후 1:00~5:00",
-      "토요일: 휴무일",
-      "일요일: 오후 1:30~3:00"
+      "Monday: Closed day",
+      "Tuesday: 1:00-5:00 PM",
+      "Wednesday: 1:00-5:00 PM",
+      "Thursday: Closed",
+      "Friday: 1:00-5:00 PM",
+      "Saturday: Closed day",
+      "Sunday: 1:30-3:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": null,
@@ -3178,8 +3178,8 @@
   },
   {
     "place_id": "ChIJa1lgPuyjfDURzKGx8PgJ2Ls",
-    "display_name": "번개탄tv",
-    "category": "교회",
+    "display_name": "lightning tv",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3187,8 +3187,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 율곡로 190 여전도회관 지하 1층",
-    "short_address": "종로구 율곡로 190 여전도회관 지하 1층",
+    "address": "190 Yulgok-ro, Jongno-gu, Seoul, Republic of Korea, 1st Basement Floor, Women’s Evangelism Center",
+    "short_address": "190 Yulgok-ro, Jongno-gu, Women’s Evangelism Center, 1st Basement Floor",
     "location": {
       "lat": 37.5756023,
       "lng": 126.9997545
@@ -3208,17 +3208,17 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3ec3e60596b:0xbbd809f8f0b1a1cc!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "미디어처리_Media Cheolhwi",
+        "author": "Media processing_Media Cheolhwi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -3226,8 +3226,8 @@
   },
   {
     "place_id": "ChIJ79MPsiejfDUR_2xLu1riyNU",
-    "display_name": "(사단)도원선교회",
-    "category": "교회",
+    "display_name": "(Division) Dowon Mission Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3235,8 +3235,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 1-1",
-    "short_address": "종로구 연지동 1-1",
+    "address": "1-1 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "1-1 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5756023,
       "lng": 126.9997545
@@ -3256,7 +3256,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca327b20fd3ef:0xd5c8e25abb4b6cff!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3266,8 +3266,8 @@
   },
   {
     "place_id": "ChIJ8f-J_yajfDURaphiCwctFSA",
-    "display_name": "일본비전교회",
-    "category": "교회",
+    "display_name": "Japanese Vision Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3275,8 +3275,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 134-1",
-    "short_address": "종로구 연지동 134-1",
+    "address": "134-1 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "134-1 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.5746292,
       "lng": 126.99986709999999
@@ -3296,7 +3296,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca326ff89fff1:0x20152d070b62986a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3310,8 +3310,8 @@
   },
   {
     "place_id": "ChIJ32pxIyujfDURlKfkDC-u2o8",
-    "display_name": "예장청년회전국연합회",
-    "category": "교회",
+    "display_name": "Presbyterian Church Youth Association National Association",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3319,8 +3319,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 대학로3길 29 한국교회100주년기념관 412호",
-    "short_address": "종로구 대학로3길 29 한국교회100주년기념관 412호",
+    "address": "#412, Korean Church Centennial Memorial Hall, 29 Daehak-ro 3-gil, Jongno-gu, Seoul, Republic of Korea",
+    "short_address": "#412, Korean Church Centennial Memorial Hall, 29 Daehak-ro 3-gil, Jongno-gu",
     "location": {
       "lat": 37.5745893,
       "lng": 127.00041799999998
@@ -3340,7 +3340,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32b23716adf:0x8fdaae2f0ce4a794!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3350,8 +3350,8 @@
   },
   {
     "place_id": "ChIJs_SFdoKjfDURABWe-fK3z0s",
-    "display_name": "크로스로드 복음앱운동",
-    "category": "교회",
+    "display_name": "Crossroads Gospel App Movement",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3359,8 +3359,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 대학로3길 29 창립100주년기념신관 4층",
-    "short_address": "종로구 대학로3길 29 창립100주년기념신관 4층",
+    "address": "4th floor, 100th Anniversary Memorial Hall, 29 Daehak-ro 3-gil, Jongno-gu, Seoul, Korea",
+    "short_address": "4th floor, 100th Anniversary Memorial Hall, 29 Daehak-ro 3-gil, Jongno-gu",
     "location": {
       "lat": 37.574368199999995,
       "lng": 127.00042870000001
@@ -3379,16 +3379,16 @@
     "google_maps_url": "https://maps.google.com/?cid=5462787127221556480",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3827685f4b3:0x4bcfb7f2f99e1500!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 6:00",
-      "화요일: 오전 10:00 ~ 오후 6:00",
-      "수요일: 오전 10:00 ~ 오후 6:00",
-      "목요일: 오전 10:00 ~ 오후 6:00",
-      "금요일: 오전 10:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 6:00 PM",
+      "Tuesday: 10:00 AM - 6:00 PM",
+      "Wednesday: 10:00 AM - 6:00 PM",
+      "Thursday: 10:00 AM - 6:00 PM",
+      "Friday: 10:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3398,8 +3398,8 @@
   },
   {
     "place_id": "ChIJYa9E39WjfDURD5PwJhkM8ro",
-    "display_name": "갈릴리겨자나무교회",
-    "category": "교회",
+    "display_name": "Galilee Mustard Tree Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3407,8 +3407,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 대학로3길 29",
-    "short_address": "종로구 대학로3길 29",
+    "address": "29 Daehak-ro 3-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "29 Daehakro 3-gil, Jongno-gu",
     "location": {
       "lat": 37.574368199999995,
       "lng": 127.00042870000001
@@ -3428,7 +3428,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3d5df44af61:0xbaf20c1926f0930f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3440,8 +3440,8 @@
   },
   {
     "place_id": "ChIJMaL0XgCjfDURcZM_rJtM7kc",
-    "display_name": "대학로교회",
-    "category": "교회",
+    "display_name": "Daehakro Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3449,8 +3449,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연건동 195-24",
-    "short_address": "종로구 연건동 195-24",
+    "address": "195-24 Yeongeon-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "195-24 Yeongeon-dong, Jongno-gu",
     "location": {
       "lat": 37.5754099,
       "lng": 127.0014097
@@ -3470,7 +3470,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3005ef4a231:0x47ee4c9bac3f9371!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3480,8 +3480,8 @@
   },
   {
     "place_id": "ChIJrwENuCejfDURdAkbQAwTCTM",
-    "display_name": "원남교회",
-    "category": "교회",
+    "display_name": "Wonnam Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3489,8 +3489,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 율곡로 183",
-    "short_address": "종로구 율곡로 183",
+    "address": "183 Yulgok-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "183 Yulgok-ro, Jongno-gu",
     "location": {
       "lat": 37.576034,
       "lng": 126.9990783
@@ -3510,50 +3510,50 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca327b80d01af:0x3309130c401b0974!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "브릿지Bridge",
+        "author": "BridgeBridge",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "원남교회에서 운영하는 \"혜수원\"이라는 무인까페.\n1층에 자리잡고 있어 길을 걷다가 비를 피할수도 있고, 무더위를 잠시 식힐수도 있다.\n자판기에 동전을 넣으면 간단한 커피음료를 즐길 수도 있다.\n장소가 아늑하고 조용하다.\n누구나 무료로 편하게 이용할 수 있어 신기하다.\n실내는 정갈하고, 잔잔한 CCM음악이 흘러나와 마음까지 평안해진다.\n복잡한 종로한복판에서 쉼을 제공하는 아름다운 공간이 있다니...\n그런데 사람들이 잘 모르는지, 왠지 남의 집에 함부로 가는것 같아 불편한지...\n올 때 마다 혼자만의 사색의 공간이 된다.\n지나실 기회있으면 한번 들러보시라~^^"
+        "relative_time": "6 years ago",
+        "text": "An unmanned cafe called “Hyesuwon” operated by Wonnam Church.\nIt is located on the first floor, so you can avoid the rain while walking down the street or cool off for a while from the scorching heat.\nYou can also enjoy a simple coffee drink by inserting a coin into the vending machine.\nThe place is cozy and quiet.\nIt's amazing that anyone can use it for free.\nThe interior is neat, and calm CCM music plays, putting your mind at peace.\nThere is a beautiful space that provides rest in the middle of busy Jongno...\nHowever, I don't know if people are aware of it, or if they feel uncomfortable because it feels like they are going into someone else's house without permission...\nEvery time I come, it becomes my own space for contemplation.\nIf you have a chance to pass by, stop by~^^"
       },
       {
-        "author": "심현근",
+        "author": "Shim Hyeon-geun",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "담임목사...진솔한 설교가좋아요 ㅋ"
+        "relative_time": "6 years ago",
+        "text": "Senior Pastor... I like honest sermons haha"
       },
       {
-        "author": "강건",
+        "author": "lustiness",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "3년 전",
-        "text": "다른 교회 사람 빼가지 마세요"
+        "relative_time": "3 years ago",
+        "text": "Don't steal people from other churches."
       },
       {
-        "author": "이지현",
+        "author": "Jihyun Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "찾아가기 쉬운 혜화동 교회"
+        "relative_time": "6 years ago",
+        "text": "Hyehwa-dong Church is easy to get to"
       },
       {
-        "author": "주재욱",
+        "author": "Jae-wook Jae-wook",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "원남교회카폐너무나조습니다"
+        "relative_time": "6 years ago",
+        "text": "Wonnam Church cafe is too cold"
       }
     ],
     "photos": [
@@ -3564,8 +3564,8 @@
   },
   {
     "place_id": "ChIJPy3o6tWifDUR7yIYUQuX8lw",
-    "display_name": "UBF 대학로",
-    "category": "교회",
+    "display_name": "UBF Daehakro",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3573,8 +3573,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 대학로3길 20",
-    "short_address": "종로구 대학로3길 20",
+    "address": "20 Daehak-ro 3-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "20 Daehakro 3-gil, Jongno-gu",
     "location": {
       "lat": 37.5743709,
       "lng": 127.00117469999998
@@ -3594,33 +3594,33 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2d5eae82d3f:0x5cf2970b511822ef!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김갈렙 (갈렙장군)",
+        "author": "Caleb Kim (General Caleb)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "최고의 대학생 성경공부 교회"
+        "relative_time": "4 years ago",
+        "text": "Best college student bible study church"
       },
       {
         "author": "Maria Rose Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "훌륭한 성경 공부와 교제"
+        "relative_time": "1 year ago",
+        "text": "Great Bible Study and Fellowship"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJb7cNiyajfDURhC3yyzcCGgg",
-    "display_name": "가나의집",
-    "category": "교회",
+    "display_name": "Ghana's House",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3628,8 +3628,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 연지동 136-25",
-    "short_address": "종로구 연지동 136-25",
+    "address": "136-25 Yeonji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "136-25 Yeonji-dong, Jongno-gu",
     "location": {
       "lat": 37.573923199999996,
       "lng": 127.00124480000001
@@ -3649,46 +3649,46 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3268b0db76f:0x81a0237cbf22d84!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "심민정",
+        "author": "Shim Min-jeong",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "장소는 역에서 가깝고 좋았는데 의자가 너무 삐걱거리는 소리가 나서 연극에 집중이 안 될 때가 있었어요"
+        "relative_time": "4 years ago",
+        "text": "The place was nice and close to the station, but there were times when I couldn't concentrate on the play because the chairs were so creaky."
       },
       {
-        "author": "송재경",
+        "author": "Song Jae-kyung",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "화동연우회29회 정기공연 싸이킥"
+        "relative_time": "6 years ago",
+        "text": "Hwadong Yeonwoohoe 29th regular performance Psychic"
       },
       {
-        "author": "권순용",
+        "author": "Kwon Soon-yong",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "담소 장소로서 괞찬은 편이라고 생각됩니다"
+        "relative_time": "6 years ago",
+        "text": "As a place to chat, I think it's a good place to go."
       },
       {
-        "author": "레이크함",
+        "author": "Lake Ham",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "연극공연 보러  다녀왔어요"
+        "relative_time": "4 years ago",
+        "text": "I went to see a theater performance."
       },
       {
-        "author": "천재윤",
+        "author": "Cheon Jaeyoon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "공간이 아름다워요"
+        "relative_time": "3 years ago",
+        "text": "The space is beautiful"
       }
     ],
     "photos": [
@@ -3706,8 +3706,8 @@
   },
   {
     "place_id": "ChIJBwXfjiajfDUR2X7gkQTbXvA",
-    "display_name": "연동교회",
-    "category": "교회",
+    "display_name": "Yeondong Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3715,8 +3715,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 김상옥로 37",
-    "short_address": "종로구 김상옥로 37",
+    "address": "37 Kimsangok-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "37 Kimsangok-ro, Jongno-gu",
     "location": {
       "lat": 37.5735733,
       "lng": 127.0016052
@@ -3735,22 +3735,22 @@
     "google_maps_url": "https://maps.google.com/?cid=17320522029587267289",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3268edf0507:0xf05edb0491e07ed9!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 5:30 ~ 오후 7:00",
-      "화요일: 오전 5:30 ~ 오후 7:00",
-      "수요일: 오전 5:30 ~ 오후 9:00",
-      "목요일: 오전 5:30 ~ 오후 9:00",
-      "금요일: 오전 5:30 ~ 오후 7:00",
-      "토요일: 오전 6:00 ~ 오후 7:00",
-      "일요일: 오전 6:00 ~ 오후 7:30"
+      "Monday: 5:30 AM - 7:00 PM",
+      "Tuesday: 5:30 AM - 7:00 PM",
+      "Wednesday: 5:30 AM - 9:00 PM",
+      "Thursday: 5:30 AM - 9:00 PM",
+      "Friday: 5:30 AM - 7:00 PM",
+      "Saturday: 6:00 AM - 7:00 PM",
+      "Sunday: 6:00 AM - 7:30 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -3758,36 +3758,36 @@
         "author": "geoKorea Song",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "제가 처음으로 출석했던 교회입니다.\n저는 이 리뷰에 연동교회에 관련된 각종 정보를 기재할 것이고,\n리뷰 아래에 첨부한 사진들에 대해서 일일이 설명하도록 하겠습니다.\n연동교회가 이 지역에서 중심을 잡고\n제 역할을 충실히 해 주고 있어서 참으로 감사합니다.\n\n1~3번 사진 : 연동교회 표지석 (옛 교회터, 건물 신축 관련 내용)\n4~6번 사진 : 교회 본당의 모습입니다.\n7번 사진 : 본당 main 출입구입니다.\n8~9번 사진 : 담임목사이셨던 게일 선교사의 흉상 및 안내문\n10~11번 사진 : 본당 정문 좌우의 스테인드글라스입니다.\n12번 이하 사진 : 별관 1층에 있는 \"더 게일 홀\"입니다.\n사진에서 보다시피 이곳은 매우 품격 있는 휴게 공간입니다.\n일반인에게 개방되어 있사오니 누구든 오셔서 편하게\n쉬다 가시면 됩니다. ( 음료도 판매합니다. )\n12번 : 내부에서 본 게일 홀의 외관\n13~15번 사진 : 음료 판매 관련 시설 / 판매 품목\n16~22번 사진 : 게일 홀 내외부의 좌석들\n( 지나실 기회가 있으면, 여기 꼭 들러서 쉬다 가시어요~~ )"
+        "relative_time": "2 months ago",
+        "text": "This is the first church I attended.\nI will include various information related to Yeondong Church in this review.\nI will explain the photos attached below the review one by one.\nYeondong Church takes center stage in this area.\nI am truly grateful that you are doing your job faithfully.\n\nPhotos 1-3: Yeondong Church marker (content related to old church site and new building construction)\nPhotos 4-6: This is the main hall of the church.\nPhoto No. 7: This is the main entrance to the main temple.\nPhotos 8-9: Bust and notice of missionary Gayle, who was the senior pastor.\nPhotos 10-11: Stained glass on the left and right of the main entrance to the main temple.\nPhotos no. 12 and below: This is “The Gayle Hall” on the first floor of the annex.\nAs you can see in the photo, this is a very classy resting space.\nIt is open to the public, so anyone can come and feel free.\nYou can take a rest. (Beverages are also sold.)\nNo. 12: The exterior of Gale Hall seen from the inside.\nPhotos 13 to 15: Beverage sales related facilities / items for sale\nPhotos 16-22: Seats inside and outside of Gayle Hall.\n(If you have a chance to pass by, be sure to stop by and rest here~~)"
       },
       {
         "author": "Lilac Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "고풍스런 외관(127년된 교회), 내부는 스테인드글라스에 비춰지는 색의 향연, 파이프오르간의 위엄. 과거와 현재, 미래가 어울어지는 하나님을 만나는 예배와 성도간의 코이노니아가 이루어 지는 곳."
+        "relative_time": "5 years ago",
+        "text": "The antique exterior (127-year-old church), the interior is a feast of colors reflected in stained glass, and the majesty of the pipe organ. A place where past, present, and future meet God in harmony and where koinonia among believers takes place."
       },
       {
         "author": "Charles Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "130년 역사를 가진 교회. 본당 파이프 올갠이 멋짐"
+        "relative_time": "1 year ago",
+        "text": "A church with 130 years of history. The pipe organ in the main hall is nice."
       },
       {
-        "author": "박성기",
+        "author": "Seonggi Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "마음에 무언가 잃어버린 듯한 허전함이\n깊은 느낌으로 생겼다면 꼭 가보시길,!\n아니면  삶의  현장 근처 가까운곳에  교회도 괜찮아요 😊 뜻밖의 결과가\n삶속에 생길것입니다.  강추입니다 ㅎㅎ 감사합니다"
+        "relative_time": "1 year ago",
+        "text": "A feeling of emptiness, as if something has been lost in my heart\nIf you have a deep feeling, be sure to go!\nOr, a church nearby where you live is also okay. 😊 An unexpected result\nIt will happen in your life.  I highly recommend it haha. Thank you."
       },
       {
-        "author": "권건수",
+        "author": "Geonsu Kwon",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "체계적인 교회입니다 저는 여기서 세례를 받았습니다 세례자 교육도 권철 목사님이 하셨는데 지금은 어떤지 모르겠네요\n좀 따분함을 느껴 졸음을 느끼셨던 분도 있었죠 이성희 담임 목사님 시절에요\n그래도 담임 목사님은 지식을 마음 것 가르쳐 주셨습니다 다른 교인들이 들으면 모르는 것들을요^^\n추억이 새록새록...시간이 흘러 저는 어느덧 종교 연구가가 되었죠"
+        "relative_time": "6 years ago",
+        "text": "It's a systematic church. I was baptized here. Pastor Kwon Cheol also provided baptism training, but I don't know what it's like now.\nThere were some people who felt a bit bored and drowsy. This was during the time of senior pastor Lee Seong-hee.\nStill, the senior pastor taught me a lot of knowledge, things that other church members would not know when they heard it^^\nMemories come flooding back... As time passed, I became a religious researcher."
       }
     ],
     "photos": [
@@ -3805,8 +3805,8 @@
   },
   {
     "place_id": "ChIJ97YWKgCjfDUR5kptnMew6TA",
-    "display_name": "열리는교회",
-    "category": "교회",
+    "display_name": "open church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3814,8 +3814,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 대학로 32",
-    "short_address": "종로구 대학로 32",
+    "address": "32 Daehak-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "32 Daehak-ro, Jongno-gu",
     "location": {
       "lat": 37.5739918,
       "lng": 127.0021955
@@ -3835,7 +3835,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3002a16b6f7:0x30e9b0c79c6d4ae6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3847,8 +3847,8 @@
   },
   {
     "place_id": "ChIJkTmC4yWjfDURKgPSpKWpLlk",
-    "display_name": "NK.C에바다선.교회",
-    "category": "교회",
+    "display_name": "NK.C Eba Sea Line Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3856,7 +3856,7 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5758462,
@@ -3877,7 +3877,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca325e3823991:0x592ea9a5a4d2032a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3887,8 +3887,8 @@
   },
   {
     "place_id": "ChIJVdO2WoGjfDURCWnYj-f7oQo",
-    "display_name": "이화목자교회",
-    "category": "교회",
+    "display_name": "Ewha Shepherd Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3896,8 +3896,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 이화동 율곡로17길 21-1",
-    "short_address": "종로구 이화동 율곡로17길 21-1",
+    "address": "21-1 Yulgok-ro 17-gil, Ihwa-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "21-1 Yulgok-ro 17-gil, Ihwa-dong, Jongno-gu",
     "location": {
       "lat": 37.5765506,
       "lng": 127.0047151
@@ -3917,7 +3917,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3815ab6d355:0xaa1fbe78fd86909!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3927,8 +3927,8 @@
   },
   {
     "place_id": "ChIJ91N2Ri-jfDURPa_IHnU-UYY",
-    "display_name": "한일교회(감리)",
-    "category": "교회",
+    "display_name": "Hanil Church (Methodist)",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3936,8 +3936,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 이화동 188",
-    "short_address": "종로구 이화동 188",
+    "address": "188 Ihwa-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "188 Ihwa-dong, Jongno-gu",
     "location": {
       "lat": 37.5765823,
       "lng": 127.00323619999998
@@ -3957,7 +3957,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32f467653f7:0x86513e751ec8af3d!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3967,8 +3967,8 @@
   },
   {
     "place_id": "ChIJh_t2rC-jfDURYIn_C66hcH0",
-    "display_name": "종로교회",
-    "category": "교회",
+    "display_name": "Jongro Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3976,8 +3976,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 이화장1가길 10",
-    "short_address": "종로구 이화장1가길 10",
+    "address": "10 Ihwajang 1ga-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "10 Ihwajang 1ga-gil, Jongno-gu",
     "location": {
       "lat": 37.5770067,
       "lng": 127.0054812
@@ -3997,48 +3997,48 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32fac76fb87:0x7d70a1ae0bff8960!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "석원윤",
+        "author": "Seok Won-yoon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "작지는 않지만 크지도 않은 적당한교회로\n감리교 에서는  오랜 전통과 역사를 지닌 정통감리교회로 이번에 금란교회 부목사로\n재직하던 김기수 목사님이 새로 부임하셔 종로교회의 신실하고 충성된 성도들과  앞으로도 더욱 부흥 발전 할것이 기대되는 교회 입니다."
+        "relative_time": "1 year ago",
+        "text": "It is an appropriate church that is not small but not large either.\nIn the Methodist Church, an orthodox Methodist church with a long tradition and history, he is currently serving as an associate pastor at Geumran Church.\nWith the new appointment of former pastor Kim Ki-soo, the church is expected to see further revival and development with the faithful and loyal members of Jongro Church."
       },
       {
         "author": "YuBeen Jo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "12년 전",
-        "text": "너무좋아여"
+        "relative_time": "12 years ago",
+        "text": "I love it so much"
       },
       {
         "author": "sungmin cho",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "은혜롭습니다."
+        "relative_time": "7 years ago",
+        "text": "It's gracious."
       },
       {
-        "author": "강승훈",
+        "author": "Seunghoon Kang",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8년 전",
-        "text": "좋은"
+        "relative_time": "8 years ago",
+        "text": "good"
       },
       {
-        "author": "전명옥",
+        "author": "Jeon Myeong-ok",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       }
     ],
@@ -4046,8 +4046,8 @@
   },
   {
     "place_id": "ChIJIVN7RzCjfDURKVcFd4ZFLGo",
-    "display_name": "성터교회",
-    "category": "교회",
+    "display_name": "Seongteo Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4055,8 +4055,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신제2동 640-242",
-    "short_address": "종로구 창신제2동 640-242",
+    "address": "640-242, Changsinje 2-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "640-242, Changsinje 2-dong, Jongno-gu",
     "location": {
       "lat": 37.574950099999995,
       "lng": 127.00930269999999
@@ -4076,40 +4076,40 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca330477b5321:0x6a2c458677055729!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "김은희",
+        "author": "Eunhee Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
+        "relative_time": "2 months ago",
         "text": null
       },
       {
         "author": "my name",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       },
       {
-        "author": "이호성",
+        "author": "Ho-seong Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       },
       {
-        "author": "엄주용",
+        "author": "Eom Joo-yong",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "13년 전",
+        "relative_time": "13 years ago",
         "text": null
       }
     ],
@@ -4121,7 +4121,7 @@
   {
     "place_id": "ChIJTfOpTACjfDURDkwF5j9_n0g",
     "display_name": "NEPALI CHURCH IN KOREA",
-    "category": "교회",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4129,8 +4129,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신4나길 13",
-    "short_address": "종로구 창신4나길 13",
+    "address": "13 Changsin 4na-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "13 Changsin 4na-gil, Jongno-gu",
     "location": {
       "lat": 37.5742942,
       "lng": 127.00976490000001
@@ -4149,13 +4149,13 @@
     "google_maps_url": "https://maps.google.com/?cid=5233041204446579726",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3004ca9f34d:0x489f7f3fe6054c0e!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 휴무일",
-      "수요일: 휴무일",
-      "목요일: 휴무일",
-      "금요일: 휴무일",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Closed day",
+      "Tuesday: Closed",
+      "Wednesday: Closed day",
+      "Thursday: Closed",
+      "Friday: Closed day",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": null,
@@ -4166,23 +4166,23 @@
         "author": "dilip kalikote",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1주 전",
+        "relative_time": "1 week ago",
         "text": null
       },
       {
         "author": "Joel Kafle",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3주 전",
-        "text": "서울 동문에 있는 네팔 교회입니다. 교회 이름은 AMI 네팔 교회입니다.\n이 교회는 한국에서 유일하게 한국 교회의 지원 없이 네팔인들이 직접 운영하는 교회입니다.\n이 교회에는 전임 목사님이 계시고, 한국에 있는 네팔인들을 사랑하고 섬기는 지도자들이 있습니다."
+        "relative_time": "3 weeks ago",
+        "text": "This is a Nepalese church located in Dongmun, Seoul. The name of the church is AMI Nepal Church.\nThis church is the only church in Korea run directly by Nepalese people without support from the Korean church.\nThis church has a full-time pastor and leaders who love and serve the Nepalese people in Korea."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJ355HkWGjfDURf3QqDKbbNMQ",
-    "display_name": "AMI교회Nepali",
-    "category": "교회",
+    "display_name": "AMI Church Nepal",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4190,8 +4190,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신4나길 13",
-    "short_address": "종로구 창신4나길 13",
+    "address": "13 Changsin 4na-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "13 Changsin 4na-gil, Jongno-gu",
     "location": {
       "lat": 37.5742942,
       "lng": 127.00976490000001
@@ -4210,16 +4210,16 @@
     "google_maps_url": "https://maps.google.com/?cid=14138166636437992575",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca36191479edf:0xc434dba60c2a747f!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 휴무일",
-      "수요일: 휴무일",
-      "목요일: 휴무일",
-      "금요일: 휴무일",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Closed day",
+      "Tuesday: Closed",
+      "Wednesday: Closed day",
+      "Thursday: Closed",
+      "Friday: Closed day",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -4229,14 +4229,14 @@
         "author": "Suzan Bishokarma",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "네팔 교회"
+        "relative_time": "5 years ago",
+        "text": "nepal church"
       },
       {
         "author": "Kumar Rana",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       }
     ],
@@ -4255,8 +4255,8 @@
   },
   {
     "place_id": "ChIJi6b3TTCjfDURk0RFAudqW28",
-    "display_name": "창신제일교회",
-    "category": "교회",
+    "display_name": "Changsin First Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4264,8 +4264,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신7길 7",
-    "short_address": "종로구 창신7길 7",
+    "address": "7 Changsin 7-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "7 Changsin 7-gil, Jongno-gu",
     "location": {
       "lat": 37.575693799999996,
       "lng": 127.00996699999999
@@ -4285,34 +4285,34 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3304df7a68b:0x6f5b6ae702454493!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "House 선샤인 (‫היים‬‎)",
+        "author": "House Sunshine (היים‎)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "목사님 설교가 깊이가 있고 은혜가됩니다"
+        "relative_time": "2 years ago",
+        "text": "The pastor's sermon is deep and graceful."
       },
       {
-        "author": "맹수현",
+        "author": "Soohyun Maeng",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10년 전",
-        "text": "아자"
+        "relative_time": "10 years ago",
+        "text": "Aja"
       },
       {
-        "author": "김미정",
+        "author": "Mijeong Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "13년 전",
+        "relative_time": "13 years ago",
         "text": null
       }
     ],
@@ -4320,15 +4320,15 @@
   },
   {
     "place_id": "ChIJY42WJgCjfDUR5mb6yCKpLgQ",
-    "display_name": "패키지연구소",
-    "category": "쇼핑몰",
+    "display_name": "Package Research Institute",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 청계천로 204-1",
-    "short_address": "중구 청계천로 204-1",
+    "address": "204-1 Cheonggyecheon-ro, Jung-gu, Seoul, South Korea",
+    "short_address": "204-1 Cheonggyecheon-ro, Jung-gu",
     "location": {
       "lat": 37.5690348,
       "lng": 127.0003439
@@ -4347,18 +4347,18 @@
     "google_maps_url": "https://maps.google.com/?cid=301364191946237670",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca30026968d63:0x42ea922c8fa66e6!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4369,15 +4369,15 @@
   },
   {
     "place_id": "ChIJtRebtyGjfDUR5ToTlZwxQDU",
-    "display_name": "영원포장",
-    "category": "쇼핑몰",
+    "display_name": "Yeongwon packaging",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 방산시장 A동 2층 3호",
-    "short_address": "중구 방산시장 A동 2층 3호",
+    "address": "#3, 2nd floor, Building A, Bangsan Market, Jung-gu, Seoul, Republic of Korea",
+    "short_address": "#3, 2nd floor, Building A, Bangsan Market, Jung-gu",
     "location": {
       "lat": 37.56879,
       "lng": 127.00039199999999
@@ -4398,8 +4398,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4409,8 +4409,8 @@
         "author": "吳文",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "건축자재 시장"
+        "relative_time": "1 year ago",
+        "text": "Building materials market"
       }
     ],
     "photos": [
@@ -4420,15 +4420,15 @@
   },
   {
     "place_id": "ChIJ-wc469mjfDUR-Ztdbw4_gBo",
-    "display_name": "공생기술",
-    "category": "쇼핑몰",
+    "display_name": "symbiotic technology",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 청계천로 159번길 세운상가",
-    "short_address": "종로구 청계천로 159번길 세운상가",
+    "address": "Seun Shopping Mall, 159 Cheonggyecheon-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "Seun Shopping Mall, 159 Cheonggyecheon-ro, Jongno-gu",
     "location": {
       "lat": 37.5687838,
       "lng": 127.0006446
@@ -4448,11 +4448,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3d9eb3807fb:0x1a803f0e6f5d9bf9!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4461,8 +4461,8 @@
   },
   {
     "place_id": "ChIJ4bQCpuqjfDUR7JX0sIgovZk",
-    "display_name": "세마실크 (SHEMA SILK)",
-    "category": "상점",
+    "display_name": "SHEMA SILK",
+    "category": "store",
     "types": [
       "shopping_mall",
       "home_goods_store",
@@ -4472,8 +4472,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 청계천로 199 1층",
-    "short_address": "종로구 청계천로 199 1층",
+    "address": "1st floor, 199 Cheonggyecheon-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "1st floor, 199 Cheonggyecheon-ro, Jongno-gu",
     "location": {
       "lat": 37.5696477,
       "lng": 126.99967000000001
@@ -4492,57 +4492,57 @@
     "google_maps_url": "https://maps.google.com/?cid=11078055225950770668",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3eaa602b4e1:0x99bd2888b0f495ec!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 오전 9:00 ~ 오후 4:00",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: 9:00 AM - 4:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "박승권",
+        "author": "Seungkwon Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "실크 의 모든것이 다 있고 넓은 공간에 잘 정돈된 실크를 내가 직접 찾을수 있어 좋아요. 세계에서 실크 종류가 제일 많이 있는 곳 갇아요."
+        "relative_time": "3 years ago",
+        "text": "It has everything silk and it's nice to be able to find silk that is well-organized in a large space. This is the place with the most types of silk in the world."
       },
       {
         "author": "K Supreme",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "서울 일대에서 가장 큰 실크 판매 전문점입니다.\n방문시 사장님 포함 직원분들이 판매 제품에 대해 상세한 설명을 해주셔서 구매 결정에 많은 도움을 주시고, 다양한 종류의 실크를 쉽게 비교할 수 있도록 잘 전시되어있어요.\n저와 같은 관련 종사자분들은 꼭 방문해보시길 추천 드립니다 ^^"
+        "relative_time": "3 years ago",
+        "text": "It is the largest silk sales store in Seoul.\nWhen you visit, the staff, including the owner, give detailed explanations of the products being sold, helping you make a purchasing decision, and the various types of silk are displayed well so that you can easily compare them.\nI recommend people who work in this field like me to visit ^^"
       },
       {
-        "author": "정성진",
+        "author": "Seongjin Jeong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "굉장히 다양한 종류의 실크가 구비되어 있습니다. 내부도 타 업체에 비해 넓은 편이고 깔끔하게 정리되어 있어 둘러보기 편합니다.\n관련 업종에 계신 분들은 원하시는 제품을 손쉽게 찾을 수 있어 도움이 되실 겁니다."
+        "relative_time": "3 years ago",
+        "text": "There are many different types of silk available. The interior is also spacious compared to other companies and neatly organized, making it easy to look around.\nPeople in related industries will find it helpful as they can easily find the products they want."
       },
       {
-        "author": "박병수",
+        "author": "Byeongsu Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "취향저격!\n다양한 실크!\n눈돌아가… ㅠㅠ"
+        "relative_time": "3 years ago",
+        "text": "Perfect for your taste!\nA variety of silk!\nRoll your eyes… ㅠㅠ"
       },
       {
-        "author": "김진환",
+        "author": "Jinhwan Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "실크맛집 추천드립니다!"
+        "relative_time": "3 years ago",
+        "text": "I recommend Silk Restaurant!"
       }
     ],
     "photos": [
@@ -4560,15 +4560,15 @@
   },
   {
     "place_id": "ChIJn9NMRCCjfDURKafHy4L1cGc",
-    "display_name": "이지의상실",
-    "category": "쇼핑몰",
+    "display_name": "loss of intelligence",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 예지동 240",
-    "short_address": "종로구 예지동 240",
+    "address": "240 Yeji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "240 Yeji-dong, Jongno-gu",
     "location": {
       "lat": 37.569590399999996,
       "lng": 126.99891189999998
@@ -4588,11 +4588,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca320444cd39f:0x6770f582cbc7a729!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4602,15 +4602,15 @@
   },
   {
     "place_id": "ChIJpSLCdCGjfDURI8D3WnC3szs",
-    "display_name": "금경 디스플레이",
-    "category": "쇼핑몰",
+    "display_name": "golden mirror display",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 예지동 296-12",
-    "short_address": "종로구 예지동 296-12",
+    "address": "296-12 Yeji-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "296-12 Yeji-dong, Jongno-gu",
     "location": {
       "lat": 37.5697293,
       "lng": 127.0011894
@@ -4630,49 +4630,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32174c222a5:0x3bb3b7705af7c023!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "오병천",
+        "author": "Oh Byeong-cheon",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Amor Fati",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "구자성",
+        "author": "Koo Ja-seong",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "柴田礼子",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "최진원",
+        "author": "Jinwon Choi",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -4681,15 +4681,15 @@
   {
     "place_id": "ChIJIYZzrU2jfDURd2-KoPGekqE",
     "display_name": "MARITHÉ FRANÇOIS GIRBAUD Gwangjang Market",
-    "category": "백화점",
+    "category": "department store",
     "types": [
       "department_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서문 1층 88 270호 KR 서울특별시 종로구 창경궁로",
-    "short_address": "서문 1층 88 KR 서울특별시 종로구 창경궁로 270호",
+    "address": "Room 88 270, 1st floor, West Gate, Seoul, Republic of Korea KR Changgyeonggung-ro, Jongno-gu, Seoul",
+    "short_address": "West Gate 1st Floor 88 KR #270, Changgyeonggung-ro, Jongno-gu, Seoul",
     "location": {
       "lat": 37.569465699999995,
       "lng": 126.9985703
@@ -4708,18 +4708,18 @@
     "google_maps_url": "https://maps.google.com/?cid=11642542747323887479",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca34dad738621:0xa1929ef1a08a6f77!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 7:00",
-      "화요일: 오전 9:00 ~ 오후 7:00",
-      "수요일: 오전 9:00 ~ 오후 7:00",
-      "목요일: 오전 9:00 ~ 오후 7:00",
-      "금요일: 오전 9:00 ~ 오후 7:00",
-      "토요일: 오전 9:00 ~ 오후 7:00",
-      "일요일: 오전 9:00 ~ 오후 7:00"
+      "Monday: 9:00 AM - 7:00 PM",
+      "Tuesday: 9:00 AM - 7:00 PM",
+      "Wednesday: 9:00 AM - 7:00 PM",
+      "Thursday: 9:00 AM - 7:00 PM",
+      "Friday: 9:00 AM - 7:00 PM",
+      "Saturday: 9:00 AM - 7:00 PM",
+      "Sunday: 9:00 AM - 7:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4733,15 +4733,15 @@
   },
   {
     "place_id": "ChIJrVR5GCCjfDURBgjTUd3I33I",
-    "display_name": "영신타올홍복상사",
-    "category": "쇼핑몰",
+    "display_name": "Youngshin Towel Hongbok Company",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 주교동 98-1",
-    "short_address": "중구 주교동 98-1",
+    "address": "98-1 Juju-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "98-1 Juju-dong, Jung-gu",
     "location": {
       "lat": 37.568662499999995,
       "lng": 126.99837799999999
@@ -4762,8 +4762,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4774,15 +4774,15 @@
   },
   {
     "place_id": "ChIJzbkoWpqjfDURZkQ-EyyDjPw",
-    "display_name": "새로피엔엘",
-    "category": "쇼핑몰",
+    "display_name": "New P&L",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 주교동 을지로35길 21",
-    "short_address": "중구 주교동 을지로35길 21",
+    "address": "21 Eulji-ro 35-gil, Juju-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "21 Euljiro 35-gil, Juju-dong, Jung-gu",
     "location": {
       "lat": 37.567727999999995,
       "lng": 127.0008027
@@ -4801,18 +4801,18 @@
     "google_maps_url": "https://maps.google.com/?cid=18198064419621979238",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca39a5a28b9cd:0xfc8c832c133e4466!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 오전 9:00 ~ 오후 4:00",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: 9:00 AM - 4:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4822,36 +4822,36 @@
         "author": "daeyoung choi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "이 곳은 방산시장에\n제과제빵 포장 관련된 용품들을\n다양하게 판매하는 곳 입니다\n\n보통 다른 인터넷 매체 등에서\n시키면 새로피엔엘 이라고 적혀 있는 거는\n이 곳에서 구매하는게 더 저렴합니다\n\n저 같은 경우는 시즌 때 포장지나\n기타 용품 등을 보려고 간간히 들립니다"
+        "relative_time": "3 years ago",
+        "text": "This place is in Bangsan Market\nProducts related to bakery packaging\nThis is a place that sells a variety of things.\n\nUsually in other internet media, etc.\nIf you order something, it says New P&L.\nIt's cheaper to buy here\n\nIn my case, it's wrapping paper during the season.\nI stop by occasionally to look at other supplies, etc."
       },
       {
         "author": "Heungsik Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "방산시장 포장골목에 위치한 포장재료판매점입니다\n판매및생활포장용기및용품들을소매로 판매하고있는곳입니다  다양한 포장및용기들을 필요한만큼\n구입할수있습니다"
+        "relative_time": "4 years ago",
+        "text": "This is a packaging material store located in the packaging alley of Bangsan Market.\nThis is a place that sells retail packaging containers and supplies for daily use. Various packaging and containers are available as needed.\nYou can buy it"
       },
       {
-        "author": "you소소한 일상",
+        "author": "you small daily life",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
-        "text": "소량구매가능.\n직원들 친절\n근데,,,흑흑  숫자초  10개입 박스로 0~9까지 개당 3000 원에구입.\n가게  도착해서 인터넷조회  해보니  개당 160 원.\n그럼 10개입  1600 원\n3만원 구입했는데\n결론은 1만4천원이나 비싸게 구입했음.\n구입할 품목을  검색해보시고 구입하시기  바람"
+        "relative_time": "5 years ago",
+        "text": "Small quantity purchase possible.\nfriendly staff\nHowever, I purchased a box of 10 black number candles from 0 to 9 for 3,000 won each.\nWhen I arrived at the store, I looked it up online and found that each piece was 160 won.\nThen 10 pieces 1600 won\nI bought it for 30,000 won.\nIn conclusion, it was purchased at a high price of 14,000 won.\nPlease search for the item you want to purchase and then purchase it."
       },
       {
-        "author": "홍윤아",
+        "author": "Hong Yuna",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "한곳에서 방산시장 포장용품을 다벌수 있는 느낌이에요. 제품을 상세히 볼 수있도록 진열해줘서 너무 편해요"
+        "relative_time": "5 years ago",
+        "text": "It feels like you can buy all the packaging supplies from Bangsan Market in one place. It is very convenient because the products are displayed so that you can see them in detail."
       },
       {
         "author": "Jjune Yoon",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "5년 전",
-        "text": "있을건 다 있지만 찾는건 하나도 없는 방산마켓. 소량판매안하고. 불친절하고. 정신없지만 초짜 영업하는분들 많이 옵니다. 새로마켓에 많이가요~"
+        "relative_time": "5 years ago",
+        "text": "Bangsan Market has everything you need but nothing you are looking for. We do not sell in small quantities. It's unfriendly. It's crazy, but a lot of beginner salespeople come here. I go to Saero Market a lot~"
       }
     ],
     "photos": [
@@ -4870,14 +4870,14 @@
   {
     "place_id": "ChIJwZlykiGjfDURAQHhfq4gPMs",
     "display_name": "CHOCOLATE ALLEY",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 방산동 95-2",
-    "short_address": "중구 방산동 95-2",
+    "address": "95-2 Bangsan-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "95-2 Bangsan-dong, Jung-gu",
     "location": {
       "lat": 37.5683892,
       "lng": 127.00174249999999
@@ -4898,18 +4898,18 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "정소희",
+        "author": "Sohee Jeong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -4917,15 +4917,15 @@
   },
   {
     "place_id": "ChIJwesh7h-jfDUR_IKOk31mQXQ",
-    "display_name": "청계5가 지하쇼핑센터",
-    "category": "쇼핑몰",
+    "display_name": "Cheonggye 5-ga underground shopping center",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 을지로동 4-36",
-    "short_address": "중구 을지로동 4-36",
+    "address": "4-36 Euljiro-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "4-36 Euljiro-dong, Jung-gu",
     "location": {
       "lat": 37.5689798,
       "lng": 127.0019592
@@ -4945,11 +4945,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca31fee21ebc1:0x7441667d938e82fc!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4961,15 +4961,15 @@
   },
   {
     "place_id": "ChIJ6f3FbSGjfDUR-tTK4ukwN2k",
-    "display_name": "광장주단침구상",
-    "category": "쇼핑몰",
+    "display_name": "Square column single bedding table",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로5가",
-    "short_address": "종로구 종로5가",
+    "address": "Jongno 5-ga, Jongno-gu, Seoul, South Korea",
+    "short_address": "Jongno 5-ga, Jongno-gu",
     "location": {
       "lat": 37.5701459,
       "lng": 127.0013838
@@ -4989,49 +4989,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3216dc5fde9:0x693730e9e2cad4fa!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "임종익",
+        "author": "Lim Jong-ik",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "순대국 맛있어요"
+        "relative_time": "6 years ago",
+        "text": "Sundae soup is delicious"
       },
       {
         "author": "DSCH Lau",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "이곳은 지역 주민들이 자주 찾는, 만두와 감을 비롯한 다양한 지역 간식을 판매하는 대규모 장소입니다."
+        "relative_time": "7 years ago",
+        "text": "This is a large venue selling dumplings, persimmons and other local snacks frequented by locals."
       },
       {
         "author": "tatsuhiko nakano",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "먹고 걷기에 추천"
+        "relative_time": "6 years ago",
+        "text": "Recommended for eating and walking"
       },
       {
-        "author": "김유영",
+        "author": "Yuyoung Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "열창도화",
+        "author": "passionate singing painting",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -5048,15 +5048,15 @@
   },
   {
     "place_id": "ChIJGfRDxzCjfDUR1mR5vvhwLS8",
-    "display_name": "클린KLEAN",
-    "category": "쇼핑몰",
+    "display_name": "CleanKLEAN",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 창경궁로 62 지층",
-    "short_address": "중구 창경궁로 62 지층",
+    "address": "Ground floor, 62 Changgyeonggung-ro, Jung-gu, Seoul, South Korea",
+    "short_address": "Ground floor, 62 Changgyeonggung-ro, Jung-gu",
     "location": {
       "lat": 37.5679267,
       "lng": 126.99820899999997
@@ -5076,11 +5076,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca330c743f419:0x2f2d70f8be7964d6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5090,15 +5090,15 @@
   },
   {
     "place_id": "ChIJWWGAA5qjfDURnNXzxRHLJx0",
-    "display_name": "마전교 지하쇼핑센터",
-    "category": "쇼핑몰",
+    "display_name": "Majeongyo Underground Shopping Center",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로5.6가동 동호로",
-    "short_address": "종로구 종로5.6가동 동호로",
+    "address": "Dongho-ro, Jongno 5.6-ga, Jongno-gu, Seoul, South Korea",
+    "short_address": "Dongho-ro, Jongno 5.6-ga, Jongno-gu",
     "location": {
       "lat": 37.5703537,
       "lng": 127.0018455
@@ -5118,22 +5118,22 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca39a03806159:0x1d27cb11c5f3d59c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "녹색걷기",
+        "author": "green walking",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "종로5가역 14번 출구.청계천 마전교앞"
+        "relative_time": "1 year ago",
+        "text": "Jongno 5-ga Station Exit 14. In front of Cheonggyecheon Majeongyo Bridge"
       }
     ],
     "photos": [
@@ -5147,15 +5147,15 @@
   },
   {
     "place_id": "ChIJOaXTYyGjfDURFpEVznwrK60",
-    "display_name": "종로5가의류센터",
-    "category": "쇼핑몰",
+    "display_name": "Jongno 5-ga Clothing Center",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로5가",
-    "short_address": "종로구 종로5가",
+    "address": "Jongno 5-ga, Jongno-gu, Seoul, South Korea",
+    "short_address": "Jongno 5-ga, Jongno-gu",
     "location": {
       "lat": 37.56997930000001,
       "lng": 127.0022726
@@ -5175,49 +5175,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32163d3a539:0xad2b2b7cce159116!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "황종각",
+        "author": "Hwangjonggak",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
-        "text": "길엽 복잡하죠   물건은 싸네요"
+        "relative_time": "5 years ago",
+        "text": "Gilyeop It’s complicated, things are cheap."
       },
       {
         "author": "Junkyu Seong",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "9년 전",
-        "text": "길 좁고 쇼핑하기 불편"
+        "relative_time": "9 years ago",
+        "text": "Narrow streets and inconvenient for shopping"
       },
       {
-        "author": "이정명",
+        "author": "Jeongmyeong Lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "10년 전",
-        "text": "의류집합소"
+        "relative_time": "10 years ago",
+        "text": "Clothing collection center"
       },
       {
         "author": "‣",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6달 전",
-        "text": "외로워\n매장 골판지 안에 있던 접이식 우산을 15000w로 구입했다."
+        "relative_time": "6 months ago",
+        "text": "I'm lonely\nI bought a folding umbrella that was in a cardboard box at the store for 15000w."
       },
       {
         "author": "Michael Chang",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9년 전",
+        "relative_time": "9 years ago",
         "text": "Just walk by..."
       }
     ],
@@ -5236,15 +5236,15 @@
   },
   {
     "place_id": "ChIJZ-2C6hSjfDURjjbO0CWBaMU",
-    "display_name": "을지 스타 몰",
-    "category": "쇼핑몰",
+    "display_name": "Eulji Star Mall",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 을지로동 6-5",
-    "short_address": "중구 을지로동 6-5",
+    "address": "6-5 Euljiro-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "6-5 Euljiro-dong, Jung-gu",
     "location": {
       "lat": 37.5667323,
       "lng": 127.00067870000001
@@ -5264,16 +5264,16 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca314ea82ed67:0xc5688125d0ce368e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실"
+      "Wheelchair entrance",
+      "wheelchair restroom"
     ],
     "parking": null,
     "reviews": [
@@ -5281,7 +5281,7 @@
         "author": "Kristin K",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],

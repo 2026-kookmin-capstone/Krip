@@ -1,8 +1,8 @@
 [
   {
     "place_id": "ChIJ-d2t4JOYfDUR7axfruXXSRs",
-    "display_name": "창천교회",
-    "category": "교회",
+    "display_name": "Changcheon Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -10,8 +10,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 연세로 38",
-    "short_address": "서대문구 연세로 38",
+    "address": "38 Yonsei-ro, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "38 Yonsei-ro, Seodaemun-gu",
     "location": {
       "lat": 37.559148199999996,
       "lng": 126.9375903
@@ -31,50 +31,50 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9893e0adddf9:0x1b49d7e5ae5faced!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "박영이",
+        "author": "Park Young-i",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "116년전 창내마을에 하나님께서 허락하신 땅에 주님의 복음을 널리전파하여 하나님의 백성을 구원하시고자 지으신 주님의 교회입니다. 서대문구 신촌에 위치한 대표적인 기도교감리교회입니다."
+        "relative_time": "6 years ago",
+        "text": "This is the church of the Lord that was built 116 years ago in Changnae Village to save God's people by spreading the gospel of the Lord in the land given by God. It is a representative Prayer Methodist Church located in Sinchon, Seodaemun-gu."
       },
       {
         "author": "Yokohama Blues",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "경건한 삷과 이성을 중시하는 프로테스탄트 감리교회 입니다.\n감리교는 성공회에서 갈라져 나았고 성결교 라는 교파를 만들었던 개신교회입니다.\n\n감리교 창시자는 존 웨슬리 목사입니다.웨슬리 가문 자체가\n영국 성공회 성직자 집안이여서 존 웨슬리 목사님도 성공회 사제 이셨지만 감리교를 세계로 전파를 해서 지금까지 이어오고\n있다고 합니다.성공회 교회에서는 웨슬리 복음운동 으로 이어져오고 있습니다."
+        "relative_time": "6 years ago",
+        "text": "It is a Protestant Methodist church that values godly life and reason.\nThe Methodist Church is a Protestant church that split from the Anglican Church and created a denomination called the Holiness Church.\n\nThe founder of Methodism was Pastor John Wesley. The Wesley family itself\nAs he came from a family of Anglican clergy, Pastor John Wesley was also an Anglican priest, but he spread Methodism throughout the world and continues to this day.\nIt is said that there is. In the Anglican Church, it has continued as the Wesleyan Gospel Movement."
       },
       {
-        "author": "이은범",
+        "author": "Eunbeom Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "신촌 연세대학교 앞에 위치한 성전으로 항상 모든\n주님의 자녀들을 기다리는 마음으로 성전의 문이\n열려 있더군요"
+        "relative_time": "6 years ago",
+        "text": "This temple is located in front of Yonsei University in Sinchon.\nThe doors of the temple are opened with a waiting heart for the children of the Lord.\nIt was open"
       },
       {
         "author": "Yanghwan Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "신촌에 위치한 아름다운 감리교회"
+        "relative_time": "5 years ago",
+        "text": "A beautiful Methodist church located in Sinchon"
       },
       {
-        "author": "이수복",
+        "author": "Soobok Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "목사님 말씀도 좋고 주차공간도 넉넉합니다\n주변에 맛집들도 많고 걷기도 좋네요^^"
+        "relative_time": "3 years ago",
+        "text": "The pastor's sermon is good and there is ample parking space.\nThere are a lot of restaurants nearby and it's nice to walk.^^"
       }
     ],
     "photos": [
@@ -92,8 +92,8 @@
   },
   {
     "place_id": "ChIJ84fi35OYfDURz46p8VuSwKY",
-    "display_name": "창천교회 백주년기념관",
-    "category": "교회",
+    "display_name": "Changcheon Church Centennial Memorial Hall",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -101,7 +101,7 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.559147599999996,
@@ -122,12 +122,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9893dfe287f3:0xa6c0925bf1a98ecf!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": null,
@@ -136,7 +136,7 @@
   {
     "place_id": "ChIJ4332RsWYfDUROYte8KvaiH8",
     "display_name": "New Philadelphia Church",
-    "category": "교회",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -144,8 +144,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "2nd floor, 24 신촌로16길 마포구 서울특별시 대한민국",
-    "short_address": "2nd floor, 24 신촌로16길 마포구",
+    "address": "2nd floor, 24 Sinchon-ro 16-gil, Mapo-gu, Seoul, Republic of Korea",
+    "short_address": "2nd floor, 24 Sinchon-ro 16-gil, Mapo-gu",
     "location": {
       "lat": 37.554581,
       "lng": 126.93434800000001
@@ -164,20 +164,20 @@
     "google_maps_url": "https://maps.google.com/?cid=9189835471656487737",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98c546f67de3:0x7f88daabf05e8b39!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 9:30 ~ 오후 5:30",
-      "수요일: 오전 9:30 ~ 오후 5:30",
-      "목요일: 오전 9:30 ~ 오후 5:30, 오후 8:00~10:00",
-      "금요일: 오전 9:30 ~ 오후 5:30",
-      "토요일: 휴무일",
-      "일요일: 오전 11:00 ~ 오후 1:00"
+      "Monday: Closed day",
+      "Tuesday: 9:30 AM - 5:30 PM",
+      "Wednesday: 9:30 AM - 5:30 PM",
+      "Thursday: 9:30 AM - 5:30 PM, 8:00 PM - 10:00 PM",
+      "Friday: 9:30 AM - 5:30 PM",
+      "Saturday: Closed day",
+      "Sunday: 11:00 AM - 1:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
@@ -185,36 +185,36 @@
         "author": "Eunbin Yoon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10달 전",
-        "text": "설교 맛집~ 자주가요~~"
+        "relative_time": "10 months ago",
+        "text": "A famous restaurant in Seomwon~ I go there often~~"
       },
       {
         "author": "MinYoung",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "저는 약 1년 전부터 이 교회에 다니기 시작했는데, 정말 삶에 큰 활력을 주는 경험이었습니다. 설교도 좋고, 이곳 공동체 분위기도 너무 좋아요. 영적으로 마음이 맞는 친구들도 사귀었고, 그들과 함께 신앙생활을 하는 것이 정말 큰 축복입니다. 또한, 다양한 국적의 사람들이 함께하는 공동체 분위기와, 깊은 교제와 친밀감을 나눌 수 있는 적절한 규모의 교회라는 점도 마음에 듭니다."
+        "relative_time": "6 months ago",
+        "text": "I started attending this church about a year ago, and it was an experience that really revitalized my life. The sermons are great, and the community atmosphere here is also great. I have made like-minded spiritual friends, and it is a great blessing to live a life of faith with them. I also like that it is an appropriately sized church with a community atmosphere where people of various nationalities can share deep fellowship and intimacy."
       },
       {
         "author": "Jacob A",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10달 전",
-        "text": "저와 아내는 이 교회에 8년 동안 다녔습니다. 설교와 예배, 특히 목요일 밤 K1 기도회는 하나님 중심적이며 예수님의 임재를 느낄 수 있는 곳입니다. 저는 이곳에서 하나님 안에서 성장하도록 도전을 받았고, 저희 부부는 삶에서 수많은 돌파구를 경험했으며, 이곳에서 만난 사람들과 깊은 우정을 쌓았습니다. 미국으로 돌아가게 되어 너무나 슬프지만, 이곳은 저희에게 영원히 영적인 가족으로 남을 것입니다. 뉴필라델피아 교회, 사랑합니다. 어거스틴 가족 드림"
+        "relative_time": "10 months ago",
+        "text": "My wife and I have been going to this church for 8 years. The sermons and worship, especially the Thursday night K1 prayer meeting, are God-centered and a place where you can feel the presence of Jesus. I have been challenged to grow in God here, my wife and I have experienced many breakthroughs in our lives, and we have developed deep friendships with the people we have met here. We are so sad to be returning to the United States, but this place will forever be our spiritual family. New Philadelphia Church, I love you. Augustine's family dream"
       },
       {
         "author": "J",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10달 전",
-        "text": "영어를 사용하는 멋진 국제 교회 공동체입니다. 강력한 예배와 성경으로 가득 찬 풍성하고 권능 있는 말씀이 있습니다. 사람들과 잘 어울리고, 각자의 다양한 이야기를 듣는 것을 좋아합니다!"
+        "relative_time": "10 months ago",
+        "text": "A wonderful international English-speaking church community. There is powerful worship and a rich and powerful Word filled with Scripture. I get along well with people, and I love hearing everyone’s different stories!"
       },
       {
         "author": "Mina Choi Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10달 전",
-        "text": "신촌역에서 걸어서 갈 수 있는 거리에 있는 교회로, 2세부터 중학생까지 어린이부도 있습니다. 성경에 기반한 설교와 성령 충만한 예배가 정말 좋습니다. 모든 분들이 친절하고 따뜻하게 맞아주십니다!"
+        "relative_time": "10 months ago",
+        "text": "This church is within walking distance from Sinchon Station and has a children's section for children ages 2 to middle school. I really like Bible-based sermons and Holy Spirit-filled worship. Everyone is friendly and welcoming!"
       }
     ],
     "photos": [
@@ -232,8 +232,8 @@
   },
   {
     "place_id": "ChIJxfc3zJCYfDURofX-D20K2Pc",
-    "display_name": "영성암",
-    "category": "불교사찰",
+    "display_name": "Yeongseongam",
+    "category": "buddhist temple",
     "types": [
       "buddhist_temple",
       "place_of_worship",
@@ -241,8 +241,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 대현동 104-48번지 602호 서대문구 서울특별시 KR",
-    "short_address": "대현동 104-48번지 602호 서대문구 서울특별시 KR",
+    "address": "#602, 104-48 Daehyeon-dong, Seoul, Republic of Korea, Seodaemun-gu, Seoul KR",
+    "short_address": "#602, 104-48 Daehyeon-dong, Seodaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5568308,
       "lng": 126.94155339999999
@@ -262,7 +262,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9890cc37f7c5:0xf7d80a6d0ffef5a1!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -272,8 +272,8 @@
   },
   {
     "place_id": "ChIJjTkLBpqYfDUR7P1y-gNyfz0",
-    "display_name": "거룩한세마포교회",
-    "category": "교회",
+    "display_name": "Holy Semaphore Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -281,8 +281,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 신촌로 162",
-    "short_address": "마포구 신촌로 162",
+    "address": "162 Sinchon-ro, Mapo-gu, Seoul, South Korea",
+    "short_address": "162 Sinchon-ro, Mapo-gu",
     "location": {
       "lat": 37.556346399999995,
       "lng": 126.9436804
@@ -302,7 +302,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989a060b398d:0x3d7f7203fa72fdec!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -315,8 +315,8 @@
   },
   {
     "place_id": "ChIJ_ZzvBZqYfDURINu7IXBPK8Q",
-    "display_name": "월산교회",
-    "category": "교회",
+    "display_name": "Wolsan Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -324,8 +324,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 신촌로 162",
-    "short_address": "마포구 신촌로 162",
+    "address": "162 Sinchon-ro, Mapo-gu, Seoul, South Korea",
+    "short_address": "162 Sinchon-ro, Mapo-gu",
     "location": {
       "lat": 37.5563498,
       "lng": 126.9437401
@@ -345,7 +345,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989a05ef9cfd:0xc42b4f7021bbdb20!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -355,8 +355,8 @@
   },
   {
     "place_id": "ChIJq0j5skOZfDURWdR_pPPQAtw",
-    "display_name": "대한예수교 장로회 염리교회",
-    "category": "교회",
+    "display_name": "Korean Presbyterian Church Yeomni Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -364,8 +364,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 고산길 147",
-    "short_address": "마포구 고산길 147",
+    "address": "147 Gosan-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "147 Gosan-gil, Mapo-gu",
     "location": {
       "lat": 37.554146,
       "lng": 126.94145989999998
@@ -385,7 +385,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9943b2f948ab:0xdc02d0f3a47fd459!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -395,8 +395,8 @@
   },
   {
     "place_id": "ChIJa5i_mZqYfDURCB3HZZRS72U",
-    "display_name": "예수비전교회",
-    "category": "교회",
+    "display_name": "Jesus Vision Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -404,8 +404,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 이화여대길 81",
-    "short_address": "서대문구 이화여대길 81",
+    "address": "81 Ewhayeodae-gil, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "81 Ewhayeodae-gil, Seodaemun-gu",
     "location": {
       "lat": 37.5589971,
       "lng": 126.94394190000001
@@ -425,7 +425,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989a99bf986b:0x65ef529465c71d08!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -435,8 +435,8 @@
   },
   {
     "place_id": "ChIJHY1_m-WZfDURqDIjdL2-yVc",
-    "display_name": "봉산 달마원",
-    "category": "교회",
+    "display_name": "Bongsan Dharma Garden",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -444,8 +444,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 이화여대길",
-    "short_address": "서대문구 이화여대길",
+    "address": "Ewhayeodae-gil, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "Ewhayeodae-gil, Seodaemun-gu",
     "location": {
       "lat": 37.558840599999996,
       "lng": 126.94445429999999
@@ -465,7 +465,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99e59b7f8d1d:0x57c9bebd742332a8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -478,8 +478,8 @@
   },
   {
     "place_id": "ChIJ54jBAy6ZfDURGuTH_qwI7rQ",
-    "display_name": "홍대청년교회",
-    "category": "교회",
+    "display_name": "Hongdae Youth Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -487,8 +487,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 연세로11길 20 2층",
-    "short_address": "서대문구 연세로11길 20 2층",
+    "address": "2nd floor, 20 Yonsei-ro 11-gil, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "2nd floor, 20 Yonsei-ro 11-gil, Seodaemun-gu",
     "location": {
       "lat": 37.5590417,
       "lng": 126.9357705
@@ -507,16 +507,16 @@
     "google_maps_url": "https://maps.google.com/?cid=13037367510386074650",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c992e03c188e7:0xb4ee08acfec7e41a!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 휴무일",
-      "수요일: 휴무일",
-      "목요일: 휴무일",
-      "금요일: 휴무일",
-      "토요일: 오전 11:00 ~ 오후 4:00",
-      "일요일: 오전 11:00 ~ 오후 4:00"
+      "Monday: Closed day",
+      "Tuesday: Closed",
+      "Wednesday: Closed day",
+      "Thursday: Closed",
+      "Friday: Closed day",
+      "Saturday: 11:00 AM - 4:00 PM",
+      "Sunday: 11:00 AM - 4:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -528,8 +528,8 @@
   },
   {
     "place_id": "ChIJ11OTbPGZfDURjDyTvQGLVNc",
-    "display_name": "신촌하나비전교회",
-    "category": "교회",
+    "display_name": "Sinchon Hana Vision Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -537,8 +537,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 53-73",
-    "short_address": "서대문구 창천동 53-73",
+    "address": "53-73 Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "53-73 Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5588677,
       "lng": 126.93459890000001
@@ -558,7 +558,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99f16c9353d7:0xd7548b01bd933c8c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -568,8 +568,8 @@
   },
   {
     "place_id": "ChIJ05gqHQCZfDURv-X6svNYvVM",
-    "display_name": "인터네셔널 선교 교회 IMC(international mission center)",
-    "category": "교회",
+    "display_name": "International Mission Church IMC (international mission center)",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -577,8 +577,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 번지 1층 53-86",
-    "short_address": "서대문구 창천동 번지 1층 53-86",
+    "address": "53-86, 1st floor, Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "1st floor, 53-86, Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5583834,
       "lng": 126.934274
@@ -598,7 +598,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99001d2a98d3:0x53bd58f3b2fae5bf!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -611,8 +611,8 @@
   },
   {
     "place_id": "ChIJAemXsOqZfDURU_rXEktVca4",
-    "display_name": "킹스웨이교회",
-    "category": "교회",
+    "display_name": "Kingsway Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -620,8 +620,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 대현동 34-15 B2F",
-    "short_address": "서대문구 대현동 34-15 B2F",
+    "address": "B2F, 34-15 Daehyeon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "34-15 B2F, Daehyeon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5594271,
       "lng": 126.94539799999998
@@ -641,42 +641,42 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99eab097e901:0xae71554b12d7fa53!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "김성주",
+        "author": "Seongju Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "작은 개척교회지만 목사님의 젊은 사고와 겸손히심이 느껴져 청년들을 중심으로 크게 성장할 것 같다. 말씀 전파에 적합한 목소리는 앞으로 크게 쓰시려는 하나님의 축복이리라."
+        "relative_time": "4 years ago",
+        "text": "Although it is a small new church, the pastor's youthful thinking and humility make it seem like it will grow significantly, especially among young people. A voice suitable for spreading the word will be a blessing from God who will use it greatly in the future."
       },
       {
         "author": "GRACE YOO",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "교통이 좋네요 이대 바로 옆이라...\n말씀도 너무 좋았어요"
+        "relative_time": "4 years ago",
+        "text": "Transportation is good. It's right next to Ewha Womans University...\nYour words were very nice too"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJ2QQuqbGZfDURkbEu6NYVf50",
-    "display_name": "엠플레이그라운드 명동",
-    "category": "쇼핑몰",
+    "display_name": "M Playground Myeongdong",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 일부 2층 KR 서울특별시 서대문구 신촌로 93, 1층",
-    "short_address": "일부 KR 서울특별시 서대문구 신촌로 93, 1층 2층",
+    "address": "2nd floor, part of Seoul, South Korea KR 1st floor, 93 Sinchon-ro, Seodaemun-gu, Seoul",
+    "short_address": "Some KR 1st floor, 2nd floor, 93 Sinchon-ro, Seodaemun-gu, Seoul",
     "location": {
       "lat": 37.5557775,
       "lng": 126.9366667
@@ -695,59 +695,59 @@
     "google_maps_url": "https://maps.google.com/?cid=11348813598759498129",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99b1a92e04d9:0x9d7f15d6e82eb191!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 11:30",
-      "화요일: 오전 10:00 ~ 오후 11:30",
-      "수요일: 오전 10:00 ~ 오후 11:30",
-      "목요일: 오전 10:00 ~ 오후 11:30",
-      "금요일: 오전 10:00 ~ 오후 11:30",
-      "토요일: 오전 10:00 ~ 오후 11:30",
-      "일요일: 오전 10:00 ~ 오후 11:30"
+      "Monday: 10:00 AM - 11:30 PM",
+      "Tuesday: 10:00 AM - 11:30 PM",
+      "Wednesday: 10:00 AM - 11:30 PM",
+      "Thursday: 10:00 AM - 11:30 PM",
+      "Friday: 10:00 AM - 11:30 PM",
+      "Saturday: 10:00 AM - 11:30 PM",
+      "Sunday: 10:00 AM - 11:30 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "연진우의 일상",
+        "author": "Yeon Jin-woo's daily life",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "좋아요~ 종류도 많고 구경하고 구매했어요~"
+        "relative_time": "6 months ago",
+        "text": "It's good~ There are many kinds, so I looked at it and bought it~"
       },
       {
-        "author": "임정옥",
+        "author": "Lim Jeong-ok",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "예쁜옷들이 넘, 많아요"
+        "relative_time": "7 months ago",
+        "text": "There are so many pretty clothes."
       },
       {
         "author": "Atikah Sharif",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "놀랍습니다. 합리적인 가격에 좋은 품질의 옷을 많이 구입했습니다."
+        "relative_time": "5 months ago",
+        "text": "It's amazing. I bought a lot of good quality clothes at reasonable prices."
       },
       {
         "author": "Hihh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "정말 예쁜 가게에 가격도 착해요! :)"
+        "relative_time": "3 months ago",
+        "text": "It’s a really pretty store and the prices are reasonable! :)"
       },
       {
         "author": "Patrick Rivera Koller",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
-        "text": "옷들이 정말 마음에 들어요. 품질도 좋고요. 여행 중에 세 번이나 매장에 들렀어요."
+        "relative_time": "8 months ago",
+        "text": "I really like the clothes. The quality is good too. I stopped by the store three times during my trip."
       }
     ],
     "photos": [
@@ -765,8 +765,8 @@
   },
   {
     "place_id": "ChIJC3p4rpWYfDUR4j_cURNTBqc",
-    "display_name": "아디다스 현대백화점키즈신촌점",
-    "category": "백화점",
+    "display_name": "Adidas Hyundai Department Store Kids Sinchon Branch",
+    "category": "department store",
     "types": [
       "department_store",
       "sportswear_store",
@@ -776,8 +776,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 신촌로 83 현대백화점 신촌점 유플렉스 8층",
-    "short_address": "서대문구 신촌로 83 현대백화점 신촌점 유플렉스",
+    "address": "8th floor, Uplex, Hyundai Department Store Sinchon Branch, 83 Sinchon-ro, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "Uplex, Hyundai Department Store Sinchon Branch, 83 Sinchon-ro, Seodaemun-gu",
     "location": {
       "lat": 37.5566621,
       "lng": 126.93660810000002
@@ -787,7 +787,7 @@
     "rating_count": 3,
     "price_level": null,
     "price_range": null,
-    "editorial_summary": "브랜드를 대표하는 스포츠 신발, 의류, 액세서리를 선보이는 소매점입니다.",
+    "editorial_summary": "A retail store featuring the brand's iconic sports shoes, clothing, and accessories.",
     "generative_summary": null,
     "review_summary": null,
     "phone": "02-3145-2636",
@@ -796,46 +796,46 @@
     "google_maps_url": "https://maps.google.com/?cid=12035398396637102050",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9895ae787a0b:0xa706531351dc3fe2!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 8:30",
-      "화요일: 오전 10:30 ~ 오후 8:30",
-      "수요일: 오전 10:30 ~ 오후 8:30",
-      "목요일: 오전 10:30 ~ 오후 8:30",
-      "금요일: 오전 10:30 ~ 오후 8:30",
-      "토요일: 오전 10:30 ~ 오후 8:30",
-      "일요일: 오전 10:30 ~ 오후 8:30"
+      "Monday: 10:30 AM - 8:30 PM",
+      "Tuesday: 10:30 AM - 8:30 PM",
+      "Wednesday: 10:30 AM - 8:30 PM",
+      "Thursday: 10:30 AM - 8:30 PM",
+      "Friday: 10:30 AM - 8:30 PM",
+      "Saturday: 10:30 AM - 8:30 PM",
+      "Sunday: 10:30 AM - 8:30 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "최우영",
+        "author": "Wooyoung Choi",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "4년 전",
-        "text": "저번 주말에 사고 싶은 모델 있어서 확인차 여자친구랑 다녀왔습니다. 안경쓰신 스포츠 머리 남자 직원분... 같은 모델 온라인 이랑 비교해보려고 질문하니, 자기들은 오프라인 매장이라고 버럭 화내고 뒤도 안돌아보고 어디로 가버리더라고요. 사실 그 매장에서도 모델이 맘에 들어서 살 생각 있었는데... 직원 이딴 식으로 막 뽑지 마세요. 다른 아디다스에 잘하고 계신 분들 피해만 주겠네 ㅉㅉ"
+        "relative_time": "4 years ago",
+        "text": "There was a model I wanted to buy last weekend, so I went there with my girlfriend to check it out. A sports-haired male employee wearing glasses... When I asked him a question to compare the online store with the same model, he got angry and said that they were an offline store and walked away without even looking back. Actually, I liked the model at that store and was thinking of buying it... Don't just hire employees like this. It will only harm those who are doing well at other Adidas companies."
       },
       {
         "author": "Henry",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "12달 전",
-        "text": "여기 점원 중에 다리에 이레즈미 한 사람있었는데 클래식 트랙팬츠 보여달라고 하니 없다고 함 그런데 비슷한거 보여달라고했는데 클래식 트랙팬츠있었다\n그리고 재고창고에서 새제품 찾기 귀찮아서 디피된 제품 그대로 줌\n레알 싸가지없는 점원"
+        "relative_time": "12 months ago",
+        "text": "Among the clerks here, there was an irezumi on the bridge, and when I asked to see the classic track pants, he said they didn't have any. But when I asked to see something similar, there were classic track pants.\nAnd because I was too lazy to look for a new product in the warehouse, I gave the damaged product as is.\nReally rude clerk"
       },
       {
-        "author": "김영승 (Lukas.K)",
+        "author": "Youngseung Kim (Lukas.K)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -843,16 +843,16 @@
   },
   {
     "place_id": "ChIJUe1cuGiZfDURAudtg2PVcew",
-    "display_name": "현대백화점 유플렉스 신촌점",
-    "category": "백화점",
+    "display_name": "Hyundai Department Store Uplex Sinchon Branch",
+    "category": "department store",
     "types": [
       "department_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 신촌로 83",
-    "short_address": "서대문구 신촌로 83",
+    "address": "83 Sinchon-ro, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "83 Sinchon-ro, Seodaemun-gu",
     "location": {
       "lat": 37.5567414,
       "lng": 126.9366004
@@ -871,63 +871,63 @@
     "google_maps_url": "https://maps.google.com/?cid=17037633488702793474",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9968b85ced51:0xec71d563836de702!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 10:00",
-      "화요일: 오전 10:30 ~ 오후 10:00",
-      "수요일: 오전 10:30 ~ 오후 10:00",
-      "목요일: 오전 10:30 ~ 오후 10:00",
-      "금요일: 오전 10:30 ~ 오후 10:00",
-      "토요일: 오전 10:30 ~ 오후 10:00",
-      "일요일: 오전 10:30 ~ 오후 10:00"
+      "Monday: 10:30 AM - 10:00 PM",
+      "Tuesday: 10:30 AM - 10:00 PM",
+      "Wednesday: 10:30 AM - 10:00 PM",
+      "Thursday: 10:30 AM - 10:00 PM",
+      "Friday: 10:30 AM - 10:00 PM",
+      "Saturday: 10:30 AM - 10:00 PM",
+      "Sunday: 10:30 AM - 10:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "김성한 (전자금융업자)",
+        "author": "Seonghan Kim (electronic finance businessman)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1달 전",
-        "text": "지하층에서바로신촌전철역이연결되어젊은고객들의유입이많고,입점업체도 애플스토어를 비롯한 젊은브랜드업체 다수입점되어있음"
+        "relative_time": "1 month ago",
+        "text": "Sinchon subway station is directly connected to the basement, so there is a lot of influx of young customers, and many young brand companies, including Apple Store, are located in the store."
       },
       {
         "author": "jay Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "동대문두타같은 느낌의 젊은 공간이 있는 곳이에요.지하2층에서는 요즘 유행타고있는 사나고의 3디시연회를 볼수있어서 너무 좋았어요.화장실도 너무 깨끗하고 위생적이더군요.지상11층에서는 맛있는 음식이 너무 많아서 배터지기 일보직전이었답니다"
+        "relative_time": "5 years ago",
+        "text": "It's a young space that feels like Dongdaemun Doota. It was great to see Sanago's 3-dish banquet, which is popular these days, on the second basement floor. The bathroom was also very clean and hygienic. There was so much delicious food on the 11th floor above ground that I was close to being full."
       },
       {
-        "author": "실버캣",
+        "author": "silver cat",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "괴담출근 매니아를 위한 굿즈 판매\n품절제품도 꽤 많아요"
+        "relative_time": "6 months ago",
+        "text": "Selling goods for ghost story enthusiasts\nThere are quite a few products out of stock."
       },
       {
-        "author": "최명옥",
+        "author": "Choi Myung-ok",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "12층 통인동커피공방에서의 커피는 맛도 좋고 뷰도 좋아요.\n눈올때 가면 더 좋을 것 같아요"
+        "relative_time": "4 years ago",
+        "text": "The coffee at Tongin-dong Coffee Workshop on the 12th floor tastes good and has a great view.\nI think it would be better to go when it snows."
       },
       {
         "author": "HONEY",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "샤핑하기에 좋은장소입니다.저와남편은 10층에 있는\n레스토랑에서 점심을 먹으로 갑니다.그리고 에스카레이타로 내려가면서 샤핑을 합니다.요사이 코로나 때문에 레스토랑과 세일하시는분들이 힘드신것 같아요."
+        "relative_time": "4 years ago",
+        "text": "It's a good place for shopping. My husband and I are on the 10th floor.\nI'm going to have lunch at a restaurant, and I'm going down the escargot to do some shopping. I think restaurants and people doing sales are having a hard time these days because of the coronavirus."
       }
     ],
     "photos": [
@@ -945,15 +945,15 @@
   },
   {
     "place_id": "ChIJp052SJSYfDURkr6uK1PK-LM",
-    "display_name": "컨버스",
-    "category": "백화점",
+    "display_name": "converse",
+    "category": "department store",
     "types": [
       "department_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.556700899999996,
@@ -964,7 +964,7 @@
     "rating_count": null,
     "price_level": null,
     "price_range": null,
-    "editorial_summary": "브랜드의 성인 및 어린이용 운동화와 의류, 양말, 가방을 판매하는 체인 소매점입니다.",
+    "editorial_summary": "A chain retail store that sells the brand's adult and children's athletic shoes, clothing, socks and bags.",
     "generative_summary": null,
     "review_summary": null,
     "phone": null,
@@ -973,18 +973,18 @@
     "google_maps_url": "https://maps.google.com/?cid=12968337585577311890",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989448764ea7:0xb3f8ca532baebe92!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 10:00",
-      "화요일: 오전 10:30 ~ 오후 10:00",
-      "수요일: 오전 10:30 ~ 오후 10:00",
-      "목요일: 오전 10:30 ~ 오후 10:00",
-      "금요일: 오전 10:30 ~ 오후 10:00",
-      "토요일: 오전 10:30 ~ 오후 10:00",
-      "일요일: 오전 10:30 ~ 오후 10:00"
+      "Monday: 10:30 AM - 10:00 PM",
+      "Tuesday: 10:30 AM - 10:00 PM",
+      "Wednesday: 10:30 AM - 10:00 PM",
+      "Thursday: 10:30 AM - 10:00 PM",
+      "Friday: 10:30 AM - 10:00 PM",
+      "Saturday: 10:30 AM - 10:00 PM",
+      "Sunday: 10:30 AM - 10:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -995,14 +995,14 @@
   {
     "place_id": "ChIJX6_9bACZfDURvueTo9_wubE",
     "display_name": "ユープレックス",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 신촌로 ８３ Hyundai Department Store 10층",
-    "short_address": "서대문구 신촌로 83 Hyundai Department Store 10층",
+    "address": "10th floor, Hyundai Department Store, 83 Sinchon-ro, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "10th floor, Hyundai Department Store, 83 Sinchon-ro, Seodaemun-gu",
     "location": {
       "lat": 37.556183,
       "lng": 126.93595599999998
@@ -1022,11 +1022,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99006cfdaf5f:0xb1b9f0dfa393e7be!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1036,16 +1036,16 @@
   },
   {
     "place_id": "ChIJYT7P_2aZfDUR1T0CjpZu_Zs",
-    "display_name": "안다르 현대백화점 신촌점 Andar Hyundai Department Store Sinchon",
-    "category": "백화점",
+    "display_name": "Andar Hyundai Department Store Sinchon",
+    "category": "department store",
     "types": [
       "department_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 신촌로 83 현대백화점 신촌점 지하 2층",
-    "short_address": "서대문구 신촌로 83 현대백화점 신촌점 지하 2층",
+    "address": "Hyundai Department Store Sinchon Branch, 2nd Basement, 83 Sinchon-ro, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "Hyundai Department Store Sinchon Branch, 2nd basement level, 83 Sinchon-ro, Seodaemun-gu",
     "location": {
       "lat": 37.5561569,
       "lng": 126.93588390000001
@@ -1064,13 +1064,13 @@
     "google_maps_url": "https://maps.google.com/?cid=11240261837893287381",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9966ffcf3e61:0x9bfd6e968e023dd5!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 8:00",
-      "화요일: 오전 10:30 ~ 오후 8:00",
-      "수요일: 오전 10:30 ~ 오후 8:00",
-      "목요일: 오전 10:30 ~ 오후 8:00",
-      "금요일: 오전 10:30 ~ 오후 8:30",
-      "토요일: 오전 10:30 ~ 오후 8:30",
-      "일요일: 오전 10:30 ~ 오후 8:30"
+      "Monday: 10:30 AM - 8:00 PM",
+      "Tuesday: 10:30 AM - 8:00 PM",
+      "Wednesday: 10:30 AM - 8:00 PM",
+      "Thursday: 10:30 AM - 8:00 PM",
+      "Friday: 10:30 AM - 8:30 PM",
+      "Saturday: 10:30 AM - 8:30 PM",
+      "Sunday: 10:30 AM - 8:30 PM"
     ],
     "services": null,
     "payment": null,
@@ -1083,16 +1083,16 @@
   },
   {
     "place_id": "ChIJX0chCwCZfDURd4SZRT_UcDc",
-    "display_name": "현대백화점 왁골프 신촌점",
-    "category": "백화점",
+    "display_name": "Hyundai Department Store Wag Golf Sinchon Branch",
+    "category": "department store",
     "types": [
       "department_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 30-33",
-    "short_address": "서대문구 창천동 30-33",
+    "address": "30-33 Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "30-33 Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5561569,
       "lng": 126.93588390000001
@@ -1112,11 +1112,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99000b21475f:0x3770d43f45998477!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1126,15 +1126,15 @@
   },
   {
     "place_id": "ChIJ59XYrZWYfDURO34O41ZlllM",
-    "display_name": "쿠아 현대신촌",
-    "category": "쇼핑몰",
+    "display_name": "Kua Hyundai Sinchon",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 30-33",
-    "short_address": "서대문구 창천동 30-33",
+    "address": "30-33 Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "30-33 Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5560909,
       "lng": 126.9358628
@@ -1153,20 +1153,20 @@
     "google_maps_url": "https://maps.google.com/?cid=6023112975505587771",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9895add8d5e7:0x53966556e30e7e3b!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 9:00",
-      "화요일: 오전 10:30 ~ 오후 9:00",
-      "수요일: 오전 10:30 ~ 오후 9:00",
-      "목요일: 오전 10:30 ~ 오후 9:00",
-      "금요일: 오전 10:30 ~ 오후 9:00",
-      "토요일: 오전 10:30 ~ 오후 9:00",
-      "일요일: 오전 10:30 ~ 오후 9:00"
+      "Monday: 10:30 AM - 9:00 PM",
+      "Tuesday: 10:30 AM - 9:00 PM",
+      "Wednesday: 10:30 AM - 9:00 PM",
+      "Thursday: 10:30 AM - 9:00 PM",
+      "Friday: 10:30 AM - 9:00 PM",
+      "Saturday: 10:30 AM - 9:00 PM",
+      "Sunday: 10:30 AM - 9:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1176,24 +1176,24 @@
         "author": "Yang Jerry",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "11년 전",
-        "text": "뉴 빌리지"
+        "relative_time": "11 years ago",
+        "text": "New Village"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJC3p4rpWYfDUR8Slfe8HixV0",
-    "display_name": "에스케이투 현대신촌",
-    "category": "백화점",
+    "display_name": "SK2 Hyundai Sinchon",
+    "category": "department store",
     "types": [
       "department_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 30-33",
-    "short_address": "서대문구 창천동 30-33",
+    "address": "30-33 Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "30-33 Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.556090999999995,
       "lng": 126.93583500000001
@@ -1212,24 +1212,24 @@
     "google_maps_url": "https://maps.google.com/?cid=6757056136565697009",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9895ae787a0b:0x5dc5e2c17b5f29f1!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 8:00",
-      "화요일: 오전 10:30 ~ 오후 8:00",
-      "수요일: 오전 10:30 ~ 오후 8:00",
-      "목요일: 오전 10:30 ~ 오후 8:00",
-      "금요일: 오전 10:30 ~ 오후 8:00",
-      "토요일: 오전 10:30 ~ 오후 8:00",
-      "일요일: 오전 10:30 ~ 오후 8:00"
+      "Monday: 10:30 AM - 8:00 PM",
+      "Tuesday: 10:30 AM - 8:00 PM",
+      "Wednesday: 10:30 AM - 8:00 PM",
+      "Thursday: 10:30 AM - 8:00 PM",
+      "Friday: 10:30 AM - 8:00 PM",
+      "Saturday: 10:30 AM - 8:00 PM",
+      "Sunday: 10:30 AM - 8:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": null,
@@ -1237,16 +1237,16 @@
   },
   {
     "place_id": "ChIJC3p4rpWYfDURG8cvhuL4p1A",
-    "display_name": "루첸리 현대백화점 신촌",
-    "category": "백화점",
+    "display_name": "Luchenri Hyundai Department Store Sinchon",
+    "category": "department store",
     "types": [
       "department_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 30-33",
-    "short_address": "서대문구 창천동 30-33",
+    "address": "30-33 Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "30-33 Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5560909,
       "lng": 126.93583500000001
@@ -1265,20 +1265,20 @@
     "google_maps_url": "https://maps.google.com/?cid=5811887495942489883",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9895ae787a0b:0x50a7f8e2862fc71b!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 10:00",
-      "화요일: 오전 10:30 ~ 오후 10:00",
-      "수요일: 오전 10:30 ~ 오후 10:00",
-      "목요일: 오전 10:30 ~ 오후 10:00",
-      "금요일: 오전 10:30 ~ 오후 10:00",
-      "토요일: 오전 10:30 ~ 오후 10:00",
-      "일요일: 오전 10:30 ~ 오후 10:00"
+      "Monday: 10:30 AM - 10:00 PM",
+      "Tuesday: 10:30 AM - 10:00 PM",
+      "Wednesday: 10:30 AM - 10:00 PM",
+      "Thursday: 10:30 AM - 10:00 PM",
+      "Friday: 10:30 AM - 10:00 PM",
+      "Saturday: 10:30 AM - 10:00 PM",
+      "Sunday: 10:30 AM - 10:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1288,16 +1288,16 @@
   },
   {
     "place_id": "ChIJC3p4rpWYfDURBk29e5gZ1ic",
-    "display_name": "오에스티 현대 유플렉스점",
-    "category": "백화점",
+    "display_name": "OST Hyundai Uplex Branch",
+    "category": "department store",
     "types": [
       "department_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 30-33",
-    "short_address": "서대문구 창천동 30-33",
+    "address": "30-33 Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "30-33 Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5560909,
       "lng": 126.93583500000001
@@ -1316,18 +1316,18 @@
     "google_maps_url": "https://maps.google.com/?cid=2870509955196996870",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9895ae787a0b:0x27d619987bbd4d06!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 8:30",
-      "화요일: 오전 10:30 ~ 오후 8:30",
-      "수요일: 오전 10:30 ~ 오후 8:30",
-      "목요일: 오전 10:30 ~ 오후 8:30",
-      "금요일: 오전 10:30 ~ 오후 8:30",
-      "토요일: 오전 10:30 ~ 오후 8:30",
-      "일요일: 오전 10:30 ~ 오후 8:30"
+      "Monday: 10:30 AM - 8:30 PM",
+      "Tuesday: 10:30 AM - 8:30 PM",
+      "Wednesday: 10:30 AM - 8:30 PM",
+      "Thursday: 10:30 AM - 8:30 PM",
+      "Friday: 10:30 AM - 8:30 PM",
+      "Saturday: 10:30 AM - 8:30 PM",
+      "Sunday: 10:30 AM - 8:30 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1337,16 +1337,16 @@
   },
   {
     "place_id": "ChIJbU0ue5qYfDURXG0fO0nar2o",
-    "display_name": "현대백화점 신촌점",
-    "category": "백화점",
+    "display_name": "Hyundai Department Store Sinchon Branch",
+    "category": "department store",
     "types": [
       "department_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 신촌로 83",
-    "short_address": "서대문구 신촌로 83",
+    "address": "83 Sinchon-ro, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "83 Sinchon-ro, Seodaemun-gu",
     "location": {
       "lat": 37.555999199999995,
       "lng": 126.93580689999997
@@ -1365,64 +1365,64 @@
     "google_maps_url": "https://maps.google.com/?cid=7687603097004109148",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989a7b2e4d6d:0x6aafda493b1f6d5c!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 8:00",
-      "화요일: 오전 10:30 ~ 오후 8:00",
-      "수요일: 오전 10:30 ~ 오후 8:00",
-      "목요일: 오전 10:30 ~ 오후 8:00",
-      "금요일: 오전 10:30 ~ 오후 8:30",
-      "토요일: 오전 10:30 ~ 오후 8:30",
-      "일요일: 오전 10:30 ~ 오후 8:30"
+      "Monday: 10:30 AM - 8:00 PM",
+      "Tuesday: 10:30 AM - 8:00 PM",
+      "Wednesday: 10:30 AM - 8:00 PM",
+      "Thursday: 10:30 AM - 8:00 PM",
+      "Friday: 10:30 AM - 8:30 PM",
+      "Saturday: 10:30 AM - 8:30 PM",
+      "Sunday: 10:30 AM - 8:30 PM"
     ],
     "services": [
-      "배달",
-      "화장실"
+      "delivery",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "김성한 (전자금융업자)",
+        "author": "Seonghan Kim (electronic finance businessman)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "My expireance is very special30yearsHellGateOpenlife.마침내 KpopGoldenClosethatGate혼:자괴롭고무섭고외롭고더럽고속이고사기당하고:문21centurySince1997~2026.02.13 김성한글을디지털전자스마트모바일기기로쓰다.WrighterUsedResourceMyDatabase."
+        "relative_time": "1 month ago",
+        "text": "My expireance is very special30yearsHellGateOpenlife.Finally KpopGoldenClosethatGateSoul: Haunted, scared, lonely, dirty, deceived and defrauded: Moon 21centurySince1997~2026.02.13 Kim Seong-han writes with a digital electronic smart mobile device.WrighterUsedResourceMyDatabase."
       },
       {
         "author": "kk peng",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "할인된 가격에 예쁜 액세서리 잘 사가용✨\n매장도 넘 깔끔하고 직원분들 친절하셔서👍"
+        "relative_time": "5 months ago",
+        "text": "Buy pretty accessories at discounted prices✨\nThe store is very clean and the staff are friendly👍"
       },
       {
-        "author": "김민경",
+        "author": "Minkyung Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "9층 카페 h에는 좋은 뷰가 있고\n휴게공간이 있어 좋습니다"
+        "relative_time": "4 months ago",
+        "text": "There is a good view at Cafe H on the 9th floor.\nIt's nice to have a rest area"
       },
       {
         "author": "Sopia Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "크리스마스 곰돌이 포토존 연출이 너무 귀여워요!"
+        "relative_time": "3 months ago",
+        "text": "The Christmas teddy bear photo zone is so cute!"
       },
       {
         "author": "BONG",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "구시가지의 영광이 깃든 현대백화점.\n\n명품보단 식품, 고급보단 대중에게 편안한 장소가 되었다. 더현대 미니판이라고 해야하려나..\n\n지하 식품 코너 호객이 너무 과한데 값은 더 과해서 멀어짐. 엄지네 꼬막 찾으러 갔다가 초밥만 구경하다옴.\n이벤트성 스토어가 간간히 열리는건 재밌는 점.\n\n결국 모두가 가는 곳은 유니클로"
+        "relative_time": "1 year ago",
+        "text": "Hyundai Department Store, home to the glory of the old town.\n\nIt has become a comfortable place for food rather than luxury goods, and for the public rather than luxury. Should I call it the Hyundai mini version?\n\nThe underground food corner was overly touting customers, but the prices were even higher, so I stayed away. I went to look for Thumb's cockles and ended up just looking at sushi.\nIt's interesting that event stores are opened occasionally.\n\nIn the end, Uniqlo is where everyone goes"
       }
     ],
     "photos": [
@@ -1440,15 +1440,15 @@
   },
   {
     "place_id": "ChIJ5VSgNJSYfDURHYz0TucIq0Q",
-    "display_name": "디자인스킨",
-    "category": "백화점",
+    "display_name": "design skin",
+    "category": "department store",
     "types": [
       "department_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5559873,
@@ -1470,8 +1470,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1481,15 +1481,15 @@
   },
   {
     "place_id": "ChIJz4YurrOZfDURuJBrO1JZMsw",
-    "display_name": "준오헤어 연대2호점",
-    "category": "쇼핑몰",
+    "display_name": "Juno Hair Yeondae 2nd Branch",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 신촌동 명물1길 24",
-    "short_address": "서대문구 신촌동 명물1길 24",
+    "address": "24, Myeongmul 1-gil, Sinchon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "24, Myeongmul 1-gil, Sinchon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5577454,
       "lng": 126.93705549999999
@@ -1509,11 +1509,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99b3ae2e86cf:0xcc3259523b6b90b8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1523,28 +1523,28 @@
         "author": "kolson zk",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "제가 외국인이라서 처음엔 한국어 하나도 못하고 사실 미용실 가는 게 어렵죠. 그렇지만 연대2호점 와서 선생님들이 넘 친절해서 오자마자 그 불안감 바로 사라졌고 게다가 머리를 자르고 나서도 마음에 들어서 지금까지 2년이나 되고 있어요. 앞으로 또 계속 올 거에요!!"
+        "relative_time": "6 years ago",
+        "text": "Because I'm a foreigner, at first I couldn't speak any Korean and it was actually difficult to go to the hair salon. However, when I came to the 2nd branch of Yonsei University, the teachers were so kind that my anxiety disappeared right away. Moreover, I liked it even after I cut my hair, so I have been doing it for two years now. I will keep coming again in the future!!"
       },
       {
-        "author": "루나우주루별",
+        "author": "Luna Universe",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "이곳은 정말 멋진 미용실이 었어요! 들어오자마자 원장님도 너무 반갑게 맞이해주시고 아이스티도 정말 맛있고 샴푸도 너무 시원 했고 저 커트 해주신 선생님도 세세한거 하나하나 물어봐주시고 스타일링 방법까지 알려주시니 얻어가는게 많았던 방문후기입니다 별점이 5점이 최대인게 아쉬울 정도에요.! 그럼 한달뒤에 또올게요ㅎㅎ"
+        "relative_time": "6 years ago",
+        "text": "This was a really cool salon! As soon as I came in, the director greeted me very warmly, the iced tea was really delicious, the shampoo was very refreshing, and the teacher who did my haircut asked me every single detail and even showed me how to style my hair, so I gained a lot from my visit. It's a shame that 5 stars is the maximum! Then I'll come back in a month haha"
       },
       {
         "author": "Manhui Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "추천"
+        "relative_time": "4 years ago",
+        "text": "suggestion"
       },
       {
-        "author": "이재은",
+        "author": "Jae-eun Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -1554,15 +1554,15 @@
   },
   {
     "place_id": "ChIJe40AlcCZfDURJJ1_YKeVJ-Q",
-    "display_name": "이랜드복합관 신촌점",
-    "category": "쇼핑몰",
+    "display_name": "E-Land Complex Sinchon Branch",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 노고산동 신촌로 94",
-    "short_address": "마포구 노고산동 신촌로 94",
+    "address": "94 Sinchon-ro, Nogosan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "94 Sinchon-ro, Nogosan-dong, Mapo-gu",
     "location": {
       "lat": 37.5549816,
       "lng": 126.9361243
@@ -1582,11 +1582,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99c095008d7b:0xe42795a7607f9d24!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1596,8 +1596,8 @@
   },
   {
     "place_id": "ChIJuWttn5WYfDURI_JgL4vrQHs",
-    "display_name": "다이소 신촌본점",
-    "category": "생활용품점",
+    "display_name": "Daiso Sinchon Main Branch",
+    "category": "Household goods store",
     "types": [
       "home_goods_store",
       "shopping_mall",
@@ -1605,8 +1605,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 신촌로 90",
-    "short_address": "마포구 신촌로 90",
+    "address": "90 Sinchon-ro, Mapo-gu, Seoul, South Korea",
+    "short_address": "90 Sinchon-ro, Mapo-gu",
     "location": {
       "lat": 37.555296,
       "lng": 126.9355255
@@ -1625,18 +1625,18 @@
     "google_maps_url": "https://maps.google.com/?cid=8881357448202482211",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98959f6d6bb9:0x7b40eb8b2f60f223!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 10:00",
-      "화요일: 오전 10:00 ~ 오후 10:00",
-      "수요일: 오전 10:00 ~ 오후 10:00",
-      "목요일: 오전 10:00 ~ 오후 10:00",
-      "금요일: 오전 10:00 ~ 오후 10:00",
-      "토요일: 오전 10:00 ~ 오후 10:00",
-      "일요일: 오전 10:00 ~ 오후 10:00"
+      "Monday: 10:00 AM - 10:00 PM",
+      "Tuesday: 10:00 AM - 10:00 PM",
+      "Wednesday: 10:00 AM - 10:00 PM",
+      "Thursday: 10:00 AM - 10:00 PM",
+      "Friday: 10:00 AM - 10:00 PM",
+      "Saturday: 10:00 AM - 10:00 PM",
+      "Sunday: 10:00 AM - 10:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1646,36 +1646,36 @@
         "author": "jay Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "신촌본점을 다녀왔어요.최근에 생긴 홍대2호점과는 비교가 안되지만 적지않은 규모에요.일단 지하가 있어요.홍대2호점은 없거든요. 역시나 신촌은 외국인분들이 많았어요.비도 오고 날씨도 쌀쌀해서  좋은 날씨는 아니지만 어디서들 알고 오는지 신기하더군요.지하1층(도기그릇제품)~지상3층으로 이루어져 있어요.오늘은 우연히 낚시용품을 발견했어요.나름 신기~~~. 여기서 홀더샤프심(2매들었는데도 1000원. 중국제)을 샀는데 저렴하더라구요.계산할때도 손님들이 너무 많아 한참을 기다린 끝에 계산을 마칠수가 있었어요.지역 특성상 안내데스크도 있었어요. 오후 10시까지 운영을 해요.다이소가 일본기업이니 아니니 하는 논쟁이 있어요.개인적으로 전 일본과 관련이 있는 회사는  맞는거같아요. 그렇지만 제품이 너무 저렴하다보니 크게 와닿지는 않더라구요.그점에선 죄송합니다^^"
+        "relative_time": "6 years ago",
+        "text": "I went to the Sinchon main branch. It can't be compared to the recently opened Hongdae 2nd branch, but it is quite large. First of all, there is a basement. The Hongdae 2nd branch does not have one. As expected, there were a lot of foreigners in Sinchon. It was rainy and chilly, so it wasn't the best weather, but I was curious to know where they came from. It consists of the 1st basement floor (pottery products) and the 3rd floor above ground. Today, I happened to find fishing supplies. It was quite interesting~~~. I bought a holder sharp lead (1,000 won for 2 pieces, made in China) here and it was cheap. There were so many customers when I checked out that I was able to pay after waiting for a while. Due to the nature of the area, there was also an information desk. It is open until 10 p.m. There is a debate as to whether Daiso is a Japanese company or not. Personally, I think it is a company with ties to Japan. However, since the product is so cheap, it didn't really make a big difference. I'm sorry about that^^"
       },
       {
         "author": "Hyewon “a” SHIM",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "신촌역 바로 앞에 있어서 찾아가기 편하다 보니 자주 들르는 곳이에요~ 매장도 넓은 편이고 3층까지 씁니다."
+        "relative_time": "1 year ago",
+        "text": "It's right in front of Sinchon Station, so it's easy to get to, so I stop by often. The store is spacious and covers up to the third floor."
       },
       {
         "author": "z z",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "계산 줄이 너무 길다 빼고 늘 만적스러운 다이소 신촌본점"
+        "relative_time": "7 months ago",
+        "text": "Daiso Sinchon Main Branch is always crowded except the checkout line is too long."
       },
       {
         "author": "Kiseog Yang (The Professionals Gambler)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "평일 저녁인데도 사람 많음. 깔끔한 매장 친절은 보통 손님이 많아서 그런가? 가격이 점점 비싸지는 다이소...처음 같지 않은 것 같다.  돈 많이 벌면 초심을 잃는 한국 사람들의 습성..."
+        "relative_time": "2 years ago",
+        "text": "Even though it was a weekday evening, there were a lot of people. Is the neat and friendly store usually due to the large number of customers? Daiso's prices are getting more and more expensive...it doesn't seem like the first time.  The habit of Korean people is to lose their original intention when they earn a lot of money..."
       },
       {
-        "author": "바람소리",
+        "author": "the sound of the wind",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "2년 전",
-        "text": "그냥 소소하게 필요한것 구매하는곳?\n다른곳 대비 좀더 넓어 다양한 종류의 상품이 많은편.\n평상시엔 셀프계산인데 그닥 밀리지도 않는데 직원이 현금 계산대에서 계산해줌."
+        "relative_time": "2 years ago",
+        "text": "A place to just buy small necessities?\nIt is larger than other places and has a wide variety of products.\nNormally, I do self-checkout, but it doesn't really matter, and the staff pays at the cash register."
       }
     ],
     "photos": [
@@ -1693,15 +1693,15 @@
   },
   {
     "place_id": "ChIJCf4nc5WYfDURgGfCHHVtB4Q",
-    "display_name": "에스티오",
-    "category": "쇼핑몰",
+    "display_name": "Estio",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 노고산동 49-46",
-    "short_address": "마포구 노고산동 49-46",
+    "address": "49-46 Nogosan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "49-46 Nogosan-dong, Mapo-gu",
     "location": {
       "lat": 37.5555354,
       "lng": 126.9347796
@@ -1721,11 +1721,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98957327fe09:0x84076d751cc26780!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1735,35 +1735,35 @@
         "author": "Justin H",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "9년 전",
-        "text": "정확하지 않은 위치"
+        "relative_time": "9 years ago",
+        "text": "incorrect location"
       },
       {
         "author": "Emil Bredahl Lavsen",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "10년 전",
-        "text": "옷이나 필요한 물건들을 살 수 있는 좋은 곳이에요. 저는 이런 쇼핑몰을 좋아하는데, 규모가 엄청 크고 모든 사람을 위한 온갖 물건들이 다 있어서 좋거든요. 다만 아쉬운 점은 많은 쇼핑몰들이 비슷하게 생겼다는 거예요."
+        "relative_time": "10 years ago",
+        "text": "It's a good place to buy clothes and other necessary items. I like shopping malls like this because they are so big and have everything for everyone. However, the unfortunate thing is that many shopping malls look similar."
       },
       {
         "author": "BlueGom Pooh",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "고경민",
+        "author": "Go Gyeong-min",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "주킁호",
+        "author": "Sniff",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -1771,15 +1771,15 @@
   },
   {
     "place_id": "ChIJcc2zEJWYfDURtpkQUqC6K7o",
-    "display_name": "캠퍼스프라자",
-    "category": "쇼핑몰",
+    "display_name": "Campus Plaza",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동",
-    "short_address": "서대문구 창천동",
+    "address": "Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5562853,
       "lng": 126.9344741
@@ -1799,51 +1799,51 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989510b3cd71:0xba2bbaa0521099b6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어화장실"
+      "wheelchair restroom"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "고동우",
+        "author": "Go Dong-woo",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "신촌역 바로 인근이라 교통 편리,유동인구가 많다."
+        "relative_time": "6 years ago",
+        "text": "It is right near Sinchon Station, so transportation is convenient and there is a lot of floating population."
       },
       {
-        "author": "함세현",
+        "author": "Ham Se-hyeon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9년 전",
-        "text": "잘 모르겠네요"
+        "relative_time": "9 years ago",
+        "text": "I'm not sure"
       },
       {
         "author": "Eric HyeonJun Gim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "9년 전",
-        "text": "좋음"
+        "relative_time": "9 years ago",
+        "text": "well"
       },
       {
         "author": "johwi Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "BlueGom Pooh",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -1853,15 +1853,15 @@
   },
   {
     "place_id": "ChIJiy0w7ZOYfDUR_ZF9ZtSLsAw",
-    "display_name": "올리브영 신촌연세점",
-    "category": "쇼핑몰",
+    "display_name": "Olive Young Sinchon Yonsei Branch",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 33-4",
-    "short_address": "서대문구 창천동 33-4",
+    "address": "33-4 Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "33-4 Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.558822299999996,
       "lng": 126.9366855
@@ -1880,59 +1880,59 @@
     "google_maps_url": "https://maps.google.com/?cid=914384468725043709",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9893ed302d8b:0xcb08bd4667d91fd!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 11:00",
-      "화요일: 오전 10:00 ~ 오후 11:00",
-      "수요일: 오전 10:00 ~ 오후 11:00",
-      "목요일: 오전 10:00 ~ 오후 11:00",
-      "금요일: 오전 10:00 ~ 오후 11:00",
-      "토요일: 오전 10:00 ~ 오후 11:00",
-      "일요일: 오전 10:00 ~ 오후 11:00"
+      "Monday: 10:00 AM - 11:00 PM",
+      "Tuesday: 10:00 AM - 11:00 PM",
+      "Wednesday: 10:00 AM - 11:00 PM",
+      "Thursday: 10:00 AM - 11:00 PM",
+      "Friday: 10:00 AM - 11:00 PM",
+      "Saturday: 10:00 AM - 11:00 PM",
+      "Sunday: 10:00 AM - 11:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이유진",
+        "author": "Yujin Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "상암점은 가짜를 판매해서 얼굴 살을 찢어 놓았 고 신촌역점, 연대점은 친절하게 상품설명을 해주었다.\n제품들이 너무 좋은데 일주일 사용했는데 피부 가 보들보들 너무 좋다.\n메이커 특성이겠지만 스킨에 유분이 너무 많은 제품을 골라줘서 남편스킨을 발랐는데 더 좋은 것같다. 기초제품을 모두 사용하니 탄력, 수분,\n유분 모두 만족하고 있는데 아모레 화장품과 성분은 같은 것같고 아모레에는 보톡스가 기본으로 들어있어 사용을 하다가 이마에 주름이 펴저 있는 것을 알고 놀라 주변에 알려 권했고 프리메라도 좋고 워터크린싱 제품도 매우 좋았는데 올리브영에서 구입한 고가 제품에 보톡스가 부족한 것같다.\n셈플 사용중으로 이제품도 좋은데 보톡스가 부족하다. 얼굴 전체에 광체가 나는 것같이 피부가 당겨지는 듯 유행하고 있는 것은 100% 있는 것같다. 우리나라 화장품 좋은데 굳이 수입제품사용 할 필요가 있을 까?싶다는 생각이 들었다. 젊은 미스들만 가는 곳으로 생각을\n했는데 나이가 좀 있으신들도 즐겨 찾으셔도 좋고 우리나라 화장품 역사의 선두 주자인 아모레 제품도 판매하면 좋겠다.\n메직클렌져가 도브비누와 재료가 같은데 조금 화장품 같은 향이 있고 좋다. 여드름 치료가 되는 것으로 권장하고싶다.\n올리브영에 바란다.\n우리나라 기존에 있던 화장품도 같이 판매를 해주면 좋겠다. 명실공히 대한민국 최고의  매장을 자랑하는 대표적 메이커로 부족할 것이 없어야 한다."
+        "relative_time": "5 years ago",
+        "text": "The Sangam branch sold fake products and tore the flesh on my face, while the Sinchon Station and Yeondeon branches kindly explained the products.\nThe products are really good. I've been using it for a week and my skin feels so soft.\nIt may be the manufacturer's characteristic, but I chose a product that has too much oil on my skin, so I applied my husband's skin and it seems to be better. By using all basic products, elasticity, moisture,\nI am satisfied with both oils, but the ingredients seem to be the same as Amore cosmetics, and Amore contains Botox as standard, so while using it, I was surprised to see wrinkles forming on my forehead, so I told people around me and recommended Primera, and the water cleansing product was also very good, but the expensive product I purchased from Olive Young seems to lack Botox.\nI'm using Sample and this product is good, but Botox isn't enough. It seems like there is 100% a trend that makes your skin look tighter, like a glow body all over your face. My country's cosmetics are good, so I thought, is there a need to use imported products? I thought of it as a place only young misses go\nIt would be nice for older people to enjoy it, and it would be great if they also sell Amore products, a leader in the history of Korean cosmetics.\nMagic Cleanser has the same ingredients as Dove soap, but it has a nice, slightly cosmetic-like scent. I would like to recommend it as a treatment for acne.\nI wish for Olive Young.\nIt would be nice if Korea's existing cosmetics were also sold. As a representative manufacturer that boasts the best stores in Korea, both in name and reality, there should be nothing lacking."
       },
       {
         "author": "Park David",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "위치도 편리하고 매니저도 친절합니다.\n사실 우리나라 왠만한곳은 다 좋습니다.\n우리나라 사람은 친절한 민족입니다"
+        "relative_time": "4 years ago",
+        "text": "The location is convenient and the manager is friendly.\nActually, most places in our country are good.\nOur people are a friendly people."
       },
       {
         "author": "WOONG PARK",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "다양한 고스메틱 제품을 한자리에서 볼 수 있어 편리했음.\n특히 남성 그루밍 제품들이 따로 진열되어있어 필요한 제품을 비교 구매할 수 있어 좋았음."
+        "relative_time": "5 years ago",
+        "text": "It was convenient to be able to see a variety of cosmetic products in one place.\nIn particular, it was nice that men's grooming products were displayed separately, allowing you to compare and purchase the products you needed."
       },
       {
-        "author": "최찬돌 (찬돌이)",
+        "author": "Choi Chan-dol (Chandoli)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "깨끗하고 넓네요"
+        "relative_time": "5 years ago",
+        "text": "It's clean and spacious"
       },
       {
         "author": "Jukyung Yoo",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "꽤 큰 올리브영이에요! 다양한 화장품들이 있어요 ㅎ"
+        "relative_time": "4 years ago",
+        "text": "It’s a pretty big Olive Young! There are various cosmetics."
       }
     ],
     "photos": [
@@ -1950,15 +1950,15 @@
   },
   {
     "place_id": "ChIJhVFf2WqZfDURIYVlhEpixmw",
-    "display_name": "올리브영 신촌명물거리점",
-    "category": "쇼핑몰",
+    "display_name": "Olive Young Sinchon Myeongmul Street Branch",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 신촌동 명물길 54",
-    "short_address": "서대문구 신촌동 명물길 54",
+    "address": "54 Myeongmul-gil, Sinchon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "54 Myeongmul-gil, Sinchon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5588389,
       "lng": 126.93939499999999
@@ -1977,18 +1977,18 @@
     "google_maps_url": "https://maps.google.com/?cid=7838060273673274657",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c996ad95f5185:0x6cc6624a84658521!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 11:00",
-      "화요일: 오전 10:00 ~ 오후 11:00",
-      "수요일: 오전 10:00 ~ 오후 11:00",
-      "목요일: 오전 10:00 ~ 오후 11:00",
-      "금요일: 오전 10:00 ~ 오후 11:00",
-      "토요일: 오전 10:00 ~ 오후 11:00",
-      "일요일: 오전 10:00 ~ 오후 11:00"
+      "Monday: 10:00 AM - 11:00 PM",
+      "Tuesday: 10:00 AM - 11:00 PM",
+      "Wednesday: 10:00 AM - 11:00 PM",
+      "Thursday: 10:00 AM - 11:00 PM",
+      "Friday: 10:00 AM - 11:00 PM",
+      "Saturday: 10:00 AM - 11:00 PM",
+      "Sunday: 10:00 AM - 11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1998,36 +1998,36 @@
         "author": "BONG",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "이대여규인근 올리브영보다 규모는 작으나 깔끔하고 동선도 좋음\n\n외국인은 적은편이고 한국인 손님 위주\n\n남성용품들도 꽤 다양하고 음료도 잘 갖추어져있음"
+        "relative_time": "1 year ago",
+        "text": "It is smaller than Olive Young near Ewha Womans University, but it is clean and has good circulation.\n\nThere are few foreigners, mainly Korean customers.\n\nThere is quite a variety of men's products and drinks are well stocked."
       },
       {
         "author": "Sophia Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "여기 정말 친절해요 알바생들도 계속 일어서있고 물건옮기느라 힘들법한데 생글생글 웃고 계시고, 진심으로 도와주시려고하는게 느껴집니다 제가 찾던 물건이 없자 재고있는 다른 올리브영은 어디있는지 위치도 상세하게 설명해주셔서 바로 가서 겟햇답니다:)"
+        "relative_time": "6 years ago",
+        "text": "This place is really friendly. The part-time workers are always on their feet and moving things around, so it might be hard, but they are smiling brightly, and I can feel that they are genuinely trying to help me. When I couldn't find the item I was looking for, they explained in detail where the other Olive Young was in stock, so I went and got it right away :)"
       },
       {
         "author": "kyeongrok nam",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "양도 많고 추울정도로 시원해요."
+        "relative_time": "3 years ago",
+        "text": "There is a lot of food and it is so refreshing that it is cold."
       },
       {
         "author": "M Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "품목도 많고 깔끔해요"
+        "relative_time": "6 years ago",
+        "text": "There are a lot of items and it's neat."
       },
       {
-        "author": "서윤빈",
+        "author": "Seo Yunbin",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "물이 맛있다"
+        "relative_time": "2 years ago",
+        "text": "the water is delicious"
       }
     ],
     "photos": [
@@ -2041,14 +2041,14 @@
   },
   {
     "place_id": "ChIJlzp1hJCYfDURONjd431QQ7w",
-    "display_name": "베이핑 프라자",
-    "category": "쇼핑몰",
+    "display_name": "Vaping Plaza",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5580257,
@@ -2069,11 +2069,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989084753a97:0xbc43507de3ddd838!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2085,15 +2085,15 @@
   },
   {
     "place_id": "ChIJy6a9jpCYfDURa3LZCKYSCYU",
-    "display_name": "(주)루피하우스",
-    "category": "쇼핑몰",
+    "display_name": "Loopy House Co., Ltd.",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 대현동 110-20번지 현대캠퍼빌 1206호 서대문구 서울특별시 KR",
-    "short_address": "대현동 110-20번지 현대캠퍼빌 1206호 서대문구 서울특별시 KR",
+    "address": "#1206, Hyundai Camperville, 110-20 Daehyeon-dong, Seoul, Republic of Korea, Seodaemun-gu, Seoul KR",
+    "short_address": "#1206, Hyundai Camperville, 110-20 Daehyeon-dong, Seodaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5582558,
       "lng": 126.94240479999999
@@ -2114,8 +2114,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2125,15 +2125,15 @@
   },
   {
     "place_id": "ChIJ9-_kp_mZfDURyKpXvdVy0pg",
-    "display_name": "다이니",
-    "category": "쇼핑몰",
+    "display_name": "Daini",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 대현동 40-34",
-    "short_address": "서대문구 대현동 40-34",
+    "address": "40-34 Daehyeon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "40-34 Daehyeon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.557144,
       "lng": 126.9449354
@@ -2153,11 +2153,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99f9a7e4eff7:0x98d272d5bd57aac8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2166,15 +2166,15 @@
   },
   {
     "place_id": "ChIJaf0CxF-ZfDURCASWI-8TX4I",
-    "display_name": "데일리윙",
-    "category": "쇼핑몰",
+    "display_name": "daily wing",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 대현동 90-3",
-    "short_address": "서대문구 대현동 90-3",
+    "address": "90-3 Daehyeon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "90-3 Daehyeon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5578018,
       "lng": 126.94453329999999
@@ -2194,11 +2194,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c995fc402fd69:0x825f13ef23960408!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2210,15 +2210,15 @@
   },
   {
     "place_id": "ChIJj3txnpqYfDURjdDo-NwNXno",
-    "display_name": "이대쇼핑거리",
-    "category": "쇼핑몰",
+    "display_name": "Ewha Womans University Shopping Street",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 신촌동 이화여대길 88",
-    "short_address": "서대문구 신촌동 이화여대길 88",
+    "address": "88 Ewhayeodae-gil, Sinchon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "88 Ewhayeodae-gil, Sinchon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5591165,
       "lng": 126.94346549999999
@@ -2237,59 +2237,59 @@
     "google_maps_url": "https://maps.google.com/?cid=8817500363157983373",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989a9e717b8f:0x7a5e0ddcf8e8d08d!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "둔둔이",
+        "author": "Dundun",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "아직 짱짱합니다! 지난날 명성엔 비할 수 없어도 주변이 깔끔하게 정리되기도 하고 생각보다 다양하게 여러가지를 보고 즐길만합니다~ 중간중간 먹거리도 엄청 다양하고 아이쇼핑도 편안하게 즐기기 좋습니다.\n특징이라면 자그마한 소호스타일 매장이 많습니다. 가격도 공개되어 부담없이 이용이 편리합니다.\n친절이라면 기본장착하고 있습니다^^\n서울 핫아이템인 박스퀘어가 있답니다~ 쪼끔해도 있을 건 다 있습니다~"
+        "relative_time": "6 years ago",
+        "text": "It’s still awesome! Although it cannot compare to the reputation of the past, the surroundings are neatly organized and there are more things to see and enjoy than you might think. There is a wide variety of food to choose from, and window shopping is also great to enjoy comfortably.\nA special feature is that there are many small Soho-style stores. The price is also disclosed, making it convenient to use.\nIf you are kind, it is equipped as standard ^^\nThere is a box square, a hot item in Seoul. Even if it is a little small, it has everything you need."
       },
       {
-        "author": "슈비두밥",
+        "author": "Shubidoo Bob",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
-        "text": "그냥 친구들끼리 놀러가기 좋는 곳이에요 옷은 으레 그렇듯이 다 비슷비슷해서 어딜 가든 똑같긴한데 중간중간 요깃거리가 있어서 먹는 재미로 가는 것 같습니당.. 탕후루가 아직도 있는 지 확인은 못했는데 예전에 먹었울때는 나쁘지 않았어요 혹시 있다면 경험삼아서 한번 잡솨보세용~ 이대에서 신촌역쪽으로 좀만 걸어가면 바로 신촌이니까 신촌도 가서 재밌게 노세욥ᕕ( ᐛ )ᕗ"
+        "relative_time": "7 years ago",
+        "text": "It's just a good place to hang out with friends. As usual, the clothes are similar, so it's the same wherever you go, but there are snacks in between, so I think I go there for the fun of eating.. I haven't confirmed if Tanghulu is still available, but it wasn't bad when I tried it before. If you do, try it out for experience. Sinchon is just a short walk from Ewha Womans University toward Sinchon Station, so go to Sinchon and have fun. ᐛ )ᕗ"
       },
       {
-        "author": "김지윤 (모로반사)",
+        "author": "Jiyoon Kim (Moro Reflection)",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
-        "text": "중고등학생에게는 가격대비 좋을 수도 있지만 질이 별로라서 의류는 오래 못입음. 양말이 많아서 고르는 재미도 있고 친구들 이랑 같이 살수있음. 먹거리도 좋음"
+        "relative_time": "7 years ago",
+        "text": "It may be good value for money for middle and high school students, but the quality is poor, so the clothes don't last long. There are a lot of socks so it's fun to choose and you can buy them together with your friends. Food is good too"
       },
       {
-        "author": "김성훈",
+        "author": "Seonghun Kim",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "7년 전",
-        "text": "옷가게 그리고 음식점들이 많다.\n옷가게에서는 저렴한 가격에 쇼핑도 하고 옷도 살 수 있는 것 같다.\n외국인들이 많은 편이고\n여자분들이 쇼핑하고 요기하기에 좋은 것 같다."
+        "relative_time": "7 years ago",
+        "text": "There are many clothing stores and restaurants.\nIt seems like you can shop and buy clothes at a low price at a clothing store.\nThere are a lot of foreigners\nI think it's a good place for women to shop and eat."
       },
       {
-        "author": "미레쨩mirechan",
+        "author": "mirechanmirechan",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "옷을 사려면 여기죠ㅎㅎㅎㅎ服買うならここでしょ(笑)"
+        "relative_time": "7 years ago",
+        "text": "If you want to buy clothes, this is the place haha."
       }
     ],
     "photos": [
@@ -2307,15 +2307,15 @@
   },
   {
     "place_id": "ChIJ2dIihqyZfDURFuNfwLJPWP4",
-    "display_name": "수앤수 이대점",
-    "category": "쇼핑몰",
+    "display_name": "Su&Soo Ewha Womans University Branch",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 이화여대길 74",
-    "short_address": "서대문구 이화여대길 74",
+    "address": "74 Ewhayeodae-gil, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "74 Ewhayeodae-gil, Seodaemun-gu",
     "location": {
       "lat": 37.5592159,
       "lng": 126.94437760000001
@@ -2334,36 +2334,36 @@
     "google_maps_url": "https://maps.google.com/?cid=18327486312734515990",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99ac8622d2d9:0xfe584fb2c05fe316!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 10:00",
-      "화요일: 오전 10:00 ~ 오후 10:00",
-      "수요일: 오전 10:00 ~ 오후 10:00",
-      "목요일: 오전 10:00 ~ 오후 10:00",
-      "금요일: 오전 10:00 ~ 오후 10:00",
-      "토요일: 오전 10:00 ~ 오후 10:00",
-      "일요일: 오전 10:00 ~ 오후 10:00"
+      "Monday: 10:00 AM - 10:00 PM",
+      "Tuesday: 10:00 AM - 10:00 PM",
+      "Wednesday: 10:00 AM - 10:00 PM",
+      "Thursday: 10:00 AM - 10:00 PM",
+      "Friday: 10:00 AM - 10:00 PM",
+      "Saturday: 10:00 AM - 10:00 PM",
+      "Sunday: 10:00 AM - 10:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "허그극",
+        "author": "Hug play",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "이대악세사리 가게중에 제일좋네요 제품도 많고"
+        "relative_time": "6 years ago",
+        "text": "It's the best among the accessories stores at Ewha Womans University. They have a lot of products."
       },
       {
-        "author": "노을",
+        "author": "sunset",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "귀걸이 너무 이쁘네요^^"
+        "relative_time": "6 years ago",
+        "text": "The earrings are so pretty^^"
       }
     ],
     "photos": [
@@ -2373,15 +2373,15 @@
   },
   {
     "place_id": "ChIJ3S0J9y2ZfDURuUMyXd-dOHA",
-    "display_name": "스카이드림엑스",
-    "category": "쇼핑몰",
+    "display_name": "Sky DreamX",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 대현동 34-49",
-    "short_address": "서대문구 대현동 34-49",
+    "address": "34-49 Daehyeon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "34-49 Daehyeon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5592208,
       "lng": 126.94452460000001
@@ -2401,11 +2401,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c992df7092ddd:0x70389ddf5d3243b9!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2415,15 +2415,15 @@
   },
   {
     "place_id": "ChIJYTkRxpqYfDURkpkZNbENWVs",
-    "display_name": "이화 52번가",
-    "category": "쇼핑몰",
+    "display_name": "Ehwa 52nd Street",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 이화여대길 52",
-    "short_address": "서대문구 이화여대길 52",
+    "address": "52 Ewhayeodae-gil, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "52 Ewhayeodae-gil, Seodaemun-gu",
     "location": {
       "lat": 37.5593581,
       "lng": 126.94497910000001
@@ -2443,52 +2443,52 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989ac6113961:0x5b590db135199992!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어화장실"
+      "wheelchair restroom"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "즘씨All painting",
+        "author": "All painting",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "맛나드라구용 상호바뀌었어요\n카레집입니다용"
+        "relative_time": "2 years ago",
+        "text": "The name has been changed to Delicious.\nThis is a curry restaurant."
       },
       {
-        "author": "둔둔이",
+        "author": "Dundun",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "점점 좋아지고 있어요. 물론 지금은 아직은 썰렁하지만 상가들과 이대학생들 인근 복지관에서 함께 연합하여 활성화를 위해 노력하고 있습니다.\n공터도 정돈하고 이런저런 행사를 열기도하고 나름 홍보도 하고 밝고 화사한 거리를 만들어 가고 있습니다! 기대해주세요^^"
+        "relative_time": "6 years ago",
+        "text": "It's getting better. Of course, it is still empty right now, but shopping malls and welfare centers near Ewha University students are working together to revitalize it.\nWe are tidying up vacant lots, holding various events, doing some publicity, and creating bright and colorful streets! Please look forward to it^^"
       },
       {
-        "author": "박병진",
+        "author": "Park Byeong-jin",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "4년 전",
-        "text": "이른 저녁인데도 사람도 별로 없고 문을 닫은 가게\n들도 제법있어서 거리가 밝지 않았어요. 코로나 영\n향인 듯 상가 거리가 활기가 없어서 안타까운 생각\n이 들었고요."
+        "relative_time": "4 years ago",
+        "text": "Even though it was early evening, there were not many people and the store was closed.\nThere were quite a few people, so the street wasn't well lit. corona young\nIt's a pity that the shopping street is not lively.\nI heard this."
       },
       {
-        "author": "김세실",
+        "author": "Kim Se-sil",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "이대역에서 가까우며 닭을 구워 다양한 소스로 요리하기때문에 골고루 맛볼수있는 곳이다 메뉴도 다양하고 가격도 저렴해서 친구들과 즐길수있는곳이다"
+        "relative_time": "6 years ago",
+        "text": "It is close to Ewha Womans University Station, and it is a place where you can enjoy a variety of dishes because they grill chicken and cook it with various sauces. The menu is diverse and the prices are reasonable, so it is a place you can enjoy with friends."
       },
       {
-        "author": "의식의흐름",
+        "author": "stream of consciousness",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "상권이 많이 죽음... 비어있는 곳이 많았음.\n그래도 여대생이 좋아할만한 알짜배기 매장은 남아있음"
+        "relative_time": "2 years ago",
+        "text": "A lot of commercial districts died... There were a lot of empty places.\nStill, there are still some decent stores that female college students will like."
       }
     ],
     "photos": [
@@ -2506,15 +2506,15 @@
   },
   {
     "place_id": "ChIJN3neYTCZfDURW7C2RqLtkdE",
-    "display_name": "하이돌리",
-    "category": "쇼핑몰",
+    "display_name": "Hi Dolly",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 대현동 56-57",
-    "short_address": "서대문구 대현동 56-57",
+    "address": "56-57 Daehyeon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "56-57 Daehyeon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.558766,
       "lng": 126.9449532
@@ -2534,11 +2534,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c993061de7937:0xd191eda246b6b05b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2548,15 +2548,15 @@
   },
   {
     "place_id": "ChIJwybxB0aZfDURTIHiMAw7qd4",
-    "display_name": "교보 핫트랙스 엘큐브 이대점",
-    "category": "쇼핑몰",
+    "display_name": "Kyobo Hot Tracks El Cube Ewha Womans University Branch",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 대현동 56-2",
-    "short_address": "서대문구 대현동 56-2",
+    "address": "56-2 Daehyeon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "56-2 Daehyeon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5589515,
       "lng": 126.9451442
@@ -2576,11 +2576,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c994607f126c3:0xdea93b0c30e2814c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2594,15 +2594,15 @@
   },
   {
     "place_id": "ChIJqwO6w5qYfDURP_ZK4JlKcCg",
-    "display_name": "메르체쇼핑몰",
-    "category": "쇼핑몰",
+    "display_name": "Merce Shopping Mall",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 대현동 56-2번지 서대문구 서울특별시 KR",
-    "short_address": "대현동 56-2번지 서대문구 서울특별시 KR",
+    "address": "56-2 Daehyeon-dong, Seoul, South Korea, Seodaemun-gu, Seoul KR",
+    "short_address": "56-2 Daehyeon-dong, Seodaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5589515,
       "lng": 126.9451442
@@ -2622,21 +2622,21 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989ac3ba03ab:0x28704a99e04af63f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김뉸뉴",
+        "author": "Kim Nyun New",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -2644,8 +2644,8 @@
   },
   {
     "place_id": "ChIJdzgwnpaYfDURwUpRQtBsmWM",
-    "display_name": "애니타임인",
-    "category": "슈퍼마켓",
+    "display_name": "Anytime In",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2655,8 +2655,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동",
-    "short_address": "서대문구 창천동",
+    "address": "Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5565631,
       "lng": 126.9380317
@@ -2677,8 +2677,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2688,16 +2688,16 @@
   },
   {
     "place_id": "ChIJ51v_ppaYfDURB9a7cFXairQ",
-    "display_name": "시흥수산",
-    "category": "시장",
+    "display_name": "Siheung Fisheries",
+    "category": "market",
     "types": [
       "market",
       "food",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 창천동 13-51번지 1층 서대문구 서울특별시 KR",
-    "short_address": "창천동 13-51번지 1층 서대문구 서울특별시 KR",
+    "address": "1st floor, 13-51 Changcheon-dong, Seoul, South Korea, Seodaemun-gu, Seoul KR",
+    "short_address": "1st floor, 13-51 Changcheon-dong, Seodaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5571185,
       "lng": 126.93816980000001
@@ -2718,8 +2718,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2728,8 +2728,8 @@
   },
   {
     "place_id": "ChIJ4Yh8V2SZfDURdM92cQMts3A",
-    "display_name": "수입과자할인점창천점",
-    "category": "슈퍼마켓",
+    "display_name": "Imported confectionery discount store Changcheon Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2739,8 +2739,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 30-8",
-    "short_address": "서대문구 창천동 30-8",
+    "address": "30-8 Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "30-8 Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5557471,
       "lng": 126.9365663
@@ -2761,8 +2761,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2772,8 +2772,8 @@
   },
   {
     "place_id": "ChIJ28nbxJaYfDUR4llKIBle814",
-    "display_name": "훼미리마트 신촌르메이르점",
-    "category": "슈퍼마켓",
+    "display_name": "Family Mart Sinchon Le Maire Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2783,8 +2783,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 20-26",
-    "short_address": "서대문구 창천동 20-26",
+    "address": "20-26 Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "20-26 Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.556424299999996,
       "lng": 126.93997350000001
@@ -2803,18 +2803,18 @@
     "google_maps_url": "https://maps.google.com/?cid=6841915720914852322",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9896c4dbc9db:0x5ef35e19204a59e2!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오후 11:00",
-      "화요일: 오전 8:00 ~ 오후 11:00",
-      "수요일: 오전 8:00 ~ 오후 11:00",
-      "목요일: 오전 8:00 ~ 오후 11:00",
-      "금요일: 오전 8:00 ~ 오후 11:00",
-      "토요일: 오전 8:00 ~ 오후 11:00",
-      "일요일: 오전 8:00 ~ 오후 11:00"
+      "Monday: 8:00 AM - 11:00 PM",
+      "Tuesday: 8:00 AM - 11:00 PM",
+      "Wednesday: 8:00 AM - 11:00 PM",
+      "Thursday: 8:00 AM - 11:00 PM",
+      "Friday: 8:00 AM - 11:00 PM",
+      "Saturday: 8:00 AM - 11:00 PM",
+      "Sunday: 8:00 AM - 11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2824,7 +2824,7 @@
         "author": "Paik Jeremy",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -2832,8 +2832,8 @@
   },
   {
     "place_id": "ChIJ1edJADKZfDURXYSH0C2CBQE",
-    "display_name": "이마트 신촌점",
-    "category": "대형 슈퍼마켓",
+    "display_name": "E-Mart Sinchon Branch",
+    "category": "hypermarket",
     "types": [
       "hypermarket",
       "supermarket",
@@ -2844,8 +2844,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 신촌로 94",
-    "short_address": "마포구 신촌로 94",
+    "address": "94 Sinchon-ro, Mapo-gu, Seoul, South Korea",
+    "short_address": "94 Sinchon-ro, Mapo-gu",
     "location": {
       "lat": 37.5549757,
       "lng": 126.9359775
@@ -2864,27 +2864,27 @@
     "google_maps_url": "https://maps.google.com/?cid=73608102205162589",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99320049e7d5:0x105822dd087845d!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 10:30",
-      "화요일: 오전 10:00 ~ 오후 10:30",
-      "수요일: 오전 10:00 ~ 오후 10:30",
-      "목요일: 오전 10:00 ~ 오후 10:30",
-      "금요일: 오전 10:00 ~ 오후 10:30",
-      "토요일: 오전 10:00 ~ 오후 10:30",
-      "일요일: 오전 10:00 ~ 오후 10:30"
+      "Monday: 10:00 AM - 10:30 PM",
+      "Tuesday: 10:00 AM - 10:30 PM",
+      "Wednesday: 10:00 AM - 10:30 PM",
+      "Thursday: 10:00 AM - 10:30 PM",
+      "Friday: 10:00 AM - 10:30 PM",
+      "Saturday: 10:00 AM - 10:30 PM",
+      "Sunday: 10:00 AM - 10:30 PM"
     ],
     "services": [
-      "배달",
-      "화장실"
+      "delivery",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -2892,36 +2892,36 @@
         "author": "NAMTAEK KIM",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7달 전",
-        "text": "큰애가 홍대 부근 생활하며 자주 방문하는 대형마트.\n에스컬레이터 이용에 다소 비좁은 장소이나 매장 내 식료품은 다른 매장과 많이 다르지 않은것 같네요.\n구매 후 셀프 계산대나 일반 계산대 붐비고 비좁으나 대형마트 근거리에 있어서 좋은 점이 많네요.\n시식코너 운영 시 냄새가 많이 나지만 식료품 구매 의욕으로 해소되지 않나 싶네요."
+        "relative_time": "7 months ago",
+        "text": "This is a large supermarket that my eldest son often visits when he lives near Hongdae.\nIt's a bit of a cramped place to use the escalator, but the groceries in the store don't seem to be much different from other stores.\nAfter purchasing, the self-checkout counter and regular checkout counter are crowded and cramped, but there are many advantages to being close to a large supermarket.\nThere is a lot of smell when operating the tasting corner, but I think it will be alleviated by the motivation to buy groceries."
       },
       {
         "author": "AUSTIN",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "지하 3개층 사용  좁아보이지만 물건충분할듯 신촌사시는 학생 및 직장인에 편리할듯합니다  샌드위치 가격 좋습니다 추천 ₩4.5천"
+        "relative_time": "4 months ago",
+        "text": "It uses 3 basement floors. It looks small, but there are enough things. It seems to be convenient for students and office workers living in Sinchon. Sandwiches are well priced. Recommended ₩4.5,000."
       },
       {
-        "author": "최상희",
+        "author": "Choi Sang-hee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "교통접근성  편리하고 찾기쉬우며. 상품들도 종류별로 많고. 찾기 쉬운 카테고리로 정돈되어 있어 깔끔하고, 혼족들이  많아지는 추세라 소량판매하는  야채나 기타 상품들이  있어서 좋았음. 다소 불편한건 건물내부가 작아 동선이 비교적 좁고,  자율계산대가 생긴지 얼마안되서 아직은 어수선한듯 함."
+        "relative_time": "5 years ago",
+        "text": "Convenient transportation access and easy to find. There are many different types of products. It's neat and tidy as it's organized into easy-to-find categories, and it's nice to have vegetables and other products sold in small quantities as the number of people living alone is increasing. What's a bit inconvenient is that the interior of the building is small, so the movement lines are relatively narrow, and the autonomous checkout counter has just been built, so it still seems a bit messy."
       },
       {
-        "author": "장문수",
+        "author": "Jang Munsu",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4달 전",
-        "text": "작지만 알찬구성 매장입구에 냄새가 조금 이상해요"
+        "relative_time": "4 months ago",
+        "text": "There is a bit of a strange smell at the entrance of the small but well-stocked store."
       },
       {
         "author": "JooHwan Han",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3달 전",
-        "text": "사람 너무 많아요  매장이 작아요. 계산하기 불편해요"
+        "relative_time": "3 months ago",
+        "text": "There are too many people and the store is small. It's inconvenient to calculate"
       }
     ],
     "photos": [
@@ -2939,8 +2939,8 @@
   },
   {
     "place_id": "ChIJQ2pb_pOYfDURfo20uEmj4xY",
-    "display_name": "꾼Ⅱ",
-    "category": "슈퍼마켓",
+    "display_name": "Hunter Ⅱ",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2951,8 +2951,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 번지 41동 1호 지상 31-80 4층",
-    "short_address": "서대문구 창천동 번지 41동 1호 지상 31-80 4층",
+    "address": "4th floor, #1, building 41, Changcheon-dong, Seodaemun-gu, Seoul, Republic of Korea, 31-80 above ground",
+    "short_address": "4th floor, #1, Building 41, Changcheon-dong, Seodaemun-gu, 31-80 above ground",
     "location": {
       "lat": 37.55815090000001,
       "lng": 126.93785290000001
@@ -2980,8 +2980,8 @@
   },
   {
     "place_id": "ChIJzYn7FbGZfDURKaInTmfB0xs",
-    "display_name": "노브랜드 서대문신촌점",
-    "category": "슈퍼마켓",
+    "display_name": "No Brand Seodaemun Sinchon Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2991,8 +2991,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 명물길 32",
-    "short_address": "서대문구 명물길 32",
+    "address": "32 Myeongmul-gil, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "32 Myeongmul-gil, Seodaemun-gu",
     "location": {
       "lat": 37.558076299999996,
       "lng": 126.9384427
@@ -3011,24 +3011,24 @@
     "google_maps_url": "https://maps.google.com/?cid=2005158908547015209",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99b115fb89cd:0x1bd3c1674e27a229!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 10:00",
-      "화요일: 오전 10:00 ~ 오후 10:00",
-      "수요일: 오전 10:00 ~ 오후 10:00",
-      "목요일: 오전 10:00 ~ 오후 10:00",
-      "금요일: 오전 10:00 ~ 오후 10:00",
-      "토요일: 오전 10:00 ~ 오후 10:00",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 10:00 PM",
+      "Tuesday: 10:00 AM - 10:00 PM",
+      "Wednesday: 10:00 AM - 10:00 PM",
+      "Thursday: 10:00 AM - 10:00 PM",
+      "Friday: 10:00 AM - 10:00 PM",
+      "Saturday: 10:00 AM - 10:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
@@ -3036,36 +3036,36 @@
         "author": "jay Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "노브랜드는 이마트자체 생산하는 브랜드에요. 브랜드명이 없기에 역시 가격은 저렴하더군요.비교하시라고 몇가지 품목을 찍었어요.저는 다크초코릿를 샀어요.1번째가 저렴한 다크인데 역시 2번째 비싼것보다 달아요.다크인데도 말이죠. 두번째는 거의 2배나 비싸요.여기에는 노브랜드제품만 취급하는줄 알았더니 다우니제품도 있어서 조금 의아했어요.그렇지만 다른 식료품 (계란1판가격이 롯데마트보다 1000원저렴)은 확실히 저렴해요.그래서 고객이 조금 있었어요.사실 신촌번화가에서 약간벗어났는데 불구하고요.근처 마트보다 확실히 저렴! 창고형 할인매장처럼 분위기는 비슷하지만 매장규모는 작아요.거의 30여평될까요?  저녁 10시까지 운영을 해요. 주차장은 근처공영주차장을 이용하면 되요"
+        "relative_time": "6 years ago",
+        "text": "No Brand is a brand produced by E-Mart itself. Since there was no brand name, the price was cheap. I took pictures of a few items for you to compare. I bought dark chocolate. The first is the cheapest dark chocolate, but it is sweeter than the second, more expensive one. Even though it is dark. The second one is almost twice as expensive. I thought they only carry no-brand products here, but they also have Downey products, so I was a little surprised. However, other groceries (the price of a carton of eggs is 1,000 won cheaper than Lotte Mart) are definitely cheaper. So there were a few customers. In fact, even though it is a little out of the downtown area of ​​Sinchon, it is definitely cheaper than the nearby mart! The atmosphere is similar to a warehouse-type discount store, but the store size is small. Is it about 30 pyeong?  It operates until 10pm. For parking, please use the nearby public parking lot."
       },
       {
-        "author": "박건수",
+        "author": "Park Geon-soo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "점원분들도 친절하시고요 아주큰 규모는 아니지만 다양한 상품이 저렴하게  많은것같아요  추천해요  굿굿"
+        "relative_time": "3 years ago",
+        "text": "The store clerks are friendly, and although it's not very large, there seems to be a lot of variety of products at reasonable prices. I recommend it. Good."
       },
       {
         "author": "KB L",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "싸고 종류도 많아요. 종이봉투 100원.\n과자종류만 팔거같지만 냉동식품 냉동고기, 멀티탭, 위생용품도 있어요."
+        "relative_time": "7 years ago",
+        "text": "It's cheap and has a lot of variety. Paper bag 100 won.\nIt looks like they only sell snacks, but they also have frozen food, frozen meat, power strips, and hygiene products."
       },
       {
         "author": "a jh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "여러가지 저렴한 물건들이 있네요\n그러나 물건마다 다릅니다\n어떤건 마트보다 비싸기도해요"
+        "relative_time": "5 months ago",
+        "text": "There are various cheap items.\nBut each item is different\nSome things are more expensive than supermarkets."
       },
       {
-        "author": "장예찬",
+        "author": "Jang Ye-chan",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "집같이 편안하고 신선해요~!"
+        "relative_time": "1 month ago",
+        "text": "It’s comfortable and fresh like home!"
       }
     ],
     "photos": [
@@ -3083,15 +3083,15 @@
   },
   {
     "place_id": "ChIJ3ea4AJWYfDURn7XzSp2NmLE",
-    "display_name": "신촌다성수산직판장",
-    "category": "시장",
+    "display_name": "Sinchon Daseong Fisheries Direct Sales Center",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 번지 2층 62-5",
-    "short_address": "서대문구 창천동 번지 2층 62-5",
+    "address": "62-5, 2nd floor, Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "62-5, 2nd floor, Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5563639,
       "lng": 126.93522200000001
@@ -3112,8 +3112,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3122,8 +3122,8 @@
   },
   {
     "place_id": "ChIJH0Ga8pWYfDURrjUjrHko3yA",
-    "display_name": "GS신촌로타리점",
-    "category": "대형 슈퍼마켓",
+    "display_name": "GS Sinchon Rotary Branch",
+    "category": "hypermarket",
     "types": [
       "hypermarket",
       "supermarket",
@@ -3134,8 +3134,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 대흥동 107-3",
-    "short_address": "마포구 대흥동 107-3",
+    "address": "107-3, Daeheung-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "107-3 Daeheung-dong, Mapo-gu",
     "location": {
       "lat": 37.554266999999996,
       "lng": 126.93678109999999
@@ -3154,18 +3154,18 @@
     "google_maps_url": "https://maps.google.com/?cid=2368656432064312750",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9895f29a411f:0x20df2879ac2335ae!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 11:00",
-      "화요일: 오전 10:00 ~ 오후 11:00",
-      "수요일: 오전 10:00 ~ 오후 11:00",
-      "목요일: 오전 10:00 ~ 오후 11:00",
-      "금요일: 오전 10:00 ~ 오후 11:00",
-      "토요일: 오전 10:00 ~ 오후 11:00",
-      "일요일: 오전 10:00 ~ 오후 11:00"
+      "Monday: 10:00 AM - 11:00 PM",
+      "Tuesday: 10:00 AM - 11:00 PM",
+      "Wednesday: 10:00 AM - 11:00 PM",
+      "Thursday: 10:00 AM - 11:00 PM",
+      "Friday: 10:00 AM - 11:00 PM",
+      "Saturday: 10:00 AM - 11:00 PM",
+      "Sunday: 10:00 AM - 11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3176,7 +3176,7 @@
   {
     "place_id": "ChIJB5-VhpWYfDUROhPItTLB8gs",
     "display_name": "新村飯店",
-    "category": "슈퍼마켓",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3186,8 +3186,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 노고산동 106-4 Nogosan-dong, Mapo-gu, Seoul, 韓國",
-    "short_address": "마포구 노고산동 106-4 Nogosan-dong, Mapo-gu, Seoul, 韓國",
+    "address": "106-4 Nogosan-dong, Mapo-gu, Seoul, Seoul, South Korea",
+    "short_address": "106-4 Nogosan-dong, Mapo-gu, Seoul, Korea",
     "location": {
       "lat": 37.554339399999996,
       "lng": 126.93572169999997
@@ -3206,24 +3206,24 @@
     "google_maps_url": "https://maps.google.com/?cid=860962902323499834",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989586959f07:0xbf2c132b5c8133a!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:30 ~ 오후 11:00",
-      "화요일: 오전 8:30 ~ 오후 11:00",
-      "수요일: 오전 8:30 ~ 오후 11:00",
-      "목요일: 오전 8:30 ~ 오후 11:00",
-      "금요일: 오전 8:30 ~ 오후 11:00",
-      "토요일: 오전 8:30 ~ 오후 11:00",
-      "일요일: 오전 8:30 ~ 오후 11:00"
+      "Monday: 8:30 AM - 11:00 PM",
+      "Tuesday: 8:30 AM - 11:00 PM",
+      "Wednesday: 8:30 AM - 11:00 PM",
+      "Thursday: 8:30 AM - 11:00 PM",
+      "Friday: 8:30 AM - 11:00 PM",
+      "Saturday: 8:30 AM - 11:00 PM",
+      "Sunday: 8:30 AM - 11:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어화장실"
+      "wheelchair restroom"
     ],
     "parking": null,
     "reviews": null,
@@ -3232,7 +3232,7 @@
   {
     "place_id": "ChIJ5byfQ5GYfDUR7fwLyyzRYrk",
     "display_name": "新村 讚娛樂室",
-    "category": "슈퍼마켓",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3242,8 +3242,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 5-48",
-    "short_address": "서대문구 창천동 5-48",
+    "address": "5-48 Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "5-48 Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5585333,
       "lng": 126.93883169999998
@@ -3264,18 +3264,18 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "작은어복이",
+        "author": "Small fish bag",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       }
     ],
@@ -3286,8 +3286,8 @@
   },
   {
     "place_id": "ChIJPaAiY-iYfDURm6sjnGrL55o",
-    "display_name": "그린마트",
-    "category": "슈퍼마켓",
+    "display_name": "Green Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3297,8 +3297,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 53-11",
-    "short_address": "서대문구 창천동 53-11",
+    "address": "53-11 Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "53-11 Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5580073,
       "lng": 126.9348351
@@ -3317,35 +3317,35 @@
     "google_maps_url": "https://maps.google.com/?cid=11162113860207618971",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98e86322a03d:0x9ae7cb6a9c23ab9b!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 11:00",
-      "화요일: 오전 9:00 ~ 오후 11:00",
-      "수요일: 오전 9:00 ~ 오후 11:00",
-      "목요일: 오전 9:00 ~ 오후 11:00",
-      "금요일: 오전 9:00 ~ 오후 11:00",
-      "토요일: 오전 9:00 ~ 오후 11:00",
-      "일요일: 오전 9:00 ~ 오후 11:00"
+      "Monday: 9:00 AM - 11:00 PM",
+      "Tuesday: 9:00 AM - 11:00 PM",
+      "Wednesday: 9:00 AM - 11:00 PM",
+      "Thursday: 9:00 AM - 11:00 PM",
+      "Friday: 9:00 AM - 11:00 PM",
+      "Saturday: 9:00 AM - 11:00 PM",
+      "Sunday: 9:00 AM - 11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "경태영경",
+        "author": "Gyeongtae Yeonggyeong",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Bohnet Adam",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -3353,8 +3353,8 @@
   },
   {
     "place_id": "ChIJvbX68tmZfDURBxsMz63s0u0",
-    "display_name": "에이스마트",
-    "category": "슈퍼마켓",
+    "display_name": "Ace Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3364,8 +3364,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 노고산동 54-31",
-    "short_address": "마포구 노고산동 54-31",
+    "address": "54-31 Nogosan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "54-31 Nogosan-dong, Mapo-gu",
     "location": {
       "lat": 37.554581,
       "lng": 126.9343476
@@ -3384,51 +3384,51 @@
     "google_maps_url": "https://maps.google.com/?cid=17137019763345332999",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99d9f2fab5bd:0xedd2ecadcf0c1b07!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 12:00 ~ 오후 11:59",
-      "화요일: 오전 12:00 ~ 오후 11:59",
-      "수요일: 오전 12:00 ~ 오후 11:59",
-      "목요일: 오전 12:00 ~ 오후 11:59",
-      "금요일: 오전 12:00 ~ 오후 11:59",
-      "토요일: 오전 12:00 ~ 오후 11:59",
-      "일요일: 오전 12:00 ~ 오후 11:59"
+      "Monday: 12:00 AM - 11:59 PM",
+      "Tuesday: 12:00 AM - 11:59 PM",
+      "Wednesday: 12:00 AM - 11:59 PM",
+      "Thursday: 12:00 AM - 11:59 PM",
+      "Friday: 12:00 AM - 11:59 PM",
+      "Saturday: 12:00 AM - 11:59 PM",
+      "Sunday: 12:00 AM - 11:59 PM"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "구리구리동동",
+        "author": "Guri-Guri-dong",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "신촌 중소형 슈퍼 중 상급.\n어디서 한번에 물량 떼오는지, 때때로 인터넷보다 싼 야채와 과일. 동네 어르신들 다 여기온다.\n\n정육코너는 적당하지만... 추천은 못함."
+        "relative_time": "3 years ago",
+        "text": "Sinchon small and medium sized supermarket, upper class.\nWhere do you get the bulk at once? Vegetables and fruits are sometimes cheaper than online. All the local elders come here.\n\nThe meat corner is adequate... but I can't recommend it."
       },
       {
-        "author": "이정필",
+        "author": "Jeongpil Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "다양한 먹거리가 있어 좋아요\n신선야채가다양하게 있어요"
+        "relative_time": "3 years ago",
+        "text": "I like that there are a variety of foods.\nThere are a variety of fresh vegetables."
       },
       {
         "author": "Ozzy",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "신선한 과일과 기념품으로 구입할 수 있는 상자형 간식을 판매하는 슈퍼마켓이 있어서 좋습니다."
+        "relative_time": "2 years ago",
+        "text": "It's nice to have a supermarket selling fresh fruit and boxed snacks that you can buy as souvenirs."
       },
       {
         "author": "Gina",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
+        "relative_time": "6 months ago",
         "text": null
       }
     ],
@@ -3447,8 +3447,8 @@
   },
   {
     "place_id": "ChIJ5QVsSpeYfDURwx046cQTmMg",
-    "display_name": "하모니마트",
-    "category": "슈퍼마켓",
+    "display_name": "Harmony Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3458,7 +3458,7 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.556221,
@@ -3478,59 +3478,59 @@
     "google_maps_url": "https://maps.google.com/?cid=14454324740492893635",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98974a6c05e5:0xc89813c4e9381dc3!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "박경주",
+        "author": "Park Gyeong-ju",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "너무 친절하신 직원분이 있어서 좋았다. 신선도가 높은 정육점이 있어서 더 좋다 늦게까지해서 다행인 곳"
+        "relative_time": "4 years ago",
+        "text": "It was nice to have such friendly staff. It's even better because there's a butcher shop with high freshness. It's a good place to stay late."
       },
       {
-        "author": "명주",
+        "author": "silk",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "다양한 농산물과 식료품을 저렴한 가격으로 구입할 수 있어서 자주 이용합니다."
+        "relative_time": "1 year ago",
+        "text": "I use it often because I can purchase a variety of agricultural products and groceries at low prices."
       },
       {
-        "author": "박태헌",
+        "author": "Park Tae-heon",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "1인가구에 최적화된 상품 구성, 편리하고 종류도 다양함. 다만, 신선식품은 꼼꼼히 확인하고 구매해야 할 것."
+        "relative_time": "5 years ago",
+        "text": "Product composition optimized for single-person households, convenient and diverse. However, fresh food must be checked carefully before purchasing."
       },
       {
-        "author": "오인수INSOO OH",
+        "author": "INSOO OH",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "24시간 하는 작은 수퍼라고 보시면 됩니다. 근처에 원룸 오피스텔이 워낙 많아서 늘 사람이 있고 상품 회전도 빠른 편입니다. 바로 길 건너 똔 하나의 하모니 마트가 있어서 신기합니다"
+        "relative_time": "4 years ago",
+        "text": "You can think of it as a small supermarket that operates 24 hours a day. There are a lot of one-room officetels nearby, so there are always people there and the product turnover is quick. It's amazing that there's a Harmony Mart right across the street."
       },
       {
         "author": "M Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "종류도 많고 야채랑 정육점 코너가 적당한 크기로 있어서 장보기 좋아요. 포인트는 좀 짜게 쌓이는듯"
+        "relative_time": "6 years ago",
+        "text": "It's great for shopping because there's a lot of variety and the vegetable and butcher section is a reasonable size. The points seem to be accumulating a bit salty."
       }
     ],
     "photos": [
@@ -3543,8 +3543,8 @@
   },
   {
     "place_id": "ChIJNxufoZCYfDURDcCoDfLHHdQ",
-    "display_name": "우리빅세일마트",
-    "category": "슈퍼마켓",
+    "display_name": "Woori Big Sale Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3554,8 +3554,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 대현동 101 22번지 101호",
-    "short_address": "서대문구 대현동 101 22번지 101호",
+    "address": "#101, 101 22 Daehyeon-dong, Seodaemun-gu, Seoul, Republic of Korea",
+    "short_address": "Room 101, 101 22 Daehyeon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5570717,
       "lng": 126.9430983
@@ -3576,8 +3576,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3587,15 +3587,15 @@
   },
   {
     "place_id": "ChIJuax6vZCYfDURKTbdFcemRQg",
-    "display_name": "지니",
-    "category": "시장",
+    "display_name": "genie",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 대현동 104 5번지 신촌푸르지오시티 1층 104호",
-    "short_address": "서대문구 대현동 104 5번지 신촌푸르지오시티 1층 104호",
+    "address": "Room 104, 1st floor, Sinchon Prugio City, 104 5 Daehyeon-dong, Seodaemun-gu, Seoul, Republic of Korea",
+    "short_address": "Room 104, 1st floor, Sinchon Prugio City, 104 5 Daehyeon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5573651,
       "lng": 126.94256109999999
@@ -3615,10 +3615,10 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9890bd7aacb9:0x845a6c715dd3629!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3627,8 +3627,8 @@
   },
   {
     "place_id": "ChIJNw4ydJqYfDURkX6Xjx8JAxw",
-    "display_name": "드림유통",
-    "category": "슈퍼마켓",
+    "display_name": "Dream Distribution",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3638,8 +3638,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 이화여대1길 38",
-    "short_address": "서대문구 이화여대1길 38",
+    "address": "38 Ewhayeodae 1-gil, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "38 Ewhayeodae 1-gil, Seodaemun-gu",
     "location": {
       "lat": 37.5572929,
       "lng": 126.9435446
@@ -3658,18 +3658,18 @@
     "google_maps_url": "https://maps.google.com/?cid=2018467089149820561",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989a74320e37:0x1c03091f8f977e91!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 6:00 ~ 오후 10:00",
-      "화요일: 오전 6:00 ~ 오후 10:00",
-      "수요일: 오전 6:00 ~ 오후 10:00",
-      "목요일: 오전 6:00 ~ 오후 10:00",
-      "금요일: 오전 6:00 ~ 오후 10:00",
-      "토요일: 오전 6:00 ~ 오후 9:00",
-      "일요일: 오전 6:00 ~ 오후 9:00"
+      "Monday: 6:00 AM - 10:00 PM",
+      "Tuesday: 6:00 AM - 10:00 PM",
+      "Wednesday: 6:00 AM - 10:00 PM",
+      "Thursday: 6:00 AM - 10:00 PM",
+      "Friday: 6:00 AM - 10:00 PM",
+      "Saturday: 6:00 AM - 9:00 PM",
+      "Sunday: 6:00 AM - 9:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3678,8 +3678,8 @@
   },
   {
     "place_id": "ChIJSQr3ZpqYfDURCceVzPFsRoM",
-    "display_name": "하모니마트이대역점",
-    "category": "슈퍼마켓",
+    "display_name": "Harmony Mart Ewha Womans University Station Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3689,8 +3689,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 대현동 90-105번지 1층 VILAGEP LAZA 서대문구 서울특별시 KR",
-    "short_address": "대현동 90-105번지 1층 VILAGEP LAZA 서대문구 서울특별시 KR",
+    "address": "VILAGEP LAZA, 1st floor, 90-105 Daehyeon-dong, Seoul, South Korea, Seodaemun-gu, Seoul KR",
+    "short_address": "1st floor, 90-105 Daehyeon-dong, VILAGEP LAZA, Seodaemun-gu, Seoul KR",
     "location": {
       "lat": 37.557431,
       "lng": 126.94448650000001
@@ -3709,20 +3709,20 @@
     "google_maps_url": "https://maps.google.com/?cid=9459367853113591561",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989a66f70a49:0x83466cf1cc95c709!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:30 ~ 오후 11:00",
-      "화요일: 오전 8:30 ~ 오후 11:00",
-      "수요일: 오전 8:30 ~ 오후 11:00",
-      "목요일: 오전 8:30 ~ 오후 11:00",
-      "금요일: 오전 8:30 ~ 오후 11:00",
-      "토요일: 오전 8:30 ~ 오후 11:00",
-      "일요일: 오전 8:30 ~ 오후 11:00"
+      "Monday: 8:30 AM - 11:00 PM",
+      "Tuesday: 8:30 AM - 11:00 PM",
+      "Wednesday: 8:30 AM - 11:00 PM",
+      "Thursday: 8:30 AM - 11:00 PM",
+      "Friday: 8:30 AM - 11:00 PM",
+      "Saturday: 8:30 AM - 11:00 PM",
+      "Sunday: 8:30 AM - 11:00 PM"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3732,36 +3732,36 @@
         "author": "MH K",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
-        "text": "과일은 여기서 사는거 조심하세요. 딸기 반값 할인하길래 겉에 보이는 부분은 괜찮아 보여서 샀는데, 안보이는 부분은 매우 심하게 물러서 다 잘라내고 먹었네요. 환불하러 가려다 귀찮아서 안갔는데, 아무리 할인하는 과일이라도 이정도 상태는 폐기하는게 맞는거같습니다."
+        "relative_time": "6 years ago",
+        "text": "Be careful when buying fruit here. There was a half-price discount on strawberries, so I bought them because the part that was visible on the outside looked good, but the part that wasn't visible was so bad that I had to cut it all off and eat it. I didn't go to get a refund because it was too inconvenient, but no matter how discounted the fruit is, I think it's right to throw it away if it's in this condition."
       },
       {
-        "author": "도토리아방",
+        "author": "Acorn Room",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "이대역 부근에서는 큰 규모의 슈퍼마켓입니다.\n임대료가 비싼 대로변이라 그런지 내부 여유공간이 없이 비좁아 불편했습니다."
+        "relative_time": "6 years ago",
+        "text": "It is a large supermarket near Ewha Womans University Station.\nIt was uncomfortable because it was cramped and there was no free space inside, perhaps because it was located on a high street with high rents."
       },
       {
-        "author": "이동준",
+        "author": "Lee Dongjun",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "좋아용~ 세일하는 과일이나 간단한 소비재 사기 좋습니당"
+        "relative_time": "4 years ago",
+        "text": "I like it~ It's good to buy fruit or simple consumer goods on sale."
       },
       {
         "author": "Seojin Lim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "싱싱 가격  위치.\n모두 좋아요."
+        "relative_time": "2 years ago",
+        "text": "Fresh price location.\nIt's all good."
       },
       {
-        "author": "정요한",
+        "author": "Jeong Yohan",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "자주 가요 좋아요"
+        "relative_time": "6 years ago",
+        "text": "I like it. I go often."
       }
     ],
     "photos": [
@@ -3780,14 +3780,14 @@
   {
     "place_id": "ChIJy5Buh5qYfDURbl_2umAoNl4",
     "display_name": "la belle vie",
-    "category": "시장",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 이화여대5길 35",
-    "short_address": "서대문구 이화여대5길 35",
+    "address": "35 Ewhayeodae 5-gil, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "35 Ewhayeodae 5-gil, Seodaemun-gu",
     "location": {
       "lat": 37.558153,
       "lng": 126.9438065
@@ -3806,18 +3806,18 @@
     "google_maps_url": "https://maps.google.com/?cid=6788657884226281326",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989a876e90cb:0x5e362860baf65f6e!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 8:00",
-      "화요일: 오전 10:00 ~ 오후 8:00",
-      "수요일: 오전 10:00 ~ 오후 8:00",
-      "목요일: 오전 10:00 ~ 오후 8:00",
-      "금요일: 오전 10:00 ~ 오후 8:00",
-      "토요일: 오전 10:00 ~ 오후 8:00",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 8:00 PM",
+      "Tuesday: 10:00 AM - 8:00 PM",
+      "Wednesday: 10:00 AM - 8:00 PM",
+      "Thursday: 10:00 AM - 8:00 PM",
+      "Friday: 10:00 AM - 8:00 PM",
+      "Saturday: 10:00 AM - 8:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3827,14 +3827,14 @@
   {
     "place_id": "ChIJX-jbj22ZfDUReO2FGhpzAeI",
     "display_name": "Shop with cheap tops",
-    "category": "시장",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 대현동 이화여대7길 33",
-    "short_address": "서대문구 대현동 이화여대7길 33",
+    "address": "33 Ewhayeodae 7-gil, Daehyeon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "33 Ewhayeodae 7-gil, Daehyeon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5585586,
       "lng": 126.943781
@@ -3855,8 +3855,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3867,7 +3867,7 @@
   {
     "place_id": "ChIJy36T8pqYfDURUwWuU96525Y",
     "display_name": "AYN FLOWER",
-    "category": "꽃집",
+    "category": "flower shop",
     "types": [
       "florist",
       "market",
@@ -3875,8 +3875,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 이화여대5길 15",
-    "short_address": "서대문구 이화여대5길 15",
+    "address": "15 Ewhayeodae 5-gil, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "15 Ewhayeodae 5-gil, Seodaemun-gu",
     "location": {
       "lat": 37.5582503,
       "lng": 126.9448089
@@ -3895,18 +3895,18 @@
     "google_maps_url": "https://maps.google.com/?cid=10870486490126615891",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989af2937ecb:0x96dbb9de53ae0553!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 8:00",
-      "화요일: 오전 10:30 ~ 오후 8:00",
-      "수요일: 오전 10:30 ~ 오후 8:00",
-      "목요일: 오전 10:30 ~ 오후 8:00",
-      "금요일: 오전 10:30 ~ 오후 8:00",
-      "토요일: 오전 10:30 ~ 오후 8:00",
-      "일요일: 휴무일"
+      "Monday: 10:30 AM - 8:00 PM",
+      "Tuesday: 10:30 AM - 8:00 PM",
+      "Wednesday: 10:30 AM - 8:00 PM",
+      "Thursday: 10:30 AM - 8:00 PM",
+      "Friday: 10:30 AM - 8:00 PM",
+      "Saturday: 10:30 AM - 8:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3916,8 +3916,8 @@
   },
   {
     "place_id": "ChIJeQNLM5qYfDURYGwuH8_lZqY",
-    "display_name": "이대할인마트",
-    "category": "슈퍼마켓",
+    "display_name": "Ewha Womans University Discount Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3927,8 +3927,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 대흥로 190",
-    "short_address": "마포구 대흥로 190",
+    "address": "190 Daeheung-ro, Mapo-gu, Seoul, South Korea",
+    "short_address": "190 Daeheung-ro, Mapo-gu",
     "location": {
       "lat": 37.555785799999995,
       "lng": 126.9460377
@@ -3947,74 +3947,74 @@
     "google_maps_url": "https://maps.google.com/?cid=11990523735664651360",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989a334b0379:0xa666e5cf1f2e6c60!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오후 10:00",
-      "화요일: 오전 8:00 ~ 오후 10:00",
-      "수요일: 오전 8:00 ~ 오후 10:00",
-      "목요일: 오전 8:00 ~ 오후 10:00",
-      "금요일: 오전 8:00 ~ 오후 10:00",
-      "토요일: 오전 8:00 ~ 오후 10:00",
-      "일요일: 오전 8:00 ~ 오후 10:00"
+      "Monday: 8:00 AM - 10:00 PM",
+      "Tuesday: 8:00 AM - 10:00 PM",
+      "Wednesday: 8:00 AM - 10:00 PM",
+      "Thursday: 8:00 AM - 10:00 PM",
+      "Friday: 8:00 AM - 10:00 PM",
+      "Saturday: 8:00 AM - 10:00 PM",
+      "Sunday: 8:00 AM - 10:00 PM"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "서sss",
+        "author": "sss",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "친절하구 상품진열많구요 ᆢ\n값도싼것같아요 ᆢ싱싱한채소~"
+        "relative_time": "4 years ago",
+        "text": "They are friendly and have a lot of products on display.\nI think it's cheap too. Fresh vegetables~"
       },
       {
         "author": "Woonju",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
-        "text": "할인도 잘모르겠고 그닥친절하시지도 않구...그냥동네슈퍼"
+        "relative_time": "5 years ago",
+        "text": "I don't know much about discounts and they aren't very friendly...just a neighborhood supermarket."
       },
       {
-        "author": "ᄅᄆᄅᄆ (ᄆᄅᄆᄅ)",
+        "author": "Hahaha (haha)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "의외로 야채가 쏠쏠함 대신 우유가 유통기한이 좀 짧은 경우가 잦음"
+        "relative_time": "2 years ago",
+        "text": "Surprisingly, although vegetables are great, milk often has a short expiration date."
       },
       {
-        "author": "이성현",
+        "author": "Seonghyun Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "생각보다 물건이 많아서 좋았어요"
+        "relative_time": "5 years ago",
+        "text": "It was nice because there were more things than I expected."
       },
       {
-        "author": "황은아",
+        "author": "Eunah Hwang",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "5년 전",
-        "text": "미세하게 비쌈.    직원분들은 친절하심"
+        "relative_time": "5 years ago",
+        "text": "Slightly expensive.    The staff are friendly"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJRe8j7pqYfDUROkOaGQc2w60",
-    "display_name": "사라장마켓",
-    "category": "시장",
+    "display_name": "Sarajang Market",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 번지 1층 101 호 파크제이드이화 KR 서울특별시 서대문구 대현동 56-28",
-    "short_address": "번지 1층 101 KR 서울특별시 서대문구 대현동 56-28 호 파크제이드이화",
+    "address": "#101, 1st floor, Seoul, Republic of Korea Park Jade E-Hwa KR 56-28 Daehyeon-dong, Seodaemun-gu, Seoul",
+    "short_address": "Address 1st floor 101 KR Park Jade E-Hwa, #56-28, Daehyeon-dong, Seodaemun-gu, Seoul",
     "location": {
       "lat": 37.5582145,
       "lng": 126.94513979999999
@@ -4035,8 +4035,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4045,8 +4045,8 @@
   },
   {
     "place_id": "ChIJsYnSzJuYfDUR_I8prUHtHRw",
-    "display_name": "GS25 마포영화점",
-    "category": "슈퍼마켓",
+    "display_name": "GS25 Mapo Cinema Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4056,8 +4056,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 대흥동 2-72",
-    "short_address": "마포구 대흥동 2-72",
+    "address": "2-72 Daeheung-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "2-72 Daeheung-dong, Mapo-gu",
     "location": {
       "lat": 37.55573,
       "lng": 126.94605629999998
@@ -4078,8 +4078,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4089,8 +4089,8 @@
   },
   {
     "place_id": "ChIJ_WqJ1ZGYfDURMcX2-NZ9t4M",
-    "display_name": "Cu 연세1호점",
-    "category": "슈퍼마켓",
+    "display_name": "Cu Yonsei 1st branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4100,8 +4100,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 신촌동 134",
-    "short_address": "서대문구 신촌동 134",
+    "address": "134 Sinchon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "134 Sinchon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.561618100000004,
       "lng": 126.94044559999999
@@ -4122,18 +4122,18 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김성수",
+        "author": "Seongsu Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -4141,8 +4141,8 @@
   },
   {
     "place_id": "ChIJ_WqJ1ZGYfDURdL-8pvpkbiI",
-    "display_name": "CU 연세2호점",
-    "category": "슈퍼마켓",
+    "display_name": "CU Yonsei 2nd branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4152,8 +4152,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 신촌동",
-    "short_address": "서대문구 신촌동",
+    "address": "Sinchon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "Sinchon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5613959,
       "lng": 126.9408344
@@ -4174,8 +4174,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4185,7 +4185,7 @@
         "author": "Kj L",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -4193,16 +4193,16 @@
   },
   {
     "place_id": "ChIJebptKpSYfDURJAQu_wG-nIw",
-    "display_name": "르포엠",
-    "category": "의류점",
+    "display_name": "report",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 창천동 29-81번지 1층 112호 신촌르메이에르타운 5 서대문구 서울특별시 KR",
-    "short_address": "창천동 29-81번지 1층 112호 신촌르메이에르타운 5 서대문구 서울특별시 KR",
+    "address": "#112, 1st floor, 29-81 Changcheon-dong, Seoul, Republic of Korea, Sinchon Lemayer Town 5, Seodaemun-gu, Seoul KR",
+    "short_address": "#112, 1st floor, 29-81 Changcheon-dong, Sinchon Lemayer Town 5, Seodaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5558297,
       "lng": 126.93794319999999
@@ -4223,8 +4223,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4233,16 +4233,16 @@
   },
   {
     "place_id": "ChIJaaXPM5SYfDURG2bKQZFgdlE",
-    "display_name": "(주)엠플레이그라운드연세점",
-    "category": "의류점",
+    "display_name": "M Play Ground Yonsei Branch",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 번지 지층 18-31 1층",
-    "short_address": "서대문구 창천동 번지 지층 18-31 1층",
+    "address": "1st Floor, Ground Floor 18-31, Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "1st floor, ground floor 18-31, Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5561629,
       "lng": 126.93711040000001
@@ -4262,50 +4262,50 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989433cfa569:0x5176609141ca661b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "바나나동그리",
+        "author": "Banana Circle",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "남녀공용 옷가게라 그런가 여자인 제가 입을 때 오버핏으로 너무 예쁘게 떨어지는 핏의 옷들이 많아요!! 힙한 무드 원하시면 여기 강추 ㅎㅎ"
+        "relative_time": "2 months ago",
+        "text": "Maybe it's because it's a unisex clothing store, but when I wear it as a woman, there are a lot of clothes that are oversized and fit beautifully!! If you want a hip mood, I highly recommend this place haha"
       },
       {
-        "author": "윤정",
+        "author": "Yunjeong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "신촌역 스트릿패션 끝판왕\n옷종류다양하고 가격도 착해서 너무 좋아요"
+        "relative_time": "2 months ago",
+        "text": "Sinchon Station street fashion king\nI really like the variety of clothes and the prices are reasonable."
       },
       {
         "author": "Seolhee Jeong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "옷이 깔끔하고 트렌디해요 종류가 다양하고 가격이 착해서 재방문의사 있음"
+        "relative_time": "1 month ago",
+        "text": "The clothes are neat and trendy. There is a wide variety and the prices are reasonable, so I plan to visit again."
       },
       {
         "author": "范治浩",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "매장이 너무 깔끔하고 이쁜옷도 많네요 자주 이용하겠습니다!"
+        "relative_time": "1 year ago",
+        "text": "The store is very clean and has a lot of pretty clothes. I will use it often!"
       },
       {
         "author": "c hoi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "직원이 친절하고 가게도 깨끗합니다!"
+        "relative_time": "3 years ago",
+        "text": "The staff is friendly and the store is clean!"
       }
     ],
     "photos": [
@@ -4323,16 +4323,16 @@
   },
   {
     "place_id": "ChIJe-hjM5SYfDURBuPrWngD3kc",
-    "display_name": "예스 신촌점",
-    "category": "의류점",
+    "display_name": "Yes Sinchon Branch",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울 서대문구 연세로 6 1층",
-    "short_address": "서울 서대문구 연세로 6 1층",
+    "address": "1st floor, 6 Yonsei-ro, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "1st floor, 6 Yonsei-ro, Seodaemun-gu, Seoul",
     "location": {
       "lat": 37.556054599999996,
       "lng": 126.93703690000001
@@ -4351,18 +4351,18 @@
     "google_maps_url": "https://maps.google.com/?cid=5178580436979016454",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98943363e87b:0x47de03785aebe306!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 10:30",
-      "화요일: 오전 10:30 ~ 오후 10:30",
-      "수요일: 오전 10:30 ~ 오후 10:30",
-      "목요일: 오전 10:30 ~ 오후 10:30",
-      "금요일: 오전 10:30 ~ 오후 10:30",
-      "토요일: 오전 10:30 ~ 오후 10:30",
-      "일요일: 오전 10:30 ~ 오후 10:30"
+      "Monday: 10:30 AM - 10:30 PM",
+      "Tuesday: 10:30 AM - 10:30 PM",
+      "Wednesday: 10:30 AM - 10:30 PM",
+      "Thursday: 10:30 AM - 10:30 PM",
+      "Friday: 10:30 AM - 10:30 PM",
+      "Saturday: 10:30 AM - 10:30 PM",
+      "Sunday: 10:30 AM - 10:30 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4373,16 +4373,16 @@
   },
   {
     "place_id": "ChIJD4KWSQCZfDURzfy95QW-Tlk",
-    "display_name": "lee bodywear 신촌점",
-    "category": "의류점",
+    "display_name": "lee bodywear sinchon branch",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 18-35번지",
-    "short_address": "서대문구 창천동 18-35번지",
+    "address": "18-35 Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "18-35 Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5560751,
       "lng": 126.9369994
@@ -4401,13 +4401,13 @@
     "google_maps_url": "https://maps.google.com/?cid=6435289850097564877",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99004996820f:0x594ebe05e5bdfccd!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 9:00",
-      "화요일: 오전 11:00 ~ 오후 9:00",
-      "수요일: 오전 11:00 ~ 오후 9:00",
-      "목요일: 오전 11:00 ~ 오후 9:00",
-      "금요일: 오전 11:00 ~ 오후 9:00",
-      "토요일: 오전 11:00 ~ 오후 9:00",
-      "일요일: 오전 11:00 ~ 오후 9:00"
+      "Monday: 11:00 AM - 9:00 PM",
+      "Tuesday: 11:00 AM - 9:00 PM",
+      "Wednesday: 11:00 AM - 9:00 PM",
+      "Thursday: 11:00 AM - 9:00 PM",
+      "Friday: 11:00 AM - 9:00 PM",
+      "Saturday: 11:00 AM - 9:00 PM",
+      "Sunday: 11:00 AM - 9:00 PM"
     ],
     "services": null,
     "payment": null,
@@ -4425,16 +4425,16 @@
   },
   {
     "place_id": "ChIJVecv1ZWYfDURGLzM02G-yzU",
-    "display_name": "(주)리켄드",
-    "category": "화장품 판매점",
+    "display_name": "Likend Co., Ltd.",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 번지 1층 29-92 세인빌딩",
-    "short_address": "서대문구 창천동 번지 1층 29-92 세인빌딩",
+    "address": "Sein Building, 29-92, 1st floor, Changcheon-dong, Seodaemun-gu, Seoul, Korea",
+    "short_address": "Sein Building, 29-92, 1st floor, Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5556146,
       "lng": 126.93785719999998
@@ -4464,16 +4464,16 @@
   },
   {
     "place_id": "ChIJGZSDQ5qYfDURkyuoNl0MXf4",
-    "display_name": "에메필 신촌점",
-    "category": "의류점",
+    "display_name": "Emephil Sinchon Branch",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 연세로 4 1층",
-    "short_address": "서대문구 연세로 4 1층",
+    "address": "1st floor, 4 Yonsei-ro, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "1st floor, 4 Yonsei-ro, Seodaemun-gu",
     "location": {
       "lat": 37.5558447,
       "lng": 126.9370029
@@ -4492,18 +4492,18 @@
     "google_maps_url": "https://maps.google.com/?cid=18328819652956269459",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989a43839419:0xfe5d0c5d36a82b93!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 12:00~10:30",
-      "화요일: 오후 12:00~10:30",
-      "수요일: 오후 12:00~10:30",
-      "목요일: 오후 12:00~10:30",
-      "금요일: 오후 12:00~10:30",
-      "토요일: 오후 12:00~10:30",
-      "일요일: 오후 12:00~10:30"
+      "Monday: 12:00-10:30 PM",
+      "Tuesday: 12:00-10:30 PM",
+      "Wednesday: 12:00-10:30 PM",
+      "Thursday: 12:00-10:30 PM",
+      "Friday: 12:00-10:30 PM",
+      "Saturday: 12:00-10:30 PM",
+      "Sunday: 12:00-10:30 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4513,24 +4513,24 @@
         "author": "Hana Vrana",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "점원분이 영어를 할 수 있어서 많이 도와주셔서 감사합니다 :)"
+        "relative_time": "3 years ago",
+        "text": "I am grateful that the clerk spoke English and helped me a lot :)"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJjai_1HiZfDURKRLZ_4_tB24",
-    "display_name": "홀리카홀리카 신촌점",
-    "category": "화장품 판매점",
+    "display_name": "Holika Holika Sinchon Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "14-1, 연세로 서대문구 서울특별시 대한민국",
-    "short_address": "14-1, 연세로 서대문구",
+    "address": "14-1, Yonsei-ro, Seodaemun-gu, Seoul South Korea",
+    "short_address": "14-1, Yonsei-ro, Seodaemun-gu",
     "location": {
       "lat": 37.5567746,
       "lng": 126.93705429999999
@@ -4549,18 +4549,18 @@
     "google_maps_url": "https://maps.google.com/?cid=7928566871737569833",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9978d4bfa88d:0x6e07ed8fffd91229!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 11:00",
-      "화요일: 오전 11:00 ~ 오후 11:00",
-      "수요일: 오전 11:00 ~ 오후 11:00",
-      "목요일: 오전 11:00 ~ 오후 11:00",
-      "금요일: 오전 11:00 ~ 오후 11:00",
-      "토요일: 오전 11:00 ~ 오후 11:00",
-      "일요일: 오전 11:00 ~ 오후 11:00"
+      "Monday: 11:00 AM - 11:00 PM",
+      "Tuesday: 11:00 AM - 11:00 PM",
+      "Wednesday: 11:00 AM - 11:00 PM",
+      "Thursday: 11:00 AM - 11:00 PM",
+      "Friday: 11:00 AM - 11:00 PM",
+      "Saturday: 11:00 AM - 11:00 PM",
+      "Sunday: 11:00 AM - 11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4570,36 +4570,36 @@
         "author": "Anasuya Ashokan",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10달 전",
-        "text": "여기 여성분은 정말 친절하고 제안과 선물도 너무 친절하세요. 꼭 다시 만나러 갈 거예요 ☺️"
+        "relative_time": "10 months ago",
+        "text": "The ladies here are really friendly and very kind with their suggestions and gifts. I will definitely go see you again ☺️"
       },
       {
         "author": "Walter Sng",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "사장님이자 영업사원인 수진 씨는 매우 지식이 풍부하고, 전문적이며, 친절합니다. 그리고 선물도 후하게 주십니다."
+        "relative_time": "3 years ago",
+        "text": "Sujin, the owner and salesperson, is very knowledgeable, professional, and friendly. And they give generous gifts."
       },
       {
         "author": "ruba Weng",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "스킨케어 제품도 좋고 서비스도 좋아요. 작은 선물도 많이 주셨어요."
+        "relative_time": "6 years ago",
+        "text": "The skin care products are good and the service is also good. They also gave me many small gifts."
       },
       {
         "author": "Nafisa Wiratsari",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": "WAWWW I LIKE MAKE UP MALL IN KOREA BUT I WANNA MEET MY SISTER RYUJIN EONNIE BUT HAECHAN MAU KESINI TAPI LAMA NERAM"
       },
       {
         "author": "Hana Vrana",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "나에게 딱 맞는 제품을 선택하도록 도와주신 친절한 점원입니다."
+        "relative_time": "3 years ago",
+        "text": "A friendly salesperson who helped me choose the product that was right for me."
       }
     ],
     "photos": [
@@ -4609,16 +4609,16 @@
   },
   {
     "place_id": "ChIJlb59SpSYfDURRfF4Qv1O5yA",
-    "display_name": "(주)이랜드월드폴더신촌점",
-    "category": "신발 판매점",
+    "display_name": "E-Land World Folder Sinchon Branch",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 연세로 7",
-    "short_address": "서대문구 연세로 7",
+    "address": "7 Yonsei-ro, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "7 Yonsei-ro, Seodaemun-gu",
     "location": {
       "lat": 37.5562349,
       "lng": 126.93666180000001
@@ -4637,18 +4637,18 @@
     "google_maps_url": "https://maps.google.com/?cid=2370950578482770245",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98944a7dbe95:0x20e74efd4278f145!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 9:30",
-      "화요일: 오전 11:00 ~ 오후 9:30",
-      "수요일: 오전 11:00 ~ 오후 9:30",
-      "목요일: 오전 11:00 ~ 오후 9:30",
-      "금요일: 오전 11:00 ~ 오후 9:30",
-      "토요일: 오전 11:00 ~ 오후 9:30",
-      "일요일: 오전 11:00 ~ 오후 9:30"
+      "Monday: 11:00 AM - 9:30 PM",
+      "Tuesday: 11:00 AM - 9:30 PM",
+      "Wednesday: 11:00 AM - 9:30 PM",
+      "Thursday: 11:00 AM - 9:30 PM",
+      "Friday: 11:00 AM - 9:30 PM",
+      "Saturday: 11:00 AM - 9:30 PM",
+      "Sunday: 11:00 AM - 9:30 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4658,15 +4658,15 @@
         "author": "Y Knutmaneric",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8년 전",
-        "text": "다양하고 저렴한 제품을 부담없이 고를 수 있음."
+        "relative_time": "8 years ago",
+        "text": "You can freely choose from a variety of affordable products."
       },
       {
         "author": "Bong Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8년 전",
-        "text": "운동화와 구두 종류가 정말 많아요. 특히 운동화가 많고, 유명 브랜드 제품도 다 있어요. 세일도 자주 하고요. 저도 여기서 조깅화 몇 켤레 샀어요."
+        "relative_time": "8 years ago",
+        "text": "There are so many types of sneakers and shoes. In particular, there are a lot of sneakers and products from famous brands. There are also frequent sales. I also bought a few pairs of jogging shoes here."
       }
     ],
     "photos": [
@@ -4684,16 +4684,16 @@
   },
   {
     "place_id": "ChIJq0yiypWYfDURBWPbXJU9EUM",
-    "display_name": "에블린 신촌점",
-    "category": "의류점",
+    "display_name": "Evelyn Sinchon Branch",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 연세로 3",
-    "short_address": "서대문구 연세로 3",
+    "address": "3 Yonsei-ro, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "3 Yonsei-ro, Seodaemun-gu",
     "location": {
       "lat": 37.5560149,
       "lng": 126.93666839999999
@@ -4712,18 +4712,18 @@
     "google_maps_url": "https://maps.google.com/?cid=4832711586862555909",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9895caa24cab:0x43113d955cdb6305!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 10:00",
-      "화요일: 오전 10:00 ~ 오후 10:00",
-      "수요일: 오전 10:00 ~ 오후 10:00",
-      "목요일: 오전 10:00 ~ 오후 10:00",
-      "금요일: 오전 10:00 ~ 오후 10:00",
-      "토요일: 오전 10:00 ~ 오후 10:00",
-      "일요일: 오전 10:00 ~ 오후 10:00"
+      "Monday: 10:00 AM - 10:00 PM",
+      "Tuesday: 10:00 AM - 10:00 PM",
+      "Wednesday: 10:00 AM - 10:00 PM",
+      "Thursday: 10:00 AM - 10:00 PM",
+      "Friday: 10:00 AM - 10:00 PM",
+      "Saturday: 10:00 AM - 10:00 PM",
+      "Sunday: 10:00 AM - 10:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4733,8 +4733,8 @@
         "author": "M A",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1년 전",
-        "text": "흥미로운 제품들이 몇 가지 있지만, 사이즈와 재고가 한정적이에요. 선물 세트를 구매하려고 했는데, 원하는 사이즈가 없었고 수량도 부족했어요."
+        "relative_time": "1 year ago",
+        "text": "There are some interesting products, but sizes and inventory are limited. I tried to buy a gift set, but they didn't have the size I wanted and the quantity wasn't enough."
       }
     ],
     "photos": [
@@ -4748,16 +4748,16 @@
   },
   {
     "place_id": "ChIJ6R_JmpuZfDURW_9gKwsNSoc",
-    "display_name": "폴더 신촌 하이라이트점",
-    "category": "신발 판매점",
+    "display_name": "Folder Sinchon Highlight Branch",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울 서대문구 연세로 7 1층",
-    "short_address": "서울 서대문구 연세로 7 1층",
+    "address": "1st floor, 7 Yonsei-ro, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "1st floor, 7 Yonsei-ro, Seodaemun-gu, Seoul",
     "location": {
       "lat": 37.5562908,
       "lng": 126.9366512
@@ -4776,18 +4776,18 @@
     "google_maps_url": "https://maps.google.com/?cid=9748618685020438363",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c999b9ac91fe9:0x874a0d0b2b60ff5b!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:30 ~ 오후 10:00",
-      "화요일: 오전 11:30 ~ 오후 10:00",
-      "수요일: 오전 11:30 ~ 오후 10:00",
-      "목요일: 오전 11:30 ~ 오후 10:00",
-      "금요일: 오전 11:30 ~ 오후 10:00",
-      "토요일: 오전 11:30 ~ 오후 10:00",
-      "일요일: 오전 11:30 ~ 오후 10:00"
+      "Monday: 11:30 AM - 10:00 PM",
+      "Tuesday: 11:30 AM - 10:00 PM",
+      "Wednesday: 11:30 AM - 10:00 PM",
+      "Thursday: 11:30 AM - 10:00 PM",
+      "Friday: 11:30 AM - 10:00 PM",
+      "Saturday: 11:30 AM - 10:00 PM",
+      "Sunday: 11:30 AM - 10:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4797,15 +4797,15 @@
         "author": "アオヤマアオヤマ",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "호카 오네오네를 구입했습니다"
+        "relative_time": "6 years ago",
+        "text": "I bought a Hoca Oneone"
       },
       {
         "author": "Raving Traveler",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2주 전",
-        "text": "마음에 드는 신발을 찾지는 못했지만, 한 판매원분께서 정말 친절하고 정중하게 응대해 주셔서 너무 좋았습니다 (2026년 3월 25일 오후 5시 30분). 이렇게 훌륭한 서비스를 받은 건 정말 처음이에요. 정말 감사합니다!"
+        "relative_time": "2 weeks ago",
+        "text": "I couldn't find the shoes I liked, but I was very happy that a salesperson was very kind and polite (March 25, 2026, 5:30 PM). This is the first time I have received such great service. thank you!"
       }
     ],
     "photos": [
@@ -4822,16 +4822,16 @@
   },
   {
     "place_id": "ChIJp1QOPJSYfDURqT1wGukV1U4",
-    "display_name": "에뛰드하우스 신촌점",
-    "category": "화장품 판매점",
+    "display_name": "Etude House Sinchon Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 18-16",
-    "short_address": "서대문구 창천동 18-16",
+    "address": "18-16 Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "18-16 Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.556840799999996,
       "lng": 126.93702939999999
@@ -4856,39 +4856,39 @@
     "parking": null,
     "reviews": [
       {
-        "author": "김동민",
+        "author": "Kim Dong-min",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "7년 전",
-        "text": "샹들리에 같은 천장 장식에 먼지 개많음 충분히 손 닿을텐데 한번 닦아주세요 그리고 외국인전용 할인 할거면 중국 가서 장사하세용♡♡"
+        "relative_time": "7 years ago",
+        "text": "There's a lot of dust on the chandelier-like ceiling decoration, so please wipe it off if you touch it easily. And if you're going to give a foreigner-only discount, go to China and do business♡♡"
       },
       {
         "author": "Eun-Young CHOI",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "딸 아이 선물 사러 갔었어요. 예전부터 깜찍한분위기의 에뛰드. 여기는 점장님이 친절하셔서 좋았어요."
+        "relative_time": "4 years ago",
+        "text": "I went to buy a gift for my daughter. Etude has always had a cute atmosphere. The store manager here was friendly and nice."
       },
       {
         "author": "Rena U",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9년 전",
-        "text": "2층으로 된 매장이 완전 예뻐요. 사진도 너무 이쁘죠?!!"
+        "relative_time": "9 years ago",
+        "text": "The two-story store is really pretty. Isn’t the photo so pretty?!!"
       },
       {
         "author": "Hyuna Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9년 전",
-        "text": "이쁘고 외국인들 짱많아요"
+        "relative_time": "9 years ago",
+        "text": "It's pretty and there are a lot of foreigners."
       },
       {
-        "author": "가ᄀ",
+        "author": "Go",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "상품파는곳입니다"
+        "relative_time": "6 years ago",
+        "text": "This is a place that sells products."
       }
     ],
     "photos": [
@@ -4906,16 +4906,16 @@
   },
   {
     "place_id": "ChIJV9tBPJSYfDUR67OYGFPzSa4",
-    "display_name": "네이처컬렉션 신촌점",
-    "category": "화장품 판매점",
+    "display_name": "Nature Collection Sinchon Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 연세로 14-1",
-    "short_address": "서대문구 연세로 14-1",
+    "address": "14-1 Yonsei-ro, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "14-1 Yonsei-ro, Seodaemun-gu",
     "location": {
       "lat": 37.5568703,
       "lng": 126.9370751
@@ -4934,18 +4934,18 @@
     "google_maps_url": "https://maps.google.com/?cid=12558836574119834603",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98943c41db57:0xae49f3531898b3eb!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 10:00",
-      "화요일: 오전 10:00 ~ 오후 10:00",
-      "수요일: 오전 10:00 ~ 오후 10:00",
-      "목요일: 오전 10:00 ~ 오후 10:00",
-      "금요일: 오전 10:00 ~ 오후 10:00",
-      "토요일: 오전 10:00 ~ 오후 10:00",
-      "일요일: 오전 10:00 ~ 오후 10:00"
+      "Monday: 10:00 AM - 10:00 PM",
+      "Tuesday: 10:00 AM - 10:00 PM",
+      "Wednesday: 10:00 AM - 10:00 PM",
+      "Thursday: 10:00 AM - 10:00 PM",
+      "Friday: 10:00 AM - 10:00 PM",
+      "Saturday: 10:00 AM - 10:00 PM",
+      "Sunday: 10:00 AM - 10:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4957,16 +4957,16 @@
   },
   {
     "place_id": "ChIJ0YXyKQCZfDURXrF3yOgNA40",
-    "display_name": "어나더어썸 신촌",
-    "category": "의류점",
+    "display_name": "Another Awesome Sinchon",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 30-6 1층",
-    "short_address": "서대문구 창천동 30-6 1층",
+    "address": "1st floor, 30-6 Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "1st floor, 30-6 Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5564156,
       "lng": 126.9366571
@@ -4987,8 +4987,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4997,16 +4997,16 @@
   },
   {
     "place_id": "ChIJ428aypWYfDUR0ESPoGj6Iwk",
-    "display_name": "미쏘시크릿 신촌점",
-    "category": "의류점",
+    "display_name": "Misso Secret Sinchon Branch",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 30-8",
-    "short_address": "서대문구 창천동 30-8",
+    "address": "30-8 Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "30-8 Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.555813199999996,
       "lng": 126.9366961
@@ -5025,18 +5025,18 @@
     "google_maps_url": "https://maps.google.com/?cid=658645297803510992",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9895ca1a6fe3:0x923fa68a08f44d0!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 10:00",
-      "화요일: 오전 11:00 ~ 오후 10:00",
-      "수요일: 오전 11:00 ~ 오후 10:00",
-      "목요일: 오전 11:00 ~ 오후 10:00",
-      "금요일: 오전 11:00 ~ 오후 10:00",
-      "토요일: 오전 11:00 ~ 오후 10:00",
-      "일요일: 오전 11:00 ~ 오후 10:00"
+      "Monday: 11:00 AM - 10:00 PM",
+      "Tuesday: 11:00 AM - 10:00 PM",
+      "Wednesday: 11:00 AM - 10:00 PM",
+      "Thursday: 11:00 AM - 10:00 PM",
+      "Friday: 11:00 AM - 10:00 PM",
+      "Saturday: 11:00 AM - 10:00 PM",
+      "Sunday: 11:00 AM - 10:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5045,16 +5045,16 @@
   },
   {
     "place_id": "ChIJb3ZDXACZfDURNMJW0dD-Hvg",
-    "display_name": "올리브영 신촌중앙점",
-    "category": "화장품 판매점",
+    "display_name": "Olive Young Sinchon Jungang Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 신촌로 93 광신빌딩 1층",
-    "short_address": "서대문구 신촌로 93 광신빌딩 1층",
+    "address": "1st floor, Gwangshin Building, 93 Sinchon-ro, Seodaemun-gu, Seoul, Korea",
+    "short_address": "1st floor, Gwangshin Building, 93 Sinchon-ro, Seodaemun-gu",
     "location": {
       "lat": 37.5557775,
       "lng": 126.9366667
@@ -5073,18 +5073,18 @@
     "google_maps_url": "https://maps.google.com/?cid=17879007743526224436",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99005c43766f:0xf81efed0d156c234!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 11:00",
-      "화요일: 오전 10:00 ~ 오후 11:00",
-      "수요일: 오전 10:00 ~ 오후 11:00",
-      "목요일: 오전 10:00 ~ 오후 11:00",
-      "금요일: 오전 10:00 ~ 오후 11:00",
-      "토요일: 오전 10:00 ~ 오후 11:00",
-      "일요일: 오전 10:00 ~ 오후 11:00"
+      "Monday: 10:00 AM - 11:00 PM",
+      "Tuesday: 10:00 AM - 11:00 PM",
+      "Wednesday: 10:00 AM - 11:00 PM",
+      "Thursday: 10:00 AM - 11:00 PM",
+      "Friday: 10:00 AM - 11:00 PM",
+      "Saturday: 10:00 AM - 11:00 PM",
+      "Sunday: 10:00 AM - 11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5094,35 +5094,35 @@
         "author": "張進東",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1달 전",
-        "text": "화장품, 스킨케어 제품, 메이크업, 스킨케어 제품…"
+        "relative_time": "1 month ago",
+        "text": "Cosmetics, skin care products, makeup, skin care products…"
       },
       {
         "author": "N C",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6달 전",
-        "text": "고객 서비스가 정말 최악이었어요. 영어로 구매 시 선물을 준다고 광고했는데, 막상 선물하려고 보니 계산원이 OY 회원 전용이라고 하더군요. 안내판 어디에도 그런 말은 없고, 모든 단어가 영어로 적혀 있었어요! 매니저가 와서는 전혀 도움이 안 되면서 \"전 세계적 문제\"라고 핑계를 댔어요. 제대로 제공할 수 없는 선물이라면 영어로 광고하지 않는 게 나을지도 모르겠네요."
+        "relative_time": "6 months ago",
+        "text": "Customer service was really bad. It was advertised in English as a gift with purchase, but when I tried to give it as a gift, the cashier said it was for OY members only. There was no such word anywhere on the sign, and all the words were written in English! The manager came and was no help at all and made the excuse that it was a “global problem.” If it's a gift that can't be given properly, it might be better not to advertise it in English."
       },
       {
         "author": "Marcel",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10달 전",
-        "text": "올리브앤영에서 정말 좋은 경험을 했습니다! 직원 한 분이 특히 친절하고 도움이 많이 되었으며, 영어로도 명확하게 소통해 주셨습니다. 세금 환급 절차도 현장에서 아주 원활하게 진행되었습니다. 모든 것이 완벽했습니다!"
+        "relative_time": "10 months ago",
+        "text": "I had a really great experience at Olive & Young! One staff member was particularly friendly and helpful, and communicated clearly in English. The tax refund process also went very smoothly on site. Everything was perfect!"
       },
       {
         "author": "まぷ",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       },
       {
         "author": "191 yhi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
+        "relative_time": "2 months ago",
         "text": null
       }
     ],
@@ -5141,8 +5141,8 @@
   },
   {
     "place_id": "ChIJ8w0RpJaYfDURgQ1eRGZX7PY",
-    "display_name": "모네",
-    "category": "여성의류점",
+    "display_name": "monet",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "clothing_store",
@@ -5150,8 +5150,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 13-68",
-    "short_address": "서대문구 창천동 13-68",
+    "address": "13-68 Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "13-68 Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5569474,
       "lng": 126.93837710000001
@@ -5172,24 +5172,24 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "정병건",
+        "author": "Jeong Byeong-gun",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "8년 전",
-        "text": "전화로예약할때랑 도착해서 얼굴볼때랑 말바꿈 저런데는 가면안됨"
+        "relative_time": "8 years ago",
+        "text": "You shouldn't go to places like that when you make a reservation over the phone and when you see someone face to face when you arrive."
       },
       {
         "author": "once sim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       }
     ],
@@ -5197,16 +5197,16 @@
   },
   {
     "place_id": "ChIJnxOWu5WYfDURjfI_6z7aFSA",
-    "display_name": "퓨마 현대신촌점",
-    "category": "의류점",
+    "display_name": "Puma Hyundai Sinchon Branch",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 신촌로 83",
-    "short_address": "서대문구 신촌로 83",
+    "address": "83 Sinchon-ro, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "83 Sinchon-ro, Seodaemun-gu",
     "location": {
       "lat": 37.5566616,
       "lng": 126.93665440000001
@@ -5216,7 +5216,7 @@
     "rating_count": 1,
     "price_level": null,
     "price_range": null,
-    "editorial_summary": "브랜드 자체 제작 운동화, 의류, 배낭, 기타 액세서리를 취급하는 소매업체",
+    "editorial_summary": "Retailer of branded sneakers, clothing, backpacks and other accessories",
     "generative_summary": null,
     "review_summary": null,
     "phone": "02-3145-1528",
@@ -5225,18 +5225,18 @@
     "google_maps_url": "https://maps.google.com/?cid=2311993947494281869",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9895bb96139f:0x2015da3eeb3ff28d!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 8:30",
-      "화요일: 오전 10:30 ~ 오후 8:30",
-      "수요일: 오전 10:30 ~ 오후 8:30",
-      "목요일: 오전 10:30 ~ 오후 8:30",
-      "금요일: 오전 10:30 ~ 오후 8:30",
-      "토요일: 오전 10:30 ~ 오후 8:30",
-      "일요일: 오전 10:30 ~ 오후 8:30"
+      "Monday: 10:30 AM - 8:30 PM",
+      "Tuesday: 10:30 AM - 8:30 PM",
+      "Wednesday: 10:30 AM - 8:30 PM",
+      "Thursday: 10:30 AM - 8:30 PM",
+      "Friday: 10:30 AM - 8:30 PM",
+      "Saturday: 10:30 AM - 8:30 PM",
+      "Sunday: 10:30 AM - 8:30 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5246,24 +5246,24 @@
         "author": "Ken Adewoyin",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "디자인도 좋고 가격도 저렴해서 후회 없을 거예요."
+        "relative_time": "7 years ago",
+        "text": "The design is great and the price is cheap, so you won’t regret it."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJrRwHOJSYfDURrEA0o5sCm7I",
-    "display_name": "폴햄(POLHAM) 현대백화점유플렉스신촌점",
-    "category": "의류점",
+    "display_name": "POLHAM Hyundai Department Store Uplex Sinchon Branch",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 신촌로 13",
-    "short_address": "서대문구 신촌로 13",
+    "address": "13 Sinchon-ro, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "13 Sinchon-ro, Seodaemun-gu",
     "location": {
       "lat": 37.5566866,
       "lng": 126.9366501
@@ -5282,22 +5282,22 @@
     "google_maps_url": "https://maps.google.com/?cid=12869883227622621356",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989438071cad:0xb29b029ba33440ac!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 10:00",
-      "화요일: 오전 10:30 ~ 오후 10:00",
-      "수요일: 오전 10:30 ~ 오후 10:00",
-      "목요일: 오전 10:30 ~ 오후 10:00",
-      "금요일: 오전 10:30 ~ 오후 10:00",
-      "토요일: 오전 10:30 ~ 오후 10:00",
-      "일요일: 오전 10:30 ~ 오후 10:00"
+      "Monday: 10:30 AM - 10:00 PM",
+      "Tuesday: 10:30 AM - 10:00 PM",
+      "Wednesday: 10:30 AM - 10:00 PM",
+      "Thursday: 10:30 AM - 10:00 PM",
+      "Friday: 10:30 AM - 10:00 PM",
+      "Saturday: 10:30 AM - 10:00 PM",
+      "Sunday: 10:30 AM - 10:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": null,
@@ -5305,16 +5305,16 @@
   },
   {
     "place_id": "ChIJd29lOJSYfDURzBgibnq_CJw",
-    "display_name": "캘빈클라인 액세서리 현대백화점 신촌점",
-    "category": "의류점",
+    "display_name": "Calvin Klein Accessories Hyundai Department Store Sinchon Branch",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 현대백화점 신관U-PLEX 6층",
-    "short_address": "서대문구 현대백화점 신관U-PLEX 6층",
+    "address": "6th floor, U-PLEX, new building of Hyundai Department Store, Seodaemun-gu, Seoul, Korea",
+    "short_address": "6th floor, U-PLEX, new building of Hyundai Department Store, Seodaemun-gu",
     "location": {
       "lat": 37.556762899999995,
       "lng": 126.936708
@@ -5333,28 +5333,28 @@
     "google_maps_url": "https://maps.google.com/?cid=11243447002285086924",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989438656f77:0x9c08bf7a6e2218cc!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 8:00",
-      "화요일: 오전 10:30 ~ 오후 8:00",
-      "수요일: 오전 10:30 ~ 오후 8:00",
-      "목요일: 오전 10:30 ~ 오후 8:00",
-      "금요일: 오전 10:30 ~ 오후 8:00",
-      "토요일: 오전 10:30 ~ 오후 8:00",
-      "일요일: 오전 10:30 ~ 오후 8:00"
+      "Monday: 10:30 AM - 8:00 PM",
+      "Tuesday: 10:30 AM - 8:00 PM",
+      "Wednesday: 10:30 AM - 8:00 PM",
+      "Thursday: 10:30 AM - 8:00 PM",
+      "Friday: 10:30 AM - 8:00 PM",
+      "Saturday: 10:30 AM - 8:00 PM",
+      "Sunday: 10:30 AM - 8:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "강훈",
+        "author": "Kang Hoon",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       }
     ],
@@ -5365,16 +5365,16 @@
   },
   {
     "place_id": "ChIJUxJprZCYfDURi3EtztJVzhM",
-    "display_name": "한국마루이서울사무소",
-    "category": "화장품 판매점",
+    "display_name": "Marui Korea Seoul Office",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 노고산동",
-    "short_address": "마포구 노고산동",
+    "address": "Nogosan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "Nogosan-dong, Mapo-gu",
     "location": {
       "lat": 37.556263,
       "lng": 126.94274419999999
@@ -5395,8 +5395,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5405,16 +5405,16 @@
   },
   {
     "place_id": "ChIJcfyEsJCYfDURutlUgGquC5A",
-    "display_name": "모퉁이양품점",
-    "category": "의류점",
+    "display_name": "Corner Goods Store",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 대현동 104-36번지 1층 107호 신촌자이엘라 서대문구 서울특별시 KR",
-    "short_address": "대현동 104-36번지 1층 107호 신촌자이엘라 서대문구 서울특별시 KR",
+    "address": "Room 107, 1st floor, 104-36 Daehyeon-dong, Seoul, Republic of Korea Sinchon Xiella Seodaemun-gu Seoul KR",
+    "short_address": "#107, 1st floor, 104-36 Daehyeon-dong, Sinchon Jaiella, Seodaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5568239,
       "lng": 126.9424861
@@ -5435,8 +5435,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5445,16 +5445,16 @@
   },
   {
     "place_id": "ChIJtb4typCYfDURCdaZNmOk0dE",
-    "display_name": "피에이티(PAT)신촌점",
-    "category": "의류점",
+    "display_name": "PAT Sinchon Branch",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 대현동 104-47",
-    "short_address": "서대문구 대현동 104-47",
+    "address": "104-47 Daehyeon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "104-47 Daehyeon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5567576,
       "lng": 126.9418622
@@ -5475,8 +5475,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5486,15 +5486,15 @@
   {
     "place_id": "ChIJcfyEsJCYfDURDTlG47PcDUk",
     "display_name": "Mirabeau",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 대현동 104-36",
-    "short_address": "서대문구 대현동 104-36",
+    "address": "104-36 Daehyeon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "104-36 Daehyeon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.556841,
       "lng": 126.942499
@@ -5513,18 +5513,18 @@
     "google_maps_url": "https://maps.google.com/?cid=5264106204636264717",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9890b084fc71:0x490ddcb3e346390d!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 9:00",
-      "화요일: 오전 10:30 ~ 오후 9:00",
-      "수요일: 오전 10:30 ~ 오후 9:00",
-      "목요일: 오전 10:30 ~ 오후 9:00",
-      "금요일: 오전 10:30 ~ 오후 9:00",
-      "토요일: 오전 10:30 ~ 오후 9:00",
-      "일요일: 오전 10:30 ~ 오후 9:00"
+      "Monday: 10:30 AM - 9:00 PM",
+      "Tuesday: 10:30 AM - 9:00 PM",
+      "Wednesday: 10:30 AM - 9:00 PM",
+      "Thursday: 10:30 AM - 9:00 PM",
+      "Friday: 10:30 AM - 9:00 PM",
+      "Saturday: 10:30 AM - 9:00 PM",
+      "Sunday: 10:30 AM - 9:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5534,7 +5534,7 @@
         "author": "阿樺田",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -5543,15 +5543,15 @@
   {
     "place_id": "ChIJi1HXWuyZfDUR4trIAx8bkt4",
     "display_name": "Green Botanic Illustration",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 대현동 신촌자이엘라",
-    "short_address": "대현동 신촌자이엘라",
+    "address": "Sinchon Xiella, Daehyeon-dong, Seoul, South Korea",
+    "short_address": "Daehyeon-dong Sinchon Xiella",
     "location": {
       "lat": 37.5568725,
       "lng": 126.94265360000001
@@ -5572,8 +5572,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5583,8 +5583,8 @@
   },
   {
     "place_id": "ChIJTdkA0sGZfDUREM5qk6w5BJ8",
-    "display_name": "Coin laundry and dry cleaning service (=크린에이드 이대역점), 1st floor inside building",
-    "category": "세탁소",
+    "display_name": "Coin laundry and dry cleaning service (=Clean Aid Ewha Womans University Station Branch), 1st floor inside building",
+    "category": "laundry",
     "types": [
       "laundry",
       "clothing_store",
@@ -5593,8 +5593,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 대흥동 12-41 이대역스타힐스 1층 108호",
-    "short_address": "마포구 대흥동 12-41 이대역스타힐스 1층 108호",
+    "address": "Room 108, 1st floor, Starhills, Ewha Womans University Station, 12-41 Daeheung-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "Room 108, 1st floor, Star Hills, Ewha Womans University Station, 12-41 Daeheung-dong, Mapo-gu",
     "location": {
       "lat": 37.5563291,
       "lng": 126.9433804
@@ -5613,13 +5613,13 @@
     "google_maps_url": "https://maps.google.com/?cid=11458346765307792912",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99c1d200d94d:0x9f0439ac936ace10!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": null,
@@ -5630,36 +5630,36 @@
         "author": "Ji hyeon Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "셀프세탁소뿐만 아니라 드라이 등도 가능해서 너무 좋아요~ 기다리는동안 심심하지 않도록 오락기도 있어서 어릴때 추억도 나구요. 맡긴옷도 친절히 잘해주시고 넘 좋습니다"
+        "relative_time": "6 years ago",
+        "text": "It's so nice that you can not only do self-laundry but also dry hair. There's also an arcade game machine so you don't get bored while waiting, which brings back memories of my childhood. They treated me kindly with the clothes I left in, which was great."
       },
       {
         "author": "JEONGA HAN",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "유니폼이나 와이셔츠처럼 간단한 세탁물 뿐만 아니라 코트랑 니트처럼 까다롭고 고급진 의류도 깨끗하게 잘되더라고요~ 코인도 24시간이라 편하게 자주 이용해요"
+        "relative_time": "6 years ago",
+        "text": "It cleans not only simple items like uniforms and dress shirts, but also difficult and high-quality clothes like coats and knits. Coin service is available 24 hours a day, so I use it often."
       },
       {
-        "author": "이흥우",
+        "author": "Heungwoo Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "빨래방 찾고있었는데, 이대역 서희스타힐스 1층 건물안쪽에 있더라구요~깔끔하고, 좋았네요~!코인은 24시간인데, 다른곳보다 세탁기가 커서 더 좋았네요~강추합니다~!"
+        "relative_time": "6 years ago",
+        "text": "I was looking for a laundromat, and it was located inside the building on the 1st floor of Seohui Star Hills near Ewha Womans University Station. It was clean and nice! Coin service is available 24 hours a day, and the washing machine was bigger than other places, so it was better. I highly recommend it!"
       },
       {
-        "author": "장신현",
+        "author": "Shinhyeon Jang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "셀프 세탁소에서 찾을수 없는 깔끔함과 쾌적한 느낌을 느낄수 있었습니다 주인 아주머니도 너무 친절해서 빨래도 더 깨끗하게 된것 같아 좋았습니다 또 갈게요!!"
+        "relative_time": "6 years ago",
+        "text": "I was able to feel the cleanliness and comfortable feeling that I couldn't find at a self-service laundromat. The owner was also very kind, so it felt like my laundry was cleaner too. I'll go again!!"
       },
       {
-        "author": "이석필",
+        "author": "Seokpil Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "매우 깨끗하고 편리합니다 시설이 관리 잘 되서 좋았습니다 ."
+        "relative_time": "6 years ago",
+        "text": "It was very clean and convenient. I liked that the facilities were well maintained."
       }
     ],
     "photos": [
@@ -5677,16 +5677,16 @@
   },
   {
     "place_id": "ChIJP8oDPZeYfDUR7ZVy6CtXyVg",
-    "display_name": "빈티지너울",
-    "category": "의류점",
+    "display_name": "vintage swell",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 노고산동 1-60번지",
-    "short_address": "마포구 노고산동 1-60번지",
+    "address": "1-60 Nogosan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "1-60 Nogosan-dong, Mapo-gu",
     "location": {
       "lat": 37.5556165,
       "lng": 126.9414857
@@ -5707,8 +5707,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5717,24 +5717,24 @@
         "author": "huniok lee",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
-        "text": "24시간인거 같은데 옷이 다양하지 않고 너무 적음 에어컨 안되있어 너무 찜통 덥고 시간투자해서 간건데 실망만 하고옴"
+        "relative_time": "1 year ago",
+        "text": "I think it's 24 hours, but there aren't a lot of clothes and there are too few. There's no air conditioning, so it's very hot. I invested a lot of time to go there, but I was disappointed."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJS43mz5CYfDURVzF6GatlwaE",
-    "display_name": "유진",
-    "category": "귀금속 상점",
+    "display_name": "Eugene",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 대현동 104-39번지 서대문구 서울특별시 KR",
-    "short_address": "대현동 104-39번지 서대문구 서울특별시 KR",
+    "address": "104-39 Daehyeon-dong, Seoul, South Korea, Seodaemun-gu, Seoul KR",
+    "short_address": "104-39 Daehyeon-dong, Seodaemun-gu, Seoul KR",
     "location": {
       "lat": 37.557195899999996,
       "lng": 126.94137280000001
@@ -5762,16 +5762,16 @@
   },
   {
     "place_id": "ChIJEwwrl6aZfDURiaU_yVeo0o8",
-    "display_name": "무릇",
-    "category": "의류점",
+    "display_name": "Anyone",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 대현동 104-25",
-    "short_address": "서대문구 대현동 104-25",
+    "address": "104-25 Daehyeon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "104-25 Daehyeon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5574355,
       "lng": 126.9418618
@@ -5792,8 +5792,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5802,8 +5802,8 @@
   },
   {
     "place_id": "ChIJK2KC5bujfDURoShNnqZKoR4",
-    "display_name": "custom t-shirts printing & sticker 단체티 & 스티커",
-    "category": "의류점",
+    "display_name": "custom t-shirts printing & sticker group t-shirts & stickers",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "government_office",
@@ -5813,8 +5813,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 대현동 101-6 5층",
-    "short_address": "서대문구 대현동 101-6 5층",
+    "address": "5th floor, 101-6 Daehyeon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "5th floor, 101-6 Daehyeon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5577071,
       "lng": 126.9429099
@@ -5833,59 +5833,59 @@
     "google_maps_url": "https://maps.google.com/?cid=2207127371869137057",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3bbe582622b:0x1ea14aa69e4d28a1!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 6:00",
-      "화요일: 오전 10:00 ~ 오후 6:00",
-      "수요일: 오전 10:00 ~ 오후 6:00",
-      "목요일: 오전 10:00 ~ 오후 6:00",
-      "금요일: 오전 10:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 6:00 PM",
+      "Tuesday: 10:00 AM - 6:00 PM",
+      "Wednesday: 10:00 AM - 6:00 PM",
+      "Thursday: 10:00 AM - 6:00 PM",
+      "Friday: 10:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이승헌",
+        "author": "Seungheon Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "내가 원하는 디자인을 간편하고 저렴한 가격으로 만들수 있어서 너무 좋네요~ 친절하게 상담해주신 사장님 감사합니다~  종종 이용하게 될꺼 같습니다^^"
+        "relative_time": "3 years ago",
+        "text": "It's so nice to be able to create the design I want easily and at a low price. Thank you to the owner for the kind advice. I think I'll use it often. ^^"
       },
       {
-        "author": "홍정연",
+        "author": "Jeongyeon Hong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "품질도 서비스도 넘 좋았어요~샘플에서 상품으로 고~고~👍"
+        "relative_time": "3 years ago",
+        "text": "The quality and service were very good. From samples to products, go~👍"
       },
       {
-        "author": "유동문",
+        "author": "floating sentence",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "궁금해서물어봅니다 가격이얼마인가요?"
+        "relative_time": "1 year ago",
+        "text": "I'm curious and ask, how much does it cost?"
       },
       {
-        "author": "유영상",
+        "author": "Yoo Young-sang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "회사가 깔끔하고 일처리가 완벽해요 강추!!!!"
+        "relative_time": "3 years ago",
+        "text": "The company is clean and the work is done perfectly. Highly recommended!!!!"
       },
       {
-        "author": "배주하",
+        "author": "Bae Joo-ha",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "완벽해요~"
+        "relative_time": "1 year ago",
+        "text": "It's perfect~"
       }
     ],
     "photos": [
@@ -5903,8 +5903,8 @@
   },
   {
     "place_id": "ChIJD810X9yYfDURAg2vDIsAfhk",
-    "display_name": "윌리엄스파",
-    "category": "피부관리실",
+    "display_name": "Williams School",
+    "category": "skin care room",
     "types": [
       "skin_care_clinic",
       "cosmetics_store",
@@ -5914,8 +5914,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 12-27번지 이대역푸르지오시티 상가310호",
-    "short_address": "마포구 12-27번지 이대역푸르지오시티 상가310호",
+    "address": "Room 310, Prugio City Shopping Mall, Ewha Womans University Station, 12-27, Mapo-gu, Seoul, Korea",
+    "short_address": "Room 310, Ewha Womans University Prugio City Shopping Mall, 12-27, Mapo-gu",
     "location": {
       "lat": 37.55634,
       "lng": 126.94455599999999
@@ -5934,20 +5934,20 @@
     "google_maps_url": "https://maps.google.com/?cid=1836906295226993922",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98dc5f74cd0f:0x197e008b0caf0d02!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 9:00",
-      "화요일: 오전 11:00 ~ 오후 9:00",
-      "수요일: 오전 11:00 ~ 오후 9:00",
-      "목요일: 오전 11:00 ~ 오후 9:00",
-      "금요일: 오전 11:00 ~ 오후 9:00",
-      "토요일: 오전 10:00 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: 11:00 AM - 9:00 PM",
+      "Tuesday: 11:00 AM - 9:00 PM",
+      "Wednesday: 11:00 AM - 9:00 PM",
+      "Thursday: 11:00 AM - 9:00 PM",
+      "Friday: 11:00 AM - 9:00 PM",
+      "Saturday: 10:00 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5957,22 +5957,22 @@
         "author": "Hye Ok Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
-        "text": "작지만 깔끔하고 힐링되는 공간이에요.\n원장님이 얼마전까지는 드끌레오 정품만 고집스럽게 사용했고, 드끌레오가 서울에서 철수하면서 프랑스 유명 화장품 브랜드인 델라롬을 사용한다고 해요. 요즘에 우후죽순처럼 생기는  다른 스파와 달리 몇년 단골이 많은 걸 보면 원장님의 깐깐한 관리와 고객을 대하는 정직함이 대단하다는 걸 알 수 있어요.\n윌리엄스파는 해외 유명 스타들도 PPL이 아닌 입소문으로 찾아와 돈 내고 스파를 받는 곳으로도 유명해요. 작지만 깨끗하고 편안한 공간에서 일인 스파를 받으면 모든 스트레스가 날아가는 것 같아요.\n윌리엄스파를 방문하여 향기로운 차를 마시며 상담만 받아도 윌리엄스파의 진가를 알아볼 수 있어요. 서울에서 몇 안되는 정직한 스파예요!"
+        "relative_time": "8 years ago",
+        "text": "It is a small, but clean and healing space.\nUntil recently, the director insisted on using only genuine Decleo products, and since Decleo withdrew from Seoul, he now uses Delarome, a famous French cosmetics brand. Unlike other spas that are mushrooming these days, the fact that there are many regulars for several years shows that the director's strict management and honesty in dealing with customers are remarkable.\nWilliams Spa is also famous for being a place where famous foreign stars come and pay for spa treatments, not through PPL but through word of mouth. I feel like all my stress melts away when I get a one-person spa treatment in a small, clean, and comfortable space.\nYou can appreciate the true value of Williams Spa just by visiting Williams Spa, drinking fragrant tea, and receiving a consultation. This is one of the few honest spas in Seoul!"
       },
       {
-        "author": "이경연",
+        "author": "Kyeong-yeon Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "2년간 다닌 곳이에요.\n좋다는 스파는 여러 군데 다녀봤지만 여기 처럼 쏙 마음에 드는 곳은 드물었어요.\n원장님이 직접 케어해 주셔서 언제나 신뢰할 수 있고,\n아늑한 공간에서 편히 쉴 수 있어요.\n원장님께서 워낙 마케팅에는 관심이 없으셔서\n제가 안타까운 마음에 난생 처음 리뷰를 남깁니다.\n직접 오셔서 꼭 한번 케어 받아 보세요.\n반드시 만족하실거라 100프로 장담합니다.\n제가 받는 제품은 델라롬이고 다른 제품도 있는 것 같습니다.\n위치는 신촌그랑자이 앞 오피스텔 3층에 있어요."
+        "relative_time": "6 years ago",
+        "text": "This is a place I went to for two years.\nI've been to many good spas, but there are few that I like as much as this one.\nYou can always trust the care provided by the director himself.\nYou can relax comfortably in a cozy space.\nThe director is not very interested in marketing.\nIt is with a sad heart that I am leaving a review for the first time in my life.\nPlease come and receive care in person.\nI 100% guarantee that you will be satisfied.\nThe product I receive is Delarome and I think there are other products as well.\nThe location is on the 3rd floor of the officetel in front of Sinchon Grand Xi."
       },
       {
-        "author": "꽃다운에밀리",
+        "author": "Flower-like Emily",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "산전산후관리 찾는분들이라면 강추하는곳입니다.  원장님이 경력있으시고 실력도 있으세요.  몸상태 체크해주시면서 꼼꼼히 케어해주십니다.. 가격, 시설, 관리, 제품 모든면에서 만족하는곳입니다. 산후 관리 10회 다 끝나고도 꾸준히 다닐 예정입니다. 오래도록 운영해주세요!!"
+        "relative_time": "5 years ago",
+        "text": "I highly recommend this place to anyone looking for prenatal and postnatal care.  The director has experience and skills.  They check your physical condition and provide thorough care. This is a place that satisfies all aspects of price, facilities, management, and products. I plan to continue attending after completing 10 postpartum care sessions. Please keep it running for a long time!!"
       }
     ],
     "photos": null

@@ -1,15 +1,15 @@
 [
   {
     "place_id": "ChIJx44v_LuifDURJTkf22KgDLE",
-    "display_name": "이브이메드텍(주)",
-    "category": "쇼핑몰",
+    "display_name": "Eve Medtech Co., Ltd.",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 청계천로 100",
-    "short_address": "중구 청계천로 100",
+    "address": "100 Cheonggyecheon-ro, Jung-gu, Seoul, South Korea",
+    "short_address": "100 Cheonggyecheon-ro, Jung-gu",
     "location": {
       "lat": 37.5675542,
       "lng": 126.98812860000001
@@ -28,20 +28,20 @@
     "google_maps_url": "https://maps.google.com/?cid=12757748190877268261",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2bbfc2f8ec7:0xb10ca062db1f3925!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:30 ~ 오후 5:30",
-      "화요일: 오전 9:30 ~ 오후 5:30",
-      "수요일: 오전 9:30 ~ 오후 5:30",
-      "목요일: 오전 9:30 ~ 오후 5:30",
-      "금요일: 오전 9:30 ~ 오후 5:30",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:30 AM - 5:30 PM",
+      "Tuesday: 9:30 AM - 5:30 PM",
+      "Wednesday: 9:30 AM - 5:30 PM",
+      "Thursday: 9:30 AM - 5:30 PM",
+      "Friday: 9:30 AM - 5:30 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -53,15 +53,15 @@
   },
   {
     "place_id": "ChIJGVQrDD6jfDUR-bg4eqPsjQQ",
-    "display_name": "스케쳐스 코리아",
-    "category": "쇼핑몰",
+    "display_name": "Skechers Korea",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 수표동 청계천로 100",
-    "short_address": "중구 수표동 청계천로 100",
+    "address": "100 Cheonggyecheon-ro, Supyo-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "100 Cheonggyecheon-ro, Supyo-dong, Jung-gu",
     "location": {
       "lat": 37.5674783,
       "lng": 126.98841209999999
@@ -81,15 +81,15 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33e0c2b5419:0x48deca37a38b8f9!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어화장실"
+      "wheelchair restroom"
     ],
     "parking": null,
     "reviews": [
@@ -97,21 +97,21 @@
         "author": "TOMMY HAN",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "신발이 편해서 5년 전부터 스케쳐스만 신는데 백화점엔 재고가 항상 부족했는데 여기 직원분들 설명도 너무 친절하고 기분 좋아 신상 지름"
+        "relative_time": "2 years ago",
+        "text": "The shoes are comfortable, so I've only been wearing Skechers for the past 5 years, and the department store was always out of stock, but the staff here were very kind and helpful, and I felt good about the new products."
       },
       {
         "author": "w w",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "3달 전",
-        "text": "최악의 서비스"
+        "relative_time": "3 months ago",
+        "text": "worst service"
       },
       {
         "author": "SiLENT",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1달 전",
+        "relative_time": "1 month ago",
         "text": null
       }
     ],
@@ -121,15 +121,15 @@
   },
   {
     "place_id": "ChIJlW4lWKWjfDURrfPC2hrWSYc",
-    "display_name": "샤이맨종각역점",
-    "category": "쇼핑몰",
+    "display_name": "Shayman Jonggak Station Branch",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로12길 18 1층",
-    "short_address": "종로구 종로12길 18 1층",
+    "address": "1st floor, 18 Jongno 12-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "1st floor, 18 Jongno 12-gil, Jongno-gu",
     "location": {
       "lat": 37.5692135,
       "lng": 126.98555419999998
@@ -148,18 +148,18 @@
     "google_maps_url": "https://maps.google.com/?cid=9748558279247852461",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3a558256e95:0x8749d61adac2f3ad!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -169,14 +169,14 @@
   },
   {
     "place_id": "ChIJV--c9eaifDURJPUtRrirAN4",
-    "display_name": "명진상사",
-    "category": "쇼핑몰",
+    "display_name": "Myungjin Trading Company",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.567694599999996,
@@ -198,8 +198,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -208,15 +208,15 @@
   },
   {
     "place_id": "ChIJ1ZFzKeaifDURFHVHpSRMXRI",
-    "display_name": "센세이션",
-    "category": "쇼핑몰",
+    "display_name": "sensation",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로2가 75-5번지 5층 종로구 서울특별시 KR",
-    "short_address": "종로2가 75-5번지 5층 종로구 서울특별시 KR",
+    "address": "5th floor, 75-5 Jongno 2-ga, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "5th floor, 75-5 Jongno 2-ga, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5699067,
       "lng": 126.986533
@@ -236,11 +236,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e6297391d5:0x125d4c24a5477514!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -250,15 +250,15 @@
   },
   {
     "place_id": "ChIJvUi5bu-ifDURRP1YmZOwKtE",
-    "display_name": "경우프라자",
-    "category": "쇼핑몰",
+    "display_name": "Gyeongyeon Plaza",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 을지로2가 28-1번지 지하층 상가 473동 B",
-    "short_address": "중구 을지로2가 28-1번지 지하층 상가 473동 B",
+    "address": "473 Building B, basement shopping center, 28-1 Euljiro 2-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "473 Building B, basement shopping center, 28-1 Euljiro 2-ga, Jung-gu",
     "location": {
       "lat": 37.566865899999996,
       "lng": 126.98540149999998
@@ -278,11 +278,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2ef6eb948bd:0xd12ab0939958fd44!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -292,15 +292,15 @@
   },
   {
     "place_id": "ChIJOaszkOaifDURZoHBzUtnjbE",
-    "display_name": "빛나라몰",
-    "category": "쇼핑몰",
+    "display_name": "Bitnara Mall",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 수표동",
-    "short_address": "중구 수표동",
+    "address": "Supyo-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "Supyo-dong, Jung-gu",
     "location": {
       "lat": 37.567487899999996,
       "lng": 126.98975109999999
@@ -320,11 +320,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e69033ab39:0xb18d674bcdc18166!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -334,15 +334,15 @@
   },
   {
     "place_id": "ChIJUaLC3LWjfDUR_a_S6XlX5mY",
-    "display_name": "유덕빌딩 301~3호 서일기획",
-    "category": "쇼핑몰",
+    "display_name": "Yudeok Building #301~3 Seoil Communications",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 관수동 수표로18길 15",
-    "short_address": "종로구 관수동 수표로18길 15",
+    "address": "15 Supyo-ro 18-gil, Gwansu-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "15 Supyo-ro 18-gil, Gwansu-dong, Jongno-gu",
     "location": {
       "lat": 37.5694714,
       "lng": 126.9904115
@@ -362,11 +362,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3b5dcc2a251:0x66e65779e9d2affd!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -376,15 +376,15 @@
   },
   {
     "place_id": "ChIJYdRXV82jfDURaEV5P8TXOvc",
-    "display_name": "종로골든쥬얼리도매",
-    "category": "쇼핑몰",
+    "display_name": "Jongno Golden Jewelry Wholesale",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로3가 124",
-    "short_address": "종로구 종로3가 124",
+    "address": "124 Jongno 3-ga, Jongno-gu, Seoul, South Korea",
+    "short_address": "124 Jongno 3-ga, Jongno-gu",
     "location": {
       "lat": 37.5701185,
       "lng": 126.99152099999999
@@ -404,22 +404,22 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3cd5757d461:0xf73ad7c43f794568!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "열혈방카",
+        "author": "Passionate Bangka",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
-        "text": "두번인가 돌반지, 귀금속을 샀던것 같다. 대로변이라 무조건 더 비싸다 걱정하지는 마세요. 들어가셔서 매장마다 둘러보고 물어보심 됨"
+        "relative_time": "7 years ago",
+        "text": "I think I bought stone rings and precious metals twice. Don't worry that it's necessarily more expensive because it's on the main street. Go in, look around each store, and ask questions."
       }
     ],
     "photos": [
@@ -429,14 +429,14 @@
   {
     "place_id": "ChIJx-fQQgujfDUR79uIe7IrjdU",
     "display_name": "سوق كوريا",
-    "category": "시장",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동8길 19",
-    "short_address": "중구 명동8길 19",
+    "address": "19 Myeongdong 8-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "19 Myeongdong 8-gil, Jung-gu",
     "location": {
       "lat": 37.562898000000004,
       "lng": 126.98471699999999
@@ -457,8 +457,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -468,14 +468,14 @@
   {
     "place_id": "ChIJ6wauSuSjfDURvayZGs_CI4Y",
     "display_name": "Tập trung 7h30",
-    "category": "시장",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 남대문로2가 16-18",
-    "short_address": "중구 남대문로2가 16-18",
+    "address": "16-18 Namdaemun-ro 2-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "16-18 Namdaemunro 2-ga, Jung-gu",
     "location": {
       "lat": 37.56363100000001,
       "lng": 126.982311
@@ -514,8 +514,8 @@
   },
   {
     "place_id": "ChIJqVOjgvqifDURce-J-0mbxaE",
-    "display_name": "코리아마트",
-    "category": "할인 슈퍼마켓",
+    "display_name": "Korea Mart",
+    "category": "discount supermarket",
     "types": [
       "discount_supermarket",
       "supermarket",
@@ -526,8 +526,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동8가길 11",
-    "short_address": "중구 명동8가길 11",
+    "address": "11 Myeongdong 8ga-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "11 Myeongdong 8ga-gil, Jung-gu",
     "location": {
       "lat": 37.561754799999996,
       "lng": 126.98574589999998
@@ -548,8 +548,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -559,36 +559,36 @@
         "author": "kang kang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9달 전",
-        "text": "서울 명동역 8번 출구에서 가까운 세계과자 할인점! 외국인 관광객이 K라면도 체험하고 쇼핑도 하는 'K라면 슈퍼마켓' 코리아마트 매일  9 ~ 23시 동남아, 일본에서 먹어봤던 간식류가 그리울 때 한 번씩 가보면 반가운 간식들을 다시 만나 볼 수 있는 곳! 농심라면 팝업스토어 매장으로K라면 체험으로 외국인들에게 유명ㅎ\n\n귀여운 폰케이스도 많아요ㅎ 일본에 있는 디럭스 매장 같음 해외여행에서 본 다른 나라 기념품은 많이 봤는데 한국 여행 기념품 들도 굉장히 예쁘네요!명동에 위치해서 외국인 손님이 많지만, 한국 손님도 많았어요ㅋ 매장이 넓고 쾌적해서 쇼핑하기 좋았던 코리아 마켓!"
+        "relative_time": "9 months ago",
+        "text": "A world snack store close to Exit 8 of Myeongdong Station in Seoul! Korea Mart, a ‘K Ramen Supermarket’ where foreign tourists can experience and shop for K Ramen. Every day from 9 to 23:00. If you miss the snacks you tried in Southeast Asia or Japan, this is a place where you can visit once in a while and try the snacks again! Nongshim Ramen pop-up store is famous among foreigners for its K-ramen experience.\n\nThere are a lot of cute phone cases. It's like a deluxe store in Japan. I saw a lot of souvenirs from other countries during my overseas travels, and the souvenirs from my trip to Korea are also very pretty! It's located in Myeongdong, so there are a lot of foreign customers, but there were also a lot of Korean customers. The Korea Market was great for shopping because the store was spacious and comfortable!"
       },
       {
-        "author": "녹색걷기",
+        "author": "green walking",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "농심 K라면 슈퍼마켓은 마트와 스낵바가 결합한 형태로 라면 쇼핑과 식사를 한 공간에서 즐길 수 있다. 원하는 라면을 구매한 뒤 즉석조리기로 라면을 끓여 먹는 방식이라는 점이 통했다는 설명. 매장 내부 공간엔 대형 컵라면 형태의 취식대, 캐릭터 포토존 등을 마련해 볼거리를 제공한다.\n*대중교통:명동역 8번출구~"
+        "relative_time": "1 year ago",
+        "text": "Nongshim K Ramyun Supermarket is a combination of a supermarket and a snack bar, allowing you to enjoy ramen shopping and dining in one space. The explanation is that the method of purchasing the ramen you want and then boiling it in an instant cooker worked well. The interior space of the store provides attractions such as a large cup noodle-shaped eating table and a character photo zone.\n*Public transportation: Myeongdong Station Exit 8~"
       },
       {
-        "author": "김형준",
+        "author": "Hyungjun Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "장사가 잘되는지 2층 확장까지 했음."
+        "relative_time": "6 years ago",
+        "text": "They even expanded to the second floor to see if business was going well."
       },
       {
         "author": "Winnie Lee",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "7달 전",
-        "text": "유통기한 확인하세요\n유통기한 5 개월이나 지난 제품 판매중"
+        "relative_time": "7 months ago",
+        "text": "Check the expiration date\nProducts on sale that are 5 months past their expiration date"
       },
       {
         "author": "e pasteIblu",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "4년 전",
-        "text": "해외 과자 위주로 판매하는 슈퍼마켓입니다. 한국 과자보다 외국 과자가 정말 많아요."
+        "relative_time": "4 years ago",
+        "text": "This is a supermarket that mainly sells overseas snacks. There are a lot more foreign snacks than Korean snacks."
       }
     ],
     "photos": [
@@ -606,8 +606,8 @@
   },
   {
     "place_id": "ChIJKb_ph_CifDUR7AVlFevg3lA",
-    "display_name": "명동마트",
-    "category": "할인 슈퍼마켓",
+    "display_name": "Myeongdong Mart",
+    "category": "discount supermarket",
     "types": [
       "discount_supermarket",
       "supermarket",
@@ -618,8 +618,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동10길 58",
-    "short_address": "중구 명동10길 58",
+    "address": "58 Myeongdong 10-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "58 Myeongdong 10-gil, Jung-gu",
     "location": {
       "lat": 37.561252499999995,
       "lng": 126.98572659999999
@@ -638,55 +638,55 @@
     "google_maps_url": "https://maps.google.com/?cid=5827342268144879084",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2f087e9bf29:0x50dee0eb156505ec!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오전 12:00",
-      "화요일: 오전 8:00 ~ 오전 12:00",
-      "수요일: 오전 8:00 ~ 오전 12:00",
-      "목요일: 오전 8:00 ~ 오전 12:00",
-      "금요일: 오전 8:00 ~ 오전 12:00",
-      "토요일: 오전 8:00 ~ 오전 12:00",
-      "일요일: 오전 8:00 ~ 오전 12:00"
+      "Monday: 8:00 AM - 12:00 AM",
+      "Tuesday: 8:00 AM - 12:00 AM",
+      "Wednesday: 8:00 AM - 12:00 AM",
+      "Thursday: 8:00 AM - 12:00 AM",
+      "Friday: 8:00 AM - 12:00 AM",
+      "Saturday: 8:00 AM - 12:00 AM",
+      "Sunday: 8:00 AM - 12:00 AM"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "테디",
+        "author": "teddy",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "지하에 위치하며 싸고 좋음 물품이 많음"
+        "relative_time": "5 years ago",
+        "text": "Located in the basement, there are many cheap and good items."
       },
       {
         "author": "Jack",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "비교적 저렴하고, 종류 많고, 친절합니다."
+        "relative_time": "1 year ago",
+        "text": "It's relatively cheap, has a lot of variety, and is friendly."
       },
       {
-        "author": "박인숙",
+        "author": "Insook Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "일단 명동를 찾는 외국인들에게 인기 만점.각종 과자류를 비롯하여 특히 일본인들이 좋아하는 김등등..."
+        "relative_time": "7 years ago",
+        "text": "First of all, it is very popular with foreigners visiting Myeong-dong. Various confectionery products, especially seaweed that Japanese people like..."
       },
       {
         "author": "Irene “MJ” Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
-        "text": "관광객용 마트.\n특이하고 알 수 없는 제품도 많다.\n한국 것인지 모르겠는 한국 물품등."
+        "relative_time": "7 years ago",
+        "text": "A supermarket for tourists.\nThere are many unique and unknown products.\nKorean goods that I don't know if they are Korean."
       },
       {
-        "author": "운동좋아하는남자",
+        "author": "A man who likes sports",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "맛있는 음식도 팝니다 ㅎ"
+        "relative_time": "6 years ago",
+        "text": "They also sell delicious food."
       }
     ],
     "photos": [
@@ -704,8 +704,8 @@
   },
   {
     "place_id": "ChIJX6IS7PqifDURi9PMFSd25t8",
-    "display_name": "사우나&휘트니스클럽",
-    "category": "슈퍼마켓",
+    "display_name": "Sauna & Fitness Club",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -715,8 +715,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로2가 61-3",
-    "short_address": "중구 충무로2가 61-3",
+    "address": "61-3, Chungmuro 2-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "61-3 Chungmuro 2-ga, Jung-gu",
     "location": {
       "lat": 37.5613412,
       "lng": 126.9879409
@@ -735,35 +735,35 @@
     "google_maps_url": "https://maps.google.com/?cid=16133712625342927755",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2faec12a25f:0xdfe6762715ccd38b!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이범익",
+        "author": "Beomik Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "시원한 알루미늄 합금 칼로리 JJ"
+        "relative_time": "3 years ago",
+        "text": "Cool aluminum alloy calories JJ"
       },
       {
-        "author": "송소진",
+        "author": "Song Sojin",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -771,15 +771,15 @@
   },
   {
     "place_id": "ChIJqb-ne_CifDURR-yH8a3sjXM",
-    "display_name": "명동야시장",
-    "category": "시장",
+    "display_name": "Myeongdong Night Market",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로2가 8-3",
-    "short_address": "중구 충무로2가 8-3",
+    "address": "8-3, Chungmuro 2-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "8-3 Chungmuro 2-ga, Jung-gu",
     "location": {
       "lat": 37.561668499999996,
       "lng": 126.9858438
@@ -798,61 +798,61 @@
     "google_maps_url": "https://maps.google.com/?cid=8326571517903629383",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2f07ba7bfa9:0x738decadf187ec47!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 5:00 ~ 오전 1:00",
-      "화요일: 오후 5:00 ~ 오전 1:00",
-      "수요일: 오후 5:00 ~ 오전 1:00",
-      "목요일: 오후 5:00 ~ 오전 1:00",
-      "금요일: 오후 5:00 ~ 오전 1:00",
-      "토요일: 오후 5:00 ~ 오전 1:00",
-      "일요일: 오후 5:00 ~ 오전 1:00"
+      "Monday: 5:00 PM - 1:00 AM",
+      "Tuesday: 5:00 PM - 1:00 AM",
+      "Wednesday: 5:00 PM - 1:00 AM",
+      "Thursday: 5:00 PM - 1:00 AM",
+      "Friday: 5:00 PM - 1:00 AM",
+      "Saturday: 5:00 PM - 1:00 AM",
+      "Sunday: 5:00 PM - 1:00 AM"
     ],
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "하얀감자",
+        "author": "white potato",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "많은 외국인과 내국인이 버글버글핫 곳\n20년도 넘어서 방문해서 그전에는 어땠는지 잘 기억안남\n저는 사람많고 활기찬곳을 좋아하는지라 너무 좋았어요\n자주 티비에 나오는 주전부리들\n수많은 소품샾, 화장품,옷가게\n다 좋아보였어요\n조카랑 가는 바람에 먹방투어만 했지만 저는 여기저기 아이쇼핑으로 아주 만족했네요\n노점도 두어가지 품목만 좀 심하다 싶은 가격이었고 나머지는 납득할만한 가격이었어서 심하다는 생각은 안들었네요\n총평은... 다시 방문할 생각 있습니다"
+        "relative_time": "2 months ago",
+        "text": "A place bustling with many foreigners and locals\nI visited more than 20 years ago, so I don't really remember what it was like before.\nI really liked it because I like places with lots of people and liveliness.\nPeople who often appear on TV\nNumerous accessory shops, cosmetics, and clothing stores\nEverything looked good\nSince I was going with my nephew, I only went on a food tour, but I was very satisfied with some window shopping here and there.\nThe price of only a couple of items at the street stall seemed a bit high, but the rest were reasonably priced, so I didn't think it was too bad.\nOverall review... I plan to visit again."
       },
       {
-        "author": "라니여사",
+        "author": "Mrs. Rani",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "2022년 11월\n명동이 살아났습니다. 코로나 이전처럼 회복됐어요. 야시장도 많아졌고 외국 여행객들이 엄청 많아요. 신세계백화점이 예쁘니 꼭 함께 보면 좋겠습니다\n2022년초\n오늘 외국인이 이곳을 찾아서 길을 안내했습니다. 명동야시장은 이 지점이 아니라 명동 전체를 말합니다.예전에는 엄청 화려하고 볼것이 많았지요. 야시장은 저녁때 오픈하는데 코로나이후 몇몇의 먹거리만 있어서 아쉽습니다. 게다가 많은 상점이 문을 닫아서 볼거리는 별로 없습니다."
+        "relative_time": "3 years ago",
+        "text": "November 2022\nMyeongdong has come back to life. I recovered like before Corona. There are many night markets and there are a lot of foreign tourists. Shinsegae Department Store is so pretty, it would be nice to see it together.\nEarly 2022\nToday a foreigner came here and showed me the way. Myeongdong Night Market refers to the entire Myeongdong area, not just this branch. It used to be very fancy and had a lot to see. The night market opens in the evening, but it's a shame that there are only a few places to eat after the coronavirus. Plus, many stores are closed, so there isn't much to see."
       },
       {
-        "author": "이호정",
+        "author": "Hojeong Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "사람이 엄청 많아요\n한국사람 3외국인7비율정도??\n야시장 음식이 너무 비싸요\n외국인상대로 눈탱이 장사인듯 보이고\n한국사람은 안사먹어요\n맛이나 보자고 몆개 사먹었는데\n가격대비 호떡외는 아까워요\n그돈으로 야시장말고 근처 맛나는 맛집많아요 사먹고도 남아요 돈이..\n그만큼 야시장 물가 비싸요"
+        "relative_time": "2 years ago",
+        "text": "There are so many people\nThe ratio is about 3 Koreans to 7 foreigners??\nNight market food is too expensive\nIt seems like a business to keep an eye on foreigners.\nKoreans don’t eat it.\nI bought a bunch to see how it tasted.\nFor the price, anything other than hotteok is a waste.\nWith that money, you can buy food at many delicious restaurants nearby, other than the night market, and still have money left over.\nThat's how expensive the night market is."
       },
       {
         "author": "Gorilla",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "서울 명동 한복판 100m가량 이어진 노점거리는 ‘야시장’을 방불케 했다.\n대만, 싱가포르 등 아시아권은 물론이고 유럽, 미국 등 서구권까지 다양한 나라에서 온 외국인 관광객들이 닭꼬치, 순대꼬치, 만두 등 한국의 이색 노점 음식을 즐기고 있었다.\n코로나19 영향으로 폭격을 맞은 듯 골목 곳곳에 빈 점포로 가득했던 명동이 활기를 되찾고 있다.\n사회적 거리두기 종료, 입국 전 유전자증폭(PCR) 검사 해제 등 방역조치가 빠르게 풀리고 있는 데다, 강(强)달러로 원화 가치가 크게 하락한 점이 명동으로 외국인들이 귀환한 배경이 되고 있다.\n고물가, 고금리 등 경기 침체 우려가 나오지만 명동은 외국인 관광객 발길이 이어지면서 코로나19 사태 이전 모습을 되찾아 가고 있다.\n명동을 찾는 MZ세대(1980년대 초∼2000년대 초 출생)들도 부쩍 늘었다."
+        "relative_time": "3 years ago",
+        "text": "The 100-meter-long street street in the middle of Myeong-dong, Seoul, was reminiscent of a ‘night market.’\nForeign tourists from various countries, including Asian countries such as Taiwan and Singapore, as well as Western countries such as Europe and the United States, were enjoying Korea's unique street food such as chicken skewers, sundae skewers, and dumplings.\nMyeong-dong, which seemed to have been bombed by the impact of COVID-19 and was filled with empty stores in alleys, is regaining vitality.\nQuarantine measures, such as the end of social distancing and the lifting of pre-entry genetic amplification (PCR) testing, are being lifted quickly, and the significant decline in the value of the won due to the strong dollar is the background for the return of foreigners to Myeong-dong.\nAlthough there are concerns about an economic downturn due to high inflation and high interest rates, Myeong-dong is regaining its pre-COVID-19 appearance as foreign tourists continue to visit.\nThe number of people from the MZ generation (born between the early 1980s and early 2000s) visiting Myeongdong has also increased significantly."
       },
       {
         "author": "Kevin _Yun",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10달 전",
-        "text": "활기차고 열정적인 장소\n외국인도 내국인도 모두 모여~"
+        "relative_time": "10 months ago",
+        "text": "A lively and passionate place\nBoth foreigners and locals gather together~"
       }
     ],
     "photos": [
@@ -870,8 +870,8 @@
   },
   {
     "place_id": "ChIJvfCdegCjfDURUBFhtNsBTxo",
-    "display_name": "더럭키스토어",
-    "category": "슈퍼마켓",
+    "display_name": "The Lucky Store",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -881,8 +881,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동길 56",
-    "short_address": "중구 명동길 56",
+    "address": "56 Myeongdong-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "56 Myeongdong-gil, Jung-gu",
     "location": {
       "lat": 37.5635916,
       "lng": 126.9856943
@@ -903,8 +903,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -914,36 +914,36 @@
         "author": "Eyedaq Optical Shop Myeong-dong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "새로 생긴 종합 판매점입니다.\n없는 게 없습니다.\n가격도 아주 저렴하고 좋네요.\n오가다 자주 가게 될 것 같습니다.\n번창하시길 바랍니다."
+        "relative_time": "1 year ago",
+        "text": "This is a new general store.\nThere is nothing missing.\nThe price is very cheap and nice.\nI think I'll be going back and forth often.\nI hope you prosper."
       },
       {
         "author": "theater mine",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
-        "text": "There are many kinds of snacks, but it's scary to carry an empty basket and force them to buy it.\n\n간식에는 여러 종류가 있지만 빈 바구니를 들고 다니며 사라고 강요하는 것은 무서운 일입니다."
+        "relative_time": "1 year ago",
+        "text": "There are many kinds of snacks, but it's scary to carry an empty basket and force them to buy it.\n\nThere are many different types of snacks, but walking around with an empty basket and forcing them to buy them can be scary."
       },
       {
-        "author": "아좋아",
+        "author": "Ah good",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "명동 새로운 마트 제품도 다양하고 직원분들\n너무 친절 바구니도 챙겨주시고 대박 나세요 다음에 명동 놀러가면\n또 갈께요 ~~^^"
+        "relative_time": "1 year ago",
+        "text": "Myeongdong’s new supermarket has a variety of products and great staff.\nYou were so kind to bring a basket and hit the jackpot. Next time you go to Myeongdong,\nI'll go again ~~^^"
       },
       {
         "author": "YU WEI LIN",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "다양한 간식을 판매하고, 직원들은 친절하고 중국어와 일본어를 모두 구사하며, 관광객들을 따뜻하게 맞아줍니다. 명동에서 기념품을 사기에 좋은 곳이에요! 👍🏻"
+        "relative_time": "1 year ago",
+        "text": "They sell a variety of snacks, the staff is friendly, speaks both Chinese and Japanese, and provides a warm welcome to tourists. This is a great place to buy souvenirs in Myeongdong! 👍🏻"
       },
       {
         "author": "Fátima Andrea",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "많은 프로모션, 다양한 제품."
+        "relative_time": "6 months ago",
+        "text": "Lots of promotions, variety of products."
       }
     ],
     "photos": [
@@ -958,14 +958,14 @@
   {
     "place_id": "ChIJLQ9MryqjfDURIo5baOHvSbI",
     "display_name": "c-sharp",
-    "category": "시장",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동",
-    "short_address": "중구 명동",
+    "address": "Myeong-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "Myeong-dong, Jung-gu",
     "location": {
       "lat": 37.5596612,
       "lng": 126.9867709
@@ -986,8 +986,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -996,23 +996,23 @@
         "author": "Yegor Denisov",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "11달 전",
-        "text": "정말 좋아요. 자바보다 훨씬 낫죠!"
+        "relative_time": "11 months ago",
+        "text": "I really like it. It's much better than Java!"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJM9Kp60dhezURGGmGFtyxKOw",
-    "display_name": "Winter Surfin' Club 윈터써핑클럽",
-    "category": "시장",
+    "display_name": "Winter Surfin' Club Winter Surfin' Club",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 디 KR 서울특별시 중구",
-    "short_address": "디 KR 서울특별시 중구",
+    "address": "Seoul, Republic of Korea D KR Jung-gu, Seoul",
+    "short_address": "D KR Jung-gu, Seoul",
     "location": {
       "lat": 37.5616345,
       "lng": 126.991921
@@ -1033,8 +1033,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1043,16 +1043,16 @@
   },
   {
     "place_id": "ChIJUdnMnuSifDURweWMU-2S3YY",
-    "display_name": "이어앤디어",
-    "category": "농산물 직판장",
+    "display_name": "Ear&Deer",
+    "category": "farmers market",
     "types": [
       "farmers_market",
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로3가 번지 4층 25-18",
-    "short_address": "중구 충무로3가 번지 4층 25-18",
+    "address": "25-18, 4th floor, Chungmuro 3-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "25-18, 4th floor, Chungmuro 3-ga, Jung-gu",
     "location": {
       "lat": 37.5629129,
       "lng": 126.99138060000001
@@ -1073,7 +1073,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1082,8 +1082,8 @@
   },
   {
     "place_id": "ChIJaaOwFfuifDURoC0S-Xz4pdU",
-    "display_name": "흥국제선(주)",
-    "category": "슈퍼마켓",
+    "display_name": "Heungkuk International Ship Co., Ltd.",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1094,8 +1094,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 주자동 43-1",
-    "short_address": "중구 주자동 43-1",
+    "address": "43-1 Juja-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "43-1 Juja-dong, Jung-gu",
     "location": {
       "lat": 37.5608533,
       "lng": 126.990135
@@ -1120,10 +1120,10 @@
     "parking": null,
     "reviews": [
       {
-        "author": "문상원",
+        "author": "Sangwon Moon",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -1131,16 +1131,16 @@
   },
   {
     "place_id": "ChIJrQaaqPyifDURgXBPMpTL8BA",
-    "display_name": "대아수산",
-    "category": "시장",
+    "display_name": "Daea Fisheries",
+    "category": "market",
     "types": [
       "market",
       "food",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 필동1가 21-2번지",
-    "short_address": "중구 필동1가 21-2번지",
+    "address": "21-2, Pil-dong 1-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "21-2, Pildong 1-ga, Jung-gu",
     "location": {
       "lat": 37.5608228,
       "lng": 126.99194190000001
@@ -1161,8 +1161,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1171,8 +1171,8 @@
   },
   {
     "place_id": "ChIJSy4cafuifDURow2UkrM_mRE",
-    "display_name": "플러스마트",
-    "category": "슈퍼마켓",
+    "display_name": "Plus Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1182,8 +1182,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 남학동 23-1번지 중구 서울특별시 KR",
-    "short_address": "남학동 23-1번지 중구 서울특별시 KR",
+    "address": "23-1 Namhak-dong, Seoul, Republic of Korea, Jung-gu, Seoul KR",
+    "short_address": "23-1 Namhak-dong, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.5604081,
       "lng": 126.99086090000002
@@ -1202,18 +1202,18 @@
     "google_maps_url": "https://maps.google.com/?cid=1268114810572377507",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2fb691c2e4b:0x11993fb392940da3!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:30 ~ 오후 11:30",
-      "화요일: 오전 8:30 ~ 오후 11:30",
-      "수요일: 오전 8:30 ~ 오후 11:30",
-      "목요일: 오전 8:30 ~ 오후 11:30",
-      "금요일: 오전 8:30 ~ 오후 11:30",
-      "토요일: 오전 8:30 ~ 오후 11:30",
-      "일요일: 오전 8:30 ~ 오후 11:30"
+      "Monday: 8:30 AM - 11:30 PM",
+      "Tuesday: 8:30 AM - 11:30 PM",
+      "Wednesday: 8:30 AM - 11:30 PM",
+      "Thursday: 8:30 AM - 11:30 PM",
+      "Friday: 8:30 AM - 11:30 PM",
+      "Saturday: 8:30 AM - 11:30 PM",
+      "Sunday: 8:30 AM - 11:30 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1223,8 +1223,8 @@
   },
   {
     "place_id": "ChIJWWt2heSifDURodYhqyD-MGE",
-    "display_name": "현주수퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Hyeonju Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1234,8 +1234,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 저동2가 48-1 1층",
-    "short_address": "중구 저동2가 48-1 1층",
+    "address": "1st floor, 48-1 Jeodong 2-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "1st floor, 48-1 Jeodong 2-ga, Jung-gu",
     "location": {
       "lat": 37.5635151,
       "lng": 126.99112140000001
@@ -1254,18 +1254,18 @@
     "google_maps_url": "https://maps.google.com/?cid=7003376836824651425",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e485766b59:0x6130fe20ab21d6a1!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오전 12:00",
-      "화요일: 오전 8:00 ~ 오전 12:00",
-      "수요일: 오전 8:00 ~ 오전 12:00",
-      "목요일: 오전 8:00 ~ 오전 12:00",
-      "금요일: 오전 8:00 ~ 오전 12:00",
-      "토요일: 오전 8:00 ~ 오전 12:00",
-      "일요일: 오전 8:00 ~ 오전 12:00"
+      "Monday: 8:00 AM - 12:00 AM",
+      "Tuesday: 8:00 AM - 12:00 AM",
+      "Wednesday: 8:00 AM - 12:00 AM",
+      "Thursday: 8:00 AM - 12:00 AM",
+      "Friday: 8:00 AM - 12:00 AM",
+      "Saturday: 8:00 AM - 12:00 AM",
+      "Sunday: 8:00 AM - 12:00 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1274,14 +1274,14 @@
         "author": "Borghini LAM",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "함승목",
+        "author": "Ham Seung-mok",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -1289,8 +1289,8 @@
   },
   {
     "place_id": "ChIJpQpp5PGifDUR53ViBcIQDJg",
-    "display_name": "롯대 슈퍼마켓",
-    "category": "슈퍼마켓",
+    "display_name": "Lotte Supermarket",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1300,7 +1300,7 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 Jung-gu",
+    "address": "Jung-gu, Seoul, South Korea",
     "short_address": "Jung-gu",
     "location": {
       "lat": 37.5646803,
@@ -1320,18 +1320,18 @@
     "google_maps_url": "https://maps.google.com/?cid=10956150418985612775",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2f1e4690aa5:0x980c10c2056275e7!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 8:00",
-      "화요일: 오전 10:30 ~ 오후 8:00",
-      "수요일: 오전 10:30 ~ 오후 8:00",
-      "목요일: 오전 10:30 ~ 오후 8:00",
-      "금요일: 오전 10:30 ~ 오후 8:30",
-      "토요일: 오전 10:30 ~ 오후 8:30",
-      "일요일: 오전 10:30 ~ 오후 8:30"
+      "Monday: 10:30 AM - 8:00 PM",
+      "Tuesday: 10:30 AM - 8:00 PM",
+      "Wednesday: 10:30 AM - 8:00 PM",
+      "Thursday: 10:30 AM - 8:00 PM",
+      "Friday: 10:30 AM - 8:30 PM",
+      "Saturday: 10:30 AM - 8:30 PM",
+      "Sunday: 10:30 AM - 8:30 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1341,36 +1341,36 @@
         "author": "Chichung liang",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "4달 전",
-        "text": "백화점 지하 1층은 넓고 쇼핑하기 편합니다. 수입 상품이 많고 한국 제품도 일부 있습니다. 세금 환급을 받으려면 고지서를 가지고 1층으로 가서 세금 환급 신청서를 받은 후, 공항으로 가서 환급을 신청해야 합니다."
+        "relative_time": "4 months ago",
+        "text": "The first basement level of the department store is spacious and convenient for shopping. There are many imported products and some Korean products as well. To receive a tax refund, you must go to the first floor with your bill, receive a tax refund application form, and then go to the airport to apply for a refund."
       },
       {
         "author": "Angeline Chew",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4달 전",
-        "text": "백화점 지하 1층에 위치해 있어 편리한 입지가 장점입니다.\n한국 간식도 몇 가지 구입할 수 있습니다. 서울역까지 멀리 가고 싶지 않은 사람들에게 편리합니다.\n하지만 세금 환급 절차는 매우 번거롭습니다. 환급을 받으려면 1층까지 내려가야 하는데, 사람이 너무 많습니다."
+        "relative_time": "4 months ago",
+        "text": "It is conveniently located on the first basement level of a department store.\nYou can also buy some Korean snacks. Convenient for people who don't want to go far to Seoul Station.\nHowever, the tax refund process is very cumbersome. You have to go down to the first floor to get a refund, but there are too many people."
       },
       {
         "author": "張鈞淯",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "롯데백화점 지하 1층에 위치해 있는데, 안내 표지판이 잘 보이지 않아요. 신선한 과일과 채소가 다양하게 있고, 머스캣 포도도 다른 슈퍼마켓보다 비싸지 않아요! 꼭 가보세요!"
+        "relative_time": "1 year ago",
+        "text": "It is located on the first basement level of Lotte Department Store, but the guide sign is hard to see. There is a wide variety of fresh fruits and vegetables, and even muscat grapes are not as expensive as other supermarkets! Be sure to go!"
       },
       {
         "author": "Pichsaran Ves",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5달 전",
-        "text": "이 슈퍼마켓은 롯데백화점 1층에 있습니다.\n태국의 고급 식품점과 비슷한 고급스러운 분위기입니다.\n\n제품 종류는 괜찮지만, 아주 다양하지는 않습니다.\n가격대는 다소 높은 편입니다.\n예를 들어, 데오드란트를 찾았는데 브랜드는 하나뿐이었고 가격도 비쌌습니다.\n기념품 코너는 그리 크지 않습니다.\n\n사람이 너무 많지는 않았습니다.\n\n직원들은 나이가 좀 있어 보였지만 친절하고 좋은 서비스를 제공하려고 노력하는 모습이었습니다."
+        "relative_time": "5 months ago",
+        "text": "This supermarket is located on the first floor of Lotte Department Store.\nIt has a luxurious atmosphere similar to a high-end grocery store in Thailand.\n\nThe product range is okay, but not very diverse.\nThe price range is somewhat high.\nFor example, I was looking for deodorant, but there was only one brand and it was expensive.\nThe souvenir corner is not very big.\n\nThere weren't too many people.\n\nThe staff looked a bit older, but they seemed friendly and trying to provide good service."
       },
       {
         "author": "E K",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "롯데몰 1층에 위치한 롯데마트입니다. 다양한 상품과 간편식을 판매합니다. 대부분 가격이 저렴한 편이지만 품질이 좋습니다."
+        "relative_time": "2 years ago",
+        "text": "Lotte Mart is located on the first floor of Lotte Mall. We sell a variety of products and convenience foods. Most of them are cheap, but the quality is good."
       }
     ],
     "photos": [
@@ -1388,8 +1388,8 @@
   },
   {
     "place_id": "ChIJWVyVs--ifDURXFXm4UeN6kU",
-    "display_name": "레몬마트",
-    "category": "슈퍼마켓",
+    "display_name": "Lemon Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1399,8 +1399,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 을지로2가 명동9길 45",
-    "short_address": "중구 을지로2가 명동9길 45",
+    "address": "45 Myeongdong 9-gil, Eulji-ro 2-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "45 Myeongdong 9-gil, Eulji-ro 2-ga, Jung-gu",
     "location": {
       "lat": 37.5658032,
       "lng": 126.9839032
@@ -1419,59 +1419,59 @@
     "google_maps_url": "https://maps.google.com/?cid=5037994473039484252",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2efb3955c59:0x45ea8d47e1e6555c!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오후 11:30",
-      "화요일: 오전 8:00 ~ 오후 11:30",
-      "수요일: 오전 8:00 ~ 오후 11:30",
-      "목요일: 오전 8:00 ~ 오후 11:30",
-      "금요일: 오전 8:00 ~ 오후 11:30",
-      "토요일: 오전 8:00 ~ 오후 11:30",
-      "일요일: 오전 8:00 ~ 오후 11:30"
+      "Monday: 8:00 AM - 11:30 PM",
+      "Tuesday: 8:00 AM - 11:30 PM",
+      "Wednesday: 8:00 AM - 11:30 PM",
+      "Thursday: 8:00 AM - 11:30 PM",
+      "Friday: 8:00 AM - 11:30 PM",
+      "Saturday: 8:00 AM - 11:30 PM",
+      "Sunday: 8:00 AM - 11:30 PM"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김동욱",
+        "author": "Kim Dong-wook",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "근처에 몇안되는 규모있는 슈퍼라 편의점에 없는거 사러오기 좋음.\n과일가격이 길건너 롯데백화점 보다는 저렴"
+        "relative_time": "3 years ago",
+        "text": "It's one of the few large supermarkets nearby, so it's good to buy things that aren't available at the convenience store.\nFruit prices are cheaper than Lotte Department Store across the street."
       },
       {
         "author": "Eyedaq Optical Shop Myeong-dong",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "8년 전",
-        "text": "과일류가 다양합니다.\n아마도 백화점 빼고 제일 많을것 같아요.\n과일 좋아 하시는 분들께는 좋을 것 같습니다"
+        "relative_time": "8 years ago",
+        "text": "There are a variety of fruits.\nI think there are probably more of them than department stores.\nI think it's good for people who like fruit"
       },
       {
-        "author": "최기훈",
+        "author": "Kihoon Choi",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "명동 기준 몇 없는 마트인듯... 넓다.\n장봐야 될 때.. 이용하는데 외국인용 같은 느낌이 드는것 왜일까?"
+        "relative_time": "3 years ago",
+        "text": "It seems to be one of the few supermarkets in Myeong-dong... It's spacious.\nWhen I need to go grocery shopping... Why does it feel like it's for foreigners?"
       },
       {
-        "author": "김남윤",
+        "author": "Namyoon Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "명동 중심에서는 다소 멀지만 번화가보다는 조금 더 저렴한 가격으로 판매한다. 외국인 관광객들을 위한 한국 특산품이 마련되어 있으며, 과일을 비롯한 다른 식자재도 싼 편이라는 장점이 있다."
+        "relative_time": "7 years ago",
+        "text": "Although it is a bit far from the center of Myeong-dong, it is sold at a slightly cheaper price than the downtown area. Korean specialties are available for foreign tourists, and fruits and other food ingredients are also cheap."
       },
       {
         "author": "D S",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
-        "text": "개인적으로 레몬 마트 간판단데는 안좋아하는데\n여기는 나름 괜찮음\n동대앞 레몬마트는 썩은거에 가격표달고\n가격은 지맘대로, 학생듵 상대로 폭리를 취하는데\n여기는 좀 낫네.\n요즘은 죄다 편의점이라 근처에 이런 마트가\n있는게 그나마 다행임\n거의 독점이랄까  관광객들도 많고\n자리 자알 잡았다\n마트하려면 이런데다가 해야하는데"
+        "relative_time": "7 years ago",
+        "text": "Personally, I don't like the Lemon Mart sign.\nIt's pretty good here\nLemon Mart in front of Dongdae puts price tags on rotten items.\nThe prices are whatever they want, and they are profiteering from students.\nIt's a little better here.\nThese days, everything is a convenience store, so there are supermarkets like this nearby.\nI'm glad I have it\nIt's almost monopoly, but there are a lot of tourists.\nGot a seat\nIf you want to go to a mart, you have to do something like this."
       }
     ],
     "photos": [
@@ -1490,14 +1490,14 @@
   {
     "place_id": "ChIJJdrfNACjfDUR27ghdGibKSc",
     "display_name": "Myeongdong Market",
-    "category": "시장",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동7길 17",
-    "short_address": "중구 명동7길 17",
+    "address": "17 Myeongdong 7-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "17 Myeongdong 7-gil, Jung-gu",
     "location": {
       "lat": 37.5644829,
       "lng": 126.9842251
@@ -1518,8 +1518,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1529,28 +1529,28 @@
         "author": "M",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "관광지"
+        "relative_time": "4 months ago",
+        "text": "tourist attraction"
       },
       {
         "author": "Ati yeah",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3주 전",
-        "text": "길거리 음식은 맛있지만 가격이 좀 비싸요."
+        "relative_time": "3 weeks ago",
+        "text": "Street food is delicious, but a bit expensive."
       },
       {
         "author": "Karel Chromý",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
+        "relative_time": "4 months ago",
         "text": null
       },
       {
         "author": "Alex Stepanyants",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -1569,8 +1569,8 @@
   },
   {
     "place_id": "ChIJH4AlbO6ifDUR329Kfg0S5iY",
-    "display_name": "홈플러스하나커넥트(유)",
-    "category": "슈퍼마켓",
+    "display_name": "Homeplus Hana Connect Co., Ltd.",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1580,8 +1580,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 을지로1가 101-1번지",
-    "short_address": "중구 을지로1가 101-1번지",
+    "address": "101-1 Euljiro 1-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "101-1 Euljiro 1-ga, Jung-gu",
     "location": {
       "lat": 37.566452399999996,
       "lng": 126.9818516
@@ -1602,8 +1602,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1613,8 +1613,8 @@
   },
   {
     "place_id": "ChIJK7CidO-ifDURzu35HeI-n90",
-    "display_name": "후니드",
-    "category": "슈퍼마켓",
+    "display_name": "Hunid",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1624,8 +1624,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 을지로2가 11",
-    "short_address": "중구 을지로2가 11",
+    "address": "11 Euljiro 2-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "11 Euljiro 2-ga, Jung-gu",
     "location": {
       "lat": 37.566423799999995,
       "lng": 126.9850799
@@ -1644,18 +1644,18 @@
     "google_maps_url": "https://maps.google.com/?cid=15969551944565517774",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2ef74a2b02b:0xdd9f3ee21df9edce!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오전 12:00",
-      "화요일: 오전 8:00 ~ 오전 12:00",
-      "수요일: 오전 8:00 ~ 오전 12:00",
-      "목요일: 오전 8:00 ~ 오전 12:00",
-      "금요일: 오전 8:00 ~ 오전 12:00",
-      "토요일: 오전 8:00 ~ 오전 12:00",
-      "일요일: 오전 8:00 ~ 오전 12:00"
+      "Monday: 8:00 AM - 12:00 AM",
+      "Tuesday: 8:00 AM - 12:00 AM",
+      "Wednesday: 8:00 AM - 12:00 AM",
+      "Thursday: 8:00 AM - 12:00 AM",
+      "Friday: 8:00 AM - 12:00 AM",
+      "Saturday: 8:00 AM - 12:00 AM",
+      "Sunday: 8:00 AM - 12:00 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1664,28 +1664,28 @@
         "author": "S.H",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "8년 전",
-        "text": "맛 없음, 최악의 서비스, 품질 개선 의지가 없음"
+        "relative_time": "8 years ago",
+        "text": "No taste, worst service, no will to improve quality"
       },
       {
         "author": "Kamu Siapa",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1달 전",
-        "text": "플라스틱이 많이 들어갔네요"
+        "relative_time": "1 month ago",
+        "text": "There's a lot of plastic in it."
       },
       {
         "author": "Nam Sean",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       },
       {
         "author": "Jinseok Oh",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "9년 전",
+        "relative_time": "9 years ago",
         "text": null
       }
     ],
@@ -1693,8 +1693,8 @@
   },
   {
     "place_id": "ChIJKf2cXOWifDURw8NZkDaPTlY",
-    "display_name": "우리농 명동나눔터",
-    "category": "식료품점",
+    "display_name": "Our Farm Myeongdong Sharing Center",
+    "category": "grocery store",
     "types": [
       "grocery_store",
       "market",
@@ -1704,8 +1704,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동길 80",
-    "short_address": "중구 명동길 80",
+    "address": "80 Myeongdong-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "80 Myeongdong-gil, Jung-gu",
     "location": {
       "lat": 37.5645047,
       "lng": 126.98724359999999
@@ -1724,49 +1724,49 @@
     "google_maps_url": "https://maps.google.com/?cid=6219065599958041539",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e55c9cfd29:0x564e8f369059c3c3!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 7:00",
-      "화요일: 오전 10:00 ~ 오후 7:00",
-      "수요일: 오전 10:00 ~ 오후 7:00",
-      "목요일: 오전 10:00 ~ 오후 7:00",
-      "금요일: 오전 10:00 ~ 오후 7:00",
-      "토요일: 오전 10:00 ~ 오후 7:00",
-      "일요일: 오전 10:00 ~ 오후 7:00"
+      "Monday: 10:00 AM - 7:00 PM",
+      "Tuesday: 10:00 AM - 7:00 PM",
+      "Wednesday: 10:00 AM - 7:00 PM",
+      "Thursday: 10:00 AM - 7:00 PM",
+      "Friday: 10:00 AM - 7:00 PM",
+      "Saturday: 10:00 AM - 7:00 PM",
+      "Sunday: 10:00 AM - 7:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "지연입장",
+        "author": "Delayed entry",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "천주교 생협 같은 곳 같아요. 명동에서 유기농 과일, 계란, 간식 살 때 좋아요. 길에서 말린 무화과, 딸기 등 사는데 비싸게 사시지 말고 여기서 사세요. 말린 무화과 (말랭이) 진짜 맛있어요!"
+        "relative_time": "1 year ago",
+        "text": "It's like a Catholic co-op. Great for buying organic fruits, eggs, and snacks in Myeongdong. Instead of buying dried figs, strawberries, etc. on the street, buy them here. Dried figs (dried figs) are really delicious!"
       },
       {
-        "author": "김진성",
+        "author": "Jinseong Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "우리  농산물을  친환경으로 기르고 가꾼 제품을 판매하는 관계로 다소 비싸나, 품질은  우수해서 조았어요."
+        "relative_time": "3 years ago",
+        "text": "Since we sell our agricultural products grown and maintained in an eco-friendly way, it is a bit expensive, but the quality is excellent."
       },
       {
         "author": "Dongwook Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
+        "relative_time": "3 months ago",
         "text": null
       },
       {
         "author": "Victor NAM",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -1785,8 +1785,8 @@
   },
   {
     "place_id": "ChIJP2IuguaifDURcCjGYv4TT5I",
-    "display_name": "진성페이퍼(주)",
-    "category": "슈퍼마켓",
+    "display_name": "Jinseong Paper Co., Ltd.",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1797,8 +1797,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 수표로 65",
-    "short_address": "중구 수표로 65",
+    "address": "65, Supyo-ro, Jung-gu, Seoul, South Korea",
+    "short_address": "65, Supyo-ro, Jung-gu",
     "location": {
       "lat": 37.5655219,
       "lng": 126.9875455
@@ -1826,15 +1826,15 @@
   },
   {
     "place_id": "ChIJP2CODFWjfDUReCWKzOIIadA",
-    "display_name": "My Car_신한카드",
-    "category": "시장",
+    "display_name": "My Car_Shinhan Card",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 을지로 100 파인에비뉴",
-    "short_address": "중구 을지로 100 파인에비뉴",
+    "address": "100 Pine Avenue, Eulji-ro, Jung-gu, Seoul, South Korea",
+    "short_address": "100 Fine Avenue, Eulji-ro, Jung-gu",
     "location": {
       "lat": 37.5656958,
       "lng": 126.98848489999997
@@ -1854,11 +1854,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3550c8e603f:0xd06908e2cc8a2578!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1868,14 +1868,14 @@
   {
     "place_id": "ChIJJaCofxyjfDURzez86xMHdEQ",
     "display_name": "tiger and garlic",
-    "category": "시장",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로 47",
-    "short_address": "중구 충무로 47",
+    "address": "47 Chungmuro, Jung-gu, Seoul, South Korea",
+    "short_address": "47 Chungmuro, Jung-gu",
     "location": {
       "lat": 37.5654671,
       "lng": 126.99252
@@ -1896,8 +1896,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1907,8 +1907,8 @@
   },
   {
     "place_id": "ChIJo44N3eOifDUR5isuLS6Mtt4",
-    "display_name": "한일종합상사",
-    "category": "슈퍼마켓",
+    "display_name": "Hanil General Trading Company",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1919,8 +1919,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로4길 5",
-    "short_address": "중구 충무로4길 5",
+    "address": "5 Chungmuro 4-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "5 Chungmuro 4-gil, Jung-gu",
     "location": {
       "lat": 37.5650708,
       "lng": 126.99315340000001
@@ -1939,13 +1939,13 @@
     "google_maps_url": "https://maps.google.com/?cid=16048168452135726054",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e3dd0d8ea3:0xdeb68c2e2d2e2be6!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": null,
@@ -1956,8 +1956,8 @@
   },
   {
     "place_id": "ChIJbdzVwuOifDURQan2AyfhCAs",
-    "display_name": "지마트",
-    "category": "슈퍼마켓",
+    "display_name": "G-mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1967,8 +1967,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 초동 18-2번지",
-    "short_address": "중구 초동 18-2번지",
+    "address": "18-2, Cho-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "18-2, Cho-dong, Jung-gu",
     "location": {
       "lat": 37.5649217,
       "lng": 126.99321669999999
@@ -1989,8 +1989,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1999,8 +1999,8 @@
   },
   {
     "place_id": "ChIJTRo-uuaifDUR5tY9xQGp0K0",
-    "display_name": "부귀식품",
-    "category": "슈퍼마켓",
+    "display_name": "rich food",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2010,8 +2010,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 을지로3가 95-14",
-    "short_address": "중구 을지로3가 95-14",
+    "address": "95-14 Euljiro 3-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "95-14 Euljiro 3-ga, Jung-gu",
     "location": {
       "lat": 37.567099400000004,
       "lng": 126.99099360000001
@@ -2032,8 +2032,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2042,8 +2042,8 @@
   },
   {
     "place_id": "ChIJc6bquOOifDURW_Mpo-JzUi0",
-    "display_name": "제일상사",
-    "category": "슈퍼마켓",
+    "display_name": "Cheil Corp.",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2054,8 +2054,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 마른내로 52",
-    "short_address": "중구 마른내로 52",
+    "address": "52 Mareunnae-ro, Jung-gu, Seoul, South Korea",
+    "short_address": "52 Mareunnae-ro, Jung-gu",
     "location": {
       "lat": 37.564192399999996,
       "lng": 126.99347599999999
@@ -2074,18 +2074,18 @@
     "google_maps_url": "https://maps.google.com/?cid=3265800097034269531",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e3b8eaa673:0x2d5273e2a329f35b!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2094,15 +2094,15 @@
   },
   {
     "place_id": "ChIJLT9_htyjfDURZokOPVrNBrc",
-    "display_name": "한달리뷰",
-    "category": "시장",
+    "display_name": "Monthly review",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 euljiro",
-    "short_address": "중구 euljiro",
+    "address": "euljiro, Jung-gu, Seoul, South Korea",
+    "short_address": "Jung-gu euljiro",
     "location": {
       "lat": 37.566044999999995,
       "lng": 126.99332969999998
@@ -2122,10 +2122,10 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3dc867f3f2d:0xb706cd5a3d0e8966!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2134,8 +2134,8 @@
   },
   {
     "place_id": "ChIJZVfpKeSifDUR1nTrPXLusls",
-    "display_name": "부부식품",
-    "category": "슈퍼마켓",
+    "display_name": "couple food",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2145,8 +2145,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 수표동 56-4번지 중구 서울특별시 KR",
-    "short_address": "수표동 56-4번지 중구 서울특별시 KR",
+    "address": "56-4 Supyo-dong, Seoul, Republic of Korea, Jung-gu, Seoul KR",
+    "short_address": "56-4 Supyo-dong, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.566795299999995,
       "lng": 126.98943519999999
@@ -2165,18 +2165,18 @@
     "google_maps_url": "https://maps.google.com/?cid=6607605777738462422",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e429e95765:0x5bb2ee723deb74d6!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오후 11:00",
-      "화요일: 오전 8:00 ~ 오후 11:00",
-      "수요일: 오전 8:00 ~ 오후 11:00",
-      "목요일: 오전 8:00 ~ 오후 11:00",
-      "금요일: 오전 8:00 ~ 오후 11:00",
-      "토요일: 오전 8:00 ~ 오후 11:00",
-      "일요일: 오전 8:00 ~ 오후 11:00"
+      "Monday: 8:00 AM - 11:00 PM",
+      "Tuesday: 8:00 AM - 11:00 PM",
+      "Wednesday: 8:00 AM - 11:00 PM",
+      "Thursday: 8:00 AM - 11:00 PM",
+      "Friday: 8:00 AM - 11:00 PM",
+      "Saturday: 8:00 AM - 11:00 PM",
+      "Sunday: 8:00 AM - 11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2185,8 +2185,8 @@
         "author": "Chanmo Yim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "무도 131116 박종호엄마"
+        "relative_time": "4 years ago",
+        "text": "Martial Arts 131116 Park Jong-ho’s mom"
       }
     ],
     "photos": [
@@ -2195,8 +2195,8 @@
   },
   {
     "place_id": "ChIJZyC6gqyjfDURrHZoVLBhz20",
-    "display_name": "명동 도매식자재 납품/유통",
-    "category": "슈퍼마켓",
+    "display_name": "Myeongdong wholesale food ingredients delivery/distribution",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2206,8 +2206,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 남대문로 117",
-    "short_address": "중구 남대문로 117",
+    "address": "117 Namdaemun-ro, Jung-gu, Seoul, South Korea",
+    "short_address": "117 Namdaemun-ro, Jung-gu",
     "location": {
       "lat": 37.567765099999995,
       "lng": 126.98231119999998
@@ -2226,18 +2226,18 @@
     "google_maps_url": "https://maps.google.com/?cid=7912650480271521452",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3ac82ba2067:0x6dcf61b0546876ac!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 휴무일"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2249,15 +2249,15 @@
   },
   {
     "place_id": "ChIJzYx3wwujfDURGZvpbylfpgU",
-    "display_name": "청계천 타임투어마켓",
-    "category": "시장",
+    "display_name": "Cheonggyecheon Time Tour Market",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 서린동 14-1",
-    "short_address": "종로구 서린동 14-1",
+    "address": "14-1 Seorin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "14-1 Seorin-dong, Jongno-gu",
     "location": {
       "lat": 37.568919699999995,
       "lng": 126.9809762
@@ -2276,20 +2276,20 @@
     "google_maps_url": "https://maps.google.com/?cid=407117447899487001",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca30bc3778ccd:0x5a65f296fe99b19!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 휴무일",
-      "수요일: 휴무일",
-      "목요일: 휴무일",
-      "금요일: 휴무일",
-      "토요일: 오후 5:00~10:00",
-      "일요일: 오후 4:00~9:00"
+      "Monday: Closed day",
+      "Tuesday: Closed",
+      "Wednesday: Closed day",
+      "Thursday: Closed",
+      "Friday: Closed day",
+      "Saturday: 5:00-10:00 PM",
+      "Sunday: 4:00-9:00 PM"
     ],
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2298,28 +2298,28 @@
         "author": "Daler Maqsudov",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": "🫰🏻🇰🇷"
       },
       {
         "author": "Praphol Jomsiriwattana",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
+        "relative_time": "7 months ago",
         "text": null
       },
       {
-        "author": "폭탄지호",
+        "author": "bomb site",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       },
       {
         "author": "Jugwan Eom",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -2338,8 +2338,8 @@
   },
   {
     "place_id": "ChIJ19U2QO-ifDURZxr3ytBjFJE",
-    "display_name": "(주)셀렉진사이언스",
-    "category": "슈퍼마켓",
+    "display_name": "Cellecgene Science Co., Ltd.",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2350,8 +2350,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 수하동 번지 서관 67 13층",
-    "short_address": "중구 수하동 번지 서관 67 13층",
+    "address": "13th floor, 67 West Building, Suha-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "13th floor, 67 West Building, Suha-dong, Jung-gu",
     "location": {
       "lat": 37.567358299999995,
       "lng": 126.9851356
@@ -2379,8 +2379,8 @@
   },
   {
     "place_id": "ChIJR6ev0u2ifDURgEzGiQrfQCY",
-    "display_name": "육일종합슈퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Six Day General Supermarket",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2390,8 +2390,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 다동길 19",
-    "short_address": "중구 다동길 19",
+    "address": "19 Dadong-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "19 Dadong-gil, Jung-gu",
     "location": {
       "lat": 37.567839899999996,
       "lng": 126.9803984
@@ -2410,18 +2410,18 @@
     "google_maps_url": "https://maps.google.com/?cid=2756448208304884864",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2edd2afa747:0x2640df0a89c64c80!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오전 12:00",
-      "화요일: 오전 8:00 ~ 오전 12:00",
-      "수요일: 오전 8:00 ~ 오전 12:00",
-      "목요일: 오전 8:00 ~ 오전 12:00",
-      "금요일: 오전 8:00 ~ 오전 12:00",
-      "토요일: 오전 8:00 ~ 오전 12:00",
-      "일요일: 오전 8:00 ~ 오전 12:00"
+      "Monday: 8:00 AM - 12:00 AM",
+      "Tuesday: 8:00 AM - 12:00 AM",
+      "Wednesday: 8:00 AM - 12:00 AM",
+      "Thursday: 8:00 AM - 12:00 AM",
+      "Friday: 8:00 AM - 12:00 AM",
+      "Saturday: 8:00 AM - 12:00 AM",
+      "Sunday: 8:00 AM - 12:00 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2430,14 +2430,14 @@
         "author": "S.C Y",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "PJ P",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -2447,8 +2447,8 @@
   },
   {
     "place_id": "ChIJDXX1N_mjfDURID4zz9z24yk",
-    "display_name": "드림마트",
-    "category": "슈퍼마켓",
+    "display_name": "Dream Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2458,8 +2458,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 삼일대로 363",
-    "short_address": "중구 삼일대로 363",
+    "address": "363 Samil-daero, Jung-gu, Seoul, South Korea",
+    "short_address": "363 Samil-daero, Jung-gu",
     "location": {
       "lat": 37.5673064,
       "lng": 126.98675270000001
@@ -2480,8 +2480,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2491,8 +2491,8 @@
   },
   {
     "place_id": "ChIJ1drtUOaifDURSFbvWNELE-w",
-    "display_name": "금성슈퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Geumseong Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2502,8 +2502,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 관철동 25",
-    "short_address": "종로구 관철동 25",
+    "address": "25 Gwancheol-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "25 Gwancheol-dong, Jongno-gu",
     "location": {
       "lat": 37.5690303,
       "lng": 126.98857109999999
@@ -2522,28 +2522,28 @@
     "google_maps_url": "https://maps.google.com/?cid=17010953211276645960",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e650eddad5:0xec130bd158ef5648!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오전 12:00",
-      "화요일: 오전 8:00 ~ 오전 12:00",
-      "수요일: 오전 8:00 ~ 오전 12:00",
-      "목요일: 오전 8:00 ~ 오전 12:00",
-      "금요일: 오전 8:00 ~ 오전 12:00",
-      "토요일: 오전 8:00 ~ 오전 12:00",
-      "일요일: 오전 8:00 ~ 오후 11:30"
+      "Monday: 8:00 AM - 12:00 AM",
+      "Tuesday: 8:00 AM - 12:00 AM",
+      "Wednesday: 8:00 AM - 12:00 AM",
+      "Thursday: 8:00 AM - 12:00 AM",
+      "Friday: 8:00 AM - 12:00 AM",
+      "Saturday: 8:00 AM - 12:00 AM",
+      "Sunday: 8:00 AM - 11:30 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "안나수이",
+        "author": "Anna Sui",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "3차 간단히 먹고싶어서 방문한 금성슈퍼\n간단히 안성탕면과 소주 한병\n역시 술은 밖에서 먹어야 제맛이네요."
+        "relative_time": "1 year ago",
+        "text": "3rd time I visited Geumseong Super because I wanted a quick bite to eat.\nSimple Anseongtangmyeon and a bottle of soju\nAfter all, alcohol tastes best when consumed outside."
       }
     ],
     "photos": [
@@ -2553,8 +2553,8 @@
   },
   {
     "place_id": "ChIJ1TZtxuaifDURR3R8wpw-SHM",
-    "display_name": "청계슈퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Cheonggye Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2564,8 +2564,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 을지로11길 30",
-    "short_address": "중구 을지로11길 30",
+    "address": "30 Eulji-ro 11-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "30 Eulji-ro 11-gil, Jung-gu",
     "location": {
       "lat": 37.5677387,
       "lng": 126.9909553
@@ -2593,8 +2593,8 @@
   },
   {
     "place_id": "ChIJ2Sf_1-aifDURNWOfvuNvRjA",
-    "display_name": "한신종합기획",
-    "category": "슈퍼마켓",
+    "display_name": "Hanshin General Planning",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2605,8 +2605,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 수표로18가길 24",
-    "short_address": "종로구 수표로18가길 24",
+    "address": "24, Supyo-ro 18ga-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "24, Supyo-ro 18ga-gil, Jongno-gu",
     "location": {
       "lat": 37.5685949,
       "lng": 126.99105119999999
@@ -2634,8 +2634,8 @@
   },
   {
     "place_id": "ChIJ4ZF8yuaifDURrKCN-JBNRmM",
-    "display_name": "온양식품",
-    "category": "슈퍼마켓",
+    "display_name": "Onyang Food",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2645,8 +2645,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 입정동 246번지 1층 정일기기 중구 서울특별시 KR",
-    "short_address": "입정동 246번지 1층 정일기기 중구 서울특별시 KR",
+    "address": "1st floor, 246 Ipjeong-dong, Seoul, Republic of Korea, Jeong Ilgigi, Jung-gu, Seoul KR",
+    "short_address": "1st floor, 246 Ipjeong-dong, Jeongil Gi Jung-gu, Seoul KR",
     "location": {
       "lat": 37.567313,
       "lng": 126.99152730000002
@@ -2667,8 +2667,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2677,8 +2677,8 @@
   },
   {
     "place_id": "ChIJbaycy-CifDUR9y6MNocNNAQ",
-    "display_name": "금호상사",
-    "category": "슈퍼마켓",
+    "display_name": "Kumho Corporation",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2689,8 +2689,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 돈화문로 7-3",
-    "short_address": "종로구 돈화문로 7-3",
+    "address": "7-3 Donhwamun-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "7-3 Donhwamun-ro, Jongno-gu",
     "location": {
       "lat": 37.569203699999996,
       "lng": 126.9918998
@@ -2709,13 +2709,13 @@
     "google_maps_url": "https://maps.google.com/?cid=302881949327568631",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e0cb9cac6d:0x4340d87368c2ef7!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:30 ~ 오후 7:30",
-      "화요일: 오전 8:30 ~ 오후 7:30",
-      "수요일: 오전 8:30 ~ 오후 7:30",
-      "목요일: 오전 8:30 ~ 오후 7:30",
-      "금요일: 오전 8:30 ~ 오후 7:30",
-      "토요일: 오전 8:30 ~ 오후 7:30",
-      "일요일: 오전 8:30 ~ 오후 7:30"
+      "Monday: 8:30 AM - 7:30 PM",
+      "Tuesday: 8:30 AM - 7:30 PM",
+      "Wednesday: 8:30 AM - 7:30 PM",
+      "Thursday: 8:30 AM - 7:30 PM",
+      "Friday: 8:30 AM - 7:30 PM",
+      "Saturday: 8:30 AM - 7:30 PM",
+      "Sunday: 8:30 AM - 7:30 PM"
     ],
     "services": null,
     "payment": null,
@@ -2726,8 +2726,8 @@
   },
   {
     "place_id": "ChIJhaLAMOGifDURzJuSlT8lRUU",
-    "display_name": "오뚜기자석",
-    "category": "슈퍼마켓",
+    "display_name": "Ottogi Magnet",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2738,8 +2738,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로 69",
-    "short_address": "중구 충무로 69",
+    "address": "69 Chungmuro, Jung-gu, Seoul, South Korea",
+    "short_address": "69 Chungmuro, Jung-gu",
     "location": {
       "lat": 37.5673501,
       "lng": 126.99229779999999
@@ -2758,13 +2758,13 @@
     "google_maps_url": "https://maps.google.com/?cid=4991436717032643532",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e130c0a285:0x4545253f95929bcc!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 9:00",
-      "화요일: 오전 9:00 ~ 오후 9:00",
-      "수요일: 오전 9:00 ~ 오후 9:00",
-      "목요일: 오전 9:00 ~ 오후 9:00",
-      "금요일: 오전 9:00 ~ 오후 9:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 9:00 PM",
+      "Tuesday: 9:00 AM - 9:00 PM",
+      "Wednesday: 9:00 AM - 9:00 PM",
+      "Thursday: 9:00 AM - 9:00 PM",
+      "Friday: 9:00 AM - 9:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": null,
@@ -2775,8 +2775,8 @@
   },
   {
     "place_id": "ChIJ8U_MxOCifDURQ36UZwhAd_g",
-    "display_name": "고려연마(주)",
-    "category": "슈퍼마켓",
+    "display_name": "Korea Polishing Co., Ltd.",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2787,8 +2787,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 청계천로 133",
-    "short_address": "종로구 청계천로 133",
+    "address": "133 Cheonggyecheon-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "133 Cheonggyecheon-ro, Jongno-gu",
     "location": {
       "lat": 37.568613,
       "lng": 126.99252209999999
@@ -2816,8 +2816,8 @@
   },
   {
     "place_id": "ChIJ_3pvx-CifDURpielsJe0Sxs",
-    "display_name": "굿모닝마트",
-    "category": "슈퍼마켓",
+    "display_name": "Good Morning Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2827,8 +2827,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 장사동 233번지 1호 종로구 서울특별시 KR",
-    "short_address": "장사동 233번지 1호 종로구 서울특별시 KR",
+    "address": "#1, 233 Jangsa-dong, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "#1, 233 Jangsa-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5688009,
       "lng": 126.99245470000001
@@ -2848,11 +2848,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e0c76f7aff:0x1b4bb497b0a527a6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2862,8 +2862,8 @@
   },
   {
     "place_id": "ChIJDUjgy-CifDURTs9enArGB1s",
-    "display_name": "혜봉전자주식회사",
-    "category": "슈퍼마켓",
+    "display_name": "Hyebong Electronics Co., Ltd.",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2874,8 +2874,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 돈화문로 7",
-    "short_address": "종로구 돈화문로 7",
+    "address": "7 Donhwamun-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "7 Donhwamun-ro, Jongno-gu",
     "location": {
       "lat": 37.5691801,
       "lng": 126.99204259999999
@@ -2894,13 +2894,13 @@
     "google_maps_url": "https://maps.google.com/?cid=6559429131163848526",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e0cbe0480d:0x5b07c60a9c5ecf4e!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": null,
@@ -2911,8 +2911,8 @@
   },
   {
     "place_id": "ChIJ02xhyeCifDUROJx3_PGPwSg",
-    "display_name": "청계상회",
-    "category": "슈퍼마켓",
+    "display_name": "Cheonggye Sanghoe",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2922,8 +2922,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 돈화문로 7",
-    "short_address": "종로구 돈화문로 7",
+    "address": "7 Donhwamun-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "7 Donhwamun-ro, Jongno-gu",
     "location": {
       "lat": 37.569193399999996,
       "lng": 126.9920621
@@ -2942,18 +2942,18 @@
     "google_maps_url": "https://maps.google.com/?cid=2936786701507861560",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e0c9616cd3:0x28c18ff1fc779c38!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:30 ~ 오후 9:30",
-      "화요일: 오전 8:30 ~ 오후 9:30",
-      "수요일: 오전 8:30 ~ 오후 9:30",
-      "목요일: 오전 8:30 ~ 오후 9:30",
-      "금요일: 오전 8:30 ~ 오후 9:30",
-      "토요일: 오전 8:30 ~ 오후 9:30",
-      "일요일: 오전 8:30 ~ 오후 9:30"
+      "Monday: 8:30 AM - 9:30 PM",
+      "Tuesday: 8:30 AM - 9:30 PM",
+      "Wednesday: 8:30 AM - 9:30 PM",
+      "Thursday: 8:30 AM - 9:30 PM",
+      "Friday: 8:30 AM - 9:30 PM",
+      "Saturday: 8:30 AM - 9:30 PM",
+      "Sunday: 8:30 AM - 9:30 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2962,8 +2962,8 @@
   },
   {
     "place_id": "ChIJe02UxeCifDUR_92ch17bmIs",
-    "display_name": "하나베어링",
-    "category": "슈퍼마켓",
+    "display_name": "Hana Bearing",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2974,8 +2974,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 돈화문로 4-2",
-    "short_address": "종로구 돈화문로 4-2",
+    "address": "4-2 Donhwamun-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "4-2 Donhwamun-ro, Jongno-gu",
     "location": {
       "lat": 37.5688806,
       "lng": 126.99245669999999
@@ -3003,8 +3003,8 @@
   },
   {
     "place_id": "ChIJ-SVztuCifDURTvjabVZbvX8",
-    "display_name": "대흥상사",
-    "category": "슈퍼마켓",
+    "display_name": "Daeheung Trading Company",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3015,8 +3015,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 돈화문로 11",
-    "short_address": "종로구 돈화문로 11",
+    "address": "11 Donhwamun-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "11 Donhwamun-ro, Jongno-gu",
     "location": {
       "lat": 37.5694647,
       "lng": 126.99207820000001
@@ -3044,8 +3044,8 @@
   },
   {
     "place_id": "ChIJoTY6uOCifDURgVg_4DGyyjg",
-    "display_name": "서광전기히타",
-    "category": "슈퍼마켓",
+    "display_name": "Seogwang Electric Heater",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3056,8 +3056,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 돈화문로 10",
-    "short_address": "종로구 돈화문로 10",
+    "address": "10 Donhwamun-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "10 Donhwamun-ro, Jongno-gu",
     "location": {
       "lat": 37.5693579,
       "lng": 126.99244259999999
@@ -3076,13 +3076,13 @@
     "google_maps_url": "https://maps.google.com/?cid=4092279138704906369",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e0b83a36a1:0x38cab231e03f5881!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 7:00",
-      "화요일: 오전 9:00 ~ 오후 7:00",
-      "수요일: 오전 9:00 ~ 오후 7:00",
-      "목요일: 오전 9:00 ~ 오후 7:00",
-      "금요일: 오전 9:00 ~ 오후 7:00",
-      "토요일: 오전 10:00 ~ 오후 3:00",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 7:00 PM",
+      "Tuesday: 9:00 AM - 7:00 PM",
+      "Wednesday: 9:00 AM - 7:00 PM",
+      "Thursday: 9:00 AM - 7:00 PM",
+      "Friday: 9:00 AM - 7:00 PM",
+      "Saturday: 10:00 AM - 3:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": null,
@@ -3093,8 +3093,8 @@
   },
   {
     "place_id": "ChIJy9GbueCifDUR3TSAyb1yps0",
-    "display_name": "태광마그네트",
-    "category": "슈퍼마켓",
+    "display_name": "Taekwang Magnet",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3105,8 +3105,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 돈화문로 12",
-    "short_address": "종로구 돈화문로 12",
+    "address": "12 Donhwamun-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "12 Donhwamun-ro, Jongno-gu",
     "location": {
       "lat": 37.569465,
       "lng": 126.99252209999999
@@ -3134,8 +3134,8 @@
   },
   {
     "place_id": "ChIJi3ma6eCifDURODSgd8kszsg",
-    "display_name": "명성전기",
-    "category": "슈퍼마켓",
+    "display_name": "Myeongseong Electric",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3146,8 +3146,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 청계천로 139-2",
-    "short_address": "종로구 청계천로 139-2",
+    "address": "139-2, Cheonggyecheon-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "139-2 Cheonggyecheon-ro, Jongno-gu",
     "location": {
       "lat": 37.5686529,
       "lng": 126.9931823
@@ -3175,8 +3175,8 @@
   },
   {
     "place_id": "ChIJxT7g6-CifDUR84InXF1CVLk",
-    "display_name": "선진기업",
-    "category": "슈퍼마켓",
+    "display_name": "advanced company",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3187,8 +3187,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 청계천로 141",
-    "short_address": "종로구 청계천로 141",
+    "address": "141 Cheonggyecheon-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "141 Cheonggyecheon-ro, Jongno-gu",
     "location": {
       "lat": 37.568656,
       "lng": 126.9933133
@@ -3216,8 +3216,8 @@
   },
   {
     "place_id": "ChIJa7_h6-CifDURCbXRpNHVCIY",
-    "display_name": "세진고무산업",
-    "category": "슈퍼마켓",
+    "display_name": "Sejin Rubber Industry",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3228,8 +3228,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 청계천로 141",
-    "short_address": "종로구 청계천로 141",
+    "address": "141 Cheonggyecheon-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "141 Cheonggyecheon-ro, Jongno-gu",
     "location": {
       "lat": 37.5686539,
       "lng": 126.9933217
@@ -3248,17 +3248,17 @@
     "google_maps_url": "https://maps.google.com/?cid=9658204497286116617",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e0ebe1bf6b:0x8608d5d1a4d1b509!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오후 6:00",
-      "화요일: 오전 8:00 ~ 오후 6:00",
-      "수요일: 오전 8:00 ~ 오후 6:00",
-      "목요일: 오전 8:00 ~ 오후 6:00",
-      "금요일: 오전 8:00 ~ 오후 6:00",
-      "토요일: 오전 8:00 ~ 오후 3:00",
-      "일요일: 휴무일"
+      "Monday: 8:00 AM - 6:00 PM",
+      "Tuesday: 8:00 AM - 6:00 PM",
+      "Wednesday: 8:00 AM - 6:00 PM",
+      "Thursday: 8:00 AM - 6:00 PM",
+      "Friday: 8:00 AM - 6:00 PM",
+      "Saturday: 8:00 AM - 3:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "체크카드"
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3267,8 +3267,8 @@
   },
   {
     "place_id": "ChIJExJ7vOCifDURabke65Ds838",
-    "display_name": "대원산업",
-    "category": "슈퍼마켓",
+    "display_name": "Daewon Industry",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3279,8 +3279,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로20길 15",
-    "short_address": "종로구 종로20길 15",
+    "address": "15 Jongno 20-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "15 Jongno 20-gil, Jongno-gu",
     "location": {
       "lat": 37.5695535,
       "lng": 126.99275379999999
@@ -3308,8 +3308,8 @@
   },
   {
     "place_id": "ChIJRQAKvuCifDUR08HitWzUmio",
-    "display_name": "준테크",
-    "category": "슈퍼마켓",
+    "display_name": "Juntech",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3320,8 +3320,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 돈화문로 11",
-    "short_address": "종로구 돈화문로 11",
+    "address": "11 Donhwamun-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "11 Donhwamun-ro, Jongno-gu",
     "location": {
       "lat": 37.5693457,
       "lng": 126.9929918
@@ -3340,17 +3340,17 @@
     "google_maps_url": "https://maps.google.com/?cid=3069999659379507667",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e0be0a0045:0x2a9ad46cb5e2c1d3!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 7:00",
-      "화요일: 오전 9:00 ~ 오후 7:00",
-      "수요일: 오전 9:00 ~ 오후 7:00",
-      "목요일: 오전 9:00 ~ 오후 7:00",
-      "금요일: 오전 9:00 ~ 오후 7:00",
-      "토요일: 오전 9:00 ~ 오후 7:00",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 7:00 PM",
+      "Tuesday: 9:00 AM - 7:00 PM",
+      "Wednesday: 9:00 AM - 7:00 PM",
+      "Thursday: 9:00 AM - 7:00 PM",
+      "Friday: 9:00 AM - 7:00 PM",
+      "Saturday: 9:00 AM - 7:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "체크카드"
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3359,16 +3359,16 @@
   },
   {
     "place_id": "ChIJA7h4EfGifDURi7fDnAsFBtA",
-    "display_name": "뷰티코리아",
-    "category": "화장품 판매점",
+    "display_name": "Beauty Korea",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 충무로1가 21-17번지 9156호 올레서비스드오퍼스 중구 서울특별시 KR",
-    "short_address": "충무로1가 21-17번지 9156호 올레서비스드오퍼스 중구 서울특별시 KR",
+    "address": "#9156, 21-17 Chungmuro 1-ga, Seoul, Republic of Korea Olleh Serviced Opus, Jung-gu, Seoul KR",
+    "short_address": "#9156, 21-17, Chungmuro 1-ga, Olleh Serviced Opus, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.561705599999996,
       "lng": 126.98267229999999
@@ -3389,8 +3389,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3399,16 +3399,16 @@
   },
   {
     "place_id": "ChIJA7h4EfGifDUR2TzCzkvNC3M",
-    "display_name": "영석주얼리",
-    "category": "귀금속 상점",
+    "display_name": "Youngseok Jewelry",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로1가 21-17번지 중앙전화국 9층 9160호",
-    "short_address": "중구 충무로1가 21-17번지 중앙전화국 9층 9160호",
+    "address": "Room 9160, 9th floor, Central Telephone Office, 21-17 Chungmuro 1-ga, Jung-gu, Seoul, Republic of Korea",
+    "short_address": "Room 9160, 9th floor, Central Telephone Office, 21-17 Chungmuro 1-ga, Jung-gu",
     "location": {
       "lat": 37.561705599999996,
       "lng": 126.98267229999999
@@ -3429,8 +3429,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3440,15 +3440,15 @@
   {
     "place_id": "ChIJ33tuqmmjfDURoeX3nu8ZyBI",
     "display_name": "Total fashion HARUKI",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동8나길 30",
-    "short_address": "중구 명동8나길 30",
+    "address": "30 Myeongdong 8na-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "30 Myeongdong 8na-gil, Jung-gu",
     "location": {
       "lat": 37.5614072,
       "lng": 126.9833289
@@ -3468,11 +3468,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca369aa6e7bdf:0x12c819ef9ef7e5a1!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3485,15 +3485,15 @@
   {
     "place_id": "ChIJidXhXNyjfDURHLiKVEFhAkQ",
     "display_name": "Mask For skin - Myeong-dong cosmetics",
-    "category": "화장품 판매점",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동8나길 30 1층",
-    "short_address": "중구 명동8나길 30 1층",
+    "address": "1st floor, 30 Myeongdong 8na-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "1st floor, 30 Myeongdong 8na-gil, Jung-gu",
     "location": {
       "lat": 37.5613752,
       "lng": 126.983331
@@ -3512,18 +3512,18 @@
     "google_maps_url": "https://maps.google.com/?cid=4900586277751666716",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3dc5ce1d589:0x44026141548ab81c!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 11:00",
-      "화요일: 오전 9:00 ~ 오후 11:00",
-      "수요일: 오전 9:00 ~ 오후 11:00",
-      "목요일: 오전 9:00 ~ 오후 11:00",
-      "금요일: 오전 9:00 ~ 오후 11:00",
-      "토요일: 오전 9:00 ~ 오후 11:00",
-      "일요일: 오전 9:00 ~ 오후 11:00"
+      "Monday: 9:00 AM - 11:00 PM",
+      "Tuesday: 9:00 AM - 11:00 PM",
+      "Wednesday: 9:00 AM - 11:00 PM",
+      "Thursday: 9:00 AM - 11:00 PM",
+      "Friday: 9:00 AM - 11:00 PM",
+      "Saturday: 9:00 AM - 11:00 PM",
+      "Sunday: 9:00 AM - 11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3533,36 +3533,36 @@
         "author": "Denisa Drugova",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "오늘 방문했는데, 긴 검은 머리의 여성 판매원이 한국에서 만난 사람 중 가장 친절했습니다. 정말 친절하고 모든 면에서 도움을 많이 주셨습니다."
+        "relative_time": "5 months ago",
+        "text": "I visited today, and the female salesperson with long black hair was the friendliest person I've ever met in Korea. They were really friendly and helpful in every way."
       },
       {
         "author": "奈菜鈴木",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6달 전",
-        "text": "높은 상품을 팔 수 있습니다. 옛날에 한 번 여기에서 구입한 적이 있었습니다만, 추후 멍하니 가격이라고 알고 충격을 받았습니다.\n이번은 사지 않고 돌아가려고 하면 「가난한 것의 언니?!」 「일본인은 케치구나!\n다른 점포 쪽이 싸고 기분 좋게 쇼핑할 수 있습니다."
+        "relative_time": "6 months ago",
+        "text": "You can sell high-quality products. I bought it here once a long time ago, but I was shocked when I realized the price.\nThis time, when I tried to go home without buying anything, I thought, “Poor thing’s older sister?!” “Japanese are so cute!”\nOther stores are cheaper and allow you to shop comfortably."
       },
       {
         "author": "Irma Nareswari",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
-        "text": "저는 이 가게를 방문했는데, 매우 비싼 마스크를 강매하려는 시도에 시달렸습니다. 단발머리의 여직원은 제가 전혀 구매할 의사가 없는 제품들을 사도록 압력을 가했습니다. 계산대로 가서 계산을 하려고 하자, 그녀는 (브랜드명) 마스크 시트 두 팩을 주면서 사진 한 장을 사은품으로 주겠다고 했습니다. 저는 마스크 값으로 199,000원을 지불했습니다. 그런데 호텔에 도착해서 짐을 확인해 보니, 약속했던 사은품은 단 한 장뿐이었습니다. 그녀는 종이봉투에 모든 사은품을 넣어주지 않았습니다. 저는 이것이 일종의 기만 행위라고 생각합니다."
+        "relative_time": "1 year ago",
+        "text": "I visited this store and was harassed by attempts to sell very expensive masks. The short-haired female employee pressured me into buying products I had no intention of purchasing. When I went to the checkout counter to pay, she gave me two packs of (brand name) mask sheets and said she would give me a photo as a free gift. I paid 199,000 won for the mask. However, when I arrived at the hotel and checked my luggage, there was only one free gift promised. She didn't put all the freebies in paper bags. I think this is some kind of deception."
       },
       {
         "author": "YL",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "점원분들이 영어를 잘하셔서 의사소통에는 전혀 문제가 없었어요. 제품 추천도 친절하게 해주시고, 저에게 딱 맞는 제품을 추천해 주시는 데에도 매우 인내심이 많으셨습니다.\n\n선크림과 헤어 케어 제품을 구매했는데, 아주 만족스러워요. 게다가 최소 구매 금액 제한 없이 세금 환급도 바로 받을 수 있었어요."
+        "relative_time": "2 years ago",
+        "text": "The clerks spoke English well, so there was no problem with communication. They were kind enough to recommend products and were very patient in recommending the perfect product for me.\n\nI purchased sunscreen and hair care products and am very satisfied. Plus, I was able to receive a tax refund right away with no minimum purchase amount restrictions."
       },
       {
         "author": "Corina Sandache",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "정말 훌륭한 제품들이네요!! 더 자세한 정보를 볼 수 있는 웹사이트가 있을까요? 친구가 여행 중에 선물로 보내줬는데, 다른 화장품도 써보고 싶어요. 유럽으로도 배송해 주시나요?"
+        "relative_time": "2 years ago",
+        "text": "These are really great products!! Is there a website where I can get more information? My friend sent it to me as a gift while traveling, but I want to try other cosmetics as well. Do you also ship to Europe?"
       }
     ],
     "photos": [
@@ -3580,16 +3580,16 @@
   },
   {
     "place_id": "ChIJ5xEFAgCjfDURcaDKC_Q10oI",
-    "display_name": "토니모리 명동충무로점",
-    "category": "화장품 판매점",
+    "display_name": "Tony Moly Myeongdong Chungmuro Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동8나길 28 1층",
-    "short_address": "중구 명동8나길 28 1층",
+    "address": "1st floor, 28 Myeongdong 8na-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "1st floor, 28 Myeongdong 8na-gil, Jung-gu",
     "location": {
       "lat": 37.5614314,
       "lng": 126.98345849999998
@@ -3608,18 +3608,18 @@
     "google_maps_url": "https://maps.google.com/?cid=9426656292325990513",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca300020511e7:0x82d235f40bcaa071!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:30 ~ 오후 11:00",
-      "화요일: 오전 9:30 ~ 오후 11:00",
-      "수요일: 오전 9:30 ~ 오후 11:00",
-      "목요일: 오전 9:30 ~ 오후 11:00",
-      "금요일: 오전 9:30 ~ 오후 11:00",
-      "토요일: 오전 9:30 ~ 오후 11:00",
-      "일요일: 오전 9:30 ~ 오후 11:00"
+      "Monday: 9:30 AM - 11:00 PM",
+      "Tuesday: 9:30 AM - 11:00 PM",
+      "Wednesday: 9:30 AM - 11:00 PM",
+      "Thursday: 9:30 AM - 11:00 PM",
+      "Friday: 9:30 AM - 11:00 PM",
+      "Saturday: 9:30 AM - 11:00 PM",
+      "Sunday: 9:30 AM - 11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3637,16 +3637,16 @@
   },
   {
     "place_id": "ChIJJ61aHPGifDURis5CcRyefnU",
-    "display_name": "탈렌트코스메틱",
-    "category": "화장품 판매점",
+    "display_name": "Talent cosmetics",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로1가 22-17번지 1층",
-    "short_address": "중구 충무로1가 22-17번지 1층",
+    "address": "1st floor, 22-17 Chungmuro 1-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "1st floor, 22-17 Chungmuro 1-ga, Jung-gu",
     "location": {
       "lat": 37.5613933,
       "lng": 126.98344399999999
@@ -3667,8 +3667,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3678,24 +3678,24 @@
         "author": "Terrence Guanio",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1년 전",
-        "text": "솔직히 말씀드리면, 소셜 미디어 인플루언서가 세계 최고 매장이라고 대대적으로 홍보해서 기대가 컸던 곳이라 좀 실망스러웠습니다. 명동에 있는 다른 VT 매장은 직원들이 제품을 강매하려 든다는 이유로 안 좋은 후기가 많았는데, 저도 똑같은 경험을 했거든요. 유명 브랜드를 홍보하는 사람의 후기는 어느 정도 걸러서 봐야 한다는 걸 깨달았습니다. 검은 옷을 입은 젊은 직원들이 있을 거라고 예상했는데, 실제 매장은 정반대였거든요. 그래도 올리브영이나 코스트코 같은 다른 곳에서는 구할 수 없는 제품들도 있어서 좋았습니다. 다만 아마존에서 훨씬 저렴하게 살 수 있다는 점은 참고하세요! 어쨌든 한 번쯤 경험해 볼 만한 곳이라고 생각했습니다. 온라인에서 헤어 리들 샷을 팔았으면 좋겠어요. 제가 제일 관심 있던 거였거든요. 어쨌든 저는 제품 종류별로 하나씩만 사려고 했는데, \"더 사시면 샘플 더 드릴게요\"라는 말에 완전히 기분이 상했어요. 그래도 제품은 마음에 들어서 어쩔 수 없죠. 어쨌든 더 나은 매장을 찾거나, 아니면 백화점에 가봐야 할지도 모르겠네요."
+        "relative_time": "1 year ago",
+        "text": "To be honest, I was a bit disappointed because I had high expectations because social media influencers had promoted it as the best store in the world. Another VT store in Myeongdong had a lot of bad reviews because the employees tried to push the product, and I had the same experience. I realized that reviews from people promoting famous brands should be viewed with some degree of filtering. I expected there to be young employees dressed in black, but the actual store was quite the opposite. Still, it was nice to have products that couldn't be found in other places like Olive Young or Costco. However, keep in mind that you can get it much cheaper on Amazon! Anyway, I thought it was a place worth experiencing at least once. I wish they sold hair riddle shots online. It was what I was most interested in. Anyway, I was only going to buy one of each product, but I was completely offended when they said, \"If you buy more, I'll give you more samples.\" Still, I like the product so I can't help it. Anyway, maybe I should find a better store or go to a department store."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJi8x3ABWjfDUR8y0EhcAquHg",
-    "display_name": "로얄스킨 충무로점",
-    "category": "화장품 판매점",
+    "display_name": "Royal Skin Chungmuro Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동8나길 26 로얄스킨",
-    "short_address": "중구 명동8나길 26 로얄스킨",
+    "address": "Royal Skin, 26 Myeongdong 8na-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "Royal Skin, 26 Myeongdong 8na-gil, Jung-gu",
     "location": {
       "lat": 37.5614406,
       "lng": 126.98352020000002
@@ -3714,57 +3714,57 @@
     "google_maps_url": "https://maps.google.com/?cid=8698749686619844083",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3150077cc8b:0x78b82ac085042df3!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:30 ~ 오후 11:00",
-      "화요일: 오전 9:30 ~ 오후 11:30",
-      "수요일: 오전 9:30 ~ 오후 11:00",
-      "목요일: 오전 9:30 ~ 오후 11:00",
-      "금요일: 오전 9:30 ~ 오후 11:00",
-      "토요일: 오전 9:30 ~ 오후 11:00",
-      "일요일: 오전 9:30 ~ 오후 11:00"
+      "Monday: 9:30 AM - 11:00 PM",
+      "Tuesday: 9:30 AM - 11:30 PM",
+      "Wednesday: 9:30 AM - 11:00 PM",
+      "Thursday: 9:30 AM - 11:00 PM",
+      "Friday: 9:30 AM - 11:00 PM",
+      "Saturday: 9:30 AM - 11:00 PM",
+      "Sunday: 9:30 AM - 11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "고승욱",
+        "author": "Seungwook Go",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "가격 저렴하고 직원분들 친절해요!"
+        "relative_time": "6 months ago",
+        "text": "The prices are cheap and the staff are friendly!"
       },
       {
         "author": "Sanjiv Kumar",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "아주 좋은 가게였고 로즈는 우리를 매우 잘 도와주었습니다"
+        "relative_time": "6 months ago",
+        "text": "It was a very nice store and Rose was very helpful to us."
       },
       {
-        "author": "강선혜",
+        "author": "Seonhye Kang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "너무 이쁜 미란언니 덕분에 좋은물건 잘 사고 가요\n무조건 여기 와야해요 💜💜💜💜"
+        "relative_time": "6 months ago",
+        "text": "Thanks to the very pretty Miran, I am able to buy good things.\nYou must come here 💜💜💜💜"
       },
       {
         "author": "Myung Ko",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "미란직원이친절하고,너무스윗해요!\n가격도좋아요"
+        "relative_time": "6 months ago",
+        "text": "Miran’s staff is friendly and so sweet!\nThe price is good too"
       },
       {
-        "author": "방향령",
+        "author": "direction",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "제품 저렴하고 세일많이 하는 매장입니다\n\n짱추합니다~"
+        "relative_time": "5 months ago",
+        "text": "This is a store with cheap products and lots of sales.\n\nI really like it~"
       }
     ],
     "photos": [
@@ -3783,15 +3783,15 @@
   {
     "place_id": "ChIJkfCWCwCjfDURHS-8y53T76U",
     "display_name": "Tem Tem",
-    "category": "화장품 판매점",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "28 1층 (충무로1가 스킨푸드, 22-17 명동8나길 명동 중구 서울특별시 대한민국",
-    "short_address": "28 1층 (충무로1가 스킨푸드, 22-17 명동8나길 명동 중구",
+    "address": "28 1st floor (Chungmuro 1-ga Skin Food, 22-17 Myeongdong 8na-gil, Myeongdong, Jung-gu, Seoul, Republic of Korea",
+    "short_address": "28 1st floor (Chungmuro 1-ga Skin Food, 22-17 Myeongdong 8na-gil, Myeongdong Jung-gu",
     "location": {
       "lat": 37.5613913,
       "lng": 126.98349420000001
@@ -3812,8 +3812,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3822,16 +3822,16 @@
   },
   {
     "place_id": "ChIJSy9zHfGifDUReAONJU-5hys",
-    "display_name": "더페이스샵 명동충무로점 THE FACE SHOP",
-    "category": "화장품 판매점",
+    "display_name": "THE FACE SHOP Myeongdong Chungmuro branch THE FACE SHOP",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동8나길 24",
-    "short_address": "중구 명동8나길 24",
+    "address": "24 Myeongdong 8na-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "24 Myeongdong 8na-gil, Jung-gu",
     "location": {
       "lat": 37.5614077,
       "lng": 126.98357419999999
@@ -3850,18 +3850,18 @@
     "google_maps_url": "https://maps.google.com/?cid=3136679415070393208",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2f11d732f4b:0x2b87b94f258d0378!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 10:00",
-      "화요일: 오전 10:00 ~ 오후 10:00",
-      "수요일: 오전 10:00 ~ 오후 10:00",
-      "목요일: 오전 10:00 ~ 오후 10:00",
-      "금요일: 오전 10:00 ~ 오후 10:00",
-      "토요일: 오전 10:00 ~ 오후 10:00",
-      "일요일: 오전 10:00 ~ 오후 10:00"
+      "Monday: 10:00 AM - 10:00 PM",
+      "Tuesday: 10:00 AM - 10:00 PM",
+      "Wednesday: 10:00 AM - 10:00 PM",
+      "Thursday: 10:00 AM - 10:00 PM",
+      "Friday: 10:00 AM - 10:00 PM",
+      "Saturday: 10:00 AM - 10:00 PM",
+      "Sunday: 10:00 AM - 10:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3871,36 +3871,36 @@
         "author": "sky",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
-        "text": "매장 앞에서 호객행위하시는분 사람얼굴봐가면서 중국어하거나 일본어하는거 고치셔야해요. 그게 얼마나 무례하고 인종차별적인 행위인지 모르시나봐요.\n상대방얼굴을 함부로 평가하는건데\n지나가다 괜히 기분나빠지네요."
+        "relative_time": "1 year ago",
+        "text": "Anyone soliciting customers in front of the store needs to look at each person's face and correct their Chinese or Japanese. I don't think you realize how rude and racist that is.\nYou're judging the other person's face carelessly.\nAs I pass by, I feel bad for no reason."
       },
       {
         "author": "Whee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "안녕하세요 어제 저녁에 폐점한 손님인데 카드를 분실했는데 혹시 습득하셨다면 내일 저녁에 다시 방문하겠습니다. 번거롭게 해드려 죄송합니다."
+        "relative_time": "1 year ago",
+        "text": "Hello, I am a customer who closed last night and lost my card. If you have found it, I will visit again tomorrow evening. Sorry for the inconvenience."
       },
       {
         "author": "Yam Ryu",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "한국👩‍🦳의 기념품에 언제나 받고 있던 보습 케어를 명동점에서 실제로 구입해 왔습니다.\n유익한 선물 패키지를 입수할 수 있었습니다!"
+        "relative_time": "2 months ago",
+        "text": "I actually purchased the moisturizing care product I always received as a souvenir from Korea👩‍🦳 at the Myeongdong branch.\nI was able to get a great gift package!"
       },
       {
         "author": "Jie Wilson",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6달 전",
+        "relative_time": "6 months ago",
         "text": "I had pleasant experience shopping for my friend. The shop assistant was patient and got what she wanted but she wasn’t very force coming with other recommendations. I had to ask her to tell me more about her products. But overall good and well stocked."
       },
       {
         "author": "Emma PAN",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "8달 전",
-        "text": "품질과 서비스가 정말 최악이었어요. 구매한 지 3일 만에 호텔에서 귀걸이 포장을 뜯으려는데, 스터드에 손도 대지 않고 가방에서 부러져 버렸어요. 가게에 가서 교환을 요청했는데 바로 거절당했어요... 대만에서 이렇게 충격적인 경험은 처음이에요. 관광객인데, 한 번도 착용해 본 적이 없다는 걸 강조하고 싶어요."
+        "relative_time": "8 months ago",
+        "text": "The quality and service were really bad. Three days after purchasing, I tried to unpack the earrings at the hotel, but they broke in my bag without even touching the studs. I went to the store and asked for an exchange, but it was immediately rejected... This is my first time experiencing such a shocking experience in Taiwan. I want to emphasize that I am a tourist and have never worn it before."
       }
     ],
     "photos": [
@@ -3918,16 +3918,16 @@
   },
   {
     "place_id": "ChIJ67NX53ijfDURo7AKUCnTjqk",
-    "display_name": "텐제로 명동 1호점",
-    "category": "화장품 판매점",
+    "display_name": "Ten Zero Myeongdong 1st branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로1가 24-12",
-    "short_address": "중구 충무로1가 24-12",
+    "address": "24-12, Chungmuro 1-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "24-12 Chungmuro 1-ga, Jung-gu",
     "location": {
       "lat": 37.561282899999995,
       "lng": 126.98350589999998
@@ -3946,22 +3946,22 @@
     "google_maps_url": "https://maps.google.com/?cid=12217935013492732067",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca378e757b3eb:0xa98ed329500ab0a3!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오전 12:00",
-      "화요일: 오전 8:00 ~ 오전 12:00",
-      "수요일: 오전 8:00 ~ 오전 12:00",
-      "목요일: 오전 8:00 ~ 오전 12:00",
-      "금요일: 오전 8:00 ~ 오전 12:00",
-      "토요일: 오전 8:00 ~ 오전 12:00",
-      "일요일: 오전 8:00 ~ 오전 12:00"
+      "Monday: 8:00 AM - 12:00 AM",
+      "Tuesday: 8:00 AM - 12:00 AM",
+      "Wednesday: 8:00 AM - 12:00 AM",
+      "Thursday: 8:00 AM - 12:00 AM",
+      "Friday: 8:00 AM - 12:00 AM",
+      "Saturday: 8:00 AM - 12:00 AM",
+      "Sunday: 8:00 AM - 12:00 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
@@ -3969,36 +3969,36 @@
         "author": "wooinpapa",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "서울에서 방문한 스킨케어 매장 중 최고였어요. 매장 배치도 깔끔하고, 테스터 제품들도 잘 정리되어 있고, 직원분들도 친절하면서도 부담스럽게 권하지 않아서 좋았습니다. 특히 유자 라인의 브라이트닝 효과가 마음에 들었어요."
+        "relative_time": "2 months ago",
+        "text": "It was the best skincare store I visited in Seoul. The store layout was neat, the tester products were well organized, and the staff were friendly and didn't make recommendations too burdensome, which was nice. I especially liked the brightening effect of the yuzu line."
       },
       {
         "author": "ka ka",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "명동을 산책하다가 텐제로 명동 1호점에 들렀어요. 직원분들이 구매 전에 유자 세럼을 테스트해볼 수 있게 해주시고, 샘플도 몇 개 주셨어요. 매장 안에도 향긋한 냄새가 나고 편안한 분위기였어요."
+        "relative_time": "3 months ago",
+        "text": "While taking a walk around Myeongdong, I stopped by the first Ten Zero Myeongdong branch. The staff allowed me to test the yuzu serum before purchasing and even gave me some samples. The store had a fragrant smell and a comfortable atmosphere."
       },
       {
         "author": "corn sky",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "서울 여행 중 텐제로 명동 1호점에 방문했는데, 직원분들이 정말 친절하시고 제 피부 타입에 맞는 유자 토너를 고르는 데 도움을 주셨어요. 명동역 근처에 있는 훌륭한 K뷰티 숍이니 꼭 추천드려요!"
+        "relative_time": "5 months ago",
+        "text": "During my trip to Seoul, I visited TenZero's first Myeongdong branch. The staff was really friendly and helped me choose a yuzu toner that suited my skin type. It’s a great K-beauty shop near Myeongdong Station, so I definitely recommend it!"
       },
       {
         "author": "César Martínez",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9달 전",
-        "text": "직원분들의 친절함이 정말 좋았습니다. 영어를 구사하지 못하시는 분들도 필요한 제품과 피부 타입에 가장 적합한 제품을 추천해주셔서 정말 만족스러웠습니다. 이 거리에서 꼭 한번 방문해야 할 곳입니다. 가격도 저렴하고 일부 제품은 1+1 행사도 진행 중입니다."
+        "relative_time": "9 months ago",
+        "text": "I really liked the friendliness of the staff. I was very satisfied that even people who could not speak English were able to recommend the products I needed and the best products for my skin type. This is a must visit place on this street. The prices are cheap and some products are even running a buy-one-get-one promotion."
       },
       {
         "author": "Jihyeropda",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10달 전",
-        "text": "한국 화장품을 좋아하고 명동에서 여러가지 가게를 돌아다니던 중 TENZERO가 가장 인상적이었습니다. 유행의 상품 뿐만이 아니라, 성분을 고집한 브랜드도 두고 있어, 시험하는 것이 즐거웠습니다. 스탭도 웃는 얼굴로 정중하게 대응해 주었습니다."
+        "relative_time": "10 months ago",
+        "text": "I like Korean cosmetics, and while visiting various stores in Myeong-dong, TENZERO was the most impressive. In addition to trendy products, they also have brands that are particular about their ingredients, so it was fun to try them out. The staff also responded politely and with a smile."
       }
     ],
     "photos": [
@@ -4016,16 +4016,16 @@
   },
   {
     "place_id": "ChIJs7VEZgCjfDURUObCTaAlnAI",
-    "display_name": "VT코스메틱 월드점(리들샷특화매장)",
-    "category": "화장품 판매점",
+    "display_name": "VT Cosmetics World Branch (Riddle Shot Specialty Store)",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로1가 22-1",
-    "short_address": "중구 충무로1가 22-1",
+    "address": "22-1, Chungmuro 1-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "22-1 Chungmuro 1-ga, Jung-gu",
     "location": {
       "lat": 37.5618865,
       "lng": 126.98394750000001
@@ -4046,47 +4046,47 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "성채은",
+        "author": "Seong Chae-eun",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
-        "text": "VT 월드점은 외국인 고객들에게 특히 친절하고, 제품 설명도 상세하게 도와주셔서 정말 만족스러웠습니다.\n피부 고민에 맞는 제품을 추천해주시고, 테스트도 직접 해볼 수 있어서 좋았어요.\n매장도 깔끔하고 고급스러운 분위기라 방문하는 내내 기분이 좋았습니다.\n특히 PDRN 리들샷과 시카 라인이 인기가 많아 바로 구매했어요!\n한국 화장품 처음 접하시는 분들도 부담 없이 들르기 좋은 곳이에요."
+        "relative_time": "8 months ago",
+        "text": "I was very satisfied with the VT World branch as they were particularly friendly to foreign customers and helped explain products in detail.\nIt was nice to be able to recommend products that fit my skin concerns and test them myself.\nThe store was clean and had a luxurious atmosphere, so I felt good throughout my visit.\nThe PDRN Riddle Shot and Cica lines were especially popular, so I bought them right away!\nIt's a great place to stop by even if you're new to Korean cosmetics."
       },
       {
         "author": "本田",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "매장이 멋졌고 친절했습니다"
+        "relative_time": "1 year ago",
+        "text": "The store was nice and friendly"
       },
       {
         "author": "ksskripai ksskripai",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
-        "text": "재스민은 제품을 직접 체험해보고 구매할 수 있도록 도와주는 훌륭한 판매원이었습니다. 그녀는 예의 바르고 쾌활하며 판매에 대한 열정이 넘치는 좋은 판매원입니다. 한번 방문하시면 분명 구매하게 되실 거예요. 세금 환급은 여권 지참 시 현장에서 가능합니다."
+        "relative_time": "8 months ago",
+        "text": "Jasmine was a great salesperson who helped me try out the products before purchasing them. She is a good salesperson who is polite, cheerful and passionate about selling. If you visit once, you will definitely buy it. Tax refunds are available on site when you bring your passport."
       },
       {
         "author": "Meria Wang",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "2달 전",
-        "text": "VT의 길가 상점들은 매우 비쌉니다. 각 품목 가격이 올리브영이나 대만에서 일반적으로 지불하는 가격보다 1만 원에서 2만 원 정도 더 비쌉니다. 직원들이 그 가격에서 일정 부분을 떼어가는 것 같습니다."
+        "relative_time": "2 months ago",
+        "text": "Roadside stores in VT are very expensive. The price of each item is about 10,000 to 20,000 won more than what you would normally pay at Olive Young or Taiwan. It seems like the employees take a certain portion of the price."
       },
       {
         "author": "李潔",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "7달 전",
-        "text": "여기 가지 마세요! 완전 사기예요. 바가지 쓴 기분이에요.\n원래 한두 개 사서 써보려고 했는데, 매장 프로모션으로 6병 사면 2만원 넘게 할인해준다고 하더군요. 영수증을 확인하고 나서야 할인이 안 된다는 걸 알게 됐어요.\n나중에 직원에게 위챗 개인 메시지를 보냈더니 이렇게 답장이 왔어요.\n\"면세점에서 쇼핑도 해주고 샘플도 많이 주는데, 가격은 천차만별이에요 (그냥 큰일 피하려는 것 같아요).\"\n정말 입이 텁텁해요!\n할인 안 되는 사람들한테 속지 마세요!\n거기서 뭔가 사면 영수증이랑 가격 꼭 확인하세요! 쇼피에서 아이크림은 456위안인데 한국에서는 955위안이에요? (가격 확인 안 한 제 잘못이에요.)\n직원들은 매우 친절했지만 사기였습니다."
+        "relative_time": "7 months ago",
+        "text": "Don't go here! It's a total scam. I feel like I was ripped off.\nI originally planned to buy one or two bottles, but they said they would give a discount of over 20,000 won if you buy 6 bottles as part of a store promotion. It was only after checking the receipt that I realized there was no discount.\nLater, I sent a WeChat private message to the employee and received this reply.\n“They help me shop at duty-free stores and give me lots of samples, but the prices vary greatly (I think they’re just trying to avoid a big deal).”\nMy mouth feels really stuffy!\nDon’t be fooled by people who don’t offer discounts!\nIf you buy something there, be sure to check the receipt and the price! The eye cream costs 456 yuan on Shopee, but in Korea it costs 955 yuan? (It's my fault for not checking the price.)\nThe staff were very friendly but it was a scam."
       }
     ],
     "photos": [
@@ -4101,16 +4101,16 @@
   },
   {
     "place_id": "ChIJ844v6gmjfDUR8LcT7FPj1gk",
-    "display_name": "루트명동",
-    "category": "의류점",
+    "display_name": "Route Myeongdong",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동2길 35 1 2층 사보이호텔 앞",
-    "short_address": "중구 명동2길 35 1 사보이호텔 앞 2층",
+    "address": "In front of Savoy Hotel, 2nd floor, 35 Myeongdong 2-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "2nd floor in front of Savoy Hotel, 35 Myeongdong 2-gil, Jung-gu",
     "location": {
       "lat": 37.5621467,
       "lng": 126.9838758
@@ -4129,57 +4129,57 @@
     "google_maps_url": "https://maps.google.com/?cid=709003940939937776",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca309ea2f8ef3:0x9d6e353ec13b7f0!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 11:30",
-      "화요일: 오전 9:00 ~ 오후 11:30",
-      "수요일: 오전 9:00 ~ 오후 11:30",
-      "목요일: 오전 9:00 ~ 오후 11:30",
-      "금요일: 오전 9:00 ~ 오후 11:30",
-      "토요일: 오전 9:00 ~ 오후 11:30",
-      "일요일: 오전 9:00 ~ 오후 11:30"
+      "Monday: 9:00 AM - 11:30 PM",
+      "Tuesday: 9:00 AM - 11:30 PM",
+      "Wednesday: 9:00 AM - 11:30 PM",
+      "Thursday: 9:00 AM - 11:30 PM",
+      "Friday: 9:00 AM - 11:30 PM",
+      "Saturday: 9:00 AM - 11:30 PM",
+      "Sunday: 9:00 AM - 11:30 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이지영",
+        "author": "Jiyoung Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "명동에 위치한 약 200평 규모의 도매가·창고형 빈티지숍 ROOT MYEONGDONG\n루트명동 @root.myeongdong\n\n명동에서 제대로 된 빈티지 분위기를 즐기고 싶다면 꼭 들러야 할 추천 매장입니다.\n\n매장은 전체적으로 깔끔하게 정돈되어 있어 구경하기 편하고, 다양한 스타일의 의류와 액세서리가 가득해 보는 것만으로도 설렘이 가득해요. 특히 선글라스, 청바지, 빈티지 드레스 등 개성 있는 아이템이 풍부해 나만의 스타일을 찾기 좋은 곳입니다. 🎵\n\n다른 곳에서는 쉽게 보기 힘든 레어한 빈티지 아이템도 많아, 패션을 좋아하는 분들에게는 말 그대로 숨은 명소 같은 곳이에요. 분위기도 편안해서 끝까지 즐겁게 쇼핑할 수 있었습니다.\n\n📍 주소 서울 중구 명동2길 35, 1–2층\n📍 영업시간 매일 10:00–24:00\n📍 찾아가는 길 명동역 6번 출구에서 도보 약 4분(약 172m)"
+        "relative_time": "4 months ago",
+        "text": "ROOT MYEONGDONG, a wholesale/warehouse-type vintage shop with an area of approximately 200 pyeong located in Myeongdong.\nRoot Myeongdong@root.myeongdong\n\nIf you want to enjoy a proper vintage atmosphere in Myeongdong, this is a must-visit store.\n\nThe overall store is neatly organized and easy to browse, and it is full of various styles of clothing and accessories, so just looking at them is full of excitement. In particular, it is a great place to find your own style as it has an abundance of unique items such as sunglasses, jeans, and vintage dresses. 🎵\n\nThere are many rare vintage items that are hard to find elsewhere, so it is literally a hidden spot for fashion lovers. The atmosphere was comfortable, so I was able to enjoy shopping until the end.\n\n📍 Address 1–2nd floor, 35 Myeongdong 2-gil, Jung-gu, Seoul\n📍Business hoursDaily 10:00–24:00\n📍 Directions Approximately 4 minutes on foot from Exit 6 of Gilmyeong-dong Station (approximately 172m)"
       },
       {
         "author": "lemon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "명동 쇼핑할 때 꼭 들러볼 만한 곳이에요! 생각보다 아이템이 정말 다양하고 멋진 옷들이 많아서 구경하는 재미가 있었어요. Y2K 스타일, 니트, 패딩부터 스트리트 웨어까지 종류가 다양해서 한참을 둘러봤습니다! 가격대도 적당하고 괜찮은 옷을 많이 찾을 수 있었어요"
+        "relative_time": "2 months ago",
+        "text": "This is a place worth stopping by when shopping in Myeongdong! It was fun to look around because there were so many different items and cool clothes than I expected. I looked around for a while because there was a wide variety of products, from Y2K styles, knits, padding to street wear! I was able to find a lot of good clothes at reasonable prices."
       },
       {
-        "author": "논현동",
+        "author": "Nonhyeon-dong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "If you are looking for real korean style vintage.. you must visit here.. Pls… you have to come\n\n진짜 꼭 오세요 완전 싸고 친절하고 매물 많고 걍 넘 좋음 진짜임 광고 아님 광고 주세요"
+        "relative_time": "3 months ago",
+        "text": "If you are looking for real korean style vintage.. you must visit here.. Pls… you have to come\n\nReally, please come. It's super cheap, friendly, and has a lot of listings. It's just so good. It's real. It's not an advertisement. Please advertise it."
       },
       {
-        "author": "인영’",
+        "author": "Inyoung’",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "옷도 많고 직원 분들이 친절해서 좋았어요 다음에도 자주 올게용"
+        "relative_time": "1 month ago",
+        "text": "I liked that there were a lot of clothes and the staff were friendly. I will come back often next time."
       },
       {
         "author": "Jimin",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "이렇게 넓고 깨끗한 빈티지샵 처음 봐요! 종류도 정말 많고 직원분들도 친절하세요 ㅎㅎ"
+        "relative_time": "6 months ago",
+        "text": "This is my first time seeing such a spacious and clean vintage shop! There are a lot of varieties and the staff are very friendly."
       }
     ],
     "photos": [
@@ -4198,15 +4198,15 @@
   {
     "place_id": "ChIJnSaLSQCjfDURi3sa7b7S0hg",
     "display_name": "Cozymood",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "3F 코지무드, 1F, 2F, 27 명동8나길 중구 서울특별시 대한민국",
-    "short_address": "1F, 2F, 3F 코지무드, 27 명동8나길 중구",
+    "address": "3F Cozy Mood, 1F, 2F, 27 Myeongdong 8 Na-gil, Jung-gu, Seoul South Korea",
+    "short_address": "1F, 2F, 3F Cozy Mood, 27 Myeongdong 8 Na-gil, Jung-gu",
     "location": {
       "lat": 37.5611987,
       "lng": 126.98346819999998
@@ -4227,46 +4227,46 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김수",
+        "author": "Kim Soo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "직원분들도 너무 친철하시고 옷도 가성비 있게 구매할 수 있어서 만족스러웠어요!! 예쁜옷도 너무 많아서 시간 가는 줄 모르게 쇼핑했어요!! 명동 오게되면 항상 들를 것 같아요💖💖"
+        "relative_time": "2 months ago",
+        "text": "The staff were very friendly and I was satisfied because I was able to purchase clothes at a reasonable price!! There were so many pretty clothes that I went shopping without realizing how much time passed!! I think I'll always stop by when I come to Myeongdong💖💖"
       },
       {
         "author": "Ryxxng",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9달 전",
-        "text": "매장이 엄청 크고 쾌적합니다. 옷도 엄청 다양하고 예뻐요. 직원분들이 응대도 빠르고 각 층 모두 친절하셨어요. 옷도 합리적인 가격이라 많이 구매해도 부담 없어요. 다음에 한국에 다시 놀러 온다면 재방문 하고 싶어요 😍"
+        "relative_time": "9 months ago",
+        "text": "The store is very large and comfortable. The clothes are very diverse and pretty. The staff were quick to respond and friendly on each floor. Clothes are also reasonably priced, so you don't have to worry about buying a lot. Next time I come to Korea again, I want to visit again 😍"
       },
       {
         "author": "Jack Chen",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "4달 전",
-        "text": "櫃檯結帳人員服務態度真的無敵差！！！不是很會用IG，希望可以拿到優惠，但服務人員態度很不耐煩，也不協助，真的有夠爛的！！\n카운터 계산원의 서비스 태도가 정말 엉망입니다! !!IG를 잘 못써서 혜택을 받았으면 좋겠는데 서비스직원이 짜증도 나고 협조도 안해주니 정말 형편없네요! ！"
+        "relative_time": "4 months ago",
+        "text": "櫃檯結帳人員服務態度真的無敵差！！！不是很會use IG，希望可以拿到優惠，但服務人員態度侈不耐煩，也不協助，真的有夠爛的！！\nThe counter cashier's service attitude is really terrible! !!I'm not good at using IG, so I wish I could get the benefits, but the service staff is annoying and uncooperative, so it's really bad! ！"
       },
       {
         "author": "L W",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "9달 전",
-        "text": "2층 서비스 직원들은 정말 최악이었어요. 옷을 입어보려면 후드를 쓰라고 계속 요구하고, 규칙도 계속 설명해 줬어요. 사이즈도 맞춰주지 않았고요. 서비스 태도도 정말 최악이었어요. 한국에서 본 서비스 중 최악이었어요."
+        "relative_time": "9 months ago",
+        "text": "The service staff on the 2nd floor were the worst. They kept asking me to wear a hood to try on the clothes and kept explaining the rules. They didn't even match the size. The service attitude was also really bad. It was the worst service I've ever seen in Korea."
       },
       {
         "author": "Cherry Chang",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "4달 전",
-        "text": "점원의 서비스 태도가 매우 나쁘고, 얼굴이 매우 더럽다. 계산대 계산원이 인내심이 없고, 옷이 예뻐도 소용없다."
+        "relative_time": "4 months ago",
+        "text": "The clerk's service attitude is very bad, and his face is very dirty. The cashier at the checkout counter has no patience, and having pretty clothes doesn't help."
       }
     ],
     "photos": [
@@ -4281,16 +4281,16 @@
   },
   {
     "place_id": "ChIJYxNrHPGifDUR8BJSuard0VA",
-    "display_name": "이니스프리충무점",
-    "category": "화장품 판매점",
+    "display_name": "Innisfree Chungmu Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동4길 46 1층",
-    "short_address": "중구 명동4길 46 1층",
+    "address": "1st floor, 46 Myeongdong 4-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "1st floor, 46 Myeongdong 4-gil, Jung-gu",
     "location": {
       "lat": 37.561718,
       "lng": 126.98394839999999
@@ -4309,18 +4309,18 @@
     "google_maps_url": "https://maps.google.com/?cid=5823679518490104560",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2f11c6b1363:0x50d1ddaab95212f0!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 11:00",
-      "화요일: 오전 10:00 ~ 오후 11:00",
-      "수요일: 오전 10:00 ~ 오후 11:00",
-      "목요일: 오전 10:00 ~ 오후 11:00",
-      "금요일: 오전 10:00 ~ 오후 11:00",
-      "토요일: 오전 10:00 ~ 오후 11:00",
-      "일요일: 오전 10:00 ~ 오후 11:00"
+      "Monday: 10:00 AM - 11:00 PM",
+      "Tuesday: 10:00 AM - 11:00 PM",
+      "Wednesday: 10:00 AM - 11:00 PM",
+      "Thursday: 10:00 AM - 11:00 PM",
+      "Friday: 10:00 AM - 11:00 PM",
+      "Saturday: 10:00 AM - 11:00 PM",
+      "Sunday: 10:00 AM - 11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4330,36 +4330,36 @@
         "author": "Esra",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6달 전",
-        "text": "직원들이 너무 무례하고 강압적이었어요. 아이크림에 대해서만 물어봤는데, 바로 카운터로 데려가려고 했어요. 첫째, 압박감이 싫었고, 둘째, 계속 캠페인과 프로모션을 강행했어요. 이 모든 일이 단 2~3분 만에 일어났어요. 고객으로서 당연히 해야 할 일인데, 구매하지 않기로 결정하자 직원들은 바로 무례하게 굴면서 저희에 대해 험담하기 시작했어요. 직원들이 고객을 이렇게 대하는 곳에서는 절대 물건을 사지 않을 거예요. 가능하다면 별점 0점을 주고 싶어요."
+        "relative_time": "6 months ago",
+        "text": "The staff were so rude and pushy. I only asked about eye cream, but they tried to take me straight to the counter. First, I didn't like the pressure, and second, I kept pushing forward with campaigns and promotions. All of this happened in just 2-3 minutes. When we decided not to purchase, which is what we should do as customers, the staff immediately became rude and started talking bad about us. I would never buy from a place where employees treat customers like this. If possible, I would give it 0 stars."
       },
       {
         "author": "S Choi",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "8달 전",
-        "text": "친절하고 도움을 주려는 듯한 판매원의 추천으로 몇 가지 물건을 구매했습니다. 하지만 제가 매장을 나서려 할 때, 그 판매원이 제가 말하지 않은 제 나이를 여권에서 알아내어 동료들에게 큰 소리로 말하는 것을 들었습니다. 제 개인 정보를 재미 삼아 사용하는 것은 부적절하다고 말하고 싶었지만 한국어가 서툴러서 그러지 못했습니다. 매장에서는 고객의 개인 정보를 다룰 때 무엇이 ​​적절하고 부적절한지 직원들을 더 철저히 교육해야 할 것 같습니다."
+        "relative_time": "8 months ago",
+        "text": "I purchased a few items on the recommendation of a friendly and helpful salesperson. But as I was leaving the store, I heard the salesperson figure out my age from my passport, which I had not told him, and shout it out to his colleagues. I wanted to say that it was inappropriate to use my personal information for fun, but I couldn't because my Korean is not good. I think stores will need to more thoroughly train their employees on what is appropriate and inappropriate when handling customers' personal information."
       },
       {
         "author": "Chloe Tu",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "가게도 예쁘고 직원분들도 친절하셨어요! 정말 친절하고 좋은 경험이었어요!!"
+        "relative_time": "1 year ago",
+        "text": "The store was pretty and the staff were friendly! It was a really friendly and great experience!!"
       },
       {
         "author": "馬場智子",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "점원의 접객도 좋고, 좋았습니다."
+        "relative_time": "1 year ago",
+        "text": "The staff's customer service was also good."
       },
       {
         "author": "takuuuma k",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "다른 가게보다 저렴했습니다. 여러가지 서비스도 해 주었습니다!"
+        "relative_time": "1 year ago",
+        "text": "It was cheaper than other stores. They also provided various services!"
       }
     ],
     "photos": [
@@ -4372,15 +4372,15 @@
   {
     "place_id": "ChIJ9YHbDACjfDURfJKGgAA95Gk",
     "display_name": "Ring making",
-    "category": "귀금속 상점",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "4층, 52 명동2길 중구 서울특별시 대한민국",
-    "short_address": "4층, 52 명동2길 중구",
+    "address": "4th floor, 52 Myeongdong 2-gil, Jung-gu, Seoul, Republic of Korea",
+    "short_address": "4th floor, 52 Myeongdong 2-gil, Jung-gu",
     "location": {
       "lat": 37.56109730000001,
       "lng": 126.98312449999999
@@ -4401,11 +4401,11 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
@@ -4413,23 +4413,23 @@
         "author": "Ray Lim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
-        "text": "정말 좋은 경험이었어요. 가게를 운영하는 부부가 너무 친절해서 꼭 추천하고 싶어요."
+        "relative_time": "8 months ago",
+        "text": "It was a really good experience. The couple who runs the store is so friendly, so I definitely recommend it."
       },
       {
         "author": "Kaylin",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2주 전",
-        "text": "가족, 친구들과 정말 즐거운 시간을 보냈어요!"
+        "relative_time": "2 weeks ago",
+        "text": "I really had a great time with my family and friends!"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJ-XysSTCjfDUR7ZBcmCjsqrU",
-    "display_name": "크리스탈에스테",
-    "category": "피부관리실",
+    "display_name": "Crystal Esthetics",
+    "category": "skin care room",
     "types": [
       "skin_care_clinic",
       "cosmetics_store",
@@ -4439,8 +4439,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로1가 24-20",
-    "short_address": "중구 충무로1가 24-20",
+    "address": "24-20 Chungmuro 1-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "24-20 Chungmuro 1-ga, Jung-gu",
     "location": {
       "lat": 37.5611191,
       "lng": 126.9833242
@@ -4459,59 +4459,59 @@
     "google_maps_url": "https://maps.google.com/?cid=13090534926004818157",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33049ac7cf9:0xb5aaec28985c90ed!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오후 6:00",
-      "화요일: 오전 8:00 ~ 오후 6:00",
-      "수요일: 오전 8:00 ~ 오후 6:00",
-      "목요일: 오전 8:00 ~ 오후 6:00",
-      "금요일: 오전 8:00 ~ 오후 6:00",
-      "토요일: 오전 8:00 ~ 오후 5:00",
-      "일요일: 휴무일"
+      "Monday: 8:00 AM - 6:00 PM",
+      "Tuesday: 8:00 AM - 6:00 PM",
+      "Wednesday: 8:00 AM - 6:00 PM",
+      "Thursday: 8:00 AM - 6:00 PM",
+      "Friday: 8:00 AM - 6:00 PM",
+      "Saturday: 8:00 AM - 5:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "홍기순",
+        "author": "Ki-soon Hong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "아는 지인소개로 크리스탈에스테를\n방문하게되었어요\n실내가 깨끗하여 오픈한지 얼마안된줄 알았는데ᆢ대박!!20년이나 되었네요\n평소 아토피와 피부알러지로\n고생하고 신경쓰였는데\n여기사용하는 화장품이\n보습전문제품이라\n안심할 수 있었어요\n예민하고 붉은기 있는 얼굴이 수분 폭탄을 제대로\n맞은것같아요^^\n개선된 내얼굴 ᆢ대만족 입니다\n또 다시 방문하고싶은곳 입니다\n감사드려요"
+        "relative_time": "2 years ago",
+        "text": "I was introduced to Crystal Esthete by an acquaintance.\nI came to visit\nThe interior was so clean that I thought it had just opened. It's amazing!! It's been 20 years.\nDue to atopic dermatitis and skin allergies\nI had a hard time and was worried.\nThe cosmetics used here are\nIt’s a moisturizing product.\nI felt safe\nSensitive and red face needs a moisturizing bomb properly.\nI think I got it right ^^\nI am very satisfied with my improved face.\nThis is a place I want to visit again.\nThank you"
       },
       {
         "author": "luke_at_82",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "여자친구가 오랬동안 다닌 샵이라 걱정없이 방문하고\n화장품도 추천 받아 구매하여 사용했습니다.\n평소에 건조해서 피부가 푸석 했었는데 사용하면서 증상이 많이 호전되어 기쁩니다. 추천도 좋고 관리도 잘해주셔서 앞으로 종종 방문할것 같습니다"
+        "relative_time": "2 years ago",
+        "text": "This is a shop that my girlfriend has been going to for a long time, so I visited it without any worries.\nI also bought and used cosmetics after receiving a recommendation.\nMy skin has always been dry and flaky, but I am glad that my symptoms have improved a lot after using it. I think I will visit often in the future because the recommendations are good and the management is good."
       },
       {
-        "author": "오디곰",
+        "author": "mulberry bear",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "일로 몸도 무겁고 피곤해서 지인 소개로 가보게 됐어요\n어떤 코스를 할까 고민이 많았는데 피부 상태와 어디가 좋지 않은지 확인해주시곤 코스도 차근차근 설명해주시면서 추천해주셨어요. 추천해주신 전신 마사지는 최고 그자체..!\n가게도 깔끔하고 너무 예뻤는데 기다리는 동안은 따뜻한 차도 내어 주셔서 몸이 벌써 나른.... 낯을 가리느라 말도 못하고 긴장하던 저에게 관리 중 말을 걸어주시면서 어색한 분위기가 되지 않게 해주신 것도 너무 좋았어요ㅎㅎ 조용하고 편안한 분위기로 뭉쳤던 어깨나 몸.. 부었던 얼굴도 다 케어 해주셔서 최고였어요! 또가고싶은 곳!"
+        "relative_time": "2 years ago",
+        "text": "I was tired and heavy from work, so I went through a friend's recommendation.\nI had a lot of trouble deciding which course to take, but he checked my skin condition and which areas were not good, explained the course step by step, and recommended it. The full body massage you recommended was the best...!\nThe store was clean and very pretty, and they even gave me warm tea while I waited, so I was already feeling tired.... I was so nervous that I couldn't speak because of my shyness, and it was great that they talked to me during the management and made sure it didn't create an awkward atmosphere. It was the best because they took care of my shoulders and body, which were gathered together in a quiet and comfortable atmosphere... and even my swollen face! A place I want to go again!"
       },
       {
-        "author": "이성민 (일어나라)",
+        "author": "Seongmin Lee (Wake up)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "얼굴 맛사지 받고 만나는 사람마다 피부결이 밝아서 예쁘단 소리를 많이 들었어요 감사합니다\n내 피부에 맞는 화장품도 살수 있어서\n참 좋았어요."
+        "relative_time": "2 years ago",
+        "text": "After getting a facial massage, I heard from everyone I met that my skin texture was bright and pretty. Thank you.\nI can buy cosmetics that suit my skin type.\nIt was great."
       },
       {
-        "author": "이서영",
+        "author": "Seoyoung Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "제가 마사지를 좋아해서 이곳저곳 마사지샵을 찾아다녀봤지만, 여기 마사지샵이 계속 생각나서 다시 찾게되는 마성의 마사지샵입니다.\n\n일단 가게 안에 입장하면 밝고 쾌적하고 깔끔한 가게 분위기에 매료되고, 사장님과 직원들이 웃는 얼굴로 환영해주십니다.\n\n샵 내부도 깔끔하고 정갈하게 정리되어있으며, 마사지가운, 이불, 수건들도 좋은재질에 좋은향기가 나고 부드러운 감촉이 피부에 닿았을때도 기분좋게 해줍니다.\n\n또한 사장님이 피부컨디션을 보고 상황에 맞게 마사지를 해 주셔서 마사지를 받고나면 얼굴붓기가 빠지고 얼굴골격이 살아나요. 또 전신마사지를 받으면 시원하고 편안해서 하루의 피로가 싹 사라지는 기분을 느낄 수 있어요.\n\n다른데 가지말고 이곳에 한번 더 가시는걸 추천합니다."
+        "relative_time": "2 years ago",
+        "text": "I like massage, so I've been looking for massage shops all over the place, but this massage shop keeps coming back to me, so I keep coming back to this magical massage shop.\n\nOnce you enter the store, you will be captivated by the bright, comfortable and clean atmosphere of the store, and the owner and employees will welcome you with a smile.\n\nThe interior of the shop is neat and tidy, and the massage gowns, blankets, and towels are made of good materials, have a nice scent, and have a soft texture that makes you feel good when they touch your skin.\n\nAlso, the owner checks your skin condition and gives you a massage according to the situation, so after receiving the massage, the facial swelling goes down and the facial structure is revived. Also, if you get a full body massage, you will feel cool and comfortable and the fatigue of the day will disappear.\n\nI recommend going here again rather than going anywhere else."
       }
     ],
     "photos": [
@@ -4529,8 +4529,8 @@
   },
   {
     "place_id": "ChIJ93Lp_PCifDUR9DRNMuOOBtk",
-    "display_name": "아디다스 오리지널스 명동 직영점",
-    "category": "스포츠 의류점",
+    "display_name": "Adidas Originals Myeongdong direct store",
+    "category": "sports clothing store",
     "types": [
       "sportswear_store",
       "sporting_goods_store",
@@ -4539,8 +4539,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동 명동8나길 20",
-    "short_address": "중구 명동 명동8나길 20",
+    "address": "20 Myeongdong 8na-gil, Myeong-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "20 Myeongdong 8na-gil, Myeong-dong, Jung-gu",
     "location": {
       "lat": 37.5614719,
       "lng": 126.9838934
@@ -4559,18 +4559,18 @@
     "google_maps_url": "https://maps.google.com/?cid=15638343862543267060",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2f0fce972f7:0xd9068ee3324d34f4!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 10:00",
-      "화요일: 오전 10:30 ~ 오후 10:00",
-      "수요일: 오전 10:30 ~ 오후 10:00",
-      "목요일: 오전 10:30 ~ 오후 10:00",
-      "금요일: 오전 10:30 ~ 오후 10:00",
-      "토요일: 오전 10:30 ~ 오후 10:00",
-      "일요일: 오전 10:30 ~ 오후 10:00"
+      "Monday: 10:30 AM - 10:00 PM",
+      "Tuesday: 10:30 AM - 10:00 PM",
+      "Wednesday: 10:30 AM - 10:00 PM",
+      "Thursday: 10:30 AM - 10:00 PM",
+      "Friday: 10:30 AM - 10:00 PM",
+      "Saturday: 10:30 AM - 10:00 PM",
+      "Sunday: 10:30 AM - 10:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4580,36 +4580,36 @@
         "author": "Hong",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "8달 전",
-        "text": "2025년 7월 21일 오후 7시에 아디다스 매장에 갔는데, 3층 서비스 직원들의 태도가 너무 안 좋았어요. 그 자리에서 계속 하품을 하더라고요. 제가 질문을 했더니 불만족스러운 답변을 하더군요. 한 명은 뚱뚱했고, 다른 한 명은 키가 작고 마른 편이었어요. 매장 직원에게 직원을 다시 확인해 달라고 요청해 주세요."
+        "relative_time": "8 months ago",
+        "text": "I went to the Adidas store at 7pm on July 21, 2025, and the attitude of the service staff on the 3rd floor was very bad. He kept yawning on the spot. I asked a question and the answer was unsatisfactory. One was fat, and the other was short and skinny. Please ask the store staff to double-check the staff."
       },
       {
-        "author": "정미선",
+        "author": "Jeong Mi-seon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "힙한 이벤트들과 다양한 재품라인들로 쇼핑하는데 지루함이 없어서 너무 좋아요!"
+        "relative_time": "1 year ago",
+        "text": "I love it because I never get bored while shopping with hip events and various product lines!"
       },
       {
-        "author": "최종노JN Choi",
+        "author": "Choi Jong-noJN Choi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "제품의 품질, 매장의 환경, 직원들의 서비스 태도등 관광객들에게 좋은 인상을 주네요. 전시장의 제품 디스플레이도 좋아요"
+        "relative_time": "2 years ago",
+        "text": "The quality of the products, the environment of the store, and the service attitude of the employees leave a good impression on tourists. I also like the product display in the exhibition hall."
       },
       {
         "author": "Space Odyssey",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
-        "text": "끔찍한 서비스, 무능한 직원을 해고하라고 요청합니다. 다시는 오지 않을 것입니다."
+        "relative_time": "1 year ago",
+        "text": "Terrible service, I ask them to fire incompetent staff. It will never come again."
       },
       {
-        "author": "유타",
+        "author": "Utah",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
-        "text": "최고입니다!\n또 다닐게요!"
+        "relative_time": "8 months ago",
+        "text": "It's the best!\nI'll go again!"
       }
     ],
     "photos": [
@@ -4628,7 +4628,7 @@
   {
     "place_id": "ChIJqyA3bACjfDURDNykxfwprbQ",
     "display_name": "光カバン",
-    "category": "여성의류점",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "point_of_interest",
@@ -4636,8 +4636,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동 명동8나길 19",
-    "short_address": "중구 명동 명동8나길 19",
+    "address": "19 Myeongdong 8na-gil, Myeong-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "19 Myeongdong 8na-gil, Myeong-dong, Jung-gu",
     "location": {
       "lat": 37.561350999999995,
       "lng": 126.98382600000001
@@ -4658,8 +4658,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4671,16 +4671,16 @@
   },
   {
     "place_id": "ChIJNdl9_PCifDURoB9YrEsiVAw",
-    "display_name": "희진부띠크",
-    "category": "의류점",
+    "display_name": "Heejin Boutique",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로1가 22-4번지",
-    "short_address": "중구 충무로1가 22-4번지",
+    "address": "22-4 Chungmuro 1-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "22-4 Chungmuro 1-ga, Jung-gu",
     "location": {
       "lat": 37.561532,
       "lng": 126.9839696
@@ -4701,8 +4701,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4711,16 +4711,16 @@
   },
   {
     "place_id": "ChIJf3DtYPCifDURac9yO719M84",
-    "display_name": "토니모리 명동2호점",
-    "category": "화장품 판매점",
+    "display_name": "Tony Moly Myeongdong 2nd branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동4길 30",
-    "short_address": "중구 명동4길 30",
+    "address": "30 Myeongdong 4-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "30 Myeongdong 4-gil, Jung-gu",
     "location": {
       "lat": 37.5623603,
       "lng": 126.98384250000001
@@ -4739,18 +4739,18 @@
     "google_maps_url": "https://maps.google.com/?cid=14858357847325069161",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2f060ed707f:0xce337dbd3b72cf69!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 9:00",
-      "화요일: 오전 10:00 ~ 오후 9:00",
-      "수요일: 오전 10:00 ~ 오후 9:00",
-      "목요일: 오전 10:00 ~ 오후 9:00",
-      "금요일: 오전 10:00 ~ 오후 9:00",
-      "토요일: 오전 10:00 ~ 오후 9:00",
-      "일요일: 오전 10:00 ~ 오후 9:00"
+      "Monday: 10:00 AM - 9:00 PM",
+      "Tuesday: 10:00 AM - 9:00 PM",
+      "Wednesday: 10:00 AM - 9:00 PM",
+      "Thursday: 10:00 AM - 9:00 PM",
+      "Friday: 10:00 AM - 9:00 PM",
+      "Saturday: 10:00 AM - 9:00 PM",
+      "Sunday: 10:00 AM - 9:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4760,14 +4760,14 @@
         "author": "Gwyneth Morrow",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "11달 전",
-        "text": "제가 직원들에게 화장품이 항공사 기내 반입 규정에 맞는지 물어봤을 때, 그들은 솔직하게 대답하지 않았습니다. 이제 집에 가기 전에 네 번의 비행 동안 짐을 부쳐야 하거나, 100달러어치 화장품을 버려야 할 것 같습니다. 너무 속상하네요."
+        "relative_time": "11 months ago",
+        "text": "When I asked the staff whether cosmetics fit the airline's carry-on regulations, they didn't give me an honest answer. Now I feel like I have to check my luggage for four flights or throw away $100 worth of makeup before I get home. I'm so upset."
       },
       {
         "author": "Alejandra Style",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       }
     ],
@@ -4775,8 +4775,8 @@
   },
   {
     "place_id": "ChIJF7cJrVijfDUR0iDtu47TFgU",
-    "display_name": "명동타운레디영약국 (Myeongdong Town Ready Young Pharmacy)",
-    "category": "약국",
+    "display_name": "Myeongdong Town Ready Young Pharmacy",
+    "category": "pharmacy",
     "types": [
       "pharmacy",
       "cosmetics_store",
@@ -4785,8 +4785,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동8가길 31 1층",
-    "short_address": "중구 명동8가길 31 1층",
+    "address": "1st floor, 31 Myeongdong 8ga-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "1st floor, 31 Myeongdong 8ga-gil, Jung-gu",
     "location": {
       "lat": 37.5618039,
       "lng": 126.9868429
@@ -4805,57 +4805,57 @@
     "google_maps_url": "https://maps.google.com/?cid=366713029668970706",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca358ad09b717:0x516d38ebbed20d2!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오전 12:30",
-      "화요일: 오전 10:00 ~ 오전 12:30",
-      "수요일: 오전 10:00 ~ 오전 12:30",
-      "목요일: 오전 10:00 ~ 오전 12:30",
-      "금요일: 오전 10:00 ~ 오전 12:30",
-      "토요일: 오전 10:00 ~ 오전 12:30",
-      "일요일: 오전 10:00 ~ 오전 12:30"
+      "Monday: 10:00 AM - 12:30 AM",
+      "Tuesday: 10:00 AM - 12:30 AM",
+      "Wednesday: 10:00 AM - 12:30 AM",
+      "Thursday: 10:00 AM - 12:30 AM",
+      "Friday: 10:00 AM - 12:30 AM",
+      "Saturday: 10:00 AM - 12:30 AM",
+      "Sunday: 10:00 AM - 12:30 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "딸기",
+        "author": "strawberry",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "약 종류도 많고, 약사님들이 상세하게 응대도 잘해주셔서 편하게 약 구매했습니다!😊"
+        "relative_time": "2 months ago",
+        "text": "There were many types of medicines, and the pharmacists were good at providing detailed information, so I was able to purchase medicines with ease!😊"
       },
       {
         "author": "Edward Kang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "스킨 케어 관련된 제품들이 기능별로 다양하게 있어서 너무 좋았어요."
+        "relative_time": "2 months ago",
+        "text": "I really liked the variety of skin care products with different functions."
       },
       {
         "author": "Edward Kang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "명동레디영약국 짱이에요. 기능별로 품종이 다 있고 직원분들도 너무 친절하세요. 한국 가면 꼭 다시 가고 싶어요."
+        "relative_time": "3 months ago",
+        "text": "Myeongdong Ready Young Pharmacy is the best. There are varieties for each function and the staff is very friendly. When I go to Korea, I definitely want to go back."
       },
       {
-        "author": "현석",
+        "author": "Hyeonseok",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "직원분들이 친절하고, 설명을 자세하게 해주세요!"
+        "relative_time": "2 months ago",
+        "text": "The staff are friendly and give detailed explanations!"
       },
       {
-        "author": "김서경",
+        "author": "Kim Seo-kyung",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "다양한 약과 화장품이 있고, 직원분들이 친절하게 안내해주셔서 원하는 물품을 찾기 좋아요!\n피부 측정기가 있고, 피부에 맞는 화장품 추천도 받을 수 있어요~"
+        "relative_time": "2 months ago",
+        "text": "There are a variety of medicines and cosmetics, and the friendly staff guides you so you can find what you want!\nThere is a skin tester and you can also receive recommendations for cosmetics that suit your skin type."
       }
     ],
     "photos": [
@@ -4873,16 +4873,16 @@
   },
   {
     "place_id": "ChIJAYutm_qifDURn5bLWWDEyxU",
-    "display_name": "로얄가죽전문점",
-    "category": "의류점",
+    "display_name": "Royal leather specialty store",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로2가 62-1",
-    "short_address": "중구 충무로2가 62-1",
+    "address": "62-1 Chungmuro 2-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "62-1 Chungmuro 2-ga, Jung-gu",
     "location": {
       "lat": 37.561674499999995,
       "lng": 126.9868299
@@ -4903,8 +4903,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4914,15 +4914,15 @@
   {
     "place_id": "ChIJj0fHTmyjfDURxd0C1CSMluI",
     "display_name": "SpaceH Myeongdong",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동8가길 28 스페이스 H",
-    "short_address": "중구 명동8가길 28 스페이스 H",
+    "address": "Space H, 28 Myeongdong 8ga-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "Space H, 28 Myeongdong 8ga-gil, Jung-gu",
     "location": {
       "lat": 37.5615971,
       "lng": 126.98655489999999
@@ -4941,18 +4941,18 @@
     "google_maps_url": "https://maps.google.com/?cid=16327391588881980869",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca36c4ec7478f:0xe2968c24d402ddc5!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 9:00",
-      "화요일: 오전 10:00 ~ 오후 9:00",
-      "수요일: 오전 10:00 ~ 오후 9:00",
-      "목요일: 오전 10:00 ~ 오후 9:00",
-      "금요일: 오전 10:00 ~ 오후 9:00",
-      "토요일: 오전 10:00 ~ 오후 9:00",
-      "일요일: 오전 10:00 ~ 오후 9:00"
+      "Monday: 10:00 AM - 9:00 PM",
+      "Tuesday: 10:00 AM - 9:00 PM",
+      "Wednesday: 10:00 AM - 9:00 PM",
+      "Thursday: 10:00 AM - 9:00 PM",
+      "Friday: 10:00 AM - 9:00 PM",
+      "Saturday: 10:00 AM - 9:00 PM",
+      "Sunday: 10:00 AM - 9:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4973,15 +4973,15 @@
   {
     "place_id": "ChIJczRd5vGifDURB4s54cZkc70",
     "display_name": "HAZZYS Flagship Store Space H SEOUL",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동8가길 28",
-    "short_address": "중구 명동8가길 28",
+    "address": "28 Myeongdong 8ga-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "28 Myeongdong 8ga-gil, Jung-gu",
     "location": {
       "lat": 37.5615971,
       "lng": 126.98655489999999
@@ -5000,22 +5000,22 @@
     "google_maps_url": "https://maps.google.com/?cid=13651365700835052295",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2f1e65d3473:0xbd7364c6e1398b07!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 8:00",
-      "화요일: 오전 10:30 ~ 오후 8:00",
-      "수요일: 오전 10:30 ~ 오후 8:00",
-      "목요일: 오전 10:30 ~ 오후 8:00",
-      "금요일: 오전 10:30 ~ 오후 8:00",
-      "토요일: 오전 10:30 ~ 오후 8:00",
-      "일요일: 오전 11:00 ~ 오후 9:00"
+      "Monday: 10:30 AM - 8:00 PM",
+      "Tuesday: 10:30 AM - 8:00 PM",
+      "Wednesday: 10:30 AM - 8:00 PM",
+      "Thursday: 10:30 AM - 8:00 PM",
+      "Friday: 10:30 AM - 8:00 PM",
+      "Saturday: 10:30 AM - 8:00 PM",
+      "Sunday: 11:00 AM - 9:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
@@ -5023,15 +5023,15 @@
         "author": "Khách sạn Tân An Palace Hải Phòng",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "이 패션 매장은 Hazzys 브랜드의 고급 국내 생산 한국 패션 제품을 전문적으로 판매합니다. 프로모션 프로그램이 많지 않아 가격대가 비교적 높은 편입니다."
+        "relative_time": "1 year ago",
+        "text": "This fashion store specializes in selling high-end, domestically produced Korean fashion products under the Hazzys brand. There aren't many promotional programs, so the prices are relatively high."
       },
       {
         "author": "江澤岳",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "직원들은 정말 친절했고, 저희에게 멋진 하루를 선사해 주었으며, 다른 직원들에게도 따뜻한 미소를 보내주었습니다. 정말 최고였습니다!"
+        "relative_time": "2 years ago",
+        "text": "The staff were really friendly, made us have a wonderful day, and sent warm smiles to the other staff members as well. It was really great!"
       }
     ],
     "photos": [
@@ -5041,8 +5041,8 @@
   },
   {
     "place_id": "ChIJqTlnnvqifDUR6kK3lb-4cOw",
-    "display_name": "엘모드",
-    "category": "의류점",
+    "display_name": "el mode",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "service",
@@ -5050,8 +5050,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로2가 11-1",
-    "short_address": "중구 충무로2가 11-1",
+    "address": "11-1, Chungmuro 2-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "11-1 Chungmuro 2-ga, Jung-gu",
     "location": {
       "lat": 37.5618939,
       "lng": 126.98643890000001
@@ -5071,7 +5071,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2fa9e6739a9:0xec70b8bf95b742ea!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -5082,7 +5082,7 @@
   {
     "place_id": "ChIJRSuq_0qifDURGIbmBAAUVUM",
     "display_name": "YH.KIM",
-    "category": "상점",
+    "category": "store",
     "types": [
       "womens_clothing_store",
       "supplier",
@@ -5093,8 +5093,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 Seoul, Jung District, Myeongdong 8ga-gil, ４７ 2F Dongyang B/D",
-    "short_address": "중구 명동8가길 ４７ Dongyang B/D 2F",
+    "address": "South Korea Seoul, Jung District, Myeongdong 8ga-gil, ４７ 2F Dongyang B/D",
+    "short_address": "47 Dongyang B/D 2F, Myeongdong 8ga-gil, Jung-gu",
     "location": {
       "lat": 37.5618816,
       "lng": 126.98755170000001
@@ -5113,20 +5113,20 @@
     "google_maps_url": "https://maps.google.com/?cid=4851806163876349464",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca24affaa2b45:0x4355140004e68618!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:30 ~ 오후 6:30",
-      "화요일: 오전 9:30 ~ 오후 6:30",
-      "수요일: 오전 9:30 ~ 오후 6:30",
-      "목요일: 오전 9:30 ~ 오후 6:30",
-      "금요일: 오전 9:30 ~ 오후 6:30",
-      "토요일: 오전 9:30 ~ 오후 6:30",
-      "일요일: 오전 9:30 ~ 오후 6:30"
+      "Monday: 9:30 AM - 6:30 PM",
+      "Tuesday: 9:30 AM - 6:30 PM",
+      "Wednesday: 9:30 AM - 6:30 PM",
+      "Thursday: 9:30 AM - 6:30 PM",
+      "Friday: 9:30 AM - 6:30 PM",
+      "Saturday: 9:30 AM - 6:30 PM",
+      "Sunday: 9:30 AM - 6:30 PM"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5136,36 +5136,36 @@
         "author": "Brandon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "한동안 가죽 재킷을 찾아 헤매다가 서울에 있는 동안 이 매장에 들렀습니다. 매장에서 제 몸에 맞는 맞춤 재킷을 제작했고, 미국 집으로 배송받았습니다. 제작 솜씨와 소재 모두 훌륭하고, 재킷도 제 몸에 완벽하게 맞습니다. 정말 만족스러운 구매였습니다!"
+        "relative_time": "1 year ago",
+        "text": "I had been looking for a leather jacket for a while and stopped by this store while I was in Seoul. The store made a custom jacket that fit my body and had it delivered to my home in the US. The workmanship and material are both excellent, and the jacket fits my body perfectly. It was a truly satisfying purchase!"
       },
       {
         "author": "Anna Miles",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "아름다운 장인정신이 돋보이는 멋진 가게입니다. 사장님께서 정말 친절하고 도움을 많이 주시며, 매너도 좋으세요."
+        "relative_time": "5 months ago",
+        "text": "This is a wonderful store with beautiful craftsmanship. The owner is really kind and helpful, and has good manners."
       },
       {
         "author": "ボスボス",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "2년 전",
-        "text": "명동 안에서 몇번이나 이전하고 있어 갔을 때는 노면 점포의 2층에서 영업하고 있었습니다.\n재킷을 원했지만 처음부터 매우 비싼 것을 추천했습니다.\n조금이라도 비싼 물건을 팔고 싶습니다.\n코로나 이전과 가게의 분위기가 바뀌어 버렸습니다.\n좋은 물건을 두고 있는데 유감입니다.결국 조금 싼 재킷을 구입했습니다만, 물건은 좋다고 생각합니다."
+        "relative_time": "2 years ago",
+        "text": "It has moved several times within Myeong-dong, and when I went there, it was operating on the second floor of the street store.\nI wanted a jacket but they recommended a very expensive one from the beginning.\nI want to sell something that is even a little more expensive.\nThe atmosphere of the store has changed since before the coronavirus.\nI'm sorry because I have a good product. In the end, I bought a slightly cheaper jacket, but I think the product is good."
       },
       {
         "author": "T S.たか",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": "2018年10月にIKKOさんが訪れた革製品等のお店。\n店長さんはとても気さくな人で日本語もペラペラです。商品も値下げ品も多く、オーダーメイドでも作ってもらえます。\n女性従業員の方達も日本語が話せるし、とても優しいですよ。\n世宗ホテルの真裏にあるので、明洞に行った時は是非寄ってみて下さい。\nまた日本のサイトも立ち上げてオーダーメイドの製品も販売するそうなので、皮ジャンが欲しい方は日本より安く手に入るので是非1度でもサイト並びに店舗へ足を運んでみてはいかがでしょうか。私のお気に入りのお店です。"
       },
       {
         "author": "Dans库",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8년 전",
-        "text": "정기적으로 할인이 제공됩니다."
+        "relative_time": "8 years ago",
+        "text": "Discounts are offered regularly."
       }
     ],
     "photos": [
@@ -5183,16 +5183,16 @@
   },
   {
     "place_id": "ChIJVdwhg_qifDUR5qaZfsl0Ogw",
-    "display_name": "(주)한섬",
-    "category": "의류점",
+    "display_name": "Handsome Co., Ltd.",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로2가 63-1",
-    "short_address": "중구 충무로2가 63-1",
+    "address": "63-1 Chungmuro 2-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "63-1 Chungmuro 2-ga, Jung-gu",
     "location": {
       "lat": 37.5615667,
       "lng": 126.98653730000001
@@ -5213,8 +5213,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5223,16 +5223,16 @@
   },
   {
     "place_id": "ChIJcfjthPqifDURKjniUyLx73M",
-    "display_name": "컨셉원",
-    "category": "의류점",
+    "display_name": "Concept One",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로2가",
-    "short_address": "중구 충무로2가",
+    "address": "Chungmuro 2-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "Chungmuro 2-ga, Jung-gu",
     "location": {
       "lat": 37.561405,
       "lng": 126.98677989999999
@@ -5251,18 +5251,18 @@
     "google_maps_url": "https://maps.google.com/?cid=8354160963534076202",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2fa84edf871:0x73eff12253e2392a!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 9:00",
-      "화요일: 오전 10:30 ~ 오후 9:00",
-      "수요일: 오전 10:30 ~ 오후 9:00",
-      "목요일: 오전 10:30 ~ 오후 9:00",
-      "금요일: 오전 10:30 ~ 오후 9:00",
-      "토요일: 오전 10:30 ~ 오후 9:00",
-      "일요일: 오전 10:30 ~ 오후 9:00"
+      "Monday: 10:30 AM - 9:00 PM",
+      "Tuesday: 10:30 AM - 9:00 PM",
+      "Wednesday: 10:30 AM - 9:00 PM",
+      "Thursday: 10:30 AM - 9:00 PM",
+      "Friday: 10:30 AM - 9:00 PM",
+      "Saturday: 10:30 AM - 9:00 PM",
+      "Sunday: 10:30 AM - 9:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5272,16 +5272,16 @@
         "author": "Yangjin Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9년 전",
-        "text": "좋습니다"
+        "relative_time": "9 years ago",
+        "text": "good"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJsbmShPqifDURghNBG5uTObk",
-    "display_name": "희림의상실",
-    "category": "의류점",
+    "display_name": "Heerim’s loss room",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "service",
@@ -5289,8 +5289,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로2가",
-    "short_address": "중구 충무로2가",
+    "address": "Chungmuro 2-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "Chungmuro 2-ga, Jung-gu",
     "location": {
       "lat": 37.561405,
       "lng": 126.98677989999999
@@ -5318,8 +5318,8 @@
   },
   {
     "place_id": "ChIJcfjthPqifDUR7ccoluP7vGI",
-    "display_name": "퀵실버록시코리아",
-    "category": "스포츠 의류점",
+    "display_name": "Quicksilver Roxy Korea",
+    "category": "sports clothing store",
     "types": [
       "sportswear_store",
       "sporting_goods_store",
@@ -5328,8 +5328,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로2가",
-    "short_address": "중구 충무로2가",
+    "address": "Chungmuro 2-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "Chungmuro 2-ga, Jung-gu",
     "location": {
       "lat": 37.561405,
       "lng": 126.98677989999999
@@ -5350,8 +5350,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5360,16 +5360,16 @@
   },
   {
     "place_id": "ChIJRxkjv_qifDURa_50t6gz55U",
-    "display_name": "한양스포츠",
-    "category": "의류점",
+    "display_name": "Hanyang Sports",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로2가",
-    "short_address": "중구 충무로2가",
+    "address": "Chungmuro 2-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "Chungmuro 2-ga, Jung-gu",
     "location": {
       "lat": 37.5620355,
       "lng": 126.9875521
@@ -5390,8 +5390,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5400,8 +5400,8 @@
   },
   {
     "place_id": "ChIJN_EqfGWjfDURYu2JCTBqn_s",
-    "display_name": "아크메드라비 명동쇼룸 | Clothing Store ACME DE LA VIE Myeongdong ShowRoom | 服屋 | 衣服店",
-    "category": "의류점",
+    "display_name": "Acme de la Vie Myeongdong Showroom | Clothing Store ACME DE LA VIE Myeongdong ShowRoom | 服屋 | clothing store",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "womens_clothing_store",
@@ -5409,8 +5409,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동8가길 26 1층",
-    "short_address": "중구 명동8가길 26 1층",
+    "address": "1st floor, 26 Myeongdong 8ga-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "1st floor, 26 Myeongdong 8ga-gil, Jung-gu",
     "location": {
       "lat": 37.5615975,
       "lng": 126.98645210000001
@@ -5429,25 +5429,25 @@
     "google_maps_url": "https://maps.google.com/?cid=18131327379367914850",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3657c2af137:0xfb9f6a300989ed62!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 10:30",
-      "화요일: 오전 11:00 ~ 오후 10:30",
-      "수요일: 오전 11:00 ~ 오후 10:30",
-      "목요일: 오전 11:00 ~ 오후 10:30",
-      "금요일: 오전 11:00 ~ 오후 10:30",
-      "토요일: 오전 11:00 ~ 오후 10:30",
-      "일요일: 오전 11:00 ~ 오후 10:30"
+      "Monday: 11:00 AM - 10:30 PM",
+      "Tuesday: 11:00 AM - 10:30 PM",
+      "Wednesday: 11:00 AM - 10:30 PM",
+      "Thursday: 11:00 AM - 10:30 PM",
+      "Friday: 11:00 AM - 10:30 PM",
+      "Saturday: 11:00 AM - 10:30 PM",
+      "Sunday: 11:00 AM - 10:30 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -5455,36 +5455,36 @@
         "author": "Dk",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "매장이 이쁘고, 직원들이 친절합니다.\n명동을 온다면 다시 한번 방문하고싶은 매장입니다!"
+        "relative_time": "2 months ago",
+        "text": "The store is pretty and the staff are friendly.\nThis is a store I want to visit again if I come to Myeongdong!"
       },
       {
         "author": "Estelle Tan",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "훌륭한 서비스 경험이었습니다. 직원분들이 매우 친절하고 도움이 많이 되었어요. 진행 중인 프로모션 정보도 알려주시고, 사이즈와 제품 선택에도 도움을 주셨습니다. 정말 감사합니다!"
+        "relative_time": "1 month ago",
+        "text": "It was a great service experience. The staff were very friendly and helpful. They provided us with information about ongoing promotions and helped us select sizes and products. thank you!"
       },
       {
         "author": "李锦珍",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "이 가게는 독특하고 참신한 스타일을 가지고 있으며, 서비스는 훌륭하고, 직원은 아름답고 친절합니다."
+        "relative_time": "2 months ago",
+        "text": "This store has a unique and novel style, the service is excellent, and the staff are beautiful and friendly."
       },
       {
         "author": "LIVERPOOLYNWA",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "아크메 드 라 비(ADLV)가 명동에 매장을 오픈했어요!\n스트릿 브랜드인데도 귀엽고 예쁜 아이템들이 정말 많았어요.\n너무 예쁜 옷들이 가득하네요! ✨"
+        "relative_time": "2 months ago",
+        "text": "Acme de la Vie (ADLV) has opened a store in Myeongdong!\nEven though it is a street brand, there were so many cute and pretty items.\nThere are so many pretty clothes! ✨"
       },
       {
         "author": "Lance Goh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "이 브랜드 제품을 처음 구매해봤는데, 품질도 훌륭하고 서비스도 최고였고 직원분들도 친절했어요."
+        "relative_time": "1 month ago",
+        "text": "This was my first time purchasing a product from this brand, and the quality was great, the service was the best, and the staff were friendly."
       }
     ],
     "photos": [
@@ -5502,16 +5502,16 @@
   },
   {
     "place_id": "ChIJLbPFk_qifDURUpOA9y8QYt0",
-    "display_name": "(주)면세점월드",
-    "category": "화장품 판매점",
+    "display_name": "Duty Free World Co., Ltd.",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 충무로2가 62-3번지 401호 뉴서울빌딩 중구 서울특별시 KR",
-    "short_address": "충무로2가 62-3번지 401호 뉴서울빌딩 중구 서울특별시 KR",
+    "address": "#401, New Seoul Building, 62-3 Chungmuro 2-ga, Seoul, Republic of Korea, Jung-gu, Seoul KR",
+    "short_address": "#401, 62-3 Chungmuro 2-ga, New Seoul Building, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.561475,
       "lng": 126.98740439999999
@@ -5532,8 +5532,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5542,16 +5542,16 @@
   },
   {
     "place_id": "ChIJUwfw5_aifDURw1SSAS5HV9U",
-    "display_name": "라빠레뜨 명동점",
-    "category": "화장품 판매점",
+    "display_name": "Laparette Myeongdong Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로2가 10",
-    "short_address": "중구 충무로2가 10",
+    "address": "10 Chungmuro 2-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "10 Chungmuro 2-ga, Jung-gu",
     "location": {
       "lat": 37.5618373,
       "lng": 126.98624960000001
@@ -5576,39 +5576,39 @@
     "parking": null,
     "reviews": [
       {
-        "author": "강덕현",
+        "author": "Deokhyeon Kang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "한때 유니콘 모양이 달려있는 가방으로 유명\n고가형은 아닌 중저가형 브랜드의 이미지가 있는데요.\n내부 이미지는 깔끔하고 예쁘구여 매물은 적당합니다.\n앞에 할인하는 가격으로 물건을 팔고있음을 강조합니다만,\n\n역시나 예쁜건 비싸죠 20만원선에서 고를거라면\n전 백화점에서 사려고 할것 같습니다.\n\n20대 초반 여성분들에게 선물 할때 고민해보시면 나쁘지 않겠습니다.."
+        "relative_time": "6 years ago",
+        "text": "It was once famous for its unicorn-shaped bag.\nIt has the image of a mid- to low-priced brand, not a high-priced one.\nThe interior image is clean and pretty, and the listing is reasonable.\nWe emphasize that we are selling products at discounted prices,\n\nOf course, pretty things are expensive. If you choose around 200,000 won,\nI think I'll try to buy it at a department store.\n\nIt wouldn't be a bad idea to think about it when giving gifts to women in their early 20s."
       },
       {
         "author": "Joe Wang",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "2년 전",
-        "text": "건물은 텅 비어 있고 주변에는 사람도 없습니다."
+        "relative_time": "2 years ago",
+        "text": "The building is empty and there are no people around."
       },
       {
         "author": "J. R. M.",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
-        "text": "직원들이 정말 친절했어요. 전혀 거만하지 않았어요! 가방 가격도 적당했어요."
+        "relative_time": "8 years ago",
+        "text": "The staff were really friendly. He wasn't arrogant at all! The price of the bag was reasonable."
       },
       {
         "author": "Lora Hataki",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
-        "text": "라팔렛 뷰티샵에서 이 크림 샀어요.. 정말 좋아요..\n*케이뷰티 써보세요*"
+        "relative_time": "8 years ago",
+        "text": "I bought this cream at Lapalette Beauty Shop.. It’s really good..\n*Try K Beauty*"
       },
       {
         "author": "Natalya Zaytseva",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "가죽 가방치고는 가격 대비 성능이 좋습니다."
+        "relative_time": "7 years ago",
+        "text": "For a leather bag, it has good value for money."
       }
     ],
     "photos": [
@@ -5624,15 +5624,15 @@
   {
     "place_id": "ChIJm83B0yejfDURtnewOanAGGc",
     "display_name": "raw end vintage",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 명동8가길 19",
-    "short_address": "중구 명동8가길 19",
+    "address": "19 Myeongdong 8ga-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "19 Myeongdong 8ga-gil, Jung-gu",
     "location": {
       "lat": 37.561800399999996,
       "lng": 126.98614599999999
@@ -5651,18 +5651,18 @@
     "google_maps_url": "https://maps.google.com/?cid=7428899418397505462",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca327d3c1cd9b:0x6718c0a939b077b6!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 11:30",
-      "화요일: 오전 9:00 ~ 오후 11:30",
-      "수요일: 오전 9:00 ~ 오후 11:30",
-      "목요일: 오전 9:00 ~ 오후 11:30",
-      "금요일: 오전 9:00 ~ 오후 11:30",
-      "토요일: 오전 9:00 ~ 오후 11:30",
-      "일요일: 오전 9:00 ~ 오후 11:30"
+      "Monday: 9:00 AM - 11:30 PM",
+      "Tuesday: 9:00 AM - 11:30 PM",
+      "Wednesday: 9:00 AM - 11:30 PM",
+      "Thursday: 9:00 AM - 11:30 PM",
+      "Friday: 9:00 AM - 11:30 PM",
+      "Saturday: 9:00 AM - 11:30 PM",
+      "Sunday: 9:00 AM - 11:30 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5671,36 +5671,36 @@
         "author": "Kai Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1주 전",
-        "text": "명동역 의류점 로우앤빈티지\n가게 규모와 옷 분류, 정리가 인상적인 빈티지&아카이브 상점. 아무래도 관광지이며 대로변 월세 높은 자리이다보니 가격이 전반적으로 평균을 상회하는 느낌이었다. 가게를 돌아다니다보면 아카이브성 피스와 흥미로운 오브제도 구경할 수 있어서 재미있음."
+        "relative_time": "1 week ago",
+        "text": "Myeongdong Station clothing store Low&Vintage\nA vintage and archive store with impressive store size, clothing classification, and organization. Since it is a tourist destination and a place with high monthly rent on the main street, the overall price felt above average. It's fun to walk around the store and see archival pieces and interesting objects."
       },
       {
         "author": "Trân",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "어제 근처 식당에서 저녁 먹고 명동을 걷다가 이 가게를 발견했어요.\n\n안으로 들어가니 괜찮은 물건들이 많고 가격도 비싼 편이었어요 ㅠㅠ 그래도 분위기랑 인테리어는 정말 좋았어요.\n\n쇼핑할 시간이 부족해서 다음에 꼭 다시 올게요."
+        "relative_time": "4 months ago",
+        "text": "I found this store yesterday while walking around Myeongdong after having dinner at a nearby restaurant.\n\nWhen I went inside, there were a lot of good items and the prices were expensive. But the atmosphere and interior were really nice.\n\nI don't have enough time to shop, so I'll definitely come back next time."
       },
       {
-        "author": "오재민",
+        "author": "Jaemin Oh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "멋진 인테리어와 고품질 의류를 갖춘 아름다운 빈티지 숍입니다.\n다양한 상품과 넓은 매장, 그리고 매우 친절한 직원들이 있습니다. 강력 추천합니다! 🫶🏻"
+        "relative_time": "3 months ago",
+        "text": "This is a beautiful vintage shop with a nice interior and high quality clothing.\nThere is a wide range of products, a spacious store, and very friendly staff. Highly recommended! 🫶🏻"
       },
       {
         "author": "Two_two",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "매장 분위기가 너무 좋아요. 독특한 상품들이 많아서 쇼핑하기에도 최고예요! 처음 보는 옷들도 많았어요. 최대 40% 할인까지 하니 더 좋네요."
+        "relative_time": "3 months ago",
+        "text": "I really like the atmosphere of the store. It’s the best place for shopping because there are so many unique products! There were many clothes I had never seen before. It's even better because it's up to 40% off."
       },
       {
         "author": "Shuang Qi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "정말 좋은 가게예요, 품질도 훌륭해서 한 번에 세 개나 샀어요! 앞으로 더 다양하고 질 좋은 옷들이 많이 들어왔으면 좋겠어요."
+        "relative_time": "1 month ago",
+        "text": "It's a really good store, the quality is great and I bought three at once! I hope that more diverse and high-quality clothes will be introduced in the future."
       }
     ],
     "photos": [
@@ -5718,16 +5718,16 @@
   },
   {
     "place_id": "ChIJNWhJwfqifDURZeGYoHPsJQk",
-    "display_name": "다희패션",
-    "category": "의류점",
+    "display_name": "Dahee Fashion",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로2가 12-8",
-    "short_address": "중구 충무로2가 12-8",
+    "address": "12-8, Chungmuro 2-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "12-8 Chungmuro 2-ga, Jung-gu",
     "location": {
       "lat": 37.5619522,
       "lng": 126.9879409
@@ -5748,8 +5748,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5758,7 +5758,7 @@
         "author": "Dalsick",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "13년 전",
+        "relative_time": "13 years ago",
         "text": null
       }
     ],
@@ -5766,16 +5766,16 @@
   },
   {
     "place_id": "ChIJnZfVgfqifDURma9VKFbqvLc",
-    "display_name": "나드리헤르본",
-    "category": "화장품 판매점",
+    "display_name": "Nadriherbon",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로2가 64-5",
-    "short_address": "중구 충무로2가 64-5",
+    "address": "64-5 Chungmuro 2-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "64-5 Chungmuro 2-ga, Jung-gu",
     "location": {
       "lat": 37.561227599999995,
       "lng": 126.98628719999998
@@ -5796,8 +5796,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5806,16 +5806,16 @@
   },
   {
     "place_id": "ChIJ31ZqTR6jfDURbYN81lDPNfU",
-    "display_name": "ABC마트 ST 명동3가점",
-    "category": "신발 판매점",
+    "display_name": "ABC Mart ST Myeongdong 3-ga branch",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 충무로2가 명동10길 41",
-    "short_address": "중구 충무로2가 명동10길 41",
+    "address": "41 Myeongdong 10-gil, Chungmuro 2-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "41 Myeongdong 10-gil, Chungmuro 2-ga, Jung-gu",
     "location": {
       "lat": 37.562016799999995,
       "lng": 126.9859052
@@ -5834,20 +5834,20 @@
     "google_maps_url": "https://maps.google.com/?cid=17669256659160826733",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca31e4d6a56df:0xf535cf50d67c836d!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 9:30",
-      "화요일: 오전 10:00 ~ 오후 9:30",
-      "수요일: 오전 10:00 ~ 오후 9:30",
-      "목요일: 오전 10:00 ~ 오후 9:30",
-      "금요일: 오전 10:00 ~ 오후 9:30",
-      "토요일: 오전 10:00 ~ 오후 9:30",
-      "일요일: 오전 10:00 ~ 오후 9:30"
+      "Monday: 10:00 AM - 9:30 PM",
+      "Tuesday: 10:00 AM - 9:30 PM",
+      "Wednesday: 10:00 AM - 9:30 PM",
+      "Thursday: 10:00 AM - 9:30 PM",
+      "Friday: 10:00 AM - 9:30 PM",
+      "Saturday: 10:00 AM - 9:30 PM",
+      "Sunday: 10:00 AM - 9:30 PM"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5857,36 +5857,36 @@
         "author": "Thị Hải Yến Vũ",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "2년 전",
-        "text": "여자 직원은 친절하지 않나요.마음에 안 들어요.발근했어요.🤬"
+        "relative_time": "2 years ago",
+        "text": "Isn’t the female staff friendly? I don’t like it. I rooted it.🤬"
       },
       {
-        "author": "나니",
+        "author": "Nani",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "예쁜 신발이 많고 직원분들께서 친절하게 응대해주십니다!"
+        "relative_time": "2 years ago",
+        "text": "There are a lot of pretty shoes and the staff is friendly!"
       },
       {
         "author": "Anthony Marijnissen",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "명동 ABC마트에서 아디다스와 뉴발란스 신발을 샀어요. 품질도 좋고 가격도 놀라울 정도로 저렴했어요. 유럽이랑 비교하면 최소 35%는 싸더라고요. 서울에 오시면 꼭 한번 들러보세요!\n\n여행 팁 더 보고 싶으시면 틱톡 @anthonyenstef 팔로우해주세요!"
+        "relative_time": "7 months ago",
+        "text": "I bought Adidas and New Balance shoes at ABC Mart in Myeongdong. The quality was good and the price was surprisingly cheap. Compared to Europe, it was at least 35% cheaper. If you come to Seoul, be sure to stop by!\n\nIf you want more travel tips, follow @anthonyenstef on TikTok!"
       },
       {
         "author": "食事のゆー",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3달 전",
-        "text": "명동의 한가운데의 점포입니다(*^^*)"
+        "relative_time": "3 months ago",
+        "text": "It is a store in the middle of Myeong-dong (*^^*)"
       },
       {
         "author": "Wilson",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "8달 전",
-        "text": "와, 여기 리뷰들을 읽어보니 저도 거의 전적으로 동감합니다. 직원들이 열정적이지는 않았지만, 솔직히 말해서 예의 바르고 기꺼이 도와주려고 했습니다.\n\n관광객들을 위해 땀 흘려 일하는 직원들의 노고를 생각하면, 정신적으로 얼마나 힘들겠어요. 그래서 거만한 사람들을 상대해야 하는 것도 이해가 갑니다."
+        "relative_time": "8 months ago",
+        "text": "Wow, after reading the reviews here, I almost completely agree. The staff weren't very enthusiastic, but to be honest, they were polite and willing to help.\n\nWhen you think about the hard work of the employees who work hard for the tourists, how mentally difficult it must be. So it’s understandable that we have to deal with arrogant people."
       }
     ],
     "photos": [

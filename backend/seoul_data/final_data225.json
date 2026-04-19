@@ -1,15 +1,15 @@
 [
   {
     "place_id": "ChIJSbOvXwCjfDURLbr-e7GlNts",
-    "display_name": "포유어아이즈온리 한남쇼룸",
-    "category": "쇼핑몰",
+    "display_name": "For Your Eyes Only Hannam Showroom",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 한남동 683-122",
-    "short_address": "용산구 한남동 683-122",
+    "address": "683-122 Hannam-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "683-122 Hannam-dong, Yongsan-gu",
     "location": {
       "lat": 37.535613,
       "lng": 126.9994726
@@ -38,14 +38,14 @@
   {
     "place_id": "ChIJMbmBlp-jfDUR_-TybXMyn14",
     "display_name": "ONEHUNNNIT",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 한남동 683-82",
-    "short_address": "용산구 한남동 683-82",
+    "address": "683-82 Hannam-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "683-82 Hannam-dong, Yongsan-gu",
     "location": {
       "lat": 37.5362101,
       "lng": 127.00086700000001
@@ -65,11 +65,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca39f9681b931:0x5e9f32736df2e4ff!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -79,8 +79,8 @@
   },
   {
     "place_id": "ChIJCc4PawCjfDURLo0t8AzBbbU",
-    "display_name": "오버듀플레어 한남쇼룸",
-    "category": "여성의류점",
+    "display_name": "Overduflare Hannam Showroom",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "shopping_mall",
@@ -89,8 +89,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원로 242 1F",
-    "short_address": "용산구 이태원로 242 1F",
+    "address": "1F, 242 Itaewon-ro, Yongsan-gu, Seoul, South Korea",
+    "short_address": "242 Itaewon-ro 1F, Yongsan-gu",
     "location": {
       "lat": 37.5362892,
       "lng": 127.00034360000001
@@ -109,20 +109,20 @@
     "google_maps_url": "https://maps.google.com/?cid=13073317554639703342",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3006b0fce09:0xb56dc10cf02d8d2e!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 8:00",
-      "화요일: 오전 11:00 ~ 오후 8:00",
-      "수요일: 오전 11:00 ~ 오후 8:00",
-      "목요일: 오전 11:00 ~ 오후 8:00",
-      "금요일: 오전 11:00 ~ 오후 8:00",
-      "토요일: 오전 11:00 ~ 오후 8:00",
-      "일요일: 오전 11:00 ~ 오후 8:00"
+      "Monday: 11:00 AM - 8:00 PM",
+      "Tuesday: 11:00 AM - 8:00 PM",
+      "Wednesday: 11:00 AM - 8:00 PM",
+      "Thursday: 11:00 AM - 8:00 PM",
+      "Friday: 11:00 AM - 8:00 PM",
+      "Saturday: 11:00 AM - 8:00 PM",
+      "Sunday: 11:00 AM - 8:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -132,14 +132,14 @@
         "author": "Rico Moon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "굿 좋아요~"
+        "relative_time": "3 months ago",
+        "text": "Good, good~"
       },
       {
         "author": "drzl",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "4달 전",
+        "relative_time": "4 months ago",
         "text": null
       }
     ],
@@ -150,8 +150,8 @@
   },
   {
     "place_id": "ChIJRw9wjfijfDURr265Wqf5tZ8",
-    "display_name": "더라이(The Rye)",
-    "category": "의류점",
+    "display_name": "The Rye",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "shopping_mall",
@@ -159,8 +159,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원로49길 20 1층",
-    "short_address": "용산구 이태원로49길 20 1층",
+    "address": "1st floor, 20 Itaewon-ro 49-gil, Yongsan-gu, Seoul, South Korea",
+    "short_address": "1st floor, 20 Itaewon-ro 49-gil, Yongsan-gu",
     "location": {
       "lat": 37.537053500000006,
       "lng": 126.9992795
@@ -179,58 +179,58 @@
     "google_maps_url": "https://maps.google.com/?cid=11508378919992127151",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3f88d700f47:0x9fb5f9a75ab96eaf!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 11:00 ~ 오후 8:00",
-      "수요일: 오전 11:00 ~ 오후 8:00",
-      "목요일: 오전 11:00 ~ 오후 8:00",
-      "금요일: 오전 11:00 ~ 오후 8:00",
-      "토요일: 오전 11:00 ~ 오후 8:00",
-      "일요일: 오전 11:00 ~ 오후 8:00"
+      "Monday: Closed day",
+      "Tuesday: 11:00 AM - 8:00 PM",
+      "Wednesday: 11:00 AM - 8:00 PM",
+      "Thursday: 11:00 AM - 8:00 PM",
+      "Friday: 11:00 AM - 8:00 PM",
+      "Saturday: 11:00 AM - 8:00 PM",
+      "Sunday: 11:00 AM - 8:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": [
-      "유료노상주차"
+      "Paid street parking"
     ],
     "reviews": [
       {
         "author": "Tong Tong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "옷 퀄리티가 정말 좋아요! 사장님도 아주 친절하세요! 지나갈 때마다 꼭 들르게 되는 정도예요."
+        "relative_time": "6 months ago",
+        "text": "The quality of the clothes is really good! The owner is also very friendly! I make sure to stop by every time I pass by."
       },
       {
-        "author": "이예은",
+        "author": "Yeeun Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "바지 맛집이라 원래 좋아하던 브랜드인데 우연히 매장이 있어서 들어왓다가 아우터에 반해서 바로 구매했어요! 너무 이쁘구 친절하셔서 기분까지 좋았어용 감사합니당💛"
+        "relative_time": "2 months ago",
+        "text": "It's a brand I always liked because it's a great pants restaurant, but I happened to find a store there, so I went in and fell in love with the outerwear, so I bought it right away! You were so pretty and kind and made me feel good. Thank you💛"
       },
       {
         "author": "F ZZZ",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "직원분이 친절하시고 옷 핏이 다 마음에 들어요! 🫶"
+        "relative_time": "4 months ago",
+        "text": "The staff is friendly and I like the fit of the clothes! 🫶"
       },
       {
         "author": "Yeonju Lim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
-        "text": "심플하고 아름다운 옷이 많은 쇼룸이예요. 인테리어도 너무 고급스러워서 사진찍기 좋아요!"
+        "relative_time": "8 months ago",
+        "text": "It's a showroom with a lot of simple and beautiful clothes. The interior is so luxurious that it’s great for taking pictures!"
       },
       {
         "author": "渡部帆乃夏",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "점원이 상냥하고, 아주 좋은 쇼핑을 할 수 있었습니다.\n옷도 너무 귀여웠어요🥰"
+        "relative_time": "6 months ago",
+        "text": "The clerk was friendly and I was able to have a very good shopping experience.\nThe clothes were so cute too🥰"
       }
     ],
     "photos": [
@@ -249,14 +249,14 @@
   {
     "place_id": "ChIJ2xNLIvyjfDURVT_RmIXuWiQ",
     "display_name": "hiig",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 한남대로27길 33 TUS HANNAM 1층",
-    "short_address": "용산구 한남대로27길 33 TUS HANNAM 1층",
+    "address": "1st floor, TUS HANNAM, 33 Hannam-daero 27-gil, Yongsan-gu, Seoul, South Korea",
+    "short_address": "1st floor, TUS HANNAM, 33 Hannam-daero 27-gil, Yongsan-gu",
     "location": {
       "lat": 37.5382264,
       "lng": 127.00300879999998
@@ -275,20 +275,20 @@
     "google_maps_url": "https://maps.google.com/?cid=2619668390831275861",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fc224b13db:0x245aee8598d13f55!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 휴무일",
-      "수요일: 오후 12:00~6:00",
-      "목요일: 오후 12:00~6:00",
-      "금요일: 오후 12:00~6:00",
-      "토요일: 오후 12:00~6:00",
-      "일요일: 오후 12:00~6:00"
+      "Monday: Closed day",
+      "Tuesday: Closed",
+      "Wednesday: 12:00-6:00 PM",
+      "Thursday: 12:00-6:00 PM",
+      "Friday: 12:00-6:00 PM",
+      "Saturday: 12:00-6:00 PM",
+      "Sunday: 12:00-6:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -305,15 +305,15 @@
   },
   {
     "place_id": "ChIJZ-pXKLKjfDURilVRvqjx_6w",
-    "display_name": "모드곤 MODGONE",
-    "category": "쇼핑몰",
+    "display_name": "MODGONE MODGONE",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원로54길 16-4",
-    "short_address": "용산구 이태원로54길 16-4",
+    "address": "16-4, Itaewon-ro 54-gil, Yongsan-gu, Seoul, South Korea",
+    "short_address": "16-4, Itaewon-ro 54-gil, Yongsan-gu",
     "location": {
       "lat": 37.537293,
       "lng": 127.00228999999999
@@ -341,21 +341,21 @@
         "author": "anna K",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
-        "text": "아주 좋아요~~~"
+        "relative_time": "8 years ago",
+        "text": "Very good~~~"
       },
       {
-        "author": "관악산",
+        "author": "Gwanaksan Mountain",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       },
       {
         "author": "L LEUNG",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       }
     ],
@@ -375,13 +375,13 @@
   {
     "place_id": "ChIJq7fjm8-jfDURcdgkjdvsK9U",
     "display_name": "Line store",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "سيول،، 대한민국",
+    "address": "سيول،، Republic of Korea",
     "short_address": "سيول،",
     "location": {
       "lat": 37.5390802,
@@ -402,11 +402,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3cf9be3b7ab:0xd52becdb8d24d871!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -419,15 +419,15 @@
   },
   {
     "place_id": "ChIJBzVtFQCjfDURM2OadJIq8mQ",
-    "display_name": "나인원한남 상가 주차장",
-    "category": "쇼핑몰",
+    "display_name": "Nine One Hannam Shopping Mall Parking Lot",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 한남동 699-5",
-    "short_address": "용산구 한남동 699-5",
+    "address": "699-5 Hannam-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "699-5 Hannam-dong, Yongsan-gu",
     "location": {
       "lat": 37.5375136,
       "lng": 127.00409669999999
@@ -447,16 +447,16 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca300156d3507:0x64f22a92749a6333!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": null,
@@ -464,8 +464,8 @@
   },
   {
     "place_id": "ChIJPw_wDDWifDUR6cRtZUWB62g",
-    "display_name": "바이더웨이 이태원청화점",
-    "category": "슈퍼마켓",
+    "display_name": "By the Way Itaewon Cheonghwa Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -475,8 +475,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원동 22-74",
-    "short_address": "용산구 이태원동 22-74",
+    "address": "22-74 Itaewon-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "22-74 Itaewon-dong, Yongsan-gu",
     "location": {
       "lat": 37.531345,
       "lng": 126.99485779999999
@@ -495,18 +495,18 @@
     "google_maps_url": "https://maps.google.com/?cid=7560278534525928681",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2350cf00f3f:0x68eb8145656dc4e9!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오후 10:00",
-      "화요일: 오전 8:00 ~ 오후 10:00",
-      "수요일: 오전 8:00 ~ 오후 10:00",
-      "목요일: 오전 8:00 ~ 오후 10:00",
-      "금요일: 오전 8:00 ~ 오후 10:00",
-      "토요일: 오전 8:00 ~ 오후 10:00",
-      "일요일: 오전 8:00 ~ 오후 10:00"
+      "Monday: 8:00 AM - 10:00 PM",
+      "Tuesday: 8:00 AM - 10:00 PM",
+      "Wednesday: 8:00 AM - 10:00 PM",
+      "Thursday: 8:00 AM - 10:00 PM",
+      "Friday: 8:00 AM - 10:00 PM",
+      "Saturday: 8:00 AM - 10:00 PM",
+      "Sunday: 8:00 AM - 10:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -516,15 +516,15 @@
   },
   {
     "place_id": "ChIJm3O8g0qifDUR4NXVruNq_bE",
-    "display_name": "용산구개인회생/파산면책",
-    "category": "시장",
+    "display_name": "Yongsan-gu personal rehabilitation/bankruptcy exemption",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원제1동",
-    "short_address": "용산구 이태원제1동",
+    "address": "Itaewon 1-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "Itaewon 1-dong, Yongsan-gu",
     "location": {
       "lat": 37.5327632,
       "lng": 126.99492869999999
@@ -545,7 +545,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -554,8 +554,8 @@
   },
   {
     "place_id": "ChIJa9c_eEqifDURrsIPFKYwvbs",
-    "display_name": "현대슈퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Hyundai Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -565,8 +565,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원동 130-28",
-    "short_address": "용산구 이태원동 130-28",
+    "address": "130-28 Itaewon-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "130-28 Itaewon-dong, Yongsan-gu",
     "location": {
       "lat": 37.533066999999996,
       "lng": 126.9938023
@@ -585,18 +585,18 @@
     "google_maps_url": "https://maps.google.com/?cid=13528022345550119598",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca24a783fd76b:0xbbbd30a6140fc2ae!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 11:00",
-      "화요일: 오전 9:00 ~ 오후 11:00",
-      "수요일: 오전 9:00 ~ 오후 11:00",
-      "목요일: 오전 9:00 ~ 오후 11:00",
-      "금요일: 오전 9:00 ~ 오후 11:00",
-      "토요일: 오전 9:00 ~ 오후 11:00",
-      "일요일: 오전 9:00 ~ 오후 11:00"
+      "Monday: 9:00 AM - 11:00 PM",
+      "Tuesday: 9:00 AM - 11:00 PM",
+      "Wednesday: 9:00 AM - 11:00 PM",
+      "Thursday: 9:00 AM - 11:00 PM",
+      "Friday: 9:00 AM - 11:00 PM",
+      "Saturday: 9:00 AM - 11:00 PM",
+      "Sunday: 9:00 AM - 11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -606,14 +606,14 @@
         "author": "Mehran K",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "지역 주민 가족이 운영하는 아주 작은 미니 마트인데 정말 친절해요. 종류가 그렇게 많지는 않지만, 큰 마트까지 걸어가지 않고도 큰 생수나 다른 생필품을 살 수 있어서 좋았어요."
+        "relative_time": "5 years ago",
+        "text": "It's a very small mini mart run by a local family and they are really friendly. Although there aren't that many varieties, it was nice to be able to buy large bottles of water and other daily necessities without having to walk to a large supermarket."
       },
       {
         "author": "M Mi",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "10년 전",
+        "relative_time": "10 years ago",
         "text": null
       }
     ],
@@ -623,8 +623,8 @@
   },
   {
     "place_id": "ChIJ93pZFTWifDUR-er6c0NxlVA",
-    "display_name": "슈퍼맨",
-    "category": "슈퍼마켓",
+    "display_name": "superman",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -634,8 +634,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 KR 서울특별시 용산구 이태원동 21-1번지 태광빌딩 1층 지",
-    "short_address": "KR 서울특별시 용산구 이태원동 21-1번지 태광빌딩 1층 지",
+    "address": "Seoul, Republic of Korea KR 1st floor, Taekwang Building, 21-1 Itaewon-dong, Yongsan-gu, Seoul",
+    "short_address": "KR 1st floor, Taekwang Building, 21-1 Itaewon-dong, Yongsan-gu, Seoul",
     "location": {
       "lat": 37.5310945,
       "lng": 126.9957217
@@ -655,11 +655,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca23515597af7:0x5095714373faeaf9!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -669,14 +669,14 @@
   {
     "place_id": "ChIJA6XKY7WjfDURgpio7CNLXqo",
     "display_name": "NADE PARIS",
-    "category": "시장",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 보광로 120 4층",
-    "short_address": "용산구 보광로 120 4층",
+    "address": "4th floor, 120 Bogwang-ro, Yongsan-gu, Seoul, South Korea",
+    "short_address": "4th floor, 120 Bogwang-ro, Yongsan-gu",
     "location": {
       "lat": 37.533406,
       "lng": 126.9945886
@@ -697,8 +697,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -707,15 +707,15 @@
   },
   {
     "place_id": "ChIJq8JYlUqifDURs6PLWvU_E2U",
-    "display_name": "가율",
-    "category": "시장",
+    "display_name": "rate",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 이태원동 137-67번지 503호 용산구 서울특별시 KR",
-    "short_address": "이태원동 137-67번지 503호 용산구 서울특별시 KR",
+    "address": "#503, 137-67 Itaewon-dong, Seoul, Republic of Korea, Yongsan-gu, Seoul KR",
+    "short_address": "#503, 137-67 Itaewon-dong, Yongsan-gu, Seoul KR",
     "location": {
       "lat": 37.533395899999995,
       "lng": 126.99573269999999
@@ -736,8 +736,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -746,8 +746,8 @@
   },
   {
     "place_id": "ChIJOzPruUqifDUR1nMpCgFXwXY",
-    "display_name": "광명공업사",
-    "category": "슈퍼마켓",
+    "display_name": "Gwangmyeong Industrial Company",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -758,8 +758,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 우사단로10길 12",
-    "short_address": "용산구 우사단로10길 12",
+    "address": "12 Usadan-ro 10-gil, Yongsan-gu, Seoul, South Korea",
+    "short_address": "12 Usadan-ro 10-gil, Yongsan-gu",
     "location": {
       "lat": 37.5330004,
       "lng": 126.9963281
@@ -787,8 +787,8 @@
   },
   {
     "place_id": "ChIJ0TqV6EqifDUR7vYW9kSVwoc",
-    "display_name": "국제마트",
-    "category": "슈퍼마켓",
+    "display_name": "International Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -798,8 +798,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원동 127-24",
-    "short_address": "용산구 이태원동 127-24",
+    "address": "127-24 Itaewon-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "127-24 Itaewon-dong, Yongsan-gu",
     "location": {
       "lat": 37.533692099999996,
       "lng": 126.9955133
@@ -818,57 +818,57 @@
     "google_maps_url": "https://maps.google.com/?cid=9782545464021153518",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca24ae8953ad1:0x87c29544f616f6ee!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 12:00",
-      "화요일: 오전 9:00 ~ 오후 12:00",
-      "수요일: 오전 9:00 ~ 오후 12:00",
-      "목요일: 오전 9:00 ~ 오후 12:00",
-      "금요일: 오전 9:00 ~ 오후 12:00",
-      "토요일: 오전 9:00 ~ 오후 12:00",
-      "일요일: 오전 9:00 ~ 오후 12:00"
+      "Monday: 9:00 AM - 12:00 PM",
+      "Tuesday: 9:00 AM - 12:00 PM",
+      "Wednesday: 9:00 AM - 12:00 PM",
+      "Thursday: 9:00 AM - 12:00 PM",
+      "Friday: 9:00 AM - 12:00 PM",
+      "Saturday: 9:00 AM - 12:00 PM",
+      "Sunday: 9:00 AM - 12:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김수영",
+        "author": "Sooyoung Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "영화 \"죽여주는 여자\", \"감시자들\" 로케이션"
+        "relative_time": "3 years ago",
+        "text": "Location of the movies “The Woman Who Kills” and “The Watchers”"
       },
       {
         "author": "Federico 's",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "포린푸드마트에 묻혔지만 똑같이 제품 많고 절 안서고 살수 있어요"
+        "relative_time": "2 years ago",
+        "text": "Even though it is buried in Foreign Food Mart, there are a lot of products and you can buy them without stopping."
       },
       {
         "author": "Hamizah M.S.",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
-        "text": "아마도 주인인 계산원의 서비스가 형편없었어요. 5만 원을 받지도 않고 지갑에서 작은 지폐를 찾으려고 함부로 뒤졌어요. 무례한 건 물론이고, 귀도 잘 안 들리는 상태였어요. 제가 비닐봉투를 사려고 하는 것도 못 듣고, 저한테 탓을 돌리고는 카운터에 물건들을 던졌어요. 마치 아이가 떼쓰는 것처럼요.\n\n가격표가 없는 물건들이 많아서 무례한 계산원에게 가격을 물어봐야 했어요. 이런 가게에서 받는 서비스 수준은 이 정도인 것 같아요. 여기서 물건을 사야 하는 사람들이 안타깝네요."
+        "relative_time": "1 year ago",
+        "text": "The service from the cashier, probably the owner, was terrible. Instead of taking the 50,000 won, I searched my wallet for small bills. Not only was it rude, but I was hard of hearing. He didn't even hear me trying to buy a plastic bag, so he blamed me and threw the items on the counter. It's like a child throwing a tantrum.\n\nMany items didn't have price tags so I had to ask the rude cashier for the price. I think this is the level of service you get at a store like this. I feel sorry for the people who have to buy things here."
       },
       {
         "author": "Müzeyyen m",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "8달 전",
-        "text": "할랄 제품을 사려고 이테아원까지 왔는데, 종류도 너무 적고 가격도 엄청 비쌌어요. 터키에서 사는 거랑 거의 똑같았어요."
+        "relative_time": "8 months ago",
+        "text": "I came to Etea One to buy halal products, but there were too few varieties and the prices were very expensive. It was almost the same as living in Türkiye."
       },
       {
         "author": "Sillily Serious",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1년 전",
-        "text": "모든 품목의 가격은 명확하게 표시되어야 합니다. 많은 경우 카운터 직원에게 문의해야 합니다.\n\n하지만 언덕 위쪽에 있는 주요 수출 식료품점에서 실패했다면 여기를 확인해 보세요."
+        "relative_time": "1 year ago",
+        "text": "The prices of all items must be clearly displayed. In many cases, you will need to ask the counter staff.\n\nBut if you failed at the main export grocery store up the hill, check this out."
       }
     ],
     "photos": [
@@ -882,8 +882,8 @@
   },
   {
     "place_id": "ChIJCeNk9EqifDURIskCfgbx_vo",
-    "display_name": "코스모마트",
-    "category": "슈퍼마켓",
+    "display_name": "Cosmo Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -893,8 +893,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원동 127-17",
-    "short_address": "용산구 이태원동 127-17",
+    "address": "127-17 Itaewon-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "127-17 Itaewon-dong, Yongsan-gu",
     "location": {
       "lat": 37.5339977,
       "lng": 126.99468429999997
@@ -913,56 +913,56 @@
     "google_maps_url": "https://maps.google.com/?cid=18086158163752700194",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca24af464e309:0xfafef1067e02c922!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오전 12:00",
-      "화요일: 오전 8:00 ~ 오전 12:00",
-      "수요일: 오전 8:00 ~ 오전 12:00",
-      "목요일: 오전 8:00 ~ 오전 12:00",
-      "금요일: 오전 8:00 ~ 오전 12:00",
-      "토요일: 오전 8:00 ~ 오전 12:00",
-      "일요일: 오전 8:00 ~ 오전 12:00"
+      "Monday: 8:00 AM - 12:00 AM",
+      "Tuesday: 8:00 AM - 12:00 AM",
+      "Wednesday: 8:00 AM - 12:00 AM",
+      "Thursday: 8:00 AM - 12:00 AM",
+      "Friday: 8:00 AM - 12:00 AM",
+      "Saturday: 8:00 AM - 12:00 AM",
+      "Sunday: 8:00 AM - 12:00 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김기석 (KISEOK KIM)",
+        "author": "KISEOK KIM",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8년 전",
-        "text": "여러가지 해외식재료들을 파는 마켓"
+        "relative_time": "8 years ago",
+        "text": "A market selling various overseas food ingredients"
       },
       {
-        "author": "욘준",
+        "author": "Yonjun",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "국제마트"
+        "relative_time": "7 years ago",
+        "text": "International Mart"
       },
       {
         "author": "Deborah Akobi",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "아프리카 음식은 가격이 좀 비싼 편입니다."
+        "relative_time": "6 years ago",
+        "text": "African food is a bit expensive."
       },
       {
         "author": "Sillily Serious",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       },
       {
         "author": "Najibullah Haidari",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -975,8 +975,8 @@
   },
   {
     "place_id": "ChIJG2lv9EqifDURCn11TR0Fuw0",
-    "display_name": "인터내셔날수퍼",
-    "category": "슈퍼마켓",
+    "display_name": "International Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -986,8 +986,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 이태원동 127-17번지 1층 용산구 서울특별시 KR",
-    "short_address": "이태원동 127-17번지 1층 용산구 서울특별시 KR",
+    "address": "1st floor, 127-17 Itaewon-dong, Seoul, Republic of Korea, Yongsan-gu, Seoul KR",
+    "short_address": "1st floor, 127-17 Itaewon-dong, Yongsan-gu, Seoul KR",
     "location": {
       "lat": 37.534013099999996,
       "lng": 126.99467669999999
@@ -1008,8 +1008,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1018,8 +1018,8 @@
   },
   {
     "place_id": "ChIJN0UFDbWjfDUR4_q7N4Ad9Kc",
-    "display_name": "대성슈퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Daesung Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1029,8 +1029,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 한남동 756-12번지 용산구 서울특별시 KR",
-    "short_address": "한남동 756-12번지 용산구 서울특별시 KR",
+    "address": "756-12 Hannam-dong, Seoul, South Korea, Yongsan-gu, Seoul KR",
+    "short_address": "756-12 Hannam-dong, Yongsan-gu, Seoul KR",
     "location": {
       "lat": 37.5323247,
       "lng": 126.99921900000001
@@ -1051,8 +1051,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1061,8 +1061,8 @@
         "author": "Yookyung Chang",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
-        "text": "이곳에서 계란을 사지 마세요. 냉장 보관하지 않은 날계란을 판매합니다. 신선한 계란만 파는 줄 알고 샀는데, 계란 하나가 완전히 썩어서 노른자가 새까맣게 변해 있었습니다. 주인에게 (환불을 요구하는 건 아니고, 상태를 알려주려고) 말했는데, 썩은 계란은 직접 가져와야 한다고만 했습니다. 어떻게 가져오냐고, 냄새가 얼마나 심한지 물었더니 한국 사람들은 다 그렇게 한다고 했습니다.\n주인은 판매하는 제품의 품질에 전혀 신경 쓰지 않고, 썩은 계란 냄새는 정말 끔찍하고 역겨웠습니다."
+        "relative_time": "6 years ago",
+        "text": "Don't buy eggs here. We sell raw, unrefrigerated eggs. I bought it thinking they only sold fresh eggs, but one egg was completely rotten and the yolk had turned black. I spoke to the owner (not asking for a refund, just to let him know the situation), but he just said I had to bring the rotten eggs myself. I asked how they got it and how bad it smelled, and they said all Koreans do that.\nThe owner doesn't care at all about the quality of the products he sells, and the rotten egg smell was truly horrible and disgusting."
       }
     ],
     "photos": [
@@ -1072,14 +1072,14 @@
   {
     "place_id": "ChIJcTWaBmGjfDURRz45-ieE8zM",
     "display_name": "msm",
-    "category": "시장",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 지하1층 5 KR 서울특별시 용산구 우사단로2길",
-    "short_address": "지하1층 5 KR 서울특별시 용산구 우사단로2길",
+    "address": "Basement 1, Seoul, Republic of Korea 5 KR Usadan-ro 2-gil, Yongsan-gu, Seoul",
+    "short_address": "Basement 1st floor 5 KR Usadan-ro 2-gil, Yongsan-gu, Seoul",
     "location": {
       "lat": 37.5307037,
       "lng": 126.99712079999998
@@ -1100,7 +1100,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1109,8 +1109,8 @@
   },
   {
     "place_id": "ChIJyTSrCrWjfDURBhIkTiwGRa0",
-    "display_name": "영남슈퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Yeongnam Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1120,8 +1120,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 보광동 265-963번지 옥외 1층 용산구 서울특별시 KR",
-    "short_address": "보광동 265-963번지 옥외 1층 용산구 서울특별시 KR",
+    "address": "Outdoor 1st floor, 265-963 Bogwang-dong, Seoul, Republic of Korea, Yongsan-gu, Seoul KR",
+    "short_address": "Outdoor 1st floor, 265-963 Bogwang-dong, Yongsan-gu, Seoul KR",
     "location": {
       "lat": 37.531982,
       "lng": 126.9997535
@@ -1149,8 +1149,8 @@
   },
   {
     "place_id": "ChIJK9kWo7ajfDUR5NgluI0Acc4",
-    "display_name": "알뜰슈퍼공판장",
-    "category": "슈퍼마켓",
+    "display_name": "Thrifty Super Marketplace",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1160,8 +1160,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 한남동 653-68",
-    "short_address": "용산구 한남동 653-68",
+    "address": "653-68 Hannam-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "653-68 Hannam-dong, Yongsan-gu",
     "location": {
       "lat": 37.5332893,
       "lng": 127.00302359999999
@@ -1180,18 +1180,18 @@
     "google_maps_url": "https://maps.google.com/?cid=14875671652861335780",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3b6a316d92b:0xce71008db825d8e4!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오전 12:00",
-      "화요일: 오전 8:00 ~ 오전 12:00",
-      "수요일: 오전 8:00 ~ 오전 12:00",
-      "목요일: 오전 8:00 ~ 오전 12:00",
-      "금요일: 오전 8:00 ~ 오전 12:00",
-      "토요일: 오전 8:00 ~ 오전 12:00",
-      "일요일: 오전 8:00 ~ 오전 12:00"
+      "Monday: 8:00 AM - 12:00 AM",
+      "Tuesday: 8:00 AM - 12:00 AM",
+      "Wednesday: 8:00 AM - 12:00 AM",
+      "Thursday: 8:00 AM - 12:00 AM",
+      "Friday: 8:00 AM - 12:00 AM",
+      "Saturday: 8:00 AM - 12:00 AM",
+      "Sunday: 8:00 AM - 12:00 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1200,8 +1200,8 @@
   },
   {
     "place_id": "ChIJXW4dbwCjfDURZmw9As93JBs",
-    "display_name": "태영유통",
-    "category": "슈퍼마켓",
+    "display_name": "Taeyoung Distribution",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1211,8 +1211,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 보광로 127",
-    "short_address": "용산구 보광로 127",
+    "address": "127 Bogwang-ro, Yongsan-gu, Seoul, South Korea",
+    "short_address": "127 Bogwang-ro, Yongsan-gu",
     "location": {
       "lat": 37.5341958,
       "lng": 126.99372530000001
@@ -1233,8 +1233,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1243,16 +1243,16 @@
         "author": "munu lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "이태원 숙소에서 지낼때 유용하게 이용한 슈퍼입니다."
+        "relative_time": "3 months ago",
+        "text": "This supermarket was useful when I stayed at an accommodation in Itaewon."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJlX9v4kqifDURcsnEdtyoUOw",
-    "display_name": "씨앤제이(CNJ)마트",
-    "category": "슈퍼마켓",
+    "display_name": "CNJ Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1262,8 +1262,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 이태원동 123-26번지 1층 용산구 서울특별시 KR",
-    "short_address": "이태원동 123-26번지 1층 용산구 서울특별시 KR",
+    "address": "1st floor, 123-26 Itaewon-dong, Seoul, Republic of Korea, Yongsan-gu, Seoul KR",
+    "short_address": "1st floor, 123-26 Itaewon-dong, Yongsan-gu, Seoul KR",
     "location": {
       "lat": 37.5347535,
       "lng": 126.99536589999998
@@ -1284,8 +1284,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1294,8 +1294,8 @@
   },
   {
     "place_id": "ChIJYz8_5UqifDURxeL5vg2UtZs",
-    "display_name": "9스토아",
-    "category": "슈퍼마켓",
+    "display_name": "9Stoa",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1305,8 +1305,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원동 127-3번지",
-    "short_address": "용산구 이태원동 127-3번지",
+    "address": "127-3 Itaewon-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "127-3 Itaewon-dong, Yongsan-gu",
     "location": {
       "lat": 37.5343162,
       "lng": 126.9951365
@@ -1327,8 +1327,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1337,7 +1337,7 @@
         "author": "Sillily Serious",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -1345,15 +1345,15 @@
   },
   {
     "place_id": "ChIJxSAiIUqifDURmwZX7b4UoC4",
-    "display_name": "죽도시장",
-    "category": "시장",
+    "display_name": "Jukdo Market",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 이태원동 118-12번지 1층 범진지물 용산구 서울특별시 KR",
-    "short_address": "이태원동 118-12번지 1층 범진지물 용산구 서울특별시 KR",
+    "address": "1st floor, 118-12 Itaewon-dong, Seoul, Republic of Korea Beomjinjimul Yongsan-gu Seoul KR",
+    "short_address": "Beomjinjimul, 1st floor, 118-12 Itaewon-dong, Yongsan-gu, Seoul KR",
     "location": {
       "lat": 37.5350532,
       "lng": 126.99188040000001
@@ -1372,37 +1372,37 @@
     "google_maps_url": "https://maps.google.com/?cid=3359708132276635291",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca24a212220c5:0x2ea014beed57069b!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 8:00",
-      "화요일: 오전 9:00 ~ 오후 8:00",
-      "수요일: 오전 9:00 ~ 오후 8:00",
-      "목요일: 오전 9:00 ~ 오후 8:00",
-      "금요일: 오전 9:00 ~ 오후 8:00",
-      "토요일: 오전 9:00 ~ 오후 8:00",
-      "일요일: 오전 9:00 ~ 오후 8:00"
+      "Monday: 9:00 AM - 8:00 PM",
+      "Tuesday: 9:00 AM - 8:00 PM",
+      "Wednesday: 9:00 AM - 8:00 PM",
+      "Thursday: 9:00 AM - 8:00 PM",
+      "Friday: 9:00 AM - 8:00 PM",
+      "Saturday: 9:00 AM - 8:00 PM",
+      "Sunday: 9:00 AM - 8:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김현재",
+        "author": "Hyeonjae Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "통문어 통골뱅이탕먹엇는데 문어는그럭저럭먹을망햌ㅅ어요\n근데 골뱅이는 냉동인지 그저그래요.."
+        "relative_time": "6 years ago",
+        "text": "I had whole octopus stew, but the octopus was barely edible.\nBut the whelk is frozen and so-so..."
       },
       {
         "author": "R. Park",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "양에 비해 가격이 좀 비싼 편이에요 (저희가 주문한 해산물 플래터는 45,000원이었어요). 하지만 조리도 잘 됐고 양념도 잘 되어 있어서 야식으로 딱 좋았어요."
+        "relative_time": "6 years ago",
+        "text": "The price is a bit expensive compared to the quantity (the seafood platter we ordered was 45,000 won). However, it was well-cooked and seasoned well, so it was perfect for a late-night snack."
       }
     ],
     "photos": [
@@ -1411,8 +1411,8 @@
   },
   {
     "place_id": "ChIJdzKFh0mifDUR0rvSiPHI1Ao",
-    "display_name": "곰돌이슈퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Bear Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1422,8 +1422,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원로23길 36",
-    "short_address": "용산구 이태원로23길 36",
+    "address": "36 Itaewon-ro 23-gil, Yongsan-gu, Seoul, South Korea",
+    "short_address": "36 Itaewon-ro 23-gil, Yongsan-gu",
     "location": {
       "lat": 37.5356157,
       "lng": 126.9916714
@@ -1442,18 +1442,18 @@
     "google_maps_url": "https://maps.google.com/?cid=780469575150123986",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca24987853277:0xad4c8f188d2bbd2!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 11:00",
-      "화요일: 오전 9:00 ~ 오후 11:00",
-      "수요일: 오전 9:00 ~ 오후 11:00",
-      "목요일: 오전 9:00 ~ 오후 11:00",
-      "금요일: 오전 9:00 ~ 오후 11:00",
-      "토요일: 오전 9:00 ~ 오후 11:00",
-      "일요일: 오전 9:00 ~ 오후 11:00"
+      "Monday: 9:00 AM - 11:00 PM",
+      "Tuesday: 9:00 AM - 11:00 PM",
+      "Wednesday: 9:00 AM - 11:00 PM",
+      "Thursday: 9:00 AM - 11:00 PM",
+      "Friday: 9:00 AM - 11:00 PM",
+      "Saturday: 9:00 AM - 11:00 PM",
+      "Sunday: 9:00 AM - 11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1462,15 +1462,15 @@
   },
   {
     "place_id": "ChIJx5XuKUuifDURGDX8MCgyCKo",
-    "display_name": "나씽",
-    "category": "시장",
+    "display_name": "Nothing",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원동 126-31번지 3층",
-    "short_address": "용산구 이태원동 126-31번지 3층",
+    "address": "3rd floor, 126-31 Itaewon-dong, Yongsan-gu, Seoul, Korea",
+    "short_address": "3rd floor, 126-31 Itaewon-dong, Yongsan-gu",
     "location": {
       "lat": 37.5343015,
       "lng": 126.9966902
@@ -1491,7 +1491,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1501,7 +1501,7 @@
   {
     "place_id": "ChIJ7WfGBYKjfDURu-ffeH2z0ak",
     "display_name": "salamexpress",
-    "category": "슈퍼마켓",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1511,8 +1511,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 1층",
-    "short_address": "용산구 1층",
+    "address": "1st floor, Yongsan-gu, Seoul, South Korea",
+    "short_address": "1st floor, Yongsan-gu",
     "location": {
       "lat": 37.5338516,
       "lng": 126.9966179
@@ -1533,8 +1533,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1543,8 +1543,8 @@
   },
   {
     "place_id": "ChIJVSbPg7OjfDURpSlnQd752Qo",
-    "display_name": "합덕슈퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Hapdeok Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1554,8 +1554,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 한남동 685-1",
-    "short_address": "용산구 한남동 685-1",
+    "address": "685-1 Hannam-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "685-1 Hannam-dong, Yongsan-gu",
     "location": {
       "lat": 37.5357056,
       "lng": 126.99996829999998
@@ -1574,18 +1574,18 @@
     "google_maps_url": "https://maps.google.com/?cid=781930743300827557",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3b383cf2655:0xad9f9de416729a5!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 7:00 ~ 오전 2:00",
-      "화요일: 오전 7:00 ~ 오전 2:00",
-      "수요일: 오전 7:00 ~ 오전 2:00",
-      "목요일: 오전 7:00 ~ 오전 2:00",
-      "금요일: 오전 7:00 ~ 오전 2:00",
-      "토요일: 오전 7:00 ~ 오전 2:00",
-      "일요일: 오전 7:00 ~ 오전 2:00"
+      "Monday: 7:00 AM - 2:00 AM",
+      "Tuesday: 7:00 AM - 2:00 AM",
+      "Wednesday: 7:00 AM - 2:00 AM",
+      "Thursday: 7:00 AM - 2:00 AM",
+      "Friday: 7:00 AM - 2:00 AM",
+      "Saturday: 7:00 AM - 2:00 AM",
+      "Sunday: 7:00 AM - 2:00 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1594,14 +1594,14 @@
         "author": "BONG",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "한남동의 시대정신을 담고 있는 슈퍼마켓이 아닐까."
+        "relative_time": "4 months ago",
+        "text": "Isn’t this a supermarket that embodies the spirit of the times in Hannam-dong?"
       },
       {
         "author": "Alma Marnus",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       }
     ],
@@ -1620,8 +1620,8 @@
   },
   {
     "place_id": "ChIJxSbIdrSjfDURaAcUIhCfQA4",
-    "display_name": "현대상회",
-    "category": "슈퍼마켓",
+    "display_name": "Hyundai Trading Company",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1631,8 +1631,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 한남동 685-37",
-    "short_address": "용산구 한남동 685-37",
+    "address": "685-37 Hannam-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "685-37 Hannam-dong, Yongsan-gu",
     "location": {
       "lat": 37.5348446,
       "lng": 127.00069040000001
@@ -1651,18 +1651,18 @@
     "google_maps_url": "https://maps.google.com/?cid=1026995606680504168",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3b476c826c5:0xe409f1022140768!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오전 12:00",
-      "화요일: 오전 8:00 ~ 오전 12:00",
-      "수요일: 오전 8:00 ~ 오전 12:00",
-      "목요일: 오전 8:00 ~ 오전 12:00",
-      "금요일: 오전 8:00 ~ 오전 12:00",
-      "토요일: 오전 8:00 ~ 오전 12:00",
-      "일요일: 오전 8:00 ~ 오전 12:00"
+      "Monday: 8:00 AM - 12:00 AM",
+      "Tuesday: 8:00 AM - 12:00 AM",
+      "Wednesday: 8:00 AM - 12:00 AM",
+      "Thursday: 8:00 AM - 12:00 AM",
+      "Friday: 8:00 AM - 12:00 AM",
+      "Saturday: 8:00 AM - 12:00 AM",
+      "Sunday: 8:00 AM - 12:00 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1671,7 +1671,7 @@
         "author": "Tycho Winter",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9년 전",
+        "relative_time": "9 years ago",
         "text": null
       }
     ],
@@ -1679,8 +1679,8 @@
   },
   {
     "place_id": "ChIJzfL9SQCjfDURE7XpxpksgOw",
-    "display_name": "보마켓 한남점",
-    "category": "슈퍼마켓",
+    "display_name": "Bo Market Hannam Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1690,8 +1690,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 한남동 829B2",
-    "short_address": "용산구 한남동 829B2",
+    "address": "829B2, Hannam-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "829B2, Hannam-dong, Yongsan-gu",
     "location": {
       "lat": 37.536288299999995,
       "lng": 127.00340800000001
@@ -1712,8 +1712,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1723,21 +1723,21 @@
         "author": "Mashi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "A lovely cafe where I enjoyed a warm cup of tea in the bitter cold of Seoul.\n\nThe place is spacious, tidy, and very clean. ☕️✨\n\n서울의 매서운 추위 속에서 따뜻한 차 한 잔을 즐겼던 멋진 카페였어요.\n\n넓고 깔끔하며 아주 깨끗해요. ☕️✨"
+        "relative_time": "4 months ago",
+        "text": "A lovely cafe where I enjoyed a warm cup of tea in the bitter cold of Seoul.\n\nThe place is spacious, tidy, and very clean. ☕️✨\n\nIt was a wonderful cafe where I enjoyed a cup of warm tea in the bitter cold of Seoul.\n\nIt's spacious, neat, and very clean. ☕️✨"
       },
       {
         "author": "Sehoon Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10달 전",
-        "text": "나인원 한남에 새로 생긴 보마켓. 건강한 음식과 음료, 힙한 식료품과 와인, 감각적인 라이프스타일 아이템이 가득한 곳이에요. 분위기도 좋고 구경하는 재미가 쏠쏠함."
+        "relative_time": "10 months ago",
+        "text": "The new Bo Market opened in Nine One Hannam. It's a place full of healthy food and drinks, hip groceries and wine, and sensuous lifestyle items. The atmosphere is nice and it's fun to look around."
       },
       {
         "author": "J L",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
+        "relative_time": "3 months ago",
         "text": null
       }
     ],
@@ -1756,8 +1756,8 @@
   },
   {
     "place_id": "ChIJr6cg40yifDUR-a0TdUN8zsw",
-    "display_name": "GS25 하얏트점",
-    "category": "슈퍼마켓",
+    "display_name": "GS25 Hyatt Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1767,8 +1767,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원동 243-39",
-    "short_address": "용산구 이태원동 243-39",
+    "address": "243-39 Itaewon-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "243-39 Itaewon-dong, Yongsan-gu",
     "location": {
       "lat": 37.5392884,
       "lng": 126.9951353
@@ -1787,57 +1787,57 @@
     "google_maps_url": "https://maps.google.com/?cid=14757869658108571129",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca24ce320a7af:0xccce7c437513adf9!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "양대리",
+        "author": "Yang Assistant Manager",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
-        "text": "맥주캔에 먼지가 끼어있었다. 오래된 맥주는 아닌 것 같은데...\n하지만 주변을 산책하면서 가볍게 먹거리 사기엔 좋은 듯 하다."
+        "relative_time": "5 years ago",
+        "text": "There was dust in the beer can. I don't think it's an old beer...\nHowever, it seems like a good place to buy some food while walking around."
       },
       {
         "author": "Bryan Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "주인장님이 매우 친절합니다. 하이앗트호텔에 머무르며 출출할 때 간식거리 사기 좋은 위치입니다."
+        "relative_time": "5 years ago",
+        "text": "The owner is very kind. It's a great location to buy snacks when you're hungry while staying at the Hiatt Hotel."
       },
       {
-        "author": "다육사랑담은",
+        "author": "A story of succulent love",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "적당한 위치에 있어서 찾는 사람들이 많은 곳이다\n따라서.. 매장 입구 테이블은 눈에 띨 정도로\n지저분하다"
+        "relative_time": "3 years ago",
+        "text": "It is a place that many people visit because it is in an appropriate location.\nTherefore... the table at the entrance to the store is noticeable.\nmessy"
       },
       {
-        "author": "이치마츠",
+        "author": "Ichimatsu",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "다양한 제품들이 가득\n그리고 앞에 테라스가 있어서 호텔바라보며 느긋하게 쉬다갈수있음"
+        "relative_time": "6 years ago",
+        "text": "Full of various products\nAnd there is a terrace in front, so you can relax while looking at the hotel."
       },
       {
         "author": "SOON K. YOON",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "좋은 위치에 있어서 사람들의 왕래가 많다\n진입로에 쓰레기가 넘 많아서 짜증난다"
+        "relative_time": "3 years ago",
+        "text": "Because it is in a good location, there is a lot of foot traffic.\nIt's annoying because there is so much trash in the driveway."
       }
     ],
     "photos": [
@@ -1853,14 +1853,14 @@
   {
     "place_id": "ChIJ06JvjrGjfDUR6bQx0NVQg_w",
     "display_name": "YVES PIAGET",
-    "category": "시장",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 한남대로27가길 13",
-    "short_address": "용산구 한남대로27가길 13",
+    "address": "13 Hannam-daero 27ga-gil, Yongsan-gu, Seoul, South Korea",
+    "short_address": "13 Hannam-daero 27ga-gil, Yongsan-gu",
     "location": {
       "lat": 37.5373909,
       "lng": 127.0030045
@@ -1881,8 +1881,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1891,8 +1891,8 @@
   },
   {
     "place_id": "ChIJQRF81rGjfDURf42ptYvH9zE",
-    "display_name": "친선마트",
-    "category": "슈퍼마켓",
+    "display_name": "Friendship Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1902,8 +1902,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 한남대로 110",
-    "short_address": "용산구 한남대로 110",
+    "address": "110 Hannam-daero, Yongsan-gu, Seoul, South Korea",
+    "short_address": "110 Hannam-daero, Yongsan-gu",
     "location": {
       "lat": 37.538101,
       "lng": 127.0047781
@@ -1922,44 +1922,44 @@
     "google_maps_url": "https://maps.google.com/?cid=3600565829968170367",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3b1d67c1141:0x31f7c78bb5a98d7f!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오전 12:00",
-      "화요일: 오전 9:00 ~ 오전 12:00",
-      "수요일: 오전 9:00 ~ 오전 12:00",
-      "목요일: 오전 9:00 ~ 오전 12:00",
-      "금요일: 오전 9:00 ~ 오전 12:00",
-      "토요일: 오전 9:00 ~ 오전 12:00",
-      "일요일: 오전 9:00 ~ 오전 12:00"
+      "Monday: 9:00 AM - 12:00 AM",
+      "Tuesday: 9:00 AM - 12:00 AM",
+      "Wednesday: 9:00 AM - 12:00 AM",
+      "Thursday: 9:00 AM - 12:00 AM",
+      "Friday: 9:00 AM - 12:00 AM",
+      "Saturday: 9:00 AM - 12:00 AM",
+      "Sunday: 9:00 AM - 12:00 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "임병삼",
+        "author": "Lim Byeong-sam",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "싸고 좋아요 주인할머니 품성도 굿"
+        "relative_time": "4 years ago",
+        "text": "It's cheap and good. The owner's grandmother is also of good character."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJQ-aGozWifDURlf3k0asSodk",
-    "display_name": "아바13월",
-    "category": "의류점",
+    "display_name": "Abba 13th month",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 녹사평대로26길 81 1층",
-    "short_address": "용산구 녹사평대로26길 81 1층",
+    "address": "1st floor, 81 Noksapyeong-daero 26-gil, Yongsan-gu, Seoul, South Korea",
+    "short_address": "1st floor, 81 Noksapyeong-daero 26-gil, Yongsan-gu",
     "location": {
       "lat": 37.5315189,
       "lng": 126.99392150000001
@@ -1980,8 +1980,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1990,16 +1990,16 @@
   },
   {
     "place_id": "ChIJQ-aGozWifDURlP5wjdOc5Kk",
-    "display_name": "의상실ABBA",
-    "category": "의류점",
+    "display_name": "Dressing Room ABBA",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 이태원동 96-70번지 1층 용산구 서울특별시 KR",
-    "short_address": "이태원동 96-70번지 1층 용산구 서울특별시 KR",
+    "address": "1st floor, 96-70 Itaewon-dong, Seoul, Republic of Korea, Yongsan-gu, Seoul KR",
+    "short_address": "1st floor, 96-70 Itaewon-dong, Yongsan-gu, Seoul KR",
     "location": {
       "lat": 37.5315189,
       "lng": 126.99392150000001
@@ -2020,8 +2020,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2030,8 +2030,8 @@
   },
   {
     "place_id": "ChIJ4Z9voTWifDURM3bm8XZq_SU",
-    "display_name": "샐리가든",
-    "category": "여성의류점",
+    "display_name": "Sally Garden",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "point_of_interest",
@@ -2039,8 +2039,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원제1동 녹사평대로26길 83",
-    "short_address": "용산구 이태원제1동 녹사평대로26길 83",
+    "address": "83, Noksapyeong-daero 26-gil, Itaewon 1-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "83, Noksapyeong-daero 26-gil, Itaewon 1-dong, Yongsan-gu",
     "location": {
       "lat": 37.531519599999996,
       "lng": 126.99410369999998
@@ -2059,20 +2059,20 @@
     "google_maps_url": "https://maps.google.com/?cid=2737461207608227379",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca235a16f9fe1:0x25fd6a76f1e67633!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 7:00",
-      "화요일: 오전 10:30 ~ 오후 7:00",
-      "수요일: 오전 10:30 ~ 오후 7:00",
-      "목요일: 오전 10:30 ~ 오후 7:00",
-      "금요일: 오전 10:30 ~ 오후 7:00",
-      "토요일: 오후 1:00~6:00",
-      "일요일: 휴무일"
+      "Monday: 10:30 AM - 7:00 PM",
+      "Tuesday: 10:30 AM - 7:00 PM",
+      "Wednesday: 10:30 AM - 7:00 PM",
+      "Thursday: 10:30 AM - 7:00 PM",
+      "Friday: 10:30 AM - 7:00 PM",
+      "Saturday: 1:00-6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2085,16 +2085,16 @@
   },
   {
     "place_id": "ChIJvRWnvDWifDURmMtOOBkuhZU",
-    "display_name": "로제",
-    "category": "의류점",
+    "display_name": "rosé",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 이태원동 96-76번지 용산구 서울특별시 KR",
-    "short_address": "이태원동 96-76번지 용산구 서울특별시 KR",
+    "address": "96-76 Itaewon-dong, Seoul, South Korea, Yongsan-gu, Seoul KR",
+    "short_address": "96-76 Itaewon-dong, Yongsan-gu, Seoul KR",
     "location": {
       "lat": 37.5316051,
       "lng": 126.99366920000001
@@ -2115,8 +2115,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2125,8 +2125,8 @@
   },
   {
     "place_id": "ChIJs5d6oDWifDUR7PdTazzdH8A",
-    "display_name": "앙쥬",
-    "category": "여성의류점",
+    "display_name": "Anju",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "point_of_interest",
@@ -2134,8 +2134,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 번지 지히 1 2층 KR 서울특별시 용산구 이태원동 96-56",
-    "short_address": "번지 지히 1 KR 서울특별시 용산구 이태원동 96-56 2층",
+    "address": "KR 96-56 Itaewon-dong, Yongsan-gu, Seoul, Republic of Korea, 2nd floor, Jihi 1, Seoul, Republic of Korea",
+    "short_address": "Address Jihi 1 KR 2nd floor, 96-56 Itaewon-dong, Yongsan-gu, Seoul",
     "location": {
       "lat": 37.5315254,
       "lng": 126.99436159999999
@@ -2156,8 +2156,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2167,15 +2167,15 @@
   {
     "place_id": "ChIJ_fZ5tHGjfDUR6yk586s5x-4",
     "display_name": "Troa",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 보광로 103",
-    "short_address": "용산구 보광로 103",
+    "address": "103 Bogwang-ro, Yongsan-gu, Seoul, South Korea",
+    "short_address": "103 Bogwang-ro, Yongsan-gu",
     "location": {
       "lat": 37.5318882,
       "lng": 126.9946396
@@ -2194,18 +2194,18 @@
     "google_maps_url": "https://maps.google.com/?cid=17205784312075069931",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca371b479f6fd:0xeec739abf33929eb!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 휴무일",
-      "수요일: 오전 10:00 ~ 오후 8:00",
-      "목요일: 오전 10:00 ~ 오후 8:00",
-      "금요일: 오전 10:00 ~ 오후 8:00",
-      "토요일: 오전 10:00 ~ 오후 8:00",
-      "일요일: 오전 10:00 ~ 오후 8:00"
+      "Monday: Closed day",
+      "Tuesday: Closed",
+      "Wednesday: 10:00 AM - 8:00 PM",
+      "Thursday: 10:00 AM - 8:00 PM",
+      "Friday: 10:00 AM - 8:00 PM",
+      "Saturday: 10:00 AM - 8:00 PM",
+      "Sunday: 10:00 AM - 8:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2224,16 +2224,16 @@
   },
   {
     "place_id": "ChIJ2bbPCjWifDURG9Pe53dyjrg",
-    "display_name": "이태리수입여성의류",
-    "category": "의류점",
+    "display_name": "Italian imported women's clothing",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 이태원동 96-51번지 1층 용산구 서울특별시 KR",
-    "short_address": "이태원동 96-51번지 1층 용산구 서울특별시 KR",
+    "address": "1st floor, 96-51 Itaewon-dong, Seoul, Republic of Korea, Yongsan-gu, Seoul KR",
+    "short_address": "1st floor, 96-51 Itaewon-dong, Yongsan-gu, Seoul KR",
     "location": {
       "lat": 37.531551,
       "lng": 126.9945174
@@ -2254,8 +2254,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2265,16 +2265,16 @@
   },
   {
     "place_id": "ChIJ6W8JblWjfDURJkZcMGhrye0",
-    "display_name": "퀸스앤틱",
-    "category": "의류점",
+    "display_name": "Queen's Antique",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 녹사평대로26길 84",
-    "short_address": "용산구 녹사평대로26길 84",
+    "address": "84 Noksapyeong-daero 26-gil, Yongsan-gu, Seoul, South Korea",
+    "short_address": "84 Noksapyeong-daero 26-gil, Yongsan-gu",
     "location": {
       "lat": 37.5313278,
       "lng": 126.99410780000001
@@ -2295,8 +2295,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2306,15 +2306,15 @@
   {
     "place_id": "ChIJJbUaDz6jfDURcmZWrr8hVyA",
     "display_name": "SEWN SWEN",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원동 96-50 B1",
-    "short_address": "용산구 이태원동 96-50 B1",
+    "address": "96-50 B1, Itaewon-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "96-50 B1, Itaewon-dong, Yongsan-gu",
     "location": {
       "lat": 37.531550599999996,
       "lng": 126.99457619999998
@@ -2335,8 +2335,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2346,15 +2346,15 @@
   {
     "place_id": "ChIJD_R5cDWifDURHtumSvrtjrk",
     "display_name": "VDR",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원동 번지 1층 17-19",
-    "short_address": "용산구 이태원동 번지 1층 17-19",
+    "address": "17-19, 1st floor, Itaewon-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "17-19, 1st floor, Itaewon-dong, Yongsan-gu",
     "location": {
       "lat": 37.531987,
       "lng": 126.994848
@@ -2373,18 +2373,18 @@
     "google_maps_url": "https://maps.google.com/?cid=13370886002959637278",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2357079f40f:0xb98eedfa4aa6db1e!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 1:00~7:00",
-      "화요일: 오후 1:00~7:00",
-      "수요일: 오후 1:00~7:00",
-      "목요일: 오후 1:00~7:00",
-      "금요일: 오후 1:00~7:00",
-      "토요일: 오후 1:00~7:00",
-      "일요일: 휴무일"
+      "Monday: 1:00-7:00 PM",
+      "Tuesday: 1:00-7:00 PM",
+      "Wednesday: 1:00-7:00 PM",
+      "Thursday: 1:00-7:00 PM",
+      "Friday: 1:00-7:00 PM",
+      "Saturday: 1:00-7:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2394,14 +2394,14 @@
         "author": "Michael Bae",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "다양한 아메리카나 스타일 의류를 갖춘 훌륭한 매장입니다. 가격도 합리적이고 품질도 뛰어납니다."
+        "relative_time": "1 year ago",
+        "text": "This is a great store with a variety of Americana style clothing. The price is reasonable and the quality is excellent."
       },
       {
         "author": "Kord",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
+        "relative_time": "8 months ago",
         "text": null
       }
     ],
@@ -2416,15 +2416,15 @@
   {
     "place_id": "ChIJdbxIkTVYezURteOeMQTN-fc",
     "display_name": "byulbat boutique",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 녹사평대로26길 92 2nd floor, Yujeong Building",
-    "short_address": "용산구 녹사평대로26길 92 2nd floor, Yujeong Building",
+    "address": "Yujeong Building, 2nd floor, 92 Noksapyeong-daero 26-gil, Yongsan-gu, Seoul, South Korea",
+    "short_address": "2nd floor, Yujeong Building, 92 Noksapyeong-daero 26-gil, Yongsan-gu",
     "location": {
       "lat": 37.531337,
       "lng": 126.99465939999997
@@ -2443,18 +2443,18 @@
     "google_maps_url": "https://maps.google.com/?cid=17868538414465213365",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357b58359148bc75:0xf7f9cd04319ee3b5!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:30 ~ 오후 6:30",
-      "화요일: 오전 9:30 ~ 오후 6:30",
-      "수요일: 오전 9:30 ~ 오후 6:30",
-      "목요일: 오전 9:30 ~ 오후 6:30",
-      "금요일: 오전 9:30 ~ 오후 6:30",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:30 AM - 6:30 PM",
+      "Tuesday: 9:30 AM - 6:30 PM",
+      "Wednesday: 9:30 AM - 6:30 PM",
+      "Thursday: 9:30 AM - 6:30 PM",
+      "Friday: 9:30 AM - 6:30 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2465,15 +2465,15 @@
   {
     "place_id": "ChIJM15lNgCjfDURstYr5RV4xDU",
     "display_name": "T-shirt",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원동 100-33",
-    "short_address": "용산구 이태원동 100-33",
+    "address": "100-33 Itaewon-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "100-33 Itaewon-dong, Yongsan-gu",
     "location": {
       "lat": 37.5320843,
       "lng": 126.9948928
@@ -2492,18 +2492,18 @@
     "google_maps_url": "https://maps.google.com/?cid=3874353614879970994",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca30036655e33:0x35c47815e52bd6b2!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 12:00~9:00",
-      "화요일: 오후 12:00~9:00",
-      "수요일: 오후 12:00~8:00",
-      "목요일: 오후 12:00~9:00",
-      "금요일: 오후 12:00~9:00",
-      "토요일: 오후 12:00~9:00",
-      "일요일: 오후 12:00~9:00"
+      "Monday: 12:00-9:00 PM",
+      "Tuesday: 12:00-9:00 PM",
+      "Wednesday: 12:00-8:00 PM",
+      "Thursday: 12:00-9:00 PM",
+      "Friday: 12:00-9:00 PM",
+      "Saturday: 12:00-9:00 PM",
+      "Sunday: 12:00-9:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2517,16 +2517,16 @@
   },
   {
     "place_id": "ChIJh_vqCzWifDURMNJfeHMXTgk",
-    "display_name": "크리스티",
-    "category": "의류점",
+    "display_name": "Christy",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 이태원동 22-46번지 용산구 서울특별시 KR",
-    "short_address": "이태원동 22-46번지 용산구 서울특별시 KR",
+    "address": "22-46 Itaewon-dong, Seoul, South Korea, Yongsan-gu, Seoul KR",
+    "short_address": "22-46 Itaewon-dong, Yongsan-gu, Seoul KR",
     "location": {
       "lat": 37.531304399999996,
       "lng": 126.9946587
@@ -2547,7 +2547,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2556,16 +2556,16 @@
   },
   {
     "place_id": "ChIJG6AsbwCjfDURi-7R0egvtn0",
-    "display_name": "아포페니안",
-    "category": "의류점",
+    "display_name": "Apophenian",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 보광로 109-1",
-    "short_address": "용산구 보광로 109-1",
+    "address": "109-1 Bogwang-ro, Yongsan-gu, Seoul, South Korea",
+    "short_address": "109-1 Bogwang-ro, Yongsan-gu",
     "location": {
       "lat": 37.532592300000005,
       "lng": 126.99442850000001
@@ -2586,8 +2586,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2597,15 +2597,15 @@
   {
     "place_id": "ChIJWywscDWifDURy69jvRw95Sk",
     "display_name": "RASSE",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 이태원동 96-24번지 1층 용산구 서울특별시 KR",
-    "short_address": "이태원동 96-24번지 1층 용산구 서울특별시 KR",
+    "address": "1st floor, 96-24 Itaewon-dong, Seoul, Republic of Korea, Yongsan-gu, Seoul KR",
+    "short_address": "1st floor, 96-24 Itaewon-dong, Yongsan-gu, Seoul KR",
     "location": {
       "lat": 37.5318393,
       "lng": 126.9950385
@@ -2626,8 +2626,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2637,15 +2637,15 @@
   {
     "place_id": "ChIJm5YXXgCjfDURYW4lL1fR-Oc",
     "display_name": "Hyso",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 보광로 104",
-    "short_address": "용산구 보광로 104",
+    "address": "104 Bogwang-ro, Yongsan-gu, Seoul, South Korea",
+    "short_address": "104 Bogwang-ro, Yongsan-gu",
     "location": {
       "lat": 37.5321321,
       "lng": 126.9950099
@@ -2664,18 +2664,18 @@
     "google_maps_url": "https://maps.google.com/?cid=16715340189368938081",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3005e17969b:0xe7f8d1572f256e61!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 1:00~9:00",
-      "화요일: 오후 1:00~9:00",
-      "수요일: 오후 1:00~9:00",
-      "목요일: 오후 1:00~9:00",
-      "금요일: 오후 1:00~9:00",
-      "토요일: 오후 1:00~9:00",
-      "일요일: 오후 1:00~9:00"
+      "Monday: 1:00-9:00 PM",
+      "Tuesday: 1:00-9:00 PM",
+      "Wednesday: 1:00-9:00 PM",
+      "Thursday: 1:00-9:00 PM",
+      "Friday: 1:00-9:00 PM",
+      "Saturday: 1:00-9:00 PM",
+      "Sunday: 1:00-9:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2689,15 +2689,15 @@
   {
     "place_id": "ChIJZTN5LACjfDURfiRGT6k9vLA",
     "display_name": "PHShop",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원동 22-32",
-    "short_address": "용산구 이태원동 22-32",
+    "address": "22-32 Itaewon-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "22-32 Itaewon-dong, Yongsan-gu",
     "location": {
       "lat": 37.5316031,
       "lng": 126.99293389999998
@@ -2725,8 +2725,8 @@
   },
   {
     "place_id": "ChIJ06xHf0qifDURiOzK4GIAaB0",
-    "display_name": "(주)어니스타컴퍼니",
-    "category": "귀금속 상점",
+    "display_name": "Honesta Company Co., Ltd.",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "point_of_interest",
@@ -2734,8 +2734,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원동 번지 1호 180-16 2층",
-    "short_address": "용산구 이태원동 번지 1호 180-16 2층",
+    "address": "2nd floor, 180-16, Itaewon-dong, Yongsan-gu, Seoul, Republic of Korea",
+    "short_address": "2nd floor, 180-16, Itaewon-dong, Yongsan-gu",
     "location": {
       "lat": 37.532944199999996,
       "lng": 126.9941128
@@ -2756,8 +2756,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2767,7 +2767,7 @@
   {
     "place_id": "ChIJTyYjf0qifDUR6riyrafQYos",
     "display_name": "Oh L",
-    "category": "여성의류점",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "point_of_interest",
@@ -2775,8 +2775,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 보광로55길 3",
-    "short_address": "용산구 보광로55길 3",
+    "address": "3 Bogwang-ro 55-gil, Yongsan-gu, Seoul, South Korea",
+    "short_address": "3, Bogwang-ro 55-gil, Yongsan-gu",
     "location": {
       "lat": 37.5329839,
       "lng": 126.99413480000001
@@ -2795,29 +2795,29 @@
     "google_maps_url": "https://maps.google.com/?cid=10043819537581914346",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca24a7f23264f:0x8b62d0a7adb2b8ea!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 7:00",
-      "화요일: 오전 10:00 ~ 오후 7:00",
-      "수요일: 오전 10:00 ~ 오후 7:00",
-      "목요일: 오전 10:00 ~ 오후 7:00",
-      "금요일: 오전 10:00 ~ 오후 7:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 7:00 PM",
+      "Tuesday: 10:00 AM - 7:00 PM",
+      "Wednesday: 10:00 AM - 7:00 PM",
+      "Thursday: 10:00 AM - 7:00 PM",
+      "Friday: 10:00 AM - 7:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "쿠헤헿",
+        "author": "Kuhehehe",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "옷디자인이 유니크하고 예뻐요"
+        "relative_time": "5 years ago",
+        "text": "The clothes design is unique and pretty."
       }
     ],
     "photos": [
@@ -2827,8 +2827,8 @@
   },
   {
     "place_id": "ChIJ7-GGfkqifDURCwiBMldvKaM",
-    "display_name": "메르시",
-    "category": "여성의류점",
+    "display_name": "Mercy",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "point_of_interest",
@@ -2836,8 +2836,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 이태원동 130-43번지 용산구 서울특별시 KR",
-    "short_address": "이태원동 130-43번지 용산구 서울특별시 KR",
+    "address": "130-43 Itaewon-dong, Seoul, South Korea, Yongsan-gu, Seoul KR",
+    "short_address": "130-43 Itaewon-dong, Yongsan-gu, Seoul KR",
     "location": {
       "lat": 37.5331073,
       "lng": 126.9942193
@@ -2858,8 +2858,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2868,8 +2868,8 @@
         "author": "Yasuo Shibusawa",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "아내가 가장 좋아하는 부티크 191026"
+        "relative_time": "6 years ago",
+        "text": "My Wife’s Favorite Boutique 191026"
       }
     ],
     "photos": [
@@ -2879,16 +2879,16 @@
   },
   {
     "place_id": "ChIJxUloPuOjfDURZfMFpoqkX7M",
-    "display_name": "레우코즈 Leukos",
-    "category": "의류점",
+    "display_name": "Leukos",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 보광동 우사단로4길 27",
-    "short_address": "용산구 보광동 우사단로4길 27",
+    "address": "27, Usadan-ro 4-gil, Bogwang-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "27 Usadan-ro 4-gil, Bogwang-dong, Yongsan-gu",
     "location": {
       "lat": 37.5314996,
       "lng": 126.99811259999998
@@ -2907,18 +2907,18 @@
     "google_maps_url": "https://maps.google.com/?cid=12925230370974462821",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3e33e6849c5:0xb35fa48aa605f365!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오후 3:00~9:00",
-      "수요일: 오후 3:00~9:00",
-      "목요일: 오후 3:00~9:00",
-      "금요일: 오후 3:00~9:00",
-      "토요일: 오후 1:00~9:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 3:00-9:00 PM",
+      "Wednesday: 3:00-9:00 PM",
+      "Thursday: 3:00-9:00 PM",
+      "Friday: 3:00-9:00 PM",
+      "Saturday: 1:00-9:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2928,15 +2928,15 @@
   {
     "place_id": "ChIJV2veuhKjfDURn6YH_F-qdcw",
     "display_name": "PAL Postcard",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 우사단로4길 15-1 1F",
-    "short_address": "용산구 우사단로4길 15-1 1F",
+    "address": "1F, 15-1 Usadan-ro 4-gil, Yongsan-gu, Seoul, South Korea",
+    "short_address": "1F, 15-1 Usadan-ro 4-gil, Yongsan-gu",
     "location": {
       "lat": 37.531535399999996,
       "lng": 126.9975925
@@ -2955,18 +2955,18 @@
     "google_maps_url": "https://maps.google.com/?cid=14732869085239420575",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca312bade6b57:0xcc75aa5ffc07a69f!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 휴무일",
-      "수요일: 휴무일",
-      "목요일: 휴무일",
-      "금요일: 휴무일",
-      "토요일: 오후 12:00~6:00",
-      "일요일: 오후 12:00~6:00"
+      "Monday: Closed day",
+      "Tuesday: Closed",
+      "Wednesday: Closed day",
+      "Thursday: Closed",
+      "Friday: Closed day",
+      "Saturday: 12:00-6:00 PM",
+      "Sunday: 12:00-6:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2975,8 +2975,8 @@
   },
   {
     "place_id": "ChIJke20TgCjfDURrZpi2qbRtg8",
-    "display_name": "우라 빈티지",
-    "category": "여성의류점",
+    "display_name": "ura vintage",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "point_of_interest",
@@ -2984,8 +2984,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 보광동 265-301",
-    "short_address": "용산구 보광동 265-301",
+    "address": "265-301 Bogwang-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "265-301 Bogwang-dong, Yongsan-gu",
     "location": {
       "lat": 37.5314682,
       "lng": 126.99736429999999
@@ -3006,17 +3006,17 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김경환",
+        "author": "Kyunghwan Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -3024,16 +3024,16 @@
   },
   {
     "place_id": "ChIJl0y-YbWjfDURrjKkzkGXRPY",
-    "display_name": "베이직 코튼",
-    "category": "의류점",
+    "display_name": "basic cotton",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 보광동 우사단로4길 36",
-    "short_address": "용산구 보광동 우사단로4길 36",
+    "address": "36 Usadan-ro 4-gil, Bogwang-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "36 Usadan-ro 4-gil, Bogwang-dong, Yongsan-gu",
     "location": {
       "lat": 37.5313034,
       "lng": 126.99867069999998
@@ -3052,31 +3052,31 @@
     "google_maps_url": "https://maps.google.com/?cid=17745474740642132654",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3b561be4c97:0xf6449741cea432ae!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 1:00 ~ 오후 7:00",
-      "화요일: 오전 1:00 ~ 오후 7:00",
-      "수요일: 오전 1:00 ~ 오후 7:00",
-      "목요일: 오전 1:00 ~ 오후 7:00",
-      "금요일: 오전 1:00 ~ 오후 7:00",
-      "토요일: 오전 1:00 ~ 오후 7:00",
-      "일요일: 오전 1:00 ~ 오후 7:00"
+      "Monday: 1:00 AM - 7:00 PM",
+      "Tuesday: 1:00 AM - 7:00 PM",
+      "Wednesday: 1:00 AM - 7:00 PM",
+      "Thursday: 1:00 AM - 7:00 PM",
+      "Friday: 1:00 AM - 7:00 PM",
+      "Saturday: 1:00 AM - 7:00 PM",
+      "Sunday: 1:00 AM - 7:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "두비두빱",
+        "author": "Doobie doo beat",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "8년 전",
-        "text": "생각보다 작았고, 제품 종류가 다양하지 않았다"
+        "relative_time": "8 years ago",
+        "text": "It was smaller than expected and the product variety was not diverse."
       }
     ],
     "photos": [
@@ -3085,8 +3085,8 @@
   },
   {
     "place_id": "ChIJyZs_P7WjfDURle-X128LiIQ",
-    "display_name": "무아애뚜아",
-    "category": "귀금속 상점",
+    "display_name": "Muaettuah",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "point_of_interest",
@@ -3094,8 +3094,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 우사단로10길 50",
-    "short_address": "용산구 우사단로10길 50",
+    "address": "50 Usadan-ro 10-gil, Yongsan-gu, Seoul, South Korea",
+    "short_address": "50 Usadan-ro 10-gil, Yongsan-gu",
     "location": {
       "lat": 37.5326582,
       "lng": 126.99819799999999
@@ -3114,56 +3114,56 @@
     "google_maps_url": "https://maps.google.com/?cid=9549895584825470869",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3b53f3f9bc9:0x84880b6fd797ef95!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 3:00",
-      "화요일: 오전 9:00 ~ 오후 9:00",
-      "수요일: 오전 9:00 ~ 오후 3:00, 오후 7:30~9:00",
-      "목요일: 오전 9:00 ~ 오후 6:30",
-      "금요일: 오전 9:00 ~ 오후 3:00, 오후 7:30~9:00",
-      "토요일: 오전 9:00 ~ 오후 9:00",
-      "일요일: 오전 9:00 ~ 오후 9:00"
+      "Monday: 9:00 AM - 3:00 PM",
+      "Tuesday: 9:00 AM - 9:00 PM",
+      "Wednesday: 9:00 AM - 3:00 PM, 7:30 - 9:00 PM",
+      "Thursday: 9:00 AM - 6:30 PM",
+      "Friday: 9:00 AM - 3:00 PM, 7:30 - 9:00 PM",
+      "Saturday: 9:00 AM - 9:00 PM",
+      "Sunday: 9:00 AM - 9:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김민서",
+        "author": "Minseo Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "안간사람은 있어도 한번간 사람은 없는곳\n아름다운원석들 품질좋은원석들을 품은\n이쁜 주얼리가 가득한곳\n빈손으로갔다가 10손가락 가득 끼고나옵니다.\n아기자기 빈티지 소품도 가득하고\n예약제다보니 사장님과 오손도손 맘편히\n나만의 악세사리를 고를수있어요.\n늘 애정합니다."
+        "relative_time": "5 years ago",
+        "text": "There are people who have never been there, but no one has been there once.\nBeautiful gemstones with good quality gemstones\nA place full of pretty jewelry\nYou go empty-handed and come out with 10 fingers full.\nFull of cute vintage props.\nSince it is a reservation system, you can comfortably spend time with the owner.\nYou can choose your own accessories.\nI always love you."
       },
       {
-        "author": "유진솔 (Jsol)",
+        "author": "Jinsol Eugene (Jsol)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "평소악세사리를 좋아하는 제가 반해버린 주얼리샵입니다. 흔하지않는 디자인과 독특함으로 한번착용하면 다른쥬얼리들도 재구매율100프로예요. 배송도 빠른편이라 만족입니다!❤️❤️"
+        "relative_time": "5 years ago",
+        "text": "This is a jewelry store that I fell in love with as I like accessories. Because of its uncommon design and uniqueness, once worn, the repurchase rate for other jewelry is 100%. I am satisfied because the delivery is also fast!❤️❤️"
       },
       {
-        "author": "윤형서",
+        "author": "Hyungseo Yoon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "예약제로 운영되고있어서 마음편하게 돌아볼 수 있고 원석들은 실물로 봐야 제대로 볼 수 있습니다 여러분 직접 방문해서 보시면 정말 다 가지고싶고 예쁜아이들 보면 열심히 일할 마음이 생겨요 ㅎㅎ 주얼리들도 종류별로 다있고 시계, 거울, 미니어처 소품들 앤틱하고 사랑스럽습니당 무엇보다 사장님이 엄청 친절하시고 위트있으셔요 히히 구경하다보면 시간이 훌쩍 가버립니당 꼭 방문 강추드려요!!"
+        "relative_time": "5 years ago",
+        "text": "It operates on a reservation system, so you can look around comfortably, and you can only see the stones properly when you see them in person. If you come and see them in person, I really want them all, and seeing the pretty kids makes me want to work hard. There are all kinds of jewelry, and the clocks, mirrors, and miniature items are antique and lovely. Above all, the owner is very kind and witty. Time flies when you look at them. I definitely recommend a visit!!"
       },
       {
-        "author": "Closet옷장",
+        "author": "ClosetCloset",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "2년 전",
-        "text": "예약 안 하고 가면 출입도 못 하게 하고 소리 지르는 곳, 보석 품질 보증서 안 줌, 강아지 있음, 불친절하니 다른 곳 가세요"
+        "relative_time": "2 years ago",
+        "text": "If you go without a reservation, they won't let you in, they will yell at you, they won't give you a jewelry quality guarantee, there are dogs, and they are unfriendly, so go somewhere else."
       },
       {
         "author": "Jae-hyuk Yang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -3176,16 +3176,16 @@
   },
   {
     "place_id": "ChIJc4Kqy26YfDURuL7QuJInLUg",
-    "display_name": "블루진밥",
-    "category": "의류점",
+    "display_name": "Blue Jean Rice",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 보광동 우사단로4길 39-1",
-    "short_address": "용산구 보광동 우사단로4길 39-1",
+    "address": "39-1, Usadan-ro 4-gil, Bogwang-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "39-1 Usadan-ro 4-gil, Bogwang-dong, Yongsan-gu",
     "location": {
       "lat": 37.5313766,
       "lng": 126.99891299999999
@@ -3204,18 +3204,18 @@
     "google_maps_url": "https://maps.google.com/?cid=5200856655802187448",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c986ecbaa8273:0x482d2792b8d0beb8!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 1:00~7:00",
-      "화요일: 오후 1:00~7:00",
-      "수요일: 오후 1:00~7:00",
-      "목요일: 오후 1:00~7:00",
-      "금요일: 오후 1:00~7:00",
-      "토요일: 오후 1:00~7:00",
-      "일요일: 오후 1:00~7:00"
+      "Monday: 1:00-7:00 PM",
+      "Tuesday: 1:00-7:00 PM",
+      "Wednesday: 1:00-7:00 PM",
+      "Thursday: 1:00-7:00 PM",
+      "Friday: 1:00-7:00 PM",
+      "Saturday: 1:00-7:00 PM",
+      "Sunday: 1:00-7:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3224,16 +3224,16 @@
   },
   {
     "place_id": "ChIJw2sDN7WjfDURrNhY1V8PXUQ",
-    "display_name": "보니타코스메틱",
-    "category": "화장품 판매점",
+    "display_name": "Bonita Cosmetic",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 한남동 732-22번지 용산구 서울특별시 KR",
-    "short_address": "한남동 732-22번지 용산구 서울특별시 KR",
+    "address": "732-22 Hannam-dong, Seoul, Republic of Korea, Yongsan-gu, Seoul KR",
+    "short_address": "732-22 Hannam-dong, Yongsan-gu, Seoul KR",
     "location": {
       "lat": 37.5329396,
       "lng": 126.99760339999999
@@ -3254,8 +3254,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3264,16 +3264,16 @@
   },
   {
     "place_id": "ChIJXSMCNbWjfDUR_ElfUz1l-Ag",
-    "display_name": "카지패션",
-    "category": "의류점",
+    "display_name": "kaji fashion",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원동 140-13번지 1층",
-    "short_address": "용산구 이태원동 140-13번지 1층",
+    "address": "1st floor, 140-13 Itaewon-dong, Yongsan-gu, Seoul, Korea",
+    "short_address": "1st floor, 140-13 Itaewon-dong, Yongsan-gu",
     "location": {
       "lat": 37.5330401,
       "lng": 126.9972276
@@ -3294,8 +3294,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3304,16 +3304,16 @@
   },
   {
     "place_id": "ChIJwc05WjWifDUReu4wuO8MiI8",
-    "display_name": "(주)동문상사",
-    "category": "신발 판매점",
+    "display_name": "Dongmun Trading Co., Ltd.",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 이태원동 15-17번지 1층 용산구 서울특별시 KR",
-    "short_address": "이태원동 15-17번지 1층 용산구 서울특별시 KR",
+    "address": "1st floor, 15-17 Itaewon-dong, Seoul, Republic of Korea, Yongsan-gu, Seoul KR",
+    "short_address": "1st floor, 15-17 Itaewon-dong, Yongsan-gu, Seoul KR",
     "location": {
       "lat": 37.5317382,
       "lng": 126.9962889
@@ -3334,7 +3334,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3343,8 +3343,8 @@
   },
   {
     "place_id": "ChIJccETdrWjfDURcctD-yQ5UCk",
-    "display_name": "후룻샵HOOROOTSHOP",
-    "category": "여성의류점",
+    "display_name": "FRUIT SHOPHOOROOTSHOP",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "point_of_interest",
@@ -3352,8 +3352,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 보광동 265-201번지 201호 용산구 서울특별시 KR",
-    "short_address": "보광동 265-201번지 201호 용산구 서울특별시 KR",
+    "address": "#201, 265-201 Bogwang-dong, Seoul, Republic of Korea, Yongsan-gu, Seoul KR",
+    "short_address": "Room 201, 265-201 Bogwang-dong, Yongsan-gu, Seoul KR",
     "location": {
       "lat": 37.5316635,
       "lng": 126.9997012
@@ -3374,8 +3374,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3384,16 +3384,16 @@
   },
   {
     "place_id": "ChIJa7BpSjWifDURJhgtnKuwdtg",
-    "display_name": "타미네",
-    "category": "의류점",
+    "display_name": "Tamine",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 보광동 274-17번지 지상1층 용산구 서울특별시 KR",
-    "short_address": "보광동 274-17번지 지상1층 용산구 서울특별시 KR",
+    "address": "1st floor, 274-17 Bogwang-dong, Seoul, Republic of Korea, Yongsan-gu, Seoul KR",
+    "short_address": "274-17 Bogwang-dong, 1st floor, Yongsan-gu, Seoul KR",
     "location": {
       "lat": 37.5307925,
       "lng": 126.99686050000001
@@ -3414,8 +3414,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3425,14 +3425,14 @@
   {
     "place_id": "ChIJx7GRMLWjfDURdq3PGyHSKwQ",
     "display_name": "VINTORI",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5332647,
@@ -3454,8 +3454,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3464,7 +3464,7 @@
         "author": "aesthet. co",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -3475,16 +3475,16 @@
   },
   {
     "place_id": "ChIJ-QpzNACjfDURWndeMC26GRs",
-    "display_name": "마칭드럼스 marching drums",
-    "category": "의류점",
+    "display_name": "marching drums",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 보광로 78",
-    "short_address": "용산구 보광로 78",
+    "address": "78 Bogwang-ro, Yongsan-gu, Seoul, South Korea",
+    "short_address": "78 Bogwang-ro, Yongsan-gu",
     "location": {
       "lat": 37.5304297,
       "lng": 126.99698059999999
@@ -3503,18 +3503,18 @@
     "google_maps_url": "https://maps.google.com/?cid=1952796616689612634",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca30034730af9:0x1b19ba2d305e775a!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 휴무일",
-      "수요일: 오후 2:00~8:00",
-      "목요일: 오후 2:00~8:00",
-      "금요일: 오후 2:00~8:00",
-      "토요일: 오후 2:00~8:00",
-      "일요일: 오후 2:00~8:00"
+      "Monday: Closed day",
+      "Tuesday: Closed",
+      "Wednesday: 2:00-8:00 PM",
+      "Thursday: 2:00-8:00 PM",
+      "Friday: 2:00-8:00 PM",
+      "Saturday: 2:00-8:00 PM",
+      "Sunday: 2:00-8:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3524,15 +3524,15 @@
   {
     "place_id": "ChIJI5waoqKjfDUR7vrRAEv5IcI",
     "display_name": "organicorgasm",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 보광로 76 1층",
-    "short_address": "용산구 보광로 76 1층",
+    "address": "1st floor, 76 Bogwang-ro, Yongsan-gu, Seoul, South Korea",
+    "short_address": "1st floor, 76 Bogwang-ro, Yongsan-gu",
     "location": {
       "lat": 37.530319,
       "lng": 126.99700299999999
@@ -3551,18 +3551,18 @@
     "google_maps_url": "https://maps.google.com/?cid=13988736018121095918",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3a2a21a9c23:0xc221f94b00d1faee!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 2:00 ~ 오후 8:00",
-      "수요일: 오후 2:00~8:00",
-      "목요일: 오후 2:00~8:00",
-      "금요일: 오후 2:00~8:00",
-      "토요일: 오후 2:00~8:00",
-      "일요일: 오후 2:00~8:00"
+      "Monday: Closed day",
+      "Tuesday: 2:00 AM - 8:00 PM",
+      "Wednesday: 2:00-8:00 PM",
+      "Thursday: 2:00-8:00 PM",
+      "Friday: 2:00-8:00 PM",
+      "Saturday: 2:00-8:00 PM",
+      "Sunday: 2:00-8:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3575,16 +3575,16 @@
   },
   {
     "place_id": "ChIJh2oYMzWifDURgWSNLeVtHKU",
-    "display_name": "리브라슈즈",
-    "category": "신발 판매점",
+    "display_name": "Libra shoes",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 일부 우측 번지 1층 238-43 KR 서울특별시 용산구 보광동",
-    "short_address": "일부 우측 번지 1층 238-43 KR 서울특별시 용산구 보광동",
+    "address": "Republic of Korea Partial right street address 1st floor 238-43 KR Bogwang-dong, Yongsan-gu, Seoul",
+    "short_address": "Partial right street address 1st floor 238-43 KR Bogwang-dong, Yongsan-gu, Seoul",
     "location": {
       "lat": 37.5302764,
       "lng": 126.99699410000001
@@ -3605,7 +3605,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3614,16 +3614,16 @@
   },
   {
     "place_id": "ChIJh2oYMzWifDURGcx1T_G2-gY",
-    "display_name": "지기빈티지",
-    "category": "의류점",
+    "display_name": "Ziggy Vintage",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 보광동 번지 1층 238-43 지기빈티지",
-    "short_address": "용산구 보광동 번지 1층 238-43 지기빈티지",
+    "address": "Ziggy Vintage, 1st floor, Bogwang-dong, Yongsan-gu, Seoul, Republic of Korea, 238-43",
+    "short_address": "Ziggy Vintage, 1st floor, Bogwang-dong, Yongsan-gu, 238-43",
     "location": {
       "lat": 37.5302764,
       "lng": 126.99699410000001
@@ -3644,8 +3644,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3654,16 +3654,16 @@
   },
   {
     "place_id": "ChIJNUQecQCjfDUR79WLgrUhy90",
-    "display_name": "독립군 빈티지",
-    "category": "의류점",
+    "display_name": "independence army vintage",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 보광로 90 202호",
-    "short_address": "용산구 보광로 90 202호",
+    "address": "#202, 90 Bogwang-ro, Yongsan-gu, Seoul, Republic of Korea",
+    "short_address": "#202, 90 Bogwang-ro, Yongsan-gu",
     "location": {
       "lat": 37.5311078,
       "lng": 126.99582989999999
@@ -3684,8 +3684,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3695,15 +3695,15 @@
   {
     "place_id": "ChIJZ7B-hUCjfDURQosl50rwZno",
     "display_name": "Graines.Demain",
-    "category": "화장품 판매점",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원동 137-3",
-    "short_address": "용산구 이태원동 137-3",
+    "address": "137-3 Itaewon-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "137-3 Itaewon-dong, Yongsan-gu",
     "location": {
       "lat": 37.5335615,
       "lng": 126.9964572
@@ -3722,18 +3722,18 @@
     "google_maps_url": "https://maps.google.com/?cid=8820001124747938626",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca340857eb067:0x7a66f04ae7258b42!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00~11:00",
-      "화요일: 오전 9:00~11:00",
-      "수요일: 오전 9:00~11:00",
-      "목요일: 오전 9:00~11:00",
-      "금요일: 오전 9:00~11:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00-11:00 AM",
+      "Tuesday: 9:00-11:00 AM",
+      "Wednesday: 9:00-11:00 AM",
+      "Thursday: 9:00-11:00 AM",
+      "Friday: 9:00-11:00 AM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3742,16 +3742,16 @@
   },
   {
     "place_id": "ChIJabCJ1EqifDURzkt4wMfQRlE",
-    "display_name": "웨어하우스",
-    "category": "의류점",
+    "display_name": "warehouse",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 이태원동 136-30번지 하동 1층 용산구 서울특별시 KR",
-    "short_address": "이태원동 136-30번지 하동 1층 용산구 서울특별시 KR",
+    "address": "1st floor, Hadong, 136-30 Itaewon-dong, Seoul, Republic of Korea, Yongsan-gu, Seoul KR",
+    "short_address": "136-30 Itaewon-dong, 1st floor, Hadong, Yongsan-gu, Seoul KR",
     "location": {
       "lat": 37.533924999999996,
       "lng": 126.99692269999998
@@ -3772,18 +3772,18 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "조석현 (Dominic)",
+        "author": "Jo Seok-hyeon (Dominic)",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       }
     ],
@@ -3791,8 +3791,8 @@
   },
   {
     "place_id": "ChIJedi5cW6jfDURjCKrZ-aM17E",
-    "display_name": "벨르스토어",
-    "category": "여성의류점",
+    "display_name": "Belle Store",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "clothing_store",
@@ -3800,8 +3800,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 한남동 우사단로10라길 13 녹색문 1층",
-    "short_address": "용산구 한남동 우사단로10라길 13 녹색문 1층",
+    "address": "1st floor, Green Gate, 13 Usadan-ro 10ra-gil, Hannam-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "1st floor, Green Gate, 13 Usadan-ro 10ra-gil, Hannam-dong, Yongsan-gu",
     "location": {
       "lat": 37.5323492,
       "lng": 127.00241489999999
@@ -3820,25 +3820,25 @@
     "google_maps_url": "https://maps.google.com/?cid=12814866185915671180",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca36e71b9d879:0xb1d78ce667ab228c!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 6:00",
-      "화요일: 오전 10:00 ~ 오후 6:00",
-      "수요일: 오전 10:00 ~ 오후 6:00",
-      "목요일: 오전 10:00 ~ 오후 6:00",
-      "금요일: 오전 10:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 6:00 PM",
+      "Tuesday: 10:00 AM - 6:00 PM",
+      "Wednesday: 10:00 AM - 6:00 PM",
+      "Thursday: 10:00 AM - 6:00 PM",
+      "Friday: 10:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": null,
@@ -3857,16 +3857,16 @@
   },
   {
     "place_id": "ChIJ4-XE6rWjfDUR3EHX97_vsak",
-    "display_name": "자락 셀렉트",
-    "category": "의류점",
+    "display_name": "Hem select",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 265-807 1층 용산구 서울특별시 KR",
-    "short_address": "265-807 1층 용산구 서울특별시 KR",
+    "address": "265-807 1st floor, Seoul, South Korea Yongsan-gu Seoul KR",
+    "short_address": "265-807 1st floor, Yongsan-gu, Seoul KR",
     "location": {
       "lat": 37.531365199999996,
       "lng": 127.0011657
@@ -3885,18 +3885,18 @@
     "google_maps_url": "https://maps.google.com/?cid=12227818071063478748",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3b5eac4e5e3:0xa9b1efbff7d741dc!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 휴무일",
-      "수요일: 오후 12:30~7:30",
-      "목요일: 오전 12:30 ~ 오후 7:30",
-      "금요일: 오후 12:30~7:30",
-      "토요일: 오후 12:00~6:00",
-      "일요일: 오후 12:00~6:00"
+      "Monday: Closed day",
+      "Tuesday: Closed",
+      "Wednesday: 12:30-7:30 PM",
+      "Thursday: 12:30 AM - 7:30 PM",
+      "Friday: 12:30-7:30 PM",
+      "Saturday: 12:00-6:00 PM",
+      "Sunday: 12:00-6:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3916,16 +3916,16 @@
   },
   {
     "place_id": "ChIJVzb5vrWjfDURlRHlBaUqFPU",
-    "display_name": "우라빈티지",
-    "category": "의류점",
+    "display_name": "Woora Vintage",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 한남동 764 14번지 우측점포",
-    "short_address": "용산구 한남동 764 14번지 우측점포",
+    "address": "Right store, 764 14th Hannam-dong, Yongsan-gu, Seoul, Korea",
+    "short_address": "Store on the right, 764 14th Street, Hannam-dong, Yongsan-gu",
     "location": {
       "lat": 37.5317144,
       "lng": 127.00092020000001
@@ -3946,7 +3946,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3955,8 +3955,8 @@
   },
   {
     "place_id": "ChIJ_-JsocajfDURDH7lSTPvKIU",
-    "display_name": "이미스 플래그십 스토어 한남",
-    "category": "의류점",
+    "display_name": "Imis Flagship Store Hannam",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "womens_clothing_store",
@@ -3964,8 +3964,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 대사관로 36",
-    "short_address": "용산구 대사관로 36",
+    "address": "36 Daesagsa-ro, Yongsan-gu, Seoul, South Korea",
+    "short_address": "36 Daesagsa-ro, Yongsan-gu",
     "location": {
       "lat": 37.533425,
       "lng": 127.00207950000001
@@ -3984,20 +3984,20 @@
     "google_maps_url": "https://maps.google.com/?cid=9595182009674989068",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3c6a16ce2ff:0x8528ef3349e57e0c!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 12:00~7:30",
-      "화요일: 오후 12:00~7:30",
-      "수요일: 오후 12:00~7:30",
-      "목요일: 오후 12:00~7:30",
-      "금요일: 오후 12:00~8:00",
-      "토요일: 오후 12:00~8:00",
-      "일요일: 오후 12:00~8:00"
+      "Monday: 12:00-7:30 PM",
+      "Tuesday: 12:00-7:30 PM",
+      "Wednesday: 12:00-7:30 PM",
+      "Thursday: 12:00-7:30 PM",
+      "Friday: 12:00-8:00 PM",
+      "Saturday: 12:00-8:00 PM",
+      "Sunday: 12:00-8:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4007,36 +4007,36 @@
         "author": "Minnie Meaw",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "9달 전",
-        "text": "แน่นอนค่ะ นี่คือคำแปลเป็นภาษาเกาหลีที่สุภาพแต่ชัดเจนในการคอมเพลน:\n\n가게는 인테리어도 예쁘고 분위기도 좋았지만, 직원들이 매우 불친절했습니다.\n직원들이 모여서 자기들끼리만 이야기하고, 손님에게는 관심이 없어 보였습니다.\n질문을 해도 얼굴을 찡그리며 대답하고, 서비스 마인드가 전혀 없었습니다.\n마치 억지로 일하는 것처럼 보였어요.\n이 정도로 유명한 브랜드라면, 직원의 서비스 수준도 그에 걸맞아야 한다고 생각합니다."
+        "relative_time": "9 months ago",
+        "text": "แน่นอนค่ะ นี่คือคำแปลเป็นภาษาเกาหลีที ่สุภาพแต่ชัดเจนในการคอมเพลน:\n\nThe store had a nice interior and nice atmosphere, but the staff was very unfriendly.\nThe employees gathered together, talked among themselves, and seemed uninterested in the customers.\nEven when I asked a question, he answered with a frown on his face and had no service mind at all.\nIt seemed like he was forced to work.\nI think that for a brand this famous, the service level of its employees should also match it."
       },
       {
-        "author": "이동현 (커넥터리)",
+        "author": "Lee Dong-hyun (connector)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "매장애 물건이 많지 않다고 들었는데 재고가 넉넉히 있더라.\n좋은 타이밍에 방문한건지 원래 넉넉한건지..\n예술적인 조형물들과 인테리어를 현대적으로 꾸며놨다.\n우리나라 사람보다 외국인 손님들이 많더라.\n외국인들에게 인기가 좋은듯하다.\n\nInsta. connector_lee"
+        "relative_time": "2 years ago",
+        "text": "I heard that the store didn't have many items, but they had plenty in stock.\nDid I visit at a good time or was there always enough space?\nArtistic sculptures and interiors are decorated in a modern way.\nThere were more foreign customers than Koreans.\nIt seems to be popular with foreigners.\n\nInsta. connector_lee"
       },
       {
-        "author": "성스타 (뉴스타만세)",
+        "author": "Seongstar (Long Live New Star)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "이 비싼땅에 저런 여유로운 공간이라니 👍"
+        "relative_time": "2 years ago",
+        "text": "Such a relaxing space on this expensive land 👍"
       },
       {
         "author": "吳海寶",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7달 전",
-        "text": "9월 2일에 갔어요. 명동보다 훨씬 다양한 스타일이 있고, 세금 환급도 가능해요. 아쉽게도 직원들이 좀 무뚝뚝했어요. 짧은 머리 직원 한 분은 정말 친절하셨어요."
+        "relative_time": "7 months ago",
+        "text": "I went on September 2nd. There are a lot more styles than Myeongdong, and tax refunds are available. Unfortunately, the staff were a bit blunt. One staff member with short hair was really friendly."
       },
       {
         "author": "Bailey Chang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "매장은 꽤 넓습니다. 필요한 물건이 있으면 직원에게 작은 메모지에 적어달라고 한 후, 계산대에서 계산하고 물건을 가져가시면 됩니다. 아쉽게도 세금 환급은 불가능합니다.\n\n매장 밖에는 차량 5대 정도를 주차할 수 있는 주차장이 있습니다."
+        "relative_time": "2 years ago",
+        "text": "The store is quite spacious. If you need something, ask the staff to write it down on a small note, then pay at the cash register and take the item. Unfortunately, tax refunds are not possible.\n\nThere is a parking lot outside the store that can accommodate about 5 cars."
       }
     ],
     "photos": [
@@ -4055,7 +4055,7 @@
   {
     "place_id": "ChIJj6SaawCjfDUR1sxXUz36qFQ",
     "display_name": "Mango Many Please Flagship Store",
-    "category": "여성의류점",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "clothing_store",
@@ -4063,8 +4063,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 대사관로 40",
-    "short_address": "용산구 대사관로 40",
+    "address": "40 Daesagsa-ro, Yongsan-gu, Seoul, South Korea",
+    "short_address": "40 Daesagsa-ro, Yongsan-gu",
     "location": {
       "lat": 37.533474,
       "lng": 127.00233870000001
@@ -4083,50 +4083,50 @@
     "google_maps_url": "https://maps.google.com/?cid=6100400836571548886",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3006b9aa48f:0x54a8fa3d5357ccd6!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 12:00~8:00",
-      "화요일: 오후 12:00~8:00",
-      "수요일: 오후 12:00~8:00",
-      "목요일: 오후 12:00~8:00",
-      "금요일: 오후 12:00~8:00",
-      "토요일: 오후 12:00~8:00",
-      "일요일: 오후 12:00~8:00"
+      "Monday: 12:00-8:00 PM",
+      "Tuesday: 12:00-8:00 PM",
+      "Wednesday: 12:00-8:00 PM",
+      "Thursday: 12:00-8:00 PM",
+      "Friday: 12:00-8:00 PM",
+      "Saturday: 12:00-8:00 PM",
+      "Sunday: 12:00-8:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "강보라",
+        "author": "River Bora",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "지나가다 들렸는데 입구랑 정원이 너무 이쁜 매장이였어요! 🤍 직원분도 친절하게 응대해주시고 피팅룸이 크고 밝아서 편하게 입어볼 수 있었어요! 한남동 들리면 둘러보기 좋을것 같아요 추천!!!! 🫧"
+        "relative_time": "4 months ago",
+        "text": "I stopped by while passing by and it was a store with a very pretty entrance and garden! 🤍 The staff responded kindly and the fitting room was large and bright, so I was able to try on clothes comfortably! I think it would be nice to take a look around if you stop by Hannam-dong. Recommended!!!! 🫧"
       },
       {
         "author": "kiho Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3달 전",
-        "text": "비싸지않은 옷가게\n점원분은 상냥한웃음\n구경하러들어가서 직원분때문에 구매"
+        "relative_time": "3 months ago",
+        "text": "Inexpensive clothing store\nThe clerk smiles kindly.\nI went in to take a look and bought it because of the staff."
       },
       {
-        "author": "문곰",
+        "author": "moon bear",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "이쁜 옷 너무 많고 점원분들 너무 친절해요 !"
+        "relative_time": "4 months ago",
+        "text": "There are so many pretty clothes and the store clerks are so friendly!"
       },
       {
         "author": "e o",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1주 전",
-        "text": "금요일 저녁 여러 고객이있었습니다. 점원은 풀어 놓아주는 감기로, 천천히 볼 수 있었습니다. 테이스트는 the barnnet 같은 분위기입니다만, 가격은 이쪽이 조금 저렴합니다."
+        "relative_time": "1 week ago",
+        "text": "We had several customers on a Friday evening. The clerk was able to watch slowly as he let go of the cold. The taste is like the barnnet, but the prices are a little cheaper here."
       }
     ],
     "photos": [
@@ -4140,8 +4140,8 @@
   },
   {
     "place_id": "ChIJOx16oLajfDURd_uv9xMIWHQ",
-    "display_name": "릴레부르",
-    "category": "여성의류점",
+    "display_name": "Lillebourg",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "clothing_store",
@@ -4149,8 +4149,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 한남동 653 74번지",
-    "short_address": "용산구 한남동 653 74번지",
+    "address": "653 74 Hannam-dong, Yongsan-gu, Seoul, Korea",
+    "short_address": "653 74th Hannam-dong, Yongsan-gu",
     "location": {
       "lat": 37.5334474,
       "lng": 127.002506
@@ -4169,21 +4169,21 @@
     "google_maps_url": "https://maps.google.com/?cid=8383459588203084663",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3b6a07a1d3b:0x74580813f7affb77!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 1:00~8:30",
-      "화요일: 오후 12:00~8:00",
-      "수요일: 오후 1:00~8:30",
-      "목요일: 오후 1:00~8:30",
-      "금요일: 오후 1:00~8:30",
-      "토요일: 오후 1:00~8:30",
-      "일요일: 오후 12:00~8:30"
+      "Monday: 1:00-8:30 PM",
+      "Tuesday: 12:00-8:00 PM",
+      "Wednesday: 1:00-8:30 PM",
+      "Thursday: 1:00-8:30 PM",
+      "Friday: 1:00-8:30 PM",
+      "Saturday: 1:00-8:30 PM",
+      "Sunday: 12:00-8:30 PM"
     ],
     "services": [
-      "배달",
-      "화장실"
+      "delivery",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4193,15 +4193,15 @@
         "author": "HJ Lee (Kelly)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "컨셉이 다양한 옷들로 채워진 앤틱분위기 의상실. 멋진 사람들은 분명 좋아하겠어...🥲"
+        "relative_time": "6 months ago",
+        "text": "An antique-style clothing room filled with clothes of various concepts. Cool people will definitely like it...🥲"
       },
       {
         "author": "Hannam Relaisblu",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "특별한 드레스와 실크 & 캐시미어 전문점"
+        "relative_time": "1 year ago",
+        "text": "Specialty dress and silk & cashmere specialty store"
       }
     ],
     "photos": [
@@ -4215,16 +4215,16 @@
   },
   {
     "place_id": "ChIJl44WPbSjfDURONI_criCsGI",
-    "display_name": "MONOLIK Showroom : 모놀릭",
-    "category": "의류점",
+    "display_name": "MONOLIK Showroom : Monolik",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 653-26 지하",
-    "short_address": "용산구 653-26 지하",
+    "address": "Basement, 653-26, Yongsan-gu, Seoul, South Korea",
+    "short_address": "Basement, 653-26, Yongsan-gu",
     "location": {
       "lat": 37.533493,
       "lng": 127.00168599999999
@@ -4243,18 +4243,18 @@
     "google_maps_url": "https://maps.google.com/?cid=7111327540320391736",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3b43d168e97:0x62b082b8723fd238!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 7:00",
-      "화요일: 오전 10:00 ~ 오후 7:00",
-      "수요일: 오전 10:00 ~ 오후 7:00",
-      "목요일: 오전 10:00 ~ 오후 7:00",
-      "금요일: 오전 10:00 ~ 오후 7:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 7:00 PM",
+      "Tuesday: 10:00 AM - 7:00 PM",
+      "Wednesday: 10:00 AM - 7:00 PM",
+      "Thursday: 10:00 AM - 7:00 PM",
+      "Friday: 10:00 AM - 7:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4264,15 +4264,15 @@
   {
     "place_id": "ChIJKbjfVvWjfDUR2hHnXn4O19o",
     "display_name": "Korean store belarus",
-    "category": "화장품 판매점",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구",
-    "short_address": "용산구",
+    "address": "Yongsan-gu, Seoul, South Korea",
+    "short_address": "Yongsan-gu",
     "location": {
       "lat": 37.5331725,
       "lng": 127.00061120000001
@@ -4293,8 +4293,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4304,16 +4304,16 @@
   },
   {
     "place_id": "ChIJLXVlEZ6jfDURWye9TvmPZF8",
-    "display_name": "더애쉴린 The Ashlynn - Pam’s Clothing Store",
-    "category": "의류점",
+    "display_name": "The Ashlynn - Pam’s Clothing Store",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "2F, 653-28 한남동 용산구 서울특별시 대한민국",
-    "short_address": "2F, 653-28 한남동 용산구",
+    "address": "2F, 653-28 Hannam-dong, Yongsan-gu, Seoul, Republic of Korea",
+    "short_address": "2F, 653-28 Hannam-dong, Yongsan-gu",
     "location": {
       "lat": 37.533586799999995,
       "lng": 127.0011418
@@ -4332,21 +4332,21 @@
     "google_maps_url": "https://maps.google.com/?cid=6873777232204867419",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca39e1165752d:0x5f648ff94ebd275b!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 12:00~7:00",
-      "화요일: 오후 12:00~7:00",
-      "수요일: 오후 12:00~7:00",
-      "목요일: 오후 12:00~7:00",
-      "금요일: 오후 12:00~7:00",
-      "토요일: 오후 12:00~7:00",
-      "일요일: 오후 12:00~7:00"
+      "Monday: 12:00-7:00 PM",
+      "Tuesday: 12:00-7:00 PM",
+      "Wednesday: 12:00-7:00 PM",
+      "Thursday: 12:00-7:00 PM",
+      "Friday: 12:00-7:00 PM",
+      "Saturday: 12:00-7:00 PM",
+      "Sunday: 12:00-7:00 PM"
     ],
     "services": [
-      "배달",
-      "화장실"
+      "delivery",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4367,16 +4367,16 @@
   },
   {
     "place_id": "ChIJm6GjQLSjfDURJ-EA_6dk2pk",
-    "display_name": "에잇피플",
-    "category": "의류점",
+    "display_name": "Eight People",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 대사관로12길 4-8",
-    "short_address": "용산구 대사관로12길 4-8",
+    "address": "4-8 Daesang-ro 12-gil, Yongsan-gu, Seoul, South Korea",
+    "short_address": "4-8, Daesang-ro 12-gil, Yongsan-gu",
     "location": {
       "lat": 37.5335774,
       "lng": 127.0010805
@@ -4395,58 +4395,58 @@
     "google_maps_url": "https://maps.google.com/?cid=11086284105426460967",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3b440a3a19b:0x99da64a7ff00e127!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 8:00",
-      "화요일: 오전 11:00 ~ 오후 8:00",
-      "수요일: 오전 11:00 ~ 오후 8:00",
-      "목요일: 오전 11:00 ~ 오후 8:00",
-      "금요일: 오전 11:00 ~ 오후 8:00",
-      "토요일: 오전 11:00 ~ 오후 8:00",
-      "일요일: 휴무일"
+      "Monday: 11:00 AM - 8:00 PM",
+      "Tuesday: 11:00 AM - 8:00 PM",
+      "Wednesday: 11:00 AM - 8:00 PM",
+      "Thursday: 11:00 AM - 8:00 PM",
+      "Friday: 11:00 AM - 8:00 PM",
+      "Saturday: 11:00 AM - 8:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김도훈",
+        "author": "Kim Do-hoon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "얼마전에 정장 맞췄는데 친절하지만 너무 부담스럽지도 않고 프로답게 잘 도와주십니다. 가격이 조금 높긴한데 옷이 너무 멋져서 돈 값 합니다."
+        "relative_time": "3 years ago",
+        "text": "I recently got a suit fitted, and he was friendly but not too burdensome and helped me like a professional. The price is a little high, but the clothes are so nice that it's worth the money."
       },
       {
         "author": "JaeKwan Sim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "옷에 대한 관점, 고객의 필요에 대한 해석, 정중하면서도 과하지 않은 편안한 응대, 결과물의 실루엣과 완성도, 가격까지 만족스럽습니다."
+        "relative_time": "4 years ago",
+        "text": "I am satisfied with the perspective on clothes, the interpretation of the customer's needs, the polite but not excessive and comfortable response, the silhouette and completeness of the result, and the price."
       },
       {
         "author": "Christian Elias Schneider",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "이곳은 제가 거의 8년 동안 정장과 셔츠를 구매할 때 자주 이용하는 곳인데, 항상 친절하고 전문적인 대우를 받았습니다. 무엇보다 중요한 것은, 완제품의 품질이 정말 훌륭하고 가격도 합리적이라는 것입니다."
+        "relative_time": "2 years ago",
+        "text": "This has been my go-to place for suits and shirts for almost 8 years, and I've always been treated kindly and professionally. Most importantly, the quality of the finished product is really great and the price is reasonable."
       },
       {
         "author": "M J",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "지금까지 제가 가본 재단사 중 최고예요!"
+        "relative_time": "1 year ago",
+        "text": "This is the best tailor I've ever been to!"
       },
       {
         "author": "Shuto Nakamura",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       }
     ],
@@ -4456,8 +4456,8 @@
   },
   {
     "place_id": "ChIJo_N73xWjfDUReoirYRw79rM",
-    "display_name": "GANISONG 가니송",
-    "category": "여성의류점",
+    "display_name": "GANISONG",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "clothing_store",
@@ -4465,8 +4465,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 대사관로 41 4층",
-    "short_address": "용산구 대사관로 41 4층",
+    "address": "4th floor, 41 Embassy-ro, Yongsan-gu, Seoul, South Korea",
+    "short_address": "4th floor, 41 Daesagsa-ro, Yongsan-gu",
     "location": {
       "lat": 37.5337122,
       "lng": 127.00277419999999
@@ -4485,16 +4485,16 @@
     "google_maps_url": "https://maps.google.com/?cid=12967617170143676538",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca315df7bf3a3:0xb3f63b1c61ab887a!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 11:00 ~ 오후 8:00",
-      "수요일: 오전 11:00 ~ 오후 8:00",
-      "목요일: 오전 11:00 ~ 오후 8:00",
-      "금요일: 오전 11:00 ~ 오후 8:00",
-      "토요일: 오전 11:00 ~ 오후 8:00",
-      "일요일: 오전 11:00 ~ 오후 8:00"
+      "Monday: Closed day",
+      "Tuesday: 11:00 AM - 8:00 PM",
+      "Wednesday: 11:00 AM - 8:00 PM",
+      "Thursday: 11:00 AM - 8:00 PM",
+      "Friday: 11:00 AM - 8:00 PM",
+      "Saturday: 11:00 AM - 8:00 PM",
+      "Sunday: 11:00 AM - 8:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -4511,7 +4511,7 @@
   {
     "place_id": "ChIJ-Q1FNQCjfDURwNnCOg09zg8",
     "display_name": "Theballon Hannam Show Room",
-    "category": "여성의류점",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "clothing_store",
@@ -4519,8 +4519,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 Seoul, Yongsan District, Daesagwan-ro, 41 1f",
-    "short_address": "용산구 대사관로 41 1f",
+    "address": "South Korea Seoul, Yongsan District, Daesagwan-ro, 41 1f",
+    "short_address": "41 Daesagsa-ro 1f, Yongsan-gu",
     "location": {
       "lat": 37.5337122,
       "lng": 127.00277419999999
@@ -4541,8 +4541,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4551,8 +4551,8 @@
   },
   {
     "place_id": "ChIJgRpKPQCjfDUR4bpBzAiGORs",
-    "display_name": "VET WOMAN HANNAM (벳우먼 한남 스토어)",
-    "category": "여성의류점",
+    "display_name": "VET WOMAN HANNAM (VET WOMAN HANNAM Store)",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "clothing_store",
@@ -4560,8 +4560,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 대사관로 41 1f",
-    "short_address": "용산구 대사관로 41 1f",
+    "address": "1f, 41 Embassy-ro, Yongsan-gu, Seoul, South Korea",
+    "short_address": "41 Daesagsa-ro 1f, Yongsan-gu",
     "location": {
       "lat": 37.5337122,
       "lng": 127.00277419999999
@@ -4582,8 +4582,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4593,15 +4593,15 @@
   {
     "place_id": "ChIJkdt6x7ajfDURNLdYvr02GV0",
     "display_name": "M&M",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 한남동 653-1",
-    "short_address": "용산구 한남동 653-1",
+    "address": "653-1 Hannam-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "653-1 Hannam-dong, Yongsan-gu",
     "location": {
       "lat": 37.533206,
       "lng": 127.00382909999999
@@ -4622,8 +4622,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4632,16 +4632,16 @@
   },
   {
     "place_id": "ChIJubeZ6IZbezURLimQhSd6DW0",
-    "display_name": "프릿 시그니처 하우스 in 한남",
-    "category": "귀금속 상점",
+    "display_name": "Frit Signature House in Hannam",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 한남동 657-121",
-    "short_address": "용산구 한남동 657-121",
+    "address": "657-121 Hannam-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "657-121 Hannam-dong, Yongsan-gu",
     "location": {
       "lat": 37.533737699999996,
       "lng": 127.0027782
@@ -4660,18 +4660,18 @@
     "google_maps_url": "https://maps.google.com/?cid=7858071234994514222",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357b5b86e899b7b9:0x6d0d7a278590292e!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 8:00",
-      "화요일: 오전 11:00 ~ 오후 8:00",
-      "수요일: 오전 11:00 ~ 오후 8:00",
-      "목요일: 휴무일",
-      "금요일: 오전 11:00 ~ 오후 8:00",
-      "토요일: 오전 11:00 ~ 오후 8:00",
-      "일요일: 오전 11:00 ~ 오후 8:00"
+      "Monday: 11:00 AM - 8:00 PM",
+      "Tuesday: 11:00 AM - 8:00 PM",
+      "Wednesday: 11:00 AM - 8:00 PM",
+      "Thursday: Closed",
+      "Friday: 11:00 AM - 8:00 PM",
+      "Saturday: 11:00 AM - 8:00 PM",
+      "Sunday: 11:00 AM - 8:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4683,8 +4683,8 @@
   },
   {
     "place_id": "ChIJB-qPPACjfDURVVZV0G2ighA",
-    "display_name": "폴로 랄프로렌 여성 플래그쉽 사운즈한남 polo ralphlauren sounds hannam",
-    "category": "여성의류점",
+    "display_name": "polo ralphlauren women's flagship sounds hannam polo ralphlauren sounds hannam",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "clothing_store",
@@ -4692,8 +4692,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 3F 2F KR 서울특별시 용산구 대사관로 35 사운즈한남 BC동 1F",
-    "short_address": "3F KR 서울특별시 용산구 대사관로 35 사운즈한남 BC동 1F 2F",
+    "address": "Republic of Korea 3F 2F KR Sounds Hannam BC Building 1F, 35 Daesagsa-ro, Yongsan-gu, Seoul",
+    "short_address": "3F KR 1F 2F, Sounds Hannam BC Building, 35 Daesagsa-ro, Yongsan-gu, Seoul",
     "location": {
       "lat": 37.533891100000005,
       "lng": 127.0019311
@@ -4712,52 +4712,52 @@
     "google_maps_url": "https://maps.google.com/?cid=1189691844109620821",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3003c8fea07:0x1082a26dd0555655!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 9:00",
-      "화요일: 오전 10:30 ~ 오후 9:00",
-      "수요일: 오전 10:30 ~ 오후 9:00",
-      "목요일: 오전 10:30 ~ 오후 9:00",
-      "금요일: 오전 10:30 ~ 오후 9:00",
-      "토요일: 오전 10:30 ~ 오후 9:00",
-      "일요일: 오전 10:30 ~ 오후 9:00"
+      "Monday: 10:30 AM - 9:00 PM",
+      "Tuesday: 10:30 AM - 9:00 PM",
+      "Wednesday: 10:30 AM - 9:00 PM",
+      "Thursday: 10:30 AM - 9:00 PM",
+      "Friday: 10:30 AM - 9:00 PM",
+      "Saturday: 10:30 AM - 9:00 PM",
+      "Sunday: 10:30 AM - 9:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "솔솔",
+        "author": "Solsol",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "여성복 플래그쉽 매장\n매우 친절하고 상품 종류도 다양해요\n스토어 한정 상품도 있고 눈이 즐거움 ^^\n발렛파킹도 매우 잘되어 있음"
+        "relative_time": "4 months ago",
+        "text": "Women's clothing flagship store\nVery friendly and has a variety of products.\nThere are also store-exclusive products, so it’s a feast for the eyes ^^\nValet parking is also very good."
       },
       {
         "author": "carl hong",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5달 전",
-        "text": "입구부터 인상적이었습니다"
+        "relative_time": "5 months ago",
+        "text": "It was impressive from the entrance."
       },
       {
-        "author": "임잡튜버",
+        "author": "Imjab Tuber",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "맛이 좋아요"
+        "relative_time": "6 months ago",
+        "text": "It tastes good"
       },
       {
-        "author": "바르다장선생",
+        "author": "Mr. Barda Jang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "출입구 갈대밭부터 멋져요"
+        "relative_time": "7 months ago",
+        "text": "The reed field at the entrance is nice."
       }
     ],
     "photos": [
@@ -4776,15 +4776,15 @@
   {
     "place_id": "ChIJv4cUJlSjfDURBxeXFDdOgsw",
     "display_name": "AMOMENTO HANNAM STORE",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 대사관로 25 1층",
-    "short_address": "용산구 대사관로 25 1층",
+    "address": "1st floor, 25 Embassy-ro, Yongsan-gu, Seoul, South Korea",
+    "short_address": "1st floor, 25 Daesagsa-ro, Yongsan-gu",
     "location": {
       "lat": 37.533821599999996,
       "lng": 127.00118289999999
@@ -4803,18 +4803,18 @@
     "google_maps_url": "https://maps.google.com/?cid=14736426929185298183",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca354261487bf:0xcc824e3714971707!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 12:00~8:00",
-      "화요일: 오후 12:00~8:00",
-      "수요일: 오후 12:00~8:00",
-      "목요일: 오후 12:00~8:00",
-      "금요일: 오후 12:00~8:00",
-      "토요일: 오후 12:00~8:00",
-      "일요일: 오후 12:00~8:00"
+      "Monday: 12:00-8:00 PM",
+      "Tuesday: 12:00-8:00 PM",
+      "Wednesday: 12:00-8:00 PM",
+      "Thursday: 12:00-8:00 PM",
+      "Friday: 12:00-8:00 PM",
+      "Saturday: 12:00-8:00 PM",
+      "Sunday: 12:00-8:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4824,29 +4824,29 @@
         "author": "Ugur Civril",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "정말 멋진 매장이에요! 너무 기대하고 갔는데, 설령 아무것도 사지 않더라도 그 분위기와 세심한 매장 운영 방식을 직접 경험해 보기 위해 한 번쯤 방문해 볼 만해요."
+        "relative_time": "1 month ago",
+        "text": "This is a really cool store! I was really looking forward to it, but even if you don't buy anything, it's worth visiting at least once to experience the atmosphere and meticulous store management."
       },
       {
         "author": "Michaela Fenkl",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "서울에서 제가 제일 좋아하는 가게예요 💓"
+        "relative_time": "3 months ago",
+        "text": "This is my favorite store in Seoul 💓"
       },
       {
         "author": "e o",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "11달 전",
-        "text": "디자인에 특징이 있어 멋집니다만, 약간 비싼 감이 있습니다."
+        "relative_time": "11 months ago",
+        "text": "The design is unique and cool, but it feels a bit expensive."
       },
       {
         "author": "Nicholas Taylor",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1달 전",
-        "text": "텅 빈 가게 앞에 줄을 서라고 하는 건 어처구니없는 일입니다. 그런 행동은 당신을 멋있거나 특별하게 보이게 하는 게 아니라, 오히려 배타적으로 보이게 할 뿐입니다."
+        "relative_time": "1 month ago",
+        "text": "It is absurd to ask people to stand in line in front of an empty store. That kind of behavior doesn't make you look cool or special; it just makes you look exclusive."
       }
     ],
     "photos": [
@@ -4862,16 +4862,16 @@
   },
   {
     "place_id": "ChIJtVdg3qWjfDURAkrQqNLjsDk",
-    "display_name": "이솝 사운즈 한남",
-    "category": "화장품 판매점",
+    "display_name": "Aesop Sounds Hannam",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 대사관로 35",
-    "short_address": "용산구 대사관로 35",
+    "address": "35 Daesagsa-ro, Yongsan-gu, Seoul, South Korea",
+    "short_address": "35 Daesagsa-ro, Yongsan-gu",
     "location": {
       "lat": 37.5339662,
       "lng": 127.00200240000001
@@ -4881,7 +4881,7 @@
     "rating_count": 26,
     "price_level": null,
     "price_range": null,
-    "editorial_summary": "고급 스킨 케어 제품과 선물 세트, 방향제, 바디 향수로 유명한 호주 업체입니다.",
+    "editorial_summary": "This Australian company is famous for its luxury skin care products, gift sets, air fresheners and body fragrances.",
     "generative_summary": null,
     "review_summary": null,
     "phone": "02-749-1987",
@@ -4890,18 +4890,18 @@
     "google_maps_url": "https://maps.google.com/?cid=4157072949977827842",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3a5de6057b5:0x39b0e3d2a8d04a02!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 9:00",
-      "화요일: 오전 11:00 ~ 오후 9:00",
-      "수요일: 오전 11:00 ~ 오후 9:00",
-      "목요일: 오전 11:00 ~ 오후 9:00",
-      "금요일: 오전 11:00 ~ 오후 9:00",
-      "토요일: 오전 11:00 ~ 오후 9:00",
-      "일요일: 오전 11:00 ~ 오후 9:00"
+      "Monday: 11:00 AM - 9:00 PM",
+      "Tuesday: 11:00 AM - 9:00 PM",
+      "Wednesday: 11:00 AM - 9:00 PM",
+      "Thursday: 11:00 AM - 9:00 PM",
+      "Friday: 11:00 AM - 9:00 PM",
+      "Saturday: 11:00 AM - 9:00 PM",
+      "Sunday: 11:00 AM - 9:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4911,36 +4911,36 @@
         "author": "Ji Yoon Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "직원분들도 친절하고 제품도 만족스러워요."
+        "relative_time": "1 year ago",
+        "text": "The staff are friendly and I am satisfied with the products."
       },
       {
         "author": "HELENA YANG",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "좋은 공간, 좋은 제품, 친절한 직원들, 훌륭한 페이셜 어포인먼트"
+        "relative_time": "6 years ago",
+        "text": "Nice space, good products, friendly staff, great facial affordability"
       },
       {
         "author": "Ina S",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "사운즈한남은 물건 구매해도 발렛비 5천원은 무조건 내야함."
+        "relative_time": "5 years ago",
+        "text": "Even if you buy something from Sounds Hannam, you have to pay 5,000 won for the valet fee."
       },
       {
-        "author": "최희윤",
+        "author": "Choi Hee-yoon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "좋아하는 브랜드가 여기 있네요"
+        "relative_time": "5 years ago",
+        "text": "My favorite brand is here"
       },
       {
-        "author": "오소연",
+        "author": "Soyeon Oh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "직원분이 매우 친절하시다."
+        "relative_time": "6 years ago",
+        "text": "The staff is very friendly."
       }
     ],
     "photos": [
@@ -4958,16 +4958,16 @@
   },
   {
     "place_id": "ChIJn-8jV0qifDUR3dr9MiWsX6M",
-    "display_name": "언더아머",
-    "category": "의류점",
+    "display_name": "under armor",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원동 108-9번지 언더아머해밀턴빌딩 1층",
-    "short_address": "용산구 이태원동 108-9번지 언더아머해밀턴빌딩 1층",
+    "address": "1st floor, Under Armor Hamilton Building, 108-9 Itaewon-dong, Yongsan-gu, Seoul, Korea",
+    "short_address": "1st floor, Under Armor Hamilton Building, 108-9 Itaewon-dong, Yongsan-gu",
     "location": {
       "lat": 37.5347302,
       "lng": 126.9941284
@@ -4988,8 +4988,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5000,15 +5000,15 @@
   {
     "place_id": "ChIJf2ZZRUqifDURHvEZrtuYRSU",
     "display_name": "CAN leather collection",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원로 179",
-    "short_address": "용산구 이태원로 179",
+    "address": "179 Itaewon-ro, Yongsan-gu, Seoul, South Korea",
+    "short_address": "179 Itaewon-ro, Yongsan-gu",
     "location": {
       "lat": 37.534757,
       "lng": 126.99367009999999
@@ -5029,8 +5029,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5040,15 +5040,15 @@
   {
     "place_id": "ChIJoTNkRUqifDUR5w7jKcMvIlk",
     "display_name": "SEOUL SHOES",
-    "category": "신발 판매점",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원로 179",
-    "short_address": "용산구 이태원로 179",
+    "address": "179 Itaewon-ro, Yongsan-gu, Seoul, South Korea",
+    "short_address": "179 Itaewon-ro, Yongsan-gu",
     "location": {
       "lat": 37.534765799999995,
       "lng": 126.99361809999999
@@ -5067,18 +5067,18 @@
     "google_maps_url": "https://maps.google.com/?cid=6422748533851623143",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca24a456433a1:0x59222fc329e30ee7!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 8:00",
-      "화요일: 오전 10:00 ~ 오후 8:00",
-      "수요일: 오전 10:00 ~ 오후 8:00",
-      "목요일: 오전 10:00 ~ 오후 8:00",
-      "금요일: 오전 10:00 ~ 오후 8:00",
-      "토요일: 오전 10:00 ~ 오후 8:00",
-      "일요일: 오전 10:00 ~ 오후 8:00"
+      "Monday: 10:00 AM - 8:00 PM",
+      "Tuesday: 10:00 AM - 8:00 PM",
+      "Wednesday: 10:00 AM - 8:00 PM",
+      "Thursday: 10:00 AM - 8:00 PM",
+      "Friday: 10:00 AM - 8:00 PM",
+      "Saturday: 10:00 AM - 8:00 PM",
+      "Sunday: 10:00 AM - 8:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5088,15 +5088,15 @@
   {
     "place_id": "ChIJQZh9RUqifDUR7tB_4VQZ8ME",
     "display_name": "WASHINGTON",
-    "category": "신발 판매점",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원로 179",
-    "short_address": "용산구 이태원로 179",
+    "address": "179 Itaewon-ro, Yongsan-gu, Seoul, South Korea",
+    "short_address": "179 Itaewon-ro, Yongsan-gu",
     "location": {
       "lat": 37.534799,
       "lng": 126.99358790000001
@@ -5117,8 +5117,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5127,16 +5127,16 @@
   },
   {
     "place_id": "ChIJn-8jV0qifDURbUHEp_toTWA",
-    "display_name": "프란시스",
-    "category": "의류점",
+    "display_name": "francis",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 이태원동 108-9번지 2층 16호 해밀턴쇼핑센터 용산구 서울특별시 KR",
-    "short_address": "이태원동 108-9번지 2층 16호 해밀턴쇼핑센터 용산구 서울특별시 KR",
+    "address": "Hamilton Shopping Center, #16, 2nd floor, 108-9 Itaewon-dong, Seoul, Republic of Korea, Yongsan-gu, Seoul KR",
+    "short_address": "#16, 2nd floor, 108-9 Itaewon-dong, Hamilton Shopping Center, Yongsan-gu, Seoul KR",
     "location": {
       "lat": 37.5347339,
       "lng": 126.99362680000002
@@ -5157,7 +5157,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5166,8 +5166,8 @@
   },
   {
     "place_id": "ChIJV8j4cm6jfDURrCGI_jDzJCA",
-    "display_name": "러쉬 이태원역점",
-    "category": "화장품 판매점",
+    "display_name": "Lush Itaewon Station Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "home_goods_store",
@@ -5175,8 +5175,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원로 179",
-    "short_address": "용산구 이태원로 179",
+    "address": "179 Itaewon-ro, Yongsan-gu, Seoul, South Korea",
+    "short_address": "179 Itaewon-ro, Yongsan-gu",
     "location": {
       "lat": 37.5346581,
       "lng": 126.9936332
@@ -5195,57 +5195,57 @@
     "google_maps_url": "https://maps.google.com/?cid=2316243500129591724",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca36e72f8c857:0x2024f330fe8821ac!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 9:00",
-      "화요일: 오전 11:00 ~ 오후 9:00",
-      "수요일: 오전 11:00 ~ 오후 9:00",
-      "목요일: 오전 11:00 ~ 오후 9:00",
-      "금요일: 오전 11:00 ~ 오후 10:00",
-      "토요일: 오전 11:00 ~ 오후 10:00",
-      "일요일: 오전 11:00 ~ 오후 10:00"
+      "Monday: 11:00 AM - 9:00 PM",
+      "Tuesday: 11:00 AM - 9:00 PM",
+      "Wednesday: 11:00 AM - 9:00 PM",
+      "Thursday: 11:00 AM - 9:00 PM",
+      "Friday: 11:00 AM - 10:00 PM",
+      "Saturday: 11:00 AM - 10:00 PM",
+      "Sunday: 11:00 AM - 10:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "신예슬",
+        "author": "Shin Ye-seul",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "편안하고 친절한 분위기에서 즐겁게 대화하다가 갑니다. 저 그 향수 꼭.. 살 거에요… 직원과 고객의 커뮤니케이션이 재밌으니까 이 순간을 기념하고 싶은 마음으로 물건을 구매할 수도 있겠다 생각이 들었습니다. Baby님 또 봬요~~!!"
+        "relative_time": "1 year ago",
+        "text": "We have a pleasant conversation in a comfortable and friendly atmosphere. I will definitely buy that perfume... Since the communication between employees and customers is fun, I thought I might purchase something to commemorate this moment. See you again Baby~~!!"
       },
       {
-        "author": "정현수",
+        "author": "Hyunsoo Jeong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "예쁘고 향기로운 비누들이 많아서 눈이 즐겁고\n\n다양한 목욕 용품들이 있다.\n\n직원분들이 친절한 매장"
+        "relative_time": "5 years ago",
+        "text": "There are so many pretty and fragrant soaps that are pleasing to the eye.\n\nThere are various bath products.\n\nStore with friendly staff"
       },
       {
-        "author": "이정현 (구글맵 리뷰어)",
+        "author": "Jeonghyeon Lee (Google Map Reviewer)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "직원님이 친절하시구 절로 지갑이 열리니 조심할것."
+        "relative_time": "6 years ago",
+        "text": "The staff is friendly and your wallet will naturally open, so be careful."
       },
       {
-        "author": "정해성",
+        "author": "Jeong Hae-seong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "매우 친절하고 좋음"
+        "relative_time": "4 years ago",
+        "text": "Very friendly and nice"
       },
       {
         "author": "Jeremiah",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "11달 전",
-        "text": "저희를 도와주신 분이 정말 일을 잘하셔서, 말 그대로 10만 원(약 100캐나다 달러)어치 물건을 사게 만드셨어요. 정말 좋았고, 몇 가지 질문만 했는데도 제가 뭘 좋아하는지 정확히 알아채시고 추천해주신 것들도 모두 훌륭했어요."
+        "relative_time": "11 months ago",
+        "text": "The person who helped us did such a good job that he literally made us buy 100,000 won (about 100 Canadian dollars) worth of items. It was really nice, and even though I only asked a few questions, they knew exactly what I liked and the recommendations they made were all great."
       }
     ],
     "photos": [
@@ -5263,16 +5263,16 @@
   },
   {
     "place_id": "ChIJic7KAUuifDURIud6ll5-NMU",
-    "display_name": "포즈",
-    "category": "신발 판매점",
+    "display_name": "pose",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 이태원동 번지 지하 112-4 1층",
-    "short_address": "용산구 이태원동 번지 지하 112-4 1층",
+    "address": "1st floor, Basement 112-4, Itaewon-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "1st floor, Basement 112-4, Itaewon-dong, Yongsan-gu",
     "location": {
       "lat": 37.5350898,
       "lng": 126.9945672
@@ -5293,8 +5293,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5304,24 +5304,24 @@
         "author": "Anne",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "이태원을 돌아다니다가 우연히 발견한 곳인데, 정말 좋은 곳을 찾았어요! 😊 칵테일도 맛있고, 후카도 부드럽고, 음악도 분위기를 제대로 살려줬어요. 갑자기 외출하고 싶을 때 딱 좋은 곳이에요!"
+        "relative_time": "1 year ago",
+        "text": "I found this place by chance while wandering around Itaewon, and it was a really nice place! 😊 The cocktails were delicious, the hookah was smooth, and the music really set the mood. This is the perfect place when you suddenly want to go out!"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJe3cCRUqifDURht9fyBR9ncs",
-    "display_name": "씨씨",
-    "category": "귀금속 상점",
+    "display_name": "cc",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 이태원동 119-25번지 해밀톤빌딩 내 1층 10호 용산구 서울특별시 KR",
-    "short_address": "이태원동 119-25번지 해밀톤빌딩 내 1층 10호 용산구 서울특별시 KR",
+    "address": "Room 10, 1st floor, Hamilton Building, 119-25 Itaewon-dong, Seoul, Republic of Korea, Yongsan-gu, Seoul KR",
+    "short_address": "Room 10, 1st floor, Hamilton Building, 119-25 Itaewon-dong, Yongsan-gu, Seoul KR",
     "location": {
       "lat": 37.5346598,
       "lng": 126.9935874
@@ -5342,8 +5342,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,

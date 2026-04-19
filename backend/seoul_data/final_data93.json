@@ -1,8 +1,8 @@
 [
   {
     "place_id": "ChIJo6HxhAuifDUR3IkllP7Aj_E",
-    "display_name": "대한감리회난지도제일교회",
-    "category": "교회",
+    "display_name": "Korean Methodist Nanjido Jeil Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -10,8 +10,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 효창동 260",
-    "short_address": "용산구 효창동 260",
+    "address": "260 Hyochang-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "260 Hyochang-dong, Yongsan-gu",
     "location": {
       "lat": 37.5429818,
       "lng": 126.95894430000001
@@ -31,7 +31,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca20b84f1a1a3:0xf18fc0fe942589dc!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -41,8 +41,8 @@
   },
   {
     "place_id": "ChIJWXVUhaGYfDURQ0tev9ufuwk",
-    "display_name": "천주교 염리동 성가정 성당",
-    "category": "교회",
+    "display_name": "Catholic Church of the Holy Family in Yeomni-dong",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -50,8 +50,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 마포대로11가길 28",
-    "short_address": "마포구 마포대로11가길 28",
+    "address": "28, Mapo-daero 11ga-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "28, Mapo-daero 11ga-gil, Mapo-gu",
     "location": {
       "lat": 37.54749290000001,
       "lng": 126.94955139999999
@@ -71,50 +71,50 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98a185547559:0x9bb9fdbbf5e4b43!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "최수연",
+        "author": "Suyeon Choi",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "전철 공덕역에서 약15분정도 걸어 올라가는 언덕위에 있어서 별하나 뺏어요.\n작은 크기라 아담하니 이뻣어요."
+        "relative_time": "2 years ago",
+        "text": "I take it away one star because it is located on a hill about a 15-minute walk from Gongdeok subway station.\nIt's small, so it's cute and pretty."
       },
       {
         "author": "Jihoon sean21",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "염라동성가정 성당\n공덕동 삼성래미안 1차와 서울여중 뒤 언덕에 있는\n주택가와 같이 위치해있고 조용한 성당"
+        "relative_time": "2 years ago",
+        "text": "Yeomna-dong Holy Family Church\nOn the hill behind Samsung Raemian 1st and Seoul Girls' Middle School in Gongdeok-dong\nA quiet cathedral located in a residential area"
       },
       {
-        "author": "참참참",
+        "author": "Cham Cham Cham Cham Cham Cham Cham Cham Cham Cham Cham Cham Cham Cham Cham Cham Cham Cham Cham Cham Cham Cham Cham Cham Cham Cham Cham Cham",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "소박하지만 평온해지는 곳입니다. 계단이 많기는 하지만 경인선 숲길에 갈 수 있는 지름길도 있어요."
+        "relative_time": "3 years ago",
+        "text": "It is a simple but peaceful place. Although there are many stairs, there is also a shortcut to the Gyeongin Line Forest Trail."
       },
       {
-        "author": "조합장백 헌",
+        "author": "Union Jangbaek Heon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "신축 성당 주택가에 위치 하여 누구든 찾으면 포근한 맘 드는 성당 이다"
+        "relative_time": "3 years ago",
+        "text": "The newly built cathedral is located in a residential area, making it a cozy cathedral for anyone who visits it."
       },
       {
-        "author": "김연정",
+        "author": "Yeonjeong Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "기도 드리기 좋은 곳"
+        "relative_time": "1 year ago",
+        "text": "A good place to pray"
       }
     ],
     "photos": [
@@ -132,8 +132,8 @@
   },
   {
     "place_id": "ChIJ_TY9-aGYfDUR_pNY44q1GuM",
-    "display_name": "성지교회",
-    "category": "교회",
+    "display_name": "Seongji Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -141,8 +141,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 염리동 27-46",
-    "short_address": "마포구 염리동 27-46",
+    "address": "27-46 Yeomni-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "27-46 Yeomni-dong, Mapo-gu",
     "location": {
       "lat": 37.5489531,
       "lng": 126.94894509999999
@@ -162,7 +162,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98a1f93d36fd:0xe31ab58ae35893fe!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -172,8 +172,8 @@
   },
   {
     "place_id": "ChIJRRf6XwCZfDURjIh_gCCrz-Y",
-    "display_name": "공덕교회",
-    "category": "교회",
+    "display_name": "Gongdeok Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -181,8 +181,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 마포대로11길 30",
-    "short_address": "마포구 마포대로11길 30",
+    "address": "30 Mapo-daero 11-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "30 Mapo-daero 11-gil, Mapo-gu",
     "location": {
       "lat": 37.549294499999995,
       "lng": 126.95272940000001
@@ -202,7 +202,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99005ffa1745:0xe6cfab20807f888c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -212,8 +212,8 @@
   },
   {
     "place_id": "ChIJveenBnWifDURRJ0KHfw4Qto",
-    "display_name": "공덕동 성당",
-    "category": "교회",
+    "display_name": "Gongdeok-dong Cathedral",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -221,8 +221,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 마포대로14길 15-1",
-    "short_address": "마포구 마포대로14길 15-1",
+    "address": "15-1, Mapo-daero 14-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "15-1, Mapo-daero 14-gil, Mapo-gu",
     "location": {
       "lat": 37.548619900000006,
       "lng": 126.9562499
@@ -242,50 +242,50 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca27506a7e7bd:0xda4238fc1d0a9d44!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "김주희",
+        "author": "Joohee Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "성당에서 운영하는 까페가 주민들의 사랑방 역할을 합니다. 커피 가격도 저렴하고, 특히 유자차 맛이 좋습니다."
+        "relative_time": "7 years ago",
+        "text": "The café operated by the cathedral serves as a living room for the residents. The coffee is cheap, and the yuzu tea tastes especially good."
       },
       {
         "author": "Kang Sue",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "요성당은 작은성당이다 신부님이 아주 적극적이시고 열심히하신다 보기좋음"
+        "relative_time": "2 years ago",
+        "text": "This cathedral is a small cathedral. The priest is very active and works hard. It is nice to see."
       },
       {
-        "author": "한중진",
+        "author": "Han Jung-jin",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "외부인이 앉아 쉴 공간이  마련돼 있고 잔에 1000원 하는 아메리카노를 파는 작은 카페(냉난방 완비)에서 담소를 나눌 수도 있음."
+        "relative_time": "6 years ago",
+        "text": "There is a space for outsiders to sit and relax, and you can chat in a small cafe (equipped with air conditioning) that sells Americano for 1,000 won per glass."
       },
       {
-        "author": "포카칩",
+        "author": "poker chips",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "4년 전",
-        "text": "몇번 미사보러갔는데 집값이야기랑 돈이야기만함\n최악임..게다가 사무실가도 돈이야기만함\n태어나서. 이런성당 첨가봄.."
+        "relative_time": "4 years ago",
+        "text": "I went to mass a few times and all they talked about was house prices and money.\nIt's the worst...and even when I go to the office, they only talk about money.\nSince I was born. Adding a cathedral like this..."
       },
       {
         "author": "Luis Choe",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "아담하지만 깨끗하고 50년의 유서깊은 성당입니다. 훌륭한 신부님과 신도분들 좋습니다."
+        "relative_time": "7 years ago",
+        "text": "It is a small but clean cathedral with 50 years of history. Great priest and believers."
       }
     ],
     "photos": [
@@ -303,8 +303,8 @@
   },
   {
     "place_id": "ChIJ4Ump6nSifDURSVkK-9DfdeM",
-    "display_name": "산마루교회",
-    "category": "교회",
+    "display_name": "Sanmaru Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -312,8 +312,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 만리재로 74",
-    "short_address": "마포구 만리재로 74",
+    "address": "74 Mallijae-ro, Mapo-gu, Seoul, South Korea",
+    "short_address": "74 Mallijae-ro, Mapo-gu",
     "location": {
       "lat": 37.5464743,
       "lng": 126.95816869999999
@@ -333,45 +333,45 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca274eaa949e1:0xe375dfd0fb0a5949!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "자동차는흉기운전자는살인마",
+        "author": "The car is a weapon and the driver is a murderer.",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "4년 전",
-        "text": "봉헌은 감사의 의미라고 하면서 봉헌 안하는건 감사할줄모르는 사람이라고하며. 뼈때림. 다만 감사내용을 써서 넣어도된다고함 근데 감사를. 왜 돈으로 할까 일만가지 악이라는돈?,,서울역광장 천막교회에서 ㄴ설교할때누군가. 비둘기사체를 던져놓고 가니 목사가?자긴 비둘기싫어한다고..비둘기는 봉헌한거 아닌가?왜 싫어할까\n예장통합 온누리교회에서 후원도 하고 봉사도함"
+        "relative_time": "4 years ago",
+        "text": "They say that offering is a sign of gratitude, but those who do not make offering mean that they are ungrateful. Bone hit. However, they say you can write down your gratitude and include it, but thank you. Why do we do it with money? Money called 10,000 evils?,,Someone was preaching at the tent church in Seoul Station Square. The pastor said he didn't like pigeons after throwing the pigeon carcass away. Aren't the pigeons consecrated? Why would he hate them?\nSponsored and volunteered at Presbyterian Church of Korea Onnuri Church"
       },
       {
-        "author": "닥터짱가",
+        "author": "Doctor Jjanga",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "좋고 은혜 가득합니다"
+        "relative_time": "2 years ago",
+        "text": "Good and full of grace"
       },
       {
-        "author": "서지호",
+        "author": "Seo Ji-ho",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
+        "relative_time": "7 months ago",
         "text": null
       },
       {
-        "author": "고쿠마",
+        "author": "kokuma",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "seok youn Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -379,8 +379,8 @@
   },
   {
     "place_id": "ChIJWTuW7nWifDURBDL0aiUECZA",
-    "display_name": "국제교회",
-    "category": "교회",
+    "display_name": "international church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -388,8 +388,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 아현동 617-7",
-    "short_address": "마포구 아현동 617-7",
+    "address": "617-7 Ahyeon-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "617-7 Ahyeon-dong, Mapo-gu",
     "location": {
       "lat": 37.550897400000004,
       "lng": 126.95502780000001
@@ -409,11 +409,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca275ee963b59:0x900904256af43204!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": null,
@@ -421,15 +421,15 @@
   },
   {
     "place_id": "ChIJ_dpM7qaYfDUR5nvQA_LUeYE",
-    "display_name": "에이즈데이즈 (8th days)",
-    "category": "쇼핑몰",
+    "display_name": "AIDS Days (8th days)",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 도화동 22번지 KR 창강빌딩 522호 마포구 서울특별시 KR",
-    "short_address": "도화동 22번지 KR 창강빌딩 522호 마포구 서울특별시 KR",
+    "address": "#522, KR Changgang Building, 22 Dohwa-dong, Mapo-gu, Seoul, Republic of Korea KR",
+    "short_address": "22 Dohwa-dong, KR Changgang Building, Room 522, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.5424641,
       "lng": 126.9505773
@@ -448,20 +448,20 @@
     "google_maps_url": "https://maps.google.com/?cid=9329722238985862118",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98a6ee4cdafd:0x8179d4f203d07be6!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 7:00",
-      "화요일: 오전 9:00 ~ 오후 7:00",
-      "수요일: 오전 9:00 ~ 오후 7:00",
-      "목요일: 오전 9:00 ~ 오후 7:00",
-      "금요일: 오전 9:00 ~ 오후 7:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 7:00 PM",
+      "Tuesday: 9:00 AM - 7:00 PM",
+      "Wednesday: 9:00 AM - 7:00 PM",
+      "Thursday: 9:00 AM - 7:00 PM",
+      "Friday: 9:00 AM - 7:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -471,15 +471,15 @@
   },
   {
     "place_id": "ChIJYViQ86CYfDURvz4pZLrgpKg",
-    "display_name": "모람방",
-    "category": "쇼핑몰",
+    "display_name": "Morambang",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 공덕동 254-5번지 신용보증기금빌딩 지하1층 마포구 서울특별시 KR",
-    "short_address": "공덕동 254-5번지 신용보증기금빌딩 지하1층 마포구 서울특별시 KR",
+    "address": "1st Basement Floor, Credit Guarantee Fund Building, 254-5 Gongdeok-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "1st Basement Floor, Credit Guarantee Fund Building, 254-5 Gongdeok-dong, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.5453577,
       "lng": 126.9525465
@@ -500,8 +500,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -511,15 +511,15 @@
   },
   {
     "place_id": "ChIJiemotaCYfDURtvZyr99i4s8",
-    "display_name": "(주)웰컴바이케이",
-    "category": "쇼핑몰",
+    "display_name": "Welcome By K Co., Ltd.",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 신공덕동 167번지 709호",
-    "short_address": "마포구 신공덕동 167번지 709호",
+    "address": "#709, 167 Singongdeok-dong, Mapo-gu, Seoul, Republic of Korea",
+    "short_address": "#709, 167 Singongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5434128,
       "lng": 126.95289619999998
@@ -539,11 +539,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98a0b5a8e989:0xcfe262dfaf72f6b6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -553,15 +553,15 @@
   },
   {
     "place_id": "ChIJr4kDWqCYfDUR6W_CTOMvNfA",
-    "display_name": "(주)비나코",
-    "category": "쇼핑몰",
+    "display_name": "Vinaco Co., Ltd.",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 404번지 708호",
-    "short_address": "마포구 공덕동 404번지 708호",
+    "address": "#708, 404 Gongdeok-dong, Mapo-gu, Seoul, Republic of Korea",
+    "short_address": "Room 708, 404 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5461523,
       "lng": 126.95212000000001
@@ -581,11 +581,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98a05a0389af:0xf0352fe34cc26fe9!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -594,15 +594,15 @@
   },
   {
     "place_id": "ChIJq8AFLIOZfDURIYIj3mmEK-Q",
-    "display_name": "크넥",
-    "category": "쇼핑몰",
+    "display_name": "Kneck",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 백범로31길 21 서울창업허브 별관 312호",
-    "short_address": "마포구 백범로31길 21 서울창업허브 별관 312호",
+    "address": "Room 312, Seoul Startup Hub Annex Building, 21 Baekbeom-ro 31-gil, Mapo-gu, Seoul, Republic of Korea",
+    "short_address": "Room 312, Seoul Startup Hub Annex, 21 Baekbeom-ro 31-gil, Mapo-gu",
     "location": {
       "lat": 37.5467447,
       "lng": 126.949975
@@ -623,8 +623,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -633,15 +633,15 @@
   },
   {
     "place_id": "ChIJU-V3NKSYfDURp1a6X-bLhw8",
-    "display_name": "로시에나",
-    "category": "쇼핑몰",
+    "display_name": "rosiana",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 도화동 560",
-    "short_address": "마포구 도화동 560",
+    "address": "560 Dohwa-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "560 Dohwa-dong, Mapo-gu",
     "location": {
       "lat": 37.543009399999995,
       "lng": 126.94772309999999
@@ -661,49 +661,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98a43477e553:0xf87cbe65fba56a7!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "박성규",
+        "author": "Park Seong-gyu",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "좋아요"
+        "relative_time": "6 years ago",
+        "text": "great"
       },
       {
-        "author": "George Wong (조 지)",
+        "author": "George Wong",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "9년 전",
-        "text": "이화 뉴빌리지는 중심부에 위치하여 레스토랑과 호텔이 즐비하고, 뉴빌리지 레이디스 마켓도 바로 인근에 있습니다."
+        "relative_time": "9 years ago",
+        "text": "Ewha New Village is located in the center, with many restaurants and hotels, and the New Village Ladies Market is also nearby."
       },
       {
         "author": "Steve Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "최종하",
+        "author": "Choi Jong-ha",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "Quo Vadis박청윤 (Brown Park)",
+        "author": "Quo Vadis Park Cheong-yoon (Brown Park)",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -711,15 +711,15 @@
   },
   {
     "place_id": "ChIJQ-Ben6GYfDUR8U8Bx9Eo0zA",
-    "display_name": "(주)인덱스마인",
-    "category": "쇼핑몰",
+    "display_name": "Index Mine Co., Ltd.",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 370-4 번지 본관 525호",
-    "short_address": "마포구 공덕동 370-4 번지 본관 525호",
+    "address": "Room 525, Main Building, 370-4 Gongdeok-dong, Mapo-gu, Seoul, Republic of Korea",
+    "short_address": "Room 525, Main Building, 370-4 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.546822399999996,
       "lng": 126.9500658
@@ -739,11 +739,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98a19f5ee043:0x30d328d1c7014ff1!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -752,15 +752,15 @@
   },
   {
     "place_id": "ChIJCyU_RaeYfDURRkDyfaj0WUQ",
-    "display_name": "유로스타",
-    "category": "쇼핑몰",
+    "display_name": "eurostar",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 신공덕동 69-2번지",
-    "short_address": "마포구 신공덕동 69-2번지",
+    "address": "69-2 Singongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "69-2, Singongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5424268,
       "lng": 126.9533694
@@ -780,11 +780,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98a7453f250b:0x4459f4a87df24046!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -795,14 +795,14 @@
   {
     "place_id": "ChIJyU9_7K-ZfDUROQnZDtzEIP8",
     "display_name": "Yeomni",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 염리동 172-16",
-    "short_address": "마포구 염리동 172-16",
+    "address": "172-16 Yeomni-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "172-16 Yeomni-dong, Mapo-gu",
     "location": {
       "lat": 37.543422,
       "lng": 126.94709789999999
@@ -823,8 +823,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -834,15 +834,15 @@
   },
   {
     "place_id": "ChIJTV9W3JujfDURWzC1r7VFer8",
-    "display_name": "(주)에원커머스-원골프",
-    "category": "쇼핑몰",
+    "display_name": "Eone Commerce-One Golf Co., Ltd.",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 신공덕동 14-55",
-    "short_address": "마포구 신공덕동 14-55",
+    "address": "14-55 Singongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "14-55 Singongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.54471910000001,
       "lng": 126.9553132
@@ -861,20 +861,20 @@
     "google_maps_url": "https://maps.google.com/?cid=13797417055042220123",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca39bdc565f4d:0xbf7a45b5afb5305b!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 7:00",
-      "화요일: 오전 9:00 ~ 오후 7:00",
-      "수요일: 오전 9:00 ~ 오후 7:00",
-      "목요일: 오전 9:00 ~ 오후 7:00",
-      "금요일: 오전 9:00 ~ 오후 7:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 7:00 PM",
+      "Tuesday: 9:00 AM - 7:00 PM",
+      "Wednesday: 9:00 AM - 7:00 PM",
+      "Thursday: 9:00 AM - 7:00 PM",
+      "Friday: 9:00 AM - 7:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -886,15 +886,15 @@
   },
   {
     "place_id": "ChIJT4-vYgqifDURXTQBzexyNcs",
-    "display_name": "현대피팅산업(주)",
-    "category": "쇼핑몰",
+    "display_name": "Hyundai Fitting Industry Co., Ltd.",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 신공덕동 15-82",
-    "short_address": "마포구 신공덕동 15-82",
+    "address": "15-82 Singongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "15-82 Singongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5448825,
       "lng": 126.95483610000001
@@ -914,11 +914,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca20a62af8f4f:0xcb3572eccd01345d!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -927,15 +927,15 @@
   },
   {
     "place_id": "ChIJI9kyiQmifDURjwL9HsSG21M",
-    "display_name": "보라컴",
-    "category": "쇼핑몰",
+    "display_name": "Boracom",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 신공덕동 145-6",
-    "short_address": "마포구 신공덕동 145-6",
+    "address": "145-6, Singongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "145-6, Singongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5418772,
       "lng": 126.95590249999998
@@ -956,8 +956,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -967,15 +967,15 @@
   },
   {
     "place_id": "ChIJ8QpYcAqifDURGEzW5VREsrY",
-    "display_name": "성우빌딩",
-    "category": "쇼핑몰",
+    "display_name": "Seongwoo Building",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 118-1",
-    "short_address": "마포구 공덕동 118-1",
+    "address": "118-1 Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "118-1 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5478951,
       "lng": 126.95703089999998
@@ -995,11 +995,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca20a70580af1:0xb6b24454e5d64c18!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1008,7 +1008,7 @@
         "author": "nemo_kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -1016,15 +1016,15 @@
   },
   {
     "place_id": "ChIJtRdcgXWifDURuEbPuxEXpqA",
-    "display_name": "(주)디앤지",
-    "category": "쇼핑몰",
+    "display_name": "D&G Co., Ltd.",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 463번지 1612호",
-    "short_address": "마포구 공덕동 463번지 1612호",
+    "address": "#1612, 463 Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "#1612, 463 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5498579,
       "lng": 126.95441869999999
@@ -1044,11 +1044,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca275815c17b5:0xa0a61711bbcf46b8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1057,8 +1057,8 @@
   },
   {
     "place_id": "ChIJYVieKKGYfDURJrPxL2CKmbQ",
-    "display_name": "롯데프리미엄푸드마켓 공덕점",
-    "category": "할인 슈퍼마켓",
+    "display_name": "Lotte Premium Food Market Gongdeok Branch",
+    "category": "discount supermarket",
     "types": [
       "discount_supermarket",
       "supermarket",
@@ -1069,8 +1069,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "B1, 109 마포대로 Level, 마포구 서울특별시 대한민국",
-    "short_address": "B1, 109 마포대로 Level, 마포구",
+    "address": "B1, 109 Mapo-daero Level, Mapo-gu, Seoul South Korea",
+    "short_address": "B1, 109 Mapo-daero Level, Mapo-gu",
     "location": {
       "lat": 37.544931,
       "lng": 126.9505963
@@ -1090,18 +1090,18 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98a1289e5861:0xb4998a602ff1b326!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "배달",
-      "화장실"
+      "delivery",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -1109,36 +1109,36 @@
         "author": "Philosophizing",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "공덕역 인근에서 가장 Fancy하고 감각적으로 Foods를 쇼핑할 수 있는 곳 !! 추천드립니다 ㅎㅎㅎ 물건도 많고 Trendy 합니다~~"
+        "relative_time": "3 months ago",
+        "text": "The most fashionable and sensuous place to shop for food near Gongdeok Station!! I recommend it hahaha. There are a lot of items and they are trendy~~"
       },
       {
-        "author": "공짜장 (Manager Kong)",
+        "author": "Manager Kong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "프리미엄마켓이라고 해서 뭐가 좀 다른가 봤더니\n선택의 폭이 좀 넓고 쇼핑 공간이 넓어 상품들이 잘 정리되어 있으며, 무엇보다도 모든 품목은 아니지만 많은 품목들이 일반 마켓에 비해 조금씩 더 비싼게 다른듯 ㅋ\n와인코너는 잘 되어있는 듯"
+        "relative_time": "1 year ago",
+        "text": "I looked into what was different about the premium market.\nThere is a wide range of choices, a large shopping space, and the products are well organized. Above all, many, if not all, of the items seem to be slightly more expensive than the general market.\nThe wine corner seems to be well maintained."
       },
       {
         "author": "JADE KELLY",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "딱 필요한것만 잘구비되어 있어요..신선식품, 반찬 잡채, 두부조림 맛있고 괜춘.프리미엄 제품이 다양해서 공덕 이마트보다 죠아요^^"
+        "relative_time": "6 years ago",
+        "text": "It's well stocked with just what you need. Fresh food, side dishes, japchae, and braised tofu are delicious and good. They have a variety of premium products, so it's smaller than Gongdeok E-Mart ^^"
       },
       {
         "author": "Ciss Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "가격 저렴하고 주차 편하고 물건 많습니다\n롯데 시티호텔 숙박객도 편하게 이용 가능합니다"
+        "relative_time": "3 months ago",
+        "text": "Cheap prices, easy parking, and lots of stuff.\nLotte City Hotel guests can also conveniently use the service."
       },
       {
         "author": "RoRo Oh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "일반 음식부터 고급 식자재까지 다양하게 있으면서 가격도 저렴한 편입니다. 특히 스시 맛집입니다. 스시 한 팩에 4990원인데 가성비 훌륭하고 맛도 좋습니다. 특히 새우스시가 굿~ 2500원짜리 크로와상샌드위치도 훌륭. 근처 호텔에서 2박3일 묵으면서 4끼를 이곳 스시와 음식들 사다 먹었습니다. 크로와상샌드위치도 3팩이나 사먹었습니다"
+        "relative_time": "5 years ago",
+        "text": "They have a wide variety of food, from regular food to high-end ingredients, and the prices are relatively reasonable. This is a particularly sushi restaurant. A pack of sushi costs 4,990 won, but it is great value for money and tastes good. The shrimp cigars are especially good. The 2,500 won croissant sandwich is also great. I stayed at a nearby hotel for 3 days and 2 nights and ate sushi and other food here for 4 meals. I also bought 3 packs of croissant sandwiches."
       }
     ],
     "photos": [
@@ -1156,15 +1156,15 @@
   },
   {
     "place_id": "ChIJjXjIkqaZfDUR7Rlt0qLQOGo",
-    "display_name": "개화기",
-    "category": "시장",
+    "display_name": "bloom",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 257-67",
-    "short_address": "마포구 공덕동 257-67",
+    "address": "257-67 Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "257-67 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.544818,
       "lng": 126.951591
@@ -1185,8 +1185,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1195,15 +1195,15 @@
         "author": "Hye Oh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "지하철 역사 내 위치한 것 치고는 꽤 큰 꽃집"
+        "relative_time": "3 years ago",
+        "text": "A fairly large flower shop for one located inside a subway station."
       },
       {
         "author": "Philosophizing",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1주 전",
-        "text": "부모님 생신을 위해 들른 공덕역 지하상가 중심부에 위치한 플라워숍, 개화기 !! 가격도 합리적이고, 접근성도 좋아서 자주 찾게될것 같아요 :) 특히 Rose 위주의 Flower들이 참 싱싱하고 감각적이었어요 ㅎㅎ 패키징도 예쁘게 잘 해주십니다 ㅎㅎ"
+        "relative_time": "1 week ago",
+        "text": "A flower shop located in the center of the underground shopping mall at Gongdeok Station where I stopped by for my parents’ birthday, Flowering Period!! The price is reasonable and the accessibility is good, so I think I'll come here often :) In particular, the flowers, mainly roses, were very fresh and sensuous haha. The packaging is also done beautifully haha."
       }
     ],
     "photos": [
@@ -1221,8 +1221,8 @@
   },
   {
     "place_id": "ChIJ2xn__9SZfDUR1xRNZVVRhks",
-    "display_name": "오아시스마켓 공덕점(공덕역점)",
-    "category": "슈퍼마켓",
+    "display_name": "Oasis Market Gongdeok Branch (Gongdeok Station Branch)",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1232,8 +1232,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 백범로 170 더샾 102동 1층 3호",
-    "short_address": "마포구 공덕동 백범로 170 더샾 102동 1층 3호",
+    "address": "Room 3, 1st floor, Building 102, The Sharp, 170 Baekbeom-ro, Gongdeok-dong, Mapo-gu, Seoul, Republic of Korea",
+    "short_address": "Room 3, 1st floor, Building 102, The Sharp, 170 Baekbeom-ro, Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5443852,
       "lng": 126.9490764
@@ -1252,20 +1252,20 @@
     "google_maps_url": "https://maps.google.com/?cid=5442126626937443543",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99d4ffff19db:0x4b865155654d14d7!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 9:00",
-      "화요일: 오전 9:00 ~ 오후 9:00",
-      "수요일: 오전 9:00 ~ 오후 9:00",
-      "목요일: 오전 9:00 ~ 오후 9:00",
-      "금요일: 오전 9:00 ~ 오후 9:00",
-      "토요일: 오전 9:00 ~ 오후 9:00",
-      "일요일: 오전 9:00 ~ 오후 9:00"
+      "Monday: 9:00 AM - 9:00 PM",
+      "Tuesday: 9:00 AM - 9:00 PM",
+      "Wednesday: 9:00 AM - 9:00 PM",
+      "Thursday: 9:00 AM - 9:00 PM",
+      "Friday: 9:00 AM - 9:00 PM",
+      "Saturday: 9:00 AM - 9:00 PM",
+      "Sunday: 9:00 AM - 9:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1275,36 +1275,36 @@
         "author": "Mihwa Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "규모가 좀 아쉬워요. 없는 품목들이 좀 있어서...\n공산품도 꽤 다양하고 냉동식품도 많아요.\n정육이나 해산물 쪽도 가짓수가 많지는 않은데 그래도 골고루 있어요.\n휴대전화 번호 등록만 하면 회원가입할 수 있고, 별다른 회비가 없어서 좋아요."
+        "relative_time": "3 years ago",
+        "text": "The scale is a bit disappointing. There are some items that are missing...\nThere are quite a variety of manufactured products and a lot of frozen foods.\nThere isn't a lot of meat or seafood, but there is a good variety.\nYou can sign up as a member by simply registering your mobile phone number, and there are no membership fees."
       },
       {
         "author": "Tosakes",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "가격이 저렴하며 바로 앞에 버스 정류장이 있어 편합니다."
+        "relative_time": "1 year ago",
+        "text": "The price is cheap and there is a bus stop right in front, so it is convenient."
       },
       {
-        "author": "안성후",
+        "author": "Seonghu Ahn",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "저렴하고 제품들 품질이 좋습니다. 건강한 제품들 위주로 갖다놨거요. 집근처에 오아시스가 있어서 정말 좋아요."
+        "relative_time": "2 years ago",
+        "text": "It's cheap and the products are of good quality. They mainly stock healthy products. It's really nice to have an oasis near my house."
       },
       {
         "author": "Sam yeong Kim",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "4달 전",
-        "text": "개판도 이런 개판이 없음 ㅋ"
+        "relative_time": "4 months ago",
+        "text": "There is no such thing as crap."
       },
       {
         "author": "Dongseok Yoo (Stone)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "유기농 제품이 많아요..\n가격은 조금 더 나가요"
+        "relative_time": "2 years ago",
+        "text": "There are many organic products..\nThe price is a little more"
       }
     ],
     "photos": [
@@ -1322,15 +1322,15 @@
   },
   {
     "place_id": "ChIJKyR9mqaYfDUR5BbHVIUWZPA",
-    "display_name": "(주)아이닥엔젤시장",
-    "category": "시장",
+    "display_name": "Idoc Angel Market Co., Ltd.",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 도화동 553번지 마포구 서울특별시 KR",
-    "short_address": "도화동 553번지 마포구 서울특별시 KR",
+    "address": "553 Dohwa-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "553 Dohwa-dong, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.542958899999995,
       "lng": 126.9493663
@@ -1351,8 +1351,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1361,8 +1361,8 @@
   },
   {
     "place_id": "ChIJqRfK6qCYfDURuh3K95OtYGA",
-    "display_name": "제일슈퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Jeil Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1372,8 +1372,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 공덕동 256-13번지 106호 제일빌딩 마포구 서울특별시 KR",
-    "short_address": "공덕동 256-13번지 106호 제일빌딩 마포구 서울특별시 KR",
+    "address": "#106, Jeil Building, 256-13 Gongdeok-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "#106, 256-13 Gongdeok-dong, Jeil Building, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.5445405,
       "lng": 126.95274579999999
@@ -1401,15 +1401,15 @@
   },
   {
     "place_id": "ChIJbQ8XkKCYfDURDXTEOZOLBTU",
-    "display_name": "공덕실업(주)",
-    "category": "시장",
+    "display_name": "Gongdeok Industry Co., Ltd.",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 256-10",
-    "short_address": "마포구 공덕동 256-10",
+    "address": "256-10 Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "256-10 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5446023,
       "lng": 126.9531195
@@ -1430,7 +1430,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1439,16 +1439,16 @@
   },
   {
     "place_id": "ChIJr4kDWqCYfDURH8NsZSByV3w",
-    "display_name": "(주)광개토수산",
-    "category": "시장",
+    "display_name": "Gwanggaeto Fisheries Co., Ltd.",
+    "category": "market",
     "types": [
       "market",
       "food",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 404번지 풍림브이아이피텔",
-    "short_address": "마포구 공덕동 404번지 풍림브이아이피텔",
+    "address": "Poonglim VIPtel, 404 Gongdeok-dong, Mapo-gu, Seoul, Korea",
+    "short_address": "Poonglim VIPtel, 404 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5461523,
       "lng": 126.95212000000001
@@ -1469,8 +1469,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1479,8 +1479,8 @@
   },
   {
     "place_id": "ChIJFwOfg6CYfDURpj9yHdx4kI0",
-    "display_name": "총각네생선(공덕시장)",
-    "category": "시장",
+    "display_name": "Bachelor’s Fish (Gongdeok Market)",
+    "category": "market",
     "types": [
       "market",
       "wholesaler",
@@ -1488,8 +1488,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 만리재로 23 공덕시장내 총각네생선",
-    "short_address": "마포구 만리재로 23 공덕시장내 총각네생선",
+    "address": "Bachelor’s Fish in Gongdeok Market, 23 Mallijae-ro, Mapo-gu, Seoul, South Korea",
+    "short_address": "Bachelor’s Fish in Gongdeok Market, 23 Mallijae-ro, Mapo-gu",
     "location": {
       "lat": 37.5451615,
       "lng": 126.95341490000001
@@ -1508,20 +1508,20 @@
     "google_maps_url": "https://maps.google.com/?cid=10200786042776338342",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98a0839f0317:0x8d9078dc1d723fa6!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 7:00 ~ 오후 7:30",
-      "화요일: 오전 7:00 ~ 오후 7:30",
-      "수요일: 오전 7:00 ~ 오후 7:30",
-      "목요일: 오전 7:00 ~ 오후 7:30",
-      "금요일: 오전 7:00 ~ 오후 7:30",
-      "토요일: 오전 7:00 ~ 오후 7:30",
-      "일요일: 휴무일"
+      "Monday: 7:00 AM - 7:30 PM",
+      "Tuesday: 7:00 AM - 7:30 PM",
+      "Wednesday: 7:00 AM - 7:30 PM",
+      "Thursday: 7:00 AM - 7:30 PM",
+      "Friday: 7:00 AM - 7:30 PM",
+      "Saturday: 7:00 AM - 7:30 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1542,8 +1542,8 @@
   },
   {
     "place_id": "ChIJt0JFfqaYfDURuT1UgCw_jQk",
-    "display_name": "(주)대불전",
-    "category": "슈퍼마켓",
+    "display_name": "Daebuljeon Co., Ltd.",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1554,8 +1554,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 도화동 556번지 SK허브그린 1017호 마포구 서울특별시 KR",
-    "short_address": "도화동 556번지 SK허브그린 1017호 마포구 서울특별시 KR",
+    "address": "#1017, SK Herb Green, 556 Dohwa-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "#1017, SK Herb Green, 556 Dohwa-dong, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.5422784,
       "lng": 126.9489459
@@ -1583,8 +1583,8 @@
   },
   {
     "place_id": "ChIJCyU_RaeYfDURTS9SKpMiIdc",
-    "display_name": "이마트 마포점",
-    "category": "대형 슈퍼마켓",
+    "display_name": "E-Mart Mapo Branch",
+    "category": "hypermarket",
     "types": [
       "hypermarket",
       "supermarket",
@@ -1595,8 +1595,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 백범로 212",
-    "short_address": "마포구 백범로 212",
+    "address": "212 Baekbeom-ro, Mapo-gu, Seoul, South Korea",
+    "short_address": "212 Baekbeom-ro, Mapo-gu",
     "location": {
       "lat": 37.542370999999996,
       "lng": 126.953362
@@ -1615,64 +1615,64 @@
     "google_maps_url": "https://maps.google.com/?cid=15501709407851523917",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98a7453f250b:0xd72122932a522f4d!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 11:00",
-      "화요일: 오전 10:00 ~ 오후 11:00",
-      "수요일: 오전 10:00 ~ 오후 11:00",
-      "목요일: 오전 10:00 ~ 오후 11:00",
-      "금요일: 오전 10:00 ~ 오후 11:00",
-      "토요일: 오전 10:00 ~ 오후 11:00",
-      "일요일: 오전 10:00 ~ 오후 11:00"
+      "Monday: 10:00 AM - 11:00 PM",
+      "Tuesday: 10:00 AM - 11:00 PM",
+      "Wednesday: 10:00 AM - 11:00 PM",
+      "Thursday: 10:00 AM - 11:00 PM",
+      "Friday: 10:00 AM - 11:00 PM",
+      "Saturday: 10:00 AM - 11:00 PM",
+      "Sunday: 10:00 AM - 11:00 PM"
     ],
     "services": [
-      "배달",
-      "화장실"
+      "delivery",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "박건수",
+        "author": "Park Geon-soo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "요즘 할인 행사한다던데~~~좋아용.주차는 살짝 좁은듯 하지만 어지간히 자리가 갈때마다 있다라구요. 굿굿굿"
+        "relative_time": "2 months ago",
+        "text": "I heard they're having a discount these days~~~ I like it. The parking lot seems a little tight, but there's always a spot available. Good good good"
       },
       {
-        "author": "히둥 heedoong",
+        "author": "hiedung heedoong",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "식품관 쪽 채소, 육류가 신선해서 종종 갑니다!!!\n품목별로 총 4개층으로 나눠져있어서 뭔가 물품 사는걸 잊으면 무빙워크 타고 오르락내리락 해야하는것 말고는.. 만족스러운 대형마트예요. 1층 스타벅스에서 커피한잔 하고 한층씩 훑고 내려가면서 필요한것들을 카트에 담고 지하주차장에서 출차하면 편리합니다~~~\n다만 주말에 지하주차장이 밀려서 한층 내려가야하는데 살짝 귀찮아요 ㅎ\n\n지하1층 가전코너는 원래대로 잘 운영 중이고, 장난감, 속옷코너는 지금 단장 중여서 한산하네요. 새롭게 단장 후 어떤 브랜드가 들어설지.. 어떤 모습일지 궁금해집니다."
+        "relative_time": "3 years ago",
+        "text": "I often go to the food hall because the vegetables and meat are fresh!!!\nIt is divided into a total of 4 floors for each item, so other than having to go up and down on the moving walkway if you forget to buy something, it is a satisfactory large supermarket. It is convenient to have a cup of coffee at Starbucks on the first floor, go down one floor at a time, put necessary things in the cart, and exit from the underground parking lot.~~~\nHowever, the underground parking lot is crowded on weekends, so I have to go down a level, which is a bit annoying.\n\nThe home appliance corner on the first basement floor is operating well as usual, and the toys and underwear corner are currently being renovated and are therefore quiet. I'm curious about what brands will come in after the refurbishment... and what it will look like."
       },
       {
         "author": "Jihoon sean21",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "이마트 마포점\n\n23년1월\n스피드계산대 이후 더 혼잡함\n계산시간 오래걸림\n\n공덕역에 위치한 이마트 마포점\n컴팩트점포\n사이즈는 작으나 근처 아파트와 주거지가 많아서 붐비는 매장\n매장이 작아서 물건 종류는 많이 없음.\n특히 라면은 종류가 별로 없음.\n식품매장도 작은편임 종류가 별로 없음."
+        "relative_time": "3 years ago",
+        "text": "E-Mart Mapo Branch\n\nJanuary 23\nMore crowded after the speed checkout counter\nCalculation takes a long time\n\nE-Mart Mapo branch located at Gongdeok Station\nCompact store\nThe store is small in size but crowded with many apartments and residences nearby.\nThe store is small so there isn't a lot of variety.\nIn particular, there are not many types of ramen.\nThe food store is also small and doesn't have much variety."
       },
       {
         "author": "S.H PARK (oxaries)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "상품도 다양하고 친절해요. 요즘 세일을 많이 하고 있어서 더 자주 가는것 같아요"
+        "relative_time": "2 years ago",
+        "text": "The products are diverse and friendly. I think I go more often because there are a lot of sales going on these days."
       },
       {
         "author": "a jh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "큰 마트입니다\n없는것 없이  일상생활 필요한 모든것이 있는듯 합니다"
+        "relative_time": "3 months ago",
+        "text": "It's a big supermarket\nIt seems like it has everything you need for daily life."
       }
     ],
     "photos": [
@@ -1690,8 +1690,8 @@
   },
   {
     "place_id": "ChIJ7bX2xaWYfDURMiiPjCoFW6A",
-    "display_name": "중앙엔지에스(주)",
-    "category": "슈퍼마켓",
+    "display_name": "JoongAng GS Co., Ltd.",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1701,8 +1701,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 도화동 173번지 1349호",
-    "short_address": "마포구 도화동 173번지 1349호",
+    "address": "#1349, 173 Dohwa-dong, Mapo-gu, Seoul, Korea",
+    "short_address": "#1349, 173 Dohwa-dong, Mapo-gu",
     "location": {
       "lat": 37.542210399999995,
       "lng": 126.9477836
@@ -1723,8 +1723,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1734,8 +1734,8 @@
   },
   {
     "place_id": "ChIJ0yG0gAqifDUROionhFeZhx8",
-    "display_name": "태광식품",
-    "category": "슈퍼마켓",
+    "display_name": "Taekwang Food",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1745,8 +1745,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 256-32",
-    "short_address": "마포구 공덕동 256-32",
+    "address": "256-32 Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "256-32 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.545066299999995,
       "lng": 126.9544313
@@ -1767,8 +1767,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1778,8 +1778,8 @@
   },
   {
     "place_id": "ChIJtZI4eFSjfDURPDRE2EyTYHU",
-    "display_name": "대중슈퍼",
-    "category": "슈퍼마켓",
+    "display_name": "public supermarket",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1789,8 +1789,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 임정로17길 3",
-    "short_address": "마포구 임정로17길 3",
+    "address": "3 Imjeong-ro 17-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "3 Imjeong-ro 17-gil, Mapo-gu",
     "location": {
       "lat": 37.5439045,
       "lng": 126.95734329999999
@@ -1820,8 +1820,8 @@
   },
   {
     "place_id": "ChIJx2CoowuifDURnA_gQCgWSMM",
-    "display_name": "공원슈퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Park Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1831,8 +1831,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 효창동 3-80번지 용산구 서울특별시 KR",
-    "short_address": "효창동 3-80번지 용산구 서울특별시 KR",
+    "address": "3-80 Hyochang-dong, Seoul, Republic of Korea Yongsan-gu Seoul KR",
+    "short_address": "3-80 Hyochang-dong, Yongsan-gu, Seoul KR",
     "location": {
       "lat": 37.5433087,
       "lng": 126.95793210000001
@@ -1861,14 +1861,14 @@
   {
     "place_id": "ChIJdbgQ6y2ZfDURziwxQgpxqAA",
     "display_name": "IRNST",
-    "category": "시장",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 마포대로11길 37 101호",
-    "short_address": "마포구 마포대로11길 37 101호",
+    "address": "#101, 37 Mapo-daero 11-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "#101, 37, Mapo-daero 11-gil, Mapo-gu",
     "location": {
       "lat": 37.548893299999996,
       "lng": 126.95192659999998
@@ -1887,18 +1887,18 @@
     "google_maps_url": "https://maps.google.com/?cid=47412084961520846",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c992deb10b875:0xa8710a42312cce!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 5:00",
-      "화요일: 오전 9:00 ~ 오후 5:00",
-      "수요일: 오전 9:00 ~ 오후 5:00",
-      "목요일: 오전 9:00 ~ 오후 5:00",
-      "금요일: 오전 9:00 ~ 오후 5:00",
-      "토요일: 오전 9:00 ~ 오후 5:00",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 5:00 PM",
+      "Tuesday: 9:00 AM - 5:00 PM",
+      "Wednesday: 9:00 AM - 5:00 PM",
+      "Thursday: 9:00 AM - 5:00 PM",
+      "Friday: 9:00 AM - 5:00 PM",
+      "Saturday: 9:00 AM - 5:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1909,8 +1909,8 @@
   },
   {
     "place_id": "ChIJ78QCmZ-YfDURYoLWWrJCXCM",
-    "display_name": "태광수퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Taekwang Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1920,8 +1920,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 175-252번지",
-    "short_address": "마포구 공덕동 175-252번지",
+    "address": "175-252 Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "175-252 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.549243499999996,
       "lng": 126.95188549999997
@@ -1942,7 +1942,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1951,8 +1951,8 @@
   },
   {
     "place_id": "ChIJi1a5kXSifDUR6nARQyB5ow8",
-    "display_name": "씽씽슈퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Sing Sing Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1962,8 +1962,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 공덕동 115-148번지 마포구 서울특별시 KR",
-    "short_address": "공덕동 115-148번지 마포구 서울특별시 KR",
+    "address": "115-148 Gongdeok-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "115-148 Gongdeok-dong, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.5474484,
       "lng": 126.95857950000001
@@ -1994,8 +1994,8 @@
   },
   {
     "place_id": "ChIJEcsv23WifDURHkkQFWMYYF0",
-    "display_name": "CU 공덕점",
-    "category": "슈퍼마켓",
+    "display_name": "CU Gongdeok Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2005,8 +2005,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 105-97",
-    "short_address": "마포구 공덕동 105-97",
+    "address": "105-97 Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "105-97 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5508697,
       "lng": 126.9559444
@@ -2025,42 +2025,42 @@
     "google_maps_url": "https://maps.google.com/?cid=6728404657125738782",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca275db2fcb11:0x5d6018631510491e!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "맛집탐방가은설푸디 (리얼먹방)",
+        "author": "Eunseol Foodi Restaurant Tour (Real Mukbang)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "보름달보며 지인분과 cu에서 소주한잔 했어요~♡♡~애들은 그 앞에 공원에서 뛰어놀고 좋았네요^^~다음에는 공덕동 맛집탐방가 투어해야겠어요^^~가볼곳이 좀 있더라고요\ncu공덕점 저녁 알바분이신지 사장님이신지는 모르겠으나 친절하시던데요~"
+        "relative_time": "3 years ago",
+        "text": "I had a glass of soju at Cu with an acquaintance while looking at the full moon~♡♡~It was nice for the kids to run around and play in the park in front of it^^~Next time, I should go on a Gongdeok-dong restaurant tour^^~There are some places to visit.\nI don't know if it's the evening worker at Cu Gongdeok branch or the owner, but he's kind."
       },
       {
-        "author": "윤기웅",
+        "author": "Kiwoong Yoon",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "8년 전",
-        "text": "매장이 휑하다고 느낄 정도로 넓어요..."
+        "relative_time": "8 years ago",
+        "text": "The store is so large that it feels empty..."
       },
       {
         "author": "Austin J. Chung",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -2072,15 +2072,15 @@
   {
     "place_id": "ChIJ0drGk0mZfDUR1GR6N4w-8L0",
     "display_name": "Stay cozy",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 마포대로",
-    "short_address": "마포구 마포대로",
+    "address": "Mapo-daero, Mapo-gu, Seoul, South Korea",
+    "short_address": "Mapo-gu, Mapo-daero",
     "location": {
       "lat": 37.544098,
       "lng": 126.95058399999998
@@ -2100,11 +2100,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c994993c6dad1:0xbdf03e8c377a64d4!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2114,16 +2114,16 @@
   },
   {
     "place_id": "ChIJn7ifKKGYfDURsn_EUB6L7Os",
-    "display_name": "(주)에이블씨엔씨지하철6호선공덕역점",
-    "category": "화장품 판매점",
+    "display_name": "Able C&C Subway Line 6 Gongdeok Station Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 공덕역미샤 KR 서울특별시 마포구 공덕동 423-29번지 지하층 지하철 6",
-    "short_address": "KR 서울특별시 마포구 공덕동 423-29번지 지하층 지하철 6 공덕역미샤",
+    "address": "Missha KR, Gongdeok Station, Seoul, Republic of Korea 423-29 Gongdeok-dong, Mapo-gu, Seoul, Basement Floor Subway 6",
+    "short_address": "KR 423-29 Gongdeok-dong, Mapo-gu, Seoul, Basement Floor, Subway 6, Gongdeok Station Missha",
     "location": {
       "lat": 37.544453499999996,
       "lng": 126.95117520000001
@@ -2144,8 +2144,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2155,24 +2155,24 @@
         "author": "Doo Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "깨끗하고 편리함"
+        "relative_time": "5 years ago",
+        "text": "Clean and convenient"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJoVHUt6aYfDUR0XpuUX3-eGU",
-    "display_name": "(주)아자두",
-    "category": "의류점",
+    "display_name": "Ajadu Co., Ltd.",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 KR 서울특별시 마포구 공덕동 461번지 A동 1506호",
-    "short_address": "KR 서울특별시 마포구 공덕동 461번지 A동 1506호",
+    "address": "#1506, Building A, 461 Gongdeok-dong, Mapo-gu, Seoul, Republic of Korea",
+    "short_address": "KR Room 1506, Building A, 461 Gongdeok-dong, Mapo-gu, Seoul",
     "location": {
       "lat": 37.5438409,
       "lng": 126.9500646
@@ -2200,16 +2200,16 @@
   },
   {
     "place_id": "ChIJoVHUt6aYfDURYKVmsVUsAXY",
-    "display_name": "(주)젤맘",
-    "category": "의류점",
+    "display_name": "GelMom Co., Ltd.",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 공덕동 461번지 B동 1512호 마포구 서울특별시 KR",
-    "short_address": "공덕동 461번지 B동 1512호 마포구 서울특별시 KR",
+    "address": "#1512, Building B, 461 Gongdeok-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "#1512, Building B, 461 Gongdeok-dong, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.5438409,
       "lng": 126.9500646
@@ -2237,16 +2237,16 @@
   },
   {
     "place_id": "ChIJoVHUt6aYfDURIMKTLrxJd18",
-    "display_name": "스마트샵",
-    "category": "의류점",
+    "display_name": "Smart Shop",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 공덕동 461번지 B동 408호 마포신영지웰 마포구 서울특별시 KR",
-    "short_address": "공덕동 461번지 B동 408호 마포신영지웰 마포구 서울특별시 KR",
+    "address": "Mapo Shinyoung Gwell, #408, Building B, 461 Gongdeok-dong, Seoul, Republic of Korea Mapo-gu Seoul KR",
+    "short_address": "#408, Building B, 461 Gongdeok-dong, Mapo Shinyoung Gwell, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.5438409,
       "lng": 126.9500646
@@ -2267,8 +2267,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2277,15 +2277,15 @@
   },
   {
     "place_id": "ChIJb59zO6GYfDURMqOwwmaitzM",
-    "display_name": "(주)세미코스메틱",
-    "category": "화장품 판매점",
+    "display_name": "Semi Cosmetic Co., Ltd.",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5438409,
@@ -2314,16 +2314,16 @@
   },
   {
     "place_id": "ChIJP8QqtqaYfDURYWarOmUMBko",
-    "display_name": "세아상사(주)",
-    "category": "의류점",
+    "display_name": "Sae-A Trading Co., Ltd.",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 461",
-    "short_address": "마포구 공덕동 461",
+    "address": "461 Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "461 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5438409,
       "lng": 126.9500646
@@ -2351,16 +2351,16 @@
   },
   {
     "place_id": "ChIJwfO_k3aZfDURZYLypEyypmA",
-    "display_name": "빈토리 공덕역점",
-    "category": "의류점",
+    "display_name": "Vintori Gongdeok Station Branch",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 역 626 동 124호 KR 서울특별시 마포구 백범로 지하200 공덕(6",
-    "short_address": "마포구 공덕동 역 626 동 KR 서울특별시 마포구 백범로 지하200 공덕(6 124호",
+    "address": "Room 124, Building 626, Gongdeok-dong Station, Mapo-gu, Seoul, Republic of Korea KR Basement 200 Baekbeom-ro, Mapo-gu, Seoul Gongdeok (6)",
+    "short_address": "Building 626, Gongdeok-dong Station, Mapo-gu KR B200 Baekbeom-ro, Mapo-gu, Seoul Gongdeok (6 124)",
     "location": {
       "lat": 37.5437509,
       "lng": 126.951257
@@ -2379,18 +2379,18 @@
     "google_maps_url": "https://maps.google.com/?cid=6964449916029665893",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c997693bff3c1:0x60a6b24ca4f28265!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 8:30",
-      "화요일: 오전 11:00 ~ 오후 8:30",
-      "수요일: 오전 11:00 ~ 오후 8:30",
-      "목요일: 오전 11:00 ~ 오후 8:30",
-      "금요일: 오전 11:00 ~ 오후 8:30",
-      "토요일: 오전 11:00 ~ 오후 8:30",
-      "일요일: 오전 11:00 ~ 오후 8:30"
+      "Monday: 11:00 AM - 8:30 PM",
+      "Tuesday: 11:00 AM - 8:30 PM",
+      "Wednesday: 11:00 AM - 8:30 PM",
+      "Thursday: 11:00 AM - 8:30 PM",
+      "Friday: 11:00 AM - 8:30 PM",
+      "Saturday: 11:00 AM - 8:30 PM",
+      "Sunday: 11:00 AM - 8:30 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2400,7 +2400,7 @@
         "author": "မေမမြတ်စံ ၀င်းပပ",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -2409,15 +2409,15 @@
   {
     "place_id": "ChIJb59zO6GYfDURBMhkvXEfVTk",
     "display_name": "LITTLEBOUTIQUE",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 롯데캐슬프레지던트 KR 서울특별시 마포구 공덕동 467번지 23층 2303호",
-    "short_address": "KR 서울특별시 마포구 공덕동 467번지 23층 2303호 롯데캐슬프레지던트",
+    "address": "Room 2303, 23rd floor, 467 Gongdeok-dong, Mapo-gu, Seoul, Lotte Castle President, Seoul, Republic of Korea",
+    "short_address": "KR Lotte Castle President, #2303, 23rd floor, 467 Gongdeok-dong, Mapo-gu, Seoul",
     "location": {
       "lat": 37.5448909,
       "lng": 126.95060660000001
@@ -2438,8 +2438,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2448,16 +2448,16 @@
   },
   {
     "place_id": "ChIJb59zO6GYfDUR8bN-kwWwfbo",
-    "display_name": "(주)롯데골드",
-    "category": "귀금속 상점",
+    "display_name": "Lotte Gold Co., Ltd.",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동",
-    "short_address": "마포구 공덕동",
+    "address": "Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5448909,
       "lng": 126.95060660000001
@@ -2478,8 +2478,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2488,16 +2488,16 @@
   },
   {
     "place_id": "ChIJGUFvvw2ZfDURzMDdRcyC4Po",
-    "display_name": "디에스 대성 금니거래소",
-    "category": "귀금속 상점",
+    "display_name": "DS Daesung Gold Exchange",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 만리재로1길 1 303호",
-    "short_address": "마포구 만리재로1길 1 303호",
+    "address": "#303, 1 Mallijae-ro 1-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "#303, 1 Mallijae-ro 1-gil, Mapo-gu",
     "location": {
       "lat": 37.5443723,
       "lng": 126.95197180000001
@@ -2518,18 +2518,18 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "구혜선",
+        "author": "Goo Hye-sun",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "친절하고 좋아요~~"
+        "relative_time": "3 years ago",
+        "text": "Kind and nice~~"
       }
     ],
     "photos": [
@@ -2546,16 +2546,16 @@
   },
   {
     "place_id": "ChIJ7X3P5qCYfDURz15DIoQD6d4",
-    "display_name": "네이처리퍼블릭 공덕역점",
-    "category": "화장품 판매점",
+    "display_name": "Nature Republic Gongdeok Station Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 423번지",
-    "short_address": "마포구 공덕동 423번지",
+    "address": "423 Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "423 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5449997,
       "lng": 126.95179780000001
@@ -2576,8 +2576,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2590,16 +2590,16 @@
   },
   {
     "place_id": "ChIJ5zemRaGYfDURT1xWlN1FD0U",
-    "display_name": "(주)부겐빌리아",
-    "category": "신발 판매점",
+    "display_name": "Bougainvillea Co., Ltd.",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 공덕동 257-3번지 국민서관 6층 마포구 서울특별시 KR",
-    "short_address": "공덕동 257-3번지 국민서관 6층 마포구 서울특별시 KR",
+    "address": "6th floor, Kookmin West Building, 257-3 Gongdeok-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "6th floor, Kookmin West Building, 257-3 Gongdeok-dong, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.5451395,
       "lng": 126.94958579999998
@@ -2628,7 +2628,7 @@
   {
     "place_id": "ChIJEXSdwVWZfDURyuJ6D98z0pk",
     "display_name": "Monoprint wallpaper",
-    "category": "여성의류점",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "point_of_interest",
@@ -2636,8 +2636,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 백범로 170",
-    "short_address": "마포구 공덕동 백범로 170",
+    "address": "170 Baekbeom-ro, Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "170 Baekbeom-ro, Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5443889,
       "lng": 126.9489717
@@ -2658,8 +2658,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2670,16 +2670,16 @@
   },
   {
     "place_id": "ChIJbwRwL6eYfDURZi1Re9ZqKRQ",
-    "display_name": "우박컬렉션(주)",
-    "category": "의류점",
+    "display_name": "Haebak Collection Co., Ltd.",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 437-9번지",
-    "short_address": "마포구 공덕동 437-9번지",
+    "address": "437-9 Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "437-9 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5430839,
       "lng": 126.9518835
@@ -2707,16 +2707,16 @@
   },
   {
     "place_id": "ChIJBUvCKgCZfDURm90IjkHCsU0",
-    "display_name": "원더풀화장품마포지사",
-    "category": "화장품 판매점",
+    "display_name": "Wonderful Cosmetics Mapo Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 256-13",
-    "short_address": "마포구 공덕동 256-13",
+    "address": "256-13, Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "256-13 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.544559299999996,
       "lng": 126.95267510000001
@@ -2737,8 +2737,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2747,16 +2747,16 @@
   },
   {
     "place_id": "ChIJKyR9mqaYfDURhXSjm2xJBf0",
-    "display_name": "(주)이스트오션",
-    "category": "의류점",
+    "display_name": "East Ocean Co., Ltd.",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 도화동",
-    "short_address": "마포구 도화동",
+    "address": "Dohwa-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "Dohwa-dong, Mapo-gu",
     "location": {
       "lat": 37.542958899999995,
       "lng": 126.9493663
@@ -2777,8 +2777,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2787,16 +2787,16 @@
   },
   {
     "place_id": "ChIJqRfK6qCYfDURXVB8GoE2D1w",
-    "display_name": "(주)이랜드",
-    "category": "의류점",
+    "display_name": "E-Land Co., Ltd.",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 공덕동 256-13번지 1003호 마포구 서울특별시 KR",
-    "short_address": "공덕동 256-13번지 1003호 마포구 서울특별시 KR",
+    "address": "#1003, 256-13 Gongdeok-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "#1003, 256-13 Gongdeok-dong, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.5445405,
       "lng": 126.95274579999999
@@ -2824,16 +2824,16 @@
   },
   {
     "place_id": "ChIJaYQOMaeYfDURyVafyZWjaUg",
-    "display_name": "강스",
-    "category": "화장품 판매점",
+    "display_name": "gangs",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 신공덕동 55-1",
-    "short_address": "마포구 신공덕동 55-1",
+    "address": "55-1 Singongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "55-1 Singongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.543095699999995,
       "lng": 126.9522896
@@ -2854,8 +2854,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2864,16 +2864,16 @@
   },
   {
     "place_id": "ChIJcyZquKCYfDURUxfoeARH6Uw",
-    "display_name": "진화장품",
-    "category": "화장품 판매점",
+    "display_name": "Evolution cosmetics",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 공덕동 456번지 801호 한국사회복지회관르네상스타워빌딩 마포구 서울특별시 KR",
-    "short_address": "공덕동 456번지 801호 한국사회복지회관르네상스타워빌딩 마포구 서울특별시 KR",
+    "address": "Korea Social Welfare Center, Renaissance Tower Building, Room 801, 456 Gongdeok-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "Room 801, 456 Gongdeok-dong, Korea Social Welfare Center, Renaissance Tower Building, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.543942099999995,
       "lng": 126.9528401
@@ -2894,8 +2894,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2904,16 +2904,16 @@
   },
   {
     "place_id": "ChIJUTu5QAqifDURtMN6LbT5cNU",
-    "display_name": "삼성화장품",
-    "category": "화장품 판매점",
+    "display_name": "Samsung Cosmetics",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 신공덕동 155번지 신공덕래미안1차아파트 상가 마포구 서울특별시 KR",
-    "short_address": "신공덕동 155번지 신공덕래미안1차아파트 상가 마포구 서울특별시 KR",
+    "address": "Singongdeok Raemian 1st Apartment, 155 Singongdeok-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "155 Singongdeok-dong Singongdeok Raemian 1st Apartment Shopping Mall Mapo-gu Seoul KR",
     "location": {
       "lat": 37.5434415,
       "lng": 126.95572709999999
@@ -2934,8 +2934,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2944,8 +2944,8 @@
   },
   {
     "place_id": "ChIJ7TNLfgqifDURpcEaWzR07Ao",
-    "display_name": "베비라공덕점",
-    "category": "어린이집",
+    "display_name": "Bevira Gongdeok Branch",
+    "category": "daycare center",
     "types": [
       "child_care_agency",
       "point_of_interest",
@@ -2954,8 +2954,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 만리재옛길 5",
-    "short_address": "마포구 만리재옛길 5",
+    "address": "5 Mallijaeyet-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "5, Mallijaeyet-gil, Mapo-gu",
     "location": {
       "lat": 37.5450203,
       "lng": 126.9542989
@@ -2983,7 +2983,7 @@
         "author": "zade S",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       }
     ],
@@ -2991,16 +2991,16 @@
   },
   {
     "place_id": "ChIJP9R5g6CYfDUREVc1K6YfK94",
-    "display_name": "보경고전의상실",
-    "category": "의류점",
+    "display_name": "Bogyeong Classic Clothing Room",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 256-30",
-    "short_address": "마포구 공덕동 256-30",
+    "address": "256-30 Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "256-30 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5447971,
       "lng": 126.9538455
@@ -3021,8 +3021,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3031,16 +3031,16 @@
   },
   {
     "place_id": "ChIJn6NGqKCYfDURSphn-fEXrCs",
-    "display_name": "제이엠(JM)의류매장",
-    "category": "의류점",
+    "display_name": "JM clothing store",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 트라우스 번지 101동 B209 호 펜 KR 서울특별시 마포구 신공덕동 172",
-    "short_address": "트라우스 번지 101동 B209 KR 서울특별시 마포구 신공덕동 172 호 펜",
+    "address": "B209, Building 101, Traus Beonji, Seoul, Republic of Korea Pen KR 172 Singongdeok-dong, Mapo-gu, Seoul",
+    "short_address": "Traus Bunji Building 101 B209 KR Pen #172, Singongdeok-dong, Mapo-gu, Seoul",
     "location": {
       "lat": 37.543336100000005,
       "lng": 126.954004
@@ -3061,8 +3061,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3072,16 +3072,16 @@
   },
   {
     "place_id": "ChIJl_arlqCYfDURb76zCMLogXk",
-    "display_name": "성희패션",
-    "category": "의류점",
+    "display_name": "Seonghee Fashion",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 256 10번지",
-    "short_address": "마포구 공덕동 256 10번지",
+    "address": "256 10, Gongdeok-dong, Mapo-gu, Seoul, Republic of Korea",
+    "short_address": "256 10th street, Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5446023,
       "lng": 126.9531195
@@ -3102,8 +3102,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3112,16 +3112,16 @@
   },
   {
     "place_id": "ChIJl_arlqCYfDURve-ESUdQHwg",
-    "display_name": "마포의류",
-    "category": "의류점",
+    "display_name": "Mapo Clothing",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 공덕동 256-10번지 1층 공덕시장 마포구 서울특별시 KR",
-    "short_address": "공덕동 256-10번지 1층 공덕시장 마포구 서울특별시 KR",
+    "address": "Gongdeok Market, 1st floor, 256-10 Gongdeok-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "1st floor, 256-10 Gongdeok-dong, Gongdeok Market, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.5446023,
       "lng": 126.9531195
@@ -3142,8 +3142,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3152,16 +3152,16 @@
   },
   {
     "place_id": "ChIJl_arlqCYfDURYK1s87_jSXg",
-    "display_name": "진주신발",
-    "category": "신발 판매점",
+    "display_name": "pearl shoes",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 공덕동 256-10번지 공덕시장 마포구 서울특별시 KR",
-    "short_address": "공덕동 256-10번지 공덕시장 마포구 서울특별시 KR",
+    "address": "Gongdeok Market, 256-10 Gongdeok-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "256-10 Gongdeok-dong, Gongdeok Market, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.5446023,
       "lng": 126.9531195
@@ -3182,8 +3182,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3192,16 +3192,16 @@
   },
   {
     "place_id": "ChIJzVudiKCYfDURA1ghcMGFK88",
-    "display_name": "원스타일",
-    "category": "의류점",
+    "display_name": "one style",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 공덕동 256-5번지 1층 마포구 서울특별시 KR",
-    "short_address": "공덕동 256-5번지 1층 마포구 서울특별시 KR",
+    "address": "1st floor, 256-5 Gongdeok-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "1st floor, 256-5 Gongdeok-dong, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.5451854,
       "lng": 126.95343380000001
@@ -3222,8 +3222,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3232,16 +3232,16 @@
   },
   {
     "place_id": "ChIJL6BsHH2jfDURUbJzEFFEpzM",
-    "display_name": "까사델사르토",
-    "category": "의류점",
+    "display_name": "Casa del Sarto",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "1층, 3-63 효창동 용산구 서울특별시 대한민국",
-    "short_address": "1층, 3-63 효창동 용산구",
+    "address": "1st floor, 3-63 Hyochang-dong, Yongsan-gu, Seoul South Korea",
+    "short_address": "1st floor, 3-63 Hyochang-dong Yongsan-gu",
     "location": {
       "lat": 37.5434907,
       "lng": 126.95772089999998
@@ -3261,11 +3261,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca37d1c6ca02f:0x33a744511073b251!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3275,16 +3275,16 @@
   },
   {
     "place_id": "ChIJYy8XogqifDURwrqQ9Bepv3U",
-    "display_name": "(주)이츠크림",
-    "category": "화장품 판매점",
+    "display_name": "Its Cream Co., Ltd.",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 242 15번지 4층",
-    "short_address": "마포구 공덕동 242 15번지 4층",
+    "address": "4th floor, 242 15th floor, Gongdeok-dong, Mapo-gu, Seoul, Korea",
+    "short_address": "4th floor, 242 15th floor, Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.546194,
       "lng": 126.95449359999998
@@ -3305,7 +3305,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3314,16 +3314,16 @@
   },
   {
     "place_id": "ChIJiemotaCYfDURed5EtvSM2R4",
-    "display_name": "올리브영 공덕역점",
-    "category": "화장품 판매점",
+    "display_name": "Olive Young Gongdeok Station Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 백범로 199 메트로디오빌 1층",
-    "short_address": "마포구 백범로 199 메트로디오빌 1층",
+    "address": "1st floor, Metrodioville, 199 Baekbeom-ro, Mapo-gu, Seoul, South Korea",
+    "short_address": "1st floor, Metrodioville, 199 Baekbeom-ro, Mapo-gu",
     "location": {
       "lat": 37.5434664,
       "lng": 126.95273269999998
@@ -3342,18 +3342,18 @@
     "google_maps_url": "https://maps.google.com/?cid=2222962873741926009",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98a0b5a8e989:0x1ed98cf4b644de79!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 10:30",
-      "화요일: 오전 10:00 ~ 오후 10:30",
-      "수요일: 오전 10:00 ~ 오후 10:30",
-      "목요일: 오전 10:00 ~ 오후 10:30",
-      "금요일: 오전 10:00 ~ 오후 10:30",
-      "토요일: 오전 10:00 ~ 오후 10:30",
-      "일요일: 오전 10:00 ~ 오후 10:30"
+      "Monday: 10:00 AM - 10:30 PM",
+      "Tuesday: 10:00 AM - 10:30 PM",
+      "Wednesday: 10:00 AM - 10:30 PM",
+      "Thursday: 10:00 AM - 10:30 PM",
+      "Friday: 10:00 AM - 10:30 PM",
+      "Saturday: 10:00 AM - 10:30 PM",
+      "Sunday: 10:00 AM - 10:30 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3363,36 +3363,36 @@
         "author": "ang Sh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "정말 좋은 화장품 매장이에요! 판매원이 친절하게 제 피부 타입에 맞는 제품을 추천해줘서 너무 감동했어요. 제품 종류도 다양하고 샘플도 많이 받았어요. 다음에 꼭 다시 올게요!"
+        "relative_time": "3 months ago",
+        "text": "This is a really good cosmetics store! I was very impressed that the salesperson kindly recommended products that suited my skin type. There was a wide variety of products and I received many samples. I will definitely come back next time!"
       },
       {
-        "author": "홍주영",
+        "author": "Hong Joo-young",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "직원들이 친절하시구 매장도 깔끔하고 원하는게 다 있었어요!!"
+        "relative_time": "3 months ago",
+        "text": "The staff was friendly, the store was clean, and it had everything I wanted!!"
       },
       {
-        "author": "곽서연",
+        "author": "Seoyeon Kwak",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "너무 좋은 서비스에요 매장은 작지만 있을건 다 있어요!"
+        "relative_time": "3 months ago",
+        "text": "It's such a good service. The store is small, but it has everything you need!"
       },
       {
         "author": "Sungmi Yun",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "직원분들이 친절하고 필요한 것들도 바로 찾아 줘서 고마워요!"
+        "relative_time": "4 months ago",
+        "text": "Thank you to the staff for being friendly and finding what I needed right away!"
       },
       {
         "author": "Hyuna Jo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "올때마다 엄청 많이 사가게 되는 올리브영!! 공덕역 직원들 넘 친절하네용!"
+        "relative_time": "3 months ago",
+        "text": "Every time I come here, I end up buying a lot of Olive Young!! The staff at Gongdeok Station are so friendly!"
       }
     ],
     "photos": [
@@ -3411,15 +3411,15 @@
   {
     "place_id": "ChIJB_J1WgCjfDURpLyQZpt_K0g",
     "display_name": "AUTOMATIC FOR THE PEOPLE",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 용산구 효창동 3-186",
-    "short_address": "용산구 효창동 3-186",
+    "address": "3-186 Hyochang-dong, Yongsan-gu, Seoul, South Korea",
+    "short_address": "3-186 Hyochang-dong, Yongsan-gu",
     "location": {
       "lat": 37.5452045,
       "lng": 126.95796349999999
@@ -3440,8 +3440,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3450,16 +3450,16 @@
   },
   {
     "place_id": "ChIJCyU_RaeYfDURQ5s3zrmKUT4",
-    "display_name": "(주)아모레퍼시픽",
-    "category": "화장품 판매점",
+    "display_name": "Amore Pacific Co., Ltd.",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 신공덕동 69-2번지 이마트 마포공덕점 지하1층 내",
-    "short_address": "마포구 신공덕동 69-2번지 이마트 마포공덕점 지하1층 내",
+    "address": "Inside the first basement level of E-Mart Mapogongdeok Branch, 69-2 Singongdeok-dong, Mapo-gu, Seoul, Korea",
+    "short_address": "Inside the first basement level of E-Mart Mapogongdeok Branch, 69-2 Singongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5424268,
       "lng": 126.9533694
@@ -3480,8 +3480,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3490,16 +3490,16 @@
   },
   {
     "place_id": "ChIJqdoa9gqifDURamUYhnVSMG4",
-    "display_name": "아가방 아가방마포공덕이마트",
-    "category": "의류점",
+    "display_name": "Agabang Agabang Mapo Gongdeok E-Mart",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 신공덕동 백범로 212",
-    "short_address": "마포구 신공덕동 백범로 212",
+    "address": "212 Baekbeom-ro, Singongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "212 Baekbeom-ro, Singongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5423682,
       "lng": 126.95336759999998
@@ -3520,25 +3520,25 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이재일 (Jerry JaeIl Lee)",
+        "author": "Jerry JaeIl Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "친절히 선물용 아가 선물 적절히 적정가에 잘 골라 주셔서 감사드립니다.."
+        "relative_time": "5 years ago",
+        "text": "Thank you for kindly choosing a gift for your baby at an appropriate price."
       },
       {
         "author": "GANESAN M",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -3546,16 +3546,16 @@
   },
   {
     "place_id": "ChIJV26WtNiZfDURs36d_oMdZIQ",
-    "display_name": "가이즈 앤 돌즈",
-    "category": "의류점",
+    "display_name": "Guys and Dolls",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 마포대로 122",
-    "short_address": "마포구 마포대로 122",
+    "address": "122 Mapo-daero, Mapo-gu, Seoul, South Korea",
+    "short_address": "122 Mapo-daero, Mapo-gu",
     "location": {
       "lat": 37.5453203,
       "lng": 126.9525219
@@ -3574,20 +3574,20 @@
     "google_maps_url": "https://maps.google.com/?cid=9539782363427208883",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99d8b4966e57:0x84641d83fe9d7eb3!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 5:00",
-      "화요일: 오전 10:00 ~ 오후 5:00",
-      "수요일: 오전 10:00 ~ 오후 5:00",
-      "목요일: 오전 10:00 ~ 오후 5:00",
-      "금요일: 오전 10:00 ~ 오후 5:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 5:00 PM",
+      "Tuesday: 10:00 AM - 5:00 PM",
+      "Wednesday: 10:00 AM - 5:00 PM",
+      "Thursday: 10:00 AM - 5:00 PM",
+      "Friday: 10:00 AM - 5:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3597,16 +3597,16 @@
   },
   {
     "place_id": "ChIJ70uoiAqifDURuRx9-AeMaAY",
-    "display_name": "풀무원 마포용산지점",
-    "category": "화장품 판매점",
+    "display_name": "Pulmuone Mapo Yongsan Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 249-12",
-    "short_address": "마포구 공덕동 249-12",
+    "address": "249-12 Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "249-12, Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5465954,
       "lng": 126.95392790000001
@@ -3627,8 +3627,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3638,16 +3638,16 @@
   },
   {
     "place_id": "ChIJQ-Ben6GYfDURqd-GN7q1KsM",
-    "display_name": "(주)빌리지베이비",
-    "category": "의류점",
+    "display_name": "Village Baby Co., Ltd.",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 번지 본관 370-4 517호",
-    "short_address": "마포구 공덕동 번지 본관 370-4 517호",
+    "address": "#517, Main Building, 370-4, Gongdeok-dong, Mapo-gu, Seoul, Republic of Korea",
+    "short_address": "#517, Main Building, 370-4, Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.546822399999996,
       "lng": 126.9500658
@@ -3675,16 +3675,16 @@
   },
   {
     "place_id": "ChIJQ-Ben6GYfDURhihtAlGwrVg",
-    "display_name": "아이보떼",
-    "category": "화장품 판매점",
+    "display_name": "Eye Beaute",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서울복지타운 720호 KR 서울특별시 마포구 공덕동 370-4번지 본관동동",
-    "short_address": "KR 서울특별시 마포구 공덕동 370-4번지 본관동동 서울복지타운 720호",
+    "address": "#720, Seoul Welfare Town, Seoul, Republic of Korea KR 370-4 Gongdeok-dong, Mapo-gu, Seoul, Main Building-dong",
+    "short_address": "KR Room 720, Seoul Welfare Town, Main Building-dong, 370-4 Gongdeok-dong, Mapo-gu, Seoul",
     "location": {
       "lat": 37.546822399999996,
       "lng": 126.9500658
@@ -3705,8 +3705,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3715,16 +3715,16 @@
   },
   {
     "place_id": "ChIJWbQNrKGYfDURcmFvIEKxA_Q",
-    "display_name": "밍크양장",
-    "category": "의류점",
+    "display_name": "Mink sheepskin",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 371",
-    "short_address": "마포구 공덕동 371",
+    "address": "371 Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "371 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.546711699999996,
       "lng": 126.95098739999999
@@ -3745,7 +3745,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3754,8 +3754,8 @@
   },
   {
     "place_id": "ChIJ1-OQjbGjfDURR5PsKsPcW-k",
-    "display_name": "베네피트 롯데백화점본점 브로우바",
-    "category": "미용실",
+    "display_name": "Benefit Lotte Department Store Main Branch Brow Bar",
+    "category": "beauty salon",
     "types": [
       "beauty_salon",
       "cosmetics_store",
@@ -3764,8 +3764,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 남대문로81, 2층",
-    "short_address": "중구 남대문로81, 2층",
+    "address": "2nd floor, 81 Namdaemun-ro, Jung-gu, Seoul, South Korea",
+    "short_address": "2nd floor, 81 Namdaemun-ro, Jung-gu",
     "location": {
       "lat": 37.5473145,
       "lng": 126.95300029999999
@@ -3784,24 +3784,24 @@
     "google_maps_url": "https://maps.google.com/?cid=16815276364514759495",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3b18d90e3d7:0xe95bdcc32aec9347!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 8:00",
-      "화요일: 오전 10:30 ~ 오후 8:00",
-      "수요일: 오전 10:30 ~ 오후 8:00",
-      "목요일: 오전 10:30 ~ 오후 8:00",
-      "금요일: 오전 10:30 ~ 오후 8:30",
-      "토요일: 오전 10:30 ~ 오후 8:30",
-      "일요일: 오전 10:30 ~ 오후 8:30"
+      "Monday: 10:30 AM - 8:00 PM",
+      "Tuesday: 10:30 AM - 8:00 PM",
+      "Wednesday: 10:30 AM - 8:00 PM",
+      "Thursday: 10:30 AM - 8:00 PM",
+      "Friday: 10:30 AM - 8:30 PM",
+      "Saturday: 10:30 AM - 8:30 PM",
+      "Sunday: 10:30 AM - 8:30 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": null,
@@ -3815,8 +3815,8 @@
   },
   {
     "place_id": "ChIJFRlWk5-YfDUReZHL_mVfKOs",
-    "display_name": "임블랑",
-    "category": "여성의류점",
+    "display_name": "imblanc",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "clothing_store",
@@ -3824,8 +3824,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 232-12번지 1층",
-    "short_address": "마포구 공덕동 232-12번지 1층",
+    "address": "1st floor, 232-12 Gongdeok-dong, Mapo-gu, Seoul, Korea",
+    "short_address": "1st floor, 232-12 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.548794199999996,
       "lng": 126.9527383
@@ -3846,8 +3846,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3856,16 +3856,16 @@
   },
   {
     "place_id": "ChIJLdvuIDeZfDURcoGt7hAxZYU",
-    "display_name": "올리브영 공덕파크팰리스점",
-    "category": "화장품 판매점",
+    "display_name": "Olive Young Gongdeok Park Palace Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕 마포대로 143 파크팰리스 108호",
-    "short_address": "마포구 공덕 마포대로 143 파크팰리스 108호",
+    "address": "Room 108, Park Palace, 143 Mapo-daero, Gongdeok, Mapo-gu, Seoul, South Korea",
+    "short_address": "Room 108, Park Palace, 143 Mapo-daero, Gongdeok, Mapo-gu",
     "location": {
       "lat": 37.547456499999996,
       "lng": 126.9530591
@@ -3884,18 +3884,18 @@
     "google_maps_url": "https://maps.google.com/?cid=9612142928485777778",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c993720eedb2d:0x85653110eead8172!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 10:30",
-      "화요일: 오전 9:00 ~ 오후 10:30",
-      "수요일: 오전 9:00 ~ 오후 10:30",
-      "목요일: 오전 9:00 ~ 오후 10:30",
-      "금요일: 오전 9:00 ~ 오후 10:30",
-      "토요일: 오전 10:00 ~ 오후 10:30",
-      "일요일: 오전 10:00 ~ 오후 10:30"
+      "Monday: 9:00 AM - 10:30 PM",
+      "Tuesday: 9:00 AM - 10:30 PM",
+      "Wednesday: 9:00 AM - 10:30 PM",
+      "Thursday: 9:00 AM - 10:30 PM",
+      "Friday: 9:00 AM - 10:30 PM",
+      "Saturday: 10:00 AM - 10:30 PM",
+      "Sunday: 10:00 AM - 10:30 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3905,35 +3905,35 @@
         "author": "IHAN Cafe",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "4달 전",
-        "text": "오늘 밤 마포 공더 매장에서 W3500 메이크업 리무버 티슈라는 작은 제품을 포함하여 네 가지 품목을 구매했습니다. 계산대에서 계산원은 평소처럼 쇼핑백을 살 것인지 물었습니다. 카드를 긁고 세금 환급금을 받은 후, 카운터에서 세 가지 품목을 근처 카운터로 가져가 가방에 넣었습니다. 호텔로 돌아와 계산서를 확인하고 나서야 메이크업 리무버 티슈를 가져가지 않았다는 것을 깨달았습니다. 이상했습니다. 계산원이 바로 옆에 있었는데, 결제를 처리한 후 바로 장바구니를 가져가고 다음 손님에게 전화를 걸었습니다. 정말 용납할 수 없는 일입니다! 계산원은 이 품목이 존재한다는 것을 알고 있었습니다. 계산하지 않았다면 괜찮았을 텐데, 계산원은 이미 계산을 했으니, 이미 계산한 품목을 가져가지 않았다는 사실을 계산원이 알고 있었을 수도 있지만 알려주지 않은 것 같습니다.\n\n한국 여행 중 서울에서 이런 일은 처음입니다. 제주도에서 테디베어 브랜드 고객에게 바가지를 씌운 적이 한 번 있었는데, 그 외에는요. 올리브영의 이미지가 실추되는 걸 보고 싶지 않습니다!\n\n#대한민국\n올리브영\n서울 마포구 마포대로 143, 파크팰리스 108호"
+        "relative_time": "4 months ago",
+        "text": "I purchased four items at the Mapo Gongde store tonight, including a small product called W3500 Makeup Remover Tissue. At checkout, the cashier asked if I wanted to buy a shopping bag like I normally would. After swiping my card and receiving my tax refund, I took the three items from the counter to a nearby counter and placed them in my bag. It wasn't until I got back to the hotel and checked the bill that I realized I hadn't brought any makeup remover wipes. It was strange. The cashier was right next to me, and after processing my payment, I immediately took my shopping cart and called the next customer. This is truly unacceptable! The cashier knew this item existed. It would have been ok if I hadn't paid, but since the cashier had already paid, I think the cashier may have known that I didn't take the items I already paid for, but didn't tell me.\n\nThis is my first time experiencing something like this in Seoul during my trip to Korea. There was one time in Jeju Island where a teddy bear brand customer was ripped off, but other than that. I don’t want to see Olive Young’s image tarnished!\n\n#South Korea\nOlive Young\nRoom 108, Park Palace, 143 Mapo-daero, Mapo-gu, Seoul"
       },
       {
         "author": "Martin L Hwang",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "2년 전",
-        "text": "친절한 직원들이 도움을 드리기 위해 대기하고 있습니다. 입구는 조금 작고 모퉁이에 있습니다."
+        "relative_time": "2 years ago",
+        "text": "Our friendly staff are waiting to assist you. The entrance is a bit small and located on a corner."
       },
       {
-        "author": "서연",
+        "author": "Seoyeon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "다양한 제품이 있고, 모든 테스터 제품이 재고가 있으며, 직원들이 친절합니다."
+        "relative_time": "2 years ago",
+        "text": "There is a wide selection, all testers are in stock, and the staff is friendly."
       },
       {
         "author": "Pei Xuan Han",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "일주일 이내",
-        "text": "원하는 것을 쉽게 얻을 수 있습니다!"
+        "relative_time": "within a week",
+        "text": "It's easy to get what you want!"
       },
       {
         "author": "Ju",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "11달 전",
+        "relative_time": "11 months ago",
         "text": null
       }
     ],
@@ -3952,16 +3952,16 @@
   },
   {
     "place_id": "ChIJf-XlGaCYfDUR0uepE1Te5Uc",
-    "display_name": "엠메이트",
-    "category": "의류점",
+    "display_name": "Mmate",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 462번지 3층 304호",
-    "short_address": "마포구 공덕동 462번지 3층 304호",
+    "address": "Room 304, 3rd floor, 462 Gongdeok-dong, Mapo-gu, Seoul, Korea",
+    "short_address": "Room 304, 3rd floor, 462 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5472768,
       "lng": 126.9530391
@@ -3982,8 +3982,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3992,16 +3992,16 @@
   },
   {
     "place_id": "ChIJN8pxGaCYfDURmpB8Leii4FU",
-    "display_name": "SBS코스메틱",
-    "category": "화장품 판매점",
+    "display_name": "SBS Cosmetics",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 462",
-    "short_address": "마포구 공덕동 462",
+    "address": "462 Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "462 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5472768,
       "lng": 126.9530391
@@ -4022,8 +4022,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4032,16 +4032,16 @@
   },
   {
     "place_id": "ChIJr4kDWqCYfDURkm_8YLHk1Oo",
-    "display_name": "(주)아우룸주얼리",
-    "category": "귀금속 상점",
+    "display_name": "Aurum Jewelry Co., Ltd.",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 404번지 풍림브이아이피텔 1126호",
-    "short_address": "마포구 공덕동 404번지 풍림브이아이피텔 1126호",
+    "address": "Room 1126, Poonglim VIPtel, 404 Gongdeok-dong, Mapo-gu, Seoul, Korea",
+    "short_address": "Room 1126, Poonglim VIPtel, 404 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5461523,
       "lng": 126.95212000000001
@@ -4069,16 +4069,16 @@
   },
   {
     "place_id": "ChIJZerT-p-YfDUREsAevXErb_M",
-    "display_name": "마포드봉",
-    "category": "화장품 판매점",
+    "display_name": "Marford Peak",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 275",
-    "short_address": "마포구 공덕동 275",
+    "address": "275 Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "275 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5483082,
       "lng": 126.95361650000001
@@ -4099,8 +4099,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4110,7 +4110,7 @@
   {
     "place_id": "ChIJ40g527ajfDUR-JYgACmzOGk",
     "display_name": "Avernojewelry",
-    "category": "귀금속 상점",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "store",
@@ -4118,8 +4118,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 마포대로12길 34 소담빌딩 4층",
-    "short_address": "마포구 마포대로12길 34 소담빌딩 4층",
+    "address": "4th floor, Sodam Building, 34 Mapo-daero 12-gil, Mapo-gu, Seoul, Korea",
+    "short_address": "4th floor, Sodam Building, 34 Mapo-daero 12-gil, Mapo-gu",
     "location": {
       "lat": 37.5475348,
       "lng": 126.9546778
@@ -4138,18 +4138,18 @@
     "google_maps_url": "https://maps.google.com/?cid=7582006961355396856",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3b6db3948e3:0x6938b329002096f8!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 6:00",
-      "화요일: 오전 10:00 ~ 오후 6:00",
-      "수요일: 오전 10:00 ~ 오후 6:00",
-      "목요일: 오전 10:00 ~ 오후 6:00",
-      "금요일: 오전 10:00 ~ 오후 6:00",
-      "토요일: 오전 10:00 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 6:00 PM",
+      "Tuesday: 10:00 AM - 6:00 PM",
+      "Wednesday: 10:00 AM - 6:00 PM",
+      "Thursday: 10:00 AM - 6:00 PM",
+      "Friday: 10:00 AM - 6:00 PM",
+      "Saturday: 10:00 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4168,16 +4168,16 @@
   },
   {
     "place_id": "ChIJ5RZZiUujfDUR_0rb3eKu8pI",
-    "display_name": "그리고샵",
-    "category": "의류점",
+    "display_name": "And shop",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 마포대로12길 36 소담빌딩 3층",
-    "short_address": "마포구 공덕동 마포대로12길 36 소담빌딩 3층",
+    "address": "3rd floor, Sodam Building, 36 Mapo-daero 12-gil, Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "3rd floor, Sodam Building, 36 Mapo-daero 12-gil, Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5472593,
       "lng": 126.95461800000001
@@ -4196,18 +4196,18 @@
     "google_maps_url": "https://maps.google.com/?cid=10588717963309435647",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca34b895916e5:0x92f2aee2dddb4aff!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 5:00",
-      "화요일: 오전 10:00 ~ 오후 5:00",
-      "수요일: 오전 10:00 ~ 오후 5:00",
-      "목요일: 오전 10:00 ~ 오후 5:00",
-      "금요일: 오전 10:00 ~ 오후 5:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 5:00 PM",
+      "Tuesday: 10:00 AM - 5:00 PM",
+      "Wednesday: 10:00 AM - 5:00 PM",
+      "Thursday: 10:00 AM - 5:00 PM",
+      "Friday: 10:00 AM - 5:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4216,16 +4216,16 @@
   },
   {
     "place_id": "ChIJuwnPSnWifDURcEpyiYEwbsM",
-    "display_name": "리안모드",
-    "category": "의류점",
+    "display_name": "Ryan Mode",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 460번지 한화꿈에그린아파트 103동 501호",
-    "short_address": "마포구 공덕동 460번지 한화꿈에그린아파트 103동 501호",
+    "address": "Room 501, Building 103, Hanwha Dream & Green Apartment, 460 Gongdeok-dong, Mapo-gu, Seoul, Korea",
+    "short_address": "Room 501, Building 103, Hanwha Dream & Green Apartment, 460 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.547016,
       "lng": 126.95533540000001
@@ -4246,8 +4246,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4256,16 +4256,16 @@
   },
   {
     "place_id": "ChIJtRdcgXWifDURp5CQaGHIayI",
-    "display_name": "(주)워래드",
-    "category": "화장품 판매점",
+    "display_name": "Warrad Co., Ltd.",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 463번지 1116호",
-    "short_address": "마포구 공덕동 463번지 1116호",
+    "address": "#1116, 463 Gongdeok-dong, Mapo-gu, Seoul, Republic of Korea",
+    "short_address": "#1116, 463 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5498579,
       "lng": 126.95441869999999
@@ -4293,16 +4293,16 @@
   },
   {
     "place_id": "ChIJtRdcgXWifDURFGFsB7YLhKE",
-    "display_name": "(주)원앤파이브",
-    "category": "귀금속 상점",
+    "display_name": "One&Five Co., Ltd.",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 공덕동 463번지 230호 마포구 서울특별시 KR",
-    "short_address": "공덕동 463번지 230호 마포구 서울특별시 KR",
+    "address": "#230, 463 Gongdeok-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "#230, 463 Gongdeok-dong, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.5498579,
       "lng": 126.95441869999999
@@ -4330,16 +4330,16 @@
   },
   {
     "place_id": "ChIJtRdcgXWifDUR3Giscra5_M8",
-    "display_name": "(주)카쿠토미코리아",
-    "category": "의류점",
+    "display_name": "Kakutomi Korea Co., Ltd.",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 공덕동 463번지 마포현대하이엘 마포구 서울특별시 KR",
-    "short_address": "공덕동 463번지 마포현대하이엘 마포구 서울특별시 KR",
+    "address": "Mapo Hyundai Hiel, 463 Gongdeok-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "463 Gongdeok-dong Mapo Hyundai Hiel Mapo-gu Seoul KR",
     "location": {
       "lat": 37.5498579,
       "lng": 126.95441869999999
@@ -4367,16 +4367,16 @@
   },
   {
     "place_id": "ChIJlc4GkHSifDUReBqa4s6qPK0",
-    "display_name": "은빛",
-    "category": "귀금속 상점",
+    "display_name": "argent",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 공덕동 115-3번지 마포구 서울특별시 KR",
-    "short_address": "공덕동 115-3번지 마포구 서울특별시 KR",
+    "address": "115-3 Gongdeok-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "115-3 Gongdeok-dong, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.5474403,
       "lng": 126.95879469999998
@@ -4404,8 +4404,8 @@
   },
   {
     "place_id": "ChIJSzkO06aYfDUR7TVbf6DBHFA",
-    "display_name": "세븐일레븐 S공덕역점",
-    "category": "편의점",
+    "display_name": "7-Eleven S Gongdeok Station Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4414,8 +4414,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 423",
-    "short_address": "마포구 공덕동 423",
+    "address": "423 Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "423 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5438426,
       "lng": 126.9509728
@@ -4423,7 +4423,7 @@
     "rating": 2.3,
     "rating_stars": "★★☆☆☆ 2.3",
     "rating_count": 4,
-    "price_level": "저렴 ($)",
+    "price_level": "Cheap ($)",
     "price_range": null,
     "editorial_summary": "Pit stop for snacks, drinks & daily essentials",
     "generative_summary": null,
@@ -4434,50 +4434,50 @@
     "google_maps_url": "https://maps.google.com/?cid=5772701717457745389",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98a6d30e394b:0x501cc1a07f5b35ed!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "황종각",
+        "author": "Hwangjonggak",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
-        "text": "친절한 아줌마  늘  미소가 보기좋군요"
+        "relative_time": "5 years ago",
+        "text": "The kind lady always has a nice smile on her face."
       },
       {
-        "author": "윤여욱",
+        "author": "Yeo-Wook Yoon",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "공덕역10번출구역.공항철도,겨의선,5,6호선접근용이"
+        "relative_time": "6 years ago",
+        "text": "Gongdeok Station Exit 10. Easy access to Airport Railroad, Gyeoui Line, and Lines 5 and 6."
       },
       {
         "author": "Dylan",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
-        "text": "최악의 7/11 남자는 전혀 도움이 되지 않고 멍청하기까지 하다"
+        "relative_time": "1 year ago",
+        "text": "The worst 7/11 guy is completely unhelpful and even stupid"
       },
       {
         "author": "son T",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
-        "text": "여성 직원들의 고객 서비스가 나빴습니다."
+        "relative_time": "1 year ago",
+        "text": "Customer service from female staff was bad."
       }
     ],
     "photos": [
@@ -4490,16 +4490,16 @@
   },
   {
     "place_id": "ChIJn7ifKKGYfDURiR3T08wkBnA",
-    "display_name": "자모",
-    "category": "서점",
+    "display_name": "letter",
+    "category": "bookstore",
     "types": [
       "book_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 공덕역 번지 지하층 626 동 125호 KR 서울특별시 마포구 공덕동 423-29",
-    "short_address": "공덕역 번지 지하층 626 동 KR 서울특별시 마포구 공덕동 423-29 125호",
+    "address": "Room 125, Building 626, Basement Floor, Gongdeok Station, Seoul, Republic of Korea KR 423-29 Gongdeok-dong, Mapo-gu, Seoul",
+    "short_address": "Gongdeok Station Basement Floor Building 626 KR Room 125, 423-29 Gongdeok-dong, Mapo-gu, Seoul",
     "location": {
       "lat": 37.544453499999996,
       "lng": 126.95117520000001
@@ -4520,8 +4520,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4530,8 +4530,8 @@
   },
   {
     "place_id": "ChIJBQI6yKaYfDURnvQK1C3h4Ac",
-    "display_name": "CU 공덕역점",
-    "category": "편의점",
+    "display_name": "CU Gongdeok Station Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4540,8 +4540,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 아현동 백범로 178",
-    "short_address": "마포구 아현동 백범로 178",
+    "address": "178 Baekbeom-ro, Ahyeon-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "178 Baekbeom-ro, Ahyeon-dong, Mapo-gu",
     "location": {
       "lat": 37.5438149,
       "lng": 126.9503062
@@ -4560,18 +4560,18 @@
     "google_maps_url": "https://maps.google.com/?cid=567701139995948190",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98a6c83a0205:0x7e0e12dd40af49e!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4581,22 +4581,22 @@
         "author": "SR Choi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "커피 살때마다 이쁜 홀더를 줬어요"
+        "relative_time": "2 years ago",
+        "text": "Every time I bought coffee, they gave me a pretty holder."
       },
       {
         "author": "hand an",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "9년 전",
-        "text": "보시다시피 보통입니다."
+        "relative_time": "9 years ago",
+        "text": "As you can see, it's normal."
       },
       {
         "author": "SHENG Wang (王閃電)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "야간 근무자는 아주 친절했어요."
+        "relative_time": "1 year ago",
+        "text": "The night shift worker was very friendly."
       }
     ],
     "photos": [
@@ -4609,16 +4609,16 @@
   },
   {
     "place_id": "ChIJP8QqtqaYfDURoJrxhkxeMx4",
-    "display_name": "(주)제우텍",
-    "category": "전자제품 판매점",
+    "display_name": "Zewootech Co., Ltd.",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 461",
-    "short_address": "마포구 공덕동 461",
+    "address": "461 Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "461 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5438921,
       "lng": 126.95008289999998
@@ -4646,8 +4646,8 @@
   },
   {
     "place_id": "ChIJb59zO6GYfDURRA1DAAH7Cks",
-    "display_name": "세븐일레븐 롯데시티호텔마포점",
-    "category": "편의점",
+    "display_name": "7-Eleven Lotte City Hotel Mapo Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4656,8 +4656,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 467번지 2층",
-    "short_address": "마포구 공덕동 467번지 2층",
+    "address": "2nd floor, 467 Gongdeok-dong, Mapo-gu, Seoul, Korea",
+    "short_address": "2nd floor, 467 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5448909,
       "lng": 126.95060660000001
@@ -4676,18 +4676,18 @@
     "google_maps_url": "https://maps.google.com/?cid=5407410284329635140",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98a13b739f6f:0x4b0afb0100430d44!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4697,8 +4697,8 @@
   },
   {
     "place_id": "ChIJvw6KUKGYfDUR0kMvDESjraU",
-    "display_name": "씨유",
-    "category": "편의점",
+    "display_name": "C.U.",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4707,8 +4707,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 공덕동 426-20번지",
-    "short_address": "마포구 공덕동 426-20번지",
+    "address": "426-20 Gongdeok-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "426-20 Gongdeok-dong, Mapo-gu",
     "location": {
       "lat": 37.5451058,
       "lng": 126.94923550000001
@@ -4729,8 +4729,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4741,7 +4741,7 @@
   {
     "place_id": "ChIJd5c9BQ6ZfDURzcfFFbIzgyo",
     "display_name": "7-Eleven Mapo",
-    "category": "편의점",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4750,8 +4750,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 도화동 17-3",
-    "short_address": "마포구 도화동 17-3",
+    "address": "17-3 Dohwa-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "17-3, Dohwa-dong, Mapo-gu",
     "location": {
       "lat": 37.5429148,
       "lng": 126.9497982
@@ -4770,18 +4770,18 @@
     "google_maps_url": "https://maps.google.com/?cid=3063349011504547789",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c990e053d9777:0x2a8333b215c5c7cd!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 10:00",
-      "화요일: 오전 10:00 ~ 오후 10:00",
-      "수요일: 오전 10:00 ~ 오후 10:00",
-      "목요일: 오전 10:00 ~ 오후 10:00",
-      "금요일: 오전 10:00 ~ 오후 10:00",
-      "토요일: 오전 10:00 ~ 오후 10:00",
-      "일요일: 오전 10:00 ~ 오후 10:00"
+      "Monday: 10:00 AM - 10:00 PM",
+      "Tuesday: 10:00 AM - 10:00 PM",
+      "Wednesday: 10:00 AM - 10:00 PM",
+      "Thursday: 10:00 AM - 10:00 PM",
+      "Friday: 10:00 AM - 10:00 PM",
+      "Saturday: 10:00 AM - 10:00 PM",
+      "Sunday: 10:00 AM - 10:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4791,35 +4791,35 @@
         "author": "David Taylor",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
-        "text": "요 전에 5만원짜리로 담배하고 맥주하고 좀 샀는데 5만원권 지폐 받더니 대놓고 짜증내면서 이거밖에 없냐고 하더라고. 살다살다 5만원권 거스름돈 걸러주기 아까워하면서 대놓고 짜증내는 인간은 처음 봤음. 정말 혐오스럽더라."
+        "relative_time": "1 year ago",
+        "text": "The other day, I bought some cigarettes and beer with a 50,000 won bill, but when he received a 50,000 won bill, he got really annoyed and asked if this was all he had. It's the first time in my life that I've ever seen a person who was so openly annoyed that he didn't feel like giving change for a 50,000 won bill. It was truly disgusting."
       },
       {
         "author": "Irene Dona King",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "2달 전",
-        "text": "저는 제가 제일 좋아하는 요거트를 사러 항상 여기를 방문해요. 그런데 한국인 아저씨가 우리가 자기 가게 재고에서 뭔가를 사려고 하는 줄 알고 퉁명스럽게 물건을 채워 넣는 걸 봤어요. 우리는 그냥 야식을 사러 간 거였는데 말이죠😅"
+        "relative_time": "2 months ago",
+        "text": "I always come here to get my favorite yogurt. But then I saw a Korean man curtly filling in the items because he thought we were trying to buy something from his store's inventory. We were just going to buy a late-night snack😅"
       },
       {
         "author": "李俊炯（イ・ジュンヒョン）",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "3년 전",
-        "text": "수염의 점원 냄비. 예의도 없다.\n같은 한국인으로서 부끄러운 녀석."
+        "relative_time": "3 years ago",
+        "text": "Beard's clerk pot. There is no manners either.\nAs a fellow Korean, he is a shameful guy."
       },
       {
         "author": "smallscale",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       },
       {
         "author": "Chany Yim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       }
     ],
@@ -4834,8 +4834,8 @@
   },
   {
     "place_id": "ChIJ6cHjPQCZfDUR0WDfpVDhJSI",
-    "display_name": "이마트24 공덕제일점",
-    "category": "편의점",
+    "display_name": "E-Mart 24 Gongdeok Jeil Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4844,8 +4844,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 만리재로 15",
-    "short_address": "마포구 만리재로 15",
+    "address": "15 Mallijae-ro, Mapo-gu, Seoul, South Korea",
+    "short_address": "15 Mallijae-ro, Mapo-gu",
     "location": {
       "lat": 37.544559299999996,
       "lng": 126.95267510000001
@@ -4866,8 +4866,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,

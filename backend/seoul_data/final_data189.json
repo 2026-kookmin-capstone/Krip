@@ -1,15 +1,15 @@
 [
   {
     "place_id": "ChIJ5-UcmVuhfDURRcUt77wKTfg",
-    "display_name": "아르띠앙서울갤러리",
-    "category": "미술관",
+    "display_name": "Artien Seoul Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 19-38 1 층",
-    "short_address": "강남구 청담동 19-38 1 층",
+    "address": "1st floor, 19-38 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "1st floor, 19-38 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5226371,
       "lng": 127.0438281
@@ -28,16 +28,16 @@
     "google_maps_url": "https://maps.google.com/?cid=17891968701195732293",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15b991ce5e7:0xf84d0abcef2dc545!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 7:00",
-      "화요일: 오전 11:00 ~ 오후 7:00",
-      "수요일: 오전 11:00 ~ 오후 7:00",
-      "목요일: 오전 11:00 ~ 오후 7:00",
-      "금요일: 오전 11:00 ~ 오후 7:00",
-      "토요일: 오전 11:00 ~ 오후 7:00",
-      "일요일: 휴무일"
+      "Monday: 11:00 AM - 7:00 PM",
+      "Tuesday: 11:00 AM - 7:00 PM",
+      "Wednesday: 11:00 AM - 7:00 PM",
+      "Thursday: 11:00 AM - 7:00 PM",
+      "Friday: 11:00 AM - 7:00 PM",
+      "Saturday: 11:00 AM - 7:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -50,15 +50,15 @@
   },
   {
     "place_id": "ChIJXW7MIAClfDURPJcMnZaLS9Y",
-    "display_name": "새결화랑",
-    "category": "미술관",
+    "display_name": "Saegyeol Hwarang",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 압구정로80길 26",
-    "short_address": "강남구 압구정로80길 26",
+    "address": "26 Apgujeong-ro 80-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "26 Apgujeong-ro 80-gil, Gangnam-gu",
     "location": {
       "lat": 37.5247156,
       "lng": 127.04459489999999
@@ -77,26 +77,26 @@
     "google_maps_url": "https://maps.google.com/?cid=15441589226366080828",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca50020cc6e5d:0xd64b8b969d0c973c!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 11:00 ~ 오후 6:00",
-      "수요일: 오전 11:00 ~ 오후 6:00",
-      "목요일: 오전 11:00 ~ 오후 6:00",
-      "금요일: 오전 11:00 ~ 오후 6:00",
-      "토요일: 오전 11:00 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 11:00 AM - 6:00 PM",
+      "Wednesday: 11:00 AM - 6:00 PM",
+      "Thursday: 11:00 AM - 6:00 PM",
+      "Friday: 11:00 AM - 6:00 PM",
+      "Saturday: 11:00 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "반달",
+        "author": "halfmoon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
+        "relative_time": "2 months ago",
         "text": null
       }
     ],
@@ -108,15 +108,15 @@
   },
   {
     "place_id": "ChIJIx6rFjGlfDUR3JSL1hoOvgc",
-    "display_name": "로이갤러리 청담",
-    "category": "미술관",
+    "display_name": "Roy Gallery Cheongdam",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 선릉로146길 27-8",
-    "short_address": "강남구 선릉로146길 27-8",
+    "address": "27-8, Seolleung-ro 146-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "27-8, Seolleung-ro 146-gil, Gangnam-gu",
     "location": {
       "lat": 37.5222422,
       "lng": 127.0422783
@@ -136,7 +136,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca53116ab1e23:0x7be0e1ad68b94dc!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -146,14 +146,14 @@
   },
   {
     "place_id": "ChIJKTJylnmkfDURY-hMwLyhVZA",
-    "display_name": "(주)윙갤러리",
-    "category": "미술관",
+    "display_name": "Wing Gallery Co., Ltd.",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5253466,
@@ -174,7 +174,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47996723229:0x9055a1bcc04ce863!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -184,15 +184,15 @@
   },
   {
     "place_id": "ChIJVwbb9HmkfDURYE6AtHWl8Yg",
-    "display_name": "(주)엠갤러리",
-    "category": "미술관",
+    "display_name": "MGallery Co., Ltd.",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 청담동 97-19번지 5층 강남구 서울특별시 KR",
-    "short_address": "청담동 97-19번지 5층 강남구 서울특별시 KR",
+    "address": "5th floor, 97-19 Cheongdam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "5th floor, 97-19 Cheongdam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.5246083,
       "lng": 127.04520099999999
@@ -212,7 +212,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca479f4db0657:0x88f1a575b4804e60!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -222,15 +222,15 @@
   },
   {
     "place_id": "ChIJfbexinmkfDURDGUf0UhU8rs",
-    "display_name": "카이스갤러리",
-    "category": "미술관",
+    "display_name": "CAIS Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 압구정로80길 17",
-    "short_address": "강남구 청담동 압구정로80길 17",
+    "address": "17 Apgujeong-ro 80-gil, Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "17 Apgujeong-ro 80-gil, Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.524584499999996,
       "lng": 127.04536220000001
@@ -250,7 +250,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4798ab1b77d:0xbbf25448d11f650c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -260,15 +260,15 @@
   },
   {
     "place_id": "ChIJ99JHinmkfDUR-LTYNOi0iZM",
-    "display_name": "자넷오갤러리",
-    "category": "미술관",
+    "display_name": "Janet O Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 번지 2층 96-15 동양빌딩",
-    "short_address": "강남구 청담동 번지 2층 96-15 동양빌딩",
+    "address": "96-15 Dongyang Building, 2nd floor, Cheongdam-dong, Gangnam-gu, Seoul, Korea",
+    "short_address": "96-15 Dongyang Building, 2nd floor, Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5248351,
       "lng": 127.04527730000001
@@ -288,7 +288,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4798a47d2f7:0x9389b4e834d8b4f8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -299,14 +299,14 @@
   {
     "place_id": "ChIJZ7DbIgClfDUR4cqOlI60pdU",
     "display_name": "easel art space",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 도산대로70길 16",
-    "short_address": "강남구 도산대로70길 16",
+    "address": "16 Dosan-daero 70-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "16 Dosan-daero 70-gil, Gangnam-gu",
     "location": {
       "lat": 37.522563,
       "lng": 127.0451295
@@ -325,13 +325,13 @@
     "google_maps_url": "https://maps.google.com/?cid=15394909425706650337",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca50022dbb067:0xd5a5b48e948ecae1!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 7:00",
-      "화요일: 오전 10:00 ~ 오후 7:00",
-      "수요일: 오전 10:00 ~ 오후 7:00",
-      "목요일: 오전 10:00 ~ 오후 7:00",
-      "금요일: 오전 10:00 ~ 오후 7:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 7:00 PM",
+      "Tuesday: 10:00 AM - 7:00 PM",
+      "Wednesday: 10:00 AM - 7:00 PM",
+      "Thursday: 10:00 AM - 7:00 PM",
+      "Friday: 10:00 AM - 7:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": null,
@@ -344,15 +344,15 @@
   },
   {
     "place_id": "ChIJM4q9YBWjfDURNuGRwnR2DMk",
-    "display_name": "갤러리그라프",
-    "category": "미술관",
+    "display_name": "Gallery Graf",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 6-2",
-    "short_address": "강남구 청담동 6-2",
+    "address": "6-2 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "6-2 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5234799,
       "lng": 127.04671789999999
@@ -371,16 +371,16 @@
     "google_maps_url": "https://maps.google.com/?cid=14487084345196667190",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca31560bd8a33:0xc90c7674c291e136!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 11:00 ~ 오후 7:00",
-      "수요일: 오전 11:00 ~ 오후 7:00",
-      "목요일: 오전 11:00 ~ 오후 7:00",
-      "금요일: 오전 11:00 ~ 오후 7:00",
-      "토요일: 오전 11:00 ~ 오후 7:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 11:00 AM - 7:00 PM",
+      "Wednesday: 11:00 AM - 7:00 PM",
+      "Thursday: 11:00 AM - 7:00 PM",
+      "Friday: 11:00 AM - 7:00 PM",
+      "Saturday: 11:00 AM - 7:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -390,35 +390,35 @@
         "author": "Didion",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "신보라 작가 개인전중입니다.\n늘 새로운 작가발굴에 힘쓰는 갤러리입니다.\n기존 갤러리 소장품들 사진도 추가합니다."
+        "relative_time": "2 years ago",
+        "text": "Artist Shin Bora's solo exhibition is underway.\nThis gallery is always striving to discover new artists.\nWe also add photos from existing gallery collections."
       },
       {
         "author": "jeongtae lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "독서당로 근처 유수의 갤러리들 사이에 있는 작지만 예쁜 갤러리이다. 독서당로  갤러리 투어에 추가할수 있는 곳이다."
+        "relative_time": "2 years ago",
+        "text": "It is a small but pretty gallery located among leading galleries near Dokseodang-ro. This is a place that can be added to the Dokseodang-ro gallery tour."
       },
       {
-        "author": "초지일관localguidek",
+        "author": "Choji consistent local guidek",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "훌륭한 전시가 있는 좋은 갤러리 입니다"
+        "relative_time": "1 year ago",
+        "text": "It's a good gallery with great exhibitions."
       },
       {
         "author": "Helena",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "규모가 작아서 놓치기 쉽지만, 컬렉션이 훌륭합니다."
+        "relative_time": "2 years ago",
+        "text": "It's small and easy to miss, but the collection is great."
       },
       {
-        "author": "갤러리 그라프Gallery Grappe",
+        "author": "Gallery Grappe",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9달 전",
+        "relative_time": "9 months ago",
         "text": null
       }
     ],
@@ -438,14 +438,14 @@
   {
     "place_id": "ChIJsbYb0vOlfDUR9cJ7qpWBL-M",
     "display_name": "333Gallery/seoul",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "주)333갤러리코리아, 7-1 청담동 강남구 서울특별시 대한민국",
-    "short_address": "주)333갤러리코리아, 7-1 청담동 강남구",
+    "address": "333 Gallery Korea, 7-1 Cheongdam-dong, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "333 Gallery Korea, 7-1 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5231379,
       "lng": 127.04703479999999
@@ -464,13 +464,13 @@
     "google_maps_url": "https://maps.google.com/?cid=16370445650325390069",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5f3d21bb6b1:0xe32f8195aa7bc2f5!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 11:00 ~ 오후 6:00",
-      "수요일: 오전 11:00 ~ 오후 6:00",
-      "목요일: 오전 11:00 ~ 오후 6:00",
-      "금요일: 오전 11:00 ~ 오후 6:00",
-      "토요일: 오전 11:00 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 11:00 AM - 6:00 PM",
+      "Wednesday: 11:00 AM - 6:00 PM",
+      "Thursday: 11:00 AM - 6:00 PM",
+      "Friday: 11:00 AM - 6:00 PM",
+      "Saturday: 11:00 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": null,
@@ -481,8 +481,8 @@
         "author": "Jr. go.go.",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "태국 팝아트"
+        "relative_time": "1 year ago",
+        "text": "thai pop art"
       }
     ],
     "photos": [
@@ -500,14 +500,14 @@
   },
   {
     "place_id": "ChIJlyEQYHqkfDUR2wlrL1GcsMU",
-    "display_name": "유로갤러리",
-    "category": "미술관",
+    "display_name": "Euro Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5235471,
@@ -528,7 +528,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47a60102197:0xc5b09c512f6b09db!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -538,15 +538,15 @@
   },
   {
     "place_id": "ChIJkevTNrClfDUR5M96HAsmsUw",
-    "display_name": "CHUNG ART GALLERY 청화랑",
-    "category": "미술관",
+    "display_name": "CHUNG ART GALLERY CHUNG ART GALLERY",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 삼성로147길 4 south KOREA",
-    "short_address": "강남구 삼성로147길 4 south KOREA",
+    "address": "4 Samseong-ro 147-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "4 Samseong-ro 147-gil, Gangnam-gu, south KOREA",
     "location": {
       "lat": 37.5226989,
       "lng": 127.0476372
@@ -565,56 +565,56 @@
     "google_maps_url": "https://maps.google.com/?cid=5526240046924615652",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5b036d3eb91:0x4cb1260b1c7acfe4!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 11:00 ~ 오후 6:00",
-      "수요일: 오전 11:00 ~ 오후 6:00",
-      "목요일: 오전 11:00 ~ 오후 6:00",
-      "금요일: 오전 11:00 ~ 오후 6:00",
-      "토요일: 오전 11:00 ~ 오후 5:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 11:00 AM - 6:00 PM",
+      "Wednesday: 11:00 AM - 6:00 PM",
+      "Thursday: 11:00 AM - 6:00 PM",
+      "Friday: 11:00 AM - 6:00 PM",
+      "Saturday: 11:00 AM - 5:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": [
-      "무료노상주차"
+      "Free street parking"
     ],
     "reviews": [
       {
         "author": "jeongtae lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "청담동 문화거리에 있는 작은 화랑이다.\n감상하기 부담없는 작품들을 주로 전시한다."
+        "relative_time": "2 years ago",
+        "text": "It is a small gallery located on Cheongdam-dong Culture Street.\nIt mainly exhibits works that are easy to appreciate."
       },
       {
-        "author": "떤우떤우",
+        "author": "Tan u ttan u",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "작은 화랑이지만 그만큼 작품에 더욱 집중하기에 좋은 곳입니다. 주차는 근처 노상주차장을 이용하시면 됩니다."
+        "relative_time": "2 years ago",
+        "text": "Although it is a small gallery, it is a great place to focus more on the work. For parking, please use the nearby street parking lot."
       },
       {
         "author": "Gang San An",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "대표님도 친근하시고 대한민국 최고의 화랑입니다."
+        "relative_time": "7 years ago",
+        "text": "The owner is friendly and it is the best gallery in Korea."
       },
       {
         "author": "Luckylife",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "좋은 작품들 잘 봤습니다."
+        "relative_time": "5 years ago",
+        "text": "I enjoyed seeing some good works."
       },
       {
-        "author": "김근호",
+        "author": "Kim Geun-ho",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -633,15 +633,15 @@
   },
   {
     "place_id": "ChIJU9-ps3ukfDURZ474TUrR0Qk",
-    "display_name": "12갤러리",
-    "category": "미술관",
+    "display_name": "12Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 118 17번지 네이처포엠 2층 220호",
-    "short_address": "강남구 청담동 118 17번지 네이처포엠 2층 220호",
+    "address": "Room 220, 2nd floor, Nature Poem, 17, 118 Cheongdam-dong, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "Room 220, 2nd floor, Nature Poem, 17, 118 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5252175,
       "lng": 127.0472183
@@ -661,7 +661,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47bb3a9df53:0x9d1d14a4df88e67!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -671,15 +671,15 @@
   },
   {
     "place_id": "ChIJU9-ps3ukfDURNiyiqciQoRg",
-    "display_name": "중중갤러리",
-    "category": "미술관",
+    "display_name": "Jungjung Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 청담동 118-17번지 강남구 서울특별시 KR",
-    "short_address": "청담동 118-17번지 강남구 서울특별시 KR",
+    "address": "118-17 Cheongdam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "118-17 Cheongdam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.5252175,
       "lng": 127.0472183
@@ -699,7 +699,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47bb3a9df53:0x18a190c8a9a22c36!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -709,15 +709,15 @@
   },
   {
     "place_id": "ChIJU9-ps3ukfDURfu011OxgBlY",
-    "display_name": "갤러리유",
-    "category": "미술관",
+    "display_name": "Gallery U",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 118-17번지 네이처포엠 3층 306호",
-    "short_address": "강남구 청담동 118-17번지 네이처포엠 3층 306호",
+    "address": "Room 306, 3rd floor, Nature Poem, 118-17 Cheongdam-dong, Gangnam-gu, Seoul, Korea",
+    "short_address": "Room 306, 3rd floor, Nature Poem, 118-17 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5252175,
       "lng": 127.0472183
@@ -737,7 +737,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47bb3a9df53:0x560660ecd435ed7e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -747,15 +747,15 @@
   },
   {
     "place_id": "ChIJU9-ps3ukfDUR9sjRs-9N-nU",
-    "display_name": "초이앤라거 갤러리",
-    "category": "미술관",
+    "display_name": "Choi&Lager Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 118-17",
-    "short_address": "강남구 청담동 118-17",
+    "address": "118-17 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "118-17 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5252175,
       "lng": 127.0472183
@@ -775,31 +775,31 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47bb3a9df53:0x75fa4defb3d1c8f6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "의료법강의",
+        "author": "Medical law lecture",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "JUA Arayuru (JUA_rang)",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "good boy",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -808,14 +808,14 @@
   {
     "place_id": "ChIJ89its3ukfDURW904po4yiU4",
     "display_name": "GALLERYGOMO",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 118-17",
-    "short_address": "강남구 청담동 118-17",
+    "address": "118-17 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "118-17 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5252175,
       "lng": 127.0472183
@@ -845,15 +845,15 @@
   },
   {
     "place_id": "ChIJC1EldXmkfDURPZEgiQ6siu4",
-    "display_name": "유경갤러리",
-    "category": "미술관",
+    "display_name": "Yukyung Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서울 강남구 청담2동 80-5",
-    "short_address": "서울 강남구 청담2동 80-5",
+    "address": "80-5, Cheongdam 2-dong, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "80-5 Cheongdam 2-dong, Gangnam-gu, Seoul",
     "location": {
       "lat": 37.5231998,
       "lng": 127.04866549999998
@@ -873,7 +873,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4797525510b:0xee8aac0e8920913d!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -883,15 +883,15 @@
   },
   {
     "place_id": "ChIJt-ZayW-kfDURR7Oy3_Ubzao",
-    "display_name": "선액자",
-    "category": "미술관",
+    "display_name": "first frame",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서울 강남구 청담2동 1",
-    "short_address": "서울 강남구 청담2동 1",
+    "address": "1 Cheongdam 2-dong, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "1 Cheongdam 2-dong, Gangnam-gu, Seoul",
     "location": {
       "lat": 37.5231998,
       "lng": 127.04866549999998
@@ -919,15 +919,15 @@
   },
   {
     "place_id": "ChIJrw_EAHukfDURoOQ617LWSvk",
-    "display_name": "안스",
-    "category": "문화센터",
+    "display_name": "Ans",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 청담동 120-13번지 2층 강남구 서울특별시 KR",
-    "short_address": "청담동 120-13번지 2층 강남구 서울특별시 KR",
+    "address": "2nd floor, 120-13 Cheongdam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "2nd floor, 120-13, Cheongdam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.524954199999996,
       "lng": 127.04819230000001
@@ -947,7 +947,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47b00c40faf:0xf94ad6b2d73ae4a0!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -958,14 +958,14 @@
   {
     "place_id": "ChIJIaUN8BqlfDURL-X0QQZcjCk",
     "display_name": "Gladstone Gallery Seoul",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 삼성로 760",
-    "short_address": "강남구 삼성로 760",
+    "address": "760 Samsung-ro, Gangnam-gu, Seoul, South Korea",
+    "short_address": "760 Samsung-ro, Gangnam-gu",
     "location": {
       "lat": 37.5227694,
       "lng": 127.0484117
@@ -984,13 +984,13 @@
     "google_maps_url": "https://maps.google.com/?cid=2993869034240664879",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca51af00da521:0x298c5c0641f4e52f!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 10:00 ~ 오후 6:00",
-      "수요일: 오전 10:00 ~ 오후 6:00",
-      "목요일: 오전 10:00 ~ 오후 6:00",
-      "금요일: 오전 10:00 ~ 오후 6:00",
-      "토요일: 오전 10:00 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 10:00 AM - 6:00 PM",
+      "Wednesday: 10:00 AM - 6:00 PM",
+      "Thursday: 10:00 AM - 6:00 PM",
+      "Friday: 10:00 AM - 6:00 PM",
+      "Saturday: 10:00 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": null,
@@ -998,32 +998,32 @@
     "parking": null,
     "reviews": [
       {
-        "author": "마도로스",
+        "author": "madoros",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "7달 전",
-        "text": "인사했더니\n여직원 눈 치켜뜨고 쳐다보더니 인사 씹네요.\n전에도 그러더니 에휴~ 왜 저려는지?\n예의가 너무 없네요.\n\n왜 쳐다 보는지 아세요?\n혹시 vip라면 인사하려고 쳐다 보는 겁니다.\n왠만하면 여직원 앉아 있으면 쌩까세요.\n\n박제를 해놔야지\n나중에 보는 눈 무시 못하죠.\n\n대체적으로 외국 갤러리 직원들\n품행이 안 좋습니다.\n관리 감독이 제대로 안되니까 지들 마음대로입니다.\n\n저는 1년에 갤러리 전시를\n평균적으로 300회 이상  관람하고 있어서\n갤러리 입장하는 순간 모든 직원과 눈을 마주치고 인사부터 합니다.\n샘플이 엄청 다양하겠죠?\n\n여긴 계속 업데이트할 겁니다.\n========================\n25년 8월 30일 토요일 다녀옴\n약간 마르고 단발 여직원 있었는데,\n인사하니까 수줍게 인사 받네요.\n\n전에 어린 여직원 보다 낫다.\n우고 론디노네 레이크 페인팅 너무 좋고👍🏻"
+        "relative_time": "7 months ago",
+        "text": "I said hello\nThe female employee looked at me with her eyes raised and said hello.\nYou've done that before, but wow, why are you doing that?\nThis is so rude.\n\nDo you know why you're staring?\nIf you are a VIP, they are looking at you to say hello.\nMost of the time, if a female employee is sitting there, it's okay.\n\nI need to stuff it\nYou can't ignore what you see later.\n\nGenerally foreign gallery employees\nBehavior is bad.\nBecause there is no proper management and supervision, they are left to their own devices.\n\nI hold a gallery exhibition a year.\nOn average, it is viewed more than 300 times.\nThe moment you enter the gallery, make eye contact with all staff and say hello.\nThe samples must be very diverse, right?\n\nWe will continue to update this place.\n========================\nWent on Saturday, August 30, 2025.\nThere was a female employee who was a bit thin and had short hair.\nWhen I said hello, they greeted me shyly.\n\nBetter than the young female employee before.\nUgo Rondinone's lake painting is so good👍🏻"
       },
       {
         "author": "jeongtae lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "청담동에 새로 생긴 외국계 갤러리로서 세련된 단독 갤러리 건물(3층)이 인상적이다.\n방문일은 카츠의 오프닝날이라 좀 산만하고 부산스러웠다."
+        "relative_time": "2 years ago",
+        "text": "As a new foreign gallery opened in Cheongdam-dong, the stylish stand-alone gallery building (3 floors) is impressive.\nThe day of my visit was the opening day of Katz, so it was a bit distracting and busy."
       },
       {
         "author": "Troy Nam",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "포스터 증정까지 전시 잘 보고갑니다~"
+        "relative_time": "2 years ago",
+        "text": "I thoroughly enjoyed the exhibition, including the poster presentation."
       },
       {
         "author": "Didion",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "조앤 조나스 라이브 공연\n9월 5일~10월 12일"
+        "relative_time": "1 year ago",
+        "text": "Joan Jonas live performance\nSeptember 5 - October 12"
       }
     ],
     "photos": [
@@ -1041,8 +1041,8 @@
   },
   {
     "place_id": "ChIJC40lqHukfDURCokoI9DvpCA",
-    "display_name": "알렌센터",
-    "category": "문화센터",
+    "display_name": "Allen Center",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "medical_clinic",
@@ -1050,8 +1050,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 117-41",
-    "short_address": "강남구 청담동 117-41",
+    "address": "117-41 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "117-41 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.525177,
       "lng": 127.04797999999998
@@ -1070,25 +1070,25 @@
     "google_maps_url": "https://maps.google.com/?cid=2352268582616336650",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47ba8258d0b:0x20a4efd02328890a!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:30 ~ 오후 9:00",
-      "화요일: 오전 8:30 ~ 오후 9:00",
-      "수요일: 오전 8:30 ~ 오후 9:00",
-      "목요일: 오전 8:30 ~ 오후 9:00",
-      "금요일: 오전 8:30 ~ 오후 9:00",
-      "토요일: 오전 8:30 ~ 오후 9:00",
-      "일요일: 휴무일"
+      "Monday: 8:30 AM - 9:00 PM",
+      "Tuesday: 8:30 AM - 9:00 PM",
+      "Wednesday: 8:30 AM - 9:00 PM",
+      "Thursday: 8:30 AM - 9:00 PM",
+      "Friday: 8:30 AM - 9:00 PM",
+      "Saturday: 8:30 AM - 9:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": null,
@@ -1098,15 +1098,15 @@
   },
   {
     "place_id": "ChIJpctbuXCkfDURFZAiDir6iak",
-    "display_name": "스페이스 옵트",
-    "category": "미술관",
+    "display_name": "space opt",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 11-10",
-    "short_address": "강남구 청담동 11-10",
+    "address": "11-10 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "11-10 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5221938,
       "lng": 127.046354
@@ -1125,40 +1125,40 @@
     "google_maps_url": "https://maps.google.com/?cid=12216570522751897621",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca470b95bcba5:0xa989fa2a0e229015!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 11:00 ~ 오후 7:00",
-      "수요일: 오전 11:00 ~ 오후 7:00",
-      "목요일: 오전 11:00 ~ 오후 7:00",
-      "금요일: 오전 11:00 ~ 오후 7:00",
-      "토요일: 오전 11:00 ~ 오후 7:00",
-      "일요일: 오전 11:00 ~ 오후 7:00"
+      "Monday: Closed day",
+      "Tuesday: 11:00 AM - 7:00 PM",
+      "Wednesday: 11:00 AM - 7:00 PM",
+      "Thursday: 11:00 AM - 7:00 PM",
+      "Friday: 11:00 AM - 7:00 PM",
+      "Saturday: 11:00 AM - 7:00 PM",
+      "Sunday: 11:00 AM - 7:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "슈카러버",
+        "author": "Shuka Lover",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "넘작음"
+        "relative_time": "6 years ago",
+        "text": "Too small"
       },
       {
-        "author": "장웅",
+        "author": "Jang Woong",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "이세연 (rhq8191)",
+        "author": "Se-yeon Lee (rhq8191)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       }
     ],
@@ -1171,14 +1171,14 @@
   {
     "place_id": "ChIJWQPgDPylfDURQG_uaBXUqG4",
     "display_name": "SEEART Gallery",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "삼성로, 755 지하 1층, 강남구 서울특별시 대한민국",
-    "short_address": "삼성로, 755 지하 1층, 강남구",
+    "address": "Samseong-ro, 755 Basement 1, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "Samseong-ro, 755 Basement 1, Gangnam-gu",
     "location": {
       "lat": 37.5222693,
       "lng": 127.048067
@@ -1197,16 +1197,16 @@
     "google_maps_url": "https://maps.google.com/?cid=7973856328679321408",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5fc0ce00359:0x6ea8d41568ee6f40!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 11:00 ~ 오후 6:00",
-      "수요일: 오전 11:00 ~ 오후 6:00",
-      "목요일: 오전 11:00 ~ 오후 6:00",
-      "금요일: 오전 11:00 ~ 오후 6:00",
-      "토요일: 오전 11:00 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 11:00 AM - 6:00 PM",
+      "Wednesday: 11:00 AM - 6:00 PM",
+      "Thursday: 11:00 AM - 6:00 PM",
+      "Friday: 11:00 AM - 6:00 PM",
+      "Saturday: 11:00 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1218,15 +1218,15 @@
   },
   {
     "place_id": "ChIJERw-HWWkfDUReYfzi-DvjXc",
-    "display_name": "마벨갤러리",
-    "category": "미술관",
+    "display_name": "Marvell Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 55-14번지",
-    "short_address": "강남구 청담동 55-14번지",
+    "address": "55-14 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "55-14 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5229882,
       "lng": 127.05269729999998
@@ -1246,7 +1246,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4651d3e1c11:0x778defe08bf38779!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1256,15 +1256,15 @@
   },
   {
     "place_id": "ChIJKWyYrWSkfDURq2NyHV8Pg2w",
-    "display_name": "몽고트",
-    "category": "미술관",
+    "display_name": "monggot",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 126-6번지 1층 102호",
-    "short_address": "강남구 청담동 126-6번지 1층 102호",
+    "address": "Room 102, 1st floor, 126-6 Cheongdam-dong, Gangnam-gu, Seoul, Korea",
+    "short_address": "Room 102, 1st floor, 126-6 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5255045,
       "lng": 127.0509707
@@ -1284,8 +1284,8 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca464ad986c29:0x6c830f5f1d7263ab!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실"
+      "Store meal",
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1295,8 +1295,8 @@
         "author": "John Kang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "아담한 규모의 편안한 갤러리\nA cozy, intimate art gallery with free admission."
+        "relative_time": "1 year ago",
+        "text": "A small, comfortable gallery\nA cozy, intimate art gallery with free admission."
       }
     ],
     "photos": [
@@ -1312,15 +1312,15 @@
   },
   {
     "place_id": "ChIJpZdSFnukfDUR2i70VGXN99E",
-    "display_name": "청담동문화센터",
-    "category": "문화센터",
+    "display_name": "Cheongdam-dong Cultural Center",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 압구정로79길 26",
-    "short_address": "강남구 압구정로79길 26",
+    "address": "26 Apgujeong-ro 79-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "26 Apgujeong-ro 79-gil, Gangnam-gu",
     "location": {
       "lat": 37.5250615,
       "lng": 127.04924450000001
@@ -1340,38 +1340,38 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47b165297a5:0xd1f7cd6554f42eda!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "유창수",
+        "author": "Yoo Chang-soo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "더운 날씨에 쾌적한 장소제공이 좋았습니다"
+        "relative_time": "6 years ago",
+        "text": "It was nice to have a comfortable place in hot weather."
       },
       {
-        "author": "박태경 (AniQ)",
+        "author": "Taekyung Park (AniQ)",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       },
       {
-        "author": "오광동",
+        "author": "Ogwang-dong",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -1382,14 +1382,14 @@
   {
     "place_id": "ChIJ2ckNsvqlfDURLlRgOGHHXQw",
     "display_name": "Space776 Seoul",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 압구정로79길 62",
-    "short_address": "강남구 압구정로79길 62",
+    "address": "62 Apgujeong-ro 79-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "62 Apgujeong-ro 79-gil, Gangnam-gu",
     "location": {
       "lat": 37.5254912,
       "lng": 127.05237059999997
@@ -1408,16 +1408,16 @@
     "google_maps_url": "https://maps.google.com/?cid=891087521660818478",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5fab20dc9d9:0xc5dc7613860542e!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 휴무일",
-      "수요일: 오후 12:00~6:00",
-      "목요일: 오후 12:00~6:00",
-      "금요일: 오후 12:00~6:00",
-      "토요일: 오후 12:00~6:00",
-      "일요일: 오후 12:00~6:00"
+      "Monday: Closed day",
+      "Tuesday: Closed",
+      "Wednesday: 12:00-6:00 PM",
+      "Thursday: 12:00-6:00 PM",
+      "Friday: 12:00-6:00 PM",
+      "Saturday: 12:00-6:00 PM",
+      "Sunday: 12:00-6:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1427,21 +1427,21 @@
         "author": "Didion",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "11달 전",
-        "text": "권지안(솔비)작가의 전시입니다.\n좋은 작가이고, 그의 재능이 부럽습니다.\n다음 작품도 기대됩니다."
+        "relative_time": "11 months ago",
+        "text": "This is an exhibition by artist Kwon Jian (Solbi).\nHe is a good writer, and I envy his talent.\nI'm also looking forward to the next work."
       },
       {
-        "author": "초지일관localguidek",
+        "author": "Choji consistent local guidek",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "좋은작품 잘 감상했습니다"
+        "relative_time": "1 year ago",
+        "text": "I enjoyed the good work."
       },
       {
-        "author": "김종헌",
+        "author": "Kim Jong-heon",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9달 전",
+        "relative_time": "9 months ago",
         "text": null
       }
     ],
@@ -1460,14 +1460,14 @@
   },
   {
     "place_id": "ChIJcb1O_3ikfDUR7m_62m1eggg",
-    "display_name": "박경미트리니티갤러리(주)",
-    "category": "미술관",
+    "display_name": "Park Kyung-Mi Trinity Gallery Co., Ltd.",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.526891299999996,
@@ -1488,7 +1488,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca478ff4ebd71:0x8825e6ddafa6fee!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1498,15 +1498,15 @@
   },
   {
     "place_id": "ChIJCYEK29alfDUR-mSc4smg3xQ",
-    "display_name": "313 청담",
-    "category": "미술관",
+    "display_name": "313 Cheongdam",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 압구정로60길 11",
-    "short_address": "강남구 청담동 압구정로60길 11",
+    "address": "11 Apgujeong-ro 60-gil, Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "11 Apgujeong-ro 60-gil, Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.526499699999995,
       "lng": 127.04220249999997
@@ -1526,7 +1526,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5d6db0a8109:0x14dfa0c9e29c64fa!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1536,15 +1536,15 @@
   },
   {
     "place_id": "ChIJQwDuXsKifDURyc0LkaXle_k",
-    "display_name": "갤러리 가이아",
-    "category": "미술관",
+    "display_name": "Gallery Gaia",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 선릉로162길 43",
-    "short_address": "강남구 선릉로162길 43",
+    "address": "43 Seolleung-ro 162-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "43 Seolleung-ro 162-gil, Gangnam-gu",
     "location": {
       "lat": 37.5262977,
       "lng": 127.04399110000001
@@ -1564,7 +1564,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c25eee0043:0xf97be5a5910bcdc9!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1574,35 +1574,35 @@
         "author": "YO LEE",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "청담동 압구정로 골목 안쪽에 위치한 조그마한 갤러리입니다. 우연히 지나다가 방문하게 되었는데, 생각보다 크지않았고, 작품도 소품위주로 전시가 가능한 곳이었습니다. 지금은 라이언킴의 개인전이 열리고 있습니다."
+        "relative_time": "1 year ago",
+        "text": "This is a small gallery located inside the alley of Apgujeong-ro, Cheongdam-dong. I happened to visit it while passing by. It wasn't as big as I thought, and it was a place where works could be mainly displayed as small items. Ryan Kim’s solo exhibition is currently open."
       },
       {
-        "author": "별앨리",
+        "author": "Star Alley",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "좋은 작품이 전시되어있어, 관람잘했습니다!!♡"
+        "relative_time": "6 years ago",
+        "text": "There were good works on display, so I enjoyed my visit!!♡"
       },
       {
-        "author": "고영완",
+        "author": "Youngwan Go",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "눈에 잘 띰. 지하철역에서 가까움. 인사동길 초입"
+        "relative_time": "6 years ago",
+        "text": "Highly visible. Close to the subway station. Entrance of Insadong-gil"
       },
       {
-        "author": "최성아",
+        "author": "Seongah Choi",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
-        "text": "공간이 좁긴한데 접근성이 너무 좋아요"
+        "relative_time": "7 years ago",
+        "text": "The space is small, but accessibility is very good."
       },
       {
         "author": "Seoungmin Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -1621,15 +1621,15 @@
   },
   {
     "place_id": "ChIJZ_Y1dXmkfDURcL6xyMoJEHw",
-    "display_name": "일란갤러리",
-    "category": "미술관",
+    "display_name": "Ilan Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 청담동 80-5번지 1층 B동 1호 층 강남구 서울특별시 KR",
-    "short_address": "청담동 80-5번지 1층 B동 1호 층 강남구 서울특별시 KR",
+    "address": "1st Floor, Building B, 1st Floor, 80-5 Cheongdam-dong, Seoul, Republic of Korea Gangnam-gu, Seoul KR",
+    "short_address": "1st floor, Building B, 1st floor, 80-5 Cheongdam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.5262914,
       "lng": 127.04407649999999
@@ -1649,7 +1649,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4797535f667:0x7c1009cac8b1be70!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1660,14 +1660,14 @@
   {
     "place_id": "ChIJm7d8JCWlfDURVTucy20dGIU",
     "display_name": "SHINSEGAE GALLERY CHEONGDAM",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 압구정로60길 21",
-    "short_address": "강남구 압구정로60길 21",
+    "address": "21 Apgujeong-ro 60-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "21 Apgujeong-ro 60-gil, Gangnam-gu",
     "location": {
       "lat": 37.5259514,
       "lng": 127.041927
@@ -1695,22 +1695,22 @@
         "author": "Didion",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1년 전",
-        "text": "멋진 전시공간입니다.\n근데.....오늘, 유난히 김치찌개같은 음식냄새가 심하게 나더군요.\n환풍시스템에 문제가 있는거겠죠?\n불편해서 일찍 나왔습니다.\n지하1층입니다."
+        "relative_time": "1 year ago",
+        "text": "It is a wonderful exhibition space.\nBut... today, the smell of food, like kimchi stew, was particularly strong.\nThere must be a problem with the ventilation system, right?\nI left early because it was inconvenient.\nIt is on the first basement floor."
       },
       {
         "author": "Xavier GENE",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "카인 : 루트 3\n2026. 1. 30 ~ 2026. 4. 4"
+        "relative_time": "1 month ago",
+        "text": "Cain: Route 3\n2026. 1. 30 ~ 2026. 4. 4"
       },
       {
         "author": "Kristine Shin",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "작지만 아늑한 공간에서 예술을 감상하세요."
+        "relative_time": "6 months ago",
+        "text": "Enjoy art in a small but cozy space."
       }
     ],
     "photos": [
@@ -1728,15 +1728,15 @@
   },
   {
     "place_id": "ChIJc_1dinikfDURgESfP1-6gMo",
-    "display_name": "갤러리아순수",
-    "category": "미술관",
+    "display_name": "Galleria Sunsoo",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 78-14",
-    "short_address": "강남구 청담동 78-14",
+    "address": "78-14 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "78-14 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.527346,
       "lng": 127.041187
@@ -1755,40 +1755,40 @@
     "google_maps_url": "https://maps.google.com/?cid=14591867710932468864",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4788a5dfd73:0xca80ba5f3f9f4480!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 1:00~7:00",
-      "화요일: 오후 1:00~7:00",
-      "수요일: 오후 1:00~7:00",
-      "목요일: 오후 1:00~7:00",
-      "금요일: 오후 1:00~7:00",
-      "토요일: 오후 1:00~7:00",
-      "일요일: 오후 1:00~7:00"
+      "Monday: 1:00-7:00 PM",
+      "Tuesday: 1:00-7:00 PM",
+      "Wednesday: 1:00-7:00 PM",
+      "Thursday: 1:00-7:00 PM",
+      "Friday: 1:00-7:00 PM",
+      "Saturday: 1:00-7:00 PM",
+      "Sunday: 1:00-7:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "운해",
+        "author": "sea ​​of ​​clouds",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
-        "text": "양아치소굴같음"
+        "relative_time": "6 years ago",
+        "text": "Looks like a gangster's den"
       },
       {
         "author": "MJ kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       },
       {
         "author": "sok",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "14년 전",
+        "relative_time": "14 years ago",
         "text": null
       }
     ],
@@ -1799,15 +1799,15 @@
   },
   {
     "place_id": "ChIJMYW7eXmkfDUR5kYbENnjoh8",
-    "display_name": "(주)송미령갤러리",
-    "category": "미술관",
+    "display_name": "Song Miryeong Gallery Co., Ltd.",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 청담동 80-21번지 주경빌딩 2층 강남구 서울특별시 KR",
-    "short_address": "청담동 80-21번지 주경빌딩 2층 강남구 서울특별시 KR",
+    "address": "2nd floor, Jukyung Building, 80-21 Cheongdam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "2nd floor, Jukyung Building, 80-21 Cheongdam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.5261354,
       "lng": 127.0448432
@@ -1827,7 +1827,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47979bb8531:0x1fa2e3d9101b46e6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1837,15 +1837,15 @@
   },
   {
     "place_id": "ChIJl4zXb3ikfDURJ1MgUCH2FRI",
-    "display_name": "갤러리루비",
-    "category": "미술관",
+    "display_name": "Gallery Ruby",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 청담동 84-1번지 1층 강남구 서울특별시 KR",
-    "short_address": "청담동 84-1번지 1층 강남구 서울특별시 KR",
+    "address": "1st floor, 84-1 Cheongdam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "1st floor, 84-1 Cheongdam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.5267597,
       "lng": 127.04071039999998
@@ -1865,7 +1865,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4786fd78c97:0x1215f62150205327!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1875,15 +1875,15 @@
   },
   {
     "place_id": "ChIJ3Ud113ukfDUROyp4_4wdNKA",
-    "display_name": "안스(ANS)희갤러리",
-    "category": "미술관",
+    "display_name": "ANS Hee Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 번지 6층 99-23",
-    "short_address": "강남구 청담동 번지 6층 99-23",
+    "address": "99-23, 6th floor, Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "99-23, 6th floor, Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.526180100000005,
       "lng": 127.0455735
@@ -1903,7 +1903,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47bd77547dd:0xa0341d8cff782a3b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1914,14 +1914,14 @@
   {
     "place_id": "ChIJmUZoNSGlfDURHzLi2BYsuXk",
     "display_name": "Tang Contemporary Art Seoul",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 압구정로75길 6",
-    "short_address": "강남구 압구정로75길 6",
+    "address": "6 Apgujeong-ro 75-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "6, Apgujeong-ro 75-gil, Gangnam-gu",
     "location": {
       "lat": 37.5261014,
       "lng": 127.0469887
@@ -1940,16 +1940,16 @@
     "google_maps_url": "https://maps.google.com/?cid=8771090225920356895",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca52135684699:0x79b92c16d8e2321f!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 10:30 ~ 오후 6:00",
-      "수요일: 오전 10:30 ~ 오후 6:00",
-      "목요일: 오전 10:30 ~ 오후 6:00",
-      "금요일: 오전 10:30 ~ 오후 6:00",
-      "토요일: 오전 10:30 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 10:30 AM - 6:00 PM",
+      "Wednesday: 10:30 AM - 6:00 PM",
+      "Thursday: 10:30 AM - 6:00 PM",
+      "Friday: 10:30 AM - 6:00 PM",
+      "Saturday: 10:30 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1959,36 +1959,36 @@
         "author": "YO LEE",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "청담동에 위치한 외국계 갤러리입니다. 아시아에서는 최대 규모의 갤러리로 알려저 있으며, 방콕, 베이징, 홍콩에 이어 22년도에 개관하였다고 합니다. 지하에 위치하고 있어 규모가 가름이 안되었으나, 생각보다 굉장히 커서 놀랐고, 지하1층과 2층이 6미터 높이의 층고로 되어있어 대형 작품의 전시도 할수 있는 구조였습니다. 현재는 양용 이라는 중국의 차세대 화가 갠전이 열리고 있었는데, 개인적 취향에 잘 맞아서 아주 재미있게 관람할수 있었습니다. 전시는 7월13일까지 입니다."
+        "relative_time": "1 year ago",
+        "text": "This is a foreign gallery located in Cheongdam-dong. It is known as the largest gallery in Asia, and is said to have opened in 2022, following Bangkok, Beijing, and Hong Kong. Because it was located underground, the scale was hard to tell, but I was surprised at how much bigger it was than I expected. The first and second basement levels have a 6-meter-high ceiling, making it possible to display large-scale works. There was currently an exhibition being held on China's next-generation painter named Yang Yong, and it suited my personal taste well, so I had a lot of fun watching it. The exhibition runs until July 13th."
       },
       {
         "author": "un promeneur solitaire",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "\n⠀⠀⠀⠀\n⠀Unpack Reveal Unleash\n⠀⠀⠀⠀2023. 10. 20 ~ 2023. 11. 25\n⠀⠀⠀\n탕 컨템포러리 아트에서는 7인의 작가들과 함께하는 그룹 전시 《Unpack Reveal Unleash》를 관람할 수 있습니다. 한국인 작가인 디렌리, 장콸, 그리고 윤협을 비롯하여 다양한 국적과 배경을 가진 작가들이 한데 모여 전시장을 가득 채우고 있습니다. 각기 다른 고유의 이야기를 전달하고 있고, 또 각기 다른 방식으로 그것을 표현하고 있지만 7인의 작가들은 모두 관람객 으로 하여금 '감동‘ 즉 마음을 움직이게 합니다. '네가 있어야 내가 있다'는 말이 있죠. 작품을 관람하다보면, '음, 이 작가는 이런 점에서 나와 비슷한 생각을 하고 있군, 혹은 '음, 이 작가는 이런 점에서 나와는 조금 다른 미적 취향을 가지고 있군' 하는 생각을 하게 되지 않나요? 내가 누군지 알기 위해서는 나와 다른 '너'를 알아야하고, 나의 존재는 나를 '너'로부터 구분 짓는 것에서 시작합니다. 이번 전시를 통해 7인의 동시대 작가들에 대해 알아보고, 더 나아가 나에 대해 알아보는 시간을 가지 면 좋을 것 같습니다. - 전시소개에서 발췌\n\n장점 : 믿고 보는 의 전시\n\n단점 : 너무 작다... 좀 더 커서... 더 많은 작품이 보고 싶다."
+        "relative_time": "2 years ago",
+        "text": "⠀⠀⠀⠀\n⠀Unpack Reveal Unleash\n⠀⠀⠀⠀2023. 10. 20 ~ 2023. 11. 25\n⠀⠀⠀\nAt Tang Contemporary Art, you can see the group exhibition “Unpack Reveal Unleash” with seven artists. Artists from various nationalities and backgrounds, including Korean artists Di Renli, Jang Qual, and Yun Hyeop, gather together to fill the exhibition hall. Although each of them is telling a unique story and expressing it in a different way, all seven artists move the viewer's heart. There is a saying, ‘I exist only when I have you.’ When you look at a work of art, don't you think, 'Hmm, this artist has similar thoughts to me in this regard, or 'Hmm, this artist has slightly different aesthetic tastes than me in this regard'? In order to know who I am, I must know the ‘you’ who is different from me, and my existence begins with distinguishing myself from ‘you’. I think it would be great to learn about 7 contemporary artists through this exhibition, and to take the time to learn more about myself. - Excerpt from exhibition introduction\n\nAdvantages: An exhibition that you can believe and see\n\nCons: It's too small... It's a little bigger... I want to see more works."
       },
       {
         "author": "BB",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "8월 24일까지 열리는 우국원 전시 보러 다녀왔어요. 전시 공간도 충분히 넓고 작품들도 많아서 꽤 시간 들여 봤어요. 이렇게 좋은 전시 공간이 있는지 몰랐네요. 훌륭한 전시를 무료로 볼 수 있어서 좋았습니다!"
+        "relative_time": "1 year ago",
+        "text": "I went to see the Woo Gukwon exhibition that runs until August 24th. The exhibition space is large enough and there are many works, so I spent quite a bit of time looking at them. I didn't know there was such a good exhibition space. It was great to see a great exhibition for free!"
       },
       {
         "author": "Didion",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "Tan ping 전시가 13일까지입니다.\n개인적으로 넘넘 좋아서, 세번쯤 갔어요.\n오늘은 가서 터치하나하나를 따라가봤죠.\n멋집니다.\n꼭 가보세요"
+        "relative_time": "2 years ago",
+        "text": "The Tan ping exhibition runs until the 13th.\nPersonally, I liked it so much that I went about three times.\nToday I went and followed each touch.\nThat's cool.\nMust go"
       },
       {
         "author": "WON SIK CHOI",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "항상 좋은 전시 만족합니다."
+        "relative_time": "4 months ago",
+        "text": "I am always satisfied with a good exhibition."
       }
     ],
     "photos": [
@@ -2006,15 +2006,15 @@
   },
   {
     "place_id": "ChIJcydeCnmkfDURdnmEkSY0yaU",
-    "display_name": "유진갤러리",
-    "category": "미술관",
+    "display_name": "Eugene Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 101-5",
-    "short_address": "강남구 청담동 101-5",
+    "address": "101-5 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "101-5 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.527478300000006,
       "lng": 127.0458873
@@ -2034,7 +2034,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4790a5e2773:0xa5c9342691847976!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2046,15 +2046,15 @@
   },
   {
     "place_id": "ChIJ1VJO05SjfDURdqmRLve-gso",
-    "display_name": "갤러리플래닛",
-    "category": "미술관",
+    "display_name": "Gallery Planet",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 압구정로71길 14 2 층",
-    "short_address": "강남구 압구정로71길 14 2 층",
+    "address": "2nd floor, 14 Apgujeong-ro 71-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "2nd floor, 14 Apgujeong-ro 71-gil, Gangnam-gu",
     "location": {
       "lat": 37.5275435,
       "lng": 127.0459073
@@ -2073,27 +2073,27 @@
     "google_maps_url": "https://maps.google.com/?cid=14592435711481325942",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca394d34e52d5:0xca82bef72e91a976!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 11:00 ~ 오후 6:00",
-      "수요일: 오전 11:00 ~ 오후 6:00",
-      "목요일: 오전 11:00 ~ 오후 6:00",
-      "금요일: 오전 11:00 ~ 오후 6:00",
-      "토요일: 오전 11:00 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 11:00 AM - 6:00 PM",
+      "Wednesday: 11:00 AM - 6:00 PM",
+      "Thursday: 11:00 AM - 6:00 PM",
+      "Friday: 11:00 AM - 6:00 PM",
+      "Saturday: 11:00 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김보영",
+        "author": "Boyoung Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "허보리작가님의  개인전을 보았습니다\n메밀추상 앞에 한참을 앉아서 제주도의 풍경을 눈으로 느끼고 왔습니다"
+        "relative_time": "2 years ago",
+        "text": "I saw artist Heo Bori’s solo exhibition.\nI sat in front of the buckwheat abstract for a while and felt the scenery of Jeju Island with my own eyes."
       }
     ],
     "photos": [
@@ -2111,15 +2111,15 @@
   },
   {
     "place_id": "ChIJUyCZu3ukfDUR48M5NADiycM",
-    "display_name": "비앙갤러리",
-    "category": "미술관",
+    "display_name": "Bien Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동",
-    "short_address": "강남구 청담동",
+    "address": "Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.525875299999996,
       "lng": 127.04722009999998
@@ -2139,7 +2139,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47bbb992053:0xc3c9e2003439c3e3!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2149,15 +2149,15 @@
   },
   {
     "place_id": "ChIJY0H0nnmkfDUR6ZPcYH89LIk",
-    "display_name": "123갤러리",
-    "category": "미술관",
+    "display_name": "123 Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 81-1 세화빌딩 2층",
-    "short_address": "강남구 청담동 81-1 세화빌딩 2층",
+    "address": "2nd floor, Sehwa Building, 81-1 Cheongdam-dong, Gangnam-gu, Seoul, Korea",
+    "short_address": "2nd floor, Sehwa Building, 81-1 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5279441,
       "lng": 127.0481159
@@ -2177,7 +2177,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4799ef44163:0x892c3d7f60dc93e9!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2188,14 +2188,14 @@
   {
     "place_id": "ChIJDbAmtnukfDUR-I2NxQjB6Wc",
     "display_name": "Gallery Koo",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "211 Nature Poem, 461 06011, Korea, 압구정로 강남구 서울특별시 대한민국",
-    "short_address": "211 Nature Poem, 461 06011, Korea, 압구정로 강남구",
+    "address": "211 Nature Poem, 461 06011, Korea, Apgujeong-ro, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "211 Nature Poem, 461 06011, Korea, Apgujeong-ro Gangnam-gu",
     "location": {
       "lat": 37.5256208,
       "lng": 127.04676069999998
@@ -2214,13 +2214,13 @@
     "google_maps_url": "https://maps.google.com/?cid=7487728098898447864",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47bb626b00d:0x67e9c108c58d8df8!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 6:00",
-      "화요일: 오전 11:00 ~ 오후 6:00",
-      "수요일: 오전 11:00 ~ 오후 6:00",
-      "목요일: 오전 11:00 ~ 오후 6:00",
-      "금요일: 오전 11:00 ~ 오후 6:00",
-      "토요일: 오전 11:00 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: 11:00 AM - 6:00 PM",
+      "Tuesday: 11:00 AM - 6:00 PM",
+      "Wednesday: 11:00 AM - 6:00 PM",
+      "Thursday: 11:00 AM - 6:00 PM",
+      "Friday: 11:00 AM - 6:00 PM",
+      "Saturday: 11:00 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": null,
@@ -2231,7 +2231,7 @@
         "author": "Gordon Ng",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       }
     ],
@@ -2239,15 +2239,15 @@
   },
   {
     "place_id": "ChIJ32GlinmkfDURHiBkKQQ8DdA",
-    "display_name": "카이스아트(주)",
-    "category": "미술관",
+    "display_name": "Kais Art Co., Ltd.",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 97-16",
-    "short_address": "강남구 청담동 97-16",
+    "address": "97-16 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "97-16 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5256244,
       "lng": 127.0457419
@@ -2267,7 +2267,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4798aa561df:0xd00d3c042964201e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2277,15 +2277,15 @@
   },
   {
     "place_id": "ChIJ0VlDFAClfDURIcfCW-uj7zM",
-    "display_name": "레이지 마이크 갤러리",
-    "category": "미술관",
+    "display_name": "Lazy Mike Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 청담동 112-6",
-    "short_address": "청담동 112-6",
+    "address": "112-6 Cheongdam-dong, Seoul, South Korea",
+    "short_address": "112-6 Cheongdam-dong",
     "location": {
       "lat": 37.527468,
       "lng": 127.0493479
@@ -2305,7 +2305,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca500144359d1:0x33efa3eb5bc2c721!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2315,15 +2315,15 @@
   },
   {
     "place_id": "ChIJuY3PJAClfDURxGkMgHnKHfA",
-    "display_name": "메타갤러리 라루나",
-    "category": "미술관",
+    "display_name": "Meta Gallery La Luna",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 112-27",
-    "short_address": "강남구 청담동 112-27",
+    "address": "112-27 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "112-27 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5273171,
       "lng": 127.0496393
@@ -2343,7 +2343,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca50024cf8db9:0xf01dca79800c69c4!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2353,15 +2353,15 @@
   },
   {
     "place_id": "ChIJVUaYpHykfDURjTJFjvDJuQw",
-    "display_name": "청담38갤러리",
-    "category": "미술관",
+    "display_name": "Cheongdam 38 Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 청담동 111-10번지 청담동 지하층 층 강남구 서울특별시 KR",
-    "short_address": "청담동 111-10번지 청담동 지하층 층 강남구 서울특별시 KR",
+    "address": "Basement floor, 111-10 Cheongdam-dong, Seoul, Republic of Korea, Cheongdam-dong, Gangnam-gu, Seoul KR",
+    "short_address": "111-10 Cheongdam-dong, Basement Floor, Cheongdam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.5269386,
       "lng": 127.04979739999999
@@ -2381,7 +2381,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47ca4984655:0xcb9c9f08e45328d!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2391,15 +2391,15 @@
   },
   {
     "place_id": "ChIJVbkE1t6lfDUR2FQd4SKAKzQ",
-    "display_name": "학고재청담",
-    "category": "미술관",
+    "display_name": "Hakgojae Cheongdam",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 도산대로89길 41",
-    "short_address": "강남구 도산대로89길 41",
+    "address": "41 Dosan-daero 89-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "41 Dosan-daero 89-gil, Gangnam-gu",
     "location": {
       "lat": 37.52691190000001,
       "lng": 127.05215740000001
@@ -2418,16 +2418,16 @@
     "google_maps_url": "https://maps.google.com/?cid=3759239201264850136",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ded604b955:0x342b8022e11d54d8!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 11:00 ~ 오후 7:00",
-      "수요일: 오전 11:00 ~ 오후 7:00",
-      "목요일: 오전 11:00 ~ 오후 7:00",
-      "금요일: 오전 11:00 ~ 오후 7:00",
-      "토요일: 오전 11:00 ~ 오후 7:00",
-      "일요일: 오전 11:00 ~ 오후 7:00"
+      "Monday: Closed day",
+      "Tuesday: 11:00 AM - 7:00 PM",
+      "Wednesday: 11:00 AM - 7:00 PM",
+      "Thursday: 11:00 AM - 7:00 PM",
+      "Friday: 11:00 AM - 7:00 PM",
+      "Saturday: 11:00 AM - 7:00 PM",
+      "Sunday: 11:00 AM - 7:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2437,35 +2437,35 @@
         "author": "Kelly kang",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "지하의 좁은 공간. 페인트 냄새 ...환기가 안되어 오래 감상이 어려웠다"
+        "relative_time": "6 years ago",
+        "text": "A narrow space underground. The smell of paint...it was difficult to enjoy it for a long time due to poor ventilation."
       },
       {
-        "author": "나한만",
+        "author": "Just me",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "KIM KYUNG SOON",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "김혜천",
+        "author": "Kim Hye-cheon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Sung Heun Ha (Rama)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -2473,15 +2473,15 @@
   },
   {
     "place_id": "ChIJGSco5TKlfDURee7CEayNopw",
-    "display_name": "갤러리 피치",
-    "category": "미술관",
+    "display_name": "gallery pitch",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 도산대로87길 25",
-    "short_address": "강남구 도산대로87길 25",
+    "address": "25 Dosan-daero 87-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "25 Dosan-daero 87-gil, Gangnam-gu",
     "location": {
       "lat": 37.5263367,
       "lng": 127.05014220000001
@@ -2500,16 +2500,16 @@
     "google_maps_url": "https://maps.google.com/?cid=11286739386315763321",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca532e5282719:0x9ca28dac11c2ee79!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 6:00",
-      "화요일: 오전 10:00 ~ 오후 6:00",
-      "수요일: 오전 10:00 ~ 오후 6:00",
-      "목요일: 오전 10:00 ~ 오후 6:00",
-      "금요일: 오전 10:00 ~ 오후 6:00",
-      "토요일: 오전 10:00 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 6:00 PM",
+      "Tuesday: 10:00 AM - 6:00 PM",
+      "Wednesday: 10:00 AM - 6:00 PM",
+      "Thursday: 10:00 AM - 6:00 PM",
+      "Friday: 10:00 AM - 6:00 PM",
+      "Saturday: 10:00 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2519,15 +2519,15 @@
   },
   {
     "place_id": "ChIJg53sFX-kfDUR4mFZakD8pcU",
-    "display_name": "잠원한강공원 압구정나들목",
-    "category": "미술관",
+    "display_name": "Jamwon Hangang Park Apgujeong Interchange",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 압구정동",
-    "short_address": "강남구 압구정동",
+    "address": "Apgujeong-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Apgujeong-dong, Gangnam-gu",
     "location": {
       "lat": 37.5307878,
       "lng": 127.04175239999998
@@ -2547,13 +2547,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47f15ec9d83:0xc5a5fc406a5961e2!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실",
-      "어린이적합"
+      "restroom",
+      "Suitable for children"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실"
+      "Wheelchair entrance",
+      "wheelchair restroom"
     ],
     "parking": null,
     "reviews": [
@@ -2561,36 +2561,36 @@
         "author": "DS Han",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "사진만큼 밝고 화사하지는 않음. 시원함을 선사하며. 자전거를 탔을 경우 성수대교쪽 보다는  압구정으로 진출하기 수월함"
+        "relative_time": "6 years ago",
+        "text": "It is not as bright and bright as the picture. Provides coolness. If you ride a bicycle, it is easier to get to Apgujeong than to Seongsu Bridge."
       },
       {
-        "author": "권귀숙",
+        "author": "Kwon Gwi-sook",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "집에서 따릉이를 타고 한강까지 가다보면 따릉이를 1시간전에 반납을 하고 다시 대여를 해서 타야 하는데 막 검색하다 압구정 나들목 바로 앞에 대여소를 발견하고 얼마나 기뻤는지 모름 나들목 벽면이 화려하게 벽화가 있어 지루하지 않게 지날수 있음"
+        "relative_time": "1 year ago",
+        "text": "If you take a Ttareungi from home to the Han River, you have to return the Ttareungi an hour in advance and rent it again. I was just searching and found a rental shop right in front of Apgujeong Interchange. I couldn't tell you how happy I was. There are colorful murals on the walls of the interchange, so you can pass by without getting bored."
       },
       {
         "author": "Yoon jin Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "파리처럼, 뉴욕 맨해튼처럼, 사진 찍는 자유로운 아티스트를 만날 수 있다. 압구정쪽 한강 공원으로 들어가는 초입이어서, 외국인들도 수이 보인다. 한강의 기적이, 눈으로 보이는 듯한 느낌"
+        "relative_time": "5 years ago",
+        "text": "Like Paris or Manhattan, New York, you can meet free artists who take pictures. Since it is the entrance to the Han River Park on the Apgujeong side, foreigners can also be seen. It feels like I can see the miracle of the Han River with my own eyes."
       },
       {
-        "author": "장Jay",
+        "author": "JangJay",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "좁고 작은 공간으로 한강으로 나가는길\n여러작품들이 이쁘게 그려놓았음"
+        "relative_time": "7 years ago",
+        "text": "The road to the Han River through a narrow and small space\nMany works were beautifully drawn."
       },
       {
         "author": "HJ P",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "장점.\n- 한강으로 진입하기 좋은 곳이에요.\n- 압구정로데오역 1번출구에서 나와서 쭉 직진하다 보면 아파트 끝나는 기점에 있습니다.\n- 그래피티들이 종종 바뀌는 걸 볼 수 있어요\n- 터널을 나오면 보이는 멋진 한강 뷰. 서울숲에 있는 큰 건물들이 멋져, 야경이 특히나 예뻐요\n- 여름에는 웨이크 보드 등을 탈 수 있는 장소가 바로 앞에 있어요.\n\n단점.\n- 앉을 수 있는 잔디밭이나 공간을 기대한다면, 터널이 있는 한강에서 출발해 어느쪽으로 가든 30분 이상을 걸어야 해요.\n- 자전거도로와 인도가 좁은 편이에요."
+        "relative_time": "4 years ago",
+        "text": "Advantages.\n- It’s a good place to enter the Han River.\n- If you come out of Exit 1 of Apgujeong Rodeo Station and walk straight, you will be at the end of the apartment complex.\n- You can see the graffiti changing often.\n- A great view of the Han River when you come out of the tunnel. The big buildings in Seoul Forest are nice, and the night view is especially pretty.\n- In the summer, there is a place right in front where you can go wakeboarding.\n\ndisadvantage.\n- If you are expecting a lawn or space to sit, you will have to start from the Han River where the tunnel is and walk for more than 30 minutes in either direction.\n- The bike path and sidewalks are narrow."
       }
     ],
     "photos": [
@@ -2608,16 +2608,16 @@
   },
   {
     "place_id": "ChIJzySV63mkfDURfAzdlHK1AiY",
-    "display_name": "(주)하늘운",
-    "category": "국립공원",
+    "display_name": "Haneulun Co., Ltd.",
+    "category": "national park",
     "types": [
       "national_park",
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 청담동 93-14번지 삼도빌딩 3층 강남구 서울특별시 KR",
-    "short_address": "청담동 93-14번지 삼도빌딩 3층 강남구 서울특별시 KR",
+    "address": "3rd floor, Samdo Building, 93-14 Cheongdam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "3rd floor, Samdo Building, 93-14 Cheongdam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.5247634,
       "lng": 127.0443188
@@ -2645,15 +2645,15 @@
   },
   {
     "place_id": "ChIJ24cawHmkfDUROuyuJwXlsoA",
-    "display_name": "청담은행나무공원",
-    "category": "공원",
+    "display_name": "Cheongdam Ginkgo Park",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동",
-    "short_address": "강남구 청담동",
+    "address": "Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.525041099999996,
       "lng": 127.0440198
@@ -2672,57 +2672,57 @@
     "google_maps_url": "https://maps.google.com/?cid=9273726393012644922",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca479c01a87db:0x80b2e50527aeec3a!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "어린이적합",
-      "반려견동반"
+      "Suitable for children",
+      "Accompanied by dogs"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "강지언",
+        "author": "Kang Ji-eon",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8년 전",
-        "text": "짧은 휴식할수있는곳"
+        "relative_time": "8 years ago",
+        "text": "A place to take a short break"
       },
       {
-        "author": "손인태",
+        "author": "Intae Son",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9년 전",
-        "text": "조용함"
+        "relative_time": "9 years ago",
+        "text": "quiet"
       },
       {
         "author": "Tania Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       },
       {
-        "author": "장웅",
+        "author": "Jang Woong",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "은비",
+        "author": "Eunbi",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "9년 전",
+        "relative_time": "9 years ago",
         "text": null
       }
     ],
@@ -2732,15 +2732,15 @@
   },
   {
     "place_id": "ChIJJ2xc9nqkfDUR9PRPqRG4wq0",
-    "display_name": "수지천",
-    "category": "공원",
+    "display_name": "Sujicheon",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 청담동 48-2번지 지층 1호 재정빌딩 강남구 서울특별시 KR",
-    "short_address": "청담동 48-2번지 지층 1호 재정빌딩 강남구 서울특별시 KR",
+    "address": "Republic of Korea, 48-2, Cheongdam-dong, Seoul, Republic of Korea, Ground Floor, No. 1, Jaejeong Building, Gangnam-gu, Seoul, Korea KR",
+    "short_address": "#1, Ground Floor, 48-2 Cheongdam-dong, Financial Building, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.5239281,
       "lng": 127.0482246
@@ -2768,15 +2768,15 @@
   },
   {
     "place_id": "ChIJEYLe5nqkfDURGstB_NiceQE",
-    "display_name": "영동식물원",
-    "category": "식물원",
+    "display_name": "Yeongdong Botanical Garden",
+    "category": "botanical garden",
     "types": [
       "botanical_garden",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 청담동 49-8번지 강남구 서울특별시 KR",
-    "short_address": "청담동 49-8번지 강남구 서울특별시 KR",
+    "address": "49-8 Cheongdam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "49-8 Cheongdam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.5239867,
       "lng": 127.04923749999999
@@ -2804,7 +2804,7 @@
         "author": "Tomas Thajeb",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -2813,15 +2813,15 @@
   {
     "place_id": "ChIJvVADUNGlfDURCw8EsfTIgpY",
     "display_name": "Batues plastik portal",
-    "category": "하이킹코스",
+    "category": "Hiking course",
     "types": [
       "hiking_area",
       "sports_activity_location",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 52-1",
-    "short_address": "강남구 청담동 52-1",
+    "address": "52-1 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "52-1 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5243861,
       "lng": 127.05165179999999
@@ -2849,14 +2849,14 @@
   },
   {
     "place_id": "ChIJ2fXyNGWkfDURTvIUrnOcF58",
-    "display_name": "사랑정원",
-    "category": "공원",
+    "display_name": "love garden",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5227846,
@@ -2886,15 +2886,15 @@
   {
     "place_id": "ChIJ8fz59iylfDUR80Adn5wIdUA",
     "display_name": "Bla",
-    "category": "하이킹코스",
+    "category": "Hiking course",
     "types": [
       "hiking_area",
       "sports_activity_location",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 도산대로89길 8",
-    "short_address": "강남구 청담동 도산대로89길 8",
+    "address": "8 Dosan-daero 89-gil, Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "8 Dosan-daero 89-gil, Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5250816,
       "lng": 127.05058799999999
@@ -2922,23 +2922,23 @@
         "author": "Norbert Röttgen",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "정말 블라. 정말 와우."
+        "relative_time": "6 months ago",
+        "text": "Really blah. Really wow."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJm452l-OlfDURe7uHQpGESd8",
-    "display_name": "청담목련어린이공원",
-    "category": "공원",
+    "display_name": "Cheongdam Magnolia Children’s Park",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 51",
-    "short_address": "강남구 청담동 51",
+    "address": "51 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "51 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5229625,
       "lng": 127.04983089999998
@@ -2958,11 +2958,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5e397768e9b:0xdf4984914287bb7b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": null,
@@ -2970,15 +2970,15 @@
   },
   {
     "place_id": "ChIJAWufXXikfDUR1QaKv4ZUj5U",
-    "display_name": "쥬리강",
-    "category": "공원",
+    "display_name": "Juri River",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 청담동 83-1번지 201호 마드레스 강남구 서울특별시 KR",
-    "short_address": "청담동 83-1번지 201호 마드레스 강남구 서울특별시 KR",
+    "address": "201, 83-1 Cheongdam-dong, Seoul, Republic of Korea Madres Gangnam-gu Seoul KR",
+    "short_address": "#201, 83-1 Cheongdam-dong, Madres, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.5267549,
       "lng": 127.04145489999999
@@ -3006,15 +3006,15 @@
   },
   {
     "place_id": "ChIJqQZIKGOkfDUR9bDuYN8PVuY",
-    "display_name": "청담 나들목",
-    "category": "공원",
+    "display_name": "Cheongdam Interchange",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 139-25",
-    "short_address": "강남구 청담동 139-25",
+    "address": "139-25 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "139-25 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.528121899999995,
       "lng": 127.05131139999999
@@ -3033,56 +3033,56 @@
     "google_maps_url": "https://maps.google.com/?cid=16597470928798920949",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca463284806a9:0xe6560fdf60eeb0f5!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "어린이적합",
-      "반려견동반"
+      "Suitable for children",
+      "Accompanied by dogs"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "조신자",
+        "author": "confidant",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "무릎이 안좋은 저에겐 한강나가기 최고인 나들목! 엘베가 있거든요!! 화장실도가깝고.\n벤치에서 물멍때리기 너무 좋아요~^^"
+        "relative_time": "5 years ago",
+        "text": "For someone like me with bad knees, this is the best way to get to the Han River! There is an elevator!! The bathroom is close too.\nI love taking a dip on the bench~^^"
       },
       {
-        "author": "또또야한강가자",
+        "author": "Let’s go to the Hangang River again",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "시설도 좋아요"
+        "relative_time": "6 years ago",
+        "text": "The facilities are good too"
       },
       {
-        "author": "장진순",
+        "author": "Jang Jin-soon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "부두에 앉아서 강물을 바라보고 있으면 마음이 평안해져요"
+        "relative_time": "5 years ago",
+        "text": "Sitting on the pier and looking at the river gives me peace of mind."
       },
       {
-        "author": "이학철",
+        "author": "Hakcheol Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "청담동 주민들이 한강공원에 편리하게 접근할수 있는 중요한 보행로"
+        "relative_time": "5 years ago",
+        "text": "An important pedestrian route that allows Cheongdam-dong residents to conveniently access Hangang Park."
       },
       {
-        "author": "황동욱",
+        "author": "Hwang Dong-wook",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "한강변의 편리한곳이죠.\n화장실도 가까워요"
+        "relative_time": "5 years ago",
+        "text": "It’s a convenient place along the Han River.\nThe bathroom is close too."
       }
     ],
     "photos": [
@@ -3100,15 +3100,15 @@
   },
   {
     "place_id": "ChIJv9lCxa6lfDURAt3PGwOMI8U",
-    "display_name": "신청담나들목",
-    "category": "공원",
+    "display_name": "Shincheondam Interchange",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동",
-    "short_address": "강남구 청담동",
+    "address": "Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.528779,
       "lng": 127.0518204
@@ -3128,12 +3128,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5aec542d9bf:0xc5238c031bcfdd02!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -3141,36 +3141,36 @@
         "author": "Casper",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "산책, 조깅, 라이딩 등 콧바람 쐬러, 운동하러 많이들 오십니다.\n날 좋을때, 시간 좋을 때 나가면 멋드러진 환경도 눈에 담을 수 있습니다."
+        "relative_time": "3 years ago",
+        "text": "Many people come to get some fresh air and exercise by walking, jogging, or riding.\nIf you go out when the weather is nice and the time is right, you can see the wonderful environment."
       },
       {
-        "author": "이학철",
+        "author": "Hakcheol Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "한강공원과 청담동 주택가를 이어주는 시민편의 시설로 유용함."
+        "relative_time": "3 years ago",
+        "text": "It is useful as a convenience facility for citizens that connects Hangang Park and Cheongdam-dong residential areas."
       },
       {
-        "author": "불광동추선생",
+        "author": "Mr. Bulgwangdongchu",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "달리기와 산책에 최고의 장소입니다."
+        "relative_time": "2 years ago",
+        "text": "It's a great place for running and walking."
       },
       {
         "author": "Kai Windrunner",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "야경 굿"
+        "relative_time": "3 years ago",
+        "text": "Night view is good"
       },
       {
         "author": "HyungSeok Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "석양 맛집입니다"
+        "relative_time": "1 year ago",
+        "text": "This is a sunset restaurant."
       }
     ],
     "photos": [
@@ -3188,15 +3188,15 @@
   },
   {
     "place_id": "ChIJJa1Ii6ClfDURwyzvysFnKPs",
-    "display_name": "강변오솔길",
-    "category": "공원",
+    "display_name": "riverside trail",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 압구정동 507",
-    "short_address": "압구정동 507",
+    "address": "507 Apgujeong-dong, Seoul, South Korea",
+    "short_address": "Apgujeong-dong 507",
     "location": {
       "lat": 37.5306929,
       "lng": 127.04189419999999
@@ -3216,8 +3216,8 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5a08b48ad25:0xfb2867c1caef2cc3!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합",
-      "반려견동반"
+      "Suitable for children",
+      "Accompanied by dogs"
     ],
     "payment": null,
     "accessibility": null,
@@ -3227,15 +3227,15 @@
         "author": "Nowoong Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "성수대교남단, 올림픽대로바로옆 산책하기좋은 강변오솔길을 소개합니다. 성수대교에서 영동대교까지 약1.5km에걸쳐있으며 강남,청담동에 이렇게 잘가꾸어진 공원이있다는게 주민들에게는 행운입니다. 올림픽대로 지하통로를통해 한강으로 나갈수도있어 시원한한강을 즐길수도 있습니다. 도심에서 산책을하고싶다면 추천드립니다."
+        "relative_time": "2 years ago",
+        "text": "Introducing a riverside trail that is great for a walk at the southern end of Seongsu Bridge, right next to Olympic Expressway. It spans about 1.5km from Seongsu Bridge to Yeongdong Bridge, and residents are lucky to have such a well-maintained park in Gangnam and Cheongdam-dong. You can also go out to the Han River through the underground passage of Olympic Boulevard and enjoy the cool Han River. Recommended if you want to take a walk in the city center."
       },
       {
-        "author": "BRIANNA “소피” Sopi",
+        "author": "BRIANNA “Sophie” Sopi",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "청담,압구정 주민들에게 산책하기좋은,나무사이길도 좋고 반려견산책되고,한강으로나갈수있는 압구정토끼굴도있고,운동기구,베드민턴장도 갖춘 사랑스런 산책로!~~~"
+        "relative_time": "1 year ago",
+        "text": "It's a great walk for residents of Cheongdam and Apgujeong. It has a nice path between trees, dog walking, Apgujeong rabbit hole that leads to the Han River, and a lovely walking path with exercise equipment and a badminton court!~~~"
       }
     ],
     "photos": [
@@ -3253,16 +3253,16 @@
   },
   {
     "place_id": "ChIJaXK2qWWlfDURG8mPRuVG-RM",
-    "display_name": "한강 자전거길",
-    "category": "하이킹코스",
+    "display_name": "Han River Bicycle Path",
+    "category": "Hiking course",
     "types": [
       "hiking_area",
       "sports_activity_location",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 압구정동 376",
-    "short_address": "강남구 압구정동 376",
+    "address": "376 Apgujeong-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "376 Apgujeong-dong, Gangnam-gu",
     "location": {
       "lat": 37.5312237,
       "lng": 127.0427029
@@ -3282,11 +3282,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca565a9b67269:0x13f946e5468fc91b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "반려견동반"
+      "Accompanied by dogs"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
@@ -3294,36 +3294,36 @@
         "author": "pru lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "풍경도 좋고 날씨도 좋아 자전거타기에 좋았습니다. 중간중간 쉼터나 편의점도 있어서 이용에도 편리했습니다."
+        "relative_time": "1 year ago",
+        "text": "The scenery was nice and the weather was good for biking. There were rest areas and convenience stores along the way, so it was convenient to use."
       },
       {
         "author": "si rere",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "서울에 한강은 사람을 힐링해주기도 고독을 주기도 한곳 한강은 치유를 준다 날씨가 풀리면 특히 자전거 민폐객들이 너무많은게 단점 봄여름가을의 한강보다 겨울의 한강을 가장선호한다"
+        "relative_time": "1 year ago",
+        "text": "The Han River in Seoul is a place that heals people and also provides solitude. The Han River is healing. The disadvantage is that there are too many cyclists, especially when the weather warms up. I prefer the Han River in winter to the Han River in spring, summer, and fall."
       },
       {
         "author": "june kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "자전거 조깅이나 유산소 운동하기 좋은곳 입니다\n탄천이랑 연결되어 있어서 자전거 출퇴근 하기에도 편리합니다"
+        "relative_time": "1 year ago",
+        "text": "It's a great place for bike jogging or aerobic exercise.\nIt is connected to Tancheon, so it is convenient for commuting by bicycle."
       },
       {
         "author": "sunghee kang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3주 전",
-        "text": "한양아파트 에서 가깝고 카페와 편의점도 있다\n뛰거나 산책하기 좋다"
+        "relative_time": "3 weeks ago",
+        "text": "It is close to Hanyang Apartment and there are cafes and convenience stores.\nGood for running or walking"
       },
       {
         "author": "Kristine Shin",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "걷기, 산책하기, 달리기하기에는 언제든 좋습니다."
+        "relative_time": "2 years ago",
+        "text": "Any time is good for walking, strolling, or running."
       }
     ],
     "photos": [
@@ -3341,15 +3341,15 @@
   },
   {
     "place_id": "ChIJ8VbLLaKlfDURtWdkUpacj2g",
-    "display_name": "압구정 나들목 (압구정 토끼굴)",
-    "category": "공원",
+    "display_name": "Apgujeong Interchange (Apgujeong Rabbit Hole)",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 압구정동",
-    "short_address": "강남구 압구정동",
+    "address": "Apgujeong-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Apgujeong-dong, Gangnam-gu",
     "location": {
       "lat": 37.5305937,
       "lng": 127.04163509999998
@@ -3368,57 +3368,57 @@
     "google_maps_url": "https://maps.google.com/?cid=7534412871055468469",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5a22dcb56f1:0x688f9c96526467b5!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "장유나",
+        "author": "Yuna Jang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "오늘 날씨가 상쾌하고 맑아서 처음 가봤는데요 정말 좋았어요=) 탁트인 한강풍경과 두둥실 떠있는 양털같은 구름들~~~ 요즘 신경쓰이던 고민들 싹~ 씻어주는 그림같은 곳이에요^^ 겨울오기전 몇번 더 가볼려고요;)♡"
+        "relative_time": "6 years ago",
+        "text": "The weather was refreshing and clear today, so I went there for the first time. It was really nice =) The open scenery of the Han River and floating clouds like fleece~~~ It's a picturesque place that washes away all the worries I've been worrying about these days^^ I plan to go a few more times before winter comes;)♡"
       },
       {
         "author": "Nowoong Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "압구정 갤러리아백화점쪽에서 한강쪽으로 내러오면 만날수있는 젊음의 장소, 그래피티로 누구나 자신을 표현할수있는곳, 더울때 잠시쉬어갈수있는곳, 이곳을 지나면 멋진 한강을 만날수있다. 그래피티는 누군가에의해서 계속바뀐다..."
+        "relative_time": "2 years ago",
+        "text": "If you come down from Apgujeong Galleria Department Store towards the Han River, you will find a place of youth, a place where anyone can express themselves through graffiti, a place where you can take a break when it's hot, and after passing here, you can see the wonderful Han River. Graffiti is constantly changed by someone..."
       },
       {
-        "author": "BRIANNA “소피” Sopi",
+        "author": "BRIANNA “Sophie” Sopi",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "토끼굴에 많은 그림이 그려져 있고 ,토끼굴지나면 뷰카페나옴,그래비티그림볼만함@@"
+        "relative_time": "1 year ago",
+        "text": "There are many pictures drawn in the rabbit hole, and after passing the rabbit hole, you will come to a view cafe, the gravity pictures are worth seeing@@"
       },
       {
-        "author": "김원선",
+        "author": "Kim Won-seon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "나들목의 시멘트벽에 그림이 인상적입니다. 시원해요"
+        "relative_time": "4 years ago",
+        "text": "The painting on the cement wall of the interchange is impressive. It's cool"
       },
       {
-        "author": "헌짱구",
+        "author": "Heonjjanggu",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "자전거 타다가 쉬러 들어가면 시원~함.. 굿"
+        "relative_time": "4 years ago",
+        "text": "When you go in to rest after riding a bike, it feels refreshing.. Good"
       }
     ],
     "photos": [
@@ -3436,15 +3436,15 @@
   },
   {
     "place_id": "ChIJPa7HIHikfDURYpIczzRVxmA",
-    "display_name": "수족관청담점",
-    "category": "수족관",
+    "display_name": "Aquarium Cheongdam Branch",
+    "category": "aquarium",
     "types": [
       "aquarium",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 89-21",
-    "short_address": "강남구 청담동 89-21",
+    "address": "89-21 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "89-21 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5248716,
       "lng": 127.04166110000001
@@ -3464,11 +3464,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47820c7ae3d:0x60c65534cf1c9262!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3478,16 +3478,16 @@
   },
   {
     "place_id": "ChIJNaHpheelfDURADHJhTNq47o",
-    "display_name": "오디컴퍼니(주)",
-    "category": "공연예술 극장",
+    "display_name": "OD Company Co., Ltd.",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 도산대로81길 51",
-    "short_address": "강남구 도산대로81길 51",
+    "address": "51 Dosan-daero 81-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "51 Dosan-daero 81-gil, Gangnam-gu",
     "location": {
       "lat": 37.5271204,
       "lng": 127.04585960000001
@@ -3507,7 +3507,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5e785e9a135:0xbae36a3385c93100!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3522,16 +3522,16 @@
   },
   {
     "place_id": "ChIJE3ZjTmqlfDURZRspQ75OE2E",
-    "display_name": "오크라서울",
-    "category": "라이브 음악 공연장",
+    "display_name": "Okra Seoul",
+    "category": "live music venue",
     "types": [
       "live_music_venue",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 도산대로 59길",
-    "short_address": "강남구 도산대로 59길",
+    "address": "Dosan-daero 59-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Dosandaero 59-gil, Gangnam-gu",
     "location": {
       "lat": 37.5251798,
       "lng": 127.0423852
@@ -3551,7 +3551,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca56a4e637613:0x61134ebe43291b65!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3561,8 +3561,8 @@
   },
   {
     "place_id": "ChIJ2VoAi3ekfDURKKcR9gkc3Tc",
-    "display_name": "겟 올라잇",
-    "category": "술집",
+    "display_name": "Get up right",
+    "category": "bar",
     "types": [
       "live_music_venue",
       "event_venue",
@@ -3570,8 +3570,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 89-5",
-    "short_address": "강남구 청담동 89-5",
+    "address": "89-5 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "89-5 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5246863,
       "lng": 127.0415362
@@ -3593,66 +3593,66 @@
     "google_maps_url": "https://maps.google.com/?cid=4025404471047726888",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4778b005ad9:0x37dd1c09f611a728!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 7:00 ~ 오전 2:00",
-      "화요일: 오후 7:00 ~ 오전 2:00",
-      "수요일: 오후 7:00 ~ 오전 2:00",
-      "목요일: 오후 8:00 ~ 오전 2:00",
-      "금요일: 오후 8:00 ~ 오전 2:00",
-      "토요일: 오후 8:00 ~ 오전 2:00",
-      "일요일: 휴무일"
+      "Monday: 7:00 PM - 2:00 AM",
+      "Tuesday: 7:00 PM - 2:00 AM",
+      "Wednesday: 7:00 PM - 2:00 AM",
+      "Thursday: 8:00 PM - 2:00 AM",
+      "Friday: 8:00 PM - 2:00 AM",
+      "Saturday: 8:00 PM - 2:00 AM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "라이브음악",
-      "화장실",
-      "단체적합",
-      "맥주",
-      "와인",
-      "칵테일"
+      "Store meal",
+      "Reservation available",
+      "live music",
+      "restroom",
+      "group fitness",
+      "beer",
+      "wine",
+      "cocktail"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "manul 마늘",
+        "author": "manul garlic",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "겟올라잇은 서울에서 재즈공연및 다양한 공연등을 볼 수있는 바겸 펍이다. 주류와 안주등을 주문해 먹을 수 있으며 분위기 또한 좋다."
+        "relative_time": "3 years ago",
+        "text": "Get All Right is a bar and pub where you can see jazz performances and various other performances in Seoul. You can order alcohol and snacks, and the atmosphere is also nice."
       },
       {
-        "author": "으니",
+        "author": "So",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "생각보다 작은 곳이었어요. 주말에 가니 바 체어는 없었고 테이블 예약을 안 하면 스탠딩으로만 입장할 수 있더라구요!  스탠딩도 불편하지는 않았어요. 작은 테이블은 작고 의자가 높아서 의자가 쓰러지거나 테이블 위 램프나 술 잔이 바닥으로 떨어지는 사고가 종종 있더군요! 불편하고 위험해 보였어요. 소파가 있는 낮은 테이블은 공연 관람에도, 술 마시며 놀기에도 좋아 보였습니다. 여럿이 찾을 때 좋겠어요. 다만 바틀 가격은 다른 곳보다 높은 편! 그래도 좋은 음악과 연주, 공연이 있으니 그걸 생각하면 괜찮은 것 같아요. 저는 칵테일만 마셨는데 맛은 보통!"
+        "relative_time": "7 years ago",
+        "text": "It was a smaller place than I thought. I went on a weekend, so there were no bar chairs, and if you don't reserve a table, you can only enter by standing!  Standing wasn't uncomfortable either. The small table is small and the chairs are high, so there are often accidents where chairs fall over or lamps or drinking glasses on the table fall to the floor! It seemed uncomfortable and dangerous. The low table with a sofa looked great for watching a performance or having a drink. I hope many people find it. However, the bottle price is higher than other places! Still, I think it's okay because there is good music, music, and performances. I only drank the cocktail, but it tasted average!"
       },
       {
-        "author": "신날치 Shinnalchi",
+        "author": "Shinnalchi",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "분위기도 좋고 그런데 왜 조금의 흥겨움의 춤사위도 아님 몸흔듦도 허용이 안되요 그리고 공연 보실려면 테이블을 잡는게 편하세요."
+        "relative_time": "6 years ago",
+        "text": "The atmosphere is nice, but why isn't even the slightest bit of joyous dancing or shaking of the body allowed? And if you want to watch the performance, it's better to grab a table."
       },
       {
-        "author": "장성진",
+        "author": "Seongjin Jang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "시간이 정말 빠르게 흘러갔습니다ㅎ적당한 취기와 그 이상 텐션을 올려주는 무대! 다음에 또 방문하고 싶네요ㅎ"
+        "relative_time": "3 years ago",
+        "text": "Time passed really quickly. A stage that made you feel just right and raised the tension even more! I want to visit again next time."
       },
       {
-        "author": "지성아",
+        "author": "Jisung-ah",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "좋은 문화를 전파하는곳\n옛날부터 뛰어난 예술과들과 배우들은 이런곳에서 프라이빗하게 놀았죠 ~ 정말 추천합니다"
+        "relative_time": "6 years ago",
+        "text": "A place that spreads good culture\nSince ancient times, outstanding artists and actors have played in private places like this. I really recommend it."
       }
     ],
     "photos": [
@@ -3671,15 +3671,15 @@
   {
     "place_id": "ChIJgy2YKqKlfDUR4CnxQ5ddu3w",
     "display_name": "RDiMUSIC",
-    "category": "라이브 음악 공연장",
+    "category": "live music venue",
     "types": [
       "live_music_venue",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 도산대로89길 8 LH빌딩 B1",
-    "short_address": "강남구 도산대로89길 8 LH빌딩 B1",
+    "address": "B1, LH Building, 8 Dosan-daero 89-gil, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "LH Building B1, 8 Dosan-daero 89-gil, Gangnam-gu",
     "location": {
       "lat": 37.5250671,
       "lng": 127.0506095
@@ -3698,36 +3698,36 @@
     "google_maps_url": "https://maps.google.com/?cid=8987880385609279968",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5a22a982d83:0x7cbb5d9743f129e0!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 7:00",
-      "화요일: 오전 10:00 ~ 오후 7:00",
-      "수요일: 오전 10:00 ~ 오전 7:00",
-      "목요일: 오전 10:00 ~ 오후 7:00",
-      "금요일: 오전 10:00 ~ 오전 7:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 7:00 PM",
+      "Tuesday: 10:00 AM - 7:00 PM",
+      "Wednesday: 10:00 AM - 7:00 AM",
+      "Thursday: 10:00 AM - 7:00 PM",
+      "Friday: 10:00 AM - 7:00 AM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "박재현",
+        "author": "Jaehyun Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "음악을 정말 좋아하시는 분이 운영하시는 소규모 공연장입니다.\n주차공간은 넉넉하지 않으니 대중교통 이용하시기 바랍니다"
+        "relative_time": "6 years ago",
+        "text": "This is a small concert hall run by someone who really loves music.\nThere is not enough parking space, so please use public transportation."
       },
       {
-        "author": "오세범",
+        "author": "Sebeom Oh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -3737,16 +3737,16 @@
   },
   {
     "place_id": "ChIJEZ0TWmOkfDURaQ8G117Ubhg",
-    "display_name": "Next Stage 넥스트 스테이지",
-    "category": "라이브 음악 공연장",
+    "display_name": "Next Stage Next Stage",
+    "category": "live music venue",
     "types": [
       "live_music_venue",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 126-1 지하",
-    "short_address": "강남구 청담동 126-1 지하",
+    "address": "Basement, 126-1 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Basement, 126-1 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5261709,
       "lng": 127.0514982
@@ -3766,11 +3766,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4635a139d11:0x186ed45ed7060f69!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3779,28 +3779,28 @@
         "author": "Nieve Davila",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "한국을 배경으로 한다는 점 때문에 정말 좋았어요. 게다가 전 한국을 너무 좋아하거든요."
+        "relative_time": "5 years ago",
+        "text": "I really liked it because it was set in Korea. Besides, I love Korea so much."
       },
       {
         "author": "Duk young Song",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "권은경",
+        "author": "Kwon Eun-kyung",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "서문진선",
+        "author": "Seomunjinseon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -3808,15 +3808,15 @@
   },
   {
     "place_id": "ChIJV2bFNi2lfDURO0rpAH2BlZ0",
-    "display_name": "복권명당청담차움점",
-    "category": "오락실",
+    "display_name": "Lottery Myeongdang Cheongdam Chaum Branch",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 18",
-    "short_address": "강남구 청담동 18",
+    "address": "18 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "18 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5228611,
       "lng": 127.04407839999999
@@ -3835,17 +3835,17 @@
     "google_maps_url": "https://maps.google.com/?cid=11355124409370757691",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca52d36c56657:0x9d95817d00e94a3b!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 9:30",
-      "화요일: 오전 10:00 ~ 오후 9:30",
-      "수요일: 오전 10:00 ~ 오후 9:30",
-      "목요일: 오전 10:00 ~ 오후 9:30",
-      "금요일: 오전 10:00 ~ 오후 9:30",
-      "토요일: 오전 10:00 ~ 오후 8:00",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 9:30 PM",
+      "Tuesday: 10:00 AM - 9:30 PM",
+      "Wednesday: 10:00 AM - 9:30 PM",
+      "Thursday: 10:00 AM - 9:30 PM",
+      "Friday: 10:00 AM - 9:30 PM",
+      "Saturday: 10:00 AM - 8:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "현금만"
+      "Cash only"
     ],
     "accessibility": null,
     "parking": null,
@@ -3858,15 +3858,15 @@
   },
   {
     "place_id": "ChIJSYO3GnukfDURkMdl1dizHwY",
-    "display_name": "M.NET노래연습장",
-    "category": "노래방",
+    "display_name": "M.NET Karaoke Practice Book",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동",
-    "short_address": "강남구 청담동",
+    "address": "Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5250113,
       "lng": 127.0487946
@@ -3885,18 +3885,18 @@
     "google_maps_url": "https://maps.google.com/?cid=441269032380123024",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47b1ab78349:0x61fb3d8d565c790!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 7:00 ~ 오전 3:00",
-      "화요일: 오후 7:00 ~ 오전 3:00",
-      "수요일: 오후 7:00 ~ 오전 3:00",
-      "목요일: 오후 7:00 ~ 오전 3:00",
-      "금요일: 오후 7:00 ~ 오전 3:00",
-      "토요일: 오후 7:00 ~ 오전 3:00",
-      "일요일: 오후 7:00 ~ 오전 3:00"
+      "Monday: 7:00 PM - 3:00 AM",
+      "Tuesday: 7:00 PM - 3:00 AM",
+      "Wednesday: 7:00 PM - 3:00 AM",
+      "Thursday: 7:00 PM - 3:00 AM",
+      "Friday: 7:00 PM - 3:00 AM",
+      "Saturday: 7:00 PM - 3:00 AM",
+      "Sunday: 7:00 PM - 3:00 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3905,14 +3905,14 @@
         "author": "Deli H",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       },
       {
         "author": "Angga Dwi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10년 전",
+        "relative_time": "10 years ago",
         "text": null
       }
     ],
@@ -3920,15 +3920,15 @@
   },
   {
     "place_id": "ChIJLfXQJ3ukfDURJJ89lJhKzPE",
-    "display_name": "에쿠스노래방",
-    "category": "노래방",
+    "display_name": "Equus Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 청담동 50-2번지 지하층 강남구 서울특별시 KR",
-    "short_address": "청담동 50-2번지 지하층 강남구 서울특별시 KR",
+    "address": "Basement floor, 50-2 Cheongdam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "Basement floor, 50-2 Cheongdam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.5241475,
       "lng": 127.05006589999999
@@ -3949,8 +3949,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3959,15 +3959,15 @@
   },
   {
     "place_id": "ChIJ2V7dT3ikfDURg1QqwKD2ogA",
-    "display_name": "코다",
-    "category": "노래방",
+    "display_name": "coda",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 80-10",
-    "short_address": "강남구 청담동 80-10",
+    "address": "80-10 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "80-10 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5265389,
       "lng": 127.04465669999999
@@ -3986,67 +3986,67 @@
     "google_maps_url": "https://maps.google.com/?cid=45870116506326147",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4784fdd5ed9:0xa2f6a0c02a5483!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 10:00",
-      "화요일: 오전 11:00 ~ 오후 10:00",
-      "수요일: 오전 11:00 ~ 오후 10:00",
-      "목요일: 오전 11:00 ~ 오후 10:00",
-      "금요일: 오전 11:00 ~ 오후 11:30",
-      "토요일: 오전 11:00 ~ 오후 10:00",
-      "일요일: 오전 11:00 ~ 오후 10:00"
+      "Monday: 11:00 AM - 10:00 PM",
+      "Tuesday: 11:00 AM - 10:00 PM",
+      "Wednesday: 11:00 AM - 10:00 PM",
+      "Thursday: 11:00 AM - 10:00 PM",
+      "Friday: 11:00 AM - 11:30 PM",
+      "Saturday: 11:00 AM - 10:00 PM",
+      "Sunday: 11:00 AM - 10:00 PM"
     ],
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "최지현",
+        "author": "Jihyun Choi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "대한민국 최고의 노래방♥\n화장실에 위생용품, 헤어드라이어까지 구비돼있으며,\n룸엔 KORG 키보드까지 있다!\n사장님은 기품과 정중함 그 자체이시고, 서비스도 듬뿍 주신다."
+        "relative_time": "5 years ago",
+        "text": "The best karaoke in Korea♥\nThe bathroom is equipped with sanitary products and a hair dryer.\nThere is even a KORG keyboard in the room!\nThe owner is the epitome of elegance and politeness, and provides plenty of service."
       },
       {
-        "author": "황철우",
+        "author": "Hwang Cheol-woo",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "지하에 위치해 있지만 깨끗해요 가족 끼리 간다해도 좋을듯 하고요 연인 끼리도 굿 입니다 .\n술 과 안주도 팔구요 예약은 필수 입니다."
+        "relative_time": "6 years ago",
+        "text": "It's located in the basement, but it's clean. It's a good place to go with family or with couples.\nThey also sell alcohol and snacks, and reservations are required."
       },
       {
         "author": "Sun-Jeong Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "청담동 깨끗하고 위생적인 어른 노래방, 헤어지기 서운 할 때 대화를 곁들인 2차 장소로 최적.5성급 호텔 라운지의 개실 수준."
+        "relative_time": "2 years ago",
+        "text": "A clean and hygienic adult karaoke room in Cheongdam-dong, perfect as a second place for conversation when you feel sad about parting ways. The private room level of a 5-star hotel lounge."
       },
       {
         "author": "Z Zz",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "사장님최고^^ 방역뿐만아니라 너무깔끔하게 관리를 잘해주셔서 이 난리통에도 믿고갑니다!!!"
+        "relative_time": "4 years ago",
+        "text": "The boss is the best^^ Not only did he quarantine, but he also managed it very neatly, so I can trust him even through this mess!!!"
       },
       {
         "author": "Dae Woong Lim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "깨끗하고 좋아요. 장소도 좋고 위치에 비해 가격도 나쁘지 않아요."
+        "relative_time": "7 years ago",
+        "text": "It's clean and nice. The place is nice and the price isn't bad considering the location."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJM6CsD3ekfDURY6F6vNlt78c",
-    "display_name": "갈릴리교회",
-    "category": "교회",
+    "display_name": "Galilee Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4054,8 +4054,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 19-1",
-    "short_address": "강남구 청담동 19-1",
+    "address": "19-1 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "19-1 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.52262470000001,
       "lng": 127.04324220000001
@@ -4075,7 +4075,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4770faca033:0xc7ef6dd9bc7aa163!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -4085,8 +4085,8 @@
   },
   {
     "place_id": "ChIJ58tb5l6lfDURI2Y97KnaqiY",
-    "display_name": "큰사랑교회",
-    "category": "교회",
+    "display_name": "Big Love Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4094,8 +4094,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 도산대로 447",
-    "short_address": "강남구 도산대로 447",
+    "address": "447 Dosan-daero, Gangnam-gu, Seoul, South Korea",
+    "short_address": "447 Dosan-daero, Gangnam-gu",
     "location": {
       "lat": 37.524197,
       "lng": 127.0450365
@@ -4115,7 +4115,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca55ee65bcbe7:0x26aadaa9ec3d6623!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -4126,7 +4126,7 @@
   {
     "place_id": "ChIJt9-9tnmkfDURTQpjlYGfHS0",
     "display_name": "SION",
-    "category": "교회",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4134,8 +4134,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 청담동 90-3번지 지하1층 강남구 서울특별시 KR",
-    "short_address": "청담동 90-3번지 지하1층 강남구 서울특별시 KR",
+    "address": "1st Basement Floor, 90-3 Cheongdam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "1st Basement Floor, 90-3 Cheongdam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.5256367,
       "lng": 127.04311530000001
@@ -4155,7 +4155,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca479b6bddfb7:0x2d1d9f8195630a4d!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -4165,8 +4165,8 @@
   },
   {
     "place_id": "ChIJhz66VHekfDURE4_zxozHqW8",
-    "display_name": "새벽별교회",
-    "category": "교회",
+    "display_name": "Morning Star Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4174,8 +4174,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 삼성로149길 26",
-    "short_address": "강남구 삼성로149길 26",
+    "address": "26, Samseong-ro 149-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "26, Samsung-ro 149-gil, Gangnam-gu",
     "location": {
       "lat": 37.523253800000006,
       "lng": 127.04540060000001
@@ -4195,12 +4195,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47754ba3e87:0x6fa9c78cc6f38f13!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -4208,14 +4208,14 @@
         "author": "Donghyun Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "아주 좋은 교회  진리 성령 헌신 충만한 교회"
+        "relative_time": "7 years ago",
+        "text": "A very good church, a church full of truth and devotion to the Holy Spirit"
       },
       {
-        "author": "김용현",
+        "author": "Yonghyun Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       }
     ],
@@ -4229,8 +4229,8 @@
   },
   {
     "place_id": "ChIJoQFXi3qkfDURh_ybsZtnixU",
-    "display_name": "청담교회",
-    "category": "교회",
+    "display_name": "Cheongdam Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4238,8 +4238,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 삼성로148길 4",
-    "short_address": "강남구 삼성로148길 4",
+    "address": "4, Samseong-ro 148-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "4, Samseong-ro 148-gil, Gangnam-gu",
     "location": {
       "lat": 37.5234832,
       "lng": 127.0483787
@@ -4259,48 +4259,48 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47a8b5701a1:0x158b679bb19bfc87!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "이배근",
+        "author": "Lee Bae Geun",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "설립역사가 110년이 넘는 오랜 역사를 간직한 교회로 은혜가 샘솟는  교회, 부흥이 시작되는 교회 캐치프레이즈를 가지고 새로운 도약을  꿈꾸는 교회이다"
+        "relative_time": "5 years ago",
+        "text": "It is a church with a long history of over 110 years of establishment. It is a church dreaming of a new leap forward with the catchphrase: a church where grace springs, a church where revival begins."
       },
       {
-        "author": "나이테",
+        "author": "annual zone",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8년 전",
-        "text": "아담하고 말씀도 좋은 교회였어요"
+        "relative_time": "8 years ago",
+        "text": "It was a small church with good preaching."
       },
       {
         "author": "HANLIM -",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "좋아요 청담교회!!"
+        "relative_time": "7 years ago",
+        "text": "I like Cheongdam Church!!"
       },
       {
         "author": "TaeWook Park",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
-        "text": "지나던 길에 있는곳."
+        "relative_time": "6 years ago",
+        "text": "A place along the way."
       },
       {
-        "author": "정영찬",
+        "author": "Youngchan Jeong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
+        "relative_time": "4 months ago",
         "text": null
       }
     ],
@@ -4308,8 +4308,8 @@
   },
   {
     "place_id": "ChIJZSmeSwClfDURQ5d75LUTvv0",
-    "display_name": "횃불교회",
-    "category": "교회",
+    "display_name": "Torch Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4317,8 +4317,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 도산대로81길 6",
-    "short_address": "강남구 도산대로81길 6",
+    "address": "6, Dosan-daero 81-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "6, Dosan-daero 81-gil, Gangnam-gu",
     "location": {
       "lat": 37.524893299999995,
       "lng": 127.04821580000001
@@ -4338,7 +4338,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5004b9e2965:0xfdbe13b5e47b9743!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -4348,8 +4348,8 @@
   },
   {
     "place_id": "ChIJfajB8nqkfDURByqGjKC1knU",
-    "display_name": "대한예수교장로회청담교회",
-    "category": "교회",
+    "display_name": "Korean Presbyterian Church Cheongdam Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4357,8 +4357,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서울 강남구 청담1동 49-15",
-    "short_address": "서울 강남구 청담1동 49-15",
+    "address": "49-15 Cheongdam 1-dong, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "49-15 Cheongdam 1-dong, Gangnam-gu, Seoul",
     "location": {
       "lat": 37.5231998,
       "lng": 127.04866549999998
@@ -4378,11 +4378,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47af2c1a87d:0x7592b5a08c862a07!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": null,
@@ -4390,8 +4390,8 @@
   },
   {
     "place_id": "ChIJzYMZX3ukfDURr1d6vsNVOTI",
-    "display_name": "영성교회",
-    "category": "교회",
+    "display_name": "Yeongseong Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4399,8 +4399,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 도산대로 507",
-    "short_address": "강남구 도산대로 507",
+    "address": "507 Dosan-daero, Gangnam-gu, Seoul, South Korea",
+    "short_address": "507 Dosan-daero, Gangnam-gu",
     "location": {
       "lat": 37.5247108,
       "lng": 127.04852120000001
@@ -4420,12 +4420,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47b5f1983cd:0x323955c3be7a57af!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -4433,14 +4433,14 @@
         "author": "Ho-jin Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "상선약수",
+        "author": "Merchant Marine Mineral Water",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -4448,8 +4448,8 @@
   },
   {
     "place_id": "ChIJOVyBZrWlfDURbP7xYy6qwwE",
-    "display_name": "하림교회",
-    "category": "교회",
+    "display_name": "Harim Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4457,8 +4457,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 10-3",
-    "short_address": "강남구 청담동 10-3",
+    "address": "10-3 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "10-3 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5221782,
       "lng": 127.0475816
@@ -4478,17 +4478,17 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5b566815c39:0x1c3aa2e63f1fe6c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "조현일",
+        "author": "Jo Hyeon-il",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -4498,8 +4498,8 @@
   },
   {
     "place_id": "ChIJkWm0nHqkfDURwy4TF-ZHTG4",
-    "display_name": "우석교회",
-    "category": "교회",
+    "display_name": "Wooseok Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4507,8 +4507,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 삼성로146길 4-8",
-    "short_address": "강남구 삼성로146길 4-8",
+    "address": "4-8, Samseong-ro 146-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "4-8, Samseong-ro 146-gil, Gangnam-gu",
     "location": {
       "lat": 37.5224133,
       "lng": 127.0487964
@@ -4528,7 +4528,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47a9cb46991:0x6e4c47e617132ec3!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -4538,8 +4538,8 @@
   },
   {
     "place_id": "ChIJ5XZICAClfDURpgu-Xi7Y-nQ",
-    "display_name": "더바이블처치",
-    "category": "교회",
+    "display_name": "The Bible Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4547,8 +4547,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 11-23",
-    "short_address": "강남구 청담동 11-23",
+    "address": "11-23 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "11-23 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5217696,
       "lng": 127.0471081
@@ -4568,7 +4568,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca500084876e5:0x74fad82e5ebe0ba6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -4578,8 +4578,8 @@
   },
   {
     "place_id": "ChIJ9XXnS3ukfDURCqqd9L_E-Zg",
-    "display_name": "청석교회",
-    "category": "교회",
+    "display_name": "Cheongseok Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4587,8 +4587,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 124-15",
-    "short_address": "강남구 청담동 124-15",
+    "address": "124-15 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "124-15 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5252634,
       "lng": 127.0504636
@@ -4608,7 +4608,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47b4be775f5:0x98f9c4bff49daa0a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -4618,8 +4618,8 @@
   },
   {
     "place_id": "ChIJzcrUZwClfDURoUVHHk1v0so",
-    "display_name": "더프리마 컨벤션(공사중)",
-    "category": "컨벤션센터",
+    "display_name": "The Prima Convention (under construction)",
+    "category": "convention center",
     "types": [
       "convention_center",
       "event_venue",
@@ -4627,8 +4627,8 @@
       "service",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 54-1",
-    "short_address": "강남구 청담동 54-1",
+    "address": "54-1 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "54-1 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5239012,
       "lng": 127.05323089999999
@@ -4648,17 +4648,17 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca50067d4cacd:0xcad26f4d1e4745a1!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": null,
@@ -4666,15 +4666,15 @@
   },
   {
     "place_id": "ChIJe8OSfHekfDURJdxbkUt_PGw",
-    "display_name": "32아울렛",
-    "category": "쇼핑몰",
+    "display_name": "32Outlet",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동",
-    "short_address": "강남구 청담동",
+    "address": "Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.523985599999996,
       "lng": 127.0432699
@@ -4694,49 +4694,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4777c92c37b:0x6c3c7f4b915bdc25!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "부처핸섬",
+        "author": "Buddha Handsome",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "9년 전",
-        "text": "비싸다"
+        "relative_time": "9 years ago",
+        "text": "expensive"
       },
       {
-        "author": "이경환",
+        "author": "Kyunghwan Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "10년 전",
-        "text": "ㅒ"
+        "relative_time": "10 years ago",
+        "text": "this guy"
       },
       {
-        "author": "서민성",
+        "author": "Seo Min-seong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       },
       {
         "author": "Eat, Stay, Fun,",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Sangho Lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -4744,16 +4744,16 @@
   },
   {
     "place_id": "ChIJvwDtfHekfDUROv9lkN6OySA",
-    "display_name": "삼이홈쇼핑",
-    "category": "쇼핑몰",
+    "display_name": "Sami Home Shopping",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 도산대로 435",
-    "short_address": "강남구 도산대로 435",
+    "address": "435 Dosan-daero, Gangnam-gu, Seoul, South Korea",
+    "short_address": "435 Dosan-daero, Gangnam-gu",
     "location": {
       "lat": 37.523997099999995,
       "lng": 127.043272
@@ -4772,20 +4772,20 @@
     "google_maps_url": "https://maps.google.com/?cid=2362576566089023290",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4777ced00bf:0x20c98ede9065ff3a!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 오전 9:00 ~ 오후 6:00",
-      "일요일: 오전 9:00 ~ 오후 6:00"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: 9:00 AM - 6:00 PM",
+      "Sunday: 9:00 AM - 6:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4806,15 +4806,15 @@
   },
   {
     "place_id": "ChIJi9Ymtf2lfDURfsPMitEEjkE",
-    "display_name": "리치온 청담점",
-    "category": "쇼핑몰",
+    "display_name": "Rich On Cheongdam Branch",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 리치온 청담점 1층",
-    "short_address": "강남구 리치온 청담점 1층",
+    "address": "1st floor, Richion Cheongdam branch, Gangnam-gu, Seoul, Korea",
+    "short_address": "1st floor, Richion Cheongdam branch, Gangnam-gu",
     "location": {
       "lat": 37.5240153,
       "lng": 127.0432707
@@ -4833,20 +4833,20 @@
     "google_maps_url": "https://maps.google.com/?cid=4723718357181580158",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5fdb526d68b:0x418e04d18accc37e!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 8:00",
-      "화요일: 오전 10:00 ~ 오후 8:00",
-      "수요일: 오전 10:00 ~ 오후 8:00",
-      "목요일: 오전 10:00 ~ 오후 8:00",
-      "금요일: 오전 10:00 ~ 오후 8:00",
-      "토요일: 오전 10:00 ~ 오후 8:00",
-      "일요일: 오전 10:00 ~ 오후 8:00"
+      "Monday: 10:00 AM - 8:00 PM",
+      "Tuesday: 10:00 AM - 8:00 PM",
+      "Wednesday: 10:00 AM - 8:00 PM",
+      "Thursday: 10:00 AM - 8:00 PM",
+      "Friday: 10:00 AM - 8:00 PM",
+      "Saturday: 10:00 AM - 8:00 PM",
+      "Sunday: 10:00 AM - 8:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4856,15 +4856,15 @@
   },
   {
     "place_id": "ChIJJ-XndHekfDUR19QdSUBEK1k",
-    "display_name": "모비스플라자",
-    "category": "쇼핑몰",
+    "display_name": "Mobis Plaza",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 3-7번지 1층",
-    "short_address": "강남구 청담동 3-7번지 1층",
+    "address": "1st floor, 3-7 Cheongdam-dong, Gangnam-gu, Seoul, Korea",
+    "short_address": "1st floor, 3-7 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5232519,
       "lng": 127.04292509999999
@@ -4884,11 +4884,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47774e7e527:0x592b4440491dd4d7!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4898,15 +4898,15 @@
   },
   {
     "place_id": "ChIJo5mwQnekfDUR5lhzvOXD9Fs",
-    "display_name": "마이분",
-    "category": "쇼핑몰",
+    "display_name": "My minutes",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동",
-    "short_address": "강남구 청담동",
+    "address": "Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5232858,
       "lng": 127.04411590000001
@@ -4925,24 +4925,24 @@
     "google_maps_url": "https://maps.google.com/?cid=6626136343245445350",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca47742b099a3:0x5bf4c3e5bc7358e6!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
@@ -4950,21 +4950,21 @@
         "author": "U_G",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "한국의 대기업 ‘신세계백화점’이 운영하는 셀렉트 숍 ‘분 더 숍’과 아트 디렉터가 공동으로 오픈한 셀렉트 숍. 계열점의 「분 더 숍」은 럭셔리 브랜드로부터 신예까지, 전세계의 모든 브랜드를 갖추고 있지만, 「마이 분」의 셀렉트는 그것보다 틈새. 아직 잘 알려지지 않은 디자이너 브랜드를 선물 사고 싶다면 헤매지 않고 여기에."
+        "relative_time": "6 years ago",
+        "text": "A select shop jointly opened by ‘Boon the Shop’, a select shop operated by the Korean conglomerate ‘Shinsegae Department Store’, and an art director. The affiliated store “Boon the Shop” carries all brands from around the world, from luxury brands to up-and-coming brands, but “My Boon”’s selection is more niche. If you want to buy a designer brand that is not yet well-known as a gift, do not hesitate and come here."
       },
       {
-        "author": "김영숙",
+        "author": "Youngsook Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       },
       {
-        "author": "라구리프라임",
+        "author": "Raguri Prime",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       }
     ],
@@ -4983,15 +4983,15 @@
   },
   {
     "place_id": "ChIJsW9awnmkfDURDG9gt9VgXqc",
-    "display_name": "드리아데",
-    "category": "쇼핑몰",
+    "display_name": "Dryade",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 93-11",
-    "short_address": "강남구 청담동 93-11",
+    "address": "93-11 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "93-11 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5247078,
       "lng": 127.04393649999999
@@ -5012,24 +5012,24 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "정연덕정연덕",
+        "author": "Jeong Yeon-deokJeong Yeon-deok",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Alan Lo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9년 전",
+        "relative_time": "9 years ago",
         "text": null
       }
     ],
@@ -5038,15 +5038,15 @@
   {
     "place_id": "ChIJb06jCXGlfDURy_JsBBLNwCY",
     "display_name": "dellalana",
-    "category": "백화점",
+    "category": "department store",
     "types": [
       "department_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 도산대로 420",
-    "short_address": "강남구 도산대로 420",
+    "address": "420 Dosan-daero, Gangnam-gu, Seoul, South Korea",
+    "short_address": "420 Dosan-daero, Gangnam-gu",
     "location": {
       "lat": 37.5230411,
       "lng": 127.0419873
@@ -5067,8 +5067,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5077,15 +5077,15 @@
   },
   {
     "place_id": "ChIJyxnAPrelfDUR-OKyi0_JcGM",
-    "display_name": "분크(Vunque)",
-    "category": "쇼핑몰",
+    "display_name": "Vunque",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 92-13",
-    "short_address": "강남구 청담동 92-13",
+    "address": "92-13 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "92-13 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5244401,
       "lng": 127.04423469999999
@@ -5105,16 +5105,16 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5b73ec019cb:0x6370c94f8bb2e2f8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실"
+      "Wheelchair entrance",
+      "wheelchair restroom"
     ],
     "parking": null,
     "reviews": [
@@ -5122,14 +5122,14 @@
         "author": "jin sun Ha",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "제가 아주 좋아라하는 브랜드 분크!!!\n세련된 디자인에 가격도 착하고 석정혜디자이너님 갠적인 팬입니다!!!"
+        "relative_time": "5 years ago",
+        "text": "Bunk, a brand I really like!!!\nIt has a sophisticated design and a reasonable price, and I am a big fan of designer Seok Jeong-hye!!!"
       },
       {
         "author": "Nat Zakaria",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -5139,15 +5139,15 @@
   },
   {
     "place_id": "ChIJD1uEpXekfDURpFSHuMdpn8U",
-    "display_name": "제인에알리스",
-    "category": "쇼핑몰",
+    "display_name": "Jane Aalis",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 3-17",
-    "short_address": "강남구 청담동 3-17",
+    "address": "3-17 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "3-17 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5228746,
       "lng": 127.04224229999998
@@ -5167,49 +5167,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca477a5845b0f:0xc59f69c7b88754a4!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "최종하",
+        "author": "Choi Jong-ha",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "황용원",
+        "author": "Yongwon Hwang",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "신성식",
+        "author": "Shin Seong-sik",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "장웅",
+        "author": "Jang Woong",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Junwon Park",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "10년 전",
+        "relative_time": "10 years ago",
         "text": null
       }
     ],
@@ -5223,14 +5223,14 @@
   {
     "place_id": "ChIJOYVfz3mkfDURED649HKh9uo",
     "display_name": "Davvero",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 93-5",
-    "short_address": "강남구 청담동 93-5",
+    "address": "93-5 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "93-5 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5249634,
       "lng": 127.04338589999999
@@ -5250,49 +5250,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca479cf5f8539:0xeaf6a172f4b83e10!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "소소한한라봉 (소소)",
+        "author": "Sosohan Hallabong (Soso)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "여러군대의 매장을 방문해봤지만 가장 마음에 들었던 장소 중 하나 입니다. 첫째, 다양한 디자인으로 나의 취향에 맞는 제품을 고를 수 있다는 점입니다. 둘째, 직원분들이 친절하게 안내해주시며 전문성과 다양한 혜택 제공을 통하여 만족감을 제공해줍니다. 셋째, 가장 중요한 가성비 느낌을 확실하게 제공해줍니다. 이가격에 이런 제품을 준다고? 하는 느낌으로 가장 마음에 드는 곳이었다."
+        "relative_time": "1 year ago",
+        "text": "I've visited several stores, but this is one of my favorites. First, you can choose a product that suits your taste with a variety of designs. Second, the staff provides friendly guidance and provides satisfaction through professionalism and various benefits. Third, it clearly provides the most important feeling of cost-effectiveness. Are you offering this product at this price? It was my favorite place with that feeling."
       },
       {
-        "author": "젼이스져니",
+        "author": "Jance Journey",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "웨딩밴드 했어요 친절하고 디자인도 심플하면서도 심심하지 않아 마음에 들어요 언덕길에 있어서 도보로 올라가기 조금 힘들어요 건물 내 2층에 있습니다"
+        "relative_time": "6 years ago",
+        "text": "I had a wedding band. It was friendly and I liked the design because it was simple but not boring. It's a bit difficult to walk up because it's on a hill. It's on the second floor of the building."
       },
       {
-        "author": "황승환",
+        "author": "Seunghwan Hwang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "친절히 제품 설명을 해주셔서 내 손에 맞는  반지를 추천받음"
+        "relative_time": "4 years ago",
+        "text": "They kindly explained the product and recommended a ring that suited my hand."
       },
       {
         "author": "YEOJIN PYEON",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "상담해주시는분 너무친절해요 ㅋㅋ그치만 디자인에 한계가있음"
+        "relative_time": "6 years ago",
+        "text": "The person giving advice is very friendly. However, there are limitations to the design."
       },
       {
-        "author": "원유창",
+        "author": "Won Won-chang",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -5311,8 +5311,8 @@
   },
   {
     "place_id": "ChIJ7eYvjHekfDURTpMZflqdJks",
-    "display_name": "비베라멜라",
-    "category": "백화점",
+    "display_name": "Biveramela",
+    "category": "department store",
     "types": [
       "department_store",
       "shoe_store",
@@ -5320,8 +5320,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 89-8",
-    "short_address": "강남구 청담동 89-8",
+    "address": "89-8 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "89-8 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.524406,
       "lng": 127.04168600000001
@@ -5340,20 +5340,20 @@
     "google_maps_url": "https://maps.google.com/?cid=5415188613947822926",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4778c2fe6ed:0x4b269d5a7e19934e!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 9:00",
-      "화요일: 오전 11:00 ~ 오후 9:00",
-      "수요일: 오전 11:00 ~ 오후 9:00",
-      "목요일: 오전 11:00 ~ 오후 9:00",
-      "금요일: 오전 11:00 ~ 오후 9:00",
-      "토요일: 오전 11:00 ~ 오후 9:00",
-      "일요일: 오전 11:00 ~ 오후 9:00"
+      "Monday: 11:00 AM - 9:00 PM",
+      "Tuesday: 11:00 AM - 9:00 PM",
+      "Wednesday: 11:00 AM - 9:00 PM",
+      "Thursday: 11:00 AM - 9:00 PM",
+      "Friday: 11:00 AM - 9:00 PM",
+      "Saturday: 11:00 AM - 9:00 PM",
+      "Sunday: 11:00 AM - 9:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5362,8 +5362,8 @@
         "author": "Lovelovelove",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9년 전",
-        "text": "사랑해요"
+        "relative_time": "9 years ago",
+        "text": "I love you"
       }
     ],
     "photos": null
@@ -5371,14 +5371,14 @@
   {
     "place_id": "ChIJzwCBRLulfDUR2zclMbAA3N4",
     "display_name": "ネイルサロン",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 Seoul, Gangnam District, 압구정동 路14キル ３５ 2階",
-    "short_address": "강남구 압구정동 路14キル 35 2階",
+    "address": "South Korea Seoul, Gangnam District, Apgujeong-dong, Road 14キル ３５ 2nd Street",
+    "short_address": "35 2nd street, Apgujeong-dong, Gangnam-gu",
     "location": {
       "lat": 37.524373,
       "lng": 127.04489699999999
@@ -5398,15 +5398,15 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5bb448100cf:0xdedc00b0312537db!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어화장실"
+      "wheelchair restroom"
     ],
     "parking": null,
     "reviews": null,
@@ -5417,14 +5417,14 @@
   {
     "place_id": "ChIJAeTF8HmkfDUR93YbKKDiNXc",
     "display_name": "Ego sposa",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 청담동 97-4",
-    "short_address": "강남구 청담동 97-4",
+    "address": "97-4 Cheongdam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "97-4 Cheongdam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5242356,
       "lng": 127.0450197
@@ -5444,49 +5444,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca479f0c5e401:0x7735e2a0281b76f7!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "황용원",
+        "author": "Yongwon Hwang",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "양진석",
+        "author": "Yang Jin-seok",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Shining Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "이웅기",
+        "author": "Woonggi Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Lia Choi",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],

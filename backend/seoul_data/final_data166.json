@@ -1,15 +1,15 @@
 [
   {
     "place_id": "ChIJM3vL5b2kfDURVV_-MypDjto",
-    "display_name": "포장마차",
-    "category": "술집",
+    "display_name": "food stall",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성수동2가 289-39번지 지상1층 4호 성동구 서울특별시 KR",
-    "short_address": "성수동2가 289-39번지 지상1층 4호 성동구 서울특별시 KR",
+    "address": "#4, 1st floor, 289-39, Seongsu-dong 2-ga, Seoul, Republic of Korea, Seongdong-gu, Seoul KR",
+    "short_address": "#4, 1st floor, 289-39 Seongsu-dong 2-ga, Seongdong-gu, Seoul KR",
     "location": {
       "lat": 37.548194099999996,
       "lng": 127.05562289999999
@@ -29,13 +29,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4bde5cb7b33:0xda8e432a33fe5f55!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -45,13 +45,13 @@
   {
     "place_id": "ChIJeR3owb2kfDURZjylQ3XPMUI",
     "display_name": "Drink Beer Save Water",
-    "category": "술집",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 4F , Yeosan B/D, Sungsu 2ga",
+    "address": "4F, Yeosan B/D, Sungsu 2ga, Seoul, South Korea",
     "short_address": "4F , Yeosan B/D, Sungsu 2ga",
     "location": {
       "lat": 37.548788,
@@ -72,51 +72,51 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4bdc1e81d79:0x4231cf7543a53c66!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "로이준TV",
+        "author": "Royjun TV",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Alex Cho",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "이성철 (아미쿠스)",
+        "author": "Seongcheol Lee (Amicus)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "남안일용",
+        "author": "Naman Daily",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "김광진",
+        "author": "Gwangjin Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -126,8 +126,8 @@
   },
   {
     "place_id": "ChIJObm7UHalfDUR8tle7py9LIg",
-    "display_name": "성수로운",
-    "category": "와인 바",
+    "display_name": "holy water",
+    "category": "wine bar",
     "types": [
       "wine_bar",
       "food",
@@ -135,8 +135,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 아차산로7길 28 쇼핑센터 내 성수로운 1층",
-    "short_address": "성동구 아차산로7길 28 쇼핑센터 내 성수로운 1층",
+    "address": "1st floor, Seongsuroun Shopping Center, 28 Achasan-ro 7-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "1st floor, Seongsuroun, shopping center, 28 Achasan-ro 7-gil, Seongdong-gu",
     "location": {
       "lat": 37.547517,
       "lng": 127.05546280000002
@@ -155,63 +155,63 @@
     "google_maps_url": "https://maps.google.com/?cid=9812426169845209586",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca57650bbb939:0x882cbd9cee5ed9f2!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 12:00~11:30",
-      "화요일: 휴무일",
-      "수요일: 오후 12:00~11:30",
-      "목요일: 오후 12:00~11:30",
-      "금요일: 오후 12:00~11:30",
-      "토요일: 오후 12:00~11:30",
-      "일요일: 오후 12:00~11:30"
+      "Monday: 12:00-11:30 PM",
+      "Tuesday: Closed",
+      "Wednesday: 12:00-11:30 PM",
+      "Thursday: 12:00-11:30 PM",
+      "Friday: 12:00-11:30 PM",
+      "Saturday: 12:00-11:30 PM",
+      "Sunday: 12:00-11:30 PM"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "단체적합",
-      "맥주",
-      "와인"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "group fitness",
+      "beer",
+      "wine"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "고단비",
+        "author": "high cost",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "세트구성이 좋았고, 맛은 더 좋았다. 나만 알고 싶은 맛집"
+        "relative_time": "3 years ago",
+        "text": "The set composition was good and the taste was even better. A restaurant that only I want to know about"
       },
       {
         "author": "Yoon Cheol Chang",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "성수 쇼핑센터 안에 위치한 쌩뚱맞은 와인바 ㅋㅋ 음식도 괜찮고 와인 구성도 좋음"
+        "relative_time": "3 years ago",
+        "text": "A strange wine bar located inside Seongsu Shopping Center. The food is good and the wine selection is good."
       },
       {
         "author": "KG Baek",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "2년 전",
-        "text": "음식값도 싸지 않은데, 거기다 1인 1음료"
+        "relative_time": "2 years ago",
+        "text": "The food isn't cheap, and one drink per person."
       },
       {
         "author": "Sunnia",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "완벽 그자체.. 메뉴도 분위기도 맛도❤️☺️"
+        "relative_time": "2 years ago",
+        "text": "Perfection itself.. the menu, atmosphere and taste❤️☺️"
       },
       {
-        "author": "고윤정 (miss고)",
+        "author": "Go Yoon-jeong (miss Go)",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -230,8 +230,8 @@
   },
   {
     "place_id": "ChIJaSM7PQClfDUR4dZnMf1dTvU",
-    "display_name": "둘쭈라 성수",
-    "category": "와인 바",
+    "display_name": "Duljura Seongsu",
+    "category": "wine bar",
     "types": [
       "wine_bar",
       "food",
@@ -239,8 +239,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수일로12길 44 2층",
-    "short_address": "성동구 성수일로12길 44 2층",
+    "address": "2nd floor, 44 Seongsuil-ro 12-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "2nd floor, 44 Seongsuil-ro 12-gil, Seongdong-gu",
     "location": {
       "lat": 37.547103799999995,
       "lng": 127.05534039999999
@@ -262,26 +262,26 @@
     "google_maps_url": "https://maps.google.com/?cid=17676168929512773345",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5003d3b2369:0xf54e5dfd3167d6e1!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 5:00~11:30",
-      "화요일: 오후 5:00~11:30",
-      "수요일: 오전 9:00 ~ 오후 5:00",
-      "목요일: 오후 5:00~11:30",
-      "금요일: 오후 5:00~11:30",
-      "토요일: 오후 5:00~11:30",
-      "일요일: 오후 5:00~11:00"
+      "Monday: 5:00-11:30 PM",
+      "Tuesday: 5:00-11:30 PM",
+      "Wednesday: 9:00 AM - 5:00 PM",
+      "Thursday: 5:00-11:30 PM",
+      "Friday: 5:00 - 11:30 PM",
+      "Saturday: 5:00-11:30 PM",
+      "Sunday: 5:00-11:00 PM"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "어린이적합",
-      "단체적합",
-      "반려견동반",
-      "와인"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "Suitable for children",
+      "group fitness",
+      "Accompanied by dogs",
+      "wine"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -291,35 +291,35 @@
         "author": "ringseli",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "와인 종류가 많고 소믈리에님이 음식에 맞게 추천을 잘해주심.\n분위기도 은은하니 좋고, 낮에가나 밤에가나 눈이 편안함.\n음식은 진짜 다 맛있어서 모든 종류 먹으러 다시 올 예정.\n안에 방이 따로 있어서 단체모임하기에도 좋음."
+        "relative_time": "7 months ago",
+        "text": "There are many types of wine and the sommelier is good at making recommendations to match the food.\nThe atmosphere is nice and subtle, and it's easy on the eyes whether you go during the day or at night.\nThe food was all so delicious that I plan to come back to try all the different types.\nThere is a separate room inside, so it is good for group gatherings."
       },
       {
         "author": "Wontae Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "사장님이 딱 적합한 와인을 디켄딩까지 해서 서빙해주십니다. 가격대도 엄청 비싸지 않은데 와인도 너무 좋고 음식의 품질도 너무 좋습니다. 여기저기 추천하고 싶은 마음입니다. 즐겁게 친구들과 모임가지고 갑니다. 또 올게요~"
+        "relative_time": "1 year ago",
+        "text": "The owner even decanted the perfect wine and served it to us. The price is not too expensive, the wine is very good, and the quality of the food is also very good. I would like to recommend it here and there. I have fun gathering with friends. I'll come again~"
       },
       {
-        "author": "법무사여봉구",
+        "author": "Attorney Yeo Bong-gu",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "단체도 가능\n연인 가족 모임 하기 좋는 곳\n음식 넘 맛나요.\n적극 방문 추천드림"
+        "relative_time": "7 months ago",
+        "text": "Groups are also possible\nA great place for couples and family gatherings\nThe food is so delicious.\nHighly recommend a visit"
       },
       {
         "author": "mango",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       },
       {
         "author": "John Ji",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -338,8 +338,8 @@
   },
   {
     "place_id": "ChIJ6Y1Y6pWlfDURlNwIk2PLaRM",
-    "display_name": "ACENO 아세누",
-    "category": "와인 바",
+    "display_name": "ACENO",
+    "category": "wine bar",
     "types": [
       "wine_bar",
       "western_restaurant",
@@ -352,8 +352,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 광나루로2길 25 1층",
-    "short_address": "성동구 광나루로2길 25 1층",
+    "address": "1st floor, 25 Gwangnaru-ro 2-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "1st floor, 25 Gwangnaru-ro 2-gil, Seongdong-gu",
     "location": {
       "lat": 37.5488273,
       "lng": 127.0544336
@@ -372,26 +372,26 @@
     "google_maps_url": "https://maps.google.com/?cid=1398872787804282004",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca595ea588de9:0x1369cb639308dc94!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 11:30 ~ 오후 10:30",
-      "수요일: 오전 11:30 ~ 오후 10:30",
-      "목요일: 오전 11:30 ~ 오후 10:30",
-      "금요일: 오전 11:30 ~ 오후 10:30",
-      "토요일: 오전 11:30 ~ 오후 11:00",
-      "일요일: 오전 11:30 ~ 오후 11:00"
+      "Monday: Closed day",
+      "Tuesday: 11:30 AM - 10:30 PM",
+      "Wednesday: 11:30 AM - 10:30 PM",
+      "Thursday: 11:30 AM - 10:30 PM",
+      "Friday: 11:30 AM - 10:30 PM",
+      "Saturday: 11:30 AM - 11:00 PM",
+      "Sunday: 11:30 AM - 11:00 PM"
     ],
     "services": [
-      "배달",
-      "포장",
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "어린이적합",
-      "와인"
+      "delivery",
+      "packaging",
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "Suitable for children",
+      "wine"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -401,35 +401,35 @@
         "author": "Youngji Ko",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "인테리어부터 압도되었어요 ! 분위기 좋고 음식도 하나하나 모두 다 맛있네요 ㅎㅎ\n드라이에이징 냉장고가 있어 스테이크 맛이 기가 막혀요 입에서 살살녹네요\n샐러드도 프레쉬하게 맛있고 파스타는 전부 다 평균이상이에요 !!\n그리고 여기 브루스게타가 진짜 맛도리니 꼭 드셔보세용 !!"
+        "relative_time": "7 months ago",
+        "text": "I was blown away by the interior! The atmosphere is nice and all the food is delicious haha.\nWe have a dry-aging refrigerator, so the steak tastes amazing. It melts in your mouth.\nThe salad is fresh and delicious and the pasta is all above average!!\nAnd the bruschetta here is really delicious, so be sure to try it!!"
       },
       {
-        "author": "정령",
+        "author": "government ordinance",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10달 전",
-        "text": "손님 응대도 친절하시고 음식도 매우 맛있습니다.\n다음번에 왔을땐 대기가 많지 않을까 걱정될 정도네요"
+        "relative_time": "10 months ago",
+        "text": "Customer service is friendly and the food is very delicious.\nI'm worried that there might be a lot of waiting next time I come."
       },
       {
-        "author": "버거보이",
+        "author": "Burger Boy",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "성수에 위치한 이곳은 분위기, 맛, 그리고 진정한 미식의 마법까지 모든 것을 갖추고 있습니다.\n브루스케타 트리오부터 뇨키까지, 전채 요리는 이미 기대치를 한 단계 높여줍니다👍🏼\n드라이 에이징 등심 스테이크는요? 믿을 수 없을 만큼 풍부한 육즙과 거부할 수 없는 품질, 사장님의 고기에 대한 열정을 온전히 느낄 수 있습니다.\n연말 데이트나 모임에 확실한 성공을 원한다면 바로 이곳입니다 ✨"
+        "relative_time": "4 months ago",
+        "text": "Located in Seongsu, this place has it all: atmosphere, taste, and true gastronomic magic.\nFrom a trio of bruschetta to gnocchi, the appetizers already raise the bar to the next level👍🏼\nWhat about dry-aged sirloin steak? You can fully feel the owner's passion for meat, with its incredibly rich gravy and undeniable quality.\nIf you want a guaranteed success for your year-end date or gathering, this is the place ✨"
       },
       {
         "author": "MAYUMI FUKUI",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10달 전",
-        "text": "진짜 맛있습니다.\n우리가 먹은 것은 레몬 맛에 넣은 토마토를 얹은 샐러드와 멸치 파스타이지만,\n정말 맛있었습니다. 미슐랭 레스토랑의 콕 씨와 새롭게 시작한 레스토랑에서 3주간밖에 걸리지 않는다고 합니다만, 손님은 많이 오고 있었습니다. 이곳은 멋진 맛이 늘어선 새로운 핫스팟입니다."
+        "relative_time": "10 months ago",
+        "text": "It's really delicious.\nWhat we ate was a salad topped with lemon-flavored tomatoes and anchovy pasta.\nIt was really delicious. It is said that it only took 3 weeks to start a new restaurant with Michelin restaurant Mr. Kok, but there were a lot of customers. This is a new hotspot filled with amazing flavors."
       },
       {
         "author": "Chanran Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "10달 전",
+        "relative_time": "10 months ago",
         "text": null
       }
     ],
@@ -449,15 +449,15 @@
   {
     "place_id": "ChIJS4ZqUAClfDURVJ75f6Fnrok",
     "display_name": "PoY",
-    "category": "칵테일바",
+    "category": "cocktail bar",
     "types": [
       "cocktail_bar",
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수동2가 299-58",
-    "short_address": "성동구 성수동2가 299-58",
+    "address": "299-58, Seongsu-dong 2-ga, Seongdong-gu, Seoul, South Korea",
+    "short_address": "299-58, Seongsu-dong 2-ga, Seongdong-gu",
     "location": {
       "lat": 37.5494886,
       "lng": 127.0544902
@@ -479,48 +479,48 @@
     "google_maps_url": "https://maps.google.com/?cid=9920980972478242388",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca500506a864b:0x89ae67a17ff99e54!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오후 6:00 ~ 오전 12:00",
-      "수요일: 오후 6:00 ~ 오전 12:00",
-      "목요일: 오후 6:00 ~ 오전 12:00",
-      "금요일: 오후 6:00 ~ 오전 12:00",
-      "토요일: 오후 6:00 ~ 오전 12:00",
-      "일요일: 오후 6:00 ~ 오전 12:00"
+      "Monday: Closed day",
+      "Tuesday: 6:00 PM - 12:00 AM",
+      "Wednesday: 6:00 PM - 12:00 AM",
+      "Thursday: 6:00 PM - 12:00 AM",
+      "Friday: 6:00 PM - 12:00 AM",
+      "Saturday: 6:00 PM - 12:00 AM",
+      "Sunday: 6:00 PM - 12:00 AM"
     ],
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "반려견동반",
-      "칵테일"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "Accompanied by dogs",
+      "cocktail"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "예슬정",
+        "author": "Yeseuljeong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "가격도 부담 없고 분위기는 정말 훌륭했습니다!\n과하게 시끄럽지 않은 LP 사운드가 공간을 은은하게 채워 편안하게 머물기 좋은 곳이었어요!\n조명과 음악이 자연스럽게 어우러져 시간 가는 줄 모르고 즐길 수 있었습니다.\n\n분위기 좋은 LP바 찾으신다면 이곳을 꼭 한 번 방문해보시길 추천드립니다."
+        "relative_time": "2 months ago",
+        "text": "The price was reasonable and the atmosphere was really great!\nIt was a great place to stay comfortably as the LP sound that wasn't overly loud filled the space softly!\nThe lighting and music came together naturally, so I was able to enjoy it without noticing the passage of time.\n\nIf you are looking for an LP bar with a good atmosphere, I recommend you visit this place."
       },
       {
         "author": "lowkey",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "칵테일과 위스키 그리고 시그니쳐 메뉴까지 모두 맛있어요~ 직원분들 다들 너무 친절하시고 따뜻함이 느껴집니다. 더불어 음악 플레이리스트의 깊이가 너무 좋아요 :)"
+        "relative_time": "2 months ago",
+        "text": "Cocktails, whiskey, and even the signature menu are all delicious. The staff are all so friendly and warm. Also, I really like the depth of the music playlist :)"
       },
       {
         "author": "Monet gold",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "분위기도 좋고, 음악도 끝내주고, 음료는 더할 나위 없이 훌륭해요. 시그니처 칵테일은 10점 만점에 10점! 직원분들도 정말 친절하고, 주말 DJ 세트는 분위기를 한층 더 활기차게 만들어줘요. 제가 가장 좋아하는 새로운 장소 중 하나가 될 것 같아요."
+        "relative_time": "2 months ago",
+        "text": "The atmosphere is great, the music is amazing, and the drinks are excellent. The signature cocktail is 10 out of 10! The staff are really friendly, and the weekend DJ sets liven up the atmosphere even more. I think it's going to be one of my new favorite places."
       }
     ],
     "photos": [
@@ -538,8 +538,8 @@
   },
   {
     "place_id": "ChIJ_024N66lfDURPealGEeeqzM",
-    "display_name": "보또비노 / Bottovino / ボットヴィーノ/ 博托维诺",
-    "category": "와인 바",
+    "display_name": "Bottovino / ボットヴィーノ/ 博托维诺",
+    "category": "wine bar",
     "types": [
       "wine_bar",
       "food",
@@ -547,8 +547,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 광나루로4가길 2 2층",
-    "short_address": "성동구 광나루로4가길 2 2층",
+    "address": "2nd floor, 2 Gwangnaru-ro 4ga-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "2nd floor, 2 Gwangnaru-ro 4ga-gil, Seongdong-gu",
     "location": {
       "lat": 37.5495873,
       "lng": 127.054161
@@ -570,65 +570,65 @@
     "google_maps_url": "https://maps.google.com/?cid=3723243545145239101",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ae37b84dff:0x33ab9e4718a5e63d!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:30 ~ 오후 10:00",
-      "화요일: 오전 11:30 ~ 오후 10:00",
-      "수요일: 오전 11:30 ~ 오후 10:00",
-      "목요일: 오전 11:30 ~ 오후 10:00",
-      "금요일: 오전 11:30 ~ 오후 10:00",
-      "토요일: 오전 11:30 ~ 오후 10:00",
-      "일요일: 오전 11:30 ~ 오후 10:00"
+      "Monday: 11:30 AM - 10:00 PM",
+      "Tuesday: 11:30 AM - 10:00 PM",
+      "Wednesday: 11:30 AM - 10:00 PM",
+      "Thursday: 11:30 AM - 10:00 PM",
+      "Friday: 11:30 AM - 10:00 PM",
+      "Saturday: 11:30 AM - 10:00 PM",
+      "Sunday: 11:30 AM - 10:00 PM"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "야외석",
-      "화장실",
-      "어린이적합",
-      "반려견동반",
-      "와인"
+      "Store meal",
+      "Reservation available",
+      "outdoor seating",
+      "restroom",
+      "Suitable for children",
+      "Accompanied by dogs",
+      "wine"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "양수정",
+        "author": "Yang Soo-jeong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "성수동 파스타 맛집! 가게 분위기부터 너무 좋았고 음식도 전부 만족스러웠어요. 새우 알리오올리오는 깔끔하고 문어 콩피는 정말 부드러웠어요. 브리오슈 식빵과 비프 타르타르까지 전부 맛있어서 재방문하고 싶은 곳이에요."
+        "relative_time": "2 months ago",
+        "text": "A great pasta restaurant in Seongsu-dong! The atmosphere of the store was great and I was satisfied with the food as well. The shrimp aglio olio was clean and the octopus confit was really soft. Everything from the brioche bread to the beef tartare is so delicious that I want to visit again."
       },
       {
-        "author": "매니아",
+        "author": "mania",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "평일 점심 브런치 맛집으로 방문한 보또비노 성수 였습니다. 쉬림프 알리오올리오 파스타, BLT샌드위치, 스파이시 토마토 수프, 부리오슈 식빵 모두 맛있게 잘 먹고 왔어요. 오픈런으로 방문하니 웨이팅 없이 방문할 수 있었어요. 캐치테이블 예약도 가능하다니 꼭 미리 예약하고 방문하시길요~  사장님들 친절하셔서 더 기분좋게 브런치 즐기고 옵니다. 다음에 또 방문 의사 있습니다."
+        "relative_time": "2 months ago",
+        "text": "Botovino Seongsu was a great place to visit for lunch and brunch on a weekday. Shrimp Aglio Olio Pasta, BLT Sandwich, Spicy Tomato Soup, and Burioche Bread were all delicious. Since I visited during the open run, I was able to visit without waiting. You can also reserve a catch table, so be sure to make a reservation in advance and visit. The owners are friendly, so I enjoyed the brunch more pleasantly. I plan to visit again next time."
       },
       {
-        "author": "먹는게제일 좋아",
+        "author": "I like eating it best",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "​유럽식 디시와 여러가지 와인을 페어링해서 마실 수 있는 와인바 성수 보또비노💜\n\n내부는 유럽 가정집을 방문한 듯한 편안한 인테리어로 분위기가 좋아서 데이트 장소로도 좋아요!\n\n토마토 파스타는 꼰낄리에 면이라 소스가 속까지 스며들어서 먹기 딱이였고 다진 와규가 들어가서 식감까지 좋았어요!"
+        "relative_time": "4 months ago",
+        "text": "Seongsu Botovino, a wine bar where you can pair European dishes with various wines💜\n\nThe interior has a comfortable interior that makes you feel like you're visiting a European home, so it's a great place for a date!\n\nThe tomato pasta was perfect for eating as the sauce soaked into it, and the minced wagyu was added so it had a great texture!"
       },
       {
         "author": "hyeon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "루프탑예쁘고 내부도 예쁘고 파스타도 맛있어요\n성수소개팅맛집 추천입니다\n데이트하거나 특별한날 오기도 좋아요\n2번째 방문인데,\n루프탑이 너무 따뜻해서 여유롭게 브런치를 즐길 수 있었어요\n아보카도샌드위치 진짜 신선하고 맛있습니다\n매콤한토마토 수프, 새우알리오올리오 다 정성가득한 맛이고 감칠맛이 좋습니다♥️"
+        "relative_time": "3 months ago",
+        "text": "The rooftop is pretty, the interior is pretty, and the pasta is delicious.\nI recommend a restaurant for blind dates in Seongsu.\nGreat for dates or special occasions\nThis is my second visit,\nThe rooftop was so warm that I was able to enjoy brunch leisurely.\nAvocado sandwich is really fresh and delicious\nSpicy tomato soup and shrimp aglio olio are all full of flavor and have a good flavor♥️"
       },
       {
-        "author": "조은혜",
+        "author": "Eunhye Jo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "2층 야외테라스 감성도 느낄 수 있는\n성수동 분위기 양식 맛집인데\n무엇보다 진짜 파스타 맛집이라 자주 올 것 같아요\n점심엔 코지한 브런치, 저녁엔 세련된 와인바로\n즐길 수 있어서 추천합니다"
+        "relative_time": "6 months ago",
+        "text": "You can also feel the sensibility of the outdoor terrace on the second floor.\nIt’s a Western restaurant with a great atmosphere in Seongsu-dong.\nAbove all, it's a real pasta restaurant, so I think I'll come here often.\nA cozy brunch for lunch and a sophisticated wine bar for dinner.\nI recommend it because you can enjoy it"
       }
     ],
     "photos": [
@@ -646,8 +646,8 @@
   },
   {
     "place_id": "ChIJ70uiW46lfDURZATEUV6ZAEk",
-    "display_name": "움 성수 WOOM",
-    "category": "와인 바",
+    "display_name": "WOOM Seongsu WOOM",
+    "category": "wine bar",
     "types": [
       "wine_bar",
       "food",
@@ -655,8 +655,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 아차산로7길 20 3층",
-    "short_address": "성동구 아차산로7길 20 3층",
+    "address": "3rd floor, 20 Achasan-ro 7-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "3rd floor, 20 Achasan-ro 7-gil, Seongdong-gu",
     "location": {
       "lat": 37.5468142,
       "lng": 127.05496000000001
@@ -675,64 +675,64 @@
     "google_maps_url": "https://maps.google.com/?cid=5260372995146515556",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca58e5ba24bef:0x4900995e51c40464!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 5:00 ~ 오전 12:00",
-      "화요일: 오후 5:00 ~ 오전 12:00",
-      "수요일: 오후 5:00 ~ 오전 12:00",
-      "목요일: 오후 5:00 ~ 오전 12:00",
-      "금요일: 오후 5:00 ~ 오전 12:00",
-      "토요일: 오후 5:00 ~ 오전 12:00",
-      "일요일: 휴무일"
+      "Monday: 5:00 PM - 12:00 AM",
+      "Tuesday: 5:00 PM - 12:00 AM",
+      "Wednesday: 5:00 PM - 12:00 AM",
+      "Thursday: 5:00 PM - 12:00 AM",
+      "Friday: 5:00 PM - 12:00 AM",
+      "Saturday: 5:00 PM - 12:00 AM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "단체적합",
-      "반려견동반",
-      "와인"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "group fitness",
+      "Accompanied by dogs",
+      "wine"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "남녀노소 루미노소",
+        "author": "Everyone, young and old, Luminos and all",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "성수 놀러와서 분위기 좋은 와인바 찾다가 가게된 와인바인데 진짜 대만족하고 왔습니다. 들어가는 입구가 난이도가 좀 있어서 여기에 와인바가 있다고..? 싶었는데 일단 가격이 너무 저렴하구요. 음식들이 정말 다 맛있었어요. 가지롤라티니도 다른곳에서 못먹던 음식이고 사진은 못찍었지만 뇨끼랑 파스타 특히 갑오징어구이!!! 이게 진짜 제일 맛있었습니다.  디저트 플레이트도 수제로 구운 피칸파이라고 하시던데  그리서 그런가 디저트까페 못지않게 너무 맛있었습니다. 정말 다 맛있었어요. 직원도 너무 친절하시고 와인 추천도 진짜 잘해주시네요. 서울와서 처음 방문한 와인바인데 앞으로 성수오면 무조건 여기입니다. ㅎㅎ"
+        "relative_time": "2 years ago",
+        "text": "I came to Seongsu and was looking for a wine bar with a nice atmosphere, so I stopped by this wine bar and was really satisfied. The entrance is a bit difficult, so there is a wine bar here..? I thought so, but the price was too cheap. All the food was really delicious. The eggplant rollatini was something I couldn't eat anywhere else, and I couldn't take a picture of it, but the gnocchi and pasta, especially the grilled cuttlefish!!! This was truly the most delicious.  The dessert plate was said to be a hand-baked pecan pie, and perhaps that was why it was just as delicious as the dessert cafe. Everything was really delicious. The staff is very friendly and they are really good at recommending wine. This is the first wine bar I visited since coming to Seoul, and I will definitely come here when I come to Seongsu from now on. Haha"
       },
       {
-        "author": "하혜경",
+        "author": "Ha Hye-kyung",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "블랙 컨셉에 모던한 인테리어~\n합리적인 와인 가격~\n가장 좋은 건 음식입니다. 친구들과 서울 여행와서 찾은 곳이라 음식을 종류별로 먹었는데 하나같이 맛있고 플레이팅이 넘 이쁨~\n특히 갑오징어와 뇨끼,피칸케잌, 가지말이 치즈구이 등~~\n굳이 레스토랑 찾아갈 필요없을 듯~~\n심지어 깔끔한 화장실~~\n음식 맛, 분위기, 청결이 다 충족되는 곳~\n누구든지 적극 추천할만한곳이네요~\n재방문 예약^^"
+        "relative_time": "2 years ago",
+        "text": "Modern interior with black concept~\nReasonable wine price~\nThe best thing is the food. I visited this place while on a trip to Seoul with friends, so I ate different types of food, and they were all delicious and the plating was very pretty.\nEspecially cuttlefish, gnocchi, pecan cake, grilled eggplant roll, etc.~~\nThere's no need to go to a restaurant.\nEven a clean bathroom~~\nA place where food taste, atmosphere, and cleanliness are all satisfied~\nThis is a place I would highly recommend to anyone.\nReservation for a return visit^^"
       },
       {
-        "author": "요호호",
+        "author": "Yo ho ho",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "완전 분위기맛집입니당 🥰❣️\n위치도 성수역에서 가깝고, 메뉴가 하나같이 다 맛있어요~~!! 🤍🖤\n시그니처 메뉴는 꼭 다 드셔보세용!\n옥수수뇨끼랑 가지롤라티니 아직도 아른아른 거려요~~ 😋\n다른 메뉴들도 먹으러 또 방문할게요 !!"
+        "relative_time": "2 years ago",
+        "text": "It’s a restaurant with a great atmosphere 🥰❣️\nThe location is close to Seongsu Station, and all of the menu items are delicious~~!! 🤍🖤\nBe sure to try all of the signature menu items!\nThe corn gnocchi and eggplant rollatini are still hazy~~ 😋\nI will visit again to try other menu items!!"
       },
       {
-        "author": "유나",
+        "author": "Yuna",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "친구랑 오랜만에 성수에서 와인바 다녀왔어용\n평소에 와인을 좋아해서 여기저기 자주다니는데\n움 성수 음식도 너무너무 맛있구 여러종류 맛보려구 글라스로 시켰더니 사장님이 보틀 가져와서 품종이랑 맛 설명 하나하나 다 해주셨어요!! 와인바중에서도 손에 꼽을정도 친절하고 맛있었던곳 !! 성수 놀러가면 다른친구들 데리고 자랑스럽게 또 방문할거같아요❤️ 단골확정입니다 💕💕💕"
+        "relative_time": "2 years ago",
+        "text": "I went to a wine bar in Seongsu with my friend after a long time.\nI like wine, so I go here and there often.\nThe food at Um Seongsu was so delicious that I ordered a glass to try several different types, and the owner brought me a bottle and explained the varieties and flavors one by one!! Among the wine bars, this place is one of the most friendly and delicious!! If I go to Seongsu, I think I will proudly visit again with my friends❤️ I am a confirmed regular 💕💕💕"
       },
       {
         "author": "ES song",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "저렴하고 분위기좋고 친절하고 맛있고 무슨말이 더 필요할까요. 반드시 흥했으면 좋겠습니다"
+        "relative_time": "2 years ago",
+        "text": "It's cheap, has a nice atmosphere, is friendly, and is delicious. What more do I need to say? I hope it will be successful"
       }
     ],
     "photos": [
@@ -750,16 +750,16 @@
   },
   {
     "place_id": "ChIJe83rMq6lfDURMoq3bPccGko",
-    "display_name": "건대 W 호스트 빠",
-    "category": "술집",
+    "display_name": "Konkuk University W Host Fa",
+    "category": "bar",
     "types": [
       "night_club",
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 광나루로 323",
-    "short_address": "성동구 광나루로 323",
+    "address": "323 Gwangnaru-ro, Seongdong-gu, Seoul, South Korea",
+    "short_address": "323 Gwangnaru-ro, Seongdong-gu",
     "location": {
       "lat": 37.54840250000001,
       "lng": 127.06564509999998
@@ -778,40 +778,40 @@
     "google_maps_url": "https://maps.google.com/?cid=5339612157207611954",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ae32ebcd7b:0x4a1a1cf76cb78a32!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "포장",
-      "매장식사",
-      "화장실",
-      "맥주"
+      "packaging",
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김정열",
+        "author": "Kim Jeong-yeol",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "용섭 실장님 짱"
+        "relative_time": "5 months ago",
+        "text": "Manager Yongseop is awesome"
       },
       {
         "author": "首尔外围Outcall&Incall",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1달 전",
-        "text": "이 레스토랑은 정말 제 마음에 깊은 인상을 남겼습니다. 먼저 음식부터 말씀드리자면, 시그니처 스테이크는 겉은 바삭하고 속은 부드러워 완벽하게 구워졌고, 함께 나온 아스파라거스도 아주 신선했습니다. 랍스터 비스크는 진하고 풍미가 가득했으며, 빵은 갓 구워 따끈하고 향긋했습니다. 서비스 또한 훌륭했습니다. 웨이터들은 매우 전문적이었고, 음식 서빙 속도도 적절했으며 접시 교체도 신속하게 처리했습니다. 은은한 조명과 적당한 음악 소리가 어우러진 분위기는 데이트하기에 완벽했습니다. 다만 아쉬운 점은 티라미수 디저트가 조금 달았다는 것입니다. 가격이 저렴한 편은 아니지만, 재료의 질과 전반적인 경험을 고려하면 합리적이라고 생각합니다. 다음에는 친구들과 함께 다른 메뉴도 꼭 먹어보고 싶습니다. 전반적으로 아주 만족스러운 식사 경험이었습니다."
+        "relative_time": "1 month ago",
+        "text": "This restaurant really left a lasting impression on me. Let's start with the food. The signature steak was grilled to perfection, crispy on the outside and soft on the inside, and the asparagus that came with it was very fresh. The lobster bisque was rich and full of flavor, and the bread was freshly baked, warm and fragrant. The service was also great. The waiters were very professional, food was served at a reasonable speed and plates were changed quickly. The atmosphere, with soft lighting and moderate music, was perfect for a date. However, the only disappointing thing is that the tiramisu dessert was a little sweet. The price is not cheap, but I think it is reasonable considering the quality of the ingredients and the overall experience. Next time, I definitely want to try other menu items with my friends. Overall, it was a very satisfying dining experience."
       }
     ],
     "photos": [
@@ -829,15 +829,15 @@
   },
   {
     "place_id": "ChIJZd2Cs8akfDURWDOsMC-K6Ls",
-    "display_name": "노가리7080",
-    "category": "술집",
+    "display_name": "Nogari7080",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송정동 66-197번지 1층 성동구 서울특별시 KR",
-    "short_address": "송정동 66-197번지 1층 성동구 서울특별시 KR",
+    "address": "1st floor, 66-197 Songjeong-dong, Seoul, Republic of Korea, Seongdong-gu, Seoul KR",
+    "short_address": "1st floor, 66-197 Songjeong-dong, Seongdong-gu, Seoul KR",
     "location": {
       "lat": 37.548400199999996,
       "lng": 127.065896
@@ -857,13 +857,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c6b382dd65:0xbbe88a2f30ac3358!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -872,15 +872,15 @@
   },
   {
     "place_id": "ChIJcZl-gQ6lfDURUH83U1hpBqQ",
-    "display_name": "웅전",
-    "category": "술집",
+    "display_name": "Woongjeon",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수2가제3동 아차산로17길 57",
-    "short_address": "성동구 성수2가제3동 아차산로17길 57",
+    "address": "57 Achasan-ro 17-gil, Seongsu 2-gaje 3-dong, Seongdong-gu, Seoul, South Korea",
+    "short_address": "57 Achasan-ro 17-gil, Seongsu 2-gaje 3-dong, Seongdong-gu",
     "location": {
       "lat": 37.5474311,
       "lng": 127.06584129999999
@@ -900,14 +900,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca50e817e9971:0xa406695853377f50!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -917,16 +917,16 @@
   },
   {
     "place_id": "ChIJ2T0NX5akfDURx2N0zUgkzds",
-    "display_name": "아웃오브타임 BAR OUT OF TIME",
-    "category": "칵테일바",
+    "display_name": "Out of Time BAR OUT OF TIME",
+    "category": "cocktail bar",
     "types": [
       "cocktail_bar",
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수일로8길 40",
-    "short_address": "성동구 성수일로8길 40",
+    "address": "40 Seongsuil-ro 8-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "40 Seongsuil-ro 8-gil, Seongdong-gu",
     "location": {
       "lat": 37.5455567,
       "lng": 127.05460579999999
@@ -948,63 +948,63 @@
     "google_maps_url": "https://maps.google.com/?cid=15838355359635104711",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4965f0d3dd9:0xdbcd2448cd7463c7!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 7:00 ~ 오전 1:00",
-      "화요일: 오후 7:00 ~ 오전 1:00",
-      "수요일: 오후 7:00 ~ 오전 1:00",
-      "목요일: 오후 7:00 ~ 오전 1:00",
-      "금요일: 오후 7:00 ~ 오전 2:00",
-      "토요일: 오후 7:00 ~ 오전 2:00",
-      "일요일: 오후 6:00 ~ 오전 12:00"
+      "Monday: 7:00 PM - 1:00 AM",
+      "Tuesday: 7:00 PM - 1:00 AM",
+      "Wednesday: 7:00 PM - 1:00 AM",
+      "Thursday: 7:00 PM - 1:00 AM",
+      "Friday: 7:00 PM - 2:00 AM",
+      "Saturday: 7:00 PM - 2:00 AM",
+      "Sunday: 6:00 PM - 12:00 AM"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "반려견동반",
-      "칵테일"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "Accompanied by dogs",
+      "cocktail"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "동민",
+        "author": "Dongmin",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "'락스' 메뉴판 보고 일행 3명과 지난 크리스마스에 방문했습니다.\n재미있는 칵테일이 많았던 걸로 기억합니다.\n개인적으로 붕어빵 칵테일이 정말 맛있었습니다.\n바텐더 분들도 재미있고 친절하십니다."
+        "relative_time": "4 months ago",
+        "text": "After looking at the 'Lax' menu, I visited last Christmas with three of my friends.\nI remember there were a lot of interesting cocktails.\nPersonally, the bungeobbang cocktail was really delicious.\nThe bartenders are also fun and friendly."
       },
       {
         "author": "Kai Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "성수역 바 아웃오브타임\n자주 방문하고 싶은 보석같은 바. 전문적이고 친절한 바텐더와 대화하다보면 시간이 금방 흘러감. 바 이름부터 더 위켄드의 히트곡인만큼 외국곡 위주로 신청곡을 받아서 틀어주는데 가게 음향이 상당히 좋아서 충분히 메리트가 있는 듯."
+        "relative_time": "1 year ago",
+        "text": "Seongsu Station Bar Out of Time\nA gem-like bar that I would like to visit often. Time flies by as you chat with the professional and friendly bartenders. As the name of the bar is based on The Weeknd's hit song, it mainly plays foreign songs upon request, and the acoustics of the store are quite good, so it seems to be quite an advantage."
       },
       {
         "author": "Anna Prilutskaya",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "The service, the atmosphere and the drinks were exceptional!!!Highly recommend! Really enjoyed my time and the drinks here and definitely  coming back again!\n\n분위기 좋고 칵테일 너무 맛있고 사장님도 너무 친천해요. 많이 추천해요!"
+        "relative_time": "1 year ago",
+        "text": "The service, the atmosphere and the drinks were exceptional!!!Highly recommend! Really enjoyed my time and the drinks here and definitely coming back again!\n\nThe atmosphere is great, the cocktails are delicious, and the owner is very friendly. Highly recommended!"
       },
       {
         "author": "Seng Cheong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "따뜻하고 아늑한 칵테일 바입니다. 편안한 음악이 흐르고 담소 나누기 좋은 곳이에요. 바텐더분께서 매우 세심하게 배려해 주시고, 외국인인 저희에게 영어로 친절하게 설명해 주셨어요. 정말 마음에 드는 곳이에요!"
+        "relative_time": "5 months ago",
+        "text": "This is a warm and cozy cocktail bar. It's a great place to listen to relaxing music and chat. The bartender was very attentive and kindly explained things in English to us foreigners. I really like this place!"
       },
       {
         "author": "首尔外围Outcall&Incall",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1달 전",
-        "text": "성수역 근처에 위치한 아웃 오브 타임은 숨겨진 보석 같은 칵테일 바입니다. 전문적이고 친절한 바텐더들은 영어도 유창하게 구사하며, 음료를 추천해주고 친절하게 설명해줍니다. 은은한 조명과 잔잔한 음악이 어우러져 따뜻하고 편안한 분위기를 자아내며, 대화하기에 더할 나위 없이 좋은 곳입니다. 칵테일은 훌륭하지만, 특히 시즌 메뉴인 분거팡은 인상적입니다. 맞춤 칵테일도 주문 가능합니다. 위스키 종류도 다양해서 위스키를 즐겨 마시지 않는 사람도 취향에 맞는 위스키를 찾을 수 있을 것입니다. 사장님은 따뜻하고 친절하게 위스키 제조 과정에 얽힌 이야기를 들려주기도 합니다. 1인당 2만~4만 원이라는 합리적인 가격으로 부담 없이 즐길 수 있습니다. 데이트나 친구들과의 편안한 모임 모두에 적합하며, 분명 다시 찾고 싶은 곳입니다."
+        "relative_time": "1 month ago",
+        "text": "Out of Time, located near Seongsu Station, is a hidden gem cocktail bar. The professional and friendly bartenders speak fluent English, recommend drinks and provide friendly explanations. The combination of soft lighting and soft music creates a warm and comfortable atmosphere, making it the perfect place for conversation. The cocktails are great, but the seasonal menu, Bungeopang, is especially impressive. Custom cocktails can also be ordered. There are many different types of whiskey, so even people who don't enjoy drinking whiskey will be able to find something to suit their taste. The owner is warm and kind and tells stories about the whiskey making process. You can enjoy it without burden at a reasonable price of 20,000 to 40,000 won per person. Perfect for both a date or a casual gathering with friends, this is definitely a place you'll want to return to."
       }
     ],
     "photos": [
@@ -1022,16 +1022,16 @@
   },
   {
     "place_id": "ChIJz8XSQZakfDURMAfI678WPPk",
-    "display_name": "린",
-    "category": "칵테일바",
+    "display_name": "lean",
+    "category": "cocktail bar",
     "types": [
       "cocktail_bar",
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수동2가 번지 3층 289-243",
-    "short_address": "성동구 성수동2가 번지 3층 289-243",
+    "address": "3rd floor, Seongsu-dong 2-ga, Seongdong-gu, Seoul, Republic of Korea 289-243",
+    "short_address": "3rd floor, Seongsu-dong 2-ga, Seongdong-gu, 289-243",
     "location": {
       "lat": 37.546400399999996,
       "lng": 127.05475720000001
@@ -1051,14 +1051,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca49641d2c5cf:0xf93c16bfebc80730!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주",
-      "칵테일"
+      "Store meal",
+      "restroom",
+      "beer",
+      "cocktail"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1068,8 +1068,8 @@
   },
   {
     "place_id": "ChIJhQfxl0qlfDUR6StyhJY6I0M",
-    "display_name": "블루 성수",
-    "category": "와인 바",
+    "display_name": "blue holy water",
+    "category": "wine bar",
     "types": [
       "wine_bar",
       "food",
@@ -1077,8 +1077,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "1층, 315-39 성수동2가 성동구 서울특별시 대한민국",
-    "short_address": "1층, 315-39 성수동2가 성동구",
+    "address": "1st floor, 315-39 Seongsu-dong 2-ga, Seongdong-gu, Seoul, Republic of Korea",
+    "short_address": "1st floor, 315-39 Seongsu-dong 2-ga, Seongdong-gu",
     "location": {
       "lat": 37.542960199999996,
       "lng": 127.05549610000001
@@ -1100,23 +1100,23 @@
     "google_maps_url": "https://maps.google.com/?cid=4837774842867624937",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca54a97f10785:0x43233a9684722be9!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 휴무일",
-      "수요일: 오후 6:00 ~ 오전 12:30",
-      "목요일: 오후 6:00 ~ 오전 12:30",
-      "금요일: 오후 6:00 ~ 오전 12:30",
-      "토요일: 오후 1:00 ~ 오전 12:30",
-      "일요일: 오후 1:00 ~ 오전 12:30"
+      "Monday: Closed day",
+      "Tuesday: Closed",
+      "Wednesday: 6:00 PM - 12:30 AM",
+      "Thursday: 6:00 PM - 12:30 AM",
+      "Friday: 6:00 PM - 12:30 AM",
+      "Saturday: 1:00 PM - 12:30 AM",
+      "Sunday: 1:00 PM - 12:30 AM"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "와인"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "wine"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1126,36 +1126,36 @@
         "author": "Juyoung Oh",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "이곳만의 특별한 분위기가 있어요. Please visit here if you want to taste genuine Mediterranean foods with wine."
+        "relative_time": "2 years ago",
+        "text": "There is a special atmosphere here. Please visit here if you want to taste genuine Mediterranean foods with wine."
       },
       {
         "author": "J JS",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "여기 감성 무슨 일인가요… 분위기 너무 좋고 아기자기 하고 사장님 집에 놀러와서 노는 거 같은 느낌이에요! ㅎㅎ 카디르 사장님 너무너무 친절하시고 한국사람 같아요 ㅋㅋㅋ 굳굳!!!"
+        "relative_time": "2 years ago",
+        "text": "What's going on here... The atmosphere is so nice and cute, it feels like I'm visiting my boss' house and having fun! Haha, the owner Kadir is so kind and looks like he’s Korean haha ​​that’s great!!!"
       },
       {
-        "author": "최정안",
+        "author": "Choi Jeong-an",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "에브루 재밌었어요. 선생님의 친절한 설명과 새로운 경험을 하게 되었어요. 그리고 한국어 엄청 잘하심 ㅎㅎ"
+        "relative_time": "6 years ago",
+        "text": "Ebru, it was fun. I had a new experience thanks to the teacher's kind explanation. And you're really good at Korean haha"
       },
       {
         "author": "Oriane Lemaire",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "와인 애호가들을 위한 특별한 곳이에요. 저는 프랑스 출신이라 한국에서는 보기 드문 와인의 품질을 직접 경험해 볼 수 있어요. 특히 터키 참리자 와이너리 셀렉션을 추천합니다!\n셰프가 직접 만드는 지중해 특선 요리도 정말 맛있어요 👌 👍 😀"
+        "relative_time": "1 year ago",
+        "text": "A special place for wine lovers. Since I am from France, I can experience first-hand the quality of wine that is rare in Korea. I especially recommend the Turkish Chamliza Winery selection!\nThe Mediterranean specialties prepared by the chef are also really delicious 👌 👍 😀"
       },
       {
         "author": "Erwan Jambet",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "아늑하고 편안한 분위기에서 맛있는 지중해 음식과 다양한 와인을 즐겨보세요. 최고의 바텐더도 함께합니다! 성수 최고의 장소 👍🏻"
+        "relative_time": "2 years ago",
+        "text": "Enjoy delicious Mediterranean food and a variety of wines in a cozy and comfortable atmosphere. We even have the best bartenders! Best place in Seongsu 👍🏻"
       }
     ],
     "photos": [
@@ -1174,15 +1174,15 @@
   {
     "place_id": "ChIJrd5doculfDURSkt5P8-5vHE",
     "display_name": "dxyz",
-    "category": "칵테일바",
+    "category": "cocktail bar",
     "types": [
       "cocktail_bar",
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 연무장9길 4 3층",
-    "short_address": "성동구 연무장9길 4 3층",
+    "address": "3rd floor, 4 Yeonmujang 9-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "3rd floor, 4 Yeonmujang 9-gil, Seongdong-gu",
     "location": {
       "lat": 37.5427008,
       "lng": 127.0559396
@@ -1204,25 +1204,25 @@
     "google_maps_url": "https://maps.google.com/?cid=8195629721681742666",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5cba15ddead:0x71bcb9cf3f794b4a!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오후 6:00 ~ 오전 12:00",
-      "수요일: 오후 6:00 ~ 오전 12:00",
-      "목요일: 오후 6:00 ~ 오전 12:00",
-      "금요일: 오후 6:00 ~ 오전 12:00",
-      "토요일: 오후 6:00 ~ 오전 12:00",
-      "일요일: 오전 12:00 ~ 오후 12:00, 오후 6:00 ~ 오전 12:00"
+      "Monday: Closed day",
+      "Tuesday: 6:00 PM - 12:00 AM",
+      "Wednesday: 6:00 PM - 12:00 AM",
+      "Thursday: 6:00 PM - 12:00 AM",
+      "Friday: 6:00 PM - 12:00 AM",
+      "Saturday: 6:00 PM - 12:00 AM",
+      "Sunday: 12:00 AM - 12:00 PM, 6:00 PM - 12:00 AM"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "맥주",
-      "와인",
-      "칵테일"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "beer",
+      "wine",
+      "cocktail"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1232,36 +1232,36 @@
         "author": "jihyon bae",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "🍷🪩 (뒤늦게 음식 사진 없다는 걸 배웠는데) 분위기 정말 좋고 적정 가격대에서 와인 마실 수 있는 곳! 8명 정도서 10시쯤 방문했을 때 자리 있었어요 :>"
+        "relative_time": "2 years ago",
+        "text": "🍷🪩 (I learned late that there were no pictures of the food) The atmosphere is really nice and you can drink wine at a reasonable price! There were about 8 people there when we visited around 10:>"
       },
       {
-        "author": "전영건",
+        "author": "Younggun Jeon",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "밖에 간판도 없고 입구까지도 오잉? 했으나 문을 여니 레트로한 아지트가 나타나네요. 재밌는 설명의 칵테일 맛도 훌륭합니다. 안주가 조금 약해서 메인식사 전 혹은 2차로 오시는걸 추천해요. 소품 구경하는 재미도 한가득한 집"
+        "relative_time": "3 years ago",
+        "text": "There is no sign outside and even the entrance? But when I opened the door, a retro hideout appeared. The cocktails with interesting explanations also taste great. The snacks are a bit weak, so I recommend coming before the main meal or as a second meal. A house full of fun looking at props"
       },
       {
         "author": "djp",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "구글지도 위치 잘못되었어요 네이버 지도보고 찾아가세요~ 분위기는 좋아요!"
+        "relative_time": "4 years ago",
+        "text": "Google map location is wrong. Look at Naver map to find it. The atmosphere is great!"
       },
       {
-        "author": "휴가가",
+        "author": "vacation",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "종종 파티도 열고 술도 맛있어요..! 성수동에서 가장 힙한 곳..,, 자체메뉴인 띤또와 보자보자하니끄 .. 음청시리 맛있습니다 한잔두잔 마시다보면 발그레해져서 집에 갑니다.. 무엇보다 음악 선곡이 너무 좋고요.(음향이 좋고 대체로 불란서 음악들 나옵니다) 빈티지 가구들과 알록달록한 오브제들로 꾸며진 인테리어 덕에 분위기가 독특하고 예뻐요!"
+        "relative_time": "6 years ago",
+        "text": "We often have parties and the drinks are delicious..! The hippest place in Seongsu-dong..,, Its own menu, Tintto and Boja Boja Hanique.. Eumcheongsiri is delicious. After one or two drinks, I get flushed and go home.. Above all, the music selection is really good. (The sound is good and mostly French music is played) The atmosphere is unique and pretty thanks to the interior decorated with vintage furniture and colorful objects!"
       },
       {
-        "author": "밀랍",
+        "author": "wax",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "가게 내부 분위기도 좋고 칵테일도 개성있고 맛있어서 좋습니다"
+        "relative_time": "2 years ago",
+        "text": "The atmosphere inside the store is nice and the cocktails are unique and delicious."
       }
     ],
     "photos": [
@@ -1279,16 +1279,16 @@
   },
   {
     "place_id": "ChIJ__HREAClfDUR7lRS34SZNhk",
-    "display_name": "더스토리지룸",
-    "category": "칵테일바",
+    "display_name": "The Storage Room",
+    "category": "cocktail bar",
     "types": [
       "cocktail_bar",
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 연무장7길 8-1 B1",
-    "short_address": "성동구 연무장7길 8-1 B1",
+    "address": "B1, 8-1 Yeonmujang 7-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "B1, 8-1 Yeonmujang 7-gil, Seongdong-gu",
     "location": {
       "lat": 37.543399799999996,
       "lng": 127.0546644
@@ -1310,25 +1310,25 @@
     "google_maps_url": "https://maps.google.com/?cid=1816808295652021486",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca50010d1f1ff:0x19369984df5254ee!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 6:00 ~ 오전 1:00",
-      "화요일: 오후 6:00 ~ 오전 1:00",
-      "수요일: 오후 6:00 ~ 오전 1:00",
-      "목요일: 오후 6:00 ~ 오전 1:00",
-      "금요일: 오후 6:00 ~ 오전 2:00",
-      "토요일: 오후 6:00 ~ 오전 2:00",
-      "일요일: 오후 6:00 ~ 오전 1:00"
+      "Monday: 6:00 PM - 1:00 AM",
+      "Tuesday: 6:00 PM - 1:00 AM",
+      "Wednesday: 6:00 PM - 1:00 AM",
+      "Thursday: 6:00 PM - 1:00 AM",
+      "Friday: 6:00 PM - 2:00 AM",
+      "Saturday: 6:00 PM - 2:00 AM",
+      "Sunday: 6:00 PM - 1:00 AM"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "맥주",
-      "와인",
-      "칵테일"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "beer",
+      "wine",
+      "cocktail"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1338,36 +1338,36 @@
         "author": "Hyuntae Kim",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "3달 전",
-        "text": "캐치테이블 예약금 반환을 '방문완료'가 아닌 '예약취소'로 하는 것은 리뷰 작성을 막으려는걸까요?\n\n분위기는 좋았습니다. 제공하는 칵테일 수 대비 가격도 저렴하더라고요. 그런데 퀄리티가 많이 아쉬웠습니다.\n\n메뉴판에 있는 칵테일 종류가 매우 제한되었음에도, 메뉴판에 없는 칵테일 주문이 매우 제한되었습니다. 바의 장점은 바텐더님과의 대화를 통해, 취향에 맞는 술을 먹을 수 있다는 점이라고 생각하는데 매우 아쉽더라고요. 메뉴에 있는 칵테일을 시켰으나, 칵테일 맛은 그냥 원칙에만 충실한 맛이었고, 그냥 친구가 타준 칵테일 느낌이었습니다."
+        "relative_time": "3 months ago",
+        "text": "Is returning the Catch Table reservation fee as ‘reservation cancellation’ rather than ‘visit complete’ an attempt to prevent reviews from being written?\n\nThe atmosphere was good. The price was cheap compared to the number of cocktails provided. However, the quality was very disappointing.\n\nAlthough the selection of cocktails on the menu was very limited, ordering cocktails that were not on the menu was very limited. I think the advantage of a bar is that you can have a drink that suits your taste through conversation with the bartender, but it was very disappointing. I ordered a cocktail from the menu, but the taste of the cocktail was just faithful to the principles and felt like a cocktail my friend had just made."
       },
       {
         "author": "Henry B",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
-        "text": "5월 22일 저녁에 방문했는데 컨셉은 좋았으나 좋은컨셉이랑 너무 동떨어지는 현대음악(엄청큼) + 엄청 언프로페셔널한 바텐더들... 서로 수다 엄청 떨고 폰만보고있고 심지어는 일하는중에 둘이 와인까서 마시고 있음 ... 너무별로.. 인테리어비가 아까움 ㅉ"
+        "relative_time": "1 year ago",
+        "text": "I visited on the evening of May 22nd, and the concept was good, but the modern music was very different from the good concept (very loud) + the bartenders were very unprofessional... They were chatting a lot with each other and just looking at their phones, and even the two of them were drinking wine while working... It was so bad... it was a waste of money for the interior design."
       },
       {
         "author": "mj kwon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "분위기 좋고 진짜 친절하세요! 칵테일 한잔 시켜서 있어도 좋은거같아요. 맛있어요. 가게 입구 찾기가 조금 힘들긴해도 너무 만족스러워요. 친구 생일 이라서 케이크 촛불 켜도 되는지 여쭤봤는데 너무 흥쾌히 된다고 하셔서 감사했어요! 덕분에 좋은 추억 만들어갑니다"
+        "relative_time": "4 months ago",
+        "text": "Nice atmosphere and really friendly! I think it would be nice to have a cocktail. it is delicious. Although it is a little difficult to find the entrance to the store, I am very satisfied. Since it was my friend's birthday, I asked if I could light the candles on the cake, and he said it would be really fun, so I was thankful! Thanks to you, I'm making good memories"
       },
       {
-        "author": "이경민",
+        "author": "Kyungmin Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "친구들과 좋은시간 잘보내고왔습니다:)"
+        "relative_time": "2 years ago",
+        "text": "I had a great time with my friends :)"
       },
       {
         "author": "woong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "나의 최고의 스픽이지 바.."
+        "relative_time": "2 years ago",
+        "text": "This is my best pick..."
       }
     ],
     "photos": [
@@ -1385,15 +1385,15 @@
   },
   {
     "place_id": "ChIJ6ZzAXJakfDUR-Ua6L4KXpCs",
-    "display_name": "폭스노래주점",
-    "category": "나이트클럽",
+    "display_name": "Fox Song Bar",
+    "category": "nightclub",
     "types": [
       "night_club",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성수동2가 289-252번지 2층 성동구 서울특별시 KR",
-    "short_address": "성수동2가 289-252번지 2층 성동구 서울특별시 KR",
+    "address": "2nd floor, 289-252 Seongsu-dong 2-ga, Seoul, Republic of Korea, Seongdong-gu, Seoul KR",
+    "short_address": "2nd floor, 289-252 Seongsu-dong 2-ga, Seongdong-gu, Seoul KR",
     "location": {
       "lat": 37.545988699999995,
       "lng": 127.05454169999999
@@ -1413,11 +1413,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4965cc09ce9:0x2ba497822fba46f9!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실",
-      "맥주"
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1426,8 +1426,8 @@
   },
   {
     "place_id": "ChIJaeGuIsGkfDURwr7MME0mPwo",
-    "display_name": "서울생주조",
-    "category": "양조장",
+    "display_name": "Seoul Raw Brewery",
+    "category": "brewery",
     "types": [
       "brewery",
       "food",
@@ -1436,8 +1436,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수동2가 281-10",
-    "short_address": "성동구 성수동2가 281-10",
+    "address": "281-10, Seongsu-dong 2-ga, Seongdong-gu, Seoul, South Korea",
+    "short_address": "281-10, Seongsu-dong 2-ga, Seongdong-gu",
     "location": {
       "lat": 37.5475109,
       "lng": 127.06482270000001
@@ -1458,8 +1458,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1471,15 +1471,15 @@
   },
   {
     "place_id": "ChIJobPe3L2kfDUR-D6kfVchlSY",
-    "display_name": "스타노래주점",
-    "category": "나이트클럽",
+    "display_name": "Star Song Bar",
+    "category": "nightclub",
     "types": [
       "night_club",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수동2가 299-13번지 지층",
-    "short_address": "성동구 성수동2가 299-13번지 지층",
+    "address": "Ground floor, 299-13 Seongsu-dong 2-ga, Seongdong-gu, Seoul, Korea",
+    "short_address": "Ground floor, 299-13 Seongsu-dong 2-ga, Seongdong-gu",
     "location": {
       "lat": 37.548732199999996,
       "lng": 127.05552669999999
@@ -1499,13 +1499,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4bddcdeb3a1:0x269521577da43ef8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실",
-      "단체적합",
-      "맥주"
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1515,14 +1515,14 @@
   {
     "place_id": "ChIJi10OKhelfDURcwNYnU586-k",
     "display_name": "NewJeans graffiti",
-    "category": "관광 명소",
+    "category": "tourist attraction",
     "types": [
       "tourist_attraction",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 아차산로9길 8",
-    "short_address": "성동구 아차산로9길 8",
+    "address": "8 Achasan-ro 9-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "8, Achasan-ro 9-gil, Seongdong-gu",
     "location": {
       "lat": 37.5444867,
       "lng": 127.0585097
@@ -1550,36 +1550,36 @@
         "author": "ほーりー",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "11달 전",
-        "text": "NewJeans의 부활을 기다리면서. . ."
+        "relative_time": "11 months ago",
+        "text": "Waiting for the resurgence of NewJeans. . ."
       },
       {
         "author": "Leo Meo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "뉴진스, 파이팅! 우리 아기들 너무 자랑스러워요. 예술에 푹 빠졌어요. 뉴진스는 절대 죽지 않아요 "
+        "relative_time": "5 months ago",
+        "text": "New Jeans, fighting! I'm so proud of my babies. I fell in love with art. New Jeans never dies "
       },
       {
         "author": "Po Shen Hsu",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "철공소 벽.\n어니언 카페에 들러서 사진 몇 장 찍었어요. 꽤 좋았어요."
+        "relative_time": "1 year ago",
+        "text": "Ironworks wall.\nI stopped by the Onion Cafe and took a few pictures. It was pretty good."
       },
       {
         "author": "TF? OK.",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "다니엘이 회사에서 해고된 후에는 누가 남을까요??? 삼가 고인의 명복을 빕니다"
+        "relative_time": "3 months ago",
+        "text": "Who will stay after Daniel is fired from the company??? May the deceased rest in peace."
       },
       {
         "author": "Jian Sheng",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
-        "text": "찾기도 쉽고, 예쁘고, 그립네요 🥹"
+        "relative_time": "8 months ago",
+        "text": "It's easy to find, pretty, and I miss it 🥹"
       }
     ],
     "photos": [
@@ -1597,15 +1597,15 @@
   },
   {
     "place_id": "ChIJt3rdMQClfDURvlJ7Lhp7bco",
-    "display_name": "하트",
-    "category": "관광 명소",
+    "display_name": "heart",
+    "category": "tourist attraction",
     "types": [
       "tourist_attraction",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 아차산로 134",
-    "short_address": "성동구 아차산로 134",
+    "address": "134 Achasan-ro, Seongdong-gu, Seoul, South Korea",
+    "short_address": "134 Achasan-ro, Seongdong-gu",
     "location": {
       "lat": 37.543595599999996,
       "lng": 127.05876099999999
@@ -1633,15 +1633,15 @@
   },
   {
     "place_id": "ChIJtfKMNOukfDURBRVuNXffQV8",
-    "display_name": "(주)두원시스템",
-    "category": "관광 명소",
+    "display_name": "Doowon System Co., Ltd.",
+    "category": "tourist attraction",
     "types": [
       "tourist_attraction",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 연무장7길 14",
-    "short_address": "성동구 연무장7길 14",
+    "address": "14 Yeonmujang 7-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "14 Yeonmujang 7-gil, Seongdong-gu",
     "location": {
       "lat": 37.5435,
       "lng": 127.0546298
@@ -1669,14 +1669,14 @@
         "author": "Teddy Moelijono",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "11달 전",
+        "relative_time": "11 months ago",
         "text": null
       },
       {
-        "author": "안녕하세요ᅳ",
+        "author": "Hello",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -1686,15 +1686,15 @@
   },
   {
     "place_id": "ChIJTf6nMRilfDURmKQ-tZAoO2g",
-    "display_name": "폴라 스튜디오 성수점",
-    "category": "관광 명소",
+    "display_name": "Polar Studio Seongsu Branch",
+    "category": "tourist attraction",
     "types": [
       "tourist_attraction",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 연무장7길 8-1 2층",
-    "short_address": "성동구 연무장7길 8-1 2층",
+    "address": "2nd floor, 8-1 Yeonmujang 7-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "2nd floor, 8-1, Yeonmujang 7-gil, Seongdong-gu",
     "location": {
       "lat": 37.5434425,
       "lng": 127.05464860000001
@@ -1714,12 +1714,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca51831a7fe4d:0x683b2890b53ea498!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": null,
     "accessibility": null,
     "parking": [
-      "유료주차장"
+      "Paid parking lot"
     ],
     "reviews": null,
     "photos": [
@@ -1729,16 +1729,16 @@
   },
   {
     "place_id": "ChIJjZvDqfClfDURUFxaJO_NzyA",
-    "display_name": "최성규의인기념비",
-    "category": "역사적 명소",
+    "display_name": "Choi Seong-gyu Righteous Man Monument",
+    "category": "historical landmark",
     "types": [
       "historical_landmark",
       "historical_place",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성수 역앞",
-    "short_address": "성수 역앞",
+    "address": "In front of Seongsu Station, Seoul, South Korea",
+    "short_address": "In front of Seongsu Station",
     "location": {
       "lat": 37.5440332,
       "lng": 127.0569672
@@ -1758,7 +1758,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5f0a9c39b8d:0x20cfcdef245a5c50!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": null,
     "accessibility": null,
@@ -1778,16 +1778,16 @@
   },
   {
     "place_id": "ChIJNeMbvr2kfDURCWfxNEwpdm8",
-    "display_name": "상도",
-    "category": "역사적 명소",
+    "display_name": "highway",
+    "category": "historical landmark",
     "types": [
       "historical_landmark",
       "historical_place",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성수동2가 299-43번지 성동구 서울특별시 KR",
-    "short_address": "성수동2가 299-43번지 성동구 서울특별시 KR",
+    "address": "299-43 Seongsu-dong 2-ga, Seoul, Republic of Korea, Seongdong-gu, Seoul KR",
+    "short_address": "299-43 Seongsu-dong 2-ga, Seongdong-gu, Seoul KR",
     "location": {
       "lat": 37.5489611,
       "lng": 127.05451889999999
@@ -1815,7 +1815,7 @@
   },
   {
     "place_id": "ChIJ29b8-d6lfDUR3HB618NS9gM",
-    "display_name": "Gallery CDA (씨디에이)",
+    "display_name": "Gallery CDA",
     "category": "Art museum",
     "types": [
       "art_museum",
@@ -1823,8 +1823,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 아차산로 120 2층",
-    "short_address": "성동구 아차산로 120 2층",
+    "address": "2nd floor, 120 Achasan-ro, Seongdong-gu, Seoul, Korea",
+    "short_address": "2nd floor, 120 Achasan-ro, Seongdong-gu",
     "location": {
       "lat": 37.543919800000005,
       "lng": 127.05723289999999
@@ -1843,16 +1843,16 @@
     "google_maps_url": "https://maps.google.com/?cid=285506627471831260",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5def9fcd6db:0x3f652c3d77a70dc!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오후 1:00~7:00",
-      "수요일: 오후 1:00~7:00",
-      "목요일: 오후 1:00~7:00",
-      "금요일: 오후 1:00~7:00",
-      "토요일: 오후 1:00~7:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 1:00-7:00 PM",
+      "Wednesday: 1:00-7:00 PM",
+      "Thursday: 1:00-7:00 PM",
+      "Friday: 1:00-7:00 PM",
+      "Saturday: 1:00-7:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1862,29 +1862,29 @@
         "author": "Kai Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "성수역 갤러리 CDA\n성수역 내려서 10초 거리에 위치한 작지만 훌륭한 갤러리. 노란색과 초록색만을 이용해서 그림을 그리는 작가분의 작품들이 인상깊었음. 갤러리스트 분이 열정적, 열성적으로 움직이시는 모습이 참 좋았다."
+        "relative_time": "2 years ago",
+        "text": "Seongsu Station Gallery CDA\nA small but excellent gallery located 10 seconds away from Seongsu Station. I was impressed by the works of the artist who paints using only yellow and green. It was great to see the gallerist acting passionately and enthusiastically."
       },
       {
         "author": "jeongtae lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "상가 빌딩 내 2층에 위치한 작은 갤러리이나, 방문일엔 운 좋게 수준 높은 작품이 전시중이었다. 이렇게 좋은 작품들이 이렇게 저렴하게 판매되다니."
+        "relative_time": "2 years ago",
+        "text": "It's a small gallery located on the second floor of a commercial building, but on the day I visited, I was lucky enough to see high-quality works on display. I can’t believe such good works are being sold so cheaply."
       },
       {
-        "author": "초지일관localguidek",
+        "author": "Choji consistent local guidek",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "재밌는 전시 잘 봤습니다"
+        "relative_time": "1 year ago",
+        "text": "I enjoyed the interesting exhibition."
       },
       {
         "author": "M Lucas",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1년 전",
-        "text": "개념 미술에 관심이 있다면 괜찮을 거예요. 다만, 많은 갤러리가 문을 닫았어요."
+        "relative_time": "1 year ago",
+        "text": "If you're interested in conceptual art, this will be fine. However, many galleries are closed."
       }
     ],
     "photos": [
@@ -1902,7 +1902,7 @@
   },
   {
     "place_id": "ChIJ-fesJZSkfDURRNwpaw0A2FE",
-    "display_name": "앗무만ATMUMAN",
+    "display_name": "ATMUMAN",
     "category": "Art museum",
     "types": [
       "art_museum",
@@ -1910,8 +1910,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수동2가 번지 4층 315-1 403호",
-    "short_address": "성동구 성수동2가 번지 4층 315-1 403호",
+    "address": "Room 403, 315-1, 4th floor, Seongsu-dong 2-ga, Seongdong-gu, Seoul, Korea",
+    "short_address": "Room 403, 315-1, 4th floor, Seongsu-dong 2-ga, Seongdong-gu",
     "location": {
       "lat": 37.5440067,
       "lng": 127.0566082
@@ -1931,7 +1931,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca49425acf7f9:0x51d8000d6b29dc44!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1941,7 +1941,7 @@
   },
   {
     "place_id": "ChIJm-0vC3alfDUR5NvLqvwpb2w",
-    "display_name": "앗뜰리에",
+    "display_name": "Atelier",
     "category": "Art museum",
     "types": [
       "art_museum",
@@ -1951,8 +1951,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 아차산로 116 403호",
-    "short_address": "성동구 아차산로 116 403호",
+    "address": "#403, 116 Achasan-ro, Seongdong-gu, Seoul, Republic of Korea",
+    "short_address": "#403, 116 Achasan-ro, Seongdong-gu",
     "location": {
       "lat": 37.5440465,
       "lng": 127.0564343
@@ -1971,35 +1971,35 @@
     "google_maps_url": "https://maps.google.com/?cid=7813510043685084132",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5760b2fed9b:0x6c6f29fcaacbdbe4!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 9:00",
-      "화요일: 오전 10:00 ~ 오후 9:00",
-      "수요일: 오전 10:00 ~ 오후 9:00",
-      "목요일: 휴무일",
-      "금요일: 휴무일",
-      "토요일: 휴무일",
-      "일요일: 오전 10:00 ~ 오후 9:00"
+      "Monday: 10:00 AM - 9:00 PM",
+      "Tuesday: 10:00 AM - 9:00 PM",
+      "Wednesday: 10:00 AM - 9:00 PM",
+      "Thursday: Closed",
+      "Friday: Closed day",
+      "Saturday: Closed day",
+      "Sunday: 10:00 AM - 9:00 PM"
     ],
     "services": [
-      "화장실",
-      "어린이적합"
+      "restroom",
+      "Suitable for children"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이미정",
+        "author": "Lee Mi-jeong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "처음에 어디지 하고 찾다가 마동석 피규어가 나어ㅏ있어서 잘 찾았어요 ㅋㅋㅋㅋㅋ 공방이 엄청 예쁘고 앗무만님 실제로 보니까 엄청 신기했어요!! 작업들도 하나하나 다 설명해주시고 원하는 작업을 듣고 재료추천도 많이 해주셔서 결정이 더 쉬웠어요 ㅎㅎㅎ 꼭 가버세요 추천 합니당!!!"
+        "relative_time": "3 years ago",
+        "text": "At first, I was wondering where it was, but I found a Ma Dong-seok figure, so I found it. The workshop was very pretty, and it was really amazing to see Atmuman in person!! It was easier to make a decision because he explained each and every project, listened to what I wanted to do, and recommended many materials haha. I definitely recommend going there!!!"
       },
       {
         "author": "Enchanted Soul",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9달 전",
-        "text": "안녕하세요! 오랫동안 당신의 작품을 정말 감탄해 왔어요. 정말 완벽하네요. 맞춤 캐릭터를 원했는데, 주문 제작도 가능하신가요? 알려주세요."
+        "relative_time": "9 months ago",
+        "text": "Hello! I've really admired your work for a long time. It's really perfect. I wanted a custom character. Is it possible to custom-make it? Please let me know."
       }
     ],
     "photos": [
@@ -2017,7 +2017,7 @@
   },
   {
     "place_id": "ChIJq2W3ZbelfDURV0NjYnwNAe0",
-    "display_name": "디지털갤러리",
+    "display_name": "Digital Gallery",
     "category": "Art museum",
     "types": [
       "art_museum",
@@ -2025,8 +2025,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 연무장5가길 25",
-    "short_address": "성동구 연무장5가길 25",
+    "address": "25 Yeonmujang 5ga-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "25 Yeonmujang 5ga-gil, Seongdong-gu",
     "location": {
       "lat": 37.5435434,
       "lng": 127.0556719
@@ -2046,7 +2046,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5b765b765ab:0xed010d7c62634357!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2058,7 +2058,7 @@
   },
   {
     "place_id": "ChIJvY21GfSlfDURnmpu1QtHbdM",
-    "display_name": "HAESO 해소",
+    "display_name": "HAESO resolved",
     "category": "Art museum",
     "types": [
       "art_museum",
@@ -2066,8 +2066,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수이로24길 31",
-    "short_address": "성동구 성수이로24길 31",
+    "address": "31 Seongsui-ro 24-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "31 Seongsui-ro 24-gil, Seongdong-gu",
     "location": {
       "lat": 37.5444981,
       "lng": 127.06164909999998
@@ -2086,16 +2086,16 @@
     "google_maps_url": "https://maps.google.com/?cid=15234911230615251614",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5f419b58dbd:0xd36d470bd56e6a9e!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 11:00 ~ 오후 7:00",
-      "수요일: 오전 11:00 ~ 오후 7:00",
-      "목요일: 오전 11:00 ~ 오후 10:00",
-      "금요일: 오전 11:00 ~ 오후 10:00",
-      "토요일: 오전 11:00 ~ 오후 10:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 11:00 AM - 7:00 PM",
+      "Wednesday: 11:00 AM - 7:00 PM",
+      "Thursday: 11:00 AM - 10:00 PM",
+      "Friday: 11:00 AM - 10:00 PM",
+      "Saturday: 11:00 AM - 10:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2105,7 +2105,7 @@
         "author": "carl hong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
+        "relative_time": "5 months ago",
         "text": null
       }
     ],
@@ -2124,15 +2124,15 @@
   },
   {
     "place_id": "ChIJ63iA8cCkfDURRgMJn1YwaLU",
-    "display_name": "(주)앤드뮤지엄",
-    "category": "박물관",
+    "display_name": "And Museum Co., Ltd.",
+    "category": "museum",
     "types": [
       "museum",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수동2가 280-18번지",
-    "short_address": "성동구 성수동2가 280-18번지",
+    "address": "280-18, Seongsu-dong 2-ga, Seongdong-gu, Seoul, Korea",
+    "short_address": "280-18 Seongsu-dong 2-ga, Seongdong-gu",
     "location": {
       "lat": 37.5473749,
       "lng": 127.06317689999997
@@ -2152,7 +2152,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c0f18078eb:0xb56830569f090346!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2166,15 +2166,15 @@
   },
   {
     "place_id": "ChIJo9WJhVilfDURjopjFWiWSh0",
-    "display_name": "박물관사랑",
-    "category": "박물관",
+    "display_name": "museum love",
+    "category": "museum",
     "types": [
       "museum",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 광나루로 286 아인빌딩 8층",
-    "short_address": "성동구 광나루로 286 아인빌딩 8층",
+    "address": "8th floor, Ain Building, 286 Gwangnaru-ro, Seongdong-gu, Seoul, Korea",
+    "short_address": "8th floor, Ain Building, 286 Gwangnaru-ro, Seongdong-gu",
     "location": {
       "lat": 37.5475886,
       "lng": 127.0612662
@@ -2194,7 +2194,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5588589d5a3:0x1d4a966815638a8e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2212,8 +2212,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "301 Songjung-gil, 40 Sungdong-Gu, 성동구 서울특별시 대한민국",
-    "short_address": "301 Songjung-gil, 40 Sungdong-Gu, 성동구",
+    "address": "301 Songjung-gil, 40 Sungdong-Gu, Seongdong-gu, Seoul South Korea",
+    "short_address": "301 Songjung-gil, 40 Sungdong-Gu, Seongdong-gu",
     "location": {
       "lat": 37.5491694,
       "lng": 127.06416050000001
@@ -2233,7 +2233,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca55b92233213:0xe95f5d0c20e90ee1!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2244,14 +2244,14 @@
   {
     "place_id": "ChIJHUCD6H2lfDURMYh-LIjkKws",
     "display_name": "PARC Editions",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 아차산로11길 28 2층",
-    "short_address": "성동구 아차산로11길 28 2층",
+    "address": "2nd floor, 28 Achasan-ro 11-gil, Seongdong-gu, Seoul, Korea",
+    "short_address": "2nd floor, 28 Achasan-ro 11-gil, Seongdong-gu",
     "location": {
       "lat": 37.5459095,
       "lng": 127.0602327
@@ -2270,17 +2270,17 @@
     "google_maps_url": "https://maps.google.com/?cid=804988231928940593",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca57de883401d:0xb2be4882c7e8831!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오후 1:00~6:00",
-      "수요일: 오후 1:00~6:00",
-      "목요일: 오후 1:00~6:00",
-      "금요일: 오후 1:00~6:00",
-      "토요일: 오후 1:00~6:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 1:00-6:00 PM",
+      "Wednesday: 1:00-6:00 PM",
+      "Thursday: 1:00-6:00 PM",
+      "Friday: 1:00-6:00 PM",
+      "Saturday: 1:00-6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실",
-      "어린이적합"
+      "restroom",
+      "Suitable for children"
     ],
     "payment": null,
     "accessibility": null,
@@ -2301,15 +2301,15 @@
   },
   {
     "place_id": "ChIJ082DzfClfDURBCmP9FmfXqY",
-    "display_name": "스페이스 로라",
-    "category": "미술관",
+    "display_name": "space roller",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수이로26길 25",
-    "short_address": "성동구 성수이로26길 25",
+    "address": "25 Seongsui-ro 26-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "25 Seongsui-ro 26-gil, Seongdong-gu",
     "location": {
       "lat": 37.5457718,
       "lng": 127.0603293
@@ -2328,16 +2328,16 @@
     "google_maps_url": "https://maps.google.com/?cid=11988194466810767620",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5f0cd83cdd3:0xa65e9f59f48f2904!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오후 1:00~5:00",
-      "수요일: 오후 1:00~5:00",
-      "목요일: 오후 1:00~5:00",
-      "금요일: 오후 1:00~5:00",
-      "토요일: 오후 1:00~5:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 1:00-5:00 PM",
+      "Wednesday: 1:00-5:00 PM",
+      "Thursday: 1:00-5:00 PM",
+      "Friday: 1:00-5:00 PM",
+      "Saturday: 1:00-5:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2347,8 +2347,8 @@
         "author": "Dillisus",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "멋진 공간에서 최경희 작가님의 전시를\n인상 깊게 관람하고 갑니다.\nI truly enjoyed viewing Choi Kyung-hee’s exhibition in this wonderful space.\n\n작품과 공간이 잘 어우러져 여운이 남는 시간이었습니다.\nThe harmony between the artwork and the venue made it a memorable experience."
+        "relative_time": "3 months ago",
+        "text": "An exhibition by artist Kyunghee Choi in a wonderful space.\nIt was an impressive tour.\nI truly enjoyed viewing Choi Kyung-hee’s exhibition in this wonderful space.\n\nIt was a time that left a lasting impression as the work and space harmonized well.\nThe harmony between the artwork and the venue made it a memorable experience."
       }
     ],
     "photos": [
@@ -2360,8 +2360,8 @@
   },
   {
     "place_id": "ChIJ1zptzEClfDUREATNMY5SJRA",
-    "display_name": "성수미술관",
-    "category": "카페",
+    "display_name": "Seongsu Art Museum",
+    "category": "cafe",
     "types": [
       "cafe",
       "art_gallery",
@@ -2369,8 +2369,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수일로8길 39 성수미술관 B02",
-    "short_address": "성동구 성수일로8길 39 성수미술관 B02",
+    "address": "B02, Seongsu Art Museum, 39 Seongsuil-ro 8-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "B02, Seongsu Art Museum, 39 Seongsuil-ro 8-gil, Seongdong-gu",
     "location": {
       "lat": 37.5456467,
       "lng": 127.0548028
@@ -2392,63 +2392,63 @@
     "google_maps_url": "https://maps.google.com/?cid=1163426849419494416",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca540cc6d3ad7:0x1025528e31cd0410!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오후 12:00~10:00",
-      "수요일: 오후 12:00~10:00",
-      "목요일: 오후 12:00~10:00",
-      "금요일: 오후 12:00 ~ 오전 12:00",
-      "토요일: 오전 12:00 ~ 오후 10:00",
-      "일요일: 오후 12:00~10:00"
+      "Monday: Closed day",
+      "Tuesday: 12:00-10:00 PM",
+      "Wednesday: 12:00-10:00 PM",
+      "Thursday: 12:00-10:00 PM",
+      "Friday: 12:00 PM - 12:00 AM",
+      "Saturday: 12:00 AM - 10:00 PM",
+      "Sunday: 12:00-10:00 PM"
     ],
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "커피",
-      "디저트"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "coffee",
+      "dessert"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "포포",
+        "author": "papaw",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "이색데이트장소로 최고! 뭔가를 만들어야한다는 부담이 적어서 좋다. 원데이클래스 같은 경우 부담될때가 종종 있거든ㅋ 시간도 잘 가고 스트레스도 풀리는 느낌? 앞치마와 이젤, 붓과 파레트는 모두의 로망이니까."
+        "relative_time": "3 years ago",
+        "text": "The best place for a unique date! It's nice because there's less pressure to create something. In the case of one-day classes, there are times when it feels burdensome. Does it feel like time goes by well and stress is relieved? Aprons, easels, brushes, and palettes are everyone’s dream."
       },
       {
-        "author": "yoo유길연",
+        "author": "yooYoo Gil-yeon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "색다른 경험, 성인이 된후로는 이쪽 분야가 아니고서는 접해볼 수 없을것만 같은 경험을 하게해 주는곳. 취미든 여가든 자유롭게 쉽게 접근할 수 있다는점. 꼭 경험해보시길..."
+        "relative_time": "6 years ago",
+        "text": "A place where you can have a unique experience, an experience that you would not have been able to experience other than in this field as an adult. Whether it is a hobby or leisure, it can be freely and easily accessed. Be sure to experience it..."
       },
       {
         "author": "KIM NEEBY",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "재미있는경험이었어요\n캔버스는 세심하게 해야해서, 큰종이는 커서 제 시간내로 못끝내는느낌입니다 ㅎㅎㅎ\n되도록 주말은 피하시고 평일시간에 가시는걸 추천해드려요\n캔버스는 천원씩 추가금 붙고, 물감말고도 다른걸로 채색할 수 있느니 많이활용하세요! 마지막에 매직으로 테두리선 따면 좋을것같아요"
+        "relative_time": "4 years ago",
+        "text": "It was a fun experience\nThe canvas has to be done with great care, and the large paper is large, so I feel like I can't finish it in time haha.\nI recommend avoiding weekends if possible and going on weekdays.\nThere is an additional charge of 1,000 won for the canvas, and you can color it with something other than paint, so make the most of it! I think it would be nice to draw the border line with a marker at the end."
       },
       {
         "author": "JHyuk C",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "그림 그리기 좋은데, 아크릴 물감이라 도화지에 수채화 느낌내기 힘들어용 ㅠㅠ\n도화지에 아크릴물감 색칠하는거 감안하고 가야 함!\n그래듀 너무 재밌었음"
+        "relative_time": "4 years ago",
+        "text": "It's good for drawing, but since it's acrylic paint, it's hard to get the feel of watercolor on drawing paper.\nYou have to take into account that you are painting with acrylic paint on drawing paper!\nYeah, it was so fun"
       },
       {
         "author": "kim life",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "어렵지않게 그림을 접할수있고 안에 분위기도 좋다 옆에 체육관이 있어서 좀 쿵쿵하지만 그림에 집중하다보면 시간가는줄 모른다 2시간 시간제한에 자유 or 밑그림그려진거 선택가능, 음료는 따로 돈내고 주문"
+        "relative_time": "6 years ago",
+        "text": "You can access the paintings without difficulty and the atmosphere is good inside. There is a gym next to it, so it's a bit hectic, but if you focus on the paintings, you lose track of time. You can choose free or sketched ones with a 2-hour time limit, and pay for drinks separately."
       }
     ],
     "photos": [
@@ -2467,7 +2467,7 @@
   {
     "place_id": "ChIJ8V0etvmlfDURoVZUwwyKkpY",
     "display_name": "RCC Inc. (Raw Creative Center)",
-    "category": "제조업체",
+    "category": "manufacturer",
     "types": [
       "manufacturer",
       "cultural_center",
@@ -2475,8 +2475,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수이로 89 MG빌딩 2층",
-    "short_address": "성동구 성수이로 89 MG빌딩 2층",
+    "address": "2nd floor, MG Building, 89 Seongsui-ro, Seongdong-gu, Seoul, Korea",
+    "short_address": "2nd floor, MG Building, 89 Seongsui-ro, Seongdong-gu",
     "location": {
       "lat": 37.5430148,
       "lng": 127.05630079999999
@@ -2504,15 +2504,15 @@
   },
   {
     "place_id": "ChIJGRXtE76kfDURNC8iCqqnxv0",
-    "display_name": "(주)갤러리팍",
-    "category": "미술관",
+    "display_name": "Gallery Park Co., Ltd.",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성수동2가 289-5번지 성동구 서울특별시 KR",
-    "short_address": "성수동2가 289-5번지 성동구 서울특별시 KR",
+    "address": "289-5 Seongsu-dong 2-ga, Seoul, Republic of Korea, Seongdong-gu, Seoul KR",
+    "short_address": "289-5 Seongsu-dong 2-ga, Seongdong-gu, Seoul KR",
     "location": {
       "lat": 37.547780599999996,
       "lng": 127.0570925
@@ -2532,7 +2532,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4be13ed1519:0xfdc6a7aa0a222f34!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2542,15 +2542,15 @@
   },
   {
     "place_id": "ChIJiaXU1xylfDURDLO44dDo83k",
-    "display_name": "갤러리 까르찌나",
-    "category": "미술관",
+    "display_name": "Gallery Carzina",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수2가제3동 성수이로 87",
-    "short_address": "성동구 성수2가제3동 성수이로 87",
+    "address": "87 Seongsui-ro, Seongsu 2-gaje 3-dong, Seongdong-gu, Seoul, South Korea",
+    "short_address": "87 Seongsui-ro, Seongsu 2-gaje 3-dong, Seongdong-gu",
     "location": {
       "lat": 37.5426988,
       "lng": 127.0562037
@@ -2569,16 +2569,16 @@
     "google_maps_url": "https://maps.google.com/?cid=8787623281767789324",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca51cd7d4a589:0x79f3e8d0e1b8b30c!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 10:00 ~ 오후 6:00",
-      "수요일: 오전 10:00 ~ 오후 6:00",
-      "목요일: 오전 10:00 ~ 오후 6:00",
-      "금요일: 오전 10:00 ~ 오후 6:00",
-      "토요일: 오전 10:00 ~ 오후 6:00",
-      "일요일: 오전 10:00 ~ 오후 6:00"
+      "Monday: Closed day",
+      "Tuesday: 10:00 AM - 6:00 PM",
+      "Wednesday: 10:00 AM - 6:00 PM",
+      "Thursday: 10:00 AM - 6:00 PM",
+      "Friday: 10:00 AM - 6:00 PM",
+      "Saturday: 10:00 AM - 6:00 PM",
+      "Sunday: 10:00 AM - 6:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2588,35 +2588,35 @@
         "author": "Kai Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "성수역 러시아 갤러리 까르찌나\n조그만 방 같은 갤러리지만 의미 있는 작품들로 가득 차있는 곳. 러시아 작가들만을 전시한다는데 다들 처음 듣는 이름이었지만 발걸음을 붙잡는 작품들이 많았다. 역에서 가깝기도 하고 아침 10시 일찍 오픈하니 근처라면 들러봐도 좋을 듯."
+        "relative_time": "2 years ago",
+        "text": "Seongsu Station Russian Gallery Karzina\nAlthough it is a small gallery, it is full of meaningful works. It was said that only Russian artists were on display, but although this was the first time everyone had heard of it, there were many works that caught one's attention. It's close to the station and opens early at 10 a.m., so it might be a good idea to stop by if you're nearby."
       },
       {
         "author": "Sunmi Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "국내 유일한 러시아 그림 전시 갤러리(성문빌딩 402호). 방문자에게 엽서 한장을 선물로 드려요. 점심시간 관람 불가.(pm12~1시)"
+        "relative_time": "1 year ago",
+        "text": "The only Russian painting exhibition gallery in Korea (Room 402, Seongmun Building). We give visitors a postcard as a gift. No viewing during lunch hours. (12pm - 1pm)"
       },
       {
-        "author": "초지일관localguidek",
+        "author": "Choji consistent local guidek",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "러시아 미술 전문 갤러리 라고 합니다\n그림 참 좋았습니다 또 방문 할 수 있으면 좋겠네요"
+        "relative_time": "1 year ago",
+        "text": "It is a gallery specializing in Russian art.\nThe picture was really nice. I hope I can visit again."
       },
       {
-        "author": "‍이상준(교원-러시아ㆍ유라시아학과)",
+        "author": "‍Sangjun Lee (Faculty - Department of Russian and Eurasian Studies)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "작지만 의미있는 미술작품 전시공간"
+        "relative_time": "3 years ago",
+        "text": "Small but meaningful art exhibition space"
       },
       {
-        "author": "수민",
+        "author": "sumin",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -2635,15 +2635,15 @@
   },
   {
     "place_id": "ChIJN6iK972kfDURaxYn0liSPyo",
-    "display_name": "US갤러리",
-    "category": "미술관",
+    "display_name": "US Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성수동2가 289-4번지 성동구 서울특별시 KR",
-    "short_address": "성수동2가 289-4번지 성동구 서울특별시 KR",
+    "address": "289-4, Seongsu-dong 2-ga, Seoul, Republic of Korea, Seongdong-gu, Seoul KR",
+    "short_address": "289-4 Seongsu-dong 2-ga, Seongdong-gu, Seoul KR",
     "location": {
       "lat": 37.547517,
       "lng": 127.05546280000002
@@ -2663,7 +2663,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4bdf78aa837:0x2a3f9258d227166b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2673,15 +2673,15 @@
   },
   {
     "place_id": "ChIJQfiNFQClfDURYnsCTl3uB7k",
-    "display_name": "뎁센드2 갤러리",
-    "category": "미술관",
+    "display_name": "Depthend 2 Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 광나루로2길 34",
-    "short_address": "성동구 광나루로2길 34",
+    "address": "34 Gwangnaru-ro 2-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "34 Gwangnaru-ro 2-gil, Seongdong-gu",
     "location": {
       "lat": 37.548207399999995,
       "lng": 127.05486719999999
@@ -2700,27 +2700,27 @@
     "google_maps_url": "https://maps.google.com/?cid=13332887306361797474",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca500158df841:0xb907ee5d4e027b62!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 9:00",
-      "화요일: 오전 10:00 ~ 오후 9:00",
-      "수요일: 오전 10:00 ~ 오후 9:00",
-      "목요일: 오전 10:00 ~ 오후 9:00",
-      "금요일: 오전 10:00 ~ 오후 9:00",
-      "토요일: 오전 10:00 ~ 오후 9:00",
-      "일요일: 오전 10:00 ~ 오후 9:00"
+      "Monday: 10:00 AM - 9:00 PM",
+      "Tuesday: 10:00 AM - 9:00 PM",
+      "Wednesday: 10:00 AM - 9:00 PM",
+      "Thursday: 10:00 AM - 9:00 PM",
+      "Friday: 10:00 AM - 9:00 PM",
+      "Saturday: 10:00 AM - 9:00 PM",
+      "Sunday: 10:00 AM - 9:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "허민지",
+        "author": "Minji Heo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "층고 높은 화이트 큐브 갤러리입니다.\n그룹전 단체전 졸업전시 대관하기에 좋아요"
+        "relative_time": "1 month ago",
+        "text": "This is a white cube gallery with a high ceiling.\nGreat for renting group exhibitions, group exhibitions and graduation exhibitions."
       }
     ],
     "photos": [
@@ -2734,16 +2734,16 @@
   },
   {
     "place_id": "ChIJhbLPbpKlfDURhhLQofc5A3Q",
-    "display_name": "청송소공원",
-    "category": "시티 공원",
+    "display_name": "Cheongsongso Park",
+    "category": "city park",
     "types": [
       "city_park",
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수동2가 277-23",
-    "short_address": "성동구 성수동2가 277-23",
+    "address": "277-23, Seongsu-dong 2-ga, Seongdong-gu, Seoul, South Korea",
+    "short_address": "277-23, Seongsu-dong 2-ga, Seongdong-gu",
     "location": {
       "lat": 37.545526,
       "lng": 127.05853540000001
@@ -2763,7 +2763,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5926ecfb285:0x740339f7a1d01286!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": null,
     "accessibility": null,
@@ -2773,8 +2773,8 @@
         "author": "さり",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4주 전",
-        "text": "건강기구가 4 종류 정도 있습니다.\n운동도 할 수 있는 조용하고 기분 좋은 공원입니다.\n고양이가 있습니다."
+        "relative_time": "4 weeks ago",
+        "text": "There are about 4 types of health equipment.\nIt is a quiet and pleasant park where you can also exercise.\nI have a cat."
       }
     ],
     "photos": [
@@ -2784,15 +2784,15 @@
   },
   {
     "place_id": "ChIJ64GrWZSkfDURjKaVsoMff1w",
-    "display_name": "파크",
-    "category": "공원",
+    "display_name": "park",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수동2가 273-51번지 201호",
-    "short_address": "성동구 성수동2가 273-51번지 201호",
+    "address": "#201, 273-51 Seongsu-dong 2-ga, Seongdong-gu, Seoul, Republic of Korea",
+    "short_address": "#201, 273-51 Seongsu-dong 2-ga, Seongdong-gu",
     "location": {
       "lat": 37.5432742,
       "lng": 127.05863839999998
@@ -2820,15 +2820,15 @@
   },
   {
     "place_id": "ChIJ4XDUk-qkfDURjQCdSW4gQL8",
-    "display_name": "근린공원",
-    "category": "공원",
+    "display_name": "neighborhood park",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수동2가 번지 1층 277-105 희은빌딩 8호",
-    "short_address": "성동구 성수동2가 번지 1층 277-105 희은빌딩 8호",
+    "address": "Room 8, Heeun Building, 277-105, 1st floor, Seongsu-dong 2-ga, Seongdong-gu, Seoul, Republic of Korea",
+    "short_address": "Room 8, Heeun Building, 277-105, 1st floor, Seongsu-dong 2-ga, Seongdong-gu",
     "location": {
       "lat": 37.5436908,
       "lng": 127.06333049999999
@@ -2848,20 +2848,20 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4ea93d470e1:0xbf40206e499d008d!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합",
-      "반려견동반"
+      "Suitable for children",
+      "Accompanied by dogs"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "제줏년",
+        "author": "My first year",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -2869,16 +2869,16 @@
   },
   {
     "place_id": "ChIJE8gGYcCkfDURvHhTTAs8piA",
-    "display_name": "포레스트",
-    "category": "국립공원",
+    "display_name": "forest",
+    "category": "national park",
     "types": [
       "national_park",
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성수동2가 280-22번지 1층 성동구 서울특별시 KR",
-    "short_address": "성수동2가 280-22번지 1층 성동구 서울특별시 KR",
+    "address": "1st floor, 280-22, Seongsu-dong 2-ga, Seoul, Republic of Korea, Seongdong-gu, Seoul KR",
+    "short_address": "1st floor, 280-22 Seongsu-dong 2-ga, Seongdong-gu, Seoul KR",
     "location": {
       "lat": 37.5469697,
       "lng": 127.0626501
@@ -2906,16 +2906,16 @@
   },
   {
     "place_id": "ChIJM_95HMGkfDURDgGZcYIOZ2I",
-    "display_name": "(주)하늘선",
-    "category": "국립공원",
+    "display_name": "Haneulsun Co., Ltd.",
+    "category": "national park",
     "types": [
       "national_park",
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수동2가 280-13번지 501호",
-    "short_address": "성동구 성수동2가 280-13번지 501호",
+    "address": "#501, 280-13 Seongsu-dong 2-ga, Seongdong-gu, Seoul, Republic of Korea",
+    "short_address": "#501, 280-13 Seongsu-dong 2-ga, Seongdong-gu",
     "location": {
       "lat": 37.5472087,
       "lng": 127.0644974
@@ -2943,15 +2943,15 @@
   },
   {
     "place_id": "ChIJBZpLeDelfDURP1Ctt8jOw6o",
-    "display_name": "송정동 뚝방길",
-    "category": "공원",
+    "display_name": "Songjeong-dong Ttukbang-gil",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 송정동 81-10",
-    "short_address": "성동구 송정동 81-10",
+    "address": "81-10 Songjeong-dong, Seongdong-gu, Seoul, South Korea",
+    "short_address": "81-10 Songjeong-dong, Seongdong-gu",
     "location": {
       "lat": 37.549449599999996,
       "lng": 127.05831839999999
@@ -2971,47 +2971,47 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca537784b9a05:0xaac3cec8b7ad503f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합",
-      "반려견동반"
+      "Suitable for children",
+      "Accompanied by dogs"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김은정",
+        "author": "Eunjeong Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "도심 속 뚝방길은 축복입니다. 봄에는 벚꽃, 여름엔 청량한 그늘, 가을에는 단풍 그리고 꽃 가득한 뚝방길의 낭만은 절대 놓치면 안되죠..!"
+        "relative_time": "5 years ago",
+        "text": "Ttukbang-gil in the city is a blessing. You can't miss the cherry blossoms in spring, the refreshing shade in summer, the autumn leaves in fall, and the romance of the flower-filled Ttukbang-gil...!"
       },
       {
-        "author": "윤효정",
+        "author": "Yoon Hyo-jeong",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "서울 송정동 중랑천변에 있는 산책로입니다. 군데군데 운동시설과 회장실이 있고,\n4월 벚꽃과 5월 장미가 예쁜 산책하기 좋은 곳입니다"
+        "relative_time": "5 years ago",
+        "text": "This is a walking trail along the Jungnang Stream in Songjeong-dong, Seoul. There are exercise facilities and a president's office here and there,\nIt's a great place for a walk with pretty cherry blossoms in April and roses in May."
       },
       {
         "author": "Shadrack Tab",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10달 전",
-        "text": "산책하기 좋은 길"
+        "relative_time": "10 months ago",
+        "text": "nice road for a walk"
       },
       {
         "author": "ZHONGCHENG ZHENG",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "하루 8천걸음 걷기 좋은데 입니다"
+        "relative_time": "4 years ago",
+        "text": "Walking 8,000 steps a day is good."
       },
       {
-        "author": "코스빌의드론TV",
+        "author": "Cosville's Drone TV",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "나무가 울참하고\n산책하기 너무 좋아요"
+        "relative_time": "4 years ago",
+        "text": "The trees are gloomy\nI love taking a walk"
       }
     ],
     "photos": [
@@ -3029,15 +3029,15 @@
   },
   {
     "place_id": "ChIJhcDzFL-kfDUR6mPx46zt_GE",
-    "display_name": "송정제방 공원",
-    "category": "공원",
+    "display_name": "Songjeong Embankment Park",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 송정동 75-14",
-    "short_address": "성동구 송정동 75-14",
+    "address": "75-14 Songjeong-dong, Seongdong-gu, Seoul, South Korea",
+    "short_address": "75-14 Songjeong-dong, Seongdong-gu",
     "location": {
       "lat": 37.5490384,
       "lng": 127.0600176
@@ -3057,50 +3057,50 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4bf14f3c085:0x61fcedace3f163ea!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합",
-      "반려견동반"
+      "Suitable for children",
+      "Accompanied by dogs"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "루나",
+        "author": "Luna",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "벚꽃이피면 아주예뻐요. 사람들이 적어서 좋았는데 점점 더 많아지네요. 길게 이어진 송정뚝방길을 걸으면서 벚꽃구경을하고싶으신분은 방문추천합니다~~!!  4월 4일 찍은사진인데 이번주말이 제일 피크일것같아요~~!!  밤에도 무척예뻐요"
+        "relative_time": "2 years ago",
+        "text": "It's very pretty when the cherry blossoms bloom. It was nice that there were few people, but the number is getting more and more. If you want to see cherry blossoms while walking along the long Songjeong Ttukbang-gil, I recommend a visit~~!!  This photo was taken on April 4th, but I think this weekend will be the peak time~~!!  It's very pretty even at night"
       },
       {
-        "author": "BRIANNA “소피” Sopi",
+        "author": "BRIANNA “Sophie” Sopi",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "11달 전",
-        "text": "벚꽃이 떨어져서 아쉬웠지만, 나무길이 예뻐요, 가을엔 단풍길, 맨발황톳길도있고, 살꽂이다리지나서가도되고, 운동하고 산책하기에 좋음!"
+        "relative_time": "11 months ago",
+        "text": "It was a shame that the cherry blossoms fell, but the tree path is pretty, and in the fall, there is a maple path, a barefoot yellow persimmon path, and you can go past the Salkoke Bridge. It's great for exercising and taking a walk!"
       },
       {
-        "author": "정승화",
+        "author": "Seunghwa Jeong",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "제방길에는 자전거도로, 산책길, 운동기구, 중랑천변길 등 전망을 감상하며 걷고, 운동하기에 아주 좋습니다."
+        "relative_time": "4 years ago",
+        "text": "The embankment road has a bicycle path, a walking path, exercise equipment, and a road along the Jungnang Stream, making it a great place to walk and exercise while admiring the view."
       },
       {
-        "author": "김용숙",
+        "author": "Yongsuk Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "산책하기 너무 좋은곳. 큰나무로 그늘도 많고 중간중간 벤치도 많아서 운동하다가 쉬기도 좋아요."
+        "relative_time": "5 years ago",
+        "text": "A great place to take a walk. There's a lot of shade from the big trees and plenty of benches along the way, so it's great for taking a break while exercising."
       },
       {
         "author": "marzo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "봄엔 벚꽃과 가을에 단풍 느끼며 걷기~참 좋아요!"
+        "relative_time": "3 years ago",
+        "text": "It’s great to walk while feeling the cherry blossoms in spring and the autumn leaves in fall!"
       }
     ],
     "photos": [
@@ -3118,15 +3118,15 @@
   },
   {
     "place_id": "ChIJHS8SyCylfDUROwaM6sjVWc8",
-    "display_name": "중랑천송정계단 진출입로6",
-    "category": "공원",
+    "display_name": "Jungnangcheon Songjeong Stairs entrance road 6",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 송정동 73-472",
-    "short_address": "성동구 송정동 73-472",
+    "address": "73-472 Songjeong-dong, Seongdong-gu, Seoul, South Korea",
+    "short_address": "73-472 Songjeong-dong, Seongdong-gu",
     "location": {
       "lat": 37.5488222,
       "lng": 127.06195579999999
@@ -3158,15 +3158,15 @@
   },
   {
     "place_id": "ChIJh1ekvcakfDURxYWVTZJ5sFA",
-    "display_name": "무지개수족관",
-    "category": "수족관",
+    "display_name": "rainbow aquarium",
+    "category": "aquarium",
     "types": [
       "aquarium",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송정동 66-50번지 성동구 서울특별시 KR",
-    "short_address": "송정동 66-50번지 성동구 서울특별시 KR",
+    "address": "66-50 Songjeong-dong, Seoul, Republic of Korea, Seongdong-gu, Seoul KR",
+    "short_address": "66-50 Songjeong-dong, Seongdong-gu, Seoul KR",
     "location": {
       "lat": 37.5492687,
       "lng": 127.065996
@@ -3187,7 +3187,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3196,16 +3196,16 @@
   },
   {
     "place_id": "ChIJqR7KFH6lfDUR6uU_reUllqY",
-    "display_name": "타임스토리",
-    "category": "공연예술 극장",
+    "display_name": "time story",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 아차산로 126 더리브세종타워 702호",
-    "short_address": "성동구 아차산로 126 더리브세종타워 702호",
+    "address": "Room 702, The Live Sejong Tower, 126 Achasan-ro, Seongdong-gu, Seoul, Korea",
+    "short_address": "Room 702, The Live Sejong Tower, 126 Achasan-ro, Seongdong-gu",
     "location": {
       "lat": 37.54363730000001,
       "lng": 127.05784629999998
@@ -3225,10 +3225,10 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca57e14ca1ea9:0xa69625e5ad3fe5ea!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3237,15 +3237,15 @@
   },
   {
     "place_id": "ChIJ9cYAvJWkfDURA1DP-E7kn_0",
-    "display_name": "청춘극장",
-    "category": "영화관",
+    "display_name": "Youth Theater",
+    "category": "movie theater",
     "types": [
       "movie_theater",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성수동2가 277-17번지 105호 성수아카데미타워 성동구 서울특별시 KR",
-    "short_address": "성수동2가 277-17번지 105호 성수아카데미타워 성동구 서울특별시 KR",
+    "address": "Seongsu Academy Tower, #105, 277-17, Seongsu-dong 2-ga, Seoul, Republic of Korea, Seongdong-gu, Seoul KR",
+    "short_address": "Room 105, 277-17, Seongsu-dong 2-ga, Seongsu Academy Tower, Seongdong-gu, Seoul KR",
     "location": {
       "lat": 37.5451437,
       "lng": 127.05782839999999
@@ -3265,11 +3265,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca495bc00c6f5:0xfd9fe44ef8cf5003!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3278,16 +3278,16 @@
   },
   {
     "place_id": "ChIJi812TfulfDURphcE_sC8blM",
-    "display_name": "에스스튜디오성수",
-    "category": "라이브 음악 공연장",
+    "display_name": "S Studio Seongsu",
+    "category": "live music venue",
     "types": [
       "live_music_venue",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수이로 117",
-    "short_address": "성동구 성수이로 117",
+    "address": "117 Seongsui-ro, Seongdong-gu, Seoul, South Korea",
+    "short_address": "117 Seongsui-ro, Seongdong-gu",
     "location": {
       "lat": 37.545554599999996,
       "lng": 127.05717119999998
@@ -3307,7 +3307,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5fb4d76cd8b:0x536ebcc0fe0417a6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3319,15 +3319,15 @@
   },
   {
     "place_id": "ChIJ5ZMaUhylfDUR5VpAZJXoZ_0",
-    "display_name": "모노플렉스",
-    "category": "영화관",
+    "display_name": "monoplex",
+    "category": "movie theater",
     "types": [
       "movie_theater",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 연무장5가길 25",
-    "short_address": "성동구 연무장5가길 25",
+    "address": "25 Yeonmujang 5ga-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "25 Yeonmujang 5ga-gil, Seongdong-gu",
     "location": {
       "lat": 37.5433863,
       "lng": 127.0554176
@@ -3347,11 +3347,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca51c521a93e5:0xfd67e89564405ae5!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3361,16 +3361,16 @@
   },
   {
     "place_id": "ChIJKTK11OmlfDUR8z0Kf2kypEk",
-    "display_name": "어쿠스틱 블루",
-    "category": "라이브 음악 공연장",
+    "display_name": "acoustic blue",
+    "category": "live music venue",
     "types": [
       "live_music_venue",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 광나루로 279 지하 1층",
-    "short_address": "성동구 광나루로 279 지하 1층",
+    "address": "Basement 1, 279 Gwangnaru-ro, Seongdong-gu, Seoul, South Korea",
+    "short_address": "Basement 1, 279 Gwangnaru-ro, Seongdong-gu",
     "location": {
       "lat": 37.548429899999995,
       "lng": 127.06080999999998
@@ -3389,20 +3389,20 @@
     "google_maps_url": "https://maps.google.com/?cid=5306421689633619443",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5e9d4b53229:0x49a432697f0a3df3!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 10:00",
-      "화요일: 오전 10:00 ~ 오후 10:00",
-      "수요일: 오전 10:00 ~ 오후 10:00",
-      "목요일: 오전 10:00 ~ 오후 10:00",
-      "금요일: 오전 10:00 ~ 오후 10:00",
-      "토요일: 오전 10:00 ~ 오후 10:00",
-      "일요일: 오전 10:00 ~ 오후 10:00"
+      "Monday: 10:00 AM - 10:00 PM",
+      "Tuesday: 10:00 AM - 10:00 PM",
+      "Wednesday: 10:00 AM - 10:00 PM",
+      "Thursday: 10:00 AM - 10:00 PM",
+      "Friday: 10:00 AM - 10:00 PM",
+      "Saturday: 10:00 AM - 10:00 PM",
+      "Sunday: 10:00 AM - 10:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3421,15 +3421,15 @@
   },
   {
     "place_id": "ChIJB-S1MpSkfDURnwSCOYocB_E",
-    "display_name": "뮤지컬노래방",
-    "category": "노래방",
+    "display_name": "musical karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성수동2가 300-1번지 지층 101 102 103호 성동구 서울특별시 KR",
-    "short_address": "성수동2가 300-1번지 지층 101 102 103호 성동구 서울특별시 KR",
+    "address": "#101 102 103, ground floor, 300-1 Seongsu-dong 2-ga, Seoul, Republic of Korea, Seongdong-gu, Seoul KR",
+    "short_address": "300-1 Seongsu-dong 2-ga, ground floor, #101 102 103, Seongdong-gu, Seoul KR",
     "location": {
       "lat": 37.5446009,
       "lng": 127.05688469999998
@@ -3449,11 +3449,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca49432b5e407:0xf1071c8a3982049f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3462,15 +3462,15 @@
   },
   {
     "place_id": "ChIJvxYv15WkfDUR_P3xboUS4cg",
-    "display_name": "얼짱노래방",
-    "category": "노래방",
+    "display_name": "Ulzzang Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성수동2가 289-13번지 성동구 서울특별시 KR",
-    "short_address": "성수동2가 289-13번지 성동구 서울특별시 KR",
+    "address": "289-13 Seongsu-dong 2-ga, Seoul, Republic of Korea, Seongdong-gu, Seoul KR",
+    "short_address": "289-13 Seongsu-dong 2-ga, Seongdong-gu, Seoul KR",
     "location": {
       "lat": 37.545238,
       "lng": 127.0564342
@@ -3490,11 +3490,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca495d72f16bf:0xc8e112856ef1fdfc!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3503,15 +3503,15 @@
   },
   {
     "place_id": "ChIJyQksMQClfDUReMacJrpZwqI",
-    "display_name": "단편선 성수",
-    "category": "오락실",
+    "display_name": "Danpyun Line Seongsu",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 아차산로 122",
-    "short_address": "성동구 아차산로 122",
+    "address": "122 Achasan-ro, Seongdong-gu, Seoul, South Korea",
+    "short_address": "122 Achasan-ro, Seongdong-gu",
     "location": {
       "lat": 37.5438518,
       "lng": 127.0574717
@@ -3530,20 +3530,20 @@
     "google_maps_url": "https://maps.google.com/?cid=11728035035672790648",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca500312c09c9:0xa2c259ba269cc678!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오전 12:00",
-      "화요일: 오전 10:00 ~ 오전 12:00",
-      "수요일: 오전 10:00 ~ 오전 12:00",
-      "목요일: 오전 10:00 ~ 오전 12:00",
-      "금요일: 오전 10:00 ~ 오전 12:00",
-      "토요일: 오전 10:00 ~ 오전 12:00",
-      "일요일: 오전 10:00 ~ 오전 12:00"
+      "Monday: 10:00 AM - 12:00 AM",
+      "Tuesday: 10:00 AM - 12:00 AM",
+      "Wednesday: 10:00 AM - 12:00 AM",
+      "Thursday: 10:00 AM - 12:00 AM",
+      "Friday: 10:00 AM - 12:00 AM",
+      "Saturday: 10:00 AM - 12:00 AM",
+      "Sunday: 10:00 AM - 12:00 AM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3552,15 +3552,15 @@
   },
   {
     "place_id": "ChIJ-fesJZSkfDURA1fR-gar7LY",
-    "display_name": "스타노래방",
-    "category": "노래방",
+    "display_name": "star karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성수동2가 315-1번지 B동 1호 성동구 서울특별시 KR",
-    "short_address": "성수동2가 315-1번지 B동 1호 성동구 서울특별시 KR",
+    "address": "#1, Building B, 315-1 Seongsu-dong 2-ga, Seoul, Republic of Korea, Seongdong-gu, Seoul KR",
+    "short_address": "#1, Building B, 315-1 Seongsu-dong 2-ga, Seongdong-gu, Seoul KR",
     "location": {
       "lat": 37.5440067,
       "lng": 127.0566082
@@ -3580,11 +3580,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca49425acf7f9:0xb6ecab06fad15703!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3594,15 +3594,15 @@
   },
   {
     "place_id": "ChIJv0RgkJakfDUR3q05MwFbwQo",
-    "display_name": "친구야노래방",
-    "category": "노래방",
+    "display_name": "My friend’s karaoke room",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성수동2가 315-71번지 지하동 1층 제일빌딩 성동구 서울특별시 KR",
-    "short_address": "성수동2가 315-71번지 지하동 1층 제일빌딩 성동구 서울특별시 KR",
+    "address": "Jeil Building, 1st Floor, Basement Building, 315-71 Seongsu-dong 2-ga, Seoul, Republic of Korea, Seongdong-gu, Seoul KR",
+    "short_address": "Jeil Building, 1st Floor, Basement Building, 315-71 Seongsu-dong 2-ga, Seongdong-gu, Seoul KR",
     "location": {
       "lat": 37.5444502,
       "lng": 127.0553861
@@ -3622,11 +3622,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca496906044bf:0xac15b013339adde!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3635,16 +3635,16 @@
   },
   {
     "place_id": "ChIJixlNopakfDURAAwa2IAfAkM",
-    "display_name": "(주)위드컴파니",
-    "category": "오락실",
+    "display_name": "With Company Co., Ltd.",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "amusement_park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수동2가 번지 13층 315-61 1302호",
-    "short_address": "성동구 성수동2가 번지 13층 315-61 1302호",
+    "address": "#1302, 315-61, 13th floor, Seongsu-dong 2-ga, Seongdong-gu, Seoul, Republic of Korea",
+    "short_address": "#1302, 315-61, 13th floor, Seongsu-dong 2-ga, Seongdong-gu",
     "location": {
       "lat": 37.543765,
       "lng": 127.055681
@@ -3664,7 +3664,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca496a24d198b:0x43021f80d81a0c00!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3674,15 +3674,15 @@
   },
   {
     "place_id": "ChIJfxCWFwClfDURkQsLHGxZ4Y8",
-    "display_name": "퍼니랜드 성수점 Funnyland Seongsu",
-    "category": "오락실",
+    "display_name": "Funnyland Seongsu",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수이로 89",
-    "short_address": "성동구 성수이로 89",
+    "address": "89 Seongsui-ro, Seongdong-gu, Seoul, South Korea",
+    "short_address": "89 Seongsui-ro, Seongdong-gu",
     "location": {
       "lat": 37.542977,
       "lng": 127.0564117
@@ -3701,18 +3701,18 @@
     "google_maps_url": "https://maps.google.com/?cid=10367666138045418385",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5001796107f:0x8fe1596c1c0b0b91!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오전 12:00",
-      "화요일: 오전 9:00 ~ 오전 12:00",
-      "수요일: 오전 9:00 ~ 오전 12:00",
-      "목요일: 오전 9:00 ~ 오전 12:00",
-      "금요일: 오전 9:00 ~ 오전 12:00",
-      "토요일: 오전 9:00 ~ 오전 12:00",
-      "일요일: 오전 9:00 ~ 오전 12:00"
+      "Monday: 9:00 AM - 12:00 AM",
+      "Tuesday: 9:00 AM - 12:00 AM",
+      "Wednesday: 9:00 AM - 12:00 AM",
+      "Thursday: 9:00 AM - 12:00 AM",
+      "Friday: 9:00 AM - 12:00 AM",
+      "Saturday: 9:00 AM - 12:00 AM",
+      "Sunday: 9:00 AM - 12:00 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3722,22 +3722,22 @@
         "author": "ku coach",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7달 전",
-        "text": "송수에 있는 'FANNY LAND'는 활기차고 즐거운 분위기의 게임센터입니다. 점내는 시원하고 쾌적하고, 관광객으로부터 현지인까지 폭넓은 층으로 붐비고 있었습니다. 특히 UFO 포수의 대수가 많아, 귀여운 캐릭터의 봉제인형이 즐비하게 늘어서 있어, 무심코 도전하고 싶어집니다. 다만 지불은 한국의 카드밖에 사용할 수 없는 것 같아, 관광객은 현금이 필수인 것이 조금 불편한 점. 그래도 부담없이 들르고 와이와이 즐길 수 있는 송수다운 엔터테인먼트 명소입니다."
+        "relative_time": "7 months ago",
+        "text": "'FANNY LAND' in Songsu is a game center with a lively and fun atmosphere. The inside of the store was cool and comfortable, and was crowded with a wide range of people, from tourists to locals. In particular, the number of UFO catchers is large, and the cute character plush toys are lined up in a row, making you want to give it a try. However, it seems that only Korean cards can be used for payment, so it is a bit inconvenient that cash is required for tourists. Still, it is a Songsu-style entertainment spot where you can stop by and enjoy Wawaii without any worries."
       },
       {
         "author": "Thảo Vy Nguyễn",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
+        "relative_time": "5 months ago",
         "text": "Mình ghé qua tiệm gắp thú và thấy không khí ở đó thật sự rất dễ chịu.\nCó nhiều loại thú bông khác nhau, kể cả những nhân vật nổi tiếng gần đây nên nhìn ngắm thôi cũng thấy vui rồi.\nMáy gắp hơi khó một chút, nhưng cảm giác khi gắp được thì rất thú vị!"
       },
       {
         "author": "Jessica",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "2달 전",
-        "text": "인형 뽑기 기계의 집게발이 너무 헐렁해요."
+        "relative_time": "2 months ago",
+        "text": "The claws of the claw machine are too loose."
       }
     ],
     "photos": [
@@ -3751,15 +3751,15 @@
   },
   {
     "place_id": "ChIJ2T0NX5akfDURF7ZswzcQlr0",
-    "display_name": "씽노래방",
-    "category": "노래방",
+    "display_name": "Sing Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성수동2가 300-63번지 B동 1층 성동구 서울특별시 KR",
-    "short_address": "성수동2가 300-63번지 B동 1층 성동구 서울특별시 KR",
+    "address": "1st floor, Building B, 300-63 Seongsu-dong 2-ga, Seoul, Republic of Korea, Seongdong-gu, Seoul KR",
+    "short_address": "1st floor, Building B, 300-63 Seongsu-dong 2-ga, Seongdong-gu, Seoul KR",
     "location": {
       "lat": 37.5455314,
       "lng": 127.05458929999998
@@ -3779,11 +3779,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4965f0d3dd9:0xbd961037c36cb617!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3792,14 +3792,14 @@
   },
   {
     "place_id": "ChIJ94L9GpakfDURq7rwAbsnpWk",
-    "display_name": "아미가노래방",
-    "category": "노래방",
+    "display_name": "Amiga Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5470638,
@@ -3820,11 +3820,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4961afd82f7:0x69a527bb01f0baab!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3833,15 +3833,15 @@
   },
   {
     "place_id": "ChIJ7Q29WJakfDURV3INQeQqXco",
-    "display_name": "대박노래방",
-    "category": "노래방",
+    "display_name": "Daebak Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성수동2가 300-64번지 지층 성동구 서울특별시 KR",
-    "short_address": "성수동2가 300-64번지 지층 성동구 서울특별시 KR",
+    "address": "Ground floor, 300-64 Seongsu-dong 2-ga, Seoul, Republic of Korea, Seongdong-gu, Seoul KR",
+    "short_address": "300-64 Seongsu-dong 2-ga, ground floor, Seongdong-gu, Seoul KR",
     "location": {
       "lat": 37.545574699999996,
       "lng": 127.05437939999999
@@ -3861,20 +3861,20 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca49658bd0ded:0xca5d2ae4410d7257!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "남고홍석",
+        "author": "Namgo Hongseok",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -3882,14 +3882,14 @@
   },
   {
     "place_id": "ChIJf3CgFZakfDURd_oK-1mEcJg",
-    "display_name": "SBS노래방",
-    "category": "노래방",
+    "display_name": "SBS Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5466465,
@@ -3911,8 +3911,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3921,35 +3921,35 @@
         "author": "WOONGCHOL SEO",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "8년 전",
-        "text": "노래만 한다면 괜찮을듯"
+        "relative_time": "8 years ago",
+        "text": "I think it'll be okay as long as I sing"
       },
       {
         "author": "Ryu Ryu",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "8년 전",
-        "text": "노래"
+        "relative_time": "8 years ago",
+        "text": "sing"
       },
       {
         "author": "#606 Sudarmaji Sudarmaji",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1달 전",
-        "text": "당둣은 없어...\n당둣이 최고야"
+        "relative_time": "1 month ago",
+        "text": "There is no dangdut...\nDangdut is the best"
       },
       {
         "author": "muhammad anwar",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1달 전",
+        "relative_time": "1 month ago",
         "text": null
       },
       {
-        "author": "김희재",
+        "author": "Heejae Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -3957,15 +3957,15 @@
   },
   {
     "place_id": "ChIJUw15FpakfDURAAsSjU_lcu4",
-    "display_name": "이십오시노래방",
-    "category": "노래방",
+    "display_name": "25 o'clock karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성수동2가 289-236번지 성동구 서울특별시 KR",
-    "short_address": "성수동2가 289-236번지 성동구 서울특별시 KR",
+    "address": "289-236 Seongsu-dong 2-ga, Seoul, Republic of Korea, Seongdong-gu, Seoul KR",
+    "short_address": "289-236 Seongsu-dong 2-ga, Seongdong-gu, Seoul KR",
     "location": {
       "lat": 37.5467856,
       "lng": 127.05493109999999
@@ -3985,11 +3985,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca49616790d53:0xee72e54f8d120b00!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3998,15 +3998,15 @@
   },
   {
     "place_id": "ChIJJYEh95akfDUR5eo0j9JN_pg",
-    "display_name": "이브노래방",
-    "category": "노래방",
+    "display_name": "Eve Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성수동2가 300-79번지 하층 성동구 서울특별시 KR",
-    "short_address": "성수동2가 300-79번지 하층 성동구 서울특별시 KR",
+    "address": "Lower floor, 300-79 Seongsu-dong 2-ga, Seoul, South Korea, Seongdong-gu, Seoul KR",
+    "short_address": "Lower floor, 300-79 Seongsu-dong 2-ga, Seongdong-gu, Seoul KR",
     "location": {
       "lat": 37.5453477,
       "lng": 127.0542691
@@ -4026,11 +4026,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca496f7218125:0x98fe4dd28f34eae5!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4039,8 +4039,8 @@
   },
   {
     "place_id": "ChIJ0zpI15WkfDURWS1Rqe8sVEg",
-    "display_name": "빛의자녀교회",
-    "category": "교회",
+    "display_name": "Children of Light Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4048,8 +4048,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수일로8길 53",
-    "short_address": "성동구 성수일로8길 53",
+    "address": "53 Seongsuil-ro 8-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "53 Seongsuil-ro 8-gil, Seongdong-gu",
     "location": {
       "lat": 37.5452888,
       "lng": 127.0564347
@@ -4069,13 +4069,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca495d7483ad3:0x48542cefa9512d59!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -4083,36 +4083,36 @@
         "author": "Theerawat Sutham",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
-        "text": "교회에 올때마다 하나님의 사랑과 은혜 느꼈습니다. 예배가 살아있는 교회.예배당안에 들어오자마자 눈물 났습니다. 기도가 넘치고 사랑 넘치는 교회 목사님.성도님 사랑합니다^^"
+        "relative_time": "8 years ago",
+        "text": "Every time I came to church, I felt God’s love and grace. A church where worship is alive. I cried as soon as I entered the chapel. Pastor of a church full of prayers and love. I love you, saints^^"
       },
       {
-        "author": "천사노호진",
+        "author": "Angel Noh Ho-jin",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "김형민 목사님너무감사합니다"
+        "relative_time": "4 months ago",
+        "text": "Pastor Hyungmin Kim, thank you so much."
       },
       {
         "author": "James Jung",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "젊은이들이 영성 안에서 뚜렷한 목표로 인생 걸어가도록 잘 도와주는 교회 되길."
+        "relative_time": "6 years ago",
+        "text": "May we become a church that helps young people walk through life with clear goals in spirituality."
       },
       {
-        "author": "박래녀",
+        "author": "Park Rae-nyeo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "가난과 질병과 무지, 상실과 버림받음의 아픔으로 피투성이가 된 자,벼랑끝에선 자들을 빛가운데로 걸어가게 하는 공동체가 있는 곳"
+        "relative_time": "5 years ago",
+        "text": "A place where there is a community that helps those who are covered in blood with the pain of poverty, disease, ignorance, loss, and abandonment, and those who are on the edge of a cliff, walk toward the light."
       },
       {
-        "author": "임사랑",
+        "author": "Lim Sarang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "영상설교에서 많은 은혜받습니다 김형민 목사님 꼭 만나뵙고싶습니다"
+        "relative_time": "5 years ago",
+        "text": "I receive a lot of grace from the video sermon. I really want to meet Pastor Hyungmin Kim."
       }
     ],
     "photos": [
@@ -4127,8 +4127,8 @@
   },
   {
     "place_id": "ChIJnXX_N5SkfDURWpxe18aDcy4",
-    "display_name": "서울일본인교회",
-    "category": "교회",
+    "display_name": "Seoul Japanese Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4136,8 +4136,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 아차산로 122",
-    "short_address": "성동구 아차산로 122",
+    "address": "122 Achasan-ro, Seongdong-gu, Seoul, South Korea",
+    "short_address": "122 Achasan-ro, Seongdong-gu",
     "location": {
       "lat": 37.5438334,
       "lng": 127.0574647
@@ -4157,11 +4157,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca49437ff759d:0x2e7383c6d75e9c5a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -4169,15 +4169,15 @@
         "author": "DO KIM",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "저의 와이프가 일본인이라서 지난주말 “서울 일본인 교회”에 다녀왔습니다.\n라디오 주파수를 맞춰서 실시간 동시통역으로\n한국인인 저역시 “요시대 고조” 목사님의 설교도 잘 들을 수 있었습니다.\n처음 예배를 드렸지만, 은혜로웠습니다.\n저희 가족을 위해 기도도 해주시는 시간도 가져주셨고 너무 따뜻한 배려속에서 귀한 하나님의 은혜를 경험한 하루 지난 주일이였습니다."
+        "relative_time": "5 years ago",
+        "text": "Since my wife is Japanese, I went to the “Seoul Japanese Church” last weekend.\nReal-time simultaneous interpretation by tuning the radio frequency\nAs a Korean, I was also able to listen well to Pastor Gojo of the Joseon Dynasty.\nIt was my first time attending worship, but it was gracious.\nLast Sunday was a day when we experienced the precious grace of God through such warm and considerate care that God took time to pray for our family."
       },
       {
         "author": "Redsox Boston",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "너무 좋습니다. 훌륭한 목사님."
+        "relative_time": "6 years ago",
+        "text": "It's so good. Great pastor."
       }
     ],
     "photos": [
@@ -4186,8 +4186,8 @@
   },
   {
     "place_id": "ChIJacfKoZakfDUR_fUzSKWfwyc",
-    "display_name": "뚝섬침례교회",
-    "category": "교회",
+    "display_name": "Ttukseom Baptist Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4195,8 +4195,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수일로6길 56",
-    "short_address": "성동구 성수일로6길 56",
+    "address": "56 Seongsuil-ro 6-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "56, Seongsuil-ro 6-gil, Seongdong-gu",
     "location": {
       "lat": 37.5437656,
       "lng": 127.05597069999999
@@ -4216,47 +4216,47 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca496a1cac769:0x27c39fa54833f5fd!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "이영미",
+        "author": "Youngmi Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       },
       {
-        "author": "유일상",
+        "author": "Yoo Il-sang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "코끼리맘",
+        "author": "elephant mom",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "최상철",
+        "author": "Choi Sang-cheol",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "이정욱",
+        "author": "Jeongwook Lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -4269,7 +4269,7 @@
   {
     "place_id": "ChIJATLsGqWlfDURPD7DL-BwiT8",
     "display_name": "Чанбин",
-    "category": "불교사찰",
+    "category": "buddhist temple",
     "types": [
       "buddhist_temple",
       "place_of_worship",
@@ -4277,8 +4277,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수동1가",
-    "short_address": "성동구 성수동1가",
+    "address": "Seongsu-dong 1-ga, Seongdong-gu, Seoul, South Korea",
+    "short_address": "Seongsu-dong 1-ga, Seongdong-gu",
     "location": {
       "lat": 37.545038999999996,
       "lng": 127.05501199999998
@@ -4298,7 +4298,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5a51aec3201:0x3f8970e02fc33e3c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -4308,15 +4308,15 @@
         "author": "Тетяна Гордєєва",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "아주 편안한 곳이지만, 창빈이가 당신을 헬스장으로 끌고 갈지도 모르니 조심하세요."
+        "relative_time": "1 year ago",
+        "text": "It's a very comfortable place, but be careful because Changbin might drag you to the gym."
       },
       {
         "author": "Полина Суднишникова",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "모두에게 추천합니다, 정말 좋은 곳이에요!!"
+        "relative_time": "1 year ago",
+        "text": "I recommend it to everyone, it's a great place!!"
       }
     ],
     "photos": [
@@ -4326,8 +4326,8 @@
   },
   {
     "place_id": "ChIJD9VrRZakfDURuAyPK-RAAH0",
-    "display_name": "임마누엘선교회",
-    "category": "교회",
+    "display_name": "Immanuel Mission Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4335,8 +4335,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수동2가 289-22",
-    "short_address": "성동구 성수동2가 289-22",
+    "address": "289-22, Seongsu-dong 2-ga, Seongdong-gu, Seoul, South Korea",
+    "short_address": "289-22, Seongsu-dong 2-ga, Seongdong-gu",
     "location": {
       "lat": 37.5462609,
       "lng": 127.0541849
@@ -4356,7 +4356,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca496456bd50f:0x7d0040e42b8f0cb8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -4366,8 +4366,8 @@
   },
   {
     "place_id": "ChIJy3yLT5akfDUR6qlQJJ_4wPg",
-    "display_name": "성락성결교회",
-    "category": "교회",
+    "display_name": "Seongrak Holiness Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4375,8 +4375,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수일로10길 33",
-    "short_address": "성동구 성수일로10길 33",
+    "address": "33 Seongsuil-ro 10-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "33 Seongsuil-ro 10-gil, Seongdong-gu",
     "location": {
       "lat": 37.5462886,
       "lng": 127.05410160000001
@@ -4396,50 +4396,50 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4964f8b7ccb:0xf8c0f89f2450a9ea!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "오경원",
+        "author": "Oh Gyeong-won",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "편리한 접근성, 넓은 공간, 3층에서의 웨딩 만족도가 높을듯!!"
+        "relative_time": "3 years ago",
+        "text": "Convenient accessibility, spacious space, and wedding satisfaction on the 3rd floor will be high!!"
       },
       {
         "author": "Andrew Kweon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "성수동에 이렇게 큰 교회가 있는 줄 몰랐습니다. 내부 시설은 정말 잘 해 놓았네요. 1층엔 카페가 있구요."
+        "relative_time": "6 years ago",
+        "text": "I didn't know there was such a big church in Seongsu-dong. The interior facilities are really well done. There is a cafe on the first floor."
       },
       {
         "author": "Sung Hwan Jun",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "제가 이 교회로 오면 피아워십의 이동선 목사님한테 만나고 싶어요"
+        "relative_time": "2 months ago",
+        "text": "When I come to this church, I want to meet Pastor Lee Dong-seon of Pia Worship."
       },
       {
         "author": "Changho lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "성락성결교회\n지형은 목사님은 말씀 묵상의 깊이도 있으시면서 다양한 분야의 사역도 감당하고 계시다"
+        "relative_time": "1 year ago",
+        "text": "Seongrak Holiness Church\nPastor Hyeong-eun Ji has a depth of meditation on the Word and is also carrying out ministries in various fields."
       },
       {
         "author": "Shadrack Tab",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "성수동에 규모가 큰 교회"
+        "relative_time": "1 year ago",
+        "text": "A large church in Seongsu-dong"
       }
     ],
     "photos": [
@@ -4457,8 +4457,8 @@
   },
   {
     "place_id": "ChIJ46iGNMGkfDURyFdaJ8ugo_Q",
-    "display_name": "한국교회",
-    "category": "교회",
+    "display_name": "Korean Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4466,8 +4466,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 송정동 66-29",
-    "short_address": "성동구 송정동 66-29",
+    "address": "66-29 Songjeong-dong, Seongdong-gu, Seoul, South Korea",
+    "short_address": "66-29 Songjeong-dong, Seongdong-gu",
     "location": {
       "lat": 37.5483719,
       "lng": 127.06521149999999
@@ -4487,11 +4487,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c13486a8e3:0xf4a3a0cb275a57c8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": null,
@@ -4499,8 +4499,8 @@
   },
   {
     "place_id": "ChIJMayONMGkfDURiGSPAhZuoyo",
-    "display_name": "성빛순복음교회",
-    "category": "교회",
+    "display_name": "Seongbit Full Gospel Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4508,8 +4508,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 송정동 66-29",
-    "short_address": "성동구 송정동 66-29",
+    "address": "66-29 Songjeong-dong, Seongdong-gu, Seoul, South Korea",
+    "short_address": "66-29 Songjeong-dong, Seongdong-gu",
     "location": {
       "lat": 37.5483159,
       "lng": 127.0652644
@@ -4529,7 +4529,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c1348eac31:0x2aa36e16028f6488!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -4539,8 +4539,8 @@
   },
   {
     "place_id": "ChIJ_cE-uZWkfDURfaK683blyuk",
-    "display_name": "허니비토",
-    "category": "쇼핑몰",
+    "display_name": "Honey Beeto",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "manufacturer",
@@ -4548,8 +4548,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수이로 118 성수아카데미타워 1302호",
-    "short_address": "성동구 성수이로 118 성수아카데미타워 1302호",
+    "address": "#1302, Seongsu Academy Tower, 118 Seongsui-ro, Seongdong-gu, Seoul, Republic of Korea",
+    "short_address": "#1302, Seongsu Academy Tower, 118 Seongsui-ro, Seongdong-gu",
     "location": {
       "lat": 37.545161,
       "lng": 127.05775290000001
@@ -4568,26 +4568,26 @@
     "google_maps_url": "https://maps.google.com/?cid=16846529655190758013",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca495b93ec1fd:0xe9cae576f3baa27d!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 8:00",
-      "화요일: 오전 10:00 ~ 오후 8:00",
-      "수요일: 오전 10:00 ~ 오후 8:00",
-      "목요일: 오전 10:00 ~ 오후 8:00",
-      "금요일: 오전 10:00 ~ 오후 8:00",
-      "토요일: 오전 10:00 ~ 오후 8:00",
-      "일요일: 오전 10:00 ~ 오후 8:00"
+      "Monday: 10:00 AM - 8:00 PM",
+      "Tuesday: 10:00 AM - 8:00 PM",
+      "Wednesday: 10:00 AM - 8:00 PM",
+      "Thursday: 10:00 AM - 8:00 PM",
+      "Friday: 10:00 AM - 8:00 PM",
+      "Saturday: 10:00 AM - 8:00 PM",
+      "Sunday: 10:00 AM - 8:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -4595,21 +4595,21 @@
         "author": "TY",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "8년 전",
-        "text": "1층에 상가와 위로 오피스텔 등이 있다\n성수역 2번 출구 바로 앞에 위치"
+        "relative_time": "8 years ago",
+        "text": "There is a store on the first floor and an officetel above.\nLocated right in front of Seongsu Station Exit 2"
       },
       {
-        "author": "불가시경계선 (Mienai Horizon)",
+        "author": "Mienai Horizon",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "11년 전",
-        "text": "입주 오피스텔로서는 최악. 건물 소유를 둘러싼 소유주들의 법정 절차 진행중이라 입주자 권리 따위는 깡그리 무시당할 수 있음."
+        "relative_time": "11 years ago",
+        "text": "The worst for an officetel. As the owners' legal proceedings surrounding ownership of the building are ongoing, occupants' rights may be completely ignored."
       },
       {
-        "author": "임지용",
+        "author": "Lim Ji-yong",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       }
     ],
@@ -4628,16 +4628,16 @@
   },
   {
     "place_id": "ChIJsy6u20mlfDURQOlVT0xmv6U",
-    "display_name": "아모레 성수",
-    "category": "쇼핑몰",
+    "display_name": "Amore Seongsu",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "manufacturer",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 아차산로11길 7",
-    "short_address": "성동구 아차산로11길 7",
+    "address": "7 Achasan-ro 11-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "7, Achasan-ro 11-gil, Seongdong-gu",
     "location": {
       "lat": 37.5444101,
       "lng": 127.0591197
@@ -4656,20 +4656,20 @@
     "google_maps_url": "https://maps.google.com/?cid=11943377214744422720",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca549dbae2eb3:0xa5bf664c4f55e940!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 10:30 ~ 오후 8:30",
-      "수요일: 오전 10:30 ~ 오후 8:30",
-      "목요일: 오전 10:30 ~ 오후 8:30",
-      "금요일: 오전 10:30 ~ 오후 8:30",
-      "토요일: 오전 10:30 ~ 오후 8:30",
-      "일요일: 오전 10:30 ~ 오후 8:30"
+      "Monday: Closed day",
+      "Tuesday: 10:30 AM - 8:30 PM",
+      "Wednesday: 10:30 AM - 8:30 PM",
+      "Thursday: 10:30 AM - 8:30 PM",
+      "Friday: 10:30 AM - 8:30 PM",
+      "Saturday: 10:30 AM - 8:30 PM",
+      "Sunday: 10:30 AM - 8:30 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4679,36 +4679,36 @@
         "author": "han modern",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "정원도 너무아름답고 성수한켠의 아름다움을 간직하고있는 곳이네요.\n아모레의 다양한 제품을 모두 경험해볼수있는 멋진 뷰티공간입니다"
+        "relative_time": "5 months ago",
+        "text": "The garden is very beautiful and it is a place that preserves the beauty of a corner of Seongsu.\nIt is a wonderful beauty space where you can experience all of Amore’s various products."
       },
       {
         "author": "h s",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "입구가 눈에 잘 띄지 않아서 근처에서 조금 헤메이긴 했지만 그렇다고 찾기 많이 어려운 곳은 아니에요. 아모레에서 만든 모든 제품뿐만 아니라 미리 예약을 하고 온다면 자신의 피부색에 딱 맞는 에센스나 파운데이션을 바로 만들어주기도 해요. 또 메이크업 서비스도 받을 수도 있고요.\n화장에 큰 관심이 없는 저도 재미있게 시간을 보내고 왔어요. 샘플도 줘서 더 좋았고요."
+        "relative_time": "5 months ago",
+        "text": "The entrance wasn't very conspicuous, so I got a little lost nearby, but it wasn't that difficult to find. In addition to all products made by Amore, if you make a reservation in advance, they will also make essence or foundation that perfectly matches your skin color. You can also receive makeup services.\nEven though I'm not particularly interested in makeup, I had a great time. It was even better that they gave me a sample."
       },
       {
-        "author": "림쓰로그Limslog",
+        "author": "Limslog",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1년 전",
-        "text": "입구가 눈에 잘 띄지는 않음. 역에서 가깝고 안에 들어가서 구경 할려면 꼭 회원가입이 필요함 번거로움. 안에 작게 체험 할수 있는 곳도 있고 자신의 피부를 카메라로 찍어 타입에 맞는 화장품을 제작 할수 있는곳도 있음."
+        "relative_time": "1 year ago",
+        "text": "The entrance is not conspicuous. It's close to the station, and you need to sign up as a member to go inside and look around. It's a hassle. There are places where you can have a small experience inside, and there are also places where you can take pictures of your own skin with a camera and create cosmetics that suit your type."
       },
       {
-        "author": "최용의- Yong Eui Choi",
+        "author": "Yong Eui Choi",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "아모레화장품에서 요즘 핫플레이스로 부상하고 있는 성수동에 플래그십 스토어를 열었다는 기사를 읽고 방문했다. 큰길가에서 작은 골목으로 한블럭쯤 들어가서, 폐자재 적치장과 작은 공장들 사이에 위치하였으며 주차장은 없다. 얕은 도랑과 바위, 나무를 놓아두어 자연을 간직한 듯한 중정을 중심으로 기존 건물을 활용한 전시장이  'ㄷ'자 모양으로 낮게 감싸고 있다. 최근의 유행을 반영한 듯, 깊게 손대지 않고 최소한의 공사만으로 기존 건물을 리노베이션해서 옛 정취를 살리려 노력했다.\n\n입구에 들어서면 회원가입을 도와주는 안내원들이 반갑게 맞아준다. 미리 예약을 하고 방문하면 화장법 교습 클래스에 참여할 수도 있다고 한다. 그래서 안쪽에 세안을 위한 공간이 따로 준비되어 있다. 긴 복도 형식의 전시 내용물을 차례로 따라가면서 상품을 살펴보고 안내원의 설명을 들을 수 있다. 이곳에서는 자세한 정보를 얻고 체험해 볼 뿐, 구매는 불가능하다. 모든 공간에 중정을 향한 커다란 전면 창을 만들어서, 자연의 경관이 내부에서도 읽혀지도록 배려했다.\n\n2층으로 올라가면 오설록 티를 즐길 수 있는 공간이 마련되어 있다. 1층 입구에서 발급받은 할인권을 이용해서 20% 저렴하게 차를 마실 수 있다. 깨끗한 화장실이 이곳에 있으며, 루프탑으로 올라가는 계단이 이어진다. 경치를 즐길 곳은 아니지만, 의자와 테이블이 준비되어 있어서 좋은 계절이라면 루프탑으로 올라가볼 만 하다.\n\n체험마케팅과 공간마케팅 측면에서 상당히 성공한 최근 사례다. 온라인과 오프라인을 통해 치열하게 고객을 모으려는 기업들의 노력이 참 대단하다. 입구부터 홈페이지 가입여부를 확인하여 자연스럽게 온라인과의 소통을 권유한다. 홈페이지는 스마트폰 화면에 적합하도록 설계되어 모바일 SNS에서도 어색하지 않다."
+        "relative_time": "5 years ago",
+        "text": "I visited Amore Cosmetics after reading an article that it had opened a flagship store in Seongsu-dong, which is emerging as a hot place these days. It is located about a block from the main street into a small alley, between a waste material storage yard and small factories, and there is no parking lot. An exhibition hall using an existing building is wrapped low in a 'ㄷ' shape, centered around a courtyard that seems to preserve nature with a shallow ditch, rocks, and trees. As if reflecting the latest trends, an effort was made to preserve the old atmosphere by renovating the existing building with minimal construction without much modification.\n\nWhen you enter the entrance, you are greeted by guides who help you sign up. It is said that if you make a reservation in advance and visit, you can participate in a makeup instruction class. So, there is a separate space inside for washing your face. You can take a look at the products and listen to the guide's explanations as you walk through the exhibition contents in a long hallway. You can only get detailed information and experience it here, but you cannot purchase it. By creating large front windows facing the courtyard in all spaces, we took care to ensure that the natural scenery can be seen from inside as well.\n\nIf you go up to the second floor, there is a space where you can enjoy Osulloc tea. You can drink tea at a 20% discount using the discount coupon issued at the first floor entrance. There is a clean restroom here, and stairs lead up to the rooftop. It's not a place to enjoy the view, but there are chairs and tables available, so it's worth going up to the rooftop if it's a good season.\n\nIt is a recent example of considerable success in terms of experiential marketing and space marketing. The efforts of companies to attract customers both online and offline are truly remarkable. From the entrance, check whether or not you have signed up for the website and naturally encourage online communication. The homepage is designed to fit the smartphone screen, so it does not look awkward on mobile SNS."
       },
       {
         "author": "Semi Park (Mumin)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "옛 자동차 정비소를 개조해서 만들었다고 하던데 일단 화장품을 좋아하거나 화장에 관심이 많다면 하루 종일 놀다올 수 있는 엄청난 곳입니다. 클렌징부터 시작해서 기초, 색조, 전문 메이크업 서비스까지 아모레에서 나오는 모든 종류의 화장품을 그 자리에서 전부 만나볼 수 있는데, 립만 해도 수백가지의 색상 톤을 세세하게 구분해놓고, 정말 모든 걸 다 해볼 수 있어요. 자유롭게 제품을 골라 화장대에서 앉아서 화장놀이를 해볼 수도 있고요. 위층에는 오설록 카페가 있어서 할인된 가격으로 음료를 마실 수도 있습니다."
+        "relative_time": "6 years ago",
+        "text": "They say it was built by remodeling an old auto repair shop, so if you like cosmetics or are interested in makeup, it's a great place where you can hang out all day. You can find all kinds of cosmetics from Amore, from cleansing to basics, color tones, and professional makeup services, right on the spot. For lip alone, hundreds of color tones are categorized in detail, so you can really try everything. You can freely choose a product, sit at the vanity table, and play with makeup. There is Osulloc Café upstairs, where you can get drinks at a discounted price."
       }
     ],
     "photos": [
@@ -4727,15 +4727,15 @@
   {
     "place_id": "ChIJD2VJISalfDURtpyXI9tuuys",
     "display_name": "STAND OIL Flagship Store",
-    "category": "상점",
+    "category": "store",
     "types": [
       "shopping_mall",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 연무장11길 19",
-    "short_address": "성동구 연무장11길 19",
+    "address": "19 Yeonmujang 11-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "19 Yeonmujang 11-gil, Seongdong-gu",
     "location": {
       "lat": 37.5437096,
       "lng": 127.05745809999998
@@ -4754,57 +4754,57 @@
     "google_maps_url": "https://maps.google.com/?cid=3151234251749825718",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5262149650f:0x2bbb6edb23979cb6!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 8:00",
-      "화요일: 오전 11:00 ~ 오후 8:00",
-      "수요일: 오전 11:00 ~ 오후 8:00",
-      "목요일: 오전 11:00 ~ 오후 8:00",
-      "금요일: 오전 11:00 ~ 오후 8:00",
-      "토요일: 오전 11:00 ~ 오후 8:00",
-      "일요일: 오전 11:00 ~ 오후 8:00"
+      "Monday: 11:00 AM - 8:00 PM",
+      "Tuesday: 11:00 AM - 8:00 PM",
+      "Wednesday: 11:00 AM - 8:00 PM",
+      "Thursday: 11:00 AM - 8:00 PM",
+      "Friday: 11:00 AM - 8:00 PM",
+      "Saturday: 11:00 AM - 8:00 PM",
+      "Sunday: 11:00 AM - 8:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "박수현",
+        "author": "Park Soo-hyun",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "친절하시고 매장이 쾌적해요!"
+        "relative_time": "1 year ago",
+        "text": "They are friendly and the store is comfortable!"
       },
       {
         "author": "Vince Shin",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "1년 전",
-        "text": "이걸 왜 줄섬?"
+        "relative_time": "1 year ago",
+        "text": "Why are you giving me this?"
       },
       {
-        "author": "city님",
+        "author": "city",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "멋진장소\n가성비 최고"
+        "relative_time": "2 years ago",
+        "text": "wonderful place\nBest value for money"
       },
       {
         "author": "Huyen Nguyen",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "플래그십 스토어는 규모가 엄청나고 성수동역 바로 근처에 위치해 있어요. 오전 11시쯤 오픈합니다. 매장은 두 층으로 되어 있으며, 브랜드의 인기 상품은 물론 세일 상품과 신상품까지 모두 만나볼 수 있어요. 가방들이 정말 예쁘고 트렌디한데, 특히 크고 통통한 광택 가죽 가방이 브랜드의 시그니처 스타일이에요. 작아 보이지만 수납공간이 넉넉해서 뭐든지 다 넣을 수 있답니다! 가격도 합리적이어서 젊은층에게 딱이에요!"
+        "relative_time": "3 months ago",
+        "text": "The flagship store is huge and located right near Seongsu-dong Station. Opens around 11 am. The store has two floors, and you can find all of the brand's popular products as well as sale items and new products. The bags are really pretty and trendy, especially the large and plump glossy leather bags, which are the brand's signature style. It looks small, but it has plenty of storage space so you can put everything in it! The price is reasonable, so it’s perfect for young people!"
       },
       {
         "author": "きま",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2달 전",
-        "text": "귀엽다! ! 일본인 손님 많음. 점원 씨는 일본어 할 수 있어 부드러운 교환을 할 수 있었습니다."
+        "relative_time": "2 months ago",
+        "text": "Cute! ! Lots of Japanese customers. The clerk could speak Japanese, so the exchange was smooth."
       }
     ],
     "photos": [
@@ -4823,14 +4823,14 @@
   {
     "place_id": "ChIJZV9nNwClfDURTGBJet50MUQ",
     "display_name": "MALBON GOLF",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수2가제3동 317-24",
-    "short_address": "성동구 성수2가제3동 317-24",
+    "address": "317-24, Seongsu 2-gaje 3-dong, Seongdong-gu, Seoul, South Korea",
+    "short_address": "317-24, Seongsu 2-gaje 3-dong, Seongdong-gu",
     "location": {
       "lat": 37.543735399999996,
       "lng": 127.05701719999999
@@ -4858,15 +4858,15 @@
   },
   {
     "place_id": "ChIJ-WUwB5WkfDURebG0JMEQcH4",
-    "display_name": "스탠드아웃스토어",
-    "category": "쇼핑몰",
+    "display_name": "stand out store",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수동2가 277-56",
-    "short_address": "성동구 성수동2가 277-56",
+    "address": "277-56, Seongsu-dong 2-ga, Seongdong-gu, Seoul, South Korea",
+    "short_address": "277-56 Seongsu-dong 2-ga, Seongdong-gu",
     "location": {
       "lat": 37.5438663,
       "lng": 127.05896249999999
@@ -4885,18 +4885,18 @@
     "google_maps_url": "https://maps.google.com/?cid=9110800467901067641",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca495073065f9:0x7e7010c124b4b179!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 7:00",
-      "화요일: 오전 11:00 ~ 오후 7:00",
-      "수요일: 오전 11:00 ~ 오후 7:00",
-      "목요일: 오전 11:00 ~ 오후 7:00",
-      "금요일: 오전 11:00 ~ 오후 7:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 11:00 AM - 7:00 PM",
+      "Tuesday: 11:00 AM - 7:00 PM",
+      "Wednesday: 11:00 AM - 7:00 PM",
+      "Thursday: 11:00 AM - 7:00 PM",
+      "Friday: 11:00 AM - 7:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4907,14 +4907,14 @@
   {
     "place_id": "ChIJeVSEb4qlfDUReWK06wy6n-E",
     "display_name": "Greedy Bear",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "104, 501 아차산로 성동구 서울특별시 대한민국",
-    "short_address": "104, 501 아차산로 성동구",
+    "address": "104, 501 Achasan-ro, Seongdong-gu, Seoul, Republic of Korea",
+    "short_address": "104, 501 Achasan-ro, Seongdong-gu",
     "location": {
       "lat": 37.54446170000001,
       "lng": 127.0554135
@@ -4935,8 +4935,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4946,15 +4946,15 @@
   },
   {
     "place_id": "ChIJ-XD-mYqlfDURfN_WOqi9Ge0",
-    "display_name": "라프텔",
-    "category": "쇼핑몰",
+    "display_name": "Raftel",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 연무장11길 10",
-    "short_address": "성동구 연무장11길 10",
+    "address": "10 Yeonmujang 11-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "10 Yeonmujang 11-gil, Seongdong-gu",
     "location": {
       "lat": 37.5428949,
       "lng": 127.0575284
@@ -4974,11 +4974,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca58a99fe70f9:0xed19bda83ad6df7c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4988,15 +4988,15 @@
   },
   {
     "place_id": "ChIJwUNk8ZKlfDURAo9xIT0xJOY",
-    "display_name": "세라제화 성수점",
-    "category": "쇼핑몰",
+    "display_name": "Cera Shoes Seongsu Branch",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수이로 89 MG빌딩 1층",
-    "short_address": "성동구 성수이로 89 MG빌딩 1층",
+    "address": "1st floor, MG Building, 89 Seongsui-ro, Seongdong-gu, Seoul, Korea",
+    "short_address": "1st floor, MG Building, 89 Seongsui-ro, Seongdong-gu",
     "location": {
       "lat": 37.543094599999996,
       "lng": 127.05646250000001
@@ -5016,29 +5016,29 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca592f16443c1:0xe624313d21718f02!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "조항득",
+        "author": "Jo Jo-deuk",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "친절하고 서련던공간"
+        "relative_time": "5 years ago",
+        "text": "A friendly and cozy space"
       },
       {
-        "author": "유재호",
+        "author": "Jaeho Yoo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "구두/핸드백 토탈 매장."
+        "relative_time": "4 years ago",
+        "text": "A total shoe/handbag store."
       }
     ],
     "photos": [
@@ -5050,15 +5050,15 @@
   },
   {
     "place_id": "ChIJqb1X7OqkfDURUTqWRYQHwE0",
-    "display_name": "잇츠카드",
-    "category": "쇼핑몰",
+    "display_name": "It's Card",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수동2가 아차산로11길 30 삼성아파트형공장",
-    "short_address": "성동구 성수동2가 아차산로11길 30 삼성아파트형공장",
+    "address": "Samsung Apartment-type Factory, 30 Achasan-ro 11-gil, Seongsu-dong 2-ga, Seongdong-gu, Seoul, Republic of Korea",
+    "short_address": "Samsung Apartment-type Factory, 30 Achasan-ro 11-gil, Seongsu-dong 2-ga, Seongdong-gu",
     "location": {
       "lat": 37.546085999999995,
       "lng": 127.060537
@@ -5077,30 +5077,30 @@
     "google_maps_url": "https://maps.google.com/?cid=5602486201133447761",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4eaec57bda9:0x4dc0078445963a51!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 6:30",
-      "화요일: 오전 10:00 ~ 오후 6:30",
-      "수요일: 오전 10:00 ~ 오후 6:30",
-      "목요일: 오전 10:00 ~ 오후 6:30",
-      "금요일: 오전 10:00 ~ 오후 6:30",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 6:30 PM",
+      "Tuesday: 10:00 AM - 6:30 PM",
+      "Wednesday: 10:00 AM - 6:30 PM",
+      "Thursday: 10:00 AM - 6:30 PM",
+      "Friday: 10:00 AM - 6:30 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "홍범주",
+        "author": "Hong Beom-ju",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -5119,15 +5119,15 @@
   },
   {
     "place_id": "ChIJu0iU1ZOkfDURIEMFc2bpXD0",
-    "display_name": "(주)야벳",
-    "category": "쇼핑몰",
+    "display_name": "Japheth Co., Ltd.",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수동2가 289-319 아이에스비즈타워 603호",
-    "short_address": "성동구 성수동2가 289-319 아이에스비즈타워 603호",
+    "address": "Room 603, ISBIZ Tower, 289-319 Seongsu-dong 2-ga, Seongdong-gu, Seoul, Republic of Korea",
+    "short_address": "Room 603, IS Biz Tower, 289-319 Seongsu-dong 2-ga, Seongdong-gu",
     "location": {
       "lat": 37.5476473,
       "lng": 127.05747539999999
@@ -5147,11 +5147,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca493d59448bb:0x3d5ce96673054320!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5160,15 +5160,15 @@
   },
   {
     "place_id": "ChIJqb3G-zClfDURNSu-f4HT-T4",
-    "display_name": "루엔 플라워 디자인",
-    "category": "쇼핑몰",
+    "display_name": "Ruen Flower Design",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 연무장5가길 25 SK V1타워 516호",
-    "short_address": "성동구 연무장5가길 25 SK V1타워 516호",
+    "address": "Room 516, SK V1 Tower, 25 Yeonmujang 5ga-gil, Seongdong-gu, Seoul, South Korea",
+    "short_address": "Room 516, SK V1 Tower, 25 Yeonmujang 5ga-gil, Seongdong-gu",
     "location": {
       "lat": 37.5435267,
       "lng": 127.05540149999999
@@ -5187,18 +5187,18 @@
     "google_maps_url": "https://maps.google.com/?cid=4537890652699896629",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca530fbc6bda9:0x3ef9d3817fbe2b35!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 7:00",
-      "화요일: 오전 10:00 ~ 오후 7:00",
-      "수요일: 오전 10:00 ~ 오후 7:00",
-      "목요일: 오전 10:00 ~ 오후 7:00",
-      "금요일: 오전 10:00 ~ 오후 7:00",
-      "토요일: 오전 11:00 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 7:00 PM",
+      "Tuesday: 10:00 AM - 7:00 PM",
+      "Wednesday: 10:00 AM - 7:00 PM",
+      "Thursday: 10:00 AM - 7:00 PM",
+      "Friday: 10:00 AM - 7:00 PM",
+      "Saturday: 11:00 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5208,15 +5208,15 @@
   },
   {
     "place_id": "ChIJV3RLyfalfDURcZ4RyP44r9U",
-    "display_name": "에스비트레이딩",
-    "category": "쇼핑몰",
+    "display_name": "SB Trading",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
-    "short_address": "서울특별시",
+    "address": "Seoul, South Korea",
+    "short_address": "Seoul special city",
     "location": {
       "lat": 37.543662,
       "lng": 127.05496099999998
@@ -5236,11 +5236,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5f6c94b7457:0xd5af38fec8119e71!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5250,23 +5250,23 @@
         "author": "Judy Seoul",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "각양각색의 가죽 전시장\n흥미로운 곳입니다"
+        "relative_time": "5 months ago",
+        "text": "A variety of leather exhibition halls\nIt's an interesting place"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJT_WdZZSkfDURSDBTWC1V6xA",
-    "display_name": "(주)트루컴퍼니",
-    "category": "쇼핑몰",
+    "display_name": "True Company Co., Ltd.",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수동2가 273-19번지 524호",
-    "short_address": "성동구 성수동2가 273-19번지 524호",
+    "address": "#524, 273-19 Seongsu-dong 2-ga, Seongdong-gu, Seoul, Republic of Korea",
+    "short_address": "#524, 273-19 Seongsu-dong 2-ga, Seongdong-gu",
     "location": {
       "lat": 37.5425508,
       "lng": 127.05820390000001
@@ -5286,11 +5286,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca494659df54f:0x10eb552d58533048!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5299,15 +5299,15 @@
   },
   {
     "place_id": "ChIJOcqi4qmlfDURRusqRzUFOQ0",
-    "display_name": "누나맘마",
-    "category": "쇼핑몰",
+    "display_name": "Sister Mamma",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수동2가 314-5",
-    "short_address": "성동구 성수동2가 314-5",
+    "address": "314-5, Seongsu-dong 2-ga, Seongdong-gu, Seoul, South Korea",
+    "short_address": "314-5, Seongsu-dong 2-ga, Seongdong-gu",
     "location": {
       "lat": 37.544762399999996,
       "lng": 127.05420300000002
@@ -5327,11 +5327,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5a9e2a2ca39:0xd390535472aeb46!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5341,15 +5341,15 @@
   },
   {
     "place_id": "ChIJ8WWLBwClfDURfomeLDsw8G4",
-    "display_name": "37디그리스 본사",
-    "category": "쇼핑몰",
+    "display_name": "37 Degrees Headquarters",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수이로 147 B302",
-    "short_address": "성동구 성수이로 147 B302",
+    "address": "B302, 147 Seongsui-ro, Seongdong-gu, Seoul, South Korea",
+    "short_address": "B302, 147 Seongsui-ro, Seongdong-gu",
     "location": {
       "lat": 37.5480939,
       "lng": 127.05751839999998
@@ -5369,11 +5369,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca500078b65f1:0x6ef0303b2c9e897e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5386,14 +5386,14 @@
   {
     "place_id": "ChIJX7-KrnalfDUR2fMaKSCc4DI",
     "display_name": "M ROUND",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 KR 서울특별시 성동구 연무장15길11 B동3층11호",
-    "short_address": "KR 서울특별시 성동구 연무장15길11 B동3층11호",
+    "address": "Seoul, Republic of Korea KR 11, Building B, 3rd floor, 11 Yeonmujang 15-gil, Seongdong-gu, Seoul",
+    "short_address": "KR Room 11, 3rd floor, Building B, 11 Yeonmujang 15-gil, Seongdong-gu, Seoul",
     "location": {
       "lat": 37.5425787,
       "lng": 127.059445
@@ -5412,20 +5412,20 @@
     "google_maps_url": "https://maps.google.com/?cid=3666101758622102489",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca576ae8abf5f:0x32e09c20291af3d9!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 11:00",
-      "화요일: 오전 11:00 ~ 오후 11:00",
-      "수요일: 오전 11:00 ~ 오후 11:00",
-      "목요일: 오전 11:00 ~ 오후 11:00",
-      "금요일: 오전 11:00 ~ 오후 11:00",
-      "토요일: 오전 11:00 ~ 오후 11:00",
-      "일요일: 오전 11:00 ~ 오후 11:00"
+      "Monday: 11:00 AM - 11:00 PM",
+      "Tuesday: 11:00 AM - 11:00 PM",
+      "Wednesday: 11:00 AM - 11:00 PM",
+      "Thursday: 11:00 AM - 11:00 PM",
+      "Friday: 11:00 AM - 11:00 PM",
+      "Saturday: 11:00 AM - 11:00 PM",
+      "Sunday: 11:00 AM - 11:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5435,35 +5435,35 @@
         "author": "Rachel Y.",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "에스팩토리 옛날 공장건물을 전시관으로 활용한 공간인데 주차장이 너무 협소하네요. 차단기까지 있으나 주차공간은 전시회 방문차량을 감당못함"
+        "relative_time": "2 years ago",
+        "text": "S-Factory is an old factory building used as an exhibition hall, but the parking lot is very small. There is a barrier, but the parking space cannot accommodate the number of vehicles visiting the exhibition."
       },
       {
-        "author": "정광수 (skyblue)",
+        "author": "Gwangsu Jeong (skyblue)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "성수동  엿날거리 방문ㆍㆍ구..현대의 시간 을  공유 한 거리"
+        "relative_time": "3 years ago",
+        "text": "Visit to Seongsu-dong's street... A street that shares modern times"
       },
       {
-        "author": "이세원",
+        "author": "Lee Se-won",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "3년 전",
-        "text": "주차가 없어서 핵 불편함!!"
+        "relative_time": "3 years ago",
+        "text": "It's really inconvenient because there's no parking!!"
       },
       {
         "author": "lee kihyun",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "아스터dj 파티 내년에도 갈거에요"
+        "relative_time": "2 years ago",
+        "text": "I'm going to Aster DJ's party next year too."
       },
       {
         "author": "JUNGUN PARK",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       }
     ],
@@ -5483,15 +5483,15 @@
   {
     "place_id": "ChIJKaUS0rmlfDUR183a0ij8FLM",
     "display_name": "minitmute seongsu",
-    "category": "상점",
+    "category": "store",
     "types": [
       "store",
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "1층, 57 연무장길 성동구 서울특별시 대한민국",
-    "short_address": "1층, 57 연무장길 성동구",
+    "address": "1st floor, 57 Yeonmujang-gil, Seongdong-gu, Seoul, Republic of Korea",
+    "short_address": "1st floor, 57 Yeonmujang-gil, Seongdong-gu",
     "location": {
       "lat": 37.542459099999995,
       "lng": 127.0562404
@@ -5510,18 +5510,18 @@
     "google_maps_url": "https://maps.google.com/?cid=12904216084589759959",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5b9d212a529:0xb314fc28d2dacdd7!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오후 1:00~8:00",
-      "수요일: 오후 1:00~8:00",
-      "목요일: 오후 1:00~8:00",
-      "금요일: 오후 1:00~8:00",
-      "토요일: 오전 9:00 ~ 오후 8:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 1:00-8:00 PM",
+      "Wednesday: 1:00-8:00 PM",
+      "Thursday: 1:00-8:00 PM",
+      "Friday: 1:00-8:00 PM",
+      "Saturday: 9:00 AM - 8:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5531,8 +5531,8 @@
         "author": "ku coach",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7달 전",
-        "text": "송수에 있는 'minitmute seongsu'는 매장 디스플레이에 여백이 많이 찍혀있어 마치 갤러리 같은 분위기가 감도는 가게입니다. 아이템은 심플한 디자인이 중심으로 세련되고 최소한의 아름다움을 느낄 수 있습니다. 점내는 혼잡하지 않고, 느긋하게 상품을 둘러볼 수 있는 것이 기쁜 포인트. 일본인 관광객의 모습도 흔히 볼 수 있어, 관광으로 들르는 사람에게도 인기인 것 같았습니다. 차분한 공간에서 심플을 좋아하게는 견딜 수없는 아이템을 만날 수있는 가게입니다."
+        "relative_time": "7 months ago",
+        "text": "'minitmute seongsu' in Songsu is a store with a lot of blank space on the store display, giving it a gallery-like atmosphere. The items are centered around simple designs, giving you a sense of sophisticated and minimalistic beauty. The nice thing about the store is that it is not crowded and you can browse the products leisurely. Japanese tourists are also common, and it seems to be popular with people visiting for sightseeing. This is a store where you can find irresistible items for simple lovers in a calm space."
       }
     ],
     "photos": [
@@ -5549,15 +5549,15 @@
   },
   {
     "place_id": "ChIJf5BjUpGkfDURjga-n9nB6Xs",
-    "display_name": "월비통상",
-    "category": "쇼핑몰",
+    "display_name": "Monthly fee",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수동2가 315-57",
-    "short_address": "성동구 성수동2가 315-57",
+    "address": "315-57, Seongsu-dong 2-ga, Seongdong-gu, Seoul, South Korea",
+    "short_address": "315-57 Seongsu-dong 2-ga, Seongdong-gu",
     "location": {
       "lat": 37.5426502,
       "lng": 127.0555182
@@ -5578,46 +5578,46 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김청래",
+        "author": "Kim Cheong-rae",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "7년 전",
-        "text": "지금은  없어져습니다"
+        "relative_time": "7 years ago",
+        "text": "It's gone now"
       },
       {
-        "author": "임창빈",
+        "author": "Changbin Lim",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "8년 전",
-        "text": "ㅜ"
+        "relative_time": "8 years ago",
+        "text": "sob"
       },
       {
         "author": "J. M. Sohn.",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "8년 전",
-        "text": "행복하다"
+        "relative_time": "8 years ago",
+        "text": "happy"
       },
       {
         "author": "yunji lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "nemo_kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -5637,14 +5637,14 @@
   {
     "place_id": "ChIJFRmT38SlfDURXqXm8lBjcfQ",
     "display_name": "Mine.is",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "1층 102호, 277-40 성수동2가 성동구 서울특별시 대한민국",
-    "short_address": "1층 102호, 277-40 성수동2가 성동구",
+    "address": "Room 102, 1st floor, 277-40 Seongsu-dong 2-ga, Seongdong-gu, Seoul, Republic of Korea",
+    "short_address": "Room 102, 1st floor, 277-40 Seongsu-dong 2-ga, Seongdong-gu",
     "location": {
       "lat": 37.5439386,
       "lng": 127.06208829999998
@@ -5665,8 +5665,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5676,15 +5676,15 @@
   },
   {
     "place_id": "ChIJAXN3DeWjfDURqohjguaiLZM",
-    "display_name": "팹스타일",
-    "category": "쇼핑몰",
+    "display_name": "fab style",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수2가제3동 성수이로22길 43 4층",
-    "short_address": "성동구 성수2가제3동 성수이로22길 43 4층",
+    "address": "4th floor, 43 Seongsui-ro 22-gil, Seongsu 2-gaje 3-dong, Seongdong-gu, Seoul, Republic of Korea",
+    "short_address": "4th floor, 43 Seongsui-ro 22-gil, Seongsu 2-gaje 3-dong, Seongdong-gu",
     "location": {
       "lat": 37.5437107,
       "lng": 127.06186939999999
@@ -5703,18 +5703,18 @@
     "google_maps_url": "https://maps.google.com/?cid=10605311808441125034",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3e50d777301:0x932da2e6826388aa!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 9:00",
-      "화요일: 오전 10:00 ~ 오후 9:00",
-      "수요일: 오전 10:00 ~ 오후 9:00",
-      "목요일: 오전 10:00 ~ 오후 9:00",
-      "금요일: 오전 10:00 ~ 오후 9:00",
-      "토요일: 오전 11:00 ~ 오후 8:00",
-      "일요일: 오전 11:00 ~ 오후 7:00"
+      "Monday: 10:00 AM - 9:00 PM",
+      "Tuesday: 10:00 AM - 9:00 PM",
+      "Wednesday: 10:00 AM - 9:00 PM",
+      "Thursday: 10:00 AM - 9:00 PM",
+      "Friday: 10:00 AM - 9:00 PM",
+      "Saturday: 11:00 AM - 8:00 PM",
+      "Sunday: 11:00 AM - 7:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5724,15 +5724,15 @@
   },
   {
     "place_id": "ChIJyddX22ClfDUR7sQ0lay0lHc",
-    "display_name": "(주)샤니코리아",
-    "category": "쇼핑몰",
+    "display_name": "Shani Korea Co., Ltd.",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 광나루로6길 605-1 35",
-    "short_address": "성동구 광나루로6길 605-1 35",
+    "address": "35, 605-1 Gwangnaru-ro 6-gil, Seongdong-gu, Seoul, Republic of Korea",
+    "short_address": "35, 605-1, Gwangnaru-ro 6-gil, Seongdong-gu",
     "location": {
       "lat": 37.5467924,
       "lng": 127.06324420000001
@@ -5751,20 +5751,20 @@
     "google_maps_url": "https://maps.google.com/?cid=8616710640397239534",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca560db57d7c9:0x7794b4ac9534c4ee!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 오전 9:00 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: 9:00 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5773,15 +5773,15 @@
   },
   {
     "place_id": "ChIJTVrf8XClfDURHxiQcwm64jc",
-    "display_name": "페라리 인증중고차 서울전시장",
-    "category": "쇼핑몰",
+    "display_name": "Ferrari Certified Used Car Seoul Showroom",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수동2가 280-38",
-    "short_address": "성동구 성수동2가 280-38",
+    "address": "280-38, Seongsu-dong 2-ga, Seongdong-gu, Seoul, South Korea",
+    "short_address": "280-38, Seongsu-dong 2-ga, Seongdong-gu",
     "location": {
       "lat": 37.5480216,
       "lng": 127.06127389999999
@@ -5800,39 +5800,39 @@
     "google_maps_url": "https://maps.google.com/?cid=4026985566578939935",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca570f1df5a4d:0x37e2ba097390181f!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 7:00",
-      "화요일: 오전 9:00 ~ 오후 7:00",
-      "수요일: 오전 9:00 ~ 오후 7:00",
-      "목요일: 오전 9:00 ~ 오후 7:00",
-      "금요일: 오전 9:00 ~ 오후 7:00",
-      "토요일: 오전 10:00 ~ 오후 6:00",
-      "일요일: 오전 10:00 ~ 오후 6:00"
+      "Monday: 9:00 AM - 7:00 PM",
+      "Tuesday: 9:00 AM - 7:00 PM",
+      "Wednesday: 9:00 AM - 7:00 PM",
+      "Thursday: 9:00 AM - 7:00 PM",
+      "Friday: 9:00 AM - 7:00 PM",
+      "Saturday: 10:00 AM - 6:00 PM",
+      "Sunday: 10:00 AM - 6:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "정라현",
+        "author": "Jeong Ra-hyeon",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "현재까지 한국에 있는 페라리의 유일한 인증 중고차 전시장입니다. 보증 되는 페라리를 긴 대기기간 없이 바로 출고 가능한 게 장점입니다."
+        "relative_time": "5 years ago",
+        "text": "To date, this is Ferrari’s only certified used car showroom in Korea. The advantage is that a guaranteed Ferrari can be shipped immediately without a long waiting period."
       },
       {
         "author": "Peter Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       }
     ],
@@ -5848,15 +5848,15 @@
   },
   {
     "place_id": "ChIJkdVVZb-kfDURM8BuaZwnCh0",
-    "display_name": "앙뉴컴퍼니",
-    "category": "쇼핑몰",
+    "display_name": "Angnew Company",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송정동 81-1번지 2층 삼우철강사 성동구 서울특별시 KR",
-    "short_address": "송정동 81-1번지 2층 삼우철강사 성동구 서울특별시 KR",
+    "address": "Samwoo Steel Company, 2nd floor, 81-1 Songjeong-dong, Seoul, Republic of Korea, Seongdong-gu, Seoul KR",
+    "short_address": "Samwoo Steel Company, 2nd floor, 81-1 Songjeong-dong, Seongdong-gu, Seoul KR",
     "location": {
       "lat": 37.5483826,
       "lng": 127.0608387
@@ -5876,11 +5876,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4bf6555d591:0x1d0a279c696ec033!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5890,15 +5890,15 @@
   },
   {
     "place_id": "ChIJl22psjulfDURN4JQECVSr1M",
-    "display_name": "하네(HANE)",
-    "category": "쇼핑몰",
+    "display_name": "HANE",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 1~4층",
-    "short_address": "성동구 1~4층",
+    "address": "1st to 4th floors, Seongdong-gu, Seoul, South Korea",
+    "short_address": "Seongdong-gu 1st~4th floor",
     "location": {
       "lat": 37.5485386,
       "lng": 127.0635382
@@ -5917,18 +5917,18 @@
     "google_maps_url": "https://maps.google.com/?cid=6030128745213362743",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca53bb2a96d97:0x53af522510508237!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,

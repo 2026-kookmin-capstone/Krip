@@ -1,15 +1,15 @@
 [
   {
     "place_id": "ChIJ-acL8eeifDURYGgHWWPqPTo",
-    "display_name": "서울미술관",
-    "category": "미술관",
+    "display_name": "Seoul Museum of Art",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 인사동 43",
-    "short_address": "종로구 인사동 43",
+    "address": "43 Insa-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "43 Insa-dong, Jongno-gu",
     "location": {
       "lat": 37.571867999999995,
       "lng": 126.98721800000001
@@ -29,38 +29,38 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e7f10ba7f9:0x3a3dea6359076860!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "상준전",
+        "author": "Sangjunjeon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "서울에"
+        "relative_time": "1 year ago",
+        "text": "In Seoul"
       },
       {
         "author": "Pan大叔",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "길을 따라 전시회가 있습니다"
+        "relative_time": "6 years ago",
+        "text": "There are exhibitions along the way"
       },
       {
         "author": "yk Lim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       },
       {
         "author": "Andrzej Ha",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -79,15 +79,15 @@
   },
   {
     "place_id": "ChIJUbuq5OeifDURbfV81-omX3Q",
-    "display_name": "희수갤러리",
-    "category": "미술관",
+    "display_name": "Heesu Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 인사동길 11-3",
-    "short_address": "종로구 인사동길 11-3",
+    "address": "11-3 Insadong-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "11-3 Insadong-gil, Jongno-gu",
     "location": {
       "lat": 37.571964099999995,
       "lng": 126.9867006
@@ -107,31 +107,31 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e7e4aabb51:0x745f26ead77cf56d!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "강아지",
+        "author": "puppy",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "좋았어요"
+        "relative_time": "6 years ago",
+        "text": "It was good"
       },
       {
-        "author": "최재혁",
+        "author": "Jaehyuk Choi",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "박성우",
+        "author": "Seongwoo Park",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -147,15 +147,15 @@
   },
   {
     "place_id": "ChIJ-wzd1PCjfDURthS3gglYWRo",
-    "display_name": "인사1길 - 홈",
-    "category": "문화센터",
+    "display_name": "Insa 1-gil - Home",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로1.2.3.4가동 137-3",
-    "short_address": "종로구 종로1.2.3.4가동 137-3",
+    "address": "137-3, Jongno 1.2.3.4 ga-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "137-3, Jongno 1.2.3.4 ga-dong, Jongno-gu",
     "location": {
       "lat": 37.571573,
       "lng": 126.98688509999998
@@ -174,16 +174,16 @@
     "google_maps_url": "https://maps.google.com/?cid=1898645515784361142",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3f0d4dd0cfb:0x1a59580982b714b6!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 9:00",
-      "화요일: 오전 10:00 ~ 오후 9:00",
-      "수요일: 오전 10:00 ~ 오후 9:00",
-      "목요일: 오전 10:00 ~ 오후 9:00",
-      "금요일: 오전 10:00 ~ 오후 9:00",
-      "토요일: 오전 10:00 ~ 오후 9:00",
-      "일요일: 오전 10:00 ~ 오후 9:00"
+      "Monday: 10:00 AM - 9:00 PM",
+      "Tuesday: 10:00 AM - 9:00 PM",
+      "Wednesday: 10:00 AM - 9:00 PM",
+      "Thursday: 10:00 AM - 9:00 PM",
+      "Friday: 10:00 AM - 9:00 PM",
+      "Saturday: 10:00 AM - 9:00 PM",
+      "Sunday: 10:00 AM - 9:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -196,15 +196,15 @@
   },
   {
     "place_id": "ChIJcwNa9-eifDURJvBE9xU32Mk",
-    "display_name": "갤러리 시작",
-    "category": "미술관",
+    "display_name": "Start Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 인사동 39",
-    "short_address": "종로구 인사동 39",
+    "address": "39 Insa-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "39 Insa-dong, Jongno-gu",
     "location": {
       "lat": 37.5721293,
       "lng": 126.9870349
@@ -224,7 +224,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e7f75a0373:0xc9d83715f744f026!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -234,21 +234,21 @@
         "author": "Taekyoung CHUNG",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "4년 전",
-        "text": "사진 갤러리"
+        "relative_time": "4 years ago",
+        "text": "photo gallery"
       },
       {
         "author": "JI YOUNG LEE",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       },
       {
-        "author": "조정화",
+        "author": "Jo Jung Hwa",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -265,14 +265,14 @@
   {
     "place_id": "ChIJ7aA_nDmjfDURBlBd_nY_9Bo",
     "display_name": "ABS gallery",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "3f, 14 인사동길 종로구 서울특별시 대한민국",
-    "short_address": "3f, 14 인사동길 종로구",
+    "address": "3f, 14 Insadong-gil, Jongno-gu, Seoul, Republic of Korea",
+    "short_address": "3f, 14 Insadong-gil, Jongno-gu",
     "location": {
       "lat": 37.5721807,
       "lng": 126.986997
@@ -291,16 +291,16 @@
     "google_maps_url": "https://maps.google.com/?cid=1942247119609745414",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3399c3fa0ed:0x1af43f76fe5d5006!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 6:00",
-      "화요일: 오전 10:30 ~ 오후 6:00",
-      "수요일: 오전 10:30 ~ 오후 6:00",
-      "목요일: 오전 10:30 ~ 오후 6:00",
-      "금요일: 오전 10:30 ~ 오후 6:00",
-      "토요일: 오전 11:00 ~ 오후 5:30",
-      "일요일: 휴무일"
+      "Monday: 10:30 AM - 6:00 PM",
+      "Tuesday: 10:30 AM - 6:00 PM",
+      "Wednesday: 10:30 AM - 6:00 PM",
+      "Thursday: 10:30 AM - 6:00 PM",
+      "Friday: 10:30 AM - 6:00 PM",
+      "Saturday: 11:00 AM - 5:30 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -312,15 +312,15 @@
   },
   {
     "place_id": "ChIJDzy-_OeifDUR2eVXXazWyi0",
-    "display_name": "북스",
-    "category": "미술관",
+    "display_name": "Books",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 인사동 152",
-    "short_address": "종로구 인사동 152",
+    "address": "152 Insa-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "152 Insa-dong, Jongno-gu",
     "location": {
       "lat": 37.5721176,
       "lng": 126.98657960000001
@@ -340,7 +340,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e7fcbe3c0f:0x2dcad6ac5d57e5d9!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -351,14 +351,14 @@
   {
     "place_id": "ChIJdX5eCwCjfDURYxIPkru67ek",
     "display_name": "Moowoosoo gallery",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 인사동길 19-2 3, 4F 와담빌딩",
-    "short_address": "종로구 인사동길 19-2 와담빌딩 3, 4F",
+    "address": "Wadam Building, 3, 4F, 19-2 Insadong-gil, Jongno-gu, Seoul, Korea",
+    "short_address": "Wadam Building 3, 4F, 19-2 Insadong-gil, Jongno-gu",
     "location": {
       "lat": 37.5726503,
       "lng": 126.98636169999999
@@ -377,13 +377,13 @@
     "google_maps_url": "https://maps.google.com/?cid=16856334295089746531",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3000b5e7e75:0xe9edbabb920f1263!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 6:00",
-      "화요일: 오전 10:00 ~ 오후 6:00",
-      "수요일: 오전 10:00 ~ 오후 6:00",
-      "목요일: 오전 10:00 ~ 오후 6:00",
-      "금요일: 오전 10:00 ~ 오후 6:00",
-      "토요일: 오전 10:00 ~ 오후 6:00",
-      "일요일: 오전 10:00 ~ 오후 6:00"
+      "Monday: 10:00 AM - 6:00 PM",
+      "Tuesday: 10:00 AM - 6:00 PM",
+      "Wednesday: 10:00 AM - 6:00 PM",
+      "Thursday: 10:00 AM - 6:00 PM",
+      "Friday: 10:00 AM - 6:00 PM",
+      "Saturday: 10:00 AM - 6:00 PM",
+      "Sunday: 10:00 AM - 6:00 PM"
     ],
     "services": null,
     "payment": null,
@@ -405,15 +405,15 @@
   },
   {
     "place_id": "ChIJOel4qsKifDURhPshEwd03r4",
-    "display_name": "설고전각팩토리",
-    "category": "미술관",
+    "display_name": "Seolgo Engraving Factory",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 인사동 170번지 605호 동일빌딩 종로구 서울특별시 KR",
-    "short_address": "인사동 170번지 605호 동일빌딩 종로구 서울특별시 KR",
+    "address": "#605, 170 Insa-dong, Seoul, Republic of Korea, Dongil Building, Jongno-gu, Seoul KR",
+    "short_address": "#605, 170 Insa-dong, Dongil Building, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5727092,
       "lng": 126.98614629999999
@@ -441,7 +441,7 @@
         "author": "Sewoong Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -451,15 +451,15 @@
   },
   {
     "place_id": "ChIJtweXT92ifDURR15Eb25u3Vo",
-    "display_name": "갤러리아트플러스",
-    "category": "미술관",
+    "display_name": "Gallery Art Plus",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 낙원동 283-38",
-    "short_address": "종로구 낙원동 283-38",
+    "address": "283-38 Nakwon-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "283-38 Nakwon-dong, Jongno-gu",
     "location": {
       "lat": 37.573092599999995,
       "lng": 126.98693250000001
@@ -479,7 +479,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2dd4f9707b7:0x5add6e6e6f445e47!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -489,15 +489,15 @@
   },
   {
     "place_id": "ChIJndvtE-iifDURfk39uLA1Wfs",
-    "display_name": "백진고미술갤러리",
-    "category": "미술관",
+    "display_name": "Baekjingo Art Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 인사동 194-4번지 B동 1층 18호 종로구 서울특별시 KR",
-    "short_address": "인사동 194-4번지 B동 1층 18호 종로구 서울특별시 KR",
+    "address": "Room 18, 1st floor, Building B, 194-4 Insa-dong, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "Room 18, 1st floor, Building B, 194-4 Insa-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.572060199999996,
       "lng": 126.9853831
@@ -517,11 +517,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e813eddb9d:0xfb5935b0b8fd4d7e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어화장실"
+      "wheelchair restroom"
     ],
     "parking": null,
     "reviews": null,
@@ -529,15 +529,15 @@
   },
   {
     "place_id": "ChIJL8O-fwCjfDURSmFqeQcnbMw",
-    "display_name": "지오9갤러리",
-    "category": "미술관",
+    "display_name": "Geo9 Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 인사동5길 11",
-    "short_address": "종로구 인사동5길 11",
+    "address": "11 Insadong 5-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "11 Insa-dong 5-gil, Jongno-gu",
     "location": {
       "lat": 37.572648699999995,
       "lng": 126.98566559999999
@@ -556,13 +556,13 @@
     "google_maps_url": "https://maps.google.com/?cid=14730191394277318986",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3007fbec32f:0xcc6c2707796a614a!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 8:00",
-      "화요일: 오전 10:00 ~ 오후 8:00",
-      "수요일: 오전 10:00 ~ 오후 8:00",
-      "목요일: 오전 10:00 ~ 오후 8:00",
-      "금요일: 오전 10:00 ~ 오후 8:00",
-      "토요일: 오전 10:00 ~ 오후 8:00",
-      "일요일: 오전 10:00 ~ 오후 8:00"
+      "Monday: 10:00 AM - 8:00 PM",
+      "Tuesday: 10:00 AM - 8:00 PM",
+      "Wednesday: 10:00 AM - 8:00 PM",
+      "Thursday: 10:00 AM - 8:00 PM",
+      "Friday: 10:00 AM - 8:00 PM",
+      "Saturday: 10:00 AM - 8:00 PM",
+      "Sunday: 10:00 AM - 8:00 PM"
     ],
     "services": null,
     "payment": null,
@@ -582,15 +582,15 @@
   },
   {
     "place_id": "ChIJIRDwBACjfDUROIoa4J_b7Dc",
-    "display_name": "지오9갤러리",
-    "category": "미술관",
+    "display_name": "Geo9 Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 인사동5길 11",
-    "short_address": "종로구 인사동5길 11",
+    "address": "11 Insadong 5-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "11 Insa-dong 5-gil, Jongno-gu",
     "location": {
       "lat": 37.572648699999995,
       "lng": 126.98566559999999
@@ -609,13 +609,13 @@
     "google_maps_url": "https://maps.google.com/?cid=4029837246295870008",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca30004f01021:0x37ecdb9fe01a8a38!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 8:00",
-      "화요일: 오전 10:00 ~ 오후 8:00",
-      "수요일: 오전 10:00 ~ 오후 8:00",
-      "목요일: 오전 10:00 ~ 오후 8:00",
-      "금요일: 오전 10:00 ~ 오후 8:00",
-      "토요일: 오전 10:00 ~ 오후 8:00",
-      "일요일: 오전 10:00 ~ 오후 8:00"
+      "Monday: 10:00 AM - 8:00 PM",
+      "Tuesday: 10:00 AM - 8:00 PM",
+      "Wednesday: 10:00 AM - 8:00 PM",
+      "Thursday: 10:00 AM - 8:00 PM",
+      "Friday: 10:00 AM - 8:00 PM",
+      "Saturday: 10:00 AM - 8:00 PM",
+      "Sunday: 10:00 AM - 8:00 PM"
     ],
     "services": null,
     "payment": null,
@@ -635,15 +635,15 @@
   },
   {
     "place_id": "ChIJF65JHeiifDURDj2eF2phNS8",
-    "display_name": "갤러리루벤",
-    "category": "미술관",
+    "display_name": "Gallery Ruben",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 인사동5길 4 1층",
-    "short_address": "종로구 인사동5길 4 1층",
+    "address": "1st floor, 4 Insa-dong 5-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "1st floor, 4 Insa-dong 5-gil, Jongno-gu",
     "location": {
       "lat": 37.5729672,
       "lng": 126.9860948
@@ -662,16 +662,16 @@
     "google_maps_url": "https://maps.google.com/?cid=3401732201838951694",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e81d49ae17:0x2f35616a179e3d0e!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 7:00",
-      "화요일: 오전 10:30 ~ 오후 7:00",
-      "수요일: 오전 10:30 ~ 오후 7:00",
-      "목요일: 오전 10:30 ~ 오후 7:00",
-      "금요일: 오전 10:30 ~ 오후 7:00",
-      "토요일: 오전 10:30 ~ 오후 7:00",
-      "일요일: 오전 10:30 ~ 오후 7:00"
+      "Monday: 10:30 AM - 7:00 PM",
+      "Tuesday: 10:30 AM - 7:00 PM",
+      "Wednesday: 10:30 AM - 7:00 PM",
+      "Thursday: 10:30 AM - 7:00 PM",
+      "Friday: 10:30 AM - 7:00 PM",
+      "Saturday: 10:30 AM - 7:00 PM",
+      "Sunday: 10:30 AM - 7:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -681,36 +681,36 @@
         "author": "YO LEE",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "인사동5길에 위치한  갤러리 루벤입니다. 메인대로 중간쯤에 있어 오며가며 자주 방문할수 있는 위치입니다. 요즘에는 Cairian이라는 81년생 중국화가의 전시를 하고 있네요. 역동적이면서 강렬한 중국풍의 화풍이 멋지네요"
+        "relative_time": "3 years ago",
+        "text": "This is Gallery Ruben, located on Insadong 5-gil. It's located in the middle of the main street, so it's a location you can visit often. These days, there is an exhibition by a Chinese painter born in 1981 named Cairian. The dynamic and intense Chinese painting style is wonderful."
       },
       {
-        "author": "정한철",
+        "author": "Jeong Han-cheol",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "메인 도로에 있진 않지만 유동인구가 많아 많은 사람들이 작품을 보러 들어옵니다. 맞은편에 주차장이 있어서 작품을 싣고 내리기 편합니다. 관장님이 친절하시고 내외분이 건물에 대부분 계셔서 점심시간이나 마무리 시간에 도와주시기도합니다."
+        "relative_time": "6 years ago",
+        "text": "Although it is not on the main road, there is a lot of traffic and many people come in to see the work. There is a parking lot across the street, making it easy to load and unload works. The director is friendly and most of his wife and daughter are in the building, so they help out during lunch or closing times."
       },
       {
-        "author": "누구세용?",
+        "author": "Who are you?",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "1층이라 편하고 깔끔하고 아담하고 좋은느낌~^^"
+        "relative_time": "4 years ago",
+        "text": "It's on the first floor, so it's comfortable, clean, cozy, and has a nice feel~^^"
       },
       {
         "author": "Jongsuk Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "좋은 작품을 관람할 수 있도록 해주셔서 감사합니다"
+        "relative_time": "2 years ago",
+        "text": "Thank you for allowing me to view this great work."
       },
       {
         "author": "JK KIM",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "도올선생님 수운시전 , 친절하게 설명을 해주시네요"
+        "relative_time": "4 years ago",
+        "text": "Teacher Dool explains the Suunsijeon very kindly."
       }
     ],
     "photos": [
@@ -728,15 +728,15 @@
   },
   {
     "place_id": "ChIJl13bTd2ifDURcPO5Q-EDZfI",
-    "display_name": "나인원갤러리",
-    "category": "미술관",
+    "display_name": "Nine One Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 인사동 10번지 2층",
-    "short_address": "종로구 인사동 10번지 2층",
+    "address": "2nd floor, 10 Insa-dong, Jongno-gu, Seoul, Korea",
+    "short_address": "2nd floor, 10 Insa-dong, Jongno-gu",
     "location": {
       "lat": 37.5731919,
       "lng": 126.98664020000001
@@ -756,7 +756,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2dd4ddb5d97:0xf26503e143b9f370!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -777,15 +777,15 @@
   },
   {
     "place_id": "ChIJZUtzqcKifDURL_j-hGxrvKQ",
-    "display_name": "아트가가",
-    "category": "미술관",
+    "display_name": "art gaga",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 인사동 183 4번지",
-    "short_address": "종로구 인사동 183 4번지",
+    "address": "183 4, Insa-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "183 4, Insa-dong, Jongno-gu",
     "location": {
       "lat": 37.5729505,
       "lng": 126.98592229999998
@@ -805,25 +805,25 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c2a9734b65:0xa4bc6b6c84fef82f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "휴대폰창업 에이엠스쿨",
+        "author": "Mobile Phone Entrepreneurship AM School",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "저희회사 워크샵으로 갤러리 구경다녀왔는데\n1,2층인데  조용하고 좋았습니다\n1층에 계신 작가님도 친절하시구요"
+        "relative_time": "2 years ago",
+        "text": "I visited the gallery as part of our company's workshop.\nIt was on the 1st and 2nd floor, and it was quiet and nice.\nThe writer on the first floor is also kind."
       },
       {
         "author": "Seon uk Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "신흥우 작가 작품 전시중"
+        "relative_time": "4 years ago",
+        "text": "Artist Shin Heung-woo's work on display"
       }
     ],
     "photos": [
@@ -839,15 +839,15 @@
   },
   {
     "place_id": "ChIJ4TAGqcKifDUROJFiXIqaBTQ",
-    "display_name": "공인화랑",
-    "category": "미술관",
+    "display_name": "Authorized gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 인사동 183-4",
-    "short_address": "종로구 인사동 183-4",
+    "address": "183-4 Insa-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "183-4 Insa-dong, Jongno-gu",
     "location": {
       "lat": 37.5729505,
       "lng": 126.98592229999998
@@ -867,7 +867,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c2a90630e1:0x34059a8a5c629138!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -877,15 +877,15 @@
   },
   {
     "place_id": "ChIJWTNRqcKifDURe8rd4k-w9PE",
-    "display_name": "남경화랑",
-    "category": "미술관",
+    "display_name": "Nankyung Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서울특별시 종로구 인사동길 27 (인사동)",
-    "short_address": "서울특별시 종로구 인사동길 27 (인사동)",
+    "address": "27 Insadong-gil, Jongno-gu, Seoul, Republic of Korea (Insadong)",
+    "short_address": "27 Insadong-gil, Jongno-gu, Seoul (Insadong)",
     "location": {
       "lat": 37.5730064,
       "lng": 126.98591300000001
@@ -905,7 +905,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c2a9513359:0xf1f4b04fe2ddca7b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -916,14 +916,14 @@
   {
     "place_id": "ChIJcdLmDhCjfDUR7aRGDswCqh0",
     "display_name": "Yok Shimwon Gallery",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 인사동 인사동5길 17",
-    "short_address": "종로구 인사동 인사동5길 17",
+    "address": "17 Insadong 5-gil, Insa-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "17 Insadong 5-gil, Insa-dong, Jongno-gu",
     "location": {
       "lat": 37.572544199999996,
       "lng": 126.98539579999998
@@ -951,15 +951,15 @@
   },
   {
     "place_id": "ChIJiUtIHeiifDURD8lcMwH01F8",
-    "display_name": "상상갤러리",
-    "category": "미술관",
+    "display_name": "Sangsang Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 인사동",
-    "short_address": "종로구 인사동",
+    "address": "Insa-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "Insa-dong, Jongno-gu",
     "location": {
       "lat": 37.5728219,
       "lng": 126.9856377
@@ -979,7 +979,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e81d484b89:0x5fd4f401335cc90f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -989,8 +989,8 @@
         "author": "Kristen Vo",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "쇠고기는 매우 부드럽고 맛있으며, 오랫동안 요리해도 질기지 않습니다."
+        "relative_time": "2 years ago",
+        "text": "The beef is very tender and delicious, and does not become tough even when cooked for a long time."
       }
     ],
     "photos": [
@@ -1000,15 +1000,15 @@
   },
   {
     "place_id": "ChIJddufld2ifDURRqjJXGISAjg",
-    "display_name": "아트레",
-    "category": "미술관",
+    "display_name": "Atre",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 돈의동 번지 5층 41-1 드래곤팰리스오피스텔 510호",
-    "short_address": "종로구 돈의동 번지 5층 41-1 드래곤팰리스오피스텔 510호",
+    "address": "Room 510, Dragon Palace Officetel, 41-1, 5th floor, Donui-dong, Jongno-gu, Seoul, Korea",
+    "short_address": "Room 510, Dragon Palace Officetel, 5th floor, 41-1, Donui-dong, Jongno-gu",
     "location": {
       "lat": 37.572314999999996,
       "lng": 126.9901999
@@ -1028,7 +1028,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2dd959fdb75:0x380212625cc9a846!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1038,15 +1038,15 @@
   },
   {
     "place_id": "ChIJPfMNpMujfDUREIimvRQFhq0",
-    "display_name": "아트스페이스 w",
-    "category": "미술관",
+    "display_name": "art space w",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 묘동 61",
-    "short_address": "종로구 묘동 61",
+    "address": "61 Myo-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "61 Myo-dong, Jongno-gu",
     "location": {
       "lat": 37.5714827,
       "lng": 126.9921143
@@ -1066,18 +1066,18 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3cba40df33d:0xad860514bda68810!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "manul 마늘",
+        "author": "manul garlic",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "아트스페이스 w는 문화공간으로 다양한 예술가들의 전시가 열린다. 지하의 작은 공간이지만 대부분의 전시가 무료여서 더 좋은 곳이다."
+        "relative_time": "2 years ago",
+        "text": "Art Space W is a cultural space where exhibitions by various artists are held. It's a small space in the basement, but it's a better place because most of the exhibitions are free."
       }
     ],
     "photos": [
@@ -1095,15 +1095,15 @@
   },
   {
     "place_id": "ChIJiWP7YACjfDURr4GZfK0JxdY",
-    "display_name": "갤러리손",
-    "category": "미술관",
+    "display_name": "Gallery Son",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 삼일대로 447",
-    "short_address": "종로구 삼일대로 447",
+    "address": "447 Samil-daero, Jongno-gu, Seoul, South Korea",
+    "short_address": "447 Samil-daero, Jongno-gu",
     "location": {
       "lat": 37.574406599999996,
       "lng": 126.98670029999998
@@ -1122,13 +1122,13 @@
     "google_maps_url": "https://maps.google.com/?cid=15475786335253004719",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca30060fb6389:0xd6c509ad7c9981af!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 2:00~7:00",
-      "화요일: 오전 11:40 ~ 오후 6:00",
-      "수요일: 오전 11:40 ~ 오후 6:00",
-      "목요일: 오전 11:40 ~ 오후 6:00",
-      "금요일: 오전 11:40 ~ 오후 6:00",
-      "토요일: 오전 11:40 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: 2:00-7:00 PM",
+      "Tuesday: 11:40 AM - 6:00 PM",
+      "Wednesday: 11:40 AM - 6:00 PM",
+      "Thursday: 11:40 AM - 6:00 PM",
+      "Friday: 11:40 AM - 6:00 PM",
+      "Saturday: 11:40 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": null,
@@ -1139,15 +1139,15 @@
   },
   {
     "place_id": "ChIJ01h91MKifDURgcTZwCWUftY",
-    "display_name": "고우갤러리",
-    "category": "미술관",
+    "display_name": "Gou Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 경운동 66-11번지 하1층 종로구 서울특별시 KR",
-    "short_address": "경운동 66-11번지 하1층 종로구 서울특별시 KR",
+    "address": "1st Floor, 66-11 Gyeongun-dong, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "66-11 Gyeongun-dong, lower 1st floor, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.574744900000006,
       "lng": 126.98617309999999
@@ -1167,7 +1167,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c2d47d58d3:0xd67e9425c0d9c481!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1177,8 +1177,8 @@
   },
   {
     "place_id": "ChIJZSGOKcOifDURNRvCKIh6HfE",
-    "display_name": "다보성갤러리",
-    "category": "미술관",
+    "display_name": "Dabosung Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "home_goods_store",
@@ -1187,8 +1187,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 Bldg 삼일대로 457 KR 서울특별시 종로구 수운회관 1, 2, 4층 1, 2, 4F, Soowoon",
-    "short_address": "종로구 Bldg 삼일대로 457 KR 서울특별시 종로구 수운회관 1, 2, 4층 1, 2, 4F, Soowoon",
+    "address": "457 Samil-daero, Bldg, Jongno-gu, Seoul, Republic of Korea KR 1st, 2nd, 4th floor, Soowoon Hall, Jongno-gu, Seoul 1st, 2nd, 4th floor, Soowoon",
+    "short_address": "457 Samil-daero, Bldg, Jongno-gu KR 1st, 2nd, 4th floor, Soowoon Hall, Jongno-gu, Seoul 1st, 2nd, 4th floor, Soowoon",
     "location": {
       "lat": 37.5753337,
       "lng": 126.9861742
@@ -1207,16 +1207,16 @@
     "google_maps_url": "https://maps.google.com/?cid=17374177662683192117",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c3298e2165:0xf11d7a8828c21b35!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1226,21 +1226,21 @@
         "author": "KEVIN KIM",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "명성황후의 초상화 등 희귀한 국보,보물급 문화재를 전시해서 뜻깊은 시간이 됐슴"
+        "relative_time": "5 months ago",
+        "text": "It was a meaningful time to display rare national treasures and treasure-level cultural assets, including the portrait of Empress Myeongseong."
       },
       {
         "author": "JY Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "친절하심. 공부 많이 됩니다."
+        "relative_time": "4 years ago",
+        "text": "You are kind. I study a lot."
       },
       {
         "author": "soushik shin",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -1259,16 +1259,16 @@
   },
   {
     "place_id": "ChIJJ1Yf08KifDUR7v1xdzes7Yk",
-    "display_name": "아트뱅크경매",
-    "category": "서비스",
+    "display_name": "Art Bank Auction",
+    "category": "service",
     "types": [
       "art_gallery",
       "service",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 경운동",
-    "short_address": "종로구 경운동",
+    "address": "Gyeongun-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "Gyeongun-dong, Jongno-gu",
     "location": {
       "lat": 37.5745545,
       "lng": 126.9862515
@@ -1287,13 +1287,13 @@
     "google_maps_url": "https://maps.google.com/?cid=9938789306903690734",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c2d31f5627:0x89edac377771fdee!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 6:00",
-      "화요일: 오전 10:00 ~ 오후 6:00",
-      "수요일: 오전 10:00 ~ 오후 6:00",
-      "목요일: 오전 10:00 ~ 오후 6:00",
-      "금요일: 오전 10:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 6:00 PM",
+      "Tuesday: 10:00 AM - 6:00 PM",
+      "Wednesday: 10:00 AM - 6:00 PM",
+      "Thursday: 10:00 AM - 6:00 PM",
+      "Friday: 10:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": null,
@@ -1304,15 +1304,15 @@
   },
   {
     "place_id": "ChIJWajDL92ifDUR6Many7tGVZA",
-    "display_name": "갤러리한스페이스 전시 갤러리",
-    "category": "미술관",
+    "display_name": "Gallery HanSpace Exhibition Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 경운동 63-10번지 1층 종로구 서울특별시 KR",
-    "short_address": "경운동 63-10번지 1층 종로구 서울특별시 KR",
+    "address": "1st floor, 63-10 Gyeongun-dong, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "1st floor, 63-10 Gyeongun-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5741989,
       "lng": 126.9869163
@@ -1332,7 +1332,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2dd2fc3a859:0x905546bbcba7c6e8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1342,14 +1342,14 @@
   },
   {
     "place_id": "ChIJJ1Yf08KifDURxzQpe-bCg7g",
-    "display_name": "갤러리 한",
-    "category": "미술관",
+    "display_name": "gallery one",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5744247,
@@ -1370,7 +1370,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c2d31f5627:0xb883c2e67b2934c7!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1380,15 +1380,15 @@
   },
   {
     "place_id": "ChIJQaQWzcKifDURpYhKkMMpfIU",
-    "display_name": "거목화랑",
-    "category": "미술관",
+    "display_name": "Geomok Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 경운동 64-12",
-    "short_address": "종로구 경운동 64-12",
+    "address": "64-12 Gyeongun-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "64-12 Gyeongun-dong, Jongno-gu",
     "location": {
       "lat": 37.574307499999996,
       "lng": 126.986239
@@ -1408,7 +1408,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c2cd16a441:0x857c29c3904a88a5!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1418,7 +1418,7 @@
         "author": "chuljoon Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "13년 전",
+        "relative_time": "13 years ago",
         "text": null
       }
     ],
@@ -1428,15 +1428,15 @@
   },
   {
     "place_id": "ChIJQxM_KMOifDURqdkSEWoOSp4",
-    "display_name": "(주)광복문화티브이",
-    "category": "문화센터",
+    "display_name": "Gwangbok Culture TV Co., Ltd.",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 경운동 88번지 408호 종로구 서울특별시 KR",
-    "short_address": "경운동 88번지 408호 종로구 서울특별시 KR",
+    "address": "#408, 88 Gyeongun-dong, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "Room 408, 88 Gyeongun-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.575215299999996,
       "lng": 126.9857682
@@ -1456,7 +1456,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c3283f1343:0x9e4a0e6a1112d9a9!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1467,14 +1467,14 @@
   {
     "place_id": "ChIJd0HMvHqjfDURO1sIdw-FuYE",
     "display_name": "Zumi Gallery",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 건국관 1층 108호 KR 서울특별시 종로구 인사동4길 17 건국빌딩",
-    "short_address": "KR 서울특별시 종로구 인사동4길 17 건국빌딩 건국관 1층 108호",
+    "address": "Room 108, 1st floor, Konkuk Building, Seoul, Republic of Korea KR Konkuk Building, 17 Insa-dong 4-gil, Jongno-gu, Seoul",
+    "short_address": "KR Room 108, 1st floor, Konkuk Hall, Konkuk Building, 17 Insa-dong 4-gil, Jongno-gu, Seoul",
     "location": {
       "lat": 37.5739466,
       "lng": 126.9867496
@@ -1493,16 +1493,16 @@
     "google_maps_url": "https://maps.google.com/?cid=9347648803052215099",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca37abccc4177:0x81b9850f77085b3b!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 5:00",
-      "화요일: 오전 10:00 ~ 오후 5:00",
-      "수요일: 오전 10:00 ~ 오후 5:00",
-      "목요일: 오전 10:00 ~ 오후 5:00",
-      "금요일: 오전 10:00 ~ 오후 5:00",
-      "토요일: 오후 2:00~6:00",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 5:00 PM",
+      "Tuesday: 10:00 AM - 5:00 PM",
+      "Wednesday: 10:00 AM - 5:00 PM",
+      "Thursday: 10:00 AM - 5:00 PM",
+      "Friday: 10:00 AM - 5:00 PM",
+      "Saturday: 2:00-6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1514,15 +1514,15 @@
   },
   {
     "place_id": "ChIJs4p07dyifDURLhVS_qcfQDE",
-    "display_name": "갤러리강호",
-    "category": "미술관",
+    "display_name": "Gallery Gangho",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 경운동 1-1",
-    "short_address": "종로구 경운동 1-1",
+    "address": "1-1 Gyeongun-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "1-1 Gyeongun-dong, Jongno-gu",
     "location": {
       "lat": 37.5753025,
       "lng": 126.98830500000001
@@ -1542,46 +1542,46 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2dced748ab3:0x31401fa7fe52152e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "조현준",
+        "author": "Hyunjun Cho",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6달 전",
-        "text": "그냥 신인이나 인지도 적은 작가들 전시 횟수 채우기 좋은  좁은 갤러리..주차도 안되는데 일주일에 100만원이라니..땅값이 비싸지만 좀 별로"
+        "relative_time": "6 months ago",
+        "text": "A small gallery that is good for filling up the number of exhibitions by new or less well-known artists. There is no parking, but it costs 1 million won a week. The land is expensive, but it is a bit expensive."
       },
       {
         "author": "Jyy J",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "지하철 1,3,5호선이 있어 교통이 좋은곳입니다"
+        "relative_time": "1 year ago",
+        "text": "It is a place with good transportation as it has subway lines 1, 3, and 5."
       },
       {
-        "author": "아니이렇게귀한곳에",
+        "author": "No, in such a precious place",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "작지만 멋진 작품들이 가득한 민화 전시회 잘봤습니다"
+        "relative_time": "4 years ago",
+        "text": "I enjoyed the folk painting exhibition full of small but wonderful works."
       },
       {
-        "author": "고은하짱",
+        "author": "Go Eun Ha-chan",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "예전엔 한옥이 있었던 곳이었는데..."
+        "relative_time": "3 years ago",
+        "text": "It used to be a place where there was a hanok..."
       },
       {
-        "author": "김윤수",
+        "author": "Yunsoo Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "멋진곳입니다"
+        "relative_time": "1 year ago",
+        "text": "It's a wonderful place"
       }
     ],
     "photos": [
@@ -1592,15 +1592,15 @@
   },
   {
     "place_id": "ChIJ7-VsJcOifDURjF0-8NXSf4o",
-    "display_name": "나화랑",
-    "category": "미술관",
+    "display_name": "Na Hwarang",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 경운동 89-4",
-    "short_address": "종로구 경운동 89-4",
+    "address": "89-4, Gyeongun-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "89-4, Gyeongun-dong, Jongno-gu",
     "location": {
       "lat": 37.5756449,
       "lng": 126.9858852
@@ -1620,17 +1620,17 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c3256ce5ef:0x8a7fd2d5f03e5d8c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "배주미",
+        "author": "Joomi Bae",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
+        "relative_time": "1 month ago",
         "text": null
       }
     ],
@@ -1638,15 +1638,15 @@
   },
   {
     "place_id": "ChIJ8eKs4NOjfDURLwmQAPNannA",
-    "display_name": "리수갤러리",
-    "category": "미술관",
+    "display_name": "Lisu Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 인사동14길 24-3",
-    "short_address": "종로구 인사동14길 24-3",
+    "address": "24-3, Insa-dong 14-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "24-3, Insa-dong 14-gil, Jongno-gu",
     "location": {
       "lat": 37.5748034,
       "lng": 126.9855098
@@ -1665,16 +1665,16 @@
     "google_maps_url": "https://maps.google.com/?cid=8115023578301204783",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3d3e0ace2f1:0x709e5af30090092f!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 6:00",
-      "화요일: 오전 11:00 ~ 오후 6:00",
-      "수요일: 오전 11:00 ~ 오후 6:00",
-      "목요일: 오전 11:00 ~ 오후 6:00",
-      "금요일: 오전 11:00 ~ 오후 6:00",
-      "토요일: 오전 11:00 ~ 오후 6:00",
-      "일요일: 오전 11:00 ~ 오후 6:00"
+      "Monday: 11:00 AM - 6:00 PM",
+      "Tuesday: 11:00 AM - 6:00 PM",
+      "Wednesday: 11:00 AM - 6:00 PM",
+      "Thursday: 11:00 AM - 6:00 PM",
+      "Friday: 11:00 AM - 6:00 PM",
+      "Saturday: 11:00 AM - 6:00 PM",
+      "Sunday: 11:00 AM - 6:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1684,36 +1684,36 @@
         "author": "jeongtae lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "한옥갤러리가 가보고 싶었으나 지금은 휴관 중이었다."
+        "relative_time": "3 years ago",
+        "text": "I wanted to go to the Hanok Gallery, but it was currently closed."
       },
       {
         "author": "B “B” B",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "전시관이 아담하고 예뻤음"
+        "relative_time": "6 years ago",
+        "text": "The exhibition hall was small and pretty."
       },
       {
-        "author": "Cholyong Kim (천궁사)",
+        "author": "Cholyong Kim (Cheongungsa Temple)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "고풍스러운한옥의 맛을느낄수있는곳  2층의 한옥전망대에서 바라본 인사도 한옥지붕의뷰는 잊을수없다"
+        "relative_time": "7 years ago",
+        "text": "A place where you can feel the taste of an old-fashioned hanok. The view of the Insa-do hanok roof from the hanok observatory on the second floor is unforgettable."
       },
       {
         "author": "sang min Ryu",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "갤러리는 항상~"
+        "relative_time": "6 years ago",
+        "text": "The gallery is always~"
       },
       {
-        "author": "김호성",
+        "author": "Kim Ho-seong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "한옥..."
+        "relative_time": "6 years ago",
+        "text": "Hanok..."
       }
     ],
     "photos": [
@@ -1731,15 +1731,15 @@
   },
   {
     "place_id": "ChIJXxU9ycKifDURaMRP3nIYGRQ",
-    "display_name": "우림화랑(대림화랑)",
-    "category": "미술관",
+    "display_name": "Woorim Gallery (Daelim Gallery)",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 관훈동 30-27",
-    "short_address": "종로구 관훈동 30-27",
+    "address": "30-27 Gwanhun-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "30-27 Gwanhun-dong, Jongno-gu",
     "location": {
       "lat": 37.5741729,
       "lng": 126.9858852
@@ -1759,7 +1759,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c2c93d155f:0x14191872de4fc468!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1769,15 +1769,15 @@
   },
   {
     "place_id": "ChIJvblSz8KifDURDyUEpuKd2LM",
-    "display_name": "청아화랑",
-    "category": "미술관",
+    "display_name": "Cheongah Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 관훈동 30-9",
-    "short_address": "종로구 관훈동 30-9",
+    "address": "30-9 Gwanhun-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "30-9 Gwanhun-dong, Jongno-gu",
     "location": {
       "lat": 37.5743048,
       "lng": 126.98570809999998
@@ -1805,15 +1805,15 @@
   },
   {
     "place_id": "ChIJvblSz8KifDURbzeZnZKMrBQ",
-    "display_name": "모인화랑",
-    "category": "미술관",
+    "display_name": "Moin Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 관훈동 30-9",
-    "short_address": "종로구 관훈동 30-9",
+    "address": "30-9 Gwanhun-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "30-9 Gwanhun-dong, Jongno-gu",
     "location": {
       "lat": 37.5743395,
       "lng": 126.98566299999999
@@ -1833,7 +1833,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c2cf52b9bd:0x14ac8c929d99376f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1845,15 +1845,15 @@
   },
   {
     "place_id": "ChIJIQkfMcOifDUR9NPV-fas4ME",
-    "display_name": "탑골미술관",
-    "category": "미술관",
+    "display_name": "Tapgol Art Museum",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 경운동 90-3번지 1층 종로구 서울특별시 KR",
-    "short_address": "경운동 90-3번지 1층 종로구 서울특별시 KR",
+    "address": "1st floor, 90-3 Gyeongun-dong, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "1st floor, 90-3 Gyeongun-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.575905299999995,
       "lng": 126.9858494
@@ -1873,32 +1873,32 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c3311f0921:0xc1e0acf6f9d5d3f4!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "녹색걷기",
+        "author": "green walking",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6달 전",
-        "text": "탑골미술관은 다양한 세대가 미술을 통해 소통하고 교감하는 열린 문화예술공간\n을 지향합니다.\n서울노인복지센타\n*대중교통:종로구 삼일대로\n3)안국역 5번 출구에서 55m\n서울노인복센타 입구 좌측\n문학축제 꿈으로 지은.... 관람"
+        "relative_time": "6 months ago",
+        "text": "Tapgol Museum of Art is an open cultural and artistic space where various generations communicate and interact through art.\nAimed for.\nSeoul Senior Welfare Center\n*Public transportation: Samil-daero, Jongno-gu\n3) 55m from Exit 5 of Anguk Station\nOn the left side of the entrance to Seoul Senior Citizens Center\nBuilt with a dream of a literary festival.... View"
       },
       {
-        "author": "초지일관localguidek",
+        "author": "Choji consistent local guidek",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "작품 감상 잘 했습니다"
+        "relative_time": "1 year ago",
+        "text": "I enjoyed the work"
       },
       {
         "author": "Kate Yi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "최낙경 복원전 2018년 5월 18일 ~ 2018년 6월 15일"
+        "relative_time": "7 years ago",
+        "text": "Choi Nak-gyeong Restoration Exhibition May 18, 2018 ~ June 15, 2018"
       }
     ],
     "photos": [
@@ -1917,14 +1917,14 @@
   {
     "place_id": "ChIJbRVv4RujfDURrUeoJe2hCio",
     "display_name": "AA Gallery",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 삼일대로 439",
-    "short_address": "종로구 삼일대로 439",
+    "address": "439 Samil-daero, Jongno-gu, Seoul, South Korea",
+    "short_address": "439 Samil-daero, Jongno-gu",
     "location": {
       "lat": 37.573716999999995,
       "lng": 126.98720600000001
@@ -1943,16 +1943,16 @@
     "google_maps_url": "https://maps.google.com/?cid=3029411739271186349",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca31be16f156d:0x2a0aa1ed25a847ad!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 10:00 ~ 오후 6:00",
-      "수요일: 오전 10:00 ~ 오후 6:00",
-      "목요일: 오전 10:00 ~ 오후 6:00",
-      "금요일: 오전 10:00 ~ 오후 6:00",
-      "토요일: 오전 10:00 ~ 오후 6:00",
-      "일요일: 오전 10:00 ~ 오후 6:00"
+      "Monday: Closed day",
+      "Tuesday: 10:00 AM - 6:00 PM",
+      "Wednesday: 10:00 AM - 6:00 PM",
+      "Thursday: 10:00 AM - 6:00 PM",
+      "Friday: 10:00 AM - 6:00 PM",
+      "Saturday: 10:00 AM - 6:00 PM",
+      "Sunday: 10:00 AM - 6:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1962,15 +1962,15 @@
   },
   {
     "place_id": "ChIJF1exJcOifDUR0aW0kG8RqJk",
-    "display_name": "제이갤러리",
-    "category": "미술관",
+    "display_name": "J Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 경운동 89-4",
-    "short_address": "종로구 경운동 89-4",
+    "address": "89-4, Gyeongun-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "89-4, Gyeongun-dong, Jongno-gu",
     "location": {
       "lat": 37.575617199999996,
       "lng": 126.98552409999999
@@ -1990,7 +1990,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c325b15717:0x99a8116f90b4a5d1!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2000,15 +2000,15 @@
   },
   {
     "place_id": "ChIJ1WgTJcOifDURmJ2cXKBgXB4",
-    "display_name": "한우리문화원",
-    "category": "문화센터",
+    "display_name": "Hanwoori Cultural Center",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 경운동 89-4",
-    "short_address": "종로구 경운동 89-4",
+    "address": "89-4, Gyeongun-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "89-4, Gyeongun-dong, Jongno-gu",
     "location": {
       "lat": 37.5757005,
       "lng": 126.9855796
@@ -2028,7 +2028,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c3251368d5:0x1e5c60a05c9c9d98!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2038,15 +2038,15 @@
   },
   {
     "place_id": "ChIJW_ggc-ejfDURc9ogC39Nkbw",
-    "display_name": "돈화문 갤러리",
-    "category": "미술관",
+    "display_name": "Donhwamun Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 돈화문로 71 인산BD 9층",
-    "short_address": "종로구 돈화문로 71 인산BD 9층",
+    "address": "9th floor, Insan BD, 71 Donhwamun-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "9th floor, Insan BD, 71 Donhwamun-ro, Jongno-gu",
     "location": {
       "lat": 37.5748578,
       "lng": 126.99062399999998
@@ -2066,7 +2066,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3e77320f85b:0xbc914d7f0b20da73!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2076,8 +2076,8 @@
         "author": "MY Yeung",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "딸기 라떼는 정말 맛있어요"
+        "relative_time": "2 years ago",
+        "text": "Strawberry latte is really delicious"
       }
     ],
     "photos": [
@@ -2086,15 +2086,15 @@
   },
   {
     "place_id": "ChIJOavn2Y2jfDURCCZj2I5K-iQ",
-    "display_name": "나마갤러리",
-    "category": "미술관",
+    "display_name": "Nama Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 돈화문로 80-1",
-    "short_address": "종로구 돈화문로 80-1",
+    "address": "80-1 Donhwamun-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "80-1 Donhwamun-ro, Jongno-gu",
     "location": {
       "lat": 37.5756051,
       "lng": 126.99083490000001
@@ -2113,55 +2113,55 @@
     "google_maps_url": "https://maps.google.com/?cid=2664524106919257608",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca38dd9e7ab39:0x24fa4a8ed8632608!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 10:00 ~ 오전 6:00",
-      "수요일: 오전 10:00 ~ 오후 6:00",
-      "목요일: 오전 10:00 ~ 오후 6:00",
-      "금요일: 오전 10:00 ~ 오후 6:00",
-      "토요일: 오전 10:00 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 10:00 AM - 6:00 AM",
+      "Wednesday: 10:00 AM - 6:00 PM",
+      "Thursday: 10:00 AM - 6:00 PM",
+      "Friday: 10:00 AM - 6:00 PM",
+      "Saturday: 10:00 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이승택",
+        "author": "Seungtaek Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "음, 그곳이 무슨 갤러린지 모르게 가졌다고 하는게 맞을 듯..\n\n내면의 서재라는 간판을 보고 들어갔는데 서점은 아니었고 그냥 카페였음.. 좀 낚인듯한 기분이었는데 위로 연결된 곳이 전시장이었음.. 그런데 뜻밖에 무척 근사하고 멋진 작품들이 있어 별이 4개..  ^^;;\n\n작품은 좋은데 홍보는 완전 꽝으로 보였음  ㅜㅜ\n\n..."
+        "relative_time": "4 years ago",
+        "text": "Well, it would be correct to say that I had it without knowing what kind of gallery it was.\n\nI went in after seeing the sign saying ‘Inner Library’, but it wasn’t a bookstore, it was just a cafe… I felt a bit like I was hooked, but the place connected to the top turned out to be an exhibition hall… But unexpectedly, there were some very cool and wonderful works, so 4 stars… ^^;;\n\nThe work was good, but the promotion seemed like a complete failure ㅜㅜ\n\n..."
       },
       {
         "author": "jeongtae lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "창덕궁에서 종로3가역 가는 길에 있는 갤러리인데 가끔 거장들의 작품들을 볼수 있다."
+        "relative_time": "1 year ago",
+        "text": "It is a gallery located on the way from Changdeokgung Palace to Jongno 3-ga Station, and you can sometimes see works by great masters."
       },
       {
         "author": "Jinnie Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "7월에 러시아작품 전시중인데 꽤나 풍성한 전시에여"
+        "relative_time": "4 years ago",
+        "text": "Russian works are on display in July, and it is quite a rich exhibition."
       },
       {
-        "author": "김형욱",
+        "author": "Kim Hyeong-wook",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "5년 전",
-        "text": "굳이... 지인이 전시회를 여는게 아니라면 아까운 시간을 쪼개어 방문하실 만한 갤러리는 아닙니다."
+        "relative_time": "5 years ago",
+        "text": "Unless a friend of yours is holding an exhibition, this is not a gallery worth wasting your time visiting."
       },
       {
         "author": "Hyunsoo Kwon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "아늑하고 좋았어요. 소련 회화 작품들이 마음에 들었습니다. 다시 방문할게요."
+        "relative_time": "4 years ago",
+        "text": "It was cozy and nice. I liked Soviet paintings. I will visit again."
       }
     ],
     "photos": [
@@ -2179,15 +2179,15 @@
   },
   {
     "place_id": "ChIJ79CwCtyifDURXvDJG0YCorI",
-    "display_name": "비원길화랑",
-    "category": "미술관",
+    "display_name": "Biwon Gil Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 와룡동 147-1번지 종로구 서울특별시 KR",
-    "short_address": "와룡동 147-1번지 종로구 서울특별시 KR",
+    "address": "147-1 Waryong-dong, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "147-1 Waryong-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5757155,
       "lng": 126.990403
@@ -2215,7 +2215,7 @@
         "author": "Huong Trieu",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "11달 전",
+        "relative_time": "11 months ago",
         "text": null
       }
     ],
@@ -2223,15 +2223,15 @@
   },
   {
     "place_id": "ChIJh25uFtyifDURYgnqM6G1kxk",
-    "display_name": "갤러리숲",
-    "category": "미술관",
+    "display_name": "Gallery Forest",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 와룡동 168-1",
-    "short_address": "종로구 와룡동 168-1",
+    "address": "168-1 Waryong-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "168-1 Waryong-dong, Jongno-gu",
     "location": {
       "lat": 37.576026299999995,
       "lng": 126.99113690000001
@@ -2251,7 +2251,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2dc166e6e87:0x1993b5a133ea0962!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2261,15 +2261,15 @@
   },
   {
     "place_id": "ChIJm0zDituifDURBQNMkyiDQTE",
-    "display_name": "358선교문화센터",
-    "category": "문화센터",
+    "display_name": "358 Mission Cultural Center",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 와룡동",
-    "short_address": "종로구 와룡동",
+    "address": "Waryong-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "Waryong-dong, Jongno-gu",
     "location": {
       "lat": 37.5759119,
       "lng": 126.990303
@@ -2289,10 +2289,10 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2db8ac34c9b:0x31418328934c0305!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "체크카드"
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2301,15 +2301,15 @@
   },
   {
     "place_id": "ChIJjbc68tuifDURuDZPmJNx1i0",
-    "display_name": "민들레문화방",
-    "category": "문화센터",
+    "display_name": "Dandelion Culture Room",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 와룡동 104-1번지 1층 종로구 서울특별시 KR",
-    "short_address": "와룡동 104-1번지 1층 종로구 서울특별시 KR",
+    "address": "1st floor, 104-1 Waryong-dong, Seoul, Republic of Korea Seoul, Jongno-gu KR",
+    "short_address": "1st floor, 104-1 Waryong-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5761466,
       "lng": 126.99066099999999
@@ -2337,15 +2337,15 @@
   },
   {
     "place_id": "ChIJIbK3UuyjfDURnRpsLmMWJWg",
-    "display_name": "스페이스22 익선",
-    "category": "미술관",
+    "display_name": "Space22 Ikseon",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 익선동 46",
-    "short_address": "종로구 익선동 46",
+    "address": "46 Ikseon-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "46 Ikseon-dong, Jongno-gu",
     "location": {
       "lat": 37.574588399999996,
       "lng": 126.98946949999998
@@ -2364,13 +2364,13 @@
     "google_maps_url": "https://maps.google.com/?cid=7504428969319209629",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3ec52b7b221:0x682516632e6c1a9d!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 11:00 ~ 오후 7:00",
-      "수요일: 오전 11:00 ~ 오후 7:00",
-      "목요일: 오전 11:00 ~ 오후 7:00",
-      "금요일: 오전 11:00 ~ 오후 7:00",
-      "토요일: 오전 11:00 ~ 오후 7:00",
-      "일요일: 오전 11:00 ~ 오후 7:00"
+      "Monday: Closed day",
+      "Tuesday: 11:00 AM - 7:00 PM",
+      "Wednesday: 11:00 AM - 7:00 PM",
+      "Thursday: 11:00 AM - 7:00 PM",
+      "Friday: 11:00 AM - 7:00 PM",
+      "Saturday: 11:00 AM - 7:00 PM",
+      "Sunday: 11:00 AM - 7:00 PM"
     ],
     "services": null,
     "payment": null,
@@ -2378,10 +2378,10 @@
     "parking": null,
     "reviews": [
       {
-        "author": "군고구마ho",
+        "author": "Roasted Sweet Potatoho",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       }
     ],
@@ -2389,15 +2389,15 @@
   },
   {
     "place_id": "ChIJk6DmPpyjfDURbxREjJMHGrY",
-    "display_name": "사단법인한국창조민술협회",
-    "category": "미술관",
+    "display_name": "Korea Creative Arts Association",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 삼일대로32길 36",
-    "short_address": "종로구 삼일대로32길 36",
+    "address": "36 Samil-daero 32-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "36 Samil-daero 32-gil, Jongno-gu",
     "location": {
       "lat": 37.5752069,
       "lng": 126.98909099999999
@@ -2417,7 +2417,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca39c3ee6a093:0xb61a07938c44146f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2427,15 +2427,15 @@
   },
   {
     "place_id": "ChIJ8y03YNyifDURbNq9pMwylJc",
-    "display_name": "필립강갤러리",
-    "category": "미술관",
+    "display_name": "Philip Kang Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 익선동",
-    "short_address": "종로구 익선동",
+    "address": "Ikseon-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "Ikseon-dong, Jongno-gu",
     "location": {
       "lat": 37.5752069,
       "lng": 126.98909099999999
@@ -2455,7 +2455,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2dc60372df3:0x979432cca4bdda6c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2465,15 +2465,15 @@
   },
   {
     "place_id": "ChIJZYHeX9yifDUR3kT8GxJtNus",
-    "display_name": "(사단)동인문화원",
-    "category": "문화센터",
+    "display_name": "(Division) Dongin Cultural Center",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 익선동 30-6",
-    "short_address": "종로구 익선동 30-6",
+    "address": "30-6 Ikseon-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "30-6 Ikseon-dong, Jongno-gu",
     "location": {
       "lat": 37.5752069,
       "lng": 126.98909099999999
@@ -2493,7 +2493,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2dc5fde8165:0xeb366d121bfc44de!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2503,15 +2503,15 @@
   },
   {
     "place_id": "ChIJh0P-iNyifDURhB4ObF8SEq0",
-    "display_name": "갤러리공간35",
-    "category": "미술관",
+    "display_name": "Gallery space 35",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 삼일대로32길 35",
-    "short_address": "종로구 삼일대로32길 35",
+    "address": "35 Samil-daero 32-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "35 Samil-daero 32-gil, Jongno-gu",
     "location": {
       "lat": 37.5755694,
       "lng": 126.98881329999999
@@ -2531,46 +2531,46 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2dc88fe4387:0xad12125f6c0e1e84!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "구르미네",
+        "author": "Gurmine",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "운현궁 옆 작은 한옥 갤러리. 소규모 전시에 적합. 옛 정취가 향수를 불러일으킨다. 지인 도예전시 보고 옴."
+        "relative_time": "5 years ago",
+        "text": "A small hanok gallery next to Unhyeongung Palace. Suitable for small exhibitions. The old atmosphere evokes nostalgia. I came to see a friend's ceramic art exhibition."
       },
       {
         "author": "Jeongae KIM",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "좋습니다.온돌방도 좋고 특히 관장님의 차가 참 좋습니다.^^"
+        "relative_time": "4 years ago",
+        "text": "It's good. The ondol room is good, and I especially like the director's tea. ^^"
       },
       {
-        "author": "테슬라",
+        "author": "tesla",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "작품 예술품입니다.구경하세요 입장료 무료입니다"
+        "relative_time": "3 years ago",
+        "text": "It is a work of art. Take a look. Admission is free."
       },
       {
         "author": "Jum Sook Kim (Pium)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "작지만 정갈하고 예쁜 한옥갤러리~~"
+        "relative_time": "5 years ago",
+        "text": "A small but neat and pretty hanok gallery~~"
       },
       {
         "author": "heekyung wei",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "한옥갤러리"
+        "relative_time": "4 years ago",
+        "text": "Hanok Gallery"
       }
     ],
     "photos": [
@@ -2588,15 +2588,15 @@
   },
   {
     "place_id": "ChIJgdDfqNyifDUROyQk5azUJZ0",
-    "display_name": "주한일본대사관 공보문화원",
-    "category": "문화센터",
+    "display_name": "Public Affairs and Culture Center of the Japanese Embassy in Korea",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 율곡로6길",
-    "short_address": "종로구 율곡로6길",
+    "address": "Yulgok-ro 6-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "Yulgok-ro 6-gil, Jongno-gu",
     "location": {
       "lat": 37.5762855,
       "lng": 126.98927499999999
@@ -2615,13 +2615,13 @@
     "google_maps_url": "https://maps.google.com/?cid=11323690677136794683",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2dca8dfd081:0x9d25d4ace524243b!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 5:30",
-      "화요일: 오전 10:00 ~ 오후 5:30",
-      "수요일: 오전 10:00 ~ 오후 5:30",
-      "목요일: 오전 10:00 ~ 오후 5:30",
-      "금요일: 오전 10:00 ~ 오후 5:30",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 5:30 PM",
+      "Tuesday: 10:00 AM - 5:30 PM",
+      "Wednesday: 10:00 AM - 5:30 PM",
+      "Thursday: 10:00 AM - 5:30 PM",
+      "Friday: 10:00 AM - 5:30 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": null,
@@ -2632,36 +2632,36 @@
         "author": "WANGYOUNG LEE",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "지금까지 7~8차례 정도 방문한 거 같습니다. 1~2년회 1번씩정도 잊을만하면 찾아가게 되는곳이죠. 전시이벤트나 사진전등을 관람하거나 시청에 있는 일본관광청과 함께 여행정보를 얻기 위해서도 갔었죠.\n\n신촌에 있다가 서울역쪽으로 옮긴 일본 국제교류기금 문화센터까지 크게는 이렇게 3곳을 이따금씩 다녀오고 각 현청에서 운영하는 관광사무소등도 열심히 발품을 팔아가며 여행계획을 짰었죠.\n\n그렇게 128회 일본여행을 다녀오고 이제 다음달 1일이면 마지막 여행으로 부터 딱 1년이 지나갑니다. 코로나 2단계 거리두기완화로 때마침 오프라인 행사가 있어서 오랜만에 다시 이곳에 오게 됩니다.\n\n이번 전시이벤트는 우키요에의 거장 호쿠사이전입니다. 그림만 봐도 알정도로 너무나도 많이 알려진 작품이지요. 일본여행을 하면서 나가노현 오부세에 위치한 그의 미술관도 다녀왔었고 기념티셔츠도 구입해 입고 다녔었죠.\n\n사전에 시간대별로 10여명씩만 신청을 받아 인원조절도 하고 입구에 적외선감지기도 설치하고 방역까지 완료하여 코로나로부터 완벽하게 차단을 하면서 진행하는 모습에 안심이 되었습니다.\n\n관람객분들도 진행요원분들도 전시장 내부에서 마스크를 벗지 않으시고 음식물도 지참할 수 없어서 더 안심된 환경을 구축하였습니다. (비록 작품들은 모조품이지만) 이렇게 이곳에 온것만으로도 기쁜 순간입니다. 모든분들이 저처럼 들뜬 기분이었을 겁니다.\n\n정성껏 준비해주신 한정판 기념품도 받고 판화작업을 하는 장인분들의 열정적인 오리지널 영상도 볼 수 있었고 이날 최고의 인기였던 우키요에 체험의 현장까지~ 1시간동안 시간가는줄 모르고 일본을 여행하였습니다.\n\n그동안 후지산을 보는 것이 목적인 여행도 두자릿수 이상다녀왔는데, 1/3은 선명하게 보고 1/3은 전혀 못보고 1/3은 구름에 가려서 볼정도로 쉽게 허락하지 않았던 후지산이었답니다.\n\n앞으로도 좋은 이벤트와 전시, 기획등으로 다시 방문드릴 날을 기다립니다. 그리고 오늘 너무도 친절하게 맞이해 주신 진행팀에게 감사드리며 하루빨리 129회 일본여행도 떠날수 있기를 바랍니다. 감사합니다."
+        "relative_time": "5 years ago",
+        "text": "I think I've visited about 7 or 8 times so far. It's a place I go to once every year or two when I feel like I'm forgetting something. I also went to see exhibitions and photography exhibitions, and to get travel information from the Japan Tourism Agency at the city hall.\n\nI visited three major places from time to time, including the Japan Foundation Cultural Center, which was located in Sinchon and moved to Seoul Station, and worked hard at the tourist offices operated by each prefectural office to make a travel plan.\n\nI have made my 128th trip to Japan, and on the 1st of next month, exactly one year will have passed since my last trip. There was an offline event due to the easing of social distancing in stage 2 of Corona, so I came here again after a long time.\n\nThis exhibition event is an exhibition of Ukiyo-e master Hokusai. This work is so well-known that you can recognize it just by looking at the picture. While traveling in Japan, I visited his art museum located in Obuse, Nagano Prefecture, and even bought and wore a commemorative T-shirt.\n\nI was reassured to see that only about 10 people applied for each time slot in advance, the number of people was adjusted, an infrared detector was installed at the entrance, and quarantine was completed to completely block the spread of COVID-19.\n\nNeither visitors nor staff had to take off their masks inside the exhibition hall, and they were not allowed to bring food or drinks, creating a more secure environment. (Even though the works are fakes), it is a happy moment just to come here. I'm sure everyone was just as excited as I was.\n\nWe received limited-edition souvenirs carefully prepared, watched original videos of passionate printmaking craftsmen, and even went to the Ukiyo-e experience, which was the most popular of the day. We traveled around Japan for an hour without realizing the passage of time.\n\nIn the meantime, I have been on more than double-digit trips with the goal of seeing Mt. Fuji, but 1/3 of the time I could see Mt. Fuji clearly, 1/3 of the time I could not see it at all, and 1/3 of the time it was obscured by clouds, making it difficult to see Mt. Fuji.\n\nWe look forward to seeing you again in the future with great events, exhibitions, and plans. And I would like to thank the hosting team for welcoming me so kindly today, and I hope to be able to leave for my 129th trip to Japan as soon as possible. thank you"
       },
       {
-        "author": "김종수",
+        "author": "Jongsu Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "다양한 영화와 전시. 가끔 일본 소설가나 전문 통역사가 특강해주시는데 무조건 일본 공부해야한다는 강박에서 벗어나 그 문화를 즐길수 있는 곳"
+        "relative_time": "6 years ago",
+        "text": "Various movies and exhibitions. Occasionally, Japanese novelists or professional interpreters give special lectures, so it is a place where you can enjoy the culture without the compulsion to study Japan."
       },
       {
         "author": "mona",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "수상 및 전시 일정이 있어 방문하였음. 직원들이 친절하게 맞아주셔서 좋았던 기억이 있음. 한국과 일본이 안좋은 감정을 버리고 가까운 이웃으로 일본과 자주 교류하는 장소가 되었으면 함."
+        "relative_time": "7 years ago",
+        "text": "I visited because I had an award and exhibition schedule. I have a nice memory of being greeted so kindly by the staff. I hope that Korea and Japan will let go of their bad feelings and become close neighbors with frequent exchanges with Japan."
       },
       {
         "author": "HYEONMOK KIM",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "코로나로 일본에 가지 못했는데 우키요에 전시회가 있다고 해서 당장에 갔습니다.\n화려한 색채의 우키요애도 많이 보고 체험 활동도 재미있었습니다. 이런 문화적 교류가 자주있었으면 좋겠네요~:)"
+        "relative_time": "4 years ago",
+        "text": "I couldn't go to Japan due to the coronavirus, but I heard there was an ukiyo-e exhibition, so I went right away.\nI saw a lot of colorful Ukiyo-e and the hands-on activities were fun. I hope there will be more cultural exchanges like this~:)"
       },
       {
-        "author": "김강동철 류헤이",
+        "author": "Kim Kang Dong-cheol and Ryu Hei",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "일본가요제 참여해보려 가봤는데 아주 좋았습니다.."
+        "relative_time": "7 years ago",
+        "text": "I went to participate in the Japanese Song Festival and it was great."
       }
     ],
     "photos": [
@@ -2679,15 +2679,15 @@
   },
   {
     "place_id": "ChIJ25WykNuifDURC4hEWK19ypI",
-    "display_name": "한국문화정품관갤러리",
-    "category": "미술관",
+    "display_name": "Korean Culture Genuine Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 운니동 1번지 1층 한국문화정품관 종로구 서울특별시 KR",
-    "short_address": "운니동 1번지 1층 한국문화정품관 종로구 서울특별시 KR",
+    "address": "Korean Culture Genuine Hall, 1st floor, 1 Unni-dong, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "1st floor, Unni-dong, Korean Culture Genuine Hall, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5768677,
       "lng": 126.98974439999999
@@ -2707,7 +2707,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2db90b295db:0x92ca7dad5844880b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2717,14 +2717,14 @@
         "author": "sᴀʀᴅᴏʀʙᴇᴋ",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       },
       {
-        "author": "신명철",
+        "author": "Shin Myeong-cheol",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -2732,15 +2732,15 @@
   },
   {
     "place_id": "ChIJf4Gv9tuifDURVER09wdh1TA",
-    "display_name": "공공예술센터태인",
-    "category": "문화센터",
+    "display_name": "Public Art Center Taein",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 와룡동 97-1",
-    "short_address": "종로구 와룡동 97-1",
+    "address": "97-1 Waryong-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "97-1 Waryong-dong, Jongno-gu",
     "location": {
       "lat": 37.57671500000001,
       "lng": 126.98927659999998
@@ -2760,7 +2760,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2dbf6af817f:0x30d56107f7744454!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2770,15 +2770,15 @@
   },
   {
     "place_id": "ChIJjRPhTwCjfDURNv5Iio07sj8",
-    "display_name": "공공룸",
-    "category": "미술관",
+    "display_name": "public room",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 계동길 23 북쪽방향 두번째가게",
-    "short_address": "종로구 계동길 23 북쪽방향 두번째가게",
+    "address": "Second store in the north direction, 23 Gyedong-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "Second store towards the north, 23 Gyedong-gil, Jongno-gu",
     "location": {
       "lat": 37.578320399999996,
       "lng": 126.9866712
@@ -2798,7 +2798,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3004fe1138d:0x3fb23b8d8a48fe36!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2808,8 +2808,8 @@
         "author": "Kai Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "안국역 갤러리 공공룸\n북촌 조그마한 팝업&전시장. 멀리서부터 눈을 확 잡아끄는 KATH 작가 개인전 EXTRA TEXTURE를 다녀왔음. 음악을 좋아한다면 꼭 방문할 것. Shut up and take my money."
+        "relative_time": "1 year ago",
+        "text": "Anguk Station Gallery Public Room\nBukchon small pop-up & exhibition hall. I went to artist KATH's solo exhibition EXTRA TEXTURE, which caught the eye from afar. If you like music, you must visit. Shut up and take my money."
       }
     ],
     "photos": [
@@ -2825,15 +2825,15 @@
   },
   {
     "place_id": "ChIJqWpNDVihfDUR7bgDq_edva4",
-    "display_name": "식품명인체험홍보관 (KFMCENTER)",
-    "category": "문화센터",
+    "display_name": "Food Master Experience Promotion Center (KFMCENTER)",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 북촌로 18 식품명인체험홍보관 1층, 2층",
-    "short_address": "종로구 북촌로 18 식품명인체험홍보관 1층, 2층",
+    "address": "1st and 2nd floors, Food Master Experience Promotion Center, 18 Bukchon-ro, Jongno-gu, Seoul, Korea",
+    "short_address": "1st and 2nd floors, Food Master Experience Promotion Center, 18 Bukchon-ro, Jongno-gu",
     "location": {
       "lat": 37.578319,
       "lng": 126.98559069999999
@@ -2852,20 +2852,20 @@
     "google_maps_url": "https://maps.google.com/?cid=12591393820249405677",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1580d4d6aa9:0xaebd9df7ab03b8ed!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 10:00 ~ 오후 7:00",
-      "수요일: 오전 10:00 ~ 오후 7:00",
-      "목요일: 오전 10:00 ~ 오후 7:00",
-      "금요일: 오전 10:00 ~ 오후 7:00",
-      "토요일: 오전 10:00 ~ 오후 7:00",
-      "일요일: 오전 10:00 ~ 오후 7:00"
+      "Monday: Closed day",
+      "Tuesday: 10:00 AM - 7:00 PM",
+      "Wednesday: 10:00 AM - 7:00 PM",
+      "Thursday: 10:00 AM - 7:00 PM",
+      "Friday: 10:00 AM - 7:00 PM",
+      "Saturday: 10:00 AM - 7:00 PM",
+      "Sunday: 10:00 AM - 7:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2874,36 +2874,36 @@
         "author": "T.B All",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "식품명인 체험 홍보관. 체험도 가능하고 관람도 좋다. 김치와 양념을 무료로 나누어준다. 북촌에 간다면 꼭 들러 보시길."
+        "relative_time": "1 year ago",
+        "text": "Food Master Experience Promotion Center. It is possible to experience and enjoy the sights. Kimchi and seasoning are distributed for free. If you go to Bukchon, be sure to stop by."
       },
       {
-        "author": "오홍석",
+        "author": "Hongseok Oh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "각종 유명한 장인들이 만든 전통주 시음이 가능하며 합리적인 가격에 구매가 가능합니다. 전통주 체험도 재미있었습니다."
+        "relative_time": "6 years ago",
+        "text": "You can taste traditional liquor made by various famous artisans and purchase it at a reasonable price. The traditional liquor experience was also fun."
       },
       {
-        "author": "다르다 떠나다",
+        "author": "different leave",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "토욜마다 식품 명인께서 직접 오셔서 함께 만드는 시간을 가져요. 두시간 동안 식품명인의 시간과 정성이 가득한 결과물을 나도 접해보고 만들어보고 먹어보고... 어디서도 가질 수 없는 시간이에요\n평일체험도 있습니다."
+        "relative_time": "3 years ago",
+        "text": "Every Saturday, a food expert comes by and we spend time together making it. For two hours, I got to experience, make, and eat the results of a food master's time and sincerity... It's a time you can't get anywhere else.\nThere are also weekday experiences."
       },
       {
         "author": "YoungJu Jang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "식품명인님을 서울에서 만날수 있고 맛볼수 있어요. 만드는 실습체험까지. 응원해드려야겠어요."
+        "relative_time": "6 years ago",
+        "text": "You can meet and taste food masters in Seoul. Even hands-on experience making it. I need to support you."
       },
       {
-        "author": "오닉시아",
+        "author": "Onyxia",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9달 전",
-        "text": "한적하고 좋음"
+        "relative_time": "9 months ago",
+        "text": "Quiet and nice"
       }
     ],
     "photos": [
@@ -2921,15 +2921,15 @@
   },
   {
     "place_id": "ChIJ3ZbMrgqjfDURTaZvWF880TA",
-    "display_name": "갤러리 재동",
-    "category": "미술관",
+    "display_name": "Gallery Jaedong",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 재동 북촌로 20-3",
-    "short_address": "종로구 재동 북촌로 20-3",
+    "address": "20-3 Bukchon-ro, Jaedong, Jongno-gu, Seoul, South Korea",
+    "short_address": "20-3 Bukchon-ro, Jaedong, Jongno-gu",
     "location": {
       "lat": 37.578567,
       "lng": 126.98556010000001
@@ -2949,7 +2949,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca30aaecc96dd:0x30d13c5f586fa64d!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2959,35 +2959,35 @@
         "author": "Mustafa Al Asmar",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "한국 선물 사기 좋은 가게네요\n친절하고 반갑게 맞아주셔서 감사합니다"
+        "relative_time": "3 years ago",
+        "text": "This is a good store to buy Korean gifts.\nThank you for your kind and welcoming welcome."
       },
       {
         "author": "Levi Rasta",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "좋은"
+        "relative_time": "1 year ago",
+        "text": "good"
       },
       {
-        "author": "류예은",
+        "author": "Ryu Ye-eun",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10달 전",
+        "relative_time": "10 months ago",
         "text": null
       },
       {
         "author": "A Google User",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10달 전",
+        "relative_time": "10 months ago",
         "text": null
       },
       {
         "author": "A Google User",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10달 전",
+        "relative_time": "10 months ago",
         "text": null
       }
     ],
@@ -2999,15 +2999,15 @@
   },
   {
     "place_id": "ChIJK5idX8SifDURnFwb1JPzcc8",
-    "display_name": "아라리오갤러리 서울",
-    "category": "미술관",
+    "display_name": "Arario Gallery Seoul",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 율곡로 85",
-    "short_address": "종로구 율곡로 85",
+    "address": "85 Yulgok-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "85 Yulgok-ro, Jongno-gu",
     "location": {
       "lat": 37.577830999999996,
       "lng": 126.9885008
@@ -3026,16 +3026,16 @@
     "google_maps_url": "https://maps.google.com/?cid=14947996454463691932",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c45f9d982b:0xcf71f393d41b5c9c!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 11:00 ~ 오후 6:00",
-      "수요일: 오전 11:00 ~ 오후 6:00",
-      "목요일: 오전 11:00 ~ 오후 6:00",
-      "금요일: 오전 11:00 ~ 오후 6:00",
-      "토요일: 오전 11:00 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 11:00 AM - 6:00 PM",
+      "Wednesday: 11:00 AM - 6:00 PM",
+      "Thursday: 11:00 AM - 6:00 PM",
+      "Friday: 11:00 AM - 6:00 PM",
+      "Saturday: 11:00 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3045,36 +3045,36 @@
         "author": "JOODY AHN",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "1. 인세인 박(Insane Park)\n갤러리 들어가자마자 미술관을 다 때려부시는 영상이 나와요. 건물 내부를 빨간색 스프레이 페인트로 욕 쓴거도 나와요. 반달리즘(Vandalism)을 할 때, 복면 대신 쓸 수 있는 비닐봉투, 사용방법이 적힌 종이가 있어요. 저도 각각 챙겨서 기념품으로 가져왔어요. 한정판 반달리즘 키트를 220,000원에 팔던데 관심 있으면 구매해보세요.\n\n2. 시용쥔(時永駿, Shih Yung Chun)\n낡은 장난감들의 잔혹동화. 속이 안 좋은 영상도 있었고, 은근 웃기고 로맨틱한 영상도 있어요. 대부분의 영상이 아무런 소리없이 진행되니까, 더욱 집중해서 상상하게 되더라구요\n1, 3, 4층에서 전시 중인데, 1층 영상을 제외하면 영상에 나온 소품들이 전시되어 있어요. 4층부터 보는 사람들도 있던데, 1층부터 보는걸 추천해요.\n\n주변에 까페와도 연결되어 있고, 옆에 뮤지엄 건물도 있어요. 저는 뮤지엄이랑 갤러리가 나뉜지 모르고 길을 헤멨어요. 전시 장소를 제대로 확인하세요."
+        "relative_time": "5 months ago",
+        "text": "1. Insane Park\nAs soon as you enter the gallery, a video of the entire museum being destroyed appears. You can also see curses written on the inside of the building with red spray paint. When committing vandalism, there is a plastic bag that can be used instead of a mask and a piece of paper with instructions on how to use it. I also packed each of them and brought them as souvenirs. The limited edition vandalism kit is sold for 220,000 won. If you are interested, buy it.\n\n2. Shih Yung Chun\nA cruel fairy tale of old toys. There are some videos that make you feel uncomfortable, and there are also some that are subtly funny and romantic. Since most of the video is played without any sound, I was able to concentrate and imagine more.\nIt is on display on the 1st, 3rd, and 4th floors, and except for the 1st floor video, props from the videos are on display. Some people watch from the 4th floor, but I recommend watching from the 1st floor.\n\nIt is connected to a cafe nearby, and there is a museum building next to it. I wandered around the street, not knowing that the museum and gallery were separated. Please check the exhibition location properly."
       },
       {
-        "author": "쏘늬",
+        "author": "Soni",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "작가 이진주님의 개인전 중이에요\n엘리베이터가 있어서 전시 관람하기 편하고 , 공간과 어우러지는 멋진 작품들이 있어서 한참 들여다 보고 왔어요"
+        "relative_time": "7 months ago",
+        "text": "This is artist Jinju Lee’s solo exhibition.\nThere is an elevator, so it is easy to view the exhibition, and there are wonderful works that blend well with the space, so I took a look at them for a while."
       },
       {
-        "author": "히둥 heedoong",
+        "author": "hiedung heedoong",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "안국역에서 가깝고\n뮤지엄, 갤러리, 프릳츠 카페 운치있고 정말 좋습니다. 뮤지엄은 입장료 유료, 갤러리는 무료로 구경했습니다.  프릳츠 한옥 카페 앞 야외석에 탑도 있어요. 담장넝쿨 건물이 운치있고 좋으네요.\n신사옥도 궁금해서 또 가보려고요."
+        "relative_time": "2 years ago",
+        "text": "Close to Anguk Station\nThe museum, gallery, and Fritz Cafe are charming and really nice. There is a fee to enter the museum, but the gallery is free.  There is also a pagoda in the outdoor seating area in front of Fritz Hanok Cafe. The vine-walled building is charming and nice.\nI'm also curious about the new building, so I'm planning to go there again."
       },
       {
-        "author": "huH지영",
+        "author": "huHJiyoung",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "역사있는 옛공간건물과 함께...  분위기 좋은  문화공간이  되었음.  전시관도  아담한듯 해도  층층이  상당한  공간이고  조용하게  감상할수있어서  너무 좋은곳."
+        "relative_time": "2 years ago",
+        "text": "Together with the historic old space building... it has become a cultural space with a good atmosphere.  Although the exhibition hall may seem small, it has quite a few floors and is a great place to enjoy the view quietly."
       },
       {
-        "author": "라임",
+        "author": "lime",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "새로 오픈한 아라리오갤러리 서울,\n옆동인 아라리오 뮤지엄과는\n출입구가 다름\n\n주로 신진작가들 작품을\n무료로 관람가능하며\n새로 오픈한 전시 공간답게 깔끔하고 모던하다.\n\n카페 브릳츠가 한건물 외부에 있어\n계절 변화에 따른 담쟁이 넝쿨과 탑을\n함께 볼 수 있는건 덤"
+        "relative_time": "2 years ago",
+        "text": "The newly opened Arario Gallery Seoul,\nNext door is the Arario Museum.\nDifferent entrances\n\nMainly works by new artists\nIt is free to view.\nAs a newly opened exhibition space, it is clean and modern.\n\nCafe Brutz is located outside of one building.\nIvy vines and towers as the seasons change\nBeing able to watch it together is a bonus"
       }
     ],
     "photos": [
@@ -3093,14 +3093,14 @@
   {
     "place_id": "ChIJNzAC0sSifDURz-CLBsamjo8",
     "display_name": "Art Works Paris Seoul Gallery",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 북촌로4길 16 3층",
-    "short_address": "종로구 북촌로4길 16 3층",
+    "address": "3rd floor, 16 Bukchon-ro 4-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "3rd floor, 16 Bukchon-ro 4-gil, Jongno-gu",
     "location": {
       "lat": 37.5791162,
       "lng": 126.9860142
@@ -3119,16 +3119,16 @@
     "google_maps_url": "https://maps.google.com/?cid=10344388763560173775",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c4d2023037:0x8f8ea6c6068be0cf!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오후 1:00~6:00",
-      "수요일: 오후 1:00~6:00",
-      "목요일: 오후 1:00~6:00",
-      "금요일: 오후 1:00~6:00",
-      "토요일: 오후 1:00~6:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 1:00-6:00 PM",
+      "Wednesday: 1:00-6:00 PM",
+      "Thursday: 1:00-6:00 PM",
+      "Friday: 1:00-6:00 PM",
+      "Saturday: 1:00-6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3138,14 +3138,14 @@
         "author": "YO LEE",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "북촌 재동초등학교 정문에서 가까운 갤러리입니다. 프랑스를 거점으로 활동한 단샛화 작가들의 컬렉션을 선보이고 프랑스에서 활동중인 한국의 작가를 소개하는 목적으로 갤러리를 운영하고 있다고 합니다. 갤러리는 2층에 위치하고 있는데, 생각보다 굉장히 작았지만 간혹 좋은 전시가 있어 방문하는 곳입니다."
+        "relative_time": "1 year ago",
+        "text": "This gallery is close to the main gate of Bukchon Jaedong Elementary School. It is said that the gallery is being operated with the purpose of showcasing collections of Dansathwa artists based in France and introducing Korean artists active in France. The gallery is located on the second floor, and although it is much smaller than expected, it is a place to visit because there are sometimes good exhibitions."
       },
       {
         "author": "Lucas Nyte",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       }
     ],
@@ -3164,15 +3164,15 @@
   },
   {
     "place_id": "ChIJdWH6X9uifDURYRjuzPekvV4",
-    "display_name": "삼성래미안문화관",
-    "category": "문화센터",
+    "display_name": "Samsung Raemian Cultural Center",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 운니동 114-2",
-    "short_address": "종로구 운니동 114-2",
+    "address": "114-2, Unni-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "114-2, Unni-dong, Jongno-gu",
     "location": {
       "lat": 37.5770597,
       "lng": 126.98775499999999
@@ -3192,10 +3192,10 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2db5ffa6175:0x5ebda4f7ccee1861!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3204,15 +3204,15 @@
   },
   {
     "place_id": "ChIJjV6Z_h-jfDURTZDG3kAyovg",
-    "display_name": "유예재 Yuyejae",
-    "category": "미술관",
+    "display_name": "Yuyejae",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창덕궁길 29-22",
-    "short_address": "종로구 창덕궁길 29-22",
+    "address": "29-22 Changdeokgung-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "29-22 Changdeokgung-gil, Jongno-gu",
     "location": {
       "lat": 37.578858,
       "lng": 126.98858729999999
@@ -3231,16 +3231,16 @@
     "google_maps_url": "https://maps.google.com/?cid=17915937521830105165",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca31ffe995e8d:0xf8a23240dec6904d!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 11:00 ~ 오후 6:00",
-      "수요일: 오전 11:00 ~ 오후 6:00",
-      "목요일: 오전 11:00 ~ 오후 6:00",
-      "금요일: 오전 11:00 ~ 오후 6:00",
-      "토요일: 오전 11:00 ~ 오후 6:00",
-      "일요일: 오전 11:00 ~ 오후 6:00"
+      "Monday: Closed day",
+      "Tuesday: 11:00 AM - 6:00 PM",
+      "Wednesday: 11:00 AM - 6:00 PM",
+      "Thursday: 11:00 AM - 6:00 PM",
+      "Friday: 11:00 AM - 6:00 PM",
+      "Saturday: 11:00 AM - 6:00 PM",
+      "Sunday: 11:00 AM - 6:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3256,15 +3256,15 @@
   },
   {
     "place_id": "ChIJL2Is19qifDUR72jr6bV5hco",
-    "display_name": "안코코예술문화공간",
-    "category": "미술관",
+    "display_name": "Ancoco Art and Culture Space",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 계동 140-25번지 종로구 서울특별시 KR",
-    "short_address": "계동 140-25번지 종로구 서울특별시 KR",
+    "address": "140-25 Gye-dong, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "140-25 Gye-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.579639799999995,
       "lng": 126.98686980000001
@@ -3284,7 +3284,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2dad72c622f:0xca8579b5e9eb68ef!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3294,15 +3294,15 @@
   },
   {
     "place_id": "ChIJIWzxCduifDURg9-WYszrrM4",
-    "display_name": "현대주택문화센터",
-    "category": "문화센터",
+    "display_name": "Hyundai Housing Culture Center",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 원서동",
-    "short_address": "종로구 원서동",
+    "address": "Wonseo-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "Wonseo-dong, Jongno-gu",
     "location": {
       "lat": 37.5777559,
       "lng": 126.98896810000001
@@ -3322,50 +3322,50 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2db09f16c21:0xceacebcc6296df83!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "최윤용",
+        "author": "Choi Yun-yong",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "민방위교육 때문에 방문했습니다. 주변 대중교통편리하고 고궁과도 가깝고 주변에 식당 및 먹을곳도 있어서 좋습니다.\n\n내부화장실이 좁은편이지만 깔끔합니다.\n주차공간이 없으니 대중교통 이용하는게 좋을거같습니다"
+        "relative_time": "7 years ago",
+        "text": "I visited for civil defense training. It's convenient for public transportation, close to the old palace, and there are restaurants and places to eat nearby.\n\nThe interior bathroom is small, but clean.\nThere is no parking space, so it would be better to use public transportation."
       },
       {
-        "author": "정수재",
+        "author": "Jeong Soo-jae",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "교통이 좋고 교육받기 적당한 장소입니다"
+        "relative_time": "7 years ago",
+        "text": "It has good transportation and is a suitable place for education."
       },
       {
         "author": "Ku rohats",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
-        "text": "음료자판기에 음료수가 전부매진이라서 안타까웠습니다."
+        "relative_time": "7 years ago",
+        "text": "It was a shame that all the drinks in the vending machine were sold out."
       },
       {
         "author": "Woohyuk Choi",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "7년 전",
-        "text": "민방위 훈련소. 의자 바꿔 주세요. 너무 오래되고 불편함."
+        "relative_time": "7 years ago",
+        "text": "Civil Defense Training Center. Please change the chair. Too old and uncomfortable."
       },
       {
         "author": "Bayu Jatmiko",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1달 전",
-        "text": "플라스틱 쓰레기가 너무 많다"
+        "relative_time": "1 month ago",
+        "text": "There is too much plastic waste"
       }
     ],
     "photos": [
@@ -3376,14 +3376,14 @@
   {
     "place_id": "ChIJo93gRMOifDURAKaNzKZUCFc",
     "display_name": "Gallery FM",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "2F, 57 율곡로 재동 종로구 서울특별시 대한민국",
-    "short_address": "2F, 57 율곡로 재동 종로구",
+    "address": "2F, 57 Yulgok-ro, Jaedong, Jongno-gu, Seoul, Republic of Korea",
+    "short_address": "2F, 57 Yulgok-ro, Jaedong, Jongno-gu",
     "location": {
       "lat": 37.5769014,
       "lng": 126.9854861
@@ -3402,27 +3402,27 @@
     "google_maps_url": "https://maps.google.com/?cid=6271355556486555136",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c344e0dda3:0x570854a6cc8da600!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:30 ~ 오후 6:00",
-      "화요일: 오전 11:30 ~ 오후 6:00",
-      "수요일: 오전 11:30 ~ 오후 6:00",
-      "목요일: 오전 11:30 ~ 오후 6:00",
-      "금요일: 오전 11:30 ~ 오후 6:00",
-      "토요일: 오전 11:30 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: 11:30 AM - 6:00 PM",
+      "Tuesday: 11:30 AM - 6:00 PM",
+      "Wednesday: 11:30 AM - 6:00 PM",
+      "Thursday: 11:30 AM - 6:00 PM",
+      "Friday: 11:30 AM - 6:00 PM",
+      "Saturday: 11:30 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "초지일관localguidek",
+        "author": "Choji consistent local guidek",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "좋은 그림을 볼 수 있었습니다"
+        "relative_time": "1 year ago",
+        "text": "I was able to see a good picture"
       }
     ],
     "photos": [
@@ -3440,15 +3440,15 @@
   },
   {
     "place_id": "ChIJ5fwheN6jfDURN_wgjUF-C20",
-    "display_name": "갤러리 오뉴월",
-    "category": "미술관",
+    "display_name": "Gallery Oh New Wall",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창덕궁1길 12",
-    "short_address": "종로구 창덕궁1길 12",
+    "address": "12 Changdeokgung 1-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "12 Changdeokgung 1-gil, Jongno-gu",
     "location": {
       "lat": 37.5794156,
       "lng": 126.98856430000001
@@ -3467,13 +3467,13 @@
     "google_maps_url": "https://maps.google.com/?cid=7857512794883685431",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3de7821fce5:0x6d0b7e418d20fc37!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 11:00 ~ 오후 6:00",
-      "수요일: 오전 11:00 ~ 오후 6:00",
-      "목요일: 오전 11:00 ~ 오후 6:00",
-      "금요일: 오전 11:00 ~ 오후 6:00",
-      "토요일: 오전 11:00 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 11:00 AM - 6:00 PM",
+      "Wednesday: 11:00 AM - 6:00 PM",
+      "Thursday: 11:00 AM - 6:00 PM",
+      "Friday: 11:00 AM - 6:00 PM",
+      "Saturday: 11:00 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": null,
@@ -3495,15 +3495,15 @@
   },
   {
     "place_id": "ChIJqfqaZ8OifDURizaOC9325mM",
-    "display_name": "킵인터치서울",
-    "category": "미술관",
+    "display_name": "Keep in Touch Seoul",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 안국동 북촌로1길 13",
-    "short_address": "종로구 안국동 북촌로1길 13",
+    "address": "13 Bukchon-ro 1-gil, Anguk-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "13 Bukchon-ro 1-gil, Anguk-dong, Jongno-gu",
     "location": {
       "lat": 37.5772915,
       "lng": 126.9849487
@@ -3522,16 +3522,16 @@
     "google_maps_url": "https://maps.google.com/?cid=7198712483640391307",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c3679afaa9:0x63e6f6dd0b8e368b!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 11:00 ~ 오후 6:00",
-      "수요일: 오전 11:00 ~ 오후 6:00",
-      "목요일: 오전 11:00 ~ 오후 6:00",
-      "금요일: 오전 11:00 ~ 오후 6:00",
-      "토요일: 오전 11:00 ~ 오후 6:00",
-      "일요일: 오전 11:00 ~ 오후 6:00"
+      "Monday: Closed day",
+      "Tuesday: 11:00 AM - 6:00 PM",
+      "Wednesday: 11:00 AM - 6:00 PM",
+      "Thursday: 11:00 AM - 6:00 PM",
+      "Friday: 11:00 AM - 6:00 PM",
+      "Saturday: 11:00 AM - 6:00 PM",
+      "Sunday: 11:00 AM - 6:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3541,36 +3541,36 @@
         "author": "Youjin Um",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "장소와 시간의 기억을 공유하고 싶은 공간입니다.🥰"
+        "relative_time": "4 years ago",
+        "text": "This is a space where I want to share memories of place and time.🥰"
       },
       {
         "author": "ruin Sung Mean Pae",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "찾아가는 길이 좋고 전시장도 괜찮네요"
+        "relative_time": "6 years ago",
+        "text": "The road to get there is good and the exhibition hall is also nice."
       },
       {
         "author": "jihoon son",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "오래도록 킵인터치 하고 싶어지는 미술생태계에 매우 소중한 공간! 입니다.  ☮♡♥☆♧♬ :)"
+        "relative_time": "6 years ago",
+        "text": "A very precious space in the art ecosystem that you will want to keep in touch with for a long time! no see.  ☮♡♥☆♧♬ :)"
       },
       {
-        "author": "김성중",
+        "author": "Seongjoong Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "좋은 전시를 하는곳입니다"
+        "relative_time": "5 years ago",
+        "text": "This is a place with good exhibitions."
       },
       {
-        "author": "이세준",
+        "author": "Sejun Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "놀라운 작품들과 부드러운 햇살."
+        "relative_time": "5 years ago",
+        "text": "Amazing artwork and soft sunlight."
       }
     ],
     "photos": [
@@ -3588,15 +3588,15 @@
   },
   {
     "place_id": "ChIJeeMd68SifDUR937fq-LzH0I",
-    "display_name": "갤러리야곱1212",
-    "category": "미술관",
+    "display_name": "GalleryJacob1212",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 재동 번지 지하 27-1 1층",
-    "short_address": "종로구 재동 번지 지하 27-1 1층",
+    "address": "1st floor, Basement 27-1, Jae-dong, Jongno-gu, Seoul, Korea",
+    "short_address": "1st floor, Basement 27-1, Jaedong, Jongno-gu",
     "location": {
       "lat": 37.579042,
       "lng": 126.98482759999997
@@ -3616,7 +3616,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c4eb1de379:0x421ff3e2abdf7ef7!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3627,14 +3627,14 @@
   {
     "place_id": "ChIJGaMxNACjfDURpCN2ci2Oh10",
     "display_name": "Sosho",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "B32, 4 북촌로6길 종로구 서울특별시 대한민국",
-    "short_address": "B32, 4 북촌로6길 종로구",
+    "address": "B32, 4 Bukchon-ro 6-gil, Jongno-gu, Seoul, Republic of Korea",
+    "short_address": "B32, 4 Bukchon-ro 6-gil, Jongno-gu",
     "location": {
       "lat": 37.5802112,
       "lng": 126.98636750000001
@@ -3663,14 +3663,14 @@
   {
     "place_id": "ChIJZYCC7QijfDURmZAUDZNtq94",
     "display_name": "Namu Modern & Contemporary Art Gallery",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "21-15, 북촌로 종로구 서울특별시 대한민국",
-    "short_address": "21-15, 북촌로 종로구",
+    "address": "21-15, Bukchon-ro, Jongno-gu, Seoul South Korea",
+    "short_address": "21-15, Bukchon-ro, Jongno-gu",
     "location": {
       "lat": 37.5787894,
       "lng": 126.98436679999999
@@ -3690,7 +3690,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca308ed828065:0xdeab6d930d149099!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3700,7 +3700,7 @@
         "author": "Terence Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       }
     ],
@@ -3710,15 +3710,15 @@
   },
   {
     "place_id": "ChIJKxfyKACjfDURBYgLsxDugwY",
-    "display_name": "작은쉼터갤러리",
-    "category": "미술관",
+    "display_name": "Small Shelter Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 계동2길 11-9",
-    "short_address": "종로구 계동2길 11-9",
+    "address": "11-9, Gyedong 2-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "11-9, Gyedong 2-gil, Jongno-gu",
     "location": {
       "lat": 37.5803228,
       "lng": 126.98766119999999
@@ -3738,7 +3738,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca30028f2172b:0x683ee10b30b8805!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3748,22 +3748,22 @@
         "author": "HYUNYONG HWANG",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "여기 골목길로 들어오시면, 한옥지원센터 바로 옆에 위치해 있습니다.\n\n여기 잠시 앉아서 쉬어가기 정말 좋은 곳입니다."
+        "relative_time": "7 months ago",
+        "text": "If you enter the alley here, it is located right next to the Hanok Support Center.\n\nThis is a really nice place to sit and relax for a while."
       },
       {
-        "author": "BRIANNA “소피” Sopi",
+        "author": "BRIANNA “Sophie” Sopi",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "2년 전",
-        "text": "북촌에 있는 신인작가들의 등용문같은 작은 갤러리,이수지 작가의 뜨게작품이 전시되고있어요,,+방문해보시면좋아요~#무료"
+        "relative_time": "2 years ago",
+        "text": "A small gallery in Bukchon that is like a gateway for new artists. Artist Suji Lee's popular works are on display. + It's good to visit~ #Free"
       },
       {
         "author": "S emiko",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "젊은 예술가의 작품이 전시되고 있습니다♪"
+        "relative_time": "1 year ago",
+        "text": "The works of young artists are on display♪"
       }
     ],
     "photos": [
@@ -3781,15 +3781,15 @@
   },
   {
     "place_id": "ChIJwQgYfd2ifDURm8OQcCjq2kw",
-    "display_name": "원각사 (탑골공원)",
-    "category": "공원",
+    "display_name": "Wongaksa Temple (Tapgol Park)",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로17길 12",
-    "short_address": "종로구 종로17길 12",
+    "address": "12 Jongno 17-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "12 Jongno 17-gil, Jongno-gu",
     "location": {
       "lat": 37.5712723,
       "lng": 126.98829399999998
@@ -3809,49 +3809,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2dd7d1808c1:0x4cdaea287090c39b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합",
-      "반려견동반"
+      "Suitable for children",
+      "Accompanied by dogs"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "이사연",
+        "author": "Lee Sa-yeon",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "이 탑에서 탑돌이 하며 소원을 빌면 이루어진다는 전설!"
+        "relative_time": "6 years ago",
+        "text": "There is a legend that if you make a wish while jumping around this pagoda, it will come true!"
       },
       {
         "author": "Kumgaec",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "독립에 염원이 서려 있는곳."
+        "relative_time": "6 years ago",
+        "text": "A place where there is a desire for independence."
       },
       {
         "author": "Miles",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "이곳은 어르신들과 어울리러 오는 한국인들에게 매우 인기 있는 곳입니다. 하지만 이 공원은 풍부한 역사도 간직하고 있으며, 1465년에 건립된 10층 석탑과 1471년에 건립된 \"원각사비\"가 보호하고 있습니다. 나무와 휴식 공간, 그리고 중앙에 정자가 있는 아름다운 공원입니다."
+        "relative_time": "1 year ago",
+        "text": "This is a very popular place for Koreans who come to hang out with the elderly. However, the park also retains a rich history, protected by a 10-story stone pagoda built in 1465 and the \"Wongaksa Monument\" built in 1471. It is a beautiful park with trees, a rest area, and a pavilion in the center."
       },
       {
         "author": "Peter Ryan",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "도시 한가운데 있는 아름다운 작은 공원입니다. 나이 드신 현지 주민들에게 인기가 많습니다. 멋진 옛 탑이 있어 사진 찍기에도 좋습니다."
+        "relative_time": "1 year ago",
+        "text": "It's a beautiful little park in the middle of the city. It is popular with older local residents. There is a nice old pagoda, which is great for taking pictures."
       },
       {
         "author": "cc c",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "대한민국에서 역사적으로 매우 중요한 의미를 지닌 곳입니다."
+        "relative_time": "1 year ago",
+        "text": "It is a place of great historical significance in Korea."
       }
     ],
     "photos": [
@@ -3870,15 +3870,15 @@
   {
     "place_id": "ChIJ6RZpSwCjfDURmj1AXzluHh8",
     "display_name": "Insadong",
-    "category": "하이킹코스",
+    "category": "Hiking course",
     "types": [
       "hiking_area",
       "sports_activity_location",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 인사동길 29",
-    "short_address": "종로구 인사동길 29",
+    "address": "29 Insadong-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "29 Insadong-gil, Jongno-gu",
     "location": {
       "lat": 37.573231899999996,
       "lng": 126.9859786
@@ -3906,8 +3906,8 @@
         "author": "Johnson",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "쇼핑하기 좋은 곳이에요!\n다양하고 독특한 상품들이 가득해요!"
+        "relative_time": "1 year ago",
+        "text": "It's a great place for shopping!\nIt’s full of diverse and unique products!"
       }
     ],
     "photos": [
@@ -3925,15 +3925,15 @@
   },
   {
     "place_id": "ChIJE531QOiifDUR4wxrdOAu49k",
-    "display_name": "한미식물원",
-    "category": "식물원",
+    "display_name": "Korean American Botanical Garden",
+    "category": "botanical garden",
     "types": [
       "botanical_garden",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 인사동 194-27번지 종로구 서울특별시 KR",
-    "short_address": "인사동 194-27번지 종로구 서울특별시 KR",
+    "address": "194-27 Insa-dong, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "194-27 Insadong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.57194820000001,
       "lng": 126.9848277
@@ -3961,15 +3961,15 @@
   },
   {
     "place_id": "ChIJm61aZgCjfDUR5fs-rOWThAE",
-    "display_name": "창신3동지봉골도시텃밭",
-    "category": "공원",
+    "display_name": "Changsin 3 Dongji Bonggol City Garden",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 가길 20",
-    "short_address": "종로구 창신동 가길 20",
+    "address": "20 Ga-gil, Changsin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "20 Ga-gil, Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.571645499999995,
       "lng": 126.99144229999999
@@ -3994,11 +3994,11 @@
     "parking": null,
     "reviews": [
       {
-        "author": "김원선",
+        "author": "Kim Won-seon",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "11달 전",
-        "text": "도심 한복판 이렇게 높은곳에 텃밭이 있어서 놀라웠어요"
+        "relative_time": "11 months ago",
+        "text": "I was surprised to see a vegetable garden so high up in the middle of the city."
       }
     ],
     "photos": [
@@ -4008,15 +4008,15 @@
   },
   {
     "place_id": "ChIJOdWxwHWjfDURWF-DKcDP--k",
-    "display_name": "월남 이상재 선생 공원",
-    "category": "공원",
+    "display_name": "Lee Sang-jae’s Park in Vietnam",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로1.2.3.4가동 88-3",
-    "short_address": "종로구 종로1.2.3.4가동 88-3",
+    "address": "88-3, Jongno 1.2.3.4 ga-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "88-3, Jongno 1.2.3.4 ga-dong, Jongno-gu",
     "location": {
       "lat": 37.5717007,
       "lng": 126.9942585
@@ -4035,27 +4035,27 @@
     "google_maps_url": "https://maps.google.com/?cid=16860298054228729688",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca375c0b1d539:0xe9fbcfc029835f58!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 6:00 ~ 오전 12:00",
-      "화요일: 오전 6:00 ~ 오전 12:00",
-      "수요일: 오전 6:00 ~ 오전 12:00",
-      "목요일: 오전 6:00 ~ 오전 12:00",
-      "금요일: 오전 6:00 ~ 오전 12:00",
-      "토요일: 오전 6:00 ~ 오전 12:00",
-      "일요일: 오전 6:00 ~ 오전 12:00"
+      "Monday: 6:00 AM - 12:00 AM",
+      "Tuesday: 6:00 AM - 12:00 AM",
+      "Wednesday: 6:00 AM - 12:00 AM",
+      "Thursday: 6:00 AM - 12:00 AM",
+      "Friday: 6:00 AM - 12:00 AM",
+      "Saturday: 6:00 AM - 12:00 AM",
+      "Sunday: 6:00 AM - 12:00 AM"
     ],
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "육아조무사TV",
+        "author": "Childcare Assistant TV",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "종묘광장공원의 맞은편에 있는 작은 공원입니다."
+        "relative_time": "4 years ago",
+        "text": "It is a small park across from Jongmyo Square Park."
       }
     ],
     "photos": [
@@ -4069,15 +4069,15 @@
   },
   {
     "place_id": "ChIJKT9d0g-jfDURoGmC6yC1l_g",
-    "display_name": "경운동 수양 느릅나무",
-    "category": "공원",
+    "display_name": "Gyeongun-dong weeping elm tree",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로1.2.3.4가동 85",
-    "short_address": "종로구 종로1.2.3.4가동 85",
+    "address": "85, Jongno 1.2.3.4 ga-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "85 Jongno 1.2.3.4 ga-dong, Jongno-gu",
     "location": {
       "lat": 37.575063,
       "lng": 126.98635569999999
@@ -4096,27 +4096,27 @@
     "google_maps_url": "https://maps.google.com/?cid=17912985195884210592",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca30fd25d3f29:0xf897b520eb8269a0!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "ok페이지",
+        "author": "ok page",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "수운회관 입구  옆"
+        "relative_time": "4 years ago",
+        "text": "Next to the entrance to Suwoon Hall"
       }
     ],
     "photos": [
@@ -4131,15 +4131,15 @@
   },
   {
     "place_id": "ChIJQRutlcKifDURWLMIIB9y2FU",
-    "display_name": "세이지그린티",
-    "category": "공원",
+    "display_name": "Sage green tea",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 관훈동 38번지 쌈지길빌딩 2층 종로구 서울특별시 KR",
-    "short_address": "관훈동 38번지 쌈지길빌딩 2층 종로구 서울특별시 KR",
+    "address": "2nd floor, Ssamziegil Building, 38 Gwanhun-dong, Seoul, Republic of Korea Seoul, Jongno-gu KR",
+    "short_address": "2nd floor, Ssamziegil Building, 38 Gwanhun-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.574160299999996,
       "lng": 126.9848384
@@ -4167,15 +4167,15 @@
   },
   {
     "place_id": "ChIJi5g-KACjfDURxxuZl7tCDVs",
-    "display_name": "원남동 분수공원",
-    "category": "공원",
+    "display_name": "Wonnam-dong Fountain Park",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 율곡로",
-    "short_address": "종로구 율곡로",
+    "address": "Yulgok-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "Yulgok-ro, Jongno-gu",
     "location": {
       "lat": 37.57615140000001,
       "lng": 126.99708629999999
@@ -4203,16 +4203,16 @@
   },
   {
     "place_id": "ChIJnbNhstuifDUR7PN7UkPFLEU",
-    "display_name": "창덕궁 회화나무 군",
-    "category": "자연보호구역",
+    "display_name": "Group of locust trees at Changdeokgung Palace",
+    "category": "nature reserve",
     "types": [
       "nature_preserve",
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 율곡로 99",
-    "short_address": "종로구 율곡로 99",
+    "address": "99 Yulgok-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "99 Yulgok-ro, Jongno-gu",
     "location": {
       "lat": 37.5781547,
       "lng": 126.9897711
@@ -4231,55 +4231,55 @@
     "google_maps_url": "https://maps.google.com/?cid=4984575780529632236",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2dbb261b39d:0x452cc543527bf3ec!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 6:00 ~ 오전 12:00",
-      "화요일: 오전 6:00 ~ 오전 12:00",
-      "수요일: 오전 6:00 ~ 오전 12:00",
-      "목요일: 오전 6:00 ~ 오전 12:00",
-      "금요일: 오전 6:00 ~ 오전 12:00",
-      "토요일: 오전 6:00 ~ 오전 12:00",
-      "일요일: 오전 6:00 ~ 오전 12:00"
+      "Monday: 6:00 AM - 12:00 AM",
+      "Tuesday: 6:00 AM - 12:00 AM",
+      "Wednesday: 6:00 AM - 12:00 AM",
+      "Thursday: 6:00 AM - 12:00 AM",
+      "Friday: 6:00 AM - 12:00 AM",
+      "Saturday: 6:00 AM - 12:00 AM",
+      "Sunday: 6:00 AM - 12:00 AM"
     ],
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "권순용",
+        "author": "Kwon Soon-yong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "창덕궁 회화나무는 수령이 300~400년으로 추정된다고 하며 천연기념물로 지정되어 있는 나무입니다."
+        "relative_time": "4 years ago",
+        "text": "The Changdeokgung Palace locust tree is said to be 300 to 400 years old and is designated as a natural monument."
       },
       {
         "author": "Brilliant Fate",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "천연기념물로써 나무의 둘레와 모양이 인상 깊었습니다."
+        "relative_time": "1 year ago",
+        "text": "As a natural monument, the tree's circumference and shape were impressive."
       },
       {
-        "author": "최고봉",
+        "author": "highest peak",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "창덕궁에 있는 회화나무입니다."
+        "relative_time": "1 year ago",
+        "text": "This is the locust tree in Changdeokgung Palace."
       },
       {
         "author": "sybil bang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "아름다운 공간이에요"
+        "relative_time": "2 years ago",
+        "text": "It's a beautiful space"
       },
       {
         "author": "JIRO N.",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "11달 전",
-        "text": "창덕궁 입구 근처에 있는 녹색이 많은 공원입니다."
+        "relative_time": "11 months ago",
+        "text": "This is a green park near the entrance to Changdeokgung Palace."
       }
     ],
     "photos": [
@@ -4297,15 +4297,15 @@
   },
   {
     "place_id": "ChIJne1DY0SjfDURNSuVwRRXlU4",
-    "display_name": "율곡로 궁궐 담장길",
-    "category": "공원",
+    "display_name": "Yulgok-ro Palace Wall Road",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 권농동 65-3",
-    "short_address": "종로구 권농동 65-3",
+    "address": "65-3, Gwonnong-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "65-3, Gwonnong-dong, Jongno-gu",
     "location": {
       "lat": 37.5776105,
       "lng": 126.99242770000001
@@ -4324,54 +4324,54 @@
     "google_maps_url": "https://maps.google.com/?cid=5662527853147007797",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3446343ed9d:0x4e955714c1952b35!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오후 8:00",
-      "화요일: 오전 8:00 ~ 오후 8:00",
-      "수요일: 오전 8:00 ~ 오후 8:00",
-      "목요일: 오전 8:00 ~ 오후 8:00",
-      "금요일: 오전 8:00 ~ 오후 8:00",
-      "토요일: 오전 8:00 ~ 오후 8:00",
-      "일요일: 오전 8:00 ~ 오후 8:00"
+      "Monday: 8:00 AM - 8:00 PM",
+      "Tuesday: 8:00 AM - 8:00 PM",
+      "Wednesday: 8:00 AM - 8:00 PM",
+      "Thursday: 8:00 AM - 8:00 PM",
+      "Friday: 8:00 AM - 8:00 PM",
+      "Saturday: 8:00 AM - 8:00 PM",
+      "Sunday: 8:00 AM - 8:00 PM"
     ],
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "녹색걷기",
+        "author": "green walking",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "창덕궁과 창경궁을 지나 종묘로 이어지는 응봉 자락을 가로지르던 율곡로가 90년 만에 왕실 문화의 보행로로 다시 이어집니다.\n서순라길 골목을 따라 여유로운 도심 산책을 즐기고 젊은 세대에게 사랑받는 익선동 한옥마을까지 살펴보는,\n새로운 매력이 가득한 코스입니다."
+        "relative_time": "2 years ago",
+        "text": "Yulgok-ro, which passes through Changdeokgung Palace and Changgyeonggung Palace and crosses the foot of Eungbong Peak leading to Jongmyo Shrine, is once again connected as a royal cultural walking path after 90 years.\nEnjoy a leisurely walk in the city center along the alleys of Seosunla-gil and check out the Ikseon-dong Hanok Village, which is loved by the younger generation.\nThis course is full of new charm."
       },
       {
-        "author": "산판",
+        "author": "mountain plate",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "볼게 있는건 아니지만, 단절된 역사 공간을 복원한 녹지공간이라 좋았음."
+        "relative_time": "2 years ago",
+        "text": "There wasn't much to see, but it was nice because it was a green space that restored a disconnected historical space."
       },
       {
-        "author": "최준혁",
+        "author": "Junhyuk Choi",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "2년 전",
-        "text": "분명 8시 마감이었는데 관리인 아저씨가 7시 40분에 빨리 썩 나가라고 쌍욕해서 기분이 참 더러웠습니다. ^^ 다시는 안 오고 싶네요."
+        "relative_time": "2 years ago",
+        "text": "It was supposed to close at 8 o'clock, but the manager scolded me and told me to leave quickly at 7:40, which made me feel really bad. ^^ I don’t want to come back again."
       },
       {
         "author": "Ruin trip",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       },
       {
-        "author": "박광일",
+        "author": "Park Gwang-il",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -4390,16 +4390,16 @@
   },
   {
     "place_id": "ChIJB5Ai6uCjfDURlk8W4kwTX7s",
-    "display_name": "와룡동 회화나무",
-    "category": "자연보호구역",
+    "display_name": "Waryong-dong locust tree",
+    "category": "nature reserve",
     "types": [
       "nature_preserve",
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 와룡동",
-    "short_address": "종로구 와룡동",
+    "address": "Waryong-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "Waryong-dong, Jongno-gu",
     "location": {
       "lat": 37.5781754,
       "lng": 126.9959507
@@ -4424,18 +4424,18 @@
     "parking": null,
     "reviews": [
       {
-        "author": "ok페이지",
+        "author": "ok page",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "창경궁의 키다리. 옥천교 아래쪽"
+        "relative_time": "4 years ago",
+        "text": "The long bridge of Changgyeonggung Palace. Below Okcheongyo Bridge"
       },
       {
         "author": "geoKorea Song",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1주 전",
-        "text": "홍화문으로 입장해서 남쪽으로 가다가\n내행각을 따라 서쪽으로 간 후 작은 문은 나서면\n앞쪽(남쪽)에 아주 우람한 화화나무가 서 있습니다.\n자세가 아주 늠름합니다.\n그런데 지지대를 4개나 세워놓았군요.\n1번 사진 : 4월 초의 모습\n\n여름철 사진은 제가 이 POI에 올린 다른 사진을 참조해 주십시오."
+        "relative_time": "1 week ago",
+        "text": "Enter through Honghwamun Gate and head south.\nGo west along Naehaenggak and go through the small gate.\nThere is a very tall Japanese flower tree standing in front (south).\nThe posture is very dignified.\nHowever, four support beams were erected.\nPhoto 1: Early April\n\nFor summer photos, please refer to the other photos I posted on this POI."
       }
     ],
     "photos": [
@@ -4453,16 +4453,16 @@
   },
   {
     "place_id": "ChIJt6WxuOCjfDURWT04soRB7E4",
-    "display_name": "창경궁 버드나무",
-    "category": "자연보호구역",
+    "display_name": "Changgyeonggung Palace willow tree",
+    "category": "nature reserve",
     "types": [
       "nature_preserve",
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 와룡동",
-    "short_address": "종로구 와룡동",
+    "address": "Waryong-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "Waryong-dong, Jongno-gu",
     "location": {
       "lat": 37.5773989,
       "lng": 126.99547119999998
@@ -4481,13 +4481,13 @@
     "google_maps_url": "https://maps.google.com/?cid=5686992467643612505",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3e0b8b1a5b7:0x4eec4184b2383d59!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 6:00 ~ 오전 12:00",
-      "화요일: 오전 6:00 ~ 오전 12:00",
-      "수요일: 오전 6:00 ~ 오전 12:00",
-      "목요일: 오전 6:00 ~ 오전 12:00",
-      "금요일: 오전 6:00 ~ 오전 12:00",
-      "토요일: 오전 6:00 ~ 오전 12:00",
-      "일요일: 오전 6:00 ~ 오전 12:00"
+      "Monday: 6:00 AM - 12:00 AM",
+      "Tuesday: 6:00 AM - 12:00 AM",
+      "Wednesday: 6:00 AM - 12:00 AM",
+      "Thursday: 6:00 AM - 12:00 AM",
+      "Friday: 6:00 AM - 12:00 AM",
+      "Saturday: 6:00 AM - 12:00 AM",
+      "Sunday: 6:00 AM - 12:00 AM"
     ],
     "services": null,
     "payment": null,
@@ -4495,11 +4495,11 @@
     "parking": null,
     "reviews": [
       {
-        "author": "ok페이지",
+        "author": "ok page",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "선인문 안쪽에, 종묘를 넘겨보는 큰 키"
+        "relative_time": "4 years ago",
+        "text": "Inside the Seoninmun Gate, a tall key overlooking Jongmyo Shrine"
       }
     ],
     "photos": [
@@ -4517,16 +4517,16 @@
   },
   {
     "place_id": "ChIJPxTxH1-jfDURgEKedlf02t4",
-    "display_name": "선인문 회화나무",
-    "category": "자연보호구역",
+    "display_name": "prickly pear tree",
+    "category": "nature reserve",
     "types": [
       "nature_preserve",
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 와룡동",
-    "short_address": "종로구 와룡동",
+    "address": "Waryong-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "Waryong-dong, Jongno-gu",
     "location": {
       "lat": 37.5778124,
       "lng": 126.9964248
@@ -4545,13 +4545,13 @@
     "google_maps_url": "https://maps.google.com/?cid=16058416077832340096",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca35f1ff1143f:0xdedaf457769e4280!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 6:00 ~ 오전 12:00",
-      "화요일: 오전 6:00 ~ 오전 12:00",
-      "수요일: 오전 6:00 ~ 오전 12:00",
-      "목요일: 오전 6:00 ~ 오전 12:00",
-      "금요일: 오전 6:00 ~ 오전 12:00",
-      "토요일: 오전 6:00 ~ 오전 12:00",
-      "일요일: 오전 6:00 ~ 오전 12:00"
+      "Monday: 6:00 AM - 12:00 AM",
+      "Tuesday: 6:00 AM - 12:00 AM",
+      "Wednesday: 6:00 AM - 12:00 AM",
+      "Thursday: 6:00 AM - 12:00 AM",
+      "Friday: 6:00 AM - 12:00 AM",
+      "Saturday: 6:00 AM - 12:00 AM",
+      "Sunday: 6:00 AM - 12:00 AM"
     ],
     "services": null,
     "payment": null,
@@ -4559,18 +4559,18 @@
     "parking": null,
     "reviews": [
       {
-        "author": "ok페이지",
+        "author": "ok page",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "사도세자 출궁하신 문 앞"
+        "relative_time": "4 years ago",
+        "text": "In front of the gate where Crown Prince Sado left the palace"
       },
       {
         "author": "geoKorea Song",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1주 전",
-        "text": "2026. 04. 02. 봄꽃들이 한창인 창경궁에 왔습니다.\n홍화문 앞 벚꽃은 어제 내린 비로 벌써 다 떨어졌는데,\n이곳은 약간 그늘이 져서 그런지 아직 화사한 벚꽃이 그대로군요.\n이 회화나무는 선인문 들어서서 석교를 건너기 전에 자리잡고 있는데\n너무 남쪽으로만 자라서 나무가 쓰러질 것만 같아요.\n그래서 네 군데나 받침대를 세워서 지탱하고 있습니다.\n나무 앞에 안내판이 세워져 있습니다.\n그리고 주변은 궐내각사의 내사복시 복원 공사가 한창이군요.\n이 리뷰 아래에 사진을 첨부하고 설명하겠습니다.\n1번 사진 : 선인문 회화나무 사진\n2번 사진 : 안내판\n3번 사진 : 선인문 (창경궁 안에서 본 모습)"
+        "relative_time": "1 week ago",
+        "text": "2026. 04. 02. I came to Changgyeonggung Palace, where spring flowers were in full bloom.\nThe cherry blossoms in front of Honghwamun have already fallen due to the rain yesterday.\nMaybe it's because it's a little shaded here, but the cherry blossoms are still bright.\nThis locust tree is located before entering Seoninmun Gate and crossing the stone bridge.\nIt grows so far south that it feels like the trees will fall down.\nSo, it is supported by four pedestals.\nThere is a sign posted in front of the tree.\nAnd in the surrounding area, restoration work is in full swing at the Palace Cabinet Temple.\nI will attach photos and explain below this review.\nPhoto No. 1: Photo of Seoninmun prickly pear tree\nPhoto 2: Information board\nPhoto 3: Seoninmun (view from inside Changgyeonggung Palace)"
       }
     ],
     "photos": [
@@ -4585,16 +4585,16 @@
   },
   {
     "place_id": "ChIJ6U_EvXijfDURfilelMomIMs",
-    "display_name": "쇼태권전용관",
-    "category": "공연예술 극장",
+    "display_name": "Show Taekwon-Only Hall",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 쇼태권 전용관 5층 KR 서울특별시 종로구 삼일대로 428 허리우드 극장",
-    "short_address": "KR 서울특별시 종로구 삼일대로 428 허리우드 극장 쇼태권 전용관 5층",
+    "address": "5th floor, Show Taekwon Hall, Seoul, Republic of Korea KR Hollywood Theater, 428 Samil-daero, Jongno-gu, Seoul",
+    "short_address": "KR 5th floor, Show Taekwon Hall, Hollywood Theater, 428 Samil-daero, Jongno-gu, Seoul",
     "location": {
       "lat": 37.5722166,
       "lng": 126.9876448
@@ -4613,13 +4613,13 @@
     "google_maps_url": "https://maps.google.com/?cid=14636741440468560254",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca378bdc44fe9:0xcb2026ca945e297e!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 10:00 ~ 오후 6:00",
-      "수요일: 오전 10:00 ~ 오후 6:00",
-      "목요일: 오전 10:00 ~ 오후 6:00",
-      "금요일: 오전 10:00 ~ 오후 6:00",
-      "토요일: 오전 10:00 ~ 오후 6:00",
-      "일요일: 오전 10:00 ~ 오후 6:00"
+      "Monday: Closed day",
+      "Tuesday: 10:00 AM - 6:00 PM",
+      "Wednesday: 10:00 AM - 6:00 PM",
+      "Thursday: 10:00 AM - 6:00 PM",
+      "Friday: 10:00 AM - 6:00 PM",
+      "Saturday: 10:00 AM - 6:00 PM",
+      "Sunday: 10:00 AM - 6:00 PM"
     ],
     "services": null,
     "payment": null,
@@ -4632,16 +4632,16 @@
   },
   {
     "place_id": "ChIJWSk9ROaifDUR8yTul4KP44k",
-    "display_name": "(주)페르소나",
-    "category": "공연예술 극장",
+    "display_name": "Persona Co., Ltd.",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 낙원동 삼일대로 428 낙원빌딩 5층",
-    "short_address": "종로구 낙원동 삼일대로 428 낙원빌딩 5층",
+    "address": "5th floor, Nakwon Building, 428 Samil-daero, Nakwon-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "5th floor, Nakwon Building, 428 Samil-daero, Nakwon-dong, Jongno-gu",
     "location": {
       "lat": 37.5722166,
       "lng": 126.9876448
@@ -4660,62 +4660,62 @@
     "google_maps_url": "https://maps.google.com/?cid=9935942993966933235",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e6443d2959:0x89e38f8297ee24f3!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 5:00~8:00",
-      "화요일: 오후 5:00~8:00",
-      "수요일: 오후 5:00~8:00",
-      "목요일: 오후 5:00~8:00",
-      "금요일: 오후 5:00~8:00",
-      "토요일: 오후 5:00~8:00",
-      "일요일: 오후 3:00~6:00"
+      "Monday: 5:00-8:00 PM",
+      "Tuesday: 5:00-8:00 PM",
+      "Wednesday: 5:00-8:00 PM",
+      "Thursday: 5:00-8:00 PM",
+      "Friday: 5:00-8:00 PM",
+      "Saturday: 5:00-8:00 PM",
+      "Sunday: 3:00-6:00 PM"
     ],
     "services": [
-      "화장실",
-      "어린이적합"
+      "restroom",
+      "Suitable for children"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어화장실"
+      "wheelchair restroom"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "혜성쌤(미용튜브)",
+        "author": "Teacher Hyeseong (Beauty Tube)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "공연 정말 배꼽빠지게 웃을수있고 재밌고 볼거리많고 톡톡튀는 아이디어들이 정말 최고네요,\n대사도 많지않은데 쏙쏙이해되는내용에 ㅎㅎ\n배우분들이 정말 센스기 넘치셔요~~\n꼭 보시길 추천해드립니다!\n전반적인 내용구성은 당연 좋았구요\n스텝분들이 너무 친절하시고 체계적으로 움직여주시고 안내해주셔서 공연 입장 퇴장할때 너무 질서있게 편안하게 퇴장하였습니다. 뮤지컬 중간중간 선물도주는데요~~ 선물 받고 너무 기분좋았네요~~ ㅎㅎ\n감사했어요~"
+        "relative_time": "7 years ago",
+        "text": "The performance really makes you laugh out loud, it’s fun, there’s a lot to see, and the unique ideas are the best.\nThere isn't a lot of dialogue, but the content is easily understandable haha.\nThe actors really have a lot of sense~~\nI highly recommend checking it out!\nThe overall content structure was definitely good.\nThe staff were very kind and moved and guided me systematically, so I was able to leave the performance in an orderly and comfortable manner. They also give gifts during the musical~~ I was very happy to receive the gifts~~ haha\nThank you~"
       },
       {
-        "author": "SGD (솔건대디)",
+        "author": "SGD (Solgeon Daddy)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "신나고 재밌어요!! 아이들도 신기해하지만. 어른들이 더 재밌어하는 공연. 아이들과 함께보기좋은 공연입니다."
+        "relative_time": "7 years ago",
+        "text": "It’s exciting and fun!! Even the kids are amazed. A performance that adults enjoy more. This is a great performance to watch with children."
       },
       {
-        "author": "황윤하",
+        "author": "Yunha Hwang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "정말 참신하고 재미있는 공연이었다. 정말 수준급 실력의 비트박스와 개성넘치는 각 캐릭터들이 관객과 활발하게 소통하며 참여를 유도하는 새로운 느낌의 뮤지컬이었다. 친분이 있는 단체가 함께 가면 모두에게 새로운 추억이 될 것 같다. :D"
+        "relative_time": "7 years ago",
+        "text": "It was a really novel and fun performance. It was a musical with a new feel, with top-level beat boxing skills and unique characters actively communicating with the audience and encouraging participation. If a close group goes together, it will create new memories for everyone. :D"
       },
       {
         "author": "于建民",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "맛나는연기 코믹과 비보이춤등 여러장르을 합한공연 아주재미나었요"
+        "relative_time": "6 years ago",
+        "text": "It was a very fun performance that combined several genres, including delicious acting, comedy, and B-boy dance."
       },
       {
-        "author": "김민경",
+        "author": "Minkyung Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "4가지 요리를 관객과 함께 하는 코믹한 쇼였습니다. 장난인걸 모두가 알기에 즐겁게 웃으며 함께했네요. 간단한? 영어로 소통에도 큰 어려움없이 즐겼습니다. 스포가 될까봐 모두 이야기할순없고, 전 2번째 코스가 가장 재밌었답니다.ㅋㅋ"
+        "relative_time": "6 years ago",
+        "text": "It was a comical show that involved the audience cooking four different dishes. Everyone knew it was a joke, so we laughed and laughed happily together. Simple? I enjoyed communicating in English without much difficulty. I can't tell you everything for fear of spoilers, but I enjoyed the second course the most. Haha."
       }
     ],
     "photos": [
@@ -4733,16 +4733,16 @@
   },
   {
     "place_id": "ChIJrxskb92ifDURfnYVLyOfsvU",
-    "display_name": "헐리우드",
-    "category": "공연예술 극장",
+    "display_name": "hollywood",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 삼일대로 428",
-    "short_address": "종로구 삼일대로 428",
+    "address": "428 Samil-daero, Jongno-gu, Seoul, South Korea",
+    "short_address": "428 Samil-daero, Jongno-gu",
     "location": {
       "lat": 37.5728323,
       "lng": 126.9880012
@@ -4761,62 +4761,62 @@
     "google_maps_url": "https://maps.google.com/?cid=17704388058609448574",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2dd6f241baf:0xf5b29f232f15767e!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오전 12:00",
-      "화요일: 오전 9:00 ~ 오전 12:00",
-      "수요일: 오전 9:00 ~ 오전 12:00",
-      "목요일: 오전 9:00 ~ 오전 12:00",
-      "금요일: 오전 9:00 ~ 오전 12:00",
-      "토요일: 오전 9:00 ~ 오전 12:00",
-      "일요일: 오전 9:00 ~ 오전 12:00"
+      "Monday: 9:00 AM - 12:00 AM",
+      "Tuesday: 9:00 AM - 12:00 AM",
+      "Wednesday: 9:00 AM - 12:00 AM",
+      "Thursday: 9:00 AM - 12:00 AM",
+      "Friday: 9:00 AM - 12:00 AM",
+      "Saturday: 9:00 AM - 12:00 AM",
+      "Sunday: 9:00 AM - 12:00 AM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실"
+      "Wheelchair entrance",
+      "wheelchair restroom"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "완두콩",
+        "author": "pea",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "종로3가역 근처에 위치한 할리우드 극장.낙원상가 4층에 위치해있고2층과 3층엔 악기전문점들이 많이 있다. 1970년대부터 많은 분들이 서울극장과 피카디리극장등 그당시에 많이 사랑받았던 극장이라고 한다. 지금은 어르신들의 문화공간으로 실버극장과 낭만극장이 운영되고있어    옛 영화들을 볼 수 있다"
+        "relative_time": "1 year ago",
+        "text": "The Hollywood Theater is located near Jongno 3-ga Station. It is located on the 4th floor of Nakwon Shopping Center. There are many musical instrument specialty stores on the 2nd and 3rd floors. Since the 1970s, many people say that it was a theater that was much loved at the time, such as the Seoul Theater and the Piccadilly Theater. Currently, the Silver Theater and Romantic Theater are operated as cultural spaces for the elderly, where you can watch old movies."
       },
       {
-        "author": "김영일",
+        "author": "Kim Young-il",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "추억과 낭만의 영화관.. 옛날에 허리우드극장 입니다."
+        "relative_time": "2 years ago",
+        "text": "A movie theater of memories and romance.. It was the Hollywood Theater in the old days."
       },
       {
-        "author": "노가다TV Bok",
+        "author": "Nogada TV Bok",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "애국영화  탐라의봄을 상영해준 영화관\n감독님과 인증샷"
+        "relative_time": "3 years ago",
+        "text": "The movie theater that screened the patriotic film Tamna’s Spring\nProof shot with the director"
       },
       {
         "author": "Hyeongyu Jang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "고봉수 감독 영화를 보러 다녀온 곳. 낙원상가 4층에 있고, 초행이라 위치 찾기가 힘들었습니다. 옛날 영화를 2천원에 볼 수 있는 곳으로 주로 노인분들이 이용하세요. 예매시에 자리 지정이 없었던 옛날 극장 분위기를 느낄 수 있습니다. 생각보다 시설이 괜찮았습니다."
+        "relative_time": "6 years ago",
+        "text": "This is where I went to see director Ko Bong-soo’s movie. It's on the 4th floor of Nakwon Shopping Mall, and it was difficult to find the location since it was my first visit. This is a place where you can watch old movies for 2,000 won and is mainly used by elderly people. You can feel the atmosphere of an old theater where seats were not assigned when purchasing tickets. The facilities were better than I expected."
       },
       {
         "author": "Josh Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "4년 전",
-        "text": "ㅋㅋㅋㅋ 모두다 할아버지할머니 벨소리는 계속 울리고 전화도 그냥 막 받우시고~. 하지만 그런 재미에 그런 분위기에 가볼만한 곳 ㅋ. 영화도 옛날 영화라 나름 색달라요"
+        "relative_time": "4 years ago",
+        "text": "Hahaha, everyone keeps ringing the bell and just answering the phone. But it's a place worth visiting for that kind of fun and that kind of atmosphere. The movie is old, so it’s different in its own way."
       }
     ],
     "photos": [
@@ -4834,16 +4834,16 @@
   },
   {
     "place_id": "ChIJbRabSJSjfDURhRka4rpud9c",
-    "display_name": "진연(Jinyeon)",
-    "category": "공연예술 극장",
+    "display_name": "Jinyeon",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 인사동5길 10",
-    "short_address": "종로구 인사동5길 10",
+    "address": "10 Insa-dong 5-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "10 Insa-dong 5-gil, Jongno-gu",
     "location": {
       "lat": 37.572860999999996,
       "lng": 126.98565400000001
@@ -4862,21 +4862,21 @@
     "google_maps_url": "https://maps.google.com/?cid=15525999989319408005",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca394489b166d:0xd7776ebae21a1985!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 5:00",
-      "화요일: 오전 10:00 ~ 오후 5:00",
-      "수요일: 오전 10:00 ~ 오후 5:00",
-      "목요일: 오전 10:00 ~ 오후 5:00",
-      "금요일: 오전 10:00 ~ 오후 5:00",
-      "토요일: 오전 10:00 ~ 오후 5:00",
-      "일요일: 오전 10:00 ~ 오후 5:00"
+      "Monday: 10:00 AM - 5:00 PM",
+      "Tuesday: 10:00 AM - 5:00 PM",
+      "Wednesday: 10:00 AM - 5:00 PM",
+      "Thursday: 10:00 AM - 5:00 PM",
+      "Friday: 10:00 AM - 5:00 PM",
+      "Saturday: 10:00 AM - 5:00 PM",
+      "Sunday: 10:00 AM - 5:00 PM"
     ],
     "services": [
-      "화장실",
-      "어린이적합"
+      "restroom",
+      "Suitable for children"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4885,36 +4885,36 @@
         "author": "young",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "한국 전통문화와 음악, 다양한 구성, 편곡이 어우러져 재미를 주는 공연이었어요. 살면서 국악공연을 검색할 일이 많지 않을텐데, 이 공연으로 입문하면 좋을 것 같아요. 아 그리고 연주자분들 정말 예쁘시고, 실력도 좋으시고 부럽습니다!!!"
+        "relative_time": "1 month ago",
+        "text": "It was a fun performance that combined Korean traditional culture, music, and various compositions and arrangements. You probably won't have many occasions to search for Korean traditional music performances in your life, so I think it would be a good idea to get started with this performance. Oh, and the musicians are really pretty and talented, and I'm jealous!!!"
       },
       {
-        "author": "해오름",
+        "author": "Haeoreum",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "인사동에 이런 곳이 있다니! 더 많은 사람들이 알길 바래요ㅠㅠ\n한국여행 온 외국인들이 자주 관람한다고 하는데, 우리나라 사람들이 봐도 무방할 정도로 가볍지만 퀄리티 있는 공연이었어요. 인사동 가볼만한 곳으로 강력 추천합니다!"
+        "relative_time": "1 month ago",
+        "text": "There is a place like this in Insa-dong! I hope more people know.\nIt is said that foreigners who travel to Korea often watch the performance, but it was a light but high-quality performance that Korean people could easily see. I highly recommend Insa-dong as a place to visit!"
       },
       {
         "author": "Dowon Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "대한민국 전통 악기로 공연하며, 전통음악을 들을 수 있어요. 공연 도입부에 관람객의 행운을 빌어주며, 경건하게 기도를 해주시더라구요. 해금과 가야금으로 아리랑 춘향가 판소리를 연주하고, 판소리 우리 가락으로 노래를 불러주셨어요. 궁에서 왕이 듣던 잔치 음악을 듣는 기회였습니다. 한복과 궁중잔치에서 연주자가 입던 옷이 예뻤어요"
+        "relative_time": "7 months ago",
+        "text": "You can perform with traditional Korean instruments and listen to traditional music. At the beginning of the performance, he wished the audience good luck and prayed reverently. They played Arirang Chunhyangga pansori with the haegeum and gayageum, and sang a song to our pansori melody. It was an opportunity to listen to the banquet music that the king used to listen to in the palace. The hanbok and clothes worn by performers at royal banquets were pretty."
       },
       {
         "author": "joonimism",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9달 전",
-        "text": "지지대악 진연 공연 보러 오셨다면, 여기 이 장소가 맞습니다. 모처럼 국악 매력에 매료된 멋진 공연이었어요. :) 추천드립니다. 굿굿!"
+        "relative_time": "9 months ago",
+        "text": "If you came to see the Jijidaeak Jinyeon performance, this is the right place. It was a wonderful performance that left me captivated by the charm of Korean traditional music. :) I recommend it. Good!"
       },
       {
-        "author": "유용재",
+        "author": "Yongjae Yoo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "숨소리까지 느껴질 정도의 코 앞에서 전통악기 연주를 감상 할 수 있다는 것은 정말 엄청나게 매력적인 부분인 것 같습니다. 음악과 악기에 대한 설명들이 참 좋았고, 악기 체험도 너무너무 즐거웠어요. 즐겁고 좋은 시간 만들어주셔서 감사합니다!"
+        "relative_time": "2 years ago",
+        "text": "I think being able to enjoy the performance of a traditional instrument right in front of your nose, where you can even feel the sound of your breathing, is truly incredibly attractive. The explanations about music and instruments were really good, and I really enjoyed experiencing the instruments. Thank you for making it a fun and great time!"
       }
     ],
     "photos": [
@@ -4932,16 +4932,16 @@
   },
   {
     "place_id": "ChIJtw8-HuiifDUR56RnjmXnj_4",
-    "display_name": "(주)객석컴퍼니",
-    "category": "공연예술 극장",
+    "display_name": "Gaekseok Company Co., Ltd.",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 관훈동 197-28",
-    "short_address": "종로구 관훈동 197-28",
+    "address": "197-28 Gwanhun-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "197-28 Gwanhun-dong, Jongno-gu",
     "location": {
       "lat": 37.5730861,
       "lng": 126.9852119
@@ -4961,7 +4961,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2e81e3e0fb7:0xfe8fe7658e67a4e7!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -4971,7 +4971,7 @@
         "author": "I.K. Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       }
     ],
@@ -4979,16 +4979,16 @@
   },
   {
     "place_id": "ChIJFVzxucKifDURYu44RT-66U4",
-    "display_name": "극단예술마루",
-    "category": "공연예술 극장",
+    "display_name": "Theater Arts Floor",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 관훈동 번지 지하 21 2층",
-    "short_address": "종로구 관훈동 번지 지하 21 2층",
+    "address": "2nd floor, Basement 21, Gwanhun-dong, Jongno-gu, Seoul, Republic of Korea",
+    "short_address": "2nd floor, Basement 21, Gwanhun-dong, Jongno-gu",
     "location": {
       "lat": 37.573785799999996,
       "lng": 126.98560870000001
@@ -5008,10 +5008,10 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c2b9f15c15:0x4ee9ba3f4538ee62!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5020,16 +5020,16 @@
   },
   {
     "place_id": "ChIJR1zxucKifDURlBbgVABDCBg",
-    "display_name": "인사아트홀",
-    "category": "공연예술 극장",
+    "display_name": "Insa Art Hall",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 인사동길 34-1",
-    "short_address": "종로구 인사동길 34-1",
+    "address": "34-1 Insadong-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "34-1 Insadong-gil, Jongno-gu",
     "location": {
       "lat": 37.5737859,
       "lng": 126.98560879999998
@@ -5049,11 +5049,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2c2b9f15c47:0x1808430054e01694!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5062,36 +5062,36 @@
         "author": "sangme Ahn",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "런던레코드 배우분들이 연기와 노래를 너무 잘하셔서 즐겁게 봤어요. 인사동가시는분들중에 뭐할지고민하시는분들이라면 런던레코드를 추천드립니다~!\n\nThe actors of London Records were so good at acting and singing that I enjoyed watching it. If you're going to Insadong and you're thinking about what to do, I recommend London Records!"
+        "relative_time": "2 years ago",
+        "text": "I enjoyed watching the London Record actors because they were so good at acting and singing. If you are going to Insadong and are wondering what to do, I recommend London Records!\n\nThe actors of London Records were so good at acting and singing that I enjoyed watching it. If you're going to Insadong and you're thinking about what to do, I recommend London Records!"
       },
       {
-        "author": "윤현철",
+        "author": "Hyuncheol Yoon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "규모에 맞게 합리적인 가격으로 뮤지컬을 감상할 수 있는 적극  추천할만한 곳이다."
+        "relative_time": "2 years ago",
+        "text": "It is a highly recommended place where you can enjoy a musical at a reasonable price."
       },
       {
-        "author": "김문선",
+        "author": "Kim Moon-seon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "수준높은 그림이  층층 마다 멋있게 전시되어 맘껏 그림을 감상 하실수있어  간 보람이 있었어요"
+        "relative_time": "1 year ago",
+        "text": "It was worthwhile to go because the high-quality paintings were nicely displayed on each floor and I was able to enjoy them to my heart’s content."
       },
       {
-        "author": "이오피",
+        "author": "EOP",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "스트리머가 참여하는 공연을 보러 갔었는데\n좌석 수는 많아서 좋았는데\n의자가 너무 하드코어한 의자라\n그건 좀 힘들었음\n무대랑 너무 멀지 않아서 좋았음"
+        "relative_time": "3 years ago",
+        "text": "I went to see a performance involving a streamer.\nIt was nice that there were a lot of seats.\nThe chair is such a hardcore chair.\nThat was a bit difficult\nIt was nice that it wasn’t too far from the stage."
       },
       {
         "author": "Jisoon Hwang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "좌석이 편안해서 공연보기 좋은곳"
+        "relative_time": "3 years ago",
+        "text": "Good place to watch the performance with comfortable seats"
       }
     ],
     "photos": [
@@ -5109,8 +5109,8 @@
   },
   {
     "place_id": "ChIJAeTvGTOjfDURvjbaECX54jI",
-    "display_name": "허경영 국가혁명배당금당",
-    "category": "콘서트홀",
+    "display_name": "Heo Gyeong-young National Revolution Dividend",
+    "category": "concert hall",
     "types": [
       "concert_hall",
       "auditorium",
@@ -5120,8 +5120,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 돈화문로5가길 1 6층",
-    "short_address": "종로구 돈화문로5가길 1 6층",
+    "address": "6th floor, 1 Donhwamun-ro 5ga-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "6th floor, 1 Donhwamun-ro 5ga-gil, Jongno-gu",
     "location": {
       "lat": 37.570941,
       "lng": 126.99126330000001
@@ -5141,25 +5141,25 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33319efe401:0x32e2f92510da36be!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김연수",
+        "author": "Yeonsu Kim",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "1년 전",
-        "text": "누가봐도 가다간 큰일날곳"
+        "relative_time": "1 year ago",
+        "text": "Anyone who goes there will be in big trouble"
       },
       {
-        "author": "박성희",
+        "author": "Seonghee Park",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
-        "text": "무엇인지 모르겠음"
+        "relative_time": "6 years ago",
+        "text": "I don't know what it is"
       }
     ],
     "photos": [
@@ -5172,16 +5172,16 @@
   },
   {
     "place_id": "ChIJZcr5WQCjfDURxrW06sYcEjg",
-    "display_name": "엠스테이지",
-    "category": "공연예술 극장",
+    "display_name": "M stage",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 인사동길 34-1",
-    "short_address": "종로구 인사동길 34-1",
+    "address": "34-1 Insadong-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "34-1 Insadong-gil, Jongno-gu",
     "location": {
       "lat": 37.573842299999995,
       "lng": 126.98560959999999
@@ -5201,22 +5201,22 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca30059f9ca65:0x38121cc6eab4b5c6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "배우",
+        "author": "actor",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "서울의 관광지에 있는 엠스테이지는 관광지의 중심에 위치해 있어 접근이 매우 편리하며 주변 분위기도 훌륭합니다. 스테이지 디자인은 화려하고, 이야기의 분위기에 딱 맞는 연출이 인상적이었습니다. 조명도 관객을 이야기의 세계로 끌어들이는 힘이 있었습니다.\n\n배우들의 연기도 훌륭하고, 감정이 제대로 전해져 왔습니다. 각각의 캐릭터가 생생하고 있어 이야기에 리얼리티와 깊이를 주고 있었습니다.\n\n엠스테이지는 관객과의 거리가 가까워 배우들과의 일체감을 느낄 수 있는 점도 매력적이었습니다. 또 방문해 다른 작품도 보고 싶었습니다."
+        "relative_time": "1 year ago",
+        "text": "M Stage, a tourist attraction in Seoul, is located in the center of the tourist area, so access is very convenient and the surrounding atmosphere is great. The stage design was gorgeous, and the production that suited the atmosphere of the story was impressive. Lighting also had the power to draw the audience into the world of the story.\n\nThe actors' acting was great, and the emotions were conveyed properly. Each character was vivid, giving realism and depth to the story.\n\nM Stage was also attractive in that the distance from the audience was close, allowing a sense of unity with the actors. I wanted to visit again and see other works."
       }
     ],
     "photos": [
@@ -5229,16 +5229,16 @@
   },
   {
     "place_id": "ChIJ9RaUp9iifDURAxZ1-i8g6oU",
-    "display_name": "공연예술집단노는이",
-    "category": "공연예술 극장",
+    "display_name": "Performing arts group player",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 인의동 번지 1층 57-1 003호",
-    "short_address": "종로구 인의동 번지 1층 57-1 003호",
+    "address": "Room 003, 57-1, 1st floor, Inui-dong, Jongno-gu, Seoul, Republic of Korea",
+    "short_address": "Room 003, 57-1, 1st floor, Inui-dong, Jongno-gu",
     "location": {
       "lat": 37.5740238,
       "lng": 126.9970156
@@ -5258,7 +5258,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2d8a79416f5:0x85ea202ffa751603!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -5268,16 +5268,16 @@
   },
   {
     "place_id": "ChIJp19RHwCjfDUR9mIBEECdhxY",
-    "display_name": "북촌나래홀",
-    "category": "공연예술 극장",
+    "display_name": "Bukchon Narae Hall",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창덕궁길 29-38",
-    "short_address": "종로구 창덕궁길 29-38",
+    "address": "29-38 Changdeokgung-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "29-38 Changdeokgung-gil, Jongno-gu",
     "location": {
       "lat": 37.5788491,
       "lng": 126.98844759999999
@@ -5297,21 +5297,21 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3001f515fa7:0x16879d40100162f6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김별님",
+        "author": "Byeol Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "스크루테이프의 편지 보러 감\n재미있었고 배우들 연기 정말 잘함\n1인다역을 믿기 어려울정도!\n\n근데 공연이 시작되면 입장 절대 불가하다는 안내가 예약 페이지에도 있었고 공연 전날 온 문자에도 있었는데 지켜지지 않고 두 팀이나 들어왔다.\n이 작고 사람들 다닥다닥 붙어 앉아 있는 소극장에서 중간에 암막커튼 확 열고 관객 입장해 버리면 공연 집중 다 깨짐. 입구 쪽에 앉아 있는 사람들은 똥 밟는 것\n그리고 내 옆에 앉은 사람은 전화 미리 꺼달라는 안내를 무시하고 진동으로 뒀는지 전화진동이 끊임없이 울렸다..... 문자도 여러번 했고 심지어 중간중간 폰열어서 확인함 .....하아....\n뒤에 앉은 꼬마는 바로 내 뒤통수 뒤에서 자기 가방 자꾸 드럼처럼 두드리고 긁었음\n소리가 그대로 내 귀로 들어왔다\n\n이제 소극장 공연은 좀 생각해봐야할것같다\n하지만 배우들 생각해서 만점 드립니다!"
+        "relative_time": "3 months ago",
+        "text": "Go see The Screwtape Letters\nIt was fun and the actors acted really well.\nIt's hard to believe that there are multiple roles!\n\nHowever, there was a notice on the reservation page and a text message sent the day before the performance that there was absolutely no entry once the performance started, but it was not followed and two teams entered.\nIn this small theater where people are sitting close together, if the blackout curtains are opened midway and the audience enters, their concentration on the performance is broken. People sitting near the entrance are stepping on poop.\nAnd the person sitting next to me must have ignored the instructions to turn off his phone in advance and put it on vibrate, so his phone vibrated constantly... I texted him several times and even opened his phone to check it in between... Sigh....\nThe kid sitting behind me kept banging and scratching his bag like a drum on the back of my head.\nThe sound came right into my ears.\n\nNow I think I need to think about performing in a small theater.\nBut I give it full marks for considering the actors!"
       }
     ],
     "photos": [
@@ -5321,16 +5321,16 @@
   },
   {
     "place_id": "ChIJxy4x_tqifDUR5HJfBdsG65Y",
-    "display_name": "북촌창우극장",
-    "category": "공연예술 극장",
+    "display_name": "Bukchon Changwoo Theater",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 원서동 158-1",
-    "short_address": "종로구 원서동 158-1",
+    "address": "158-1 Wonseo-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "158-1 Wonseo-dong, Jongno-gu",
     "location": {
       "lat": 37.5788668,
       "lng": 126.98882920000001
@@ -5350,10 +5350,10 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2dafe312ec7:0x96eb06db055f72e4!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5362,36 +5362,36 @@
         "author": "SHELLY",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "계단식 객석을 갖춘 50석내외 공연에 적합한 소극장. 조명과 오디오도 잘 구비되어 몰입감 높음."
+        "relative_time": "2 years ago",
+        "text": "A small theater suitable for performances with around 50 seats and terraced seating. Well-equipped lighting and audio provide a high level of immersion."
       },
       {
         "author": "KH B",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "너무 멋지고 즐거운 공간이에요"
+        "relative_time": "1 year ago",
+        "text": "It's such a nice and fun space."
       },
       {
         "author": "Duk Jin Hong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "다양한 공연이 있는 극장입니다."
+        "relative_time": "1 year ago",
+        "text": "This is a theater with a variety of performances."
       },
       {
-        "author": "김성은",
+        "author": "Seong Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "소규모 연극 뮤지컬 볼 수 있는 아담한 곳"
+        "relative_time": "3 years ago",
+        "text": "A small place to see small-scale plays and musicals"
       },
       {
         "author": "JaeWon Lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "4년 전",
-        "text": "옛날식건물의극장지하공연장은쾌적해요"
+        "relative_time": "4 years ago",
+        "text": "The basement performance hall of the theater in an old-fashioned building is comfortable."
       }
     ],
     "photos": [
@@ -5409,15 +5409,15 @@
   },
   {
     "place_id": "ChIJcRG6-NqifDUR9p1RsvtoZJ0",
-    "display_name": "북촌아트홀",
-    "category": "공연예술 극장",
+    "display_name": "Bukchon Art Hall",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.578922399999996,
@@ -5438,49 +5438,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2daf8ba1171:0x9d6468fbb2519df6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "railra 양YS",
+        "author": "railra yang YS",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "소극장이지만 깔끔하고 죄석 배치도 적절하고, 불편하지 않았습니다. 공연중 배우들의 감정표현과 연기를 가깝게 관람할 수 있어서 좋았습니다. 음향이나 음량도 소극장이지만 웅장한 느낌이어서 즐겁게 관람할 수 있었습니다."
+        "relative_time": "3 years ago",
+        "text": "Although it is a small theater, it was clean, the seating arrangement was appropriate, and it wasn't uncomfortable. It was great to be able to closely watch the actors' emotional expressions and acting during the performance. Even though the sound and volume were small, it had a grand feel, so I was able to enjoy the movie."
       },
       {
         "author": "Hannah Cha",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "소극장 연극  보기에 적합해요..\n시원하고 좋았는데 화장실이 하나라 조금 불편했어요"
+        "relative_time": "7 years ago",
+        "text": "It's perfect for watching small theater plays.\nIt was nice and cool, but there was only one bathroom so it was a little inconvenient."
       },
       {
         "author": "Hyeok KIM",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "공연 잘 봤습니다. 장소는 조금 협소합니다. 연기는 정말 좋더군요."
+        "relative_time": "7 years ago",
+        "text": "I enjoyed the performance. The place is a little small. The acting was really good."
       },
       {
         "author": "Oh Junsu",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8년 전",
-        "text": "관객석이랑 화장실이 약간 불편"
+        "relative_time": "8 years ago",
+        "text": "The audience seats and restrooms are a bit uncomfortable."
       },
       {
         "author": "Bob Cho",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "천로역정 뮤지컬을 보았는데 필그림과 소망 역할을 맡으신 분들이 눈물을 흘리며 공연을 펼치셔서 감동적이었습니다. 물론 다른 분들도 어무 열심히 하셨구요.😊😊😊"
+        "relative_time": "6 years ago",
+        "text": "I saw the Pilgrim's Progress musical, and the people who played the roles of Pilgrim and Somang performed with tears in their eyes, which was touching. Of course, other people worked hard too.😊😊😊"
       }
     ],
     "photos": [
@@ -5498,15 +5498,15 @@
   },
   {
     "place_id": "ChIJofYJZ92ifDURG6hUdokFJTk",
-    "display_name": "(주)추억을파는극장",
-    "category": "영화관",
+    "display_name": "Theater that sells memories",
+    "category": "movie theater",
     "types": [
       "movie_theater",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 낙원동 번지 4층 284-6",
-    "short_address": "종로구 낙원동 번지 4층 284-6",
+    "address": "284-6, 4th floor, Nakwon-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "284-6, 4th floor, Nakwon-dong, Jongno-gu",
     "location": {
       "lat": 37.5725341,
       "lng": 126.98779019999999
@@ -5526,11 +5526,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2dd6709f6a1:0x392505897654a81b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5540,15 +5540,15 @@
   },
   {
     "place_id": "ChIJtfkJZ92ifDUR7FzYUgc5cDw",
-    "display_name": "(주)동아서울시네마",
-    "category": "영화관",
+    "display_name": "Donga Seoul Cinema Co., Ltd.",
+    "category": "movie theater",
     "types": [
       "movie_theater",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 삼일대로 428",
-    "short_address": "종로구 삼일대로 428",
+    "address": "428 Samil-daero, Jongno-gu, Seoul, South Korea",
+    "short_address": "428 Samil-daero, Jongno-gu",
     "location": {
       "lat": 37.572574599999996,
       "lng": 126.98780370000001
@@ -5568,11 +5568,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2dd6709f9b5:0x3c70390752d85cec!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5581,35 +5581,35 @@
         "author": "5509 days",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "10년 전",
-        "text": "낙원동 서울 씨네마!!"
+        "relative_time": "10 years ago",
+        "text": "Nakwon-dong Seoul Cinema!!"
       },
       {
-        "author": "김성주 색소폰SJsax",
+        "author": "Seongju Kim SaxophoneSJsax",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "9년 전",
-        "text": "잘모름"
+        "relative_time": "9 years ago",
+        "text": "Not sure"
       },
       {
         "author": "Din Cicilia",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1달 전",
-        "text": "하숙"
+        "relative_time": "1 month ago",
+        "text": "lodging"
       },
       {
         "author": "Li Fen",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9년 전",
-        "text": "매우 좋은"
+        "relative_time": "9 years ago",
+        "text": "very good"
       },
       {
-        "author": "이제석",
+        "author": "Lee Jae-seok",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -5617,8 +5617,8 @@
   },
   {
     "place_id": "ChIJM5MKad2ifDURzeiYjJo09gg",
-    "display_name": "낙원악기상가",
-    "category": "상점",
+    "display_name": "Nakwon Musical Instrument Mall",
+    "category": "store",
     "types": [
       "live_music_venue",
       "event_venue",
@@ -5628,8 +5628,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 삼일대로 428",
-    "short_address": "종로구 삼일대로 428",
+    "address": "428 Samil-daero, Jongno-gu, Seoul, South Korea",
+    "short_address": "428 Samil-daero, Jongno-gu",
     "location": {
       "lat": 37.5726662,
       "lng": 126.9878079
@@ -5648,65 +5648,65 @@
     "google_maps_url": "https://maps.google.com/?cid=645761434962684109",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2dd690a9333:0x8f6349a8c98e8cd!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 7:30",
-      "화요일: 오전 10:00 ~ 오후 7:30",
-      "수요일: 오전 10:00 ~ 오후 7:30",
-      "목요일: 오전 10:00 ~ 오후 7:30",
-      "금요일: 오전 10:00 ~ 오후 7:30",
-      "토요일: 오전 10:00 ~ 오후 7:30",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 7:30 PM",
+      "Tuesday: 10:00 AM - 7:30 PM",
+      "Wednesday: 10:00 AM - 7:30 PM",
+      "Thursday: 10:00 AM - 7:30 PM",
+      "Friday: 10:00 AM - 7:30 PM",
+      "Saturday: 10:00 AM - 7:30 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "배달",
-      "어린이적합"
+      "delivery",
+      "Suitable for children"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어화장실"
+      "wheelchair restroom"
     ],
     "parking": [
-      "유료노상주차",
-      "유료주차장"
+      "Paid street parking",
+      "Paid parking lot"
     ],
     "reviews": [
       {
-        "author": "Earth Traveler (메아리짱)",
+        "author": "Earth Traveler (Echo Jjang)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "낙원상가 공영주차장의 주차면이 몇개되진 않지만,  관리인분이 너무나도 친절하시고, 또간집 특순대국밥도 너무나 맛좋았고, 기타줄 갈기의 비용도 합리작이라고 느껴졌다"
+        "relative_time": "3 months ago",
+        "text": "Although there are only a few parking spaces in the public parking lot of Nakwon Shopping Mall, the manager was very friendly, the Toganjip Special Sundae Gukbap was very delicious, and the cost of sharpening guitar strings felt reasonable."
       },
       {
         "author": "1Road 2Arcadia",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5달 전",
-        "text": "음악인들의 성지. 악기구입 할때면 항상 생각나는 곳입니다. 식당도 있어서 좋아요. 들어가서 구경하면 시간 가는 줄 모르고 있게됩니다."
+        "relative_time": "5 months ago",
+        "text": "A mecca for musicians. This is a place that always comes to mind when I buy musical instruments. It's nice that there's a restaurant too. If you go in and look around, you will lose track of time."
       },
       {
-        "author": "강준우",
+        "author": "Junwoo Kang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "그저 GOAT 진짜 착하신분들 많으시고 사람없으면 시연도 하게해주신다.\n남북악기,미스터기타,세종수제악기,해성악기\n이4점포가 단연코 최고라고 볼수있다."
+        "relative_time": "1 month ago",
+        "text": "There are a lot of really nice people at GOAT, and they even let you demonstrate if there are no people around.\nNorth and South Korean instruments, Mr. Guitar, Sejong handmade instruments, Haeseong instruments\nThese 4 stores are by far the best."
       },
       {
         "author": "Sepia Hh",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "종로 낙원동 낙원상가 악기상4번 출구를 나가시면 왼쪽에 나지막한 건물이 있고 그 곳에 낙원 악기상가라고 쓰여 있어요 1층 가장자리를 주차장과 도로로 겸용을 하고 있고 2층 무두가 악기상으로 이루어져 있어요. 낙원상가 2층 악기상이 있는 곳으로 들어가면 가장 먼저 보이는 것이 각종 음향기기 시설과 수리를 해주는 곳이에요낙원악기상가 | 서울생활문화센터 낙원낙원악기상가에 나와서 다양한 악기상과 음향장비 매장을 둘러본 낙원이란 여의도 격리거점을 뜻하는듯 합니다. 구역이 등급별로 나뉘어져 있는듯하며, 여의도와 연결된 다리들은 모두 끊어낸듯 합니다. 그래서 배를 타고 외부로 왔다갔다... 그 외에는 큼직큼직한 건물들 주차 타워, 공사장A, B, 아트 갤러리, 경찰서, MR 투자증권, 호텔 모모, 탑골 공원, 종로 빌딩, 낙원 악기 상가가 있습니다!악기에 관심이 있는 사람이라면 모를 수 없는 전세계에서 가장 큰 단일 악기상가인 낙원상가는 종로3가역 5번출구 근처에 위치해있습니다낙원악기상가에서 기타를 사고 평생 그 기타를 고쳐 써가며 노래를 놓지 않고 살아온 사람. 음악전공자가 한 사람도 없지만, 음악을 친구삼아 살아오는 그들은 ‘자신의 청춘과 낭만의 기억’이 있는 낙원상가 살리기에 동참종합악기상가로 익숙한 낙원악기상가와 탑골 공원 주변을 경험할 수 있다.악기상가·영화관·전통시장에 아파트도 있는 낙원빌딩\n\n낙원악기상가로 알려진 낙원빌딩입니다. 이 건물을 유심히 바라봤다면 특이한 구석이 있는 걸 발견했을 겁니다. 건물 아래로 차량이 지나다니고 있다는 점입니다. 여느 건물이라면 도로변에 들어섰을 텐데 낙원상가는 도로 위에다 건축했습니다. 낙원상가는 낙원악기상가로 그 명성을 이어갔다. 2, 3층 ‘악기상가’, 4층 ‘허리우드극장’, 6층에서 15층까지는 ‘낙원아파트’가 있는 구조다. 시간이 흘러 멀티플렉스가 번창하며 허리우드극장은 ‘허리우드 클래식’, ‘서울아트시네마’\n\nIt is located near exit 5 of Jongno 3-ga StationA person who bought a guitar at the Paradise Musical Instruments Market and spent his whole life rewriting the guitar and living without letting go of the song.\n\nAlthough there is no music major, they can experience the Nakwon Musical Instruments Market and Tapgol Park,\n\nwhich are familiar with the comprehensive musical instrument merchant who participates in the revival of the Nakwon Shopping Center, where \"the memory of their youth and romance\" is located.\n\nParadise Building with Apartments in Musical Instruments Market, Movie Theater, and Traditional Market\n\nIt is the Nakwon Building, known as the Nakwon Musical Instruments Market. If you looked closely at this building,\n\nyou'd find something unusual. The point is that vehicles are passing underneath the building. Any building would have been on the side of the road,\n\nbut Paradise Shopping Center was built on the road. Paradise Shopping Center continued its reputation as a paradise musical instrument shopping center. There are musical instrument shops on the 2nd and 3rd floors, Hollywood Theater on the 4th floor, and Paradise Apartment on the 6th to 15th floors.\n\nOver time, multiplexes thrive, and Hollywood Theater is \"Whorrywood Classic\" and \"Seoul Art Cinema.\"\n\n낙원피아노악기\n영업 중19:00에 영업 종료\n서울낙원악기악기\n영업 중20:00에 영업 종료\n현재 위치에서180m\n서울 종로구 낙원동"
+        "relative_time": "1 year ago",
+        "text": "When you come out of Exit 4 of Nakwon Musical Instruments Shopping Center in Nakwon-dong, Jongno, there is a low building on your left with the name Nakwon Musical Instruments Shopping Center written on it. The edge of the first floor is used as a parking lot and a road, and the second floor consists of Muduga Musical Shopping Center. When you enter the musical instrument store on the second floor of Nakwon Shopping Mall, the first thing you see is a place that provides facilities and repairs for various audio equipment. Nakwon Musical Instrument Store | I went to Nakwon Nakwon Musical Instrument Mall at the Seoul Living Culture Center and looked around various musical instrument and sound equipment shops. Paradise seems to mean the Yeouido quarantine base. The area appears to be divided by grade, and all bridges connected to Yeouido appear to have been cut down. So, I took a boat and went outside... In addition, there are large buildings such as parking tower, construction site A and B, art gallery, police station, MR Investment & Securities, Hotel Momo, Tapgol Park, Jongno Building, and Nakwon Musical Instrument Mall! Anyone interested in musical instruments will know that Nakwon Shopping Mall, the largest single musical instrument shopping mall in the world, is located near Exit 5 of Jongno 3-ga Station. Buy a guitar at Nakwon Musical Instrument Mall and use that guitar for the rest of your life. A person who has lived without giving up singing. Although none of them are music majors, they live with music as their friend and participate in reviving Nakwon Shopping Mall, where they have ‘memories of their youth and romance.’ They can experience the Nakwon Musical Instrument Shopping Mall and the surrounding Tapgol Park, which are familiar as a comprehensive musical instrument shopping mall. The Nakwon Building, which also has apartments in the musical instrument shopping mall, movie theater, and traditional market.\n\nThis is Nakwon Building, known as Nakwon Musical Instrument Mall. If you looked closely at this building, you would have noticed something unusual. There are cars passing under the building. Any other building would have been built on the roadside, but Nakwon Shopping Center was built on the road. Nakwon Shopping Center continued its reputation as Nakwon Musical Instrument Shopping Center. It is structured with a ‘Musical Instrument Mall’ on the 2nd and 3rd floors, ‘Hollywood Theater’ on the 4th floor, and ‘Nakwon Apartments’ from the 6th to 15th floors. As time passed and multiplexes prospered, Hollywood Theater became known as ‘Hollywood Classic’ and ‘Seoul Art Cinema’.\n\nIt is located near exit 5 of Jongno 3-ga StationA person who bought a guitar at the Paradise Musical Instruments Market and spent his whole life rewriting the guitar and living without letting go of the song.\n\nAlthough there is no music major, they can experience the Nakwon Musical Instruments Market and Tapgol Park,\n\nwhich are familiar with the comprehensive musical instrument merchant who participates in the revival of the Nakwon Shopping Center, where \"the memory of their youth and romance\" is located.\n\nParadise Building with Apartments in Musical Instruments Market, Movie Theater, and Traditional Market\n\nIt is the Nakwon Building, known as the Nakwon Musical Instruments Market. If you looked closely at this building,\n\nyou'd find something unusual. The point is that vehicles are passing underneath the building. Any building would have been on the side of the road,\n\nbut Paradise Shopping Center was built on the road. Paradise Shopping Center continued its reputation as a paradise musical instrument shopping center. There are musical instrument shops on the 2nd and 3rd floors, Hollywood Theater on the 4th floor, and Paradise Apartment on the 6th to 15th floors.\n\nOver time, multiplexes thrive, and Hollywood Theater is \"Whorrywood Classic\" and \"Seoul Art Cinema.\"\n\nparadise piano instrument\nOpen Closes at 19:00\nSeoul Paradise Musical Instrument\nOpen Closes at 20:00\n180m from current location\nNakwon-dong, Jongno-gu, Seoul"
       },
       {
         "author": "Ok-jin Song",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9달 전",
-        "text": "지하에 음식점들이 아직도 활발히 운영되고 있다. 종로 한복판에서 가성비 좋고 맛은 더좋고.. 은혜로운 곳"
+        "relative_time": "9 months ago",
+        "text": "Restaurants in the basement are still actively operating. A gracious place with good value and better taste in the middle of Jongno."
       }
     ],
     "photos": [
@@ -5724,14 +5724,14 @@
   },
   {
     "place_id": "ChIJofYJZ92ifDUR7BlaygW7TsY",
-    "display_name": "낭만극장",
-    "category": "영화관",
+    "display_name": "romantic theater",
+    "category": "movie theater",
     "types": [
       "movie_theater",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5728323,
@@ -5747,16 +5747,16 @@
     "review_summary": null,
     "phone": "02-742-4231",
     "phone_international": "+82 2-742-4231",
-    "website": "https://낭만극장.com/",
+    "website": "https://romantictheater.com/",
     "google_maps_url": "https://maps.google.com/?cid=14289564301237295596",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca2dd6709f6a1:0xc64ebb05ca5a19ec!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5766,28 +5766,28 @@
         "author": "J A",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "2023-08-21\n낙원상가 옥상에 이런 극장과 공연장이 있었는 줄 이제야 알았네요. ^^"
+        "relative_time": "2 years ago",
+        "text": "2023-08-21\nI finally realized that there was a theater and performance hall like this on the rooftop of Nakwon Shopping Mall. ^^"
       },
       {
         "author": "yongjin Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "낼 박일남선생님 공연이 있다 해서 부산에서 상경 보려갑니다"
+        "relative_time": "4 years ago",
+        "text": "I'm going to see Park Il-nam's performance tomorrow from Busan."
       },
       {
-        "author": "최혜경",
+        "author": "Hyekyung Choi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       },
       {
-        "author": "박현숙판도삼만불",
+        "author": "Park Hyeon-sook’s Pando 30,000 Dollars",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],

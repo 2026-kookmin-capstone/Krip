@@ -1,16 +1,16 @@
 [
   {
     "place_id": "ChIJTWLxkZqZfDURf6Lcf1RBc14",
-    "display_name": "더 풀 비어",
-    "category": "호프/생맥주집",
+    "display_name": "The Full Beer",
+    "category": "Hop/draft beer house",
     "types": [
       "pub",
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 234-20",
-    "short_address": "마포구 성산동 234-20",
+    "address": "234-20 Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "234-20 Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.5587707,
       "lng": 126.91602809999999
@@ -29,67 +29,67 @@
     "google_maps_url": "https://maps.google.com/?cid=6805855293065175679",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c999a91f1624d:0x5e7341547fdca27f!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 5:00 ~ 오전 12:00",
-      "화요일: 오후 5:00 ~ 오전 12:00",
-      "수요일: 오후 5:00 ~ 오전 12:00",
-      "목요일: 오후 5:00 ~ 오전 12:00",
-      "금요일: 오후 5:00 ~ 오전 12:00",
-      "토요일: 오후 5:00 ~ 오전 12:00",
-      "일요일: 휴무일"
+      "Monday: 5:00 PM - 12:00 AM",
+      "Tuesday: 5:00 PM - 12:00 AM",
+      "Wednesday: 5:00 PM - 12:00 AM",
+      "Thursday: 5:00 PM - 12:00 AM",
+      "Friday: 5:00 PM - 12:00 AM",
+      "Saturday: 5:00 PM - 12:00 AM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "배달",
-      "포장",
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "단체적합",
-      "맥주",
-      "와인",
-      "칵테일"
+      "delivery",
+      "packaging",
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "group fitness",
+      "beer",
+      "wine",
+      "cocktail"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이혜영",
+        "author": "Hyeyoung Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10달 전",
-        "text": "담엔 꼭 유닉 착장하고 가서 더 신나게 마실거에요. 크래프트비어 위스키 칵테일 와인까지..그리고 음식이 정말맛있어요"
+        "relative_time": "10 months ago",
+        "text": "Next time, I'll definitely wear my uniform and have more fun drinking there. Craft beer, whiskey, cocktails and wine...and the food is really delicious."
       },
       {
-        "author": "미소녀천재",
+        "author": "Pretty girl genius",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "친절하고 맥주 탭과 캔 라인업도 좋은 곳\n공간이 크고 야외도 있어서 혼맥하기도 적당\n다음엔 가서 안주 먹어봐야지!"
+        "relative_time": "3 years ago",
+        "text": "A friendly place with a good lineup of beer taps and cans.\nThe space is large and there is an outdoor area, so it is suitable for mixing.\nNext time, I have to go and try some snacks!"
       },
       {
         "author": "Honey Pod",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "친절하고 안주도 깔끔하게 나옴\n맥주 종류가 다양함"
+        "relative_time": "4 years ago",
+        "text": "Friendly and clean snacks\nVarious types of beer"
       },
       {
-        "author": "김선경",
+        "author": "Kim Seon-kyung",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "🍺 도 오징어입도 만족스러웠다. 재방문 의사 있음"
+        "relative_time": "5 years ago",
+        "text": "🍺 I was also satisfied with the squid mouth. Willing to visit again"
       },
       {
         "author": "SkirtBoyz",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "맛있는 맥주가 많고 안주도 맛있어요."
+        "relative_time": "4 years ago",
+        "text": "There is a lot of delicious beer and the snacks are also delicious."
       }
     ],
     "photos": [
@@ -107,8 +107,8 @@
   },
   {
     "place_id": "ChIJZecxTfWZfDURb_vEb2t6shs",
-    "display_name": "모그리",
-    "category": "와인 바",
+    "display_name": "Mogli",
+    "category": "wine bar",
     "types": [
       "wine_bar",
       "bar",
@@ -116,8 +116,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 월드컵북로16길 54 1층",
-    "short_address": "마포구 월드컵북로16길 54 1층",
+    "address": "1st floor, 54 Worldcupbuk-ro 16-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "1st floor, 54 Worldcupbuk-ro 16-gil, Mapo-gu",
     "location": {
       "lat": 37.563043799999996,
       "lng": 126.91734710000001
@@ -137,13 +137,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99f54d31e765:0x1bb27a6b6fc4fb6f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "와인"
+      "Store meal",
+      "restroom",
+      "wine"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -153,15 +153,15 @@
   },
   {
     "place_id": "ChIJqxNHwsuZfDURgiX36_e0L3w",
-    "display_name": "부엉",
-    "category": "술집",
+    "display_name": "hoot",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 월드컵북로23길 9",
-    "short_address": "마포구 월드컵북로23길 9",
+    "address": "9 Worldcupbuk-ro 23-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "9, Worldcupbuk-ro 23-gil, Mapo-gu",
     "location": {
       "lat": 37.5644172,
       "lng": 126.9117843
@@ -180,42 +180,42 @@
     "google_maps_url": "https://maps.google.com/?cid=8948569961517229442",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99cbc24713ab:0x7c2fb4f7ebf72582!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 5:00 ~ 오전 1:00",
-      "화요일: 오후 5:00 ~ 오전 1:00",
-      "수요일: 오후 5:00 ~ 오전 1:00",
-      "목요일: 오후 5:00 ~ 오전 1:00",
-      "금요일: 오후 5:00 ~ 오전 1:00",
-      "토요일: 오후 5:00 ~ 오전 1:00",
-      "일요일: 휴무일"
+      "Monday: 5:00 PM - 1:00 AM",
+      "Tuesday: 5:00 PM - 1:00 AM",
+      "Wednesday: 5:00 PM - 1:00 AM",
+      "Thursday: 5:00 PM - 1:00 AM",
+      "Friday: 5:00 PM - 1:00 AM",
+      "Saturday: 5:00 PM - 1:00 AM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이재민",
+        "author": "disaster victims",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "맛좋은 중식요리를 즐길 수 있는 주점. 산니백육 냉채를 시켜 오이랑 편육 하나씩 꺼내 소스를 잘 쌓아 먹고 연태고량주 하이볼을 한 모금 마시니 조합이 너무 좋았다."
+        "relative_time": "3 years ago",
+        "text": "A pub where you can enjoy delicious Chinese cuisine. I ordered Sanni Baekyuk with cold vegetables, took out cucumbers and cold cuts each, layered the sauce on top, and took a sip of the Yantaegoryangju highball. The combination was really good."
       },
       {
         "author": "soso “merry” so",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "중국식 안주. 맛있으나 가격 대비 양은 적은 편. 생맥은 없음."
+        "relative_time": "3 years ago",
+        "text": "Chinese snacks. It's delicious, but the quantity is small for the price. No draft beer."
       }
     ],
     "photos": [
@@ -231,15 +231,15 @@
   },
   {
     "place_id": "ChIJK_6EaieZfDURpv1DtyIQG9M",
-    "display_name": "투다리성산점",
-    "category": "술집",
+    "display_name": "Tudari Seongsan Branch",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 월드컵북로 133 1층",
-    "short_address": "마포구 월드컵북로 133 1층",
+    "address": "1st floor, 133 Worldcupbuk-ro, Mapo-gu, Seoul, South Korea",
+    "short_address": "1st floor, 133 Worldcupbuk-ro, Mapo-gu",
     "location": {
       "lat": 37.5645575,
       "lng": 126.9120482
@@ -258,63 +258,63 @@
     "google_maps_url": "https://maps.google.com/?cid=15211769907663601062",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99276a84fe2b:0xd31b1022b743fda6!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 휴무일",
-      "수요일: 휴무일",
-      "목요일: 휴무일",
-      "금요일: 휴무일",
-      "토요일: 휴무일",
-      "일요일: 오후 5:00 ~ 오전 3:00"
+      "Monday: Closed day",
+      "Tuesday: Closed",
+      "Wednesday: Closed day",
+      "Thursday: Closed",
+      "Friday: Closed day",
+      "Saturday: Closed day",
+      "Sunday: 5:00 PM - 3:00 AM"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김정수",
+        "author": "Kim Jeong-su",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "간단히 먹을수 있는것부터 식사까지 다양해요\n사장님이 귀가 어두우신듯 불러도 모르심"
+        "relative_time": "1 year ago",
+        "text": "There are a variety of foods, from simple snacks to meals.\nThe boss seems to be deaf and doesn't know when I call him."
       },
       {
-        "author": "김줄기",
+        "author": "seaweed stem",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "2년 전",
-        "text": "터치스크린 터치가안되어서 우동이 4개가 나왔네요. 그러면 한번쯤 물어보고 만들어야하지 않나요? 어쩔 수 없다니요. 터치스크린 그지같네요\n\n두번째 또 스크린이 안되네요 ㅠ 이렇게 장사 합니까? 제손이 무뎌서 안되는거죠 손이 메말라서 ㅠ 정말 답답하네요"
+        "relative_time": "2 years ago",
+        "text": "The touch screen didn't work, so 4 udon noodles came out. Then shouldn’t we ask and make it at least once? I can't help it. It looks like a touch screen.\n\nThe screen doesn't work for the second time. Is this how you do business? It doesn't work because my hands are numb. My hands are dry. It's really frustrating."
       },
       {
-        "author": "에바라기",
+        "author": "Ebaragi",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "가성비좋은 투다리는 옛날 이야기인가.\n좀 아쉽다 그래도 뭐 나쁘진않은 느낑..\n노부부 두분이 하기엔 벅차보이네.."
+        "relative_time": "3 years ago",
+        "text": "Are cost-effective Tudari a thing of the past?\nIt's a bit disappointing, but it's not that bad...\nIt seems like a lot for two old couples to do."
       },
       {
         "author": "Jongtan Kim",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "8달 전",
-        "text": "다 좋은데 사장님 겁나 불친절"
+        "relative_time": "8 months ago",
+        "text": "Everything is good, but the owner is very unfriendly"
       },
       {
-        "author": "김진용",
+        "author": "Jinyong Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "편안하게  맛나게  간단히  한잔할수있는곳입니다"
+        "relative_time": "3 years ago",
+        "text": "This is a place where you can enjoy a simple and delicious drink in comfort."
       }
     ],
     "photos": [
@@ -332,16 +332,16 @@
   },
   {
     "place_id": "ChIJU02j8yCZfDURQiW0IZjWsao",
-    "display_name": "슬그머니",
-    "category": "칵테일바",
+    "display_name": "Secretly",
+    "category": "cocktail bar",
     "types": [
       "cocktail_bar",
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산로4길 2 1층 slgmony",
-    "short_address": "마포구 성산로4길 2 1층 slgmony",
+    "address": "slgmony, 1st floor, 2 Seongsan-ro 4-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "1st floor, 2 Seongsan-ro 4-gil, Mapo-gu slgmony",
     "location": {
       "lat": 37.5638176,
       "lng": 126.9072244
@@ -360,22 +360,22 @@
     "google_maps_url": "https://maps.google.com/?cid=12299848006214362434",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9920f3a34d53:0xaab1d69821b42542!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 6:00 ~ 오전 2:00",
-      "화요일: 휴무일",
-      "수요일: 오후 6:00 ~ 오전 2:00",
-      "목요일: 오후 6:00 ~ 오전 2:00",
-      "금요일: 오후 6:00 ~ 오전 2:00",
-      "토요일: 오후 6:00 ~ 오전 2:00",
-      "일요일: 오후 6:00 ~ 오전 2:00"
+      "Monday: 6:00 PM - 2:00 AM",
+      "Tuesday: Closed",
+      "Wednesday: 6:00 PM - 2:00 AM",
+      "Thursday: 6:00 PM - 2:00 AM",
+      "Friday: 6:00 PM - 2:00 AM",
+      "Saturday: 6:00 PM - 2:00 AM",
+      "Sunday: 6:00 PM - 2:00 AM"
     ],
     "services": [
-      "매장식사",
-      "화장실",
-      "칵테일"
+      "Store meal",
+      "restroom",
+      "cocktail"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -385,7 +385,7 @@
         "author": "soo youn Kang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
+        "relative_time": "3 months ago",
         "text": null
       }
     ],
@@ -393,15 +393,15 @@
   },
   {
     "place_id": "ChIJraGlYR6ZfDURJlds4fEICRI",
-    "display_name": "플랜트마포성산라운지",
-    "category": "술집",
+    "display_name": "Plant Mapo Seongsan Lounge",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 200-49번지 2층",
-    "short_address": "마포구 성산동 200-49번지 2층",
+    "address": "2nd floor, 200-49 Seongsan-dong, Mapo-gu, Seoul, Korea",
+    "short_address": "2nd floor, 200-49 Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.5676266,
       "lng": 126.9085545
@@ -421,13 +421,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c991e61a5a1ad:0x120908f1e16c5726!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -438,14 +438,14 @@
   {
     "place_id": "ChIJeXiRMACZfDUR3Jm9e1DYAaw",
     "display_name": "SEOB's",
-    "category": "술집",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 3-24",
-    "short_address": "마포구 성산동 3-24",
+    "address": "3-24 Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "3-24 Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.5653268,
       "lng": 126.9160511
@@ -467,64 +467,64 @@
     "google_maps_url": "https://maps.google.com/?cid=12394425489685322204",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c990030917879:0xac01d8507bbd99dc!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 휴무일",
-      "수요일: 휴무일",
-      "목요일: 오후 7:00 ~ 오전 12:00",
-      "금요일: 오후 7:00 ~ 오전 12:00",
-      "토요일: 오후 7:00 ~ 오전 12:00",
-      "일요일: 오후 7:00~11:00"
+      "Monday: Closed day",
+      "Tuesday: Closed",
+      "Wednesday: Closed day",
+      "Thursday: 7:00 PM - 12:00 AM",
+      "Friday: 7:00 PM - 12:00 AM",
+      "Saturday: 7:00 PM - 12:00 AM",
+      "Sunday: 7:00-11:00 PM"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "맥주",
-      "와인",
-      "칵테일"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "beer",
+      "wine",
+      "cocktail"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "유경",
+        "author": "Yugyeong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "너무 행복한 경험이었어요~! 칵테일도 맛있고 수준 높은 공연도 감상했어요!! 다음에 다시 방문하고 싶어요"
+        "relative_time": "6 months ago",
+        "text": "It was such a happy experience! The cocktails were delicious and I enjoyed a high-quality performance!! I would like to visit again next time"
       },
       {
-        "author": "*무엄하다",
+        "author": "*Ruthless",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "매일 잘생긴 주인장이 직접 간단한 설명과 함께 스윙 위주의 재즈 라이브 공연이 있습니다. 주차가 다소 불펀하지만 저녁 늦은시간에 오픈하는 만큼 조금 돌아다니면 주차가 불가능한 수준은 아닙니다. 재즈라이브바 치고는 저렴한가격에 수준높은 공연을 들을 수 있으며 논알콜음료도 준비되어 있습니다. 올드패션은 근래에 먹은 곳 중에 가장 맛있었습니다"
+        "relative_time": "1 year ago",
+        "text": "Every day, there is a live swing-oriented jazz performance accompanied by a brief explanation from the handsome owner himself. Parking is somewhat difficult, but since it opens late in the evening, parking is not impossible if you wander around a bit. For a jazz live bar, you can listen to high-quality performances at a reasonable price, and non-alcoholic drinks are also available. Old Fashion was the most delicious place I've eaten in a while."
       },
       {
         "author": "S",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "엄청 귀여운 고양이가 음악에 맞춰 노래를 부름. 진짜임. 마티니도 정량으로 타줘서 맛이 꽤 괜."
+        "relative_time": "1 year ago",
+        "text": "A super cute cat sings along to the music. It's real. The martini is also brewed in the right amount so it tastes pretty good."
       },
       {
-        "author": "김형민 (Kingsmin)",
+        "author": "Hyungmin Kim (Kingsmin)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "인간 재즈. 분위기 만점."
+        "relative_time": "1 year ago",
+        "text": "Human Jazz. Great atmosphere."
       },
       {
         "author": "川口菜々子",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "영어 기사에서이 재즈 바를 찾아 인스타 DM에서 예약했습니다.\n친절한 대응, 맛있는 술, 멋진 음악과 최고의 시간을 보냈습니다.\n또 한국에 갈 때는 방문하고 싶습니다!\n\n※단지, 지불시에 일본의 visa 카드(미츠이 스미토모 카드)를 사용할 수 없습니다. 가게 주인의 분들 가끔 이런 일이 있다고 하므로, 일본인의 분은 JCB나 MasterCard등 다른 신용카드나, 충전된 wowpass등을 가져 두면 안심이라고 생각합니다:)"
+        "relative_time": "1 month ago",
+        "text": "I found this jazz bar from an English article and made a reservation through an Instagram DM.\nWe had a great time with friendly response, delicious drinks, great music.\nI want to visit again when I go to Korea!\n\n※However, Japanese visa cards (Mitsui Sumitomo Card) cannot be used for payment. The store owners say that this happens sometimes, so I think it would be safer for Japanese people to bring other credit cards such as JCB or MasterCard, or a charged wowpass :)"
       }
     ],
     "photos": [
@@ -542,15 +542,15 @@
   },
   {
     "place_id": "ChIJ-40jTuGYfDURuO4Lfo4qgsE",
-    "display_name": "김효식당",
-    "category": "술집",
+    "display_name": "Kimhyo Restaurant",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 연남로11길 52",
-    "short_address": "마포구 연남로11길 52",
+    "address": "52 Yeonnam-ro 11-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "52 Yeonnam-ro 11-gil, Mapo-gu",
     "location": {
       "lat": 37.5653268,
       "lng": 126.9160511
@@ -572,62 +572,62 @@
     "google_maps_url": "https://maps.google.com/?cid=13943754187780910776",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98e14e238dfb:0xc1822a8e7e0beeb8!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오후 7:00 ~ 오전 1:00",
-      "수요일: 오후 7:00 ~ 오전 1:00",
-      "목요일: 오후 7:00 ~ 오전 1:00",
-      "금요일: 오후 7:00 ~ 오전 1:00",
-      "토요일: 오후 7:00 ~ 오전 1:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 7:00 PM - 1:00 AM",
+      "Wednesday: 7:00 PM - 1:00 AM",
+      "Thursday: 7:00 PM - 1:00 AM",
+      "Friday: 7:00 PM - 1:00 AM",
+      "Saturday: 7:00 PM - 1:00 AM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "박원재",
+        "author": "Wonjae Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "주택가 골목에 있는 자그마한 술집. 다찌라고 해야할까? 큰 테이블을 가운데 놓고 둘러앉는 것처럼 구성되어 있다. 작은 공간이지만 포근하고 편안한 분위기로 잘 꾸며두셨다.\n안주는 가볍게 한 잔 걸치기에 좋은 메뉴들, 그리고 안주와 어울리는 다양한 술 메뉴가 있다. 메뉴에 따라 잘 어울리는 술을 추천해주시기도 한다. 조리할때나 옆자리 손님이 먹는 모습을 보면 자연스레 이것저것 주문하게 되는 곳.\n김장김치를 담그시면서 김장김치 굴 수육 메뉴를 추가했는데 수량한정이라고 해서 마지막 1접시를 주문했다. 고소하고 쫄깃하게 잘 삶아진 수육에 아삭한 김장김치, 갈치속젓, 굴과 서설을 곁들이니 너무 맛있고 조합이 좋았다.\n시간이 없어서 김장김치와 수육 한가지 메뉴밖에 못먹어봤지만 조만간 다시 방문해서 다른 메뉴들과 새로운 술을 맛봐야겠다. 맛있고 편안하고 사장님과 손님들 모두 유쾌해서 기분좋은 곳."
+        "relative_time": "3 years ago",
+        "text": "A small bar in a residential alley. Should I call it dachi? It is structured as if you are sitting around a large table in the center. Although it is a small space, it was well decorated to create a cozy and comfortable atmosphere.\nFor snacks, there are menus that are good for a light drink, and a variety of alcohol menus that go well with snacks. They also recommend alcohol that goes well with the menu. This is a place where you naturally order something when you see the food being prepared or the customer sitting next to you eating.\nWhile making kimchi, I added the kimchi kimchi and oyster stew menu, but I was told that the quantity was limited, so I ordered the last plate. The savory and chewy boiled pork served with crunchy kimchi, salted cutlassfish, oysters, and scallions was so delicious and a good combination.\nBecause I didn't have time, I was only able to try the kimchi and boiled pork menu, but I will visit again soon to try other menu items and new drinks. It's delicious, comfortable, and both the owner and the customers are cheerful, so it's a pleasant place."
       },
       {
         "author": "CamilaIF",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "조용한 분위기. 심야식당 느낌.\n요리도 맛있다....명란두부? 계속 생각난다. 사진보니 또 먹고 싶네.\n일반 소주는 없었던 것 같다. 독특한 소주들만 있었다. 보리소주 내 취향."
+        "relative_time": "7 years ago",
+        "text": "Quiet atmosphere. Feels like a late night diner.\nThe food is also delicious... pollack roe tofu? I keep thinking about it. Looking at the picture makes me want to eat it again.\nI don't think there was any regular soju. There were only unique sojus. Barley soju is my favorite."
       },
       {
-        "author": "뚜뚜루뚜뚜",
+        "author": "Tudududududu",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "사장님 혼자 모든걸 다 하세요.\n조용하고 음식 정말 맛있고 술종류도 많아요."
+        "relative_time": "7 years ago",
+        "text": "The boss does everything alone.\nIt's quiet, the food is really delicious, and there's a lot of alcohol."
       },
       {
-        "author": "엠투이_M2e김현준",
+        "author": "M2e_M2eHyeonjun Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "분위기에 취하고 맛에 취하고 독특한 술에 취하는곳"
+        "relative_time": "6 years ago",
+        "text": "A place where you can be intoxicated by the atmosphere, intoxicated by the taste, and intoxicated by unique drinks."
       },
       {
         "author": "jinfe",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "느낌 좋다! 메뉴판에서 참이슬을 원해요!"
+        "relative_time": "7 years ago",
+        "text": "It feels good! I want Chamisul on the menu!"
       }
     ],
     "photos": [
@@ -645,15 +645,15 @@
   },
   {
     "place_id": "ChIJ9_oSCOKZfDURRwPuTQ9yy-s",
-    "display_name": "조쿤",
-    "category": "술집",
+    "display_name": "jokun",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 연남로11길 52",
-    "short_address": "마포구 성산동 연남로11길 52",
+    "address": "52 Yeonnam-ro 11-gil, Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "52 Yeonnam-ro 11-gil, Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.5652462,
       "lng": 126.91609389999999
@@ -673,13 +673,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99e20812faf7:0xebcb720f4dee0347!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -689,35 +689,35 @@
         "author": "Sung-Tae Hong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "아늑하고 무난한 주점. 안에  라쿤이  실제로 있음."
+        "relative_time": "7 years ago",
+        "text": "A cozy and decent pub. There is actually a raccoon inside."
       },
       {
         "author": "Reno Park",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "성산동에 작은 술집입니다.\n금요일 저녁에 앞을 지나가는데,\n다른 술집처럼 소란스럽지 않더라고요"
+        "relative_time": "6 years ago",
+        "text": "It’s a small bar in Seongsan-dong.\nPassing by on Friday evening,\nIt wasn't noisy like other bars."
       },
       {
-        "author": "마루코코",
+        "author": "Marukoko",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "주점입니다. 분위기가 독특하고 아늑합니다."
+        "relative_time": "7 years ago",
+        "text": "It's a tavern. The atmosphere is unique and cozy."
       },
       {
         "author": "Raluca Stanciu",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "귀여운 한국 음식점인데, 아쉽게도 너구리 메뉴는 더 이상 없네요 🥲"
+        "relative_time": "2 years ago",
+        "text": "It's a cute Korean restaurant, but unfortunately, Neoguri menu is no longer available 🥲"
       },
       {
-        "author": "김광호",
+        "author": "Gwangho Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       }
     ],
@@ -737,14 +737,14 @@
   {
     "place_id": "ChIJjS9oUuGYfDURP_lsFBAhe34",
     "display_name": "KICK",
-    "category": "술집",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 608 11번지 SELECTED 2호점 101호",
-    "short_address": "마포구 성산동 608 11번지 SELECTED 2호점 101호",
+    "address": "Room 101, SELECTED 2nd Branch, 608 11, Seongsan-dong, Mapo-gu, Seoul, Republic of Korea",
+    "short_address": "Room 101, SELECTED 2nd Branch, 608 11th Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.56529,
       "lng": 126.9162642
@@ -764,14 +764,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98e152682f8d:0x7e7b2110146cf93f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -781,14 +781,14 @@
   {
     "place_id": "ChIJiw8KDgCZfDURZTi7qTqtB0U",
     "display_name": "Mushroom",
-    "category": "술집",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 연남로11길 44",
-    "short_address": "마포구 연남로11길 44",
+    "address": "44 Yeonnam-ro 11-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "44 Yeonnam-ro 11-gil, Mapo-gu",
     "location": {
       "lat": 37.565368299999996,
       "lng": 126.9165684
@@ -808,13 +808,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99000e0a0f8b:0x4507ad3aa9bb3865!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -823,8 +823,8 @@
         "author": "Sascha R.",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
-        "text": "와! 분위기가 정말 끝내주네요!\n\n서비스도 최고예요. 웨이터와 셰프 역할을 한 사람이 동시에 하고 있거든요. 음식도 너무 맛있고, 특히 버섯 뇨키 파스타가 최고였어요.\n\n베를린에서 인사드려요 ^•^"
+        "relative_time": "8 months ago",
+        "text": "Wow! The atmosphere is amazing!\n\nThe service is also great. One person is acting as a waiter and a chef at the same time. The food was very delicious, especially the mushroom gnocchi pasta was the best.\n\nGreetings from Berlin ^•^"
       }
     ],
     "photos": [
@@ -835,15 +835,15 @@
   },
   {
     "place_id": "ChIJDWYjNQCZfDURA0go3H3R2C8",
-    "display_name": "둥둥",
-    "category": "술집",
+    "display_name": "floating",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 연남동 487-213",
-    "short_address": "마포구 연남동 487-213",
+    "address": "487-213 Yeonnam-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "487-213 Yeonnam-dong, Mapo-gu",
     "location": {
       "lat": 37.565413,
       "lng": 126.9171819
@@ -863,13 +863,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99003523660d:0x2fd8d17ddc284803!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합"
+      "Store meal",
+      "restroom",
+      "group fitness"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -878,8 +878,8 @@
   },
   {
     "place_id": "ChIJd3pHTgCZfDURAhO_dyHI7fc",
-    "display_name": "ONE LOVE SEOUL 원러브서울",
-    "category": "술집",
+    "display_name": "ONE LOVE SEOUL ONE LOVE SEOUL",
+    "category": "bar",
     "types": [
       "bar",
       "art_studio",
@@ -888,8 +888,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성미산로17길 105",
-    "short_address": "마포구 성미산로17길 105",
+    "address": "105 Seongmisan-ro 17-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "105 Seongmisan-ro 17-gil, Mapo-gu",
     "location": {
       "lat": 37.566096,
       "lng": 126.9169686
@@ -911,65 +911,65 @@
     "google_maps_url": "https://maps.google.com/?cid=17865155342917112578",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99004e477a77:0xf7edc82177bf1302!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 4:00 ~ 오전 12:00",
-      "화요일: 휴무일",
-      "수요일: 오후 4:00 ~ 오전 12:00",
-      "목요일: 오후 4:00 ~ 오전 12:00",
-      "금요일: 오후 4:00 ~ 오전 12:00",
-      "토요일: 오후 4:00 ~ 오전 12:00",
-      "일요일: 오후 4:00 ~ 오전 12:00"
+      "Monday: 4:00 PM - 12:00 AM",
+      "Tuesday: Closed",
+      "Wednesday: 4:00 PM - 12:00 AM",
+      "Thursday: 4:00 PM - 12:00 AM",
+      "Friday: 4:00 PM - 12:00 AM",
+      "Saturday: 4:00 PM - 12:00 AM",
+      "Sunday: 4:00 PM - 12:00 AM"
     ],
     "services": [
-      "포장",
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "어린이적합",
-      "단체적합",
-      "반려견동반"
+      "packaging",
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "Suitable for children",
+      "group fitness",
+      "Accompanied by dogs"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "강은정",
+        "author": "Kang Eun-jeong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "바에 들어서는 순간, 동남아 여행지에서 맡았던 인센스 향이 은은하게 퍼져 마치 외국으로 떠나온 듯한 기분이 들어요.\n음료와 간단한 안주 하나하나에도 정성이 가득 담겨 있어요(혼자 준비하셔 조금 기다릴 수는 있지만요).\n\n그리고 이곳은 음악을 들으러 오는 공간인 만큼, 몸이 절로 리듬을 타게 되는 레게 음악을 마음껏 즐길 수 있어요.\n무엇보다 환하게 맞아주시는 사장님의 진심 어린 미소 덕분에 기분이 한층 더 좋아집니다.\n\n경기도 시흥에서 벌써 세 번째 방문했는데, 원러브서울이 생각날 때마다 언제든 다시 올 수 있도록 사장님이 오래오래 이 자리를 지켜주셨으면 좋겠어요.\n\n낭만 치사량 초과공간❤️❤️"
+        "relative_time": "3 months ago",
+        "text": "The moment you enter the bar, the incense scent that you smelled during your travels in Southeast Asia fills you, making you feel as if you have traveled to a foreign country.\nA lot of care is put into every single drink and simple snack (although you may have to wait a bit since you prepare them yourself).\n\nAnd since this is a place to listen to music, you can fully enjoy reggae music that will get your body moving to the rhythm.\nAbove all, the sincere smile of the owner who welcomes you makes you feel even better.\n\nThis is already my third visit from Siheung, Gyeonggi-do, and I hope the owner will keep this place for a long time so that I can come back whenever I think of One Love Seoul.\n\nRomantic lethal excess space❤️❤️"
       },
       {
-        "author": "민족소개서",
+        "author": "Ethnic introduction",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "레게노래들이 너무 즐거웠고\n평소에 먹어보지못한 안주들도 맛있고 특별했습니다 감사합니다 !"
+        "relative_time": "5 months ago",
+        "text": "I really enjoyed the reggae songs\nThe snacks I had never tried before were also delicious and special. Thank you!"
       },
       {
         "author": "Luka Bakelants",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "최고의 레게 바!!! 정말 너무 좋아요! 서비스도 훌륭하고 직원분들도 항상 친절하세요! 이 리뷰를 보는 모든 분들께 꼭 추천하고 싶어요! 맥주도 정말 맛있어요 (지난 4개월 동안 한국에서 마셔본 맥주 중 최고였어요!) 음식도 정말 맛있어서 모든 게 완벽해요💚💛❤️"
+        "relative_time": "3 months ago",
+        "text": "Best reggae bar!!! I really like it! The service is great and the staff are always friendly! I definitely recommend this to everyone who reads this review! The beer is really good (it was the best beer I've had in Korea in the last 4 months!) The food is really good too and everything is perfect💚💛❤️"
       },
       {
-        "author": "Kang Anna강안나",
+        "author": "Kang AnnaKang Anna",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "정말 멋진 레게 클럽이에요. 위스키 한 잔 마셨는데, 서버도 친절하고 분위기도 최고였어요. 강력 추천합니다."
+        "relative_time": "7 months ago",
+        "text": "It’s a really cool reggae club. I had a glass of whiskey, the server was friendly and the atmosphere was great. Highly recommended."
       },
       {
         "author": "らそれラフな枠",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
-        "text": "한국에서 레게 바를 찾게 되어 정말 기뻐요. 레게 바 특유의 거친 매력과 한국적인 세련미가 조화롭게 어우러진 곳이에요. 이곳을 발견하게 되어 진심으로 기쁩니다."
+        "relative_time": "8 months ago",
+        "text": "I'm really glad I found a reggae bar in Korea. It is a place that harmoniously combines the rough charm of a reggae bar with Korean sophistication. I am truly happy to have found this place."
       }
     ],
     "photos": [
@@ -987,8 +987,8 @@
   },
   {
     "place_id": "ChIJF3kvTU2ZfDURwGPyMrv1Ix0",
-    "display_name": "마인드엔터",
-    "category": "와인 바",
+    "display_name": "Mind Enter",
+    "category": "wine bar",
     "types": [
       "wine_bar",
       "bar",
@@ -996,8 +996,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성미산로17길 109 1 층",
-    "short_address": "마포구 성미산로17길 109 1 층",
+    "address": "1st floor, 109 Seongmisan-ro 17-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "1st floor, 109 Seongmisan-ro 17-gil, Mapo-gu",
     "location": {
       "lat": 37.566262,
       "lng": 126.9169281
@@ -1016,24 +1016,24 @@
     "google_maps_url": "https://maps.google.com/?cid=2099792035647218624",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c994d4d2f7917:0x1d23f5bb32f263c0!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 11:30 ~ 오후 11:00",
-      "수요일: 오전 11:30 ~ 오후 11:00",
-      "목요일: 오전 11:30 ~ 오후 11:00",
-      "금요일: 오전 11:30 ~ 오후 11:00",
-      "토요일: 오후 12:00~11:00",
-      "일요일: 오후 12:00~11:00"
+      "Monday: Closed day",
+      "Tuesday: 11:30 AM - 11:00 PM",
+      "Wednesday: 11:30 AM - 11:00 PM",
+      "Thursday: 11:30 AM - 11:00 PM",
+      "Friday: 11:30 AM - 11:00 PM",
+      "Saturday: 12:00-11:00 PM",
+      "Sunday: 12:00-11:00 PM"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "맥주",
-      "와인"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "beer",
+      "wine"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1043,8 +1043,8 @@
         "author": "Ben Lua",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "음식과 서비스 모두 훌륭했어요. 에어비앤비 근처에서 간단하게 저녁을 먹으러 들렀는데 정말 만족스러웠습니다. 빈티지한 분위기에 감미로운 재즈 음악이 흘러나와 하루를 마무리하기에 편안하고 여유로운 저녁 식사였어요."
+        "relative_time": "1 year ago",
+        "text": "Both food and service were great. I stopped by for a quick dinner near the Airbnb and was really satisfied. It was a comfortable and leisurely dinner to end the day with sweet jazz music playing in a vintage atmosphere."
       }
     ],
     "photos": [
@@ -1055,15 +1055,15 @@
   },
   {
     "place_id": "ChIJL8QC7qeZfDURamtNbbUSHZI",
-    "display_name": "르규옹",
-    "category": "술집",
+    "display_name": "Leguong",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 연남동 487-23",
-    "short_address": "마포구 연남동 487-23",
+    "address": "487-23 Yeonnam-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "487-23 Yeonnam-dong, Mapo-gu",
     "location": {
       "lat": 37.566262,
       "lng": 126.9169281
@@ -1083,30 +1083,30 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99a7ee02c42f:0x921d12b56d4d6b6a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "음식과술",
+        "author": "food and alcohol",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "식재료 간의 궁합이 아주 좋은 파스타 가게. 삼치파스타는 정말 기억에 남는 맛이었다. 강추!!"
+        "relative_time": "3 years ago",
+        "text": "A pasta restaurant with excellent compatibility between ingredients. The mackerel pasta had a truly memorable taste. Highly recommended!!"
       },
       {
         "author": "Reno Park",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
-        "text": "경의선숲길, 가좌역 방향 입구 인근에 있는 바에요.\n홍대 앞과 달리 여유롭고 한적한 곳이라 거리두기 모임을 갖기 좋아 보입니다."
+        "relative_time": "5 years ago",
+        "text": "It's a bar near the entrance of Gyeongui Line Forest Road towards Gajwa Station.\nUnlike in front of Hongdae, it is a leisurely and quiet place, so it seems like a good place to have a social distancing gathering."
       }
     ],
     "photos": [
@@ -1122,15 +1122,15 @@
   },
   {
     "place_id": "ChIJ6wVqTACZfDURO5YYbRnUnJ4",
-    "display_name": "2012년 생명의 나무심기 숲가꾸기",
-    "category": "관광 명소",
+    "display_name": "2012 Tree of Life Planting Forest Management",
+    "category": "tourist attraction",
     "types": [
       "tourist_attraction",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 산11-64",
-    "short_address": "마포구 성산동 산11-64",
+    "address": "11-64 San, Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "San 11-64, Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.5617346,
       "lng": 126.91125
@@ -1150,7 +1150,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99004c6a05eb:0x9e9cd4196d18963b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": null,
     "accessibility": null,
@@ -1160,36 +1160,36 @@
         "author": "DODO kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "항상 달리기 하고 쉬는곳으로 나라에서 나무 심었다고 생각했는데 유한킴벌리가 40년 동안 심고 가꾸며 함께 만들어간 1,277개의 숲중에서 하나였다니 이번 계기로\n1277개 숲들 모두 가보고 싶네요^^ 감사합니다  유한킴벌리!\n유한킴벌리 #우리강산푸르게푸르게 #고맙숲니다"
+        "relative_time": "1 year ago",
+        "text": "I always thought that the country planted a tree as a place to run and rest, but this was an opportunity to learn that it was one of the 1,277 forests that Yuhan Kimberly has planted and maintained over 40 years.\nI want to visit all 1,277 forests^^ Thank you, Yuhan-Kimberly!\nYuhan-Kimberly #Our rivers and mountains are green #Thank you forest"
       },
       {
-        "author": "최선영",
+        "author": "Choi Seonyoung",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "20년 이상을 나고 자란 고향동네! 친구들이랑 성미산에 운동하러도 많이 가고 나무 심기도 하고 했던 기억이 많은데 유한킴벌리의 숲 가꾸기 사업으로 산이 더 푸르러 지는 것 같아 좋습니다ㅎㅎ 앞으로도 더 많은 산 푸르게 푸르게 해주세요~\n\n#유한킴벌리 #우리강산푸르게푸르게 #고맙숲니다"
+        "relative_time": "1 year ago",
+        "text": "My hometown where I was born and raised for over 20 years! I have many memories of going to Seongmisan Mountain with my friends to exercise and plant trees, and it's nice to see the mountains becoming greener thanks to Yuhan-Kimberly's forestry project. Please make more mountains greener in the future~\n\n#YuhanKimberly #Our rivers and mountains are green #Thank you forest"
       },
       {
-        "author": "이하나",
+        "author": "Lee Hana",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "유한킴벌리의 선한 영향력이 널리 널리 퍼졌으면 졸겠어요! 이벤트 하면서 알게 됐네요^^이 근처에서 유일한 쉼터예요\n#유한킴벌리 #우리강산푸르게푸르게 #고맙숲니다"
+        "relative_time": "1 year ago",
+        "text": "I'll be sleepy if Yuhan-Kimberly's good influence spreads far and wide! I found out about it during the event^^ This is the only rest area in the area.\n#YuhanKimberly #Our rivers and mountains are green #Thank you forest"
       },
       {
         "author": "xx ch",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "작지만 알찬 동네 산 그자체🩵 이런 동네 산이 동네에 있는게 행복입니다 ^^ 소화하고 싶을때나 답답할 때 걷기 좋은 산이에요 #유한킴벌리 #우리강산푸르게푸르게 #고맙숲니다"
+        "relative_time": "1 year ago",
+        "text": "The small but meaningful local mountain itself🩵 I'm happy to have a local mountain like this in my neighborhood ^^ It's a good mountain to walk when you want to digest food or when you're feeling stuffy #YuhanKimberly #Our RiverMountainGreener #ThankfulForest"
       },
       {
         "author": "yeoyeombu (unak)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "빽빽한 골목을 벗어나 한숨 돌릴 수 있는 휴식처입니다ㅎㅎ 산책하기 좋아요! #유한킴벌리 #우리강산푸르게푸르게 #고맙숲니다"
+        "relative_time": "1 year ago",
+        "text": "It's a resting place where you can escape from the crowded alleys and take a breather. It's great for a walk! #YuhanKimberly #Our rivers and mountains are green #Thank you forest"
       }
     ],
     "photos": [
@@ -1198,7 +1198,7 @@
   },
   {
     "place_id": "ChIJY7pK1ciZfDURHD8yciKV3lA",
-    "display_name": "k아트 인터내셔널",
+    "display_name": "k art international",
     "category": "Art museum",
     "types": [
       "art_museum",
@@ -1206,8 +1206,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구",
-    "short_address": "마포구",
+    "address": "Mapo-gu, Seoul, South Korea",
+    "short_address": "Mapo-gu",
     "location": {
       "lat": 37.5637561,
       "lng": 126.90842110000001
@@ -1226,16 +1226,16 @@
     "google_maps_url": "https://maps.google.com/?cid=5827258943041322780",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99c8d54aba63:0x50de952272323f1c!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 5:30",
-      "화요일: 오전 10:00 ~ 오후 5:30",
-      "수요일: 오전 10:00 ~ 오후 5:30",
-      "목요일: 오전 10:00 ~ 오후 5:30",
-      "금요일: 오전 10:00 ~ 오후 5:30",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 5:30 PM",
+      "Tuesday: 10:00 AM - 5:30 PM",
+      "Wednesday: 10:00 AM - 5:30 PM",
+      "Thursday: 10:00 AM - 5:30 PM",
+      "Friday: 10:00 AM - 5:30 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1250,15 +1250,15 @@
   },
   {
     "place_id": "ChIJIRhk0yGZfDURs0GMTx67q4w",
-    "display_name": "나루아토",
-    "category": "박물관",
+    "display_name": "Naruto",
+    "category": "museum",
     "types": [
       "museum",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 275-3",
-    "short_address": "마포구 성산동 275-3",
+    "address": "275-3 Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "275-3 Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.5637561,
       "lng": 126.90830969999999
@@ -1278,7 +1278,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9921d3641821:0x8cabbb1e4f8c41b3!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1288,15 +1288,15 @@
   },
   {
     "place_id": "ChIJc05vQ96YfDURI00D76LPQz8",
-    "display_name": "전쟁과여성인권박물관",
-    "category": "박물관",
+    "display_name": "War and Women’s Human Rights Museum",
+    "category": "museum",
     "types": [
       "museum",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 월드컵북로11길 20",
-    "short_address": "마포구 월드컵북로11길 20",
+    "address": "20 Worldcupbuk-ro 11-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "20 Worldcupbuk-ro 11-gil, Mapo-gu",
     "location": {
       "lat": 37.5600573,
       "lng": 126.91489929999999
@@ -1315,57 +1315,57 @@
     "google_maps_url": "https://maps.google.com/?cid=4558715546530696483",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98de436f4e73:0x3f43cfa2ef034d23!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 10:00 ~ 오후 6:00",
-      "수요일: 오전 10:00 ~ 오후 6:00",
-      "목요일: 오전 10:00 ~ 오후 6:00",
-      "금요일: 오전 10:00 ~ 오후 6:00",
-      "토요일: 오전 10:00 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 10:00 AM - 6:00 PM",
+      "Wednesday: 10:00 AM - 6:00 PM",
+      "Thursday: 10:00 AM - 6:00 PM",
+      "Friday: 10:00 AM - 6:00 PM",
+      "Saturday: 10:00 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어화장실"
+      "wheelchair restroom"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "평화로운수다",
+        "author": "peaceful chat",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "5번째 방문입니다.\n\n올 때 마다 다르게 다가오는 전시입니다.\n\n외국인 친구들이 한국에 오면 가자고 제안합니다.\n\n전쟁이 많아지는 시기\n평화가 더 필요한 시기\n\n무엇이 이 삶에서 중요한지\n꼭 방문하시기를 추천합니다.\n\n기억하고\n또 기억합니다."
+        "relative_time": "2 months ago",
+        "text": "This is my 5th visit.\n\nThis is an exhibition that approaches you differently every time you visit.\n\nI suggest that my foreign friends go when they come to Korea.\n\nA time when war increases\nWhen we need more peace\n\nwhat's important in this life\nI highly recommend you visit.\n\nremember\nI remember again."
       },
       {
-        "author": "최은서",
+        "author": "Eunseo Choi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "이곳에서 우리의 아픈 역사를 더 자세히 들여다볼 수 있어 좋았습니다. 오디오를 따라 이동하며 할머니들의 고통을 함께 느낄 수 있어 뜻깊은 시간이었습니다. 기회가 된다면 다음에 다시 방문하고 싶습니다."
+        "relative_time": "1 year ago",
+        "text": "It was great to be able to take a closer look at our painful history here. It was a meaningful time to be able to feel the pain of the grandmothers while moving along the audio. If I have the chance, I would like to visit again next time."
       },
       {
-        "author": "박주은",
+        "author": "Park Joo-eun",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "전쟁에 가려진, 전쟁을 살아내셨던 피해자 분들에 대해 알 수 있는 뜻깊은 시간이었습니다. 영상, 사진, 오디오 등 다양한 방법으로 전쟁 피해 여성의 역사에 대한 내용을 감상할 수 있었습니다. 앞으로도 함께 연대하겠습니다."
+        "relative_time": "1 year ago",
+        "text": "It was a meaningful time to learn about the victims who survived the war, who were overshadowed by it. We were able to enjoy the history of war victims through a variety of methods, including video, photos, and audio. We will continue to stand together in the future."
       },
       {
-        "author": "전설",
+        "author": "legend",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "11달 전",
-        "text": "슬픔이란 단순한 감정에서 끝나는 게 아니라 앞으로 어떻게 행동하면 좋을지, 그리고 우리 나라가 가해자였던 상황까지 알 수 있어 좋았습니다. 끝까지 함께 기억하겠습니다."
+        "relative_time": "11 months ago",
+        "text": "Sadness is not just a simple feeling, it was good to know how to act in the future and even the situation where our country was the perpetrator. We will remember together until the end."
       },
       {
-        "author": "김귀남",
+        "author": "Kim Gwi-nam",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5달 전",
-        "text": "처음와본 박물관 아픈역사를 보고듣고 마음아팠습니다..\n학생들과 교육으로 역사를 체험"
+        "relative_time": "5 months ago",
+        "text": "It was my first time visiting a museum and it was heartbreaking to see and hear about the painful history.\nExperience history through education with students"
       }
     ],
     "photos": [
@@ -1383,7 +1383,7 @@
   },
   {
     "place_id": "ChIJDUKoIZKZfDURCYch1Bbx2lE",
-    "display_name": "사월갤러리 성산점",
+    "display_name": "Sawol Gallery Seongsan Branch",
     "category": "Art museum",
     "types": [
       "art_museum",
@@ -1391,8 +1391,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성미산로11길 32",
-    "short_address": "마포구 성미산로11길 32",
+    "address": "32 Seongmisan-ro 11-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "32 Seongmisan-ro 11-gil, Mapo-gu",
     "location": {
       "lat": 37.561971199999995,
       "lng": 126.916393
@@ -1411,16 +1411,16 @@
     "google_maps_url": "https://maps.google.com/?cid=5898291742345627401",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c999221a8420d:0x51daf116d4218709!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1435,15 +1435,15 @@
   },
   {
     "place_id": "ChIJEbn6BOSYfDURbTrknKSwqig",
-    "display_name": "(주)화능산업",
-    "category": "박물관",
+    "display_name": "Hwaneung Industrial Co., Ltd.",
+    "category": "museum",
     "types": [
       "museum",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 연남동 487 452번지",
-    "short_address": "마포구 연남동 487 452번지",
+    "address": "487 452 Yeonnam-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "487 452 Yeonnam-dong, Mapo-gu",
     "location": {
       "lat": 37.5659214,
       "lng": 126.9170248
@@ -1463,7 +1463,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98e404fab911:0x28aab0a49ce43a6d!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1481,8 +1481,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성미산로17길 68 1 층 1, 2호",
-    "short_address": "마포구 성미산로17길 68 1 층 1, 2호",
+    "address": "Rooms 1 and 2, 1st floor, 68 Seongmisan-ro 17-gil, Mapo-gu, Seoul, Republic of Korea",
+    "short_address": "Rooms 1 and 2, 1st floor, 68 Seongmisan-ro 17-gil, Mapo-gu",
     "location": {
       "lat": 37.564439199999995,
       "lng": 126.9174874
@@ -1501,16 +1501,16 @@
     "google_maps_url": "https://maps.google.com/?cid=802164029077674007",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c998b58636d43:0xb21dbef34c55817!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 11:00 ~ 오후 6:00",
-      "수요일: 오전 11:00 ~ 오후 6:00",
-      "목요일: 오전 11:00 ~ 오후 6:00",
-      "금요일: 오전 11:00 ~ 오후 6:00",
-      "토요일: 오전 11:00 ~ 오후 6:00",
-      "일요일: 오전 11:00 ~ 오후 6:00"
+      "Monday: Closed day",
+      "Tuesday: 11:00 AM - 6:00 PM",
+      "Wednesday: 11:00 AM - 6:00 PM",
+      "Thursday: 11:00 AM - 6:00 PM",
+      "Friday: 11:00 AM - 6:00 PM",
+      "Saturday: 11:00 AM - 6:00 PM",
+      "Sunday: 11:00 AM - 6:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1523,15 +1523,15 @@
   },
   {
     "place_id": "ChIJ2WtQbQCZfDURiTZ3eeVA8rU",
-    "display_name": "갤러리프롬나드",
-    "category": "미술관",
+    "display_name": "Gallery Promenade",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산로4안길 30",
-    "short_address": "마포구 성산로4안길 30",
+    "address": "30 Seongsan-ro 4an-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "30 Seongsan-ro 4an-gil, Mapo-gu",
     "location": {
       "lat": 37.562964,
       "lng": 126.91061099999999
@@ -1551,7 +1551,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99006d506bd9:0xb5f240e579773689!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1561,15 +1561,15 @@
   },
   {
     "place_id": "ChIJabYTLT-ZfDUR-2ul3oIoYMI",
-    "display_name": "피플리",
-    "category": "미술관",
+    "display_name": "Peeply",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 서강로",
-    "short_address": "마포구 서강로",
+    "address": "Seogang-ro, Mapo-gu, Seoul, South Korea",
+    "short_address": "Seogang-ro, Mapo-gu",
     "location": {
       "lat": 37.5593115,
       "lng": 126.9082589
@@ -1597,15 +1597,15 @@
   },
   {
     "place_id": "ChIJSZNZSSeZfDURBCKj7b9xFdw",
-    "display_name": "(주)두에이치컬처클럽",
-    "category": "문화센터",
+    "display_name": "DoH Culture Club Co., Ltd.",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성산동 250-18번지 마포구 서울특별시 KR",
-    "short_address": "성산동 250-18번지 마포구 서울특별시 KR",
+    "address": "250-18 Seongsan-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "250-18 Seongsan-dong, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.5585138,
       "lng": 126.91005020000001
@@ -1625,7 +1625,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c992749599349:0xdc1571bfeda32204!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1636,14 +1636,14 @@
   {
     "place_id": "ChIJc8RfJwCZfDURr1F4xLYV1gM",
     "display_name": "Seobo Art and Cultural Space",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 114-7",
-    "short_address": "마포구 성산동 114-7",
+    "address": "114-7 Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "114-7 Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.5620674,
       "lng": 126.9153122
@@ -1663,7 +1663,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9900275fc473:0x3d615b6c47851af!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1674,14 +1674,14 @@
   {
     "place_id": "ChIJ77K48L2ifDURDWi-Ug4Eq6I",
     "display_name": "Nonfictionhome",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 37-15",
-    "short_address": "마포구 성산동 37-15",
+    "address": "37-15 Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "37-15 Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.5640861,
       "lng": 126.9141899
@@ -1709,35 +1709,35 @@
         "author": "sshkp ko",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       },
       {
         "author": "flat m. designoffice",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       },
       {
-        "author": "나희찬",
+        "author": "Na Hee-chan",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2주 전",
+        "relative_time": "2 weeks ago",
         "text": null
       },
       {
-        "author": "이영선",
+        "author": "Youngseon Lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       },
       {
         "author": "Thanapawat Than",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       }
     ],
@@ -1756,15 +1756,15 @@
   },
   {
     "place_id": "ChIJDRMwTACZfDURUmTCK3K5U1o",
-    "display_name": "블루스프링갤러리",
-    "category": "미술관",
+    "display_name": "Blue Spring Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 월드컵북로 161",
-    "short_address": "마포구 월드컵북로 161",
+    "address": "161 Worldcupbuk-ro, Mapo-gu, Seoul, South Korea",
+    "short_address": "161 Worldcupbuk-ro, Mapo-gu",
     "location": {
       "lat": 37.5666902,
       "lng": 126.9102008
@@ -1783,13 +1783,13 @@
     "google_maps_url": "https://maps.google.com/?cid=6508749786492068946",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99004c30130d:0x5a53b9722bc26452!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 6:00",
-      "화요일: 오전 11:00 ~ 오후 6:00",
-      "수요일: 오전 11:00 ~ 오후 6:00",
-      "목요일: 오전 11:00 ~ 오후 6:00",
-      "금요일: 오전 11:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 11:00 AM - 6:00 PM",
+      "Tuesday: 11:00 AM - 6:00 PM",
+      "Wednesday: 11:00 AM - 6:00 PM",
+      "Thursday: 11:00 AM - 6:00 PM",
+      "Friday: 11:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": null,
@@ -1797,10 +1797,10 @@
     "parking": null,
     "reviews": [
       {
-        "author": "예전마루 (예전마루)",
+        "author": "Jeonmaru (Yeojeonmaru)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
+        "relative_time": "1 month ago",
         "text": null
       }
     ],
@@ -1811,15 +1811,15 @@
   },
   {
     "place_id": "ChIJoThjAB6ZfDURoD6twgTpz8k",
-    "display_name": "블랙화이트갤러리",
-    "category": "미술관",
+    "display_name": "Black White Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 중동 번지 지하 362 1층",
-    "short_address": "마포구 중동 번지 지하 362 1층",
+    "address": "1st floor, Basement 362, Jungdong-dong, Mapo-gu, Seoul, Korea",
+    "short_address": "1st floor, Basement 362, Jungdong-dong, Mapo-gu",
     "location": {
       "lat": 37.5676857,
       "lng": 126.91095339999998
@@ -1839,7 +1839,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c991e006338a1:0xc9cfe904c2ad3ea0!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1849,15 +1849,15 @@
   },
   {
     "place_id": "ChIJz6SifACZfDURxNJzY1ZQBmw",
-    "display_name": "사슴갤러리",
-    "category": "미술관",
+    "display_name": "Deer Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성미산로13길 110",
-    "short_address": "마포구 성미산로13길 110",
+    "address": "110, Seongmisan-ro 13-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "110, Seongmisan-ro 13-gil, Mapo-gu",
     "location": {
       "lat": 37.5657509,
       "lng": 126.9162594
@@ -1877,7 +1877,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99007ca2a4cf:0x6c0650566373d2c4!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1887,14 +1887,14 @@
         "author": "bogsung -a",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
-        "text": "atnoonbooks 팝업에."
+        "relative_time": "8 months ago",
+        "text": "atnoonbooks pops up."
       },
       {
         "author": "papermint",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "11달 전",
+        "relative_time": "11 months ago",
         "text": null
       }
     ],
@@ -1913,15 +1913,15 @@
   },
   {
     "place_id": "ChIJr8bTG2CZfDURl-u2k2qctq8",
-    "display_name": "주예소스페이스",
-    "category": "미술관",
+    "display_name": "Juyeso Space",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성미산로17길 97 지하 1층",
-    "short_address": "마포구 성미산로17길 97 지하 1층",
+    "address": "Basement 1, 97 Seongmisan-ro 17-gil, Mapo-gu, Seoul, Korea",
+    "short_address": "Basement 1, 97 Seongmisan-ro 17-gil, Mapo-gu",
     "location": {
       "lat": 37.5657183,
       "lng": 126.9171203
@@ -1940,27 +1940,27 @@
     "google_maps_url": "https://maps.google.com/?cid=12661479383957433239",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99601bd3c6af:0xafb69c6a93b6eb97!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 10:00",
-      "화요일: 오전 10:00 ~ 오후 10:00",
-      "수요일: 오전 10:00 ~ 오후 10:00",
-      "목요일: 오전 10:00 ~ 오후 10:00",
-      "금요일: 오전 10:00 ~ 오후 10:00",
-      "토요일: 오전 10:00 ~ 오후 10:00",
-      "일요일: 오전 10:00 ~ 오후 10:00"
+      "Monday: 10:00 AM - 10:00 PM",
+      "Tuesday: 10:00 AM - 10:00 PM",
+      "Wednesday: 10:00 AM - 10:00 PM",
+      "Thursday: 10:00 AM - 10:00 PM",
+      "Friday: 10:00 AM - 10:00 PM",
+      "Saturday: 10:00 AM - 10:00 PM",
+      "Sunday: 10:00 AM - 10:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "감성카르텔 (감성카르텔)",
+        "author": "Emotional Cartel (Emotional Cartel)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "예술 하는 분들이 협업하여 전시 기획 등 화기애애하고 감성적인 인테리어 기억에 남네요"
+        "relative_time": "3 years ago",
+        "text": "I remember the friendly and emotional interior design of artists collaborating to plan exhibitions."
       }
     ],
     "photos": [
@@ -1978,15 +1978,15 @@
   },
   {
     "place_id": "ChIJFxs9CwCZfDURDHcxWu8ktMI",
-    "display_name": "전시장",
-    "category": "미술관",
+    "display_name": "exhibition hall",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성미산로17길 68",
-    "short_address": "마포구 성미산로17길 68",
+    "address": "68, Seongmisan-ro 17-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "68, Seongmisan-ro 17-gil, Mapo-gu",
     "location": {
       "lat": 37.564439799999995,
       "lng": 126.91749150000001
@@ -2006,7 +2006,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99000b3d1b17:0xc2b424ef5a31770c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2016,15 +2016,15 @@
   },
   {
     "place_id": "ChIJxXf-QSCZfDURozV7BuXWjXk",
-    "display_name": "성산근린공원",
-    "category": "공원",
+    "display_name": "Seongsan Neighborhood Park",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동",
-    "short_address": "마포구 성산동",
+    "address": "Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.5621175,
       "lng": 126.90975410000001
@@ -2043,17 +2043,17 @@
     "google_maps_url": "https://maps.google.com/?cid=8758893129450075555",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c992041fe77c5:0x798dd6e5067b35a3!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "어린이적합",
-      "반려견동반"
+      "Suitable for children",
+      "Accompanied by dogs"
     ],
     "payment": null,
     "accessibility": null,
@@ -2063,36 +2063,36 @@
         "author": "Life traveler",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "산책하기 좋고 공원내에 운동기구도 있어 동내, 인근에 위치한 주민이 즐겨 찾는 공원입니다. 최근 봄이되어 꽃도 피고 좋은 산책로 같네요."
+        "relative_time": "5 years ago",
+        "text": "It's a great park for a walk, and there's exercise equipment in the park, so it's a park frequented by locals and nearby residents. It's recently been spring, so flowers are blooming and it looks like a nice walking trail."
       },
       {
-        "author": "반미영",
+        "author": "Ban Mi-young",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "높지않고 여러코스로 다닐수있고요.전망대에서 보는 안산 북한산 여의도 63빌딩까지 한눈에 보여요^^ 일몰도 멋집니다."
+        "relative_time": "5 years ago",
+        "text": "It is not high and you can take several courses. From the observatory, you can see Ansan Bukhansan Mountain and Yeouido 63 Building at a glance^^ The sunset is also beautiful."
       },
       {
-        "author": "글그룹장",
+        "author": "Head of writing group",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "성산근린공원은 마포구에 있는 큰공원인데 공원진입로가 무척많고 자연그대로 보존되어있는게 많네요"
+        "relative_time": "5 years ago",
+        "text": "Seongsan Neighborhood Park is a large park in Mapo-gu. There are many entrance roads to the park, and many of them are preserved in their natural state."
       },
       {
-        "author": "이종희",
+        "author": "Jonghee Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "마포구에서 신경을 많이 쓰셨더라구요\n주차만 좀 더 해결되면 많이 갈수 있을것 같아요"
+        "relative_time": "4 years ago",
+        "text": "Mapo-gu paid a lot of attention.\nI think I could go a lot more if parking were just a bit better."
       },
       {
-        "author": "수요Suyo",
+        "author": "demandSuyo",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "작은 동네공원. 동네사람들이 운동삼아 오르는 작은 산 공원인데 봄이면 꽃이 진짜 예쁘게 피는 곳"
+        "relative_time": "7 years ago",
+        "text": "A small neighborhood park. It's a small mountain park where local people climb for exercise, and the flowers bloom really beautifully in spring."
       }
     ],
     "photos": [
@@ -2110,15 +2110,15 @@
   },
   {
     "place_id": "ChIJNY41GiCZfDURkPmLVAK90ZM",
-    "display_name": "파크존스퀘어",
-    "category": "공원",
+    "display_name": "Park Zone Square",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 번지 401호 81-59 예림빌라",
-    "short_address": "마포구 성산동 번지 401호 81-59 예림빌라",
+    "address": "Yerim Villa, #401, 81-59, Seongsan-dong, Mapo-gu, Seoul, Korea",
+    "short_address": "Yerim Villa, #401, Seongsan-dong, Mapo-gu, 81-59",
     "location": {
       "lat": 37.5629436,
       "lng": 126.91017919999999
@@ -2146,15 +2146,15 @@
   },
   {
     "place_id": "ChIJt8S9JCCZfDUR2jVahlWLHnc",
-    "display_name": "뒤뜰어린이공원",
-    "category": "공원",
+    "display_name": "Backyard Children's Park",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동",
-    "short_address": "마포구 성산동",
+    "address": "Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.5631729,
       "lng": 126.9093652
@@ -2173,21 +2173,21 @@
     "google_maps_url": "https://maps.google.com/?cid=8583451139257284058",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c992024bdc4b7:0x771e8b55865a35da!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "어린이적합",
-      "반려견동반"
+      "Suitable for children",
+      "Accompanied by dogs"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
@@ -2195,14 +2195,14 @@
         "author": "home_papa Jee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "4년 전",
-        "text": "벌레가 많은것 빼고는 괸찬아요."
+        "relative_time": "4 years ago",
+        "text": "Other than the fact that there are a lot of bugs, it's fine."
       },
       {
         "author": "Dayoung Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -2216,15 +2216,15 @@
   },
   {
     "place_id": "ChIJMQFwEe-ZfDURxbnxus149aQ",
-    "display_name": "평화의소녀상",
-    "category": "공원",
+    "display_name": "Girl of Peace Statue",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산로 128",
-    "short_address": "마포구 성산로 128",
+    "address": "128 Seongsan-ro, Mapo-gu, Seoul, South Korea",
+    "short_address": "128 Seongsan-ro, Mapo-gu",
     "location": {
       "lat": 37.5634124,
       "lng": 126.90876039999999
@@ -2249,17 +2249,17 @@
     "parking": null,
     "reviews": [
       {
-        "author": "한주영",
+        "author": "Jooyoung Han",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "마포중앙도서관 광장에 있는 서있는 형태의 소녀상. 보편적인 형태와는 틀리게 작가의 작품을 소녀상으로 만들어놓아 다양성이 좀 확보되었다고 보아짐. 많은 곳에 소녀상이 건립이 되었고, 다양한 모습의 소녀상들이 만들어 지고 있는데, 가급적이면 다양한 모습으로 만들어졌으면 하는 바램이 있음. 언제나 만날때마다 가슴이 먹먹해지는 조형물.\n\n2018년 4월 13일에 건립된 소녀상. 마포중앙도서관 광장에 서있는 형태의 소녀상. 평화의 소녀상(平和의 少女像, 영어: Statue of Peace) 혹은 위안부 상(일본어: 慰安婦像 いあんふぞう 이안후조[*])는 일본군 위안부 피해자들을 기리고 올바른 역사 인식을 확립하기 위한 예술 조형물(동상)이다. 평화비(平和碑)라는 이름으로 불리기도 한다. 상의 모양은 의자에 앉아있는 모양과 서있는 모양이 대표적이다.\n비교해 보면, 독일의 사과와 반성의 방식은 존중받을 만하다."
+        "relative_time": "7 years ago",
+        "text": "A standing statue of a girl in the square of Mapo Central Library. It seems that diversity has been secured by making the artist's work into a statue of a girl, which is different from the common form. Girl statues have been erected in many places, and girl statues of various appearances are being made. I hope that they will be made in as many different shapes as possible. A sculpture that breaks my heart every time I see it.\n\nThe statue was erected on April 13, 2018. A statue of a girl standing in the square of Mapo Central Library. The Statue of Peace (English: Statue of Peace) or Comfort Women Statue (Japanese: 慰安婦像 いあんふぞう Ianfujo[*]) is an artistic sculpture (statue) to commemorate the comfort women victims of the Japanese military and establish correct historical awareness. It is also called the Peace Monument. Representative shapes of the top include sitting on a chair and standing.\nIn comparison, Germany's approach to apology and reflection deserves respect."
       },
       {
         "author": "Kyungmin Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -2276,16 +2276,16 @@
   },
   {
     "place_id": "ChIJebJEeQCZfDUR_dp0NaZJsco",
-    "display_name": "성산",
-    "category": "하이킹코스",
+    "display_name": "Seongsan",
+    "category": "Hiking course",
     "types": [
       "hiking_area",
       "sports_activity_location",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 산16",
-    "short_address": "마포구 성산동 산16",
+    "address": "San 16, Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "San 16, Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.5615397,
       "lng": 126.91278279999999
@@ -2313,8 +2313,8 @@
         "author": "Stanley Chan",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "11달 전",
-        "text": "이곳에 리뷰가 하나도 없다는 게 믿기지 않아요. 제가 평생 본 가장 아름다운 동네 공원이에요. 제 사진으로는 그 아름다움을 제대로 표현할 수 없어요. 정말 아늑해요."
+        "relative_time": "11 months ago",
+        "text": "I can't believe there aren't any reviews here. It's the most beautiful neighborhood park I've ever seen in my life. My photos cannot adequately express its beauty. It's really cozy."
       }
     ],
     "photos": [
@@ -2333,14 +2333,14 @@
   {
     "place_id": "ChIJFxkwHbiZfDURe9rPvDz3ljI",
     "display_name": "Nanji Hangang Park ( Nanji Camping Site )",
-    "category": "공원",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "162 Hangangnanji-ro, 마포구 서울특별시 대한민국",
-    "short_address": "162 Hangangnanji-ro, 마포구",
+    "address": "162 Hangangnanji-ro, Mapo-gu, Seoul South Korea",
+    "short_address": "162 Hangangnanji-ro, Mapo-gu",
     "location": {
       "lat": 37.5637561,
       "lng": 126.90842110000001
@@ -2359,13 +2359,13 @@
     "google_maps_url": "https://maps.google.com/?cid=3645372788640832123",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99b81d301917:0x3296f73cbccfda7b!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": null,
@@ -2376,7 +2376,7 @@
         "author": "Phương Khanh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": "Công viên có không gian cắm trại vô cùng đã luôn đó mấy bạn ơi"
       }
     ],
@@ -2386,15 +2386,15 @@
   },
   {
     "place_id": "ChIJc05vQ96YfDURmceYzDCrT7U",
-    "display_name": "평화의소녀상",
-    "category": "공원",
+    "display_name": "Girl of Peace Statue",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 월드컵북로11길 20",
-    "short_address": "마포구 성산동 월드컵북로11길 20",
+    "address": "20 Worldcupbuk-ro 11-gil, Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "20 Worldcupbuk-ro 11-gil, Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.5600537,
       "lng": 126.9148471
@@ -2414,45 +2414,45 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98de436f4e73:0xb54fab30cc98c799!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "한주영",
+        "author": "Jooyoung Han",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "전쟁과여성 인권 박물관 방문에 만나게 된 많은 소녀상 중 하나. 보편적인 앉아있는 소녀상의 모습이며, 다른 많은 곳의 모델이 된 소녀상. 박물관 내부의 많은 전시물과 함께 아픈역사를 보여주는 조형물. 박물관내 사진 촬영은 금지이나 이 곳만은 촬영이 허락되어 있음.  2012년 5월 5일에 만들어진 소녀상이며, 전쟁과 여성 인권 박물관을 방문하여 반드시 보게 될 소녀상. 다른 곳에 있는 소녀상보다도 더 먹먹해지는 느낌을 받음.\n\n2012년 5월 5일에 건립된 소녀상. 전쟁과여성 인권박물관 내부에 앉아있는 소녀상.  평화의 소녀상(平和의 少女像, 영어: Statue of Peace) 혹은 위안부 상(일본어: 慰安婦像 いあんふぞう 이안후조[*])는 일본군 위안부 피해자들을 기리고 올바른 역사 인식을 확립하기 위한 예술 조형물(동상)이다. 평화비(平和碑)라는 이름으로 불리기도 한다. 상의 모양은 의자에 앉아있는 모양과 서있는 모양이 대표적이다.\n비교해 보면, 독일의 사과와 반성의 방식은 존중받을 만하다."
+        "relative_time": "7 years ago",
+        "text": "One of the many girl statues I came across while visiting the War and Women's Human Rights Museum. This is a common sitting girl statue, and it has become a model for many other places. A sculpture that shows painful history along with the many exhibits inside the museum. Photography is prohibited inside the museum, but photography is permitted here.  This statue was created on May 5, 2012, and is a must-see when visiting the War and Women's Human Rights Museum. It feels even more depressing than the girl statues found elsewhere.\n\nThe statue was erected on May 5, 2012. A statue of a girl sitting inside the War and Women’s Human Rights Museum.  The Statue of Peace (English: Statue of Peace) or Comfort Women Statue (Japanese: 慰安婦像 いあんふぞう Ianfujo[*]) is an artistic sculpture (statue) to commemorate the comfort women victims of the Japanese military and establish correct historical awareness. It is also called the Peace Monument. Representative shapes of the top include sitting on a chair and standing.\nIn comparison, Germany's approach to apology and reflection deserves respect."
       },
       {
-        "author": "임종철",
+        "author": "Lim Jong-cheol",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "\"그걸 다 기억하고 살았으면 아마 살지 못했을 거예요\""
+        "relative_time": "4 years ago",
+        "text": "“If I had remembered all that, I probably wouldn’t have survived.”"
       },
       {
-        "author": "이재우",
+        "author": "Jaewoo Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       },
       {
-        "author": "윤석배",
+        "author": "Seokbae Yoon",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "이준희",
+        "author": "Junhee Lee",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -2467,15 +2467,15 @@
   },
   {
     "place_id": "ChIJgY3svuCYfDURHSs6wpvFpfM",
-    "display_name": "다솜어린이공원",
-    "category": "공원",
+    "display_name": "Dasom Children’s Park",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동",
-    "short_address": "마포구 성산동",
+    "address": "Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.5624508,
       "lng": 126.91536459999999
@@ -2494,21 +2494,21 @@
     "google_maps_url": "https://maps.google.com/?cid=17556655995142941469",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98e0beec8d81:0xf3a5c59bc23a2b1d!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "어린이적합",
-      "반려견동반"
+      "Suitable for children",
+      "Accompanied by dogs"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
@@ -2516,36 +2516,36 @@
         "author": "Glory Son",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "딸아이 어릴때 잼나게 놀던 추억의 장소랍니당^^지금은 21살!!"
+        "relative_time": "6 years ago",
+        "text": "It's a place I have fond memories of when my daughter was young. She's 21 now!!"
       },
       {
         "author": "John aslee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "우리 직원이 사는 집 앞. 놀아보진 못했지만 있는게 어디임"
+        "relative_time": "2 years ago",
+        "text": "In front of the house where our employees live. I haven't played it, but where is it?"
       },
       {
-        "author": "여기연제나",
+        "author": "Here's the show",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "아이들이 뛰놀기 정말좋으며 넓은 공원이 좋음"
+        "relative_time": "7 years ago",
+        "text": "It's great for kids to run around and the large park is nice."
       },
       {
-        "author": "김민석",
+        "author": "Minseok Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9년 전",
-        "text": "조용히 산책하기 좋은 곳입니다"
+        "relative_time": "9 years ago",
+        "text": "It's a great place for a quiet walk"
       },
       {
         "author": "Seungbae Lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "4년 전",
-        "text": "여름엔 좋을듯 그늘이 많이지내요"
+        "relative_time": "4 years ago",
+        "text": "It would be nice in the summer, there is a lot of shade."
       }
     ],
     "photos": [
@@ -2563,15 +2563,15 @@
   },
   {
     "place_id": "ChIJl7JcB96YfDUR3m4XkY9AWKs",
-    "display_name": "(재)한국숲",
-    "category": "공원",
+    "display_name": "Korea Forest Foundation",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 번지 5층 209-4",
-    "short_address": "마포구 성산동 번지 5층 209-4",
+    "address": "209-4, 5th floor, Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "209-4, 5th floor, Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.5607703,
       "lng": 126.9164406
@@ -2599,15 +2599,15 @@
   },
   {
     "place_id": "ChIJF9VuUa6ZfDUReA6gYJC-Nqo",
-    "display_name": "이차림 (Secondary Forest)",
-    "category": "식물원",
+    "display_name": "Secondary Forest",
+    "category": "botanical garden",
     "types": [
       "botanical_garden",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 200 85",
-    "short_address": "마포구 200 85",
+    "address": "200 85, Mapo-gu, Seoul, South Korea",
+    "short_address": "Mapo-gu 200 85",
     "location": {
       "lat": 37.5666429,
       "lng": 126.9087646
@@ -2626,13 +2626,13 @@
     "google_maps_url": "https://maps.google.com/?cid=12265200162495794808",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99ae516ed517:0xaa36be9060a00e78!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 휴무일",
-      "수요일: 오후 3:00~7:00",
-      "목요일: 오후 3:00~7:00",
-      "금요일: 오후 3:00~7:00",
-      "토요일: 오후 1:00~7:00",
-      "일요일: 오후 1:00~7:00"
+      "Monday: Closed day",
+      "Tuesday: Closed",
+      "Wednesday: 3:00-7:00 PM",
+      "Thursday: 3:00-7:00 PM",
+      "Friday: 3:00-7:00 PM",
+      "Saturday: 1:00-7:00 PM",
+      "Sunday: 1:00-7:00 PM"
     ],
     "services": null,
     "payment": null,
@@ -2651,15 +2651,15 @@
   },
   {
     "place_id": "ChIJCQozRx-ZfDURL46TeKvuLc0",
-    "display_name": "쌍둥이어린이공원",
-    "category": "공원",
+    "display_name": "Twin Children’s Park",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동",
-    "short_address": "마포구 성산동",
+    "address": "Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.565700299999996,
       "lng": 126.90672649999999
@@ -2678,56 +2678,56 @@
     "google_maps_url": "https://maps.google.com/?cid=14784735571956960815",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c991f47330a09:0xcd2deeab78938e2f!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "어린이적합",
-      "반려견동반"
+      "Suitable for children",
+      "Accompanied by dogs"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "DJ맘",
+        "author": "DJ Mom",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "새똥이 좀 많아요. 넓긴한대 놀거리는 많이없어요.\n놀이터 인대 대낮에 놀아도 주변분들이 시끄럽다고 딴대가서 놀으라고 뭐라고들 하시네요;;"
+        "relative_time": "4 years ago",
+        "text": "There is a lot of bird poop. It's spacious, but there isn't much to do.\nPlayground ligaments Even if you play in broad daylight, people around you tell you to go somewhere else and play because it's noisy;;"
       },
       {
-        "author": "디스이즈스파르타",
+        "author": "This is Sparta",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "9년 전",
-        "text": "아담한 공원 바닥이 포장돠있어 아이들 넘어짐에 안전하다"
+        "relative_time": "9 years ago",
+        "text": "The small park has a paved floor, making it safe for children to fall."
       },
       {
         "author": "On Son",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "8년 전",
-        "text": "금연공원/애완동물 금지"
+        "relative_time": "8 years ago",
+        "text": "Non-smoking park/no pets allowed"
       },
       {
-        "author": "스누피민들레씨",
+        "author": "Snoopy Dandelion Seed",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "색다른 분위기 입니다."
+        "relative_time": "3 years ago",
+        "text": "It's a different atmosphere."
       },
       {
-        "author": "진웅김 (SOUNDGOAM)",
+        "author": "Jinwoong Kim (SOUNDGOAM)",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "8년 전",
-        "text": "화장실이없음"
+        "relative_time": "8 years ago",
+        "text": "No bathroom"
       }
     ],
     "photos": [
@@ -2745,15 +2745,15 @@
   },
   {
     "place_id": "ChIJidsIix6ZfDURqeL4Mx-XZCk",
-    "display_name": "큰길어린이공원",
-    "category": "공원",
+    "display_name": "Main Road Children’s Park",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동",
-    "short_address": "마포구 성산동",
+    "address": "Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.567700099999996,
       "lng": 126.90819850000001
@@ -2772,58 +2772,58 @@
     "google_maps_url": "https://maps.google.com/?cid=2982675013497840297",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c991e8b08db89:0x2964971f33f8e2a9!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "어린이적합",
-      "반려견동반"
+      "Suitable for children",
+      "Accompanied by dogs"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "DJ맘",
+        "author": "DJ Mom",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "동네라 가끔 나가서 노는데 손 씻을수있는 공중화장실이 있어서 좋아요. 아이들 놀거리 조금 있고.운동기구 조금 있어요~  9시넘어선 주민들 소음문제로 놀수없어요."
+        "relative_time": "3 years ago",
+        "text": "Because it's a neighborhood, I sometimes go out and play, and it's nice to have a public restroom where I can wash my hands. There are some things for children to play. There is some exercise equipment. Residents cannot play after 9 o'clock due to noise issues."
       },
       {
-        "author": "이재범",
+        "author": "Jaebeom Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "어린 아이들과 어르신 분 들에 놀이와 쉼 정도..."
+        "relative_time": "4 years ago",
+        "text": "A place for play and rest for young children and the elderly..."
       },
       {
-        "author": "김익중",
+        "author": "Kim Ik-joong",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "8년 전",
-        "text": "추락위험이 있어요..보호자의 주의가 필요합니다"
+        "relative_time": "8 years ago",
+        "text": "There is a risk of falling. A guardian's attention is required."
       },
       {
-        "author": "김한수",
+        "author": "Hansoo Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9년 전",
-        "text": "내 인생에서 가장 행복했던 시간을 보냈었다..."
+        "relative_time": "9 years ago",
+        "text": "I had the happiest time of my life..."
       },
       {
-        "author": "밤손님",
+        "author": "night guest",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
-        "text": "길가옆 서일유치원 옆에 있습니다,"
+        "relative_time": "8 years ago",
+        "text": "It's next to Seoil Kindergarten on the side of the road."
       }
     ],
     "photos": [
@@ -2841,14 +2841,14 @@
   {
     "place_id": "ChIJPY9RbwCZfDURQVRZiadFsZk",
     "display_name": "Ongmisan-Ro Minipark",
-    "category": "동물원",
+    "category": "zoo",
     "types": [
       "zoo",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성미산로",
-    "short_address": "마포구 성미산로",
+    "address": "Seongmisan-ro, Mapo-gu, Seoul, South Korea",
+    "short_address": "Seongmisan-ro, Mapo-gu",
     "location": {
       "lat": 37.561093,
       "lng": 126.9149798
@@ -2867,20 +2867,20 @@
     "google_maps_url": "https://maps.google.com/?cid=11074709544546948161",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99006f518f3d:0x99b145a789595441!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 휴무일",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Closed day",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2889,16 +2889,16 @@
   },
   {
     "place_id": "ChIJNdS7H5mZfDURfLvnAGFbkeA",
-    "display_name": "성미산문화협동조합",
-    "category": "공연예술 극장",
+    "display_name": "Seongmisan Cultural Cooperative",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 월드컵로26길 39 시민공간 나루 지하 2층",
-    "short_address": "마포구 월드컵로26길 39 시민공간 나루 지하 2층",
+    "address": "Citizen Space Naru, 2nd Basement, 39 Worldcup-ro 26-gil, Mapo-gu, Seoul, Republic of Korea",
+    "short_address": "Citizen Space Naru, Basement 2nd Floor, 39 World Cup-ro 26-gil, Mapo-gu",
     "location": {
       "lat": 37.559424199999995,
       "lng": 126.9098932
@@ -2918,11 +2918,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99991fbbd435:0xe0915b6100e7bb7c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2931,16 +2931,16 @@
   },
   {
     "place_id": "ChIJ9ZbwkuCYfDURoJuVbKEn7CI",
-    "display_name": "노기쓰(주)",
-    "category": "공연예술 극장",
+    "display_name": "Nogitsu Co., Ltd.",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산제1동",
-    "short_address": "마포구 성산제1동",
+    "address": "Seongsanje 1-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "Seongsanje 1-dong, Mapo-gu",
     "location": {
       "lat": 37.5628211,
       "lng": 126.91458850000001
@@ -2960,7 +2960,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98e092f096f5:0x22ec27a16c959ba0!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2970,16 +2970,16 @@
   },
   {
     "place_id": "ChIJYXuGZt6YfDURvWCQbmwBkh0",
-    "display_name": "(주)컨텐트폼컨텍스트",
-    "category": "공연예술 극장",
+    "display_name": "Content Form Context Co., Ltd.",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 239 18번지",
-    "short_address": "마포구 성산동 239 18번지",
+    "address": "239 18 Seongsan-dong, Mapo-gu, Seoul, Korea",
+    "short_address": "239 18th Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.5595862,
       "lng": 126.9154413
@@ -2999,7 +2999,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98de66867b61:0x1d92016c6e9060bd!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3009,16 +3009,16 @@
   },
   {
     "place_id": "ChIJvbXBe96YfDUR2E5yAzvCQlc",
-    "display_name": "사랑티비소극장",
-    "category": "공연예술 극장",
+    "display_name": "Love TV Small Theater",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성산동 234-4번지 마포구 서울특별시 KR",
-    "short_address": "성산동 234-4번지 마포구 서울특별시 KR",
+    "address": "234-4 Seongsan-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "234-4 Seongsan-dong, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.5593054,
       "lng": 126.9160736
@@ -3038,10 +3038,10 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98de7bc1b5bd:0x5742c23b03724ed8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3050,16 +3050,16 @@
   },
   {
     "place_id": "ChIJ49C4WOGYfDUR8L0QB7IjQN8",
-    "display_name": "극단현",
-    "category": "공연예술 극장",
+    "display_name": "Geuk Hyeon",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 번지 601호 3-40 동양하우징",
-    "short_address": "마포구 성산동 번지 601호 3-40 동양하우징",
+    "address": "Dongyang Housing, #601, 3-40, Seongsan-dong, Mapo-gu, Seoul, Korea",
+    "short_address": "Dongyang Housing, #601, Seongsan-dong, Mapo-gu, 3-40",
     "location": {
       "lat": 37.565996999999996,
       "lng": 126.9155352
@@ -3079,7 +3079,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98e158b8d0e3:0xdf4023b20710bdf0!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3089,16 +3089,16 @@
   },
   {
     "place_id": "ChIJGwZO4fmZfDURj1NTA1y0aV0",
-    "display_name": "마포구 성산동 239-1",
-    "category": "라이브 음악 공연장",
+    "display_name": "239-1 Seongsan-dong, Mapo-gu",
+    "category": "live music venue",
     "types": [
       "live_music_venue",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 239-1",
-    "short_address": "마포구 성산동 239-1",
+    "address": "239-1 Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "239-1 Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.559266799999996,
       "lng": 126.91491289999998
@@ -3118,7 +3118,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99f9e14e061b:0x5d69b45c0353538f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3128,15 +3128,15 @@
   },
   {
     "place_id": "ChIJ-3Ib2yaZfDURJXVQMTEInLI",
-    "display_name": "3040노래방",
-    "category": "노래방",
+    "display_name": "3040 Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성산동 253-16번지 2층 마포구 서울특별시 KR",
-    "short_address": "성산동 253-16번지 2층 마포구 서울특별시 KR",
+    "address": "2nd floor, 253-16 Seongsan-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "2nd floor, 253-16 Seongsan-dong, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.5588676,
       "lng": 126.90786279999999
@@ -3156,11 +3156,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9926db1b72fb:0xb29c083131507525!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3169,21 +3169,21 @@
         "author": "Jessica Holynski",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
+        "relative_time": "5 months ago",
         "text": null
       },
       {
         "author": "Phillips",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
+        "relative_time": "5 months ago",
         "text": null
       },
       {
         "author": "Lynelle Leess",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
+        "relative_time": "5 months ago",
         "text": null
       }
     ],
@@ -3191,14 +3191,14 @@
   },
   {
     "place_id": "ChIJUYPYviaZfDURasAU4l2gYNg",
-    "display_name": "점프노리망원점",
-    "category": "오락실",
+    "display_name": "Jump Norimangwon Branch",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5590858,
@@ -3218,60 +3218,60 @@
     "google_maps_url": "https://maps.google.com/?cid=15591638235042070634",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9926bed88351:0xd860a05de214c06a!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 8:00",
-      "화요일: 오전 10:00 ~ 오후 8:00",
-      "수요일: 오전 10:00 ~ 오후 8:00",
-      "목요일: 오전 10:00 ~ 오후 8:00",
-      "금요일: 오전 10:00 ~ 오후 8:00",
-      "토요일: 오전 10:00 ~ 오후 8:00",
-      "일요일: 오전 10:00 ~ 오후 8:00"
+      "Monday: 10:00 AM - 8:00 PM",
+      "Tuesday: 10:00 AM - 8:00 PM",
+      "Wednesday: 10:00 AM - 8:00 PM",
+      "Thursday: 10:00 AM - 8:00 PM",
+      "Friday: 10:00 AM - 8:00 PM",
+      "Saturday: 10:00 AM - 8:00 PM",
+      "Sunday: 10:00 AM - 8:00 PM"
     ],
     "services": [
-      "화장실",
-      "어린이적합"
+      "restroom",
+      "Suitable for children"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "정면돌파",
+        "author": "Head-on breakthrough",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "사장님이 너무 친절하고, 깨끗해서 아이들이 놀기 너무 좋았어요~\n음식 가격도 너무 착하구요~ 적극 추천요^^"
+        "relative_time": "7 years ago",
+        "text": "The owner was so kind, and it was clean, so it was great for the kids to play.\nThe food prices are very reasonable ~ I highly recommend it ^^"
       },
       {
-        "author": "김민",
+        "author": "Kim Min",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
-        "text": "가성비는 좋으나 친절은 기대하지 않는것이 좋음"
+        "relative_time": "7 years ago",
+        "text": "Good value for money, but don't expect kindness."
       },
       {
-        "author": "곰두마리",
+        "author": "Two bears",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8년 전",
-        "text": "만 3세 이상의 아이들이 시간 보내기 좋음."
+        "relative_time": "8 years ago",
+        "text": "Good for children over 3 years old to spend time."
       },
       {
-        "author": "이슬아뿡댕뿌",
+        "author": "Isul-a-ppung-ppu",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
-        "text": "애둘..인젠 돈많이나와서 못가겠음\n기본값도 오른듯"
+        "relative_time": "7 years ago",
+        "text": "Two kids...now I have a lot of money so I can't go.\nThe default value also seems to have increased"
       },
       {
-        "author": "해동",
+        "author": "thaw",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "ㅋㅋ"
+        "relative_time": "7 years ago",
+        "text": "lol"
       }
     ],
     "photos": [
@@ -3281,15 +3281,15 @@
   },
   {
     "place_id": "ChIJ8zjDWSGZfDURYglJ7Np8iUA",
-    "display_name": "킹노래방성산점",
-    "category": "노래방",
+    "display_name": "King Karaoke Seongsan Branch",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 263-4",
-    "short_address": "마포구 성산동 263-4",
+    "address": "263-4, Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "263-4, Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.5609161,
       "lng": 126.90596540000001
@@ -3309,11 +3309,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c992159c338f3:0x40897cdaec490962!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3322,15 +3322,15 @@
   },
   {
     "place_id": "ChIJXRQYriaZfDURKwij5ZUJuuw",
-    "display_name": "궁전노래방",
-    "category": "노래방",
+    "display_name": "Palace Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 망원동 478-9",
-    "short_address": "마포구 망원동 478-9",
+    "address": "478-9 Mangwon-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "478-9 Mangwon-dong, Mapo-gu",
     "location": {
       "lat": 37.559804299999996,
       "lng": 126.90636419999998
@@ -3351,61 +3351,61 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "대리오",
+        "author": "dario",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "7년 전",
-        "text": "맥주 6캔 시켰는데 서비스 30분, 새우깡 3번 리필했는데 왤케 많이먹냐 화냄^ ^"
+        "relative_time": "7 years ago",
+        "text": "I ordered 6 cans of beer, but the service lasted 30 minutes, and I refilled the shrimp crackers 3 times, but I was so angry that I ate so much^^"
       },
       {
-        "author": "김병환",
+        "author": "Kim Byeong-hwan",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
-        "text": "장애인이 이용하기가 어렵네요!"
+        "relative_time": "7 years ago",
+        "text": "It's difficult for disabled people to use!"
       },
       {
-        "author": "AIOF아이오프",
+        "author": "AIOF IOFF",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "즐거운 노래~"
+        "relative_time": "7 years ago",
+        "text": "Happy song~"
       },
       {
-        "author": "이영우",
+        "author": "Youngwoo Lee",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
-        "text": "이상해요"
+        "relative_time": "6 years ago",
+        "text": "It's strange"
       },
       {
-        "author": "성승훈",
+        "author": "Seunghun Seong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "없음"
+        "relative_time": "6 years ago",
+        "text": "doesn't exist"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJW2SOXyGZfDURdIjy0aCE_hE",
-    "display_name": "2차는노래방",
-    "category": "노래방",
+    "display_name": "The second round is karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성산동 266-16번지 마포구 서울특별시 KR",
-    "short_address": "성산동 266-16번지 마포구 서울특별시 KR",
+    "address": "266-16 Seongsan-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "266-16 Seongsan-dong, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.561434999999996,
       "lng": 126.90576200000001
@@ -3425,11 +3425,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99215f8e645b:0x11fe84a0d1f28874!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3438,15 +3438,15 @@
   },
   {
     "place_id": "ChIJp7oGwiaZfDUR_S0bXUg3Uu4",
-    "display_name": "바다노래연습장",
-    "category": "노래방",
+    "display_name": "Sea song practice center",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 망원동 481-5",
-    "short_address": "마포구 망원동 481-5",
+    "address": "481-5 Mangwon-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "481-5 Mangwon-dong, Mapo-gu",
     "location": {
       "lat": 37.558628399999996,
       "lng": 126.9074328
@@ -3465,20 +3465,20 @@
     "google_maps_url": "https://maps.google.com/?cid=17172849113056357885",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9926c206baa7:0xee5237485d1b2dfd!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 10:00",
-      "화요일: 오전 11:00 ~ 오후 10:00",
-      "수요일: 오전 11:00 ~ 오후 10:00",
-      "목요일: 오전 11:00 ~ 오후 10:00",
-      "금요일: 오전 11:00 ~ 오후 10:00",
-      "토요일: 오전 11:00 ~ 오후 10:00",
-      "일요일: 오전 11:00 ~ 오후 10:00"
+      "Monday: 11:00 AM - 10:00 PM",
+      "Tuesday: 11:00 AM - 10:00 PM",
+      "Wednesday: 11:00 AM - 10:00 PM",
+      "Thursday: 11:00 AM - 10:00 PM",
+      "Friday: 11:00 AM - 10:00 PM",
+      "Saturday: 11:00 AM - 10:00 PM",
+      "Sunday: 11:00 AM - 10:00 PM"
     ],
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3487,7 +3487,7 @@
         "author": "PARK JAZZ",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       }
     ],
@@ -3495,15 +3495,15 @@
   },
   {
     "place_id": "ChIJJ8smVueYfDURNPzXyr1RxzU",
-    "display_name": "우리노래방",
-    "category": "노래방",
+    "display_name": "Our Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성산동 210-13번지 지하1층 마포구 서울특별시 KR",
-    "short_address": "성산동 210-13번지 지하1층 마포구 서울특별시 KR",
+    "address": "1st Basement Floor, 210-13 Seongsan-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "210-13 Seongsan-dong, Basement 1, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.5609531,
       "lng": 126.91692350000001
@@ -3523,11 +3523,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98e75626cb27:0x35c751bdcad7fc34!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3536,15 +3536,15 @@
   },
   {
     "place_id": "ChIJO6GqT-CYfDURzGHW5QV_nl4",
-    "display_name": "스타노래방",
-    "category": "노래방",
+    "display_name": "star karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성산동 51-18번지 2층 마포구 서울특별시 KR",
-    "short_address": "성산동 51-18번지 2층 마포구 서울특별시 KR",
+    "address": "2nd floor, 51-18 Seongsan-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "2nd floor, 51-18 Seongsan-dong, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.564253199999996,
       "lng": 126.91295480000001
@@ -3564,11 +3564,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98e04faaa13b:0x5e9e7f05e5d661cc!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3577,8 +3577,8 @@
   },
   {
     "place_id": "ChIJPbxX_t-YfDURyAZyrsDVEuw",
-    "display_name": "성림사",
-    "category": "불교사찰",
+    "display_name": "Seongnimsa Temple",
+    "category": "buddhist temple",
     "types": [
       "buddhist_temple",
       "health",
@@ -3587,8 +3587,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 월드컵북로15안길 15",
-    "short_address": "마포구 월드컵북로15안길 15",
+    "address": "15 Worldcupbuk-ro 15an-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "15 Worldcupbuk-ro 15an-gil, Mapo-gu",
     "location": {
       "lat": 37.562923,
       "lng": 126.91156299999999
@@ -3607,16 +3607,16 @@
     "google_maps_url": "https://maps.google.com/?cid=17010893766068930248",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98dffe57bc3d:0xec12d5c0ae7206c8!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 5:00 ~ 오후 6:00",
-      "화요일: 오전 5:00 ~ 오후 6:00",
-      "수요일: 오전 5:00 ~ 오후 6:00",
-      "목요일: 오전 5:00 ~ 오후 6:00",
-      "금요일: 오전 5:00 ~ 오후 6:00",
-      "토요일: 오전 5:00 ~ 오후 6:00",
-      "일요일: 오전 5:00 ~ 오후 6:00"
+      "Monday: 5:00 AM - 6:00 PM",
+      "Tuesday: 5:00 AM - 6:00 PM",
+      "Wednesday: 5:00 AM - 6:00 PM",
+      "Thursday: 5:00 AM - 6:00 PM",
+      "Friday: 5:00 AM - 6:00 PM",
+      "Saturday: 5:00 AM - 6:00 PM",
+      "Sunday: 5:00 AM - 6:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3626,36 +3626,36 @@
         "author": "Jeseok Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "서울 마포구 성산동 성미산 자락에 있는 조계종 사찰입니다. 교통편은 6호선 마포구청역 3번 출구에서 도보로 15분. 또는 홍대역에서 상암동 방향 버스를 타고 성산우체국이나 베니키아더엠호텔에서 하차 후 성미산 방향으로 200미터 정도 걸어오시면 됩니다.\n\n서울 도심에서 쉽게 볼 수 없는 낮은 산을 끼고 있는 작지만 정갈한 느낌의 사찰입니다. 최근에 현대식으로 사찰을 지어 현대 건축물이지만 외관과 실내는 전통 사찰의 느낌을 줍니다. 서울 시내에서 대중교통을 이용해서 쉽게 갈 수 있습니다.\n\n서울 시내에 있으며 주지스님과 회주스님이 상담을 바탕으로 하여 \"마음의 병\"을 앓고 있는 현대인의 지친 심신을 달래주는 편안한 사찰. 사찰 본연의 역할에 충실하면서도 지역 사회와 연계할 수 있는 일반인을 위한 다양한 행사를 진행하고 있습니다.  02-334-6465"
+        "relative_time": "6 years ago",
+        "text": "This is a Jogye Order temple located at the foot of Seongmisan Mountain in Seongsan-dong, Mapo-gu, Seoul. For transportation, it is a 15-minute walk from Exit 3 of Mapo-gu Office Station (Line 6). Alternatively, you can take a bus from Hongik University Station toward Sangam-dong and get off at Seongsan Post Office or Benikea the M Hotel and walk about 200 meters toward Seongmisan Mountain.\n\nIt is a small but neat temple located on a low mountain that is not easily seen in downtown Seoul. Although the temple was recently built in a modern style and is a modern building, the exterior and interior give the feel of a traditional temple. It is easily accessible by public transportation from downtown Seoul.\n\nA comfortable temple located in downtown Seoul that soothes the tired mind and body of modern people suffering from “mental illness” based on consultations by the head monk and the Hoeju monk. We are holding various events for the general public that can connect with the local community while remaining faithful to the temple's original role.  02-334-6465"
       },
       {
         "author": "S GOON (Sgoon)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "어린이집과 인접한 작은 규모의 절. 교통량 적은 언덕길에 위치. 조용함. 이번에 새로 주지스님이 오셨음."
+        "relative_time": "1 year ago",
+        "text": "A small temple adjacent to a daycare center. Located on a hillside with little traffic. quiet. A new abbot arrived this time."
       },
       {
-        "author": "마혜지",
+        "author": "Ma Hye-ji",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "늘 마음이 평온해지는 공간입니다 행복이 찾아올것만같은!🫶🏻"
+        "relative_time": "1 year ago",
+        "text": "It's a place where your mind will always be at peace, where happiness will come!🫶🏻"
       },
       {
         "author": "Dong-Gyun Ryu",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "11달 전",
-        "text": "도심 속 쉼터!"
+        "relative_time": "11 months ago",
+        "text": "A rest area in the city!"
       },
       {
-        "author": "조서영",
+        "author": "Seoyoung Jo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "잘쉬다왔습니다"
+        "relative_time": "7 months ago",
+        "text": "I had a good rest"
       }
     ],
     "photos": [
@@ -3673,8 +3673,8 @@
   },
   {
     "place_id": "ChIJk_OTcyGZfDURBOz-oL2M81Q",
-    "display_name": "영복교회(예장)",
-    "category": "교회",
+    "display_name": "Yeongbok Church (Presbyterian Church)",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3682,8 +3682,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산제1동 271-17",
-    "short_address": "마포구 성산제1동 271-17",
+    "address": "271-17, Seongsanje 1-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "271-17 Seongsanje 1-dong, Mapo-gu",
     "location": {
       "lat": 37.5619605,
       "lng": 126.90685449999998
@@ -3703,7 +3703,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99217393f393:0x54f38cbda0feec04!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3713,8 +3713,8 @@
   },
   {
     "place_id": "ChIJsVhTKyCZfDURAAd4wqYMkTg",
-    "display_name": "기독교대한감리회신성교회",
-    "category": "교회",
+    "display_name": "Christian Korean Methodist Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3722,8 +3722,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서울 마포구 아현3동 275-2",
-    "short_address": "서울 마포구 아현3동 275-2",
+    "address": "275-2, Ahyeon 3-dong, Mapo-gu, Seoul, Republic of Korea",
+    "short_address": "275-2, Ahyeon 3-dong, Mapo-gu, Seoul",
     "location": {
       "lat": 37.5637561,
       "lng": 126.90842110000001
@@ -3743,7 +3743,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99202b5358b1:0x38910ca6c2780700!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3753,8 +3753,8 @@
   },
   {
     "place_id": "ChIJqcRpYiGZfDURsqfWCfJs3EE",
-    "display_name": "성산교회",
-    "category": "교회",
+    "display_name": "Seongsan Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3762,8 +3762,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성미산로1길 100",
-    "short_address": "마포구 성미산로1길 100",
+    "address": "100 Seongmisan-ro 1-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "100 Seongmisan-ro 1-gil, Mapo-gu",
     "location": {
       "lat": 37.561906799999996,
       "lng": 126.90592819999999
@@ -3783,20 +3783,20 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99216269c4a9:0x41dc6cf209d6a7b2!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "김점경",
+        "author": "Kim Jeom-kyung",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9달 전",
+        "relative_time": "9 months ago",
         "text": null
       }
     ],
@@ -3806,8 +3806,8 @@
   },
   {
     "place_id": "ChIJk1cEByiZfDURJncPCh4gs_I",
-    "display_name": "MVP선교회",
-    "category": "교회",
+    "display_name": "MVP Mission Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3815,8 +3815,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산로 124 덕성빌딩 5층",
-    "short_address": "마포구 성산로 124 덕성빌딩 5층",
+    "address": "5th floor, Deokseong Building, 124 Seongsan-ro, Mapo-gu, Seoul, Korea",
+    "short_address": "5th floor, Deokseong Building, 124 Seongsan-ro, Mapo-gu",
     "location": {
       "lat": 37.56378290000001,
       "lng": 126.9074955
@@ -3836,7 +3836,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c992807045793:0xf2b3201e0a0f7726!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3846,8 +3846,8 @@
   },
   {
     "place_id": "ChIJobr4Ft6YfDURpGTyPd2aWQw",
-    "display_name": "열림교회",
-    "category": "교회",
+    "display_name": "open church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3855,8 +3855,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 월드컵북로 81",
-    "short_address": "마포구 월드컵북로 81",
+    "address": "81 Worldcupbuk-ro, Mapo-gu, Seoul, South Korea",
+    "short_address": "81 Worldcupbuk-ro, Mapo-gu",
     "location": {
       "lat": 37.560809899999995,
       "lng": 126.9153289
@@ -3876,50 +3876,50 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98de16f8baa1:0xc599add3df264a4!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "여기연제나",
+        "author": "Here's the show",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "제가 다니는 교회이기도 하고 목사님 말씀도 좋고 아이들 자모실과 화장실 유아유치부 시설도 좋습니다"
+        "relative_time": "6 years ago",
+        "text": "This is the church I go to, and the pastor's words are good, and the children's nursery and restroom facilities are also good."
       },
       {
-        "author": "어흥",
+        "author": "Ugh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "새벽예배 토요일 5시 반. 기도하다 갑니다."
+        "relative_time": "4 years ago",
+        "text": "Dawn service Saturday 5:30. I'm going to pray."
       },
       {
-        "author": "유만섭",
+        "author": "Yoo Man-seop",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "시설이좋아요. 아이들이 좋아할것 같러요"
+        "relative_time": "5 years ago",
+        "text": "The facilities are good. I think kids will like it"
       },
       {
-        "author": "정성준",
+        "author": "Seongjun Jeong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "선생님 도 좋고 세 건물 이다"
+        "relative_time": "7 years ago",
+        "text": "The teacher is good and there are three buildings."
       },
       {
         "author": "Reno Park",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "열림교회 닫힘으로 유명한, 그 교회입니다!!"
+        "relative_time": "5 years ago",
+        "text": "This church is famous for closing the Open Church!!"
       }
     ],
     "photos": [
@@ -3932,8 +3932,8 @@
   },
   {
     "place_id": "ChIJ2XvAmOCYfDURf_C3hbVsw44",
-    "display_name": "다릿골교회",
-    "category": "교회",
+    "display_name": "Daritgol Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3941,8 +3941,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 114-15",
-    "short_address": "마포구 성산동 114-15",
+    "address": "114-15 Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "114-15 Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.561984599999995,
       "lng": 126.9150387
@@ -3962,17 +3962,17 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98e098c07bd9:0x8ec36cb585b7f07f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "임건묵",
+        "author": "Lim Geon-muk",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -3980,8 +3980,8 @@
   },
   {
     "place_id": "ChIJ9zhkhq2ZfDURACA4N1axg68",
-    "display_name": "하늘나무교회",
-    "category": "교회",
+    "display_name": "Sky Tree Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3989,8 +3989,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 월드컵북로12안길 9 지하1층",
-    "short_address": "마포구 월드컵북로12안길 9 지하1층",
+    "address": "Basement 1, 9 Worldcupbuk-ro 12an-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "Basement 1, 9 Worldcupbuk-ro 12an-gil, Mapo-gu",
     "location": {
       "lat": 37.562249,
       "lng": 126.9150756
@@ -4010,7 +4010,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99ad866438f7:0xaf83b15637382000!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -4020,8 +4020,8 @@
   },
   {
     "place_id": "ChIJJaILX-CYfDUR6jlIwCfUkgM",
-    "display_name": "만민교회",
-    "category": "교회",
+    "display_name": "Manmin Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4029,8 +4029,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 108-1",
-    "short_address": "마포구 성산동 108-1",
+    "address": "108-1 Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "108-1 Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.5634229,
       "lng": 126.91369809999998
@@ -4050,7 +4050,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98e05f0ba225:0x392d427c04839ea!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -4060,8 +4060,8 @@
   },
   {
     "place_id": "ChIJh72GON-YfDURqoGBpAm1XUY",
-    "display_name": "성서교회",
-    "category": "교회",
+    "display_name": "Seongseong Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4069,7 +4069,7 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5585902,
@@ -4090,17 +4090,17 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98df3886bd87:0x465db509a48181aa!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "결단",
+        "author": "resolve",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -4112,8 +4112,8 @@
   },
   {
     "place_id": "ChIJw_bxrh6ZfDURDwD11ia7l_A",
-    "display_name": "생명강교회",
-    "category": "교회",
+    "display_name": "Life River Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4121,8 +4121,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산제2동 200-170",
-    "short_address": "마포구 성산제2동 200-170",
+    "address": "200-170 Seongsanje 2-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "200-170 Seongsanje 2-dong, Mapo-gu",
     "location": {
       "lat": 37.5664732,
       "lng": 126.90805739999999
@@ -4142,7 +4142,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c991eaef1f6c3:0xf097bb26d6f5000f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -4152,8 +4152,8 @@
   },
   {
     "place_id": "ChIJL7JcFx6ZfDURhd-M_Qyvl9Y",
-    "display_name": "정각사",
-    "category": "불교사찰",
+    "display_name": "Jeonggaksa Temple",
+    "category": "buddhist temple",
     "types": [
       "buddhist_temple",
       "place_of_worship",
@@ -4161,8 +4161,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 200-12",
-    "short_address": "마포구 성산동 200-12",
+    "address": "200-12 Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "200-12 Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.5670058,
       "lng": 126.9103928
@@ -4182,24 +4182,24 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c991e175cb22f:0xd697af0cfd8cdf85!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "형龍哥",
+        "author": "Brother Dragon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "상지초남정미",
+        "author": "Sangji Chonam Jeongmi",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -4207,8 +4207,8 @@
   },
   {
     "place_id": "ChIJYfzvEB6ZfDUR0CZ_OOJA93M",
-    "display_name": "천주교 성산2동 성당",
-    "category": "교회",
+    "display_name": "Catholic Seongsan 2-dong Cathedral",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4216,8 +4216,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 월드컵북로 166",
-    "short_address": "마포구 월드컵북로 166",
+    "address": "166 Worldcupbuk-ro, Mapo-gu, Seoul, South Korea",
+    "short_address": "166 Worldcupbuk-ro, Mapo-gu",
     "location": {
       "lat": 37.567229499999996,
       "lng": 126.91033859999999
@@ -4237,12 +4237,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c991e10effc61:0x73f740e2387f26d0!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -4250,36 +4250,36 @@
         "author": "Yokohama Blues",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "불광동 성당을 다녀와서 친구가 다니는 성당을 들어가 봤는데 깔끔한 일반적인 천주교 성당이다. 그런데 다른 성당들보다\n스테인드글라스 작품이 별로 많지않아서 예배당은 조금 걸려있는데 본당이외에는 다 시트지로 되어있다.\n스테인드글라스를 잘 배워서 이 성당에 기증하고 싶다. 특히 원형창틀이 있기 때문에 달드베르 기법과 레드케임 기법으로\n만들면 될것같다. 내부에 사진이 찍을것이 스테인드글라스 찍어서 올립니다. 그래도 대충찍어서 올리진 않으니 괜찮겠죠."
+        "relative_time": "6 years ago",
+        "text": "After visiting Bulgwang-dong Cathedral, I went into the church my friend goes to, and it was a clean, typical Catholic cathedral. However, more than other cathedrals\nThere aren't that many stained glass works, so there's a little bit of stained glass hanging in the chapel, but everything except the main hall is made of sheets.\nI want to learn stained glass well and donate it to this cathedral. In particular, since there is a circular window frame, the Daldebert technique and the Redkeme technique are used.\nI think I can make it. I am uploading a photo of the stained glass inside. Still, I don't take a rough picture and upload it, so it's probably okay."
       },
       {
-        "author": "강성현",
+        "author": "Seonghyeon Kang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "주님을 만날수 있는 마음의 안식처"
+        "relative_time": "1 year ago",
+        "text": "A sanctuary of the heart where you can meet the Lord"
       },
       {
-        "author": "스머프마눌마마",
+        "author": "Smurf Manul Mama",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "영적인공간인데 포근하고 감동적인곳입니다"
+        "relative_time": "3 years ago",
+        "text": "It is a spiritual space, but it is a cozy and touching place."
       },
       {
-        "author": "이옥경",
+        "author": "Lee Ok-kyung",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "신부님 너무 좋으시구  ...\n교우들도 다정다감 하십니다~^^"
+        "relative_time": "7 years ago",
+        "text": "The bride is so nice...\nThe schoolmates are also friendly~^^"
       },
       {
-        "author": "호주TV방송",
+        "author": "Australian TV broadcasting",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "신부님의말씀이정겹게들려와서좋아요"
+        "relative_time": "6 years ago",
+        "text": "I’m glad to hear the priest’s words in a friendly way."
       }
     ],
     "photos": [
@@ -4297,8 +4297,8 @@
   },
   {
     "place_id": "ChIJneCjzOaYfDURlPJ67GCf5YI",
-    "display_name": "대한예수교장로회연광교회",
-    "category": "교회",
+    "display_name": "Korean Presbyterian Church Yeongwang Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4306,8 +4306,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성미산로13길 76",
-    "short_address": "마포구 성미산로13길 76",
+    "address": "76 Seongmisan-ro 13-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "76, Seongmisan-ro 13-gil, Mapo-gu",
     "location": {
       "lat": 37.564205799999996,
       "lng": 126.91652780000001
@@ -4327,40 +4327,40 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98e6cca3e09d:0x82e59f60ec7af294!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "박진호",
+        "author": "Jinho Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "차분하고 말씀의 깊이가 있는 교회"
+        "relative_time": "7 years ago",
+        "text": "A calm and deep church"
       },
       {
         "author": "Peace Lee",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "10년 전",
-        "text": "목마르다"
+        "relative_time": "10 years ago",
+        "text": "be thirsty"
       },
       {
-        "author": "여기엽",
+        "author": "Here you go",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "10달 전",
+        "relative_time": "10 months ago",
         "text": null
       },
       {
         "author": "Sam Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9년 전",
+        "relative_time": "9 years ago",
         "text": null
       }
     ],
@@ -4372,8 +4372,8 @@
   },
   {
     "place_id": "ChIJgQmQpOaYfDUR3z6bXXAG_M8",
-    "display_name": "복음교회",
-    "category": "교회",
+    "display_name": "Gospel Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4381,8 +4381,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 연남동 487-14",
-    "short_address": "마포구 연남동 487-14",
+    "address": "487-14 Yeonnam-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "487-14 Yeonnam-dong, Mapo-gu",
     "location": {
       "lat": 37.564895,
       "lng": 126.91744770000001
@@ -4402,7 +4402,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98e6a4900981:0xcffc06705d9b3edf!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -4413,7 +4413,7 @@
   {
     "place_id": "ChIJ0z83CACZfDURmjffxDYnl_Q",
     "display_name": "Eglise missionaire Noël",
-    "category": "교회",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4421,8 +4421,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성미산로19길 73",
-    "short_address": "마포구 성미산로19길 73",
+    "address": "73 Seongmisan-ro 19-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "73 Seongmisan-ro 19-gil, Mapo-gu",
     "location": {
       "lat": 37.5649283,
       "lng": 126.91761690000001
@@ -4442,7 +4442,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c990008373fd3:0xf4972736c4df379a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -4452,8 +4452,8 @@
   },
   {
     "place_id": "ChIJ4S1bGeSYfDUR4otna7oLyyw",
-    "display_name": "연성교회",
-    "category": "교회",
+    "display_name": "Yeonsung Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4461,8 +4461,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 연남동 361-16",
-    "short_address": "마포구 연남동 361-16",
+    "address": "361-16 Yeonnam-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "361-16 Yeonnam-dong, Mapo-gu",
     "location": {
       "lat": 37.5656727,
       "lng": 126.917531
@@ -4482,7 +4482,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98e4195b2de1:0x2ccb0bba6b678be2!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -4492,8 +4492,8 @@
   },
   {
     "place_id": "ChIJ56tDGeSYfDURFr5V2pW6-sA",
-    "display_name": "대한예수교장로회연성교회",
-    "category": "교회",
+    "display_name": "Presbyterian Church of Korea Yeonsung Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4501,8 +4501,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 연남동 480-17",
-    "short_address": "마포구 연남동 480-17",
+    "address": "480-17 Yeonnam-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "480-17 Yeonnam-dong, Mapo-gu",
     "location": {
       "lat": 37.5656703,
       "lng": 126.91753890000001
@@ -4522,7 +4522,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98e41943abe7:0xc0faba95da55be16!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -4532,8 +4532,8 @@
   },
   {
     "place_id": "ChIJGaQhouaYfDUR6GIOy3Vblnc",
-    "display_name": "Noël Community 노엘 커뮤니티(프랑스어 예배)",
-    "category": "교회",
+    "display_name": "Noël Community Noël Community (French worship)",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4541,7 +4541,7 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5649629,
@@ -4562,24 +4562,24 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98e6a221a419:0x77965b75cb0e62e8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "어흥",
+        "author": "Ugh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "프랑스어로 예배 드리는 곳"
+        "relative_time": "1 year ago",
+        "text": "Where to worship in French"
       },
       {
-        "author": "헬로캐디(hello caddy)",
+        "author": "hello caddy",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -4589,8 +4589,8 @@
   },
   {
     "place_id": "ChIJtVjd6eaYfDURw386UibqgyE",
-    "display_name": "선민교회",
-    "category": "교회",
+    "display_name": "Seonmin Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4598,8 +4598,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성미산로19길 45",
-    "short_address": "마포구 성미산로19길 45",
+    "address": "45 Seongmisan-ro 19-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "45 Seongmisan-ro 19-gil, Mapo-gu",
     "location": {
       "lat": 37.5637256,
       "lng": 126.9178582
@@ -4619,34 +4619,34 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98e6e9dd58b5:0x2183ea26523a7fc3!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "김로온",
+        "author": "Kim Ro-on",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "꼭 한번 가보고싶어요  추억이 가득한곳  보경이  연식이  영기형  목사님  경재형  수십년이 흘렀지만  보고싶네요 가수 김로온"
+        "relative_time": "2 years ago",
+        "text": "I really want to go there once. A place full of memories. Bo-kyung, Yeonshik, Pastor Yeong-gi-hyung, Kyung-jae-hyung. Decades have passed, but I miss you. Singer Kim Lo-on."
       },
       {
         "author": "h aru",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9년 전",
-        "text": "동네주민들을 위해 종종\n\n음식도 나눠주고 동네주민들 좋아라하심"
+        "relative_time": "9 years ago",
+        "text": "Often for local residents\n\nHe handed out food and said the local residents liked it."
       },
       {
         "author": "H E",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       }
     ],
@@ -4657,8 +4657,8 @@
   },
   {
     "place_id": "ChIJvUNHIuKYfDURX9TS9YCTE1I",
-    "display_name": "은광선교원",
-    "category": "교회",
+    "display_name": "Eunkwang Missionary Center",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -4666,8 +4666,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 134-124",
-    "short_address": "마포구 성산동 134-124",
+    "address": "134-124 Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "134-124 Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.5675057,
       "lng": 126.91255919999998
@@ -4687,7 +4687,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98e2224743bd:0x52139380f5d2d45f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -4697,14 +4697,14 @@
   },
   {
     "place_id": "ChIJN3m_GSGZfDURoMTphDIQfN4",
-    "display_name": "되살림가게",
-    "category": "쇼핑몰",
+    "display_name": "revival store",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5609841,
@@ -4724,18 +4724,18 @@
     "google_maps_url": "https://maps.google.com/?cid=16031706582696445088",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c992119bf7937:0xde7c103284e9c4a0!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 5:00",
-      "화요일: 오전 11:00 ~ 오후 5:00",
-      "수요일: 오전 11:00 ~ 오후 5:00",
-      "목요일: 오전 11:00 ~ 오후 5:00",
-      "금요일: 오전 11:00 ~ 오후 5:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 11:00 AM - 5:00 PM",
+      "Tuesday: 11:00 AM - 5:00 PM",
+      "Wednesday: 11:00 AM - 5:00 PM",
+      "Thursday: 11:00 AM - 5:00 PM",
+      "Friday: 11:00 AM - 5:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4749,15 +4749,15 @@
   },
   {
     "place_id": "ChIJj5NcFyGZfDURDnBLqlAwN1M",
-    "display_name": "더나은내일",
-    "category": "쇼핑몰",
+    "display_name": "A better tomorrow",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산제1동 261-7",
-    "short_address": "마포구 성산제1동 261-7",
+    "address": "261-7, Seongsanje 1-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "261-7, Seongsanje 1-dong, Mapo-gu",
     "location": {
       "lat": 37.561052,
       "lng": 126.9077098
@@ -4778,8 +4778,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4789,15 +4789,15 @@
   },
   {
     "place_id": "ChIJBxmmtSaZfDURUHLK7J0gWpg",
-    "display_name": "RYN 코리아망원점",
-    "category": "쇼핑몰",
+    "display_name": "RYN Korea Mangwon Branch",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 260-27",
-    "short_address": "마포구 성산동 260-27",
+    "address": "260-27 Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "260-27 Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.5597844,
       "lng": 126.90694889999999
@@ -4817,11 +4817,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9926b5a61907:0x985a209decca7250!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4831,35 +4831,35 @@
         "author": "Caleb D.H AN",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "8년 전",
-        "text": "별로 맛있는게 없네요"
+        "relative_time": "8 years ago",
+        "text": "It's not very tasty"
       },
       {
-        "author": "이민규",
+        "author": "Lee Min-gyu",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "8년 전",
-        "text": "사람들이맗이오네요"
+        "relative_time": "8 years ago",
+        "text": "People are coming."
       },
       {
-        "author": "송병춘",
+        "author": "Song Byeong-chun",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "해동",
+        "author": "thaw",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "황용원",
+        "author": "Yongwon Hwang",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -4871,15 +4871,15 @@
   },
   {
     "place_id": "ChIJWTwYJCeZfDUR9zKs_yz0KmE",
-    "display_name": "동진미디어",
-    "category": "쇼핑몰",
+    "display_name": "Dongjin Media",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산제1동 성미산로1길",
-    "short_address": "마포구 성산제1동 성미산로1길",
+    "address": "Seongmisan-ro 1-gil, Seongsanje 1-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "Seongmisan-ro 1-gil, Seongsanje 1-dong, Mapo-gu",
     "location": {
       "lat": 37.55847500000001,
       "lng": 126.908792
@@ -4898,37 +4898,37 @@
     "google_maps_url": "https://maps.google.com/?cid=7001677044806071031",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c992724183c59:0x612af42cffac32f7!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 오전 9:00 ~ 오후 5:00",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: 9:00 AM - 5:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "해동",
+        "author": "thaw",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "황용원",
+        "author": "Yongwon Hwang",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -4944,14 +4944,14 @@
   {
     "place_id": "ChIJn7YKbTOZfDURJaZ1Vy3bcR8",
     "display_name": "YOUNGGI MIND NẤM TƯƠI",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 108-9",
-    "short_address": "마포구 성산동 108-9",
+    "address": "108-9, Seongsan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "108-9 Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.562841999999996,
       "lng": 126.91420099999999
@@ -4972,8 +4972,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4982,15 +4982,15 @@
   },
   {
     "place_id": "ChIJmUwYZOCYfDURf-fV5UcrvgI",
-    "display_name": "앤드컴퍼니",
-    "category": "쇼핑몰",
+    "display_name": "And Company",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 번지 3층 301 호 호 KR 서울특별시 마포구 성산동 103-7",
-    "short_address": "번지 3층 301 KR 서울특별시 마포구 성산동 103-7 호 호",
+    "address": "Room 301, 3rd floor, Seoul, Republic of Korea KR 103-7 Seongsan-dong, Mapo-gu, Seoul",
+    "short_address": "Address 3rd floor 301 KR 103-7 Seongsan-dong, Mapo-gu, Seoul",
     "location": {
       "lat": 37.5630605,
       "lng": 126.91338409999999
@@ -5010,11 +5010,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98e064184c99:0x2be2b47e5d5e77f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5024,15 +5024,15 @@
   },
   {
     "place_id": "ChIJvQP2YEqZfDURG5t3XBP9gDY",
-    "display_name": "루루커머스",
-    "category": "쇼핑몰",
+    "display_name": "Lulu Commerce",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성미산로15길 16-3",
-    "short_address": "마포구 성미산로15길 16-3",
+    "address": "16-3, Seongmisan-ro 15-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "16-3, Seongmisan-ro 15-gil, Mapo-gu",
     "location": {
       "lat": 37.5620963,
       "lng": 126.91768230000001
@@ -5051,18 +5051,18 @@
     "google_maps_url": "https://maps.google.com/?cid=3927417134664620827",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c994a60f603bd:0x3680fd135c779b1b!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5072,15 +5072,15 @@
   },
   {
     "place_id": "ChIJDWhtYZaZfDURYHIHmzl4o5M",
-    "display_name": "노스타시 (NOSTASY)",
-    "category": "쇼핑몰",
+    "display_name": "NOSTASY",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 월드컵북로23길 24",
-    "short_address": "마포구 월드컵북로23길 24",
+    "address": "24 Worldcupbuk-ro 23-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "24 Worldcupbuk-ro 23-gil, Mapo-gu",
     "location": {
       "lat": 37.5643528,
       "lng": 126.91129919999999
@@ -5100,11 +5100,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9996616d680d:0x93a378399b077260!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5114,15 +5114,15 @@
   },
   {
     "place_id": "ChIJ3cXOAx6ZfDURUcyvhnl3we8",
-    "display_name": "에이컴퍼니",
-    "category": "쇼핑몰",
+    "display_name": "A Company",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성산동 137-3번지 5층 501-3호 마포구 서울특별시 KR",
-    "short_address": "성산동 137-3번지 5층 501-3호 마포구 서울특별시 KR",
+    "address": "501-3, 5th floor, 137-3 Seongsan-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "#501-3, 5th floor, 137-3 Seongsan-dong, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.5674005,
       "lng": 126.91091
@@ -5142,11 +5142,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c991e03cec5dd:0xefc1777986afcc51!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5156,15 +5156,15 @@
   },
   {
     "place_id": "ChIJZX2xVimZfDUR0i1KE048QYI",
-    "display_name": "굿즈이즈커밍",
-    "category": "쇼핑몰",
+    "display_name": "Goods is Coming",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산동 50-12 굿즈이즈커밍 1층",
-    "short_address": "마포구 성산동 50-12 굿즈이즈커밍 1층",
+    "address": "1st floor, Goods is Coming, 50-12 Seongsan-dong, Mapo-gu, Seoul, Korea",
+    "short_address": "1st floor, Goods is Coming, 50-12 Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.564832599999995,
       "lng": 126.91320659999998
@@ -5183,20 +5183,20 @@
     "google_maps_url": "https://maps.google.com/?cid=9385849404445568466",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c992956b17d65:0x82413c4e134a2dd2!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 8:30",
-      "화요일: 오전 9:00 ~ 오후 8:30",
-      "수요일: 오전 9:00 ~ 오후 8:30",
-      "목요일: 오전 9:00 ~ 오후 8:30",
-      "금요일: 오전 9:00 ~ 오후 8:30",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 8:30 PM",
+      "Tuesday: 9:00 AM - 8:30 PM",
+      "Wednesday: 9:00 AM - 8:30 PM",
+      "Thursday: 9:00 AM - 8:30 PM",
+      "Friday: 9:00 AM - 8:30 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5206,8 +5206,8 @@
         "author": "TJ's work archive",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "왕좌의 게임 굿즈들과 영상, 음악을 즐길 수 있는 테마 쇼룸입니다. 친절한 설명과 함께 다양한 굿즈들을 직접 눈으로 확인하고 체험도 할 수 있습니다. 구매를 원하시는 분은 온라인에서 하시면 됩니다. 입장료 없고 간단한 음료는 들고 오셔서 편하게 시간을 즐기시면 됩니다. 단, 들고 온 쓰레기는 수거해 가셔야 합니다!"
+        "relative_time": "6 years ago",
+        "text": "This is a themed showroom where you can enjoy Game of Thrones goods, videos, and music. You can see and experience various goods with your own eyes along with friendly explanations. If you want to purchase it, you can do so online. There is no admission fee, so you can bring a light drink and enjoy your time comfortably. However, you must collect any trash you bring with you!"
       }
     ],
     "photos": [
@@ -5226,14 +5226,14 @@
   {
     "place_id": "ChIJ3Yqvdu-ZfDURctz2NX_8S8E",
     "display_name": "mooodoorang",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 월드컵북로20안길 27",
-    "short_address": "마포구 월드컵북로20안길 27",
+    "address": "27 Worldcupbuk-ro 20an-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "27, Worldcupbuk-ro 20an-gil, Mapo-gu",
     "location": {
       "lat": 37.5655869,
       "lng": 126.9140468
@@ -5252,18 +5252,18 @@
     "google_maps_url": "https://maps.google.com/?cid=13928503895869807730",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99ef76af8add:0xc14bfc7f35f6dc72!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5275,15 +5275,15 @@
   },
   {
     "place_id": "ChIJRc0imDCZfDURb40rLOB5AMM",
-    "display_name": "다메르나",
-    "category": "쇼핑몰",
+    "display_name": "Damerna",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성미산로13길 122",
-    "short_address": "마포구 성미산로13길 122",
+    "address": "122, Seongmisan-ro 13-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "122, Seongmisan-ro 13-gil, Mapo-gu",
     "location": {
       "lat": 37.566240799999996,
       "lng": 126.91614859999999
@@ -5303,11 +5303,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99309822cd45:0xc30079e02c2b8d6f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5317,15 +5317,15 @@
   },
   {
     "place_id": "ChIJ31OsoyCZfDURKG6l8thV2_4",
-    "display_name": "진보마켓",
-    "category": "시장",
+    "display_name": "Jinbo Market",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성산동 650번지 성산동자담이움아파트 마포구 서울특별시 KR",
-    "short_address": "성산동 650번지 성산동자담이움아파트 마포구 서울특별시 KR",
+    "address": "650 Seongsan-dong, Seoul, Republic of Korea Seongsan-dong Jadam Ium Apartment, Mapo-gu, Seoul KR",
+    "short_address": "650 Seongsan-dong, Seongsan-dong Jadam Ium Apartment, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.5596059,
       "lng": 126.9106319
@@ -5346,8 +5346,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5357,14 +5357,14 @@
   {
     "place_id": "ChIJmdGIRceZfDURQhJWLP4_M8M",
     "display_name": "MMJ#",
-    "category": "시장",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 월드컵로30가길 14",
-    "short_address": "마포구 월드컵로30가길 14",
+    "address": "14 Worldcup-ro 30ga-gil, Mapo-gu, Seoul, South Korea",
+    "short_address": "14 World Cup-ro 30ga-gil, Mapo-gu",
     "location": {
       "lat": 37.5612555,
       "lng": 126.90721549999999
@@ -5383,18 +5383,18 @@
     "google_maps_url": "https://maps.google.com/?cid=14065656422106272322",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99c74588d199:0xc3333ffe2c561242!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 오후 12:00~6:00",
-      "일요일: 휴무일"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: 12:00-6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5403,8 +5403,8 @@
   },
   {
     "place_id": "ChIJK6oVVt-YfDUR9Po4QWr1EKo",
-    "display_name": "울림두레생협 성산점",
-    "category": "슈퍼마켓",
+    "display_name": "Ullim Dure Cooperative Seongsan Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -5414,8 +5414,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 성산제1동 245-44",
-    "short_address": "마포구 성산제1동 245-44",
+    "address": "245-44 Seongsanje 1-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "245-44 Seongsanje 1-dong, Mapo-gu",
     "location": {
       "lat": 37.5587594,
       "lng": 126.91118069999999
@@ -5434,59 +5434,59 @@
     "google_maps_url": "https://maps.google.com/?cid=12254564422784711412",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98df5615aa2b:0xaa10f56a4138faf4!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 9:00",
-      "화요일: 오전 10:00 ~ 오후 9:00",
-      "수요일: 오전 10:00 ~ 오후 9:00",
-      "목요일: 오전 10:00 ~ 오후 9:00",
-      "금요일: 오전 10:00 ~ 오후 9:00",
-      "토요일: 오전 10:00 ~ 오후 7:30",
-      "일요일: 오전 10:00 ~ 오후 7:30"
+      "Monday: 10:00 AM - 9:00 PM",
+      "Tuesday: 10:00 AM - 9:00 PM",
+      "Wednesday: 10:00 AM - 9:00 PM",
+      "Thursday: 10:00 AM - 9:00 PM",
+      "Friday: 10:00 AM - 9:00 PM",
+      "Saturday: 10:00 AM - 7:30 PM",
+      "Sunday: 10:00 AM - 7:30 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "생강GINGER",
+        "author": "GINGER",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "청귤청 수업은 7,000원에 진행이되었고 그야말로 완벽했다~!! 내가 가지기 간통에 충분히 담아 주셨구 담당자님들은 매우 친절하시다 ^^ 다른 수업들도 참여하고싶다;) 궁금하신분들은 두레생협성산점으로 검색하시면 됩니다**"
+        "relative_time": "6 years ago",
+        "text": "The green tangerine class was held for 7,000 won and was absolutely perfect~!! They provided enough for me to have, and the people in charge are very kind ^^ I want to participate in other classes as well;) If you are curious, you can search for Dure Cooperative Seongsan branch**"
       },
       {
-        "author": "범쫀쿠",
+        "author": "Beomjjokku",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "9달 전",
-        "text": "생협이라는 거 몇번 지나가듯 봤지만 이번에 처음 방문해봤어요. 상생을 목적으로 하는 만큼 가격이 절대적으로 저렴하진않지만 마트나 시장보단 믿음이 가는것 같아요."
+        "relative_time": "9 months ago",
+        "text": "I've seen the cooperative a few times in passing, but this was my first time visiting it. The price is not absolutely cheap as it is aimed at coexistence, but I think it is more reliable than a supermarket or market."
       },
       {
-        "author": "이윤",
+        "author": "profit",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "상생업체. 생활협동조합 형태의 매장.\n조합원의 이용이 주로 이루어지지만\n계산해주시는분에게 미리  조합원이 아님을 말하고 구매할수 있음.\n조합원이 아닐경우  약간의 금액(5~10%정도였던것 같음)이 더 발생함.\n유기농과 무농약 제품을 추구하고,\n유제품,간단한 반찬,냉동 국,돈까스, 전 등..가공식품.\n김치,떡,견과류,도 취급하고 있고,쌀을 포함한  여러가지 곡물과  김,미역,생 육류,냉동 육류등 도 있음.\n채소와 과일은 제철 위주 판매.\n반려견 간식도 있고, 냉동식품과 아이스크림 도 있음.\n\n자체 브랜드 물품도 많음.\n여성용품 도 있음.\n물품 대부분이 국산.\n취급물품의 기준이 까다로운것 으로 알고있고....\n화장품,비누,바디워시,샴푸,세제,설것이 비누 등도  성분착한것 위주로 취급하는편.\n주류도 판매하고,주방용품 도 있음.\n계절별 이불등  가끔 반짝판매도  함.\n\n지역과 연동 상생프로그램이 많고, 좋은 영향력이 있는 기업으로 보임."
+        "relative_time": "2 years ago",
+        "text": "A win-win company. A cooperative-style store.\nIt is mainly used by union members, but\nYou can purchase by telling the person paying the bill in advance that you are not a member of the union.\nIf you are not a union member, a small amount (I think it was about 5-10%) will be charged an additional amount.\nPursuing organic and pesticide-free products,\nDairy products, simple side dishes, frozen soup, pork cutlet, pancakes, etc..processed foods.\nWe also handle kimchi, rice cakes, and nuts, as well as various grains including rice, seaweed, seaweed, raw meat, and frozen meat.\nVegetables and fruits are sold mainly in season.\nThere are dog snacks, frozen food, and ice cream.\n\nThere are also many own brand items.\nFeminine products are also available.\nMost of the products are domestically produced.\nI know that the standards for handling goods are strict...\nCosmetics, soap, body wash, shampoo, detergent, dishwashing soap, etc. are mainly handled with good ingredients.\nThey also sell alcohol and have kitchenware.\nThere are occasional flash sales, such as seasonal blankets.\n\nIt appears to be a company with a lot of win-win programs linked to the region and a good influence."
       },
       {
         "author": "cse75audw i10047556",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "종류도 다양하고 매일 세일 품목이 나와서 좋구요  무엇보다 깨끗하고 엄선된 식재료들이라 믿고 먹을수 있어요"
+        "relative_time": "5 years ago",
+        "text": "It's nice that there are a variety of items and they go on sale every day. Above all, the ingredients are clean and carefully selected, so you can eat with confidence."
       },
       {
         "author": "yunee Jeong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "울림두레협동조합 제품들은 믿고구입가능해요^^"
+        "relative_time": "6 years ago",
+        "text": "You can buy products from Ullim Dure Cooperative with confidence^^"
       }
     ],
     "photos": [
@@ -5505,14 +5505,14 @@
   {
     "place_id": "ChIJqQa1nh6ZfDURhjBxcvZE7PI",
     "display_name": "shop porter",
-    "category": "시장",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구",
-    "short_address": "마포구",
+    "address": "Mapo-gu, Seoul, South Korea",
+    "short_address": "Mapo-gu",
     "location": {
       "lat": 37.5637561,
       "lng": 126.90842110000001
@@ -5533,8 +5533,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5544,7 +5544,7 @@
   {
     "place_id": "ChIJDeuJ1viZfDURswsP6qw6eH0",
     "display_name": "GK TRADING INC",
-    "category": "자동차 정비소",
+    "category": "car repair shop",
     "types": [
       "market",
       "car_repair",
@@ -5552,8 +5552,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "Mapo Street, Mapo-gu, Seoul, 대한민국",
-    "short_address": "Mapo Street, 마포구",
+    "address": "Mapo Street, Mapo-gu, Seoul, South Korea",
+    "short_address": "Mapo Street, Mapo-gu",
     "location": {
       "lat": 37.5637561,
       "lng": 126.90842110000001
@@ -5574,8 +5574,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5584,8 +5584,8 @@
   },
   {
     "place_id": "ChIJp9iqmyGZfDURbbiYrj_N2EU",
-    "display_name": "호연수퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Hoyeon Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -5595,8 +5595,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성산동 275-12번지 마포구 서울특별시 KR",
-    "short_address": "성산동 275-12번지 마포구 서울특별시 KR",
+    "address": "275-12 Seongsan-dong, Seoul, Republic of Korea, Mapo-gu, Seoul KR",
+    "short_address": "275-12 Seongsan-dong, Mapo-gu, Seoul KR",
     "location": {
       "lat": 37.5628157,
       "lng": 126.9065794
@@ -5624,15 +5624,15 @@
   },
   {
     "place_id": "ChIJjSN5rCaZfDURKcl272R6ZC8",
-    "display_name": "현이네회시장",
-    "category": "시장",
+    "display_name": "Hyeonine Raw Fish Market",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 전면 우측 번지 1층 478-5 101호 KR 서울특별시 마포구 망원동",
-    "short_address": "전면 우측 번지 1층 478-5 KR 서울특별시 마포구 망원동 101호",
+    "address": "Republic of Korea Front right address 1st floor 478-5 Room 101 KR Mangwon-dong, Mapo-gu, Seoul",
+    "short_address": "Front right address 1st floor 478-5 KR #101, Mangwon-dong, Mapo-gu, Seoul",
     "location": {
       "lat": 37.5600935,
       "lng": 126.906077
@@ -5652,11 +5652,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9926ac79238d:0x2f647a64ef76c929!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5666,15 +5666,15 @@
         "author": "jae joon LEE",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "근방에서 횟집은 일번이지 싶습니다.\n\n맛이랑 친절 가격 모두 괜찮습니다.\n\n새우 튀김 두께 다소 두껍습니다만 기름이 깨끗하다는 느낌을 받습니다.\n\n친절함이 재방문을 희망케 합니다.\n\n주차장이 없어 인근 공영주차장에\n주차해야 합니다. 주차장에서 일분 이내 거리입니디.\n쓰고보니 ai 느낌 나네여.."
+        "relative_time": "6 months ago",
+        "text": "I think this is the number one raw fish restaurant in the area.\n\nBoth the taste and the friendly price are okay.\n\nThe fried shrimp are a bit thick, but the oil feels clean.\n\nYour kindness makes me hope to visit again.\n\nThere is no parking lot, so use the nearby public parking lot.\nYou have to park. It's less than a minute from the parking lot.\nWhen I wrote it, it felt like AI.."
       },
       {
         "author": "DK OH",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "망원동 거주자들의 숨은 회맛집. 저렴한 가격에 신선한 회를 먹을 수 있는 곳.\n거기더 반찬도 매우 깔끔해서, 술 한잔 하려면 꼭 가는 것을 추천!"
+        "relative_time": "1 year ago",
+        "text": "A hidden raw fish restaurant for Mangwon-dong residents. A place where you can eat fresh raw fish at an affordable price.\nMoreover, the side dishes are very good, so I definitely recommend going there if you want to have a drink!"
       }
     ],
     "photos": [
@@ -5684,8 +5684,8 @@
   },
   {
     "place_id": "ChIJfxVNl-CYfDURi-76ebyzf8k",
-    "display_name": "원플러스마트",
-    "category": "슈퍼마켓",
+    "display_name": "One Plus Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -5695,8 +5695,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "1 층 102 호, 114-3 성산동 마포구 서울특별시 대한민국",
-    "short_address": "1 층 102 호, 114-3 성산동 마포구",
+    "address": "Room 102, 1st floor, 114-3 Seongsan-dong, Mapo-gu, Seoul South Korea",
+    "short_address": "Room 102, 1st floor, 114-3 Seongsan-dong, Mapo-gu",
     "location": {
       "lat": 37.5623267,
       "lng": 126.91480740000002
@@ -5715,20 +5715,20 @@
     "google_maps_url": "https://maps.google.com/?cid=14519521345747480203",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98e0974d157f:0xc97fb3bc79faee8b!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:30 ~ 오후 10:00",
-      "화요일: 오전 9:30 ~ 오후 10:00",
-      "수요일: 오전 9:30 ~ 오후 10:00",
-      "목요일: 오전 9:30 ~ 오후 10:00",
-      "금요일: 오전 9:30 ~ 오후 10:00",
-      "토요일: 오전 9:30 ~ 오후 10:00",
-      "일요일: 오전 9:30 ~ 오후 10:00"
+      "Monday: 9:30 AM - 10:00 PM",
+      "Tuesday: 9:30 AM - 10:00 PM",
+      "Wednesday: 9:30 AM - 10:00 PM",
+      "Thursday: 9:30 AM - 10:00 PM",
+      "Friday: 9:30 AM - 10:00 PM",
+      "Saturday: 9:30 AM - 10:00 PM",
+      "Sunday: 9:30 AM - 10:00 PM"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5738,36 +5738,36 @@
         "author": "lucky always",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "과일이나  생선이  질이  좋고  신선해요  가격도  괜찮구요  근처에  과일생선  파는데가  없는데  여기  좋아요"
+        "relative_time": "6 years ago",
+        "text": "The fruits and fish are of good quality and fresh, and the prices are reasonable. There is no place that sells fruit and fish nearby, but this place is good."
       },
       {
-        "author": "카리스마",
+        "author": "charisma",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "물건이 싼건 싸고 친절."
+        "relative_time": "7 years ago",
+        "text": "The goods are cheap and friendly."
       },
       {
         "author": "Candy Baek",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "싱싱하고 맛있어요"
+        "relative_time": "7 years ago",
+        "text": "Fresh and delicious"
       },
       {
-        "author": "강휘성",
+        "author": "Kang Hwi-seong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "맥주안주 서비스!!! 캬~"
+        "relative_time": "7 years ago",
+        "text": "Beer snack service!!! Okay~"
       },
       {
-        "author": "전재일",
+        "author": "Jeon Jae-il",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "아이스크림이 싼 마트"
+        "relative_time": "7 years ago",
+        "text": "A supermarket with cheap ice cream"
       }
     ],
     "photos": [
