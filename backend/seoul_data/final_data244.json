@@ -1,8 +1,8 @@
 [
   {
     "place_id": "ChIJLXe6FKylfDURCgMPXXGN5cQ",
-    "display_name": "코드",
-    "category": "와인 바",
+    "display_name": "cord",
+    "category": "wine bar",
     "types": [
       "wine_bar",
       "bar",
@@ -10,8 +10,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 잠실동 22-6번지 송파구 서울특별시 KR",
-    "short_address": "잠실동 22-6번지 송파구 서울특별시 KR",
+    "address": "22-6 Jamsil-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "22-6 Jamsil-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5119423,
       "lng": 127.08702539999999
@@ -31,13 +31,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ac14ba772d:0xc4e58d715d0f030a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "와인"
+      "Store meal",
+      "restroom",
+      "wine"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -47,15 +47,15 @@
   },
   {
     "place_id": "ChIJpX4HGq2lfDURhmo_oXht9gw",
-    "display_name": "펍플레이스",
-    "category": "술집",
+    "display_name": "Pub Place",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 잠실동 183-9번지 잠실동 2층 송파구 서울특별시 KR",
-    "short_address": "잠실동 183-9번지 잠실동 2층 송파구 서울특별시 KR",
+    "address": "2nd floor, Jamsil-dong, 183-9 Jamsil-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "183-9 Jamsil-dong, 2nd floor, Jamsil-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5108338,
       "lng": 127.0846658
@@ -75,14 +75,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ad1a077ea5:0xcf66d78a13f6a86!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -92,15 +92,15 @@
   },
   {
     "place_id": "ChIJG0Nd2KulfDURRYKKbHL7udc",
-    "display_name": "TEALABO티라보",
-    "category": "술집",
+    "display_name": "TEALABO",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 잠실 리센츠 KR 서울특별시 송파구 잠실동 22번지 지하1층 A90호",
-    "short_address": "KR 서울특별시 송파구 잠실동 22번지 지하1층 A90호 잠실 리센츠",
+    "address": "Jamsil Ricenz, Seoul, Republic of Korea Room A90, B1, 22 Jamsil-dong, Songpa-gu, Seoul",
+    "short_address": "KR Jamsil Ricenz, Room A90, Basement 1, 22 Jamsil-dong, Songpa-gu, Seoul",
     "location": {
       "lat": 37.5140313,
       "lng": 127.0882363
@@ -120,13 +120,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5abd85d431b:0xd7b9fb726c8a8245!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -137,14 +137,14 @@
   {
     "place_id": "ChIJUdqu3CWlfDURjDGi_57CYsw",
     "display_name": "Bronx Brewery",
-    "category": "술집",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 185",
-    "short_address": "송파구 잠실동 185",
+    "address": "185 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "185 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.510690499999995,
       "lng": 127.08450579999999
@@ -164,14 +164,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca525dcaeda51:0xcc62c29effa2318c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -180,36 +180,36 @@
         "author": "YJ YANG",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "반반 18인치 피자로 주문했는데 꽤 크지만 얇아서 둘이 먹을만 하며 맛은 무난함.\n맥주가 다양하게 있고 라거보단 에일 맥주가 꽤 괜찮음.\n창가쪽 문열고 있으면 야외에서 먹는 느낌이라 좋음."
+        "relative_time": "2 years ago",
+        "text": "I ordered a half-and-half 18-inch pizza, and although it was quite large, it was thin enough for two people to eat, and the taste was decent.\nThere are a variety of beers, and ale beer is better than lager.\nIf you open the door near the window, it feels like you're eating outdoors, which is nice."
       },
       {
         "author": "Redstone68",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "체인점이라 어디가나 비슷한 맥주와 안주. 저렴한 가격에 즐길 수 있는 적당한 품질의 수제 맥주. 맛이 좀 약한 편. 내부 소음이 좀 있는 편이었음"
+        "relative_time": "3 years ago",
+        "text": "Since it is a chain restaurant, the beer and snacks are similar everywhere. Craft beer of reasonable quality at an affordable price. The taste is a bit weak. There was some noise inside."
       },
       {
-        "author": "김무형 요셉",
+        "author": "Kim Moo-hyung Joseph",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "안주도 부담없이 맥주가 맛있습니다"
+        "relative_time": "2 years ago",
+        "text": "The beer is delicious without the burden of snacks."
       },
       {
         "author": "Young Je Woo",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "2년 전",
-        "text": "맥주만 드세요. 한치세트 먹었는데 너무 짜서 기본안주인 건빵만 먹었습니다."
+        "relative_time": "2 years ago",
+        "text": "Just drink beer. I had the cuttlefish set, but it was so salty that I only ate the basic snack, the biscuits."
       },
       {
         "author": "kut kuku",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "스타우트 맛집"
+        "relative_time": "2 years ago",
+        "text": "Stout restaurant"
       }
     ],
     "photos": [
@@ -225,15 +225,15 @@
   },
   {
     "place_id": "ChIJabyJMQ-lfDURqoSoJivOC5s",
-    "display_name": "브라보마이라이프",
-    "category": "술집",
+    "display_name": "Bravo My Life",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 백제고분로7길 52 1f",
-    "short_address": "송파구 백제고분로7길 52 1f",
+    "address": "1f, 52 Baekjegobun-ro 7-gil, Songpa-gu, Seoul, South Korea",
+    "short_address": "1f, 52 Baekjegobun-ro 7-gil, Songpa-gu",
     "location": {
       "lat": 37.510625399999995,
       "lng": 127.08463900000001
@@ -253,13 +253,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca50f3189bc69:0x9b0bce2b26a884aa!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -269,15 +269,15 @@
   },
   {
     "place_id": "ChIJ_SWZKwClfDURGYaIq4tlsJE",
-    "display_name": "수다주막",
-    "category": "술집",
+    "display_name": "Suda tavern",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 백제고분로7길 39",
-    "short_address": "송파구 백제고분로7길 39",
+    "address": "39 Baekjegobun-ro 7-gil, Songpa-gu, Seoul, South Korea",
+    "short_address": "39 Baekjegobun-ro 7-gil, Songpa-gu",
     "location": {
       "lat": 37.511058999999996,
       "lng": 127.0833559
@@ -300,53 +300,53 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5002b9925fd:0x91b0658bab888619!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "먹죽귀",
+        "author": "black and white",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "2년 전",
-        "text": "송파구 잠실새내역 근처에 위치한\n수다주막 다녀왔어요\n\n예전에 지금보고싶다 라는 주점\n으로 기억하는데 기억에 매장이\n큰편이어서 방문했습니다\n\n메뉴는 자리에서 태블릿으로 바로\n바로 주문 할 수 있는 스타일\n이었고 저희는 국물 메뉴가 떙겨\n물떡훔친꽃게오뎅탕으로 주문\n\n메뉴는 금방 나왔고 다른곳에 가면\n꽃게도 수율이 상당히 좋았고\n어묵도 종류가 많았고 특히나\n물떡이 매력적이었습니다\n\n처음보는 주막이라 기대가 크게\n없었는데 재료 구성도 알찾고\n국물도 맛이 좋았어요\n\n하지만 굉장히 매장 분위기 자체가\n시끄럽기 때문에 조용한 분위기를\n원하는 분은 비추천입니다\n\n안주들도 가성비도 좋고 다음번에\n2차로 또 올거 같아요"
+        "relative_time": "2 years ago",
+        "text": "Located near Jamsil Saenae Station in Songpa-gu\nI went to Suda tavern\n\nA bar that used to be called “I Miss You Now”\nI remember it, but there is a store in my memory.\nI visited because it was big.\n\nMenus are available directly on your tablet from your seat.\nStyles you can order right away\nAnd we wanted the soup menu.\nOrdered the water-stewed flower crab soup.\n\nThe menu came out quickly and if you go somewhere else,\nThe yield of blue crabs was also quite good.\nThere were many types of fish cakes, especially\nThe water rice cake was attractive\n\nThis is my first time seeing a tavern so I have high expectations.\nI didn't have it, but I found out the ingredients.\nThe soup also tasted good.\n\nBut the atmosphere of the store itself is very\nBecause it is noisy, create a quiet atmosphere\nNot recommended for those who want it.\n\nThe snacks are also good value for money. Next time.\nI think I'll come again for the second time"
       },
       {
-        "author": "김상민",
+        "author": "Sangmin Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
-        "text": "3차쯤 오면 괜찮겠다. 힙하고 젊은 사람들이 많다."
+        "relative_time": "8 months ago",
+        "text": "It will be okay if the third time comes. There are a lot of hip and young people."
       },
       {
         "author": "KM Yoon",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1년 전",
-        "text": "맛은 있는데 양이 넘 적어요 ㅋ"
+        "relative_time": "1 year ago",
+        "text": "It tastes good, but the quantity is too small."
       },
       {
         "author": "Junhyuck Song",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       },
       {
-        "author": "위풍툰탕",
+        "author": "Wipoongtuntang",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -365,15 +365,15 @@
   },
   {
     "place_id": "ChIJxe0GPq2lfDURv0OSl8sWRxE",
-    "display_name": "마차",
-    "category": "술집",
+    "display_name": "carriage",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 잠실동 186-14번지 지층 송파구 서울특별시 KR",
-    "short_address": "잠실동 186-14번지 지층 송파구 서울특별시 KR",
+    "address": "Ground Floor, 186-14 Jamsil-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "186-14 Jamsil-dong, ground floor, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5106757,
       "lng": 127.08427189999998
@@ -393,13 +393,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ad3e06edc5:0x114716cb979243bf!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -408,16 +408,16 @@
   },
   {
     "place_id": "ChIJbbeQ79-lfDURyuheCLS5vek",
-    "display_name": "잠실새내 술집 포차천국 잠실새내점",
-    "category": "호프/생맥주집",
+    "display_name": "Jamsil Saenae Pub Pocha Heaven Jamsil Saenae Branch",
+    "category": "Hop/draft beer house",
     "types": [
       "pub",
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 백제고분로7길 48 성원빌딩 2층",
-    "short_address": "송파구 백제고분로7길 48 성원빌딩 2층",
+    "address": "2nd floor, Seongwon Building, 48 Baekjegobun-ro 7-gil, Songpa-gu, Seoul, Korea",
+    "short_address": "2nd floor, Seongwon Building, 48 Baekjegobun-ro 7-gil, Songpa-gu",
     "location": {
       "lat": 37.510671699999996,
       "lng": 127.0841419
@@ -436,26 +436,26 @@
     "google_maps_url": "https://maps.google.com/?cid=16842822364321212618",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5dfef90b76d:0xe9bdb9b4085ee8ca!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 4:00 ~ 오전 2:00",
-      "화요일: 오후 4:00 ~ 오전 2:00",
-      "수요일: 오후 4:00 ~ 오전 2:00",
-      "목요일: 오후 4:00 ~ 오전 2:00",
-      "금요일: 오후 4:00 ~ 오전 3:00",
-      "토요일: 오후 4:00 ~ 오전 3:00",
-      "일요일: 오후 4:00 ~ 오전 2:00"
+      "Monday: 4:00 PM - 2:00 AM",
+      "Tuesday: 4:00 PM - 2:00 AM",
+      "Wednesday: 4:00 PM - 2:00 AM",
+      "Thursday: 4:00 PM - 2:00 AM",
+      "Friday: 4:00 PM - 3:00 AM",
+      "Saturday: 4:00 PM - 3:00 AM",
+      "Sunday: 4:00 PM - 2:00 AM"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "단체적합",
-      "스포츠관람",
-      "맥주",
-      "칵테일"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "group fitness",
+      "Watching sports",
+      "beer",
+      "cocktail"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -465,36 +465,36 @@
         "author": "Roe Polar",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "전체적으로 나쁘지 않았네요\n다시 간다면 무조건 곱도리탕 먹어야 하는 곳 ㅋㅋㅋ\n글보고 맛있다고 시킨 츄러스는 생크림 양이 살짝 아쉬웠는데 리필해줘서 나름 만족합니다\n친구들이랑 짐실새내 근처 자주 가게되는데 모임장소로 괜찮은 곳입니다"
+        "relative_time": "2 years ago",
+        "text": "Overall it wasn't bad\nIf I go back, I definitely have to eat gopdoritang haha.\nThe churros I ordered after reading the article said they were delicious, but the amount of whipped cream was a little disappointing, but I am satisfied with the refill.\nI often go near Jimsil Saenae with my friends, and it's a good place for a gathering."
       },
       {
         "author": "in M",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "걍 최고 맛집이라고 생각함 맛, 가격, 매운맛 다 맘에들었고 좀 아쉬운건 직원분들이 근무한지 꽤 되셔서 노련하신데 사람이 너무 많아서 바빠보임\n여기 사람 많다고 느낀 적 없는데도 잠실새내에선 꽤 모이는 듯"
+        "relative_time": "2 years ago",
+        "text": "I just thought it was the best restaurant. I liked the taste, price, and spiciness. What was a bit disappointing was that the staff had been working there for a while and were experienced, but there were too many people and they seemed busy.\nI've never felt like there were a lot of people here, but they seem to gather quite a bit in Jamsil Saenae."
       },
       {
-        "author": "정종은",
+        "author": "Jeong Jong-eun",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "안주가 하도 많아서 고르는 데 꽤 걸렸네요 ㅋㅋ\n결국 치킨이랑 막창 시켜서 먹었습니다\n무난하게 놀기 위한 헌포...? 술집 느낌인데\n잠실새내역이랑 좀 가까워서 잠실에서 딴 거하고 놀다가 넘어가기 좋아요"
+        "relative_time": "2 years ago",
+        "text": "There were so many snacks that it took quite a while to choose.\nIn the end, I ordered chicken and makchang and ate it.\nA used bag for playing comfortably...? It feels like a bar.\nIt's a bit close to Jamsil Saenae Station, so it's a good place to go after doing something different in Jamsil."
       },
       {
         "author": "Dk H",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "누구와 가던 재밌게 즐기다 올 수 있을 것 같네요 🙂\n기분 좋게 한잔하고 왔습니다~ㅋㅋㅋㅎㅎㅎ"
+        "relative_time": "2 years ago",
+        "text": "I think you can have fun no matter who you go with 🙂\nI had a nice drink~hahahahaha"
       },
       {
-        "author": "이정진",
+        "author": "Jeongjin Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "밤12시에 들어가서그런지 사람없었어요\n흡연실도있음"
+        "relative_time": "3 years ago",
+        "text": "Perhaps because I went in at 12 midnight, there was no one there.\nThere is also a smoking room"
       }
     ],
     "photos": [
@@ -512,15 +512,15 @@
   },
   {
     "place_id": "ChIJh9V6Y02kfDUR5v0ts_ronN0",
-    "display_name": "와라와라신천1호점",
-    "category": "술집",
+    "display_name": "Warawara Shincheon 1st branch",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 183-1",
-    "short_address": "송파구 잠실동 183-1",
+    "address": "183-1 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "183-1 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.510987899999996,
       "lng": 127.0833497
@@ -528,7 +528,7 @@
     "rating": 3.6,
     "rating_stars": "★★★☆☆ 3.6",
     "rating_count": 8,
-    "price_level": "보통 ($$)",
+    "price_level": "Average ($$)",
     "price_range": null,
     "editorial_summary": null,
     "generative_summary": null,
@@ -539,61 +539,61 @@
     "google_maps_url": "https://maps.google.com/?cid=15968894542194540006",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca44d637ad587:0xdd9ce8fab32dfde6!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 6:00 ~ 오전 3:00",
-      "화요일: 오후 6:00 ~ 오전 3:00",
-      "수요일: 오후 6:00 ~ 오전 3:00",
-      "목요일: 오후 6:00 ~ 오전 3:00",
-      "금요일: 오후 6:00 ~ 오전 3:00",
-      "토요일: 오후 6:00 ~ 오전 3:00",
-      "일요일: 오후 7:00 ~ 오전 2:00"
+      "Monday: 6:00 PM - 3:00 AM",
+      "Tuesday: 6:00 PM - 3:00 AM",
+      "Wednesday: 6:00 PM - 3:00 AM",
+      "Thursday: 6:00 PM - 3:00 AM",
+      "Friday: 6:00 PM - 3:00 AM",
+      "Saturday: 6:00 PM - 3:00 AM",
+      "Sunday: 7:00 PM - 2:00 AM"
     ],
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "안시영",
+        "author": "Siyoung Ahn",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "나의 주체할 수 없는 흥을 분출해주었음"
+        "relative_time": "2 years ago",
+        "text": "It unleashed my uncontrollable excitement."
       },
       {
         "author": "Sla Te",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "가성비가 참 좋다"
+        "relative_time": "6 years ago",
+        "text": "Very good value for money"
       },
       {
         "author": "Sang Mo Choi",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "고도한미식가 분위기"
+        "relative_time": "6 years ago",
+        "text": "High-end gourmet atmosphere"
       },
       {
         "author": "yunji lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "홍순원",
+        "author": "Hong Soon-won",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -604,8 +604,8 @@
   },
   {
     "place_id": "ChIJpe6zgUGlfDURo_cij1pUeD0",
-    "display_name": "오늘와인한잔 신천점",
-    "category": "와인 바",
+    "display_name": "A glass of wine today Sincheon branch",
+    "category": "wine bar",
     "types": [
       "wine_bar",
       "bar",
@@ -613,8 +613,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 백제고분로7길 46",
-    "short_address": "송파구 백제고분로7길 46",
+    "address": "46 Baekjegobun-ro 7-gil, Songpa-gu, Seoul, South Korea",
+    "short_address": "46 Baekjegobun-ro 7-gil, Songpa-gu",
     "location": {
       "lat": 37.510717,
       "lng": 127.08391800000001
@@ -634,8 +634,8 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca54181b3eea5:0x3d78545a8f22f7a3!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실",
-      "와인"
+      "restroom",
+      "wine"
     ],
     "payment": null,
     "accessibility": null,
@@ -645,36 +645,36 @@
         "author": "sodam oh",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "조금 안쪽에 위치하고 있어서 벚꽃축제 일요일 저녁에 방문했지만 사람이 많지 않았어요. 그래서 친구들과 이야기 하기 좋았습니다. 대부분의 메뉴들은 아주 저렴했고 그 가격만큼의 퀄리티를 가진 음식이었어요. 모임하기에 아주 좋은 분위기였어요."
+        "relative_time": "7 years ago",
+        "text": "It's located a little inside, so I visited on a Sunday evening during the Cherry Blossom Festival, but there weren't many people. So it was nice to talk with friends. Most of the menu items were very affordable and the quality of the food was worth the price. It was a very nice atmosphere for a gathering."
       },
       {
         "author": "JINI",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "이름처럼 와인 한 잔 하기 딱 좋은 곳\n가성비 좋은 와인들이 많아서 종종 가면 좋아여 ㅎㅎ"
+        "relative_time": "5 years ago",
+        "text": "As the name suggests, it’s the perfect place to have a glass of wine\nThere are a lot of wines that are good value for money, so I like to go there often haha."
       },
       {
         "author": "J",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
-        "text": "분위기 괜찮아요\n알바생 얘기가 왜 후기에 언급되는지 알것 같아요"
+        "relative_time": "5 years ago",
+        "text": "The atmosphere is okay\nI think I know why the part-time job is mentioned in the reviews."
       },
       {
         "author": "Sunny Choe",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "정말 말 그대로 한 잔 하고 싶을때 가벼운 마음으로 가면 좋을 것 같습니다. 와인이 주력인 줄 알았는데 예상외로 음식도 맛이 좋았어요! 굵은 면인 탈리아텔레도 맛이 좋아서 저녁식사하면서 와인 먹기 좋았습니다. 인테리어도 예쁘고 어두워서 비교적 저렴한 가격으로 분위기 잡기 좋아요."
+        "relative_time": "7 years ago",
+        "text": "If you really want to have a drink, it would be a good idea to go with a light heart. I thought wine was the main focus, but the food was unexpectedly delicious! The thick tagliatelle was also delicious, so it was nice to have wine with dinner. The interior is pretty and dark, so it's a good place to set the mood for a relatively cheap price."
       },
       {
         "author": "sejung Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
-        "text": "분위기 좋아보여서 갔는데\n안주가 그닥. . ."
+        "relative_time": "5 years ago",
+        "text": "I went because it looked like a good atmosphere.\nThe snacks are so-so. . ."
       }
     ],
     "photos": [
@@ -692,15 +692,15 @@
   },
   {
     "place_id": "ChIJGysfDq2lfDUR-6YWUaWyhQs",
-    "display_name": "헨드릭스",
-    "category": "술집",
+    "display_name": "hendricks",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 185-11번지 2층",
-    "short_address": "송파구 잠실동 185-11번지 2층",
+    "address": "2nd floor, 185-11 Jamsil-dong, Songpa-gu, Seoul, Korea",
+    "short_address": "2nd floor, 185-11 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5104894,
       "lng": 127.0849913
@@ -722,25 +722,25 @@
     "google_maps_url": "https://maps.google.com/?cid=830266129419511547",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ad0e1f2b1b:0xb85b2a55116a6fb!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 7:00 ~ 오전 12:00",
-      "화요일: 오후 7:00 ~ 오전 12:00",
-      "수요일: 오후 7:00 ~ 오전 12:00",
-      "목요일: 오후 7:00 ~ 오전 12:00",
-      "금요일: 오후 7:00 ~ 오전 12:00",
-      "토요일: 오후 7:00 ~ 오전 12:00",
-      "일요일: 휴무일"
+      "Monday: 7:00 PM - 12:00 AM",
+      "Tuesday: 7:00 PM - 12:00 AM",
+      "Wednesday: 7:00 PM - 12:00 AM",
+      "Thursday: 7:00 PM - 12:00 AM",
+      "Friday: 7:00 PM - 12:00 AM",
+      "Saturday: 7:00 PM - 12:00 AM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주",
-      "와인",
-      "칵테일"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer",
+      "wine",
+      "cocktail"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -750,36 +750,36 @@
         "author": "SeongMook Shin",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "잠실새내역의 보물. 살짝 둔중한 1층 출입문을 열고 계단을 올라 2층 가게에 들어서면, 아늑한 음악이 흐르는, 전혀 딴 세상 같은 공간이 기다리고 있습니다."
+        "relative_time": "1 year ago",
+        "text": "A treasure of Jamsil Saenae Station. When you open the slightly dull first floor door, climb the stairs, and enter the second floor store, a completely different world-like space awaits you, with cozy music playing."
       },
       {
         "author": "Kr Nomadian",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "신청곡도 가능~안주종류는 별로 없어서 술에 간단히^^"
+        "relative_time": "2 years ago",
+        "text": "Song requests are also available. There aren't many types of snacks, so just have a drink ^^"
       },
       {
-        "author": "이뷔로",
+        "author": "By this way",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "주인의 음악추천이 탁월함.\n방해받지 않고 즐기는 맥주.양주는 다른곳보다 저렴한 편"
+        "relative_time": "5 years ago",
+        "text": "The owner's music recommendations are excellent.\nEnjoy beer and liquor without being disturbed. They are cheaper than other places."
       },
       {
-        "author": "이밤바다",
+        "author": "Tonight's sea",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "음악과 분위기가 좋아요"
+        "relative_time": "3 years ago",
+        "text": "I like the music and atmosphere"
       },
       {
-        "author": "지훈",
+        "author": "Jihoon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "괜찮은 뮤직바"
+        "relative_time": "3 years ago",
+        "text": "Good music bar"
       }
     ],
     "photos": [
@@ -797,15 +797,15 @@
   },
   {
     "place_id": "ChIJOZL3Pq2lfDURXuAUcaqHEHc",
-    "display_name": "비어엔포테이토",
-    "category": "술집",
+    "display_name": "Beer N Potato",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 잠실동 186-7번지 송파구 서울특별시 KR",
-    "short_address": "잠실동 186-7번지 송파구 서울특별시 KR",
+    "address": "186-7 Jamsil-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "186-7 Jamsil-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5106359,
       "lng": 127.08412639999997
@@ -825,13 +825,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ad3ef79239:0x771087aa7114e05e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -841,15 +841,15 @@
   },
   {
     "place_id": "ChIJMz8KJOKlfDURR3OaTI4xB-Q",
-    "display_name": "피아이디",
-    "category": "술집",
+    "display_name": "PID",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 백제고분로7길",
-    "short_address": "송파구 잠실동 백제고분로7길",
+    "address": "Baekjegobun-ro 7-gil, Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "Baekjegobun-ro 7-gil, Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5106718,
       "lng": 127.0838557
@@ -868,25 +868,25 @@
     "google_maps_url": "https://maps.google.com/?cid=16431156252724851527",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5e2240a3f33:0xe407318e4c9a7347!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 4:00 ~ 오전 4:00",
-      "화요일: 오후 4:00 ~ 오전 4:00",
-      "수요일: 오후 4:00 ~ 오전 4:00",
-      "목요일: 오후 4:00 ~ 오전 4:00",
-      "금요일: 오후 4:00 ~ 오전 4:00",
-      "토요일: 오후 4:00 ~ 오전 4:00",
-      "일요일: 오후 4:00 ~ 오전 4:00"
+      "Monday: 4:00 PM - 4:00 AM",
+      "Tuesday: 4:00 PM - 4:00 AM",
+      "Wednesday: 4:00 PM - 4:00 AM",
+      "Thursday: 4:00 PM - 4:00 AM",
+      "Friday: 4:00 PM - 4:00 AM",
+      "Saturday: 4:00 PM - 4:00 AM",
+      "Sunday: 4:00 PM - 4:00 AM"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "단체적합",
-      "맥주",
-      "칵테일"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "group fitness",
+      "beer",
+      "cocktail"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -896,36 +896,36 @@
         "author": "BrilliantJ",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "2년 전",
-        "text": "20대 젊은이들이 많은 곳.야구를 큰 화면에서 볼수있고, 야구복을 입고 오면 할인도 해주는듯하고, 다트게임 이벤트도 있어서 우승하면 할인? 게임진행중일때는 시끌시끌 정신없다.\n가격대는 저렴해서 부담없이 마구 주문할 수 있음.활기찬 분위기 좋아한다면 추천.  조용하게 대화하고 싶다면 비추"
+        "relative_time": "2 years ago",
+        "text": "A place with a lot of young people in their 20s. You can watch baseball on a big screen, and they seem to give you a discount if you wear a baseball uniform. There's also a dart game event, so if you win, you get a discount? It's noisy and hectic when the game is in progress.\nThe prices are cheap, so you can order as much as you want without hesitation. Recommended if you like a lively atmosphere.  Not recommended if you want to talk quietly"
       },
       {
-        "author": "정성희",
+        "author": "Seonghee Jeong",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "사장님과 직원들 친절함\n안주 맛있음\n나이대 젊른편\n생일축하가 너무 잦음..."
+        "relative_time": "5 years ago",
+        "text": "Friendly owner and staff\nSnacks are delicious\nYounger in age\nCelebrating birthdays too often..."
       },
       {
-        "author": "박성준",
+        "author": "Seongjun Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "항상 맛있게 먹고 갑니다~~"
+        "relative_time": "5 years ago",
+        "text": "I always eat delicious food~~"
       },
       {
         "author": "sangyoung lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "7년째 여기서 주구장창 술만먹네욤...."
+        "relative_time": "4 years ago",
+        "text": "I've been drinking here a lot for 7 years..."
       },
       {
         "author": "Hungryshark",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "송파 22년차 제 최애 술집입니더"
+        "relative_time": "6 years ago",
+        "text": "Songpa My favorite bar for 22 years"
       }
     ],
     "photos": [
@@ -943,15 +943,15 @@
   },
   {
     "place_id": "ChIJS1TPDq2lfDUR819YW5nrm-U",
-    "display_name": "막잔노가리포차",
-    "category": "술집",
+    "display_name": "Makjan Nogari Pocha",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 잠실동 208-1번지 2층 송파구 서울특별시 KR",
-    "short_address": "잠실동 208-1번지 2층 송파구 서울특별시 KR",
+    "address": "2nd floor, 208-1 Jamsil-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "2nd floor, 208-1 Jamsil-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5104167,
       "lng": 127.08526479999999
@@ -971,13 +971,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ad0ecf544b:0xe59beb995b585ff3!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -987,15 +987,15 @@
   },
   {
     "place_id": "ChIJsXWR-C-lfDURo5UhrE8PP2U",
-    "display_name": "동래파전",
-    "category": "술집",
+    "display_name": "Dongrae green onion pancake",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 185-8",
-    "short_address": "송파구 잠실동 185-8",
+    "address": "185-8 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "185-8 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5104344,
       "lng": 127.0848819
@@ -1018,53 +1018,53 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca52ff89175b1:0x653f0f4fac2195a3!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김경실",
+        "author": "Kim Gyeong-sil",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "아들.딸랑구 와 저녁식사 겸 막걸리 한잔씩 하려갔네요 친절하신 사장님 과 직원분들 기본찬 너무 맛있어서 추가 추가 모듬전. 굴전. 해물칼국수 막걸리 최고입니다 정말 맛있어요 👍 잘먹었습니다"
+        "relative_time": "2 years ago",
+        "text": "I went with my son and daughter for dinner and a glass of makgeolli. The owner and staff were friendly. The basic dishes were so delicious that we added an extra assorted pancake. Oyster pancake. The seafood kalguksu and makgeolli are the best. It’s really delicious. I enjoyed it."
       },
       {
-        "author": "민석탁",
+        "author": "Min Seok-tak",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6달 전",
-        "text": "먹자메인에 있던 십수년전부터 다녔는데\n동그랑땡과 칼국수나 수제비요.\n모듬전은 취향이라면 시키세요.\n추천은 동그랑땡 단품임"
+        "relative_time": "6 months ago",
+        "text": "I've been going to Eat Main for over 10 years.\nDonggeurrangttaeng, kalguksu, and sujebi.\nOrder assorted pancakes if you like.\nRecommendation is the round item alone."
       },
       {
         "author": "sm Jang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "파전도 좋지만 느낌 팍!!팍!! 오는 홍어삼합도 훌륭하지요.."
+        "relative_time": "1 year ago",
+        "text": "Green onion pancakes are good, but it feels so good!! The skate samhap that comes is also great.."
       },
       {
-        "author": "먹방여신수민",
+        "author": "Food Goddess Sumin",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "해물파전이랑 칼국수 너무 맛있음~\n담번에는 모듬전이라 육전 먹으러 가야겠음!"
+        "relative_time": "3 years ago",
+        "text": "The seafood pancake and kalguksu are so delicious~\nNext time, I'll have to go eat meat pancake since it's assorted pancake!"
       },
       {
         "author": "Mingoo KANG",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "동래파전을 파는집은 아니에요.\n그래도 맛은 괜찮아요."
+        "relative_time": "4 years ago",
+        "text": "This is not a restaurant that sells Dongrae green onion pancakes.\nStill, the taste is okay."
       }
     ],
     "photos": [
@@ -1082,8 +1082,8 @@
   },
   {
     "place_id": "ChIJHTTINa2lfDUR1o1uKRSvVi0",
-    "display_name": "어래",
-    "category": "와인 바",
+    "display_name": "What the heck",
+    "category": "wine bar",
     "types": [
       "wine_bar",
       "food",
@@ -1091,8 +1091,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 잠실동 183-1번지 송파구 서울특별시 KR",
-    "short_address": "잠실동 183-1번지 송파구 서울특별시 KR",
+    "address": "183-1 Jamsil-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "183-1 Jamsil-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5109018,
       "lng": 127.0832149
@@ -1112,13 +1112,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ad35c8341d:0x2d56af14296e8dd6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "와인"
+      "Store meal",
+      "restroom",
+      "wine"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1128,15 +1128,15 @@
   },
   {
     "place_id": "ChIJPSsP11KkfDURal3pGUToshE",
-    "display_name": "리본CLUB",
-    "category": "나이트클럽",
+    "display_name": "RibbonCLUB",
+    "category": "nightclub",
     "types": [
       "night_club",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 19-6",
-    "short_address": "송파구 잠실동 19-6",
+    "address": "19-6 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "19-6 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5120643,
       "lng": 127.0824157
@@ -1156,14 +1156,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca452d70f2b3d:0x11b2e84419e95d6a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1172,14 +1172,14 @@
         "author": "首尔上门服务Outcall&Incall",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3달 전",
-        "text": "나무 테이블과 의자, 따뜻한 조명이 어우러져 우아한 분위기를 자아내며 편안한 느낌을 줍니다. 대표 메뉴인 삼겹살찜은 기름기가 적당히 있지만 느끼하지 않고 입에서 살살 녹아 밥과 함께 먹으면 환상적인 궁합을 자랑합니다. 찜 농어는 신선도는 괜찮았지만 양념이 다소 싱거웠습니다. 직원들이 물을 채워주고 접시를 치워주는 등 서비스는 신속했지만, 피크 시간대에는 직원 수가 약간 부족해 보였습니다. 가격은 합리적이며, 2인 세트 메뉴는 양이 푸짐합니다. 가족 모임에도 적합하며 주차도 편리합니다. 음식 맛이 좀 더 일정하게 유지된다면 더욱 좋을 것 같습니다. 전반적으로 만족스러운 경험이었고, 다시 방문할 의향이 있습니다."
+        "relative_time": "3 months ago",
+        "text": "Wooden tables, chairs, and warm lighting combine to create an elegant atmosphere and a comfortable feel. The signature dish, braised pork belly, has a moderate amount of fat, but is not greasy and melts in your mouth, making it a fantastic combination when eaten with rice. The steamed sea bass was fresh, but the seasoning was a bit bland. Service was prompt, with staff refilling water and clearing away dishes, but staff seemed a bit short during peak hours. The prices are reasonable, and the set menu for two is generous. It's perfect for family gatherings and parking is convenient. It would be better if the food taste was more consistent. Overall, it was a satisfactory experience and I would visit again."
       },
       {
-        "author": "고상길",
+        "author": "Go Sang-gil",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       }
     ],
@@ -1187,15 +1187,15 @@
   },
   {
     "place_id": "ChIJtwuGvlKkfDURoLkBNgyqWm0",
-    "display_name": "브이아이피",
-    "category": "나이트클럽",
+    "display_name": "VIP",
+    "category": "nightclub",
     "types": [
       "night_club",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 잠실동 180-10번지 5층 송파구 서울특별시 KR",
-    "short_address": "잠실동 180-10번지 5층 송파구 서울특별시 KR",
+    "address": "5th floor, 180-10 Jamsil-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "5th floor, 180-10 Jamsil-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.511044,
       "lng": 127.0818061
@@ -1215,10 +1215,10 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca452be860bb7:0x6d5aaa0c3601b9a0!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1227,8 +1227,8 @@
   },
   {
     "place_id": "ChIJ06ApulKkfDURvZGQR7qLO0c",
-    "display_name": "멜론주점",
-    "category": "술집",
+    "display_name": "Melon Bar",
+    "category": "bar",
     "types": [
       "karaoke",
       "night_club",
@@ -1236,8 +1236,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 182-6",
-    "short_address": "송파구 잠실동 182-6",
+    "address": "182-6 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "182-6 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5108629,
       "lng": 127.08214419999999
@@ -1257,14 +1257,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca452ba29a0d3:0x473b8bba479091bd!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1274,51 +1274,51 @@
         "author": "STEVEN HUR",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
-        "text": "노래방인데 도우미없고 양주를 싸게 먹을수 있어요. 이야기하다가 노래하다가 술마시다가  편하게 술먹을수 있음."
+        "relative_time": "7 years ago",
+        "text": "It's a karaoke room, but there's no helper and you can drink cheap liquor. You can drink comfortably while talking or singing."
       },
       {
         "author": "JW Hur",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "9년 전",
-        "text": "안주는 비추\n시설은 옛날식\n제일큰방은 문이 아니고 커텐임\n즐겁게놀다 밖에서 들리는 우리방소리 챙피할 수도 있음..."
+        "relative_time": "9 years ago",
+        "text": "Not recommended for snacks\nThe facilities are old-fashioned\nThe biggest room has a curtain, not a door.\nI can have fun and avoid the noise from my room from outside..."
       },
       {
         "author": "Jong-Heum Chung",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "8년 전",
-        "text": "술 숨겨서 들어가다가 맨날 걸리는 노래방 그래도 담배 한대 달라고 하면 구해주시는 인간적인 서민 노래방"
+        "relative_time": "8 years ago",
+        "text": "A karaoke room where you hide your alcohol and always get caught, but a humane karaoke room for ordinary people who will save you if you ask for a cigarette."
       },
       {
-        "author": "김병열",
+        "author": "Kim Byeong-yeol",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
-        "text": "맥주마시려니 방없다고 하고 양주마시려니 방있다고 함"
+        "relative_time": "6 years ago",
+        "text": "When I wanted to drink beer, they said there was no room. When I wanted to drink liquor, they said there was room."
       },
       {
-        "author": "황shed7",
+        "author": "Hwangshed7",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "시설은 그닥이나 다른곳처럼 지저분하진 않음"
+        "relative_time": "3 years ago",
+        "text": "The facilities are good, but not as dirty as other places."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJyWL_ZE2kfDURjtXUQ8tFzCw",
-    "display_name": "헤라",
-    "category": "나이트클럽",
+    "display_name": "Hera",
+    "category": "nightclub",
     "types": [
       "night_club",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 183-1",
-    "short_address": "송파구 잠실동 183-1",
+    "address": "183-1 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "183-1 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5109628,
       "lng": 127.0830279
@@ -1338,14 +1338,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca44d64ff62c9:0x2ccc45cb43d4d58e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1355,36 +1355,36 @@
         "author": "suri K",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "놀기 좋은 곳! 밤사나 별밤, 토토가 분위기\n1곡 풀로 들려준다기 보다는 신나는 후렴구 포함한 2절완창 해주는 느낌으로 빠르게 돌아가는 노래가 맘에 들었습니다.\n금연구역이 따로 있어서 좋긴 한데 금연구역 앞이 에어컨인데 왜 거기서 담배들을 피는지...1도 이해 안되는ㅋㅋㅋㅋㅋㅋㅋㅋㅋ\n아무튼 즐겁게 즐기기 좋고 연령대가 생각보다 젊었던 곳"
+        "relative_time": "6 years ago",
+        "text": "Great place to hang out! Nightshade or starry night, Totoga atmosphere\nI liked how the song moves quickly, giving the feeling of two full verses, including an exciting chorus, rather than a full song.\nIt's nice to have a separate non-smoking area, but there's an air conditioner in front of the non-smoking area, so I don't understand why people smoke there...lol.\nAnyway, it was a good place to have fun and the age group was younger than expected."
       },
       {
         "author": "BBab Jo",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
-        "text": "디제이가 별롭니다. 레파토리도 좀많이가지고 있어야될것같고 자기연습을 하려는지 일렉 힙합을 많이틉니다. 여기오는 사람들은 니즈가 그게아닌데..\n집에서 연습하고 레파토리나 늘려오는게 좋아보입니다"
+        "relative_time": "1 year ago",
+        "text": "The DJ is great. I feel like I need to have a lot of repertoire, and I play a lot of electronic hip-hop for self-practice. Those are not the needs of the people who come here.\nIt seems like a good idea to practice at home and expand your repertoire."
       },
       {
-        "author": "정현웅 (veflm)",
+        "author": "Hyeonwoong Jeong (veflm)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "거의 전좌석 흡연석이지만 비흡연석도 있음 다만 흡연석에 비해 많지는 않지만;; ㅋㅋ\n여긴 선인장 되면 입장할수 있는 클럽과는 다르게24살부터 입장이 가능함\n헌팅은 무제한!!\n평일 언제인지는 기억이 안나지만 소주,맥주 무제한일때도있으니 참고하시길"
+        "relative_time": "6 years ago",
+        "text": "Almost all seats are smoking, but there are also non-smoking seats, although not as many as there are smoking seats. Haha\nUnlike clubs where you can enter only when you become a cactus, you can enter here only when you are 24 years old.\nHunting is unlimited!!\nI don't remember when it is on a weekday, but there are times when there is unlimited soju and beer, so keep that in mind."
       },
       {
-        "author": "뇽뇽 (뇽뇽)",
+        "author": "Nyongnyong (nyongnyong)",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
-        "text": "노래도 별로인데 시끄러워서 인근 숙박인데 며칠째 잠을 못자서 소음 신고했습니다"
+        "relative_time": "1 year ago",
+        "text": "The song wasn't that good, but it was noisy, so I stayed nearby and couldn't sleep for a few days, so I reported the noise."
       },
       {
-        "author": "철웅황",
+        "author": "Cheolwoong Hwang",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
-        "text": "소소"
+        "relative_time": "5 years ago",
+        "text": "small"
       }
     ],
     "photos": [
@@ -1402,15 +1402,15 @@
   },
   {
     "place_id": "ChIJhUcyUWGlfDUR3H9QNjAfe30",
-    "display_name": "정국숲 3호",
-    "category": "관광 명소",
+    "display_name": "Jeongguk Forest No. 3",
+    "category": "tourist attraction",
     "types": [
       "tourist_attraction",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 한가람로 65",
-    "short_address": "송파구 한가람로 65",
+    "address": "65 Hangaram-ro, Songpa-gu, Seoul, South Korea",
+    "short_address": "65 Hangaram-ro, Songpa-gu",
     "location": {
       "lat": 37.518507299999996,
       "lng": 127.08314349999998
@@ -1430,45 +1430,45 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca56151324785:0x7d7b1f3036507fdc!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김성범",
+        "author": "Seongbeom Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "BTS 정국 숲 3호 보기 좋아요^^\nIt was so nice to see BTS Jungkook’s Forest No.3"
+        "relative_time": "6 months ago",
+        "text": "It's good to see BTS Jungkook Forest No. 3^^\nIt was so nice to see BTS Jungkook’s Forest No.3"
       },
       {
         "author": "李文仁",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9달 전",
-        "text": "날씨도 좋고 일몰도 볼 수 있어서 정말 즐거운 시간을 보냈어요."
+        "relative_time": "9 months ago",
+        "text": "I had a really nice time because the weather was nice and I was able to see the sunset."
       },
       {
         "author": "P C",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "도시의 멋진 전망."
+        "relative_time": "4 months ago",
+        "text": "Great views of the city."
       },
       {
         "author": "Lailatus sa'diyah",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1달 전",
-        "text": "말랑 미트볼은 없습니다."
+        "relative_time": "1 month ago",
+        "text": "There are no soft meatballs."
       },
       {
-        "author": "최종성",
+        "author": "finality",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -1487,16 +1487,16 @@
   },
   {
     "place_id": "ChIJswHKPlWkfDURxn9z_0FLWH8",
-    "display_name": "잠실한강공원",
-    "category": "공원",
+    "display_name": "Jamsil Hangang Park",
+    "category": "park",
     "types": [
       "park",
       "tourist_attraction",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 한가람로 65",
-    "short_address": "송파구 한가람로 65",
+    "address": "65 Hangaram-ro, Songpa-gu, Seoul, South Korea",
+    "short_address": "65 Hangaram-ro, Songpa-gu",
     "location": {
       "lat": 37.5175896,
       "lng": 127.08672359999998
@@ -1515,65 +1515,65 @@
     "google_maps_url": "https://maps.google.com/?cid=9176166987598102470",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4553eca01b3:0x7f584b41ff737fc6!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "어린이적합",
-      "반려견동반"
+      "Suitable for children",
+      "Accompanied by dogs"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": [
-      "유료노상주차"
+      "Paid street parking"
     ],
     "reviews": [
       {
         "author": "My God Oh",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5달 전",
-        "text": "한강공원.\n참 잘 해 놨네요.\n편의점도 물가에 바로 있고\n바베큐 가게가 물가에 있는건 처음알았네요.\n산책하기도 좋고 다른데보다 조금 더 잘 되어있는 느낌입니다."
+        "relative_time": "5 months ago",
+        "text": "Hangang Park.\nYou did a great job.\nThere is also a convenience store right by the water.\nThis was my first time knowing that there was a barbecue shop near the water.\nIt's nice to take a walk and it feels a little better than other places."
       },
       {
-        "author": "양또또(양또또)",
+        "author": "Yangtto (Yangtto)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7달 전",
-        "text": "노을 보러 방문한 잠실한강공원! 잠실쪽 한강공원은 처음인데 산책하기 좋았어요! 노을보면서 마시는 맥주는 아주 굿! 남산도 보이고 롯데타워도 보이는...! 여유로운 곳! 날 시원해지면 또 가고싶어요!"
+        "relative_time": "7 months ago",
+        "text": "I visited Jamsil Hangang Park to see the sunset! It was my first time at Hangang Park on the Jamsil side, and it was great for a walk! Drinking beer while watching the sunset is great! You can see Namsan and Lotte Tower...! A relaxing place! I want to go again when it gets cooler!"
       },
       {
-        "author": "작을소진 (Littlesojin)",
+        "author": "Littlesojin",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
-        "text": "일을 마치고 휴식을 하기위해 잠깐 들렀다. 괴생물체가 널 반겨줬다. 주차도 편하고 공원 정비도 매우 잘되어있어 마음 편히 쉴 수 있다.\nI stopped by to relax after work. The monster welcomed you. Parking is easy and the park is well maintained, so you can relax."
+        "relative_time": "8 months ago",
+        "text": "I stopped by for a quick rest after work. A strange creature welcomed you. Parking is easy and the park is well maintained, so you can relax with peace of mind.\nI stopped by to relax after work. The monster welcomed you. Parking is easy and the park is well maintained, so you can relax."
       },
       {
-        "author": "이규희 (COCO LEE)",
+        "author": "COCO LEE",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7달 전",
-        "text": "성인용 풀장을 없애고 아이들이 안전하게 놀수 있는 시설로 개장 했네요.\n깨끗하고 좋아졌어요.\n도시락에 식음료 가져가도 됩니다.\n그늘이 없어서 파라솔 자리 잡으려면 서둘러 입장 하여야 합니다.\n시설이 깨끗하게 관리되어 쾌적합니다."
+        "relative_time": "7 months ago",
+        "text": "The adult pool was removed and a facility was opened for children to play safely.\nIt's cleaner and better.\nYou can bring food and drinks in your lunch box.\nThere is no shade, so you have to rush in to get a seat under an umbrella.\nThe facilities are cleanly maintained and comfortable."
       },
       {
         "author": "Mark HONG",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "잠실 한강공원은 서울에서 가장 인기 있는 한강 공원 중 하나로, 자연과 여유, 다양한 활동을 즐길 수 있는 완벽한 도심 속 힐링 공간입니다. 가족, 연인, 친구와 함께 방문하기에 최적의 장소이며, 혼자만의 시간을 보내기에도 좋은 곳입니다.\n1. 아름다운 풍경\n\n잠실 한강공원은 넓고 탁 트인 공간과 함께 한강의 아름다운 풍경을 감상할 수 있습니다. 특히, 석촌호수와 롯데월드타워가 가까이 있어 도시의 화려함과 자연이 조화를 이루는 독특한 매력을 느낄 수 있었습니다. 일몰 시간대에는 강에 비치는 노을이 환상적이었습니다.\n2. 가족 친화적\n\n공원은 넓은 잔디밭과 잘 정돈된 산책로가 있어 아이들과 함께 방문하기에 안성맞춤입니다. 물놀이장이나 놀이터 같은 시설도 있어 아이들이 뛰어놀기 좋은 환경입니다. 또한, 자전거 대여소와 안전한 자전거 도로가 있어 온 가족이 함께 자전거를 타며 여유를 즐길 수 있습니다.\n3. 다양한 액티비티\n\n잠실 한강공원에서는 산책, 러닝, 자전거 타기 같은 기본적인 활동 외에도 한강 위에서 카약이나 SUP(스탠드업 패들보드) 같은 수상 스포츠를 즐길 수 있습니다. 따뜻한 날씨에는 잔디밭에서 피크닉을 즐기거나 책을 읽으며 시간을 보내는 것도 좋았습니다.\n4. 편리한 접근성과 시설\n\n잠실 한강공원은 지하철 2호선 잠실나루역에서 도보로 이동할 수 있어 접근성이 뛰어납니다. 공원 내에는 편의점, 화장실, 샤워실 등 편의시설이 잘 갖춰져 있어 하루 종일 머물러도 불편함이 없습니다. 근처에는 카페와 레스토랑도 많아 방문 후 가벼운 식사를 즐기기 좋았습니다.\n5. 다양한 이벤트\n\n공원에서는 계절마다 다양한 행사가 열립니다. 봄에는 한강변에서 꽃놀이를, 여름에는 한강몽땅 여름축제와 같은 특별한 이벤트를 즐길 수 있습니다. 야경이 멋진 롯데월드타워와 함께하는 불꽃놀이도 놓칠 수 없는 하이라이트입니다.\n총평\n\n잠실 한강공원은 자연 속에서 여유롭게 즐길 수 있는 다채로운 활동과 편리한 시설이 돋보이는 장소입니다. 도심에 위치해 있어 접근성이 뛰어나며, 누구나 각자의 방식으로 힐링을 즐길 수 있는 공간입니다. 한강의 아름다움과 함께 잊지 못할 시간을 보내고 싶다면 잠실 한강공원은 반드시 방문해보세요."
+        "relative_time": "1 year ago",
+        "text": "Jamsil Hangang Park is one of the most popular Hangang parks in Seoul and is a perfect healing space in the city where you can enjoy nature, relaxation, and various activities. It is the perfect place to visit with family, lovers, and friends, and it is also a great place to spend time alone.\n1. Beautiful scenery\n\nJamsil Hangang Park offers a wide, open space where you can enjoy the beautiful scenery of the Hangang River. In particular, Seokchon Lake and Lotte World Tower are close by, so I was able to feel the unique charm of harmonizing the splendor of the city with nature. During sunset time, the glow reflected on the river was fantastic.\n2. Family friendly\n\nThe park has large lawns and well-maintained walking paths, making it perfect for visiting with children. There are also facilities such as a water park and playground, making it a great environment for children to run around and play. Additionally, there are bicycle rental shops and safe bicycle paths so the whole family can enjoy leisurely bicycle rides together.\n3. Various activities\n\nAt Jamsil Hangang Park, in addition to basic activities such as walking, running, and biking, you can also enjoy water sports such as kayaking or SUP (stand-up paddleboarding) on the Han River. In warm weather, it was nice to enjoy a picnic on the lawn or spend time reading a book.\n4. Convenient accessibility and facilities\n\nJamsil Hangang Park is accessible on foot from Jamsilnaru Station on Subway Line 2. The park is well-equipped with convenient facilities such as convenience stores, restrooms, and shower rooms, so you won't have any inconveniences even if you stay all day. There are many cafes and restaurants nearby, so it was nice to enjoy a light meal after visiting.\n5. Various events\n\nVarious events are held in the park each season. In the spring, you can enjoy flower viewing on the banks of the Han River, and in the summer, you can enjoy special events such as the Han River All Summer Festival. The fireworks display with Lotte World Tower, which has a beautiful night view, is also a highlight that cannot be missed.\nOverall review\n\nJamsil Hangang Park is a place that stands out for its diverse activities and convenient facilities that can be enjoyed leisurely in nature. It is located in the city center, so it is highly accessible, and it is a space where everyone can enjoy healing in their own way. If you want to spend an unforgettable time with the beauty of the Han River, be sure to visit Jamsil Hangang Park."
       }
     ],
     "photos": [
@@ -1591,16 +1591,16 @@
   },
   {
     "place_id": "ChIJx-96TAClfDURoqOykbw4evA",
-    "display_name": "서울마라톤 출발지",
-    "category": "역사적 명소",
+    "display_name": "Seoul Marathon starting point",
+    "category": "historical landmark",
     "types": [
       "historical_landmark",
       "historical_place",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실2동",
-    "short_address": "송파구 잠실2동",
+    "address": "Jamsil 2-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "Jamsil 2-dong, Songpa-gu",
     "location": {
       "lat": 37.514157499999996,
       "lng": 127.07768530000001
@@ -1628,15 +1628,15 @@
   },
   {
     "place_id": "ChIJV44F3aylfDURUi9Zagw_y3o",
-    "display_name": "지니갤러리",
-    "category": "미술관",
+    "display_name": "Genie Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 잠실 파인애플상가 53호 KR 서울특별시 송파구 잠실동 19-9번지 2층 에이",
-    "short_address": "잠실 KR 서울특별시 송파구 잠실동 19-9번지 2층 에이 파인애플상가 53호",
+    "address": "#53, Jamsil Pineapple Shopping Center, Seoul, Republic of Korea KR 2nd floor, 19-9 Jamsil-dong, Songpa-gu, Seoul",
+    "short_address": "Jamsil KR #53, A Pineapple Shopping Center, 2nd floor, 19-9 Jamsil-dong, Songpa-gu, Seoul",
     "location": {
       "lat": 37.512046399999996,
       "lng": 127.08417259999997
@@ -1656,7 +1656,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5acdd058e57:0x7acb3f0c6a592f52!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1666,15 +1666,15 @@
   },
   {
     "place_id": "ChIJe1rlsZulfDUR2FfSuBdmm5c",
-    "display_name": "뽕나무 근린공원",
-    "category": "공원",
+    "display_name": "Mulberry Neighborhood Park",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실2동 19-3",
-    "short_address": "송파구 잠실2동 19-3",
+    "address": "19-3, Jamsil 2-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "19-3, Jamsil 2-dong, Songpa-gu",
     "location": {
       "lat": 37.513897,
       "lng": 127.0819054
@@ -1694,12 +1694,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca59bb1e55a7b:0x979b6617b8d257d8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합",
-      "반려견동반"
+      "Suitable for children",
+      "Accompanied by dogs"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": null,
@@ -1707,15 +1707,15 @@
   },
   {
     "place_id": "ChIJGxhXy6ylfDURcam9N5bb54M",
-    "display_name": "(주)분당추모공원휴",
-    "category": "공원",
+    "display_name": "Bundang Memorial Park Holiday Co., Ltd.",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동",
-    "short_address": "송파구 잠실동",
+    "address": "Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.512898799999995,
       "lng": 127.08299319999998
@@ -1743,7 +1743,7 @@
         "author": "ccenjoo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "12년 전",
+        "relative_time": "12 years ago",
         "text": "o55\n7\n7\n^~="
       }
     ],
@@ -1751,15 +1751,15 @@
   },
   {
     "place_id": "ChIJcVL9egClfDURK0exOuNAes4",
-    "display_name": "부리근린공원",
-    "category": "공원",
+    "display_name": "Buri Neighborhood Park",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 22-5",
-    "short_address": "송파구 잠실동 22-5",
+    "address": "22-5 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "22-5 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.514494899999995,
       "lng": 127.08735109999999
@@ -1779,7 +1779,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5007afd5271:0xce7a40e33ab1472b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": null,
     "accessibility": null,
@@ -1790,14 +1790,14 @@
   {
     "place_id": "ChIJneI0fAClfDURED7ws1Ysuxo",
     "display_name": "船",
-    "category": "공원",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 한가람로 65",
-    "short_address": "송파구 한가람로 65",
+    "address": "65 Hangaram-ro, Songpa-gu, Seoul, South Korea",
+    "short_address": "65 Hangaram-ro, Songpa-gu",
     "location": {
       "lat": 37.518499999999996,
       "lng": 127.08161109999999
@@ -1825,15 +1825,15 @@
   },
   {
     "place_id": "ChIJTVRDGwClfDURuFACzfEGTGg",
-    "display_name": "잠실 한강공원 트랙구장",
-    "category": "공원",
+    "display_name": "Jamsil Hangang Park Track Stadium",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실2동",
-    "short_address": "송파구 잠실2동",
+    "address": "Jamsil 2-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "Jamsil 2-dong, Songpa-gu",
     "location": {
       "lat": 37.517445699999996,
       "lng": 127.08327849999998
@@ -1853,7 +1853,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5001b43544d:0x684c06f1cd0250b8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": null,
     "accessibility": null,
@@ -1864,14 +1864,14 @@
   {
     "place_id": "ChIJ6xElfgClfDUR_HVcbmqfuQg",
     "display_name": "Water Tour Call Taxi Platform",
-    "category": "공원",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 백제고분로 2",
-    "short_address": "송파구 백제고분로 2",
+    "address": "2 Baekjegobun-ro, Songpa-gu, Seoul, South Korea",
+    "short_address": "2 Baekjegobun-ro, Songpa-gu",
     "location": {
       "lat": 37.5187854,
       "lng": 127.0819302
@@ -1890,13 +1890,13 @@
     "google_maps_url": "https://maps.google.com/?cid=628708902461797884",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5007e2511eb:0x8b99f6a6e5c75fc!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 7:00 ~ 오후 8:00",
-      "화요일: 오전 7:00 ~ 오후 8:00",
-      "수요일: 오전 7:00 ~ 오후 8:00",
-      "목요일: 오전 7:00 ~ 오후 8:00",
-      "금요일: 오전 7:00 ~ 오후 8:00",
-      "토요일: 오전 7:00 ~ 오후 8:00",
-      "일요일: 오전 7:00 ~ 오후 8:00"
+      "Monday: 7:00 AM - 8:00 PM",
+      "Tuesday: 7:00 AM - 8:00 PM",
+      "Wednesday: 7:00 AM - 8:00 PM",
+      "Thursday: 7:00 AM - 8:00 PM",
+      "Friday: 7:00 AM - 8:00 PM",
+      "Saturday: 7:00 AM - 8:00 PM",
+      "Sunday: 7:00 AM - 8:00 PM"
     ],
     "services": null,
     "payment": null,
@@ -1910,14 +1910,14 @@
   {
     "place_id": "ChIJX6YCRgClfDURvxwl2l4awfw",
     "display_name": "RM forest 1",
-    "category": "공원",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 한가람로 65",
-    "short_address": "송파구 한가람로 65",
+    "address": "65 Hangaram-ro, Songpa-gu, Seoul, South Korea",
+    "short_address": "65 Hangaram-ro, Songpa-gu",
     "location": {
       "lat": 37.5172686,
       "lng": 127.08451389999999
@@ -1942,10 +1942,10 @@
     "parking": null,
     "reviews": [
       {
-        "author": "이용대",
+        "author": "Yongdae Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4달 전",
+        "relative_time": "4 months ago",
         "text": null
       }
     ],
@@ -1964,16 +1964,16 @@
   },
   {
     "place_id": "ChIJz0qZFTWlfDURWe5QziM524k",
-    "display_name": "한강 자전거길",
-    "category": "하이킹코스",
+    "display_name": "Han River Bicycle Path",
+    "category": "Hiking course",
     "types": [
       "hiking_area",
       "sports_activity_location",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실2동",
-    "short_address": "송파구 잠실2동",
+    "address": "Jamsil 2-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "Jamsil 2-dong, Songpa-gu",
     "location": {
       "lat": 37.518567999999995,
       "lng": 127.08583209999999
@@ -2001,35 +2001,35 @@
         "author": "Andy Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "서울시민들이 쉽게 접근할 수 있는 한강의 남북 접안부는 공원과 자전거 도로가 잘 되어 있다. 넓은 강을 옆에 끼고 달리는 기분은 언제나 상쾌하며, 멀리 동쪽으로는 양수리를 지나 북한강과 남한강으로 이어지며 서쪽으로는 아라뱃길을 따라 정서진까지 닿는다. 그리고 한강 보다 작은 개천들인 탄천, 양재천, 왕숙천, 중랑천, 청계천, 홍제천, 도림천 안양천 등이 연결되어 있어, 서울에 살아도 평소 쉽게 가볼 수 없는 지역도 자전거로 가는 것이 가능하다. 특히 강과 개천들은 경사가 비교적 완만하여 큰 힘을 들이지 않고 탈 수 있다."
+        "relative_time": "2 years ago",
+        "text": "The north and south berths of the Han River, which are easily accessible to Seoul citizens, have well-maintained parks and bicycle paths. The feeling of running next to a wide river is always refreshing. To the east, it passes Yangsu-ri and connects to the Bukhan River and the Namhan River, and to the west, along the Ara Waterway, it reaches Jeongseojin. In addition, streams smaller than the Han River, such as Tancheon, Yangjaecheon, Wangsukcheon, Jungnangcheon, Cheonggyecheon, Hongjecheon, Dorimcheon, and Anyangcheon, are connected, so it is possible to go to areas that are not usually easy to visit even if you live in Seoul. In particular, rivers and streams have relatively gentle slopes, so you can ride them without much effort."
       },
       {
         "author": "Junghoon Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "서울에 자전거 여행을 할때마다 방문하는곳이다\n여러가지 특색이 있는곳도 많고 자전거나 운동하는\n산책을 하는분들에게 좋은장소이다"
+        "relative_time": "2 years ago",
+        "text": "This is a place I visit every time I go on a bicycle trip in Seoul.\nThere are many places with various characteristics and places to bike or exercise.\nIt's a good place for those who take a walk"
       },
       {
-        "author": "라이가",
+        "author": "Raiga",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "월드컵 대교 근처 자전거 도로 7월31일 까지공사\n2023년"
+        "relative_time": "2 years ago",
+        "text": "Construction of bicycle road near World Cup Bridge until July 31st\n2023"
       },
       {
         "author": "Jang Oksoon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "좋음"
+        "relative_time": "1 year ago",
+        "text": "well"
       },
       {
-        "author": "최종성",
+        "author": "finality",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -2048,15 +2048,15 @@
   },
   {
     "place_id": "ChIJV44F3aylfDUR4JQbIYQQqNg",
-    "display_name": "이메진",
-    "category": "영화관",
+    "display_name": "Imagine",
+    "category": "movie theater",
     "types": [
       "movie_theater",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 잠실 파인애플상가 60호 KR 서울특별시 송파구 잠실동 19-9번지 1층 에이",
-    "short_address": "잠실 KR 서울특별시 송파구 잠실동 19-9번지 1층 에이 파인애플상가 60호",
+    "address": "#60, Jamsil Pineapple Mall, Seoul, Republic of Korea KR 1st floor, 19-9 Jamsil-dong, Songpa-gu, Seoul",
+    "short_address": "Jamsil KR #60, A Pineapple Shopping Center, 1st floor, 19-9 Jamsil-dong, Songpa-gu, Seoul",
     "location": {
       "lat": 37.512046399999996,
       "lng": 127.08417259999997
@@ -2076,11 +2076,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5acdd058e57:0xd8a81084211b94e0!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2090,15 +2090,15 @@
   },
   {
     "place_id": "ChIJqbaRJwClfDUR1F5NpBAMfa4",
-    "display_name": "점핑배틀 잠실새내점",
-    "category": "오락실",
+    "display_name": "Jumping Battle Jamsil Saenae Branch",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 180-1",
-    "short_address": "송파구 잠실동 180-1",
+    "address": "180-1 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "180-1 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5108327,
       "lng": 127.08122299999998
@@ -2117,20 +2117,20 @@
     "google_maps_url": "https://maps.google.com/?cid=12573219000303836884",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5002791b6a9:0xae7d0c10a44d5ed4!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 11:00 ~ 오전 12:00",
-      "화요일: 오후 11:00 ~ 오전 12:00",
-      "수요일: 오후 11:00 ~ 오전 12:00",
-      "목요일: 오후 11:00 ~ 오전 12:00",
-      "금요일: 오후 11:00 ~ 오전 12:00",
-      "토요일: 오후 11:00 ~ 오전 12:00",
-      "일요일: 24시간 영업"
+      "Monday: 11:00 PM - 12:00 AM",
+      "Tuesday: 11:00 PM - 12:00 AM",
+      "Wednesday: 11:00 PM - 12:00 AM",
+      "Thursday: 11:00 PM - 12:00 AM",
+      "Friday: 11:00 PM - 12:00 AM",
+      "Saturday: 11:00 PM - 12:00 AM",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2145,15 +2145,15 @@
   },
   {
     "place_id": "ChIJQTsyg1KkfDUR93RcRJiyc30",
-    "display_name": "셜록홈즈 잠실점",
-    "category": "오락실",
+    "display_name": "Sherlock Holmes Jamsil Branch",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 잠실동 179-3번지 3층",
-    "short_address": "잠실동 179-3번지 3층",
+    "address": "3rd floor, 179-3 Jamsil-dong, Seoul, South Korea",
+    "short_address": "3rd floor, 179-3 Jamsil-dong",
     "location": {
       "lat": 37.5106567,
       "lng": 127.0810092
@@ -2172,74 +2172,74 @@
     "google_maps_url": "https://maps.google.com/?cid=9039765244114400503",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca45283323b41:0x7d73b298445c74f7!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 11:00",
-      "화요일: 오전 10:00 ~ 오후 11:00",
-      "수요일: 오전 10:00 ~ 오후 11:00",
-      "목요일: 오전 10:00 ~ 오후 11:00",
-      "금요일: 오전 10:00 ~ 오후 11:00",
-      "토요일: 오전 10:00 ~ 오후 11:00",
-      "일요일: 오전 10:00 ~ 오후 11:00"
+      "Monday: 10:00 AM - 11:00 PM",
+      "Tuesday: 10:00 AM - 11:00 PM",
+      "Wednesday: 10:00 AM - 11:00 PM",
+      "Thursday: 10:00 AM - 11:00 PM",
+      "Friday: 10:00 AM - 11:00 PM",
+      "Saturday: 10:00 AM - 11:00 PM",
+      "Sunday: 10:00 AM - 11:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "최미라",
+        "author": "Mira Choi",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "소품들이 많이 낡은 듯한.. 느낌이지만\n재밌게 잘 했어요.\n직원분 친절.\n매장은 좀 추운느낌.\n힌트받는 핸드폰은 톡만가능해서 그게 좀 불편하긴했음."
+        "relative_time": "4 years ago",
+        "text": "It feels like a lot of the props are worn out.\nI had fun doing it.\nFriendly staff.\nThe store feels a bit cold.\nIt was a bit inconvenient because the phone that receives hints only allows for chatting."
       },
       {
         "author": "Song Hyun Lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "괜찬햇엇는데, 힌트줄때 설명하고 답장오는데 시간이 너무 오래걸려요. 한번은 읽고 답장오는때까지 3분 걸렷어요. 시스탬도 너무 어렵고. 폰으로 머 하는게 신기하긴하지만, 방을 탈출 하려는것 보다 그냥 무슨 미니게임 하는 느낌이낫어요. 제 생각에는 폰으로 하는게 그냥 시간만 낭비돼는것 같아요"
+        "relative_time": "6 years ago",
+        "text": "It was okay, but it took too long to explain and reply when giving hints. Once I read it, it took 3 minutes to get a reply. The system is also very difficult. It's amazing what you can do with your phone, but it feels better to just be playing a mini game than trying to escape the room. I think using your phone is just a waste of time."
       },
       {
-        "author": "만두왕",
+        "author": "Dumpling King",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "빛과 그림자를 했고요 난이도는 적당했고 재밌었습니다. 깔끔하기도 했고 전반적으로 나쁘지 않았어요. 다음번에는 난이도 조금 있는걸로 해봐야겠습니다."
+        "relative_time": "7 years ago",
+        "text": "I did light and shadow, the level of difficulty was reasonable and it was fun. It was clean and overall not bad. Next time, I'll try something a little more difficult."
       },
       {
-        "author": "김찬범",
+        "author": "Chanbeom Kim",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "5년 전",
-        "text": "비밀번호 맞췄는데도 힘을 많이 줘야만 열리는 자물쇠... 조건을 만족했음에도 자동으로 열리는 게 아니라 힘으로 열어야 하는 비밀 문.. 전체적으로 아쉬웠다."
+        "relative_time": "5 years ago",
+        "text": "Even though I guessed the password, the lock opened only with a lot of force... Even though the conditions were met, the secret door did not open automatically and had to be opened with force... Overall, it was disappointing."
       },
       {
-        "author": "이다교",
+        "author": "Lee Da-gyo",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
-        "text": "공포테마가 진짜 너무 재미없고 무섭지도않고 설치시설이 너무 허접해요 .. 별1개도 아까움"
+        "relative_time": "6 years ago",
+        "text": "The horror theme is really boring and not scary, and the installation facilities are so poor... not even 1 star."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJ0QXSgE2kfDURs0yDff6dwBU",
-    "display_name": "큐브이스케이프잠실점",
-    "category": "오락실",
+    "display_name": "Cube Escape Jamsil Branch",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 잠실동 177-5번지 4층 송파구 서울특별시 KR",
-    "short_address": "잠실동 177-5번지 4층 송파구 서울특별시 KR",
+    "address": "4th floor, 177-5 Jamsil-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "4th floor, 177-5 Jamsil-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5107107,
       "lng": 127.07996079999998
@@ -2258,59 +2258,59 @@
     "google_maps_url": "https://maps.google.com/?cid=1567426386677943475",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca44d80d205d1:0x15c09dfe7d834cb3!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 11:00",
-      "화요일: 오전 11:00 ~ 오후 11:00",
-      "수요일: 오전 11:00 ~ 오후 11:00",
-      "목요일: 오전 11:00 ~ 오후 11:00",
-      "금요일: 오전 11:00 ~ 오후 11:00",
-      "토요일: 오전 11:00 ~ 오후 11:00",
-      "일요일: 오전 11:00 ~ 오후 11:00"
+      "Monday: 11:00 AM - 11:00 PM",
+      "Tuesday: 11:00 AM - 11:00 PM",
+      "Wednesday: 11:00 AM - 11:00 PM",
+      "Thursday: 11:00 AM - 11:00 PM",
+      "Friday: 11:00 AM - 11:00 PM",
+      "Saturday: 11:00 AM - 11:00 PM",
+      "Sunday: 11:00 AM - 11:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "뀨뜌니",
+        "author": "kyun kyunni",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "방탈출이야 뭐 재밌었고 다 떠나서 여사장님이 넘 칠절하심 리뷰 안쓰는데원래 일부러 쓰려 들어옴 ㅎ 흥하세욧"
+        "relative_time": "2 years ago",
+        "text": "The escape room was fun, and the lady boss was very rude after everyone left. I don't write reviews, but I came here on purpose. Enjoy."
       },
       {
-        "author": "삐삐요링",
+        "author": "Beep beeping",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "4년 전",
-        "text": "너무 스토리가 짧음. 별 4개짜리갔는데 설마 이제 끝인가? 했음.\n자물쇠도 다 숫자랑 영어 자물쇠뿐이고 10개 미만이었음.\n현금가 18000원인데 돈 좀 더 주고 긴거가는게 나을뻔."
+        "relative_time": "4 years ago",
+        "text": "The story is too short. I got 4 stars, but is this really the end? I did.\nThere were only number and English locks and there were less than 10 locks.\nThe cash price is 18,000 won, so it would have been better to pay a little more and get a longer one."
       },
       {
         "author": "Doyoon Kwon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
-        "text": "방탈출인데 너무 어려워요\n가장 쉬운 것도"
+        "relative_time": "8 months ago",
+        "text": "It’s an escape room, but it’s so difficult.\nThe easiest thing too"
       },
       {
         "author": "ji-youn Choi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "사장님이 너무 친절하심\n\n아이가 쫄보에서 벗어나면 꼭 다시 갈께요"
+        "relative_time": "5 years ago",
+        "text": "The owner is so kind\n\nI will definitely go back once my child gets out of this fear."
       },
       {
-        "author": "홍제익",
+        "author": "Jeik Hong",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "난이도가 표시된 것보다 낮다고 보시면 됩니다.\n깔끔하고 사장님 친절하십니다."
+        "relative_time": "5 years ago",
+        "text": "You can see that the difficulty level is lower than indicated.\nIt's clean and the owner is friendly."
       }
     ],
     "photos": [
@@ -2322,15 +2322,15 @@
   },
   {
     "place_id": "ChIJ_-8Pt1KkfDURX4hPykunJ7c",
-    "display_name": "셜록홈즈잠실2호점",
-    "category": "오락실",
+    "display_name": "Sherlock Holmes Jamsil 2nd branch",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 182-5번지 4층",
-    "short_address": "송파구 잠실동 182-5번지 4층",
+    "address": "4th floor, 182-5 Jamsil-dong, Songpa-gu, Seoul, Korea",
+    "short_address": "4th floor, 182-5 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.510901,
       "lng": 127.08241179999999
@@ -2350,11 +2350,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca452b70fefff:0xb727a74bca4f885f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2364,51 +2364,51 @@
         "author": "Ja K",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "4년 전",
-        "text": "테마는 기억이 안날정도로\n직원들이 최악!!!!\n기본적인 설명 의무도 지키지 않음\n테마 설명 없음, 진행율 물어봐도 자긴 모르겠다는식\n\n아니 직원이 모르면 누가 암?ㅋㅋㅋㅋ\n\n평일 점심~낮타임 여자 직원 두명\n일하기 싫음 걍 관두자"
+        "relative_time": "4 years ago",
+        "text": "I can't remember the theme\nThe employees are the worst!!!!\nFailure to comply with basic explanation obligations\nNo theme explanation, even if you ask for progress, they say they don’t know.\n\nNo, if the employees don't know, who's at risk? LOL\n\nTwo female employees during lunch and daytime on weekdays\nI don't want to work, let's just quit"
       },
       {
         "author": "MAYU",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "알바분 설명이 친절하고 문제 차분히 풀 기회 주셔서 좋았음. 개인적으로 단잠을 좀더 기대하고 갔으나, 너무 어두워서 눈이 아팠음."
+        "relative_time": "4 years ago",
+        "text": "The part-time worker's explanation was friendly and it was nice to have the opportunity to calmly solve the problem. Personally, I went there expecting to get a good night's sleep, but it was so dark that it hurt my eyes."
       },
       {
         "author": "Euijin Chang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "랑슈뷰티연구소, 단잠 정말 재미있게 플레이했습니다."
+        "relative_time": "3 years ago",
+        "text": "I really enjoyed playing Langshu Beauty Research Institute and Danjam."
       },
       {
         "author": "Mut Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "Qr만 찍다 끝이난..."
+        "relative_time": "3 years ago",
+        "text": "Just took a QR and it was over..."
       },
       {
         "author": "Regina",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "퀄리티가 좋았고 재밌었다"
+        "relative_time": "4 years ago",
+        "text": "The quality was good and it was fun"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJ914En1KkfDURJM38ZFQjECE",
-    "display_name": "와썹노래방",
-    "category": "노래방",
+    "display_name": "Wassup Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 번지 3층 191-7",
-    "short_address": "송파구 잠실동 번지 3층 191-7",
+    "address": "191-7, 3rd floor, Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "191-7, 3rd floor, Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.510436899999995,
       "lng": 127.08147749999999
@@ -2429,8 +2429,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2439,7 +2439,7 @@
         "author": "Sean A. Lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       }
     ],
@@ -2447,15 +2447,15 @@
   },
   {
     "place_id": "ChIJsdE-PaClfDURcqYceD6K1qI",
-    "display_name": "방탈출카페 넥스트에디션 잠실점",
-    "category": "오락실",
+    "display_name": "Escape Room Cafe Next Edition Jamsil Branch",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 올림픽로 118 지하 1층",
-    "short_address": "송파구 잠실동 올림픽로 118 지하 1층",
+    "address": "Basement 1, 118 Olympic-ro, Jamsil-dong, Songpa-gu, Seoul, Korea",
+    "short_address": "Basement 1, 118 Olympic-ro, Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5114558,
       "lng": 127.0836316
@@ -2474,20 +2474,20 @@
     "google_maps_url": "https://maps.google.com/?cid=11733717880068154994",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5a03d3ed1b1:0xa2d68a3e781ca672!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 11:00",
-      "화요일: 오전 10:30 ~ 오후 11:00",
-      "수요일: 오전 10:30 ~ 오후 11:00",
-      "목요일: 오전 10:30 ~ 오후 11:00",
-      "금요일: 오전 10:30 ~ 오후 11:00",
-      "토요일: 오전 10:30 ~ 오후 11:00",
-      "일요일: 오전 10:30 ~ 오후 11:00"
+      "Monday: 10:30 AM - 11:00 PM",
+      "Tuesday: 10:30 AM - 11:00 PM",
+      "Wednesday: 10:30 AM - 11:00 PM",
+      "Thursday: 10:30 AM - 11:00 PM",
+      "Friday: 10:30 AM - 11:00 PM",
+      "Saturday: 10:30 AM - 11:00 PM",
+      "Sunday: 10:30 AM - 11:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2497,35 +2497,35 @@
         "author": "Peter Kim (Winters)",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       },
       {
-        "author": "뱅뱅뱅",
+        "author": "Bang bang bang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       },
       {
-        "author": "윤승우",
+        "author": "Seungwoo Yoon",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       },
       {
         "author": "Je Young Yoo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       },
       {
-        "author": "강소영",
+        "author": "Soyoung Kang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -2533,16 +2533,16 @@
   },
   {
     "place_id": "ChIJ6xUfTwClfDURZcCNXoR1oRs",
-    "display_name": "셜록홈즈 잠실새내점",
-    "category": "오락실",
+    "display_name": "Sherlock Holmes Jamsil Saenae Branch",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "amusement_park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 191-1 2층",
-    "short_address": "송파구 잠실동 191-1 2층",
+    "address": "2nd floor, 191-1 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "2nd floor, 191-1 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.510339699999996,
       "lng": 127.08132260000001
@@ -2562,11 +2562,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5004f1f15eb:0x1ba175845e8dc065!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2575,15 +2575,15 @@
   },
   {
     "place_id": "ChIJ65G6n1KkfDURsYa0AhfcAqY",
-    "display_name": "수노래방신천점",
-    "category": "노래방",
+    "display_name": "Sun Karaoke Sincheon Branch",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 백제고분로7길 24",
-    "short_address": "송파구 잠실동 백제고분로7길 24",
+    "address": "24 Baekjegobun-ro 7-gil, Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "24 Baekjegobun-ro 7-gil, Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5103491,
       "lng": 127.0814888
@@ -2602,59 +2602,59 @@
     "google_maps_url": "https://maps.google.com/?cid=11962365551637202609",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4529fba91eb:0xa602dc1702b486b1!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 1:00~10:00",
-      "화요일: 오후 1:00~10:00",
-      "수요일: 오후 1:00~10:00",
-      "목요일: 오후 1:00~10:00",
-      "금요일: 오후 1:00~10:00",
-      "토요일: 오후 1:00~10:00",
-      "일요일: 오후 1:00~10:00"
+      "Monday: 1:00-10:00 PM",
+      "Tuesday: 1:00-10:00 PM",
+      "Wednesday: 1:00-10:00 PM",
+      "Thursday: 1:00-10:00 PM",
+      "Friday: 1:00-10:00 PM",
+      "Saturday: 1:00-10:00 PM",
+      "Sunday: 1:00-10:00 PM"
     ],
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "최상연",
+        "author": "Choi Sang-yeon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "솔직히 룸은 그리 크지 않았지만 그래도 서비스가 좋고 거기 일하시는 분이 너무 친절하셔서 별 만점 드립니다.\n또...시간대를 잘 맞춰서 가면 손님이 많지 않을때 서비스 시간 많이 줍니다.\n완전 개꿀"
+        "relative_time": "6 years ago",
+        "text": "To be honest, the room wasn't that big, but the service was good and the people working there were very friendly, so I give it full stars.\nAlso...if you schedule the right time, they will give you more service time when there are not many customers.\nAbsolutely shit"
       },
       {
-        "author": "장원석",
+        "author": "Jang Won-seok",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "2마넌방이랑 더큰 2.5마넌 방있다길래 2.5방 했는데 하나도 안넓었음 2마넌방은 얼마나 좁은걸까"
+        "relative_time": "4 years ago",
+        "text": "I heard there was a 2-man room and a larger 2.5-man room, so I took the 2.5-man room, but it wasn't spacious at all. How narrow is the 2-man room?"
       },
       {
         "author": "Jihyun Yoon",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "10년 전",
-        "text": "수노래방치곤 좀 지저분하지만.. 그래도 근처에선 맘 편하게 갈 수 있어서 좋아요."
+        "relative_time": "10 years ago",
+        "text": "It's a bit messy for a karaoke bar, but it's nice to be able to go comfortably nearby."
       },
       {
         "author": "DLX 1000",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "방 쾌적함. 다만 방문당시 겨울이었는데 난방이 좀 쎄서 더웠음."
+        "relative_time": "6 years ago",
+        "text": "Room comfort. However, it was winter when I visited and the heating was a bit strong so it was hot."
       },
       {
         "author": "Janggwan Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "서비스가 한시간 넘게 들어오고 마이크도 괜찮음 내부도 깨끗하고"
+        "relative_time": "5 years ago",
+        "text": "The service lasted over an hour, the microphone was good, and the interior was clean."
       }
     ],
     "photos": [
@@ -2663,15 +2663,15 @@
   },
   {
     "place_id": "ChIJSdmEpVKkfDUR7l1FYfwJPk8",
-    "display_name": "비타민노래연습장",
-    "category": "노래방",
+    "display_name": "vitamin karaoke practice",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 189-2",
-    "short_address": "송파구 잠실동 189-2",
+    "address": "189-2 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "189-2 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5103906,
       "lng": 127.08225069999999
@@ -2692,8 +2692,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2702,15 +2702,15 @@
   },
   {
     "place_id": "ChIJLXe6FKylfDURyyykCYTthY0",
-    "display_name": "블럭에듀",
-    "category": "오락실",
+    "display_name": "Block Edu",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 잠실동 22-6번지 리센츠상가 3A8호 송파구 서울특별시 KR",
-    "short_address": "잠실동 22-6번지 리센츠상가 3A8호 송파구 서울특별시 KR",
+    "address": "3A8 Ricenz Shopping Center, 22-6 Jamsil-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "#3A8, Ricenz Shopping Center, 22-6 Jamsil-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5119423,
       "lng": 127.08702539999999
@@ -2730,12 +2730,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ac14ba772d:0x8d85ed8409a42ccb!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실",
-      "어린이적합"
+      "restroom",
+      "Suitable for children"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2744,23 +2744,23 @@
         "author": "lia hur",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "아이들 놀기 너무 좋은곳 :)"
+        "relative_time": "6 years ago",
+        "text": "A great place for kids to play :)"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJxVBcEK2lfDURdnT-mG2Qzcg",
-    "display_name": "신천ae코인",
-    "category": "노래방",
+    "display_name": "Shincheon ae Coin",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 백제고분로7길 54",
-    "short_address": "송파구 잠실동 백제고분로7길 54",
+    "address": "54 Baekjegobun-ro 7-gil, Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "54 Baekjegobun-ro 7-gil, Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5106888,
       "lng": 127.08483310000001
@@ -2779,57 +2779,57 @@
     "google_maps_url": "https://maps.google.com/?cid=14469379978203919478",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ad105c50c5:0xc8cd906d98fe7476!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 3:00 ~ 오전 3:00",
-      "화요일: 오후 3:00 ~ 오전 3:00",
-      "수요일: 오후 3:00 ~ 오전 3:00",
-      "목요일: 오후 3:00 ~ 오전 3:00",
-      "금요일: 오후 3:00 ~ 오전 3:00",
-      "토요일: 오후 3:00 ~ 오전 3:00",
-      "일요일: 오후 3:00 ~ 오전 3:00"
+      "Monday: 3:00 PM - 3:00 AM",
+      "Tuesday: 3:00 PM - 3:00 AM",
+      "Wednesday: 3:00 PM - 3:00 AM",
+      "Thursday: 3:00 PM - 3:00 AM",
+      "Friday: 3:00 PM - 3:00 AM",
+      "Saturday: 3:00 PM - 3:00 AM",
+      "Sunday: 3:00 PM - 3:00 AM"
     ],
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "손병욱",
+        "author": "Son Byeong-wook",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "노래방이 깨끗하고 시설이좋다 그냥노래방 같다"
+        "relative_time": "7 years ago",
+        "text": "The karaoke room is clean and has good facilities. It’s just like a karaoke room."
       },
       {
-        "author": "정귀영",
+        "author": "Jeong Gwi-young",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "아주 재미 있는  즐기고 있왔어요"
+        "relative_time": "6 years ago",
+        "text": "I've been having a lot of fun"
       },
       {
-        "author": "강비",
+        "author": "river rain",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "4곡에 1000"
+        "relative_time": "7 years ago",
+        "text": "1000 for 4 songs"
       },
       {
-        "author": "윤윤인숙",
+        "author": "Yun Yoon In-sook",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "넘 비좁다ㆍ"
+        "relative_time": "6 years ago",
+        "text": "It's too cramped."
       },
       {
         "author": "sujin kwack",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -2839,14 +2839,14 @@
   },
   {
     "place_id": "ChIJgytDR62lfDURCRzHio3mIgg",
-    "display_name": "뿅뿅 오락실",
-    "category": "전자오락실",
+    "display_name": "Bang Bang Arcade",
+    "category": "Electronic game room",
     "types": [
       "video_arcade",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.510755599999996,
@@ -2866,57 +2866,57 @@
     "google_maps_url": "https://maps.google.com/?cid=586284397104667657",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ad47432b83:0x822e68d8ac71c09!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오전 3:00",
-      "화요일: 오전 10:00 ~ 오전 3:00",
-      "수요일: 오전 10:00 ~ 오전 3:00",
-      "목요일: 오전 10:00 ~ 오전 3:00",
-      "금요일: 오전 10:00 ~ 오전 3:00",
-      "토요일: 오전 10:00 ~ 오전 3:00",
-      "일요일: 오전 10:00 ~ 오전 3:00"
+      "Monday: 10:00 AM - 3:00 AM",
+      "Tuesday: 10:00 AM - 3:00 AM",
+      "Wednesday: 10:00 AM - 3:00 AM",
+      "Thursday: 10:00 AM - 3:00 AM",
+      "Friday: 10:00 AM - 3:00 AM",
+      "Saturday: 10:00 AM - 3:00 AM",
+      "Sunday: 10:00 AM - 3:00 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이정원",
+        "author": "Lee Jeong-won",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "뿅뿅오락실은 잠실새내 중심에 위치하여 근래에 새롭게 리뉴얼된 오락실입니다.\n잠실새내 때는 뿅뿅게임랜드 신천1호점 또는 월드카니발 이라는 간판으로 운영되고 있었는데, 예전 오락실 느낌이라 굉장히 노후된 느낌을 받았었거든요.\n이름도 뿅뿅오락실로 바뀐 것과 더불어 최근에 개업하는 최신오락실들과 같아진 분위기에 굉장히 신기했어요~\n\n1층은 인형뽑기, 2층은 오락기로 세팅되어 있는건 똑같았어요.\n인형뽑기는 코코짱과 돌하우스의 기기 위주로 설치되어있는데, 인형의 크기도 나름 크고 종류도 다양해서 어느것을 뽑아야 할 지 둘러보는 재미도 있었습니다.\n\n2층은 기본 아케이드 게임부터 사운드웨이브, 하우스오브데드, 펌프, 픽셀크래프트, 배스킷볼프로 등 액션 게임기까지 갖추고 있습니다.\n꾸준한 인기를 자랑하는 게임기들이 종류별로 하나씩 있는데, 불빛도 잘 나오고 소리도 빵빵해서 오락할 맛이 나더라고요!\n다만, 공간이 제한적이다보니 같은 기기 개수가 적은게 좀 아쉬웠어요.\n\n게임기가 내뿜는 열기가 있다보니 2층은 다소 더운감이 있어서, 1층에서 예전 추억도 느껴볼겸 고전 인형뽑기를 직접 플레이해봤습니다.\n언제나 그랬듯이 집게발의 힘이 약할거라 예상은 했지만, 생각보다 더 약하게 설정해둔 점은 개선이 필요할 듯 합니다.\n지폐교환기도 각 층마다 정상적으로 작동하고 있어 오락을 이용하는데 있어 편했답니다.\n\n잠실새내에서 다양한 다양한 오락기와 인형뽑기를 즐길 수 있는 뿅뿅오락실.\n신세대에 맞게 바꾼 오락실 분위기와 최신 오락기를 잠실새내에서도 즐길 수 있다는건 하나의 재미는 보장된 것 같아 올 때마다 들르고 있습니다.\n잠실 또는 잠실 근처에 여행오시거나 놀러오신 분들이라면 지인, 연인, 친구, 가족들과 함께 재미난 오락 한 판 즐겨보세요!"
+        "relative_time": "1 year ago",
+        "text": "Pungpung Arcade is a recently renovated arcade located in the center of Jamsil Saenae.\nDuring the Jamsil Saenae era, it was operated under the signboard “PpungPung Game Land Sincheon 1st Branch” or “World Carnival,” but it felt very old because it had the feel of an old arcade.\nI was very surprised by the name change to Bbungbung Arcade and the atmosphere that was similar to the latest arcades that have opened recently.\n\nThe first floor was set up with a claw machine and the second floor was set up with an arcade machine, which was the same.\nThe doll claw machine is mainly equipped with Coco-chan and Dollhouse machines, and the dolls are large in size and of various types, so it was fun to look around to see which one to pick.\n\nThe second floor is equipped with basic arcade games and action game machines such as Soundwave, House of Dead, Pump, Pixelcraft, and Basketball Pro.\nThere are game consoles of each type that are consistently popular, and the lights come out well and the sound is loud, so it's fun to play!\nHowever, because space was limited, it was a bit disappointing that there were only a small number of devices of the same type.\n\nThe second floor felt a bit hot due to the heat radiating from the game console, so I played a classic claw machine on the first floor to relive old memories.\nAs always, I expected the force of the claws to be weak, but the fact that it was set to be weaker than expected seems to need improvement.\nThe bill exchange machine was operating normally on each floor, making it convenient to use the entertainment.\n\nPungppong Arcade in Jamsil Saenae, where you can enjoy a variety of arcade machines and claw machines.\nThe atmosphere of the arcade has been changed to suit the new generation and the fact that you can enjoy the latest arcade games in Jamsil Sae-nae seems like fun guaranteed, so I stop by every time I come.\nIf you are traveling or visiting Jamsil or near Jamsil, enjoy some fun entertainment with your acquaintances, lovers, friends, and family!"
       },
       {
-        "author": "복이빈",
+        "author": "Lucky Yibin",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1달 전",
-        "text": "절대 가지마세요. 인형뽑기 조절하는거 당연히 알고있는데 인형뽑기 5년하면서 이렇게 양심없이 조절한곳은 처음보네요."
+        "relative_time": "1 month ago",
+        "text": "Don't ever go there. Of course I know how to control claw machines, but in 5 years of claw claw machines, this is the first time I have seen a place that adjusts them without conscience like this."
       },
       {
         "author": "* 4U",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "잠실동에 위치한 오락실입니다. '뿅뿅 게임랜드'라니 이름부터 익살스러우면서도 발음하기가 좀 힘듭니다.ㅎ\n위치는 2호선 잠실새내역 3번 출구에서 조금만 걸으면 찾으실 수 있습니다. 1층은 리듬게임이 주를 이루고, 2층은 철권, 코인 노래방이 있습니다.\n리듬게임 라인업은 DDR, 댄스 러시를 제외한 비마니 기체를 전부 보유하고 있고 마이마이, 펌프, 츄니즘, 이지투, 왓카로 꽤 좋습니다.\n게임 환경 또한 나쁘지 않았습니다. 선풍기가 많이 있어서 편리했고, 동전교환기도 가까이 있어서 좋았습니다. 기기 배치가 좀 아쉬웠던 것 같습니다. 1층 한쪽 구석에 리듬게임이 다 있다 보니 일단 소리가 쉽게 묻힐 듯 보였습니다. 제가 방문했을 당시는 사람이 별로 없었음에도 주변 기기가 좀 시끄럽게 느껴졌습니다.\n기기 상태는 전반적으로 보통인 것 같습니다. 사볼 은 버튼, 노브 둘 다 좀 무거운 편입니다.\n여러모로 찾아본 바에 의하면 주변 오락실에 비해 대기가 덜 걸리는 편이라고 합니다."
+        "relative_time": "4 years ago",
+        "text": "This is an arcade located in Jamsil-dong. Although the name ‘Bungbung Game Land’ is humorous, it is a bit difficult to pronounce.\nThe location can be found a short walk from Exit 3 of Jamsil Saenae Station on Line 2. The first floor mainly features rhythm games, and the second floor has Tekken and coin karaoke.\nThe rhythm game lineup is pretty good, with all of the Bemani aircraft except DDR and Dance Rush, and MyMai, Pump, Tunism, Easy2, and Wakka.\nThe game environment wasn't bad either. It was convenient because there were many fans, and it was nice that there was a coin exchange nearby. I think the device placement was a bit disappointing. Since all the rhythm games were in one corner of the first floor, it seemed like the sound would be easily drowned out. Even though there weren't many people when I visited, the surrounding devices felt a bit noisy.\nThe overall condition of the device appears to be average. Both the buttons and knobs are a bit heavy.\nAccording to what I have researched, there is less waiting time compared to nearby arcades."
       },
       {
-        "author": "유027",
+        "author": "Yu027",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "오락실의 크기가 크다. 1층은 거의 리듬게임 전문 오락실급으로 많은 종류의 리듬게임 기체들이 있었다. 다만 중간중간 상태가 좋은편이 아닌 기체들이 몇몇이 있었다."
+        "relative_time": "3 years ago",
+        "text": "The size of the arcade is large. The first floor was almost like an arcade specializing in rhythm games, and there were many types of rhythm game machines. However, there were some aircraft that were not in good condition."
       },
       {
         "author": "Nomad Frog",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "1층은 리듬게임 위주고, 2층은 조이패드 게임이 주 입니다. 펌프잇업 500원 저렴한가격이 매우 맘에드네요."
+        "relative_time": "5 years ago",
+        "text": "The first floor focuses on rhythm games, and the second floor focuses on joypad games. I really like the affordable price of Pump It Up, 500 won."
       }
     ],
     "photos": [
@@ -2934,15 +2934,15 @@
   },
   {
     "place_id": "ChIJAeLnXAClfDUREWWcf4-VYxY",
-    "display_name": "찰리이스케이프",
-    "category": "오락실",
+    "display_name": "Charlie Escape",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 백제고분로7길 52-5 지하1층",
-    "short_address": "송파구 백제고분로7길 52-5 지하1층",
+    "address": "Basement 1, 52-5 Baekjegobun-ro 7-gil, Songpa-gu, Seoul, South Korea",
+    "short_address": "Basement 1, 52-5 Baekjegobun-ro 7-gil, Songpa-gu",
     "location": {
       "lat": 37.5104579,
       "lng": 127.08489460000001
@@ -2962,11 +2962,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5005ce7e201:0x1663958f7f9c6511!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2975,23 +2975,23 @@
         "author": "BONGHYUN NAM",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "여기 진짜 장난아니네요.\n재밌게 즐기다 갔습니다!!\n\n간단한 다과(커피)는 제공됩니다!\n다만 거미는 안나오니 걱정마세요!!"
+        "relative_time": "1 year ago",
+        "text": "This is a real joke.\nI had fun!!\n\nLight refreshments (coffee) are provided!\nBut don’t worry, there are no spiders!!"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJgytDR62lfDURzR_cXH_AIto",
-    "display_name": "코리아씨티노래방",
-    "category": "노래방",
+    "display_name": "Korea City Tino Raebang",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 186",
-    "short_address": "송파구 잠실동 186",
+    "address": "186 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "186 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5106269,
       "lng": 127.08387750000001
@@ -3011,10 +3011,10 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ad47432b83:0xda22c07f5cdc1fcd!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3023,15 +3023,15 @@
   },
   {
     "place_id": "ChIJbcO7FK2lfDURFco8QwqNb2Q",
-    "display_name": "페스티발노래방",
-    "category": "노래방",
+    "display_name": "Festival Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동",
-    "short_address": "송파구 잠실동",
+    "address": "Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.510321399999995,
       "lng": 127.0846274
@@ -3051,11 +3051,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ad14bbc36d:0x646f8d0a433cca15!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3064,15 +3064,15 @@
   },
   {
     "place_id": "ChIJF2mjEq2lfDURXXhKRK42Mzw",
-    "display_name": "코리아노래연습장",
-    "category": "노래방",
+    "display_name": "Korea karaoke practice center",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 185-9",
-    "short_address": "송파구 잠실동 185-9",
+    "address": "185-9 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "185-9 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.510245399999995,
       "lng": 127.0850124
@@ -3091,20 +3091,20 @@
     "google_maps_url": "https://maps.google.com/?cid=4337870988185860189",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ad12a36917:0x3c3336ae444a785d!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 10:00",
-      "화요일: 오전 11:00 ~ 오후 10:00",
-      "수요일: 오전 11:00 ~ 오후 10:00",
-      "목요일: 오전 11:00 ~ 오후 10:00",
-      "금요일: 오전 11:00 ~ 오후 10:00",
-      "토요일: 오전 11:00 ~ 오후 10:00",
-      "일요일: 오전 11:00 ~ 오후 10:00"
+      "Monday: 11:00 AM - 10:00 PM",
+      "Tuesday: 11:00 AM - 10:00 PM",
+      "Wednesday: 11:00 AM - 10:00 PM",
+      "Thursday: 11:00 AM - 10:00 PM",
+      "Friday: 11:00 AM - 10:00 PM",
+      "Saturday: 11:00 AM - 10:00 PM",
+      "Sunday: 11:00 AM - 10:00 PM"
     ],
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3113,15 +3113,15 @@
   },
   {
     "place_id": "ChIJmy6Uaq2lfDUR1evLUg-LY-U",
-    "display_name": "비틀즈노래연습장",
-    "category": "노래방",
+    "display_name": "Beatles singing practice",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 186-12",
-    "short_address": "송파구 잠실동 186-12",
+    "address": "186-12 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "186-12 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5102836,
       "lng": 127.0843649
@@ -3142,8 +3142,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3152,16 +3152,16 @@
         "author": "C-min Yi (Min)",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "9년 전",
-        "text": "회사 동료들이랑 술마시고 얼떨결에 간곳인데요.\n손님이 거의 없고, 약간 곰팡이 냄새가 나서 비염으로 고생한 곳^^;"
+        "relative_time": "9 years ago",
+        "text": "This is a place I accidentally went to after drinking with my co-workers.\nThere were very few customers and it smelled a bit like mold, so I suffered from rhinitis ^^;"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJC5XyMq2lfDURgM80K5H1hbE",
-    "display_name": "팡팡 락 볼링장",
-    "category": "볼링장",
+    "display_name": "Pangpang Rock Bowling Alley",
+    "category": "bowling club",
     "types": [
       "bowling_alley",
       "sports_complex",
@@ -3169,8 +3169,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 올림픽로 114 지하1층",
-    "short_address": "송파구 올림픽로 114 지하1층",
+    "address": "Basement 1, 114 Olympic-ro, Songpa-gu, Seoul, Korea",
+    "short_address": "Basement 1, 114 Olympic-ro, Songpa-gu",
     "location": {
       "lat": 37.511331399999996,
       "lng": 127.0830896
@@ -3191,8 +3191,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3202,36 +3202,36 @@
         "author": "EK Han",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8년 전",
-        "text": "국빈관 자리에 새로 생긴 락볼링장입니다. 시설 깔끔하고 분위기 좋네요. 즐겁게 볼링을 칠 수 있는 곳이라고 생각합니다. 다만 개업한지 알마 안되어서 그런지 직원들의 서비스가 아직 어설픈  점은 있네요."
+        "relative_time": "8 years ago",
+        "text": "This is a new rock bowling alley located at the state guesthouse. The facilities are clean and the atmosphere is nice. I think it's a fun place to go bowling. However, perhaps because it hasn't been opened since it opened, the staff's service is still lacking."
       },
       {
         "author": "SuN",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "신발대여는 오로지 현금 선결제만가능\n주류도 선결제만 가능\n내기를 한다면 한명이 다 몰아서 계산후 정산 하는게 나을듯\n시설은 깔끔하고 양호함"
+        "relative_time": "7 years ago",
+        "text": "Shoe rental can only be paid in cash in advance.\nAlcoholic beverages can only be paid in advance\nIf you're going to bet, it would be better for one person to do it all and settle the bill.\nFacilities are clean and good"
       },
       {
         "author": "SEUNGYOON LEE",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "레인이 짧긴한데 분위기가 좋음. 신천 쪽 오면 한번쯤 올만한 곳."
+        "relative_time": "6 years ago",
+        "text": "The lanes are short, but the atmosphere is good. A place worth visiting at least once when you come to Sincheon."
       },
       {
         "author": "DJ C",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "코로나로 안가려다 직원들과 ..즐거운시간 보냈어요\n\n옛날에 나이트클럽이었던 곳인걸로 기억하는데ㅎㅎ\n\n레인관리좀 하셔야겠어요.. ;;;"
+        "relative_time": "4 years ago",
+        "text": "I had a great time with the staff despite the coronavirus pandemic.\n\nI remember it used to be a nightclub haha.\n\nI need to do some lane management... ;;;"
       },
       {
-        "author": "전수진",
+        "author": "Soojin Jeon",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "쾌적하고 신나고 나름 괜찮아요^^\n토요일 인데도 사람이 많지 않아서 저희는 좋았어요~"
+        "relative_time": "6 years ago",
+        "text": "It’s comfortable and exciting, and it’s okay ^^\nWe liked it because there weren't many people even though it was Saturday."
       }
     ],
     "photos": [
@@ -3249,8 +3249,8 @@
   },
   {
     "place_id": "ChIJx7I2KMWlfDURuU8NeJ_p-h0",
-    "display_name": "루아흐교회",
-    "category": "교회",
+    "display_name": "Ruach Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3258,8 +3258,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실2동",
-    "short_address": "송파구 잠실2동",
+    "address": "Jamsil 2-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "Jamsil 2-dong, Songpa-gu",
     "location": {
       "lat": 37.5120933,
       "lng": 127.08259430000001
@@ -3279,7 +3279,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5c52836b2c7:0x1dfae99f780d4fb9!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3289,8 +3289,8 @@
   },
   {
     "place_id": "ChIJpXzallKkfDURfsj7EkdZV5Y",
-    "display_name": "제일교회",
-    "category": "교회",
+    "display_name": "First Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3298,8 +3298,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 180-4번지 4층",
-    "short_address": "송파구 잠실동 180-4번지 4층",
+    "address": "4th floor, 180-4 Jamsil-dong, Songpa-gu, Seoul, Korea",
+    "short_address": "4th floor, 180-4 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5110683,
       "lng": 127.08132730000001
@@ -3319,7 +3319,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca45296da7ca5:0x9657594712fbc87e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3329,8 +3329,8 @@
   },
   {
     "place_id": "ChIJJXUnjU2kfDURy_8NkA6i1HE",
-    "display_name": "일원성결교회",
-    "category": "교회",
+    "display_name": "Ilwon Holiness Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3338,8 +3338,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 175-1",
-    "short_address": "송파구 잠실동 175-1",
+    "address": "175-1 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "175-1 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.510737899999995,
       "lng": 127.078989
@@ -3359,7 +3359,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca44d8d277525:0x71d4a20e900dffcb!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3369,8 +3369,8 @@
   },
   {
     "place_id": "ChIJ-ZfQGqylfDURc5YCmOztJck",
-    "display_name": "은혜나눔교회",
-    "category": "교회",
+    "display_name": "Grace Sharing Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3378,8 +3378,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실2동 올림픽로 145",
-    "short_address": "송파구 잠실2동 올림픽로 145",
+    "address": "145 Olympic-ro, Jamsil 2-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "145 Olympic-ro, Jamsil 2-dong, Songpa-gu",
     "location": {
       "lat": 37.511964,
       "lng": 127.08779399999999
@@ -3399,26 +3399,26 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ac1ad097f9:0xc925edec98029673!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "하디",
+        "author": "hardy",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "13년 전",
-        "text": "은혜와 사랑이 넘치는 신앙의 가족 공동체^^"
+        "relative_time": "13 years ago",
+        "text": "A family community of faith full of grace and love^^"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJhygpAa2lfDURIe7-rBSBYFs",
-    "display_name": "잠실본동교회",
-    "category": "교회",
+    "display_name": "Jamsil Bondong Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3426,8 +3426,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 184-11",
-    "short_address": "송파구 잠실동 184-11",
+    "address": "184-11 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "184-11 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5108642,
       "lng": 127.0854595
@@ -3447,7 +3447,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ad01292887:0x5b608114acfeee21!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3457,8 +3457,8 @@
   },
   {
     "place_id": "ChIJq7ykEq2lfDURb6KKR8pz6Dg",
-    "display_name": "대한예수교장로회잠실3교",
-    "category": "교회",
+    "display_name": "Presbyterian Church of Korea Jamsil 3 School",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3466,8 +3466,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 185-9",
-    "short_address": "송파구 잠실동 185-9",
+    "address": "185-9 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "185-9 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.510245399999995,
       "lng": 127.0850124
@@ -3487,7 +3487,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ad12a4bcab:0x38e873ca478aa26f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3497,8 +3497,8 @@
   },
   {
     "place_id": "ChIJAXdjDa2lfDUR9ettGkqqdDI",
-    "display_name": "잠실3교회",
-    "category": "교회",
+    "display_name": "Jamsil 3 Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -3506,8 +3506,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 185-9",
-    "short_address": "송파구 잠실동 185-9",
+    "address": "185-9 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "185-9 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.510238,
       "lng": 127.0849885
@@ -3527,7 +3527,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ad0d637701:0x3274aa4a1a6debf5!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -3537,15 +3537,15 @@
   },
   {
     "place_id": "ChIJ-0NliU2kfDUR2bqZ1ujJx18",
-    "display_name": "아워쇼핑",
-    "category": "쇼핑몰",
+    "display_name": "Our Shopping",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 잠실동 렉스빌 2차 KR 서울특별시 송파구 잠실동 176-2번지 3층 342호",
-    "short_address": "잠실동 KR 서울특별시 송파구 잠실동 176-2번지 3층 342호 렉스빌 2차",
+    "address": "Room 342, 3rd floor, 176-2 Jamsil-dong, Songpa-gu, Seoul, Rexville 2nd, Jamsil-dong, Seoul, Republic of Korea",
+    "short_address": "Jamsil-dong KR Rexville 2, #342, 3rd floor, 176-2 Jamsil-dong, Songpa-gu, Seoul",
     "location": {
       "lat": 37.510874099999995,
       "lng": 127.0793095
@@ -3565,11 +3565,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca44d896543fb:0x5fc7c9e8d699bad9!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3579,8 +3579,8 @@
   },
   {
     "place_id": "ChIJqVedLa2lfDURAMWFjHq8ROc",
-    "display_name": "컨시어지 신천점",
-    "category": "휴대폰 판매점",
+    "display_name": "Concierge Sincheon Branch",
+    "category": "cell phone store",
     "types": [
       "cell_phone_store",
       "shopping_mall",
@@ -3590,8 +3590,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 184-21",
-    "short_address": "송파구 잠실동 184-21",
+    "address": "184-21 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "184-21 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.511219499999996,
       "lng": 127.08317029999999
@@ -3610,18 +3610,18 @@
     "google_maps_url": "https://maps.google.com/?cid=16664651755707286784",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ad2d9d57a9:0xe744bc7a8c85c500!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 10:00",
-      "화요일: 오전 11:00 ~ 오후 10:00",
-      "수요일: 오전 11:00 ~ 오후 10:00",
-      "목요일: 오전 11:00 ~ 오후 10:00",
-      "금요일: 오전 11:00 ~ 오후 10:00",
-      "토요일: 오전 11:00 ~ 오후 10:00",
-      "일요일: 오후 12:00~9:00"
+      "Monday: 11:00 AM - 10:00 PM",
+      "Tuesday: 11:00 AM - 10:00 PM",
+      "Wednesday: 11:00 AM - 10:00 PM",
+      "Thursday: 11:00 AM - 10:00 PM",
+      "Friday: 11:00 AM - 10:00 PM",
+      "Saturday: 11:00 AM - 10:00 PM",
+      "Sunday: 12:00-9:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3631,15 +3631,15 @@
   },
   {
     "place_id": "ChIJXY4F3aylfDURFq5zDFPcsPc",
-    "display_name": "다린크래프트 잠실점",
-    "category": "쇼핑몰",
+    "display_name": "Darin Craft Jamsil Branch",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 19-9 대한민국 서울특별시 송파구 잠실동 19-9 잠실파인애플상가 지하1층 A130호",
-    "short_address": "송파구 잠실동 19-9 대한민국 서울특별시 송파구 잠실동 19-9 잠실파인애플상가 지하1층 A130호",
+    "address": "19-9 Jamsil-dong, Songpa-gu, Seoul, Republic of Korea Room A130, B1, Jamsil Pineapple Shopping Center, 19-9 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "19-9 Jamsil-dong, Songpa-gu, Room A130, B1, Jamsil Pineapple Shopping Center, 19-9 Jamsil-dong, Songpa-gu, Seoul, South Korea",
     "location": {
       "lat": 37.5120463,
       "lng": 127.08417250000001
@@ -3659,11 +3659,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5acdd058e5d:0xf7b0dc530c73ae16!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3673,15 +3673,15 @@
   },
   {
     "place_id": "ChIJU1gPGv-lfDURdmXJMmLUWRU",
-    "display_name": "파인애플상가",
-    "category": "쇼핑몰",
+    "display_name": "Pineapple Shopping Mall",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실2동 올림픽로 119",
-    "short_address": "송파구 잠실2동 올림픽로 119",
+    "address": "119 Olympic-ro, Jamsil 2-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "119 Olympic-ro, Jamsil 2-dong, Songpa-gu",
     "location": {
       "lat": 37.512046399999996,
       "lng": 127.08417259999997
@@ -3701,54 +3701,54 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ff1a0f5853:0x1559d46232c96576!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "하하",
+        "author": "haha",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "4달 전",
-        "text": "지하1층 청년폰상가에서\n폰구매하러 갔는데\n폰게임하면서 귀찮고 짜증난다는식으로 손님응대하는데\n이렇게 기분나쁜건 처음이다\n다른곳 많으니 다른데 가셔도될듯하다"
+        "relative_time": "4 months ago",
+        "text": "At the youth phone store on the first basement floor\nI went to buy a phone\nWhile playing games on your phone, you treat customers like they are annoying and annoying.\nThis is my first time feeling this bad\nThere are many other places, so you may want to go somewhere else."
       },
       {
         "author": "Bong",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
-        "text": "이곳의 경비인은 예절 교육을 받아야합니다.\n6월 6일 목요일 오후 10시 50분경, 빌렸던 장비의 반납을 위해 차량을 가지고 방문했습니다. 오후 11시가 되면 건물이 닫힌다는 사실을 방문전에는 몰랐기 때문에 11시가 되어 찾아온 경비인의 나가달라는 요청을 듣고 차를 빼기로 했습니다.\n하지만 이 경비인은 출차하려는 저를 향해 처음왔다는것을 믿지 않는다고 했고 셔터문을 열어줄테니 나가달라고 이야기 했습니다. 너무나 신경질적인 말투였기에 저는 저한테 왜 그러시냐고, 그만해달라고 요청했습니다. 출차하는 저의 차에 대고 비속어가 섞인 소리를 질러댔습니다. 제가 블랙박스로 녹화하고 있으니 그만하라고 조심하시라고 말을 하니 그제서야 욕설을 멈추었습니다.\n이곳은 큰 상가로 즐겨찾는 사람이 많은 곳이지만 반면 이곳의 경비인은 그에 걸맞는 교양을 갖추지 못해 많이 아쉽습니다."
+        "relative_time": "1 year ago",
+        "text": "The guards here must receive etiquette training.\nOn Thursday, June 6th, around 10:50 PM, I visited with my vehicle to return the equipment I had borrowed. I didn't know before visiting that the building closes at 11 p.m., so I decided to leave after hearing the security guard who came at 11 p.m. asking me to leave.\nHowever, as I was about to leave, this security guard said he did not believe it was my first time coming and told me to leave as he would open the shutter door. Because his tone was so irritating, I asked him why he was doing that and asked him to stop. He shouted profanity at my car as it was leaving the car. When I told him to stop and be careful because I was recording it with a black box, he only stopped swearing.\nThis is a large shopping mall and is visited by many people, but on the other hand, it is very disappointing that the security guards here do not have the appropriate culture."
       },
       {
         "author": "kyoungil kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "잠실새내 역 부근에서 잘 알려진 상가이다. 근처 엘스 아파트가 있어서, 유동인구가 어느정도 있는듯하다. 닭곰탕과 닭칼국수집, 칼국수 전문점, 등이  맛집으로 유명하고, 피자집, 반찬가게 도 잘 알려져 있다."
+        "relative_time": "3 years ago",
+        "text": "This is a well-known shopping mall near Jamsil Saenae Station. Since there is Els Apartment nearby, there seems to be a certain amount of floating population. Chicken gomtang (chicken soup), chicken kalguksu (chicken kalguksu) restaurants, and kalguksu (noodle soup) restaurants are famous as gourmet restaurants, and pizza restaurants and side dish shops are also well known."
       },
       {
-        "author": "임유진",
+        "author": "Yujin Lim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "점포 엄청 많아요 수선집 많고 먹거리도 좋아요 학원도 많아요"
+        "relative_time": "1 year ago",
+        "text": "There are a lot of stores, a lot of repair shops, good food, and a lot of academies."
       },
       {
         "author": "mk hong (hongmie)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "1층에 다양한 점포가 오밀조밀 모여있고 지하 식당엔 맛집이 있어서 골라먹는 재미가 있다ᆢ"
+        "relative_time": "2 years ago",
+        "text": "There are a variety of stores tightly packed together on the first floor, and there are delicious restaurants in the basement, so it's fun to choose from."
       }
     ],
     "photos": [
@@ -3763,15 +3763,15 @@
   },
   {
     "place_id": "ChIJUVPEU6ylfDURiVzIszlN7xU",
-    "display_name": "트리지움상가",
-    "category": "쇼핑몰",
+    "display_name": "Trizium Shopping Mall",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 석촌호수로 61",
-    "short_address": "송파구 석촌호수로 61",
+    "address": "61 Seokchonhosu-ro, Songpa-gu, Seoul, South Korea",
+    "short_address": "61 Seokchonhosu-ro, Songpa-gu",
     "location": {
       "lat": 37.5111312,
       "lng": 127.08609170000001
@@ -3790,63 +3790,63 @@
     "google_maps_url": "https://maps.google.com/?cid=1580566904455060617",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ac53c45351:0x15ef4d39b3c85c89!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 6:00 ~ 오후 11:00",
-      "화요일: 오전 6:00 ~ 오후 11:00",
-      "수요일: 오전 6:00 ~ 오후 11:00",
-      "목요일: 오전 6:00 ~ 오후 11:00",
-      "금요일: 오전 6:00 ~ 오후 11:00",
-      "토요일: 오전 6:00 ~ 오후 11:00",
-      "일요일: 오전 6:00 ~ 오후 11:00"
+      "Monday: 6:00 AM - 11:00 PM",
+      "Tuesday: 6:00 AM - 11:00 PM",
+      "Wednesday: 6:00 AM - 11:00 PM",
+      "Thursday: 6:00 AM - 11:00 PM",
+      "Friday: 6:00 AM - 11:00 PM",
+      "Saturday: 6:00 AM - 11:00 PM",
+      "Sunday: 6:00 AM - 11:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "언제나 졸리",
+        "author": "Always sleepy",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "상가에 도배하러 왔어요오오~~~\n\n와우 엄청 북적북적 하네요\n그래서인지 건물이 오래되서 그런지 엘베가\n개 느림용@@"
+        "relative_time": "1 year ago",
+        "text": "I came to wallpaper the shopping mall~~~\n\nWow, it’s so crowded.\nPerhaps because the building is old, the elevator\nDog is slow@@"
       },
       {
-        "author": "Y오키도키 (여행준비)",
+        "author": "YOki Doki (travel preparation)",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "잠실새내 2번출구쪽. 지하철역과 가장 가까이 있는 편리한 상가가 아닐까? 그런데 지하 롯데마트에 들어서는 순간 음식냄새가 너무 나기에 다른 곳을 둘러볼  여유도  없이 서둘러 나와버렸다.  필기구를 사러 잠시 들어간 것인데 입구에 위치하고 있는 반찬가게  음식냄새가 너무 풍겨  옷에서  냄새가 날까봐 서둘러 나온 것이다. 평상시는  좋아라 구경했을텐데... 오늘따라 그런 것인지,  시간대가 점심시간대라서 그런 것인지, 같은 층에서  있는 상점주들은  좀  힘들지 않을까?  생각해 본다."
+        "relative_time": "3 years ago",
+        "text": "Jamsil Saenae, Exit 2. Isn’t this the most convenient shopping mall closest to the subway station? However, the moment I entered the underground Lotte Mart, the smell of food was so strong that I hurried out without even having time to look elsewhere.  I went in briefly to buy writing utensils, but the smell of food from the side dish store located at the entrance was so strong that I was afraid my clothes would smell. Normally, I would have enjoyed looking around... I don't know if it was because of today or because it was lunch time, but wouldn't it be a bit difficult for the store owners on the same floor?  Think about it."
       },
       {
-        "author": "신신성훈",
+        "author": "Shin Shin Seong-Hoon",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2달 전",
-        "text": "전체적으로 깨끗하고 좋읍니다"
+        "relative_time": "2 months ago",
+        "text": "Overall, it's clean and nice."
       },
       {
         "author": "whi y",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "엘리베이터 안에 충격 흠집 방지용으로 붙여 놓은 진한 붉은색 오래된 커버 좀 교체했으면 좋겠습니다 상가 내에 맛집도 있고 병원, 학원도 많은데 시각적으로도 위생상으로도 어둡고 칙칙하여 상가 전체 이미지가 안 좋아 보일 것 같아요. 밝고 환한색으로 교체 바랍니다"
+        "relative_time": "4 years ago",
+        "text": "I wish they would replace the old, dark red cover that was placed inside the elevator to prevent impact scratches. There are many restaurants, hospitals, and academies within the shopping mall, but it is dark and dreary both visually and from a hygienic perspective, so I think the overall image of the mall will look bad. Please replace it with a brighter color."
       },
       {
         "author": "HeeSoo Jung",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "올레 김밥집 맛있어요~ 재료를 좋은걸 쓰셔서 그런지 가격이 조금 있지만 소고기 꼬마 김밥도 안질기고 맛있었네요."
+        "relative_time": "5 years ago",
+        "text": "Olle Gimbap Restaurant is delicious. It's a bit pricey, perhaps because they use high-quality ingredients, but the beef little gimbap was not too tough and was delicious."
       }
     ],
     "photos": [
@@ -3864,15 +3864,15 @@
   },
   {
     "place_id": "ChIJpxgdt0ukfDUR6b8F2Jt29Mk",
-    "display_name": "캠프라인 아웃도어몰",
-    "category": "쇼핑몰",
+    "display_name": "Campline Outdoor Mall",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 트리지움상가 B 118 KR 서울특별시 송파구 잠실동 35-2",
-    "short_address": "트리지움상가 B 118 KR 서울특별시 송파구 잠실동 35-2",
+    "address": "Trizium Shopping Center B 118, Seoul, Republic of Korea KR 35-2 Jamsil-dong, Songpa-gu, Seoul",
+    "short_address": "Trizium Shopping Center B 118 KR 35-2 Jamsil-dong, Songpa-gu, Seoul",
     "location": {
       "lat": 37.5106681,
       "lng": 127.08619940000001
@@ -3891,58 +3891,58 @@
     "google_maps_url": "https://maps.google.com/?cid=14552386707657179113",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca44bb71d18a7:0xc9f4769bd805bfe9!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 8:00",
-      "화요일: 오전 10:00 ~ 오후 8:00",
-      "수요일: 오전 10:00 ~ 오후 8:00",
-      "목요일: 오전 10:00 ~ 오후 8:00",
-      "금요일: 오전 10:00 ~ 오후 8:00",
-      "토요일: 오전 10:00 ~ 오후 8:00",
-      "일요일: 오후 1:00~6:00"
+      "Monday: 10:00 AM - 8:00 PM",
+      "Tuesday: 10:00 AM - 8:00 PM",
+      "Wednesday: 10:00 AM - 8:00 PM",
+      "Thursday: 10:00 AM - 8:00 PM",
+      "Friday: 10:00 AM - 8:00 PM",
+      "Saturday: 10:00 AM - 8:00 PM",
+      "Sunday: 1:00-6:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "신한빈",
+        "author": "Shin Hanbin",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "사장님 최근에 에베레스트도 다녀오시고 등산을 너무 사랑하시는 분입니다. 너무 친절하게 전문적으로 용품 설명 해주셔서 후회없는 구매를 할 수 있었어요.\n\n한국에서는 캠프라인이 최고 신뢰도입니다. 매번 즐겨 사용합니다."
+        "relative_time": "7 months ago",
+        "text": "The owner recently visited Everest and loves mountain climbing. They explained the product so kindly and professionally, so I was able to make a purchase with no regrets.\n\nIn Korea, Campline is the most reliable. I enjoy using it every time."
       },
       {
-        "author": "최명희",
+        "author": "Myunghee Choi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "첫 등산화를 실패하고 우연히 들린 캠프라인아웃도어몰매장...들어가기전엔 반신반의로...,\n이 사장님 달변에 안 넘어가려 무진장 노력했는데\n전문가의 조언은 연실 나도 모르게 끄덕끄덕...,\n등산화 새로 구입했는데 왜이리 뿌듯한지...\n빨리 산에 가고 싶네요.\n담에 들러 다른 용품들도 또 구매하고 싶네요\n사장님 짱~~~입니다"
+        "relative_time": "3 years ago",
+        "text": "After failing to get my first pair of hiking boots, I happened to stop by the Campline Outdoor Mall store... I was skeptical before going in...,\nI tried my best not to fall for this boss’s eloquence.\nThe expert's advice made me nod without realizing it...\nI bought new hiking shoes and why am I so proud?\nI want to go to the mountains quickly.\nI want to stop by next time and buy other items.\nThe boss is awesome~~~"
       },
       {
-        "author": "정연우",
+        "author": "Yeonwoo Jeong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "여기 사장님이 진짜 찐입니다...! 전문 산악인 출신이셔서 아는 지식도 많고 주말마다 등산간다고 하시네요..!  시간 조율해서 가시면 정말 캠프라인 등산화 뿐 아니라 다양한 산에 대한 정보도 주시고 좋아요!"
+        "relative_time": "4 years ago",
+        "text": "The owner here is really cool...! Since he is a former professional mountaineer, he has a lot of knowledge and says he goes hiking every weekend!  If you coordinate your time, it's great because they give you not only Campline hiking shoes, but also information about various mountains!"
       },
       {
         "author": "Yeohwan Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "등산화를 사려고 방문함. 친절한 상담과 딱 맞는 신발을 추천 해주심."
+        "relative_time": "4 years ago",
+        "text": "Visited to buy hiking boots. They gave friendly advice and recommended the right shoes."
       },
       {
         "author": "soobae peterkim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       }
     ],
@@ -3961,15 +3961,15 @@
   },
   {
     "place_id": "ChIJY4h3CK2lfDURr6jvlZefbb0",
-    "display_name": "PAT 잠실신천2점",
-    "category": "쇼핑몰",
+    "display_name": "PAT Jamsil Sincheon 2 Branch",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 208-16",
-    "short_address": "송파구 잠실동 208-16",
+    "address": "208-16 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "208-16 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.51051580000001,
       "lng": 127.08551620000001
@@ -3989,49 +3989,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ad08778863:0xbd6d9f9795efa8af!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "어쩌라고어모달라고모",
+        "author": "What should I do?",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "이정준",
+        "author": "Jeongjun Lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "김옥현",
+        "author": "Okhyun Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "함형천",
+        "author": "Ham Hyeong-cheon",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Сергій Костючок",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -4039,8 +4039,8 @@
   },
   {
     "place_id": "ChIJwcFKRbKlfDURurjTcmRHRUE",
-    "display_name": "잠실환전",
-    "category": "서비스",
+    "display_name": "Jamsil Currency Exchange",
+    "category": "service",
     "types": [
       "shopping_mall",
       "finance",
@@ -4048,8 +4048,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 트리지움 상가 1층 108 잠실환전 1호 KR 서울특별시 송파구 석촌호수로61",
-    "short_address": "트리지움 상가 1층 108 KR 서울특별시 송파구 석촌호수로61 잠실환전 1호",
+    "address": "Jamsil Exchange No. 1, 108, 1st floor, Trizium Shopping Mall, Seoul, Republic of Korea KR 61 Seokchonhosu-ro, Songpa-gu, Seoul",
+    "short_address": "Trizium Shopping Center 1st floor 108 KR Jamsil Currency Exchange No. 1, 61 Seokchonhosu-ro, Songpa-gu, Seoul",
     "location": {
       "lat": 37.5105189,
       "lng": 127.0861099
@@ -4068,13 +4068,13 @@
     "google_maps_url": "https://maps.google.com/?cid=4703243882607130810",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5b2454ac1c1:0x4145476472d3b8ba!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 8:00",
-      "화요일: 오전 10:00 ~ 오후 8:00",
-      "수요일: 오전 10:00 ~ 오후 8:00",
-      "목요일: 오전 10:00 ~ 오후 8:00",
-      "금요일: 오전 10:00 ~ 오후 8:00",
-      "토요일: 오전 10:00 ~ 오후 6:00",
-      "일요일: 오전 10:00 ~ 오후 6:00"
+      "Monday: 10:00 AM - 8:00 PM",
+      "Tuesday: 10:00 AM - 8:00 PM",
+      "Wednesday: 10:00 AM - 8:00 PM",
+      "Thursday: 10:00 AM - 8:00 PM",
+      "Friday: 10:00 AM - 8:00 PM",
+      "Saturday: 10:00 AM - 6:00 PM",
+      "Sunday: 10:00 AM - 6:00 PM"
     ],
     "services": null,
     "payment": null,
@@ -4085,36 +4085,36 @@
         "author": "Liam Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
-        "text": "공간도 너무 쾌적하고 직원분도 친절해서 기분 좋게 환전했네요! 사탕도 덤으로 주셔서 좋았어요!!! 👍👍👍 마침 달러가 남아도는게 있었는데 잘 환전하고 갑니다~"
+        "relative_time": "8 months ago",
+        "text": "The space was so comfortable and the staff were friendly, so I exchanged money comfortably! It was nice that they gave me candy as a bonus!!! 👍👍👍 I happened to have some dollars left over, so I exchanged them and left."
       },
       {
-        "author": "껄껄껄이순간을",
+        "author": "This moment",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
-        "text": "잠실환전 너무 좋아요❤️❤️\n사장님 엄청 친절하세요!! 가격도 너무 좋네요~\n빠른 거래도 너무 만족해요!\n잠실에서 환전하신다면 여기서 하셔요!"
+        "relative_time": "8 months ago",
+        "text": "Jamsil Currency Exchange is so good❤️❤️\nThe owner is very kind!! The price is very good too~\nI am very satisfied with the quick transaction too!\nIf you want to exchange money in Jamsil, do it here!"
       },
       {
-        "author": "이은서",
+        "author": "Eunseo Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "동네에 금액잘쳐주는 환전소가 생겼어요! 은행보다 훨신 나아서 방문했습니다 ㅎㅎ 믿음직하고 깔끔한 잠실환전 추천드려요"
+        "relative_time": "7 months ago",
+        "text": "There is a currency exchange office in the neighborhood that offers good rates! I visited because it was much better than the bank. I recommend Jamsil Currency Exchange, which is reliable and clean."
       },
       {
         "author": "RioS",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "태국 여행을 하고 남은 바트를 원화로 환전 했습니다.\n가격도 잘 쳐주시고 친절하게 잘 해주시네요.\n은행에서 하는것보다 훨씬 추천합니다"
+        "relative_time": "7 months ago",
+        "text": "I exchanged the remaining baht from my trip to Thailand to won.\nThey charge a good price and treat you kindly.\nI highly recommend it over doing it at the bank."
       },
       {
-        "author": "이도경",
+        "author": "Lee Do-kyung",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "환전소 분위기 너무 좋고 사장님 너무 친절하세요!! 다음에도 꼭 방문하겠습니다 두번정도 확인 해주시고 정말 감사합니당"
+        "relative_time": "7 months ago",
+        "text": "The atmosphere at the exchange office is very nice and the owner is very friendly!! I will definitely visit again next time. Thank you very much for checking twice."
       }
     ],
     "photos": [
@@ -4132,15 +4132,15 @@
   },
   {
     "place_id": "ChIJd9mwFK2lfDUR56Lq2HmQOaQ",
-    "display_name": "해피종합몰",
-    "category": "쇼핑몰",
+    "display_name": "Happy Comprehensive Mall",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 번지 5층 185-1",
-    "short_address": "송파구 잠실동 번지 5층 185-1",
+    "address": "185-1, 5th floor, Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "185-1, 5th floor, Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5103168,
       "lng": 127.08457600000001
@@ -4161,8 +4161,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4172,15 +4172,15 @@
   },
   {
     "place_id": "ChIJD5N2Cq2lfDURfvvAdcPvCho",
-    "display_name": "엠에스존 신천점",
-    "category": "쇼핑몰",
+    "display_name": "MS Zone Sincheon Branch",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 208-13",
-    "short_address": "송파구 잠실동 208-13",
+    "address": "208-13 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "208-13 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5100992,
       "lng": 127.08562730000001
@@ -4200,49 +4200,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ad0a76930f:0x1a0aefc375c0fb7e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "어쩌라고어모달라고모",
+        "author": "What should I do?",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "yunji lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "김영수",
+        "author": "Youngsu Kim",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "최상철",
+        "author": "Choi Sang-cheol",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "김지아",
+        "author": "Kim Ji-ah",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -4251,7 +4251,7 @@
   {
     "place_id": "ChIJwQRgTIClfDURtpUeb6hrJbs",
     "display_name": "LOTTE MYSUPER",
-    "category": "슈퍼마켓",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4261,8 +4261,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 올림픽로 １０５",
-    "short_address": "송파구 잠실동 올림픽로 １０５",
+    "address": "105 Olympic-ro, Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "105 Olympic-ro, Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.511987999999995,
       "lng": 127.0824999
@@ -4281,24 +4281,24 @@
     "google_maps_url": "https://maps.google.com/?cid=13485303030393771446",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5804c6004c1:0xbb256ba86f1e95b6!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 10:00",
-      "화요일: 오전 9:00 ~ 오후 10:00",
-      "수요일: 오전 9:00 ~ 오후 10:00",
-      "목요일: 오전 9:00 ~ 오후 10:00",
-      "금요일: 오전 9:00 ~ 오후 10:00",
-      "토요일: 오전 9:00 ~ 오후 10:00",
-      "일요일: 오전 9:00 ~ 오후 10:00"
+      "Monday: 9:00 AM - 10:00 PM",
+      "Tuesday: 9:00 AM - 10:00 PM",
+      "Wednesday: 9:00 AM - 10:00 PM",
+      "Thursday: 9:00 AM - 10:00 PM",
+      "Friday: 9:00 AM - 10:00 PM",
+      "Saturday: 9:00 AM - 10:00 PM",
+      "Sunday: 9:00 AM - 10:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어화장실"
+      "wheelchair restroom"
     ],
     "parking": null,
     "reviews": [
@@ -4306,15 +4306,15 @@
         "author": "武藤嘉孝",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "잠실 세네 역 근처에 있습니다."
+        "relative_time": "6 years ago",
+        "text": "It is located near Jamsil Sene Station."
       },
       {
         "author": "Chen Ourway",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "비싼 슈퍼마켓"
+        "relative_time": "3 years ago",
+        "text": "expensive supermarket"
       }
     ],
     "photos": [
@@ -4325,8 +4325,8 @@
   },
   {
     "place_id": "ChIJadAY11KkfDURg2KH_KClA00",
-    "display_name": "롯데슈퍼 신천점",
-    "category": "슈퍼마켓",
+    "display_name": "Lotte Super Sincheon Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4336,8 +4336,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 19-8",
-    "short_address": "송파구 잠실동 19-8",
+    "address": "19-8 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "19-8 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5121341,
       "lng": 127.0830846
@@ -4356,62 +4356,62 @@
     "google_maps_url": "https://maps.google.com/?cid=5549461276700664451",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca452d718d069:0x4d03a5a0fc876283!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 11:00",
-      "화요일: 오전 10:00 ~ 오후 11:00",
-      "수요일: 오전 10:00 ~ 오후 11:00",
-      "목요일: 오전 10:00 ~ 오후 11:00",
-      "금요일: 오전 10:00 ~ 오후 11:00",
-      "토요일: 오전 10:00 ~ 오후 11:00",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 11:00 PM",
+      "Tuesday: 10:00 AM - 11:00 PM",
+      "Wednesday: 10:00 AM - 11:00 PM",
+      "Thursday: 10:00 AM - 11:00 PM",
+      "Friday: 10:00 AM - 11:00 PM",
+      "Saturday: 10:00 AM - 11:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "강민희",
+        "author": "Minhee Kang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "가게도 많고 넓어서 좋습니다"
+        "relative_time": "1 month ago",
+        "text": "It's nice because there are a lot of stores and it's spacious."
       },
       {
         "author": "Ramana M",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "친절하시고 모두 열심히 잘 해주십니다. 야채 생선 등 날것들도 신선합니다. 특히 와인이 다른 곳에 비해 다양합니다."
+        "relative_time": "2 years ago",
+        "text": "Everyone is kind and works hard. Raw foods such as vegetables and fish are also fresh. The wines are especially diverse compared to other places."
       },
       {
-        "author": "나은빛설",
+        "author": "Better Light Theory",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "키오스크계산기가 너무복잡해서 몇번해봐도 할때마다 헤깔리고 그래서 계산대를 이용하는데 전반적으로 이거빼고는 직원분들도 친절하구 좋아요"
+        "relative_time": "3 years ago",
+        "text": "The kiosk calculator is so complicated that no matter how many times I try it, I get confused every time, so I use the checkout counter. Other than this, the staff are friendly and nice."
       },
       {
-        "author": "이병훈 (쿨가이)",
+        "author": "Byung-Hoon Lee (Cool Guy)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "가끔 가면서 음료ㆍ아이들 간식거리를 구입해가는 롯데마트네요^^\n코로나19로 사람들이 별로없으니 쇼핑하기 좋네요!!!"
+        "relative_time": "6 years ago",
+        "text": "This is Lotte Mart where I occasionally go and buy drinks and snacks for my children.^^\nIt's good for shopping because there aren't many people due to COVID-19!!!"
       },
       {
         "author": "Kyu-Baek Hwang",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "7년 전",
-        "text": "과일은 보통이지만 채소는 매우 별로. 별로 친절하지도 않음. 1단지 유일한 수퍼라서 가지만 대안이 있다면 가지 않을 것."
+        "relative_time": "7 years ago",
+        "text": "Fruits are average, but vegetables are very poor. Not very friendly. I go because it's the only supermarket in Complex 1, but I wouldn't go if there was an alternative."
       }
     ],
     "photos": [
@@ -4429,8 +4429,8 @@
   },
   {
     "place_id": "ChIJcQUZnVKkfDUR16MCoxZRHtg",
-    "display_name": "퍼스트",
-    "category": "슈퍼마켓",
+    "display_name": "first",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4440,8 +4440,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동",
-    "short_address": "송파구 잠실동",
+    "address": "Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5105435,
       "lng": 127.08104440000001
@@ -4461,11 +4461,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4529d190571:0xd81e5116a302a3d7!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4475,35 +4475,35 @@
         "author": "Eugene Yun",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "흠"
+        "relative_time": "6 years ago",
+        "text": "hmm"
       },
       {
         "author": "New",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       },
       {
-        "author": "장호식",
+        "author": "Jang Ho-sik",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "이성원",
+        "author": "Seongwon Lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "황용원",
+        "author": "Yongwon Hwang",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -4516,8 +4516,8 @@
   },
   {
     "place_id": "ChIJ70ndYk2kfDURqyFHAXpKC0E",
-    "display_name": "(주)엘브라더스맨하탄슈퍼직영점",
-    "category": "슈퍼마켓",
+    "display_name": "L Brothers Manhattan Super Direct Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4527,8 +4527,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 192 11번지 1층",
-    "short_address": "송파구 잠실동 192 11번지 1층",
+    "address": "1st floor, 192 11, Jamsil-dong, Songpa-gu, Seoul, Korea",
+    "short_address": "1st floor, 192 11th, Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5103216,
       "lng": 127.08102649999998
@@ -4549,8 +4549,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4559,8 +4559,8 @@
   },
   {
     "place_id": "ChIJV44F3aylfDURFLEx39b8Y7k",
-    "display_name": "잠실반찬",
-    "category": "슈퍼마켓",
+    "display_name": "Jamsil side dishes",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4570,8 +4570,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 잠실동 19-9번지 파인애플상가 B동 1층 A05호 송파구 서울특별시 KR",
-    "short_address": "잠실동 19-9번지 파인애플상가 B동 1층 A05호 송파구 서울특별시 KR",
+    "address": "Room A05, 1st floor, Building B, Pineapple Shopping Center, 19-9 Jamsil-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "Room A05, 1st floor, Building B, Pineapple Shopping Center, 19-9 Jamsil-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.512046399999996,
       "lng": 127.08417259999997
@@ -4592,8 +4592,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4602,8 +4602,8 @@
   },
   {
     "place_id": "ChIJ56ezNq2lfDURnnmeIN_gBf8",
-    "display_name": "원스탑체인본부",
-    "category": "슈퍼마켓",
+    "display_name": "One Stop Chain Headquarters",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4613,8 +4613,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 183-1",
-    "short_address": "송파구 잠실동 183-1",
+    "address": "183-1 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "183-1 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5109018,
       "lng": 127.0832149
@@ -4635,8 +4635,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4645,8 +4645,8 @@
   },
   {
     "place_id": "ChIJa49xkE2kfDURiD8CPnJvb7o",
-    "display_name": "원스탑 잠실본동점",
-    "category": "슈퍼마켓",
+    "display_name": "One Stop Jamsil Bondong Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4656,8 +4656,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 195",
-    "short_address": "송파구 잠실동 195",
+    "address": "195 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "195 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.510293499999996,
       "lng": 127.0795723
@@ -4678,8 +4678,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4688,8 +4688,8 @@
   },
   {
     "place_id": "ChIJLXe6FKylfDURl9oBNQDtpXY",
-    "display_name": "농협하나로마트신천역점",
-    "category": "슈퍼마켓",
+    "display_name": "Nonghyup Hanaro Mart Sincheon Station Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4699,8 +4699,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 올림픽로 145",
-    "short_address": "송파구 올림픽로 145",
+    "address": "145 Olympic-ro, Songpa-gu, Seoul, South Korea",
+    "short_address": "145 Olympic-ro, Songpa-gu",
     "location": {
       "lat": 37.5119423,
       "lng": 127.0870255
@@ -4719,63 +4719,63 @@
     "google_maps_url": "https://maps.google.com/?cid=8549500052777851543",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ac14ba772d:0x76a5ed003501da97!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:30 ~ 오후 9:00",
-      "화요일: 오전 9:30 ~ 오후 9:00",
-      "수요일: 오전 9:30 ~ 오후 9:00",
-      "목요일: 오전 9:30 ~ 오후 9:00",
-      "금요일: 오전 9:30 ~ 오후 9:00",
-      "토요일: 오전 9:30 ~ 오후 9:00",
-      "일요일: 오전 9:30 ~ 오후 9:00"
+      "Monday: 9:30 AM - 9:00 PM",
+      "Tuesday: 9:30 AM - 9:00 PM",
+      "Wednesday: 9:30 AM - 9:00 PM",
+      "Thursday: 9:30 AM - 9:00 PM",
+      "Friday: 9:30 AM - 9:00 PM",
+      "Saturday: 9:30 AM - 9:00 PM",
+      "Sunday: 9:30 AM - 9:00 PM"
     ],
     "services": [
-      "배달",
-      "화장실"
+      "delivery",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "김규환",
+        "author": "Gyu-hwan Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "넘 친절하고 생활용품 쇼핑 좋와요\n잠실새내역7번출구 바로 지하1층에 있어요"
+        "relative_time": "6 years ago",
+        "text": "Very friendly and great for shopping for daily necessities\nIt is located on the basement level, right at Exit 7 of Jamsil Saenae Station."
       },
       {
-        "author": "서민석",
+        "author": "Minseok Seo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "친절하고 상냥하게 대해서 고맙습니다 ㆍ행복하세요"
+        "relative_time": "1 year ago",
+        "text": "Thank you for being kind and kind. Be happy."
       },
       {
-        "author": "김민철 (갑자기분위기핑크색)",
+        "author": "Kim Min-cheol (Sudden Mood Pink)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "신선한 제품과 서비스.좋아요"
+        "relative_time": "3 years ago",
+        "text": "Fresh product and service.Good"
       },
       {
-        "author": "고태윤",
+        "author": "Go Tae-yoon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "과일파는 마른젊은남자직원이 골라주는 과일만 먹어요  맛있은것만 잘 골라주더라구요"
+        "relative_time": "6 years ago",
+        "text": "I only eat the fruits that the thin young male employee at the fruit vendor picks out. He picks out only the delicious ones."
       },
       {
-        "author": "짱아오빠",
+        "author": "Jjang-ah oppa",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "다 그런건 아니지만 주변에 세계로마트나 롯데슈퍼 대비 대체적으로 비쌈."
+        "relative_time": "5 years ago",
+        "text": "It's not all like that, but it's generally more expensive than nearby World Lomart or Lotte Super."
       }
     ],
     "photos": [
@@ -4786,8 +4786,8 @@
   },
   {
     "place_id": "ChIJS4poBK2lfDURi8FLeQ_TZX0",
-    "display_name": "IGA마트",
-    "category": "슈퍼마켓",
+    "display_name": "IGA Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4797,8 +4797,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 잠실동 184-12번지 1호 송파구 서울특별시 KR",
-    "short_address": "잠실동 184-12번지 1호 송파구 서울특별시 KR",
+    "address": "#1, 184-12 Jamsil-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "#1, 184-12 Jamsil-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.510869299999996,
       "lng": 127.08518459999999
@@ -4817,20 +4817,20 @@
     "google_maps_url": "https://maps.google.com/?cid=9035860290801746315",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ad04688a4b:0x7d65d30f794bc18b!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 6:00 ~ 오후 11:00",
-      "화요일: 오전 6:00 ~ 오후 11:00",
-      "수요일: 오전 6:00 ~ 오후 11:00",
-      "목요일: 오전 6:00 ~ 오후 11:00",
-      "금요일: 오전 6:00 ~ 오후 11:00",
-      "토요일: 오전 6:00 ~ 오후 11:00",
-      "일요일: 오전 6:00 ~ 오후 11:00"
+      "Monday: 6:00 AM - 11:00 PM",
+      "Tuesday: 6:00 AM - 11:00 PM",
+      "Wednesday: 6:00 AM - 11:00 PM",
+      "Thursday: 6:00 AM - 11:00 PM",
+      "Friday: 6:00 AM - 11:00 PM",
+      "Saturday: 6:00 AM - 11:00 PM",
+      "Sunday: 6:00 AM - 11:00 PM"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4840,8 +4840,8 @@
   },
   {
     "place_id": "ChIJ6zG7ra2lfDURUxoPttX05iM",
-    "display_name": "한살림 신천역매장",
-    "category": "식료품점",
+    "display_name": "Hansalim Sincheon Station Store",
+    "category": "grocery store",
     "types": [
       "farmers_market",
       "grocery_store",
@@ -4854,8 +4854,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 35-2",
-    "short_address": "송파구 잠실동 35-2",
+    "address": "35-2 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "35-2 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.510957499999996,
       "lng": 127.08616719999999
@@ -4874,57 +4874,57 @@
     "google_maps_url": "https://maps.google.com/?cid=2587024234690583123",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5adadbb31eb:0x23e6f4d5b60f1a53!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 8:00",
-      "화요일: 오전 10:00 ~ 오후 8:00",
-      "수요일: 오전 10:00 ~ 오후 8:00",
-      "목요일: 오전 10:00 ~ 오후 8:00",
-      "금요일: 오전 10:00 ~ 오후 8:00",
-      "토요일: 오전 10:00 ~ 오후 5:00",
-      "일요일: 오전 10:00 ~ 오후 5:00"
+      "Monday: 10:00 AM - 8:00 PM",
+      "Tuesday: 10:00 AM - 8:00 PM",
+      "Wednesday: 10:00 AM - 8:00 PM",
+      "Thursday: 10:00 AM - 8:00 PM",
+      "Friday: 10:00 AM - 8:00 PM",
+      "Saturday: 10:00 AM - 5:00 PM",
+      "Sunday: 10:00 AM - 5:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "육아조무사TV",
+        "author": "Childcare Assistant TV",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "예전에는 가끔 냄새도 나고 했는데 최근 리뉴얼을 하면서 정말 좋아졌다. 조합원으로 가입해서 가볼만 한 유기농 매장이다."
+        "relative_time": "6 years ago",
+        "text": "In the past, it sometimes had a smell, but it has really improved since the recent renewal. This is an organic store worth visiting as a member."
       },
       {
         "author": "Woo Choul Moon",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "보통의 한살림 매장중 하나랄까? 장사는 잘되는 것 같음"
+        "relative_time": "6 years ago",
+        "text": "Is this one of the regular Hansalim stores? Business seems to be going well."
       },
       {
         "author": "yhhho",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "이유식 재료는 한살림에서"
+        "relative_time": "4 years ago",
+        "text": "Baby food ingredients are from Hansalim."
       },
       {
         "author": "Antonio Yang",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
-        "text": "별로입니다"
+        "relative_time": "5 years ago",
+        "text": "Not very good"
       },
       {
         "author": "Yurok Cho",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "건강한!!"
+        "relative_time": "3 years ago",
+        "text": "Healthy!!"
       }
     ],
     "photos": [
@@ -4940,16 +4940,16 @@
   },
   {
     "place_id": "ChIJ_YuBaVOkfDURDTXQg_OI8lM",
-    "display_name": "더블유제이",
-    "category": "의류점",
+    "display_name": "WJ",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 19번지 112동 1902호",
-    "short_address": "송파구 잠실동 19번지 112동 1902호",
+    "address": "#1902, Building 112, 19 Jamsil-dong, Songpa-gu, Seoul, Republic of Korea",
+    "short_address": "Room 1902, Building 112, 19 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.51404,
       "lng": 127.0814571
@@ -4970,7 +4970,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "체크카드"
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4979,16 +4979,16 @@
   },
   {
     "place_id": "ChIJw60OiVKkfDURbjC7wSeOZec",
-    "display_name": "비채",
-    "category": "의류점",
+    "display_name": "Bichae",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 잠실동 175-12번지 706호 올림픽타워 송파구 서울특별시 KR",
-    "short_address": "잠실동 175-12번지 706호 올림픽타워 송파구 서울특별시 KR",
+    "address": "Room 706, Olympic Tower, 175-12 Jamsil-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "Room 706, 175-12 Jamsil-dong, Olympic Tower, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5114085,
       "lng": 127.0804669
@@ -5008,11 +5008,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca452890eadc3:0xe7658e27c1bb306e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5021,16 +5021,16 @@
   },
   {
     "place_id": "ChIJmQIRiVKkfDURGudvJZhejZo",
-    "display_name": "(주)파워제이케이",
-    "category": "의류점",
+    "display_name": "Power JK Co., Ltd.",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 175-12",
-    "short_address": "송파구 잠실동 175-12",
+    "address": "175-12 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "175-12 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5114085,
       "lng": 127.0804669
@@ -5051,7 +5051,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5060,16 +5060,16 @@
   },
   {
     "place_id": "ChIJFYgQcFKkfDURMjPc1WttKeM",
-    "display_name": "아모레퍼시픽뷰레이터",
-    "category": "화장품 판매점",
+    "display_name": "Amore Pacific Viewator",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 잠실동 175-8번지 7층 영원빌딩 송파구 서울특별시 KR",
-    "short_address": "잠실동 175-8번지 7층 영원빌딩 송파구 서울특별시 KR",
+    "address": "7th floor, Youngwon Building, 175-8 Jamsil-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "7th floor, 175-8 Jamsil-dong, Youngwon Building, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5115068,
       "lng": 127.079554
@@ -5090,8 +5090,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5100,15 +5100,15 @@
   },
   {
     "place_id": "ChIJLcbFxlKkfDURWZUMzfCVkpg",
-    "display_name": "코리아나화장품 잠실점",
-    "category": "화장품 판매점",
+    "display_name": "Koreana Cosmetics Jamsil Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5113767,
@@ -5128,18 +5128,18 @@
     "google_maps_url": "https://maps.google.com/?cid=10994014501829645657",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca452c6c5c62d:0x989295f0cd0c9559!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 10:00",
-      "화요일: 오전 10:30 ~ 오후 10:00",
-      "수요일: 오전 10:30 ~ 오후 10:00",
-      "목요일: 오전 10:30 ~ 오후 10:00",
-      "금요일: 오전 10:30 ~ 오후 10:00",
-      "토요일: 오전 10:30 ~ 오후 10:00",
-      "일요일: 오전 10:30 ~ 오후 10:00"
+      "Monday: 10:30 AM - 10:00 PM",
+      "Tuesday: 10:30 AM - 10:00 PM",
+      "Wednesday: 10:30 AM - 10:00 PM",
+      "Thursday: 10:30 AM - 10:00 PM",
+      "Friday: 10:30 AM - 10:00 PM",
+      "Saturday: 10:30 AM - 10:00 PM",
+      "Sunday: 10:30 AM - 10:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5149,7 +5149,7 @@
         "author": "Nathawat Park Su Wan",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -5157,15 +5157,15 @@
   },
   {
     "place_id": "ChIJt4sGllKkfDURf9y8S-SJ95c",
-    "display_name": "한불화장품구리지사",
-    "category": "화장품 판매점",
+    "display_name": "Hanbul Cosmetics Guri Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5110668,
@@ -5187,8 +5187,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5197,16 +5197,16 @@
   },
   {
     "place_id": "ChIJt4sGllKkfDURKLLYmffQwfk",
-    "display_name": "한불화장품잠실지사",
-    "category": "화장품 판매점",
+    "display_name": "Korean French Cosmetics Jamsil Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 180-6",
-    "short_address": "송파구 잠실동 180-6",
+    "address": "180-6 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "180-6 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5110668,
       "lng": 127.0815988
@@ -5227,8 +5227,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5237,16 +5237,16 @@
   },
   {
     "place_id": "ChIJt4sGllKkfDURSN_weNnPLIY",
-    "display_name": "한불화장품신천지사",
-    "category": "화장품 판매점",
+    "display_name": "Korean-French Cosmetics Shincheon Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 180-6",
-    "short_address": "송파구 잠실동 180-6",
+    "address": "180-6 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "180-6 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5110668,
       "lng": 127.0815988
@@ -5267,8 +5267,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5277,16 +5277,16 @@
   },
   {
     "place_id": "ChIJkeoSstClfDURQJXwijTuZzI",
-    "display_name": "SÈ ORK (시오크)",
-    "category": "의류점",
+    "display_name": "SÈ ORK",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 올림픽대로 106 상록빌딩 4층 402호",
-    "short_address": "송파구 올림픽대로 106 상록빌딩 4층 402호",
+    "address": "Room 402, 4th floor, Sangnok Building, 106 Olympic-daero, Songpa-gu, Seoul, Korea",
+    "short_address": "Room 402, 4th floor, Sangnok Building, 106 Olympic-daero, Songpa-gu",
     "location": {
       "lat": 37.5114854,
       "lng": 127.08261320000001
@@ -5305,18 +5305,18 @@
     "google_maps_url": "https://maps.google.com/?cid=3632133533934327104",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5d0b212ea91:0x3267ee348af09540!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 5:00",
-      "화요일: 오전 9:00 ~ 오후 5:00",
-      "수요일: 오전 9:00 ~ 오후 5:00",
-      "목요일: 오전 9:00 ~ 오후 5:00",
-      "금요일: 오전 9:00 ~ 오후 5:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 5:00 PM",
+      "Tuesday: 9:00 AM - 5:00 PM",
+      "Wednesday: 9:00 AM - 5:00 PM",
+      "Thursday: 9:00 AM - 5:00 PM",
+      "Friday: 9:00 AM - 5:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5328,7 +5328,7 @@
   {
     "place_id": "ChIJpbjRAn-lfDURJePDhOYVkdw",
     "display_name": "LOOP SHOP l Ethical Indie Brands. Vintage. Artisanal Crafts.",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "gift_shop",
       "womens_clothing_store",
@@ -5337,8 +5337,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 #B1 08 KR 서울특별시 송파구 올림픽로119",
-    "short_address": "#B1 08 KR 서울특별시 송파구 올림픽로119",
+    "address": "Seoul, Republic of Korea #B1 08 KR 119 Olympic-ro, Songpa-gu, Seoul",
+    "short_address": "#B1 08 KR 119 Olympic-ro, Songpa-gu, Seoul",
     "location": {
       "lat": 37.512114499999996,
       "lng": 127.0832714
@@ -5359,8 +5359,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5374,16 +5374,16 @@
   },
   {
     "place_id": "ChIJmWRbglKkfDURBiG_r-PcMxk",
-    "display_name": "보란",
-    "category": "화장품 판매점",
+    "display_name": "Boran",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 179-2",
-    "short_address": "송파구 잠실동 179-2",
+    "address": "179-2 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "179-2 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.510624899999996,
       "lng": 127.0807457
@@ -5404,25 +5404,25 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "강영민",
+        "author": "Youngmin Kang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "여기 가격 착하고 가성비 좋습니다. 직원분들도 친절하고 데이트팝으로 이용하면 할인까지 적용되니 알아두 say yo~!"
+        "relative_time": "5 years ago",
+        "text": "The price here is reasonable and good value for money. The staff are friendly and you can even get a discount if you use it as a date pop, so say yo~!"
       },
       {
         "author": "HBN",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -5432,16 +5432,16 @@
   },
   {
     "place_id": "ChIJ-0NliU2kfDURcgFoJxVLDvo",
-    "display_name": "(주)씨케이뷰티트레이딩컴퍼니",
-    "category": "화장품 판매점",
+    "display_name": "CK Beauty Trading Company Co., Ltd.",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 번지 3층 176-2 392호",
-    "short_address": "송파구 잠실동 번지 3층 176-2 392호",
+    "address": "#392, 176-2, 3rd floor, Jamsil-dong, Songpa-gu, Seoul, Korea",
+    "short_address": "Room 392, 176-2, 3rd floor, Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.510874099999995,
       "lng": 127.0793095
@@ -5462,8 +5462,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5472,16 +5472,16 @@
   },
   {
     "place_id": "ChIJ2x87fk2kfDUR9SVMTNrciQg",
-    "display_name": "판도라",
-    "category": "귀금속 상점",
+    "display_name": "pandora",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 번지 2층 178-4 201호",
-    "short_address": "송파구 잠실동 번지 2층 178-4 201호",
+    "address": "Room 201, 178-4, 2nd floor, Jamsil-dong, Songpa-gu, Seoul, Korea",
+    "short_address": "Room 201, 178-4, 2nd floor, Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5105833,
       "lng": 127.08049729999998
@@ -5509,8 +5509,8 @@
   },
   {
     "place_id": "ChIJdSzB9E2kfDUR6kZ2oLBOpJQ",
-    "display_name": "엘로이즈ELOISE",
-    "category": "여성의류점",
+    "display_name": "EloiseELOISE",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "clothing_store",
@@ -5518,8 +5518,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 1 호 위너스오피스텔 KR 서울특별시 송파구 잠실동 175-2번지 10층 1005",
-    "short_address": "1 KR 서울특별시 송파구 잠실동 175-2번지 10층 1005 호 위너스오피스텔",
+    "address": "Republic of Korea Seoul Metropolitan City No. 1 Winners Officetel KR 1005, 10th floor, 175-2 Jamsil-dong, Songpa-gu, Seoul",
+    "short_address": "1 KR Winners Officetel, #1005, 10th floor, 175-2 Jamsil-dong, Songpa-gu, Seoul",
     "location": {
       "lat": 37.5110113,
       "lng": 127.0788723
@@ -5540,8 +5540,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5550,16 +5550,16 @@
   },
   {
     "place_id": "ChIJdSzB9E2kfDUR-3O4UEzzAUU",
-    "display_name": "(주)젠클로버",
-    "category": "의류점",
+    "display_name": "GenClover Co., Ltd.",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 잠실동 175-2번지 914호 송파구 서울특별시 KR",
-    "short_address": "잠실동 175-2번지 914호 송파구 서울특별시 KR",
+    "address": "#914, 175-2 Jamsil-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "#914, 175-2 Jamsil-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5110113,
       "lng": 127.0788723
@@ -5580,8 +5580,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5590,16 +5590,16 @@
   },
   {
     "place_id": "ChIJFeSMawClfDURSXXxLkWVfyM",
-    "display_name": "올리브영 신천중앙점",
-    "category": "화장품 판매점",
+    "display_name": "Olive Young Sincheon Jungang Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 올림픽로 114 서경빌딩 1-2층",
-    "short_address": "송파구 올림픽로 114 서경빌딩 1-2층",
+    "address": "1-2nd floor, Seokyeong Building, 114 Olympic-ro, Songpa-gu, Seoul, Korea",
+    "short_address": "1-2nd floor, Seogyeong Building, 114 Olympic-ro, Songpa-gu",
     "location": {
       "lat": 37.5114154,
       "lng": 127.0831936
@@ -5618,18 +5618,18 @@
     "google_maps_url": "https://maps.google.com/?cid=2557927237742589257",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5006b8ce415:0x237f95452ef17549!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 11:00",
-      "화요일: 오전 10:00 ~ 오후 11:00",
-      "수요일: 오전 10:00 ~ 오후 11:00",
-      "목요일: 오전 10:00 ~ 오후 11:00",
-      "금요일: 오전 10:00 ~ 오후 11:00",
-      "토요일: 오전 10:00 ~ 오후 11:00",
-      "일요일: 오전 10:00 ~ 오후 11:00"
+      "Monday: 10:00 AM - 11:00 PM",
+      "Tuesday: 10:00 AM - 11:00 PM",
+      "Wednesday: 10:00 AM - 11:00 PM",
+      "Thursday: 10:00 AM - 11:00 PM",
+      "Friday: 10:00 AM - 11:00 PM",
+      "Saturday: 10:00 AM - 11:00 PM",
+      "Sunday: 10:00 AM - 11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5639,16 +5639,16 @@
   },
   {
     "place_id": "ChIJi2uyM62lfDURUdECCtHPSBE",
-    "display_name": "닥터스칼프잠실점",
-    "category": "화장품 판매점",
+    "display_name": "Dr. Scalp Jamsil Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 184-21",
-    "short_address": "송파구 잠실동 184-21",
+    "address": "184-21 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "184-21 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.511348999999996,
       "lng": 127.0831831
@@ -5669,8 +5669,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5680,7 +5680,7 @@
         "author": "j# J",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -5688,16 +5688,16 @@
   },
   {
     "place_id": "ChIJr5hfgU2kfDUR1CLk8O0ZbYE",
-    "display_name": "빅볼",
-    "category": "의류점",
+    "display_name": "big ball",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동",
-    "short_address": "송파구 잠실동",
+    "address": "Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5105157,
       "lng": 127.08001669999999
@@ -5718,8 +5718,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5728,16 +5728,16 @@
   },
   {
     "place_id": "ChIJV85AHa2lfDURSVLrMRWelwM",
-    "display_name": "에블린 신천점",
-    "category": "의류점",
+    "display_name": "Evelyn Sincheon Branch",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 184-7",
-    "short_address": "송파구 잠실동 184-7",
+    "address": "184-7 Jamsil-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "184-7 Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.5109601,
       "lng": 127.08273870000001
@@ -5758,8 +5758,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5769,16 +5769,16 @@
   },
   {
     "place_id": "ChIJWxUkolKkfDURx_-soTZb8aQ",
-    "display_name": "젠",
-    "category": "귀금속 상점",
+    "display_name": "zen",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 잠실동 190번지 송파구 서울특별시 KR",
-    "short_address": "잠실동 190번지 송파구 서울특별시 KR",
+    "address": "190 Jamsil-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "190 Jamsil-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5104857,
       "lng": 127.08172809999999
@@ -5799,8 +5799,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5809,16 +5809,16 @@
   },
   {
     "place_id": "ChIJV44F3aylfDURdHecHT8OE1E",
-    "display_name": "허클베리",
-    "category": "의류점",
+    "display_name": "huckleberry",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 잠실동 번지 2층 19-9 2-이 61호",
-    "short_address": "송파구 잠실동 번지 2층 19-9 2-이 61호",
+    "address": "#61, 19-9 2-i, 2nd floor, Jamsil-dong, Songpa-gu, Seoul, Republic of Korea",
+    "short_address": "#61, 2nd floor, 19-9 2-i, Jamsil-dong, Songpa-gu",
     "location": {
       "lat": 37.512046399999996,
       "lng": 127.08417259999997
@@ -5839,8 +5839,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5849,16 +5849,16 @@
   },
   {
     "place_id": "ChIJV44F3aylfDURhy73_Ib9UQg",
-    "display_name": "바니앤루나",
-    "category": "의류점",
+    "display_name": "Bunny and Luna",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 잠실동 19-9번지 잠실파인애플상가 지하1층 158호 송파구 서울특별시 KR",
-    "short_address": "잠실동 19-9번지 잠실파인애플상가 지하1층 158호 송파구 서울특별시 KR",
+    "address": "Room 158, B1, Jamsil Pineapple Shopping Center, 19-9 Jamsil-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "Room 158, B1, Jamsil Pineapple Shopping Center, 19-9 Jamsil-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.512046399999996,
       "lng": 127.08417259999997
@@ -5879,8 +5879,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,

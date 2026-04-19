@@ -1,16 +1,16 @@
 [
   {
     "place_id": "ChIJg_YwW2-7fDUR-3XxtGOoq9c",
-    "display_name": "온설",
-    "category": "자연보호구역",
+    "display_name": "hot snow",
+    "category": "nature reserve",
     "types": [
       "nature_preserve",
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 105 33번지 2층",
-    "short_address": "동대문구 회기동 105 33번지 2층",
+    "address": "2nd floor, 105 33 Hoegi-dong, Dongdaemun-gu, Seoul, Korea",
+    "short_address": "2nd floor, 105 33 Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5911976,
       "lng": 127.05140309999999
@@ -38,15 +38,15 @@
   },
   {
     "place_id": "ChIJ2e8_KwC7fDURE-rfjsF9eTE",
-    "display_name": "더코드 회기점",
-    "category": "공원",
+    "display_name": "The Code Hoegi Branch",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기로13길 10",
-    "short_address": "동대문구 회기로13길 10",
+    "address": "10, Hoegi-ro 13-gil, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "10, Hoegi-ro 13-gil, Dongdaemun-gu",
     "location": {
       "lat": 37.5919975,
       "lng": 127.05105169999997
@@ -74,16 +74,16 @@
   },
   {
     "place_id": "ChIJTYKNRwC7fDUR1tmkI_pPfRw",
-    "display_name": "르네아트홀 Rene Art Hall",
-    "category": "공연예술 극장",
+    "display_name": "Rene Art Hall",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 경희대로4길 48",
-    "short_address": "동대문구 경희대로4길 48",
+    "address": "48 Kyunghee-daero 4-gil, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "48 Kyunghee-daero 4-gil, Dongdaemun-gu",
     "location": {
       "lat": 37.5916074,
       "lng": 127.0548857
@@ -103,7 +103,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb00478d824d:0x1c7d4ffa23a4d9d6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -113,16 +113,16 @@
   },
   {
     "place_id": "ChIJN42iLQC7fDURVVyz3q2YSVg",
-    "display_name": "휘락아트홀",
-    "category": "공연예술 극장",
+    "display_name": "Whirock Art Hall",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 청량리동 2-5",
-    "short_address": "동대문구 청량리동 2-5",
+    "address": "2-5 Cheongnyangni-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "2-5 Cheongnyangni-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5868184,
       "lng": 127.0520985
@@ -142,7 +142,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb002da28d37:0x584998addeb35c55!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -152,15 +152,15 @@
   },
   {
     "place_id": "ChIJn6GyImy7fDURy0d0KEkgsXk",
-    "display_name": "앤SDVD영화관",
-    "category": "영화관",
+    "display_name": "Ann SDVD Cinema",
+    "category": "movie theater",
     "types": [
       "movie_theater",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 휘경동 319-13번지 4층 두리빌딩 동대문구 서울특별시 KR",
-    "short_address": "휘경동 319-13번지 4층 두리빌딩 동대문구 서울특별시 KR",
+    "address": "4th floor, Duri Building, 319-13 Hwigyeong-dong, Seoul, Republic of Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "4th floor, 319-13, Hwigyeong-dong, Duri Building, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5896514,
       "lng": 127.05680000000001
@@ -180,11 +180,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6c22b2a19f:0x79b12049287447cb!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -194,15 +194,15 @@
   },
   {
     "place_id": "ChIJ7WIeX2-7fDUR0vW8GRGBwOM",
-    "display_name": "랑시어터",
-    "category": "영화관",
+    "display_name": "Lang Theater",
+    "category": "movie theater",
     "types": [
       "movie_theater",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 회기동 60-58번지 하동 1층 동대문구 서울특별시 KR",
-    "short_address": "회기동 60-58번지 하동 1층 동대문구 서울특별시 KR",
+    "address": "1st floor, Hadong, 60-58 Hoegi-dong, Seoul, South Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "60-58 Hoegi-dong, 1st floor, Hadong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5915578,
       "lng": 127.0509252
@@ -222,11 +222,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6f5f1e62ed:0xe3c0811119bcf5d2!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -235,15 +235,15 @@
   },
   {
     "place_id": "ChIJox9o4m67fDURYXE8_q9p9Tg",
-    "display_name": "오아시스노래방",
-    "category": "노래방",
+    "display_name": "Oasis Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 회기동 45-70번지 지층 동대문구 서울특별시 KR",
-    "short_address": "회기동 45-70번지 지층 동대문구 서울특별시 KR",
+    "address": "Ground floor, 45-70, Hoegi-dong, Seoul, South Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "45-70 Hoegi-dong, ground floor, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5911985,
       "lng": 127.0535341
@@ -263,11 +263,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6ee2681fa3:0x38f569affe3c7161!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -277,14 +277,14 @@
   {
     "place_id": "ChIJScrrV967fDURSu_NYagvrp0",
     "display_name": "photo&game",
-    "category": "오락실",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 45-70",
-    "short_address": "동대문구 회기동 45-70",
+    "address": "45-70 Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "45-70 Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5911942,
       "lng": 127.053466
@@ -304,7 +304,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbbde57ebca49:0x9dae2fa861cdef4a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -314,8 +314,8 @@
   },
   {
     "place_id": "ChIJUSAazmm7fDURyvdmD-HH6vw",
-    "display_name": "터치런 (led game)",
-    "category": "오락실",
+    "display_name": "touch run (led game)",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "indoor_playground",
@@ -324,8 +324,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 지하1층 152 KR 서울특별시 동대문구 회기로",
-    "short_address": "지하1층 152 KR 서울특별시 동대문구 회기로",
+    "address": "Basement 1, Seoul, Republic of Korea 152 KR Hoegi-ro, Dongdaemun-gu, Seoul",
+    "short_address": "Basement 1, 152 KR, Hoegi-ro, Dongdaemun-gu, Seoul",
     "location": {
       "lat": 37.5910849,
       "lng": 127.0531218
@@ -344,20 +344,20 @@
     "google_maps_url": "https://maps.google.com/?cid=18224598611548108746",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb69ce1a2051:0xfceac7e10f66f7ca!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오후 12:00~9:00",
-      "수요일: 오후 12:00~9:00",
-      "목요일: 오후 12:00~9:00",
-      "금요일: 오후 12:00~9:00",
-      "토요일: 오후 12:00~9:00",
-      "일요일: 오후 12:00~9:00"
+      "Monday: Closed day",
+      "Tuesday: 12:00-9:00 PM",
+      "Wednesday: 12:00-9:00 PM",
+      "Thursday: 12:00-9:00 PM",
+      "Friday: 12:00-9:00 PM",
+      "Saturday: 12:00-9:00 PM",
+      "Sunday: 12:00-9:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -367,36 +367,36 @@
         "author": "Seungbae Sim (Crayon)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "11달 전",
-        "text": "아이들이 좋아하네요."
+        "relative_time": "11 months ago",
+        "text": "Kids love it."
       },
       {
         "author": "Xiou",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
-        "text": "정말 재밌는 경험이었어요, 100% 추천합니다😛"
+        "relative_time": "8 months ago",
+        "text": "It was a really fun experience, I 100% recommend it😛"
       },
       {
         "author": "Saku",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "친구들과 함께 가기에 정말 좋은 곳이에요. 직원들도 정말 친절해요. 추천합니다 😊✨"
+        "relative_time": "1 year ago",
+        "text": "It's a really great place to go with friends. The staff are also really friendly. I recommend it 😊✨"
       },
       {
-        "author": "서실라",
+        "author": "Stand",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "정말 재밌었어요. 서비스도 많이 주셨어요."
+        "relative_time": "1 year ago",
+        "text": "It was really fun. They also provided a lot of service."
       },
       {
         "author": "Cristina Rojas",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "정말 재밌는 곳이었습니다. 두 가지 게임이 있어서 원하는 걸 고를 수 있고, 직원들도 정말 친절했습니다."
+        "relative_time": "1 year ago",
+        "text": "It was a really fun place. There were two games so you could choose which one you wanted, and the staff was really friendly."
       }
     ],
     "photos": [
@@ -414,15 +414,15 @@
   },
   {
     "place_id": "ChIJP833HG-7fDURngEqRIy5peY",
-    "display_name": "즐거운짤짤이노래방",
-    "category": "노래방",
+    "display_name": "Happy Jjaljjal Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 회기동 45-74번지 지하 동대문구 서울특별시 KR",
-    "short_address": "회기동 45-74번지 지하 동대문구 서울특별시 KR",
+    "address": "Basement, 45-74 Hoegi-dong, Seoul, Republic of Korea Dongdaemun-gu Seoul KR",
+    "short_address": "Basement, 45-74 Hoegi-dong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5914299,
       "lng": 127.0531857
@@ -442,11 +442,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6f1cf7cd3f:0xe6a5b98c442a019e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -455,15 +455,15 @@
   },
   {
     "place_id": "ChIJW7uJEW-7fDURNHkv3NqG5UY",
-    "display_name": "질러질러코인노래연습장",
-    "category": "노래방",
+    "display_name": "Jelly Jelly Coin Karaoke Workbook",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 회기동 16-57번지 3층 동대문구 서울특별시 KR",
-    "short_address": "회기동 16-57번지 3층 동대문구 서울특별시 KR",
+    "address": "3rd floor, 16-57, Hoegi-dong, Seoul, Republic of Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "3rd floor, 16-57 Hoegi-dong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.591681799999996,
       "lng": 127.0524523
@@ -483,11 +483,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6f1189bb5b:0x46e586dadc2f7934!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -496,36 +496,36 @@
         "author": "Dong-Hee Oh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "사장님도 친절하시고 방마다 개별 설정 만질수 있어러 좋아요"
+        "relative_time": "4 years ago",
+        "text": "The owner is friendly and I like that you can adjust individual settings for each room."
       },
       {
         "author": "Hwarang Jo",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "2023.10.17 아직까지 천원 네곡. 카드결제가능."
+        "relative_time": "2 years ago",
+        "text": "2023.10.17 Still four thousand won. Card payment possible."
       },
       {
-        "author": "부현손",
+        "author": "Boo Hyeon-son",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "정말 저렴해요!! 깨끗하고 강추합니다"
+        "relative_time": "5 years ago",
+        "text": "It's really cheap!! Clean and highly recommended"
       },
       {
         "author": "JW Suh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "굿"
+        "relative_time": "4 years ago",
+        "text": "exorcism"
       },
       {
         "author": "Tina TV (Miao Ying)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "3층에 KTV가 있는 경우는 드물고, 보통 지하에 있습니다. 방은 많지만 꽤 작습니다. 음식은 직접 가져오셔도 됩니다. 음향 시스템은 꽤 크고 방음은 잘 안 됩니다(보통 그렇듯이). 무선 마이크가 제공됩니다. 결제는 카드나 휴대폰으로 가능합니다."
+        "relative_time": "3 years ago",
+        "text": "It is rare to find a KTV on the third floor, and it is usually located in the basement. There are a lot of rooms but they are quite small. You may bring your own food. The sound system is quite loud and the soundproofing is not very good (as usual). A wireless microphone is provided. Payment can be made by card or mobile phone."
       }
     ],
     "photos": [
@@ -534,15 +534,15 @@
   },
   {
     "place_id": "ChIJn6GyImy7fDURIqJHjOUOJrk",
-    "display_name": "인디아나노래방",
-    "category": "노래방",
+    "display_name": "Indiana Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 휘경동 319-13번지 동대문구 서울특별시 KR",
-    "short_address": "휘경동 319-13번지 동대문구 서울특별시 KR",
+    "address": "319-13 Hwigyeong-dong, Seoul, Republic of Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "319-13 Hwigyeong-dong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5896514,
       "lng": 127.05680000000001
@@ -562,12 +562,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6c22b2a19f:0xb9260ee58c47a222!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "배달",
-      "매장식사"
+      "delivery",
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -576,14 +576,14 @@
   },
   {
     "place_id": "ChIJz14bCW-7fDUREEkwHtUehck",
-    "display_name": "당가노래방",
-    "category": "노래방",
+    "display_name": "Danga Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5921199,
@@ -603,20 +603,20 @@
     "google_maps_url": "https://maps.google.com/?cid=14521046474209380624",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6f091b5ecf:0xc9851ed51e304910!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 10:00",
-      "화요일: 오전 10:00 ~ 오후 10:00",
-      "수요일: 오전 10:00 ~ 오후 10:00",
-      "목요일: 오전 10:00 ~ 오후 10:00",
-      "금요일: 오전 10:00 ~ 오후 11:30",
-      "토요일: 오전 10:00 ~ 오후 10:00",
-      "일요일: 오전 10:00 ~ 오후 10:00"
+      "Monday: 10:00 AM - 10:00 PM",
+      "Tuesday: 10:00 AM - 10:00 PM",
+      "Wednesday: 10:00 AM - 10:00 PM",
+      "Thursday: 10:00 AM - 10:00 PM",
+      "Friday: 10:00 AM - 11:30 PM",
+      "Saturday: 10:00 AM - 10:00 PM",
+      "Sunday: 10:00 AM - 10:00 PM"
     ],
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -625,15 +625,15 @@
   },
   {
     "place_id": "ChIJO0qsbW-7fDURmUhqrxu1HfU",
-    "display_name": "락휴코인노래방",
-    "category": "노래방",
+    "display_name": "Rockhucoin Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 42-94 번지 하 1층",
-    "short_address": "동대문구 회기동 42-94 번지 하 1층",
+    "address": "1st floor, 42-94 Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "1st floor, 42-94 Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.591844099999996,
       "lng": 127.0519112
@@ -653,48 +653,48 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6f6dac4a3b:0xf51db51baf6a4899!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "인태영",
+        "author": "Taeyoung In",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "방이 많고 시설이 잘 갖춰져있음"
+        "relative_time": "3 years ago",
+        "text": "Lots of rooms and well-equipped"
       },
       {
         "author": "JAE SIM",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       },
       {
-        "author": "ᄉᄃᄅᄆᄋᄑ",
+        "author": "Hahaha",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       },
       {
-        "author": "파닭파닭",
+        "author": "Green onion chicken Green onion chicken",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       },
       {
         "author": "J A Park",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -705,15 +705,15 @@
   },
   {
     "place_id": "ChIJEZ-Acm-7fDURazdHrhVXWKc",
-    "display_name": "화이트노래방",
-    "category": "노래방",
+    "display_name": "white karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 42-37번지",
-    "short_address": "동대문구 회기동 42-37번지",
+    "address": "42-37 Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "42-37 Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5919768,
       "lng": 127.0519424
@@ -733,11 +733,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6f72809f11:0xa7585715ae47376b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -746,15 +746,15 @@
   },
   {
     "place_id": "ChIJ8xAqCG-7fDURKXziUabru3g",
-    "display_name": "스위트노래방",
-    "category": "노래방",
+    "display_name": "Sweet Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 회기동 16-50번지 동대문구 서울특별시 KR",
-    "short_address": "회기동 16-50번지 동대문구 서울특별시 KR",
+    "address": "16-50 Hoegi-dong, Seoul, Republic of Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "16-50 Hoegi-dong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5923144,
       "lng": 127.05259280000001
@@ -774,11 +774,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6f082a10f3:0x78bbeba651e27c29!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -787,15 +787,15 @@
   },
   {
     "place_id": "ChIJ-eHkOGy7fDURwsTUJIbzhUg",
-    "display_name": "더코인노래연습장",
-    "category": "노래방",
+    "display_name": "The Coin Karaoke Practice Center",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 휘경동 319-1",
-    "short_address": "동대문구 휘경동 319-1",
+    "address": "319-1 Hwigyeong-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "319-1 Hwigyeong-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.589808399999995,
       "lng": 127.057339
@@ -814,58 +814,58 @@
     "google_maps_url": "https://maps.google.com/?cid=5225850700102419650",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6c38e4e1f9:0x4885f38624d4c4c2!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "잔잔바리",
+        "author": "small barri",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "반주소리가 기본적으로 작고\n시설이 좋지는 않음, 또한 문닫고 노래부르면 너무 더움.\n마이크도 인식이 잘 안되어 소리가 작음.\n다만 1000원 4곡으로 저렴.\n내부 화장실 있음."
+        "relative_time": "3 years ago",
+        "text": "The accompaniment sound is basically small.\nThe facilities are not good, and it gets too hot when you sing with the door closed.\nThe microphone is not recognized well and the sound is low.\nHowever, it is cheap at 1,000 won for 4 songs.\nThere is an internal toilet."
       },
       {
         "author": "HK 2",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "내가 쓴 마이크는 하자가 있었음 1000원에 4곡은 울산,강남,영등포 제외 국룰이니깐 가격차이는 없고\n에어컨 되는 방일수도 있고 아닐 수도 있어서 잘선택해야함"
+        "relative_time": "6 years ago",
+        "text": "The microphone I used was defective, but 4 songs for 1,000 won are national rules excluding Ulsan, Gangnam, and Yeongdeungpo, so there is no difference in price.\nIt may or may not be an air-conditioned room, so choose wisely."
       },
       {
         "author": "Hans Kyuhan LEE",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "무인 코인 노래방임. 2곡에 500원으로 저렴하고, 음료도 저렴하게 지판기에서 구입 가능."
+        "relative_time": "3 years ago",
+        "text": "It is an unmanned coin karaoke room. It is cheap at 500 won for 2 songs, and drinks can be purchased at a cheap price at Jipangi."
       },
       {
-        "author": "김대식",
+        "author": "Daesik Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "에어컨 나오고 좋긴한데 방수가 적어 대기가 좀 있으며 마이크 불량이 간간히있음, 리모컨 및 음질 등은 굿"
+        "relative_time": "6 years ago",
+        "text": "The air conditioner works well, but the water resistance is low, so there is a bit of atmosphere, and the microphone is occasionally defective. The remote control and sound quality are good."
       },
       {
         "author": "Quet",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "4년 전",
-        "text": "위치는 매우 좋은데 음향이 별로임 급할때나 갈만함"
+        "relative_time": "4 years ago",
+        "text": "The location is very good, but the sound is not good. Worth going only when you are in a hurry."
       }
     ],
     "photos": [
@@ -874,15 +874,15 @@
   },
   {
     "place_id": "ChIJtw11z227fDURvchZnezTp_o",
-    "display_name": "노래방PRO",
-    "category": "노래방",
+    "display_name": "Karaoke PRO",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 휘경동 183 245번지 1307호",
-    "short_address": "동대문구 휘경동 183 245번지 1307호",
+    "address": "#1307, 183 245 Hwigyeong-dong, Dongdaemun-gu, Seoul, Republic of Korea",
+    "short_address": "#1307, 183 245, Hwigyeong-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5912134,
       "lng": 127.05697850000001
@@ -902,11 +902,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6dcf750db7:0xfaa7d3ec9d59c8bd!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -915,15 +915,15 @@
   },
   {
     "place_id": "ChIJ_3g6Nmy7fDURN_NRxSti19I",
-    "display_name": "소리골노래방",
-    "category": "노래방",
+    "display_name": "Sorigol Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 휘경동 191-4번지 동대문구 서울특별시 KR",
-    "short_address": "휘경동 191-4번지 동대문구 서울특별시 KR",
+    "address": "191-4 Hwigyeong-dong, Seoul, Republic of Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "191-4 Hwigyeong-dong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.590144699999996,
       "lng": 127.05742110000001
@@ -943,11 +943,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6c363a78ff:0xd2d7622bc551f337!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -956,15 +956,15 @@
   },
   {
     "place_id": "ChIJy51dcW-7fDUReb9N9471s34",
-    "display_name": "초코렛노래연습장",
-    "category": "노래방",
+    "display_name": "Chocolate singing practice book",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 42-48",
-    "short_address": "동대문구 회기동 42-48",
+    "address": "42-48 Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "42-48 Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5922438,
       "lng": 127.05174869999999
@@ -985,8 +985,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -995,15 +995,15 @@
   },
   {
     "place_id": "ChIJ0Sb1JwC7fDURV8aZaEfR17o",
-    "display_name": "청하노래방",
-    "category": "노래방",
+    "display_name": "Cheongha Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기로13길 6",
-    "short_address": "동대문구 회기로13길 6",
+    "address": "6, Hoegi-ro 13-gil, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "6, Hoegi-ro 13-gil, Dongdaemun-gu",
     "location": {
       "lat": 37.591720699999996,
       "lng": 127.05103449999999
@@ -1022,13 +1022,13 @@
     "google_maps_url": "https://maps.google.com/?cid=13463459715675178583",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb0027f526d1:0xbad7d1476899c657!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": null,
@@ -1039,14 +1039,14 @@
   },
   {
     "place_id": "ChIJ20WZimW7fDURs7N2-QGUn6A",
-    "display_name": "조아라노래방",
-    "category": "노래방",
+    "display_name": "Joara Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5919269,
@@ -1067,12 +1067,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb658a9945db:0xa09f9401f976b3b3!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "배달",
-      "매장식사"
+      "delivery",
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1081,15 +1081,15 @@
   },
   {
     "place_id": "ChIJkwPhYW-7fDURdBBku2Hj3LM",
-    "display_name": "노블레스노래방",
-    "category": "노래방",
+    "display_name": "Noblesse Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 회기동 60-68번지 회기동 지하층 동대문구 서울특별시 KR",
-    "short_address": "회기동 60-68번지 회기동 지하층 동대문구 서울특별시 KR",
+    "address": "60-68 Hoegi-dong, Seoul, South Korea, Basement Floor, Hoegi-dong, Dongdaemun-gu, Seoul KR",
+    "short_address": "60-68 Hoegi-dong, Basement Floor, Hoegi-dong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5920377,
       "lng": 127.0507798
@@ -1109,11 +1109,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6f61e10393:0xb3dce361bb641074!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1122,15 +1122,15 @@
   },
   {
     "place_id": "ChIJq1y-e2-7fDUREgPMDcDOJdY",
-    "display_name": "SMBRAVO(에스엠브라보)노래방",
-    "category": "노래방",
+    "display_name": "SMBRAVO Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 회기동 42-74번지 하동 1층 동대문구 서울특별시 KR",
-    "short_address": "회기동 42-74번지 하동 1층 동대문구 서울특별시 KR",
+    "address": "1st floor, Hadong, 42-74 Hoegi-dong, Seoul, South Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "42-74 Hoegi-dong, 1st floor, Hadong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5924402,
       "lng": 127.05119479999998
@@ -1150,11 +1150,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6f7bbe5cab:0xd625cec00dcc0312!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1163,15 +1163,15 @@
   },
   {
     "place_id": "ChIJY7Ak1M67fDURzoqn4QIduTs",
-    "display_name": "히어로보드게임카페 경희대점",
-    "category": "오락실",
+    "display_name": "Hero Board Game Cafe Kyung Hee University Branch",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 108 15 지하 1층",
-    "short_address": "동대문구 회기동 108 15 지하 1층",
+    "address": "Basement 1, 108 15, Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "Basement 1, 108 15, Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5930888,
       "lng": 127.0524503
@@ -1190,20 +1190,20 @@
     "google_maps_url": "https://maps.google.com/?cid=4303502817142213326",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbbced424b063:0x3bb91d02e1a78ace!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 1:00 ~ 오전 12:00",
-      "화요일: 오후 1:00 ~ 오전 12:00",
-      "수요일: 오후 1:00 ~ 오전 12:00",
-      "목요일: 오후 1:00 ~ 오전 12:00",
-      "금요일: 오후 1:00 ~ 오전 12:00",
-      "토요일: 오후 1:00 ~ 오전 12:00",
-      "일요일: 오후 1:00 ~ 오전 12:00"
+      "Monday: 1:00 PM - 12:00 AM",
+      "Tuesday: 1:00 PM - 12:00 AM",
+      "Wednesday: 1:00 PM - 12:00 AM",
+      "Thursday: 1:00 PM - 12:00 AM",
+      "Friday: 1:00 PM - 12:00 AM",
+      "Saturday: 1:00 PM - 12:00 AM",
+      "Sunday: 1:00 PM - 12:00 AM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1213,8 +1213,8 @@
         "author": "SJ Yoo",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "게임종류도 다양하고, 틀림그림찾기, 포켓볼, 닌텐도, 플스 등 이것저것 다즐기기 가능하다."
+        "relative_time": "2 years ago",
+        "text": "There are a variety of games, and you can enjoy everything from find the difference, pocket ball, Nintendo, and PlayStation."
       }
     ],
     "photos": [
@@ -1230,15 +1230,15 @@
   },
   {
     "place_id": "ChIJVVYqFNe7fDURMECAfEJ7Td4",
-    "display_name": "루비노래방",
-    "category": "노래방",
+    "display_name": "Ruby Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "42-74, 동대문구 서울특별시 대한민국",
-    "short_address": "42-74, 동대문구",
+    "address": "42-74, Dongdaemun-gu, Seoul South Korea",
+    "short_address": "42-74, Dongdaemun-gu",
     "location": {
       "lat": 37.5925332,
       "lng": 127.0511715
@@ -1257,70 +1257,70 @@
     "google_maps_url": "https://maps.google.com/?cid=16018594975113560112",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbbd7142a5655:0xde4d7b427c804030!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "황민숙",
+        "author": "Hwang Min-sook",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "혼자가도 친절하게 맞아주시고 머리식힐때 마다 가는데 괜츈"
+        "relative_time": "6 years ago",
+        "text": "Even if I go alone, they welcome me kindly and I go there whenever I need to cool off."
       },
       {
-        "author": "강정미",
+        "author": "Kang Jeong-mi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "사장님 친절하고 고등학교때부터 다니던곳"
+        "relative_time": "6 years ago",
+        "text": "The owner is friendly and I've been going there since high school."
       },
       {
-        "author": "임고은",
+        "author": "Lim Go-eun",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "사장님도 친절하고 서비스좋음!"
+        "relative_time": "6 years ago",
+        "text": "The owner is friendly and the service is good!"
       },
       {
-        "author": "박여우",
+        "author": "Park Fox",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "생파할때 방빌려서 놀기 좋음!!"
+        "relative_time": "6 years ago",
+        "text": "It's great to rent a room and play when you're broke!!"
       },
       {
-        "author": "아현",
+        "author": "Ahyeon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "서비스 시간 많이줘서 좋음-"
+        "relative_time": "6 years ago",
+        "text": "It's good to have a lot of service time -"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJ52_t1Wi7fDURzAxnYotUjGE",
-    "display_name": "세계선교센터",
-    "category": "교회",
+    "display_name": "World Mission Center",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1328,8 +1328,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 65-85",
-    "short_address": "동대문구 회기동 65-85",
+    "address": "65-85 Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "65-85 Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5894778,
       "lng": 127.053406
@@ -1349,7 +1349,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb68d5ed6fe7:0x618c548b62670ccc!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1359,8 +1359,8 @@
   },
   {
     "place_id": "ChIJSx8c2Wi7fDUR_nquf2PxWDM",
-    "display_name": "동일침례교회",
-    "category": "교회",
+    "display_name": "Dongil Baptist Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1368,8 +1368,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 이문로1길 14",
-    "short_address": "동대문구 이문로1길 14",
+    "address": "14 Imun-ro 1-gil, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "14 Imun-ro 1-gil, Dongdaemun-gu",
     "location": {
       "lat": 37.5889082,
       "lng": 127.05321779999998
@@ -1389,26 +1389,26 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb68d91c1f4b:0x3358f1637fae7afe!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "원우주",
+        "author": "original universe",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       },
       {
         "author": "soojung kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -1418,8 +1418,8 @@
   },
   {
     "place_id": "ChIJb7KQ9267fDURmxJKCT3zenk",
-    "display_name": "참예수교회",
-    "category": "교회",
+    "display_name": "True Jesus Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1427,8 +1427,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 회기로23가길 12",
-    "short_address": "동대문구 회기동 회기로23가길 12",
+    "address": "12, Hoegi-ro 23ga-gil, Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "12, Hoegi-ro 23ga-gil, Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5916164,
       "lng": 127.0541836
@@ -1448,7 +1448,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6ef790b26f:0x797af33d094a129b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1458,28 +1458,28 @@
         "author": "Neil Yeh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "지하철 1호선을 타고 후이지(惠地) 역에서 하차하신 후, 바로 옆 청량리(靑梁里) 역에서 내리세요. 활기차면서도 조용한 곳으로, 살기 좋은 곳입니다.\n\n동방 교회는 독립된 건물들로 구성되어 있어 신도들 간의 소통과 예배를 위한 훌륭한 기회를 제공합니다. 주님께서 동방 교회 형제자매들을 축복하시고 지켜주시기를 기도합니다."
+        "relative_time": "6 years ago",
+        "text": "Take subway line 1 and get off at Huiji Station, then get off at Cheongnyangni Station right next to it. It's a lively yet quiet place, making it a great place to live.\n\nThe Eastern Church is comprised of independent buildings, providing excellent opportunities for communication and worship among believers. I pray that the Lord will bless and protect our brothers and sisters in the Eastern Church."
       },
       {
         "author": "叮叮",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "명동 쇼핑가에서 동방교회까지 어떻게 가나요?"
+        "relative_time": "1 year ago",
+        "text": "How do I get from Myeongdong Shopping District to Dongbang Church?"
       },
       {
         "author": "Antonella Lin Moi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "성령이 있는 교회"
+        "relative_time": "7 years ago",
+        "text": "Church with the Holy Spirit"
       },
       {
         "author": "del hanss",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9년 전",
+        "relative_time": "9 years ago",
         "text": null
       }
     ],
@@ -1498,8 +1498,8 @@
   },
   {
     "place_id": "ChIJ7W9suGi7fDURvM0mfgqST4Y",
-    "display_name": "휘경중앙교회",
-    "category": "교회",
+    "display_name": "Hwigyeong Central Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1507,8 +1507,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동",
-    "short_address": "동대문구 회기동",
+    "address": "Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5895359,
       "lng": 127.05204919999998
@@ -1528,7 +1528,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb68b86c6fed:0x864f920a7e26cdbc!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1538,8 +1538,8 @@
   },
   {
     "place_id": "ChIJL8tKGgC7fDURpkCAAjRHPbU",
-    "display_name": "천도교 당산교구",
-    "category": "교회",
+    "display_name": "Cheondogyo Dangsan Parish",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1547,8 +1547,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 망우로1길 9-6",
-    "short_address": "동대문구 망우로1길 9-6",
+    "address": "9-6, Mangu-ro 1-gil, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "9-6, Mangu-ro 1-gil, Dongdaemun-gu",
     "location": {
       "lat": 37.588500200000006,
       "lng": 127.0549829
@@ -1568,7 +1568,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb001a4acb2f:0xb53d4734028040a6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1578,8 +1578,8 @@
   },
   {
     "place_id": "ChIJMaghPm-7fDURGjsDSKlgWXw",
-    "display_name": "사랑선교원",
-    "category": "교회",
+    "display_name": "Love Mission Center",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1587,8 +1587,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 60-39",
-    "short_address": "동대문구 회기동 60-39",
+    "address": "60-39 Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "60-39 Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5911262,
       "lng": 127.05228040000001
@@ -1608,7 +1608,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6f3e21a831:0x7c5960a948033b1a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1619,7 +1619,7 @@
   {
     "place_id": "ChIJ7fCkKAW7fDURT6oUnnVfiKg",
     "display_name": "Ruth Church",
-    "category": "교회",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1627,8 +1627,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 회기로 140",
-    "short_address": "동대문구 회기동 회기로 140",
+    "address": "140 Hoegi-ro, Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "140 Hoegi-ro, Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5912553,
       "lng": 127.05237819999999
@@ -1648,7 +1648,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb0528a4f0ed:0xa8885f759e14aa4f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1658,8 +1658,8 @@
   },
   {
     "place_id": "ChIJMaghPm-7fDURSzzOy8ijYk8",
-    "display_name": "룻교회",
-    "category": "교회",
+    "display_name": "Ruth Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1667,8 +1667,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 회기로 140",
-    "short_address": "동대문구 회기동 회기로 140",
+    "address": "140 Hoegi-ro, Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "140 Hoegi-ro, Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5912553,
       "lng": 127.05237819999999
@@ -1688,12 +1688,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6f3e21a831:0x4f62a3c8cbce3c4b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -1701,36 +1701,36 @@
         "author": "Jiyoung Moon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "아래 그 목사분은 다른데로 가셨고.지금은 정말 신실한 목사님이 섬기고 계시는곳"
+        "relative_time": "6 months ago",
+        "text": "The pastor below has gone somewhere else, and now a truly faithful pastor is serving here."
       },
       {
         "author": "Joan Kim",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "8년 전",
-        "text": "교인들 목사집에불러서 집안일 시키는 교회"
+        "relative_time": "8 years ago",
+        "text": "A church that calls its members to the pastor's house and makes them do housework"
       },
       {
         "author": "Alex Kim",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "7년 전",
-        "text": "사막 잡신 집단"
+        "relative_time": "7 years ago",
+        "text": "desert junk group"
       },
       {
-        "author": "문종석",
+        "author": "Jongseok Moon",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "13년 전",
-        "text": "노인-A"
+        "relative_time": "13 years ago",
+        "text": "Old Man-A"
       },
       {
         "author": "J L",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "11달 전",
-        "text": "중년 남성의 의미 있고 감동적인 세례와 놀라운 예배."
+        "relative_time": "11 months ago",
+        "text": "A meaningful and touching baptism and amazing worship service by a middle-aged man."
       }
     ],
     "photos": [
@@ -1740,8 +1740,8 @@
   },
   {
     "place_id": "ChIJ_S_f9Wi7fDURc_it5ribz8o",
-    "display_name": "(재단)제7안식일시조사",
-    "category": "교회",
+    "display_name": "(Foundation) 7th Sabbath Survey",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1749,8 +1749,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 청량리동 1-1",
-    "short_address": "동대문구 청량리동 1-1",
+    "address": "1-1 Cheongnyangni-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "1-1 Cheongnyangni-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.588201,
       "lng": 127.0524432
@@ -1770,7 +1770,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb68f5df2ffd:0xcacf9bb8e6adf873!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1780,8 +1780,8 @@
   },
   {
     "place_id": "ChIJEUnPA2m7fDURZqoHiGeNvxU",
-    "display_name": "본부교회",
-    "category": "교회",
+    "display_name": "Headquarters Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1789,8 +1789,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 왕산로 312",
-    "short_address": "동대문구 왕산로 312",
+    "address": "312 Wangsan-ro, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "312 Wangsan-ro, Dongdaemun-gu",
     "location": {
       "lat": 37.5877263,
       "lng": 127.05371199999998
@@ -1809,59 +1809,59 @@
     "google_maps_url": "https://maps.google.com/?cid=1567126671151573606",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6903cf4911:0x15bf8d678807aa66!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오후 12:00~9:00",
-      "수요일: 휴무일",
-      "목요일: 휴무일",
-      "금요일: 오후 12:00~9:00",
-      "토요일: 오전 9:00 ~ 오후 7:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 12:00-9:00 PM",
+      "Wednesday: Closed day",
+      "Thursday: Closed",
+      "Friday: 12:00-9:00 PM",
+      "Saturday: 9:00 AM - 7:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "김기원",
+        "author": "Kim Ki-won",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "이곳은 시조사 앞에 위치해 있다 교회에서 예식장도 운영 해서 많은분들이 이용 하고 있고 채식식사를 맘껏 하실수 있어서 좋다"
+        "relative_time": "6 years ago",
+        "text": "This place is located in front of Sijo. The church also operates a wedding hall, so many people use it, and it is nice to be able to eat vegetarian meals to your heart's content."
       },
       {
-        "author": "문영위",
+        "author": "Youngwi Moon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "말씀속에  계신하나님  성령으로  인도  하시는  하나님  정말정말  좋은  은혜로운  말씀  성도들  따뜻한정이  오가는교회  넘 좋았어요"
+        "relative_time": "3 years ago",
+        "text": "God in the word, God leading through the Holy Spirit, really, really good, gracious words, I really liked the church where the saints shared warm feelings."
       },
       {
-        "author": "김춘동",
+        "author": "Kim Chun-dong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
-        "text": "김중석 집사님이의 예수님을 사랑하는 깊은마음이 집사님의 아시는 분들에게도 같은마음으로 되는 것 깉읍니다, 저가 그렇습니다."
+        "relative_time": "8 years ago",
+        "text": "I know that Deacon Kim Jung-seok's deep love for Jesus is shared by those he knows, as do I."
       },
       {
-        "author": "임은호",
+        "author": "Eunho Lim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "깔끔한 외관만큼 내실있는 내부를 갖춘 교회. 지역공동체와 소통하려는듯 여러 사업을 추진하고있는 모습이 인상적임"
+        "relative_time": "6 years ago",
+        "text": "A church with an interior as substantial as its clean exterior. It is impressive to see that various projects are being promoted as if they are trying to communicate with the local community."
       },
       {
-        "author": "청량리불가마",
+        "author": "Cheongnyangni Bulk Kiln",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "8년 전",
-        "text": "교회여직원이싸가지없고매너없고방귀를아무데서나크게껴"
+        "relative_time": "8 years ago",
+        "text": "The female church employee is rude, has no manners, and farts loudly everywhere."
       }
     ],
     "photos": [
@@ -1879,8 +1879,8 @@
   },
   {
     "place_id": "ChIJGT86Tm67fDURkW9pWz0NM_o",
-    "display_name": "산정현장로교회",
-    "category": "교회",
+    "display_name": "Sanjeonghyeon Presbyterian Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1888,8 +1888,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 경희대로4길 21",
-    "short_address": "동대문구 경희대로4길 21",
+    "address": "21 Kyunghee-daero 4-gil, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "21 Kyunghee-daero 4-gil, Dongdaemun-gu",
     "location": {
       "lat": 37.592449699999996,
       "lng": 127.0539058
@@ -1909,49 +1909,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6e4e3a3f19:0xfa330d3d5b696f91!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "담이아빠",
+        "author": "Dam's dad",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "커리어를 느낄수 있는 목사님의 정통성 감사합니다."
+        "relative_time": "7 years ago",
+        "text": "I am grateful to the pastor for his orthodoxy that allows me to feel his career."
       },
       {
-        "author": "김이라",
+        "author": "Ira Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "회기동 경희대 가까운 장로교입니다."
+        "relative_time": "6 years ago",
+        "text": "It is a Presbyterian church near Kyung Hee University in Hoegi-dong."
       },
       {
-        "author": "이종관 (우리는 강력하다는)",
+        "author": "Lee Jong-kwan (We Are Powerful)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "역사적인 교회입니다."
+        "relative_time": "7 years ago",
+        "text": "It is a historic church."
       },
       {
-        "author": "박현용",
+        "author": "Park Hyeon-yong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       },
       {
         "author": "Jae Hyun Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       }
     ],
@@ -1970,8 +1970,8 @@
   },
   {
     "place_id": "ChIJ487cPWy7fDURSQr0QzrnJuY",
-    "display_name": "휘경중앙교회",
-    "category": "교회",
+    "display_name": "Hwigyeong Central Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1979,8 +1979,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 휘경동 319-39",
-    "short_address": "동대문구 휘경동 319-39",
+    "address": "319-39 Hwigyeong-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "319-39 Hwigyeong-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.589589,
       "lng": 127.05709999999999
@@ -2000,7 +2000,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6c3ddccee3:0xe626e73a43f40a49!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2010,8 +2010,8 @@
   },
   {
     "place_id": "ChIJndwbbGm7fDURNcspDF-Wh_g",
-    "display_name": "빌립보교회",
-    "category": "교회",
+    "display_name": "Philippian Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2019,8 +2019,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 휘경동",
-    "short_address": "동대문구 휘경동",
+    "address": "Hwigyeong-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "Hwigyeong-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5875892,
       "lng": 127.05510029999999
@@ -2040,17 +2040,17 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb696c1bdc9d:0xf887965f0c29cb35!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이영재",
+        "author": "Youngjae Lee",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -2060,8 +2060,8 @@
   },
   {
     "place_id": "ChIJj0aZDWm7fDUR4eSzuxMpoXc",
-    "display_name": "동은교회",
-    "category": "교회",
+    "display_name": "Dongeun Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2069,8 +2069,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 전농동",
-    "short_address": "동대문구 전농동",
+    "address": "Jeonnong-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "Jeonnong-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5874781,
       "lng": 127.0546003
@@ -2090,11 +2090,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb690d99468f:0x77a12913bbb3e4e1!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -2102,8 +2102,8 @@
         "author": "Donghyun Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "좋은 교회"
+        "relative_time": "7 years ago",
+        "text": "good church"
       }
     ],
     "photos": [
@@ -2112,8 +2112,8 @@
   },
   {
     "place_id": "ChIJxQDh9Zi7fDURTkvoNmPdSSI",
-    "display_name": "SDA 대학선교센터(동액트교회)",
-    "category": "교회",
+    "display_name": "SDA University Mission Center (Dong Act Church)",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2121,8 +2121,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 이문로1길 11 어린이청소년비전센터 1층",
-    "short_address": "동대문구 이문로1길 11 어린이청소년비전센터 1층",
+    "address": "1st floor, Children and Youth Vision Center, 11 Imun-ro 1-gil, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "1st floor, Children and Youth Vision Center, 11 Imun-ro 1-gil, Dongdaemun-gu",
     "location": {
       "lat": 37.5875505,
       "lng": 127.0525946
@@ -2142,7 +2142,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb98f5e100c5:0x2249dd6336e84b4e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2157,8 +2157,8 @@
   },
   {
     "place_id": "ChIJK2LoZm-7fDURHt1q5ue8E2k",
-    "display_name": "그레이스",
-    "category": "교회",
+    "display_name": "grace",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2166,8 +2166,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 60-60번지 2층",
-    "short_address": "동대문구 회기동 60-60번지 2층",
+    "address": "2nd floor, 60-60 Hoegi-dong, Dongdaemun-gu, Seoul, Korea",
+    "short_address": "2nd floor, 60-60 Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.591842899999996,
       "lng": 127.05119669999999
@@ -2187,7 +2187,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6f66e8622b:0x6913bce7e66add1e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2197,8 +2197,8 @@
   },
   {
     "place_id": "ChIJF3YFwW27fDURKvZPWKFN-bA",
-    "display_name": "기독교대한성결교회새창조교회",
-    "category": "교회",
+    "display_name": "Christian Korean Holiness Church New Creation Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2206,8 +2206,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 휘경동",
-    "short_address": "동대문구 휘경동",
+    "address": "Hwigyeong-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "Hwigyeong-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.591577099999995,
       "lng": 127.0572694
@@ -2227,26 +2227,26 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6dc1057617:0xb0f94da1584ff62a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "윤유섭",
+        "author": "Yoon Yu-seop",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
-        "text": "축복의 통로 어서오세요~^^"
+        "relative_time": "8 years ago",
+        "text": "Welcome to the passage of blessings~^^"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJQeBZwG27fDURST3HRpL2iPw",
-    "display_name": "새문교회",
-    "category": "교회",
+    "display_name": "Saemun Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2254,8 +2254,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 휘경동 183-386",
-    "short_address": "동대문구 휘경동 183-386",
+    "address": "183-386 Hwigyeong-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "183-386 Hwigyeong-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.591588699999996,
       "lng": 127.05734999999999
@@ -2275,7 +2275,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6dc059e041:0xfc88f69246c73d49!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2285,8 +2285,8 @@
   },
   {
     "place_id": "ChIJgzDxLla7fDUR82M2HhFKD7w",
-    "display_name": "Dongan English Worship (DEW) 동안교회 영어예배",
-    "category": "교회",
+    "display_name": "Dongan English Worship (DEW) Dongan Church English Worship",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2294,8 +2294,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 이문로 55 동안교회 비전센터 4층",
-    "short_address": "동대문구 이문로 55 동안교회 비전센터 4층",
+    "address": "4th floor, Dongan Church Vision Center, 55 Imun-ro, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "4th floor, Dongan Church Vision Center, 55 Imun-ro, Dongdaemun-gu",
     "location": {
       "lat": 37.592405899999996,
       "lng": 127.05722069999999
@@ -2314,40 +2314,40 @@
     "google_maps_url": "https://maps.google.com/?cid=13551131241162892275",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb562ef13083:0xbc0f4a111e3663f3!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 휴무일",
-      "수요일: 휴무일",
-      "목요일: 휴무일",
-      "금요일: 휴무일",
-      "토요일: 휴무일",
-      "일요일: 오후 2:00~4:00"
+      "Monday: Closed day",
+      "Tuesday: Closed",
+      "Wednesday: Closed day",
+      "Thursday: Closed",
+      "Friday: Closed day",
+      "Saturday: Closed day",
+      "Sunday: 2:00-4:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "박주성",
+        "author": "Park Joo-seong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "이곳에서는 영어권 분들을 위한 예배가 있습니다. 찬양, 설교, 그리고 합심기도는 모두 열정과 은혜로 가득합니다. 또한 예배팀을 위해 찬양팀과 음악팀을 모집하고 있습니다."
+        "relative_time": "1 year ago",
+        "text": "There is a service here for English-speaking people. Praise, sermons, and corporate prayer are all full of passion and grace. We are also recruiting praise and music teams for our worship team."
       },
       {
         "author": "JULIA CHOI",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "축복의 길."
+        "relative_time": "1 year ago",
+        "text": "The path of blessing."
       },
       {
         "author": "Jihyun Seo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -2366,8 +2366,8 @@
   },
   {
     "place_id": "ChIJlSiP-W27fDURdd7IYvwtjVs",
-    "display_name": "동안교회",
-    "category": "교회",
+    "display_name": "Dongan Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -2375,8 +2375,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 회기로25길 67",
-    "short_address": "회기로25길 67",
+    "address": "67, Hoegi-ro 25-gil, Seoul, South Korea",
+    "short_address": "67, Hoeiro 25-gil",
     "location": {
       "lat": 37.5929218,
       "lng": 127.05680029999999
@@ -2396,13 +2396,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6df98f2895:0x5b8d2dfc62c8de75!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -2410,36 +2410,36 @@
         "author": "Yong Suk Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "11달 전",
-        "text": "기도와 말씀, 양육과 교육이 풍성한 교회.\n지역과 사회를 섬기고 나눔이 풍성한 교회."
+        "relative_time": "11 months ago",
+        "text": "A church rich in prayer, words, nurturing, and education.\nA church that serves the community and society and is rich in sharing."
       },
       {
         "author": "angels kick",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "강북최고의 교회 성도수6천명 청년2천명에 청년회1부10부까지 40대청년회도 있어요"
+        "relative_time": "3 years ago",
+        "text": "The best church in Gangbuk has 6,000 members, 2,000 young people, and there is also a youth group in their 40s with 1 and 10 youth groups."
       },
       {
-        "author": "김수진 (베리베리)",
+        "author": "Soojin Kim (Very Berry)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "273.120.145 서울버스등등 교통 편리. 25.03.3현재 도서관건물 위 비전센타 확장공사중 여름완공예정"
+        "relative_time": "1 year ago",
+        "text": "273.120.145 Convenient transportation including Seoul buses. 25.03.3 Currently under construction to expand the Vision Center above the library building. Scheduled for completion in the summer."
       },
       {
-        "author": "윤선옥",
+        "author": "Seonok Yoon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
-        "text": "말씀에 충실한 교회\n매주 담밈 목아님의 말씀이 은혜가 되는 교회\n성도들의 교제가 건전하고 따듯한교회!!!\n이곳으로 초대합니다♡"
+        "relative_time": "8 years ago",
+        "text": "A church faithful to the Word\nA church where the words of Dammim Mok-a become a blessing every week\nA church where the fellowship of believers is healthy and warm!!!\nWe invite you here♡"
       },
       {
         "author": "Youngin Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
-        "text": "내부적으로 믿음의공동체 역할을 충실히 이행하고있고 외부활동도 전도와봉사를 동시에추구하는  바람직한 교회이다"
+        "relative_time": "8 years ago",
+        "text": "It is a desirable church that faithfully fulfills its role as a community of faith internally and pursues both evangelism and service in its external activities."
       }
     ],
     "photos": [
@@ -2457,15 +2457,15 @@
   },
   {
     "place_id": "ChIJpyz6wm67fDURBNq0iAZHKsA",
-    "display_name": "리폼",
-    "category": "쇼핑몰",
+    "display_name": "reform",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 61-9",
-    "short_address": "동대문구 회기동 61-9",
+    "address": "61-9, Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "61-9, Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5904221,
       "lng": 127.05426699999998
@@ -2484,20 +2484,20 @@
     "google_maps_url": "https://maps.google.com/?cid=13846958097692940804",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6ec2fa2ca7:0xc02a470688b4da04!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 7:00",
-      "화요일: 오전 10:00 ~ 오후 7:00",
-      "수요일: 오전 10:00 ~ 오후 7:00",
-      "목요일: 오전 10:00 ~ 오후 7:00",
-      "금요일: 오전 10:00 ~ 오후 7:00",
-      "토요일: 오전 10:00 ~ 오후 7:00",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 7:00 PM",
+      "Tuesday: 10:00 AM - 7:00 PM",
+      "Wednesday: 10:00 AM - 7:00 PM",
+      "Thursday: 10:00 AM - 7:00 PM",
+      "Friday: 10:00 AM - 7:00 PM",
+      "Saturday: 10:00 AM - 7:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2507,35 +2507,35 @@
         "author": "STart Re",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9년 전",
-        "text": "잘해줘요"
+        "relative_time": "9 years ago",
+        "text": "Be nice to me"
       },
       {
         "author": "DONG JIN LEE",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       },
       {
-        "author": "조순목",
+        "author": "Sunmok Cho",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "이세연",
+        "author": "Lee Se-yeon",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Anthony Budiman",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -2545,15 +2545,15 @@
   },
   {
     "place_id": "ChIJR9dG6267fDURKLsPp5dTr8c",
-    "display_name": "로즈블랑쉬",
-    "category": "쇼핑몰",
+    "display_name": "Rose Blanche",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 346번지 1층",
-    "short_address": "동대문구 회기동 346번지 1층",
+    "address": "1st floor, 346 Hoegi-dong, Dongdaemun-gu, Seoul, Korea",
+    "short_address": "1st floor, 346, Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5905954,
       "lng": 127.0547318
@@ -2573,11 +2573,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6eeb46d747:0xc7af5397a70fbb28!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2587,15 +2587,15 @@
   },
   {
     "place_id": "ChIJddvYTW-7fDUR51gQ9YtTmgY",
-    "display_name": "아이제이솝",
-    "category": "쇼핑몰",
+    "display_name": "IJ Soap",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 64-49번지 3층",
-    "short_address": "동대문구 회기동 64-49번지 3층",
+    "address": "3rd floor, 64-49 Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "3rd floor, 64-49 Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5906599,
       "lng": 127.05154689999999
@@ -2615,11 +2615,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6f4dd8db75:0x69a538bf51058e7!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2629,15 +2629,15 @@
   },
   {
     "place_id": "ChIJiVcc6e27fDURIHS0A1tzesQ",
-    "display_name": "오마쭈",
-    "category": "쇼핑몰",
+    "display_name": "OMG",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 105-9",
-    "short_address": "동대문구 회기동 105-9",
+    "address": "105-9, Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "105-9, Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5912407,
       "lng": 127.0509394
@@ -2657,11 +2657,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbbede91c5789:0xc47a735b03b47420!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2671,15 +2671,15 @@
   },
   {
     "place_id": "ChIJqT5efG-7fDURyjb31alkwig",
-    "display_name": "제이베이스볼",
-    "category": "쇼핑몰",
+    "display_name": "Jay Baseball",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 휘경동 317-87",
-    "short_address": "동대문구 휘경동 317-87",
+    "address": "317-87 Hwigyeong-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "317-87 Hwigyeong-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.588454999999996,
       "lng": 127.05749899999999
@@ -2698,20 +2698,20 @@
     "google_maps_url": "https://maps.google.com/?cid=2937020587600983754",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6f7c5e3ea9:0x28c264a9d5f736ca!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 8:00",
-      "화요일: 오전 10:00 ~ 오후 8:00",
-      "수요일: 오전 10:00 ~ 오후 8:00",
-      "목요일: 오전 10:00 ~ 오후 8:00",
-      "금요일: 오전 10:00 ~ 오후 8:00",
-      "토요일: 오전 12:00 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 8:00 PM",
+      "Tuesday: 10:00 AM - 8:00 PM",
+      "Wednesday: 10:00 AM - 8:00 PM",
+      "Thursday: 10:00 AM - 8:00 PM",
+      "Friday: 10:00 AM - 8:00 PM",
+      "Saturday: 12:00 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2721,15 +2721,15 @@
   },
   {
     "place_id": "ChIJzct15W27fDURyqnVnMqDJko",
-    "display_name": "달콤노리",
-    "category": "쇼핑몰",
+    "display_name": "sweet nori",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 이문동 341-60번지 1층 상가좌측 동대문구 서울특별시 KR",
-    "short_address": "이문동 341-60번지 1층 상가좌측 동대문구 서울특별시 KR",
+    "address": "341-60 Imun-dong, Seoul, South Korea, 1st floor, left side of shopping mall, Dongdaemun-gu, Seoul KR",
+    "short_address": "341-60 Imun-dong, 1st floor, left side of shopping mall, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5923829,
       "lng": 127.0567372
@@ -2750,8 +2750,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2760,15 +2760,15 @@
   },
   {
     "place_id": "ChIJAe0l4G27fDURsEdHDWvLRY4",
-    "display_name": "글래",
-    "category": "쇼핑몰",
+    "display_name": "Okay",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 60-108",
-    "short_address": "동대문구 회기동 60-108",
+    "address": "60-108 Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "60-108 Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.591612999999995,
       "lng": 127.049611
@@ -2789,8 +2789,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2800,14 +2800,14 @@
   {
     "place_id": "ChIJsUYG8EW7fDUR8xPIkFn2Bho",
     "display_name": "Dangsin",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "304호, 62 회기로29길 휘경동 동대문구 서울특별시 대한민국",
-    "short_address": "304호, 62 회기로29길 휘경동 동대문구",
+    "address": "Room 304, 62 Hoe-ro 29-gil, Hwigyeong-dong, Dongdaemun-gu, Seoul, Republic of Korea",
+    "short_address": "Room 304, 62 Hoegye-ro 29-gil, Hwigyeong-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.592251,
       "lng": 127.0588485
@@ -2826,18 +2826,18 @@
     "google_maps_url": "https://maps.google.com/?cid=1875457159387943923",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb45f00646b1:0x1a06f65990c813f3!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 7:00",
-      "화요일: 오전 10:00 ~ 오후 7:00",
-      "수요일: 오전 10:00 ~ 오후 7:00",
-      "목요일: 오전 10:00 ~ 오후 7:00",
-      "금요일: 오전 10:00 ~ 오후 7:00",
-      "토요일: 오전 12:00 ~ 오후 3:00",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 7:00 PM",
+      "Tuesday: 10:00 AM - 7:00 PM",
+      "Wednesday: 10:00 AM - 7:00 PM",
+      "Thursday: 10:00 AM - 7:00 PM",
+      "Friday: 10:00 AM - 7:00 PM",
+      "Saturday: 12:00 AM - 3:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2849,15 +2849,15 @@
   },
   {
     "place_id": "ChIJl2JwC7y7fDURGg4mq2w-8X4",
-    "display_name": "회기시장",
-    "category": "시장",
+    "display_name": "Hoegi Market",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 58-5",
-    "short_address": "동대문구 회기동 58-5",
+    "address": "58-5 Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "58-5 Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.590542899999996,
       "lng": 127.0545565
@@ -2877,49 +2877,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbbbc0b706297:0x7ef13e6cab260e1a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "하재철",
+        "author": "Ha Jae-cheol",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "재래시장은 완전 사라짐. 맛집이 고기하다, 장군집, 홍곱창, 레알라면정도가 맛집. 좀더 특화된 거리가 아쉽다"
+        "relative_time": "3 years ago",
+        "text": "Traditional markets have completely disappeared. Famous restaurants include Gogihada, Janggun’s House, Red Gopchang, and Reala Ramen. It's a pity that the streets are more specialized."
       },
       {
-        "author": "비니",
+        "author": "beanie",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "예전 느낌은 많이 사라지고 이제 몇 곳 방송 나온집들과 인근 학교덕에 그래도 어느정도 보장은 되는곳 이네요"
+        "relative_time": "3 years ago",
+        "text": "The old feeling has largely disappeared, and now, thanks to several houses that have appeared on TV and nearby schools, it is still a place with some degree of security."
       },
       {
-        "author": "이남규",
+        "author": "Namgyu Lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "2년 전",
-        "text": "음...시장이라 하기엔 가게들도 그렇고..물건들도 없는편입니다."
+        "relative_time": "2 years ago",
+        "text": "Well...it's a market, but there aren't any shops or goods."
       },
       {
-        "author": "김한구",
+        "author": "Kim Han-gu",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "2년 전",
-        "text": "제가 보기에 시장이라고 할 수 없고 거리 명칭이 그렇다 할 수 있을정도로 봐야 할 듯 합니다."
+        "relative_time": "2 years ago",
+        "text": "In my opinion, it can't be called a market, but it should be viewed as a street name."
       },
       {
         "author": "shawn HONG",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "현대화 되고있는 회기동 전통시장"
+        "relative_time": "2 years ago",
+        "text": "The modernizing traditional market in Hoegi-dong"
       }
     ],
     "photos": [
@@ -2928,8 +2928,8 @@
   },
   {
     "place_id": "ChIJiTq57m67fDUR316zDc1V8GI",
-    "display_name": "아리랑슈퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Arirang Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2939,8 +2939,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 57-11번지",
-    "short_address": "동대문구 회기동 57-11번지",
+    "address": "57-11, Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "57-11 Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.590835,
       "lng": 127.05438679999999
@@ -2961,8 +2961,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2971,8 +2971,8 @@
   },
   {
     "place_id": "ChIJ5d7OT2-7fDURF4ZVYvMp3OQ",
-    "display_name": "플러스마트",
-    "category": "슈퍼마켓",
+    "display_name": "Plus Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2982,8 +2982,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 회기동 103-220번지 1호 필지 1층 동대문구 서울특별시 KR",
-    "short_address": "회기동 103-220번지 1호 필지 1층 동대문구 서울특별시 KR",
+    "address": "1st floor, lot 1, 103-220 Hoegi-dong, Seoul, Republic of Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "1st floor, Lot 1, 103-220 Hoegi-dong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5908559,
       "lng": 127.0514969
@@ -3003,11 +3003,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6f4fcedee5:0xe4dc29f362558617!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3017,15 +3017,15 @@
   },
   {
     "place_id": "ChIJ2cryACK7fDUR-OsLuAISHBo",
-    "display_name": "이마트24 휘경스타점",
-    "category": "시장",
+    "display_name": "E-Mart 24 Hwigyeong Star Branch",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 휘경동 312-261",
-    "short_address": "동대문구 휘경동 312-261",
+    "address": "312-261 Hwigyeong-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "312-261 Hwigyeong-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5876058,
       "lng": 127.05517159999998
@@ -3044,18 +3044,18 @@
     "google_maps_url": "https://maps.google.com/?cid=1881398547221048312",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb2200f2cad9:0x1a1c1202b80bebf8!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3068,15 +3068,15 @@
   },
   {
     "place_id": "ChIJz0UPaG-7fDURUc6W4FyHZvI",
-    "display_name": "경희수산",
-    "category": "시장",
+    "display_name": "Kyunghee Fisheries",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 번지 1층 60-50",
-    "short_address": "동대문구 회기동 번지 1층 60-50",
+    "address": "60-50, 1st floor, Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "60-50, 1st floor, Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5916017,
       "lng": 127.0514625
@@ -3097,8 +3097,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3107,15 +3107,15 @@
   },
   {
     "place_id": "ChIJtw11z227fDURJpUmJagX9tY",
-    "display_name": "농산물직판장",
-    "category": "시장",
+    "display_name": "Farmers' market",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 휘경동 183 245번지 1층 101호",
-    "short_address": "동대문구 휘경동 183 245번지 1층 101호",
+    "address": "Room 101, 1st floor, 183 245 Hwigyeong-dong, Dongdaemun-gu, Seoul, Republic of Korea",
+    "short_address": "Room 101, 1st floor, 183 245 Hwigyeong-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5912134,
       "lng": 127.05697850000001
@@ -3136,8 +3136,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3146,15 +3146,15 @@
   },
   {
     "place_id": "ChIJY5iUthe7fDURiXl9dyLYHo4",
-    "display_name": "GS25 휘경럭키점",
-    "category": "시장",
+    "display_name": "GS25 Hwigyeong Lucky Branch",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 휘경동 312-11",
-    "short_address": "동대문구 휘경동 312-11",
+    "address": "312-11 Hwigyeong-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "312-11 Hwigyeong-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.587819599999996,
       "lng": 127.05619970000001
@@ -3173,42 +3173,42 @@
     "google_maps_url": "https://maps.google.com/?cid=10240860245232286089",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb17b6949863:0x8e1ed822777d7989!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "렛츠기릿",
+        "author": "Let's give it a try",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "2달 전",
-        "text": "알바인지사장인지?사장이면그렇게못했겠지만ᆢ뭐찾는질문에퉁퉁거리면서없다고 누가들어도짜증섞인말투 일하는데내가너무방해했나?요즘알바들돈너무쉽게번다ᆢ"
+        "relative_time": "2 months ago",
+        "text": "Is it a part-time job or is it the boss? If it were the boss, it wouldn't have been able to do that. He blurted out when asked what he was looking for, and even when someone heard him say he wasn't there, he spoke in an annoyed tone. Did I interfere too much with his work? These days, part-time jobs make money too easily."
       },
       {
         "author": "Maurnvic Castillo Rulida",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3달 전",
+        "relative_time": "3 months ago",
         "text": null
       },
       {
         "author": "Vinh Nguyễn",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -3219,14 +3219,14 @@
   {
     "place_id": "ChIJfTFlRZy7fDURRPaxiQkfzY8",
     "display_name": "Aclode",
-    "category": "시장",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기로 195 6층 601호",
-    "short_address": "동대문구 회기로 195 6층 601호",
+    "address": "Room 601, 6th floor, 195 Hoegi-ro, Dongdaemun-gu, Seoul, Korea",
+    "short_address": "Room 601, 6th floor, 195 Hoegi-ro, Dongdaemun-gu",
     "location": {
       "lat": 37.5901728,
       "lng": 127.05755099999999
@@ -3245,18 +3245,18 @@
     "google_maps_url": "https://maps.google.com/?cid=10361972443474687556",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb9c4565317d:0x8fcd1f0989b1f644!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 휴무일",
-      "수요일: 휴무일",
-      "목요일: 휴무일",
-      "금요일: 휴무일",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Closed day",
+      "Tuesday: Closed",
+      "Wednesday: Closed day",
+      "Thursday: Closed",
+      "Friday: Closed day",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3265,8 +3265,8 @@
   },
   {
     "place_id": "ChIJO0-3dmm7fDURCcs6rVboxRE",
-    "display_name": "경희마트",
-    "category": "슈퍼마켓",
+    "display_name": "Kyunghee Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3276,8 +3276,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 휘경동 312-73번지 1호 동대문구 서울특별시 KR",
-    "short_address": "휘경동 312-73번지 1호 동대문구 서울특별시 KR",
+    "address": "1, 312-73 Hwigyeong-dong, Seoul, Republic of Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "#1, 312-73 Hwigyeong-dong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5869985,
       "lng": 127.05519280000001
@@ -3296,18 +3296,18 @@
     "google_maps_url": "https://maps.google.com/?cid=1280685128027917065",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6976b74f3b:0x11c5e856ad3acb09!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 11:00",
-      "화요일: 오전 9:00 ~ 오후 11:00",
-      "수요일: 오전 9:00 ~ 오후 11:00",
-      "목요일: 오전 9:00 ~ 오후 11:00",
-      "금요일: 오전 9:00 ~ 오후 11:00",
-      "토요일: 오전 9:00 ~ 오후 11:00",
-      "일요일: 오전 9:00 ~ 오후 11:00"
+      "Monday: 9:00 AM - 11:00 PM",
+      "Tuesday: 9:00 AM - 11:00 PM",
+      "Wednesday: 9:00 AM - 11:00 PM",
+      "Thursday: 9:00 AM - 11:00 PM",
+      "Friday: 9:00 AM - 11:00 PM",
+      "Saturday: 9:00 AM - 11:00 PM",
+      "Sunday: 9:00 AM - 11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3316,14 +3316,14 @@
         "author": "E E",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       },
       {
-        "author": "김상수",
+        "author": "Sangsu Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -3331,8 +3331,8 @@
   },
   {
     "place_id": "ChIJSbpH8Z-7fDURexmvXC7lJhk",
-    "display_name": "Go 마트",
-    "category": "슈퍼마켓",
+    "display_name": "Go Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3342,8 +3342,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 전농동 113-38",
-    "short_address": "동대문구 전농동 113-38",
+    "address": "113-38 Jeonnong-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "113-38 Jeonnong-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5868961,
       "lng": 127.0546689
@@ -3363,20 +3363,20 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb9ff147ba49:0x1926e52e5caf197b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김민기",
+        "author": "Minki Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -3386,8 +3386,8 @@
   },
   {
     "place_id": "ChIJU3rP5GW7fDUR_48cJUqa5AQ",
-    "display_name": "하모니마트",
-    "category": "할인 슈퍼마켓",
+    "display_name": "Harmony Mart",
+    "category": "discount supermarket",
     "types": [
       "discount_supermarket",
       "supermarket",
@@ -3398,8 +3398,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 회기로 122",
-    "short_address": "동대문구 회기동 회기로 122",
+    "address": "122, Hoegi-ro, Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "122, Hoegi-ro, Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.591308399999996,
       "lng": 127.05005690000002
@@ -3418,20 +3418,20 @@
     "google_maps_url": "https://maps.google.com/?cid=352576314082627583",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb65e4cf7a53:0x4e49a4a251c8fff!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 10:30",
-      "화요일: 오전 9:00 ~ 오후 10:30",
-      "수요일: 오전 9:00 ~ 오후 10:30",
-      "목요일: 오전 9:00 ~ 오후 10:30",
-      "금요일: 오전 9:00 ~ 오후 10:30",
-      "토요일: 오전 9:00 ~ 오후 10:30",
-      "일요일: 오전 9:00 ~ 오후 10:30"
+      "Monday: 9:00 AM - 10:30 PM",
+      "Tuesday: 9:00 AM - 10:30 PM",
+      "Wednesday: 9:00 AM - 10:30 PM",
+      "Thursday: 9:00 AM - 10:30 PM",
+      "Friday: 9:00 AM - 10:30 PM",
+      "Saturday: 9:00 AM - 10:30 PM",
+      "Sunday: 9:00 AM - 10:30 PM"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3441,35 +3441,35 @@
         "author": "Dong-Hee Oh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "친절하시고 가격도 좋은거 같음 은개뿔 집앞이라 좋음"
+        "relative_time": "5 years ago",
+        "text": "They're friendly and the price seems to be good. It's nice because it's right in front of my house."
       },
       {
-        "author": "汪卉卉（가영）",
+        "author": "汪卉卉（Gayoung）",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "阿姨們很親切 아줌머니들 친철하게 대하셔요"
+        "relative_time": "4 years ago",
+        "text": "阿姨們很親切 Treat the ladies kindly."
       },
       {
-        "author": "송예진",
+        "author": "Song Ye-jin",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "다른 마트에는 없는 문구류까지 어느정도 있습니다."
+        "relative_time": "4 years ago",
+        "text": "They even have a certain amount of stationery that other supermarkets don't have."
       },
       {
         "author": "Tanmoy Mondal",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "비누, 치약부터 바로 먹을 수 있는 식품과 신선한 야채까지 일상생활에 필요한 모든 것을 판매하는 작은 마트입니다."
+        "relative_time": "6 years ago",
+        "text": "It is a small supermarket that sells everything you need for daily life, from soap and toothpaste to ready-to-eat food and fresh vegetables."
       },
       {
         "author": "Ellie",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -3477,8 +3477,8 @@
   },
   {
     "place_id": "ChIJNeznm2-7fDUR1nW8q2P_W3U",
-    "display_name": "럭키슈퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Lucky Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3488,8 +3488,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 42-10번지",
-    "short_address": "동대문구 회기동 42-10번지",
+    "address": "42-10 Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "42-10 Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.592972599999996,
       "lng": 127.0517361
@@ -3509,7 +3509,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6f9be7ec35:0x755bff63abbc75d6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": null,
     "accessibility": null,
@@ -3519,8 +3519,8 @@
   },
   {
     "place_id": "ChIJI0Ox5GW7fDURQ3eiqcz4p0Q",
-    "display_name": "IGA마트 회기점",
-    "category": "슈퍼마켓",
+    "display_name": "IGA Mart Hoegi Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3530,8 +3530,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 60-125",
-    "short_address": "동대문구 회기동 60-125",
+    "address": "60-125 Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "60-125 Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5915886,
       "lng": 127.0498785
@@ -3550,20 +3550,20 @@
     "google_maps_url": "https://maps.google.com/?cid=4947196273592792899",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb65e4b14323:0x44a7f8cca9a27743!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오후 10:30",
-      "화요일: 오전 8:00 ~ 오후 10:30",
-      "수요일: 오전 8:00 ~ 오후 10:30",
-      "목요일: 오전 8:00 ~ 오후 10:30",
-      "금요일: 오전 8:00 ~ 오후 10:30",
-      "토요일: 오전 8:00 ~ 오후 10:30",
-      "일요일: 오전 8:00 ~ 오후 10:30"
+      "Monday: 8:00 AM - 10:30 PM",
+      "Tuesday: 8:00 AM - 10:30 PM",
+      "Wednesday: 8:00 AM - 10:30 PM",
+      "Thursday: 8:00 AM - 10:30 PM",
+      "Friday: 8:00 AM - 10:30 PM",
+      "Saturday: 8:00 AM - 10:30 PM",
+      "Sunday: 8:00 AM - 10:30 PM"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3573,14 +3573,14 @@
         "author": "Joseph T E",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "잃어버린"
+        "relative_time": "3 years ago",
+        "text": "lost"
       },
       {
-        "author": "장장재웅",
+        "author": "Jaewoong Jang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       }
     ],
@@ -3588,8 +3588,8 @@
   },
   {
     "place_id": "ChIJKf44FWi7fDURwNTuPAZSKZk",
-    "display_name": "우창마트",
-    "category": "슈퍼마켓",
+    "display_name": "Wuchang Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3599,8 +3599,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 청량리동 18-18번지 동대문구 서울특별시 KR",
-    "short_address": "청량리동 18-18번지 동대문구 서울특별시 KR",
+    "address": "18-18 Cheongnyangni-dong, Seoul, Republic of Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "18-18 Cheongnyangni-dong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5867045,
       "lng": 127.05201489999999
@@ -3621,8 +3621,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3631,8 +3631,8 @@
   },
   {
     "place_id": "ChIJLaVvwWu7fDURde0w7TUUksI",
-    "display_name": "도영슈퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Doyoung Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3642,8 +3642,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 휘경동 308-91번지 동대문구 서울특별시 KR",
-    "short_address": "휘경동 308-91번지 동대문구 서울특별시 KR",
+    "address": "308-91 Hwigyeong-dong, Seoul, Republic of Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "308-91 Hwigyeong-dong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5869802,
       "lng": 127.05718929999998
@@ -3668,24 +3668,24 @@
     "parking": null,
     "reviews": [
       {
-        "author": "김진영",
+        "author": "Jinyoung Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "좋아요"
+        "relative_time": "5 years ago",
+        "text": "great"
       },
       {
-        "author": "심재남",
+        "author": "Shim Jaenam",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       },
       {
-        "author": "안성익",
+        "author": "Seongik Ahn",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -3693,16 +3693,16 @@
   },
   {
     "place_id": "ChIJAY1G0W67fDURzVOYYAYSn48",
-    "display_name": "미래화장품",
-    "category": "화장품 판매점",
+    "display_name": "Mirae Cosmetics",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동",
-    "short_address": "동대문구 회기동",
+    "address": "Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.589888099999996,
       "lng": 127.05384059999999
@@ -3723,8 +3723,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3733,8 +3733,8 @@
   },
   {
     "place_id": "ChIJm-o39cq7fDURTSGf7647jGc",
-    "display_name": "제이쉬",
-    "category": "여성의류점",
+    "display_name": "Jaycee",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "point_of_interest",
@@ -3742,8 +3742,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기로 168 1 층",
-    "short_address": "동대문구 회기로 168 1 층",
+    "address": "1st floor, 168 Hoegi-ro, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "1st floor, 168 Hoegi-ro, Dongdaemun-gu",
     "location": {
       "lat": 37.590320999999996,
       "lng": 127.05467639999999
@@ -3764,8 +3764,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3775,8 +3775,8 @@
         "author": "shawn HONG",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "친절하고 센스 있는 사장님의 최신 트랜드의 이쁘고 젊은 여성복들을 잘 갖추어놓은 아담하고 이쁜 매장"
+        "relative_time": "3 years ago",
+        "text": "A small, pretty store with a good selection of the latest trends and pretty, young women's clothing, run by a kind and sensible owner."
       }
     ],
     "photos": [
@@ -3788,16 +3788,16 @@
   },
   {
     "place_id": "ChIJRx9suG67fDURLMDuv15Bnmo",
-    "display_name": "사랑빌딩",
-    "category": "귀금속 상점",
+    "display_name": "Love Building",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동",
-    "short_address": "동대문구 회기동",
+    "address": "Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5898389,
       "lng": 127.0548503
@@ -3825,16 +3825,16 @@
   },
   {
     "place_id": "ChIJMQoK6W67fDURM7XE5UFKGnU",
-    "display_name": "미샤",
-    "category": "화장품 판매점",
+    "display_name": "Missha",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 회기동 58-3번지 1층 동대문구 서울특별시 KR",
-    "short_address": "회기동 58-3번지 1층 동대문구 서울특별시 KR",
+    "address": "1st floor, 58-3, Hoegi-dong, Seoul, Republic of Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "1st floor, 58-3, Hoegi-dong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5906509,
       "lng": 127.0543563
@@ -3855,8 +3855,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3865,16 +3865,16 @@
   },
   {
     "place_id": "ChIJGVPGv267fDURMQgs-JBPbAk",
-    "display_name": "패션잡화",
-    "category": "의류점",
+    "display_name": "Fashion miscellaneous goods",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 76-2번지",
-    "short_address": "동대문구 회기동 76-2번지",
+    "address": "76-2, Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "76-2 Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5902418,
       "lng": 127.0549095
@@ -3895,8 +3895,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3906,16 +3906,16 @@
   },
   {
     "place_id": "ChIJce1K5m67fDUR8QYvXAcJyNI",
-    "display_name": "헌트인너웨어경희대점",
-    "category": "의류점",
+    "display_name": "Hunt Innerwear Kyung Hee University Branch",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 회기동 45-57번지 동대문구 서울특별시 KR",
-    "short_address": "회기동 45-57번지 동대문구 서울특별시 KR",
+    "address": "45-57 Hoegi-dong, Seoul, Republic of Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "45-57 Hoegi-dong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5907754,
       "lng": 127.05403199999999
@@ -3936,8 +3936,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3947,16 +3947,16 @@
   },
   {
     "place_id": "ChIJR9dG6267fDUR_TWoi9u0P2k",
-    "display_name": "솔브경희대점",
-    "category": "의류점",
+    "display_name": "Solve Kyung Hee University Branch",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 346",
-    "short_address": "동대문구 회기동 346",
+    "address": "346, Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "346, Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5905954,
       "lng": 127.0547318
@@ -3977,8 +3977,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3988,16 +3988,16 @@
   },
   {
     "place_id": "ChIJM61hym67fDUR643cJYr6V3w",
-    "display_name": "자블라니",
-    "category": "의류점",
+    "display_name": "Jabulani",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 회기동 72-9번지 회기동 1층 동대문구 서울특별시 KR",
-    "short_address": "회기동 72-9번지 회기동 1층 동대문구 서울특별시 KR",
+    "address": "1st floor, Hoegi-dong, 72-9 Hoegi-dong, Seoul, Republic of Korea Dongdaemun-gu Seoul KR",
+    "short_address": "72-9 Hoegi-dong, 1st floor, Hoegi-dong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5893726,
       "lng": 127.05471899999999
@@ -4018,7 +4018,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4027,16 +4027,16 @@
   },
   {
     "place_id": "ChIJhZF97G67fDURwmf11CigF9Y",
-    "display_name": "민비이주얼리",
-    "category": "귀금속 상점",
+    "display_name": "Minbi Jewelry",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 57-15번지 1층 101호",
-    "short_address": "동대문구 회기동 57-15번지 1층 101호",
+    "address": "Room 101, 1st floor, 57-15 Hoegi-dong, Dongdaemun-gu, Seoul, Republic of Korea",
+    "short_address": "Room 101, 1st floor, 57-15 Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5907215,
       "lng": 127.0546215
@@ -4057,7 +4057,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "체크카드"
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4066,16 +4066,16 @@
   },
   {
     "place_id": "ChIJiTq57m67fDURm47h3CmGYfM",
-    "display_name": "슈즈왕국",
-    "category": "신발 판매점",
+    "display_name": "Shoe Kingdom",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 57-11번지",
-    "short_address": "동대문구 회기동 57-11번지",
+    "address": "57-11, Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "57-11 Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.590835,
       "lng": 127.05438679999999
@@ -4096,48 +4096,48 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "장기영",
+        "author": "Jang Ki-young",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "저는 슈즈왕국의 오랜단골입니다\n올해 비가 많이 오는 날\n\n물이  들어가서\n샌들이 찢어져서\n도움을 요청드렸는데\n\n새 샌들로 아예  교환해주셨고\n\n250mm로 치수가 맞지 않은 경우에도\n맞는 치수로 교환해주셨습니다\n\n현재 저는 270mm를 신고 있고\n\n오랫동안 정직하게 장사해온\n회기동 착한 구두가게입니다.\n\n믿고 거래하셔도 되는 집입니다"
+        "relative_time": "6 months ago",
+        "text": "I am a long-time regular at Shoe Kingdom.\nA rainy day this year\n\nWater got in\nMy sandals are torn\nI asked for help\n\nThey exchanged them for new sandals.\n\nEven if the dimensions do not match 250mm\nExchanged it for the correct size.\n\nCurrently I am wearing 270mm\n\nWe have been doing business honestly for a long time.\nThis is a good shoe store in Hoegi-dong.\n\nThis is a house you can trust and do business with."
       },
       {
-        "author": "오동진",
+        "author": "Oh Dong-jin",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "11달 전",
-        "text": "2025년 1월에 45,000원짜리 샌들을 구입했습니다. 사실 비싸게 느꼈지만 그대로 구입했습니다. 그런데 2개월도 안 되었는데 양쪽이 다 찢어졌습니다. 그래서 가게를 방문했더니 새로운 신발로 교체해 두더군요. 2개월 동안 신었던 것도 있어 그냥 받지 않고 2만원을 주었습니다.\n\n그런데 다음날 아침에 교체해준 샌들이 다 찢어졌습니다. 화가 나서 다시 가게를 방문했습니다. 사장은 자기 잘못이 아니라 신발 불량이라고 말만 합니다. 심지어 환불 요구했더니만 새로운 샌들로 교체해 주고 추가로 지불한 2만원은 돈 대신 슬리퍼로 교환해 주더군요.\n\n사장하고 더 싸우고 싶었지만 6,5000원으로 이렇게까지 해야 하나 싶어 그만 두었습니다.\n\n참으로 다시는 가고 싶지 않은 가게입니다."
+        "relative_time": "11 months ago",
+        "text": "I purchased sandals worth 45,000 won in January 2025. Actually, I felt it was expensive, but I bought it anyway. But less than two months later, both sides were torn. So I visited the store and they replaced it with new shoes. I wore some for 2 months, so instead of just accepting it, I gave them 20,000 won.\n\nBut the next morning, the sandals I replaced were all torn. I got angry and went back to the store. The boss just says it's not his fault, it's the defective shoes. Even when I asked for a refund, they replaced it with new sandals and exchanged the additional 20,000 won I paid for slippers instead of money.\n\nI wanted to fight more with the boss, but I stopped because I didn't know if I had to go this far for 6,5000 won.\n\nThis is truly a store I never want to go to again."
       },
       {
         "author": "Lloyd shin",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "4년 전",
-        "text": "들어가자마자 뭔 말도 없이 축구나 참 열심히 보심 ㅋㅋ 이거 얼마냐고 3번 말하니까 그제야 답하는데 (아마도 바가지인듯) 8만원이라고 턱없이 비싼가격 불러서 나가려니까 가격 5만원까지 내려서 부름,, 걍 괘씸해서 \"다음에 올게요~\" 이러니까 \"장사 안되는데 x발 도와주지도 않네\"라고 욕 박고 짜증내더라,,,\n사장님 장사가 안되는건 아마 사장님 빼고 다 알듯하네요~"
+        "relative_time": "4 years ago",
+        "text": "As soon as he entered, he didn't say anything and watched soccer really hard. I asked him 3 times how much it was, and only then did he answer (probably a rip-off). He called me for a ridiculously high price of 80,000 won, and when I tried to leave, he lowered the price to 50,000 won. When I said, \"I'll come next time~\", he cursed and got annoyed, saying, \"It's no business and you're not helping me.\"\nI think everyone but the boss knows that business is not going well."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJP2w8lG67fDURN8iAKE0RJSQ",
-    "display_name": "유니크클로젯",
-    "category": "의류점",
+    "display_name": "Unique Closet",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 346 20번지 1층",
-    "short_address": "동대문구 회기동 346 20번지 1층",
+    "address": "1st floor, 346 20, Hoegi-dong, Dongdaemun-gu, Seoul, Korea",
+    "short_address": "1st floor, 346 20, Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5904467,
       "lng": 127.05507109999998
@@ -4158,8 +4158,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4168,16 +4168,16 @@
   },
   {
     "place_id": "ChIJW20bwmq7fDURayq4KFxH8MY",
-    "display_name": "Hong 홍",
-    "category": "의류점",
+    "display_name": "Hong Hong",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기로 171 홍",
-    "short_address": "동대문구 회기로 171 홍",
+    "address": "171 Hong, Hoegi-ro, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "171 Hong, Hoegi-ro, Dongdaemun-gu",
     "location": {
       "lat": 37.5904467,
       "lng": 127.05507109999998
@@ -4196,28 +4196,28 @@
     "google_maps_url": "https://maps.google.com/?cid=14335036075066010219",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6ac21b6d5b:0xc6f0475c28b82a6b!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 10:00",
-      "화요일: 오전 10:30 ~ 오후 10:00",
-      "수요일: 오전 10:30 ~ 오후 10:00",
-      "목요일: 오전 10:30 ~ 오후 10:00",
-      "금요일: 오전 10:30 ~ 오후 10:00",
-      "토요일: 오전 10:30 ~ 오후 10:00",
-      "일요일: 오전 10:30 ~ 오후 10:00"
+      "Monday: 10:30 AM - 10:00 PM",
+      "Tuesday: 10:30 AM - 10:00 PM",
+      "Wednesday: 10:30 AM - 10:00 PM",
+      "Thursday: 10:30 AM - 10:00 PM",
+      "Friday: 10:30 AM - 10:00 PM",
+      "Saturday: 10:30 AM - 10:00 PM",
+      "Sunday: 10:30 AM - 10:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "홍구구리리",
+        "author": "Hongguguriri",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1주 전",
+        "relative_time": "1 week ago",
         "text": null
       }
     ],
@@ -4227,16 +4227,16 @@
   },
   {
     "place_id": "ChIJQ2-eMWm7fDURkjxLrSSxOu8",
-    "display_name": "날개달린구제",
-    "category": "의류점",
+    "display_name": "winged relief",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 회기동 71-4번지 동대문구 서울특별시 KR",
-    "short_address": "회기동 71-4번지 동대문구 서울특별시 KR",
+    "address": "71-4 Hoegi-dong, Seoul, Republic of Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "71-4 Hoegi-dong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5890357,
       "lng": 127.05428160000001
@@ -4257,7 +4257,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4266,16 +4266,16 @@
   },
   {
     "place_id": "ChIJnUSMH2-7fDUR4M5wXpjf2bU",
-    "display_name": "미즈앤엑스",
-    "category": "의류점",
+    "display_name": "Miz&X",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 회기동 45-105번지 1층 동대문구 서울특별시 KR",
-    "short_address": "회기동 45-105번지 1층 동대문구 서울특별시 KR",
+    "address": "1st floor, 45-105 Hoegi-dong, Seoul, Republic of Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "1st floor, 45-105 Hoegi-dong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.590896099999995,
       "lng": 127.0533534
@@ -4296,8 +4296,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4306,15 +4306,15 @@
   },
   {
     "place_id": "ChIJB1xKl267fDURRYYoD2KcqKo",
-    "display_name": "트라이경희대점",
-    "category": "의류점",
+    "display_name": "Tri Kyung Hee University Branch",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5904222,
@@ -4336,8 +4336,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4347,16 +4347,16 @@
   },
   {
     "place_id": "ChIJgcG2GG-7fDURxMuWqPDl1s0",
-    "display_name": "예스",
-    "category": "의류점",
+    "display_name": "yes",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 회기동 45-107번지 동대문구 서울특별시 KR",
-    "short_address": "회기동 45-107번지 동대문구 서울특별시 KR",
+    "address": "45-107 Hoegi-dong, Seoul, Republic of Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "45-107 Hoegi-dong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5910273,
       "lng": 127.05308789999998
@@ -4377,8 +4377,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4388,15 +4388,15 @@
   {
     "place_id": "ChIJlUuZHW-7fDURz7Vdx6LAPfI",
     "display_name": "JELKEL",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 회기동 45-73번지 동대문구 서울특별시 KR",
-    "short_address": "회기동 45-73번지 동대문구 서울특별시 KR",
+    "address": "45-73 Hoegi-dong, Seoul, South Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "45-73 Hoegi-dong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5912748,
       "lng": 127.05338369999998
@@ -4417,8 +4417,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4427,16 +4427,16 @@
   },
   {
     "place_id": "ChIJIcLaSWm7fDURo4ickIByR5g",
-    "display_name": "아모레퍼시픽동대문점",
-    "category": "화장품 판매점",
+    "display_name": "Amore Pacific Dongdaemun Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 휘경동 번지 3층 336-4",
-    "short_address": "동대문구 휘경동 번지 3층 336-4",
+    "address": "336-4, 3rd floor, Hwigyeong-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "336-4, 3rd floor, Hwigyeong-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5887905,
       "lng": 127.05482939999999
@@ -4457,8 +4457,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4469,15 +4469,15 @@
   {
     "place_id": "ChIJ0e-vGW-7fDUR0B_ZbZMnA3A",
     "display_name": "URBAN",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 회기동 45-53번지 동대문구 서울특별시 KR",
-    "short_address": "회기동 45-53번지 동대문구 서울특별시 KR",
+    "address": "45-53 Hoegi-dong, Seoul, Republic of Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "45-53 Hoegi-dong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.591212399999996,
       "lng": 127.05290889999999
@@ -4498,8 +4498,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4509,16 +4509,16 @@
   },
   {
     "place_id": "ChIJw-fMGW-7fDURcrQ2VyZGvhA",
-    "display_name": "바이오나라",
-    "category": "화장품 판매점",
+    "display_name": "Bionara",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 45-104",
-    "short_address": "동대문구 회기동 45-104",
+    "address": "45-104 Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "45-104 Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5911998,
       "lng": 127.05282260000001
@@ -4539,8 +4539,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4549,16 +4549,16 @@
   },
   {
     "place_id": "ChIJAY1G0W67fDURgivxLZrIGLs",
-    "display_name": "유렛",
-    "category": "전자제품 판매점",
+    "display_name": "Youret",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 351번지 301호",
-    "short_address": "동대문구 회기동 351번지 301호",
+    "address": "#301, 351 Hoegi-dong, Dongdaemun-gu, Seoul, Republic of Korea",
+    "short_address": "#301, 351 Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.589888099999996,
       "lng": 127.05384059999999
@@ -4579,8 +4579,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4589,8 +4589,8 @@
   },
   {
     "place_id": "ChIJAY1G0W67fDURc5JlGiOJo9M",
-    "display_name": "세븐데일리",
-    "category": "편의점",
+    "display_name": "Seven Daily",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4599,8 +4599,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 회기동 351번지 101동 1101호 회기힐스테이트 동대문구 서울특별시 KR",
-    "short_address": "회기동 351번지 101동 1101호 회기힐스테이트 동대문구 서울특별시 KR",
+    "address": "Hoegi Hillstate, #1101, Building 101, 351 Hoegi-dong, Seoul, Republic of Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "351 Hoegi-dong, 101-dong, Room 1101, Hoegi Hillstate, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.589888099999996,
       "lng": 127.05384059999999
@@ -4621,8 +4621,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4632,8 +4632,8 @@
   },
   {
     "place_id": "ChIJNSRWEFe7fDURpPqEZq-vKhA",
-    "display_name": "CU 회기힐스테이트점",
-    "category": "편의점",
+    "display_name": "CU Hoegi Hillstate Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4642,8 +4642,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기로26길 15 회기힐스테이트 1층 103-2호",
-    "short_address": "동대문구 회기로26길 15 회기힐스테이트 1층 103-2호",
+    "address": "#103-2, 1st floor, Hoegi Hillstate, 15 Hoegi-ro 26-gil, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "#103-2, 1st floor, Hoegi Hillstate, 15 Hoegi-ro 26-gil, Dongdaemun-gu",
     "location": {
       "lat": 37.589504,
       "lng": 127.05463029999999
@@ -4662,18 +4662,18 @@
     "google_maps_url": "https://maps.google.com/?cid=1164936621502823076",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb5710562435:0x102aafaf6684faa4!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4683,8 +4683,8 @@
   },
   {
     "place_id": "ChIJiTq57m67fDURPFfCqlJ8VZA",
-    "display_name": "세븐일레븐 경희대대현점",
-    "category": "편의점",
+    "display_name": "7-Eleven Kyunghee University Daehyeon Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4693,8 +4693,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기로 163",
-    "short_address": "동대문구 회기로 163",
+    "address": "163 Hoegi-ro, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "163 Hoegi-ro, Dongdaemun-gu",
     "location": {
       "lat": 37.590835,
       "lng": 127.05438679999999
@@ -4713,18 +4713,18 @@
     "google_maps_url": "https://maps.google.com/?cid=10400355608976054076",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6eeeb93a89:0x90557c52aac2573c!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4734,8 +4734,8 @@
   },
   {
     "place_id": "ChIJ5fB2u267fDURoddZ5paPGLM",
-    "display_name": "세븐일레븐 회기해피파크점",
-    "category": "편의점",
+    "display_name": "7-Eleven Hoegi Happy Park Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4744,8 +4744,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 이문로 19",
-    "short_address": "동대문구 이문로 19",
+    "address": "19 Imun-ro, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "19 Imun-ro, Dongdaemun-gu",
     "location": {
       "lat": 37.5898233,
       "lng": 127.05530770000001
@@ -4764,18 +4764,18 @@
     "google_maps_url": "https://maps.google.com/?cid=12905222610502670241",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6ebb76f0e5:0xb3188f96e659d7a1!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4785,8 +4785,8 @@
   },
   {
     "place_id": "ChIJy9c_sm67fDURlUVGbkgrDaY",
-    "display_name": "CU 회기나무점",
-    "category": "편의점",
+    "display_name": "CU Hoeginamu Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4795,8 +4795,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 이문로 18",
-    "short_address": "동대문구 이문로 18",
+    "address": "18 Imun-ro, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "18 Imun-ro, Dongdaemun-gu",
     "location": {
       "lat": 37.5892039,
       "lng": 127.05537899999999
@@ -4815,18 +4815,18 @@
     "google_maps_url": "https://maps.google.com/?cid=11965267375081014677",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6eb23fd7cb:0xa60d2b486e464595!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4836,16 +4836,16 @@
         "author": "Salome Bibilashvili",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "2주 전",
-        "text": "점원 때문에 정말 짜증나는 경험을 했습니다. 한국 사람들이 구글 지도를 잘 안 쓴다는 건 알지만, 아무도 신경 안 쓰겠지만, 제 불만을 좀 표현하고 싶었어요. 안경 쓴 여직원이 저랑 제 친구에게 너무 공격적인 태도를 보였어요. 벌써 세 번이나 그랬습니다. 제가 외국인이라서 그런 건지, 아니면 다른 사람들도 다 그런 건지는 모르겠지만, 그 직원은 모든 일에 화를 내고 짜증을 내면서 금방 참을성을 잃어요. 게다가 내내 저를 노려보기까지 했습니다."
+        "relative_time": "2 weeks ago",
+        "text": "I had a really annoying experience with the clerk. I know Koreans don't use Google Maps very often, and no one will care, but I wanted to express my dissatisfaction. The female employee wearing glasses was very aggressive toward me and my friend. It's already happened three times. I don't know if it's because I'm a foreigner, or if everyone else is like that too, but the employee gets angry and irritated about everything and quickly loses patience. Plus, he was glaring at me the whole time."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJy9c_sm67fDURsFMmWePeUnk",
-    "display_name": "지에스25회기이문로점",
-    "category": "편의점",
+    "display_name": "GS 25 Hoegi Imunro Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4854,8 +4854,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 휘경동 333-5번지 4필지 101호 동대문구 서울특별시 KR",
-    "short_address": "휘경동 333-5번지 4필지 101호 동대문구 서울특별시 KR",
+    "address": "#101, Lot 4, 333-5 Hwigyeong-dong, Seoul, Republic of Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "#101, Lot 4, 333-5 Hwigyeong-dong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5892039,
       "lng": 127.05537899999999
@@ -4876,8 +4876,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4888,7 +4888,7 @@
   {
     "place_id": "ChIJlZXh3Gi7fDURy0X72qKlCV8",
     "display_name": "gs25",
-    "category": "편의점",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4897,7 +4897,7 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5888893,
@@ -4919,8 +4919,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4930,8 +4930,8 @@
   },
   {
     "place_id": "ChIJ7W9suGi7fDURoyDm7WAuA6w",
-    "display_name": "지에스25청량현대점",
-    "category": "편의점",
+    "display_name": "GS25 Cheongnyang Hyundai Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4940,8 +4940,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 청량리 신현대아파트 1층 101 103 104호 KR 서울특별시 동대문구 회기동 65번지 상가",
-    "short_address": "청량리 KR 서울특별시 동대문구 회기동 65번지 상가 신현대아파트 1층 101 103 104호",
+    "address": "101 103 104, 1st floor, Shinhyundai Apartment, Cheongnyangni, Seoul, Republic of Korea KR 65 Hoegi-dong, Dongdaemun-gu, Seoul, Shopping Mall",
+    "short_address": "Cheongnyangni KR 101 103 104, 1st floor, Shinhyundai Apartment, 65 Hoegi-dong, Dongdaemun-gu, Seoul",
     "location": {
       "lat": 37.5895359,
       "lng": 127.05204919999998
@@ -4962,8 +4962,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4973,8 +4973,8 @@
   },
   {
     "place_id": "ChIJQ5fPH2y7fDURnNJNpAefTaI",
-    "display_name": "GS25 신회기역점",
-    "category": "편의점",
+    "display_name": "GS25 Shinhoegi Station Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4983,8 +4983,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 휘경제1동 회기로 182",
-    "short_address": "동대문구 휘경제1동 회기로 182",
+    "address": "182, Hoegyeong-ro, Hwigyeong 1-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "182, Hoegyeong-ro, Hwigyeongje 1-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5897508,
       "lng": 127.0561635
@@ -5003,18 +5003,18 @@
     "google_maps_url": "https://maps.google.com/?cid=11695178662521197212",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6c1fcf9743:0xa24d9f07a44dd29c!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5024,16 +5024,16 @@
   },
   {
     "place_id": "ChIJj2s33qq7fDURB-JyqB-zmUY",
-    "display_name": "책나라",
-    "category": "서점",
+    "display_name": "book country",
+    "category": "bookstore",
     "types": [
       "book_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 경희대로4길 60",
-    "short_address": "동대문구 경희대로4길 60",
+    "address": "60 Kyunghee-daero 4-gil, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "60 Kyunghee-daero 4-gil, Dongdaemun-gu",
     "location": {
       "lat": 37.5913974,
       "lng": 127.0553841

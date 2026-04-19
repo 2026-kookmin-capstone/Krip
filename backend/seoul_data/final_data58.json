@@ -1,15 +1,15 @@
 [
   {
     "place_id": "ChIJlZhyycSkfDUR6JcmGstQbtk",
-    "display_name": "화음노래광장",
-    "category": "노래방",
+    "display_name": "Hwaeum Song Square",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 화양동 111-161번지 하동 1층 광진구 서울특별시 KR",
-    "short_address": "화양동 111-161번지 하동 1층 광진구 서울특별시 KR",
+    "address": "1st floor, Hadong, 111-161 Hwayang-dong, Seoul, Republic of Korea, Gwangjin-gu, Seoul KR",
+    "short_address": "111-161 Hwayang-dong, 1st floor, Hadong, Gwangjin-gu, Seoul KR",
     "location": {
       "lat": 37.5474197,
       "lng": 127.0718167
@@ -29,11 +29,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c4c9729895:0xd96e50cb1a2697e8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -42,15 +42,15 @@
   },
   {
     "place_id": "ChIJ22iizsSkfDURSA5SMJ4p_68",
-    "display_name": "인디아나노래방",
-    "category": "노래방",
+    "display_name": "Indiana Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 화양동 111-5번지 2층 광진구 서울특별시 KR",
-    "short_address": "화양동 111-5번지 2층 광진구 서울특별시 KR",
+    "address": "2nd floor, 111-5 Hwayang-dong, Seoul, Republic of Korea, Gwangjin-gu, Seoul KR",
+    "short_address": "2nd floor, 111-5 Hwayang-dong, Gwangjin-gu, Seoul KR",
     "location": {
       "lat": 37.5475795,
       "lng": 127.07186669999999
@@ -70,11 +70,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c4cea268db:0xafff299e30520e48!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -83,16 +83,16 @@
   },
   {
     "place_id": "ChIJxXjJd-mkfDURbDbPKnb0wtA",
-    "display_name": "코드네임블랙",
-    "category": "실내 놀이터",
+    "display_name": "code name black",
+    "category": "indoor playground",
     "types": [
       "indoor_playground",
       "playground",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 지하1층 코드네임블랙",
-    "short_address": "광진구 지하1층 코드네임블랙",
+    "address": "Code Name Black, Basement 1, Gwangjin-gu, Seoul, Republic of Korea",
+    "short_address": "Gwangjin-gu Basement 1, Code Name Black",
     "location": {
       "lat": 37.5406154,
       "lng": 127.0676811
@@ -111,18 +111,18 @@
     "google_maps_url": "https://maps.google.com/?cid=15042854493732419180",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4e977c978c5:0xd0c2f4762acf366c!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오전 12:00",
-      "화요일: 오전 10:00 ~ 오전 12:00",
-      "수요일: 오전 10:00 ~ 오전 12:00",
-      "목요일: 오전 10:00 ~ 오전 12:00",
-      "금요일: 오전 10:00 ~ 오전 12:00",
-      "토요일: 오전 10:00 ~ 오전 12:00",
-      "일요일: 오전 10:00 ~ 오전 12:00"
+      "Monday: 10:00 AM - 12:00 AM",
+      "Tuesday: 10:00 AM - 12:00 AM",
+      "Wednesday: 10:00 AM - 12:00 AM",
+      "Thursday: 10:00 AM - 12:00 AM",
+      "Friday: 10:00 AM - 12:00 AM",
+      "Saturday: 10:00 AM - 12:00 AM",
+      "Sunday: 10:00 AM - 12:00 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -131,44 +131,44 @@
         "author": "Kimberly An",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
-        "text": "초보 방탈출ㅈ러로서 재밌었움. 제일 낮은 난이도였지만 7분 남겨두고 탈출성공! 완전 쉬운것도 완전 어려운것도 아니었음. 겨울인데도 관리를 안하는건지 모기가 꽤잏었음. 현재기온 ㅡ7도...인데....성공하면 인증샷 찍어줌 둘이가면 한장찍어주던데 셋이가도 한장일듯..아쉽..각 한장씩 갖고싶었는데ㅠㅜ사진때문에 별3개! 나머진 만족."
+        "relative_time": "7 years ago",
+        "text": "It was fun as a beginner escape room enthusiast. It was the lowest difficulty level, but we successfully escaped with 7 minutes left! It wasn't completely easy or completely difficult. Even though it was winter, there were quite a few mosquitoes, probably due to lack of maintenance. The current temperature is 7 degrees... If you succeed, they will take a proof photo. If two people go, they will take one picture, but even if three people go, it will only take one... Too bad... I wanted one of each, but 3 stars because of the picture! The rest is satisfactory."
       },
       {
-        "author": "루파팡",
+        "author": "Lupa Pang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "크라임씬 :피의결혼식? 했습니다.\n크라임씬은 각자 배역을 맡아 연기(?)하면서 범인이 아님을 부정하고 증거를찾고 브리핑하는형식.\n마지막엔 범인을 찾고. 감옥에 가두고.\n협동하여 방탈출하는 게임을 하다가, 이렇게 배역이있고 범인을 찾는 게임하니 또다른 재미더라구요.\n그 크라임씬프로그램으로 나온거라는데.\n크라임씬프로그램처럼 크게는아니어도 방이 조금씩 나뉜형태엿음 더 좋았을것같아요.\n한방에 모든방이 있다보니 조금 갑갑..\n그래도 색다로운추억이되어서 좋았고,\n직원분들도 센스라던지 친절하고 좋았어요ㅋㅋ"
+        "relative_time": "7 years ago",
+        "text": "Crime Scene: Blood Wedding? I did it.\nIn a crime scene, each person takes on a role and acts(?), denying that they are the culprit, finding evidence, and briefing them.\nFinally, find the culprit. Put him in jail.\nAfter playing a collaborative escape room game, it was fun to play a game where you had roles and had to find the culprit.\nI heard it came out of that crime scene program.\nI think it would have been better if the rooms were slightly divided, although not as large as in the crime scene program.\nIt's a bit cramped since all the rooms are in one room.\nStill, it was nice to have a different memory,\nThe staff were also kind and nice."
       },
       {
-        "author": "김선아",
+        "author": "Kim Seon-a",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "존체 테마가 어렵지 않고 흥미진진하고 재밌어요! 스토리를 찬찬히 따라가면서 플레이하면 재밌답니다!\n이제는 플레이 안한게 크라임씬 하나만 남아서 너무 어쉬워요. ㅠㅜ"
+        "relative_time": "6 years ago",
+        "text": "The theme is not difficult, but it is exciting and fun! It's fun to play while carefully following the story!\nNow, I'm so sad that there's only one crime scene left that I haven't played. ㅠㅜ"
       },
       {
-        "author": "크로미얀",
+        "author": "Chromyan",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "로스트 원더랜드 완주했습니다\n심장 쫄깃하고 불안함에 자꾸 뒤돌아보게 만드는 분위기가 아주 좋았습니다.\n전체적으로 아주 어둡지않아 문제를 읽는데도 어려움이 없었구요.\n저같은 초심자들도 적극적으로 달려들면 헤매더라도 완주할 수 있을만한 난이도였습니다.\n다만 불편한 점도 많았습니다.\n첫번째 방에 고정되어있는 노트북으로 힌트를 요청하기때문에 방을 넘어가게되면 되돌아오기가 심히 귀찮습니다.\n방과 방 사이의 문은 닫히면 자동으로 잠기게되는데 저희는 어떠한 경고도 듣지못해 잠시간 좁은 공간에 갇혀있었습니다.\n또한 힘으로 뜯어내면 안된다고 주의를 줄 정도면 중요한 클루를 그렇게 숨겨둬서는 안된다고 생각합니다.\n\n전체적으로 아주 즐거웠었고 다음에는 다른 방도 시도해보고싶네요"
+        "relative_time": "6 years ago",
+        "text": "Lost Wonderland completed\nI really liked the atmosphere that made my heart pound and I kept looking back with anxiety.\nIt wasn't very dark overall, so I didn't have any trouble reading the questions.\nIt was a level of difficulty that even beginners like me could finish the course even if they got lost if they tried hard.\nHowever, there were many inconveniences.\nBecause hints are requested from a laptop fixed in the first room, it is very annoying to return once you pass the room.\nThe door between rooms automatically locks when closed, but we didn't hear any warnings, so we were trapped in a small space for a while.\nAlso, I don't think important clews should be hidden like that, even if they warn you not to use force to tear them off.\n\nOverall, it was very enjoyable and I want to try other rooms next time."
       },
       {
-        "author": "ᄏᄏ",
+        "author": "Haha",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
-        "text": "더러움 냄새남.. 특히 화장실에 한겨울에도 모기있음\n게임 설명이 친절하지않음\n게임고 재미없음"
+        "relative_time": "6 years ago",
+        "text": "It smells dirty.. especially there are mosquitoes in the bathroom even in the middle of winter.\nGame description is not friendly\nThe game is not fun"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJ_4KR9MKkfDURwHpgloSRNfE",
-    "display_name": "한아름 볼링장",
-    "category": "볼링장",
+    "display_name": "Hanareum Bowling Alley",
+    "category": "bowling club",
     "types": [
       "bowling_alley",
       "sports_complex",
@@ -176,7 +176,7 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5434315,
@@ -196,60 +196,60 @@
     "google_maps_url": "https://maps.google.com/?cid=17380958335550913216",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c2f49182ff:0xf135918496607ac0!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오전 3:00",
-      "화요일: 오전 10:00 ~ 오전 3:00",
-      "수요일: 오전 10:00 ~ 오전 3:00",
-      "목요일: 오전 10:00 ~ 오전 3:00",
-      "금요일: 오전 10:00 ~ 오전 3:00",
-      "토요일: 오전 10:00 ~ 오전 3:00",
-      "일요일: 오전 10:00 ~ 오전 3:00"
+      "Monday: 10:00 AM - 3:00 AM",
+      "Tuesday: 10:00 AM - 3:00 AM",
+      "Wednesday: 10:00 AM - 3:00 AM",
+      "Thursday: 10:00 AM - 3:00 AM",
+      "Friday: 10:00 AM - 3:00 AM",
+      "Saturday: 10:00 AM - 3:00 AM",
+      "Sunday: 10:00 AM - 3:00 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "김실비아",
+        "author": "Sylvia Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
-        "text": "볼링장과 당구장과 탁구장이 한곳에 모여 있어서\n가족이 함께가도 좋을듯 하네요~\n주차도 되고요~\n주말에는 사람많으니 평일이 좋았어요~\n허탕 친적도 있었거든요~"
+        "relative_time": "7 years ago",
+        "text": "A bowling alley, billiards room, and table tennis room are all located in one place.\nI think it would be nice to go with the family~\nYou can also park~\nWeekdays were good because there were a lot of people on the weekends.\nI also had a foolish relationship~"
       },
       {
-        "author": "이현동",
+        "author": "Lee Hyeon-dong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "볼링공 종류도 무게별로 다양하고 시설이 넓고 깔끔해요."
+        "relative_time": "3 years ago",
+        "text": "There are various types of bowling balls by weight, and the facilities are spacious and clean."
       },
       {
-        "author": "안Somi",
+        "author": "Somi An",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "직원분들 친절하시고 문제 처리 잘 해주셔서 좋습니다. 화장실도 깔끔하고 넓어서 좋아요~~~"
+        "relative_time": "4 years ago",
+        "text": "The staff is friendly and takes care of problems well. The bathroom is clean and spacious, so I like it~~~"
       },
       {
-        "author": "김현진",
+        "author": "Hyunjin Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "반짝반짝 거리던 볼링장이 생각납니다. 초보자라서 볼링을 그렇게 좋아하지 않았으나 친구들과 이쁜 야광의 볼린장을 보니 흥이 절로 났습니다 ㅎㅎ"
+        "relative_time": "7 years ago",
+        "text": "I remember the sparkling bowling alley. Since I was a beginner, I didn't really like bowling, but after seeing the pretty luminous bowling alley with my friends, I got excited haha."
       },
       {
-        "author": "박명희",
+        "author": "Park Myung-hee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "깨끗하고 좋네요..지하에 당구장.탁구장도\n같이 있어요"
+        "relative_time": "3 years ago",
+        "text": "It's clean and nice. There's a billiards room and table tennis room in the basement.\nWe're together"
       }
     ],
     "photos": [
@@ -267,8 +267,8 @@
   },
   {
     "place_id": "ChIJs9YLYemkfDURZI_6oopgXoM",
-    "display_name": "한반도교회",
-    "category": "교회",
+    "display_name": "Korean Peninsula Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -276,8 +276,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 자양동 9-29",
-    "short_address": "광진구 자양동 9-29",
+    "address": "9-29 Jayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "9-29 Jayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5399563,
       "lng": 127.06704490000001
@@ -297,7 +297,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4e9610bd6b3:0x835e608aa2fa8f64!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -307,8 +307,8 @@
   },
   {
     "place_id": "ChIJA2F8dsKkfDUReHZnFPk0P7k",
-    "display_name": "초대교회",
-    "category": "교회",
+    "display_name": "early church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -316,8 +316,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 47-43",
-    "short_address": "광진구 화양동 47-43",
+    "address": "47-43 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "47-43 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.542789299999995,
       "lng": 127.0685725
@@ -337,7 +337,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c2767c6103:0xb93f34f914677678!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -347,8 +347,8 @@
   },
   {
     "place_id": "ChIJYfgYQ-mkfDURwwRw9Li-s_E",
-    "display_name": "동성교회",
-    "category": "교회",
+    "display_name": "Dongseong Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -356,8 +356,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 아차산로30길 25-10",
-    "short_address": "광진구 아차산로30길 25-10",
+    "address": "25-10 Achasan-ro 30-gil, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "25-10 Achasan-ro 30-gil, Gwangjin-gu",
     "location": {
       "lat": 37.539421499999996,
       "lng": 127.06764199999999
@@ -377,11 +377,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4e94318f861:0xf1b3beb8f47004c3!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -389,14 +389,14 @@
         "author": "Taeseob Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       },
       {
-        "author": "김정미",
+        "author": "Kim Jeong-mi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -406,8 +406,8 @@
   },
   {
     "place_id": "ChIJAadnwOukfDURlT63LECb3Nc",
-    "display_name": "한마음교회",
-    "category": "교회",
+    "display_name": "Hanmaeum Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -415,8 +415,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 자양동 13-42",
-    "short_address": "광진구 자양동 13-42",
+    "address": "13-42 Jayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "13-42 Jayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5404007,
       "lng": 127.0656006
@@ -436,7 +436,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4ebc067a701:0xd7dc9b402cb73e95!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -446,8 +446,8 @@
   },
   {
     "place_id": "ChIJ09JDgcKkfDUR5VjktKMJis4",
-    "display_name": "여명교회",
-    "category": "교회",
+    "display_name": "Yeomyeong Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -455,8 +455,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 9-1",
-    "short_address": "광진구 화양동 9-1",
+    "address": "9-1 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "9-1 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5424283,
       "lng": 127.06982239999998
@@ -476,7 +476,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c28143d2d3:0xce8a09a3b4e458e5!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -486,8 +486,8 @@
   },
   {
     "place_id": "ChIJa-O2-MGkfDURwni6BF5pZF8",
-    "display_name": "사랑제일교회",
-    "category": "교회",
+    "display_name": "Sarang Jeil Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -495,8 +495,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 36-59",
-    "short_address": "광진구 화양동 36-59",
+    "address": "36-59 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "36-59 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5436225,
       "lng": 127.06679489999999
@@ -516,7 +516,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c1f8b6e36b:0x5f64695e04ba78c2!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -526,8 +526,8 @@
   },
   {
     "place_id": "ChIJxZjvcuqkfDUR-_7aHn6dX2Q",
-    "display_name": "은석교회",
-    "category": "교회",
+    "display_name": "Eunseok Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -535,8 +535,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 42-3",
-    "short_address": "광진구 화양동 42-3",
+    "address": "42-3 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "42-3 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5433252,
       "lng": 127.06540709999999
@@ -556,11 +556,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4ea72ef98c5:0x645f9d7e1edafefb!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": null,
@@ -568,8 +568,8 @@
   },
   {
     "place_id": "ChIJX51gV-qkfDURXFlj2DlwheM",
-    "display_name": "동순교회",
-    "category": "교회",
+    "display_name": "Dongsoon Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -577,8 +577,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 50-2",
-    "short_address": "광진구 화양동 50-2",
+    "address": "50-2 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "50-2 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.542428199999996,
       "lng": 127.06443399999999
@@ -598,7 +598,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4ea57609d5f:0xe3857039d863595c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -608,8 +608,8 @@
   },
   {
     "place_id": "ChIJXaNcru6kfDURm4QQCWZbaLI",
-    "display_name": "성수교회",
-    "category": "교회",
+    "display_name": "Seongsu Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -617,8 +617,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 능동로9길 38",
-    "short_address": "광진구 능동로9길 38",
+    "address": "38 Neungdong-ro 9-gil, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "38 Neungdong-ro 9-gil, Gwangjin-gu",
     "location": {
       "lat": 37.5381529,
       "lng": 127.06734979999999
@@ -638,13 +638,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4eeae5ca35d:0xb2685b660910849b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -652,44 +652,44 @@
         "author": "Hyeonil Choi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "어렸을 때 왔었고, 안다녔는데. 그대로 있어서 개인적으로 반가운 장소이군요. 교회. 또, 교회. 다녀보세요. 기독교. 전화해서 가 보세요. 저의 리뷰. 봐 주셔서 감사합니다."
+        "relative_time": "5 years ago",
+        "text": "I came here when I was young, and I knew it. It's a place that I'm personally glad to see still there. church. Also, church. Take a look. Christianity. Please call and go. My review. Thanks for watching."
       },
       {
-        "author": "백승진",
+        "author": "Seungjin Baek",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "사랑 넘치는 교회입니다♡"
+        "relative_time": "1 year ago",
+        "text": "This is a church full of love♡"
       },
       {
-        "author": "오진규",
+        "author": "Oh Jin-gyu",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "강유형 담임목사님의 설교가 아주 은혜롭습니다!"
+        "relative_time": "6 years ago",
+        "text": "Senior Pastor Yuhyeong Kang’s sermon is very gracious!"
       },
       {
-        "author": "백구하늘을 나는 백구",
+        "author": "Baekgu Baekgu flying in the sky",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "친절해요"
+        "relative_time": "4 years ago",
+        "text": "You are kind."
       },
       {
-        "author": "육성",
+        "author": "upbringing",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "최고입니다"
+        "relative_time": "2 years ago",
+        "text": "It's the best"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJa3YRtMOkfDURrI1wCIIQvbQ",
-    "display_name": "영신암",
-    "category": "불교사찰",
+    "display_name": "Yeongsinam Hermitage",
+    "category": "buddhist temple",
     "types": [
       "buddhist_temple",
       "place_of_worship",
@@ -697,8 +697,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 33-57",
-    "short_address": "광진구 화양동 33-57",
+    "address": "33-57 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "33-57 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.545233499999995,
       "lng": 127.0684891
@@ -718,7 +718,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c3b411766b:0xb4bd108208708dac!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -728,8 +728,8 @@
   },
   {
     "place_id": "ChIJdelxs8OkfDURP1pf0TqL4OI",
-    "display_name": "성호중앙교회",
-    "category": "교회",
+    "display_name": "Seongho Central Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -737,8 +737,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 33-29",
-    "short_address": "광진구 화양동 33-29",
+    "address": "33-29 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "33-29 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5450668,
       "lng": 127.06860019999999
@@ -758,7 +758,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c3b371e975:0xe2e08b3ad15f5a3f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -768,8 +768,8 @@
   },
   {
     "place_id": "ChIJzetaTcKkfDURVQOvOOlR2bc",
-    "display_name": "화양순볶음교회",
-    "category": "교회",
+    "display_name": "Hwayang Sunbokkeum Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -777,8 +777,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 33-34",
-    "short_address": "광진구 화양동 33-34",
+    "address": "33-34 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "33-34 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.544843799999995,
       "lng": 127.0688735
@@ -798,7 +798,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c24d5aebcd:0xb7d951e938af0355!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -808,8 +808,8 @@
   },
   {
     "place_id": "ChIJ7fkZ2cOkfDURNQcgWj_lBn4",
-    "display_name": "화양중앙교회",
-    "category": "교회",
+    "display_name": "Hwayang Central Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -817,8 +817,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 24-9",
-    "short_address": "광진구 화양동 24-9",
+    "address": "24-9 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "24-9 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5462889,
       "lng": 127.0670725
@@ -838,17 +838,17 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c3d919f9ed:0x7e06e53f5a200735!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "쭈니군",
+        "author": "Jjuni-gun",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -856,8 +856,8 @@
   },
   {
     "place_id": "ChIJ7fkZ2cOkfDURX1KZMSBzDtA",
-    "display_name": "성동중앙교회",
-    "category": "교회",
+    "display_name": "Seongdong Central Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -865,8 +865,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 24-9",
-    "short_address": "광진구 화양동 24-9",
+    "address": "24-9 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "24-9 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5462889,
       "lng": 127.0670725
@@ -886,7 +886,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c3d919f9ed:0xd00e73203199525f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -896,8 +896,8 @@
   },
   {
     "place_id": "ChIJv-BhiaNsMhURhI9OHUvEdug",
-    "display_name": "세빛교회",
-    "category": "교회",
+    "display_name": "Sebit Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -905,8 +905,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 동일로28길 31",
-    "short_address": "광진구 화양동 동일로28길 31",
+    "address": "31 Dongil-ro 28-gil, Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "31 Dongil-ro 28-gil, Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5464572,
       "lng": 127.0684755
@@ -926,7 +926,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x15326ca38961e0bf:0xe876c44b1d4e8f84!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -936,14 +936,14 @@
         "author": "Nguyen Anh Hau",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
+        "relative_time": "3 months ago",
         "text": null
       },
       {
-        "author": "유정석",
+        "author": "Yoo Jeong-seok",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -951,8 +951,8 @@
   },
   {
     "place_id": "ChIJRawfYMGkfDURigFyTPNmc8A",
-    "display_name": "주예수교회",
-    "category": "교회",
+    "display_name": "Lord Jesus Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -960,8 +960,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 24-1",
-    "short_address": "광진구 화양동 24-1",
+    "address": "24-1 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "24-1 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5466814,
       "lng": 127.06685650000001
@@ -981,17 +981,17 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c1601fac45:0xc07366f34c72018a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "성춘택",
+        "author": "Seong Chun-taek",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       }
     ],
@@ -999,8 +999,8 @@
   },
   {
     "place_id": "ChIJGx8O38GkfDURijuuoGMdokY",
-    "display_name": "좋은이웃교회",
-    "category": "교회",
+    "display_name": "Good Neighbor Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1008,8 +1008,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 42-1",
-    "short_address": "광진구 화양동 42-1",
+    "address": "42-1 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "42-1 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.543900300000004,
       "lng": 127.06523940000001
@@ -1029,7 +1029,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c1df0e1f1b:0x46a21d63a0ae3b8a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1039,14 +1039,14 @@
         "author": "Min",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       },
       {
         "author": "hamin park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -1054,8 +1054,8 @@
   },
   {
     "place_id": "ChIJAWKS4sKkfDURBf5hTnJpcu8",
-    "display_name": "성도교회",
-    "category": "교회",
+    "display_name": "Seongdo Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1063,8 +1063,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 군자로3길 21",
-    "short_address": "광진구 군자로3길 21",
+    "address": "21 Gunja-ro 3-gil, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "21, Gunja-ro 3-gil, Gwangjin-gu",
     "location": {
       "lat": 37.5442574,
       "lng": 127.0703403
@@ -1084,7 +1084,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c2e2926201:0xef7269724e61fe05!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1094,8 +1094,8 @@
   },
   {
     "place_id": "ChIJ12LeaMOkfDUR1YR0-p3xOu4",
-    "display_name": "서울성서교회",
-    "category": "교회",
+    "display_name": "Seoul Bible Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1103,8 +1103,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 군자로 28",
-    "short_address": "광진구 군자로 28",
+    "address": "28 Gunja-ro, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "28 Gunja-ro, Gwangjin-gu",
     "location": {
       "lat": 37.54580310000001,
       "lng": 127.0708057
@@ -1124,33 +1124,33 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c368de62d7:0xee3af19dfa7484d5!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "박종애",
+        "author": "Park Jong-ae",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "조그마하고 가족같은 분위기 이천에 기도원이 있는데 산이 있어 공기도 좋아요"
+        "relative_time": "5 years ago",
+        "text": "There is a prayer center in Icheon with a small, family-like atmosphere. There are mountains and the air is good."
       },
       {
         "author": "eunjin chung",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       },
       {
-        "author": "김정빈",
+        "author": "Kim Jeongbin",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -1160,8 +1160,8 @@
   },
   {
     "place_id": "ChIJJVfkfcSkfDURm4dZfi1wOp0",
-    "display_name": "코리아교회",
-    "category": "교회",
+    "display_name": "Korea Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1169,8 +1169,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동",
-    "short_address": "광진구 화양동",
+    "address": "Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.547249099999995,
       "lng": 127.06949429999999
@@ -1189,47 +1189,47 @@
     "google_maps_url": "https://maps.google.com/?cid=11329491153299539867",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c47de45725:0x9d3a702d7e59879b!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 6:00~7:00",
-      "화요일: 오전 6:00~7:00",
-      "수요일: 오전 6:00~7:00",
-      "목요일: 오전 6:00~7:00",
-      "금요일: 오전 6:00~7:00, 오후 8:30~11:00",
-      "토요일: 오전 6:00~7:00",
-      "일요일: 오전 6:00~7:00, 오전 10:30 ~ 오후 12:30"
+      "Monday: 6:00-7:00 AM",
+      "Tuesday: 6:00-7:00 AM",
+      "Wednesday: 6:00-7:00 AM",
+      "Thursday: 6:00-7:00 AM",
+      "Friday: 6:00-7:00 AM, 8:30-11:00 PM",
+      "Saturday: 6:00-7:00 AM",
+      "Sunday: 6:00 AM - 7:00 AM, 10:30 AM - 12:30 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이강욱",
+        "author": "Lee Kang-wook",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "이 시대에 필요한 말씀을 듣고 , 사람을 변화시키는 강력한 메세지. 설교\n강력추천~!!!"
+        "relative_time": "7 years ago",
+        "text": "A powerful message that changes people by listening to the words needed in this era. sermon\nHighly recommended~!!!"
       },
       {
         "author": "jong hyon Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       },
       {
-        "author": "이준혁",
+        "author": "Junhyuk Lee",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       },
       {
-        "author": "정슈아",
+        "author": "Jeongshua",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       }
     ],
@@ -1237,8 +1237,8 @@
   },
   {
     "place_id": "ChIJe7PFYNukfDURcNT4wFszvB0",
-    "display_name": "새희망교회",
-    "category": "교회",
+    "display_name": "New Hope Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1246,8 +1246,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동",
-    "short_address": "광진구 화양동",
+    "address": "Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5456502,
       "lng": 127.07368299999999
@@ -1267,7 +1267,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4db60c5b37b:0x1dbc335bc0f8d470!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1277,8 +1277,8 @@
   },
   {
     "place_id": "ChIJB1RtocSkfDURDdsflkQVQLg",
-    "display_name": "화양동교회",
-    "category": "교회",
+    "display_name": "Hwayang-dong Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1286,8 +1286,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 132-3",
-    "short_address": "광진구 화양동 132-3",
+    "address": "132-3 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "132-3 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5465667,
       "lng": 127.07109989999998
@@ -1307,11 +1307,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c4a16d5407:0xb8401544961fdb0d!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": null,
@@ -1319,8 +1319,8 @@
   },
   {
     "place_id": "ChIJAZeEctukfDURMlhz7uc_3lA",
-    "display_name": "천주교 화양동 성당",
-    "category": "교회",
+    "display_name": "Catholic Hwayang-dong Cathedral",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1328,8 +1328,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 능동로 180",
-    "short_address": "광진구 능동로 180",
+    "address": "180 Neungdong-ro, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "180 Neungdong-ro, Gwangjin-gu",
     "location": {
       "lat": 37.5463783,
       "lng": 127.0742876
@@ -1349,49 +1349,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4db72849701:0x50de3fe7ee735832!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "강히포",
+        "author": "Strongly Po",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "7월2일 주일 오전 미사 드리고 왔습니다. 규모가 너무 크고 웅장합니다.현대식 건축물입니다."
+        "relative_time": "2 years ago",
+        "text": "I went to mass on Sunday morning, July 2nd. It is so large and majestic. It is a modern building."
       },
       {
         "author": "jiny kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "전반적으로 시설이 고급스러워 좋았어요 분위기도 좋고"
+        "relative_time": "3 years ago",
+        "text": "Overall, the facilities were luxurious and nice. The atmosphere was also nice."
       },
       {
-        "author": "박유나",
+        "author": "Yuna Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "새로 지어서 굉장히 커요\n주님을  믿고 사랑하고 성당을 사랑하는 저에겐 더욱 좋아요"
+        "relative_time": "4 years ago",
+        "text": "It's newly built so it's very big.\nIt is even better for me who believes in and loves the Lord and loves the cathedral."
       },
       {
-        "author": "김문숙",
+        "author": "Moonsook Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "건축 공간의 넉넉함\n묵상의 십자가의 길\n성전들어서기전 성모님께 인사\n부활예수님이 반겨주심"
+        "relative_time": "4 years ago",
+        "text": "Ample architectural space\ncontemplative way of the cross\nGreetings to Our Lady before entering the temple\nResurrection Jesus welcomes you"
       },
       {
         "author": "Kwang Suk Oh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "정말 세련되고 멋진 성당이에요!"
+        "relative_time": "5 years ago",
+        "text": "It’s a really stylish and wonderful cathedral!"
       }
     ],
     "photos": [
@@ -1409,8 +1409,8 @@
   },
   {
     "place_id": "ChIJe6NSawClfDURG3TvpqzUNns",
-    "display_name": "늘푸른교회",
-    "category": "교회",
+    "display_name": "Evergreen Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1418,8 +1418,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 광나루로 410",
-    "short_address": "광진구 광나루로 410",
+    "address": "410 Gwangnaru-ro, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "410 Gwangnaru-ro, Gwangjin-gu",
     "location": {
       "lat": 37.5465583,
       "lng": 127.07505299999998
@@ -1439,7 +1439,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5006b52a37b:0x7b36d4aca6ef741b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1449,8 +1449,8 @@
   },
   {
     "place_id": "ChIJt2hhlNukfDURdXp5-_bj07g",
-    "display_name": "건국대UBF 교회",
-    "category": "교회",
+    "display_name": "Konkuk University UBF Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -1458,8 +1458,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 495-22",
-    "short_address": "광진구 화양동 495-22",
+    "address": "495-22 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "495-22 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5454558,
       "lng": 127.0760717
@@ -1478,16 +1478,16 @@
     "google_maps_url": "https://maps.google.com/?cid=13318239172985191029",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4db946168b7:0xb8d3e3f6fb797a75!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 10:00 ~ 오후 10:00",
-      "수요일: 오전 10:00 ~ 오후 10:00",
-      "목요일: 오전 10:00 ~ 오후 10:00",
-      "금요일: 오전 10:00 ~ 오후 10:00",
-      "토요일: 오전 10:00 ~ 오후 10:00",
-      "일요일: 오전 9:00 ~ 오후 10:00"
+      "Monday: Closed day",
+      "Tuesday: 10:00 AM - 10:00 PM",
+      "Wednesday: 10:00 AM - 10:00 PM",
+      "Thursday: 10:00 AM - 10:00 PM",
+      "Friday: 10:00 AM - 10:00 PM",
+      "Saturday: 10:00 AM - 10:00 PM",
+      "Sunday: 9:00 AM - 10:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1497,36 +1497,36 @@
         "author": "2dgames 1983",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "말씀이 참 좋은 교회이다. 목자님이 성경을 중심으로 주일 설교를 전하시면, 성도들은 배운 말씀대로 살려고 애쓰며, 언제나 모든 면에서 예수님을 닮고 배우는 것을 목적으로 한다. 예수님을 배우는 자들의 내면은 겸손하고 온유하며 밝은 얼굴로 행복해보이고, 서로를 향한 사랑과 섬김이 풍성하다. 영적 가족으로서 공동체를 위한 기도가 쉬지 않는다. 초대교회처럼 말씀 중심, 기도 중심, 사역에 힘쓰는 교회. 여러분 꼭 가보세요. 주저없이 추천합니다!"
+        "relative_time": "4 years ago",
+        "text": "It is a church with very good words. When the shepherd delivers a Sunday sermon centered on the Bible, the congregation strives to live according to the words they have learned, always aiming to imitate and learn from Jesus in all aspects. Those who learn Jesus appear humble, meek, and happy with bright faces on the inside, and their love and service toward one another is abundant. As a spiritual family, we never stop praying for the community. A church that is word-centered, prayer-centered, and focuses on ministry like the early church. Everyone, please visit. I recommend it without hesitation!"
       },
       {
-        "author": "SH “햅삐데이” H.",
+        "author": "SH “Happy Day” H.",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "학교 공부가 어려웠을때 전공으로도 선배님들의 도움을 많이 받았어요. 공강시간에 교회에서 조용히 자습도 하고 1층에서 탁구도 치고 성경공부도 하면서 건국대UBF 덕분에 행복하게 캠퍼스 시절을 보냈어요~\n선배님들이 저의 고민을 진지하게 들어주시고\n좋은 조언도 해주시고\n인생의 고민의 답이 성경말씀 안에 있는 것을 깨닫게 되었네요."
+        "relative_time": "4 years ago",
+        "text": "When school studies were difficult, I received a lot of help from seniors with my major. Thanks to Konkuk University UBF, I had a happy time on campus thanks to Konkuk University UBF, studying quietly at church during public lectures, playing table tennis on the first floor, and studying the Bible.\nMy seniors listened to my concerns seriously.\nGive me good advice too\nI came to realize that the answer to life's worries lies in the words of the Bible."
       },
       {
-        "author": "조민희",
+        "author": "Cho Min-hee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "건국대 후문 바로 앞이어서 공강시간에 짬내서 들르기에 편해요\n성경을 체계적으로 알아갈 수 있어서 논리적인 나도 쉽게 성경을 접할 수 있었어요"
+        "relative_time": "4 years ago",
+        "text": "It's right in front of the back gate of Konkuk University, so it's convenient to stop by during class time.\nBecause I was able to understand the Bible systematically, I was able to access the Bible easily even as a logical person."
       },
       {
         "author": "Misook Kang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "말씀이 살아있는 교회. 말씀대로 행동하는 교회. 믿음이 자라도록 사랑과 기도로 돕는 교회👍"
+        "relative_time": "4 years ago",
+        "text": "A church where the Word is alive. A church that acts according to its words. A church that helps people grow in faith with love and prayers👍"
       },
       {
         "author": "Jolly Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "성경공부 하는 좋은곳. 신천지 같은류 아님."
+        "relative_time": "3 years ago",
+        "text": "A good place to study the Bible. Not the same type as Shincheonji."
       }
     ],
     "photos": [
@@ -1536,7 +1536,7 @@
   {
     "place_id": "ChIJhYRmdkKlfDURuQjREgkiOc8",
     "display_name": "Greencircle Pharmacy",
-    "category": "약국",
+    "category": "pharmacy",
     "types": [
       "pharmacy",
       "shopping_mall",
@@ -1545,8 +1545,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 아차산로 212 더포디엄 830 102호",
-    "short_address": "광진구 아차산로 212 더포디엄 830 102호",
+    "address": "#102, The Podium 830, 212 Achasan-ro, Gwangjin-gu, Seoul, Republic of Korea",
+    "short_address": "#102, The Podium 830, 212 Achasan-ro, Gwangjin-gu",
     "location": {
       "lat": 37.5406773,
       "lng": 127.06662100000001
@@ -1565,25 +1565,25 @@
     "google_maps_url": "https://maps.google.com/?cid=14932003461889329337",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca54276668485:0xcf39220912d108b9!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 10:00",
-      "화요일: 오전 10:00 ~ 오후 10:00",
-      "수요일: 오전 10:30 ~ 오후 10:00",
-      "목요일: 오전 10:00 ~ 오후 10:00",
-      "금요일: 오전 10:00 ~ 오후 10:00",
-      "토요일: 오전 10:00 ~ 오후 10:00",
-      "일요일: 오전 10:00 ~ 오후 10:00"
+      "Monday: 10:00 AM - 10:00 PM",
+      "Tuesday: 10:00 AM - 10:00 PM",
+      "Wednesday: 10:30 AM - 10:00 PM",
+      "Thursday: 10:00 AM - 10:00 PM",
+      "Friday: 10:00 AM - 10:00 PM",
+      "Saturday: 10:00 AM - 10:00 PM",
+      "Sunday: 10:00 AM - 10:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어좌석",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair seat",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -1591,36 +1591,36 @@
         "author": "JEONGMOON MO",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
+        "relative_time": "6 months ago",
         "text": "I found the cleanest, most spacious pharmacy near Seongsu — it’s honestly the biggest one I’ve seen around here! I picked up so many trendy Korean skincare products and supplements, and the prices were way cheaper than what I usually see in Hongdae. If you’re visiting Seongsu, you’ve got to check this place out!And of course you can do taxfree here"
       },
       {
         "author": "香菇",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "지안다 성수이에 새로 오픈한 약국은 정말 방문하기 좋아요. 전체적인 인테리어는 자연 건강에 초점을 맞추고 있고, 창고형 매장처럼 꾸며져 있어요. 감기약, 체중 감량제, 프로바이오틱스 등 모든 것을 갖추고 있어요. 1회용, 2회용, 1주일치 등 다양한 조합의 팩도 준비되어 있어요. 약사가 미리 포장해 주기 때문에 집에서 따로 사올 필요가 없어요! 💊 가장 좋은 점은 현장에서 미량 원소 검사를 해준다는 거예요. 정말 재밌는 과정이에요.\n\n🐕 오늘 방문의 주요 목적은 반려동물 용품을 사는 거였어요. 특히 강아지 감기약, 소화 프로바이오틱스, 영양제, 간식을 판매하고 있어요. 세금 환급도 바로 받을 수 있고, 직원분은 중국어도 잘하세요. 이렇게 큰 약국에 가면 정말 안심이 돼요! 제 털복숭이 친구들도 다시 너무 좋아해요! 뛰어다니며 신나게 놀고 있어요!\n\n📍 그린서클약국 그린서클\n🚇 건대입구역(2호선) 6번 출구에서 150m\n광진구 아차산로 212 더포디엄 830\n#한국유학생 #한국약국 #한국약국필수품 #한국여행 #한국여행사 #한국약국가이드 #성수동 #성수약국 #한국생활 #건강제품공유"
+        "relative_time": "6 months ago",
+        "text": "The newly opened pharmacy in Gianda Shengshui is really nice to visit. The overall interior focuses on natural health and is decorated like a warehouse store. They have everything including cold medicine, weight loss pills, and probiotics. We also have packs of various combinations available, including one-use, two-use, and one-week supply. The pharmacist pre-packages it for you, so you don’t have to buy it separately from home! 💊 The best part is that they do trace element testing on site. It's a really fun process.\n\n🐕 The main purpose of today's visit was to buy pet supplies. In particular, we sell dog cold medicine, digestive probiotics, nutritional supplements, and snacks. You can receive your tax refund right away, and the staff speaks Chinese well. I feel so reassured when I go to a big pharmacy like this! My furry friends love it too! Running around and having fun!\n\n📍 Green Circle Pharmacy Green Circle\n🚇 150m from Exit 6 of Konkuk University Station (Line 2)\nThe Podium 830, 212 Achasan-ro, Gwangjin-gu\n#Students studying abroad in Korea #Korean pharmacy #Korean pharmacy necessities #Korea travel #Korean travel agency #Korean pharmacy guide #Seongsu-dong #Seongsu pharmacy #Life in Korea #Sharing health products"
       },
       {
         "author": "Moo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "한국 여행 중에 정말 전문적인 약국을 우연히 발견했어요! 심지어 우리 몸에 부족한 게 뭔지 검사하는 장비까지 갖추고 있었고, 검사 결과에 따라 건강 보조 식품도 추천해 주셨어요. 단순히 물건을 팔려고 하는 게 아니라, 진심으로 우리를 챙겨주는 느낌이었어요. 🥹 모든 분들께 강력 추천합니다. 한국 여행 시 꼭 들러야 할 약국이라고 확신해요. ❤️"
+        "relative_time": "4 months ago",
+        "text": "While traveling in Korea, I stumbled upon a truly professional pharmacy! They even had equipment to test what our bodies were lacking, and they also recommended health supplements based on the test results. It felt like they were not just trying to sell us something, but that they truly cared for us. 🥹 Highly recommended to everyone. I am sure this is a pharmacy you must visit when traveling to Korea. ❤️"
       },
       {
-        "author": "정루나",
+        "author": "Luna Jeong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "성수이에서 가장 큰 약국입니다. 다양한 스킨케어 제품과 유지 관리 제품을 갖추고 있으며, 처방약도 처방해 드립니다. 피부과에 직접 가서 약을 받을 수 있어 매우 편리합니다. 공간도 정말 편안합니다. 성수이에 꼭 오세요. 굳이 그곳에 가지 않아도 됩니다."
+        "relative_time": "6 months ago",
+        "text": "This is the largest pharmacy in Seongsui. We have a wide range of skin care and maintenance products, and we also offer prescription medications. It is very convenient as you can go directly to the dermatologist and receive medicine. The space is also really comfortable. Please come to Seongsui. You don't have to go there."
       },
       {
         "author": "Maxin S",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "명동이나 강남 등 다른 곳보다 대부분 품목이 저렴했어요"
+        "relative_time": "6 months ago",
+        "text": "Most items were cheaper than other places such as Myeongdong and Gangnam."
       }
     ],
     "photos": [
@@ -1638,15 +1638,15 @@
   },
   {
     "place_id": "ChIJBS1wcumkfDURrspo8Ukiq7I",
-    "display_name": "에고이스트",
-    "category": "쇼핑몰",
+    "display_name": "egoist",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 자양동 6-31",
-    "short_address": "광진구 자양동 6-31",
+    "address": "6-31 Jayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "6-31 Jayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.540011899999996,
       "lng": 127.0679893
@@ -1666,28 +1666,28 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4e972702d05:0xb2ab2249f168caae!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "강상욱",
+        "author": "Kang Sang-wook",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Sanghee Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -1695,15 +1695,15 @@
   },
   {
     "place_id": "ChIJo35QAxelfDUR4jt5FPgWSIU",
-    "display_name": "커먼그라운드",
-    "category": "쇼핑몰",
+    "display_name": "common ground",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 아차산로 200",
-    "short_address": "광진구 아차산로 200",
+    "address": "200 Achasan-ro, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "200 Achasan-ro, Gwangjin-gu",
     "location": {
       "lat": 37.541151299999996,
       "lng": 127.0659498
@@ -1722,26 +1722,26 @@
     "google_maps_url": "https://maps.google.com/?cid=9603951460118772706",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca51703507ea3:0x854816f814793be2!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 10:00",
-      "화요일: 오전 11:00 ~ 오후 10:00",
-      "수요일: 오전 11:00 ~ 오후 10:00",
-      "목요일: 오전 11:00 ~ 오후 10:00",
-      "금요일: 오전 11:00 ~ 오후 10:00",
-      "토요일: 오전 11:00 ~ 오후 10:00",
-      "일요일: 오전 11:00 ~ 오후 10:00"
+      "Monday: 11:00 AM - 10:00 PM",
+      "Tuesday: 11:00 AM - 10:00 PM",
+      "Wednesday: 11:00 AM - 10:00 PM",
+      "Thursday: 11:00 AM - 10:00 PM",
+      "Friday: 11:00 AM - 10:00 PM",
+      "Saturday: 11:00 AM - 10:00 PM",
+      "Sunday: 11:00 AM - 10:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -1749,36 +1749,36 @@
         "author": "national_jiographic",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2달 전",
-        "text": "성수다운 매력이 느껴지는 곳이라 지나가는 길에 들러볼만하지만 일부러 찾아갈 필요까지는 없을것 같습니다."
+        "relative_time": "2 months ago",
+        "text": "It's a place with a seongsu-like charm, so it's worth stopping by on your way through, but I don't think there's a need to go out of your way to visit."
       },
       {
-        "author": "이병훈 (쿨가이)",
+        "author": "Byung-Hoon Lee (Cool Guy)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9달 전",
-        "text": "200개의 컨테이너로 구성된 국내 최대 컨테이너 팝업 쇼핑몰 커먼그라운드에서는 색다른 쇼핑의 재미와 다양한 미식 브랜드들을 만나보실 수 있습니다.\n젊고 유니크한 CULTURE를 향유하는 YOUTH를 위한 복합문화공간, 커먼그라운드에서 기존의 쇼핑몰에서 느낄 수 없었던 다채로운 즐거움을 경험해보세요."
+        "relative_time": "9 months ago",
+        "text": "At Common Ground, Korea's largest container pop-up shopping mall consisting of 200 containers, you can experience unique shopping fun and a variety of gourmet brands.\nExperience a variety of pleasures that cannot be experienced in existing shopping malls at Common Ground, a complex cultural space for YOUTH who enjoy young and unique culture."
       },
       {
         "author": "seok yun kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "외부에서 보기에도 힙한데 내부도 굉장히 멋진 곳이네요. 옷가게, 먹거리 가게, 서점 등 개성 넘치고 예쁜 가게들이 옹기종기 잘 모여 있으면서도 커먼그라운드 특유의 분위기는 통일성 있게 잘 유지되는 곳 같네요 :)"
+        "relative_time": "3 years ago",
+        "text": "It looks hip from the outside, but the inside is also very cool. It seems like a place where common ground's unique atmosphere is maintained in a coherent manner, with many unique and pretty shops, including clothing stores, food stores, and bookstores, all gathered together :)"
       },
       {
         "author": "Yoonho Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "여기 2층 식당에서 식사했는데 단지 전체가 외국 여행지 느낌 나고 좋아요. 가격이 시중가에 비해 조금 비싸지만 식사하며 기분 내기에 좋습니다."
+        "relative_time": "4 months ago",
+        "text": "I ate at the restaurant on the second floor here, and the entire complex felt like a foreign travel destination and I liked it. The price is a little more expensive than the market price, but it is good to feel good while eating."
       },
       {
         "author": "YJ Oh",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "파란색 대형 컨테이너 200여개로 건축된 국내 최초의 Pop Up Style의 복합문화공간. 지하철 건대입구역 6번출구로 나와 200미터 정도의 거리에 위치한다. 젊은이들을 위한 장소를 표방하는데, 건물내에 다양한 상점들과 즐길꺼리, 그리고 카페와 음식점들이 입주해서 운영되고 있다. 처음 접하는 아주 색다른 장소라서 한번쯤은 가보시길 추천한다. 컨테이너 건축물들의 중앙부근에 위치한 광장에는 이따금 다양한  전시회를 진행한다. 그리 넓지는 않지만 15여대 정도 주차가 가능한 유료주차장도 준비되어 있다."
+        "relative_time": "3 years ago",
+        "text": "Korea's first Pop Up Style complex cultural space built with about 200 large blue containers. It is located about 200 meters away from Exit 6 of Konkuk University Station on the subway. It claims to be a place for young people, and various shops, places to enjoy, cafes, and restaurants are operating within the building. It's a very unique place that you'll encounter for the first time, so I recommend going there at least once. Various exhibitions are occasionally held in the plaza located near the center of the container buildings. Although it is not very spacious, there is also a paid parking lot that can accommodate about 15 cars."
       }
     ],
     "photos": [
@@ -1796,15 +1796,15 @@
   },
   {
     "place_id": "ChIJ5Q98DemkfDURE1g-lXBVhZo",
-    "display_name": "로엠건대점",
-    "category": "쇼핑몰",
+    "display_name": "Roem Konkuk University Branch",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 자양동 6-73",
-    "short_address": "광진구 자양동 6-73",
+    "address": "6-73 Jayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "6-73 Jayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.539873,
       "lng": 127.06835039999999
@@ -1825,8 +1825,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1836,15 +1836,15 @@
   },
   {
     "place_id": "ChIJyz0ttemkfDURf3U_LLQkI0o",
-    "display_name": "퍼니시티",
-    "category": "쇼핑몰",
+    "display_name": "Funny City",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 8-101",
-    "short_address": "광진구 화양동 8-101",
+    "address": "8-101 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "8-101 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5410377,
       "lng": 127.0695432
@@ -1864,11 +1864,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4e9b52d3dcb:0x4a2324b42c3f757f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1880,15 +1880,15 @@
   },
   {
     "place_id": "ChIJyYl2EumkfDUREC9OM5Em7eU",
-    "display_name": "워모",
-    "category": "쇼핑몰",
+    "display_name": "womo",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 자양동 6-1",
-    "short_address": "광진구 자양동 6-1",
+    "address": "6-1 Jayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "6-1 Jayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5398175,
       "lng": 127.0684337
@@ -1909,17 +1909,17 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김상용",
+        "author": "Kim Sang-yong",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       }
     ],
@@ -1927,15 +1927,15 @@
   },
   {
     "place_id": "ChIJVXaXX-mkfDURrK7Yy0ZqqEM",
-    "display_name": "몰오브케이",
-    "category": "쇼핑몰",
+    "display_name": "Mall of K",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 아차산로30길 26",
-    "short_address": "광진구 아차산로30길 26",
+    "address": "26 Achasan-ro 30-gil, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "26, Achasan-ro 30-gil, Gwangjin-gu",
     "location": {
       "lat": 37.5397132,
       "lng": 127.06691789999999
@@ -1954,26 +1954,26 @@
     "google_maps_url": "https://maps.google.com/?cid=4875263448928792236",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4e95f977655:0x43a86a46cbd8aeac!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 10:00",
-      "화요일: 오전 10:00 ~ 오후 10:00",
-      "수요일: 오전 10:00 ~ 오후 10:00",
-      "목요일: 오전 10:00 ~ 오후 10:00",
-      "금요일: 오전 10:00 ~ 오후 10:00",
-      "토요일: 오전 10:00 ~ 오후 10:00",
-      "일요일: 오전 10:00 ~ 오후 10:00"
+      "Monday: 10:00 AM - 10:00 PM",
+      "Tuesday: 10:00 AM - 10:00 PM",
+      "Wednesday: 10:00 AM - 10:00 PM",
+      "Thursday: 10:00 AM - 10:00 PM",
+      "Friday: 10:00 AM - 10:00 PM",
+      "Saturday: 10:00 AM - 10:00 PM",
+      "Sunday: 10:00 AM - 10:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -1981,36 +1981,36 @@
         "author": "Jong Min Park",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "1층에 있는 GS25 친절함.\n화장실 가려고 올라가봤는데 2층은 뭔가 휑한 느낌이고 화장실 문이 잠겨 있었다."
+        "relative_time": "5 years ago",
+        "text": "GS25 on the first floor is friendly.\nI went up to go to the bathroom, but the second floor felt somewhat empty and the bathroom door was locked."
       },
       {
         "author": "jolly j",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "2년 전",
-        "text": "1층 상점들이 다 폐점하고 엘스컬레이터는 운영하지 않은 상황"
+        "relative_time": "2 years ago",
+        "text": "All stores on the first floor were closed and the escalator was not in operation."
       },
       {
-        "author": "김민정",
+        "author": "Minjeong Kim",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "2년 전",
-        "text": "영화관때문에 들렀는데 거의 비어있네요. 조금 을씨년스러웠다는..."
+        "relative_time": "2 years ago",
+        "text": "I stopped by the movie theater, but it was almost empty. It was a little girly..."
       },
       {
         "author": "park rachel",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "8년 전",
-        "text": "헤어컷하고 매화딤섬 점심식사"
+        "relative_time": "8 years ago",
+        "text": "Haircut and plum blossom dim sum lunch"
       },
       {
         "author": "kin co.",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "11달 전",
-        "text": "슈퍼주니어의 팝업을 실시하고 있었으므로 방문.\n외로울 것 같은 분위기"
+        "relative_time": "11 months ago",
+        "text": "I visited because Super Junior was having a pop-up.\nA lonely atmosphere"
       }
     ],
     "photos": [
@@ -2026,15 +2026,15 @@
   },
   {
     "place_id": "ChIJPdrwdMKkfDURhhkC_1W21nk",
-    "display_name": "잎새",
-    "category": "쇼핑몰",
+    "display_name": "leaf",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 47-41",
-    "short_address": "광진구 화양동 47-41",
+    "address": "47-41 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "47-41 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5429282,
       "lng": 127.06835029999999
@@ -2054,42 +2054,42 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c274f0da3d:0x79d6b655ff021986!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "조영호",
+        "author": "Youngho Cho",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "용",
+        "author": "dragon",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Byungmin Lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Shining Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -2104,14 +2104,14 @@
   {
     "place_id": "ChIJTSb3g6KlfDUR718KwOlDPwE",
     "display_name": "the gil",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 아차산로30길 36 2층 220호",
-    "short_address": "광진구 아차산로30길 36 2층 220호",
+    "address": "Room 220, 2nd floor, 36 Achasan-ro 30-gil, Gwangjin-gu, Seoul, Korea",
+    "short_address": "Room 220, 2nd floor, 36 Achasan-ro 30-gil, Gwangjin-gu",
     "location": {
       "lat": 37.5393556,
       "lng": 127.0667081
@@ -2130,20 +2130,20 @@
     "google_maps_url": "https://maps.google.com/?cid=89865188799045615",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5a283f7264d:0x13f43e9c00a5fef!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2155,15 +2155,15 @@
   },
   {
     "place_id": "ChIJYdlAG-mkfDURl5qVvBjbWQo",
-    "display_name": "로데오플라자",
-    "category": "쇼핑몰",
+    "display_name": "Rodeo Plaza",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 자양동 5-13번지",
-    "short_address": "광진구 자양동 5-13번지",
+    "address": "5-13 Jayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "5-13 Jayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.539512599999995,
       "lng": 127.06913790000002
@@ -2183,11 +2183,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4e91b40d961:0xa59db18bc959a97!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2199,15 +2199,15 @@
   },
   {
     "place_id": "ChIJS6UiAumkfDURzYnetxoVx7A",
-    "display_name": "브렌우드 건대점",
-    "category": "쇼핑몰",
+    "display_name": "Branwood Konkuk University Branch",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 자양동 7-2",
-    "short_address": "광진구 자양동 7-2",
+    "address": "7-2 Jayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "7-2 Jayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5397064,
       "lng": 127.06946140000001
@@ -2228,25 +2228,25 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "12거냐",
+        "author": "Is it 12?",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9년 전",
-        "text": "좋은"
+        "relative_time": "9 years ago",
+        "text": "good"
       },
       {
-        "author": "댕댕이",
+        "author": "Doggy",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -2254,15 +2254,15 @@
   },
   {
     "place_id": "ChIJj8t5cF6lfDUR1FuhrdTxOeA",
-    "display_name": "어바웃엠 about-m",
-    "category": "쇼핑몰",
+    "display_name": "About M about-m",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 자양제4동 아차산로24길 20",
-    "short_address": "광진구 자양제4동 아차산로24길 20",
+    "address": "20 Achasan-ro 24-gil, Jayangje 4-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "20 Achasan-ro 24-gil, Jayangje 4-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5402823,
       "lng": 127.06471409999999
@@ -2281,18 +2281,18 @@
     "google_maps_url": "https://maps.google.com/?cid=16157211033916758996",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca55e7079cb8f:0xe039f1d4ada15bd4!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 휴무일",
-      "수요일: 휴무일",
-      "목요일: 휴무일",
-      "금요일: 휴무일",
-      "토요일: 오후 12:00~5:00",
-      "일요일: 오후 12:00~5:00"
+      "Monday: Closed day",
+      "Tuesday: Closed",
+      "Wednesday: Closed day",
+      "Thursday: Closed",
+      "Friday: Closed day",
+      "Saturday: 12:00-5:00 PM",
+      "Sunday: 12:00-5:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2308,14 +2308,14 @@
   },
   {
     "place_id": "ChIJ3y6F9MKkfDURPP6Z7wkcKrY",
-    "display_name": "한아름528 쇼핑센터",
-    "category": "쇼핑몰",
+    "display_name": "Hanareum 528 Shopping Center",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5434559,
@@ -2336,50 +2336,50 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c2f4852edf:0xb62a1c09ef99fe3c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "임일화",
+        "author": "Ilhwa Lim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9년 전",
-        "text": "볼링장 탁구장 포켓볼 스포츠하기에만 좋음 음식점 몇개빼고는 쇼핑몰이라는 말은 과하다"
+        "relative_time": "9 years ago",
+        "text": "Bowling alley, table tennis court, pocket ball, good only for sports. Aside from a few restaurants, calling it a shopping mall is an overstatement."
       },
       {
-        "author": "이학철",
+        "author": "Hakcheol Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "화양동 주택지역 전통시장에 근접한\n쇼핑센타."
+        "relative_time": "4 years ago",
+        "text": "Close to the traditional market in the residential area of Hwayang-dong\nShopping center."
       },
       {
         "author": "Shawn KIM",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "10년 전",
-        "text": "주차비 비싸고 매우 혼잡"
+        "relative_time": "10 years ago",
+        "text": "Parking is expensive and very crowded"
       },
       {
         "author": "JIWOONG JEONG",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9년 전",
-        "text": "괜찮은 가게들이 많음"
+        "relative_time": "9 years ago",
+        "text": "Lots of good stores"
       },
       {
-        "author": "박종찬",
+        "author": "Jongchan Park",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "9년 전",
-        "text": "좋음"
+        "relative_time": "9 years ago",
+        "text": "well"
       }
     ],
     "photos": [
@@ -2398,14 +2398,14 @@
   {
     "place_id": "ChIJe0YeAuykfDUR4vgdFYHUgG4",
     "display_name": "POLKA Collectio",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 자양동 848-1",
-    "short_address": "광진구 자양동 848-1",
+    "address": "848-1 Jayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "848-1 Jayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.538401,
       "lng": 127.06679500000001
@@ -2425,49 +2425,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4ec021e467b:0x6e80d481151df8e2!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "뭉치뭉치는말안들어",
+        "author": "Moonggi Mungi doesn’t listen.",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "8년 전",
-        "text": "쫌비싸요"
+        "relative_time": "8 years ago",
+        "text": "It's a bit expensive"
       },
       {
-        "author": "조영호",
+        "author": "Youngho Cho",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "D.H Choi",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "유태일",
+        "author": "Yoo Tae-il",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       },
       {
-        "author": "추류샹",
+        "author": "Chu Liuxiang",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "9년 전",
+        "relative_time": "9 years ago",
         "text": null
       }
     ],
@@ -2483,15 +2483,15 @@
   },
   {
     "place_id": "ChIJBc23aOqkfDURY3zKOOwuOtQ",
-    "display_name": "LG패션",
-    "category": "쇼핑몰",
+    "display_name": "LG Fashion",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 42-24",
-    "short_address": "광진구 화양동 42-24",
+    "address": "42-24 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "42-24 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5430948,
       "lng": 127.0649339
@@ -2511,48 +2511,48 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4ea68b7cd05:0xd43a2eec38ca7c63!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "강상욱",
+        "author": "Kang Sang-wook",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "조영호",
+        "author": "Youngho Cho",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "은피리",
+        "author": "silver flute",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Brasil cho eun Life",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "캡틴준마이",
+        "author": "Captain Junmai",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -2560,15 +2560,15 @@
   },
   {
     "place_id": "ChIJGfsXyMKkfDURdgThz_QYGwY",
-    "display_name": "서울",
-    "category": "쇼핑몰",
+    "display_name": "seoul",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 화양동 3-35번지 1층 광진구 서울특별시 KR",
-    "short_address": "화양동 3-35번지 1층 광진구 서울특별시 KR",
+    "address": "1st floor, 3-35 Hwayang-dong, Seoul, Republic of Korea, Gwangjin-gu, Seoul KR",
+    "short_address": "1st floor, 3-35 Hwayang-dong, Gwangjin-gu, Seoul KR",
     "location": {
       "lat": 37.5427301,
       "lng": 127.0716417
@@ -2588,11 +2588,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c2c817fb19:0x61b18f4cfe10476!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2602,15 +2602,15 @@
   },
   {
     "place_id": "ChIJkYL1zsKkfDURjIG4YOzfrQQ",
-    "display_name": "악세사리전문점",
-    "category": "쇼핑몰",
+    "display_name": "Accessory specialty store",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 화양동 3-28번지 ㅣ층 광진구 서울특별시 KR",
-    "short_address": "화양동 3-28번지 ㅣ층 광진구 서울특별시 KR",
+    "address": "3-28 Hwayang-dong, Seoul, Republic of Korea | Floor, Gwangjin-gu, Seoul KR",
+    "short_address": "3-28 Hwayang-dong ㅣFloor Gwangjin-gu Seoul KR",
     "location": {
       "lat": 37.543064799999996,
       "lng": 127.0718005
@@ -2630,22 +2630,22 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c2cef58291:0x4addfec60b8818c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김영일",
+        "author": "Kim Young-il",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "동대문 오층에 악세사리 전문점이 있다.. 다양한 상품과 도매상이 있는 곳이라 가격이 저렴 하다.. 사진  찍을게 너무 많은데 사진을 너무 찍는 것도 실례인지라 누구든 한번 오면 깜짝 놀랜다"
+        "relative_time": "1 year ago",
+        "text": "There is an accessory store on the 5th floor of Dongdaemun. It is a place with a variety of products and wholesalers, so the prices are cheap. There are so many things to take pictures of, but it is rude to take too many pictures, so anyone who comes here will be surprised."
       }
     ],
     "photos": [
@@ -2658,16 +2658,16 @@
   },
   {
     "place_id": "ChIJGTa-h-ikfDURhI1EicEDpJw",
-    "display_name": "컨시어지 롯데백화점건대점",
-    "category": "백화점",
+    "display_name": "Concierge Lotte Department Store Konkuk University Branch",
+    "category": "department store",
     "types": [
       "department_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 자양동 227-342",
-    "short_address": "광진구 자양동 227-342",
+    "address": "227-342 Jayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "227-342 Jayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.539150899999996,
       "lng": 127.0716556
@@ -2687,53 +2687,53 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4e887be3619:0x9ca403c189448d84!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "장라이더(Jangrider)",
+        "author": "Jangrider",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "10년 전",
-        "text": "사람이 엄청나게 많더라고요 일요일에 갔는데..\n\n카페 빈자리가 없었어요"
+        "relative_time": "10 years ago",
+        "text": "There were a lot of people. I went on a Sunday.\n\nThere were no empty seats in the cafe."
       },
       {
         "author": "Tae-Nam Kwon",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "9년 전",
-        "text": "나름 괜찮아요."
+        "relative_time": "9 years ago",
+        "text": "It's pretty good."
       },
       {
-        "author": "이정명",
+        "author": "Jeongmyeong Lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "10년 전",
-        "text": "쇼핑"
+        "relative_time": "10 years ago",
+        "text": "shopping"
       },
       {
-        "author": "권작가TV victor gwon",
+        "author": "Writer Kwon TV victor gwon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9년 전",
-        "text": "안가봄"
+        "relative_time": "9 years ago",
+        "text": "I'm not going"
       },
       {
         "author": "C.S. KIM",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -2741,15 +2741,15 @@
   },
   {
     "place_id": "ChIJPd2hER6lfDURVgk2xdCr2Vg",
-    "display_name": "핑크에이지건대점",
-    "category": "쇼핑몰",
+    "display_name": "Pink Age Konkuk University Branch",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 3-22",
-    "short_address": "광진구 화양동 3-22",
+    "address": "3-22 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "3-22 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5433626,
       "lng": 127.07196989999998
@@ -2768,44 +2768,44 @@
     "google_maps_url": "https://maps.google.com/?cid=6402337258434070870",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca51e11a1dd3d:0x58d9abd0c5360956!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 10:00",
-      "화요일: 오전 11:00 ~ 오후 10:00",
-      "수요일: 오전 11:00 ~ 오후 10:00",
-      "목요일: 오전 11:00 ~ 오후 10:00",
-      "금요일: 오전 11:00 ~ 오후 10:00",
-      "토요일: 오전 11:00 ~ 오후 10:00",
-      "일요일: 오전 11:00 ~ 오후 10:00"
+      "Monday: 11:00 AM - 10:00 PM",
+      "Tuesday: 11:00 AM - 10:00 PM",
+      "Wednesday: 11:00 AM - 10:00 PM",
+      "Thursday: 11:00 AM - 10:00 PM",
+      "Friday: 11:00 AM - 10:00 PM",
+      "Saturday: 11:00 AM - 10:00 PM",
+      "Sunday: 11:00 AM - 10:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "공일이",
+        "author": "public holiday",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "핑크에이지 자체는 좋으나 지금 알바나 서비스 상태가 so so"
+        "relative_time": "6 years ago",
+        "text": "Pink Age itself is good, but the current state of the part-time job service is so so."
       },
       {
-        "author": "깅나히",
+        "author": "Gingnahi",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "직원 정말불친절"
+        "relative_time": "6 years ago",
+        "text": "Staff really unfriendly"
       },
       {
-        "author": "배지훈",
+        "author": "Bae Ji-hoon",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -2813,16 +2813,16 @@
   },
   {
     "place_id": "ChIJyf4tjOikfDURT96LHyldoIA",
-    "display_name": "롯데백화점 건대스타시티점",
-    "category": "백화점",
+    "display_name": "Lotte Department Store Konkuk University Star City Branch",
+    "category": "department store",
     "types": [
       "department_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 능동로 92",
-    "short_address": "광진구 능동로 92",
+    "address": "92 Neungdong-ro, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "92 Neungdong-ro, Gwangjin-gu",
     "location": {
       "lat": 37.5390185,
       "lng": 127.07120739999999
@@ -2841,64 +2841,64 @@
     "google_maps_url": "https://maps.google.com/?cid=9268510464332783183",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4e88c2dfec9:0x80a05d291f8bde4f!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 8:00",
-      "화요일: 오전 10:30 ~ 오후 8:00",
-      "수요일: 오전 10:30 ~ 오후 8:00",
-      "목요일: 오전 10:30 ~ 오후 8:00",
-      "금요일: 오전 10:30 ~ 오후 8:30",
-      "토요일: 오전 10:30 ~ 오후 8:30",
-      "일요일: 오전 10:30 ~ 오후 8:30"
+      "Monday: 10:30 AM - 8:00 PM",
+      "Tuesday: 10:30 AM - 8:00 PM",
+      "Wednesday: 10:30 AM - 8:00 PM",
+      "Thursday: 10:30 AM - 8:00 PM",
+      "Friday: 10:30 AM - 8:30 PM",
+      "Saturday: 10:30 AM - 8:30 PM",
+      "Sunday: 10:30 AM - 8:30 PM"
     ],
     "services": [
-      "배달",
-      "화장실"
+      "delivery",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "세종딸 바보",
+        "author": "Sejong's daughter is stupid",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "롯데백화점 식당가를 방문했어요.\n\"한가람\"가서 소불고기와 보리밥열무낙지정식 먹었는데, 맛있습니다. 뷰도 좋고~ 주차장은 건대병원 주차장에 주차를 해서 잘 모르겠네요.\n\n직원분들도 친절하시고 좋습니다."
+        "relative_time": "3 years ago",
+        "text": "I visited the restaurant area of Lotte Department Store.\nI went to \"Hangaram\" and had beef bulgogi and barley rice and radish octopus set meal, and it was delicious. The view is good~ I'm not sure about the parking lot because I parked in the Konkuk University Hospital parking lot.\n\nThe staff are also friendly and nice."
       },
       {
         "author": "YJ Byun",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "2층 테일러드홈 수입가구 조명 보이고 루이스폴센도 있고 희귀 브랜드 있음.\n옆에 슬로베이커리 베이커리 카페에 바닐라라떼 바닐라 시럽아니고 빈 바닐라로 만들어서 정말 맛있고 밀크티도 진짜 강추.\n조용히 커피마시고 노트북하기에 좋음."
+        "relative_time": "4 years ago",
+        "text": "On the 2nd floor, you can see imported furniture from Tailored Home, including Louis Poulsen and rare brands.\nThe vanilla latte at the Slow Bakery Bakery Cafe next door is made with bean vanilla instead of vanilla syrup, and is really delicious. I also really recommend the milk tea.\nGreat for quietly drinking coffee and using your laptop."
       },
       {
         "author": "Lu pin",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "2년 전",
-        "text": "고디바 매장 방문했습니다\n\n아이스초코를 주문했습니다. 컵사이즈에 비해 얼음은 크고 많고 ㅜㅜ 상대적으로 음료양이 적으니… 종이빨대로 음료가 전혀 마실수가 없네요. 아이스크림은 너무 맛있어요. 음료는 좀 아쉽습니다"
+        "relative_time": "2 years ago",
+        "text": "I visited the Godiva store\n\nI ordered ice chocolate. Compared to the cup size, the ice is large and plentiful. The amount of drink is relatively small... I can't drink anything with a paper straw. The ice cream is so delicious. Drinks are a bit disappointing"
       },
       {
         "author": "CHANJO SON",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "Monster VR 자유이용권으로 다 이용해보면 좋을거같아요^^\n래프팅과 워킹 어트랙션 추천!\nInteresting place! I reccomend to rafting and walking attraction!!"
+        "relative_time": "7 years ago",
+        "text": "I think it would be nice to use it all with the Monster VR free pass^^\nRafting and walking attractions recommended!\nInteresting place! I reccomend to rafting and walking attraction!!"
       },
       {
-        "author": "황지연",
+        "author": "Jiyeon Hwang",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "다른롯데백화점들 보다는 규모가작고 아담하지만~ 그래도 돌아보기는 편한편이자 부대시설이 잘갖춰진느낌이지"
+        "relative_time": "4 years ago",
+        "text": "Although it is smaller and more compact than other Lotte Department Stores, it is still easy to navigate and has good facilities."
       }
     ],
     "photos": [
@@ -2916,16 +2916,16 @@
   },
   {
     "place_id": "ChIJJZZGkuikfDURiPPoNmf7qIY",
-    "display_name": "(주)와이케이038",
-    "category": "백화점",
+    "display_name": "YK038 Co., Ltd.",
+    "category": "department store",
     "types": [
       "department_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 자양동 227-342",
-    "short_address": "광진구 자양동 227-342",
+    "address": "227-342 Jayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "227-342 Jayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5387765,
       "lng": 127.0710831
@@ -2946,8 +2946,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2956,16 +2956,16 @@
   },
   {
     "place_id": "ChIJJZZGkuikfDURpY1G81SaBS4",
-    "display_name": "레노마 셔츠",
-    "category": "백화점",
+    "display_name": "Renoma Shirt",
+    "category": "department store",
     "types": [
       "department_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 자양제3동 227-342",
-    "short_address": "광진구 자양제3동 227-342",
+    "address": "227-342 Jayangje 3-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "227-342 Jayangje 3-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5387765,
       "lng": 127.0710831
@@ -2984,18 +2984,18 @@
     "google_maps_url": "https://maps.google.com/?cid=3316226390277655973",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4e892469625:0x2e059a54f3468da5!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 8:00",
-      "화요일: 오전 10:30 ~ 오후 8:00",
-      "수요일: 오전 10:30 ~ 오후 8:00",
-      "목요일: 오전 10:30 ~ 오후 8:00",
-      "금요일: 오전 10:30 ~ 오후 8:00",
-      "토요일: 오전 10:30 ~ 오후 8:00",
-      "일요일: 오전 10:30 ~ 오후 8:00"
+      "Monday: 10:30 AM - 8:00 PM",
+      "Tuesday: 10:30 AM - 8:00 PM",
+      "Wednesday: 10:30 AM - 8:00 PM",
+      "Thursday: 10:30 AM - 8:00 PM",
+      "Friday: 10:30 AM - 8:00 PM",
+      "Saturday: 10:30 AM - 8:00 PM",
+      "Sunday: 10:30 AM - 8:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3005,15 +3005,15 @@
   },
   {
     "place_id": "ChIJb4NIkuikfDURjVzd3BTh93w",
-    "display_name": "크로커다일 롯데백화점스타시티점",
-    "category": "쇼핑몰",
+    "display_name": "Crocodile Lotte Department Store Star City Branch",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 자양동 227-342",
-    "short_address": "광진구 자양동 227-342",
+    "address": "227-342 Jayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "227-342 Jayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5387343,
       "lng": 127.0711279
@@ -3033,46 +3033,46 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4e89248836f:0x7cf7e114dcdd5c8d!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "박경화",
+        "author": "Park Kyung-hwa",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "이성원",
+        "author": "Seongwon Lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "寶命",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Andy Cho",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -3080,15 +3080,15 @@
   },
   {
     "place_id": "ChIJb4NIkuikfDURcZiQjodfwwQ",
-    "display_name": "아놀드파마 롯데스타시티",
-    "category": "쇼핑몰",
+    "display_name": "Arnold Pharma Lotte Star City",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 자양동 227-342",
-    "short_address": "광진구 자양동 227-342",
+    "address": "227-342 Jayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "227-342 Jayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5387343,
       "lng": 127.0711279
@@ -3108,30 +3108,30 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4e89248836f:0x4c35f878e909871!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "최성혜",
+        "author": "Seonghye Choi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "배점숙",
+        "author": "Bae Jeom-sook",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -3139,15 +3139,15 @@
   },
   {
     "place_id": "ChIJb4NIkuikfDURzJKBCPmxOcQ",
-    "display_name": "빈폴 롯데스타시티",
-    "category": "쇼핑몰",
+    "display_name": "Beanpole Lotte Star City",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 자양동 227-342",
-    "short_address": "광진구 자양동 227-342",
+    "address": "227-342 Jayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "227-342 Jayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5387343,
       "lng": 127.0711279
@@ -3167,53 +3167,53 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4e89248836f:0xc439b1f9088192cc!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "펭귄",
+        "author": "penguin",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8년 전",
-        "text": "굳이에요"
+        "relative_time": "8 years ago",
+        "text": "Why?"
       },
       {
-        "author": "조영호",
+        "author": "Youngho Cho",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Kunsup S",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "박경화",
+        "author": "Park Kyung-hwa",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "K바위",
+        "author": "K rock",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -3221,15 +3221,15 @@
   },
   {
     "place_id": "ChIJ57IRIuakfDURtmj9bzw5Zt8",
-    "display_name": "스타시티몰",
-    "category": "쇼핑몰",
+    "display_name": "Star City Mall",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 아차산로 262",
-    "short_address": "광진구 아차산로 262",
+    "address": "262 Achasan-ro, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "262 Achasan-ro, Gwangjin-gu",
     "location": {
       "lat": 37.5385849,
       "lng": 127.07296590000001
@@ -3248,63 +3248,63 @@
     "google_maps_url": "https://maps.google.com/?cid=16097616849822116022",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4e62211b2e7:0xdf66393c6ffd68b6!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 11:00",
-      "화요일: 오전 10:00 ~ 오후 11:00",
-      "수요일: 오전 10:00 ~ 오후 11:00",
-      "목요일: 오전 10:00 ~ 오후 11:00",
-      "금요일: 오전 10:00 ~ 오후 11:00",
-      "토요일: 오전 10:00 ~ 오후 11:00",
-      "일요일: 오전 10:00 ~ 오후 11:00"
+      "Monday: 10:00 AM - 11:00 PM",
+      "Tuesday: 10:00 AM - 11:00 PM",
+      "Wednesday: 10:00 AM - 11:00 PM",
+      "Thursday: 10:00 AM - 11:00 PM",
+      "Friday: 10:00 AM - 11:00 PM",
+      "Saturday: 10:00 AM - 11:00 PM",
+      "Sunday: 10:00 AM - 11:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "희희",
+        "author": "Hee hee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "이마트에서 장보고 롯데백화점에서 이벤트홀 쇼핑도 하고 다음엔 푸드코트에세 밥먹으러 올게요. 너무 좋은 곳을 늦게 알았네요.서점도 있어요"
+        "relative_time": "1 month ago",
+        "text": "I'll buy groceries at E-Mart, shop at the event hall at Lotte Department Store, and then come to the food court to eat. I found out about this great place too late. There is also a bookstore."
       },
       {
         "author": "Eunha Hong",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1달 전",
-        "text": "넓어서 비올때 산책할 수 잇어 좋아요\n맛집 핫플이 더 많이 들어왔으면"
+        "relative_time": "1 month ago",
+        "text": "It's spacious so you can take a walk when it rains.\nI wish there were more popular restaurants"
       },
       {
-        "author": "오프로",
+        "author": "offo",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2달 전",
-        "text": "추석명절 선물 사러 들렀어요ㆍ 물건도 많고 미리 가면 할인혜택이 많아요"
+        "relative_time": "2 months ago",
+        "text": "I stopped by to buy a Chuseok holiday gift. There are a lot of products and there are many discounts if you go in advance."
       },
       {
         "author": "JEONGIL KANG",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7달 전",
-        "text": "건대 스타시티몰은 쇼핑, 식사, 문화생활을 한 번에 즐길 수 있는 복합 쇼핑몰이라 주말에 가기 딱 좋아요. 규모가 크진 않지만 필요한 브랜드들이 알차게 들어가 있고, 지하철역과 바로 연결돼 접근성이 뛰어난 게 장점이에요. 특히 식당가가 다양해서 친구나 가족이랑 가도 메뉴 고르기 편하고, 영화관도 있어서 하루 종일 보내기 괜찮습니다. 다만 주말에는 사람들로 꽉 차서 주차나 엘리베이터 이용이 불편할 때가 있고, 매장 구성도 자주 바뀌는 편이라 원하는 브랜드가 없어질 때도 있더군요."
+        "relative_time": "7 months ago",
+        "text": "Konkuk University Star City Mall is a complex shopping mall where you can enjoy shopping, dining, and cultural activities all at once, making it perfect for a weekend visit. Although it is not large in size, it has a good selection of necessary brands, and its advantage is that it is directly connected to the subway station, making it highly accessible. In particular, there are a variety of restaurants, so it's easy to choose a menu even if you go with friends or family, and there's also a movie theater, so it's a great place to spend the whole day. However, on weekends, it is so crowded that it can be difficult to park or use the elevator, and because the store structure changes frequently, there are times when the brand you want is no longer available."
       },
       {
-        "author": "달빛조각사",
+        "author": "Moonlight Sculptor",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "🛍 구경할 거리가 많음 🛍\n다양한 음식점과 쇼핑몰이 입점되어 있음"
+        "relative_time": "1 year ago",
+        "text": "🛍 Lots to see 🛍\nThere are various restaurants and shopping malls."
       }
     ],
     "photos": [
@@ -3323,14 +3323,14 @@
   {
     "place_id": "ChIJRbBTw6OlfDURs_gbT7P5Qfw",
     "display_name": "SEOSA",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "98-3, 201 아차산로21길 광진구 서울특별시 대한민국",
-    "short_address": "98-3, 201 아차산로21길 광진구",
+    "address": "98-3, 201 Achasan-ro 21-gil, Gwangjin-gu, Seoul, Republic of Korea",
+    "short_address": "98-3, 201 Achasan-ro 21-gil, Gwangjin-gu",
     "location": {
       "lat": 37.546043600000004,
       "lng": 127.0673307
@@ -3349,18 +3349,18 @@
     "google_maps_url": "https://maps.google.com/?cid=18177084119565727923",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5a3c353b045:0xfc41f9b34f1bf8b3!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오전 5:30",
-      "화요일: 오전 10:00 ~ 오후 5:30",
-      "수요일: 오전 10:00 ~ 오후 5:30",
-      "목요일: 오전 10:00 ~ 오후 5:30",
-      "금요일: 오전 10:00 ~ 오후 5:30",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 5:30 AM",
+      "Tuesday: 10:00 AM - 5:30 PM",
+      "Wednesday: 10:00 AM - 5:30 PM",
+      "Thursday: 10:00 AM - 5:30 PM",
+      "Friday: 10:00 AM - 5:30 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3370,15 +3370,15 @@
   },
   {
     "place_id": "ChIJ53DPwMGlfDURXD0u8JjhMfI",
-    "display_name": "성수낙낙",
-    "category": "쇼핑몰",
+    "display_name": "Seongsu Naknak",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수2가제3동 광나루로6길 49",
-    "short_address": "성동구 성수2가제3동 광나루로6길 49",
+    "address": "49, Gwangnaru-ro 6-gil, Seongsu 2-gaje 3-dong, Seongdong-gu, Seoul, South Korea",
+    "short_address": "49, Gwangnaru-ro 6-gil, Seongsu 2-gaje 3-dong, Seongdong-gu",
     "location": {
       "lat": 37.5465029,
       "lng": 127.06526299999999
@@ -3398,54 +3398,54 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5c1c0cf70e7:0xf231e198f02e3d5c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "손주일 (Cecil)",
+        "author": "Son Joo-il (Cecil)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "트렌디한 서울 성수동 지역에 위치한 성수낙낙은 독특한 이름뿐 아니라 장인의 솜씨와 현대적인 디자인이 독특하게 조화를 이루는 곳으로도 유명합니다. 이 다기능 공간은 카페, 갤러리, 작업장을 완벽하게 결합하여 방문객에게 수공예품과 예술적 표현의 세계로 즐거운 여행을 선사합니다.\n\n성수낙낙에 들어서자마자 미니멀하면서도 매력적인 인테리어가 시선을 사로잡는다. 장식은 깔끔한 라인, 천연 소재, 차분한 색상 팔레트가 특징이며 편안하고 영감을 주는 분위기를 조성합니다. 이 공간은 세심하게 선별된 도자기, 직물, 기타 수공예품이 벽과 선반을 장식하여 현지 장인의 작품을 전시할 수 있도록 세심하게 디자인되었습니다.\n\n성수낙낙 카페에서는 엄선된 스페셜티 커피와 장인의 차를 통해 감각적 경험을 더욱 향상시킵니다. 완벽하게 추출된 에스프레소를 원하시든 상쾌한 허브 차를 원하시든, 지식이 풍부한 직원이 각 음료의 세부 사항과 품질에 주의를 기울여 준비한 음료 메뉴를 친절하게 안내해 드립니다.\n\n성수낙낙은 카페와 갤러리로서의 역할 외에도 창의성과 지역사회 참여의 허브 역할을 합니다. 정기적인 워크숍과 이벤트가 이곳에서 개최되어 방문객들에게 숙련된 장인으로부터 새로운 기술을 배우거나 공동 예술 프로젝트에 참여할 수 있는 기회를 제공합니다. 이러한 활동은 지역 문화 현장을 풍요롭게 할 뿐만 아니라 참가자들 간의 유대감과 동지애를 키워줍니다.\n\n성수낙낙의 매력은 미적 매력과 우수한 커피뿐 아니라 지역 장인정신을 장려하고 활기 넘치는 창의적 커뮤니티를 육성하려는 노력에도 있습니다. 당신이 핸드메이드 제품을 좋아하는 사람이든, 커피를 좋아하는 사람이든, 단순히 긴장을 풀 수 있는 고요한 공간을 찾는 사람이든, 성수낙낙은 장인정신의 아름다움과 창의적인 표현의 힘을 기념하는 기억에 남는 경험을 선사합니다."
+        "relative_time": "1 year ago",
+        "text": "Located in the trendy Seongsu-dong area of ​​Seoul, Seongsu Nak Nak is famous not only for its unique name, but also for its unique blend of craftsmanship and modern design. This multi-functional space seamlessly combines a café, gallery and workshop, offering visitors a delightful journey into the world of handicrafts and artistic expression.\n\nAs soon as you enter Seongsu Naknak, the minimalistic yet attractive interior catches your eye. The décor features clean lines, natural materials and a muted color palette, creating a comfortable and inspiring atmosphere. The space has been carefully designed to showcase the work of local artisans, with carefully curated ceramics, textiles and other handicrafts adorning the walls and shelves.\n\nSeongsu Naknak Cafe further enhances the sensory experience with carefully selected specialty coffees and artisan teas. Whether you're looking for a perfectly brewed espresso or a refreshing herbal tea, our knowledgeable staff will happily guide you through our drinks menu, prepared with attention to detail and quality of each drink.\n\nIn addition to its role as a café and gallery, Seongsunaknak serves as a hub for creativity and community participation. Regular workshops and events are held here, giving visitors the opportunity to learn new skills from skilled artisans or take part in collaborative art projects. These activities not only enrich the local cultural scene, but also foster bonds and camaraderie among participants.\n\nThe appeal of Seongsunaknak lies not only in its aesthetic appeal and excellent coffee, but also in its efforts to promote local craftsmanship and foster a vibrant creative community. Whether you are a fan of handmade items, a coffee lover, or simply looking for a quiet space to unwind, Seongsu Naknak offers a memorable experience that celebrates the beauty of craftsmanship and the power of creative expression."
       },
       {
         "author": "john Dejong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "주말에 근처 갔다가 지하에 내려가봤는데\n문닫은곳도 많고 아직 오픈 준비중인데도 많은듯 함\n몰 자체 활성화가 조금 않된 느낌"
+        "relative_time": "1 year ago",
+        "text": "I went nearby on the weekend and went down to the basement.\nThere are many places that are closed and many are still preparing to open.\nIt feels like the mall itself has not been activated a bit."
       },
       {
         "author": "Sunny Yang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "분위기 좋아요. 지상에 녹색 잔디 광장도 있고, 커피숍도 있고, 맛집들도 계속 입점하는 중입니다. ^^"
+        "relative_time": "4 years ago",
+        "text": "Good atmosphere. There is a green lawn square on the ground, a coffee shop, and restaurants are continuing to open. ^^"
       },
       {
         "author": "abrooyal K",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "4년 전",
-        "text": "시설도 나쁘지 않으나 식당 퀄리티는 별로이니 참고."
+        "relative_time": "4 years ago",
+        "text": "The facilities are not bad, but the quality of the restaurant is not so good."
       },
       {
         "author": "Kyle",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "3년 전",
-        "text": "토요일인데도 문 연 가게가 별로 없고 빈 가게가 많음. 직장인 점심 먹는 그냥 그런 작은 푸드코트인데 굳이 가족들과 찾아올 정도 아님"
+        "relative_time": "3 years ago",
+        "text": "Even though it was Saturday, not many stores were open and many were empty. It's just a small food court for office workers to have lunch, but it's not worth visiting with your family."
       }
     ],
     "photos": [
@@ -3463,15 +3463,15 @@
   },
   {
     "place_id": "ChIJiaOvklalfDURyhHWup8epow",
-    "display_name": "일로코리아",
-    "category": "쇼핑몰",
+    "display_name": "Ilo Korea",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 아차산로17길 49 생각공장데시앙플렉스 704호",
-    "short_address": "성동구 아차산로17길 49 생각공장데시앙플렉스 704호",
+    "address": "#704, Thought Factory Desianplex, 49 Achasan-ro 17-gil, Seongdong-gu, Seoul, Republic of Korea",
+    "short_address": "Room 704, Thought Factory Desianplex, 49 Achasan-ro 17-gil, Seongdong-gu",
     "location": {
       "lat": 37.5467137,
       "lng": 127.06551959999999
@@ -3491,11 +3491,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca55692afa389:0x8ca61e9fbad611ca!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3505,15 +3505,15 @@
   },
   {
     "place_id": "ChIJG_l5PsOkfDUROgsvlugDxuQ",
-    "display_name": "한성기업",
-    "category": "쇼핑몰",
+    "display_name": "Hansung Enterprise",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 15-7",
-    "short_address": "광진구 화양동 15-7",
+    "address": "15-7 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "15-7 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5449558,
       "lng": 127.0710166
@@ -3534,8 +3534,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3544,15 +3544,15 @@
   },
   {
     "place_id": "ChIJ_7_RsRClfDURA-HBiU33gaw",
-    "display_name": "성수락락",
-    "category": "쇼핑몰",
+    "display_name": "Acceptance of sex",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 성동구 성수2가제3동 성수이로26길 61",
-    "short_address": "성동구 성수2가제3동 성수이로26길 61",
+    "address": "61 Seongsui-ro 26-gil, Seongsu 2-gaje 3-dong, Seongdong-gu, Seoul, South Korea",
+    "short_address": "61, Seongsui-ro 26-gil, Seongsu 2-gaje 3-dong, Seongdong-gu",
     "location": {
       "lat": 37.5446331,
       "lng": 127.06430839999999
@@ -3572,11 +3572,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca510b1d1bfff:0xac81f74d89c1e103!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3586,15 +3586,15 @@
   },
   {
     "place_id": "ChIJjzt6zNykfDURQ3-URtxg81Y",
-    "display_name": "헤커",
-    "category": "쇼핑몰",
+    "display_name": "hecker",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 2-23",
-    "short_address": "광진구 화양동 2-23",
+    "address": "2-23 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "2-23 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5444003,
       "lng": 127.07243319999998
@@ -3614,49 +3614,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4dccc7a3b8f:0x56f360dc46947f43!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "배주진",
+        "author": "Joojin Bae",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "9년 전",
-        "text": "길가에있어서 찾아가기는 쉬운듯"
+        "relative_time": "9 years ago",
+        "text": "It's on the side of the road so it's easy to find."
       },
       {
         "author": "Byulna Yoo",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Brasil cho eun Life",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "강정훈",
+        "author": "Jeonghoon Kang",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "영림",
+        "author": "Younglim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -3664,15 +3664,15 @@
   },
   {
     "place_id": "ChIJt3-KtsSkfDURpE_NIJ6jfsc",
-    "display_name": "락스타몰",
-    "category": "쇼핑몰",
+    "display_name": "Rockstar Mall",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 113-1",
-    "short_address": "광진구 화양동 113-1",
+    "address": "113-1 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "113-1 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5470944,
       "lng": 127.07182199999998
@@ -3692,49 +3692,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c4b68a7fb7:0xc77ea39e20cd4fa4!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "뭉치뭉치는말안들어",
+        "author": "Moonggi Mungi doesn’t listen.",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
-        "text": "볼게많아요"
+        "relative_time": "8 years ago",
+        "text": "There's a lot to see"
       },
       {
-        "author": "최시영",
+        "author": "Siyoung Choi",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "yunji lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Jongwon Yun",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "임수해",
+        "author": "Lim Soo-hae",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       }
     ],
@@ -3744,15 +3744,15 @@
   },
   {
     "place_id": "ChIJkXRNpdukfDUR7cHsXybK-vE",
-    "display_name": "어게인",
-    "category": "쇼핑몰",
+    "display_name": "Again",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 번지 지층 499-1",
-    "short_address": "광진구 화양동 번지 지층 499-1",
+    "address": "Ground floor 499-1, Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "Ground floor 499-1, Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5464057,
       "lng": 127.0755739
@@ -3772,11 +3772,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4dba54d7491:0xf1faca265fecc1ed!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3786,15 +3786,15 @@
   },
   {
     "place_id": "ChIJRf7H6sSkfDUR-Rt0crPOQ7w",
-    "display_name": "웨이즈컴퍼니",
-    "category": "쇼핑몰",
+    "display_name": "Waze Company",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 화양동 번지 1 동 동도센트리움캠퍼스파크 505호 KR 서울특별시 광진구 화양동 116-2",
-    "short_address": "화양동 번지 1 동 KR 서울특별시 광진구 화양동 116-2 동도센트리움캠퍼스파크 505호",
+    "address": "Room 505, Dongdo Centrium Campus Park, Hwayang-dong, Seoul, Republic of Korea KR 116-2 Hwayang-dong, Gwangjin-gu, Seoul",
+    "short_address": "Building 1, Hwayang-dong KR Room 505, Dongdo Centrium Campus Park, 116-2 Hwayang-dong, Gwangjin-gu, Seoul",
     "location": {
       "lat": 37.5476469,
       "lng": 127.0708044
@@ -3814,11 +3814,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c4eac7fe45:0xbc43ceb372741bf9!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3828,8 +3828,8 @@
   },
   {
     "place_id": "ChIJA4VBkumkfDURmGAbCUie1E0",
-    "display_name": "세븐일레븐 건대제일점",
-    "category": "슈퍼마켓",
+    "display_name": "7-Eleven Konkuk University Jeil Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3839,8 +3839,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 47-67",
-    "short_address": "광진구 화양동 47-67",
+    "address": "47-67 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "47-67 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5416506,
       "lng": 127.06762819999999
@@ -3859,18 +3859,18 @@
     "google_maps_url": "https://maps.google.com/?cid=5608281468210733208",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4e992418503:0x4dd49e48091b6098!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3880,21 +3880,21 @@
         "author": "jason lee",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "2년 전",
-        "text": "안경쓰고 뚱뚱한 알바 싸가지 없네요 사장님이 일궈놓으신거 다 망칩니다."
+        "relative_time": "2 years ago",
+        "text": "The fat part-time job wearing glasses is not worth it. It ruins everything the boss has built."
       },
       {
-        "author": "Youn-il Lee (풍류토깽)",
+        "author": "Youn-il Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       },
       {
-        "author": "김응진",
+        "author": "Eungjin Kim",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -3902,8 +3902,8 @@
   },
   {
     "place_id": "ChIJZQ3VcemkfDURSYes5nw6YmM",
-    "display_name": "GS25 노유점",
-    "category": "슈퍼마켓",
+    "display_name": "GS25 Noyu branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -3913,8 +3913,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 자양동 6-39",
-    "short_address": "광진구 자양동 6-39",
+    "address": "6-39 Jayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "6-39 Jayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.540095199999996,
       "lng": 127.06771149999999
@@ -3933,18 +3933,18 @@
     "google_maps_url": "https://maps.google.com/?cid=7161350665592932169",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4e971d50d65:0x63623a7ce6ac8749!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3954,35 +3954,35 @@
         "author": "Anyma St",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
-        "text": "물건사러갔더니 개념없는알바 끝까지 폰 쳐보고있고 봉투달라했더니 물건옆에 봉투던지면서 '니가담아가세요' 이런투로 서비스함 쓰레기점포"
+        "relative_time": "1 year ago",
+        "text": "I went to buy something, and he was staring at his phone until the end of his part-time job, and when I asked for a bag, he threw the bag next to the item and said, 'You take it.' It's a garbage store."
       },
       {
-        "author": "최JI",
+        "author": "Choi JI",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "10년 전",
-        "text": "주말 알바랑 주인분 참 시크하심"
+        "relative_time": "10 years ago",
+        "text": "Weekend part-time job and the owner is so chic."
       },
       {
-        "author": "윤인창",
+        "author": "Inchang Yoon",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "편의점...좁다."
+        "relative_time": "6 years ago",
+        "text": "Convenience store... it's narrow."
       },
       {
-        "author": "한경",
+        "author": "Hankyung",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       },
       {
-        "author": "신은철",
+        "author": "Shin Eun-cheol",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -3994,7 +3994,7 @@
   {
     "place_id": "ChIJx4kTh_qlfDURy31Md-Xg8mM",
     "display_name": "Sinh doi mart",
-    "category": "슈퍼마켓",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4004,8 +4004,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 47-41",
-    "short_address": "광진구 화양동 47-41",
+    "address": "47-41 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "47-41 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.542996699999996,
       "lng": 127.0682862
@@ -4026,8 +4026,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4037,8 +4037,8 @@
   },
   {
     "place_id": "ChIJ2faFUgClfDURuujOm1CU-Q4",
-    "display_name": "베트남 쌍둥이 마트",
-    "category": "슈퍼마켓",
+    "display_name": "Vietnamese Twin Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4048,8 +4048,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 47-41",
-    "short_address": "광진구 화양동 47-41",
+    "address": "47-41 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "47-41 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.542995,
       "lng": 127.06835880000001
@@ -4077,8 +4077,8 @@
   },
   {
     "place_id": "ChIJO-1BD8KkfDUR7OayJ-XvO94",
-    "display_name": "아시안마트",
-    "category": "슈퍼마켓",
+    "display_name": "Asian Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4088,8 +4088,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 35-24번지 102호",
-    "short_address": "광진구 화양동 35-24번지 102호",
+    "address": "#102, 35-24 Hwayang-dong, Gwangjin-gu, Seoul, Republic of Korea",
+    "short_address": "#102, 35-24 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5433696,
       "lng": 127.06760179999999
@@ -4109,11 +4109,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c20f41ed3b:0xde3befe527b2e6ec!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4123,8 +4123,8 @@
   },
   {
     "place_id": "ChIJje9bBVqlfDURlc-KfoOnOT8",
-    "display_name": "민지슈퍼 / Minji Super / ミンジスーパーガメク / 闵智超市加麦",
-    "category": "술집",
+    "display_name": "Minji Super / Minji Supermarket / Minji Supermarket",
+    "category": "bar",
     "types": [
       "bar",
       "supermarket",
@@ -4136,8 +4136,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 10-9",
-    "short_address": "광진구 화양동 10-9",
+    "address": "10-9 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "10-9 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.542601,
       "lng": 127.06992880000001
@@ -4159,63 +4159,63 @@
     "google_maps_url": "https://maps.google.com/?cid=4555856681267548053",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca55a055bef8d:0x3f39a7837e8acf95!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 5:00 ~ 오전 3:00",
-      "화요일: 오후 5:00 ~ 오전 3:00",
-      "수요일: 오후 5:00 ~ 오전 3:00",
-      "목요일: 오후 5:00 ~ 오전 3:00",
-      "금요일: 오후 5:00 ~ 오전 3:00",
-      "토요일: 오후 5:00 ~ 오전 3:00",
-      "일요일: 오후 5:00 ~ 오전 3:00"
+      "Monday: 5:00 PM - 3:00 AM",
+      "Tuesday: 5:00 PM - 3:00 AM",
+      "Wednesday: 5:00 PM - 3:00 AM",
+      "Thursday: 5:00 PM - 3:00 AM",
+      "Friday: 5:00 PM - 3:00 AM",
+      "Saturday: 5:00 PM - 3:00 AM",
+      "Sunday: 5:00 PM - 3:00 AM"
     ],
     "services": [
-      "포장",
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "packaging",
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "권혁인",
+        "author": "Kwon Hyuk-in",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "여기 진짜 가성비 최고예요! 국물떡볶이도 은근 중독성 있고, 간장치킨은 반마리인데 양도 넉넉하고 맛있었어요.\n야장 자리도 있어서 선선한 날 저녁에 분위기 내기 딱 좋아요.\n친구랑 가볍게 한잔하거나 데이트 코스로도 강추예요 :)"
+        "relative_time": "1 year ago",
+        "text": "This is truly the best value for money! The soup tteokbokki was also quite addictive, and the soy sauce chicken was only half, but it was generous and delicious.\nThere is also a night market, so it's perfect for creating a nice atmosphere on a cool evening.\nHighly recommended for a quick drink with a friend or as a date :)"
       },
       {
         "author": "LEE MYUNGHUN",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "건대에서 여기만큼 가성비 좋은 술집은 아마 없을거에요. 건대 백종원이라고 불리우는 사장님께서 운영하시는 곳으로 가맥집 분위기에 이것저것 시켜먹어도 정말 부담 하나도 안되는 안주들이 있는 곳이에요. 가격이 저렴한데 맛과 퀄리티까지 있는 건대 민지슈퍼 진짜 강추합니다. 즉떡에 컵라면 볶음밥 조합도 꼭 드셔보세요. 건대에서 어디갈까 고민하지말고 그냥 민지슈퍼로 가보세요."
+        "relative_time": "1 year ago",
+        "text": "There is probably no other bar in Konkuk University that is as cost-effective as this one. This place is run by the owner called Baek Jong-won of Konkuk University. It has a restaurant atmosphere and has snacks that you can order without feeling burdened. I really recommend Konkuk University Minji Super, which is cheap but has good taste and quality. Be sure to try the rice cake and cup ramen fried rice combination. Don't worry about where to go from Konkuk University, just go to Minji Supermarket."
       },
       {
-        "author": "림림",
+        "author": "rimrim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "역시 핫한 민지슈퍼! 가격도 착하고 안주 메뉴 다 너무 맛있더라구요 치즈떡볶이도 너무 맛있었구요 고기튀김 바삭하고 너무 맛있더라구요 콘치즈도 최고! 분위기가 너무 좋아서 다시 또 들릴게요"
+        "relative_time": "1 year ago",
+        "text": "As expected, Minji Super is hot! The prices were reasonable and the snack menu was all very delicious. Cheese tteokbokki was also very delicious. The fried meat was crispy and very delicious. The corn cheese was also the best! The atmosphere is so good that I will come back again."
       },
       {
-        "author": "국선현",
+        "author": "Gukseonhyeon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "건대 레트로감성 분위기 좋은 핫플 :)\n자리에서 직접 끓여먹는 즉석떡볶이에 하이볼한잔\n가볍게 과자 라면과 한잔 하기도 좋은 1차2차술집\n날좋을때 야장으로도 가보고 싶네요!\n가성비도 대박입니다"
+        "relative_time": "1 year ago",
+        "text": "A hot post with a nice retro atmosphere at Konkuk University :)\nInstant tteokbokki cooked at your seat and a glass of highball\n1st and 2nd bars that are great for light snacks and ramen and a drink\nWhen the weather is nice, I want to go to the field too!\nThe cost-effectiveness is also great."
       },
       {
-        "author": "울산둥이",
+        "author": "Ulsan Doongi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "요즘 트렌드와 재미를 다 잡은 곳, 민지슈퍼 건대본점 즉석떡볶이 시그니처 메뉴부터 갓성비안주들이 많아 좋았고 가격 분위기 모두 만족스러워서 누구에게나 한번쯤 추천해보고 싶어요. 건대 주변에 들를 일이 있다면 여기는 꼭 리스트에 추가해보세요."
+        "relative_time": "1 year ago",
+        "text": "A place that captures all the latest trends and fun, Minji Super Konkuk University Main Branch, including the signature instant tteokbokki menu and lots of freshly prepared side dishes, was great, and the prices and atmosphere were all satisfactory, so I would like to recommend it to anyone. If you have a chance to stop by around Konkuk University, be sure to add this place to your list."
       }
     ],
     "photos": [
@@ -4233,15 +4233,15 @@
   },
   {
     "place_id": "ChIJsd_9hMKkfDURvmX8jntuz-s",
-    "display_name": "매일유업 동성대리점",
-    "category": "시장",
+    "display_name": "Maeil Dairy Products Dongseong Agency",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 11-16",
-    "short_address": "광진구 화양동 11-16",
+    "address": "11-16 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "11-16 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.542539399999995,
       "lng": 127.07007229999998
@@ -4260,27 +4260,27 @@
     "google_maps_url": "https://maps.google.com/?cid=16991921396051109310",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c284fddfb1:0xebcf6e7b8efc65be!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 8:00",
-      "화요일: 오전 9:00 ~ 오후 8:00",
-      "수요일: 오전 9:00 ~ 오후 8:00",
-      "목요일: 오전 9:00 ~ 오후 8:00",
-      "금요일: 오전 9:00 ~ 오후 8:00",
-      "토요일: 오전 9:00 ~ 오후 8:00",
-      "일요일: 오전 9:00 ~ 오후 8:00"
+      "Monday: 9:00 AM - 8:00 PM",
+      "Tuesday: 9:00 AM - 8:00 PM",
+      "Wednesday: 9:00 AM - 8:00 PM",
+      "Thursday: 9:00 AM - 8:00 PM",
+      "Friday: 9:00 AM - 8:00 PM",
+      "Saturday: 9:00 AM - 8:00 PM",
+      "Sunday: 9:00 AM - 8:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "오승주",
+        "author": "Seungju Oh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -4288,8 +4288,8 @@
   },
   {
     "place_id": "ChIJ_xkP_8GkfDURSmPk2__vWi8",
-    "display_name": "신미니슈퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Shinmini Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4299,7 +4299,7 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.543507999999996,
@@ -4325,25 +4325,25 @@
     "parking": null,
     "reviews": [
       {
-        "author": "미태",
+        "author": "mitae",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "4년 전",
-        "text": "여기는 손님한테 싸가지없이 대할거면 장사를 왜 하는거지 이해가 안감"
+        "relative_time": "4 years ago",
+        "text": "I don't understand why you're in business here if you're going to treat customers rudely."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJzbD-UemkfDUROuTpI0EPviw",
-    "display_name": "조양시장(주)",
-    "category": "시장",
+    "display_name": "Joyang Market Co., Ltd.",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5387343,
@@ -4364,51 +4364,51 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4e951feb0cd:0x2cbe0f4123e9e43a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "상가.점포무권리상가건대부동산",
+        "author": "Shopping mall, store without rights, Konkuk University Real Estate",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9년 전",
-        "text": "저렴하게 많이 먹을수 있어요"
+        "relative_time": "9 years ago",
+        "text": "You can eat a lot for cheap."
       },
       {
-        "author": "승호김",
+        "author": "Seungho Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "8년 전",
-        "text": "말고기로 유명하다"
+        "relative_time": "8 years ago",
+        "text": "famous for horse meat"
       },
       {
-        "author": "서영숙",
+        "author": "Youngsook Seo",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
-        "text": "시장이 죽은듯ᆢ"
+        "relative_time": "6 years ago",
+        "text": "The market seems to be dead."
       },
       {
         "author": "JY Jang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
-        "text": "다양한 먹거리"
+        "relative_time": "8 years ago",
+        "text": "variety of food"
       },
       {
-        "author": "조영호",
+        "author": "Youngho Cho",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -4427,15 +4427,15 @@
   },
   {
     "place_id": "ChIJ2dxOZ8KkfDUREPogAoeTZsA",
-    "display_name": "화양제일시장",
-    "category": "시장",
+    "display_name": "Hwayang Jeil Market",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동",
-    "short_address": "광진구 화양동",
+    "address": "Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5435393,
       "lng": 127.0691835
@@ -4454,61 +4454,61 @@
     "google_maps_url": "https://maps.google.com/?cid=13863930710972234256",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c2674edcd9:0xc06693870220fa10!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오후 9:00",
-      "화요일: 오전 8:00 ~ 오후 9:00",
-      "수요일: 오전 8:00 ~ 오후 9:00",
-      "목요일: 오전 8:00 ~ 오후 9:00",
-      "금요일: 오전 8:00 ~ 오후 9:00",
-      "토요일: 오전 8:00 ~ 오후 9:00",
-      "일요일: 오전 8:00 ~ 오후 9:00"
+      "Monday: 8:00 AM - 9:00 PM",
+      "Tuesday: 8:00 AM - 9:00 PM",
+      "Wednesday: 8:00 AM - 9:00 PM",
+      "Thursday: 8:00 AM - 9:00 PM",
+      "Friday: 8:00 AM - 9:00 PM",
+      "Saturday: 8:00 AM - 9:00 PM",
+      "Sunday: 8:00 AM - 9:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "BRIANNA “소피” Sopi",
+        "author": "BRIANNA “Sophie” Sopi",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "골목길로쭉이어진, 건대입구역에있는, 맛집,빵집,분식집등이 몰려있음,가격도 저렴한편!!"
+        "relative_time": "1 year ago",
+        "text": "At Konkuk University Station, along the alleys, there are many restaurants, bakeries, and snack bars, all at reasonable prices!!"
       },
       {
         "author": "Tim Choi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "재래시장 정겨움이 묻어있습니다.예전 시장분위기보다는 깨끗해지고 간판과 시장좌판도 정리되어 제법 세련되어졌습니다. 주차장이 불편한것은 여전히 숙제이긴 하지만요."
+        "relative_time": "3 years ago",
+        "text": "It has a traditional market atmosphere. It has become cleaner than the previous market atmosphere and the signboards and market stalls have been organized and become quite sophisticated. Although the inconvenient parking lot is still an issue."
       },
       {
-        "author": "이상규",
+        "author": "Lee Sang-gyu",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
-        "text": "서울시내의 시장중에 제일 작은 초미니 시장 이네요!\n먹거리이외에는 시장기능이 거의 없는 시장 입니다!"
+        "relative_time": "6 years ago",
+        "text": "It is the smallest mini market among the markets in Seoul!\nIt is a market with almost no market functions other than food!"
       },
       {
-        "author": "박상구",
+        "author": "Park Sang-gu",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "얼핏 보면 제래시장처럼 보이지만 절대로 아닙니다. 젊은 건대, 세종대 친구들이 즐겨찾는걸 보면 맛은 MZ세대에 맞춘 곳입니다.\n음식들을 사먹어 봐도 역시 JMT입니다."
+        "relative_time": "2 years ago",
+        "text": "At first glance, it looks like a traditional market, but it is definitely not. Judging by the fact that young friends from Konkuk University and Sejong University frequent this place, the taste is tailored to the MZ generation.\nEven if you buy food, it is still JMT."
       },
       {
-        "author": "롯뽕취하다",
+        "author": "get drunk",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "서울 떡볶이~ 맛있게맵콤🔥 가성비굿!!👍"
+        "relative_time": "4 years ago",
+        "text": "Seoul Tteokbokki~ Deliciously spicy🔥 Good value for money!!👍"
       }
     ],
     "photos": [
@@ -4526,8 +4526,8 @@
   },
   {
     "place_id": "ChIJIcEJduykfDURT34aDDV1WBc",
-    "display_name": "대성슈퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Daesung Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4537,8 +4537,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 자양동",
-    "short_address": "광진구 자양동",
+    "address": "Jayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "Jayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5392341,
       "lng": 127.065184
@@ -4566,8 +4566,8 @@
   },
   {
     "place_id": "ChIJbzx-88KkfDURWu6GN9YCTkE",
-    "display_name": "GS더프레시 광진화양점",
-    "category": "슈퍼마켓",
+    "display_name": "GS The Fresh Gwangjin Hwayang Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4577,8 +4577,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 능동로13길 39",
-    "short_address": "광진구 능동로13길 39",
+    "address": "39 Neungdong-ro 13-gil, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "39, Neungdong-ro 13-gil, Gwangjin-gu",
     "location": {
       "lat": 37.5434882,
       "lng": 127.06992029999999
@@ -4597,25 +4597,25 @@
     "google_maps_url": "https://maps.google.com/?cid=4705701779726593626",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c2f37e3c6f:0x414e02d63786ee5a!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오전 12:00",
-      "화요일: 오전 10:00 ~ 오전 12:00",
-      "수요일: 오전 10:00 ~ 오전 12:00",
-      "목요일: 오전 10:00 ~ 오전 12:00",
-      "금요일: 오전 10:00 ~ 오전 12:00",
-      "토요일: 오전 10:00 ~ 오전 12:00",
-      "일요일: 오전 10:00 ~ 오전 12:00"
+      "Monday: 10:00 AM - 12:00 AM",
+      "Tuesday: 10:00 AM - 12:00 AM",
+      "Wednesday: 10:00 AM - 12:00 AM",
+      "Thursday: 10:00 AM - 12:00 AM",
+      "Friday: 10:00 AM - 12:00 AM",
+      "Saturday: 10:00 AM - 12:00 AM",
+      "Sunday: 10:00 AM - 12:00 AM"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -4623,36 +4623,36 @@
         "author": "MB KIM",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "2023년 8월 31일 배달로 제품 수령했습니다.\n아이스크림이 시원하고 안전하게 잘 포장돼서 배송됐습니다.\n정성스런 메모를 함께 보내주셔서 기분이 좋았습니다."
+        "relative_time": "2 years ago",
+        "text": "I received the product via delivery on August 31, 2023.\nThe ice cream was delivered cool and safely packaged well.\nI was glad that you sent me a thoughtful note."
       },
       {
-        "author": "이정대",
+        "author": "Jeongdae Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "위스키런 때문에 다녀왔는데 위치도 좋고 매장도 넓고 품목도 다양하고 셀프 계산대에서 막히는 부분도 잘 안내해 주셨어요"
+        "relative_time": "2 years ago",
+        "text": "I went there for Whiskey Run, and the location was good, the store was spacious and had a variety of items, and they provided good guidance on areas that were blocked at the self-checkout counter."
       },
       {
         "author": "sangkang ahn",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "이곳부근에 오면 꼭 들리는 습관이 있다..웬지 자신도\n모르게 들어선다..마치 참새가 방앗간 그냥 지나치는 일이 없듯이...많든 적든.사들고 나오면 마음이뿌듯하다\n....아내에게 갖다주는 것이 좋다...행복과 기쁨이 교차한\n다...나의 일상생활의 일부로 자리잡음에 가슴이 뿌듯하\n다....이곳이 말이다...직원들도 익숙해 눈인사 한다^^^"
+        "relative_time": "5 years ago",
+        "text": "I have a habit of stopping by whenever I come around here.\nYou enter without realizing it. Just like a sparrow never passes by a mill. Whether it is a lot or a little, you feel proud when you come out with something.\n....It's good to give it to your wife...a mixture of happiness and joy\nI feel proud that it has become a part of my daily life.\nThis is it...the employees are used to it and greet me with their eyes ^^^"
       },
       {
-        "author": "나일주",
+        "author": "Nailju",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "진열과 깨끝한 환경에서 쇼핑하기 좋은 장소입니다.비교적 값도 저렴하고 특히 쎄일하는 상품이 있어서  아주 좋았습니다. 우유와 빵을 구매했습니다."
+        "relative_time": "5 years ago",
+        "text": "It's a great place to shop in a clean environment with great displays. The prices are relatively cheap, and it was especially nice to have products on sale. I bought milk and bread."
       },
       {
         "author": "Kiyora P",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
-        "text": "차로 5~10분 거리에 있는 성동구는 구가 다르다고 배달이 안 되고, 광진구만 배달이 된다고 해서 잘 안 감.\n몇몇 야채가 이마트보다 싸서 가볍게 쇼핑할 때만 가는 걸로..."
+        "relative_time": "7 years ago",
+        "text": "In Seongdong-gu, which is 5-10 minutes away by car, delivery is not possible because the districts are different, and delivery is only available in Gwangjin-gu, so I don't really get it.\nSome vegetables are cheaper than E-Mart, so I only go there for light shopping..."
       }
     ],
     "photos": [
@@ -4670,8 +4670,8 @@
   },
   {
     "place_id": "ChIJMZf2BuukfDURdbzOA_EHK3o",
-    "display_name": "청정마트",
-    "category": "슈퍼마켓",
+    "display_name": "Clean Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4681,8 +4681,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 자양동 23-3번지 1층 오성빌딩 광진구 서울특별시 KR",
-    "short_address": "자양동 23-3번지 1층 오성빌딩 광진구 서울특별시 KR",
+    "address": "1st floor, Oseong Building, 23-3 Jayang-dong, Seoul, Republic of Korea, Gwangjin-gu, Seoul KR",
+    "short_address": "23-3 Jayang-dong, 1st floor, Oseong Building, Gwangjin-gu, Seoul KR",
     "location": {
       "lat": 37.5416179,
       "lng": 127.0639551
@@ -4703,8 +4703,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4713,8 +4713,8 @@
   },
   {
     "place_id": "ChIJMfL1zsKkfDURROI8rsq3eCc",
-    "display_name": "세븐일레븐",
-    "category": "슈퍼마켓",
+    "display_name": "7-Eleven",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4724,8 +4724,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동",
-    "short_address": "광진구 화양동",
+    "address": "Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.542595,
       "lng": 127.07135000000001
@@ -4746,8 +4746,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4761,8 +4761,8 @@
   },
   {
     "place_id": "ChIJYZdsMuakfDUR4lmnSMUqXeA",
-    "display_name": "이마트 자양점",
-    "category": "대형 슈퍼마켓",
+    "display_name": "E-Mart Jayang Branch",
+    "category": "hypermarket",
     "types": [
       "hypermarket",
       "supermarket",
@@ -4773,8 +4773,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 아차산로 272 이마트자양점",
-    "short_address": "광진구 아차산로 272 이마트자양점",
+    "address": "E-Mart Jayang Branch, 272 Achasan-ro, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "E-Mart Jayang Branch, 272 Achasan-ro, Gwangjin-gu",
     "location": {
       "lat": 37.5384446,
       "lng": 127.07284829999999
@@ -4793,27 +4793,27 @@
     "google_maps_url": "https://maps.google.com/?cid=16167125264145799650",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4e6326c9761:0xe05d2ac548a759e2!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 11:00",
-      "화요일: 오전 10:00 ~ 오후 11:00",
-      "수요일: 오전 10:00 ~ 오후 11:00",
-      "목요일: 오전 10:00 ~ 오후 11:00",
-      "금요일: 오전 10:00 ~ 오후 11:00",
-      "토요일: 오전 10:00 ~ 오후 11:00",
-      "일요일: 오전 10:00 ~ 오후 11:00"
+      "Monday: 10:00 AM - 11:00 PM",
+      "Tuesday: 10:00 AM - 11:00 PM",
+      "Wednesday: 10:00 AM - 11:00 PM",
+      "Thursday: 10:00 AM - 11:00 PM",
+      "Friday: 10:00 AM - 11:00 PM",
+      "Saturday: 10:00 AM - 11:00 PM",
+      "Sunday: 10:00 AM - 11:00 PM"
     ],
     "services": [
-      "배달",
-      "화장실"
+      "delivery",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -4821,36 +4821,36 @@
         "author": "Young Suh",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9달 전",
-        "text": "건대입구역과 가까워 교통이 편리 합니다.\n매장이 넓어 쾌적한 편이고 주변 시설도 깨끗해\n편안한 쇼핑 가능 합니다."
+        "relative_time": "9 months ago",
+        "text": "It is close to Konkuk University Station, so transportation is convenient.\nThe store is spacious and comfortable, and the surrounding facilities are clean.\nYou can shop comfortably."
       },
       {
         "author": "Tim Choi",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1달 전",
-        "text": "이마트 굿입니다.\n싱싱해요 ~~~"
+        "relative_time": "1 month ago",
+        "text": "E-Mart is good.\nIt’s fresh ~~~"
       },
       {
-        "author": "joylombok “호연지기”",
+        "author": "joylombok “Hoyeonjigi”",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "1년 전",
-        "text": "대부분의 리뷰가 좋은것 같네요\n그래서 리뷰를 관리하는 분이 있으면 이것을 시정해 주십사하고 리뷰를 씁니다\n어제 처음으로 이마트 식당가를 걸어서 갔는데 사진과 같이 에스컬레이터 끝나는 지점에 안내도가 걸려 있었습니다\n사진을 보시면 보는곳에서 왼쪽으로 가는것으로 알 것입니다\n그런데 아닙니다 반대방향이었습니다 걸음이 불편한 노모를 모시고 한참을 가니 롯데 백화점이라 나옵니다. 이런 낭패가...\n이런 몰상식 아니 무지가 있나 생각해 봅니다.\n지도를 현재 위치에 붙이려면 위아래를 바꾸던가, 건너편 이마트 입구쪽에 붙여야 했습니다.\n이마트의 안일한 생각에 얼마나 많은 사람들이 헛걸음을 했을까 싶네요.\n그래도 없는것 보다 나으니  별점 두개입니다"
+        "relative_time": "1 year ago",
+        "text": "Most reviews seem to be good.\nSo, if there is someone who manages reviews, please correct this and write a review.\nYesterday, I walked to the E-Mart restaurant area for the first time, and there was a guide posted at the end of the escalator as shown in the picture.\nIf you look at the picture, you will see that it is going to the left from where you are looking.\nBut no, it was in the opposite direction. After walking for a while with my elderly mother who had trouble walking, we came to Lotte Department Store. Such a disaster...\nI wonder if there is such a lack of common sense or ignorance.\nTo attach the map to its current location, you had to turn it upside down or paste it at the entrance of E-Mart across the street.\nI wonder how many people were wasted by E-Mart's complacent thinking.\nStill, it's better than nothing, so I'm giving it two stars."
       },
       {
-        "author": "황지연",
+        "author": "Jiyeon Hwang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "이마트도 다스타일이.다르지만 건대 자양점을 깔금하고 다른지점보다 관리를 잘하는 느낌이에요~~~이젠 키오스크를\n실프로 계산하다보니 캐셔분들과 접할일이 거의없어지네요 점점더 편해지는 시스템이네요...."
+        "relative_time": "3 years ago",
+        "text": "E-Mart also has a different style, but it feels like the Konkuk University Jayang branch is clean and managed better than other branches. Now they have a kiosk.\nSince I use Silpro, I rarely have to interact with cashiers. The system is becoming more and more convenient...."
       },
       {
         "author": "Eunha Hong",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1달 전",
-        "text": "생필품이나 잡화상품들이 좀더 고급진 것이 들어왔으몀"
+        "relative_time": "1 month ago",
+        "text": "More high-end daily necessities and miscellaneous goods have arrived."
       }
     ],
     "photos": [
@@ -4868,8 +4868,8 @@
   },
   {
     "place_id": "ChIJkWKvh8GkfDURiVREVY9XNkQ",
-    "display_name": "GS25 화양동해점",
-    "category": "슈퍼마켓",
+    "display_name": "GS25 Hwayang Donghae Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4879,8 +4879,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 37-1",
-    "short_address": "광진구 화양동 37-1",
+    "address": "37-1 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "37-1 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5451779,
       "lng": 127.06673930000001
@@ -4899,35 +4899,35 @@
     "google_maps_url": "https://maps.google.com/?cid=4915212316443956361",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c187af6291:0x4436578f55445489!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김영철",
+        "author": "Youngcheol Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "돈주로"
+        "relative_time": "4 years ago",
+        "text": "With money"
       },
       {
         "author": "Catherine Koo",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -4937,8 +4937,8 @@
   },
   {
     "place_id": "ChIJpcQOU8KkfDURKOFMWZkXjeQ",
-    "display_name": "CU 화양중앙점",
-    "category": "슈퍼마켓",
+    "display_name": "CU Hwayang Jungang Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -4948,8 +4948,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 33-40",
-    "short_address": "광진구 화양동 33-40",
+    "address": "33-40 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "33-40 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5446502,
       "lng": 127.06910010000001
@@ -4968,18 +4968,18 @@
     "google_maps_url": "https://maps.google.com/?cid=16468845359759417640",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c2530ec4a5:0xe48d1799594ce128!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4989,35 +4989,35 @@
         "author": "tima ME",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "편의점 좋아요"
+        "relative_time": "7 years ago",
+        "text": "I like convenience stores"
       },
       {
-        "author": "김인철",
+        "author": "Incheol Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Sanghee Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "남김진태",
+        "author": "Nam Kim Jin-tae",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       },
       {
-        "author": "왓더",
+        "author": "What the",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       }
     ],
@@ -5025,8 +5025,8 @@
   },
   {
     "place_id": "ChIJccW_VsKkfDUR6cfqsBXZ62g",
-    "display_name": "싱싱야채과일",
-    "category": "식료품점",
+    "display_name": "Fresh vegetables and fruits",
+    "category": "grocery store",
     "types": [
       "grocery_store",
       "food_store",
@@ -5036,7 +5036,7 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5443552,
@@ -5058,8 +5058,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5068,8 +5068,8 @@
   },
   {
     "place_id": "ChIJfTBJ6cGkfDURgY5Fbd9LpLo",
-    "display_name": "현대할인마트",
-    "category": "슈퍼마켓",
+    "display_name": "Hyundai Discount Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -5079,8 +5079,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 234",
-    "short_address": "광진구 화양동 234",
+    "address": "234 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "234 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5444557,
       "lng": 127.06582269999998
@@ -5099,42 +5099,42 @@
     "google_maps_url": "https://maps.google.com/?cid=13448957810218208897",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c1e949307d:0xbaa44bdf6d458e81!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이호윤",
+        "author": "Hoyoon Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "오애숙",
+        "author": "Oh Ae-sook",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "HYUNG-WOO DO",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -5142,8 +5142,8 @@
   },
   {
     "place_id": "ChIJ2QAxl8OkfDURZ43FpyOCx6M",
-    "display_name": "씨유",
-    "category": "슈퍼마켓",
+    "display_name": "C.U.",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -5153,8 +5153,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 화양동 19-27번지 1층 광진구 서울특별시 KR",
-    "short_address": "화양동 19-27번지 1층 광진구 서울특별시 KR",
+    "address": "1st floor, 19-27 Hwayang-dong, Seoul, Republic of Korea, Gwangjin-gu, Seoul KR",
+    "short_address": "1st floor, 19-27 Hwayang-dong, Gwangjin-gu, Seoul KR",
     "location": {
       "lat": 37.5463117,
       "lng": 127.06876249999999
@@ -5175,8 +5175,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5185,8 +5185,8 @@
   },
   {
     "place_id": "ChIJB7zy3cOkfDURY6tzNGTRbXA",
-    "display_name": "온누리슈퍼마켓",
-    "category": "슈퍼마켓",
+    "display_name": "Onnuri Supermarket",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -5196,8 +5196,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 화양동 24-3번지 1층 광진구 서울특별시 KR",
-    "short_address": "화양동 24-3번지 1층 광진구 서울특별시 KR",
+    "address": "1st floor, 24-3 Hwayang-dong, Seoul, Republic of Korea, Gwangjin-gu, Seoul KR",
+    "short_address": "1st floor, 24-3 Hwayang-dong, Gwangjin-gu, Seoul KR",
     "location": {
       "lat": 37.5465577,
       "lng": 127.06728040000002
@@ -5218,8 +5218,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5228,8 +5228,8 @@
   },
   {
     "place_id": "ChIJ266cG8OkfDURuUwrc7MPCQk",
-    "display_name": "GS25 화양한아름점",
-    "category": "슈퍼마켓",
+    "display_name": "GS25 Hwayang Hanareum Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -5239,8 +5239,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 15-20",
-    "short_address": "광진구 화양동 15-20",
+    "address": "15-20 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "15-20 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.544622499999996,
       "lng": 127.0704056
@@ -5259,42 +5259,42 @@
     "google_maps_url": "https://maps.google.com/?cid=651068884537527481",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c31b9caedb:0x9090fb3732b4cb9!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "뭉치뭉치는말안들어",
+        "author": "Moonggi Mungi doesn’t listen.",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
-        "text": "직원분들이 친절해요~"
+        "relative_time": "8 years ago",
+        "text": "The staff are friendly~"
       },
       {
-        "author": "박성규",
+        "author": "Park Seong-gyu",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Julian Usman",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       }
     ],
@@ -5302,8 +5302,8 @@
   },
   {
     "place_id": "ChIJjc5dbMOkfDUR55gO5Xon2MM",
-    "display_name": "세븐일레븐 화양가중공원길점",
-    "category": "슈퍼마켓",
+    "display_name": "7-Eleven Hwayanggajungwon-gil branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -5313,8 +5313,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 16-16",
-    "short_address": "광진구 화양동 16-16",
+    "address": "16-16 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "16-16 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5455946,
       "lng": 127.0704611
@@ -5333,35 +5333,35 @@
     "google_maps_url": "https://maps.google.com/?cid=14112072841147881703",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c36c5dce8d:0xc3d8277ae50e98e7!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "정우혁",
+        "author": "Woohyuk Jeong",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "9년 전",
-        "text": "직원이 친절하고 이용하기가 매우 편리한 곳입니다"
+        "relative_time": "9 years ago",
+        "text": "The staff is friendly and it is a very convenient place to use."
       },
       {
-        "author": "나정호",
+        "author": "Na Jeong-ho",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -5372,8 +5372,8 @@
   },
   {
     "place_id": "ChIJ509NfMSkfDURlc-RUH_vddE",
-    "display_name": "세븐일레븐 건국대병원점",
-    "category": "슈퍼마켓",
+    "display_name": "7-Eleven Konkuk University Hospital Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -5383,8 +5383,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 19-1",
-    "short_address": "광진구 화양동 19-1",
+    "address": "19-1 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "19-1 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5473721,
       "lng": 127.0693778
@@ -5403,18 +5403,18 @@
     "google_maps_url": "https://maps.google.com/?cid=15093233056293703573",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c47c4d4fe7:0xd175ef7f5091cf95!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:30 ~ 오후 10:00",
-      "화요일: 오전 8:30 ~ 오후 10:00",
-      "수요일: 오전 8:30 ~ 오후 10:00",
-      "목요일: 오전 8:30 ~ 오후 10:00",
-      "금요일: 오전 8:30 ~ 오후 10:00",
-      "토요일: 오전 8:30 ~ 오후 10:00",
-      "일요일: 오전 8:30 ~ 오후 10:00"
+      "Monday: 8:30 AM - 10:00 PM",
+      "Tuesday: 8:30 AM - 10:00 PM",
+      "Wednesday: 8:30 AM - 10:00 PM",
+      "Thursday: 8:30 AM - 10:00 PM",
+      "Friday: 8:30 AM - 10:00 PM",
+      "Saturday: 8:30 AM - 10:00 PM",
+      "Sunday: 8:30 AM - 10:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5425,7 +5425,7 @@
   {
     "place_id": "ChIJhVeOh8SkfDUR8jjaQlr5HmU",
     "display_name": "365PLUS",
-    "category": "슈퍼마켓",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -5435,8 +5435,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 화양동 17-10번지 1층 광진구 서울특별시 KR",
-    "short_address": "화양동 17-10번지 1층 광진구 서울특별시 KR",
+    "address": "1st floor, 17-10 Hwayang-dong, Seoul, Republic of Korea, Gwangjin-gu, Seoul KR",
+    "short_address": "1st floor, 17-10 Hwayang-dong, Gwangjin-gu, Seoul KR",
     "location": {
       "lat": 37.54738400000001,
       "lng": 127.06957980000001
@@ -5455,18 +5455,18 @@
     "google_maps_url": "https://maps.google.com/?cid=7286535413196011762",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4c4878e5785:0x651ef95a42da38f2!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 12:00 ~ 오후 11:59",
-      "화요일: 오전 12:00 ~ 오후 11:59",
-      "수요일: 오전 12:00 ~ 오후 11:59",
-      "목요일: 오전 12:00 ~ 오후 11:59",
-      "금요일: 오전 12:00 ~ 오후 11:59",
-      "토요일: 오전 12:00 ~ 오후 11:59",
-      "일요일: 오전 12:00 ~ 오후 11:59"
+      "Monday: 12:00 AM - 11:59 PM",
+      "Tuesday: 12:00 AM - 11:59 PM",
+      "Wednesday: 12:00 AM - 11:59 PM",
+      "Thursday: 12:00 AM - 11:59 PM",
+      "Friday: 12:00 AM - 11:59 PM",
+      "Saturday: 12:00 AM - 11:59 PM",
+      "Sunday: 12:00 AM - 11:59 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5476,15 +5476,15 @@
   },
   {
     "place_id": "ChIJpzg4S8OkfDURVs4hIHrY09U",
-    "display_name": "서울우유화양대리점",
-    "category": "시장",
+    "display_name": "Seoul Milk Hwayang Agency",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 2-1",
-    "short_address": "광진구 화양동 2-1",
+    "address": "2-1 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "2-1 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5450113,
       "lng": 127.07218320000001
@@ -5505,8 +5505,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5515,15 +5515,15 @@
   },
   {
     "place_id": "ChIJbaGIKy2lfDURZbXnxlqy8Vw",
-    "display_name": "donghwa(동화)",
-    "category": "시장",
+    "display_name": "donghwa (fairy tale)",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 1-21",
-    "short_address": "광진구 화양동 1-21",
+    "address": "1-21 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "1-21 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5451031,
       "lng": 127.0718725
@@ -5544,8 +5544,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5554,8 +5554,8 @@
   },
   {
     "place_id": "ChIJF7X9W9ukfDURpOglgFai2oo",
-    "display_name": "24시마트",
-    "category": "슈퍼마켓",
+    "display_name": "24 hour mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -5565,8 +5565,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 화양동 94-59번지 광진구 서울특별시 KR",
-    "short_address": "화양동 94-59번지 광진구 서울특별시 KR",
+    "address": "94-59 Hwayang-dong, Seoul, Republic of Korea, Gwangjin-gu, Seoul KR",
+    "short_address": "94-59 Hwayang-dong, Gwangjin-gu, Seoul KR",
     "location": {
       "lat": 37.545876299999996,
       "lng": 127.07320960000001
@@ -5585,18 +5585,18 @@
     "google_maps_url": "https://maps.google.com/?cid=10005488014557833380",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4db5bfdb517:0x8adaa2568025e8a4!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5606,8 +5606,8 @@
   },
   {
     "place_id": "ChIJHw34IvClfDURHX5P_ZNM4gc",
-    "display_name": "데일리마트 화양점",
-    "category": "슈퍼마켓",
+    "display_name": "Daily Mart Hwayang Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -5617,8 +5617,8 @@
       "store",
       "establishment"
     ],
-    "address": "타워 아파트 지하 1층, 47 능동로19길 화양동 광진구 서울, 대한민국",
-    "short_address": "타워 아파트 지하 1층, 47 능동로19길 화양동 광진구 서울",
+    "address": "Tower Apartment, 1st Basement Floor, 47 Neungdong-ro 19-gil, Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "Tower Apartment, 1st Basement Floor, 47 Neungdong-ro 19-gil, Hwayang-dong, Gwangjin-gu, Seoul",
     "location": {
       "lat": 37.5469833,
       "lng": 127.07118320000001
@@ -5637,25 +5637,25 @@
     "google_maps_url": "https://maps.google.com/?cid=568100701495852573",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5f022f80d1f:0x7e24c93fd4f7e1d!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오후 11:00",
-      "화요일: 오전 8:00 ~ 오후 11:00",
-      "수요일: 오전 8:00 ~ 오후 11:00",
-      "목요일: 오전 8:00 ~ 오후 11:00",
-      "금요일: 오전 8:00 ~ 오후 11:00",
-      "토요일: 오전 8:00 ~ 오후 11:00",
-      "일요일: 오전 8:00 ~ 오후 11:00"
+      "Monday: 8:00 AM - 11:00 PM",
+      "Tuesday: 8:00 AM - 11:00 PM",
+      "Wednesday: 8:00 AM - 11:00 PM",
+      "Thursday: 8:00 AM - 11:00 PM",
+      "Friday: 8:00 AM - 11:00 PM",
+      "Saturday: 8:00 AM - 11:00 PM",
+      "Sunday: 8:00 AM - 11:00 PM"
     ],
     "services": [
-      "배달",
-      "화장실"
+      "delivery",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
@@ -5663,36 +5663,36 @@
         "author": "Si-ryu",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "도소매점\n대체로 저렴한 편\n•●•단, 정육코너는 간혹 단가 높은 고기는 무거운 접시로 포장해서 중량찍어서 파니까 주의해야함.\n그렇게 측량하면 싸구려접시가 몇 천원잡힘."
+        "relative_time": "3 years ago",
+        "text": "Wholesale/Retail Store\nGenerally cheap\n•●•However, you need to be careful because sometimes high-priced meat is packaged in heavy plates and sold by weight at the meat corner.\nIf you measure it like that, a cheap plate can cost several thousand won."
       },
       {
         "author": "Seung Youn Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "친절하시고 가격도 저렴합니다 3만원이상 무료 배달 가능합니다"
+        "relative_time": "3 years ago",
+        "text": "They are friendly and the price is cheap. Free delivery is available for orders over 30,000 won."
       },
       {
-        "author": "안운경",
+        "author": "Unkyung Ahn",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "저렴한 가격에 다양한걸 살수 있네요"
+        "relative_time": "2 years ago",
+        "text": "You can buy a variety of things at low prices."
       },
       {
-        "author": "No꼰 TV",
+        "author": "No braided TV",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "1년도 채 되지 않았는데 나름 자리 잡은듯 행사품 많으니 확인 하시고 쇼핑 하시길"
+        "relative_time": "3 years ago",
+        "text": "It's been less than a year, but it seems to have established itself well. There are a lot of promotional items, so check them out before shopping."
       },
       {
-        "author": "행복요리사",
+        "author": "happy chef",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "가격도 착하고 좋아요."
+        "relative_time": "3 years ago",
+        "text": "The price is good and reasonable."
       }
     ],
     "photos": [
@@ -5701,8 +5701,8 @@
   },
   {
     "place_id": "ChIJg33xjdukfDURGpp5HlYw_q0",
-    "display_name": "선인수퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Seonin Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -5712,8 +5712,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 화양동 513번지 광진구 서울특별시 KR",
-    "short_address": "화양동 513번지 광진구 서울특별시 KR",
+    "address": "513 Hwayang-dong, Seoul, Republic of Korea, Gwangjin-gu, Seoul KR",
+    "short_address": "513 Hwayang-dong, Gwangjin-gu, Seoul KR",
     "location": {
       "lat": 37.545118599999995,
       "lng": 127.0759813
@@ -5741,16 +5741,16 @@
   },
   {
     "place_id": "ChIJ3YXWmumkfDURbaCLKSHPG0Y",
-    "display_name": "블루문앤코",
-    "category": "의류점",
+    "display_name": "Blue Moon & Co.",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 화양동 48-17번지 광진구 서울특별시 KR",
-    "short_address": "화양동 48-17번지 광진구 서울특별시 KR",
+    "address": "48-17 Hwayang-dong, Seoul, Republic of Korea, Gwangjin-gu, Seoul KR",
+    "short_address": "48-17 Hwayang-dong, Gwangjin-gu, Seoul KR",
     "location": {
       "lat": 37.541165299999996,
       "lng": 127.0675591
@@ -5769,29 +5769,29 @@
     "google_maps_url": "https://maps.google.com/?cid=5051859148364030061",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4e99ad685dd:0x461bcf21298ba06d!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 8:30",
-      "화요일: 오전 10:30 ~ 오후 8:30",
-      "수요일: 오전 10:30 ~ 오후 8:30",
-      "목요일: 오전 10:30 ~ 오후 8:30",
-      "금요일: 오전 10:30 ~ 오후 8:30",
-      "토요일: 오전 10:30 ~ 오후 8:30",
-      "일요일: 오전 10:30 ~ 오후 8:30"
+      "Monday: 10:30 AM - 8:30 PM",
+      "Tuesday: 10:30 AM - 8:30 PM",
+      "Wednesday: 10:30 AM - 8:30 PM",
+      "Thursday: 10:30 AM - 8:30 PM",
+      "Friday: 10:30 AM - 8:30 PM",
+      "Saturday: 10:30 AM - 8:30 PM",
+      "Sunday: 10:30 AM - 8:30 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "소정",
+        "author": "Sojeong",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "맛있고 저렴하고 좋슴다"
+        "relative_time": "5 years ago",
+        "text": "Delicious, cheap and good"
       }
     ],
     "photos": [
@@ -5809,16 +5809,16 @@
   },
   {
     "place_id": "ChIJaX2SmemkfDURUTnPUlLVzhc",
-    "display_name": "건대메이드",
-    "category": "의류점",
+    "display_name": "Konkuk University Made",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 번지 지하 48-14 1층",
-    "short_address": "광진구 화양동 번지 지하 48-14 1층",
+    "address": "1st floor, Basement 48-14, Hwayang-dong, Gwangjin-gu, Seoul, Korea",
+    "short_address": "1st floor, Basement 48-14, Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5410879,
       "lng": 127.0679154
@@ -5837,20 +5837,20 @@
     "google_maps_url": "https://maps.google.com/?cid=1715543057628084561",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca4e999927d69:0x17ced55252cf3951!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 휴무일",
-      "수요일: 휴무일",
-      "목요일: 휴무일",
-      "금요일: 휴무일",
-      "토요일: 휴무일",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Closed",
+      "Wednesday: Closed day",
+      "Thursday: Closed",
+      "Friday: Closed day",
+      "Saturday: Closed day",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5860,24 +5860,24 @@
         "author": "Danye Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "2년 전",
-        "text": "그저그럭.."
+        "relative_time": "2 years ago",
+        "text": "So-so..."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJaX2SmemkfDURiUz0GrDk900",
-    "display_name": "유리코스메틱",
-    "category": "화장품 판매점",
+    "display_name": "glass cosmetics",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 화양동 48-14번지 삼영프라자 502호 광진구 서울특별시 KR",
-    "short_address": "화양동 48-14번지 삼영프라자 502호 광진구 서울특별시 KR",
+    "address": "#502, Samyoung Plaza, 48-14 Hwayang-dong, Seoul, Republic of Korea, Gwangjin-gu, Seoul KR",
+    "short_address": "#502, Samyoung Plaza, 48-14 Hwayang-dong, Gwangjin-gu, Seoul KR",
     "location": {
       "lat": 37.5410879,
       "lng": 127.0679154
@@ -5898,8 +5898,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5908,16 +5908,16 @@
   },
   {
     "place_id": "ChIJoUuJJGSlfDURJaXiAnS0zo4",
-    "display_name": "감성빈티지",
-    "category": "의류점",
+    "display_name": "Emotional vintage",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 48-9",
-    "short_address": "광진구 화양동 48-9",
+    "address": "48-9 Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "48-9 Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5411575,
       "lng": 127.06816239999999
@@ -5938,8 +5938,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5949,8 +5949,8 @@
   },
   {
     "place_id": "ChIJw0iqchylfDURss68l-7cl2w",
-    "display_name": "CLO 클로 건대점",
-    "category": "여성의류점",
+    "display_name": "CLO Clo Konkuk University Branch",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "clothing_store",
@@ -5958,8 +5958,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광진구 화양동 아차산로 221",
-    "short_address": "광진구 화양동 아차산로 221",
+    "address": "221 Achasan-ro, Hwayang-dong, Gwangjin-gu, Seoul, South Korea",
+    "short_address": "221 Achasan-ro, Hwayang-dong, Gwangjin-gu",
     "location": {
       "lat": 37.5410367,
       "lng": 127.06827480000001
@@ -5978,18 +5978,18 @@
     "google_maps_url": "https://maps.google.com/?cid=7824965794885586610",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca51c72aa48c3:0x6c97dcee97bcceb2!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 12:00~11:00",
-      "화요일: 오후 12:00~11:00",
-      "수요일: 오후 12:00~11:00",
-      "목요일: 오후 12:00~11:00",
-      "금요일: 오후 12:00~11:00",
-      "토요일: 오후 12:00~11:00",
-      "일요일: 오후 12:00~11:00"
+      "Monday: 12:00-11:00 PM",
+      "Tuesday: 12:00-11:00 PM",
+      "Wednesday: 12:00-11:00 PM",
+      "Thursday: 12:00-11:00 PM",
+      "Friday: 12:00-11:00 PM",
+      "Saturday: 12:00-11:00 PM",
+      "Sunday: 12:00-11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -6006,16 +6006,16 @@
   },
   {
     "place_id": "ChIJ9XCjd-mkfDURarl2kGt57H8",
-    "display_name": "건대로데오화장품",
-    "category": "화장품 판매점",
+    "display_name": "Kondaero Deo Cosmetics",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 자양동 8-1번지 ㅣ층 광진구 서울특별시 KR",
-    "short_address": "자양동 8-1번지 ㅣ층 광진구 서울특별시 KR",
+    "address": "8-1 Jayang-dong, Seoul, Republic of Korea | Floor, Gwangjin-gu, Seoul KR",
+    "short_address": "8-1 Jayang-dong ㅣFloor Gwangjin-gu Seoul KR",
     "location": {
       "lat": 37.5405784,
       "lng": 127.06763769999999
@@ -6036,8 +6036,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,

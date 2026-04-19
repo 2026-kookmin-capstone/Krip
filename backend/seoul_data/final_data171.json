@@ -1,8 +1,8 @@
 [
   {
     "place_id": "ChIJDa-tMHalfDUR0e68CgshwHc",
-    "display_name": "천성교회",
-    "category": "교회",
+    "display_name": "Cheonseong Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -10,8 +10,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파1동 135-2",
-    "short_address": "송파구 송파1동 135-2",
+    "address": "135-2, Songpa 1-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "135-2, Songpa 1-dong, Songpa-gu",
     "location": {
       "lat": 37.5092664,
       "lng": 127.1118192
@@ -31,7 +31,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca57630adaf0d:0x77c0210b0abceed1!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -41,8 +41,8 @@
   },
   {
     "place_id": "ChIJq6ITIpylfDURhdb5Y5abPhc",
-    "display_name": "승리선교교회",
-    "category": "교회",
+    "display_name": "Victory Mission Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -50,8 +50,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 111-28",
-    "short_address": "송파구 송파동 111-28",
+    "address": "111-28 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "111-28 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.505600199999996,
       "lng": 127.11018059999999
@@ -71,7 +71,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca59c2213a2ab:0x173e9b9663f9d685!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -81,8 +81,8 @@
   },
   {
     "place_id": "ChIJ-dUM4Z2lfDUR1wmSg4r1WR8",
-    "display_name": "주거지",
-    "category": "교회",
+    "display_name": "residence",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -90,8 +90,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동",
-    "short_address": "송파구 송파동",
+    "address": "Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.508148299999995,
       "lng": 127.10997370000001
@@ -111,7 +111,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca59de10cd5f9:0x1f59f58a839209d7!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -121,8 +121,8 @@
   },
   {
     "place_id": "ChIJRWxlxJylfDURgeAEcHuZg-Y",
-    "display_name": "빛고을교회",
-    "category": "교회",
+    "display_name": "Bitgoeul Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -130,8 +130,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 122-1",
-    "short_address": "송파구 송파동 122-1",
+    "address": "122-1 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "122-1 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.504489299999996,
       "lng": 127.11418019999999
@@ -151,7 +151,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca59cc4656c45:0xe683997b7004e081!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -161,8 +161,8 @@
   },
   {
     "place_id": "ChIJxfO8KwClfDURD1WTLLf-Sc4",
-    "display_name": "감동교회",
-    "category": "교회",
+    "display_name": "touching church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -170,8 +170,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 가락로 177",
-    "short_address": "송파구 가락로 177",
+    "address": "177 Garak-ro, Songpa-gu, Seoul, South Korea",
+    "short_address": "177 Garak-ro, Songpa-gu",
     "location": {
       "lat": 37.504481,
       "lng": 127.11416999999999
@@ -191,19 +191,19 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5002bbcf3c5:0xce49feb72c93550f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "허웅",
+        "author": "Heo Woong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -214,8 +214,8 @@
   },
   {
     "place_id": "ChIJESOYPnalfDURcSrZKhvGnBE",
-    "display_name": "성석교회",
-    "category": "교회",
+    "display_name": "Seongseok Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -223,8 +223,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동",
-    "short_address": "송파구 송파동",
+    "address": "Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.509478800000004,
       "lng": 127.11136049999998
@@ -244,7 +244,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5763e982311:0x119cc61b2ad92a71!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -254,8 +254,8 @@
   },
   {
     "place_id": "ChIJ0dQLDZylfDURhsZQvH_l3A8",
-    "display_name": "문을여는교회",
-    "category": "교회",
+    "display_name": "Church that opens doors",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -263,8 +263,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 108-14",
-    "short_address": "송파구 송파동 108-14",
+    "address": "108-14 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "108-14 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.5046003,
       "lng": 127.1109583
@@ -284,24 +284,24 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca59c0d0bd4d1:0xfdce57fbc50c686!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이상승",
+        "author": "Sangseung Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
+        "relative_time": "4 months ago",
         "text": null
       },
       {
         "author": "johwi Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -309,8 +309,8 @@
   },
   {
     "place_id": "ChIJTfBtDpylfDURcxslb1fiTYU",
-    "display_name": "동선교회",
-    "category": "교회",
+    "display_name": "Dongseon Church",
+    "category": "church",
     "types": [
       "church",
       "place_of_worship",
@@ -318,8 +318,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 93",
-    "short_address": "송파구 송파동 93",
+    "address": "93 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "93 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.5046836,
       "lng": 127.11073609999998
@@ -339,7 +339,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca59c0e6df04d:0x854de2576f251b73!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -349,15 +349,15 @@
   },
   {
     "place_id": "ChIJy4AqaQSlfDURtnPjoGUdi88",
-    "display_name": "라이즈 업 Rise Up",
-    "category": "쇼핑몰",
+    "display_name": "Rise Up Rise Up",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 131-22 305호",
-    "short_address": "송파구 송파동 131-22 305호",
+    "address": "#305, 131-22 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "#305, 131-22 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.50759,
       "lng": 127.11349229999999
@@ -377,11 +377,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca504692a80cb:0xcf8b1d65a0e373b6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -391,15 +391,15 @@
   },
   {
     "place_id": "ChIJ7XF-I52lfDURkFl3Au-TE10",
-    "display_name": "조야스위스",
-    "category": "쇼핑몰",
+    "display_name": "Joya Switzerland",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 119",
-    "short_address": "송파구 송파동 119",
+    "address": "119 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "119 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.5057113,
       "lng": 127.1141246
@@ -419,22 +419,22 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca59d237e71ed:0x5d1393ef02775990!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "반월당빈대떡 신사",
+        "author": "Banwoldang Bindaetteok Shrine",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "좋고 좋아하는 사람은들과"
+        "relative_time": "6 years ago",
+        "text": "With people I like and like"
       }
     ],
     "photos": [
@@ -447,15 +447,15 @@
   },
   {
     "place_id": "ChIJIcreaqylfDUR2DdRAK5HKus",
-    "display_name": "헤어E마켓(미용재료도소매)",
-    "category": "쇼핑몰",
+    "display_name": "Hair E-Market (wholesale and retail of beauty ingredients)",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 가락로 183 3층 307호",
-    "short_address": "송파구 가락로 183 3층 307호",
+    "address": "Room 307, 3rd floor, 183 Garak-ro, Songpa-gu, Seoul, Korea",
+    "short_address": "Room 307, 3rd floor, 183 Garak-ro, Songpa-gu",
     "location": {
       "lat": 37.5050678,
       "lng": 127.11453999999999
@@ -474,18 +474,18 @@
     "google_maps_url": "https://maps.google.com/?cid=16945435360590116824",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5ac6adeca21:0xeb2a47ae005137d8!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:30 ~ 오후 6:30",
-      "화요일: 오전 9:00 ~ 오후 5:00",
-      "수요일: 오전 9:30 ~ 오후 6:30",
-      "목요일: 오전 9:30 ~ 오후 6:30",
-      "금요일: 오전 9:30 ~ 오후 6:30",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:30 AM - 6:30 PM",
+      "Tuesday: 9:00 AM - 5:00 PM",
+      "Wednesday: 9:30 AM - 6:30 PM",
+      "Thursday: 9:30 AM - 6:30 PM",
+      "Friday: 9:30 AM - 6:30 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -504,15 +504,15 @@
   },
   {
     "place_id": "ChIJ5-4H1xSlfDURWIRRhXfOefo",
-    "display_name": "주식회사 포인트링크",
-    "category": "쇼핑몰",
+    "display_name": "Point Link Co., Ltd.",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 파트너스 2 411호",
-    "short_address": "송파구 파트너스 2 411호",
+    "address": "#411, Partners 2, Songpa-gu, Seoul, Republic of Korea",
+    "short_address": "#411, Partners 2, Songpa-gu",
     "location": {
       "lat": 37.5056205,
       "lng": 127.1152992
@@ -531,20 +531,20 @@
     "google_maps_url": "https://maps.google.com/?cid=18048683994397115480",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca514d707eee7:0xfa79ce7785518458!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 6:00",
-      "화요일: 오전 10:00 ~ 오후 6:00",
-      "수요일: 오전 10:00 ~ 오후 6:00",
-      "목요일: 오전 10:00 ~ 오후 6:00",
-      "금요일: 오전 10:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 6:00 PM",
+      "Tuesday: 10:00 AM - 6:00 PM",
+      "Wednesday: 10:00 AM - 6:00 PM",
+      "Thursday: 10:00 AM - 6:00 PM",
+      "Friday: 10:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -559,15 +559,15 @@
   },
   {
     "place_id": "ChIJM1EVIgClfDURqrjciIM345Y",
-    "display_name": "영폼빌딩",
-    "category": "쇼핑몰",
+    "display_name": "Young Form Building",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 20-5",
-    "short_address": "송파구 송파동 20-5",
+    "address": "20-5 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "20-5 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.5071122,
       "lng": 127.1095549
@@ -587,11 +587,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca50022155133:0x96e3378388dcb8aa!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -601,15 +601,15 @@
   },
   {
     "place_id": "ChIJ4bxZmdqlfDURCL6m3RZXgI0",
-    "display_name": "빅터송파점",
-    "category": "쇼핑몰",
+    "display_name": "Victor Songpa Branch",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 방이동 114-4",
-    "short_address": "송파구 방이동 114-4",
+    "address": "114-4 Bangi-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "114-4 Bangi-dong, Songpa-gu",
     "location": {
       "lat": 37.509757199999996,
       "lng": 127.1136318
@@ -628,20 +628,20 @@
     "google_maps_url": "https://maps.google.com/?cid=10196245312086392328",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5da9959bce1:0x8d805716dda6be08!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 7:00",
-      "화요일: 오전 11:00 ~ 오후 7:00",
-      "수요일: 오전 11:00 ~ 오후 7:00",
-      "목요일: 오전 11:00 ~ 오후 7:00",
-      "금요일: 오전 11:00 ~ 오후 7:00",
-      "토요일: 오전 11:00 ~ 오후 7:00",
-      "일요일: 휴무일"
+      "Monday: 11:00 AM - 7:00 PM",
+      "Tuesday: 11:00 AM - 7:00 PM",
+      "Wednesday: 11:00 AM - 7:00 PM",
+      "Thursday: 11:00 AM - 7:00 PM",
+      "Friday: 11:00 AM - 7:00 PM",
+      "Saturday: 11:00 AM - 7:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -651,14 +651,14 @@
         "author": "Bosung Suh",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
-        "text": "그립을 너무 대충 갈아서 실망이네요... 빅터 전문점이라고해서 갔는데 참.."
+        "relative_time": "6 years ago",
+        "text": "I'm disappointed because the grip was changed so roughly... I went to the Victor specialty store, but..."
       },
       {
         "author": "rin2",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -672,14 +672,14 @@
   {
     "place_id": "ChIJlfCeRUalfDURooz3iQVAPv4",
     "display_name": "cocoro668",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 21-7",
-    "short_address": "송파구 송파동 21-7",
+    "address": "21-7 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "21-7 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.5070219,
       "lng": 127.10885520000001
@@ -700,8 +700,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -711,15 +711,15 @@
   },
   {
     "place_id": "ChIJUb3bEXalfDURJMfH82NiYSI",
-    "display_name": "사랑찬",
-    "category": "쇼핑몰",
+    "display_name": "Sarangchan",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파동 50-12번지 101호 1층 송파구 서울특별시 KR",
-    "short_address": "송파동 50-12번지 101호 1층 송파구 서울특별시 KR",
+    "address": "1st floor, #101, 50-12 Songpa-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "1st floor, #101, 50-12 Songpa-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.509674,
       "lng": 127.1104737
@@ -739,11 +739,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca57611dbbd51:0x22616263f3c7c724!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -752,15 +752,15 @@
   },
   {
     "place_id": "ChIJx4OlVQClfDURPbRpt5PNbc0",
-    "display_name": "KGROOMER(케이그루머)",
-    "category": "쇼핑몰",
+    "display_name": "KGROOMER",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 백제고분로45길 11",
-    "short_address": "송파구 백제고분로45길 11",
+    "address": "11 Baekjegobun-ro 45-gil, Songpa-gu, Seoul, South Korea",
+    "short_address": "11 Baekjegobun-ro 45-gil, Songpa-gu",
     "location": {
       "lat": 37.509415499999996,
       "lng": 127.1099873
@@ -779,36 +779,36 @@
     "google_maps_url": "https://maps.google.com/?cid=14802713584557732925",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca50055a583c7:0xcd6dcd93b769b43d!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 6:00",
-      "화요일: 오전 10:00 ~ 오후 6:00",
-      "수요일: 오전 10:00 ~ 오후 6:00",
-      "목요일: 오전 10:00 ~ 오후 6:00",
-      "금요일: 오전 10:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 6:00 PM",
+      "Tuesday: 10:00 AM - 6:00 PM",
+      "Wednesday: 10:00 AM - 6:00 PM",
+      "Thursday: 10:00 AM - 6:00 PM",
+      "Friday: 10:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "최수잉",
+        "author": "Sooying Choi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "가위는 항상 도쿠몰에서 직접 와서 보고사는거같아요 인터넷에서 사는거랑 직접 보고 사는거랑 확연히 다르긴 해요 :)  정직하신 사장님 덕분에 오늘두 가위 잘 겟잇하고 갑니당~~!!"
+        "relative_time": "1 month ago",
+        "text": "I always seem to buy scissors by coming to Doku Mall and seeing them in person. There is a clear difference between buying them online and seeing them in person :) Thanks to the honest owner, I was able to get a pair of scissors today~~!!"
       },
       {
-        "author": "수밍TV",
+        "author": "Suming TV",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "사장님도 친절하시구 가위 종류 많아서 잡아보고 살 수 있어서 좋아요!! 담에 또 오겠습니다 ㅎㅎ"
+        "relative_time": "1 month ago",
+        "text": "The owner is very friendly and there are many different types of scissors so it's nice to be able to try them and buy them!! I will come again next time haha"
       }
     ],
     "photos": [
@@ -823,15 +823,15 @@
   },
   {
     "place_id": "ChIJCzTsXNalfDURqaRCSSGkY5o",
-    "display_name": "플루티온 Fluti:ON",
-    "category": "쇼핑몰",
+    "display_name": "Fluti:ON",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 4층",
-    "short_address": "송파구 4층",
+    "address": "4th floor, Songpa-gu, Seoul, South Korea",
+    "short_address": "Songpa-gu 4th floor",
     "location": {
       "lat": 37.509959699999996,
       "lng": 127.11534639999999
@@ -851,11 +851,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5d65cec340b:0x9a63a4214942a4a9!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -865,23 +865,23 @@
         "author": "Kim HyunWook",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "인스타에서 보고 분위기가 너무 예뻐서 샀는데 실물이 더 깡패네요. 니트류는 잘못 사면 까슬거리는데 여기 건 부드럽고 퀄리티가 좋아요. 특유의 루즈한 느낌이 너무 예뻐서 대충 걸쳐도 스타일리시해 보입니다. 사장님이 옷에 진심이신 듯. 앞으로 제 옷장은 여기서 채웁니다."
+        "relative_time": "2 months ago",
+        "text": "I bought it because I saw it on Instagram and the atmosphere was so pretty, but the real thing is even worse. Knitwear can be scratchy if you buy it wrong, but this one is soft and of good quality. The unique loose feel is so pretty that it looks stylish even when worn casually. It seems like the owner is serious about the clothes. From now on, I will fill my closet here."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJoe0YfJulfDURRcfwB0Dztd4",
-    "display_name": "영진빌딩",
-    "category": "쇼핑몰",
+    "display_name": "Youngjin Building",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 가락로 95 영진빌딩 B1",
-    "short_address": "송파구 가락로 95 영진빌딩 B1",
+    "address": "B1, Youngjin Building, 95 Garak-ro, Songpa-gu, Seoul, South Korea",
+    "short_address": "Youngjin Building B1, 95 Garak-ro, Songpa-gu",
     "location": {
       "lat": 37.5032116,
       "lng": 127.1128193
@@ -901,11 +901,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca59b7c18eda1:0xdeb5f34007f0c745!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -916,14 +916,14 @@
   {
     "place_id": "ChIJMTkL9J6lfDURcnhd--xopSA",
     "display_name": "LEPAIN",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파동 22번지 0호 101 파동 송파구 서울특별시 KR",
-    "short_address": "송파동 22번지 0호 101 파동 송파구 서울특별시 KR",
+    "address": "#0, 22 Songpa-dong, Seoul, Republic of Korea 101 Pa-dong Songpa-gu Seoul KR",
+    "short_address": "22 Songpa-dong, #0 101, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5071598,
       "lng": 127.1081791
@@ -944,8 +944,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -957,15 +957,15 @@
   },
   {
     "place_id": "ChIJTVXFGHelfDURPFKjyzAQNxM",
-    "display_name": "올림픽골프 Olympic Golf",
-    "category": "쇼핑몰",
+    "display_name": "Olympic Golf Olympic Golf",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 방이2동 108-11",
-    "short_address": "송파구 방이2동 108-11",
+    "address": "108-11 Bangi 2-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "108-11 Bangi 2-dong, Songpa-gu",
     "location": {
       "lat": 37.511393399999996,
       "lng": 127.11283299999998
@@ -984,20 +984,20 @@
     "google_maps_url": "https://maps.google.com/?cid=1384593212200669756",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca57718c5554d:0x13371030cba3523c!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 8:00",
-      "화요일: 오전 10:00 ~ 오후 8:00",
-      "수요일: 오전 10:00 ~ 오후 8:00",
-      "목요일: 오전 10:00 ~ 오후 8:00",
-      "금요일: 오전 10:00 ~ 오후 8:00",
-      "토요일: 오전 10:00 ~ 오후 5:00",
-      "일요일: 오전 10:00 ~ 오후 5:00"
+      "Monday: 10:00 AM - 8:00 PM",
+      "Tuesday: 10:00 AM - 8:00 PM",
+      "Wednesday: 10:00 AM - 8:00 PM",
+      "Thursday: 10:00 AM - 8:00 PM",
+      "Friday: 10:00 AM - 8:00 PM",
+      "Saturday: 10:00 AM - 5:00 PM",
+      "Sunday: 10:00 AM - 5:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1007,36 +1007,36 @@
         "author": "YOUNG GUN JANG",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "직원들이 친절한 프로들이라서 좋아요"
+        "relative_time": "6 years ago",
+        "text": "I like it because the staff are friendly and professional."
       },
       {
         "author": "KYUNG CHUN KIM",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "10달 전",
-        "text": "애매한데.. 핏팅 전문성은 떨어져 보임.. 매우 주관적인 느낌인데.. 가격은 양심적으로 느꼈음.. 내가 원하는 모델이 정확히 있다.. 추천.."
+        "relative_time": "10 months ago",
+        "text": "It's ambiguous... The fitting expertise seems to be lacking... It feels very subjective... I felt conscientious about the price... There's exactly the model I want... Recommended..."
       },
       {
         "author": "Good Forest",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
-        "text": "많은 제품과 친절한 상담이 있는 곳입니다"
+        "relative_time": "8 years ago",
+        "text": "This is a place with many products and friendly advice."
       },
       {
-        "author": "김한중",
+        "author": "Kim Han-joong",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "이곳에서는 점장님과 상담후 구매하시면\n저렴하게 구입할수 있읍니다\n점잠님이 좋은가격에 해주실것입니다"
+        "relative_time": "5 years ago",
+        "text": "Here, you can purchase after consulting with the store manager.\nYou can buy it cheaply\nJeomjam will do it for you at a good price."
       },
       {
-        "author": "마천동부동산고은공인",
+        "author": "Macheon-dong Real Estate Goeun Certified",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "다양한 상품과 사장님의 친절함이  좋아요ᆢ"
+        "relative_time": "6 years ago",
+        "text": "I like the variety of products and the friendliness of the owner."
       }
     ],
     "photos": [
@@ -1051,8 +1051,8 @@
   },
   {
     "place_id": "ChIJI2tU9nelfDURvD_V8ysjz70",
-    "display_name": "동양슈퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Dongyang Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1062,8 +1062,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동",
-    "short_address": "송파구 송파동",
+    "address": "Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.5079889,
       "lng": 127.11498560000001
@@ -1088,10 +1088,10 @@
     "parking": null,
     "reviews": [
       {
-        "author": "황정훈",
+        "author": "Hwang Jeong-hoon",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       }
     ],
@@ -1099,8 +1099,8 @@
   },
   {
     "place_id": "ChIJl2P-KJ2lfDURlJmd1xxOweg",
-    "display_name": "롯데슈퍼 송파점",
-    "category": "슈퍼마켓",
+    "display_name": "Lotte Super Songpa Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1110,8 +1110,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 가락로 183",
-    "short_address": "송파구 가락로 183",
+    "address": "183 Garak-ro, Songpa-gu, Seoul, South Korea",
+    "short_address": "183 Garak-ro, Songpa-gu",
     "location": {
       "lat": 37.5052629,
       "lng": 127.11471289999999
@@ -1130,25 +1130,25 @@
     "google_maps_url": "https://maps.google.com/?cid=16771772373087918484",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca59d28fe6397:0xe8c14e1cd79d9994!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 11:00",
-      "화요일: 오전 10:00 ~ 오후 11:00",
-      "수요일: 오전 10:00 ~ 오후 11:00",
-      "목요일: 오전 10:00 ~ 오후 11:00",
-      "금요일: 오전 10:00 ~ 오후 11:00",
-      "토요일: 오전 10:00 ~ 오후 11:00",
-      "일요일: 오전 10:00 ~ 오후 11:00"
+      "Monday: 10:00 AM - 11:00 PM",
+      "Tuesday: 10:00 AM - 11:00 PM",
+      "Wednesday: 10:00 AM - 11:00 PM",
+      "Thursday: 10:00 AM - 11:00 PM",
+      "Friday: 10:00 AM - 11:00 PM",
+      "Saturday: 10:00 AM - 11:00 PM",
+      "Sunday: 10:00 AM - 11:00 PM"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -1156,36 +1156,36 @@
         "author": "- “‪R‬”",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "무난한 슈퍼입니다. 공산품은 괜찮으며, 채소/육류/과일 등은 주변보다 살짝 비싸면서 씨알은 약간 작습니다. 가끔 하는 할인상품이 있을때 가면 좋습니다."
+        "relative_time": "3 years ago",
+        "text": "It's a decent supermarket. Industrial products are okay, vegetables/meat/fruit, etc. are slightly more expensive than those around, and the seeds are slightly smaller. It's good to go when there are occasional discounts."
       },
       {
         "author": "Sangmi Baek",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "아주 크지는 않지만 매월 행사와 롯데포인트 행사 등 할인가로 물건 구입가능!!"
+        "relative_time": "7 years ago",
+        "text": "Although it is not very big, you can purchase items at discounted prices through monthly events and Lotte Point events!!"
       },
       {
-        "author": "박서현",
+        "author": "Seohyun Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "정말 친절하시네요.\n남자직원분이요.\n제품도 다양하네요."
+        "relative_time": "1 year ago",
+        "text": "That's really kind of you.\nA male employee.\nThere are many different products."
       },
       {
-        "author": "염동훈",
+        "author": "Donghoon Yeom",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "아파트 주민들뿐만 아니라 주변사람들도 이용할수\n있고 주차도 가능하며 배달도 가능합니다.\n계산하는분들은 항상 모자라고 손님들도 예전만은\n못하네요.가격은 그냥 평균 슈퍼 가격이며 다만\n유통기한 임박한 상품은 조금 할인을 해줍니다."
+        "relative_time": "7 years ago",
+        "text": "It can be used not only by apartment residents but also by people nearby.\nParking is available, and delivery is also available.\nThe people who pay the bills are always short, and the customers are as good as they used to be.\nI can't do it. The price is just the average super price, but\nWe offer a small discount for products nearing their expiration date."
       },
       {
         "author": "Song Oscar",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "안녕하세요\n롯데슈퍼송파점입니다.\n연중무휴! 365일 오전9시부터 오후10시까지 영업합니다.\n필요하신 상품이나 문의사항이 있으시다면 언제든지 연락주시기 바락니다.\n감사합니다😊\n\n(Korean, English available)\nIf need any help, contact 02-422-9003"
+        "relative_time": "6 years ago",
+        "text": "hello\nThis is Lotte Super Songpa branch.\nOpen all year round! Open 365 days a year from 9 am to 10 pm.\nIf you have any questions or products you need, please contact us at any time.\nThank you😊\n\n(Korean, English available)\nIf need any help, contact 02-422-9003"
       }
     ],
     "photos": [
@@ -1203,8 +1203,8 @@
   },
   {
     "place_id": "ChIJlU6qDnilfDUR9asCj9w5Ldk",
-    "display_name": "아이지에이마트",
-    "category": "슈퍼마켓",
+    "display_name": "IGA Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1214,8 +1214,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파동 143-2번지 1층 송파구 서울특별시 KR",
-    "short_address": "송파동 143-2번지 1층 송파구 서울특별시 KR",
+    "address": "1st floor, 143-2 Songpa-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "1st floor, 143-2 Songpa-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.50713580000001,
       "lng": 127.1161331
@@ -1236,8 +1236,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1247,16 +1247,16 @@
   },
   {
     "place_id": "ChIJPZvPjZylfDURQeOStf4meoc",
-    "display_name": "안호균종합식품(주)",
-    "category": "시장",
+    "display_name": "An Ho-kyun General Food Co., Ltd.",
+    "category": "market",
     "types": [
       "market",
       "food",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동",
-    "short_address": "송파구 송파동",
+    "address": "Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.504608999999995,
       "lng": 127.1119305
@@ -1276,11 +1276,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca59c8dcf9b3d:0x877a26feb592e341!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1289,7 +1289,7 @@
         "author": "johwi Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -1297,8 +1297,8 @@
   },
   {
     "place_id": "ChIJ1VjdDXilfDURUKAnO5gC1Q0",
-    "display_name": "IGA마트 백제고분로점",
-    "category": "슈퍼마켓",
+    "display_name": "IGA Mart Baekje Gobunro Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1308,8 +1308,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동",
-    "short_address": "송파구 송파동",
+    "address": "Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.50724470000001,
       "lng": 127.1162636
@@ -1330,8 +1330,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1341,7 +1341,7 @@
         "author": "Yuno Heo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
+        "relative_time": "8 months ago",
         "text": null
       }
     ],
@@ -1349,8 +1349,8 @@
   },
   {
     "place_id": "ChIJkxZoEnilfDURqWppey3-1_Q",
-    "display_name": "세븐일레븐 송파3호점",
-    "category": "슈퍼마켓",
+    "display_name": "7-Eleven Songpa 3rd branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1360,8 +1360,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 142-9",
-    "short_address": "송파구 송파동 142-9",
+    "address": "142-9 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "142-9 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.5074334,
       "lng": 127.1162633
@@ -1382,8 +1382,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1393,8 +1393,8 @@
   },
   {
     "place_id": "ChIJy04sDQClfDURvofUEamPMVg",
-    "display_name": "올스타푸드마켓 송파점",
-    "category": "슈퍼마켓",
+    "display_name": "All Star Food Market Songpa Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1404,8 +1404,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 가락로 171 1 층",
-    "short_address": "송파구 가락로 171 1 층",
+    "address": "1st floor, 171 Garak-ro, Songpa-gu, Seoul, South Korea",
+    "short_address": "1st floor, 171 Garak-ro, Songpa-gu",
     "location": {
       "lat": 37.5042445,
       "lng": 127.11396010000001
@@ -1424,18 +1424,18 @@
     "google_maps_url": "https://maps.google.com/?cid=6355018505507866558",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5000d2c4ecb:0x58318fa911d487be!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 10:00",
-      "화요일: 오전 9:00 ~ 오후 10:00",
-      "수요일: 오전 9:00 ~ 오후 10:00",
-      "목요일: 오전 9:00 ~ 오후 10:00",
-      "금요일: 오전 9:00 ~ 오후 10:00",
-      "토요일: 오전 9:00 ~ 오후 10:00",
-      "일요일: 오전 9:00 ~ 오후 10:00"
+      "Monday: 9:00 AM - 10:00 PM",
+      "Tuesday: 9:00 AM - 10:00 PM",
+      "Wednesday: 9:00 AM - 10:00 PM",
+      "Thursday: 9:00 AM - 10:00 PM",
+      "Friday: 9:00 AM - 10:00 PM",
+      "Saturday: 9:00 AM - 10:00 PM",
+      "Sunday: 9:00 AM - 10:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1445,8 +1445,8 @@
   },
   {
     "place_id": "ChIJ5Ud5CwClfDURhk7NBXqOI4I",
-    "display_name": "나들가게 럭키마트",
-    "category": "슈퍼마켓",
+    "display_name": "Nadeul Store Lucky Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1456,8 +1456,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파대로42길 20",
-    "short_address": "송파구 송파대로42길 20",
+    "address": "20 Songpa-daero 42-gil, Songpa-gu, Seoul, South Korea",
+    "short_address": "20 Songpa-daero 42-gil, Songpa-gu",
     "location": {
       "lat": 37.505358699999995,
       "lng": 127.1098514
@@ -1478,8 +1478,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1490,8 +1490,8 @@
   },
   {
     "place_id": "ChIJSbL3nYKlfDURQzoWNOHx4-E",
-    "display_name": "홈플러스 익스프레스 송파점",
-    "category": "슈퍼마켓",
+    "display_name": "Homeplus Express Songpa Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1501,8 +1501,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 가락로30길 6",
-    "short_address": "송파구 가락로30길 6",
+    "address": "6 Garak-ro 30-gil, Songpa-gu, Seoul, South Korea",
+    "short_address": "6, Garak-ro 30-gil, Songpa-gu",
     "location": {
       "lat": 37.506239099999995,
       "lng": 127.11667989999998
@@ -1521,61 +1521,61 @@
     "google_maps_url": "https://maps.google.com/?cid=16277119427790912067",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5829df7b249:0xe1e3f1e134163a43!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 10:30",
-      "화요일: 오전 9:00 ~ 오후 11:00",
-      "수요일: 오전 10:00 ~ 오후 10:30",
-      "목요일: 오전 10:00 ~ 오후 10:30",
-      "금요일: 오전 10:00 ~ 오후 10:30",
-      "토요일: 오전 9:00 ~ 오후 11:00",
-      "일요일: 오전 10:00 ~ 오후 10:30"
+      "Monday: 10:00 AM - 10:30 PM",
+      "Tuesday: 9:00 AM - 11:00 PM",
+      "Wednesday: 10:00 AM - 10:30 PM",
+      "Thursday: 10:00 AM - 10:30 PM",
+      "Friday: 10:00 AM - 10:30 PM",
+      "Saturday: 9:00 AM - 11:00 PM",
+      "Sunday: 10:00 AM - 10:30 PM"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "클로이",
+        "author": "Chloe",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "2만원부터 배달가능하고 작지만 알차게 있을건 다 있고 없을껀 없고 그래도 배달 서비스는 편리해요"
+        "relative_time": "7 years ago",
+        "text": "Delivery is available starting from 20,000 won, and although it is small, it has everything you need and nothing is missing, but the delivery service is convenient."
       },
       {
-        "author": "별마루",
+        "author": "Byulmaru",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "대형 마트를 못가서 재료가 부족할때\n어렵지않게 구할수있는곳입니다."
+        "relative_time": "3 years ago",
+        "text": "When you can't go to a large supermarket and don't have enough ingredients\nThis is a place where you can get it without difficulty."
       },
       {
-        "author": "참민주주의",
+        "author": "true democracy",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "친절하고 신선해요.\n상품 종류도 다양해서 좋아요~"
+        "relative_time": "7 years ago",
+        "text": "Friendly and fresh.\nI like the variety of products."
       },
       {
-        "author": "한율",
+        "author": "Hanyul",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9달 전",
-        "text": "직장하고가까워자주가는곳."
+        "relative_time": "9 months ago",
+        "text": "I go there often because it's close to work."
       },
       {
-        "author": "초록나무",
+        "author": "green tree",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "근처에 홈플러스익스프레스가 여기 딱 하나있음.\n대로변이 아니고 주거지로 둘러싸인곳에 있어  이동네 사람들이 감사해할듯."
+        "relative_time": "5 years ago",
+        "text": "There is only one Homeplus Express nearby.\nI think the people of Dong-dong will be grateful that it is surrounded by residential areas and not on the main street."
       }
     ],
     "photos": [
@@ -1586,16 +1586,16 @@
   },
   {
     "place_id": "ChIJtVIFHZylfDURXzhcGOdrIeo",
-    "display_name": "자연 그대로 농수산물",
-    "category": "농산물 직판장",
+    "display_name": "Natural agricultural and marine products",
+    "category": "farmers market",
     "types": [
       "farmers_market",
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 87-21",
-    "short_address": "송파구 송파동 87-21",
+    "address": "87-21 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "87-21 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.505183599999995,
       "lng": 127.10990280000001
@@ -1615,11 +1615,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca59c1d0552b5:0xea216be7185c385f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1628,8 +1628,8 @@
   },
   {
     "place_id": "ChIJRWpHlpylfDURUrO4VQG-y5U",
-    "display_name": "미화슈퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Mihwa Supermarket",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1639,8 +1639,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동",
-    "short_address": "송파구 송파동",
+    "address": "Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.503878199999996,
       "lng": 127.11370810000001
@@ -1668,16 +1668,16 @@
   },
   {
     "place_id": "ChIJ67oxVZmlfDURmbr-F8Myf3g",
-    "display_name": "태영수산",
-    "category": "시장",
+    "display_name": "Taeyoung Fisheries",
+    "category": "market",
     "types": [
       "market",
       "food",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파동 88-19번지 402호 송파구 서울특별시 KR",
-    "short_address": "송파동 88-19번지 402호 송파구 서울특별시 KR",
+    "address": "#402, 88-19 Songpa-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "#402, 88-19 Songpa-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5045642,
       "lng": 127.10965660000001
@@ -1698,8 +1698,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1708,8 +1708,8 @@
   },
   {
     "place_id": "ChIJkblUDXelfDURnN7_wnprBww",
-    "display_name": "오케이마트",
-    "category": "슈퍼마켓",
+    "display_name": "OK Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1719,8 +1719,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 방이동 번지 1층 112-4",
-    "short_address": "송파구 방이동 번지 1층 112-4",
+    "address": "1st floor, 112-4, Bangi-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "112-4, 1st floor, Bangi-dong, Songpa-gu",
     "location": {
       "lat": 37.5105594,
       "lng": 127.11379319999999
@@ -1740,11 +1740,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5770d54b991:0xc076b7ac2ffde9c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1753,16 +1753,16 @@
   },
   {
     "place_id": "ChIJETX4nZylfDURTEprl_WVGK0",
-    "display_name": "라이거통상(주)",
-    "category": "시장",
+    "display_name": "Liger Trading Co., Ltd.",
+    "category": "market",
     "types": [
       "market",
       "food",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 103-29",
-    "short_address": "송파구 송파동 103-29",
+    "address": "103-29 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "103-29 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.5031933,
       "lng": 127.11343459999999
@@ -1783,8 +1783,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1797,8 +1797,8 @@
   },
   {
     "place_id": "ChIJoauK9p6lfDURgZ1rYv0GFRg",
-    "display_name": "내마트",
-    "category": "슈퍼마켓",
+    "display_name": "My mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1808,8 +1808,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 백제고분로41길 14",
-    "short_address": "송파구 백제고분로41길 14",
+    "address": "14 Baekjegobun-ro 41-gil, Songpa-gu, Seoul, South Korea",
+    "short_address": "14 Baekjegobun-ro 41-gil, Songpa-gu",
     "location": {
       "lat": 37.507342,
       "lng": 127.1080399
@@ -1828,18 +1828,18 @@
     "google_maps_url": "https://maps.google.com/?cid=1735300916768906625",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca59ef68aaba1:0x181506fd626b9d81!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오전 12:00",
-      "화요일: 오전 8:00 ~ 오전 12:00",
-      "수요일: 오전 8:00 ~ 오전 12:00",
-      "목요일: 오전 8:00 ~ 오전 12:00",
-      "금요일: 오전 8:00 ~ 오전 12:00",
-      "토요일: 오전 8:00 ~ 오전 12:00",
-      "일요일: 오전 8:00 ~ 오전 12:00"
+      "Monday: 8:00 AM - 12:00 AM",
+      "Tuesday: 8:00 AM - 12:00 AM",
+      "Wednesday: 8:00 AM - 12:00 AM",
+      "Thursday: 8:00 AM - 12:00 AM",
+      "Friday: 8:00 AM - 12:00 AM",
+      "Saturday: 8:00 AM - 12:00 AM",
+      "Sunday: 8:00 AM - 12:00 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1848,35 +1848,35 @@
         "author": "Jay",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
-        "text": "남자 직원들이 은근 불친절함"
+        "relative_time": "6 years ago",
+        "text": "The male employees are quite unfriendly."
       },
       {
-        "author": "영상이",
+        "author": "The video",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9년 전",
-        "text": "싸고 좋아요"
+        "relative_time": "9 years ago",
+        "text": "Cheap and good"
       },
       {
-        "author": "이성용",
+        "author": "Seongyong Lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "양호합니다"
+        "relative_time": "3 years ago",
+        "text": "It's good"
       },
       {
-        "author": "박찬우",
+        "author": "Chanwoo Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       },
       {
-        "author": "최성도",
+        "author": "Seongdo Choi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -1886,8 +1886,8 @@
   },
   {
     "place_id": "ChIJPch5-3WlfDUR1nP0LTMVuEg",
-    "display_name": "호수마트",
-    "category": "슈퍼마켓",
+    "display_name": "Lake Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1897,8 +1897,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동",
-    "short_address": "송파구 송파동",
+    "address": "Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.5097385,
       "lng": 127.1094028
@@ -1917,20 +1917,20 @@
     "google_maps_url": "https://maps.google.com/?cid=5239961476004082646",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca575fb79c83d:0x48b815332df473d6!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오전 12:00",
-      "화요일: 오전 8:00 ~ 오전 12:00",
-      "수요일: 오전 8:00 ~ 오전 12:00",
-      "목요일: 오전 8:00 ~ 오전 12:00",
-      "금요일: 오전 8:00 ~ 오전 12:00",
-      "토요일: 오전 8:00 ~ 오전 12:00",
-      "일요일: 오전 7:30 ~ 오후 11:00"
+      "Monday: 8:00 AM - 12:00 AM",
+      "Tuesday: 8:00 AM - 12:00 AM",
+      "Wednesday: 8:00 AM - 12:00 AM",
+      "Thursday: 8:00 AM - 12:00 AM",
+      "Friday: 8:00 AM - 12:00 AM",
+      "Saturday: 8:00 AM - 12:00 AM",
+      "Sunday: 7:30 AM - 11:00 PM"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1940,7 +1940,7 @@
         "author": "soobum park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -1948,8 +1948,8 @@
   },
   {
     "place_id": "ChIJb6eM9p6lfDUROXqxfUyluTs",
-    "display_name": "삼양수퍼마켓",
-    "category": "슈퍼마켓",
+    "display_name": "Samyang Supermarket",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1959,8 +1959,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파동 23-12번지 송파구 서울특별시 KR",
-    "short_address": "송파동 23-12번지 송파구 서울특별시 KR",
+    "address": "23-12 Songpa-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "23-12 Songpa-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5073316,
       "lng": 127.1080188
@@ -1981,8 +1981,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1991,8 +1991,8 @@
   },
   {
     "place_id": "ChIJD47O9p6lfDUR6McIZqfjMHc",
-    "display_name": "대진하이퍼마켓",
-    "category": "슈퍼마켓",
+    "display_name": "Daejin Hypermarket",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2002,8 +2002,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동",
-    "short_address": "송파구 송파동",
+    "address": "Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.507238799999996,
       "lng": 127.10798630000001
@@ -2022,18 +2022,18 @@
     "google_maps_url": "https://maps.google.com/?cid=8588614797506430952",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca59ef6ce8e0f:0x7730e3a76608c7e8!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 9:30",
-      "화요일: 오전 9:00 ~ 오후 9:30",
-      "수요일: 오전 9:00 ~ 오후 9:30",
-      "목요일: 오전 9:00 ~ 오후 9:30",
-      "금요일: 오전 9:00 ~ 오후 9:30",
-      "토요일: 오전 9:00 ~ 오후 9:30",
-      "일요일: 오전 9:00 ~ 오후 9:30"
+      "Monday: 9:00 AM - 9:30 PM",
+      "Tuesday: 9:00 AM - 9:30 PM",
+      "Wednesday: 9:00 AM - 9:30 PM",
+      "Thursday: 9:00 AM - 9:30 PM",
+      "Friday: 9:00 AM - 9:30 PM",
+      "Saturday: 9:00 AM - 9:30 PM",
+      "Sunday: 9:00 AM - 9:30 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2042,8 +2042,8 @@
   },
   {
     "place_id": "ChIJnzrAsL6lfDUR-_8l9MbQDY4",
-    "display_name": "그램당",
-    "category": "의류점",
+    "display_name": "per gram",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "market",
@@ -2052,8 +2052,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 가락로 151 동원빌딩 1층",
-    "short_address": "송파구 가락로 151 동원빌딩 1층",
+    "address": "1st floor, Dongwon Building, 151 Garak-ro, Songpa-gu, Seoul, Korea",
+    "short_address": "1st floor, Dongwon Building, 151 Garak-ro, Songpa-gu",
     "location": {
       "lat": 37.5028737,
       "lng": 127.1123576
@@ -2072,18 +2072,18 @@
     "google_maps_url": "https://maps.google.com/?cid=10236067081001238523",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5beb0c03a9f:0x8e0dd0c6f425fffb!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:30 ~ 오후 8:00",
-      "화요일: 오전 11:30 ~ 오후 8:00",
-      "수요일: 오전 11:30 ~ 오후 8:00",
-      "목요일: 오전 11:30 ~ 오후 8:00",
-      "금요일: 오전 11:30 ~ 오후 8:00",
-      "토요일: 오전 11:30 ~ 오후 8:00",
-      "일요일: 휴무일"
+      "Monday: 11:30 AM - 8:00 PM",
+      "Tuesday: 11:30 AM - 8:00 PM",
+      "Wednesday: 11:30 AM - 8:00 PM",
+      "Thursday: 11:30 AM - 8:00 PM",
+      "Friday: 11:30 AM - 8:00 PM",
+      "Saturday: 11:30 AM - 8:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2093,8 +2093,8 @@
         "author": "je L",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "저렴한 가격에 예쁜 빈티지 제품들이 많은 멋진 빈티지 숍이었어요. 사장님도 정말 친절하셨고요! 다음에 꼭 다시 방문할 거예요 :)"
+        "relative_time": "1 month ago",
+        "text": "It was a great vintage shop with a lot of pretty vintage products at affordable prices. The owner was really friendly too! I will definitely visit again next time :)"
       }
     ],
     "photos": [
@@ -2110,8 +2110,8 @@
   },
   {
     "place_id": "ChIJvUUiWJ6lfDURLbNc2kj76dE",
-    "display_name": "한국유통",
-    "category": "슈퍼마켓",
+    "display_name": "Korean distribution",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2121,7 +2121,7 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5076277,
@@ -2141,58 +2141,58 @@
     "google_maps_url": "https://maps.google.com/?cid=15125897113820246829",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca59e582245bd:0xd1e9fb48da5cb32d!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오후 11:30",
-      "화요일: 오전 8:00 ~ 오후 11:30",
-      "수요일: 오전 8:00 ~ 오후 11:30",
-      "목요일: 오전 8:00 ~ 오후 11:30",
-      "금요일: 오전 8:00 ~ 오후 11:30",
-      "토요일: 오전 8:00 ~ 오후 11:30",
-      "일요일: 오전 8:00 ~ 오후 11:30"
+      "Monday: 8:00 AM - 11:30 PM",
+      "Tuesday: 8:00 AM - 11:30 PM",
+      "Wednesday: 8:00 AM - 11:30 PM",
+      "Thursday: 8:00 AM - 11:30 PM",
+      "Friday: 8:00 AM - 11:30 PM",
+      "Saturday: 8:00 AM - 11:30 PM",
+      "Sunday: 8:00 AM - 11:30 PM"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "서하영",
+        "author": "Hayoung Seo",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8년 전",
-        "text": "종류는 많아서 좋은데 관리가 좀 필요함..;;"
+        "relative_time": "8 years ago",
+        "text": "There are many types, which is good, but it requires some management..;;"
       },
       {
         "author": "Jb L",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "좋습니다"
+        "relative_time": "7 years ago",
+        "text": "good"
       },
       {
-        "author": "민수여",
+        "author": "Minsu",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "7년 전",
-        "text": "비싸고 직원들에게 불친절하다"
+        "relative_time": "7 years ago",
+        "text": "Expensive and unfriendly to staff"
       },
       {
         "author": "DOHYUN KIM",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "권미자",
+        "author": "Mija Kwon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -2200,16 +2200,16 @@
   },
   {
     "place_id": "ChIJbW3GbpWlfDURgxNL7MUprJU",
-    "display_name": "아이엠린다",
-    "category": "의류점",
+    "display_name": "I'm Linda",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 118-39",
-    "short_address": "송파구 송파동 118-39",
+    "address": "118-39 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "118-39 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.50646570000001,
       "lng": 127.1130442
@@ -2228,18 +2228,18 @@
     "google_maps_url": "https://maps.google.com/?cid=10785041137695134595",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5956ec66d6d:0x95ac29c5ec4b1383!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 8:00",
-      "화요일: 오전 11:00 ~ 오후 8:00",
-      "수요일: 오전 11:00 ~ 오후 8:00",
-      "목요일: 오전 11:00 ~ 오후 8:00",
-      "금요일: 오전 11:00 ~ 오후 8:00",
-      "토요일: 오전 11:00 ~ 오후 8:00",
-      "일요일: 휴무일"
+      "Monday: 11:00 AM - 8:00 PM",
+      "Tuesday: 11:00 AM - 8:00 PM",
+      "Wednesday: 11:00 AM - 8:00 PM",
+      "Thursday: 11:00 AM - 8:00 PM",
+      "Friday: 11:00 AM - 8:00 PM",
+      "Saturday: 11:00 AM - 8:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2248,16 +2248,16 @@
   },
   {
     "place_id": "ChIJO-vXYJ2lfDURJqnumHA6cPs",
-    "display_name": "비와이인터내셔널",
-    "category": "의류점",
+    "display_name": "BewhY International",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 131-5번지 201호",
-    "short_address": "송파구 송파동 131-5번지 201호",
+    "address": "#201, 131-5 Songpa-dong, Songpa-gu, Seoul, Republic of Korea",
+    "short_address": "Room 201, 131-5 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.5074928,
       "lng": 127.11363370000001
@@ -2278,7 +2278,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2288,15 +2288,15 @@
   {
     "place_id": "ChIJQcNzFNKlfDURfDMViQoTmII",
     "display_name": "SHOP CIABATTA",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 130-14",
-    "short_address": "송파구 송파동 130-14",
+    "address": "130-14 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "130-14 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.5073846,
       "lng": 127.11206059999999
@@ -2317,8 +2317,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2327,8 +2327,8 @@
   },
   {
     "place_id": "ChIJaSviW52lfDUR125zCGHeoFY",
-    "display_name": "로이스",
-    "category": "여성의류점",
+    "display_name": "lois",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "clothing_store",
@@ -2336,8 +2336,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파동 128-5번지 101호 송파구 서울특별시 KR",
-    "short_address": "송파동 128-5번지 101호 송파구 서울특별시 KR",
+    "address": "#101, 128-5 Songpa-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "#101, 128-5 Songpa-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5072474,
       "lng": 127.1141931
@@ -2358,8 +2358,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2368,16 +2368,16 @@
   },
   {
     "place_id": "ChIJd39hvZ2lfDURyvOHs8_JCcQ",
-    "display_name": "세인화장품",
-    "category": "화장품 판매점",
+    "display_name": "Sein Cosmetics",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파동 132-16번지 파동 송파구 서울특별시 KR",
-    "short_address": "송파동 132-16번지 파동 송파구 서울특별시 KR",
+    "address": "132-16 Songpa-dong, Seoul, Republic of Korea Padong Songpa-gu Seoul KR",
+    "short_address": "132-16 Songpa-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5072998,
       "lng": 127.1116815
@@ -2398,8 +2398,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2408,16 +2408,16 @@
   },
   {
     "place_id": "ChIJva4tl52lfDURQKwFb0vjTNc",
-    "display_name": "아모레",
-    "category": "화장품 판매점",
+    "display_name": "Amore",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 132-5",
-    "short_address": "송파구 송파동 132-5",
+    "address": "132-5 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "132-5 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.5075941,
       "lng": 127.11164749999999
@@ -2438,8 +2438,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2448,16 +2448,16 @@
   },
   {
     "place_id": "ChIJozqXsp2lfDURWmDjDyhOaMU",
-    "display_name": "빈스락아뜨리에",
-    "category": "의류점",
+    "display_name": "Vince Rock Atelier",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 115-3번지 1층 102호",
-    "short_address": "송파구 송파동 115-3번지 1층 102호",
+    "address": "Room 102, 1st floor, 115-3 Songpa-dong, Songpa-gu, Seoul, Korea",
+    "short_address": "Room 102, 1st floor, 115-3 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.506223399999996,
       "lng": 127.1117361
@@ -2477,11 +2477,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca59db2973aa3:0xc5684e280fe3605a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2491,16 +2491,16 @@
   },
   {
     "place_id": "ChIJyZaVV52lfDUR7maS2rIuIc4",
-    "display_name": "송화",
-    "category": "의류점",
+    "display_name": "Songhwa",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 145 19번지",
-    "short_address": "송파구 송파동 145 19번지",
+    "address": "145 19 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "145 19th Street, Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.507331199999996,
       "lng": 127.11454619999999
@@ -2521,8 +2521,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2531,16 +2531,16 @@
   },
   {
     "place_id": "ChIJ75o8q4KlfDUR0hrOTUlxXdA",
-    "display_name": "핑크요정",
-    "category": "의류점",
+    "display_name": "pink fairy",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파동 145-13번지 102호 송파구 서울특별시 KR",
-    "short_address": "송파동 145-13번지 102호 송파구 서울특별시 KR",
+    "address": "#102, 145-13 Songpa-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "#102, 145-13 Songpa-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5069892,
       "lng": 127.1152017
@@ -2561,8 +2561,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2571,16 +2571,16 @@
   },
   {
     "place_id": "ChIJkZOh652lfDURFrlXtn_VhN0",
-    "display_name": "주간코스메틱신문",
-    "category": "화장품 판매점",
+    "display_name": "Weekly Cosmetic Newspaper",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 134-3",
-    "short_address": "송파구 송파동 134-3",
+    "address": "134-3 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "134-3 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.5077944,
       "lng": 127.11093050000001
@@ -2601,8 +2601,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2611,14 +2611,14 @@
         "author": "3well TV",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "베스트"
+        "relative_time": "6 years ago",
+        "text": "Best"
       },
       {
-        "author": "김지아",
+        "author": "Kim Ji-ah",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -2626,16 +2626,16 @@
   },
   {
     "place_id": "ChIJF0N8jJ2lfDUR6E_mAdOXo70",
-    "display_name": "남강패션",
-    "category": "의류점",
+    "display_name": "Namgang Fashion",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파동 134-1번지 송파구 서울특별시 KR",
-    "short_address": "송파동 134-1번지 송파구 서울특별시 KR",
+    "address": "134-1 Songpa-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "134-1 Songpa-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5082898,
       "lng": 127.11129770000001
@@ -2656,8 +2656,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2666,16 +2666,16 @@
   },
   {
     "place_id": "ChIJMd-gznelfDURWr2vBVkap5k",
-    "display_name": "비앤비",
-    "category": "의류점",
+    "display_name": "B&B",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 137-1번지 1층 101호",
-    "short_address": "송파구 송파동 137-1번지 1층 101호",
+    "address": "Room 101, 1st floor, 137-1 Songpa-dong, Songpa-gu, Seoul, Korea",
+    "short_address": "Room 101, 1st floor, 137-1 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.5088607,
       "lng": 127.1128009
@@ -2696,7 +2696,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2706,15 +2706,15 @@
   {
     "place_id": "ChIJ36L39XelfDURouxu8PEe5_E",
     "display_name": "SHIMSHAIRDO",
-    "category": "화장품 판매점",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파동 142번지 지상1층 송파구 서울특별시 KR",
-    "short_address": "송파동 142번지 지상1층 송파구 서울특별시 KR",
+    "address": "142 Songpa-dong, Seoul, Republic of Korea, 1st floor, Songpa-gu, Seoul KR",
+    "short_address": "142 Songpa-dong, 1st floor, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5081086,
       "lng": 127.1151285
@@ -2735,8 +2735,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2746,16 +2746,16 @@
   },
   {
     "place_id": "ChIJex6XH3ilfDURe8S6f7W5JQg",
-    "display_name": "로앤엄",
-    "category": "의류점",
+    "display_name": "Roanham",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 번지 4층 142-1",
-    "short_address": "송파구 송파동 번지 4층 142-1",
+    "address": "142-1, 4th floor, Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "142-1, 4th floor, Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.508251,
       "lng": 127.1152524
@@ -2776,8 +2776,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2786,16 +2786,16 @@
   },
   {
     "place_id": "ChIJf-YTKJ2lfDUR91_85VzjEvU",
-    "display_name": "따삐오롯데송파점",
-    "category": "의류점",
+    "display_name": "Tapio Lotte Songpa Branch",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파동 121번지 한양아파트 상가1층 송파구 서울특별시 KR",
-    "short_address": "송파동 121번지 한양아파트 상가1층 송파구 서울특별시 KR",
+    "address": "1st floor, Hanyang Apartments, 121 Songpa-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "121 Songpa-dong, Hanyang Apartment Commercial Building, 1st floor, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.505172099999996,
       "lng": 127.11452530000001
@@ -2816,8 +2816,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2827,16 +2827,16 @@
   },
   {
     "place_id": "ChIJj5KT15ylfDURbdHYHirlqfI",
-    "display_name": "프린세스속눈썹",
-    "category": "화장품 판매점",
+    "display_name": "princess eyelashes",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 121",
-    "short_address": "송파구 송파동 121",
+    "address": "121 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "121 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.505172099999996,
       "lng": 127.11452530000001
@@ -2857,8 +2857,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2867,8 +2867,8 @@
   },
   {
     "place_id": "ChIJ6eqJ5Z2lfDURJNWhmf46LpU",
-    "display_name": "(주)뻬띠앙뜨",
-    "category": "여성의류점",
+    "display_name": "Petiante Co., Ltd.",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "clothing_store",
@@ -2876,8 +2876,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파1동 47-7",
-    "short_address": "송파구 송파1동 47-7",
+    "address": "47-7 Songpa 1-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "47-7 Songpa 1-dong, Songpa-gu",
     "location": {
       "lat": 37.5081457,
       "lng": 127.1104692
@@ -2905,16 +2905,16 @@
   },
   {
     "place_id": "ChIJc2fl75qlfDUR0cPooRnP4w0",
-    "display_name": "심플",
-    "category": "귀금속 상점",
+    "display_name": "simple",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 47-9",
-    "short_address": "송파구 송파동 47-9",
+    "address": "47-9 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "47-9 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.507895399999995,
       "lng": 127.11025269999999
@@ -2939,10 +2939,10 @@
     "parking": null,
     "reviews": [
       {
-        "author": "김찬회",
+        "author": "Chanhoe Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9년 전",
+        "relative_time": "9 years ago",
         "text": null
       }
     ],
@@ -2950,16 +2950,16 @@
   },
   {
     "place_id": "ChIJs9JpcQClfDURXTjVmhd88FI",
-    "display_name": "올리브영 송리단길점",
-    "category": "화장품 판매점",
+    "display_name": "Olive Young Songridan-gil Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 백제고분로 425",
-    "short_address": "송파구 백제고분로 425",
+    "address": "425 Baekjegobun-ro, Songpa-gu, Seoul, South Korea",
+    "short_address": "425 Baekjegobun-ro, Songpa-gu",
     "location": {
       "lat": 37.5090673,
       "lng": 127.111285
@@ -2978,18 +2978,18 @@
     "google_maps_url": "https://maps.google.com/?cid=5976413146344405085",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5007169d2b3:0x52f07c179ad5385d!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 10:30",
-      "화요일: 오전 10:00 ~ 오후 10:30",
-      "수요일: 오전 10:00 ~ 오후 10:30",
-      "목요일: 오전 10:00 ~ 오후 10:30",
-      "금요일: 오전 10:00 ~ 오후 10:30",
-      "토요일: 오전 10:00 ~ 오후 10:30",
-      "일요일: 오전 10:00 ~ 오후 10:30"
+      "Monday: 10:00 AM - 10:30 PM",
+      "Tuesday: 10:00 AM - 10:30 PM",
+      "Wednesday: 10:00 AM - 10:30 PM",
+      "Thursday: 10:00 AM - 10:30 PM",
+      "Friday: 10:00 AM - 10:30 PM",
+      "Saturday: 10:00 AM - 10:30 PM",
+      "Sunday: 10:00 AM - 10:30 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2999,16 +2999,16 @@
   },
   {
     "place_id": "ChIJ678-9QelfDURBBS4pIkGPpI",
-    "display_name": "크림이",
-    "category": "의류점",
+    "display_name": "Cream",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동",
-    "short_address": "송파구 송파동",
+    "address": "Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.504608999999995,
       "lng": 127.1119305
@@ -3029,8 +3029,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3039,16 +3039,16 @@
   },
   {
     "place_id": "ChIJOY47Y52lfDURRbGzAVv-QRg",
-    "display_name": "코러스음향",
-    "category": "전자제품 판매점",
+    "display_name": "Chorus sound",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파동 131-12번지 송파구 서울특별시 KR",
-    "short_address": "송파동 131-12번지 송파구 서울특별시 KR",
+    "address": "131-12 Songpa-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "131-12 Songpa-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5077201,
       "lng": 127.1131865
@@ -3076,8 +3076,8 @@
   },
   {
     "place_id": "ChIJ-Trul52lfDUR3oeayljBjCg",
-    "display_name": "세븐일레븐 송파초교점",
-    "category": "편의점",
+    "display_name": "7-Eleven Songpa Elementary School Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3086,8 +3086,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 백제고분로44길 9",
-    "short_address": "송파구 백제고분로44길 9",
+    "address": "9 Baekjegobun-ro 44-gil, Songpa-gu, Seoul, South Korea",
+    "short_address": "9, Baekjegobun-ro 44-gil, Songpa-gu",
     "location": {
       "lat": 37.5073539,
       "lng": 127.11168819999999
@@ -3095,7 +3095,7 @@
     "rating": 5,
     "rating_stars": "★★★★★ 5",
     "rating_count": 1,
-    "price_level": "저렴 ($)",
+    "price_level": "Cheap ($)",
     "price_range": null,
     "editorial_summary": "Pit stop for snacks, drinks & daily essentials",
     "generative_summary": null,
@@ -3106,28 +3106,28 @@
     "google_maps_url": "https://maps.google.com/?cid=2921922845357017054",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca59d97ee3af9:0x288cc158ca9a87de!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "신지훈",
+        "author": "Jihoon Shin",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -3135,8 +3135,8 @@
   },
   {
     "place_id": "ChIJr7wI2nelfDURn8KlzJGvyzA",
-    "display_name": "(주)티에이치옵틱스",
-    "category": "전자제품 판매점",
+    "display_name": "TH Optics Co., Ltd.",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "home_goods_store",
@@ -3145,8 +3145,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 138-1번지 302호",
-    "short_address": "송파구 송파동 138-1번지 302호",
+    "address": "#302, 138-1 Songpa-dong, Songpa-gu, Seoul, Republic of Korea",
+    "short_address": "#302, 138-1 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.508255,
       "lng": 127.1131429
@@ -3167,7 +3167,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3176,8 +3176,8 @@
   },
   {
     "place_id": "ChIJnXP-h52lfDURMu2BGVpLsQ4",
-    "display_name": "GS25 송파중앙점",
-    "category": "편의점",
+    "display_name": "GS25 Songpa Jungang Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3186,8 +3186,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 133",
-    "short_address": "송파구 송파동 133",
+    "address": "133 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "133 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.508461,
       "lng": 127.11184700000001
@@ -3206,37 +3206,37 @@
     "google_maps_url": "https://maps.google.com/?cid=1058710237755862322",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca59d87fe739d:0xeb14b5a1981ed32!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "반월당빈대떡 신사",
+        "author": "Banwoldang Bindaetteok Shrine",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
-        "text": "그런대로"
+        "relative_time": "5 years ago",
+        "text": "Just like that"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJyRFgz3elfDUR9edgbsvoY4U",
-    "display_name": "CU 송파중앙점",
-    "category": "편의점",
+    "display_name": "CU Songpa Jungang Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3245,8 +3245,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 139",
-    "short_address": "송파구 송파동 139",
+    "address": "139 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "139 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.5087261,
       "lng": 127.1131226
@@ -3267,8 +3267,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3279,7 +3279,7 @@
   {
     "place_id": "ChIJlUQFxnelfDUR856dwwHk_DY",
     "display_name": "cu",
-    "category": "편의점",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3288,7 +3288,7 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5088181,
@@ -3310,8 +3310,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3322,7 +3322,7 @@
   {
     "place_id": "ChIJwW4VqYKlfDURb_JJkH-o9vA",
     "display_name": "cu",
-    "category": "편의점",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3331,7 +3331,7 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5068307,
@@ -3353,8 +3353,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3364,8 +3364,8 @@
   },
   {
     "place_id": "ChIJf-YTKJ2lfDURgrUWeGOiWFE",
-    "display_name": "마트아임",
-    "category": "편의점",
+    "display_name": "I'm a mart",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3374,8 +3374,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 121번지 1층 4호",
-    "short_address": "송파구 송파동 121번지 1층 4호",
+    "address": "#4, 1st floor, 121 Songpa-dong, Songpa-gu, Seoul, Korea",
+    "short_address": "#4, 1st floor, 121 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.505172099999996,
       "lng": 127.11452530000001
@@ -3396,8 +3396,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3408,15 +3408,15 @@
   {
     "place_id": "ChIJwSSe9talfDUR2RM5BjqZPNI",
     "display_name": "iknowk",
-    "category": "선물 가게",
+    "category": "gift shop",
     "types": [
       "gift_shop",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 58 가든파이브툴동 3층 b",
-    "short_address": "송파구 58 가든파이브툴동 3층 b",
+    "address": "B, 3rd floor, Garden Five Tool Building, 58 Songpa-gu, Seoul, South Korea",
+    "short_address": "3rd floor b, Garden Five Tool Building, 58 Songpa-gu",
     "location": {
       "lat": 37.5056205,
       "lng": 127.1152992
@@ -3435,18 +3435,18 @@
     "google_maps_url": "https://maps.google.com/?cid=15149151721059062745",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5d6f69e24c1:0xd23c993a063913d9!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 7:00",
-      "화요일: 오전 10:00 ~ 오후 7:00",
-      "수요일: 오전 10:00 ~ 오후 7:00",
-      "목요일: 오전 10:00 ~ 오후 7:00",
-      "금요일: 오전 10:00 ~ 오후 7:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 7:00 PM",
+      "Tuesday: 10:00 AM - 7:00 PM",
+      "Wednesday: 10:00 AM - 7:00 PM",
+      "Thursday: 10:00 AM - 7:00 PM",
+      "Friday: 10:00 AM - 7:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3455,24 +3455,24 @@
         "author": "Thy Nguyen",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
-        "text": "오프라인 매장은 없습니다. 온라인이나 다른 곳(예: 디즈니 스토어)에서만 판매합니다."
+        "relative_time": "1 year ago",
+        "text": "There are no offline stores. Only sold online or elsewhere (e.g. Disney Store)."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJ49ikIXilfDURSwRISoz77bk",
-    "display_name": "송파전동키보드",
-    "category": "전자제품 판매점",
+    "display_name": "Songpa electric keyboard",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파1동 4-6",
-    "short_address": "송파구 송파1동 4-6",
+    "address": "4-6 Songpa 1-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "4-6, Songpa 1-dong, Songpa-gu",
     "location": {
       "lat": 37.5083834,
       "lng": 127.11535719999999
@@ -3493,17 +3493,17 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "박철",
+        "author": "Park Cheol",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -3513,16 +3513,16 @@
   },
   {
     "place_id": "ChIJUXFz552lfDUR4TGxk6YTgTw",
-    "display_name": "다본다서비스송파점",
-    "category": "전자제품 판매점",
+    "display_name": "Dabonda Service Songpa Branch",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 47-9",
-    "short_address": "송파구 송파동 47-9",
+    "address": "47-9 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "47-9 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.507895399999995,
       "lng": 127.11025269999999
@@ -3543,8 +3543,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3553,21 +3553,21 @@
         "author": "Ni mitz",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "4년 전",
-        "text": "차 두대의 보조배터리및 블박 장착 서비스기간4년으로 계약.후에 한대의 블박이 작동안되어 수리받고 어느날 아예 먹통됨.지방이주 관계로 좀 늦게방문.배터리불량수리한다고 한달..이후 나머지 한대점검위해 타업체방문.보조배터리 스위치가 탄 흔적과 스위치온도 안되어있는 상태 당연히 주차녹화안됨.거지같은 사기업체임.백만원 날림.그것도 생각해서 현금줬는데..그 이후에 수리한 배터리도 엉터리여서 새로 설치.이런 책임없는 가게는 없엊러야 할듯."
+        "relative_time": "4 years ago",
+        "text": "I signed a contract for 4 years of service with auxiliary batteries and black box for two cars. Later, one black plate did not work and was repaired, and one day it stopped working. I visited a little late due to moving out of town. They said they would repair a defective battery for a month. After that, I visited another company to inspect the remaining car. There were burnt marks on the auxiliary battery switch and the temperature of the switch was not up. Of course, there was no parking recording. It's a crappy scam company. I wasted millions of won. Thinking about that too. I paid cash, but the battery they repaired afterwards was crap, so I installed a new one. I think this kind of irresponsible store should be eliminated."
       },
       {
-        "author": "남정윤용",
+        "author": "Nam Jeong Yun-yong",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       },
       {
-        "author": "한상준",
+        "author": "Sangjun Han",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       }
     ],
@@ -3575,8 +3575,8 @@
   },
   {
     "place_id": "ChIJUXFz552lfDURfI6qW4TCbW8",
-    "display_name": "세븐일레븐 송파송리단점",
-    "category": "편의점",
+    "display_name": "7-Eleven Songpa Songni Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3585,8 +3585,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 백제고분로 411",
-    "short_address": "송파구 백제고분로 411",
+    "address": "411 Baekjegobun-ro, Songpa-gu, Seoul, South Korea",
+    "short_address": "411 Baekjegobun-ro, Songpa-gu",
     "location": {
       "lat": 37.5079541,
       "lng": 127.110266
@@ -3605,29 +3605,29 @@
     "google_maps_url": "https://maps.google.com/?cid=8029287584400838268",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca59de7737151:0x6f6dc2845baa8e7c!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "쑥갬",
+        "author": "Let’s go",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "7달 전",
-        "text": "다른알바분들은 좋았는데 평일 낮에 일하시는 아저씨분 너무 불친절하세요 다른데가고말겠음"
+        "relative_time": "7 months ago",
+        "text": "The other part-time workers were good, but the man who worked during the day on weekdays was so unfriendly. I ended up going somewhere else."
       }
     ],
     "photos": [
@@ -3636,8 +3636,8 @@
   },
   {
     "place_id": "ChIJAzJwHnalfDURfP34o2X0TrM",
-    "display_name": "GS25 송파제일점",
-    "category": "편의점",
+    "display_name": "GS25 Songpa Jeil Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3646,8 +3646,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 백제고분로 423",
-    "short_address": "송파구 백제고분로 423",
+    "address": "423 Baekjegobun-ro, Songpa-gu, Seoul, South Korea",
+    "short_address": "423 Baekjegobun-ro, Songpa-gu",
     "location": {
       "lat": 37.5089197,
       "lng": 127.11102849999999
@@ -3666,18 +3666,18 @@
     "google_maps_url": "https://maps.google.com/?cid=12920533098352409980",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5761e703203:0xb34ef465a3f8fd7c!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3687,36 +3687,36 @@
         "author": "StoneMe Jeon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
-        "text": "부부내외와 시누이가 운영하는 참 친절하고,\n구수한 사람살아가는 맛과 운치가 나는 곳"
+        "relative_time": "8 years ago",
+        "text": "Very friendly and run by a couple and their sister-in-law.\nA place with taste and taste where people live"
       },
       {
-        "author": "나르미",
+        "author": "Narmi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "친절하고 깨끗하고 임직원이 성실해욤"
+        "relative_time": "7 years ago",
+        "text": "It's friendly, clean, and the employees are sincere."
       },
       {
-        "author": "박정환",
+        "author": "Park Jeong-hwan",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9년 전",
-        "text": "홍라면 최고!!!!"
+        "relative_time": "9 years ago",
+        "text": "Hong Ramen is the best!!!!"
       },
       {
-        "author": "이우선",
+        "author": "Lee Woo-seon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "편의점입니다"
+        "relative_time": "6 years ago",
+        "text": "It's a convenience store"
       },
       {
-        "author": "이성용",
+        "author": "Seongyong Lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "양호합니다"
+        "relative_time": "3 years ago",
+        "text": "It's good"
       }
     ],
     "photos": [
@@ -3726,16 +3726,16 @@
   },
   {
     "place_id": "ChIJQaLWZZylfDURHqQu3dl509s",
-    "display_name": "피씨사랑",
-    "category": "전자제품 판매점",
+    "display_name": "PC love",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동",
-    "short_address": "송파구 송파동",
+    "address": "Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.504608999999995,
       "lng": 127.1119305
@@ -3756,8 +3756,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3766,8 +3766,8 @@
   },
   {
     "place_id": "ChIJl0x7mXelfDURvji_DD0dqJ8",
-    "display_name": "세븐일레븐방이상윤점",
-    "category": "편의점",
+    "display_name": "7-Eleven Bangi Sangyoon Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3776,8 +3776,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 방이동 115-8번지 1층 송파구 서울특별시 KR",
-    "short_address": "방이동 115-8번지 1층 송파구 서울특별시 KR",
+    "address": "1st floor, 115-8 Bangi-dong, Seoul, Republic of Korea, Songpa-gu, Seoul KR",
+    "short_address": "1st floor, 115-8 Bangi-dong, Songpa-gu, Seoul KR",
     "location": {
       "lat": 37.5094859,
       "lng": 127.1141067
@@ -3798,8 +3798,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3809,8 +3809,8 @@
   },
   {
     "place_id": "ChIJsawYH5ylfDURDM8CrPycZW8",
-    "display_name": "씨앤씨옵티칼",
-    "category": "편의점",
+    "display_name": "C&C Optical",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3819,8 +3819,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 111-19",
-    "short_address": "송파구 송파동 111-19",
+    "address": "111-19 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "111-19 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.505481599999996,
       "lng": 127.11002459999999
@@ -3841,8 +3841,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3852,16 +3852,16 @@
   },
   {
     "place_id": "ChIJNXsVn4KlfDURjg11O5EPW7c",
-    "display_name": "아이펀펀송파센터",
-    "category": "서점",
+    "display_name": "iFunFun Songpa Center",
+    "category": "bookstore",
     "types": [
       "book_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 150-1",
-    "short_address": "송파구 송파동 150-1",
+    "address": "150-1 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "150-1 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.5064613,
       "lng": 127.11656880000001
@@ -3882,8 +3882,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3892,8 +3892,8 @@
   },
   {
     "place_id": "ChIJLRXVGgClfDURSAW9PgL2YX4",
-    "display_name": "GS25 송파세원점",
-    "category": "편의점",
+    "display_name": "GS25 Songpa Sewon Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3902,8 +3902,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 백제고분로42길 24",
-    "short_address": "송파구 백제고분로42길 24",
+    "address": "24 Baekjegobun-ro 42-gil, Songpa-gu, Seoul, South Korea",
+    "short_address": "24 Baekjegobun-ro 42-gil, Songpa-gu",
     "location": {
       "lat": 37.5046562,
       "lng": 127.1106708
@@ -3922,28 +3922,28 @@
     "google_maps_url": "https://maps.google.com/?cid=9106830411022796104",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5001ad5152d:0x7e61f6023ebd0548!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "신지훈",
+        "author": "Jihoon Shin",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -3951,8 +3951,8 @@
   },
   {
     "place_id": "ChIJeQzmOwClfDURYo2qCQjMgx0",
-    "display_name": "CU 송파에스아이팰리스점",
-    "category": "편의점",
+    "display_name": "CU Songpa SI Palace Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3961,8 +3961,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 백제고분로42길 4-5",
-    "short_address": "송파구 백제고분로42길 4-5",
+    "address": "4-5 Baekjegobun-ro 42-gil, Songpa-gu, Seoul, South Korea",
+    "short_address": "4-5, Baekjegobun-ro 42-gil, Songpa-gu",
     "location": {
       "lat": 37.5058547,
       "lng": 127.10935579999999
@@ -3981,18 +3981,18 @@
     "google_maps_url": "https://maps.google.com/?cid=2126767783942983010",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca5003be60c79:0x1d83cc0809aa8d62!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4002,16 +4002,16 @@
   },
   {
     "place_id": "ChIJKdIGNdOmfDURutJnar835j8",
-    "display_name": "꽃누리화원",
-    "category": "선물 가게",
+    "display_name": "Kkotnuri Flower Garden",
+    "category": "gift shop",
     "types": [
       "gift_shop",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 송파구 송파동 86",
-    "short_address": "송파구 송파동 86",
+    "address": "86 Songpa-dong, Songpa-gu, Seoul, South Korea",
+    "short_address": "86 Songpa-dong, Songpa-gu",
     "location": {
       "lat": 37.505516799999995,
       "lng": 127.1094862
@@ -4032,19 +4032,19 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김미숙",
+        "author": "Kim Mi-sook",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "꽃 종류 가 다양하고 선물용 화분도 있어요.."
+        "relative_time": "5 years ago",
+        "text": "There are various types of flowers and there are also flower pots for gifts."
       }
     ],
     "photos": [
@@ -4062,8 +4062,8 @@
   },
   {
     "place_id": "ChIJ2yK6NoOZfDURPdDQPTUv6zo",
-    "display_name": "신촌집밥부페",
-    "category": "한식당",
+    "display_name": "Sinchon House Food Buffet",
+    "category": "Korean restaurant",
     "types": [
       "korean_restaurant",
       "buffet_restaurant",
@@ -4073,8 +4073,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 연세로2가길 6",
-    "short_address": "서대문구 연세로2가길 6",
+    "address": "6 Yonsei-ro 2ga-gil, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "6 Yonsei-ro 2ga-gil, Seodaemun-gu",
     "location": {
       "lat": 37.5562634,
       "lng": 126.93760859999999
@@ -4093,25 +4093,25 @@
     "google_maps_url": "https://maps.google.com/?cid=4245538979443691581",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c998336ba22db:0x3aeb2f353dd0d03d!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 7:00 ~ 오후 2:30",
-      "화요일: 오전 7:00 ~ 오후 2:30",
-      "수요일: 오전 7:00 ~ 오후 2:30",
-      "목요일: 오전 7:00 ~ 오후 2:30",
-      "금요일: 오전 7:00 ~ 오후 2:30",
-      "토요일: 오전 7:00 ~ 오후 2:30",
-      "일요일: 휴무일"
+      "Monday: 7:00 AM - 2:30 PM",
+      "Tuesday: 7:00 AM - 2:30 PM",
+      "Wednesday: 7:00 AM - 2:30 PM",
+      "Thursday: 7:00 AM - 2:30 PM",
+      "Friday: 7:00 AM - 2:30 PM",
+      "Saturday: 7:00 AM - 2:30 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "조식",
-      "점심",
-      "저녁"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "breakfast",
+      "lunch",
+      "dinner"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4120,28 +4120,28 @@
         "author": "Edward Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "10,000원을 내고 조식 뷔페를 이용했는데, 네이버 지도에서 고기와 계란 사진을 보고 기대가 컸어요. 가족들과 함께 가기로 마음먹었죠. 도착하니 한국어로 \"1인당 10,000원\"이라고 적힌 초록색 간판이 있어서 제대로 찾아갔어요. 뷔페에는 계란과 불고기가 있었고, 주방장님이 한국어로 더 준비하고 있다고 말씀해 주셨어요.\n\n반찬, 밥, 김치밥, 계란, 불고기, 조개, 가지, 빵까지 무제한으로 나왔어요. 정말 최고였어요!\n\n저희 가족 모두 맛있게 먹었어요. 맛있고 저렴한 조식 뷔페를 찾는 분들께 강력 추천합니다.\n\n네이버 지도에서 다른 곳으로 가다가 우연히 발견했는데, 정말 좋은 선택이었어요!\n\n참고로, 이 사진은 오전 8시 55분에 찍은 거예요."
+        "relative_time": "4 months ago",
+        "text": "I paid 10,000 won for the breakfast buffet, and I had high expectations when I saw pictures of meat and eggs on Naver Maps. I decided to go with my family. When I arrived, there was a green sign that said \"10,000 won per person\" in Korean, so I looked for it correctly. The buffet had eggs and bulgogi, and the chef told us in Korean that he was preparing more.\n\nIt came with unlimited side dishes, rice, kimchi rice, eggs, bulgogi, clams, eggplant, and bread. It was really great!\n\nMy whole family enjoyed it. Highly recommended to anyone looking for a delicious and affordable breakfast buffet.\n\nI found it by chance while going to a different place on Naver Maps, and it was a really good choice!\n\nFor reference, this photo was taken at 8:55 am."
       },
       {
-        "author": "신봉승",
+        "author": "Shin Bong-seung",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "진짜 한국 가정식 스타일의 음식점입니다. 훌륭한 맛을 매우 저렴한 가격에 즐길 수 있습니다."
+        "relative_time": "3 months ago",
+        "text": "This is a real Korean home style restaurant. You can enjoy great taste at a very affordable price."
       },
       {
         "author": "Khaled Sha'ban",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1주 전",
-        "text": "저는 이 식당에 진심으로 반했어요. 10,000원이라는 가격에 이렇게 다양한 음식을 맛볼 수 있다는 게 정말 놀랍고 가성비도 훌륭해요.\n식당 분위기도 정통적이고, 이름도 그 분위기를 완벽하게 반영하고 있어요.\n많은 직장인들이 이곳을 다시 찾는 것도 당연한 것 같아요."
+        "relative_time": "1 week ago",
+        "text": "I really fell in love with this restaurant. It's really amazing that you can taste such a variety of food for just 10,000 won, and it's also great value for money.\nThe atmosphere of the restaurant is authentic, and the name reflects it perfectly.\nI think it’s natural that many office workers return to this place."
       },
       {
         "author": "heffi st",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
+        "relative_time": "1 month ago",
         "text": null
       }
     ],
@@ -4160,8 +4160,8 @@
   },
   {
     "place_id": "ChIJ34klKJSYfDUROODyQn3L9h4",
-    "display_name": "무교동 낙지골",
-    "category": "한식당",
+    "display_name": "Mugyo-dong Octopus Valley",
+    "category": "Korean restaurant",
     "types": [
       "korean_restaurant",
       "restaurant",
@@ -4169,8 +4169,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 연세로2길 19",
-    "short_address": "서대문구 연세로2길 19",
+    "address": "19 Yonsei-ro 2-gil, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "19 Yonsei-ro 2-gil, Seodaemun-gu",
     "location": {
       "lat": 37.556079,
       "lng": 126.93795659999999
@@ -4189,58 +4189,58 @@
     "google_maps_url": "https://maps.google.com/?cid=2231194404263223352",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9894282589df:0x1ef6cb7d42f2e038!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오전 12:00",
-      "화요일: 오전 11:00 ~ 오전 12:00",
-      "수요일: 오전 11:00 ~ 오전 12:00",
-      "목요일: 오전 11:00 ~ 오전 12:00",
-      "금요일: 오전 11:00 ~ 오전 12:00",
-      "토요일: 오전 11:00 ~ 오전 12:00",
-      "일요일: 오전 11:00 ~ 오전 12:00"
+      "Monday: 11:00 AM - 12:00 AM",
+      "Tuesday: 11:00 AM - 12:00 AM",
+      "Wednesday: 11:00 AM - 12:00 AM",
+      "Thursday: 11:00 AM - 12:00 AM",
+      "Friday: 11:00 AM - 12:00 AM",
+      "Saturday: 11:00 AM - 12:00 AM",
+      "Sunday: 11:00 AM - 12:00 AM"
     ],
     "services": [
-      "포장",
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "단체적합",
-      "점심",
-      "저녁",
-      "맥주"
+      "packaging",
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "group fitness",
+      "lunch",
+      "dinner",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "장동광",
+        "author": "Jang Dong-kwang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "양호  그날의메뉴가 있는것 같던대. 밖에 고지가 안되어있어서 알수없는."
+        "relative_time": "4 years ago",
+        "text": "Good. It seemed like there was a menu for the day. I don't know because there is no notice outside."
       },
       {
-        "author": "안명규",
+        "author": "Myeong-gyu Ahn",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "4년 전",
-        "text": "별로 맛이 없네요."
+        "relative_time": "4 years ago",
+        "text": "It doesn't taste very good."
       },
       {
         "author": "Haksan Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "맛있는 단골집."
+        "relative_time": "7 years ago",
+        "text": "A delicious regular restaurant."
       },
       {
         "author": "Jinseob Shin",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -4253,8 +4253,8 @@
   },
   {
     "place_id": "ChIJ78mhgpaYfDURH7wdmaUmwJM",
-    "display_name": "미래족발",
-    "category": "한식당",
+    "display_name": "future pig's feet",
+    "category": "Korean restaurant",
     "types": [
       "korean_restaurant",
       "restaurant",
@@ -4262,8 +4262,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동",
-    "short_address": "서대문구 창천동",
+    "address": "Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5560909,
       "lng": 126.93800149999998
@@ -4282,25 +4282,25 @@
     "google_maps_url": "https://maps.google.com/?cid=10646552011784174623",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989682a1c9ef:0x93c026a5991dbc1f!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:30 ~ 오전 12:00",
-      "화요일: 오전 11:30 ~ 오전 12:00",
-      "수요일: 오전 11:30 ~ 오전 12:00",
-      "목요일: 오전 11:30 ~ 오전 12:00",
-      "금요일: 오전 11:30 ~ 오전 12:30",
-      "토요일: 오전 11:30 ~ 오전 12:00",
-      "일요일: 오전 11:30 ~ 오전 12:00"
+      "Monday: 11:30 AM - 12:00 AM",
+      "Tuesday: 11:30 AM - 12:00 AM",
+      "Wednesday: 11:30 AM - 12:00 AM",
+      "Thursday: 11:30 AM - 12:00 AM",
+      "Friday: 11:30 AM - 12:30 AM",
+      "Saturday: 11:30 AM - 12:00 AM",
+      "Sunday: 11:30 AM - 12:00 AM"
     ],
     "services": [
-      "포장",
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "저녁",
-      "맥주"
+      "packaging",
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "dinner",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4310,8 +4310,8 @@
   },
   {
     "place_id": "ChIJ4evF0pWYfDUR2ktJ8Ayjfyk",
-    "display_name": "닭잡는파로",
-    "category": "한식당",
+    "display_name": "Chicken Parro",
+    "category": "Korean restaurant",
     "types": [
       "korean_restaurant",
       "restaurant",
@@ -4319,8 +4319,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 창천동 18-36번지 서대문구 서울특별시 KR",
-    "short_address": "창천동 18-36번지 서대문구 서울특별시 KR",
+    "address": "18-36 Changcheon-dong, Seoul, South Korea, Seodaemun-gu, Seoul KR",
+    "short_address": "18-36 Changcheon-dong, Seodaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5557638,
       "lng": 126.9375462
@@ -4340,18 +4340,18 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9895d2c5ebe1:0x297fa30cf0494bda!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "포장",
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "단체적합",
-      "점심",
-      "저녁",
-      "맥주"
+      "packaging",
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "group fitness",
+      "lunch",
+      "dinner",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4362,7 +4362,7 @@
   {
     "place_id": "ChIJXeZNEwCZfDURak3_zTMY5aE",
     "display_name": "モッパン",
-    "category": "한식당",
+    "category": "Korean restaurant",
     "types": [
       "korean_restaurant",
       "restaurant",
@@ -4370,8 +4370,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 １８−５５",
-    "short_address": "서대문구 창천동 １８−５５",
+    "address": "１８−５５ Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "Changcheon-dong, Seodaemun-gu １８−５５",
     "location": {
       "lat": 37.5565054,
       "lng": 126.9370727
@@ -4391,14 +4391,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9900134de65d:0xa1e51833cdff4d6a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "저녁"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "dinner"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4407,8 +4407,8 @@
   },
   {
     "place_id": "ChIJ8TbOIpSYfDURNY0e0ivJWEg",
-    "display_name": "강남불백 신촌점",
-    "category": "한식당",
+    "display_name": "Gangnam Bulbaek Sinchon Branch",
+    "category": "Korean restaurant",
     "types": [
       "korean_restaurant",
       "restaurant",
@@ -4416,8 +4416,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울 서대문구 연세로4길 6",
-    "short_address": "서울 서대문구 연세로4길 6",
+    "address": "6 Yonsei-ro 4-gil, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "6 Yonsei-ro 4-gil, Seodaemun-gu, Seoul",
     "location": {
       "lat": 37.5569062,
       "lng": 126.93735790000001
@@ -4425,7 +4425,7 @@
     "rating": 4.2,
     "rating_stars": "★★★★☆ 4.2",
     "rating_count": 75,
-    "price_level": "보통 ($$)",
+    "price_level": "Average ($$)",
     "price_range": {
       "min": "10000 KRW",
       "max": "20000 KRW"
@@ -4439,24 +4439,24 @@
     "google_maps_url": "https://maps.google.com/?cid=5213137758727343413",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c989422ce36f1:0x4858c92bd21e8d35!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 11:00",
-      "화요일: 오전 10:00 ~ 오후 11:00",
-      "수요일: 오전 10:00 ~ 오후 11:00",
-      "목요일: 오전 10:00 ~ 오후 11:00",
-      "금요일: 오전 10:00 ~ 오후 11:00",
-      "토요일: 오전 10:00 ~ 오후 11:00",
-      "일요일: 오전 10:00 ~ 오후 11:00"
+      "Monday: 10:00 AM - 11:00 PM",
+      "Tuesday: 10:00 AM - 11:00 PM",
+      "Wednesday: 10:00 AM - 11:00 PM",
+      "Thursday: 10:00 AM - 11:00 PM",
+      "Friday: 10:00 AM - 11:00 PM",
+      "Saturday: 10:00 AM - 11:00 PM",
+      "Sunday: 10:00 AM - 11:00 PM"
     ],
     "services": [
-      "매장식사",
-      "화장실",
-      "점심",
-      "저녁",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "lunch",
+      "dinner",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4466,36 +4466,36 @@
         "author": "Jueon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10달 전",
-        "text": "진심으로 너무 맛있었던 불백집.\n일단 불맛이 너무 나서 냄새만 맡아도 남자들 환장하는 그런 맛입니다.\n양도 성인 남자 기준 든든하고 진짜 맛있어요.\n체인점이긴하지만 강남에 이은 2번째 체인점으로 거의 직영점입니다."
+        "relative_time": "10 months ago",
+        "text": "Bulbaek House was truly delicious.\nFirst of all, it has such a fiery taste that men go crazy just by smelling it.\nBoth portions are filling for an adult male and really delicious.\nAlthough it is a chain store, it is the second chain store after Gangnam and is almost directly managed."
       },
       {
-        "author": "아기공룡둘째",
+        "author": "Baby Dinosaur Second",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "4년 전",
-        "text": "가볍게 먹기 좋습니다. 불 맛도 잘 나는 편이고 양념도 맛있었습니다.\n반찬으로 달걀 프라이를 줘서 너무 좋았습니다만 같이 나온 된장찌개의 맛은 조금 아쉬웠습니다."
+        "relative_time": "4 years ago",
+        "text": "Good for a light meal. It had a good fire flavor and the seasoning was delicious.\nI really liked the fried egg as a side dish, but the taste of the soybean paste stew that came with it was a bit disappointing."
       },
       {
-        "author": "뚠뚠홍",
+        "author": "Toon toon Hong",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "불쭈정식,해물김치볶음 시킴\n밑반찬으로 주는 김치볶음 진심맛있음 내스똬일!!\n남치니랑~♡ 간단하게한잔~우후훗\n도시락밥에 추억돋고‥ 으흐흐  너무져앙~"
+        "relative_time": "5 years ago",
+        "text": "Buljju set meal, stir-fried seafood kimchi\nThe stir-fried kimchi served as a side dish is seriously delicious and my day!!\nA quick drink with my boyfriend~♡ Uhuhuhu\nMemories of lunch box rice come back‥ Ughhh so much~"
       },
       {
-        "author": "언제나맑음",
+        "author": "It's always sunny",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "4년 전",
-        "text": "신촌에서 가볍게 먹을 곳을 찾다가 방문\n불백정식에 달걀 후라이가 나온다.\n밥은 도시락통에 나와서 흔들어 먹어도 좋다."
+        "relative_time": "4 years ago",
+        "text": "Visited while looking for a place to eat lightly in Sinchon.\nBulbaekjeongsik comes with a fried egg.\nYou can eat rice by shaking it in a lunch box."
       },
       {
         "author": "Bong Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "The 불백정식 was delicious. Comes with 된장찌개 a fried egg and rice."
+        "relative_time": "1 year ago",
+        "text": "The Bulbaekjeongsik was delicious. Comes with soybean paste stew a fried egg and rice."
       }
     ],
     "photos": [
@@ -4513,8 +4513,8 @@
   },
   {
     "place_id": "ChIJ33cu_1WZfDUR8E2QkzuxvL0",
-    "display_name": "통큰냄비",
-    "category": "한식당",
+    "display_name": "big pot",
+    "category": "Korean restaurant",
     "types": [
       "korean_restaurant",
       "restaurant",
@@ -4522,8 +4522,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 연세로4길 7",
-    "short_address": "서대문구 연세로4길 7",
+    "address": "7 Yonsei-ro 4-gil, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "7 Yonsei-ro 4-gil, Seodaemun-gu",
     "location": {
       "lat": 37.5570473,
       "lng": 126.93736270000001
@@ -4546,54 +4546,54 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9955ff2e77df:0xbdbcb13b93904df0!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "점심",
-      "저녁",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "lunch",
+      "dinner",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "Serene Lee (리세린 Re:Serene)",
+        "author": "Serene Lee (Re:Serene)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "돼지고기 김치찌개 맛있어요. 고기는 비계 살코기 비율이 적당하고(돼지 비계 싫어하시면 비추) 간도 자극적이지 않고 맛있어요 김치 칼칼하이 괜찮습니다. 김치전은 평범한데 매콤했어요. 무난무난하게 한 끼 먹기 좋고 다른 메뉴도 많아서 술 마시러 가기도 괜찮을 거 같아요 사장님이 매우 친절하셔서 기분 좋았어요"
+        "relative_time": "2 years ago",
+        "text": "Pork kimchi stew is delicious. The meat has an appropriate ratio of fat to lean meat (not recommended if you don't like pork fat), and the liver is delicious without being harsh. The kimchi is good. The kimchi pancake was ordinary but spicy. It's a good place to have a quick meal, and there are many other menus, so it would be nice to go for a drink. The owner was very friendly, so it was nice."
       },
       {
         "author": "bbio yhe",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "2년 전",
-        "text": "맛:기본에 충실한 김치찌개\n달지 않고 짜지 않고 고기는 두툼하며\n조미료향이 나지않아 부담없이 먹기좋은 맛\n자리: 1인테이블과 4인테이블 여러개가 구비되있다\n분위기: 평범한 가게 분위기\n하지만 약간 습한감이 있다 (날씨가 안좋기에 이것은 확실치않음)\n*1인분 9천원에 가성비가 매우 훌륭한 가게\n조미료향이나 단음식을 싫어한다면 추천"
+        "relative_time": "2 years ago",
+        "text": "Taste: Kimchi stew, faithful to the basics\nIt's not sweet or salty and the meat is thick.\nIt has no seasoning smell and is easy to eat.\nSeating: Several one-person tables and four-person tables are available.\nAtmosphere: Ordinary store atmosphere\nBut it feels a bit humid (not sure about this because the weather is bad)\n*A very cost-effective restaurant at 9,000 won per person\nRecommended if you dislike seasoning scents or sweet foods."
       },
       {
         "author": "salryojuseyo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "오래간만에 신촌에 생긴 김치찌개 전문점. 푸짐한 고기 양과 넉넉한 국물 덕분에 배부르게 먹을 수 있습니다. 다발은 맛이 별로고 김삼보는 줄 서서 먹기 싫을 때 여기서 드시면 됩니다."
+        "relative_time": "3 years ago",
+        "text": "A kimchi stew restaurant that opened in Sinchon after a long time. Thanks to the generous amount of meat and ample broth, you can eat to your fill. If you don't like the taste of the bunch and you don't want to wait in line to eat it, you can eat it here."
       },
       {
-        "author": "김민수",
+        "author": "Minsu Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "술안주로 먹을만했음."
+        "relative_time": "3 years ago",
+        "text": "It was worth eating as a side dish."
       },
       {
         "author": "Yōkai Sapiens",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "11달 전",
+        "relative_time": "11 months ago",
         "text": null
       }
     ],
@@ -4612,8 +4612,8 @@
   },
   {
     "place_id": "ChIJRVGDPZSYfDUR6EXphqd9XVo",
-    "display_name": "호야즉석떡볶이",
-    "category": "한식당",
+    "display_name": "Hoya Instant Tteokbokki",
+    "category": "Korean restaurant",
     "types": [
       "snack_bar",
       "meal_takeaway",
@@ -4623,8 +4623,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 연세로4길 1",
-    "short_address": "서대문구 연세로4길 1",
+    "address": "1 Yonsei-ro 4-gil, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "1 Yonsei-ro 4-gil, Seodaemun-gu",
     "location": {
       "lat": 37.557031599999995,
       "lng": 126.9371252
@@ -4643,65 +4643,65 @@
     "google_maps_url": "https://maps.google.com/?cid=6511498794724050408",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98943d835145:0x5a5d7da786e945e8!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 10:00",
-      "화요일: 오전 11:00 ~ 오후 10:00",
-      "수요일: 오전 11:00 ~ 오후 10:00",
-      "목요일: 오전 11:00 ~ 오후 10:00",
-      "금요일: 오전 11:00 ~ 오후 10:00",
-      "토요일: 오전 11:00 ~ 오후 10:00",
-      "일요일: 오전 11:00 ~ 오후 10:00"
+      "Monday: 11:00 AM - 10:00 PM",
+      "Tuesday: 11:00 AM - 10:00 PM",
+      "Wednesday: 11:00 AM - 10:00 PM",
+      "Thursday: 11:00 AM - 10:00 PM",
+      "Friday: 11:00 AM - 10:00 PM",
+      "Saturday: 11:00 AM - 10:00 PM",
+      "Sunday: 11:00 AM - 10:00 PM"
     ],
     "services": [
-      "배달",
-      "포장",
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "점심",
-      "저녁"
+      "delivery",
+      "packaging",
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "lunch",
+      "dinner"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김에디터",
+        "author": "Editor Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8년 전",
-        "text": "대한민국맛집이라는 현수막 유치하지만 1인분 시켜 혼자 먹어도 눈치 안 주는 소중한 곳."
+        "relative_time": "8 years ago",
+        "text": "The banner calling it the best restaurant in Korea is childish, but it is a precious place where no one will notice even if you order a portion for one person and eat alone."
       },
       {
-        "author": "현수문",
+        "author": "suspension gate",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "7년 전",
-        "text": "진짜 개별론데 왜 먹는지 모르겠음\n솔직히 별점 0 주고싶은데 안돼서 1주는거임\n갈 때 앞으론 리뷰 찾아보고 먹어야겠음\n개별로 그자체임 직원도 좀 불친절하고\n맛은 국물이 떡이랑 라면사리 다 불어터져서 냄비에 눌러붙을 때 즈음에 쫄기시작함 게다가 양념맛이 맛있는것도아님;; 떡도 맛 이상해서 쫄아도 떡맛만 난다는게 함정이다\n그냥 가지마세요\n들어가자마자 사람이 1도없음\n개별로임ㅡㅡ 돈버린거같음"
+        "relative_time": "7 years ago",
+        "text": "It's really individual, but I don't know why I eat it.\nHonestly, I wanted to give it a 0 star rating, but I couldn't, so I'm giving it a 1 star.\nNext time I go, I'll have to look for reviews before eating.\nPersonally, the staff is a bit unfriendly.\nAs for the taste, it starts to get chewy when the rice cakes and ramen noodles all swell and stick to the pot. Moreover, the seasoning is not delicious;; The trap is that even if you are scared of the rice cake because it tastes strange, it will only taste like rice cake.\nJust don't go\nAs soon as I entered there was no one there.\nIndividual fee ㅡㅡ I feel like I wasted money."
       },
       {
-        "author": "이성",
+        "author": "reason",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "학창시절때 먹던 맛나서 좋다. 금액도 착한편이라 친구들이랑 신촌서 모이면 자주가는편임. ㅎ"
+        "relative_time": "7 years ago",
+        "text": "I like it because it tastes just like the one I ate during my school days. The price is reasonable, so I often go there when I meet up with friends in Sinchon. Haha"
       },
       {
-        "author": "문현기",
+        "author": "Hyunki Moon",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "7년 전",
-        "text": "즉석떡볶이가 맛이 없을 수 없으나 재료중 일부가 신선하지 않은 것들이 있었고 사리를 추가할 경우 가격이 저렴하지는 않음"
+        "relative_time": "7 years ago",
+        "text": "The instant tteokbokki may not be delicious, but some of the ingredients were not fresh and the price is not cheap if you add sari."
       },
       {
-        "author": "윤연우",
+        "author": "Yeonwoo Yoon",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "7년 전",
-        "text": "맛도없고 직원도 별로;"
+        "relative_time": "7 years ago",
+        "text": "No taste and no staff."
       }
     ],
     "photos": [
@@ -4717,8 +4717,8 @@
   },
   {
     "place_id": "ChIJORWKG5SYfDUR0mq4zktvo9g",
-    "display_name": "신의주전통찹쌀순대 신촌점",
-    "category": "한식당",
+    "display_name": "Sinuiju Traditional Glutinous Rice Sundae Sinchon Branch",
+    "category": "Korean restaurant",
     "types": [
       "korean_restaurant",
       "soup_restaurant",
@@ -4727,8 +4727,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 명물길 12-6",
-    "short_address": "서대문구 명물길 12-6",
+    "address": "12-6, Myeongmul-gil, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "12-6, Myeongmul-gil, Seodaemun-gu",
     "location": {
       "lat": 37.5571671,
       "lng": 126.93773530000001
@@ -4750,66 +4750,66 @@
     "google_maps_url": "https://maps.google.com/?cid=15610443104777693906",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98941b8a1539:0xd8a36f4bceb86ad2!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "포장",
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "조식",
-      "점심",
-      "저녁",
-      "맥주"
+      "packaging",
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "breakfast",
+      "lunch",
+      "dinner",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "INcLine Museum_인클",
+        "author": "INcLine Museum_IncLine",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "순대국집인데 김치찌개가 예술이에요. 돼지고기가 듬뿍 들어 있습니다. 2인 2.8만원이고, 깍두기도 시원해서 좋았습니다.\n\n막걸리 4천원에 즐길 수 있고, 1인 1메뉴는 필수 인 곳입니다. 해물파전 남은 음식은 깔끔하게 포장도 해주셨어요"
+        "relative_time": "1 year ago",
+        "text": "It's a sundae soup restaurant, and the kimchi stew is a work of art. There is plenty of pork. It was 28,000 won for two people, and the radish radish kimchi was refreshing and nice.\n\nYou can enjoy makgeolli for 4,000 won, and one menu per person is a must. The leftover seafood and green onion pancakes were packaged neatly."
       },
       {
         "author": "K EN",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "10달 전",
-        "text": "와...진짜...별점 최소 3점은 주는 편인데,\n뼈해장국은  몬맛인지 모르겠고, 순대국은 순대2개들은것도 맛이 이상해서 못먹겠음.\n기본으로 주는 들깨가루도 없고.\n정말 어디가든 기본은 하는게 순대국과 뼈해장국인데\n🤬🤬🤬"
+        "relative_time": "10 months ago",
+        "text": "Wow... really... I tend to give it at least 3 stars.\nI don't know if the bone haejangguk tastes like fish, and the sundae soup with two pieces of sundae tastes so weird that I can't eat it.\nThere is no perilla seed powder provided as standard.\nWherever you go, the basics are sundae soup and bone haejangguk.\n🤬🤬🤬"
       },
       {
-        "author": "한선영",
+        "author": "Seonyoung Han",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "2년 전",
-        "text": "맛에 비해 비싸요.\n뼈해장국 타 지역에 비해 엄청 비쌌는데 푹 끓인 뼈해장국이 아닌 얼마 안끓인 느낌이 확 났습니다.\n24시라 아침에 잠깐 해장할만은 한데 추천까지는 조금..."
+        "relative_time": "2 years ago",
+        "text": "It's expensive compared to the taste.\nThe bone haejangguk was very expensive compared to other regions, but it felt like it had just been boiled rather than a well-boiled bone haejangguk.\nIt's 24 hours, so it's worth a quick hangover in the morning, but it's not recommended..."
       },
       {
         "author": "Sunghi An",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "3년 전",
-        "text": "순대국을 주문했는데 밥이 오래된 것 같고 육수에서 뼛조각이 나와서 치아 상할 뻔 했어요\n냉장고에 있던 순대가 속까지 데워지지 않아 겉만 뜨겁고 순대 내부가 차갑고, 순댓국에 함께 있던 고기는 양이 적은 건 괜찮은데 얇게 썰어진 삶은 고기가 냉장고에서 오래 있었던 듯한 느낌으로 약간 질기고 냄새가 났어요. 곁들여진 썰어나온 양파 쌈장에 찍어 먹은게 제일 맛있었어요."
+        "relative_time": "3 years ago",
+        "text": "I ordered sundae soup, but the rice seemed old and there were bone fragments in the broth that almost damaged my teeth.\nThe sundae in the refrigerator was not warmed up to the core, so only the outside was hot and the inside of the sundae was cold. The small amount of meat in the sundae soup was okay, but the thinly sliced boiled meat felt like it had been in the refrigerator for a long time and was a bit tough and smelled. It was most delicious dipped in the accompanying sliced ​​onion ssamjang."
       },
       {
-        "author": "이상목",
+        "author": "Lee Sang-mok",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
-        "text": "내부는 그저 그런 국밥집이지만, 긴 테이블이 있어서 최대 8~10명까지 한번에 앉을 수 있는 테이블이 있습니다. 매장 내 혼잡으로 1호점과 2호점을 근거리에서 같이 운영하고 있는것 같은데, 확실히 2호점이 넓습니다. 순대국밥은 한그릇에 7500원의 가격입니다.  일단 양은 확실히 많았습니다만 순대가 너무 달았습니다. 맛에 비해 서비스가 나쁜 편은 아니지만,  근처에 국밥집도 많고 거리도 멀어서 한번 더 갈지는 모르겠습니다."
+        "relative_time": "6 years ago",
+        "text": "Inside, it's just an ordinary soup restaurant, but there are long tables that can accommodate up to 8 to 10 people at a time. It seems like the 1st and 2nd stores are being operated close together due to congestion within the store, but the 2nd store is definitely larger. Sundae Gukbap costs 7,500 won per bowl.  First of all, the portion was definitely large, but the sundae was too sweet. The service isn't bad compared to the taste, but there are a lot of soup restaurants nearby and the distance is far, so I don't know if I'll go there again."
       }
     ],
     "photos": [
@@ -4827,8 +4827,8 @@
   },
   {
     "place_id": "ChIJU3K9WACZfDURfnOqvykc-2c",
-    "display_name": "담솥 신촌점",
-    "category": "한식당",
+    "display_name": "Damsot Sinchon Branch",
+    "category": "Korean restaurant",
     "types": [
       "korean_restaurant",
       "restaurant",
@@ -4836,8 +4836,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 18-10",
-    "short_address": "서대문구 창천동 18-10",
+    "address": "18-10 Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "18-10 Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5570715,
       "lng": 126.93712900000001
@@ -4859,24 +4859,24 @@
     "google_maps_url": "https://maps.google.com/?cid=7492613370695807870",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c990058bd7253:0x67fb1c29bfaa737e!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 3:00, 오후 5:00~10:00",
-      "화요일: 오전 11:00 ~ 오후 3:00, 오후 5:00~10:00",
-      "수요일: 오전 11:00 ~ 오후 3:00, 오후 5:00~10:00",
-      "목요일: 오전 11:00 ~ 오후 3:00, 오후 5:00~10:00",
-      "금요일: 오전 11:00 ~ 오후 3:00, 오후 5:00~10:00",
-      "토요일: 오전 11:00 ~ 오후 3:00, 오후 5:00~10:00",
-      "일요일: 오전 11:00 ~ 오후 3:00, 오후 5:00~10:00"
+      "Monday: 11:00 AM - 3:00 PM, 5:00 PM - 10:00 PM",
+      "Tuesday: 11:00 AM - 3:00 PM, 5:00 PM - 10:00 PM",
+      "Wednesday: 11:00 AM - 3:00 PM, 5:00 PM - 10:00 PM",
+      "Thursday: 11:00 AM - 3:00 PM, 5:00 PM - 10:00 PM",
+      "Friday: 11:00 AM - 3:00 PM, 5:00 PM - 10:00 PM",
+      "Saturday: 11:00 AM - 3:00 PM, 5:00 PM - 10:00 PM",
+      "Sunday: 11:00 AM - 3:00 PM, 5:00 PM - 10:00 PM"
     ],
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "점심",
-      "저녁"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "lunch",
+      "dinner"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4886,36 +4886,36 @@
         "author": "wonyoung Jang",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "2024.11. 평일 오후 방문\n매운가지솥밥 주문\n\n요즘 밥값 정말 비싼거 생각하면 여기는 정말 괜찮은것 같아요. 이 볼륨에 누룽지까지 먹을 수 있게 되어있어요. 양이 상당해서 남기겠다 싶었는데 요즘 날이 추워져서 그런지 맛있어서 그런지 폭식했습니다.\n맛있게 잘 먹었어요! 다음번엔 다른 메뉴도 먹어보고 싶어요."
+        "relative_time": "1 year ago",
+        "text": "2024.11. Visit on a weekday afternoon\nOrder spicy eggplant pot rice\n\nConsidering how expensive food is these days, I think this place is really good. You can even eat scorched rice in this volume. It was a large portion so I thought I would leave some, but I ate it too much, perhaps because it was cold these days or because it was delicious.\nIt was delicious! I want to try other menus next time."
       },
       {
         "author": "BJJ Judo Jung",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "맛있고 친절합니다. 누룽지가 매우 맛있어요!"
+        "relative_time": "7 months ago",
+        "text": "Delicious and friendly. The scorched rice is very delicious!"
       },
       {
-        "author": "이경숙",
+        "author": "Kyungsook Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
-        "text": "아는맛\n돌솥밥은 언제나 정답.\n안산자락길 가는길에 먹고 갑니다."
+        "relative_time": "8 months ago",
+        "text": "The taste of knowing\nStone pot rice is always the answer.\nWe ate on the way to Ansan Jarak-gil."
       },
       {
-        "author": "한지현",
+        "author": "Jihyun Han",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9달 전",
-        "text": "연어솥밥, 고등어솥밥 맛있게 먹었습니다."
+        "relative_time": "9 months ago",
+        "text": "I enjoyed the salmon pot rice and mackerel pot rice."
       },
       {
         "author": "TAEYOUNG KIM",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "솥밥 맛있어요!!"
+        "relative_time": "1 year ago",
+        "text": "The pot rice is delicious!!"
       }
     ],
     "photos": [
@@ -4933,8 +4933,8 @@
   },
   {
     "place_id": "ChIJTaAbS5SYfDUR6H6sF9pF3OE",
-    "display_name": "동해해물탕",
-    "category": "해산물 요리 전문식당",
+    "display_name": "Donghae seafood stew",
+    "category": "Seafood restaurant",
     "types": [
       "seafood_restaurant",
       "korean_restaurant",
@@ -4943,8 +4943,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 연세로 9-5",
-    "short_address": "서대문구 연세로 9-5",
+    "address": "9-5 Yonsei-ro, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "9-5 Yonsei-ro, Seodaemun-gu",
     "location": {
       "lat": 37.556257599999995,
       "lng": 126.93643440000001
@@ -4952,7 +4952,7 @@
     "rating": 4.3,
     "rating_stars": "★★★★☆ 4.3",
     "rating_count": 100,
-    "price_level": "보통 ($$)",
+    "price_level": "Average ($$)",
     "price_range": {
       "min": "10000 KRW",
       "max": "20000 KRW"
@@ -4966,65 +4966,65 @@
     "google_maps_url": "https://maps.google.com/?cid=16274959956412497640",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98944b1ba04d:0xe1dc45da17ac7ee8!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 12:00~9:00",
-      "화요일: 오후 12:00~9:00",
-      "수요일: 오후 12:00~9:00",
-      "목요일: 오후 12:00~9:00",
-      "금요일: 오후 12:00~9:00",
-      "토요일: 오후 12:00~9:00",
-      "일요일: 오후 12:00~9:00"
+      "Monday: 12:00-9:00 PM",
+      "Tuesday: 12:00-9:00 PM",
+      "Wednesday: 12:00-9:00 PM",
+      "Thursday: 12:00-9:00 PM",
+      "Friday: 12:00-9:00 PM",
+      "Saturday: 12:00-9:00 PM",
+      "Sunday: 12:00-9:00 PM"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "단체적합",
-      "점심",
-      "저녁",
-      "맥주"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "group fitness",
+      "lunch",
+      "dinner",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "지오c",
+        "author": "geoc",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "2년 전",
-        "text": "가장 큰 장점은 가성비.\n\n홍대 신촌 부근에서 이 가격에 이 정도 퀄리티의 해물탕을 먹을 수 있는 건 이 집밖에 없다. 일찌기 그룹 UV가 을 통해 \"신촌은 뭔가 부족해~\"라며 일갈했는데 그 통찰에 전적으로 동의한다.\n\n신촌은 어느 집을 가든 가격도 애매하고 맛도 애매하고 분위기도 애매하고 전반적으로 뭔가 부족하다. 이 집은 뭔가 부족한 신촌 바닥에서 그나마 덜 부족한 집으로 꼽고 싶다.\n\n해물탕 小자가 꽤 오랫동안 2.5만원이었는데 이 집도 미친 물가를 이기지 못하고 3만원으로 올라섰다. 그래도 다른 가게들에 비해 여전히 저렴한 편.\n\n낙지, 꽃게, 새우, 이리, 알, 홍합, 관자, 조개, 콩나물, 미나리가 들어간다. 나머지는 국물맛을 내는 조연들이고 건더기는 낙지, 꽃게, 새우, 이리, 알 정도로 보면 된다.\n\n요즘 해물탕집들이 왜 그런지 모르겠는데 매운탕 육수같은 텁텁한 고추장 베이스를 많이 쓰는 것 같다. 이 집은 탕이 끓기 전에 국물 맛을 보면 거의 아무 맛이 나지 않는다. 국물이 끓기 시작해야 재료들에서 맛이 베어나온다. 끓일수록 시원한 해물탕 맛이 우러나는데 다만 고춧가루가 좀 많이 씹혀서 아주 맑고 개운한 국물이라고 말할 순 없다. 2천원을 내면 밥도 볶아주는데 절대 놓쳐선 안된다.\n\n저렴한 만큼 식당 컨디션이 그리 쾌적하지는 않다. 좋게 말하면 노포고 나쁘게 말하면 허름하다. 코로나를 거치면서 평상들이 많이 사라졌는데 이 집은 여전히 평상이 대다수 공간을 차지하고 있다. 이것도 호불호의 요소가 될 것 같다. 나도 평상은 불편하다. 사람들 생각이 다 비슷비슷해서 좌식 테이블부터 자리가 찬 뒤에 평상이 차기 시작한다."
+        "relative_time": "2 years ago",
+        "text": "The biggest advantage is cost-effectiveness.\n\nThis restaurant is the only place near Hongdae and Sinchon where you can eat seafood stew of this quality at this price. Group UV once said, \"Sinchon is lacking something,\" and I completely agree with that insight.\n\nNo matter which house you go to in Sinchon, the price is ambiguous, the taste is ambiguous, the atmosphere is ambiguous, and overall, something is lacking. I would like to choose this house as the least lacking house in Sinchon.\n\nA small bowl of seafood stew has been priced at 25,000 won for quite some time, but this restaurant, unable to overcome the crazy prices, has risen to 30,000 won. However, it is still cheaper than other stores.\n\nContains octopus, crab, shrimp, milt, roe, mussels, scallops, clams, bean sprouts, and water parsley. The rest are supporting characters that give the flavor of the soup, and the ingredients are octopus, crab, shrimp, and wolf.\n\nI don't know why seafood stew restaurants these days are like that, but they seem to use a thick red pepper paste base that's like maeuntang broth. At this restaurant, if you taste the soup before it boils, there is almost no taste at all. Only when the soup starts to boil does the flavor of the ingredients come out. The more it boils, the more the refreshing taste of seafood soup emerges, but it cannot be said to be a very clear and refreshing soup because there is a bit of red pepper powder in it. If you pay 2,000 won, they will also give you stir-fried rice, so you shouldn't miss it.\n\nAs it is cheap, the restaurant conditions are not very comfortable. To put it in a good way, it is an old establishment, but to put it in a bad way, it is shabby. Many benches disappeared during the coronavirus pandemic, but the majority of the space in this house is still occupied by benches. This also seems to be a factor in likes and dislikes. I, too, am uncomfortable in normal times. People all have similar thoughts, so after the seating tables are filled, the regular tables start to fill up."
       },
       {
         "author": "JB SHIM",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "맛은 조금 없는 편.\n해물탕 국물이 엄청 텁텁.\n가격 대비 건더기 양은 푸짐 한 편.\n요즘 소자 2.5만 짜리 해물탕 집도 거의 없는걸 생각해보면,\n저렴함.\n국물만 좀 개선하면 좋을텐데...\n반찬은 그냥 쏘~쏘~."
+        "relative_time": "3 years ago",
+        "text": "The taste is a bit lacking.\nThe seafood stew soup was very thick.\nThe amount of ingredients is generous for the price.\nConsidering that there are very few seafood stew restaurants that cost 25,000 won these days,\nCheap.\nIt would be nice if the soup could be improved a bit...\nThe side dishes are just so-so."
       },
       {
         "author": "Taste Log",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "찾기 어렵고 노포지만, 그래도 저렴한 가격과 적당한 맛으로 수십년째 자리를 지키는 것 같아요.\n\n해물탕 좋아하시는 분은 정말 괜찮아요~"
+        "relative_time": "3 years ago",
+        "text": "It's hard to find and it's an old store, but it seems to have been around for decades with its low prices and decent taste.\n\nIt's really good for those who like seafood stew~"
       },
       {
         "author": "0153 Jake",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "해물찜 대 사이즈 4만원.순한맛 순삭했어요~  해물이 신선해요. 골목에 있는데 검색해서 오지않으면 못찾을듯 해요."
+        "relative_time": "4 years ago",
+        "text": "Steamed seafood, large size, 40,000 won. Mild flavor and crispy texture. The seafood is fresh. It's in an alley, but you won't be able to find it unless you search."
       },
       {
-        "author": "정요한",
+        "author": "Jeong Yohan",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "해물이 신선하고 맛있습니다 숨어있는 노포 맛집 느낌이예요"
+        "relative_time": "5 years ago",
+        "text": "The seafood is fresh and delicious. It feels like a hidden old restaurant."
       }
     ],
     "photos": [
@@ -5042,8 +5042,8 @@
   },
   {
     "place_id": "ChIJ-5WBwhCZfDURSpRjTkij9TI",
-    "display_name": "돌장각 신촌현대백화점점",
-    "category": "한식당",
+    "display_name": "Doljanggak Sinchon Hyundai Department Store",
+    "category": "Korean restaurant",
     "types": [
       "korean_restaurant",
       "restaurant",
@@ -5051,8 +5051,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 창천동 30-1",
-    "short_address": "서대문구 창천동 30-1",
+    "address": "30-1 Changcheon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "30-1 Changcheon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.556700899999996,
       "lng": 126.93652669999999
@@ -5072,49 +5072,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9910c28195fb:0x32f5a3484e63944a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "점심",
-      "저녁"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "lunch",
+      "dinner"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어화장실",
-      "휠체어주차"
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "작은어복이",
+        "author": "Small fish bag",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "백화점 지하1층에 위치.\n냉면류.만두.정식류\n비빔밥 깔끔! 참나물.궁채나물반찬도 좋음"
+        "relative_time": "1 year ago",
+        "text": "Located on the first basement level of the department store.\nCold noodles, dumplings, set meals\nBibimbap is neat! Chamnamul.Gungchaenamul side dishes are also good."
       },
       {
-        "author": "니고라",
+        "author": "Nicorah",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "깨끗하고 맛있음"
+        "relative_time": "3 years ago",
+        "text": "Clean and delicious"
       },
       {
         "author": "Mila Loo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "정말 맛있고 깨끗한 곳이에요. 다만 양이 좀 적은 것 같아요."
+        "relative_time": "1 year ago",
+        "text": "It's a really delicious and clean place. However, I think the amount is a bit small."
       },
       {
-        "author": "임재현",
+        "author": "Jaehyun Lim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -5130,8 +5130,8 @@
   },
   {
     "place_id": "ChIJc04DHZSYfDURwgHGcAsjUcI",
-    "display_name": "신의주 전통찹쌀순대",
-    "category": "한식당",
+    "display_name": "Sinuiju Traditional Glutinous Rice Sundae",
+    "category": "Korean restaurant",
     "types": [
       "korean_restaurant",
       "restaurant",
@@ -5139,8 +5139,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 연세로4길 19",
-    "short_address": "서대문구 연세로4길 19",
+    "address": "19 Yonsei-ro 4-gil, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "19 Yonsei-ro 4-gil, Seodaemun-gu",
     "location": {
       "lat": 37.5572764,
       "lng": 126.9378345
@@ -5159,28 +5159,28 @@
     "google_maps_url": "https://maps.google.com/?cid=14002011248515219906",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98941d034e73:0xc251230b70c601c2!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "배달",
-      "포장",
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "조식",
-      "점심",
-      "저녁",
-      "맥주"
+      "delivery",
+      "packaging",
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "breakfast",
+      "lunch",
+      "dinner",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5190,8 +5190,8 @@
         "author": "Suckee Park",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1년 전",
-        "text": "좋은."
+        "relative_time": "1 year ago",
+        "text": "good."
       }
     ],
     "photos": [
@@ -5203,8 +5203,8 @@
   },
   {
     "place_id": "ChIJISRUeJaYfDURPxAroUx674U",
-    "display_name": "도적",
-    "category": "한식당",
+    "display_name": "thief",
+    "category": "Korean restaurant",
     "types": [
       "korean_restaurant",
       "restaurant",
@@ -5212,8 +5212,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 마포구 노고산동 40-45",
-    "short_address": "마포구 노고산동 40-45",
+    "address": "40-45 Nogosan-dong, Mapo-gu, Seoul, South Korea",
+    "short_address": "40-45 Nogosan-dong, Mapo-gu",
     "location": {
       "lat": 37.5551313,
       "lng": 126.9381255
@@ -5241,16 +5241,16 @@
         "author": "J L",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "8년 전",
-        "text": "회전율이 낮아 타 지점에 비해 만족도 떨어지는편"
+        "relative_time": "8 years ago",
+        "text": "The turnover rate is low, so satisfaction is lower compared to other branches."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJ6zx1ruOZfDURPwPkrTZL4Dk",
-    "display_name": "장충왕족발보쌈 신촌점",
-    "category": "한식당",
+    "display_name": "Jangchungwangjokbal Bossam Sinchon branch",
+    "category": "Korean restaurant",
     "types": [
       "korean_restaurant",
       "restaurant",
@@ -5258,8 +5258,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 신촌동 연세로4길 19",
-    "short_address": "서대문구 신촌동 연세로4길 19",
+    "address": "19 Yonsei-ro 4-gil, Sinchon-dong, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "19 Yonsei-ro 4-gil, Sinchon-dong, Seodaemun-gu",
     "location": {
       "lat": 37.5572905,
       "lng": 126.9378306
@@ -5281,64 +5281,64 @@
     "google_maps_url": "https://maps.google.com/?cid=4170415953162797887",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99e3ae753ceb:0x39e04b36ade4033f!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "점심",
-      "저녁",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "lunch",
+      "dinner",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "신진리의빛",
+        "author": "light of new faith",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "뼈해장국이맛있어요.\n직원분들도친절하시고\n신촌역에서가까워서좋아요."
+        "relative_time": "2 years ago",
+        "text": "Bone haejangguk is delicious.\nThe staff are also friendly\nI like that it’s close to Sinchon Station."
       },
       {
-        "author": "신묘한인생상담사神村空自",
+        "author": "Shinmyohan Life Counselor",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "#신촌 맛집 이라는 곳 #3%부족한 집이다"
+        "relative_time": "2 years ago",
+        "text": "#A place called Sinchon Restaurant #This restaurant is lacking 3%"
       },
       {
         "author": "Brandon Kim",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "2년 전",
-        "text": "최근 상호 바뀜. 눅눅하고 오래된 맛."
+        "relative_time": "2 years ago",
+        "text": "Recently changed name. Damp and old taste."
       },
       {
-        "author": "알드스퍼스",
+        "author": "Aldspurs",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "건더기도 많고 맛있습니다"
+        "relative_time": "2 years ago",
+        "text": "It has a lot of ingredients and is delicious."
       },
       {
         "author": "麥朵IG: lovefood.maiduo",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "🔥한국인들이 아침으로 국을 먹는다고요?!\n\n저는 물닭과 순대국을 먹어봤어요. 한국 드라마를 보면서 순대국 맛이 궁금해졌어요! 쌀쌀한 날씨에 국수 먹기 딱 좋았어요.\n\n✨️순대국\n고기 육수에 새우젓과 소금으로 간을 했어요. 아주 진하고 맛있는 뼈 육수예요. 돼지머리 껍질을 많이 넣었는데, 살코기가 있긴 했지만 대부분 지방이 많아서 저한테는 너무 기름졌지만 돼지껍데기 좋아하는 사람들은 정말 좋아할 거예요.\n\n순대국은 정말 특이했어요 😂. 당면이 들어있어서 익힌 고기의 불순물과 피가 안에 뭉쳐 있는 것 같았어요. 대만식 돼지피와는 전혀 달라서 부드럽고 부드럽지 않았어요.\n\n✨️물닭국\n닭고기에 찹쌀을 채워서 국물이 약간 걸쭉했어요. 물닭 특유의 향이 가볍고 상큼했어요. 나쁘지는 않았지만 아주 건강한 느낌이었어요. 아마 한 번만 시도해 볼 것 같아요."
+        "relative_time": "1 year ago",
+        "text": "🔥Koreans eat soup for breakfast?!\n\nI tried water chicken and sundae soup. While watching Korean dramas, I became curious about the taste of sundae soup! It was perfect to eat noodles in chilly weather.\n\n✨️Sundaeguk\nI seasoned the meat broth with salted shrimp and salt. It’s a very rich and delicious bone broth. I added a lot of pork rind. Although there was some lean meat, it was mostly fat, so it was too greasy for me, but people who like pork rind will really like it.\n\nThe sundae soup was really unique 😂. Because it had glass noodles in it, it seemed like impurities and blood from the cooked meat were stuck inside. It was completely different from Taiwanese pork blood, it was not soft and soft.\n\n✨️Water Chicken Soup\nThe chicken was stuffed with glutinous rice, so the soup was a bit thick. The unique scent of water chicken was light and refreshing. It wasn't bad, but it felt very healthy. I'll probably just give it a try once."
       }
     ],
     "photos": [
@@ -5356,8 +5356,8 @@
   },
   {
     "place_id": "ChIJITveHJSYfDURqe-7WuecQlI",
-    "display_name": "통통돼지",
-    "category": "한식당",
+    "display_name": "plump pig",
+    "category": "Korean restaurant",
     "types": [
       "korean_barbecue_restaurant",
       "korean_restaurant",
@@ -5366,8 +5366,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 연세로4길 19",
-    "short_address": "서대문구 연세로4길 19",
+    "address": "19 Yonsei-ro 4-gil, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "19 Yonsei-ro 4-gil, Seodaemun-gu",
     "location": {
       "lat": 37.5573377,
       "lng": 126.93779769999999
@@ -5389,64 +5389,64 @@
     "google_maps_url": "https://maps.google.com/?cid=5927472577046638505",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c98941cde3b21:0x52429ce75abbefa9!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 4:30 ~ 오전 12:00",
-      "화요일: 오후 4:30 ~ 오전 12:00",
-      "수요일: 오후 4:30 ~ 오전 12:00",
-      "목요일: 오후 4:30 ~ 오전 12:00",
-      "금요일: 오후 4:30 ~ 오전 12:00",
-      "토요일: 오후 4:30 ~ 오전 12:00",
-      "일요일: 오후 4:30 ~ 오전 12:00"
+      "Monday: 4:30 PM - 12:00 AM",
+      "Tuesday: 4:30 PM - 12:00 AM",
+      "Wednesday: 4:30 PM - 12:00 AM",
+      "Thursday: 4:30 PM - 12:00 AM",
+      "Friday: 4:30 PM - 12:00 AM",
+      "Saturday: 4:30 PM - 12:00 AM",
+      "Sunday: 4:30 PM - 12:00 AM"
     ],
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "점심",
-      "저녁",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "lunch",
+      "dinner",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "세상에는 좋은 노래가 참 많아",
+        "author": "There are so many good songs in the world",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "180그램 14,000원. 요즘 시대에 적당한 가격.\n\n초벌하듯이 살짝 구운 후에 되가져가서 뭔가 양념을 해 다시 가져온다. 후추 향이 물씬? 다시 구우니 풍미가 좋다.\n\n형제 갈비, 벽제 갈비는 언감생심...통통돼지가 좋네. ㅋ"
+        "relative_time": "3 years ago",
+        "text": "180 grams 14,000 won. Affordable price in this day and age.\n\nAfter lightly grilling it as if it were a primer, we take it back, season it with something, and bring it back. Pepper-scented? The flavor is good when you bake it again.\n\nBrother's ribs and Byeokje ribs are amazing... I like the plump pork. Haha"
       },
       {
         "author": "Cassius G",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "가격이 싸지는 않은편,\n고기가 맛잇긴 하지만, 서비스는 별로였음.\n영업을 지금 하고 있는게 맞는지? 헷갈릴정도\n하지만 껍데기는 꽤 맛있엇음.\n다음에는 껍데기만 먹으러 방문할듯"
+        "relative_time": "3 years ago",
+        "text": "The price is not cheap,\nThe meat was delicious, but the service was not good.\nIs it true that you are doing business now? It's confusing\nBut the shell was quite delicious.\nNext time, I think I'll visit just to eat the shells."
       },
       {
         "author": "KT L",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
-        "text": "2년정도를 벼르고 벼르다 드디어 갔다..\n\n처음 시키면 살짝 구워주신다.. 삼겹살만 먹었는데 신촌 근방 삼겹살집 중에서는 괜찮은편.\n\n근데 이 가격이면 역시 좀 더 저렴한 집을 가거나 좀 더 비싼 집을 갈 듯.. 맛은 좋다"
+        "relative_time": "5 years ago",
+        "text": "After waiting for about 2 years, I finally went.\n\nWhen you order for the first time, they grill it slightly. I only ate pork belly, but it was good among the pork belly restaurants near Sinchon.\n\nBut at this price, I think I would go for a cheaper place or a more expensive place. The taste is good."
       },
       {
-        "author": "김민수",
+        "author": "Minsu Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "뜻하지 않게 방문했으나 엄청난 맛집.\n좀 불친절하게 느껴질 수 있으면서도 맛으로 승부함.\n삼겹살도 맛있는데 주물럭은 더 맛있음.\n이상 방문해보길 권장함."
+        "relative_time": "3 years ago",
+        "text": "I visited this restaurant unexpectedly, but it was a great restaurant.\nIt may feel a little unfriendly, but it competes with taste.\nPork belly is delicious, but the pork belly is even more delicious.\nRecommended to visit above."
       },
       {
         "author": "Eun Yeong Sim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
-        "text": "가격이 좀 오르긴 했는데 제가 먹어본 삼겹살 목살 중 가장 맛있었습니다. 고기가 아예 다르고...가격값 하는 느낌? 같이 나오는 사이드 양념 및 야채들에서도 일반 고깃집에서 느껴지는 싸구려 재료맛이 아니라 손수 만든 독특하고 사려깊은 맛의 조화를 느낀 수 있습니다. 주인분들이 말수가 없으시긴 한데 예의가 없는 것은 절대 아니며 사이드가 비었다거나 찌개가 나올 때가 됐다거나 하면 알아서 리필하고 챙겨주십니다."
+        "relative_time": "8 years ago",
+        "text": "The price went up a bit, but it was the most delicious pork belly I've ever had. The meat is completely different...does it feel worth the price? The side seasonings and vegetables that come with the dish do not taste like cheap ingredients found at regular meat restaurants, but rather a unique and thoughtful combination of hand-made flavors. The owners may be quiet, but they are by no means rude. If you tell them that the side is empty or that it is time for the stew, they will refill it for you and take care of it for you."
       }
     ],
     "photos": [
@@ -5464,8 +5464,8 @@
   },
   {
     "place_id": "ChIJ_wyWqJaYfDUR6kw3LXK-HzQ",
-    "display_name": "명물순대국",
-    "category": "한식당",
+    "display_name": "Specialty Sundaeguk",
+    "category": "Korean restaurant",
     "types": [
       "korean_restaurant",
       "restaurant",
@@ -5473,8 +5473,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 창천동 13-50번지 서대문구 서울특별시 KR",
-    "short_address": "창천동 13-50번지 서대문구 서울특별시 KR",
+    "address": "13-50 Changcheon-dong, Seoul, South Korea, Seodaemun-gu, Seoul KR",
+    "short_address": "13-50 Changcheon-dong, Seodaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5572939,
       "lng": 126.9382318
@@ -5493,26 +5493,26 @@
     "google_maps_url": "https://maps.google.com/?cid=3755930011844431082",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c9896a8960cff:0x341fbe722d374cea!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 10:00",
-      "화요일: 오전 11:00 ~ 오후 10:00",
-      "수요일: 오전 11:00 ~ 오후 10:00",
-      "목요일: 오전 11:00 ~ 오후 10:00",
-      "금요일: 오전 11:00 ~ 오후 10:00",
-      "토요일: 오전 11:00 ~ 오후 10:00",
-      "일요일: 오전 11:00 ~ 오후 10:00"
+      "Monday: 11:00 AM - 10:00 PM",
+      "Tuesday: 11:00 AM - 10:00 PM",
+      "Wednesday: 11:00 AM - 10:00 PM",
+      "Thursday: 11:00 AM - 10:00 PM",
+      "Friday: 11:00 AM - 10:00 PM",
+      "Saturday: 11:00 AM - 10:00 PM",
+      "Sunday: 11:00 AM - 10:00 PM"
     ],
     "services": [
-      "포장",
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "점심",
-      "저녁",
-      "맥주"
+      "packaging",
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "lunch",
+      "dinner",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5522,7 +5522,7 @@
         "author": "chris tomson",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
+        "relative_time": "6 months ago",
         "text": null
       }
     ],
@@ -5530,8 +5530,8 @@
   },
   {
     "place_id": "ChIJrzVAGvuZfDURlZdzikJDRek",
-    "display_name": "mojonginthecity(모종인더시티)",
-    "category": "샐러드샵",
+    "display_name": "mojonginthecity",
+    "category": "Salad Shop",
     "types": [
       "salad_shop",
       "hawaiian_restaurant",
@@ -5542,8 +5542,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 연세로4길 19 2층",
-    "short_address": "서대문구 연세로4길 19 2층",
+    "address": "2nd floor, 19 Yonsei-ro 4-gil, Seodaemun-gu, Seoul, South Korea",
+    "short_address": "2nd floor, 19 Yonsei-ro 4-gil, Seodaemun-gu",
     "location": {
       "lat": 37.557395,
       "lng": 126.9378107
@@ -5565,23 +5565,23 @@
     "google_maps_url": "https://maps.google.com/?cid=16808915137299978133",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99fb1a4035af:0xe94543428a739795!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오후 8:00",
-      "화요일: 오전 8:00 ~ 오후 8:00",
-      "수요일: 오전 8:00 ~ 오후 8:00",
-      "목요일: 오전 8:00 ~ 오후 8:00",
-      "금요일: 오전 8:00 ~ 오후 8:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 8:00 AM - 8:00 PM",
+      "Tuesday: 8:00 AM - 8:00 PM",
+      "Wednesday: 8:00 AM - 8:00 PM",
+      "Thursday: 8:00 AM - 8:00 PM",
+      "Friday: 8:00 AM - 8:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "배달",
-      "포장",
-      "매장식사",
-      "화장실"
+      "delivery",
+      "packaging",
+      "Store meal",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5591,36 +5591,36 @@
         "author": "Sun Young Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "깔끔한 재료들로 한 끼를 해결하고 싶을 때 정말 좋은 곳입니다! 밥-고기-샐러드의 조합 좋아하시는 분들이라면 맛있게 드시고 갈 수 있어요! 더블업 라이스볼을 시켜봤는데 맛도 깔끔하고 양도 넉넉하고 속도 편안해요.\n\n모두 맛있고 즐거운 한 끼 해결하고 가요!"
+        "relative_time": "1 year ago",
+        "text": "This is a great place when you want to prepare a meal with simple ingredients! If you like the combination of rice, meat, and salad, you can enjoy it! I ordered the Double Up Rice Ball and it tasted clean, the portion was generous and the speed was easy.\n\nLet's all have a delicious and enjoyable meal!"
       },
       {
-        "author": "손규원",
+        "author": "Son Gyu-won",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "11달 전",
-        "text": "매장은 2층에 있습니다. 못 찾고 돌아서지 마세요! 노래방 입구에서 믿고 올라가면 간판이 있어요.\n\n키오스크로 주문하는 방식인데, 네이버페이 등 간편결제 가능해서 카드 없어도 이용할 수 있고요,\n\n식사는 맛있는데도 건강한 느낌이라 밖에서  한끼 식사할 수 있어요!\n\n그리고 식사 나오는데 폰거치대도 주시네요 ㅎㅎㅎ 실화인가요\n\n덕분에 집에서 밥먹는 편안한 기분으로 있다 갑니다"
+        "relative_time": "11 months ago",
+        "text": "The store is on the 2nd floor. Don't turn back if you can't find it! If you go up to the entrance of the karaoke room, there is a sign.\n\nYou order through a kiosk, but you can use it without a card because you can use simple payments such as Naver Pay.\n\nThe food is delicious and healthy, so you can eat a meal outside!\n\nAnd when the meal was served, they also gave me a phone stand haha. Is this true?\n\nThanks to you, I left with the comfortable feeling of eating at home."
       },
       {
         "author": "Jungha Wang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "모종 매장 분위기도 굉장히 밝고 특히 샐러드파스타가 진짜 맛있어요!! 개인적으로 저는 훈제오리샐러드파스타가 제일 맛있다고 생각합니다. 벌써 1년동안 모종만 몇번 오는지 모르겠습니다. 연대생들의 아지트가 되는 그날까지👍🏻"
+        "relative_time": "1 year ago",
+        "text": "The atmosphere of the seedling store is very bright, and the salad pasta is especially delicious!! Personally, I think the smoked duck salad pasta is the most delicious. I don't know how many times seedlings have arrived in the past year. Until the day it becomes a hideout for solidarity students👍🏻"
       },
       {
         "author": "Eunsu Cho",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "신촌에 있으면서 가장 자주 갔던 음식점이에요. 쾌적하고 개성이 톡톡했던 식당.. 맛은 물론이고 건가강이랑 영양도 챙길 수 있어서 늘 갈때마다 만족스럽게 식사했어요 : ) 🥗🍀"
+        "relative_time": "1 year ago",
+        "text": "This is the restaurant I went to most often while I was in Sinchon. It was a comfortable and unique restaurant... Not only did it taste good, it was also healthy and nutritious, so I always ate with satisfaction every time I went there :) 🥗🍀"
       },
       {
         "author": "Seongi Baek",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "식단 중에 먹을 것 찾다가 모종인더시티 와봤는데 식단인데도 맛있어서 놀랐어요 🥲 내부 인테리어도 예쁘고 전반적으로 만족스러운 곳입니다! 또 먹고 싶네요 ㅎㅎ"
+        "relative_time": "1 year ago",
+        "text": "I came across Seedlings in the City while looking for something to eat during my diet, and was surprised at how delicious it was even though it was a diet menu. The interior is pretty and overall I'm satisfied with the place! I want to eat it again haha"
       }
     ],
     "photos": [
@@ -5638,8 +5638,8 @@
   },
   {
     "place_id": "ChIJofC3jvCZfDURTFjSHkkUp7o",
-    "display_name": "연안옥 칼순대국 신촌점",
-    "category": "음식점",
+    "display_name": "Yeonan Ok Kal Sundae Soup Sinchon branch",
+    "category": "eating house",
     "types": [
       "restaurant",
       "korean_restaurant",
@@ -5647,8 +5647,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서대문구 연세로4길 21 1층 1호",
-    "short_address": "서대문구 연세로4길 21 1층 1호",
+    "address": "#1, 1st floor, 21 Yonsei-ro 4-gil, Seodaemun-gu, Seoul, Republic of Korea",
+    "short_address": "#1, 1st floor, 21 Yonsei-ro 4-gil, Seodaemun-gu",
     "location": {
       "lat": 37.5573899,
       "lng": 126.9379442
@@ -5670,26 +5670,26 @@
     "google_maps_url": "https://maps.google.com/?cid=13449741116447545420",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357c99f08eb7f0a1:0xbaa714491ed2584c!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 10:00",
-      "화요일: 오전 11:00 ~ 오후 10:00",
-      "수요일: 오전 11:00 ~ 오후 10:00",
-      "목요일: 오전 11:00 ~ 오후 10:00",
-      "금요일: 오전 11:00 ~ 오후 10:00",
-      "토요일: 오전 11:00 ~ 오후 4:00",
-      "일요일: 휴무일"
+      "Monday: 11:00 AM - 10:00 PM",
+      "Tuesday: 11:00 AM - 10:00 PM",
+      "Wednesday: 11:00 AM - 10:00 PM",
+      "Thursday: 11:00 AM - 10:00 PM",
+      "Friday: 11:00 AM - 10:00 PM",
+      "Saturday: 11:00 AM - 4:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "포장",
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "점심",
-      "저녁",
-      "맥주"
+      "packaging",
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "lunch",
+      "dinner",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5699,36 +5699,36 @@
         "author": "BJJ Judo Jung",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "여기 진짜 짱입니다. 술국에 미나리전에 수육! 가격도 싼데다가 사장님도 너무 친절 하십니다. 오천원짜리 수육 시키시고 거기에 고추 절임 얹어 먹는 것을 추천 드립니다. 완전 킥입니다!"
+        "relative_time": "5 months ago",
+        "text": "This place is really great. Boiled pork with water parsley in liquor soup! The price is cheap and the owner is very friendly. I recommend ordering 5,000 won worth of boiled pork and topping it with pickled peppers. It's a total kick!"
       },
       {
         "author": "Jae Seung Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "혼자 밥먹기에도 괜찮고 두세명이 오기에도 좋아 보입니다. 순대국밥을 먹었는데 반찬으로 나온 고추장아찌도 맛있었고, 순대국 자체도 따로 간을 하지 않고 그대로 나온대로 먹어도 간이 잘 맞았습니다. 배고플 때 먹어서였을수도 있겠지만 돼지귀 연골 부속기까지도 역하지 않고 부드럽고 좋은 식감으로 씹혔습니다. 언제든지 편안하게 들르게 될 것 같습니다."
+        "relative_time": "3 months ago",
+        "text": "It's good for eating alone and looks good for two or three people. I had Sundae Gukbap, and the pickled red pepper sauce that came as a side dish was delicious, and the Sundae Guk itself was seasoned well even if I ate it as is without seasoning it. It may have been because I ate it when I was hungry, but even the pig ear cartilage appendages were soft and had a good texture without being unpleasant. I feel like I can stop by comfortably anytime."
       },
       {
-        "author": "아이리쉬포테이토",
+        "author": "Irish Potato",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9달 전",
-        "text": "순대국 + 수육 주문했습니다.\n순대국은 사골국물의 전형적인 맛있는 순대국이었구요\n안에 고기가 정말 많이 들어있었어요\n근데 사이드로 수육 시켰는데 이기 진짜 맛도리\n수육이 아니라 차슈를 먹는거 같은 부드러움을 느꼈습니다.\n일정상 술을 못먹었지만 소주 한잔 하기 정말 좋을거 같아요 ㅊㅊ"
+        "relative_time": "9 months ago",
+        "text": "I ordered sundaeguk + boiled pork.\nSundae-guk was a typical, delicious sundae-guk made from bone broth.\nThere was a lot of meat inside.\nBut I ordered boiled pork on the side and it was really delicious.\nI felt as if I was eating chashu instead of boiled pork.\nI couldn't drink alcohol due to my schedule, but I think it would be really nice to have a glass of soju."
       },
       {
-        "author": "김혜성",
+        "author": "Kim Hye-seong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "국밥집인데 깔끔하고 이쁨 데이트밥집처럼 생김\n밥 많이주고 고기많고 국물 감칠맛남 아주맛있음\n직원들 친절함\n딱하나 아쉬운거 부추가 없음\n국밥에 부추 넣어먹으면  쥑이는데\n대신 들깨 있음 들깨 좋아하면 강추"
+        "relative_time": "7 months ago",
+        "text": "It's a soup restaurant, but it's clean and pretty and looks like a date restaurant.\nThey give you a lot of rice, a lot of meat, and the soup is very tasty.\nStaff are friendly\nThe only thing that is disappointing is that there are no chives.\nIf you add chives to soup, it tastes good.\nInstead, there are perilla seeds. Highly recommended if you like perilla seeds."
       },
       {
         "author": "heffi st",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10달 전",
-        "text": "맛남"
+        "relative_time": "10 months ago",
+        "text": "Delicious"
       }
     ],
     "photos": [

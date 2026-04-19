@@ -1,16 +1,16 @@
 [
   {
     "place_id": "ChIJJR0I1D6jfDURPzW6eb1oUV0",
-    "display_name": "경신어패럴",
-    "category": "의류점",
+    "display_name": "Kyungshin Apparel",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 흥인동 117-1",
-    "short_address": "중구 흥인동 117-1",
+    "address": "117-1 Heungin-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "117-1 Heungin-dong, Jung-gu",
     "location": {
       "lat": 37.5663522,
       "lng": 127.01550929999998
@@ -31,8 +31,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -41,16 +41,16 @@
   },
   {
     "place_id": "ChIJJR0I1D6jfDURYWur0XRsPNs",
-    "display_name": "나노스포츠",
-    "category": "의류점",
+    "display_name": "nano sports",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 흥인동 117-1",
-    "short_address": "중구 흥인동 117-1",
+    "address": "117-1 Heungin-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "117-1 Heungin-dong, Jung-gu",
     "location": {
       "lat": 37.5663522,
       "lng": 127.01550929999998
@@ -71,8 +71,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -81,16 +81,16 @@
   },
   {
     "place_id": "ChIJ0ZMXOSWjfDURVSpYJFrc91M",
-    "display_name": "나유키의가게 奈雪の店",
-    "category": "화장품 판매점",
+    "display_name": "Nayuki's store 奈雪の店",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 흥인동 141-1",
-    "short_address": "중구 흥인동 141-1",
+    "address": "141-1 Heungin-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "141-1 Heungin-dong, Jung-gu",
     "location": {
       "lat": 37.5659142,
       "lng": 127.01419969999999
@@ -109,18 +109,18 @@
     "google_maps_url": "https://maps.google.com/?cid=6050546904110475861",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca325391793d1:0x53f7dc5a24582a55!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 1:00 ~ 오전 6:00",
-      "화요일: 오후 1:00 ~ 오전 6:00",
-      "수요일: 오후 1:00 ~ 오전 6:00",
-      "목요일: 오후 1:00 ~ 오전 6:00",
-      "금요일: 오후 1:00 ~ 오전 6:00",
-      "토요일: 오후 2:00 ~ 오전 11:00",
-      "일요일: 오후 1:00 ~ 오전 6:00"
+      "Monday: 1:00 PM - 6:00 AM",
+      "Tuesday: 1:00 PM - 6:00 AM",
+      "Wednesday: 1:00 PM - 6:00 AM",
+      "Thursday: 1:00 PM - 6:00 AM",
+      "Friday: 1:00 PM - 6:00 AM",
+      "Saturday: 2:00 PM - 11:00 AM",
+      "Sunday: 1:00 PM - 6:00 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -130,16 +130,16 @@
   },
   {
     "place_id": "ChIJgap_0z6jfDURJfrwAB2KTEo",
-    "display_name": "부루",
-    "category": "의류점",
+    "display_name": "Buru",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 흥인동 116",
-    "short_address": "중구 흥인동 116",
+    "address": "116 Heungin-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "116 Heungin-dong, Jung-gu",
     "location": {
       "lat": 37.566480999999996,
       "lng": 127.01549969999999
@@ -160,8 +160,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -171,15 +171,15 @@
   {
     "place_id": "ChIJbyXQbdujfDURGpWOcR4OjQY",
     "display_name": "maisonlevert",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 다산로47길 25 메종르베르",
-    "short_address": "중구 다산로47길 25 메종르베르",
+    "address": "Maison Le Vert, 25 Dasan-ro 47-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "Maison LeVert, 25 Dasan-ro 47-gil, Jung-gu",
     "location": {
       "lat": 37.566540499999995,
       "lng": 127.01465089999998
@@ -200,8 +200,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -218,7 +218,7 @@
   {
     "place_id": "ChIJFTCKYTajfDURYBd_dJnsfgc",
     "display_name": "alen813",
-    "category": "귀금속 상점",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "point_of_interest",
@@ -226,8 +226,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당1동 퇴계로73길",
-    "short_address": "중구 신당1동 퇴계로73길",
+    "address": "Toegye-ro 73-gil, Sindang 1-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "Toegye-ro 73-gil, Sindang 1-dong, Jung-gu",
     "location": {
       "lat": 37.5661124,
       "lng": 127.01412880000001
@@ -246,18 +246,18 @@
     "google_maps_url": "https://maps.google.com/?cid=540129149159675744",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca336618a3015:0x77eec99747f1760!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 5:00 ~ 오전 5:00",
-      "화요일: 오후 12:30 ~ 오전 5:00",
-      "수요일: 오후 5:00 ~ 오전 5:00",
-      "목요일: 오후 12:30 ~ 오전 5:00",
-      "금요일: 오후 12:30 ~ 오전 5:00",
-      "토요일: 오후 12:30 ~ 오전 5:00",
-      "일요일: 오후 12:30 ~ 오전 5:00"
+      "Monday: 5:00 PM - 5:00 AM",
+      "Tuesday: 12:30 PM - 5:00 AM",
+      "Wednesday: 5:00 PM - 5:00 AM",
+      "Thursday: 12:30 PM - 5:00 AM",
+      "Friday: 12:30 PM - 5:00 AM",
+      "Saturday: 12:30 PM - 5:00 AM",
+      "Sunday: 12:30 PM - 5:00 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -267,36 +267,36 @@
         "author": "Mike G (ちゃんくん)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "5개 이상 사면 50% 할인 해 줘요~ 매장 넓고 중국인들 일본인들 사이에서 유명한 집, 관광객들 많이 찾아와요~"
+        "relative_time": "7 years ago",
+        "text": "Get a 50% discount if you buy 5 or more items. The store is spacious and is famous among the Chinese and Japanese, so many tourists come here."
       },
       {
         "author": "Yuko m",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10달 전",
-        "text": "우연히 들어갔지만 싸고 귀여운 것이 많아서 좋았다 (이 주변에 있는 유명점에서)\n다음 번 도한 때는 또 가고 싶다! !"
+        "relative_time": "10 months ago",
+        "text": "I went there by chance, but it was nice because there were a lot of cheap and cute items (at a famous store around here).\nI want to go again next time I go to Korea! !"
       },
       {
         "author": "Ngocbich Đinh",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "7달 전",
-        "text": "서비스 태도가 너무 형편없고 비전문적이네요… 🤯"
+        "relative_time": "7 months ago",
+        "text": "The service attitude is very poor and unprofessional… 🤯"
       },
       {
         "author": "Marina Malikin",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "귀걸이, 팔찌 등 정말 다양한 상품이 있어요!\n좋은 가격에 구매해주셔서 감사합니다!"
+        "relative_time": "5 years ago",
+        "text": "There are so many different products, including earrings and bracelets!\nThank you for purchasing at a great price!"
       },
       {
         "author": "林晶晶",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "그분은 매우 예의 바르셨고, 다양한 스타일을 보유하고 계셨습니다. 👍🏻"
+        "relative_time": "6 years ago",
+        "text": "He was very polite and had many styles. 👍🏻"
       }
     ],
     "photos": [
@@ -310,16 +310,16 @@
   },
   {
     "place_id": "ChIJc3RXuT6jfDUR1e2SRv6WuL8",
-    "display_name": "(주)예쁜청바지",
-    "category": "의류점",
+    "display_name": "Pretty Jeans Co., Ltd.",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 흥인동 144번지 인지빌딩 중구 서울특별시 KR",
-    "short_address": "흥인동 144번지 인지빌딩 중구 서울특별시 KR",
+    "address": "144 Heungin-dong, Inji Building, Jung-gu, Seoul, Republic of Korea Seoul KR",
+    "short_address": "144 Heungin-dong, Inji Building, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.566263899999996,
       "lng": 127.014211
@@ -340,8 +340,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -350,16 +350,16 @@
   },
   {
     "place_id": "ChIJJzAgyj6jfDURPqLiXfancJE",
-    "display_name": "패션JOB",
-    "category": "의류점",
+    "display_name": "FashionJOB",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 흥인동 158-8",
-    "short_address": "중구 흥인동 158-8",
+    "address": "158-8 Heungin-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "158-8 Heungin-dong, Jung-gu",
     "location": {
       "lat": 37.5666529,
       "lng": 127.0146122
@@ -380,8 +380,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -391,15 +391,15 @@
   {
     "place_id": "ChIJQdZSw1yjfDURSBe0cjJSfAg",
     "display_name": "xiao pan",
-    "category": "화장품 판매점",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 흥인동 142-1",
-    "short_address": "중구 흥인동 142-1",
+    "address": "142-1 Heungin-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "142-1 Heungin-dong, Jung-gu",
     "location": {
       "lat": 37.566086,
       "lng": 127.01395529999999
@@ -418,18 +418,18 @@
     "google_maps_url": "https://maps.google.com/?cid=611454026041792328",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca35cc352d641:0x87c523272b41748!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 2:00 ~ 오전 6:00",
-      "화요일: 오후 2:00 ~ 오전 6:00",
-      "수요일: 오후 2:00 ~ 오전 6:00",
-      "목요일: 오후 2:00 ~ 오전 6:00",
-      "금요일: 오후 2:00 ~ 오전 6:00",
-      "토요일: 오후 2:00~10:00",
-      "일요일: 오후 2:00 ~ 오전 6:00"
+      "Monday: 2:00 PM - 6:00 AM",
+      "Tuesday: 2:00 PM - 6:00 AM",
+      "Wednesday: 2:00 PM - 6:00 AM",
+      "Thursday: 2:00 PM - 6:00 AM",
+      "Friday: 2:00 PM - 6:00 AM",
+      "Saturday: 2:00-10:00 PM",
+      "Sunday: 2:00 PM - 6:00 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -439,28 +439,28 @@
         "author": "スラ子",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
-        "text": "THE MASK SHOP에서 수십 미터 떨어진 곳에 있으며, 작고 좁은 가게 때문에 물건 수는 적지만 확실히 THE MASK SHOP보다 저렴합니다.\n\n2020년 1월 시점의 가격입니다만, 구입한 상품의 일부를 소개합니다.\n\n・AHC 펩티드 액티브 리얼 아이크림 포 페이스:5500W(약 500엔)\n・AHC 에이지레스 리얼 아이 크림 시즌 7 : 5500W(약 500엔)\n・더 샘(The saem) 커버 퍼펙션 칩 컨실러:3200W(290엔)\n\n메디힐의 시트 마스크도 구입했습니다만, D:NA 아쿠아링 마스크×1과 P.D.F A.C 드레싱 앰풀 마스크×2를 정리해 구입해 30,300W(2800엔)이었으므로 각각의 가격은 불명입니다.\n\nTHE MASK SHOP가 가이드북에 게재되었기 때문에 점내는 꽤 혼잡하고 있었습니다만, 이쪽은 비교적 스페이스가 있었습니다.\n가격이 적지 않은 것이 많기 때문에 스탭에게 물어볼 필요가 있습니다만, 모두 기본적으로 일본어가 통합니다.\n점내 스탭은 문제 없습니다만. 접수의 형의 태도가 너무 심하게, 상품을 던지도록 둡니다. 쇄도하는 손님에게 싫증이 난 것일지도 모릅니다만, 솔직히 꽤 불쾌했습니다.\n영수증은 1회째에 구입했을 때는 주었습니다만, 2회째의 때는 「영수증은 내고 있지 않다」라고 말하지 않았습니다. 아까 받은 취지를 전했으면 굉장히 하고 있었습니다만, 도매상이니까는 꽤 좋은 가감입니다.\n\n어쨌든 싸게 사고 싶은 사람은 좋을지도 모릅니다만, 이런 생각을 한다면 높아도 보통으로 사고 싶습니다."
+        "relative_time": "6 years ago",
+        "text": "It is located a few tens of meters away from THE MASK SHOP. Because it is a small and narrow store, there are fewer items, but it is definitely cheaper than THE MASK SHOP.\n\nThe prices are as of January 2020, but here are some of the products purchased.\n\n・AHC Peptide Active Real Eye Cream for Face: 5500W (about 500 yen)\n・AHC Ageless Real Eye Cream Season 7: 5500W (about 500 yen)\n・The saem Cover Perfection Chip Concealer: 3200W (290 yen)\n\nI also purchased Mediheal's sheet mask, but I bought the D:NA Aqua Ring Mask x 1 and the P.D.F A.C Dressing Ampoule Mask x 2 together for 30,300W (2800 yen), so the price of each is unknown.\n\nBecause THE MASK SHOP was published in the guidebook, the store was quite crowded, but there was relatively space here.\nYou may need to ask the staff, as many are quite expensive, but they all basically speak Japanese.\nThere is no problem with the staff in the store. The attitude of the receptionist's brother was so bad that he let the product be thrown away. Maybe they were just tired of the influx of customers, but honestly it was quite unpleasant.\nThey gave me a receipt the first time I purchased it, but they didn't say \"I don't have a receipt\" the second time. I really wanted to convey the purpose of what I received earlier, but since I am a wholesaler, it is a pretty good addition.\n\nAnyway, it may be good for those who want to buy it cheaply, but if you think like this, you want to buy it at the average price even if it is high."
       },
       {
         "author": "Meg",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "3년 전",
-        "text": "2023년 1월 방문시, 가게명과 장소(곧바로)도 바뀌었으므로 주의해 주세요."
+        "relative_time": "3 years ago",
+        "text": "Please note that when visiting in January 2023, the store name and location (immediately) have changed."
       },
       {
         "author": "マ!",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "3년 전",
-        "text": "싸지만 하나밖에 사지 않았는데 2개가 되어 여분에 돈을 받았으므로, 그 자리에서 가격을 확인하는 것이 좋다."
+        "relative_time": "3 years ago",
+        "text": "It's cheap, but I only bought one, but I ended up paying extra for two, so it's best to check the price on the spot."
       },
       {
-        "author": "소오르",
+        "author": "Soor",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       }
     ],
@@ -475,16 +475,16 @@
   },
   {
     "place_id": "ChIJj581uj6jfDUR78h81lLAkq8",
-    "display_name": "티모드",
-    "category": "의류점",
+    "display_name": "T mode",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 흥인동 145",
-    "short_address": "중구 흥인동 145",
+    "address": "145 Heungin-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "145 Heungin-dong, Jung-gu",
     "location": {
       "lat": 37.5664181,
       "lng": 127.01412060000001
@@ -505,8 +505,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -515,16 +515,16 @@
   },
   {
     "place_id": "ChIJTxN6lz6jfDUR6XuDGbqFeoU",
-    "display_name": "신선스포츠",
-    "category": "의류점",
+    "display_name": "fresh sports",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동 251-68",
-    "short_address": "중구 신당동 251-68",
+    "address": "251-68 Sindang-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "251-68 Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.5658925,
       "lng": 127.0138684
@@ -545,8 +545,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -555,16 +555,16 @@
   },
   {
     "place_id": "ChIJTxN6lz6jfDURyCW-P8HLaY4",
-    "display_name": "망고",
-    "category": "의류점",
+    "display_name": "mango",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동 251-68",
-    "short_address": "중구 신당동 251-68",
+    "address": "251-68 Sindang-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "251-68 Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.5658925,
       "lng": 127.0138684
@@ -583,29 +583,29 @@
     "google_maps_url": "https://maps.google.com/?cid=10261957256798938568",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33e977a134f:0x8e69cbc13fbe25c8!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 10:00",
-      "화요일: 오전 10:30 ~ 오후 10:00",
-      "수요일: 오전 10:30 ~ 오후 10:00",
-      "목요일: 오전 10:30 ~ 오후 10:00",
-      "금요일: 오전 10:30 ~ 오후 10:00",
-      "토요일: 오전 10:30 ~ 오후 10:00",
-      "일요일: 오전 10:30 ~ 오후 10:00"
+      "Monday: 10:30 AM - 10:00 PM",
+      "Tuesday: 10:30 AM - 10:00 PM",
+      "Wednesday: 10:30 AM - 10:00 PM",
+      "Thursday: 10:30 AM - 10:00 PM",
+      "Friday: 10:30 AM - 10:00 PM",
+      "Saturday: 10:30 AM - 10:00 PM",
+      "Sunday: 10:30 AM - 10:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김현정",
+        "author": "Hyunjeong Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "9달 전",
-        "text": "맛있게 먹었어요"
+        "relative_time": "9 months ago",
+        "text": "I enjoyed it"
       }
     ],
     "photos": [
@@ -614,16 +614,16 @@
   },
   {
     "place_id": "ChIJKZXRjz6jfDURbDQMqjk1eZc",
-    "display_name": "(주)리브리아코스메틱",
-    "category": "화장품 판매점",
+    "display_name": "Libria Cosmetic Co., Ltd.",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 신당동 253-5번지 지층 중구 서울특별시 KR",
-    "short_address": "신당동 253-5번지 지층 중구 서울특별시 KR",
+    "address": "Ground floor, 253-5 Sindang-dong, Seoul, South Korea, Jung-gu, Seoul KR",
+    "short_address": "253-5 Sindang-dong, ground floor, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.565409800000005,
       "lng": 127.014006
@@ -651,8 +651,8 @@
   },
   {
     "place_id": "ChIJdV-XZR2jfDURwJg25LtPs8k",
-    "display_name": "메종드메이어",
-    "category": "여성의류점",
+    "display_name": "Maison de Mayer",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "point_of_interest",
@@ -660,8 +660,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 다산로 263 6층",
-    "short_address": "중구 다산로 263 6층",
+    "address": "6th floor, 263 Dasan-ro, Jung-gu, Seoul, South Korea",
+    "short_address": "6th floor, 263 Dasan-ro, Jung-gu",
     "location": {
       "lat": 37.566469700000006,
       "lng": 127.01587219999999
@@ -680,18 +680,18 @@
     "google_maps_url": "https://maps.google.com/?cid=14534048090860984512",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca31d65975f75:0xc9b34fbbe43698c0!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:30 ~ 오후 5:30",
-      "화요일: 오전 9:30 ~ 오후 5:30",
-      "수요일: 오전 9:30 ~ 오후 5:30",
-      "목요일: 오전 9:30 ~ 오후 5:30",
-      "금요일: 오전 9:30 ~ 오후 5:30",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:30 AM - 5:30 PM",
+      "Tuesday: 9:30 AM - 5:30 PM",
+      "Wednesday: 9:30 AM - 5:30 PM",
+      "Thursday: 9:30 AM - 5:30 PM",
+      "Friday: 9:30 AM - 5:30 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -701,16 +701,16 @@
   },
   {
     "place_id": "ChIJvxRW1T6jfDURak9wFzS2xro",
-    "display_name": "탠타스틱",
-    "category": "신발 판매점",
+    "display_name": "tantastic",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 흥인동 104번지 그랜드빌딩 3층 1호",
-    "short_address": "중구 흥인동 104번지 그랜드빌딩 3층 1호",
+    "address": "#1, 3rd floor, Grand Building, 104 Heungin-dong, Jung-gu, Seoul, Korea",
+    "short_address": "#1, 3rd floor, Grand Building, 104 Heungin-dong, Jung-gu",
     "location": {
       "lat": 37.566469700000006,
       "lng": 127.01587219999999
@@ -731,8 +731,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -741,16 +741,16 @@
   },
   {
     "place_id": "ChIJJW-1RSOjfDUReyNWx_DYiP8",
-    "display_name": "콜라보",
-    "category": "의류점",
+    "display_name": "collaboration",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 장충단로13길 34",
-    "short_address": "중구 장충단로13길 34",
+    "address": "34 Jangchungdan-ro 13-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "34 Jangchungdan-ro 13-gil, Jung-gu",
     "location": {
       "lat": 37.56893670000001,
       "lng": 127.0069909
@@ -769,18 +769,18 @@
     "google_maps_url": "https://maps.google.com/?cid=18413205605152334715",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32345b56f25:0xff88d8f0c756237b!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -789,8 +789,8 @@
   },
   {
     "place_id": "ChIJTybcdXSjfDUR-MHD1aeoR0A",
-    "display_name": "컬럼비아 현대시티아울렛 동대문점 哥伦比亚 哥伦比亚 户外 Columbia sportswear Hyundai City Outlet Dongdaemun",
-    "category": "의류점",
+    "display_name": "Columbia Hyundai City Outlet Dongdaemun Branch Columbia sportswear Hyundai City Outlet Dongdaemun",
+    "category": "clothing store",
     "types": [
       "sporting_goods_store",
       "point_of_interest",
@@ -798,8 +798,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 장춘단 13길 20 현대시티아울렛 7층",
-    "short_address": "중구 장춘단 13길 20 현대시티아울렛 7층",
+    "address": "7th floor, Hyundai City Outlet, 20 Jangchundan 13-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "7th floor, Hyundai City Outlet, 20 Jangchundan 13-gil, Jung-gu",
     "location": {
       "lat": 37.5689239,
       "lng": 127.00719550000001
@@ -818,22 +818,22 @@
     "google_maps_url": "https://maps.google.com/?cid=4631856180573225464",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca37475dc264f:0x4047a8a7d5c3c1f8!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 9:00",
-      "화요일: 오전 10:30 ~ 오후 9:00",
-      "수요일: 오전 10:30 ~ 오후 9:00",
-      "목요일: 오전 10:30 ~ 오후 9:00",
-      "금요일: 오전 10:30 ~ 오후 9:30",
-      "토요일: 오전 10:30 ~ 오후 9:30",
-      "일요일: 오전 10:30 ~ 오후 9:30"
+      "Monday: 10:30 AM - 9:00 PM",
+      "Tuesday: 10:30 AM - 9:00 PM",
+      "Wednesday: 10:30 AM - 9:00 PM",
+      "Thursday: 10:30 AM - 9:00 PM",
+      "Friday: 10:30 AM - 9:30 PM",
+      "Saturday: 10:30 AM - 9:30 PM",
+      "Sunday: 10:30 AM - 9:30 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": null,
@@ -843,16 +843,16 @@
   },
   {
     "place_id": "ChIJx9edTCOjfDURVLdsPubIPiA",
-    "display_name": "소영패션",
-    "category": "의류점",
+    "display_name": "Soyoung Fashion",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 을지로6가 17",
-    "short_address": "중구 을지로6가 17",
+    "address": "17 Euljiro 6-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "17 Euljiro 6-ga, Jung-gu",
     "location": {
       "lat": 37.5690666,
       "lng": 127.0067401
@@ -873,8 +873,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -884,15 +884,15 @@
   {
     "place_id": "ChIJs8JUfQCjfDUReqDZ5iHAABU",
     "display_name": "Pal Zileri - Hyundai City Outlet Dongdaemun",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 장충단로13길 28-1",
-    "short_address": "중구 장충단로13길 28-1",
+    "address": "28-1 Jangchungdan-ro 13-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "28-1 Jangchungdan-ro 13-gil, Jung-gu",
     "location": {
       "lat": 37.5688727,
       "lng": 127.0074185
@@ -911,31 +911,31 @@
     "google_maps_url": "https://maps.google.com/?cid=1513420726635962490",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3007d54c2b3:0x1500c021e6d9a07a!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 9:00",
-      "화요일: 오전 10:30 ~ 오후 9:00",
-      "수요일: 오전 10:30 ~ 오후 9:00",
-      "목요일: 오전 10:30 ~ 오후 9:00",
-      "금요일: 오전 10:30 ~ 오후 9:30",
-      "토요일: 오전 10:30 ~ 오후 9:30",
-      "일요일: 오전 10:30 ~ 오후 9:30"
+      "Monday: 10:30 AM - 9:00 PM",
+      "Tuesday: 10:30 AM - 9:00 PM",
+      "Wednesday: 10:30 AM - 9:00 PM",
+      "Thursday: 10:30 AM - 9:00 PM",
+      "Friday: 10:30 AM - 9:30 PM",
+      "Saturday: 10:30 AM - 9:30 PM",
+      "Sunday: 10:30 AM - 9:30 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "황규성",
+        "author": "Hwang Gyu-seong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "PAL ZILERI is an Italian luxury menswear brand known for refined tailoring, sophisticated silhouettes, and premium materials. The brand offers elegant suits, jackets, and smart casual pieces that reflect modern Italian style with a focus on quality and craftsman\nPAL ZILERI는 세련된 테일러링과 고급 소재 사용으로 알려진 이탈리아의 럭셔리 남성 브랜드입니다. 정장과 재킷을 중심으로 현대적이고 품위있는 이탈리아 스타일을 제안하고 있습니다.\nPAL ZILERI 시의대리 고단남장품패, 이정치 전재, 优雅廓形和高品 质面料著称, 呈现兼具 现代 감여 격건적 의식 남장기격.\n\nAt Hyundai City Outlet Dongdaemun, you can explore PAL ZILERI alongside a curated selection of premium menswear brands, cafés, and concept stores that showcase Korean lifestyle and culture.\n현대 시티 아울렛 동대문에서는 PAL ZILERI를 비롯해 고급스러운 남성 패션 브랜드와 카페, 그리고 한국의 라이프 스타일과 문화를 느낄 수 있는 컨셉 숍을 함께 즐길 수 있습니다.\n在现代城奥特莱斯东大门店、您可以选购PAL ZILERI、同时体验多样的高端男装品牌、咖啡馆、以及融合韩国生活方式与文化特色的主题店铺。"
+        "relative_time": "3 months ago",
+        "text": "PAL ZILERI is an Italian luxury menswear brand known for refined tailoring, sophisticated silhouettes, and premium materials. The brand offers elegant suits, jackets, and smart casual pieces that reflect modern Italian style with a focus on quality and craftsman\nPAL ZILERI is an Italian luxury men's brand known for its sophisticated tailoring and use of high-quality materials. We offer a modern and elegant Italian style, focusing on suits and jackets.\nPAL ZILERI city council representative high-class men's clothing, Lee Jeong-chi's Jeon Jae, 优雅廓形和高品 质面料著称, 呈现兼具 现代 Gam-yeo's fierce consciousness of cross-dressing.\n\nAt Hyundai City Outlet Dongdaemun, you can explore PAL ZILERI alongside a curated selection of premium menswear brands, cafés, and concept stores that showcase Korean lifestyle and culture.\nAt Hyundai City Outlet Dongdaemun, you can enjoy luxurious men's fashion brands including PAL ZILERI, cafes, and concept shops where you can experience Korean lifestyle and culture.\nPAL ZILERI、Same country, multi-national, high school, men's clothing, company Liquor, Chinese food, Korean food, living, drinking, culture, and entertainment."
       }
     ],
     "photos": [
@@ -945,15 +945,15 @@
   {
     "place_id": "ChIJiXXqYgCjfDUR7gyIzmhSKX4",
     "display_name": "Kinloch - Hyundai City Outlet Dongdaemun",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 장충단로13길 28-1",
-    "short_address": "중구 장충단로13길 28-1",
+    "address": "28-1 Jangchungdan-ro 13-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "28-1 Jangchungdan-ro 13-gil, Jung-gu",
     "location": {
       "lat": 37.5689737,
       "lng": 127.00746049999998
@@ -972,31 +972,31 @@
     "google_maps_url": "https://maps.google.com/?cid=9090887932919155950",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca30062ea7589:0x7e295268ce880cee!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 9:00",
-      "화요일: 오전 10:30 ~ 오후 9:00",
-      "수요일: 오전 10:30 ~ 오후 9:00",
-      "목요일: 오전 10:30 ~ 오후 9:00",
-      "금요일: 오전 10:30 ~ 오후 9:30",
-      "토요일: 오전 10:30 ~ 오후 9:30",
-      "일요일: 오전 10:30 ~ 오후 9:30"
+      "Monday: 10:30 AM - 9:00 PM",
+      "Tuesday: 10:30 AM - 9:00 PM",
+      "Wednesday: 10:30 AM - 9:00 PM",
+      "Thursday: 10:30 AM - 9:00 PM",
+      "Friday: 10:30 AM - 9:30 PM",
+      "Saturday: 10:30 AM - 9:30 PM",
+      "Sunday: 10:30 AM - 9:30 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "황규성",
+        "author": "Hwang Gyu-seong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "Kinloch by Kinloch Anderson is a menswear brand rooted in British tailoring tradition, offering classic suits and smart styles with a refined, timeless appeal. The brand is known for its balanced approach to formal and semi-formal wear, making everyday polished looks.\nKinloch by Kinloch Anderson은 영국 테일러링의 전통을 기반으로 한 남성 브랜드입니다. 클래식하고 품위있는 슈트나 스마트한 스타일을 중심으로, 비즈니스로부터 세미포멀까지 폭넓게 대응할 수 있는 점이 특징입니다.\nKinloch by Kinloch Anderson 시원 자영국 재벌 传统的男装品牌, 主打经典 西装与优雅正式风格, 稳重耐看的设计, 合合商务, 正式场合及日常利落穿탑.\n\nAt Hyundai City Outlet Dongdaemun, you can explore Kinloch by Kinloch Anderson alongside a wide range of men’s fashion brands, cafés, and concept stores that reflect Korean style, lifestyle, and culture.\n현대 시티 아울렛 동대문에서는 Kinloch by Kinloch Anderson을 비롯해 남성 패션 브랜드와 카페, 한국 스타일과 라이프 스타일, 문화를 느낄 수 있는 컨셉 숍을 즐길 수 있습니다.\n在现代城奥特莱斯东大门店、您可以选购Kinloch by Kinloch Anderson、同时体验多样的男士时尚品牌、咖啡馆、以及展现韩国生活方式与文化"
+        "relative_time": "3 months ago",
+        "text": "Kinloch by Kinloch Anderson is a menswear brand rooted in British tailoring tradition, offering classic suits and smart styles with a refined, timeless appeal. The brand is known for its balanced approach to formal and semi-formal wear, creating everyday polished looks.\nKinloch by Kinloch Anderson is a men's brand based on the tradition of British tailoring. The feature is that it can accommodate a wide range of styles, from business to semi-formal, with a focus on classic, elegant suits and smart styles.\nKinloch by Kinloch Anderson The Tower of Correct Local Collaboration and Profitability.\n\nAt Hyundai City Outlet Dongdaemun, you can explore Kinloch by Kinloch Anderson alongside a wide range of men’s fashion brands, cafés, and concept stores that reflect Korean style, lifestyle, and culture.\nAt Hyundai City Outlet Dongdaemun, you can enjoy Kinloch by Kinloch Anderson, men's fashion brands, cafes, and concept shops where you can experience Korean style, lifestyle, and culture.\nKinloch by Kinloch Anderson、同时体验多样的士时尚品牌、咖啡馆、以及展现韩国生活方式与文化"
       }
     ],
     "photos": [
@@ -1006,15 +1006,15 @@
   {
     "place_id": "ChIJ92E7BwCjfDURX9RjUN10NwE",
     "display_name": "Ziozia - Hyundai City Outlet Dongdaemun",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 장충단로13길 28-1",
-    "short_address": "중구 장충단로13길 28-1",
+    "address": "28-1 Jangchungdan-ro 13-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "28-1 Jangchungdan-ro 13-gil, Jung-gu",
     "location": {
       "lat": 37.5689298,
       "lng": 127.00745830000001
@@ -1033,30 +1033,30 @@
     "google_maps_url": "https://maps.google.com/?cid=87667211642328159",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca300073b61f7:0x13774dd5063d45f!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 9:00",
-      "화요일: 오전 10:30 ~ 오후 9:00",
-      "수요일: 오전 10:30 ~ 오후 9:00",
-      "목요일: 오전 10:30 ~ 오후 9:00",
-      "금요일: 오전 10:30 ~ 오후 9:30",
-      "토요일: 오전 10:30 ~ 오후 9:30",
-      "일요일: 오전 10:30 ~ 오후 9:30"
+      "Monday: 10:30 AM - 9:00 PM",
+      "Tuesday: 10:30 AM - 9:00 PM",
+      "Wednesday: 10:30 AM - 9:00 PM",
+      "Thursday: 10:30 AM - 9:00 PM",
+      "Friday: 10:30 AM - 9:30 PM",
+      "Saturday: 10:30 AM - 9:30 PM",
+      "Sunday: 10:30 AM - 9:30 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "황규성",
+        "author": "Hwang Gyu-seong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
+        "relative_time": "3 months ago",
         "text": "ZIOZIA is a Korean menswear brand known for its modern business wear and clean, contemporary styling. The brand offers suits, jackets, and smart casual pieces that balance practicality with trend-conscious design, making it popular among men looking for stylish yet wearable fashion. The staff are friendly and able to assist international customers.\nZIOZIA（ジオジア）は、モダンなビジネスウェアと洗練されたデザインで知られる韓国のメンズブランドです。スーツやジャケット、スマートカジュアルまで幅広く展開し、実用性とトレンド感のバランスが取れたスタイルが特徴です。スタッフは親切で、外国人のお客様への対応も可能です。\nZIOZIA是韩国男装品牌，以现代商务风格和简洁利落的设计著称，提供西装、夹克及商务休闲单品，兼顾实穿性与时尚感。店员服务友好，可为外国顾客提供协助。\n\nAt Hyundai City Outlet Dongdaemun, you can explore ZIOZIA alongside a wide range of men’s fashion brands, cafés, and concept stores, making it a convenient shopping destination. Tax refund services are available on the B1 level, making shopping easier and more convenient compared to other locations.\n現代シティアウトレット東大門では、ZIOZIAをはじめ、メンズファッションブランドやカフェ、コンセプトショップを一度に楽しめます。地下1階にタックスリファンドカウンターがあり、他の場所よりもスムーズにショッピングができる点も魅力です。\n在现代城奥特莱斯东大门店，您可以选购ZIOZIA，同时逛遍多样的男士时尚品牌、咖啡馆与特色店铺。地下1层设有退税柜台，让购物更加便捷省心。"
       }
     ],
@@ -1066,16 +1066,16 @@
   },
   {
     "place_id": "ChIJXa95WyOjfDURv0_v5974TfQ",
-    "display_name": "뉴그린",
-    "category": "의류점",
+    "display_name": "New Green",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 을지로6가",
-    "short_address": "중구 을지로6가",
+    "address": "Euljiro 6-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "Euljiro 6-ga, Jung-gu",
     "location": {
       "lat": 37.5693348,
       "lng": 127.0068494
@@ -1094,18 +1094,18 @@
     "google_maps_url": "https://maps.google.com/?cid=17604000154718785471",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3235b79af5d:0xf44df8dee7ef4fbf!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 7:00 ~ 오후 6:00",
-      "화요일: 오전 7:00 ~ 오후 6:00",
-      "수요일: 오전 7:00 ~ 오후 6:00",
-      "목요일: 오전 7:00 ~ 오후 6:00",
-      "금요일: 오전 7:00 ~ 오후 6:00",
-      "토요일: 오전 7:00 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: 7:00 AM - 6:00 PM",
+      "Tuesday: 7:00 AM - 6:00 PM",
+      "Wednesday: 7:00 AM - 6:00 PM",
+      "Thursday: 7:00 AM - 6:00 PM",
+      "Friday: 7:00 AM - 6:00 PM",
+      "Saturday: 7:00 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1114,8 +1114,8 @@
   },
   {
     "place_id": "ChIJvXy5biOjfDURU3ZAZ3goh5U",
-    "display_name": "팝콘",
-    "category": "의류점",
+    "display_name": "popcorn",
+    "category": "clothing store",
     "types": [
       "wholesaler",
       "point_of_interest",
@@ -1123,8 +1123,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 을지로6가 17번지 평화시장 192호 의2분의1 193호 중구 서울특별시 KR",
-    "short_address": "을지로6가 17번지 평화시장 192호 의2분의1 193호 중구 서울특별시 KR",
+    "address": "#192, 1/2, Pyeonghwa Market, 17 Eulji-ro 6-ga, Seoul, Republic of Korea #193, Jung-gu, Seoul KR",
+    "short_address": "#192, 1/2, Pyeonghwa Market, 17 Eulji-ro 6-ga, #193, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.5693555,
       "lng": 127.00695169999997
@@ -1152,16 +1152,16 @@
   },
   {
     "place_id": "ChIJvXy5biOjfDURHsuk_SQc4uo",
-    "display_name": "한일모자",
-    "category": "의류점",
+    "display_name": "Korea-Japan hat",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 을지로6가 17번지 평화시장 1층 가열109호 다열92동 4호 중구 서울특별시 KR",
-    "short_address": "을지로6가 17번지 평화시장 1층 가열109호 다열92동 4호 중구 서울특별시 KR",
+    "address": "#4, Dayeol 92-dong, #109, 1st floor, Pyeonghwa Market, 17 Eulji-ro 6-ga, Seoul, Republic of Korea, Jung-gu, Seoul KR",
+    "short_address": "#109, 1st floor, Pyeonghwa Market, 17 Eulji-ro 6-ga, #4, Dayeol 92-dong, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.5693536,
       "lng": 127.006886
@@ -1182,8 +1182,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1192,8 +1192,8 @@
   },
   {
     "place_id": "ChIJV2S1xHujfDURbd_quwDJwx0",
-    "display_name": "라운드플레이 roundplay blackpup 블랙펍",
-    "category": "스포츠 의류점",
+    "display_name": "round play roundplay blackpup black pub",
+    "category": "sports clothing store",
     "types": [
       "sportswear_store",
       "sporting_goods_store",
@@ -1202,8 +1202,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 청계천로 274 99 KR 평화시장 2층 다열 99.100호",
-    "short_address": "중구 청계천로 274 99 KR 평화시장 2층 다열 99.100호",
+    "address": "Room 99.100, Multi-row, 2nd floor, Pyeonghwa Market, 274, Cheonggyecheon-ro, Jung-gu, Seoul, 99 KR, Republic of Korea",
+    "short_address": "Room 99.100, Multi-row, 2nd floor, KR Pyeonghwa Market, 274 Cheonggyecheon-ro, Jung-gu 99",
     "location": {
       "lat": 37.569351000000005,
       "lng": 127.0068599
@@ -1218,24 +1218,24 @@
     "review_summary": null,
     "phone": "02-2274-5220",
     "phone_international": "+82 2-2274-5220",
-    "website": "http://www.우림인터내셔널.com/",
+    "website": "http://www.wooriminternational.com/",
     "google_maps_url": "https://maps.google.com/?cid=2144778852548403053",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca37bc4b56457:0x1dc3c900bbeadf6d!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:30 ~ 오후 7:00",
-      "화요일: 오전 9:30 ~ 오후 7:00",
-      "수요일: 오전 9:30 ~ 오후 7:00",
-      "목요일: 오전 9:30 ~ 오후 7:00",
-      "금요일: 오전 9:30 ~ 오후 7:00",
-      "토요일: 오전 10:00 ~ 오후 4:00",
-      "일요일: 휴무일"
+      "Monday: 9:30 AM - 7:00 PM",
+      "Tuesday: 9:30 AM - 7:00 PM",
+      "Wednesday: 9:30 AM - 7:00 PM",
+      "Thursday: 9:30 AM - 7:00 PM",
+      "Friday: 9:30 AM - 7:00 PM",
+      "Saturday: 10:00 AM - 4:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1257,15 +1257,15 @@
   {
     "place_id": "ChIJnX9HXQCjfDURC8RYUnHys1A",
     "display_name": "SIEG - Hyundai City Outlet Dongdaemun",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 장충단로13길",
-    "short_address": "중구 장충단로13길",
+    "address": "Jangchungdan-ro 13-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "Jangchungdan-ro 13-gil, Jung-gu",
     "location": {
       "lat": 37.568811100000005,
       "lng": 127.00744119999999
@@ -1284,31 +1284,31 @@
     "google_maps_url": "https://maps.google.com/?cid=5815258112392217611",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3005d477f9d:0x50b3f2715258c40b!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 9:00",
-      "화요일: 오전 10:30 ~ 오후 9:00",
-      "수요일: 오전 10:30 ~ 오후 9:00",
-      "목요일: 오전 10:30 ~ 오후 9:00",
-      "금요일: 오전 10:30 ~ 오후 9:30",
-      "토요일: 오전 10:30 ~ 오후 9:30",
-      "일요일: 오전 10:30 ~ 오후 9:30"
+      "Monday: 10:30 AM - 9:00 PM",
+      "Tuesday: 10:30 AM - 9:00 PM",
+      "Wednesday: 10:30 AM - 9:00 PM",
+      "Thursday: 10:30 AM - 9:00 PM",
+      "Friday: 10:30 AM - 9:30 PM",
+      "Saturday: 10:30 AM - 9:30 PM",
+      "Sunday: 10:30 AM - 9:30 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "황규성",
+        "author": "Hwang Gyu-seong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "SIEG is a Korean menswear brand known for its modern suits and smart business wear that emphasize clean tailoring and a sharp silhouette. The brand is popular among men looking for stylish yet practical outfits suitable for work, formal occasions, ande\nSIEG는 단정한 테일러링과 샤프한 실루엣이 특징인 한국 남성 브랜드입니다. 비즈니스 씬으로부터 포멀한 장면, 일상의 오피스 스타일까지 폭넓게 대응할 수 있는 점에서 지지되고 있습니다.\nSIEG 是韩国男装品牌、以利落剪裁和和净线条的西装与商务服饰著称、深受追求实用性与时尚感兼备的男士喜爱。\n\nAt Hyundai City Outlet Dongdaemun, you can explore SIEG alongside a wide range of men’s fashion brands, cafés, and concept stores that reflect Korean style, lifestyle, and culture.\n현대 시티 아울렛 동대문에서는 SIEG를 비롯해 남성 패션 브랜드와 카페, 한국 스타일과 라이프 스타일, 문화를 느낄 수 있는 컨셉 숍을 한 번에 즐길 수 있습니다.\n在现代城奥特莱斯东大门店、您可以选购SIEG、同时体验多样的男士时尚品牌、咖啡馆、以及展现韩国生活方式与文化特色的主题店铺。"
+        "relative_time": "3 months ago",
+        "text": "SIEG is a Korean menswear brand known for its modern suits and smart business wear that emphasizes clean tailoring and a sharp silhouette. The brand is popular among men looking for stylish yet practical outfits suitable for work, formal occasions, ande\nSIEG is a Korean men's brand characterized by neat tailoring and sharp silhouettes. It is supported in that it can accommodate a wide range of applications, from business scenes to formal scenes and everyday office styles.\nSIEG Korean-Korean men's clothing supply, commercial sales, harmonization, trade, trade, western clothing sales. It's about meeting people's tastes, traveling abroad, having sex with friends, and having fun with men and women.\n\nAt Hyundai City Outlet Dongdaemun, you can explore SIEG alongside a wide range of men’s fashion brands, cafés, and concept stores that reflect Korean style, lifestyle, and culture.\nAt Hyundai City Outlet Dongdaemun, you can enjoy SIEG, men's fashion brands, cafes, and concept shops where you can feel Korean style, lifestyle, and culture all at once.\n在现代城奥特莱斯东大门店、您可以选购SIEG、同时体验多样的男It is a business, a business, a business, a business, a business, a business, a business, a business, a business, and a business."
       }
     ],
     "photos": [
@@ -1317,16 +1317,16 @@
   },
   {
     "place_id": "ChIJvXy5biOjfDUR0wvd_bQrz54",
-    "display_name": "본콜렉션",
-    "category": "의류점",
+    "display_name": "This collection",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 을지로6가 17번지 평화시장 1층 271-2호 중구 서울특별시 KR",
-    "short_address": "을지로6가 17번지 평화시장 1층 271-2호 중구 서울특별시 KR",
+    "address": "#271-2, 1st floor, Pyeonghwa Market, 17 Eulji-ro 6-ga, Seoul, Republic of Korea, Jung-gu, Seoul KR",
+    "short_address": "#271-2, 1st floor, Pyeonghwa Market, 17 Eulji-ro 6-ga, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.569322799999995,
       "lng": 127.006765
@@ -1347,8 +1347,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1358,15 +1358,15 @@
   {
     "place_id": "ChIJK9xeIACjfDURIxinfFDJCNY",
     "display_name": "Ferraro Milano - Hyundai City Outlet Dongdaemun",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 장충단로13길 28-1",
-    "short_address": "중구 장충단로13길 28-1",
+    "address": "28-1 Jangchungdan-ro 13-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "28-1 Jangchungdan-ro 13-gil, Jung-gu",
     "location": {
       "lat": 37.5688923,
       "lng": 127.0074848
@@ -1385,31 +1385,31 @@
     "google_maps_url": "https://maps.google.com/?cid=15422798271456155683",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca300205edc2b:0xd608c9507ca71823!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 9:00",
-      "화요일: 오전 10:30 ~ 오후 9:00",
-      "수요일: 오전 10:30 ~ 오후 9:00",
-      "목요일: 오전 10:30 ~ 오후 9:00",
-      "금요일: 오전 10:30 ~ 오후 9:30",
-      "토요일: 오전 10:30 ~ 오후 9:30",
-      "일요일: 오전 10:30 ~ 오후 9:30"
+      "Monday: 10:30 AM - 9:00 PM",
+      "Tuesday: 10:30 AM - 9:00 PM",
+      "Wednesday: 10:30 AM - 9:00 PM",
+      "Thursday: 10:30 AM - 9:00 PM",
+      "Friday: 10:30 AM - 9:30 PM",
+      "Saturday: 10:30 AM - 9:30 PM",
+      "Sunday: 10:30 AM - 9:30 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "황규성",
+        "author": "Hwang Gyu-seong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "Ferraro Milano is an Italian contemporary menswear brand founded in 1974 in Milan by Franco Ferraro, who began his career at Zegna. The brand is known for refined tailoring, premium European fabrics, and a style that reflects the relaxed yet elegantItalia\nFerraro Milano는 1974년에 밀라노에서 Zegna 출신의 Franco Ferraro에 의해 설립된 이탈리아의 현대 남성복 브랜드입니다. 유럽 ​​최고급 소재와 고급스럽고 자연스러운 이탈리아 스타일이 특징입니다.\nFerraro Milano 시의대리 당대 남장품패, 创立于 1974년, 유曾任职于 Zegna的Franco Ferraro在米兰创立. 품패 이후 유럽주 고단면료, 정치 전재급의 대리식 优雅生活方式 저칭.\n\nAt Hyundai City Outlet Dongdaemun, you can explore Ferraro Milano alongside a curated selection of men’s fashion brands, cafés, and concept stores that showcase Korean lifestyle and culture.\n현대시티아울렛 동대문에서는 페라로 밀라노를 비롯해 엄선된 남성 패션 브랜드와 카페, 한국의 라이프 스타일과 문화를 느낄 수 있는 컨셉 숍을 함께 즐길 수 있습니다.\n在现代城奥特莱斯东大门店、您可以选购 Ferro Milano、同时体验多样的男士时尚品牌、咖啡馆、以及展现韩国生活方式与文化特色的主题商店。"
+        "relative_time": "3 months ago",
+        "text": "Ferraro Milano is an Italian contemporary menswear brand founded in 1974 in Milan by Franco Ferraro, who began his career at Zegna. The brand is known for refined tailoring, premium European fabrics, and a style that reflects the relaxed yet elegantItalia\nFerraro Milano is an Italian contemporary menswear brand founded in Milan in 1974 by Franco Ferraro from Zegna. It features the finest European materials and a luxurious, natural Italian style.\nFerraro Milano, the city's representative, contemporary men's dress code, 1974, Yu, 1974, Zegna like Franco Ferraro. After the failure of the class, the high section fee for European stocks, the surrogate style of the political jeonjae-level, was used as an impersonation.\n\nAt Hyundai City Outlet Dongdaemun, you can explore Ferraro Milano alongside a curated selection of men’s fashion brands, cafés, and concept stores that showcase Korean lifestyle and culture.\nAt Hyundai City Outlet Dongdaemun, you can enjoy carefully selected men's fashion brands including Ferraro Milano, cafes, and concept shops where you can experience Korean lifestyle and culture.\nFerro Milano, same-family business, multi-family business, family business, family business Liquor, business exhibition, Korean food, production, culture, culture, entertainment, and more."
       }
     ],
     "photos": [
@@ -1418,8 +1418,8 @@
   },
   {
     "place_id": "ChIJvXy5biOjfDURwB-Xw-BHcng",
-    "display_name": "원미사",
-    "category": "여성의류점",
+    "display_name": "Wonmisa",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "point_of_interest",
@@ -1427,8 +1427,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 을지로6가 17번지 평화시장 1층 가-182호 중구 서울특별시 KR",
-    "short_address": "을지로6가 17번지 평화시장 1층 가-182호 중구 서울특별시 KR",
+    "address": "#182 Ga-182, 1st floor, Pyeonghwa Market, 17 Eulji-ro 6-ga, Seoul, Republic of Korea, Jung-gu, Seoul KR",
+    "short_address": "#182 Ga-182, 1st floor, Pyeonghwa Market, 17 Eulji-ro 6-ga, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.569313799999996,
       "lng": 127.0067388
@@ -1449,12 +1449,12 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": null,
@@ -1462,16 +1462,16 @@
   },
   {
     "place_id": "ChIJx9edTCOjfDURUheM9bnZNg0",
-    "display_name": "미진모자",
-    "category": "의류점",
+    "display_name": "Mijin hat",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 청계천로 274",
-    "short_address": "중구 청계천로 274",
+    "address": "274 Cheonggyecheon-ro, Jung-gu, Seoul, South Korea",
+    "short_address": "274 Cheonggyecheon-ro, Jung-gu",
     "location": {
       "lat": 37.5693632,
       "lng": 127.00688260000001
@@ -1492,7 +1492,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1501,16 +1501,16 @@
   },
   {
     "place_id": "ChIJGTOaWyOjfDURdAdYJ_uK2fA",
-    "display_name": "허씨",
-    "category": "의류점",
+    "display_name": "Mr. Heo",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 청계천로 274",
-    "short_address": "중구 청계천로 274",
+    "address": "274 Cheonggyecheon-ro, Jung-gu, Seoul, South Korea",
+    "short_address": "274 Cheonggyecheon-ro, Jung-gu",
     "location": {
       "lat": 37.5693637,
       "lng": 127.0068759
@@ -1529,18 +1529,18 @@
     "google_maps_url": "https://maps.google.com/?cid=17355055450350421876",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3235b9a3319:0xf0d98afb27580774!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 5:00",
-      "화요일: 오전 9:00 ~ 오후 5:00",
-      "수요일: 오전 9:00 ~ 오후 5:00",
-      "목요일: 오전 9:00 ~ 오후 5:00",
-      "금요일: 오전 9:00 ~ 오후 5:00",
-      "토요일: 오전 9:00 ~ 오후 2:00",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 5:00 PM",
+      "Tuesday: 9:00 AM - 5:00 PM",
+      "Wednesday: 9:00 AM - 5:00 PM",
+      "Thursday: 9:00 AM - 5:00 PM",
+      "Friday: 9:00 AM - 5:00 PM",
+      "Saturday: 9:00 AM - 2:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1549,16 +1549,16 @@
   },
   {
     "place_id": "ChIJvXy5biOjfDURNGpzVkIy4_4",
-    "display_name": "모자백화점",
-    "category": "의류점",
+    "display_name": "Hat Department Store",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 을지로6가",
-    "short_address": "중구 을지로6가",
+    "address": "Euljiro 6-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "Euljiro 6-ga, Jung-gu",
     "location": {
       "lat": 37.569305299999996,
       "lng": 127.00671570000002
@@ -1579,18 +1579,18 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김병석",
+        "author": "Kim Byeong-seok",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -1598,16 +1598,16 @@
   },
   {
     "place_id": "ChIJvXy5biOjfDURH0wc7cWOpns",
-    "display_name": "신신사",
-    "category": "의류점",
+    "display_name": "Shinsinsa Temple",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 을지로6가 17번지 평화시장 2층 가C265호 중구 서울특별시 KR",
-    "short_address": "을지로6가 17번지 평화시장 2층 가C265호 중구 서울특별시 KR",
+    "address": "#265 GaC, 2nd floor, Pyeonghwa Market, 17 Eulji-ro 6-ga, Seoul, Republic of Korea, Jung-gu, Seoul KR",
+    "short_address": "#265 GaC, 2nd floor, Pyeonghwa Market, 17 Eulji-ro 6-ga, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.5693329,
       "lng": 127.00676560000001
@@ -1628,8 +1628,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1638,16 +1638,16 @@
   },
   {
     "place_id": "ChIJx9edTCOjfDUR0SYPKwW6brc",
-    "display_name": "디즈니",
-    "category": "의류점",
+    "display_name": "disney",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 장충단로13길 20",
-    "short_address": "중구 장충단로13길 20",
+    "address": "20 Jangchungdan-ro 13-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "20 Jangchungdan-ro 13-gil, Jung-gu",
     "location": {
       "lat": 37.5688309,
       "lng": 127.0074773
@@ -1666,18 +1666,18 @@
     "google_maps_url": "https://maps.google.com/?cid=13217706487739000529",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3234c9dd7c7:0xb76eba052b0f26d1!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 9:00",
-      "화요일: 오전 10:30 ~ 오후 9:00",
-      "수요일: 오전 10:30 ~ 오후 9:00",
-      "목요일: 오전 10:30 ~ 오후 9:00",
-      "금요일: 오전 10:30 ~ 오후 9:00",
-      "토요일: 오전 10:30 ~ 오후 9:00",
-      "일요일: 오전 10:30 ~ 오후 9:00"
+      "Monday: 10:30 AM - 9:00 PM",
+      "Tuesday: 10:30 AM - 9:00 PM",
+      "Wednesday: 10:30 AM - 9:00 PM",
+      "Thursday: 10:30 AM - 9:00 PM",
+      "Friday: 10:30 AM - 9:00 PM",
+      "Saturday: 10:30 AM - 9:00 PM",
+      "Sunday: 10:30 AM - 9:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1686,16 +1686,16 @@
   },
   {
     "place_id": "ChIJvXy5biOjfDURBwBH7JZYIe4",
-    "display_name": "TNC모자",
-    "category": "의류점",
+    "display_name": "TNC hat",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 을지로6가 17번지 평화시장 1층 가열264호 265 266다열16 중구 서울특별시 KR",
-    "short_address": "을지로6가 17번지 평화시장 1층 가열264호 265 266다열16 중구 서울특별시 KR",
+    "address": "#264, 1st floor, Pyeonghwa Market, 17 Euljiro 6-ga, Seoul, Republic of Korea 265 266Dayeol 16, Jung-gu, Seoul KR",
+    "short_address": "#264, 1st floor, Pyeonghwa Market, 17 Eulji-ro 6-ga 265 266Dayeol 16, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.5693231,
       "lng": 127.00672139999999
@@ -1716,8 +1716,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1726,16 +1726,16 @@
   },
   {
     "place_id": "ChIJj4KMmzujfDURA9anlkXgIqM",
-    "display_name": "꼬끼오",
-    "category": "신발 판매점",
+    "display_name": "Kkokkio",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 장충단로 282-10",
-    "short_address": "중구 장충단로 282-10",
+    "address": "282-10 Jangchungdan-ro, Jung-gu, Seoul, South Korea",
+    "short_address": "282-10 Jangchungdan-ro, Jung-gu",
     "location": {
       "lat": 37.569101499999995,
       "lng": 127.0108647
@@ -1754,18 +1754,18 @@
     "google_maps_url": "https://maps.google.com/?cid=11755204566875362819",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33b9b8c828f:0xa322e04596a7d603!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1775,15 +1775,15 @@
   {
     "place_id": "ChIJsdwMnDujfDURvHQrDYBkZc4",
     "display_name": "Jindo Design Shoes!",
-    "category": "신발 판매점",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 장충단로 282-10",
-    "short_address": "중구 장충단로 282-10",
+    "address": "282-10 Jangchungdan-ro, Jung-gu, Seoul, South Korea",
+    "short_address": "282-10 Jangchungdan-ro, Jung-gu",
     "location": {
       "lat": 37.5691305,
       "lng": 127.01081459999999
@@ -1802,18 +1802,18 @@
     "google_maps_url": "https://maps.google.com/?cid=14872403845600474300",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33b9c0cdcb1:0xce6564800d2b74bc!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1822,16 +1822,16 @@
   },
   {
     "place_id": "ChIJfR7lmzujfDURQ7-MmZu79m4",
-    "display_name": "옷샘",
-    "category": "의류점",
+    "display_name": "Otsam",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당1동 772",
-    "short_address": "중구 신당1동 772",
+    "address": "772, Sindang 1-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "772, Sindang 1-dong, Jung-gu",
     "location": {
       "lat": 37.5691305,
       "lng": 127.01081459999999
@@ -1852,8 +1852,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1862,16 +1862,16 @@
   },
   {
     "place_id": "ChIJLc1-hTujfDURT10oHGQKdoI",
-    "display_name": "패션팀",
-    "category": "의류점",
+    "display_name": "fashion team",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 신당동 774번지 제일평화시장 지하층 382 383호 중구 서울특별시 KR",
-    "short_address": "신당동 774번지 제일평화시장 지하층 382 383호 중구 서울특별시 KR",
+    "address": "Room 382 383, Basement Floor, Jeil Pyeonghwa Market, 774 Sindang-dong, Seoul, Republic of Korea, Jung-gu, Seoul KR",
+    "short_address": "774 Sindang-dong, Jeil Pyeonghwa Market Basement Floor #382 383, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.5686531,
       "lng": 127.01115820000001
@@ -1892,8 +1892,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1905,16 +1905,16 @@
   },
   {
     "place_id": "ChIJLc1-hTujfDURKboaglNa4hg",
-    "display_name": "W(더블유)",
-    "category": "의류점",
+    "display_name": "W",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동",
-    "short_address": "중구 신당동",
+    "address": "Sindang-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.5686531,
       "lng": 127.01115820000001
@@ -1933,18 +1933,18 @@
     "google_maps_url": "https://maps.google.com/?cid=1793094916358453801",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33b857ecd2d:0x18e25a53821aba29!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오전 4:30",
-      "화요일: 오전 10:00 ~ 오전 4:30",
-      "수요일: 오전 10:00 ~ 오전 4:30",
-      "목요일: 오전 10:00 ~ 오전 4:30",
-      "금요일: 오전 10:00 ~ 오전 4:30",
-      "토요일: 오전 10:00 ~ 오후 5:00",
-      "일요일: 오후 9:00 ~ 오전 4:30"
+      "Monday: 10:00 AM - 4:30 AM",
+      "Tuesday: 10:00 AM - 4:30 AM",
+      "Wednesday: 10:00 AM - 4:30 AM",
+      "Thursday: 10:00 AM - 4:30 AM",
+      "Friday: 10:00 AM - 4:30 AM",
+      "Saturday: 10:00 AM - 5:00 PM",
+      "Sunday: 9:00 PM - 4:30 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1954,7 +1954,7 @@
         "author": "Mink mong",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -1962,16 +1962,16 @@
   },
   {
     "place_id": "ChIJl6JlIACjfDURrZZYgOxTBXk",
-    "display_name": "Friends Italy 프렌즈 무스탕 가죽",
-    "category": "의류점",
+    "display_name": "Friends Italy Friends Mustang Leather",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 마장로 3",
-    "short_address": "중구 마장로 3",
+    "address": "3 Majang-ro, Jung-gu, Seoul, South Korea",
+    "short_address": "3 Majang-ro, Jung-gu",
     "location": {
       "lat": 37.5687305,
       "lng": 127.01066329999998
@@ -1990,17 +1990,17 @@
     "google_maps_url": "https://maps.google.com/?cid=8720468528703510189",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3002065a297:0x790553ec805896ad!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "체크카드"
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2009,14 +2009,14 @@
         "author": "Mihye Kwon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "다른 가죽이나 양털 가게들은 밤에만 열고 금~일요일은 닫는데, 여기는 금요일 오후 4시에 문을 열었어요.\n\n야시장보다 조금 비싸긴 하지만, 밤늦게까지 나가기 귀찮은 사람들에게는 돈을 더 내는 게 나을 거예요. 저는 디자이너 브랜드 재킷의 4분의 1 가격에 크롭 가죽 양털 재킷을 샀어요. 품질도 좋고, 신용카드로 결제하면 10%가 더 부과되더라고요. 저는 신용카드로 결제했어요."
+        "relative_time": "2 years ago",
+        "text": "Other leather or wool stores only open at night and close from Friday to Sunday, but this one opened at 4pm on Friday.\n\nIt's a little more expensive than the night market, but for those who don't want to go out late at night, it might be worth paying more. I bought a cropped leather shearling jacket for a quarter of the price of a designer brand jacket. The quality is good, but if you pay with a credit card, an additional 10% is charged. I paid with a credit card."
       },
       {
-        "author": "유승렬",
+        "author": "Seungryeol Yoo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -2030,16 +2030,16 @@
   },
   {
     "place_id": "ChIJC9HkgTujfDURZ4TwnCl03bM",
-    "display_name": "오뜨레",
-    "category": "의류점",
+    "display_name": "Otre",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동 773번지 맥스타일 2층26호",
-    "short_address": "중구 신당동 773번지 맥스타일 2층26호",
+    "address": "Room 26, 2nd floor, Maxtyle, 773 Sindang-dong, Jung-gu, Seoul, Korea",
+    "short_address": "Room 26, 2nd floor, Maxtyle, 773 Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.5687296,
       "lng": 127.01066069999999
@@ -2060,8 +2060,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2072,16 +2072,16 @@
   },
   {
     "place_id": "ChIJRVoQRQCjfDURjA6mgL8RAkg",
-    "display_name": "마르진 margin",
-    "category": "신발 판매점",
+    "display_name": "Margin margin",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 마장로 3",
-    "short_address": "중구 마장로 3",
+    "address": "3 Majang-ro, Jung-gu, Seoul, South Korea",
+    "short_address": "3 Majang-ro, Jung-gu",
     "location": {
       "lat": 37.5688228,
       "lng": 127.01056329999999
@@ -2100,28 +2100,28 @@
     "google_maps_url": "https://maps.google.com/?cid=5188729234879024780",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca30045105a45:0x480211bf80a60e8c!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 오전 10:00 ~ 오후 5:00",
-      "토요일: 오전 10:00 ~ 오후 5:00",
-      "일요일: 오후 8:00 ~ 오전 12:00"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: 10:00 AM - 5:00 PM",
+      "Saturday: 10:00 AM - 5:00 PM",
+      "Sunday: 8:00 PM - 12:00 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이성훈",
+        "author": "Seonghoon Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
+        "relative_time": "3 months ago",
         "text": null
       }
     ],
@@ -2129,16 +2129,16 @@
   },
   {
     "place_id": "ChIJTTvLmDujfDUR3GIGXu-HwSw",
-    "display_name": "타워",
-    "category": "의류점",
+    "display_name": "tower",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 신당동 217-117번지 중구 서울특별시 KR",
-    "short_address": "신당동 217-117번지 중구 서울특별시 KR",
+    "address": "217-117 Sindang-dong, Seoul, Republic of Korea, Jung-gu, Seoul KR",
+    "short_address": "217-117 Sindang-dong, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.5693921,
       "lng": 127.0108473
@@ -2159,11 +2159,11 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": null,
@@ -2171,16 +2171,16 @@
   },
   {
     "place_id": "ChIJ82CBojujfDURoXVVK357bTw",
-    "display_name": "퀸스컬렉션",
-    "category": "의류점",
+    "display_name": "Queen's Collection",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동 번지 2층 217-1 에이동 21호",
-    "short_address": "중구 신당동 번지 2층 217-1 에이동 21호",
+    "address": "#21, Building A, 217-1, 2nd floor, Sindang-dong, Jung-gu, Seoul, Republic of Korea",
+    "short_address": "#21, Building A, 217-1, 2nd floor, Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.5694216,
       "lng": 127.01103149999999
@@ -2201,8 +2201,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2211,16 +2211,16 @@
   },
   {
     "place_id": "ChIJ82CBojujfDURNRIAldBF5_Q",
-    "display_name": "챠밍",
-    "category": "의류점",
+    "display_name": "Charming",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동 217-1번지 신평화상가 지하층 다 3호",
-    "short_address": "중구 신당동 217-1번지 신평화상가 지하층 다 3호",
+    "address": "#3, Basement Floor, Shinpyeong Shopping Mall, 217-1 Sindang-dong, Jung-gu, Seoul, Republic of Korea",
+    "short_address": "#3, Basement Floor, Shinpyeong Shopping Center, 217-1 Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.5694216,
       "lng": 127.01103149999999
@@ -2241,8 +2241,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2251,16 +2251,16 @@
   },
   {
     "place_id": "ChIJ82CBojujfDURbk0Z7X7-wBM",
-    "display_name": "(주)아이니",
-    "category": "의류점",
+    "display_name": "Aini Co., Ltd.",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 신당동 217-1번지 중구 서울특별시 KR",
-    "short_address": "신당동 217-1번지 중구 서울특별시 KR",
+    "address": "217-1 Sindang-dong, Seoul, Republic of Korea, Jung-gu, Seoul KR",
+    "short_address": "217-1 Sindang-dong, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.5694216,
       "lng": 127.01103149999999
@@ -2288,16 +2288,16 @@
   },
   {
     "place_id": "ChIJ82CBojujfDURbgcE9Y2LrTc",
-    "display_name": "화성패션",
-    "category": "의류점",
+    "display_name": "Hwaseong Fashion",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 신당동 217-1번지 신평화상가 3호 B42 중구 서울특별시 KR",
-    "short_address": "신당동 217-1번지 신평화상가 3호 B42 중구 서울특별시 KR",
+    "address": "217-1 Sindang-dong, Seoul, South Korea, Shinpyeonghwa Shopping Center, #3 B42, Jung-gu, Seoul KR",
+    "short_address": "217-1 Sindang-dong, Shinpyeong Shopping Mall, No. 3, B42, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.5694216,
       "lng": 127.01103149999999
@@ -2318,8 +2318,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2328,16 +2328,16 @@
   },
   {
     "place_id": "ChIJ82CBojujfDURfIX0A2Edrcw",
-    "display_name": "투풋",
-    "category": "의류점",
+    "display_name": "two foot",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 신당동 217-1번지 1층 가4호 신평화시장 중구 서울특별시 KR",
-    "short_address": "신당동 217-1번지 1층 가4호 신평화시장 중구 서울특별시 KR",
+    "address": "217-1 Sindang-dong, Seoul, Republic of Korea, #4, 1st floor, Shinpyeonghwa Market, Jung-gu, Seoul KR",
+    "short_address": "217-1 Sindang-dong, 1st floor, No. 4, Shinpyeonghwa Market, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.5694216,
       "lng": 127.01103149999999
@@ -2358,8 +2358,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2368,16 +2368,16 @@
   },
   {
     "place_id": "ChIJ82CBojujfDURb2yC4mPCIno",
-    "display_name": "금도",
-    "category": "의류점",
+    "display_name": "Geumdo",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 신당동 217-1번지 1층 가19호 신당동신평화시장 중구 서울특별시 KR",
-    "short_address": "신당동 217-1번지 1층 가19호 신당동신평화시장 중구 서울특별시 KR",
+    "address": "19th floor, 1st floor, 217-1 Sindang-dong, Seoul, Republic of Korea Shindang-dong Shinpyeonghwa Market Jung-gu Seoul KR",
+    "short_address": "#19 Ga, 1st floor, 217-1 Sindang-dong, Sindang-dong Shinpyeonghwa Market, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.5694216,
       "lng": 127.01103149999999
@@ -2398,7 +2398,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2407,16 +2407,16 @@
   },
   {
     "place_id": "ChIJ82CBojujfDUR62XrjOUmhXQ",
-    "display_name": "이모든",
-    "category": "의류점",
+    "display_name": "This is everything",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 신당동 217-1번지 2 B동 43호 중구 서울특별시 KR",
-    "short_address": "신당동 217-1번지 2 B동 43호 중구 서울특별시 KR",
+    "address": "#43, Building B, 2, 217-1, Sindang-dong, Seoul, Republic of Korea, Jung-gu, Seoul KR",
+    "short_address": "#43, Building B, 2, 217-1, Sindang-dong, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.5694216,
       "lng": 127.01103149999999
@@ -2444,16 +2444,16 @@
   },
   {
     "place_id": "ChIJ82CBojujfDUR7tC6YBRQOwg",
-    "display_name": "안드레",
-    "category": "의류점",
+    "display_name": "Andre",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 신당동 217-1번지 신평화상가 지하층 층 가22호 중구 서울특별시 KR",
-    "short_address": "신당동 217-1번지 신평화상가 지하층 층 가22호 중구 서울특별시 KR",
+    "address": "#22, Basement Floor, Shinpyeong Shopping Center, 217-1 Sindang-dong, Seoul, Republic of Korea, Jung-gu, Seoul KR",
+    "short_address": "217-1 Sindang-dong, Shinpyeong Burns Mall, basement floor, #22, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.5694216,
       "lng": 127.01103149999999
@@ -2474,8 +2474,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2484,16 +2484,16 @@
   },
   {
     "place_id": "ChIJ82CBojujfDURhdQdfj7XOQE",
-    "display_name": "모밍스포츠",
-    "category": "의류점",
+    "display_name": "moming sports",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 신당동 217-1번지 13동 1호 중구 서울특별시 KR",
-    "short_address": "신당동 217-1번지 13동 1호 중구 서울특별시 KR",
+    "address": "13 Building 1, 217-1 Sindang-dong, Seoul, Republic of Korea Jung-gu Seoul KR",
+    "short_address": "217-1 Sindang-dong, Building 13, No. 1, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.5694216,
       "lng": 127.01103149999999
@@ -2514,8 +2514,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2524,16 +2524,16 @@
   },
   {
     "place_id": "ChIJ82CBojujfDURyDpE140QkCQ",
-    "display_name": "나무",
-    "category": "의류점",
+    "display_name": "tree",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 신당동 217-1번지 신평화상가 1층 5호 중구 서울특별시 KR",
-    "short_address": "신당동 217-1번지 신평화상가 1층 5호 중구 서울특별시 KR",
+    "address": "#5, 1st floor, Shinpyeong Shopping Center, 217-1 Sindang-dong, Seoul, Republic of Korea, Jung-gu, Seoul KR",
+    "short_address": "217-1 Sindang-dong, #5, 1st floor, Shinpyeong Shopping Center, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.5694216,
       "lng": 127.01103149999999
@@ -2554,7 +2554,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "체크카드"
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2563,16 +2563,16 @@
   },
   {
     "place_id": "ChIJ82CBojujfDURoH8QhXsXpdM",
-    "display_name": "쏠트",
-    "category": "의류점",
+    "display_name": "salt",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 신당동 217-1번지 신평화시장 C동 2층 17호 중구 서울특별시 KR",
-    "short_address": "신당동 217-1번지 신평화시장 C동 2층 17호 중구 서울특별시 KR",
+    "address": "Room 17, 2nd floor, Building C, Shinpyeonghwa Market, 217-1 Sindang-dong, Seoul, Republic of Korea, Jung-gu, Seoul KR",
+    "short_address": "Room 17, 2nd floor, Building C, Shinpyeonghwa Market, 217-1 Sindang-dong, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.5694216,
       "lng": 127.01103149999999
@@ -2593,8 +2593,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2603,16 +2603,16 @@
   },
   {
     "place_id": "ChIJe7XYCTmjfDURMHODX-iAq10",
-    "display_name": "윌",
-    "category": "의류점",
+    "display_name": "will",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동 193 2번지",
-    "short_address": "중구 신당동 193 2번지",
+    "address": "193 2, Sindang-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "193 2nd, Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.5691202,
       "lng": 127.0149759
@@ -2633,8 +2633,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2643,16 +2643,16 @@
   },
   {
     "place_id": "ChIJe7XYCTmjfDURe9RVLjUN4Uk",
-    "display_name": "보떼",
-    "category": "화장품 판매점",
+    "display_name": "Beaute",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동 193 2번지",
-    "short_address": "중구 신당동 193 2번지",
+    "address": "193 2, Sindang-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "193 2nd, Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.5691202,
       "lng": 127.0149759
@@ -2673,8 +2673,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2683,16 +2683,16 @@
   },
   {
     "place_id": "ChIJe7XYCTmjfDUR53aMVFfaSm0",
-    "display_name": "린제이",
-    "category": "의류점",
+    "display_name": "Lindsay",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 KR 서울특별시 중구 신당동 193-2번지 디오트상가 3층 D13호",
-    "short_address": "KR 서울특별시 중구 신당동 193-2번지 디오트상가 3층 D13호",
+    "address": "Room D13, 3rd floor, Diot Shopping Center, 193-2 Sindang-dong, Jung-gu, Seoul, Republic of Korea",
+    "short_address": "KR Room D13, 3rd floor, Diot Shopping Center, 193-2 Sindang-dong, Jung-gu, Seoul",
     "location": {
       "lat": 37.5691202,
       "lng": 127.0149759
@@ -2713,8 +2713,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2723,16 +2723,16 @@
   },
   {
     "place_id": "ChIJe7XYCTmjfDURX1fcHYCPisA",
-    "display_name": "루루제이",
-    "category": "의류점",
+    "display_name": "Lulu J",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 KR 서울특별시 중구 신당동 193-2번지 지하1층 C동 04호",
-    "short_address": "KR 서울특별시 중구 신당동 193-2번지 지하1층 C동 04호",
+    "address": "Seoul, Republic of Korea KR Room 04, Building C, Basement 1, 193-2, Sindang-dong, Jung-gu, Seoul",
+    "short_address": "KR Room 04, Building C, Basement 1, 193-2 Sindang-dong, Jung-gu, Seoul",
     "location": {
       "lat": 37.5691202,
       "lng": 127.0149759
@@ -2753,8 +2753,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2763,8 +2763,8 @@
   },
   {
     "place_id": "ChIJe7XYCTmjfDUR8PFMceqPn2I",
-    "display_name": "쁘렝땅",
-    "category": "여성의류점",
+    "display_name": "Printemps",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "point_of_interest",
@@ -2772,8 +2772,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동 09호 KR 서울특별시 중구 신당동 193-2번지 2층 2F",
-    "short_address": "동 KR 서울특별시 중구 신당동 193-2번지 2층 2F 09호",
+    "address": "Building 09, Seoul, Republic of Korea KR 2nd floor, 2nd floor, 193-2 Sindang-dong, Jung-gu, Seoul",
+    "short_address": "East KR Room 09, 2nd floor, 2nd floor, 193-2 Sindang-dong, Jung-gu, Seoul",
     "location": {
       "lat": 37.5691202,
       "lng": 127.0149759
@@ -2794,8 +2794,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2804,16 +2804,16 @@
   },
   {
     "place_id": "ChIJe7XYCTmjfDUR-LB0rujUFgM",
-    "display_name": "블랙다이아몬드",
-    "category": "귀금속 상점",
+    "display_name": "black diamond",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 신당동 193-2번지 1층 B동 10호 중구 서울특별시 KR",
-    "short_address": "신당동 193-2번지 1층 B동 10호 중구 서울특별시 KR",
+    "address": "#10, Building B, 1st floor, 193-2, Sindang-dong, Seoul, Republic of Korea, Jung-gu, Seoul KR",
+    "short_address": "#10, Building B, 1st floor, 193-2 Sindang-dong, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.5691202,
       "lng": 127.0149759
@@ -2834,8 +2834,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2845,16 +2845,16 @@
   },
   {
     "place_id": "ChIJe7XYCTmjfDURBrkIaRsOdto",
-    "display_name": "라미제이",
-    "category": "의류점",
+    "display_name": "Rami J",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동 193-2번지",
-    "short_address": "중구 신당동 193-2번지",
+    "address": "193-2, Sindang-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "193-2 Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.5691202,
       "lng": 127.0149759
@@ -2875,8 +2875,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2885,16 +2885,16 @@
   },
   {
     "place_id": "ChIJe7XYCTmjfDURUgb4XDn_pbU",
-    "display_name": "체리핑크",
-    "category": "의류점",
+    "display_name": "Cherry Pink",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동 193-2번지 디오트 1층 18호",
-    "short_address": "중구 신당동 193-2번지 디오트 1층 18호",
+    "address": "Room 18, 1st floor, Diot Building, 193-2 Sindang-dong, Jung-gu, Seoul, Korea",
+    "short_address": "Room 18, 1st floor, Diot, 193-2 Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.5691202,
       "lng": 127.0149759
@@ -2915,8 +2915,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2925,16 +2925,16 @@
   },
   {
     "place_id": "ChIJe7XYCTmjfDURahAHEEvQicY",
-    "display_name": "(주)바나나뉴욕",
-    "category": "의류점",
+    "display_name": "Banana New York Co., Ltd.",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 신당동 193-2번지 2층 비열 19호 중구 서울특별시 KR",
-    "short_address": "신당동 193-2번지 2층 비열 19호 중구 서울특별시 KR",
+    "address": "193-2, Sindang-dong, Seoul, South Korea, 2nd floor, Biyeol #19, Jung-gu, Seoul KR",
+    "short_address": "#19, 2nd floor, 193-2 Sindang-dong, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.5691202,
       "lng": 127.0149759
@@ -2955,7 +2955,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2964,8 +2964,8 @@
   },
   {
     "place_id": "ChIJe2bNrnqjfDURfCK4WsCzWIQ",
-    "display_name": "클로띵크",
-    "category": "여성의류점",
+    "display_name": "Clothink",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "point_of_interest",
@@ -2973,8 +2973,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 D12 다산로 293 디오뜨 5충 KR 서울특별시 중구",
-    "short_address": "D12 다산로 293 KR 서울특별시 중구 디오뜨 5충",
+    "address": "293 Dasan-ro, D12, Seoul, Republic of Korea Diote 5-block, Jung-gu, Seoul KR",
+    "short_address": "D12 293 Dasan-ro KR Diote 5-dong, Jung-gu, Seoul",
     "location": {
       "lat": 37.5691371,
       "lng": 127.0147791
@@ -2995,8 +2995,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3005,8 +3005,8 @@
   },
   {
     "place_id": "ChIJXWuSYs6jfDURnVvcfCtiZ6U",
-    "display_name": "니즈",
-    "category": "여성의류점",
+    "display_name": "needs",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "point_of_interest",
@@ -3014,8 +3014,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동 다산로 293 디오트 3층 B-13호",
-    "short_address": "중구 신당동 다산로 293 디오트 3층 B-13호",
+    "address": "Room B-13, 3rd floor, Diot, 293 Dasan-ro, Sindang-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "Room B-13, 3rd floor, Diot, 293 Dasan-ro, Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.5691371,
       "lng": 127.0147791
@@ -3034,18 +3034,18 @@
     "google_maps_url": "https://maps.google.com/?cid=11918602877777238941",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3ce62926b5d:0xa567622b7cdc5b9d!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 11:30 ~ 오전 11:30",
-      "화요일: 오후 11:30 ~ 오전 11:30",
-      "수요일: 오후 11:30 ~ 오전 11:30",
-      "목요일: 오후 11:30 ~ 오전 5:00",
-      "금요일: 휴무일",
-      "토요일: 휴무일",
-      "일요일: 오후 11:30 ~ 오전 11:30"
+      "Monday: 11:30 PM - 11:30 AM",
+      "Tuesday: 11:30 PM - 11:30 AM",
+      "Wednesday: 11:30 PM - 11:30 AM",
+      "Thursday: 11:30 PM - 5:00 AM",
+      "Friday: Closed day",
+      "Saturday: Closed day",
+      "Sunday: 11:30 PM - 11:30 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3054,8 +3054,8 @@
   },
   {
     "place_id": "ChIJ-XGnpjmjfDURnhw4_VxjcM4",
-    "display_name": "디스티",
-    "category": "여성의류점",
+    "display_name": "Disty",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "point_of_interest",
@@ -3063,8 +3063,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동 청계천로 334 청평화시장 1층 가 21호",
-    "short_address": "중구 신당동 청계천로 334 1층 가 21호 청평화시장",
+    "address": "#21, 1st floor, Cheongpyeonghwa Market, 334 Cheonggyecheon-ro, Sindang-dong, Jung-gu, Seoul, Republic of Korea",
+    "short_address": "Cheongpyeonghwa Market, #21, 1st floor, 334 Cheonggyecheon-ro, Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.569427999999995,
       "lng": 127.01492539999998
@@ -3085,8 +3085,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3095,16 +3095,16 @@
   },
   {
     "place_id": "ChIJ-XGnpjmjfDURAxtGHfgcB8I",
-    "display_name": "런던브라이드",
-    "category": "의류점",
+    "display_name": "London Bride",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 지하층 가열 20호 번지 청 KR 서울특별시 중구 신당동 217-91",
-    "short_address": "지하층 가열 20호 KR 서울특별시 중구 신당동 217-91 번지 청",
+    "address": "Republic of Korea Seoul, Republic of Korea Basement Heating No. 20 Cheong KR 217-91 Sindang-dong, Jung-gu, Seoul",
+    "short_address": "Basement floor heating No. 20 KR Office, 217-91 Sindang-dong, Jung-gu, Seoul",
     "location": {
       "lat": 37.569427999999995,
       "lng": 127.01492539999998
@@ -3125,8 +3125,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3135,8 +3135,8 @@
   },
   {
     "place_id": "ChIJ-XGnpjmjfDURJGw9bfmmtfU",
-    "display_name": "뉴욕세이",
-    "category": "여성의류점",
+    "display_name": "New York Say",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "point_of_interest",
@@ -3144,8 +3144,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 KR 서울특별시 중구 신당동 217-91번지 3층 다열 42호",
-    "short_address": "KR 서울특별시 중구 신당동 217-91번지 3층 다열 42호",
+    "address": "Room 42, Multi-row, 3rd floor, 217-91 Sindang-dong, Jung-gu, Seoul, Republic of Korea KR",
+    "short_address": "KR Room 42, Multi-row, 3rd floor, 217-91 Sindang-dong, Jung-gu, Seoul",
     "location": {
       "lat": 37.569427999999995,
       "lng": 127.01492539999998
@@ -3166,8 +3166,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3176,16 +3176,16 @@
   },
   {
     "place_id": "ChIJR02npjmjfDURqYAkdAhdQi8",
-    "display_name": "오션뷰",
-    "category": "의류점",
+    "display_name": "Ocean view",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동 217-91",
-    "short_address": "중구 신당동 217-91",
+    "address": "217-91 Sindang-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "217-91 Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.569427999999995,
       "lng": 127.01492539999998
@@ -3206,8 +3206,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3216,16 +3216,16 @@
   },
   {
     "place_id": "ChIJR02npjmjfDURvzTgOakVq8E",
-    "display_name": "루비",
-    "category": "의류점",
+    "display_name": "ruby",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동 217-91",
-    "short_address": "중구 신당동 217-91",
+    "address": "217-91 Sindang-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "217-91 Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.569427999999995,
       "lng": 127.01492539999998
@@ -3246,8 +3246,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3256,16 +3256,16 @@
   },
   {
     "place_id": "ChIJR02npjmjfDUR5A1kwUEbgJY",
-    "display_name": "성공사",
-    "category": "의류점",
+    "display_name": "success story",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동 217-91",
-    "short_address": "중구 신당동 217-91",
+    "address": "217-91 Sindang-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "217-91 Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.569427999999995,
       "lng": 127.01492539999998
@@ -3286,8 +3286,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3296,16 +3296,16 @@
   },
   {
     "place_id": "ChIJoZ0Y0yKjfDUR6wgNyU2k-k8",
-    "display_name": "연다라",
-    "category": "의류점",
+    "display_name": "Open it",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동 217-91",
-    "short_address": "중구 신당동 217-91",
+    "address": "217-91 Sindang-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "217-91 Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.569427999999995,
       "lng": 127.01492539999998
@@ -3326,8 +3326,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3336,16 +3336,16 @@
   },
   {
     "place_id": "ChIJR02npjmjfDURL-LywWOqIuA",
-    "display_name": "대림사",
-    "category": "의류점",
+    "display_name": "Daerimsa Temple",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동 217-91",
-    "short_address": "중구 신당동 217-91",
+    "address": "217-91 Sindang-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "217-91 Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.569427999999995,
       "lng": 127.01492539999998
@@ -3373,16 +3373,16 @@
   },
   {
     "place_id": "ChIJR02npjmjfDURoCJZUhlxzGA",
-    "display_name": "주근깨",
-    "category": "의류점",
+    "display_name": "freckles",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동 217-91",
-    "short_address": "중구 신당동 217-91",
+    "address": "217-91 Sindang-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "217-91 Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.569427999999995,
       "lng": 127.01492539999998
@@ -3403,8 +3403,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3413,16 +3413,16 @@
   },
   {
     "place_id": "ChIJYyqR3SSjfDURtuGq_B-ELIw",
-    "display_name": "발란스",
-    "category": "의류점",
+    "display_name": "balance",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로41길 13",
-    "short_address": "종로구 종로41길 13",
+    "address": "13 Jongno 41-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "13 Jongno 41-gil, Jongno-gu",
     "location": {
       "lat": 37.5718096,
       "lng": 127.00654300000001
@@ -3441,18 +3441,18 @@
     "google_maps_url": "https://maps.google.com/?cid=10100593337203089846",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca324dd912a63:0x8c2c841ffcaae1b6!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 8:00",
-      "화요일: 오전 10:00 ~ 오후 8:00",
-      "수요일: 오전 10:00 ~ 오후 8:00",
-      "목요일: 오전 10:00 ~ 오후 8:00",
-      "금요일: 오전 10:00 ~ 오후 8:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 8:00 PM",
+      "Tuesday: 10:00 AM - 8:00 PM",
+      "Wednesday: 10:00 AM - 8:00 PM",
+      "Thursday: 10:00 AM - 8:00 PM",
+      "Friday: 10:00 AM - 8:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3461,16 +3461,16 @@
   },
   {
     "place_id": "ChIJE-uZ3SSjfDUR4f1BRDu52sI",
-    "display_name": "코아",
-    "category": "의류점",
+    "display_name": "koa",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로41길 13",
-    "short_address": "종로구 종로41길 13",
+    "address": "13 Jongno 41-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "13 Jongno 41-gil, Jongno-gu",
     "location": {
       "lat": 37.571794499999996,
       "lng": 127.006548
@@ -3489,18 +3489,18 @@
     "google_maps_url": "https://maps.google.com/?cid=14040738452480327137",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca324dd99eb13:0xc2dab93b4441fde1!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 8:00",
-      "화요일: 오전 10:00 ~ 오후 8:00",
-      "수요일: 오전 10:00 ~ 오후 8:00",
-      "목요일: 오전 10:00 ~ 오후 8:00",
-      "금요일: 오전 10:00 ~ 오후 8:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 8:00 PM",
+      "Tuesday: 10:00 AM - 8:00 PM",
+      "Wednesday: 10:00 AM - 8:00 PM",
+      "Thursday: 10:00 AM - 8:00 PM",
+      "Friday: 10:00 AM - 8:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3509,8 +3509,8 @@
   },
   {
     "place_id": "ChIJjSiZ3SSjfDURtY7tb6OsCuw",
-    "display_name": "마인드",
-    "category": "여성의류점",
+    "display_name": "mind",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "clothing_store",
@@ -3518,8 +3518,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로41길 13",
-    "short_address": "종로구 종로41길 13",
+    "address": "13 Jongno 41-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "13 Jongno 41-gil, Jongno-gu",
     "location": {
       "lat": 37.5717806,
       "lng": 127.00655339999999
@@ -3538,18 +3538,18 @@
     "google_maps_url": "https://maps.google.com/?cid=17008596760675585717",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca324dd99288d:0xec0aaca36fed8eb5!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 8:00",
-      "화요일: 오전 10:00 ~ 오후 8:00",
-      "수요일: 오전 10:00 ~ 오후 8:00",
-      "목요일: 오전 10:00 ~ 오후 8:00",
-      "금요일: 오전 10:00 ~ 오후 8:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 8:00 PM",
+      "Tuesday: 10:00 AM - 8:00 PM",
+      "Wednesday: 10:00 AM - 8:00 PM",
+      "Thursday: 10:00 AM - 8:00 PM",
+      "Friday: 10:00 AM - 8:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3558,16 +3558,16 @@
   },
   {
     "place_id": "ChIJxUEw5ySjfDURpeDvRr-QAT8",
-    "display_name": "다인",
-    "category": "의류점",
+    "display_name": "dyne",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로6가 244-6",
-    "short_address": "종로구 종로6가 244-6",
+    "address": "244-6 Jongno 6-ga, Jongno-gu, Seoul, South Korea",
+    "short_address": "244-6 Jongno 6-ga, Jongno-gu",
     "location": {
       "lat": 37.571942,
       "lng": 127.00633529999999
@@ -3588,8 +3588,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3598,16 +3598,16 @@
   },
   {
     "place_id": "ChIJz4Es1TqjfDUR9GsVduA-pz4",
-    "display_name": "엘제이",
-    "category": "의류점",
+    "display_name": "LJ",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로6가",
-    "short_address": "종로구 종로6가",
+    "address": "Jongno 6-ga, Jongno-gu, Seoul, South Korea",
+    "short_address": "Jongno 6-ga, Jongno-gu",
     "location": {
       "lat": 37.571853,
       "lng": 127.0078329
@@ -3628,8 +3628,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3638,16 +3638,16 @@
   },
   {
     "place_id": "ChIJXYf61SSjfDURfEE3LPriUsc",
-    "display_name": "각시방",
-    "category": "의류점",
+    "display_name": "Each room",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로6가",
-    "short_address": "종로구 종로6가",
+    "address": "Jongno 6-ga, Jongno-gu, Seoul, South Korea",
+    "short_address": "Jongno 6-ga, Jongno-gu",
     "location": {
       "lat": 37.571853,
       "lng": 127.0078329
@@ -3668,8 +3668,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3678,16 +3678,16 @@
   },
   {
     "place_id": "ChIJU_TYPjujfDURYRenshnvmwU",
-    "display_name": "상신주단",
-    "category": "의류점",
+    "display_name": "Sangsin Judan",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로6가",
-    "short_address": "종로구 종로6가",
+    "address": "Jongno 6-ga, Jongno-gu, Seoul, South Korea",
+    "short_address": "Jongno 6-ga, Jongno-gu",
     "location": {
       "lat": 37.571853,
       "lng": 127.0078329
@@ -3706,20 +3706,20 @@
     "google_maps_url": "https://maps.google.com/?cid=404179485230307169",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33b3ed8f453:0x59bef19b2a71761!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 7:00",
-      "화요일: 오전 10:00 ~ 오후 7:00",
-      "수요일: 오전 10:00 ~ 오후 7:00",
-      "목요일: 오전 10:00 ~ 오후 7:00",
-      "금요일: 오전 10:00 ~ 오후 7:00",
-      "토요일: 오전 10:00 ~ 오후 7:00",
-      "일요일: 오전 10:00 ~ 오후 7:00"
+      "Monday: 10:00 AM - 7:00 PM",
+      "Tuesday: 10:00 AM - 7:00 PM",
+      "Wednesday: 10:00 AM - 7:00 PM",
+      "Thursday: 10:00 AM - 7:00 PM",
+      "Friday: 10:00 AM - 7:00 PM",
+      "Saturday: 10:00 AM - 7:00 PM",
+      "Sunday: 10:00 AM - 7:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3728,16 +3728,16 @@
   },
   {
     "place_id": "ChIJg2ETPSWjfDUReAeotUz82Xk",
-    "display_name": "저스트인스타일",
-    "category": "의류점",
+    "display_name": "Just in Style",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로6가 189번지 4층 402호 세동빌딩 종로구 서울특별시 KR",
-    "short_address": "종로6가 189번지 4층 402호 세동빌딩 종로구 서울특별시 KR",
+    "address": "Room 402, 4th floor, Sedong Building, 189 Jongno 6-ga, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "Room 402, 4th floor, 189 Jongno 6-ga, Sedong Building, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.572854,
       "lng": 127.00657109999999
@@ -3758,8 +3758,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3768,16 +3768,16 @@
   },
   {
     "place_id": "ChIJUXVUxCSjfDUR-FYzRMa_NSg",
-    "display_name": "에셀가발",
-    "category": "화장품 판매점",
+    "display_name": "Essel wig",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로6가 번지 1층 125-1",
-    "short_address": "종로구 종로6가 번지 1층 125-1",
+    "address": "125-1, 1st floor, Jongno 6-ga, Jongno-gu, Seoul, Korea",
+    "short_address": "125-1, 1st floor, Jongno 6-ga, Jongno-gu",
     "location": {
       "lat": 37.5713031,
       "lng": 127.0069686
@@ -3798,8 +3798,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3808,16 +3808,16 @@
   },
   {
     "place_id": "ChIJHRiqtvSjfDUR1VwuQIzJIvw",
-    "display_name": "제니트 패턴카페",
-    "category": "의류점",
+    "display_name": "Zenit Pattern Cafe",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로5.6가동 종로39길 11",
-    "short_address": "종로구 종로5.6가동 종로39길 11",
+    "address": "11 Jongno 39-gil, Jongno 5.6-ga-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "11 Jongno 39-gil, Jongno 5.6-ga-dong, Jongno-gu",
     "location": {
       "lat": 37.5716648,
       "lng": 127.0060495
@@ -3836,18 +3836,18 @@
     "google_maps_url": "https://maps.google.com/?cid=18168305450975386837",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3f4b6aa181d:0xfc22c98c402e5cd5!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 7:00",
-      "화요일: 오전 9:00 ~ 오후 7:00",
-      "수요일: 오전 9:00 ~ 오후 7:00",
-      "목요일: 오전 9:00 ~ 오후 7:00",
-      "금요일: 오전 9:00 ~ 오후 7:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 7:00 PM",
+      "Tuesday: 9:00 AM - 7:00 PM",
+      "Wednesday: 9:00 AM - 7:00 PM",
+      "Thursday: 9:00 AM - 7:00 PM",
+      "Friday: 9:00 AM - 7:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3858,16 +3858,16 @@
   },
   {
     "place_id": "ChIJqZlz6ySjfDURbUMTY0486Pc",
-    "display_name": "스타가발",
-    "category": "화장품 판매점",
+    "display_name": "star wig",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로5가 2-4",
-    "short_address": "종로구 종로5가 2-4",
+    "address": "2-4 Jongno 5-ga, Jongno-gu, Seoul, South Korea",
+    "short_address": "2-4 Jongno 5-ga, Jongno-gu",
     "location": {
       "lat": 37.5712847,
       "lng": 127.0062166
@@ -3888,8 +3888,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3899,7 +3899,7 @@
         "author": "Young Mee Hong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -3907,16 +3907,16 @@
   },
   {
     "place_id": "ChIJg_-wEQejfDURpu3pTe0jhTE",
-    "display_name": "네이비스캔들",
-    "category": "의류점",
+    "display_name": "Navy Candle",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 율곡로 269",
-    "short_address": "종로구 율곡로 269",
+    "address": "269 Yulgok-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "269 Yulgok-ro, Jongno-gu",
     "location": {
       "lat": 37.5712926,
       "lng": 127.0078721
@@ -3935,20 +3935,20 @@
     "google_maps_url": "https://maps.google.com/?cid=3568297781882383782",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca30711b0ff83:0x318523ed4de9eda6!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오전 6:00",
-      "화요일: 오전 11:00 ~ 오후 6:00",
-      "수요일: 오전 11:00 ~ 오후 6:00",
-      "목요일: 오전 11:00 ~ 오후 6:00",
-      "금요일: 오전 11:00 ~ 오후 6:00",
-      "토요일: 오전 11:00 ~ 오후 6:00",
-      "일요일: 오전 11:00 ~ 오후 6:00"
+      "Monday: 11:00 AM - 6:00 AM",
+      "Tuesday: 11:00 AM - 6:00 PM",
+      "Wednesday: 11:00 AM - 6:00 PM",
+      "Thursday: 11:00 AM - 6:00 PM",
+      "Friday: 11:00 AM - 6:00 PM",
+      "Saturday: 11:00 AM - 6:00 PM",
+      "Sunday: 11:00 AM - 6:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3968,16 +3968,16 @@
   },
   {
     "place_id": "ChIJndfV7CSjfDUR0B_ZkV3wCVg",
-    "display_name": "나르지오워킹화종로점",
-    "category": "신발 판매점",
+    "display_name": "Nargio Walking Hwajongno Branch",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로 253",
-    "short_address": "종로구 종로 253",
+    "address": "253 Jongno, Jongno-gu, Seoul, South Korea",
+    "short_address": "253 Jongno, Jongno-gu",
     "location": {
       "lat": 37.5712641,
       "lng": 127.0059854
@@ -3996,49 +3996,49 @@
     "google_maps_url": "https://maps.google.com/?cid=6343865834797604816",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca324ecd5d79d:0x5809f05d91d91fd0!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 8:00",
-      "화요일: 오전 10:00 ~ 오후 7:30",
-      "수요일: 오전 10:00 ~ 오후 7:30",
-      "목요일: 오전 10:00 ~ 오후 7:30",
-      "금요일: 오전 10:00 ~ 오후 7:30",
-      "토요일: 오전 10:00 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 8:00 PM",
+      "Tuesday: 10:00 AM - 7:30 PM",
+      "Wednesday: 10:00 AM - 7:30 PM",
+      "Thursday: 10:00 AM - 7:30 PM",
+      "Friday: 10:00 AM - 7:30 PM",
+      "Saturday: 10:00 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "주미연",
+        "author": "Joo Mi-yeon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "신발샀어요"
+        "relative_time": "1 year ago",
+        "text": "I bought shoes"
       },
       {
         "author": "jjung j",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "나하 시각부 건강한 호두. 我认为, 送给家人, 好友礼物 비상호. 혹은 수요 长时间行走的人、长时间站着工作的人、喜欢散步和长时间散步的人。 추장 给这样적 사람. 발 건강에 좋은 신발 선물로 좋아요. 혹은 오래 걸으시는 분, 오래 서 계시는 분, 걷는 거 좋아하시는 분 추천해요. 걷는 것을 좋아하는 분, 다리에 힘이 없는 분, 나이가 들고 나서 자세가 무너지는 분, 꼭 본점에 와 신어 봐 주세요."
+        "relative_time": "7 years ago",
+        "text": "Naha visual department healthy walnuts. I am a person who has changed, a person who has left the family, a good friend and a non-human. Or demand, long-term people, long-term workers, long-term workers, long-term workers, and chiefs. Shoes that are good for foot health make a great gift. Also, I recommend it to people who walk for a long time, stand for a long time, or like to walk. If you like walking, have weak legs, or have poor posture as you age, please come to our store and try these shoes on."
       },
       {
-        "author": "전태산",
+        "author": "Jeontaesan",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       },
       {
-        "author": "ᄅᄋ",
+        "author": "Okay",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       }
     ],
@@ -4058,7 +4058,7 @@
   {
     "place_id": "ChIJx6IRmKGjfDURooSnE3ErPvs",
     "display_name": "funicut",
-    "category": "잡화점",
+    "category": "variety store",
     "types": [
       "general_store",
       "clothing_store",
@@ -4068,8 +4068,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 효제동 175-14 1층",
-    "short_address": "종로구 효제동 175-14 1층",
+    "address": "1st floor, 175-14 Hyoje-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "1st floor, 175-14 Hyoje-dong, Jongno-gu",
     "location": {
       "lat": 37.5717138,
       "lng": 127.0055905
@@ -4088,22 +4088,22 @@
     "google_maps_url": "https://maps.google.com/?cid=18103955316737016994",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3a19811a2c7:0xfb3e2b7113a784a2!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어주차"
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -4111,8 +4111,8 @@
         "author": "marcus hooi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "5달러도 안 되는 가격으로 귀여운 열쇠고리를 만들어 보세요. ABC마트 옆 지하에 위치해 있습니다."
+        "relative_time": "1 year ago",
+        "text": "Make a cute keychain for less than $5. It is located in the basement next to ABC Mart."
       }
     ],
     "photos": [
@@ -4125,16 +4125,16 @@
   },
   {
     "place_id": "ChIJqxBN7SSjfDURQ3kXtd_dMz8",
-    "display_name": "큰사람들",
-    "category": "의류점",
+    "display_name": "big people",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로5가 6-1",
-    "short_address": "종로구 종로5가 6-1",
+    "address": "6-1 Jongno 5-ga, Jongno-gu, Seoul, South Korea",
+    "short_address": "6-1 Jongno 5-ga, Jongno-gu",
     "location": {
       "lat": 37.57129820000001,
       "lng": 127.0058593
@@ -4153,56 +4153,56 @@
     "google_maps_url": "https://maps.google.com/?cid=4554227601087363395",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca324ed4d10ab:0x3f33dddfb5177943!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 8:00",
-      "화요일: 오전 9:00 ~ 오후 8:00",
-      "수요일: 오전 9:00 ~ 오후 8:00",
-      "목요일: 오전 9:00 ~ 오후 8:00",
-      "금요일: 오전 9:00 ~ 오후 8:00",
-      "토요일: 오전 9:00 ~ 오후 8:00",
-      "일요일: 오전 10:00 ~ 오후 6:00"
+      "Monday: 9:00 AM - 8:00 PM",
+      "Tuesday: 9:00 AM - 8:00 PM",
+      "Wednesday: 9:00 AM - 8:00 PM",
+      "Thursday: 9:00 AM - 8:00 PM",
+      "Friday: 9:00 AM - 8:00 PM",
+      "Saturday: 9:00 AM - 8:00 PM",
+      "Sunday: 10:00 AM - 6:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "냥냥이글스",
+        "author": "Meow Meow Eagles",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "사장님 진짜 친절 bb"
+        "relative_time": "5 years ago",
+        "text": "The owner is really kind bb"
       },
       {
         "author": "Roman Don",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "이 가게는 엄청나게 큰 사이즈의 옷을 팔아요. 특히 배가 나온 분들이 좋아하실 거예요. 옷 품질도 꽤 괜찮아요. 가격은 평균보다 좀 높지만, 사장님이 흥정해서 가격을 낮춰주기도 해요. 키가 큰 분들께도 강력 추천합니다."
+        "relative_time": "2 years ago",
+        "text": "This store sells clothes in extremely large sizes. People with big bellies will especially like it. The quality of the clothes is pretty good too. The price is a bit higher than average, but the owner sometimes negotiates to lower the price. Highly recommended even for tall people."
       },
       {
         "author": "Ondra Malek",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2주 전",
-        "text": "키 187cm, 몸무게 105kg의 유럽인인 저는 일반 매장에서는 제 사이즈에 맞는 청바지를 찾을 수 없었습니다. 이 가게에서 청바지 세 벌을 샀는데, 사장님이 정말 친절하셨어요."
+        "relative_time": "2 weeks ago",
+        "text": "As a European, 187cm tall and 105kg, I couldn't find jeans in my size at regular stores. I bought three pairs of jeans at this store, and the owner was really kind."
       },
       {
         "author": "Mich I",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       },
       {
-        "author": "심선희",
+        "author": "Seonhee Shim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -4214,8 +4214,8 @@
   },
   {
     "place_id": "ChIJFwGrkiSjfDUR7RgeKl2nOyk",
-    "display_name": "유명토탈패션",
-    "category": "의류점",
+    "display_name": "Famous total fashion",
+    "category": "clothing store",
     "types": [
       "home_goods_store",
       "clothing_store",
@@ -4223,8 +4223,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로5가 6-1",
-    "short_address": "종로구 종로5가 6-1",
+    "address": "6-1 Jongno 5-ga, Jongno-gu, Seoul, South Korea",
+    "short_address": "6-1 Jongno 5-ga, Jongno-gu",
     "location": {
       "lat": 37.5712695,
       "lng": 127.0058271
@@ -4243,20 +4243,20 @@
     "google_maps_url": "https://maps.google.com/?cid=2971152397761386733",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32492ab0117:0x293ba75d2a1e18ed!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:30 ~ 오후 7:00",
-      "화요일: 오전 8:30 ~ 오후 7:00",
-      "수요일: 오전 8:30 ~ 오후 7:00",
-      "목요일: 오전 8:30 ~ 오후 7:00",
-      "금요일: 오전 8:30 ~ 오후 6:00",
-      "토요일: 오전 9:00 ~ 오후 2:00",
-      "일요일: 휴무일"
+      "Monday: 8:30 AM - 7:00 PM",
+      "Tuesday: 8:30 AM - 7:00 PM",
+      "Wednesday: 8:30 AM - 7:00 PM",
+      "Thursday: 8:30 AM - 7:00 PM",
+      "Friday: 8:30 AM - 6:00 PM",
+      "Saturday: 9:00 AM - 2:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4272,16 +4272,16 @@
   },
   {
     "place_id": "ChIJx0TnH7GjfDURWcoGez_H_RI",
-    "display_name": "다나눔",
-    "category": "의류점",
+    "display_name": "Dananum",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로 251",
-    "short_address": "종로구 종로 251",
+    "address": "251 Jongno, Jongno-gu, Seoul, South Korea",
+    "short_address": "251 Jongno, Jongno-gu",
     "location": {
       "lat": 37.5712918,
       "lng": 127.0057337
@@ -4302,8 +4302,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4312,16 +4312,16 @@
   },
   {
     "place_id": "ChIJq50hhHOjfDUREK9qoVL_2Vo",
-    "display_name": "베스트유니폼",
-    "category": "의류점",
+    "display_name": "Best uniform",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로 251 4층",
-    "short_address": "종로구 종로 251 4층",
+    "address": "4th floor, 251 Jongno, Jongno-gu, Seoul, South Korea",
+    "short_address": "4th floor, 251 Jongno, Jongno-gu",
     "location": {
       "lat": 37.5712918,
       "lng": 127.0057337
@@ -4340,18 +4340,18 @@
     "google_maps_url": "https://maps.google.com/?cid=6546544263720251152",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca37384219dab:0x5ad9ff52a16aaf10!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 6:00",
-      "화요일: 오전 10:00 ~ 오후 6:00",
-      "수요일: 오전 10:00 ~ 오후 6:00",
-      "목요일: 오전 10:00 ~ 오후 6:00",
-      "금요일: 오전 10:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 6:00 PM",
+      "Tuesday: 10:00 AM - 6:00 PM",
+      "Wednesday: 10:00 AM - 6:00 PM",
+      "Thursday: 10:00 AM - 6:00 PM",
+      "Friday: 10:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4371,16 +4371,16 @@
   },
   {
     "place_id": "ChIJt91GjSSjfDURtkyEYM2ES1g",
-    "display_name": "빈스빈 유니폼",
-    "category": "의류점",
+    "display_name": "Vince Bean Uniform",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로 251 (종로5가)",
-    "short_address": "종로구 종로 251 (종로5가)",
+    "address": "251 Jongno, Jongno-gu, Seoul, South Korea (Jongno 5-ga)",
+    "short_address": "251 Jongno, Jongno-gu (Jongno 5-ga)",
     "location": {
       "lat": 37.571252,
       "lng": 127.00575
@@ -4399,18 +4399,18 @@
     "google_maps_url": "https://maps.google.com/?cid=6362324916213402806",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3248d46ddb7:0x584b84cd60844cb6!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 8:00",
-      "화요일: 오전 9:00 ~ 오후 8:00",
-      "수요일: 오전 9:00 ~ 오후 8:00",
-      "목요일: 오전 9:00 ~ 오후 8:00",
-      "금요일: 오전 9:00 ~ 오후 8:00",
-      "토요일: 오전 9:00 ~ 오후 7:00",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 8:00 PM",
+      "Tuesday: 9:00 AM - 8:00 PM",
+      "Wednesday: 9:00 AM - 8:00 PM",
+      "Thursday: 9:00 AM - 8:00 PM",
+      "Friday: 9:00 AM - 8:00 PM",
+      "Saturday: 9:00 AM - 7:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4419,14 +4419,14 @@
         "author": "Manuela B",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "주방용 모자를 사러 갔었는데, 직원분들이 너무 친절하게 대해주셔서 정말 감사했습니다."
+        "relative_time": "2 years ago",
+        "text": "I went to buy a kitchen hat, and I was really grateful that the staff were so friendly."
       },
       {
-        "author": "오스카",
+        "author": "oscar",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -4445,16 +4445,16 @@
   },
   {
     "place_id": "ChIJkxaNdmSjfDURjJ5XzM2ryfQ",
-    "display_name": "나일론스튜디오",
-    "category": "신발 판매점",
+    "display_name": "Nylon Studio",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문 종합시장B 동 4층 KR 서울특별시 종로구 종로 266",
-    "short_address": "동대문 종합시장B 동 KR 서울특별시 종로구 종로 266 4층",
+    "address": "4th floor, Building B, Dongdaemun General Market, Seoul, Republic of Korea KR 266 Jongno, Jongno-gu, Seoul",
+    "short_address": "Dongdaemun General Market Building B KR 4th floor, 266 Jongno, Jongno-gu, Seoul",
     "location": {
       "lat": 37.570802,
       "lng": 127.00692609999999
@@ -4473,18 +4473,18 @@
     "google_maps_url": "https://maps.google.com/?cid=17638818315958197900",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca364768d1693:0xf4c9abcdcc579e8c!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4494,16 +4494,16 @@
   },
   {
     "place_id": "ChIJpTOAZjqjfDUR6Eg6EN9KAIw",
-    "display_name": "(주)에이블씨엔씨",
-    "category": "화장품 판매점",
+    "display_name": "Able C&C Co., Ltd.",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 552",
-    "short_address": "종로구 창신동 552",
+    "address": "552 Changsin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "552 Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.572036,
       "lng": 127.01098900000001
@@ -4531,16 +4531,16 @@
   },
   {
     "place_id": "ChIJc8QtezqjfDURJmaeNkJdNJg",
-    "display_name": "지인어페럴",
-    "category": "의류점",
+    "display_name": "Jiin Apparel",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 578-5번지 801호",
-    "short_address": "종로구 창신동 578-5번지 801호",
+    "address": "#801, 578-5 Changsin-dong, Jongno-gu, Seoul, Republic of Korea",
+    "short_address": "#801, 578-5 Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.5723269,
       "lng": 127.01097610000001
@@ -4561,8 +4561,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4571,16 +4571,16 @@
   },
   {
     "place_id": "ChIJh_j7ZTqjfDURXcQBdZGBTS4",
-    "display_name": "솔브",
-    "category": "의류점",
+    "display_name": "solve",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 창신동 551번지 1호 종로구 서울특별시 KR",
-    "short_address": "창신동 551번지 1호 종로구 서울특별시 KR",
+    "address": "#1, 551 Changsin-dong, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "#1, 551 Changsin-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5719761,
       "lng": 127.0111562
@@ -4609,15 +4609,15 @@
   {
     "place_id": "ChIJY1e2YDqjfDURj77mazncD5E",
     "display_name": "PAT",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 창신동 559-1번지 종로구 서울특별시 KR",
-    "short_address": "창신동 559-1번지 종로구 서울특별시 KR",
+    "address": "559-1 Changsin-dong, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "559-1 Changsin-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5718579,
       "lng": 127.01081470000001
@@ -4638,8 +4638,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4650,16 +4650,16 @@
   },
   {
     "place_id": "ChIJCZZIU0ejfDURS2y_-p_dFTI",
-    "display_name": "뱅뱅",
-    "category": "의류점",
+    "display_name": "Bang bang",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동",
-    "short_address": "종로구 창신동",
+    "address": "Changsin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.5718721,
       "lng": 127.01076739999998
@@ -4678,18 +4678,18 @@
     "google_maps_url": "https://maps.google.com/?cid=3609034355583708235",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca34753489609:0x3215dd9ffabf6c4b!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 8:00",
-      "화요일: 오전 10:00 ~ 오후 8:00",
-      "수요일: 오전 10:00 ~ 오후 8:00",
-      "목요일: 오전 10:00 ~ 오후 8:00",
-      "금요일: 오전 10:00 ~ 오후 8:00",
-      "토요일: 오전 10:00 ~ 오후 8:00",
-      "일요일: 오전 11:00 ~ 오후 5:00"
+      "Monday: 10:00 AM - 8:00 PM",
+      "Tuesday: 10:00 AM - 8:00 PM",
+      "Wednesday: 10:00 AM - 8:00 PM",
+      "Thursday: 10:00 AM - 8:00 PM",
+      "Friday: 10:00 AM - 8:00 PM",
+      "Saturday: 10:00 AM - 8:00 PM",
+      "Sunday: 11:00 AM - 5:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,

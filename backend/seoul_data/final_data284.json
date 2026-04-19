@@ -1,8 +1,8 @@
 [
   {
     "place_id": "ChIJlwPRMwC7fDURryTgShRHTfY",
-    "display_name": "GS25 회기한양점",
-    "category": "편의점",
+    "display_name": "GS25 Hoegi Hanyang Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -11,8 +11,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기로25길 23",
-    "short_address": "동대문구 회기로25길 23",
+    "address": "23, Hoegi-ro 25-gil, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "23, Hoeiro 25-gil, Dongdaemun-gu",
     "location": {
       "lat": 37.591190999999995,
       "lng": 127.0557086
@@ -33,8 +33,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -44,16 +44,16 @@
   },
   {
     "place_id": "ChIJ-XkiBW-7fDURwNBYc2hxGOg",
-    "display_name": "미래전기",
-    "category": "전자제품 판매점",
+    "display_name": "Future Electric",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 회기로21길 3",
-    "short_address": "동대문구 회기동 회기로21길 3",
+    "address": "3, Hoegi-ro 21-gil, Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "3, Hoegi-ro 21-gil, Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5916783,
       "lng": 127.0529188
@@ -72,18 +72,18 @@
     "google_maps_url": "https://maps.google.com/?cid=16724241909666074816",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6f052279f9:0xe81871687358d0c0!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 8:00",
-      "화요일: 오전 9:00 ~ 오후 8:00",
-      "수요일: 오전 9:00 ~ 오후 8:00",
-      "목요일: 오전 9:00 ~ 오후 8:00",
-      "금요일: 오전 9:00 ~ 오후 8:00",
-      "토요일: 오전 9:00 ~ 오후 8:00",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 8:00 PM",
+      "Tuesday: 9:00 AM - 8:00 PM",
+      "Wednesday: 9:00 AM - 8:00 PM",
+      "Thursday: 9:00 AM - 8:00 PM",
+      "Friday: 9:00 AM - 8:00 PM",
+      "Saturday: 9:00 AM - 8:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -92,21 +92,21 @@
         "author": "eunchan jeong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
-        "text": "집 수리때, 공사를 주었는데 너무 꼼꼼하게 가격을 비교 및  알려주며  주인에게 허락을 받고 공사를 진행하는데  너무  꼼꼼하게 무사히 마칠수 있어서 감사드립니다.\n나중에 알게 된 사실은 국가1급 자격증 소유자.\n역시 남다르다 하니, 최고!"
+        "relative_time": "8 years ago",
+        "text": "When I was renovating my house, they gave me the work, and I am grateful that they were so meticulous in comparing prices and informing me that I was able to complete the work safely after getting permission from the owner.\nI found out later that he was a holder of a national level 1 certification.\nAs expected, it is unique and the best!"
       },
       {
-        "author": "이종관 (우리는 강력하다는)",
+        "author": "Lee Jong-kwan (We Are Powerful)",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
-        "text": "회기동에 몇 개 없는 전자기기 수리와 판매점입니다. 아저씨 친절하십니다."
+        "relative_time": "7 years ago",
+        "text": "This is one of the few electronic device repair and sales stores in Hoegi-dong. Sir, you are kind."
       },
       {
-        "author": "오랑캐",
+        "author": "barbarian",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       }
     ],
@@ -118,8 +118,8 @@
   },
   {
     "place_id": "ChIJjYnSImy7fDURgWH4A2mJIyM",
-    "display_name": "CU 회기역점",
-    "category": "편의점",
+    "display_name": "CU Hoegi Station Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -128,8 +128,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 휘경동 319-13",
-    "short_address": "동대문구 휘경동 319-13",
+    "address": "319-13 Hwigyeong-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "319-13 Hwigyeong-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5897309,
       "lng": 127.0567258
@@ -148,18 +148,18 @@
     "google_maps_url": "https://maps.google.com/?cid=2532018499643531649",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6c22d2898d:0x2323896903f86181!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -169,16 +169,16 @@
         "author": "Ilya Koreezzz",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9년 전",
-        "text": "훌륭한 천연 커피"
+        "relative_time": "9 years ago",
+        "text": "great natural coffee"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJm1yCWm67fDURBuez8kxxRqs",
-    "display_name": "GS25 경희의대점",
-    "category": "편의점",
+    "display_name": "GS25 Kyunghee University College of Medicine Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -187,8 +187,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 3-4",
-    "short_address": "동대문구 회기동 3-4",
+    "address": "3-4 Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "3-4 Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.592199699999995,
       "lng": 127.05412799999999
@@ -207,18 +207,18 @@
     "google_maps_url": "https://maps.google.com/?cid=12341676404158752518",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb6e5a825c9b:0xab46714cf2b3e706!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -228,35 +228,35 @@
         "author": "Soohyun Kwon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
-        "text": "물건도 많고 정리도 잘 되어 있어요. 점원 분들도 친절하세요"
+        "relative_time": "8 years ago",
+        "text": "There is a lot of stuff and it is well organized. The clerks are also friendly."
       },
       {
-        "author": "하태규 (룩카고)",
+        "author": "Ha Tae-gyu (Lookago)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "친절해요"
+        "relative_time": "3 years ago",
+        "text": "You are kind."
       },
       {
-        "author": "정현모",
+        "author": "Jeong Hyeon-mo",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "깔끔하고 무난한 편의점입니다."
+        "relative_time": "7 years ago",
+        "text": "It is a clean and decent convenience store."
       },
       {
         "author": "Pava Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "친절하심"
+        "relative_time": "5 years ago",
+        "text": "Kindness"
       },
       {
-        "author": "현권민",
+        "author": "Hyeon Kwon-min",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       }
     ],
@@ -269,8 +269,8 @@
   },
   {
     "place_id": "ChIJm3vBQSC7fDURY5PoQebqXpA",
-    "display_name": "GS25 휘경제이스카이점",
-    "category": "편의점",
+    "display_name": "GS25 Hwigyeong Sky Sky Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -279,8 +279,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 휘경동 망우로21나길 6 1층 102호 192-1",
-    "short_address": "동대문구 휘경동 망우로21나길 6 192-1 1층 102호",
+    "address": "192-1, #102, 1st floor, 6 Mangu-ro 21na-gil, Hwigyeong-dong, Dongdaemun-gu, Seoul, Republic of Korea",
+    "short_address": "Room 102, 1st floor, 192-1, 6, Mangu-ro 21na-gil, Hwigyeong-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.588256099999995,
       "lng": 127.0557284
@@ -301,8 +301,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -312,8 +312,8 @@
   },
   {
     "place_id": "ChIJFQNubG-7fDURy_HIprC9i2w",
-    "display_name": "GS25시경희사랑점",
-    "category": "편의점",
+    "display_name": "GS25 Sikyung Hee Sarang Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -322,8 +322,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 42-40번지 1층",
-    "short_address": "동대문구 회기동 42-40번지 1층",
+    "address": "1st floor, 42-40 Hoegi-dong, Dongdaemun-gu, Seoul, Korea",
+    "short_address": "1st floor, 42-40 Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.5917348,
       "lng": 127.0518809
@@ -344,8 +344,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -355,8 +355,8 @@
   },
   {
     "place_id": "ChIJewckFmy7fDURgUiaM5iHqFs",
-    "display_name": "씨유회기창덕안점",
-    "category": "편의점",
+    "display_name": "Seeyuhoegi Changdeokan Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -365,8 +365,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 휘경동 319-39번지 1층 102호 동대문구 서울특별시 KR",
-    "short_address": "휘경동 319-39번지 1층 102호 동대문구 서울특별시 KR",
+    "address": "Room 102, 1st floor, 319-39 Hwigyeong-dong, Seoul, Republic of Korea, Dongdaemun-gu, Seoul KR",
+    "short_address": "Room 102, 1st floor, 319-39, Hwigyeong-dong, Dongdaemun-gu, Seoul KR",
     "location": {
       "lat": 37.5895091,
       "lng": 127.0570351
@@ -387,8 +387,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -398,8 +398,8 @@
   },
   {
     "place_id": "ChIJh93n4Hi7fDURdcAZdw6NHxE",
-    "display_name": "CU 경희대점",
-    "category": "편의점",
+    "display_name": "CU Kyunghee University Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -408,8 +408,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 회기동 19",
-    "short_address": "동대문구 회기동 19",
+    "address": "19 Hoegi-dong, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "19, Hoegi-dong, Dongdaemun-gu",
     "location": {
       "lat": 37.59246350000001,
       "lng": 127.0534542
@@ -428,28 +428,28 @@
     "google_maps_url": "https://maps.google.com/?cid=1233859916190040181",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb78e0e7dd87:0x111f8d0e7719c075!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "캐리캐리",
+        "author": "Carry Carry",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -457,8 +457,8 @@
   },
   {
     "place_id": "ChIJISGv7oC7fDURoNgFKdrGTs8",
-    "display_name": "세븐일레븐 휘경본점",
-    "category": "편의점",
+    "display_name": "7-Eleven Hwigyeong Main Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -467,8 +467,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동대문구 이문로 42-1",
-    "short_address": "동대문구 이문로 42-1",
+    "address": "42-1 Imun-ro, Dongdaemun-gu, Seoul, South Korea",
+    "short_address": "42-1 Imun-ro, Dongdaemun-gu",
     "location": {
       "lat": 37.5911706,
       "lng": 127.05696379999999
@@ -487,18 +487,18 @@
     "google_maps_url": "https://maps.google.com/?cid=14938095654327933088",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357cbb80eeaf2121:0xcf4ec6da2905d8a0!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,

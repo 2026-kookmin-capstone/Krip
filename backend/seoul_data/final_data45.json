@@ -9,8 +9,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 사옥 서초대로74길 11 삼성전자 B1 유나갤러리",
-    "short_address": "서초구 사옥 서초대로74길 11 B1 유나갤러리 삼성전자",
+    "address": "Samsung Electronics B1 Yuna Gallery, 11 Seocho-daero 74-gil, Seocho-gu, Seoul, Republic of Korea",
+    "short_address": "Seocho-gu Office Building 11 Seocho-daero 74-gil B1 Yuna Gallery Samsung Electronics",
     "location": {
       "lat": 37.496690699999995,
       "lng": 127.02685550000001
@@ -29,16 +29,16 @@
     "google_maps_url": "https://maps.google.com/?cid=15696758542513400419",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15a4a3b6ae5:0xd9d616babb96ea63!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 10:00 ~ 오후 6:00",
-      "수요일: 오전 10:00 ~ 오후 6:00",
-      "목요일: 오전 10:00 ~ 오후 6:00",
-      "금요일: 오전 10:00 ~ 오후 6:00",
-      "토요일: 오전 10:00 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 10:00 AM - 6:00 PM",
+      "Wednesday: 10:00 AM - 6:00 PM",
+      "Thursday: 10:00 AM - 6:00 PM",
+      "Friday: 10:00 AM - 6:00 PM",
+      "Saturday: 10:00 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -48,28 +48,28 @@
         "author": "Jaemoon Park",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "무료로 관람 가능하며, 삼성전자 서초사옥 2시간 무료주차 가능."
+        "relative_time": "3 years ago",
+        "text": "It is free to view, and free parking is available for 2 hours at the Samsung Electronics Seocho office building."
       },
       {
         "author": "Chan Young Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "삼성 서초사옥 지하 아케이드에 있는 갤러리.\n무료로 작품을 둘러 볼 수가 있습니다. 간간히 작품이 교체가 되는 것 같은데 오피스 건물 지하 아케이드다 보니 잘 드러나지 않네요.\n아케이드 식당 대기를 기다릴 때나 시간이 있을 때 잠깐 둘러보기에 좋습니다."
+        "relative_time": "3 years ago",
+        "text": "A gallery in the basement arcade of Samsung’s Seocho office building.\nYou can browse the works for free. It seems that the works are changed occasionally, but since it is an arcade in the basement of an office building, it is not clearly visible.\nIt's great for a quick look while waiting in line at the arcade restaurant or when you have time."
       },
       {
-        "author": "창민",
+        "author": "changmin",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "안드레스 발렌시아 작품"
+        "relative_time": "3 years ago",
+        "text": "Andres Valencia's work"
       },
       {
         "author": "Anezka Adamcova",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
+        "relative_time": "6 months ago",
         "text": null
       }
     ],
@@ -88,7 +88,7 @@
   },
   {
     "place_id": "ChIJjYSwWwmjfDURmcNXKnH3oME",
-    "display_name": "에스아트스페이스(S ART SPACE)",
+    "display_name": "S ART SPACE",
     "category": "Art museum",
     "types": [
       "art_museum",
@@ -96,8 +96,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 501호",
-    "short_address": "강남구 501호",
+    "address": "#501, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "Room 501, Gangnam-gu",
     "location": {
       "lat": 37.4961779,
       "lng": 127.03755829999999
@@ -117,7 +117,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3095bb0848d:0xc1a0f7712a57c399!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -129,7 +129,7 @@
   },
   {
     "place_id": "ChIJY1kPH1ihfDURBkWWCRRumno",
-    "display_name": "마테리오 갤러리 MATERIAUX GALLERY",
+    "display_name": "MATERIAUX GALLERY",
     "category": "Art museum",
     "types": [
       "art_museum",
@@ -138,8 +138,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 8F 강남대로94길 27-15 태리빌딩 KR 서울특별시 강남구",
-    "short_address": "8F 강남대로94길 27-15 KR 서울특별시 강남구 태리빌딩",
+    "address": "Taeri Building, 27-15 Gangnam-daero 94-gil, 8F, Seoul, Republic of Korea KR Gangnam-gu, Seoul",
+    "short_address": "8F Gangnam-daero 94-gil 27-15 KR Taeri Building, Gangnam-gu, Seoul",
     "location": {
       "lat": 37.5006646,
       "lng": 127.02910990000001
@@ -158,16 +158,16 @@
     "google_maps_url": "https://maps.google.com/?cid=8834494651379893510",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1581f0f5963:0x7a9a6e1409964506!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오후 1:00~7:00",
-      "수요일: 오후 1:00~7:00",
-      "목요일: 오후 1:00~7:00",
-      "금요일: 오후 1:00~7:00",
-      "토요일: 오후 1:00~7:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 1:00-7:00 PM",
+      "Wednesday: 1:00-7:00 PM",
+      "Thursday: 1:00-7:00 PM",
+      "Friday: 1:00-7:00 PM",
+      "Saturday: 1:00-7:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -189,14 +189,14 @@
   {
     "place_id": "ChIJ-QSrG6ahfDUR49Wehl3LH3s",
     "display_name": "thesoolgallery",
-    "category": "박물관",
+    "category": "museum",
     "types": [
       "museum",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 ６２１−１６",
-    "short_address": "강남구 역삼동 ６２１−１６",
+    "address": "621-16, Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Yeoksam-dong, Gangnam-gu ６２１−１６",
     "location": {
       "lat": 37.5015046,
       "lng": 127.0278611
@@ -216,7 +216,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1a61bab04f9:0x7b1fcb5d869ed5e3!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -227,14 +227,14 @@
   {
     "place_id": "ChIJ3x9iDFahfDUR9VFC62G6CqM",
     "display_name": "Gallery Imazoo",
-    "category": "박물관",
+    "category": "museum",
     "types": [
       "museum",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동 735-34 -dong",
-    "short_address": "강남구 역삼1동 735-34 -dong",
+    "address": "735-34 Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea -dong",
+    "short_address": "735-34 Yeoksam 1-dong, Gangnam-gu -dong",
     "location": {
       "lat": 37.4988838,
       "lng": 127.03422470000001
@@ -254,7 +254,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1560c621fdf:0xa30aba61eb4251f5!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -264,35 +264,35 @@
         "author": "Chan Young Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "테헤란로 뒤쪽 골목으로 있는 지하 갤러리.\n근처 직장인들에게는 평일에도 들리기 좋습니다."
+        "relative_time": "2 years ago",
+        "text": "An underground gallery located in an alley behind Teheran Road.\nIt's a good place to stop by on weekdays for people working nearby."
       },
       {
-        "author": "현영미",
+        "author": "Hyun Young-mi",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "좋은 위치에 기다리던 전시.\n감사하다~\n근데 그림을 보는네네 불편했다.\n조명이 왠지 그림을 보는데 거슬렸다. 아쉽다.\n기걱을 떠나서 저 그림을 조 조명이 불편하게 하는구나."
+        "relative_time": "2 years ago",
+        "text": "A long-awaited exhibition in a good location.\nThank you~\nBut looking at the picture made me feel uncomfortable.\nThe lighting somehow bothered me when looking at the picture. it's a shame.\nRegardless, the lighting on that painting makes me uncomfortable."
       },
       {
         "author": "J.M KIM",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "좋아하는 작가님의 작품을 볼수 있었던 곳^^\n이미경작가님은 이마주 대표작가시죠^^\n감히 작품을 게시할수 없어서^"
+        "relative_time": "7 years ago",
+        "text": "A place where you can see the works of your favorite author^^\nAuthor Lee Mi-kyung is the representative author of Imazoo^^\nI don't dare to post my work^^"
       },
       {
-        "author": "문현기",
+        "author": "Hyunki Moon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       },
       {
         "author": "sungsu Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -305,15 +305,15 @@
   },
   {
     "place_id": "ChIJRWYCKdGjfDURLSoupGkhSgY",
-    "display_name": "아트리안",
-    "category": "박물관",
+    "display_name": "Atrian",
+    "category": "museum",
     "types": [
       "museum",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로19길 28 3층",
-    "short_address": "강남구 테헤란로19길 28 3층",
+    "address": "3rd floor, 28 Teheran-ro 19-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "3rd floor, 28 Teheran-ro 19-gil, Gangnam-gu",
     "location": {
       "lat": 37.501837699999996,
       "lng": 127.033193
@@ -333,7 +333,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3d129026645:0x64a2169a42e2a2d!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -343,7 +343,7 @@
   },
   {
     "place_id": "ChIJEWwu8Q-jfDURFFcrtxdIYo4",
-    "display_name": "디아트웍스",
+    "display_name": "The Artworks",
     "category": "Art museum",
     "types": [
       "art_museum",
@@ -351,8 +351,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로 464 424호",
-    "short_address": "강남구 강남대로 464 424호",
+    "address": "#424, 464 Gangnam-daero, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "#424, 464 Gangnam-daero, Gangnam-gu",
     "location": {
       "lat": 37.5036695,
       "lng": 127.0253109
@@ -372,7 +372,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca30ff12e6c11:0x8e624817b72b5714!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -382,8 +382,8 @@
         "author": "green fingers",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "올림피아자그놀리 작가의 작품을 무스타파 이사님 통해 잘 설명받고 구매하였습니다."
+        "relative_time": "3 years ago",
+        "text": "I purchased the work of Olympia Zagnoli after receiving a good explanation from Director Mustafa."
       }
     ],
     "photos": [
@@ -395,15 +395,15 @@
   },
   {
     "place_id": "ChIJLRDp71mhfDURJ75kNC0qQ28",
-    "display_name": "스페이스22",
-    "category": "미술관",
+    "display_name": "space22",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로 390",
-    "short_address": "강남구 강남대로 390",
+    "address": "390 Gangnam-daero, Gangnam-gu, Seoul, South Korea",
+    "short_address": "390 Gangnam-daero, Gangnam-gu",
     "location": {
       "lat": 37.497836299999996,
       "lng": 127.02857669999999
@@ -422,21 +422,21 @@
     "google_maps_url": "https://maps.google.com/?cid=8017298135290527271",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca159efe9102d:0x6f432a2d3464be27!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 11:00 ~ 오후 7:00",
-      "수요일: 오전 11:00 ~ 오후 7:00",
-      "목요일: 오전 11:00 ~ 오후 7:00",
-      "금요일: 오전 11:00 ~ 오후 7:00",
-      "토요일: 오전 11:00 ~ 오후 7:00",
-      "일요일: 휴무일"
+      "Monday: Closed day",
+      "Tuesday: 11:00 AM - 7:00 PM",
+      "Wednesday: 11:00 AM - 7:00 PM",
+      "Thursday: 11:00 AM - 7:00 PM",
+      "Friday: 11:00 AM - 7:00 PM",
+      "Saturday: 11:00 AM - 7:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실"
+      "Wheelchair entrance",
+      "wheelchair restroom"
     ],
     "parking": null,
     "reviews": [
@@ -444,36 +444,36 @@
         "author": "JACK LEE (JACK LEE)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "사진 전문 갤러리\n강남사거리에 위치한 문화공간입니다.\n미진프라자 22F에 위치하고 있습니다."
+        "relative_time": "7 years ago",
+        "text": "Photo gallery\nIt is a cultural space located at Gangnam intersection.\nIt is located on the 22nd floor of Mijin Plaza."
       },
       {
-        "author": "범서",
+        "author": "Beomseo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "대한민국 사진계가 나아갈 방향을 길잡이 해 주는 역할을 잘 해주고 있는 곳"
+        "relative_time": "7 years ago",
+        "text": "A place that plays a good role in guiding the direction of the Korean photography industry."
       },
       {
-        "author": "최진국",
+        "author": "Choi Jin-guk",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "깔끔하고 화장실이 갖춰져 있으며, 관람객을 위한 휴게실도 제공하여 편안했습니다."
+        "relative_time": "7 years ago",
+        "text": "It was clean and equipped with a restroom, and a lounge was provided for visitors to make it comfortable."
       },
       {
-        "author": "한솔로",
+        "author": "Han Solo",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "강남에서 희귀한 좋은뮈치의 사진전문 갤러리~전시내용 편차가 있지만 나쁘진않음.게다가 스카이라운지라는 차별성도있음"
+        "relative_time": "7 years ago",
+        "text": "A photo gallery specializing in good muchi, which is rare in Gangnam. There are differences in exhibition content, but it's not bad. In addition, it has the distinction of being a sky lounge."
       },
       {
-        "author": "이민",
+        "author": "immigrant",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "김녕만 사진전\n김녕만, 기억의 시작"
+        "relative_time": "6 years ago",
+        "text": "Gimnyeongman Photo Exhibition\nKim Nyong-man, the beginning of memory"
       }
     ],
     "photos": [
@@ -491,15 +491,15 @@
   },
   {
     "place_id": "ChIJsXPj4lmhfDURhqlELoUV6pc",
-    "display_name": "(주)해츠",
-    "category": "미술관",
+    "display_name": "Hats Co., Ltd.",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 825-20번지 311호 강남구 서울특별시 KR",
-    "short_address": "역삼동 825-20번지 311호 강남구 서울특별시 KR",
+    "address": "#311, 825-20 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "#311, 825-20 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.4977172,
       "lng": 127.02914739999999
@@ -519,7 +519,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca159e2e373b1:0x97ea15852e44a986!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -529,15 +529,15 @@
   },
   {
     "place_id": "ChIJv0o9ZlqhfDURWLbfzoh5JIY",
-    "display_name": "마루아트센터(주)",
-    "category": "미술관",
+    "display_name": "Maru Art Center Co., Ltd.",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 서초동 1328-3번지 12층",
-    "short_address": "서초구 서초동 1328-3번지 12층",
+    "address": "12th floor, 1328-3 Seocho-dong, Seocho-gu, Seoul, Korea",
+    "short_address": "12th floor, 1328-3 Seocho-dong, Seocho-gu",
     "location": {
       "lat": 37.4956154,
       "lng": 127.02820320000001
@@ -557,11 +557,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15a663d4abf:0x86247988cedfb658!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어화장실"
+      "wheelchair restroom"
     ],
     "parking": null,
     "reviews": null,
@@ -569,15 +569,15 @@
   },
   {
     "place_id": "ChIJTSZ7TFqhfDURiy02takke0k",
-    "display_name": "이스라엘문화원",
-    "category": "문화센터",
+    "display_name": "Israel Cultural Center",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 서초대로74길 23",
-    "short_address": "서초구 서초대로74길 23",
+    "address": "23, Seocho-daero 74-gil, Seocho-gu, Seoul, South Korea",
+    "short_address": "23, Seocho-daero 74-gil, Seocho-gu",
     "location": {
       "lat": 37.4955666,
       "lng": 127.02708279999999
@@ -597,12 +597,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15a4c7b264d:0x497b24a9b5362d8b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -610,35 +610,35 @@
         "author": "IK SOO KIM",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9년 전",
-        "text": "쾌적한 전시공간 성경과 이스라엘\n문화 관련 자료와 책이 전시되었다"
+        "relative_time": "9 years ago",
+        "text": "Pleasant exhibition space Bible and Israel\nCultural materials and books were on display."
       },
       {
-        "author": "알리나Alina",
+        "author": "Alina",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "최고"
+        "relative_time": "7 years ago",
+        "text": "best"
       },
       {
-        "author": "박금순",
+        "author": "Park Geum-soon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "SuYeon Kim (Raguelshemakim1124)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "정현우",
+        "author": "Hyeonwoo Jeong",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -648,14 +648,14 @@
   },
   {
     "place_id": "ChIJ2dsiwlmhfDURqSsNUaVAknU",
-    "display_name": "풀잎문화센터",
-    "category": "문화센터",
+    "display_name": "Grass Leaf Cultural Center",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.4984885,
@@ -675,57 +675,57 @@
     "google_maps_url": "https://maps.google.com/?cid=8471904927810923433",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca159c222dbd9:0x759240a5510d2ba9!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 10:00",
-      "화요일: 오전 9:00 ~ 오후 10:00",
-      "수요일: 오전 9:00 ~ 오후 10:00",
-      "목요일: 오전 9:00 ~ 오후 10:00",
-      "금요일: 오전 9:00 ~ 오후 10:00",
-      "토요일: 오전 9:00 ~ 오후 10:00",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 10:00 PM",
+      "Tuesday: 9:00 AM - 10:00 PM",
+      "Wednesday: 9:00 AM - 10:00 PM",
+      "Thursday: 9:00 AM - 10:00 PM",
+      "Friday: 9:00 AM - 10:00 PM",
+      "Saturday: 9:00 AM - 10:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "전미숙",
+        "author": "Jeon Mi-sook",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "공예활동하기좋은곳입니다"
+        "relative_time": "7 years ago",
+        "text": "It's a great place for craft activities."
       },
       {
-        "author": "나용규",
+        "author": "Na Yong-gyu",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "HJ S",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "박양수",
+        "author": "Yangsu Park",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       },
       {
         "author": "Iksoo Koh (高益秀整形外科)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -733,15 +733,15 @@
   },
   {
     "place_id": "ChIJPeoPb1ehfDURGAcFrp48WLc",
-    "display_name": "유엔문화원",
-    "category": "문화센터",
+    "display_name": "United Nations Cultural Center",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 824번지",
-    "short_address": "강남구 역삼동 824번지",
+    "address": "824 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "824 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.498250299999995,
       "lng": 127.0300905
@@ -761,7 +761,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1576f0fea3d:0xb7583c9eae050718!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -771,15 +771,15 @@
   },
   {
     "place_id": "ChIJFe-RzlahfDURn2thY_5Zwk8",
-    "display_name": "케이아트포트폴리오",
-    "category": "미술관",
+    "display_name": "K Art Portfolio",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 828 10번지 올림피아센터 711호",
-    "short_address": "강남구 역삼동 828 10번지 올림피아센터 711호",
+    "address": "Room 711, Olympia Center, 828 10 Yeoksam-dong, Gangnam-gu, Seoul, Korea",
+    "short_address": "Room 711, Olympia Center, 828 10 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.496024,
       "lng": 127.03286619999999
@@ -799,7 +799,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca156ce91ef15:0x4fc259fe63616b9f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -810,14 +810,14 @@
   {
     "place_id": "ChIJQQVmVAChfDUR3dpeQbYsiDQ",
     "display_name": "KUVA ARTS CENTER",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로4길 45",
-    "short_address": "강남구 테헤란로4길 45",
+    "address": "45 Teheran-ro 4-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "45 Teheran-ro 4-gil, Gangnam-gu",
     "location": {
       "lat": 37.4955286,
       "lng": 127.03106869999999
@@ -837,7 +837,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca10054660541:0x34882cb6415edadd!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -847,15 +847,15 @@
   },
   {
     "place_id": "ChIJQ5zbNVGhfDURVMCfrwP-7eo",
-    "display_name": "역삼1 문화센터",
-    "category": "문화센터",
+    "display_name": "Yeoksam 1 Cultural Center",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼로7길 16",
-    "short_address": "강남구 역삼로7길 16",
+    "address": "16 Yeoksam-ro 7-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "16 Yeoksam-ro 7-gil, Gangnam-gu",
     "location": {
       "lat": 37.4952945,
       "lng": 127.0332162
@@ -875,17 +875,17 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15135db9c43:0xeaedfe03af9fc054!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -893,36 +893,36 @@
         "author": "Ryan HJ Suh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "도서관 이용차 정기적으로 방문하는 곳입니다. 도서관 사서님들 매우 친절하시고, 관리도 잘되어있습니다. 책 보유량이 생각보다 많지 않은데 타 도서관 이관신청을 하면 문제없더라고요."
+        "relative_time": "3 months ago",
+        "text": "This is a place I visit regularly to use the library. The librarians are very friendly and well-maintained. I didn't have as many books as I thought, but there was no problem when I applied to transfer to another library."
       },
       {
-        "author": "한대웅",
+        "author": "Daewoong Han",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "강남문화세터 주관의 목요예술무대가 열리는 곳.\n입장 절차도 그렇고 세심하게 관리하고 공연도 즐겁게 관람.\n추울정도로 시원했음."
+        "relative_time": "4 years ago",
+        "text": "This is where the Thursday art stage hosted by Gangnam Culture Set is held.\nThe admission process was carefully managed and the performance was enjoyable to watch.\nIt was so cool that it was cold."
       },
       {
-        "author": "김금주",
+        "author": "Geumju Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "갤러리 사진전 있어 둘러보고 왔어요\n야생화들이 예쁘게 자태를 보이고"
+        "relative_time": "3 years ago",
+        "text": "There was a photo exhibition in the gallery, so I took a look around.\nWildflowers show up beautifully"
       },
       {
         "author": "Amy Hong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "도서관 리모델링해서 너무 깨끗하고 좋아요."
+        "relative_time": "4 months ago",
+        "text": "The library has been remodeled and is very clean and nice."
       },
       {
         "author": "kim burn",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "층별로 잘 갖춰져 있읍니다. 5층은 도서관 4층은아넉한 룸??이있고  3층은 영화관과 공연장??이 있고 1층은 동민원실과 전시관이 있고 2층에는 헬스장과, 기둥없는 큰 볼룸이  있습니다. 아, 지하에는 주차장이 잘 갖춰져있고 골프연습장이 있습니다."
+        "relative_time": "1 year ago",
+        "text": "Each floor is well equipped. The 5th floor is a library, the 4th floor has plenty of rooms, the 3rd floor has a movie theater and performance hall, the 1st floor has a community center and an exhibition hall, and the 2nd floor has a gym and a large ballroom without pillars. Oh, there is a well-equipped parking lot in the basement and a golf driving range."
       }
     ],
     "photos": [
@@ -940,15 +940,15 @@
   },
   {
     "place_id": "ChIJadgac1ehfDURuxPxio8GEH4",
-    "display_name": "문화오름",
-    "category": "문화센터",
+    "display_name": "Culture Oreum",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 824-19번지 동경빌딩 10층 1035호",
-    "short_address": "강남구 역삼동 824-19번지 동경빌딩 10층 1035호",
+    "address": "Room 1035, 10th floor, Donggyeong Building, 824-19 Yeoksam-dong, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "#1035, 10th floor, Donggyeong Building, 824-19 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.498443,
       "lng": 127.0305178
@@ -976,15 +976,15 @@
   },
   {
     "place_id": "ChIJhz85xFWhfDURdbdfNb9wsCM",
-    "display_name": "한국산악문화회관",
-    "category": "문화센터",
+    "display_name": "Korean Mountain Culture Center",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 740-10",
-    "short_address": "강남구 역삼동 740-10",
+    "address": "740-10 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "740-10 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4977756,
       "lng": 127.03565669999999
@@ -1004,7 +1004,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca155c4393f87:0x23b070bf355fb775!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1014,8 +1014,8 @@
   },
   {
     "place_id": "ChIJ88ijmz-hfDURZfJ5kMWnkiA",
-    "display_name": "일상비일상의틈byU+ (Teum by LG Uplus)",
-    "category": "문화센터",
+    "display_name": "The gap between everyday life and everyday life byU+ (Teum by LG Uplus)",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "cafe",
@@ -1023,8 +1023,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 강남대로 426",
-    "short_address": "강남구 역삼동 강남대로 426",
+    "address": "426 Gangnam-daero, Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "426 Gangnam-daero, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5005376,
       "lng": 127.02674269999999
@@ -1044,50 +1044,50 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca13f9ba3c8f3:0x2092a7c59079f265!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "Harryjuni (해리주니)",
+        "author": "Harryjuni",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4달 전",
-        "text": "더 많은 정보는 검색창에 '해리주니'를 검색하세요~👉\n\n강남역에서 색다른 전시나 실내 데이트 코스를 찾고 있다면 일상비일상의틈 무료 전시회를 추천드리고 싶어요.\n\n2025년 11월 14일부터 12월 31일까지 약 한 달 반 동안, 일상비일상의틈이 갤러리 호튼과 콜라보 하여 준비한 특별 전시 ‘창조의 경계: AI, 인간, 그리고 예술’이 무료로 진행되고 있어요.\n\n유명 작가부터 신진 작가까지 총 9명의 작품을 무료로 볼 수 있는 흔치 않은 기회라 강남역 놀거리 찾는 분들께 딱일 거 같아요.\n\n이번 전시는 예술과 기술, 그리고 인간의 상상력이 교차하는 지점을 탐구하는 현대미술 중심 전시예요.\n\n참여 아티스트는 다음 9명으로, 무료 전시임에도 라인업이 정말 화려해요.\n\n전시는 총 3개 층(지하 1층, 1층, 2층)에서 이어지는데 층마다 분위기가 달라 자연스럽게 동선을 따라 즐기기 좋았어요."
+        "relative_time": "4 months ago",
+        "text": "For more information, search for ‘Harry Junie’ in the search bar~👉\n\nIf you are looking for a unique exhibition or indoor date course at Gangnam Station, I would like to recommend the free exhibition between the everyday and the non-daily.\n\nFor about a month and a half from November 14 to December 31, 2025, the special exhibition ‘Borders of Creation: AI, Humans, and Art’, prepared in collaboration with Gallery Horton, is being held for free.\n\nThis is a rare opportunity to see the works of a total of 9 artists, from famous to new artists, for free, so I think it will be perfect for those looking for something to do at Gangnam Station.\n\nThis exhibition is a contemporary art-centered exhibition that explores the intersection of art, technology, and human imagination.\n\nThe participating artists include the following 9 artists, and even though it is a free exhibition, the lineup is truly spectacular.\n\nThe exhibition spans three floors (basement level, first floor, and second floor), and each floor had a different atmosphere, so it was nice to naturally follow the route."
       },
       {
         "author": "RabbitJ**",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "“MZ의 취향놀이터”를 테마로 한 강남의 콜라보 팝업 스토어 엘지 유플러스에서 운영중\n\n강남역 11번출구로 나와서 영화관CGv 방향으로 쭉 걸어가다보면 나온다.\n\n기간마다 다른 이벤트를 진행하고 있다고 함\n2월19일부터 3월 9일까지는 유어굿즈 일러스트 페어를 진행중! 오전11시부터 오후 9시까지 운영중\n*매주 월요일은 휴뮤일이라고 한다\n28일이후에는 라인업이 신규로 추가된다고 함❣️\n\n다이어리꾸미기에 유용한 스티커라던지 필기용구라던지 다양한 캐릭터를 활용한 굿즈가 있다. 요새 젊은 친구들이 많이 하고 다니는 가방에 다는 키링도 많은 캐릭터를 모티브로 한 굿즈가 많음\n\n귀여운것을 보면 텐션이 올라가는 분들에게 강략 추천\n\n기념해서 사진을 찍을수 있는 포토존도 있으니 친구 혹은 연인이 같이 가서 구경하는 것도 좋을듯:)\n\n참여브랜드\n무직타이거, 고동상, 무너스토어, 빤쮸토끼, 밤토리상점, 베리베리뱁, 슈야토야, 스폰지밥, 마이그리미, 노베지치에, 김김랩, 그림채, 고미콩 등"
+        "relative_time": "1 year ago",
+        "text": "A collaboration pop-up store in Gangnam with the theme of “MZ’s Playground” is being operated by LG U+.\n\nCome out of Exit 11 of Gangnam Station and walk straight in the direction of the CGv movie theater.\n\nIt is said that different events are held every period.\nYour Goods Illustration Fair is running from February 19th to March 9th! Open from 11 am to 9 pm\n*Every Monday is a closed day.\nIt is said that a new lineup will be added after the 28th❣️\n\nThere are goods using various characters, such as stickers and writing utensils that are useful for decorating diaries. These days, there are many goods with character motifs, including keyrings attached to bags that many young people wear.\n\nHighly recommended for those who get excited when they see cute things\n\nThere is also a photo zone where you can take a commemorative photo, so it might be a good idea to go with a friend or lover and take a look :)\n\nParticipating Brand\nMujik Tiger, Godongsang, Mureo Store, Panchu Rabbit, Bamtori Store, Berry Berry Bab, Shuya Toya, SpongeBob, My Grimy, Nobejichie, Kim Kim Lab, Grimchae, Gomi Kong, etc."
       },
       {
         "author": "roadpicture",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "5년 전",
-        "text": "뭐하자는 거지. 시간과 개인 정보만 빼앗긴 기분. 그 많은 인력과 공간은 누구를 위한건지. 그냥 갤러리 그림 감상하는 방향 으로 조용하게 휴식하는 공간도 아니고 어수선과 힙하지도 않고 억지로 껴 맞추어져 있는 혼란한 공간. 감동 재미 그런거 없어요. 지하철 빈 상가에 하면 딱 좋을 컨셉 덩어리."
+        "relative_time": "5 years ago",
+        "text": "What are we going to do? I feel like my time and personal information has been taken away. Who is all that manpower and space for? It is not just a space to quietly rest for viewing gallery paintings, but a chaotic space that is forced to fit together without being cluttered and hip. There is no such thing as touching or fun. A concept that would be perfect for empty subway shopping malls."
       },
       {
-        "author": "수락수락해",
+        "author": "Accept, accept",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "여러 기업의 제품 홍보와 체험 성격 요소가 분명 있지만, 나름 강남 한복판에 무료로 이러한 문화 컨텐츠를 즐길 수 있는 신선한 점이 만족스럽다.\n\n직원들도 매우 친절한 편이라, 좋은 경험이였다."
+        "relative_time": "5 years ago",
+        "text": "Although there are certainly elements of various companies' product promotions and experiential nature, I am satisfied with the freshness of being able to enjoy such cultural content for free in the middle of Gangnam.\n\nThe staff were very friendly, so it was a good experience."
       },
       {
         "author": "WANGYOUNG LEE",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "범계역에서 삼성역을 가기 위해 3030번 광역버스를 타고 양재역으로 가려 합니다. 그런데 버스환승을 하기에 다음 정류장과의 거리가 꽤 멀리 떨어져 있습니다.\n\n그래서 강남역까지 가서 지하철을 타기로 합니다. 그렇게 버스에 내려서 횡단보도를 지나 강남역으로 걸어 가는데, 삐까삐까 레고샵 앞에 사람들이 바글거립니다.\n\n레고를 엄청 좋아하지는 않지만 일본여행중 나고야의 레고랜드도 2회 다녀오며 레고전철도 타고 레고버거도 먹고 레고맨홀도 담아 옵니다.\n\n삼성역을 갔다가 애프터눈티를 고터로 가는 일정에서 레고를 보고 애프터눈티 이후 삼성역으로 가는 루트로 급변경을 합니다.\n\n레고 90주년 기념 팝업스토어는 구)씨티극장옆 강남대로변에 위치해 있어서 쉽게 눈에 띕니다. 기간은 8월14일 까지입니다.\n\n1F은 참여공간으로 일상비일상의틈 어플을 다운 받고 회원가입을 해야 참가가능합니다. 어플을 안하면 이벤트 참여는 불가지만 관람은 가능합니다.\n\n저도 참가하여 레고블록쌓기와 나만의 레고만들기 미션후 스탬프를 받아 인형뽑기 코인을 1개 받아 캡슐뽑기에 도전하여 성공합니다.\n\n제가 뽑은 상품은 레고황금키링입니다. 매장에서 약 1만5천원에 판매하고 있는 정품상품이네요! lucky ♥️\n1층 매장에서 이어지는 2F은 레고샵입니다.\n\n이곳에서는 유플러스 회원들은 할인을 받아 구매가능합니다. 지하1F에는 레고작가들의 작품을 전시해 두고 있습니다.\n\n장소가 넓진 않지만 B1F~2F까지 레고로 가득합니다. 레고를 직접 만들어 볼 수 있는 공간도 있어 아이들도 많습니다. 선물도 뽑아가시구요^^ 감사합니다."
+        "relative_time": "3 years ago",
+        "text": "To go from Beomgye Station to Samseong Station, I'm going to take metropolitan bus number 3030 to Yangjae Station. However, because of the bus transfer, the distance to the next stop is quite far.\n\nSo I decided to go to Gangnam Station and take the subway. I got off the bus, walked across the crosswalk to Gangnam Station, and people were crowded in front of the Pika Pika Lego Shop.\n\nI don't like Lego very much, but during my trip to Japan, I visited Legoland in Nagoya twice, rode the Lego train, ate a Lego burger, and took a Lego manhole.\n\nAfter going to Samseong Station and then going to Samseong Station for afternoon tea, we saw Lego and quickly changed the route to Samseong Station after afternoon tea.\n\nThe LEGO 90th Anniversary Pop-up Store is located on Gangnam-daero next to the old City Theater, so it is easily visible. The period is until August 14th.\n\n1F is a participation space, and you must download the Daily Non-Daily Life Gap app and register as a member to participate. If you do not use the app, you cannot participate in the event, but you can view it.\n\nI also participated and completed the mission of stacking Lego blocks and making my own Lego, received a stamp, received a doll claw coin, and succeeded in the capsule raffle challenge.\n\nThe product I chose is the Lego Golden Keyring. This is a genuine product sold in stores for about 15,000 won! lucky ♥️\nThe 2nd floor, connected to the 1st floor store, is a Lego shop.\n\nHere, U+ members can purchase at a discount. The works of LEGO artists are on display on the first floor of the basement.\n\nAlthough the place is not large, it is full of Lego from B1F to 2F. There is also a space where children can build their own LEGOs. Please pick up a gift as well^^ Thank you."
       }
     ],
     "photos": [
@@ -1105,15 +1105,15 @@
   },
   {
     "place_id": "ChIJn9cofFehfDURHnhnhP3rI6g",
-    "display_name": "대만교육센터",
-    "category": "문화센터",
+    "display_name": "Taiwan Education Center",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로 113길",
-    "short_address": "강남구 테헤란로 113길",
+    "address": "113 Teheran-ro, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Teheran-ro 113-gil, Gangnam-gu",
     "location": {
       "lat": 37.4989154,
       "lng": 127.02949840000001
@@ -1132,16 +1132,16 @@
     "google_maps_url": "https://maps.google.com/?cid=12115786896637392926",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1577c28d79f:0xa823ebfd8467781e!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1151,15 +1151,15 @@
   },
   {
     "place_id": "ChIJo5ZfXQChfDUR1aD1As-M1tc",
-    "display_name": "아트스페이스와이 갤러리",
-    "category": "미술관",
+    "display_name": "Art Space Y Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로100길 28",
-    "short_address": "강남구 강남대로100길 28",
+    "address": "28 Gangnam-daero 100-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "28, Gangnam-daero 100-gil, Gangnam-gu",
     "location": {
       "lat": 37.501837099999996,
       "lng": 127.0283551
@@ -1178,16 +1178,16 @@
     "google_maps_url": "https://maps.google.com/?cid=15552773183906357461",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1005d5f96a3:0xd7d68ccf02f5a0d5!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 10:00 ~ 오후 8:00",
-      "수요일: 오전 10:00 ~ 오후 8:00",
-      "목요일: 오전 10:00 ~ 오후 8:00",
-      "금요일: 오전 10:00 ~ 오후 8:00",
-      "토요일: 오전 10:00 ~ 오후 8:00",
-      "일요일: 오전 10:00 ~ 오후 8:00"
+      "Monday: Closed day",
+      "Tuesday: 10:00 AM - 8:00 PM",
+      "Wednesday: 10:00 AM - 8:00 PM",
+      "Thursday: 10:00 AM - 8:00 PM",
+      "Friday: 10:00 AM - 8:00 PM",
+      "Saturday: 10:00 AM - 8:00 PM",
+      "Sunday: 10:00 AM - 8:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1197,7 +1197,7 @@
         "author": "Alex Smith",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1달 전",
+        "relative_time": "1 month ago",
         "text": null
       }
     ],
@@ -1210,14 +1210,14 @@
   {
     "place_id": "ChIJNdO-3VehfDURGhrOBCNoaBo",
     "display_name": "WCNDT 2020 SEOUL",
-    "category": "문화센터",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로7길 22",
-    "short_address": "강남구 테헤란로7길 22",
+    "address": "22 Teheran-ro 7-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "22 Teheran-ro 7-gil, Gangnam-gu",
     "location": {
       "lat": 37.500703,
       "lng": 127.0307454
@@ -1237,11 +1237,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca157ddbed335:0x1a68682304ce1a1a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1250,15 +1250,15 @@
   },
   {
     "place_id": "ChIJN2BJduujfDURFguI93MVDX4",
-    "display_name": "갤러리샘 Saem Gallery",
-    "category": "미술관",
+    "display_name": "Gallery Saem Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로13길 30",
-    "short_address": "강남구 테헤란로13길 30",
+    "address": "30 Teheran-ro 13-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "30 Teheran-ro 13-gil, Gangnam-gu",
     "location": {
       "lat": 37.5016083,
       "lng": 127.0319116
@@ -1277,16 +1277,16 @@
     "google_maps_url": "https://maps.google.com/?cid=9082939611294468886",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3eb76496037:0x7e0d1573f7880b16!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 6:00",
-      "화요일: 오전 10:00 ~ 오후 6:00",
-      "수요일: 오전 10:00 ~ 오후 6:00",
-      "목요일: 오전 10:00 ~ 오후 6:00",
-      "금요일: 오전 10:00 ~ 오후 6:00",
-      "토요일: 오전 10:00 ~ 오후 6:00",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 6:00 PM",
+      "Tuesday: 10:00 AM - 6:00 PM",
+      "Wednesday: 10:00 AM - 6:00 PM",
+      "Thursday: 10:00 AM - 6:00 PM",
+      "Friday: 10:00 AM - 6:00 PM",
+      "Saturday: 10:00 AM - 6:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1296,7 +1296,7 @@
         "author": "Lim Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       }
     ],
@@ -1315,15 +1315,15 @@
   },
   {
     "place_id": "ChIJJ2NdDlahfDURfPm2pw8eMmk",
-    "display_name": "(주)이후갤러리",
-    "category": "미술관",
+    "display_name": "Whoo Gallery Co., Ltd.",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 735 32번지 11층 1139호",
-    "short_address": "강남구 역삼동 735 32번지 11층 1139호",
+    "address": "Room 1139, 11th floor, 735 32 Yeoksam-dong, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "Room 1139, 11th floor, 735 32 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4990484,
       "lng": 127.0341289
@@ -1343,7 +1343,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1560e5d6327:0x69321e0fa7b6f97c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1354,13 +1354,13 @@
   {
     "place_id": "ChIJe2YVH_6jfDUR5y8gD02kezs",
     "display_name": "Turkish Cultural Center",
-    "category": "문화센터",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "(Teheran-ro 26gil 12 2F, 3F), Gangnam-gu, Seoul, 대한민국",
+    "address": "(Teheran-ro 26gil 12 2F, 3F), Gangnam-gu, Seoul, South Korea",
     "short_address": "(Teheran-ro 26gil 12 2F, 3F), Gangnam-gu",
     "location": {
       "lat": 37.499404,
@@ -1380,70 +1380,70 @@
     "google_maps_url": "https://maps.google.com/?cid=4286200121246363623",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fe1f15667b:0x3b7ba44d0f202fe7!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:30 ~ 오후 10:00",
-      "화요일: 오전 9:30 ~ 오후 10:00",
-      "수요일: 오전 9:30 ~ 오후 10:00",
-      "목요일: 오전 9:30 ~ 오후 10:00",
-      "금요일: 오전 9:30 ~ 오후 10:00",
-      "토요일: 오전 9:30 ~ 오후 10:00",
-      "일요일: 오전 9:30 ~ 오후 10:00"
+      "Monday: 9:30 AM - 10:00 PM",
+      "Tuesday: 9:30 AM - 10:00 PM",
+      "Wednesday: 9:30 AM - 10:00 PM",
+      "Thursday: 9:30 AM - 10:00 PM",
+      "Friday: 9:30 AM - 10:00 PM",
+      "Saturday: 9:30 AM - 10:00 PM",
+      "Sunday: 9:30 AM - 10:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김은영",
+        "author": "Eunyoung Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "신선한 문화체험이였습니다.\n이벤트당첨되어 선물도 받았어요~"
+        "relative_time": "6 years ago",
+        "text": "It was a refreshing cultural experience.\nI won the event and received a gift~"
       },
       {
         "author": "Raymond Min",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "한국에서 색다른 경험을 할 수 있는 곳"
+        "relative_time": "6 years ago",
+        "text": "A place where you can have a unique experience in Korea"
       },
       {
-        "author": "진수수",
+        "author": "Jinsoosu",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "모자이크 램프 만들기 유익하고 즐거운 시간이었습니다."
+        "relative_time": "6 years ago",
+        "text": "Making a mosaic lamp was an informative and enjoyable experience."
       },
       {
         "author": "Adina Kaiym",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "터키식 아침 식사를 먹으러 딱 한 번 가봤어요. 요리, 그림 그리기, 공예 등 다양한 프로그램을 배우고 체험해 볼 수 있어요. 정말 멋진 커뮤니티예요."
+        "relative_time": "6 years ago",
+        "text": "I've only been there once for Turkish breakfast. You can learn and experience various programs such as cooking, painting, and crafts. It's a really cool community."
       },
       {
         "author": "murat bayrak",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "서울에서 터키풍 문양을 볼 수 있다니 정말 멋지네요."
+        "relative_time": "6 years ago",
+        "text": "It’s really cool to be able to see Turkish patterns in Seoul."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJZ3LLbv6jfDURf1NV9vKBDMk",
-    "display_name": "아우구스타갤러리(AUGUSTAGALLERY)",
-    "category": "미술관",
+    "display_name": "AUGUSTAGALLERY",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동",
-    "short_address": "강남구 역삼동",
+    "address": "Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5008108,
       "lng": 127.0356647
@@ -1463,7 +1463,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fe6ecb7267:0xc90c81f2f655537f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1473,15 +1473,15 @@
   },
   {
     "place_id": "ChIJTx0ku-KjfDUR2GW_5NSlDfM",
-    "display_name": "유나이티드문화센터",
-    "category": "문화센터",
+    "display_name": "United Cultural Center",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 622-15",
-    "short_address": "강남구 역삼동 622-15",
+    "address": "622-15 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "622-15 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5025435,
       "lng": 127.0284386
@@ -1501,12 +1501,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3e2bb241d4f:0xf30da5d4e4bf65d8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": null,
@@ -1518,15 +1518,15 @@
   },
   {
     "place_id": "ChIJhXUaHPyjfDUR30qBBFgzigY",
-    "display_name": "자알라얀(주)",
-    "category": "문화센터",
+    "display_name": "Jaalayaan Province",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 629-6",
-    "short_address": "강남구 역삼동 629-6",
+    "address": "629-6 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "629-6 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.503534099999996,
       "lng": 127.03438779999999
@@ -1554,15 +1554,15 @@
   },
   {
     "place_id": "ChIJu1PQyy6jfDURybshnJX99BM",
-    "display_name": "주한네팔문화원",
-    "category": "문화센터",
+    "display_name": "Nepal Cultural Center in Korea",
+    "category": "cultural center",
     "types": [
       "cultural_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로25길 39",
-    "short_address": "강남구 테헤란로25길 39",
+    "address": "39 Teheran-ro 25-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "39 Teheran-ro 25-gil, Gangnam-gu",
     "location": {
       "lat": 37.5030548,
       "lng": 127.03472310000001
@@ -1581,16 +1581,16 @@
     "google_maps_url": "https://maps.google.com/?cid=1438053000049441737",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32ecbd053bb:0x13f4fd959c21bbc9!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:30 ~ 오후 5:00",
-      "화요일: 오전 9:30 ~ 오후 5:00",
-      "수요일: 오전 9:30 ~ 오후 5:00",
-      "목요일: 오전 9:30 ~ 오후 5:00",
-      "금요일: 오전 9:30 ~ 오후 5:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:30 AM - 5:00 PM",
+      "Tuesday: 9:30 AM - 5:00 PM",
+      "Wednesday: 9:30 AM - 5:00 PM",
+      "Thursday: 9:30 AM - 5:00 PM",
+      "Friday: 9:30 AM - 5:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1611,14 +1611,14 @@
   },
   {
     "place_id": "ChIJ43l_S_mjfDURNj4zB7kUKvQ",
-    "display_name": "선석갤러리",
-    "category": "미술관",
+    "display_name": "Seonseok Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.504033299999996,
@@ -1639,7 +1639,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3f94b7f79e3:0xf42a14b907333e36!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1650,14 +1650,14 @@
   {
     "place_id": "ChIJvRFrHQOjfDURyxtxue62AWc",
     "display_name": "aie gallery",
-    "category": "미술관",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "B1, 25 gil, 26 테헤란로 강남구 서울특별시 대한민국",
-    "short_address": "B1, 25 gil, 26 테헤란로 강남구",
+    "address": "B1, 25 gil, 26 Teheran-ro, Gangnam-gu, Seoul South Korea",
+    "short_address": "B1, 25 gil, 26 Teheran-ro, Gangnam-gu",
     "location": {
       "lat": 37.5022114,
       "lng": 127.0353758
@@ -1676,13 +1676,13 @@
     "google_maps_url": "https://maps.google.com/?cid=7422414797312957387",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3031d6b11bd:0x6701b6eeb9711bcb!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Closed day",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": null,
@@ -1695,15 +1695,15 @@
   },
   {
     "place_id": "ChIJBxQ_2vijfDUR1bp347LyyIg",
-    "display_name": "에스갤러리",
-    "category": "미술관",
+    "display_name": "S Gallery",
+    "category": "art gallery",
     "types": [
       "art_gallery",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 670-5",
-    "short_address": "강남구 역삼동 670-5",
+    "address": "670-5 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "670-5 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5037862,
       "lng": 127.037781
@@ -1723,7 +1723,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3f8da3f1407:0x88c8f2b2e377bad5!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1733,15 +1733,15 @@
   },
   {
     "place_id": "ChIJcaoMW1qhfDURkx8D0sPNxEY",
-    "display_name": "(주)그라운드원",
-    "category": "공원",
+    "display_name": "Ground One Co., Ltd.",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초동 1327-2번지 서초구 서울특별시 KR",
-    "short_address": "서초동 1327-2번지 서초구 서울특별시 KR",
+    "address": "1327-2 Seocho-dong, Seoul, South Korea, Seocho-gu, Seoul KR",
+    "short_address": "1327-2 Seocho-dong, Seocho-gu, Seoul KR",
     "location": {
       "lat": 37.4957685,
       "lng": 127.02753630000001
@@ -1769,15 +1769,15 @@
   },
   {
     "place_id": "ChIJE3Um-5qhfDURRmY7t7GzNsw",
-    "display_name": "역삼까치공원",
-    "category": "공원",
+    "display_name": "Yeoksam Magpie Park",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동 824-10",
-    "short_address": "강남구 역삼1동 824-10",
+    "address": "824-10, Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "824-10 Yeoksam 1-dong, Gangnam-gu",
     "location": {
       "lat": 37.4972085,
       "lng": 127.03072599999999
@@ -1797,47 +1797,47 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca19afb267513:0xcc36b3b1b73b6646!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합",
-      "반려견동반"
+      "Suitable for children",
+      "Accompanied by dogs"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "윤필중 (필)",
+        "author": "Piljung Yoon (Phil)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "역삼까치공원은 강남역 3번 출구 근처의 번화가 한가운데에 위치한 공원입니다.\n\n공원의 크기는 정말 작지만 직장인들의 발길이 끊이질 않는 정말 번화한 공원입니다.\n\n공원 내에는 많은 벤치들과 미끄럼틀, 흔들말 그리고 운동기구들이 비치되어 있습니다.\n\n점심때에는 점심을 먹고 소화 겸 공원을 돌거나 운동기구를 사용하는 직장인과 반려견과 함께 공원을 방문하는 주민들 그리고 벤치에 앉아 휴식을 취하는 많은 사람들을 볼 수 있습니다.\n\n공원 근처에 많은 회사들이 있어 업무 중 휴식시간에 잠깐 나와 짧게라도 공원에서 기분전환을 하기에 좋은 공원인 것 같았습니다."
+        "relative_time": "2 years ago",
+        "text": "Yeoksam Magpie Park is a park located in the middle of a downtown area near Exit 3 of Gangnam Station.\n\nAlthough the park is really small, it is a really bustling park with a constant flow of office workers.\n\nThe park has many benches, slides, rocking horses, and exercise equipment.\n\nAt lunch time, you can see office workers walking around the park or using exercise equipment after lunch, residents visiting the park with their dogs, and many people sitting on benches to rest.\n\nThere are many companies near the park, so it seemed like a good park to take a short break from work and refresh yourself."
       },
       {
-        "author": "문양집",
+        "author": "pattern collection",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "건물과 상점사이에 휴식공간으로 좋네요"
+        "relative_time": "4 years ago",
+        "text": "It's a good place to rest between the building and the store."
       },
       {
-        "author": "이은경",
+        "author": "Eunkyung Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "11달 전",
-        "text": "사람이 많고 개 산책 시키는 분들도 쉬어감"
+        "relative_time": "11 months ago",
+        "text": "There are a lot of people and even people walking their dogs take a break."
       },
       {
-        "author": "루이루이",
+        "author": "Rui Rui",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "한가로운 오후에 잠시 나가서 벤치에 앉아보심이."
+        "relative_time": "4 years ago",
+        "text": "On a leisurely afternoon, go out for a moment and sit on a bench."
       },
       {
         "author": "hokyu kim",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "3년 전",
-        "text": "그냥 회사원들 커피마시는 공원 정도."
+        "relative_time": "3 years ago",
+        "text": "It's just a park where office workers drink coffee."
       }
     ],
     "photos": [
@@ -1855,15 +1855,15 @@
   },
   {
     "place_id": "ChIJzVL-3FahfDUROaH_S7SF0z0",
-    "display_name": "(주)선샤인언더그라운드",
-    "category": "공원",
+    "display_name": "Sunshine Underground Co., Ltd.",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 828-5번지 2층",
-    "short_address": "강남구 역삼동 828-5번지 2층",
+    "address": "2nd floor, 828-5 Yeoksam-dong, Gangnam-gu, Seoul, Korea",
+    "short_address": "2nd floor, 828-5 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.496822,
       "lng": 127.0324963
@@ -1892,14 +1892,14 @@
   {
     "place_id": "ChIJCekkDgChfDURG8UXXa-JtWs",
     "display_name": "小さな休憩場所",
-    "category": "공원",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 620-21",
-    "short_address": "강남구 역삼동 620-21",
+    "address": "620-21 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "620-21 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5011243,
       "lng": 127.0293428
@@ -1927,16 +1927,16 @@
   },
   {
     "place_id": "ChIJM7-Ah_2jfDURDbm9HkjgTV0",
-    "display_name": "레인포레스트",
-    "category": "국립공원",
+    "display_name": "rainforest",
+    "category": "national park",
     "types": [
       "national_park",
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 한주빌딩 KR 서울특별시 강남구 역삼동 647번지 B1층",
-    "short_address": "KR 서울특별시 강남구 역삼동 647번지 B1층 한주빌딩",
+    "address": "B1F, Hanju Building, Seoul, Republic of Korea, 647 Yeoksam-dong, Gangnam-gu, Seoul",
+    "short_address": "KR Hanju Building, B1F, 647 Yeoksam-dong, Gangnam-gu, Seoul",
     "location": {
       "lat": 37.500437999999995,
       "lng": 127.03250279999999
@@ -1964,15 +1964,15 @@
   },
   {
     "place_id": "ChIJ8Y4E9f6jfDURlK0aJ6jmT-Q",
-    "display_name": "(주)녹산공원",
-    "category": "공원",
+    "display_name": "Noksan Park Co., Ltd.",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 KR 서울특별시 강남구 역삼동 642-6번지 성지하이츠3차빌딩 빌딩 1511호",
-    "short_address": "KR 서울특별시 강남구 역삼동 642-6번지 성지하이츠3차빌딩 빌딩 1511호",
+    "address": "Room 1511, Seongji Heights 3rd Building, 642-6 Yeoksam-dong, Gangnam-gu, Seoul, Republic of Korea KR",
+    "short_address": "KR Room 1511, Seongji Heights 3rd Building, 642-6 Yeoksam-dong, Gangnam-gu, Seoul",
     "location": {
       "lat": 37.501539099999995,
       "lng": 127.03614280000001
@@ -1992,7 +1992,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fef5048ef1:0xe44fe6a8271aad94!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합"
+      "Suitable for children"
     ],
     "payment": null,
     "accessibility": null,
@@ -2002,15 +2002,15 @@
   },
   {
     "place_id": "ChIJiSRD_C2jfDUR1c9quPJDb2c",
-    "display_name": "충현1공원",
-    "category": "공원",
+    "display_name": "Chunghyeon 1 Park",
+    "category": "park",
     "types": [
       "park",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 봉은사로30길",
-    "short_address": "강남구 역삼동 봉은사로30길",
+    "address": "Bongeunsa-ro 30-gil, Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Bongeunsa-ro 30-gil, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5044865,
       "lng": 127.0366049
@@ -2030,49 +2030,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32dfc432489:0x676f43f2b86acfd5!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "어린이적합",
-      "반려견동반"
+      "Suitable for children",
+      "Accompanied by dogs"
     ],
     "payment": null,
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "정미선",
+        "author": "Jeong Mi-seon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "가을 단풍이 너무나 예뻤어요. 놀이터 기구들도 안전해 보여 아이들이 놀기에 좋은 공간인 것 같아요:)"
+        "relative_time": "5 years ago",
+        "text": "The fall leaves were so pretty. The playground equipment seems safe and seems like a good place for children to play :)"
       },
       {
-        "author": "조혜영",
+        "author": "Hyeyoung Jo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "작은 공원 있을건 다있는 쾌적 상쾌 공원\n앞에 편의점에서 간단한 먹을거 사서\n조용히 시간 보내기 좋은 곳 작은 돗자리 깔고\n편의점 도시락 먹으면 짱"
+        "relative_time": "2 years ago",
+        "text": "A pleasant and refreshing park with everything you need in a small park\nI bought some snacks at the convenience store in front.\nA good place to quietly spend time. Lay out a small mat.\nIt's great to eat a convenience store lunch box"
       },
       {
-        "author": "짜과짜과[Apple Tube]",
+        "author": "Jjagwa Jjagwa [Apple Tube]",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "역삼동 충현교회 옆에 위치한 충현 1공원"
+        "relative_time": "3 years ago",
+        "text": "Chunghyeon 1 Park located next to Chunghyeon Church in Yeoksam-dong"
       },
       {
         "author": "gwon new",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "아이들이 좋아할만한 곳입니다. 운동시설과 놀이터가 약간 분리되어 있어 좋습니다."
+        "relative_time": "3 years ago",
+        "text": "This is a place that kids will love. It's nice that the exercise facilities and playground are slightly separated."
       },
       {
         "author": "J -",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "야간에 가면 목줄 없는 개들이 돌아다님.\n견종이 작더라도 규칙은 지켰으면 좋겠음.\n작은 개라도 무서워하는 사람들이 있기에."
+        "relative_time": "3 years ago",
+        "text": "If you go at night, there are dogs wandering around without leashes.\nEven if the breed is small, I hope the rules are followed.\nBecause there are people who are afraid of even small dogs."
       }
     ],
     "photos": [
@@ -2090,16 +2090,16 @@
   },
   {
     "place_id": "ChIJ11OtZFihfDURRAfN5hg3qCc",
-    "display_name": "집사의하루 강남점",
-    "category": "고양이 카페",
+    "display_name": "Butler's Day Gangnam Branch",
+    "category": "cat cafe",
     "types": [
       "cat_cafe",
       "zoo",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로1길 40 5층",
-    "short_address": "강남구 테헤란로1길 40 5층",
+    "address": "5th floor, 40 Teheran-ro 1-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "5th floor, 40 Teheran-ro 1-gil, Gangnam-gu",
     "location": {
       "lat": 37.5008802,
       "lng": 127.0272505
@@ -2118,28 +2118,28 @@
     "google_maps_url": "https://maps.google.com/?cid=2857594543657518916",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15864ad53d7:0x27a83718e6cd0744!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 12:00~10:00",
-      "화요일: 오후 12:00~10:00",
-      "수요일: 오후 12:00~10:00",
-      "목요일: 오후 12:00~10:00",
-      "금요일: 오후 12:00~10:00",
-      "토요일: 오전 11:00 ~ 오후 10:00",
-      "일요일: 오전 11:00 ~ 오후 10:00"
+      "Monday: 12:00-10:00 PM",
+      "Tuesday: 12:00-10:00 PM",
+      "Wednesday: 12:00-10:00 PM",
+      "Thursday: 12:00-10:00 PM",
+      "Friday: 12:00-10:00 PM",
+      "Saturday: 11:00 AM - 10:00 PM",
+      "Sunday: 11:00 AM - 10:00 PM"
     ],
     "services": [
-      "야외석",
-      "화장실",
-      "어린이적합",
-      "커피"
+      "outdoor seating",
+      "restroom",
+      "Suitable for children",
+      "coffee"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어좌석",
-      "휠체어화장실"
+      "wheelchair seat",
+      "wheelchair restroom"
     ],
     "parking": null,
     "reviews": [
@@ -2147,36 +2147,36 @@
         "author": "Yunah Hahn",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "고양이 아주 많아요\n하도 음식을 많이 줘서 통통해요. 음식을 사서 계속 주는게 고양이 건강에 좋을지 모르겠어요. 한 30% 고양이들은 한시간 내내 조금도 움직이지 않고 잠만 자요.\n아이들이 좋아해 가자 해서 간건데 고양이는 주로 어른들에게 가지 애들에겐 잘 안가요. 좀더 반기고 애교있는 고양이면 좋을텐데 하도 만지는 사람들도 많고 놀아주는 사람들도 많아 고양이들이 스포일 된거 같아요."
+        "relative_time": "1 year ago",
+        "text": "There are so many cats\nThey give me so much food that I feel chubby. I'm not sure if buying food and constantly giving it to my cat is good for my cat's health. About 30% of cats sleep for an entire hour without moving at all.\nI went there because the kids liked it, but cats usually go to adults, but not to kids. It would be nice to have a more welcoming and affectionate cat, but I think cats are spoiled because there are so many people touching them and playing with them."
       },
       {
-        "author": "고형민",
+        "author": "Go Hyeong-min",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "고양이가 너무 귀엽고 매장이 조용하고 깔끔해서 좋았습니다!\n다음에도 재방문 할게요~~"
+        "relative_time": "3 months ago",
+        "text": "I liked that the cat was so cute and the store was quiet and clean!\nI will visit again next time~~"
       },
       {
-        "author": "민경준",
+        "author": "Min Kyung-jun",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "아주 편안하게 힐링하다 갈 수 있어요"
+        "relative_time": "3 months ago",
+        "text": "You can heal very comfortably."
       },
       {
-        "author": "수지수지",
+        "author": "Resin Resin",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "너무 예쁘고 관리 잘된 야옹이들~ 이 사랑스러운 아이들이 가지고 있는 아픔들이 조금이나마ㅈ위안이 되어줬음 좋겠어요 사장님도 많은 아가들 돌보시느라 힘드실텐데 감사합니다~^-^"
+        "relative_time": "1 year ago",
+        "text": "So pretty and well-maintained meows~ I hope this brings some comfort to the pain these lovely children are going through. Thank you, boss, because you must be having a hard time taking care of so many babies~^-^"
       },
       {
-        "author": "유창희",
+        "author": "Yoo Chang-hee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "나눠진공간에 공간도 잘 꾸며 놓았네요 냥이들은 약 20마리쯤 되구요 노령묘부터 아기냥이까지 다양한 연령대로 편안한 분위기에 잘 어울리고 있어요 지금은 입장료 9천원에 1시간 30분이용이에요 잠깐 쉬어가기 좋습니다^^ 동물을 좋아하시는 분들은 참고하시길~"
+        "relative_time": "7 years ago",
+        "text": "The space in the divided space is well decorated. There are about 20 cats. They are of various ages, from old cats to kittens, and they fit in well with the comfortable atmosphere. Currently, the admission fee is 9,000 won and it is open for 1 hour and 30 minutes. It is a good place to take a short break. ^^ If you like animals, please note this~"
       }
     ],
     "photos": [
@@ -2194,16 +2194,16 @@
   },
   {
     "place_id": "ChIJnYU40VuhfDURzCgaeEG3zUM",
-    "display_name": "(주)호갱노노",
-    "category": "공연예술 극장",
+    "display_name": "Hogaengnono Co., Ltd.",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 서초동 번지 13층 1317-23",
-    "short_address": "서초구 서초동 번지 13층 1317-23",
+    "address": "1317-23, 13th floor, Seocho-dong, Seocho-gu, Seoul, Republic of Korea",
+    "short_address": "1317-23, 13th floor, Seocho-dong, Seocho-gu",
     "location": {
       "lat": 37.497780299999995,
       "lng": 127.02619270000001
@@ -2223,7 +2223,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15bd138859d:0x43cdb741781a28cc!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2233,8 +2233,8 @@
   },
   {
     "place_id": "ChIJ5WKnPwChfDURIn3JIK4aRYc",
-    "display_name": "레드버튼 컬처 스테이지",
-    "category": "콘서트홀",
+    "display_name": "Red Button Culture Stage",
+    "category": "concert hall",
     "types": [
       "concert_hall",
       "live_music_venue",
@@ -2243,8 +2243,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로 422 2층, 3층",
-    "short_address": "강남구 강남대로 422 2층, 3층",
+    "address": "2nd and 3rd floors, 422 Gangnam-daero, Gangnam-gu, Seoul, Korea",
+    "short_address": "2nd and 3rd floors, 422 Gangnam-daero, Gangnam-gu",
     "location": {
       "lat": 37.5003747,
       "lng": 127.02691580000001
@@ -2264,10 +2264,10 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1003fa762e5:0x87451aae20c97d22!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2276,8 +2276,8 @@
   },
   {
     "place_id": "ChIJlSAunFehfDURYBakCO2GhKs",
-    "display_name": "KB 아트홀 강남",
-    "category": "콘서트홀",
+    "display_name": "KB Art Hall Gangnam",
+    "category": "concert hall",
     "types": [
       "concert_hall",
       "live_music_venue",
@@ -2286,8 +2286,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동 테헤란로 117",
-    "short_address": "강남구 역삼1동 테헤란로 117",
+    "address": "117 Teheran-ro, Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "117 Teheran-ro, Yeoksam 1-dong, Gangnam-gu",
     "location": {
       "lat": 37.499108899999996,
       "lng": 127.0302634
@@ -2307,51 +2307,51 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1579c2e2095:0xab8486ed08a41660!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": [
-      "휠체어화장실"
+      "wheelchair restroom"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "김동한",
+        "author": "Donghan Kim",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
-        "text": "에어콘 켜면 양말 썩은 냄새가 나요^^\n\n의자 넘 불편해요 ~\n\n완전 비추!!!"
+        "relative_time": "6 years ago",
+        "text": "When I turn on the air conditioner, it smells like rotten socks^^\n\nThe chair is very uncomfortable~\n\nAbsolutely not!!!"
       },
       {
-        "author": "haha사비",
+        "author": "haha Sabi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "아트홀이좁아서 너무좋다 정말가까이서 다볼수있다"
+        "relative_time": "7 years ago",
+        "text": "I love that the art hall is small. You can see everything from really close up."
       },
       {
-        "author": "선구자",
+        "author": "precursor",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "외국인들과 함께 다녀 왔는데 너무 좋아요."
+        "relative_time": "6 years ago",
+        "text": "I went there with foreigners and it was great."
       },
       {
         "author": "Hana JEON",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "공간이 넓어 다양한 공연하기에 편리함"
+        "relative_time": "6 years ago",
+        "text": "The space is large and convenient for various performances."
       },
       {
-        "author": "달콤한선물",
+        "author": "sweet gift",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "너무 좋아요~^^"
+        "relative_time": "6 years ago",
+        "text": "I love it so much~^^"
       }
     ],
     "photos": [
@@ -2367,16 +2367,16 @@
   },
   {
     "place_id": "ChIJ8Y4E9f6jfDURIdD08W9iauA",
-    "display_name": "새빛",
-    "category": "공연예술 극장",
+    "display_name": "new light",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 KR 서울특별시 강남구 역삼동 642-6번지 1801호 성지하이츠3차 빌딩",
-    "short_address": "KR 서울특별시 강남구 역삼동 642-6번지 1801호 성지하이츠3차 빌딩",
+    "address": "Seoul, Republic of Korea KR 1801 Seongji Heights 3rd Building, 642-6 Yeoksam-dong, Gangnam-gu, Seoul",
+    "short_address": "KR Seongji Heights 3rd Building, #1801, 642-6 Yeoksam-dong, Gangnam-gu, Seoul",
     "location": {
       "lat": 37.501539099999995,
       "lng": 127.03614280000001
@@ -2396,7 +2396,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fef5048ef1:0xe06a626ff1f4d021!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -2407,15 +2407,15 @@
   {
     "place_id": "ChIJt0crfW-jfDURE69qsOBOFXc",
     "display_name": "GS Arts Center",
-    "category": "공연예술 극장",
+    "category": "performing arts theater",
     "types": [
       "performing_arts_theater",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 논현로 508",
-    "short_address": "강남구 논현로 508",
+    "address": "508 Nonhyeon-ro, Gangnam-gu, Seoul, South Korea",
+    "short_address": "508 Nonhyeon-ro, Gangnam-gu",
     "location": {
       "lat": 37.5026571,
       "lng": 127.0378873
@@ -2435,15 +2435,15 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca36f7d2b47b7:0x77154ee0b06aaf13!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
@@ -2451,36 +2451,36 @@
         "author": "HENY",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "급하게 예매했는데 이렇게 잊지 못할 하루가 될 줄은 몰랐어요.\nGS아트센터는 처음 가봤는데 1층 B블록 4열이라 무대와 배우 표정이 잘 보여 만족했어요.\n1~3열은 단차가 없어 오히려 4열이 더 나았어요.\n지도는 8번출구로 나가라고 하는데 7번 출구는 건물과 바로 연결되어있어 7번 출구로 바로 가면 돼요\n로비에는 노란 롤스로이스 포토존이 있어 사진 찍기 좋았고, 칵테일 타워 4컷 부스도 있었어요.\n다만 캐스팅보드는 위층에만 있어서 조금 아쉬웠어요.\n무대에 들어서자 파도 소리와 바다 연출이 나와 시작부터 몰입이 됐어요.\n자막은 무대 앞과 양옆에 있었는데 앞줄에서도 크게 불편하지 않았어요.\n조던 역 배우가 춤과 노래를 여유롭게 해내는 모습이 인상 깊었고, 원작을 본 친구도 각색이 흥미롭다고 했어요.\n아쉬운 점은 배우 대사가 또렷하지 않고 무대 뒤 준비 소리가 들렸던 거였어요.\n그래도 배우들의 에너지와 화려한 무대 덕분에 별점 5점 만점에 5점이었어요.\n공연 후 개츠비 역 배우분을 로비에서 만나 사진도 찍었어요\n커튼콜 촬영도 가능해 추억을 남길 수 있었고, 티켓값도 아깝지 않은 공연이었어요.\n이번 시즌 꼭 봐야 할 뮤지컬로 추천.!!!!"
+        "relative_time": "6 months ago",
+        "text": "I made a quick reservation, but I had no idea it would be such an unforgettable day.\nIt was my first time going to GS Arts Center, and I was satisfied because I was in the 4th row of Block B on the first floor, so I could see the stage and the actors' expressions well.\nThere was no step between the 1st and 3rd rows, so the 4th row was better.\nThe map says to go out through exit 8, but exit 7 is directly connected to the building, so you can go straight through exit 7.\nThere was a yellow Rolls-Royce photo zone in the lobby, which was great for taking pictures, and there was also a cocktail tower 4-cut booth.\nHowever, it was a little disappointing that the casting board was only on the upper floor.\nAs soon as I entered the stage, I was immersed in the sound of waves and the ocean.\nThere were subtitles in front and on both sides of the stage, so even in the front row it wasn't too much of an inconvenience.\nI was impressed by the way the actor who played Jordan danced and sang with ease, and my friend who watched the original also said that the adaptation was interesting.\nWhat was disappointing was that the actor's lines were not clear and the sounds of preparations behind the stage could be heard.\nStill, it was 5 out of 5 stars thanks to the energy of the actors and the gorgeous stage.\nAfter the performance, I met the actor who played Gatsby in the lobby and took a picture with him.\nIt was possible to take pictures of the curtain call, making memories, and it was a performance worth the price of the ticket.\nRecommended as a must-see musical this season!!!!"
       },
       {
-        "author": "김루비",
+        "author": "Ruby Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "공연장 대쾌적 음향 최고\n객석의자 너무 좋고 단차 좋고 시야 좋고\n모든것이 다 좋은 극장!!"
+        "relative_time": "4 months ago",
+        "text": "Excellent acoustics in the concert hall\nThe audience chairs are very nice, the height is good, and the view is good.\nEverything about this theater is good!!"
       },
       {
         "author": "So Hyun Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2달 전",
-        "text": "뮤지컬 관람 차 방문했습니다.\n극장도 깨끗하고 시야도 좋습니다.\n1층 로비에 앉는 곳이 좀 마련되면 더 좋을 것 같아요!"
+        "relative_time": "2 months ago",
+        "text": "I visited to see a musical.\nThe theater is clean and the view is good.\nI think it would be better if there was a place to sit in the lobby on the first floor!"
       },
       {
-        "author": "봄봄동동",
+        "author": "Bombomdong-dong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "오랜만에 온 GS아트센터..좋았습니다."
+        "relative_time": "3 months ago",
+        "text": "It's been a while since I came to GS Art Center...it was nice."
       },
       {
         "author": "M Pak",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "브로드웨이에 가지 않고도 브로드웨이 뮤지컬을 볼 수 있었습니다. 처음에는 한국 배우들과의 콜라보레이션인 줄 알았는데, 100% 미국 배우들이 열정적으로 공연했습니다. 흥겹게 무대를 장악해 주셔서 온전히 즐길 수 있었고, 무대가 너무 아름다워서 다시 한번 감탄했습니다.\n\n정말 인상적인 공연이었습니다. LG아트센터가 GS아트센터로 바뀐 후 처음 방문했는데, 의자가 좀 딱딱하고 불편했습니다.\n\n현재 한국을 여행 중이시라면 꼭 방문해 보시기를 강력 추천합니다."
+        "relative_time": "5 months ago",
+        "text": "You could see a Broadway musical without going to Broadway. At first, I thought it was a collaboration with Korean actors, but 100% American actors performed passionately. I was able to fully enjoy the stage as they took over the stage with great excitement, and I was impressed once again because the stage was so beautiful.\n\nIt was a truly impressive performance. This was my first visit after LG Arts Center changed to GS Arts Center, and the chairs were a bit hard and uncomfortable.\n\nIf you are currently traveling to Korea, I highly recommend you visit."
       }
     ],
     "photos": [
@@ -2498,16 +2498,16 @@
   },
   {
     "place_id": "ChIJ9fgEh7ChfDURKpGvaCgOH2I",
-    "display_name": "365일 강남 펀앤펀",
-    "category": "라이브 음악 공연장",
+    "display_name": "365 days Gangnam Fun & Fun",
+    "category": "live music venue",
     "types": [
       "live_music_venue",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 858",
-    "short_address": "강남구 역삼동 858",
+    "address": "858 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "858 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4984519,
       "lng": 127.0280089
@@ -2527,11 +2527,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1b08704f8f5:0x621f0e2868af912a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2543,15 +2543,15 @@
   },
   {
     "place_id": "ChIJV50sflmhfDURvzIlmqhzvDY",
-    "display_name": "메가박스 강남",
-    "category": "영화관",
+    "display_name": "Megabox Gangnam",
+    "category": "movie theater",
     "types": [
       "movie_theater",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 서초대로77길 3 아라타워 8~11층",
-    "short_address": "서초구 서초대로77길 3 아라타워 8~11층",
+    "address": "8th to 11th floors, Ara Tower, 3 Seocho-daero 77-gil, Seocho-gu, Seoul, South Korea",
+    "short_address": "8th to 11th floors, Ara Tower, 3 Seocho-daero 77-gil, Seocho-gu",
     "location": {
       "lat": 37.4979437,
       "lng": 127.0265374
@@ -2571,55 +2571,55 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1597e2c9d57:0x36bc73a89a2532bf!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실",
-      "어린이적합"
+      "restroom",
+      "Suitable for children"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "여행남",
+        "author": "travel man",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "전 좌석이 리클라이너로 바뀌면서 요금도 올랐을까요? 요금은 주말 오전 12000원. 좌석은 너무 편하게 좋네요."
+        "relative_time": "1 year ago",
+        "text": "Did the rates go up as all seats were changed to recliners? The fare is 12,000 won on weekend mornings. The seats are very comfortable."
       },
       {
         "author": "Ottr B",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "전 좌석 리클라이너로 바뀌면서 더 이상 다른 동네 영화관이 부럽지 않음"
+        "relative_time": "7 months ago",
+        "text": "As all seats have been replaced with recliners, I no longer envy other local movie theaters."
       },
       {
         "author": "K MR.",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "깔끔하고 높고 의자도 편함.\n8층에 있어서 가기 껄끄러울 줄 알았는데\n의외로 시설 좋음."
+        "relative_time": "7 years ago",
+        "text": "It's clean, high, and the chairs are comfortable.\nI thought it would be difficult to get there since it is on the 8th floor.\nSurprisingly good facilities."
       },
       {
         "author": "CHANGWOO JUNG",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "강남 한정 cgv보다 좋은듯합니다 단 계단 이용하기 진짜 힘들고 -_-  엘베가 후집니다 3관 이용했는데 상영스크린의 선명도나 크기도 괜찮앗고 음향도 좋았습니다"
+        "relative_time": "6 years ago",
+        "text": "It seems to be better than Gangnam-only CGV. However, it is really difficult to use the stairs -_- The elevator is weak. I used the 3rd theater, and the clarity and size of the screening screen were good, and the sound was also good."
       },
       {
         "author": "ty Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1달 전",
-        "text": "메가박스 강남쪽 리클라이너는 편안하고 1,000원 더 비싸도 만족도는 높게 다가옵니다! 사운드와 스크린 상태도 많이 개선되어 부담감없이 다가오구요. 현재 전관 리클라이너 시트로 교체되어 운영중에 있습니다, 확실히 넓고 편해 추천 합니다. 1월 부터 6월 사이 전망 엘리베이터 보수공사가 예정되어 있다는데 아직 구체작인 안건은 안 올라온 상태입니다"
+        "relative_time": "1 month ago",
+        "text": "Megabox Gangnam recliners are comfortable and even though they cost 1,000 won more, the satisfaction level is high! The sound and screen quality have also improved a lot, so you don't have to worry about it. Currently, the entire building has been replaced with recliner seats. It is definitely spacious and comfortable, so I recommend it. It is said that repair work on the observation elevator is scheduled between January and June, but no specific agenda has been posted yet."
       }
     ],
     "photos": [
@@ -2637,16 +2637,16 @@
   },
   {
     "place_id": "ChIJKeox5wShfDURRDCphg5_rDc",
-    "display_name": "두남재아트홀",
-    "category": "라이브 음악 공연장",
+    "display_name": "Dunamjae Art Hall",
+    "category": "live music venue",
     "types": [
       "live_music_venue",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로4길 45",
-    "short_address": "강남구 테헤란로4길 45",
+    "address": "45 Teheran-ro 4-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "45 Teheran-ro 4-gil, Gangnam-gu",
     "location": {
       "lat": 37.4955286,
       "lng": 127.03106869999999
@@ -2666,11 +2666,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca104e731ea29:0x37ac7f0e86a93044!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2679,16 +2679,16 @@
   },
   {
     "place_id": "ChIJm328FsihfDURTyEfJAef_7g",
-    "display_name": "강남씨어터",
-    "category": "라이브 음악 공연장",
+    "display_name": "Gangnam Theater",
+    "category": "live music venue",
     "types": [
       "live_music_venue",
       "event_venue",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼로7길 16 3층",
-    "short_address": "강남구 역삼로7길 16 3층",
+    "address": "3rd floor, 16 Yeoksam-ro 7-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "3rd floor, 16 Yeoksam-ro 7-gil, Gangnam-gu",
     "location": {
       "lat": 37.495188,
       "lng": 127.03321629999999
@@ -2707,25 +2707,25 @@
     "google_maps_url": "https://maps.google.com/?cid=13330548275059564879",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1c816bc7d9b:0xb8ff9f07241f214f!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -2733,36 +2733,36 @@
         "author": "Sarah Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "목요일 1시간 무료공연 좋아요~"
+        "relative_time": "3 years ago",
+        "text": "I like the 1-hour free performance on Thursday~"
       },
       {
-        "author": "김금주",
+        "author": "Geumju Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "좋은 음향 조명 타의 추종을 불허하는 이곳\n최화영 노래교실이 재개설 된\n6월 오늘도 수업 잘 하고 왔습니다."
+        "relative_time": "3 years ago",
+        "text": "Good sound and lighting are unrivaled here.\nChoi Hwa-young’s singing class has been reopened.\nI had a great class today in June."
       },
       {
-        "author": "문영",
+        "author": "Moonyoung",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "깨끗하고 음향 시설도 좋아\n소리도 잘 들렸어요ㅎ"
+        "relative_time": "2 years ago",
+        "text": "Clean and good acoustics\nI heard the sound well."
       },
       {
-        "author": "김민채",
+        "author": "Minchae Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "좋아요"
+        "relative_time": "1 year ago",
+        "text": "great"
       },
       {
         "author": "hoon js nils",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "깔끔함"
+        "relative_time": "4 years ago",
+        "text": "neatness"
       }
     ],
     "photos": [
@@ -2773,15 +2773,15 @@
   },
   {
     "place_id": "ChIJ5Z_nelWhfDURdqH-FdQFIBQ",
-    "display_name": "(주)드림의전서비스",
-    "category": "영화관",
+    "display_name": "Dream Protocol Service Co., Ltd.",
+    "category": "movie theater",
     "types": [
       "movie_theater",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 738-28번지 마이다스빌딩 5층 502호",
-    "short_address": "강남구 역삼동 738-28번지 마이다스빌딩 5층 502호",
+    "address": "Room 502, 5th floor, Midas Building, 738-28 Yeoksam-dong, Gangnam-gu, Seoul, Korea",
+    "short_address": "Room 502, 5th floor, Midas Building, 738-28 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.49799540000001,
       "lng": 127.0379322
@@ -2801,11 +2801,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1557ae79fe5:0x142005d415fea176!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2815,15 +2815,15 @@
   },
   {
     "place_id": "ChIJYZKIdFahfDURid4fwvBzZkc",
-    "display_name": "(주)옥토버시네마",
-    "category": "영화관",
+    "display_name": "Oktober Cinema Co., Ltd.",
+    "category": "movie theater",
     "types": [
       "movie_theater",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 735-36번지 2층",
-    "short_address": "강남구 역삼동 735-36번지 2층",
+    "address": "2nd floor, 735-36 Yeoksam-dong, Gangnam-gu, Seoul, Korea",
+    "short_address": "2nd floor, 735-36 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.498463799999996,
       "lng": 127.03437740000001
@@ -2843,11 +2843,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15674889261:0x476673f0c21fde89!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2856,15 +2856,15 @@
   },
   {
     "place_id": "ChIJoQELVFihfDURD_tA36q7MmE",
-    "display_name": "시티극장",
-    "category": "영화관",
+    "display_name": "City Theater",
+    "category": "movie theater",
     "types": [
       "movie_theater",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동 816",
-    "short_address": "강남구 역삼1동 816",
+    "address": "816 Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "816 Yeoksam 1-dong, Gangnam-gu",
     "location": {
       "lat": 37.50037700000001,
       "lng": 127.026939
@@ -2884,39 +2884,39 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca158540b01a1:0x6132bbaadf40fb0f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "마늘넘좋아",
+        "author": "Garlic is so good",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "지금은 폐점한 메가박스 강남대로(씨티) 지하 공간만\n인수해서 운영되는 독립예술극장 같은데 시설도 좋은 것 같고 너무 좋습니다. 사람들에게 널리 알려져서 오래오래 운영되었으면 좋겠습니다."
+        "relative_time": "1 year ago",
+        "text": "Currently only in the basement of the closed Megabox Gangnam-daero (Citi)\nIt looks like an independent art theater that was acquired and operated, but the facilities seem to be good and I really like it. I hope it becomes widely known to people and operates for a long time."
       },
       {
         "author": "Michael Her",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "12년 전",
-        "text": "1빠"
+        "relative_time": "12 years ago",
+        "text": "1 bar"
       },
       {
-        "author": "김기원",
+        "author": "Kim Ki-won",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -2935,15 +2935,15 @@
   },
   {
     "place_id": "ChIJs9WnolWhfDURIIY5Gnsp5KM",
-    "display_name": "(주)마나도",
-    "category": "영화관",
+    "display_name": "Manado Co., Ltd.",
+    "category": "movie theater",
     "types": [
       "movie_theater",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 봉은사로18길 85",
-    "short_address": "강남구 봉은사로18길 85",
+    "address": "85 Bongeunsa-ro 18-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "85 Bongeunsa-ro 18-gil, Gangnam-gu",
     "location": {
       "lat": 37.5012617,
       "lng": 127.0277998
@@ -2963,11 +2963,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca155a2a7d5b3:0xa3e4297b1a398620!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2976,15 +2976,15 @@
   },
   {
     "place_id": "ChIJcwYv9VihfDURRQCofahHIn4",
-    "display_name": "CGV 강남",
-    "category": "영화관",
+    "display_name": "CGV Gangnam",
+    "category": "movie theater",
     "types": [
       "movie_theater",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로 438 스타플렉스 4층~8층",
-    "short_address": "강남구 강남대로 438 스타플렉스 4층~8층",
+    "address": "4th to 8th floors, Starplex, 438 Gangnam-daero, Gangnam-gu, Seoul, Korea",
+    "short_address": "Starplex 4th to 8th floors, 438 Gangnam-daero, Gangnam-gu",
     "location": {
       "lat": 37.501558599999996,
       "lng": 127.02631900000002
@@ -3004,18 +3004,18 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca158f52f0673:0x7e2247a87da80045!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실",
-      "어린이적합"
+      "restroom",
+      "Suitable for children"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -3023,36 +3023,36 @@
         "author": "john Dejong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "오랜만에 영화보러 들린 CGV 강남\n같은 강남권의 메가박스 코엑스에 비해 규모도 작고\n상영관 자체도 크기가 작은 편이지만\n접근성 좋은것이 장점\n간단하게 먹으려고 몸통 즉석구이 오징어 주문했는데...\n그냥 순수한 오징어 구이인줄 알았는데 버터리하고 엄청 단 소스가 발라져있어서 ..먹다 버림"
+        "relative_time": "1 year ago",
+        "text": "CGV Gangnam, where I stopped by to see a movie after a long time.\nIt is smaller than Megabox COEX in the same Gangnam area.\nThe theater itself is small in size.\nGood accessibility is an advantage\nI ordered instant grilled squid for a quick meal...\nI thought it was just pure grilled squid, but it was covered in a buttery and very sweet sauce... so I threw it away after eating it."
       },
       {
         "author": "na Lu",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "이 베트남 쌀국수 정말 최고예요! 국물이 깊고 진한 소고기 육수의 풍미가 가득해서 한 입 먹자마자 몸도 마음도 따뜻해지는 느낌이에요. 쌀국수 면도 부드러우면서 쫄깃하고, 신선한 소고기와 고수, 숙주 등의 고명이 어우러져 식감과 맛의 조화가 훌륭합니다. 특히 레몬즙, 칠리 소스, 피쉬 소스를 곁들여 먹으면 각자 취향에 맞게 즐길 수 있어서 더욱 만족스러워요. 베트남 현지에서 먹는 것 같은 정통의 맛을 느끼고 싶다면 꼭 추천합니다!"
+        "relative_time": "1 year ago",
+        "text": "This Vietnamese pho is absolutely the best! The soup is deep and full of rich beef broth flavor, so you feel warm in your body and mind as soon as you take a bite. The rice noodles are soft and chewy, and the combination of fresh beef, cilantro, and bean sprouts provides a great combination of texture and taste. It is especially satisfying when eaten with lemon juice, chili sauce, and fish sauce, as each person can enjoy it to their own taste. Definitely recommend it if you want to experience the authentic taste of eating in Vietnam!"
       },
       {
-        "author": "이정민",
+        "author": "Jeongmin Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "4층에서 매표\n8층까지 에스컬레이터로이동~\n\n미리 예매해서 4층에서 검표 후 바로 입장.\n\n조조로 신비한동물사전 3  봄\n두팀만 관람\n\n쿠키는 없음"
+        "relative_time": "3 years ago",
+        "text": "Ticket sales on the 4th floor\nTake the escalator to the 8th floor~\n\nBook in advance and enter immediately after checking in on the 4th floor.\n\nJojoro Fantastic Beasts 3 Spring\nOnly two teams to watch\n\nNo cookies"
       },
       {
         "author": "Lee- Action girl",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "3년 전",
-        "text": "강남 대로변에 크게 영화관이 있어요.\n4F에 매표소가 있어요.\n주차는 3시간에 6,000원.\n(원래 영화시간동안은 무료 아닌가요? 서민생각ㅎ)\n\n상영시간표를 보려주는 스크린은 찾지 못했습니다.\n휴일인지라 매표소가 좁고 붐빕니다.\n영화관 출입은 4층에서 시작합니다. 10분전부터! 온도체크하고 입장가능합니다.\n\n출입구는 1곳입니다.\n미리 입장하려 길을 헤매고..\n입장시간엔 우르르... 몰리니 다소 불편했어요.\n상영관은 전체적으로 150석 내......\n(그래서인지 이런 시국에도 빡빡하게 앉히네요)\n\n약속이 있어 여기로 왔지만..굳이 여길 오고 싶진 않네요...\n힘든 서울. 어려운 강남."
+        "relative_time": "3 years ago",
+        "text": "There is a large movie theater along Gangnam Street.\nThere is a ticket office on the 4th floor.\nParking is 6,000 won for 3 hours.\n(Isn’t it free during the movie time? Think of the common people.)\n\nI couldn't find a screen that showed the show schedule.\nBecause it is a holiday, the ticket booth is narrow and crowded.\nAccess to the movie theater starts from the 4th floor. From 10 minutes ago! Temperature check is required before entry.\n\nThere is one entrance.\nI wandered around trying to get in early.\nIt was a bit uncomfortable because there was a rush during the entrance time.\nThe theater has 150 seats in total...\n(Perhaps that's why they keep you seated so tightly even in these current times)\n\nI came here because I had an appointment, but I don't really want to come here...\nSeoul is tough. Difficult Gangnam."
       },
       {
         "author": "Bill",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "접근성이 좋다. 영화관의 퀄리티보다는 근처에 먹고 놀 곳이 많다는 것이 장점!"
+        "relative_time": "2 years ago",
+        "text": "Accessibility is good. The advantage rather than the quality of the movie theater is that there are many places to eat and play nearby!"
       }
     ],
     "photos": [
@@ -3071,14 +3071,14 @@
   {
     "place_id": "ChIJiTpSP3WhfDUReawYJawYbwI",
     "display_name": "ScreenX",
-    "category": "영화관",
+    "category": "movie theater",
     "types": [
       "movie_theater",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 814-6 스타플렉스",
-    "short_address": "강남구 역삼동 814-6 스타플렉스",
+    "address": "Starplex, 814-6 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Starplex, 814-6 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.501568899999995,
       "lng": 127.02630919999999
@@ -3098,10 +3098,10 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1753f523a89:0x26f18ac2518ac79!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "체크카드"
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3110,7 +3110,7 @@
         "author": "Shashwat Shivam",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -3118,8 +3118,8 @@
   },
   {
     "place_id": "ChIJWZdYJCOjfDURnGEgBaxJ0fQ",
-    "display_name": "지인라이브",
-    "category": "술집",
+    "display_name": "Acquaintance Live",
+    "category": "bar",
     "types": [
       "live_music_venue",
       "bar",
@@ -3127,8 +3127,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로19길 18",
-    "short_address": "강남구 테헤란로19길 18",
+    "address": "18 Teheran-ro 19-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "18 Teheran-ro 19-gil, Gangnam-gu",
     "location": {
       "lat": 37.5012094,
       "lng": 127.033425
@@ -3148,16 +3148,16 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32324589759:0xf4d149ac0520619c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "예약가능",
-      "라이브음악",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "Reservation available",
+      "live music",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3166,23 +3166,23 @@
         "author": "Hemanth",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "이쁘녜 ✌"
+        "relative_time": "5 years ago",
+        "text": "It’s pretty ✌"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJsyhlvP2jfDURB3cpy1P9J3o",
-    "display_name": "(주)정우시네마",
-    "category": "영화관",
+    "display_name": "Jeongwoo Cinema Co., Ltd.",
+    "category": "movie theater",
     "types": [
       "movie_theater",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 637-10번지 2층 유림빌딩 강남구 서울특별시 KR",
-    "short_address": "역삼동 637-10번지 2층 유림빌딩 강남구 서울특별시 KR",
+    "address": "Yurim Building, 2nd floor, 637-10 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "Yurim Building, 2nd floor, 637-10 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.5017105,
       "lng": 127.032854
@@ -3202,11 +3202,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fdbc6528b3:0x7a27fd53cb297707!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3215,15 +3215,15 @@
   },
   {
     "place_id": "ChIJo5JehuKjfDUR5uMRtfSN7LI",
-    "display_name": "이십일세기시네마",
-    "category": "영화관",
+    "display_name": "21st Century Cinema",
+    "category": "movie theater",
     "types": [
       "movie_theater",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 812번지",
-    "short_address": "강남구 역삼동 812번지",
+    "address": "812 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "812 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5029389,
       "lng": 127.0268529
@@ -3243,11 +3243,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3e2865e92a3:0xb2ec8df4b511e3e6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3257,15 +3257,15 @@
   },
   {
     "place_id": "ChIJp6e0HeOjfDURCRyCGeWd9ys",
-    "display_name": "세아떼",
-    "category": "영화관",
+    "display_name": "Seate",
+    "category": "movie theater",
     "types": [
       "movie_theater",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 602번지 역삼동더리츠칼튼서울호텔 지상4층 강남구 서울특별시 KR",
-    "short_address": "역삼동 602번지 역삼동더리츠칼튼서울호텔 지상4층 강남구 서울특별시 KR",
+    "address": "4th floor above ground, The Ritz-Carlton Seoul Hotel, Yeoksam-dong, 602 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "602 Yeoksam-dong, 4th floor above ground, The Ritz-Carlton Seoul Hotel, Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.5047005,
       "lng": 127.0275166
@@ -3285,11 +3285,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3e31db4a7a7:0x2bf79de519821c09!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3298,15 +3298,15 @@
   },
   {
     "place_id": "ChIJuyYJnlChfDURz3Ko1mtDHWs",
-    "display_name": "뮤직이너스노래방",
-    "category": "노래방",
+    "display_name": "Music Innus Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 KR 서울특별시 강남구 역삼동 826-21번지 지하2층 미왕빌딩",
-    "short_address": "KR 서울특별시 강남구 역삼동 826-21번지 지하2층 미왕빌딩",
+    "address": "Seoul, Republic of Korea KR Miwang Building, Basement 2, 826-21 Yeoksam-dong, Gangnam-gu, Seoul",
+    "short_address": "KR Miwang Building, Basement 2, 826-21 Yeoksam-dong, Gangnam-gu, Seoul",
     "location": {
       "lat": 37.4955715,
       "lng": 127.02933940000001
@@ -3327,31 +3327,31 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "최상순",
+        "author": "Choi Sang-soon",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "7년 전",
-        "text": "코인으로 결재가 되는 노래방이지...\n천원에 3곡4곡 부를수있는 코인노래방이 아님. 그냥 곡당 오백원\n\n세상마지막 코인노래방이 여기라면 ㄱㄱ"
+        "relative_time": "7 years ago",
+        "text": "It's a karaoke room where you can pay with coins...\nThis is not a coin karaoke room where you can sing 3 or 4 songs for 1,000 won. Just 500 won per song\n\nIf the world’s last coin karaoke room is here, then ㄱㄱ"
       },
       {
         "author": "Juyoung Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       },
       {
-        "author": "진승언",
+        "author": "Jin Seung-eon",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       }
     ],
@@ -3359,15 +3359,15 @@
   },
   {
     "place_id": "ChIJzXU6tw6hfDUR-_1kK3YgDwE",
-    "display_name": "비트포비아 강남 던전2",
-    "category": "오락실",
+    "display_name": "Beatphobia Gangnam Dungeon 2",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로4길 32",
-    "short_address": "강남구 테헤란로4길 32",
+    "address": "32 Teheran-ro 4-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "32 Teheran-ro 4-gil, Gangnam-gu",
     "location": {
       "lat": 37.4962612,
       "lng": 127.03014449999999
@@ -3387,11 +3387,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca10eb73a75cd:0x10f20762b64fdfb!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3400,15 +3400,15 @@
         "author": "hanui Jeong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "진짜 재밌었어요 역대급 방탈출 !!!!!!! 던전이라 무대스케일이다르더라구요 와... 감탄의 연발이었습니다"
+        "relative_time": "2 years ago",
+        "text": "It was really fun, the best escape room ever!!!!!!! Because it was a dungeon, the stage scale was different. Wow... I was filled with admiration."
       },
       {
-        "author": "나윤관",
+        "author": "Na Yun-kwan",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "장치가 잘 되어있고, 문항이 많음!!"
+        "relative_time": "5 months ago",
+        "text": "The equipment is well designed and there are a lot of questions!!"
       }
     ],
     "photos": [
@@ -3421,15 +3421,15 @@
   },
   {
     "place_id": "ChIJTx0xi1qhfDURtQ3VLwrrPiY",
-    "display_name": "콜노래방",
-    "category": "노래방",
+    "display_name": "Call Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초동 1327-11번지 하동 1층 서초구 서울특별시 KR",
-    "short_address": "서초동 1327-11번지 하동 1층 서초구 서울특별시 KR",
+    "address": "1st floor, Hadong, 1327-11 Seocho-dong, Seoul, Republic of Korea, Seocho-gu, Seoul KR",
+    "short_address": "1327-11 Seocho-dong, 1st floor, Hadong, Seocho-gu, Seoul KR",
     "location": {
       "lat": 37.4949775,
       "lng": 127.0279946
@@ -3449,11 +3449,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15a8b311d4f:0x263eeb0a2fd50db5!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3462,14 +3462,14 @@
         "author": "Calvin Chhour",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1년 전",
-        "text": "객실은 깨끗했고 시스템(TJ 미디어)은 잘 작동했지만, POS는 신용카드/애플 페이를 받지 못했습니다. 약 30분 정도 주고받은 끝에 결국 신용카드로 결제가 완료되었습니다. 골치 아프지 않으려면 현금을 지참하세요."
+        "relative_time": "1 year ago",
+        "text": "The room was clean and the system (TJ Media) worked well, but the POS did not accept credit cards/Apple Pay. After about 30 minutes of back and forth, the payment was eventually completed via credit card. Bring cash to avoid headaches."
       },
       {
-        "author": "정윤혁",
+        "author": "Yunhyeok Jeong",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -3477,15 +3477,15 @@
   },
   {
     "place_id": "ChIJg0PYtFChfDUR6-V0E-B9Sto",
-    "display_name": "둥둥노래방",
-    "category": "노래방",
+    "display_name": "Dungdung Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 827-5",
-    "short_address": "강남구 역삼동 827-5",
+    "address": "827-5 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "827-5 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4965165,
       "lng": 127.0304664
@@ -3504,29 +3504,29 @@
     "google_maps_url": "https://maps.google.com/?cid=15729523049897453035",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca150b4d84383:0xda4a7de01374e5eb!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 10:00",
-      "화요일: 오전 11:00 ~ 오후 10:00",
-      "수요일: 오전 11:00 ~ 오후 10:00",
-      "목요일: 오전 11:00 ~ 오후 10:00",
-      "금요일: 오전 11:00 ~ 오후 10:00",
-      "토요일: 오전 11:00 ~ 오후 10:00",
-      "일요일: 오전 11:00 ~ 오후 10:00"
+      "Monday: 11:00 AM - 10:00 PM",
+      "Tuesday: 11:00 AM - 10:00 PM",
+      "Wednesday: 11:00 AM - 10:00 PM",
+      "Thursday: 11:00 AM - 10:00 PM",
+      "Friday: 11:00 AM - 10:00 PM",
+      "Saturday: 11:00 AM - 10:00 PM",
+      "Sunday: 11:00 AM - 10:00 PM"
     ],
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "신형교",
+        "author": "new bridge",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       }
     ],
@@ -3534,15 +3534,15 @@
   },
   {
     "place_id": "ChIJ8ViqvVChfDUR9h3TECQgWUU",
-    "display_name": "엠",
-    "category": "노래방",
+    "display_name": "M",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 826-39번지 지상 1층 강남구 서울특별시 KR",
-    "short_address": "역삼동 826-39번지 지상 1층 강남구 서울특별시 KR",
+    "address": "1st floor, 826-39 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "826-39 Yeoksam-dong, 1st floor, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.4956566,
       "lng": 127.03014439999998
@@ -3562,11 +3562,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca150bdaa58f1:0x4559202410d31df6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3575,15 +3575,15 @@
   },
   {
     "place_id": "ChIJUcrwP1OhfDURsr2L3FgudAU",
-    "display_name": "룸즈에이 강남점",
-    "category": "오락실",
+    "display_name": "Rooms A Gangnam Branch",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동 테헤란로4길 35",
-    "short_address": "강남구 역삼1동 테헤란로4길 35",
+    "address": "35 Teheran-ro 4-gil, Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "35 Teheran-ro 4-gil, Yeoksam 1-dong, Gangnam-gu",
     "location": {
       "lat": 37.4961737,
       "lng": 127.03067489999998
@@ -3603,11 +3603,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1533ff0ca51:0x5742e58dc8bbdb2!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3617,21 +3617,21 @@
         "author": "Jinyoup Ahn",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       },
       {
         "author": "Davon Koo",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       },
       {
-        "author": "성지명",
+        "author": "Holy place name",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       }
     ],
@@ -3641,15 +3641,15 @@
   },
   {
     "place_id": "ChIJ1301elmhfDUR-hPIQftKlE0",
-    "display_name": "보드스쿨",
-    "category": "오락실",
+    "display_name": "board school",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 서초대로77길 9",
-    "short_address": "서초구 서초대로77길 9",
+    "address": "9, Seocho-daero 77-gil, Seocho-gu, Seoul, South Korea",
+    "short_address": "9, Seocho-daero 77-gil, Seocho-gu",
     "location": {
       "lat": 37.4985553,
       "lng": 127.0261956
@@ -3668,20 +3668,20 @@
     "google_maps_url": "https://maps.google.com/?cid=5590175480474506234",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1597a357dd7:0x4d944afb41c813fa!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 1:00~11:00",
-      "화요일: 오후 1:00~11:00",
-      "수요일: 오후 1:00~11:00",
-      "목요일: 오후 1:00~11:00",
-      "금요일: 오후 1:00~11:00",
-      "토요일: 오후 12:00~11:00",
-      "일요일: 오후 12:00~11:00"
+      "Monday: 1:00-11:00 PM",
+      "Tuesday: 1:00-11:00 PM",
+      "Wednesday: 1:00-11:00 PM",
+      "Thursday: 1:00-11:00 PM",
+      "Friday: 1:00-11:00 PM",
+      "Saturday: 12:00-11:00 PM",
+      "Sunday: 12:00-11:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3690,28 +3690,28 @@
         "author": "Jiwoo Seo",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "재밌고 여럿이 오래 놀기 좋아요 음료도 나쁘지 않고 게임설명도 잘해주고"
+        "relative_time": "6 years ago",
+        "text": "It's fun and good for a group of people to play for a long time. The drinks aren't bad and they explain the game well."
       },
       {
-        "author": "이성",
+        "author": "reason",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "게임들이 많아요"
+        "relative_time": "7 years ago",
+        "text": "There are a lot of games"
       },
       {
         "author": "Jisung Jung",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       },
       {
-        "author": "이승민",
+        "author": "Seungmin Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -3721,15 +3721,15 @@
   },
   {
     "place_id": "ChIJgey8I1ehfDURmp9TWX_yK18",
-    "display_name": "특급 노래방",
-    "category": "노래방",
+    "display_name": "express karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로84길 36",
-    "short_address": "강남구 강남대로84길 36",
+    "address": "36 Gangnam-daero 84-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "36 Gangnam-daero 84-gil, Gangnam-gu",
     "location": {
       "lat": 37.4971229,
       "lng": 127.0315278
@@ -3750,8 +3750,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3760,15 +3760,15 @@
   },
   {
     "place_id": "ChIJiY-7M1ehfDURMdFyT22pnhM",
-    "display_name": "키이스케이프강남더오름",
-    "category": "오락실",
+    "display_name": "Key Escape Gangnam The Oreum",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 번지 지하 827-37 1층",
-    "short_address": "강남구 역삼동 번지 지하 827-37 1층",
+    "address": "1st floor, 827-37 Basement, Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "1st floor, 827-37 Basement, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4965257,
       "lng": 127.03108309999999
@@ -3788,11 +3788,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15733bb8f89:0x139ea96d4f72d131!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3801,36 +3801,36 @@
         "author": "Pang Pang",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "장치화려하고 좋았는디 시간을 대부분 무부터 풀어야하는지 뭘해야하는지를 너무 모르겠음 ㅜㅜ\n초보인것도있지만 덩그렇니놓고 풀라는식이라...\n3~4명이서 가야함 ㅜㅜ 꼭... 2명이서 갔다가 탈탈털리고 나왔어요.. 힌트 막썻는데도\n70% 풀었나... 하... 아쉬움 .. 아쉬워...난이도 높아...참고로 방탈 5번째임ㅎㅎ"
+        "relative_time": "5 years ago",
+        "text": "The device was nice and flashy, but I didn't know what to do or where to start most of the time.\nI may be a beginner, but they just tell me to solve it...\nWe had to go with 3-4 people ㅜㅜ Definitely... We went with 2 people and left without any help... Even though we didn't use any hints.\nDid I solve 70%... Ha... I'm sorry... I'm sorry... The difficulty level is high... For your information, this is my 5th escape haha."
       },
       {
-        "author": "이종욱",
+        "author": "Jongwook Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "2020년 최고의 방탈출다운 방탈출카페입니다!\n진행시간두 길고 자물쇠보단 장치가 많아서 너무신났어요!\n초보자분들은 힌트를 아끼시지말고 마구쓰시면서 스토리에 몰입하시는걸 추천드립니다!"
+        "relative_time": "5 years ago",
+        "text": "This is the best escape room cafe of 2020!\nIt was so exciting because it took so long and there were more devices than locks!\nFor beginners, we recommend that you use the hints without hesitation and immerse yourself in the story!"
       },
       {
         "author": "Jungeun Cha",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "네오 짱! 장치 스토리 문제유형 모두 완벽햇다. 엔젤리오도 재밋단 소문에 곧 할려고 합니다."
+        "relative_time": "5 years ago",
+        "text": "Neo-chan! All device story and problem types were perfect. Angelio is also planning to do it soon as it is rumored to be fun."
       },
       {
         "author": "JI B",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "모기 너무 많아서 징그러워요... 왜 많은지는 알것 같은데"
+        "relative_time": "1 year ago",
+        "text": "There are so many mosquitoes that it's disgusting... I think I know why there are so many."
       },
       {
         "author": "l sa",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "네드 테마 예약이 힘들었는데 그정도로 대단하지는 않았다\n걍 쏘쏘함"
+        "relative_time": "3 years ago",
+        "text": "It was difficult to make a reservation for the Ned theme, but it wasn't that great.\nIt's just soso"
       }
     ],
     "photos": [
@@ -3839,15 +3839,15 @@
   },
   {
     "place_id": "ChIJU1WFFlehfDURxKjrDnhCa7s",
-    "display_name": "비트포비아 강남 던전(Beat Phobia Dungeon) - Gangnam escape room",
-    "category": "오락실",
+    "display_name": "Beat Phobia Dungeon - Gangnam escape room",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 824-25 대우디오빌플러스 지하 1층 111호",
-    "short_address": "강남구 역삼동 824-25 대우디오빌플러스 지하 1층 111호",
+    "address": "Room 111, Basement 1, Daewoo Dioville Plus, 824-25 Yeoksam-dong, Gangnam-gu, Seoul, Korea",
+    "short_address": "Room 111, Basement 1, Daewoo Dioville Plus, 824-25 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.497403299999995,
       "lng": 127.03105219999999
@@ -3866,58 +3866,58 @@
     "google_maps_url": "https://maps.google.com/?cid=13504960991014398148",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15716855553:0xbb6b42780eeba8c4!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:50 ~ 오후 11:00",
-      "화요일: 오전 11:50 ~ 오후 11:00",
-      "수요일: 오전 11:50 ~ 오후 11:00",
-      "목요일: 오전 11:50 ~ 오후 11:00",
-      "금요일: 오전 11:50 ~ 오후 11:00",
-      "토요일: 오전 10:00 ~ 오후 10:30",
-      "일요일: 오전 10:00 ~ 오후 10:30"
+      "Monday: 11:50 AM - 11:00 PM",
+      "Tuesday: 11:50 AM - 11:00 PM",
+      "Wednesday: 11:50 AM - 11:00 PM",
+      "Thursday: 11:50 AM - 11:00 PM",
+      "Friday: 11:50 AM - 11:00 PM",
+      "Saturday: 10:00 AM - 10:30 PM",
+      "Sunday: 10:00 AM - 10:30 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김재용",
+        "author": "Jaeyong Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "기대반 설렘반 처음 방탈출을 하러 갔었습니다. 방탈출 컨텐츠는 신선하네요. 로비의 분위기도 아늑하고.. 실제 플레이도 재미있었습니다. 노트북으로 이루어지는 힌트의 전달에 의사소통의 문제가 있었고 중간에 힌트를 찾았지만 그게 무엇 때문에 나왔는지 모르게 뜬금없는 것도 있었고 맞는 정답을 수차례 넣었지만 자물쇠가 제대로 동작하지 않아 시간 소비가 컸던 점들은 아쉬움으로 남습니다. 이런 부분들만 좀 더 보완 된다면 직장 동료나 가족, 친구, 애인들과 즐거운 시간을 보낼 수 있는 좋은 컨텐츠가 될 것 같네요."
+        "relative_time": "7 years ago",
+        "text": "I was half excited and excited when I went to an escape room for the first time. Escape room content is refreshing. The atmosphere in the lobby was cozy... and the actual play was fun. There was a communication problem in delivering the hints through the laptop, and although I found the hints in the middle, there were some that came out of nowhere and I did not know why, and although I entered the correct answer several times, the lock did not work properly, so it was a lot of time wasting, which remains regrettable. If these aspects are improved a little more, I think it will be good content that can be enjoyed with co-workers, family, friends, and lovers."
       },
       {
         "author": "Sung h",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "대호시장 살인사건 매우 재밌었다.\n장치, 시설 모두 만족.\n문제의 난이도는 낮은 편은 아니지만 모두 개연성있는 문제여서 거부감이 없었다.\n아쉽게도 탈출에는 실패 ㅠㅠ"
+        "relative_time": "4 years ago",
+        "text": "The Daeho Market Murder Case was very interesting.\nSatisfied with both equipment and facilities.\nAlthough the difficulty level of the questions was not low, there was no resistance as they were all plausible questions.\nUnfortunately, I failed to escape."
       },
       {
-        "author": "이윤성",
+        "author": "Yunseong Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8년 전",
-        "text": "방탈출 카페 첫 방문. 생각보다 작은규모여서 조금 놀랐으나, 친절한 직원분들 설명과 재미난 테마(조별과제 선택)로 즐거웠음. 재방문 의사 있음"
+        "relative_time": "8 years ago",
+        "text": "First visit to an escape room cafe. I was a little surprised because it was smaller than I expected, but I enjoyed the friendly staff's explanations and fun themes (selection of group assignments). Willing to visit again"
       },
       {
         "author": "Eunhye Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "강남목욕탕, 대호시장살인사건, 로스트킹덤 세개 해봤는데 비싼만큼 시설과 스토리 모두 좋았다. 가본 방탈출중 가장 최고인듯"
+        "relative_time": "6 years ago",
+        "text": "I tried three places: Gangnam Bathhouse, Daeho Market Murder Case, and Lost Kingdom, and although they were expensive, the facilities and story were all good. It's the best escape room I've ever been to."
       },
       {
-        "author": "오지인",
+        "author": "Ojiin",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8년 전",
-        "text": "강남이라 지역특성상 방이 좀 좁긴한데 그래도 방탈출은 항상 재밌어요~!  요즘 방탈출은 점점 어려워지고 있는듯.. 다들 탈출을 넘 잘해서 그런가..ㅎ"
+        "relative_time": "8 years ago",
+        "text": "Because it's Gangnam, the rooms are a bit narrow due to the regional characteristics, but escape rooms are always fun~!  Escape from rooms seems to be getting more and more difficult these days. Maybe it's because everyone is so good at escaping.. haha"
       }
     ],
     "photos": [
@@ -3935,15 +3935,15 @@
   },
   {
     "place_id": "ChIJSyx211ChfDURJVTczNdg0ho",
-    "display_name": "노래야노래야코인노래연습장",
-    "category": "노래방",
+    "display_name": "Songya Song Yakoin Karaoke Workbook",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로6길 47 3층",
-    "short_address": "강남구 테헤란로6길 47 3층",
+    "address": "3rd floor, 47 Teheran-ro 6-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "3rd floor, 47 Teheran-ro 6-gil, Gangnam-gu",
     "location": {
       "lat": 37.4956043,
       "lng": 127.03182229999999
@@ -3962,18 +3962,18 @@
     "google_maps_url": "https://maps.google.com/?cid=1932713670066590757",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca150d7762c4b:0x1ad260d7ccdc5425!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오전 2:00",
-      "화요일: 오전 11:00 ~ 오전 2:00",
-      "수요일: 오전 11:00 ~ 오전 2:00",
-      "목요일: 오전 11:00 ~ 오전 2:00",
-      "금요일: 오전 11:00 ~ 오전 2:00",
-      "토요일: 오전 11:00 ~ 오전 2:00",
-      "일요일: 오전 11:00 ~ 오전 2:00"
+      "Monday: 11:00 AM - 2:00 AM",
+      "Tuesday: 11:00 AM - 2:00 AM",
+      "Wednesday: 11:00 AM - 2:00 AM",
+      "Thursday: 11:00 AM - 2:00 AM",
+      "Friday: 11:00 AM - 2:00 AM",
+      "Saturday: 11:00 AM - 2:00 AM",
+      "Sunday: 11:00 AM - 2:00 AM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3982,36 +3982,36 @@
         "author": "Yeonjae Kim",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "2년 전",
-        "text": "음식은 없으니 평점은 좀 그렇고요.\n서비스는 무인이라 받은 부분이 없습니다. 관리가 되지 않은 룸이 많고 입장했을 때 그나마 깨끗한 제 룸도 마이크 하나는 캡이 계속 씌어져 있어서 서비스는 있다고 느껴지지 않았어요.\n분위기도 그닥... 입지는 좋아요. 하지만 방음이 전혀 안 됩니다."
+        "relative_time": "2 years ago",
+        "text": "There is no food, so the rating is a bit mediocre.\nThe service was unmanned, so I received nothing. There were many unmaintained rooms, and when I entered my room, which was clean, one microphone still had its cap on, so I didn't feel like there was any service.\nThe atmosphere is so... the location is good. However, there is no soundproofing at all."
       },
       {
-        "author": "크앙",
+        "author": "Kang",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "5년 전",
-        "text": "장비가 좋은 장비라고 내세우던데 노후화인지 고장인지 관리를 어떻게 했는지는 몰라도 소리가 미세하게 잘 안나오는 방이 있음.\n그리고 카운터 여자분 알반지 사장인지 몰라도 4가지없어서 기분 다 잡침."
+        "relative_time": "5 years ago",
+        "text": "They claim that the equipment is good, but I don't know if it is due to aging or a breakdown or how it was maintained, but there is a room where the sound is slightly muffled.\nAnd the woman at the counter might be the owner of the ring, but I was in a bad mood because she didn't have 4 items."
       },
       {
-        "author": "정호철",
+        "author": "Jeong Ho-cheol",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "공기가 상쾌하고 시설관리가 잘된것같다 마이크소리가 딱이다^^여기만 왔다가면 스트레스가 확풀린다~"
+        "relative_time": "2 years ago",
+        "text": "The air is refreshing and the facilities seem to be well maintained. The microphone sound is perfect. ^^ If you come here, your stress will go away~"
       },
       {
-        "author": "ᄉᄀ",
+        "author": "Okay",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "주변에 코인노래방이 없어 사람이 많은편\n저녁에는 많이 기다려야하고 오후 10시반 이후에 가야 사람이 없음\n웨이팅 순서도 잘 지켜지고 불친절한 느낌을 받은 적이 없어 친절하다고 여겨짐"
+        "relative_time": "2 years ago",
+        "text": "There are no coin karaoke rooms nearby so there are a lot of people.\nYou have to wait a lot in the evening and there is no one there if you go after 10:30 PM.\nThe waiting order was followed well and I never felt unfriendly, so it was considered friendly."
       },
       {
-        "author": "장진호",
+        "author": "Jang Jin-ho",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "주말저녁 방문시에는 10여분정도 대기필요"
+        "relative_time": "3 years ago",
+        "text": "If you visit on a weekend evening, you may have to wait about 10 minutes."
       }
     ],
     "photos": [
@@ -4021,15 +4021,15 @@
   },
   {
     "place_id": "ChIJA1m--FahfDURUBNlWLayPv4",
-    "display_name": "제니스노래방",
-    "category": "노래방",
+    "display_name": "Zenith Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로10길 16",
-    "short_address": "강남구 테헤란로10길 16",
+    "address": "16 Teheran-ro 10-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "16 Teheran-ro 10-gil, Gangnam-gu",
     "location": {
       "lat": 37.4981055,
       "lng": 127.0323921
@@ -4048,20 +4048,20 @@
     "google_maps_url": "https://maps.google.com/?cid=18320276830426567504",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca156f8be5903:0xfe3eb2b658651350!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4071,15 +4071,15 @@
   },
   {
     "place_id": "ChIJ0eXoilahfDUR9K0HvbvJWKw",
-    "display_name": "펌프",
-    "category": "노래방",
+    "display_name": "pump",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 828-23번지 강남구 서울특별시 KR",
-    "short_address": "역삼동 828-23번지 강남구 서울특별시 KR",
+    "address": "828-23 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "828-23 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.4976893,
       "lng": 127.03342279999998
@@ -4099,10 +4099,10 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1568ae8e5d1:0xac58c9bbbd07adf4!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4111,15 +4111,15 @@
   },
   {
     "place_id": "ChIJlaq9wY6hfDURKwx4ygVTfGI",
-    "display_name": "비트포비아 던전 스텔라",
-    "category": "오락실",
+    "display_name": "Beatphobia Dungeon Stella",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로14길 34 이지소울리더 B1",
-    "short_address": "강남구 테헤란로14길 34 이지소울리더 B1",
+    "address": "Easy Soul Leader B1, 34 Teheran-ro 14-gil, Gangnam-gu, Seoul, Korea",
+    "short_address": "Easy Soul Leader B1, 34 Teheran-ro 14-gil, Gangnam-gu",
     "location": {
       "lat": 37.4971971,
       "lng": 127.033723
@@ -4139,11 +4139,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca18ec1bdaa95:0x627c5305ca780c2b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4153,7 +4153,7 @@
         "author": "さかもと",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9달 전",
+        "relative_time": "9 months ago",
         "text": null
       }
     ],
@@ -4169,15 +4169,15 @@
   },
   {
     "place_id": "ChIJNSsb21ChfDURNGdHGc745e0",
-    "display_name": "씽씽노래방",
-    "category": "노래방",
+    "display_name": "Sing Sing Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 827-23번지 하동 1층 강남구 서울특별시 KR",
-    "short_address": "역삼동 827-23번지 하동 1층 강남구 서울특별시 KR",
+    "address": "1st floor, Hadong, 827-23 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "1st floor, Hadong, 827-23 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.4954573,
       "lng": 127.0314373
@@ -4196,20 +4196,20 @@
     "google_maps_url": "https://maps.google.com/?cid=17142381120726722356",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca150db1b2b35:0xede5f8ce19476734!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 10:00",
-      "화요일: 오전 11:00 ~ 오후 10:00",
-      "수요일: 오전 11:00 ~ 오후 10:00",
-      "목요일: 오전 11:00 ~ 오후 10:00",
-      "금요일: 오전 11:00 ~ 오후 10:00",
-      "토요일: 오전 11:00 ~ 오후 10:00",
-      "일요일: 오전 11:00 ~ 오후 10:00"
+      "Monday: 11:00 AM - 10:00 PM",
+      "Tuesday: 11:00 AM - 10:00 PM",
+      "Wednesday: 11:00 AM - 10:00 PM",
+      "Thursday: 11:00 AM - 10:00 PM",
+      "Friday: 11:00 AM - 10:00 PM",
+      "Saturday: 11:00 AM - 10:00 PM",
+      "Sunday: 11:00 AM - 10:00 PM"
     ],
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4218,15 +4218,15 @@
   },
   {
     "place_id": "ChIJRZRHLgChfDURhHMeZsfCCi4",
-    "display_name": "겟어웨이 방탈출",
-    "category": "오락실",
+    "display_name": "Getaway Escape Room",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼로5길 22 3층",
-    "short_address": "강남구 역삼로5길 22 3층",
+    "address": "3rd floor, 22 Yeoksam-ro 5-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "3rd floor, 22 Yeoksam-ro 5-gil, Gangnam-gu",
     "location": {
       "lat": 37.495334,
       "lng": 127.0320214
@@ -4245,20 +4245,20 @@
     "google_maps_url": "https://maps.google.com/?cid=3317678237179343748",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1002e479445:0x2e0ac2c7661e7384!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 11:00",
-      "화요일: 오전 10:00 ~ 오후 11:00",
-      "수요일: 오전 10:00 ~ 오후 11:00",
-      "목요일: 오전 10:00 ~ 오후 11:00",
-      "금요일: 오전 10:00 ~ 오후 11:00",
-      "토요일: 오전 10:00 ~ 오후 11:00",
-      "일요일: 오전 10:00 ~ 오후 11:00"
+      "Monday: 10:00 AM - 11:00 PM",
+      "Tuesday: 10:00 AM - 11:00 PM",
+      "Wednesday: 10:00 AM - 11:00 PM",
+      "Thursday: 10:00 AM - 11:00 PM",
+      "Friday: 10:00 AM - 11:00 PM",
+      "Saturday: 10:00 AM - 11:00 PM",
+      "Sunday: 10:00 AM - 11:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4267,15 +4267,15 @@
   },
   {
     "place_id": "ChIJj_JXw1ChfDURtKDPRhb6ziI",
-    "display_name": "프랜드노래방",
-    "category": "노래방",
+    "display_name": "Friend Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로78길 25",
-    "short_address": "강남구 강남대로78길 25",
+    "address": "25 Gangnam-daero 78-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "25 Gangnam-daero 78-gil, Gangnam-gu",
     "location": {
       "lat": 37.49539540000001,
       "lng": 127.031272
@@ -4295,20 +4295,20 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca150c357f28f:0x22cefa1646cfa0b4!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "정용석",
+        "author": "Yongseok Jeong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -4316,15 +4316,15 @@
   },
   {
     "place_id": "ChIJwykAVgChfDURY_1ATt5x3XQ",
-    "display_name": "핑미핑미",
-    "category": "오락실",
+    "display_name": "Ping Me Ping Me",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로78길 22",
-    "short_address": "강남구 강남대로78길 22",
+    "address": "22 Gangnam-daero 78-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "22 Gangnam-daero 78-gil, Gangnam-gu",
     "location": {
       "lat": 37.495157,
       "lng": 127.0311655
@@ -4344,11 +4344,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca100560029c3:0x74dd71de4e40fd63!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4357,15 +4357,15 @@
   },
   {
     "place_id": "ChIJqczMeQChfDURz42n1DdythY",
-    "display_name": "강남역 노래방",
-    "category": "노래방",
+    "display_name": "Gangnam Station Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로78길 16",
-    "short_address": "강남구 강남대로78길 16",
+    "address": "16 Gangnam-daero 78-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "16 Gangnam-daero 78-gil, Gangnam-gu",
     "location": {
       "lat": 37.494970099999996,
       "lng": 127.03071260000002
@@ -4385,11 +4385,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca10079cccca9:0x16b67237d4a78dcf!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4398,15 +4398,15 @@
   },
   {
     "place_id": "ChIJOdAgXVShfDUROrAyIbNPxI4",
-    "display_name": "벅스노래방",
-    "category": "노래방",
+    "display_name": "Bugs Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 748-29번지 하동 1층 강남구 서울특별시 KR",
-    "short_address": "역삼동 748-29번지 하동 1층 강남구 서울특별시 KR",
+    "address": "1st floor, Hadong, 748-29 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "748-29 Yeoksam-dong, 1st floor, Hadong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.495562799999995,
       "lng": 127.03674430000001
@@ -4426,11 +4426,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1545d20d039:0x8ec44fb32132b03a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4440,15 +4440,15 @@
   },
   {
     "place_id": "ChIJ35SuRQChfDURkbCFAjdyWqQ",
-    "display_name": "판타스틱코인노래연습장강남역삼역점",
-    "category": "노래방",
+    "display_name": "Fantastic Coin Singing Studio Gangnam Yeoksam Station Branch",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로20길 25 지하 1층",
-    "short_address": "강남구 테헤란로20길 25 지하 1층",
+    "address": "Basement 1, 25 Teheran-ro 20-gil, Gangnam-gu, Seoul, Korea",
+    "short_address": "Basement 1, 25 Teheran-ro 20-gil, Gangnam-gu",
     "location": {
       "lat": 37.498149500000004,
       "lng": 127.0349307
@@ -4468,11 +4468,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca10045ae94df:0xa45a72370285b091!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4481,15 +4481,15 @@
   },
   {
     "place_id": "ChIJGXYqglWhfDURGTBJTY_77z8",
-    "display_name": "삼삼노래방",
-    "category": "노래방",
+    "display_name": "Samsam Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 논현로85길 5-11",
-    "short_address": "강남구 논현로85길 5-11",
+    "address": "5-11 Nonhyeon-ro 85-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "5-11 Nonhyeon-ro 85-gil, Gangnam-gu",
     "location": {
       "lat": 37.4984348,
       "lng": 127.03719659999997
@@ -4509,11 +4509,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca155822a7619:0x3feffb8f4d493019!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4522,15 +4522,15 @@
   },
   {
     "place_id": "ChIJuxgSKP6jfDUR7_BzQaARTV4",
-    "display_name": "뮤즈노래연습장",
-    "category": "노래방",
+    "display_name": "Muse singing practice center",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 논현로85길 7",
-    "short_address": "강남구 논현로85길 7",
+    "address": "7 Nonhyeon-ro 85-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "7 Nonhyeon-ro 85-gil, Gangnam-gu",
     "location": {
       "lat": 37.4989503,
       "lng": 127.03672619999999
@@ -4549,18 +4549,18 @@
     "google_maps_url": "https://maps.google.com/?cid=6795106792762503407",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fe281218bb:0x5e4d11a04173f0ef!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 12:00~5:00, 오후 6:00 ~ 오전 5:00",
-      "화요일: 오후 6:00 ~ 오전 5:00",
-      "수요일: 오후 6:00 ~ 오전 5:00",
-      "목요일: 오후 6:00 ~ 오전 5:00",
-      "금요일: 오후 6:00 ~ 오전 5:00",
-      "토요일: 오후 6:00 ~ 오전 12:00",
-      "일요일: 휴무일"
+      "Monday: 12:00 AM - 5:00 AM, 6:00 PM - 5:00 AM",
+      "Tuesday: 6:00 PM - 5:00 AM",
+      "Wednesday: 6:00 PM - 5:00 AM",
+      "Thursday: 6:00 PM - 5:00 AM",
+      "Friday: 6:00 PM - 5:00 AM",
+      "Saturday: 6:00 PM - 12:00 AM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4569,7 +4569,7 @@
         "author": "ilkeun chun",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -4577,15 +4577,15 @@
   },
   {
     "place_id": "ChIJu9hHKP6jfDURQ7QySpfsv64",
-    "display_name": "뉴스타노래방",
-    "category": "노래방",
+    "display_name": "New Star Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 738-6번지 지하동 1층 은혜빌딩 강남구 서울특별시 KR",
-    "short_address": "역삼동 738-6번지 지하동 1층 은혜빌딩 강남구 서울특별시 KR",
+    "address": "KR, Eunhye Building, 1st Floor, Basement Building, 738-6 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "738-6 Yeoksam-dong, 1st floor, underground building, Eunhye Building, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.498944099999996,
       "lng": 127.0368049
@@ -4605,11 +4605,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fe2847d8bb:0xaebfec974a32b443!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4618,23 +4618,23 @@
         "author": "T K",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "2년 전",
-        "text": "들어갔는데 큰 방밖에 없다고 자리나면 바꿔준다고해서 기다리면서 술먹고 놀았는데 3시간동안 방도 안바꿔주고 계산할때 1시간에 10만원씩 받는 방이라고 30만원을 내고왔네요.\n역삼에서 노래방 가시는분들 회식하시는분들 가격 조심하세요"
+        "relative_time": "2 years ago",
+        "text": "I went in and there was only a large room, and they said they would change it if a seat became available, so I drank and played while waiting, but they didn't change the room for 3 hours, and when I checked out, I ended up paying 300,000 won for a room that costs 100,000 won per hour.\nThose who go to karaoke in Yeoksam and those who have a company dinner, be careful about the prices."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJ_3yiM2KhfDURu1I5g-zx7Gg",
-    "display_name": "코드헌터 강남점 방탈출카페(Codehunter Escape)",
-    "category": "오락실",
+    "display_name": "Codehunter Escape, Gangnam Branch",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 817-17 3층",
-    "short_address": "강남구 역삼동 817-17 3층",
+    "address": "3rd floor, 817-17 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "3rd floor, 817-17 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4999879,
       "lng": 127.02810509999999
@@ -4653,60 +4653,60 @@
     "google_maps_url": "https://maps.google.com/?cid=7560683872564368059",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca16233a27cff:0x68ecf1ec833952bb!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 12:30~11:00",
-      "화요일: 오후 12:30~11:00",
-      "수요일: 오후 12:30~11:00",
-      "목요일: 오후 12:30~11:00",
-      "금요일: 오후 12:30~11:00",
-      "토요일: 오전 11:00 ~ 오후 11:00",
-      "일요일: 오전 11:00 ~ 오후 11:00"
+      "Monday: 12:30-11:00 PM",
+      "Tuesday: 12:30-11:00 PM",
+      "Wednesday: 12:30-11:00 PM",
+      "Thursday: 12:30-11:00 PM",
+      "Friday: 12:30-11:00 PM",
+      "Saturday: 11:00 AM - 11:00 PM",
+      "Sunday: 11:00 AM - 11:00 PM"
     ],
     "services": [
-      "화장실",
-      "어린이적합"
+      "restroom",
+      "Suitable for children"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이주미",
+        "author": "Lee Joo-mi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "난이도: 별 4개 정도로 입문자나 숙련자 모두 즐기기 좋습니다.\n• 특징: 귀여운 티모 캐릭터를 활용한 유쾌한 스토리와 아기자기한 인테리어가 돋보입니다.\n• 문제: 자물쇠와 장치 비율이 적절하며, 직관적인 관찰력이 중요합니다. 억지스러운 문제 없이 깔끔하게 풀리는 편이라 몰입감이 높습니다.\n• 팁: 활동성이 살짝 있으니 편한 복장을 추천하며, 소품 하나하나 꼼꼼히 살피는 것이 빠른 탈출의 열쇠입니다.\n총평: 귀여운 테마를 좋아한다면 강추! 기분 좋게 성공의 짜릿함을 느낄 수 있는 테마였습니다."
+        "relative_time": "3 months ago",
+        "text": "Difficulty level: 4 stars, suitable for both beginners and experts.\n• Features: A delightful story using the cute Teemo character and a cute interior stand out.\n• Problem: Proper lock to device ratio, intuitive observation is important. The problem is solved neatly without any unreasonable problems, so there is a high sense of immersion.\n• Tip: Since there will be some activity, comfortable clothing is recommended, and carefully examining each and every accessory is the key to a quick escape.\nOverall Review: Highly recommended if you like cute themes! It was a theme that allowed you to feel the thrill of success."
       },
       {
-        "author": "조용석",
+        "author": "Cho Yong-seok",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "한국어버전 방탈출도 재밌는데 영어 버전도 있다니 나중에 또 해보고싶네요!\n재밌게했습니다!"
+        "relative_time": "3 months ago",
+        "text": "The Korean version of Escape Room is fun, but there is also an English version, so I want to try it again in the future!\nI had fun!"
       },
       {
-        "author": "조혜경",
+        "author": "Jo Hye-kyung",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "공주와왕자 테마 했는데 분리됐다가 만날때 너무 반갑더라고요 ㅋㅋㅋㅋ 친구의 소중함을 깨닫게 해주는 테마였어요 진짜 재밌어요 !!!"
+        "relative_time": "3 months ago",
+        "text": "It was a princess and prince theme, and I was so happy when they met after being separated. It was a theme that made me realize the importance of friends. It was really fun!!!"
       },
       {
-        "author": "김병준",
+        "author": "Byeongjun Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "끼리코 구조대하였는데 아기자기 하고 재밌었습니다! 다음에 와서 다른 테마도 해보고싶네요"
+        "relative_time": "2 months ago",
+        "text": "We had Kiriko rescue team and it was cute and fun! I want to come next time and try other themes."
       },
       {
         "author": "Nadene Bakker",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "정말 재밌었어요! 4살, 9살 두 아이와 함께 하니 아이들도 쉽게 참여할 수 있었고, 부모인 저희도 충분히 즐길 수 있을 만큼 재미있었어요!! 강력 추천합니다!"
+        "relative_time": "1 month ago",
+        "text": "It was really fun! With two children aged 4 and 9, it was easy for the children to participate, and it was fun enough for us as parents to enjoy as well!! Highly recommended!"
       }
     ],
     "photos": [
@@ -4723,15 +4723,15 @@
   },
   {
     "place_id": "ChIJlfObylmhfDURAJyCV6khIbw",
-    "display_name": "마돈나노래방",
-    "category": "노래방",
+    "display_name": "Madonna Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로96길 12",
-    "short_address": "강남구 강남대로96길 12",
+    "address": "12 Gangnam-daero 96-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "12 Gangnam-daero 96-gil, Gangnam-gu",
     "location": {
       "lat": 37.4999883,
       "lng": 127.0281887
@@ -4750,20 +4750,20 @@
     "google_maps_url": "https://maps.google.com/?cid=13556153364563270656",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca159ca9bf395:0xbc2121a957829c00!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 10:00",
-      "화요일: 오전 11:00 ~ 오후 10:00",
-      "수요일: 오전 11:00 ~ 오후 10:00",
-      "목요일: 오전 11:00 ~ 오후 10:00",
-      "금요일: 오전 11:00 ~ 오후 10:00",
-      "토요일: 오전 11:00 ~ 오후 10:00",
-      "일요일: 오전 11:00 ~ 오후 10:00"
+      "Monday: 11:00 AM - 10:00 PM",
+      "Tuesday: 11:00 AM - 10:00 PM",
+      "Wednesday: 11:00 AM - 10:00 PM",
+      "Thursday: 11:00 AM - 10:00 PM",
+      "Friday: 11:00 AM - 10:00 PM",
+      "Saturday: 11:00 AM - 10:00 PM",
+      "Sunday: 11:00 AM - 10:00 PM"
     ],
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4772,14 +4772,14 @@
         "author": "YJ 1105",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "2년 전",
-        "text": "방안에 벌레 많고 3만5천원으로 겁나 비쌉니다"
+        "relative_time": "2 years ago",
+        "text": "There are a lot of bugs in the room and it is very expensive at 35,000 won."
       },
       {
-        "author": "정성현",
+        "author": "Seonghyeon Jeong",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       }
     ],
@@ -4787,15 +4787,15 @@
   },
   {
     "place_id": "ChIJVXdA6LahfDURAUlV14KWQtc",
-    "display_name": "방탈출 넥스트에디션 강남2호점",
-    "category": "오락실",
+    "display_name": "Escape Room Next Edition Gangnam 2nd Branch",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 817-18",
-    "short_address": "강남구 역삼동 817-18",
+    "address": "817-18 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "817-18 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5000487,
       "lng": 127.0282136
@@ -4814,20 +4814,20 @@
     "google_maps_url": "https://maps.google.com/?cid=15511125555320015105",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1b6e8407755:0xd7429682d7554901!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오전 12:00",
-      "화요일: 오전 10:30 ~ 오전 12:00",
-      "수요일: 오전 10:30 ~ 오전 12:00",
-      "목요일: 오전 10:30 ~ 오전 12:00",
-      "금요일: 오전 10:30 ~ 오전 12:00",
-      "토요일: 오전 10:30 ~ 오전 12:00",
-      "일요일: 오전 10:30 ~ 오전 12:00"
+      "Monday: 10:30 AM - 12:00 AM",
+      "Tuesday: 10:30 AM - 12:00 AM",
+      "Wednesday: 10:30 AM - 12:00 AM",
+      "Thursday: 10:30 AM - 12:00 AM",
+      "Friday: 10:30 AM - 12:00 AM",
+      "Saturday: 10:30 AM - 12:00 AM",
+      "Sunday: 10:30 AM - 12:00 AM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4837,35 +4837,35 @@
         "author": "Clare Kim",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "5년 전",
-        "text": "오전 타임 예약해서 갔는데 문 닫음ㅋㅋ전화도안받고 공지도 미리 없고 무슨 시츄에이션인지.."
+        "relative_time": "5 years ago",
+        "text": "I made a reservation for the morning time, but it was closed. No phone call, no notice in advance, I don't know what the situation is.."
       },
       {
         "author": "hoya012",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
-        "text": "뭐 무난한데 기가막히진않아요 ㅋ"
+        "relative_time": "5 years ago",
+        "text": "Well, it's okay, but it's not amazing."
       },
       {
         "author": "Smart Gong",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "3년 전",
-        "text": "상당히 불친절... 설명 듣다 기분 나빠졌어요"
+        "relative_time": "3 years ago",
+        "text": "Quite unfriendly... I felt bad after hearing the explanation."
       },
       {
-        "author": "벙뭉",
+        "author": "Bungmung",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       },
       {
-        "author": "임채은",
+        "author": "Lim Chae-eun",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       }
     ],
@@ -4873,15 +4873,15 @@
   },
   {
     "place_id": "ChIJi9XANlihfDUR4yYvvORao_I",
-    "display_name": "마돈나2",
-    "category": "노래방",
+    "display_name": "Madonna 2",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동 817-18",
-    "short_address": "강남구 역삼1동 817-18",
+    "address": "817-18 Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "817-18 Yeoksam 1-dong, Gangnam-gu",
     "location": {
       "lat": 37.5000487,
       "lng": 127.0282136
@@ -4901,11 +4901,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15836c0d58b:0xf2a35ae4bc2f26e3!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4914,15 +4914,15 @@
   },
   {
     "place_id": "ChIJ2cnF09ehfDUR5wwU4-PZn98",
-    "display_name": "초상화 강남",
-    "category": "오락실",
+    "display_name": "portrait gangnam",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로96길 15 3층",
-    "short_address": "강남구 강남대로96길 15 3층",
+    "address": "3rd floor, 15 Gangnam-daero 96-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "3rd floor, 15 Gangnam-daero 96-gil, Gangnam-gu",
     "location": {
       "lat": 37.5000905,
       "lng": 127.0282409
@@ -4941,20 +4941,20 @@
     "google_maps_url": "https://maps.google.com/?cid=16113837564545469671",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1d7d3c5c9d9:0xdf9fd9e3e3140ce7!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:10 ~ 오후 11:20",
-      "화요일: 오전 10:10 ~ 오후 11:20",
-      "수요일: 오전 10:10 ~ 오후 11:20",
-      "목요일: 오전 10:10 ~ 오후 11:20",
-      "금요일: 오전 10:10 ~ 오후 11:20",
-      "토요일: 오전 10:10 ~ 오후 11:20",
-      "일요일: 오전 10:10 ~ 오후 11:20"
+      "Monday: 10:10 AM - 11:20 PM",
+      "Tuesday: 10:10 AM - 11:20 PM",
+      "Wednesday: 10:10 AM - 11:20 PM",
+      "Thursday: 10:10 AM - 11:20 PM",
+      "Friday: 10:10 AM - 11:20 PM",
+      "Saturday: 10:10 AM - 11:20 PM",
+      "Sunday: 10:10 AM - 11:20 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4965,15 +4965,15 @@
   },
   {
     "place_id": "ChIJteDQtFmhfDURExZNvDW6E6c",
-    "display_name": "팝스멀티방",
-    "category": "오락실",
+    "display_name": "Pops Multi Room",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로96길 9",
-    "short_address": "강남구 강남대로96길 9",
+    "address": "9, Gangnam-daero 96-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "9, Gangnam-daero 96-gil, Gangnam-gu",
     "location": {
       "lat": 37.4998243,
       "lng": 127.02776229999999
@@ -4992,20 +4992,20 @@
     "google_maps_url": "https://maps.google.com/?cid=12039170968846669331",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca159b4d0e0b5:0xa713ba35bc4d1613!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5014,15 +5014,15 @@
   },
   {
     "place_id": "ChIJS_XhMFihfDUR_dqytw0ThJ0",
-    "display_name": "키이스케이프 강남",
-    "category": "오락실",
+    "display_name": "KeyEscape Gangnam",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울 강남구 강남대로96길 17 6층",
-    "short_address": "서울 강남구 강남대로96길 17 6층",
+    "address": "6th floor, 17 Gangnam-daero 96-gil, Gangnam-gu, Seoul, Korea",
+    "short_address": "6th floor, 17 Gangnam-daero 96-gil, Gangnam-gu, Seoul",
     "location": {
       "lat": 37.500138899999996,
       "lng": 127.0283996
@@ -5041,20 +5041,20 @@
     "google_maps_url": "https://maps.google.com/?cid=11350217910517947133",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15830e1f54b:0x9d84130db7b2dafd!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 11:00",
-      "화요일: 오전 11:00 ~ 오후 11:00",
-      "수요일: 오전 11:00 ~ 오후 11:00",
-      "목요일: 오전 11:00 ~ 오후 11:00",
-      "금요일: 오전 11:00 ~ 오후 11:00",
-      "토요일: 오전 11:00 ~ 오후 11:00",
-      "일요일: 오전 11:00 ~ 오후 11:00"
+      "Monday: 11:00 AM - 11:00 PM",
+      "Tuesday: 11:00 AM - 11:00 PM",
+      "Wednesday: 11:00 AM - 11:00 PM",
+      "Thursday: 11:00 AM - 11:00 PM",
+      "Friday: 11:00 AM - 11:00 PM",
+      "Saturday: 11:00 AM - 11:00 PM",
+      "Sunday: 11:00 AM - 11:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5064,36 +5064,36 @@
         "author": "P",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "'그카지말라캤자나' 테마가 유명합니다. 왜 유명한지는 직접 해보면 알 수 있어요! 대기 공간이 좁아서 조금 불편했지만, 직원분들도 친절하시고 테마도 만족스러운 퀄리티라서 좋았어요."
+        "relative_time": "6 years ago",
+        "text": "The theme ‘Gkajimalakyjana’ is famous. You'll find out why it's famous when you try it! It was a little uncomfortable because the waiting space was small, but I liked it because the staff was friendly and the theme was of satisfactory quality."
       },
       {
-        "author": "여물이",
+        "author": "trough",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "넘내뤼 재밌는거~~ 탈출성공!!! 오져버렸다 직원분들도 친절함 ♡"
+        "relative_time": "5 years ago",
+        "text": "So much fun~~ Successful escape!!! The staff are also friendly ♡"
       },
       {
         "author": "Hyejin Son",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "월야애담 테마로 47분만에 탈출 성공했습니다. 방탈출 몇번 안해봤는데 무리없이 술술 진행할 수 있었습니다.\n규모가 크진 않지만 참 이쁘고 아기자기하게, 또 컨셉에 맞게 너무 잘 꾸며져 있어서 한시간 내내 우와- 와! 소리가 나오더라구요. 다음에는 다른 테마를 도전해 볼 생각입니다."
+        "relative_time": "6 years ago",
+        "text": "We successfully escaped in 47 minutes with the theme of Monday Night Love. I've only tried escape rooms a few times, but I was able to proceed without difficulty.\nAlthough the scale is not large, it is very pretty and cute, and it is decorated so well according to the concept that I was like wow for an entire hour! A sound came out. I plan to try a different theme next time."
       },
       {
-        "author": "한형식",
+        "author": "Han Hyeong-sik",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "월야애담 힌트 1개 53분 클리어. 경험자1인 왕초심자1인 2명으로 갔음. 스토리 전개에 무리없이 구성되어있고 소품이 아기자기해 만족도가 높았음."
+        "relative_time": "6 years ago",
+        "text": "Clear 1 Wolyadam hint in 53 minutes. We went with 2 people, 1 experienced person and 1 beginner. I was highly satisfied with the story as it was organized without any problems and the props were cute."
       },
       {
-        "author": "정지선",
+        "author": "stop line",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "친구 입문시키기용으로 딱! 초보자분들께 추천하는 곳이에요. 세 테마 다 해봤는데 신기한 장치도 많고 너무 재밌어요 ㅎㅎ"
+        "relative_time": "5 years ago",
+        "text": "Perfect for introducing friends! This is a recommended place for beginners. I've tried all three themes and there are a lot of amazing devices and it's so much fun haha."
       }
     ],
     "photos": [
@@ -5107,15 +5107,15 @@
   },
   {
     "place_id": "ChIJWX9Pd8qhfDURrxgoJiwnriI",
-    "display_name": "이스케이프랩",
-    "category": "오락실",
+    "display_name": "Escape Lab",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로96길 18 4F 이스케이프랩",
-    "short_address": "강남구 강남대로96길 18 4F 이스케이프랩",
+    "address": "Escape Lab, 4F, 18 Gangnam-daero 96-gil, Gangnam-gu, Seoul, Korea",
+    "short_address": "Escape Lab, 4F, 18 Gangnam-daero 96-gil, Gangnam-gu",
     "location": {
       "lat": 37.499829,
       "lng": 127.02845509999999
@@ -5135,27 +5135,27 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1ca774f7f59:0x22ae272c262818af!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이동훈",
+        "author": "Donghoon Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       },
       {
         "author": "gyeongsoo ko",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       }
     ],
@@ -5163,15 +5163,15 @@
   },
   {
     "place_id": "ChIJ7xkZPxOhfDURTjipQMevvZ8",
-    "display_name": "마피아카페 강남1호점",
-    "category": "오락실",
+    "display_name": "Mafia Cafe Gangnam 1st branch",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로96길 19 마피아카페 4층",
-    "short_address": "강남구 강남대로96길 19 마피아카페 4층",
+    "address": "4th floor, Mafia Cafe, 19 Gangnam-daero 96-gil, Gangnam-gu, Seoul, Korea",
+    "short_address": "4th floor, Mafia Cafe, 19 Gangnam-daero 96-gil, Gangnam-gu",
     "location": {
       "lat": 37.500179599999996,
       "lng": 127.02856039999999
@@ -5190,52 +5190,52 @@
     "google_maps_url": "https://maps.google.com/?cid=11510549492947040334",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1133f1919ef:0x9fbdafc740a9384e!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 3:00~11:00",
-      "화요일: 오후 3:00~11:00",
-      "수요일: 오후 3:00~11:00",
-      "목요일: 오후 3:00~11:00",
-      "금요일: 오후 3:00~11:00",
-      "토요일: 오후 1:00~11:00",
-      "일요일: 오후 1:00~11:00"
+      "Monday: 3:00-11:00 PM",
+      "Tuesday: 3:00 PM - 11:00 PM",
+      "Wednesday: 3:00-11:00 PM",
+      "Thursday: 3:00 PM - 11:00 PM",
+      "Friday: 3:00-11:00 PM",
+      "Saturday: 1:00-11:00 PM",
+      "Sunday: 1:00-11:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이은규",
+        "author": "Eunkyu Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "이곳은 매우 재미있고 흥미진진하며 3시간의 시간이 빠르게 흘러간다. 룰에 대하여 확실히 익혔다면 보다 이 게임에 빠져들것이다. 매우 추천한다."
+        "relative_time": "1 year ago",
+        "text": "It's very fun and exciting, and the three hours go by quickly. If you have a clear understanding of the rules, you will fall in love with this game even more. Highly recommended."
       },
       {
-        "author": "서민준",
+        "author": "Minjun Seo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "오프라인으로 마피아게임을 제대로 할 수 있는 곳이 없었는데, 여기가 생겨 무척 행복합니다 혼자서도 가서 도전할 수 있어서 무척 좋은 거 같아요! 앞으로도 계속 하고싶어요!"
+        "relative_time": "1 year ago",
+        "text": "There was no place where you could properly play mafia games offline, so I'm very happy that this place has come up. I think it's great that I can go and challenge myself even by myself! I want to continue doing this in the future!"
       },
       {
-        "author": "문이현",
+        "author": "Moon Ihyeon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "직업 설명 읽고오면 첫판부터 재밌게 할수 있어요\n마피아 걸려서 속이는것도 재밌고 시민으로 추리하는것도 재밌어요"
+        "relative_time": "1 year ago",
+        "text": "If you read the job description, you can have fun starting from the first page.\nIt's fun to trick the mafia, and it's fun to reason as a citizen."
       },
       {
-        "author": "김세인",
+        "author": "Sein Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "궁금해서 한 번 갔다가 중독돼서 거의 일주일에 한 판씩은 하고있어요🥲😆😆"
+        "relative_time": "1 year ago",
+        "text": "I was curious so I went once and became addicted so I play it almost once a week🥲😆😆"
       }
     ],
     "photos": [
@@ -5250,16 +5250,16 @@
   },
   {
     "place_id": "ChIJez7LM1ihfDURE1_LspEZvbQ",
-    "display_name": "더큐이스케이프 강남점",
-    "category": "오락실",
+    "display_name": "The Q Escape Gangnam Branch",
+    "category": "arcade",
     "types": [
       "amusement_park",
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로96길 20",
-    "short_address": "강남구 강남대로96길 20",
+    "address": "20 Gangnam-daero 96-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "20 Gangnam-daero 96-gil, Gangnam-gu",
     "location": {
       "lat": 37.4998818,
       "lng": 127.0286143
@@ -5279,49 +5279,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15833cb3e7b:0xb4bd1991b2cb5f13!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "현민",
+        "author": "Hyeonmin",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "7년 전",
-        "text": "많은인원이 가서 하기에는 다소 부적절한컨텐츠입니다.\n설명에서는 4명에서 10명이 플레이한다고하지만 어두운방안에서 후레쉬를 하나밖에주지않았고 그럼에도 불구하고 문제가 독립적이지않고 순차적으로 풀기때문에 소수만이 문제를 풀수있고 대다수가 할수있는게 없다.\n이를 보완하기위해 후레쉬를 많이주고 문제를 동시다발적으로 풀수잏게바꾸고 그것을 퍼즐처럼 모아서 탈출하는형식이 다수인원에게 더 큰만족감을 주지않을까생각됩니다"
+        "relative_time": "7 years ago",
+        "text": "This content is somewhat inappropriate for a large number of people to watch.\nThe explanation says that 4 to 10 people can play, but only one flashlight is given in a dark room, and even so, because the problems are not independent and are solved sequentially, only a few can solve the problems and the majority can do nothing.\nTo compensate for this, I think that giving a lot of flash, changing the problem into a way to solve it simultaneously, and collecting them like a puzzle to escape would give more satisfaction to the majority of people."
       },
       {
-        "author": "경Bae",
+        "author": "Kyeong Bae",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
-        "text": "한시간이 아니고 45분임. 스토리 설명 미흡. 조금 억지인 문제들이 있어서 아쉬움.. 그리고 내가 했던 테마만 그런지 모르겠는데 거의 수학 문제 위주였음... (결국 탈출 실패)"
+        "relative_time": "6 years ago",
+        "text": "It's 45 minutes, not an hour. Insufficient story explanation. It's a shame that some of the problems were a bit far-fetched... And I don't know if it's just the theme I did, but it was mostly focused on math problems... (I ultimately failed to escape)"
       },
       {
-        "author": "최연세",
+        "author": "Choi Yonsei",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "7년 전",
-        "text": "시설 관리상태가 매우 안좋았으며 풀이과정의 연결이 너무 미흡했습니다. 다풀어도 어떤걸 조작해야하는지 알수없을정도로"
+        "relative_time": "7 years ago",
+        "text": "The facility management was very poor and the connection to the solution process was very poor. Even if I solve everything, I don't know what to do."
       },
       {
-        "author": "이채원",
+        "author": "Chaewon Lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
-        "text": "너무 짧은 시간이라 스토리를 다 보지 못함. 가격이 비싸긴하네요. 난이도 선택을 잘해야 할 듯. 45분에 별다섯개는 무리였음"
+        "relative_time": "7 years ago",
+        "text": "Because it was so short, I couldn't see the entire story. The price is expensive. I think you need to choose the difficulty level carefully. Five stars was too much for 45 minutes."
       },
       {
-        "author": "술탱",
+        "author": "Sultang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "아 재미있는공간ㅋㅋ\n시간가는줄 모르겠!!!"
+        "relative_time": "6 years ago",
+        "text": "Ah, a fun space haha.\nI lose track of time!!!"
       }
     ],
     "photos": [
@@ -5331,15 +5331,15 @@
   },
   {
     "place_id": "ChIJ_dklp22hfDURjDyY42fZLFE",
-    "display_name": "비밀의화원 리버타운점",
-    "category": "오락실",
+    "display_name": "Secret Garden Rivertown Branch",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 지하1,2층 20 KR 서울특별시 강남구 강남대로96길",
-    "short_address": "지하1,2층 20 KR 서울특별시 강남구 강남대로96길",
+    "address": "Basement 1 and 2nd floor, Seoul, Republic of Korea 20 KR Gangnam-daero 96-gil, Gangnam-gu, Seoul",
+    "short_address": "Basement 1, 2nd floor 20 KR Gangnam-daero 96-gil, Gangnam-gu, Seoul",
     "location": {
       "lat": 37.4998638,
       "lng": 127.02862659999998
@@ -5359,49 +5359,49 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca16da725d9fd:0x512cd967e3983c8c!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "창진",
+        "author": "Changjin",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "스토커 테마 했는데 존잼임\n플레이 타임이 좀 짧아서 뭔가 아쉽."
+        "relative_time": "2 years ago",
+        "text": "I did a stalker theme and it was great.\nIt's a shame that the play time is a bit short."
       },
       {
         "author": "J _",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "방탈출 존잼 사진첨부불가ㅠ"
+        "relative_time": "4 years ago",
+        "text": "Escape Room Jonjam photos cannot be attached."
       },
       {
         "author": "H Song",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       },
       {
         "author": "anselm lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       },
       {
-        "author": "톰페티",
+        "author": "tompetty",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       }
     ],
@@ -5419,15 +5419,15 @@
   },
   {
     "place_id": "ChIJBZofC8yhfDURVbhE8dqzd_0",
-    "display_name": "와와오락실",
-    "category": "전자오락실",
+    "display_name": "Wawa Arcade",
+    "category": "Electronic game room",
     "types": [
       "video_arcade",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로96길 5",
-    "short_address": "강남구 강남대로96길 5",
+    "address": "5 Gangnam-daero 96-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "5 Gangnam-daero 96-gil, Gangnam-gu",
     "location": {
       "lat": 37.4997641,
       "lng": 127.02745799999998
@@ -5446,13 +5446,13 @@
     "google_maps_url": "https://maps.google.com/?cid=18264264566756390997",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1cc0b1f9a05:0xfd77b3daf144b855!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 10:00",
-      "화요일: 오전 9:00 ~ 오후 10:00",
-      "수요일: 오전 9:00 ~ 오후 10:00",
-      "목요일: 오전 9:00 ~ 오후 10:00",
-      "금요일: 오전 9:00 ~ 오후 10:00",
-      "토요일: 오전 9:00 ~ 오후 10:00",
-      "일요일: 오전 9:00 ~ 오후 10:00"
+      "Monday: 9:00 AM - 10:00 PM",
+      "Tuesday: 9:00 AM - 10:00 PM",
+      "Wednesday: 9:00 AM - 10:00 PM",
+      "Thursday: 9:00 AM - 10:00 PM",
+      "Friday: 9:00 AM - 10:00 PM",
+      "Saturday: 9:00 AM - 10:00 PM",
+      "Sunday: 9:00 AM - 10:00 PM"
     ],
     "services": null,
     "payment": null,
@@ -5460,39 +5460,39 @@
     "parking": null,
     "reviews": [
       {
-        "author": "라미",
+        "author": "ramie",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "2년 전",
-        "text": "1+1 묶여있는 것들은 구조상 거의 뽑을 수 없게 만들었음. 1개 출구에 떨구고 담 거 뽑을라고 하면 묶여잇는 상품이 무게 추 역할을 해버려서 그 무게를 집게들이 버티질 못 함. ^^"
+        "relative_time": "2 years ago",
+        "text": "The ones tied 1+1 were made almost impossible to pull out due to their structure. If you drop it at one exit and tell them to pull it out, the tied product acts as a weight and the tongs cannot withstand the weight. ^^"
       },
       {
         "author": "JS K",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
-        "text": "사람이 많이 없을 때 알아봤어야 했다. 대체로 인형 뽑기는 집게 힘이 약하더라도 10번에서 15번 정도 시도하면 집게 힘이 강해지는데 여기는 그런게 없는 것 같다. 30번을 시도해도 하나도 못 뽑았다. 사람이 없는 이유가 있는 것 같아요. 차라리 잠실역에 있는 인형 뽑기로 가세요! 농구 게임은 농구공이 4개 뿐이어서 재미없어요."
+        "relative_time": "1 year ago",
+        "text": "I should have looked into it when there weren't many people around. In general, in claw machines, even if the force of the claw is weak, the force of the claw becomes stronger after about 10 to 15 attempts, but this doesn't seem to be the case here. Even after trying 30 times, I couldn't get a single one out. I think there is a reason why there are no people. Instead, go to the claw machine at Jamsil Station! Basketball games are boring because there are only 4 basketballs."
       },
       {
-        "author": "조성훈",
+        "author": "Jo Seong-hoon",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7달 전",
-        "text": "큰 인형뽑기는 거의 안 뽑히고 밀판이 아주 잘 됩니다. 밀판 꼭 해보세요!!"
+        "relative_time": "7 months ago",
+        "text": "The large claw machine rarely pulls anything and the push game is very good. Be sure to try Milpan!!"
       },
       {
         "author": "Hansol Yim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "우연히 지나가다가 들렀는데 사람 별로 없고 쾌적해요"
+        "relative_time": "2 years ago",
+        "text": "I happened to stop by while passing by, and there weren't many people and it was comfortable."
       },
       {
-        "author": "김래아",
+        "author": "Kim Rae-ah",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1년 전",
-        "text": "리듬게임이 있었으면 정말 좋았을텐데"
+        "relative_time": "1 year ago",
+        "text": "It would be really nice if there was a rhythm game"
       }
     ],
     "photos": [
@@ -5504,14 +5504,14 @@
   {
     "place_id": "ChIJ6wswrDuhfDURJBriaSy-wxE",
     "display_name": "MSG(Main street gate)",
-    "category": "오락실",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 816-4",
-    "short_address": "강남구 역삼동 816-4",
+    "address": "816-4, Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "816-4 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4997792,
       "lng": 127.02744129999999
@@ -5531,10 +5531,10 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca13bac300beb:0x11c3be2c69e21a24!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5543,15 +5543,15 @@
   },
   {
     "place_id": "ChIJp2wkVYChfDURRiy8cfFRrOE",
-    "display_name": "방탈출 넥스트에디션 강남5호점",
-    "category": "오락실",
+    "display_name": "Escape Room Next Edition Gangnam 5th Branch",
+    "category": "arcade",
     "types": [
       "amusement_center",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로94길 11 지하 넥스트에디션 1층",
-    "short_address": "강남구 강남대로94길 11 지하 넥스트에디션 1층",
+    "address": "1st floor, Next Edition, Basement, 11 Gangnam-daero 94-gil, Gangnam-gu, Seoul, Korea",
+    "short_address": "1st floor, Next Edition, basement, 11 Gangnam-daero 94-gil, Gangnam-gu",
     "location": {
       "lat": 37.4995109,
       "lng": 127.02823529999999
@@ -5570,59 +5570,59 @@
     "google_maps_url": "https://maps.google.com/?cid=16261462451965144134",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca18055246ca7:0xe1ac51f171bc2c46!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:20 ~ 오후 12:00",
-      "화요일: 오전 10:20 ~ 오후 12:00",
-      "수요일: 오전 10:20 ~ 오후 12:00",
-      "목요일: 오전 10:20 ~ 오후 12:00",
-      "금요일: 오전 10:20 ~ 오후 12:00",
-      "토요일: 오전 10:20 ~ 오후 12:00",
-      "일요일: 오전 10:20 ~ 오후 12:00"
+      "Monday: 10:20 AM - 12:00 PM",
+      "Tuesday: 10:20 AM - 12:00 PM",
+      "Wednesday: 10:20 AM - 12:00 PM",
+      "Thursday: 10:20 AM - 12:00 PM",
+      "Friday: 10:20 AM - 12:00 PM",
+      "Saturday: 10:20 AM - 12:00 PM",
+      "Sunday: 10:20 AM - 12:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "공윤기",
+        "author": "Gong Yoon-gi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "김선의랑 뱅크럽 연방하고 왔는데 역시 완전 재미짐. 직원분도 매우 친절하구요~ 나머지 방 오픈하면 재방문 합니다 ㅎㅎ"
+        "relative_time": "6 years ago",
+        "text": "I went to Bankrupt Federation with Kim Seon-ui and it was really fun. The staff is also very friendly. I will visit again when the remaining rooms open."
       },
       {
         "author": "Silentday",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "패드를 이용하기도 하고 힌트도 폰 이용해서 주기도 하고 특별한 기구들과 장치들이 있어서 색달랐음."
+        "relative_time": "5 years ago",
+        "text": "It was different because it used a pad, hints were given using a phone, and there were special instruments and devices."
       },
       {
-        "author": "야르야르",
+        "author": "Yaryar",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "시설이 조금 노후된곳도 잇긴했지만 알바생 남자 두분 너무 친절해서 잘 진행했습니다!!"
+        "relative_time": "3 years ago",
+        "text": "Although the facilities were a bit old in some places, the two part-time men were so friendly that the process went smoothly!!"
       },
       {
         "author": "1988 hecate",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "재미있습니다 피망 적당한 활동성 칼 인식이 조금 어렵"
+        "relative_time": "4 years ago",
+        "text": "It's fun. Green pepper. Moderate activity. Knife recognition is a bit difficult."
       },
       {
-        "author": "빵집",
+        "author": "bakery",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "김선의 테마 잔잔하게 즐기기 좋았습니다"
+        "relative_time": "4 years ago",
+        "text": "It was nice to enjoy Kim Seon’s theme calmly."
       }
     ],
     "photos": [
@@ -5639,15 +5639,15 @@
   },
   {
     "place_id": "ChIJA1KFy1mhfDURt3CZkzYJHdw",
-    "display_name": "뮤즈노래방",
-    "category": "노래방",
+    "display_name": "Muse Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동 818-13",
-    "short_address": "강남구 역삼1동 818-13",
+    "address": "818-13, Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "818-13 Yeoksam 1-dong, Gangnam-gu",
     "location": {
       "lat": 37.4995109,
       "lng": 127.02823529999999
@@ -5666,45 +5666,45 @@
     "google_maps_url": "https://maps.google.com/?cid=15860843592677945527",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca159cb855203:0xdc1d0936939970b7!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 10:00",
-      "화요일: 오전 11:00 ~ 오후 10:00",
-      "수요일: 오전 11:00 ~ 오후 10:00",
-      "목요일: 오전 11:00 ~ 오후 10:00",
-      "금요일: 오전 11:00 ~ 오후 10:00",
-      "토요일: 오전 11:00 ~ 오후 10:00",
-      "일요일: 오전 11:00 ~ 오후 10:00"
+      "Monday: 11:00 AM - 10:00 PM",
+      "Tuesday: 11:00 AM - 10:00 PM",
+      "Wednesday: 11:00 AM - 10:00 PM",
+      "Thursday: 11:00 AM - 10:00 PM",
+      "Friday: 11:00 AM - 10:00 PM",
+      "Saturday: 11:00 AM - 10:00 PM",
+      "Sunday: 11:00 AM - 10:00 PM"
     ],
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "Part-Timer[아르바이트중]",
+        "author": "Part-Timer [Working part-time]",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8년 전",
-        "text": "그럼 노래를 잘해야지"
+        "relative_time": "8 years ago",
+        "text": "Then you have to sing well"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJJeb5TlihfDURZQcYEZ0WEtk",
-    "display_name": "라라코인노래방",
-    "category": "노래방",
+    "display_name": "Lala Coin Karaoke",
+    "category": "karaoke",
     "types": [
       "karaoke",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로1길 32",
-    "short_address": "강남구 테헤란로1길 32",
+    "address": "32 Teheran-ro 1-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "32 Teheran-ro 1-gil, Gangnam-gu",
     "location": {
       "lat": 37.500357900000004,
       "lng": 127.02746990000001
@@ -5723,58 +5723,58 @@
     "google_maps_url": "https://maps.google.com/?cid=15641589319663617893",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1584ef9e625:0xd912169d11180765!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오전 5:00",
-      "화요일: 오전 11:00 ~ 오전 5:00",
-      "수요일: 오전 11:00 ~ 오전 5:00",
-      "목요일: 오전 11:00 ~ 오전 5:00",
-      "금요일: 오전 11:00 ~ 오전 5:00",
-      "토요일: 오전 11:00 ~ 오전 5:00",
-      "일요일: 오전 11:00 ~ 오전 5:00"
+      "Monday: 11:00 AM - 5:00 AM",
+      "Tuesday: 11:00 AM - 5:00 AM",
+      "Wednesday: 11:00 AM - 5:00 AM",
+      "Thursday: 11:00 AM - 5:00 AM",
+      "Friday: 11:00 AM - 5:00 AM",
+      "Saturday: 11:00 AM - 5:00 AM",
+      "Sunday: 11:00 AM - 5:00 AM"
     ],
     "services": [
-      "매장식사"
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "라인에어",
+        "author": "Line Air",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "천원에 3곡. 제일 안쪽에 4인실 있으나 화장실 가는길 옆에 있음. 무엇보다 화장실이 엄청 좁은데 남자 소변기를 지나야 여성용변기를 사용할수 있다. 뒷모습도 아니고 옆모습이라 서로 매우 난감. 심지어 문도 못잠근다. 오밤중에 맥주먹고 갈만한곳은 절대 아님"
+        "relative_time": "6 years ago",
+        "text": "3 songs for 1,000 won. There is a 4-person room in the very back, but it is next to the road to the bathroom. Above all, the bathroom is very narrow, and you have to pass the men's urinal to use the women's toilet. It's not a back view, but a side view, so it's very embarrassing. I can't even lock the door. Definitely not a place to go for a beer in the middle of the night"
       },
       {
         "author": "Paul “Seize” Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "시설은 괜찮은데 좀 지저분함"
+        "relative_time": "4 years ago",
+        "text": "Facilities are okay, but a bit dirty"
       },
       {
         "author": "jin hyuk park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "갓토브리그 큐사인 등록되있음 👍"
+        "relative_time": "6 years ago",
+        "text": "Godto League cue sign registered 👍"
       },
       {
         "author": "Balance Make",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "카드결제가능.놀만한곳."
+        "relative_time": "3 years ago",
+        "text": "Credit card payment accepted. Great place to have fun."
       },
       {
-        "author": "재평소",
+        "author": "Jaepyeongso",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "규미와 노래방 리유니온\n화장실 토"
+        "relative_time": "4 years ago",
+        "text": "Kyumi and Karaoke Reunion\nToilet puking"
       }
     ],
     "photos": [
@@ -5783,15 +5783,15 @@
   },
   {
     "place_id": "ChIJpT0utlmhfDURJeN10ze_gpM",
-    "display_name": "리가플스방",
-    "category": "전자오락실",
+    "display_name": "Rigapse Room",
+    "category": "Electronic game room",
     "types": [
       "video_arcade",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 818 15번지 5층",
-    "short_address": "강남구 역삼동 818 15번지 5층",
+    "address": "5th floor, 818 15, Yeoksam-dong, Gangnam-gu, Seoul, Korea",
+    "short_address": "5th floor, 818 15th floor, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4994033,
       "lng": 127.02795060000001
@@ -5812,8 +5812,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5823,36 +5823,36 @@
         "author": "Jueon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "강남역에 있는 플스방.\n1시간에 4천원대로 가격은 나쁘지 않다.\n남자 사장님 친절하고 넷플릭스부터 닌텐도, 플스 게임 모두 할 수 있다.\n커플들이 강남에서 시간 녹이기에 이것만큼 좋은 곳은 없다."
+        "relative_time": "6 months ago",
+        "text": "Playstation room in Gangnam Station.\nThe price is not bad at around 4,000 won per hour.\nThe male owner is friendly and you can play everything from Netflix to Nintendo and PS games.\nThere is no better place for couples to spend some time in Gangnam."
       },
       {
         "author": "Kai Lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1년 전",
-        "text": "강남역 플스방 리가\n얼마 남지 않은 정통 플스방. 위닝 대회를 아직까지 개최하고 있어서 놀랐음. 가게 전반적으로 조용한 분위기는 아니다. 가격은 1시간에 인당 5천원이고 게임 타이틀은 1시간에 1번 교체 가능."
+        "relative_time": "1 year ago",
+        "text": "Gangnam Station Playstation Riga\nThere are not many authentic PlayStation rooms left. I was surprised that the winning competition is still being held. The overall atmosphere of the store is not quiet. The price is 5,000 won per person per hour, and the game title can be changed once per hour."
       },
       {
-        "author": "김지원",
+        "author": "Kim Ji-won",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "보드게임카페에 가서 보드게임도 하고 맛있는 밥도 먹고왔어요.^^"
+        "relative_time": "2 years ago",
+        "text": "I went to a board game cafe, played board games, and ate delicious food.^^"
       },
       {
         "author": "weg eg",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "11달 전",
-        "text": "시설도 별로 플스 상태도 별로 가격은 창렬함 걍 피방 가는거 추천함 뭔 … 누가여길가나"
+        "relative_time": "11 months ago",
+        "text": "The facilities aren't great, the condition of the console isn't great, and the prices are outrageous. I just recommend going to a pub. Who is going here?"
       },
       {
         "author": "Kevin Kang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "깨끗하고 깔끔한. 관리 잘하는듯. 현 상황서 들어갈때 체온체크, 연락처 적기, 게임 중에도 마스크 쓰기 등 방역 지침 잘 지키는 곳입니다."
+        "relative_time": "5 years ago",
+        "text": "Clean and tidy. Looks like you are taking good care of it. Under the current situation, it is a place where quarantine guidelines are well followed, such as checking body temperature when entering, writing down contact information, and wearing a mask even during games."
       }
     ],
     "photos": [

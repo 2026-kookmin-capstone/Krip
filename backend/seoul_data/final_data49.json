@@ -2,15 +2,15 @@
   {
     "place_id": "ChIJiQS_4_6jfDURdr3zpaM2sOY",
     "display_name": "LF collect",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 논현로 508",
-    "short_address": "강남구 논현로 508",
+    "address": "508 Nonhyeon-ro, Gangnam-gu, Seoul, South Korea",
+    "short_address": "508 Nonhyeon-ro, Gangnam-gu",
     "location": {
       "lat": 37.5018488,
       "lng": 127.03711109999999
@@ -31,24 +31,24 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "송영찬",
+        "author": "Song Youngchan",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "온라인으로 구매한옷을 찾아오고..기장수선했음"
+        "relative_time": "4 years ago",
+        "text": "I picked up the clothes I bought online and had the length altered."
       },
       {
-        "author": "양혜진",
+        "author": "Hyejin Yang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       }
     ],
@@ -58,16 +58,16 @@
   },
   {
     "place_id": "ChIJ8Y4E9f6jfDURTV8mr_D-V8M",
-    "display_name": "하라뷰티컴퍼니",
-    "category": "화장품 판매점",
+    "display_name": "Hara Beauty Company",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 번지 13층 16 호 성지하이츠3차빌딩 빌딩 KR 서울특별시 강남구 역삼동 642-6",
-    "short_address": "번지 13층 16 KR 서울특별시 강남구 역삼동 642-6 호 성지하이츠3차빌딩 빌딩",
+    "address": "No. 16, Seongji Heights 3rd Building, 13th Floor, Seoul, Republic of Korea KR 642-6 Yeoksam-dong, Gangnam-gu, Seoul",
+    "short_address": "Address 13th floor 16 KR Seongji Heights 3rd building, #642-6, Yeoksam-dong, Gangnam-gu, Seoul",
     "location": {
       "lat": 37.501539099999995,
       "lng": 127.03614280000001
@@ -88,8 +88,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -98,16 +98,16 @@
   },
   {
     "place_id": "ChIJ8Y4E9f6jfDUR7gfMGoIBb6M",
-    "display_name": "밸류라인",
-    "category": "귀금속 상점",
+    "display_name": "value line",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 번지 9층 642-6",
-    "short_address": "강남구 역삼동 번지 9층 642-6",
+    "address": "642-6, 9th floor, Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "9th floor, Yeoksam-dong, Gangnam-gu, 642-6",
     "location": {
       "lat": 37.501539099999995,
       "lng": 127.03614280000001
@@ -128,8 +128,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -138,16 +138,16 @@
   },
   {
     "place_id": "ChIJ8Y4E9f6jfDURrP47hsgXgbE",
-    "display_name": "트리비아뉴욕(주)",
-    "category": "의류점",
+    "display_name": "Trivia New York Co., Ltd.",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 642-6번지 907호",
-    "short_address": "강남구 역삼동 642-6번지 907호",
+    "address": "#907, 642-6 Yeoksam-dong, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "Room 907, 642-6 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5015359,
       "lng": 127.0361362
@@ -167,10 +167,10 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fef5048ef1:0xb18117c8863bfeac!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -179,16 +179,16 @@
   },
   {
     "place_id": "ChIJ9avm5f6jfDURhon8bV4VOcc",
-    "display_name": "LG패션 GS직매장",
-    "category": "의류점",
+    "display_name": "LG Fashion GS direct store",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 논현로 508",
-    "short_address": "강남구 논현로 508",
+    "address": "508 Nonhyeon-ro, Gangnam-gu, Seoul, South Korea",
+    "short_address": "508 Nonhyeon-ro, Gangnam-gu",
     "location": {
       "lat": 37.501821299999996,
       "lng": 127.03719249999999
@@ -207,56 +207,56 @@
     "google_maps_url": "https://maps.google.com/?cid=14355528782536542598",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fee5e6abf5:0xc739155e6dfc8986!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 8:30",
-      "화요일: 오전 10:30 ~ 오후 8:30",
-      "수요일: 오전 10:30 ~ 오후 8:30",
-      "목요일: 오전 10:30 ~ 오후 8:30",
-      "금요일: 오전 10:30 ~ 오후 8:30",
-      "토요일: 오전 10:30 ~ 오후 8:30",
-      "일요일: 오전 10:30 ~ 오후 8:30"
+      "Monday: 10:30 AM - 8:30 PM",
+      "Tuesday: 10:30 AM - 8:30 PM",
+      "Wednesday: 10:30 AM - 8:30 PM",
+      "Thursday: 10:30 AM - 8:30 PM",
+      "Friday: 10:30 AM - 8:30 PM",
+      "Saturday: 10:30 AM - 8:30 PM",
+      "Sunday: 10:30 AM - 8:30 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이승호",
+        "author": "Seungho Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9년 전",
-        "text": "주인 아저씨가 친절하고 다 좋은데 인터넷으로 파는거보다 약간 비쌈"
+        "relative_time": "9 years ago",
+        "text": "The owner is friendly and everything is good, but it is a bit more expensive than selling it online."
       },
       {
         "author": "Jade Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "9년 전",
-        "text": "인터넷으로 사세요~"
+        "relative_time": "9 years ago",
+        "text": "Buy it online~"
       },
       {
-        "author": "안택상",
+        "author": "Ahn Taek-sang",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
-        "text": "쇼핑몰"
+        "relative_time": "7 years ago",
+        "text": "shopping mall"
       },
       {
-        "author": "김영수",
+        "author": "Youngsu Kim",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "크앙",
+        "author": "Kang",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -264,16 +264,16 @@
   },
   {
     "place_id": "ChIJxRchPFqhfDUR6wSj7q5aWbg",
-    "display_name": "아이티샵",
-    "category": "전자제품 판매점",
+    "display_name": "IT Shop",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 강남대로 381 두산베어스텔 1204호",
-    "short_address": "서초구 강남대로 381 두산베어스텔 1204호",
+    "address": "#1204, Doosan Bearstel, 381 Gangnam-daero, Seocho-gu, Seoul, Korea",
+    "short_address": "#1204, Doosan Bearstel, 381 Gangnam-daero, Seocho-gu",
     "location": {
       "lat": 37.496718099999995,
       "lng": 127.02781569999998
@@ -292,18 +292,18 @@
     "google_maps_url": "https://maps.google.com/?cid=13283748283280458987",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15a3c2117c5:0xb8595aaeeea304eb!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 7:00",
-      "화요일: 오전 10:00 ~ 오후 7:00",
-      "수요일: 오전 10:00 ~ 오후 7:00",
-      "목요일: 오전 10:00 ~ 오후 7:00",
-      "금요일: 오전 10:00 ~ 오후 7:00",
-      "토요일: 오전 11:00 ~ 오후 4:00",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 7:00 PM",
+      "Tuesday: 10:00 AM - 7:00 PM",
+      "Wednesday: 10:00 AM - 7:00 PM",
+      "Thursday: 10:00 AM - 7:00 PM",
+      "Friday: 10:00 AM - 7:00 PM",
+      "Saturday: 11:00 AM - 4:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -313,8 +313,8 @@
         "author": "3well TV",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "굿"
+        "relative_time": "5 years ago",
+        "text": "exorcism"
       }
     ],
     "photos": [
@@ -324,16 +324,16 @@
   },
   {
     "place_id": "ChIJZxa79FihfDURp5yhEwR4phU",
-    "display_name": "알라딘 중고서점 강남역7번출구점",
-    "category": "서점",
+    "display_name": "Aladdin Used Bookstore Gangnam Station Exit 7",
+    "category": "bookstore",
     "types": [
       "book_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 강남대로 381 지하 1층",
-    "short_address": "서초구 강남대로 381 지하 1층",
+    "address": "Basement 1, 381 Gangnam-daero, Seocho-gu, Seoul, Korea",
+    "short_address": "Basement 1, 381 Gangnam-daero, Seocho-gu",
     "location": {
       "lat": 37.4967849,
       "lng": 127.0276423
@@ -352,20 +352,20 @@
     "google_maps_url": "https://maps.google.com/?cid=1560066279835016359",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca158f4bb1667:0x15a6780413a19ca7!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:30 ~ 오후 10:00",
-      "화요일: 오전 9:30 ~ 오후 10:00",
-      "수요일: 오전 9:30 ~ 오후 10:00",
-      "목요일: 오전 9:30 ~ 오후 10:00",
-      "금요일: 오전 9:30 ~ 오후 10:00",
-      "토요일: 오전 9:30 ~ 오후 10:00",
-      "일요일: 오전 9:30 ~ 오후 10:00"
+      "Monday: 9:30 AM - 10:00 PM",
+      "Tuesday: 9:30 AM - 10:00 PM",
+      "Wednesday: 9:30 AM - 10:00 PM",
+      "Thursday: 9:30 AM - 10:00 PM",
+      "Friday: 9:30 AM - 10:00 PM",
+      "Saturday: 9:30 AM - 10:00 PM",
+      "Sunday: 9:30 AM - 10:00 PM"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -375,36 +375,36 @@
         "author": "Andrew Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8달 전",
-        "text": "강남역 출구나오면 1분 내로 진입이 가능해 좋은 입지를 차지하고 있다. 필요시 이용하면 좋을만한 곳"
+        "relative_time": "8 months ago",
+        "text": "It is in a good location as it is accessible within 1 minute from the exit of Gangnam Station. A great place to use when needed"
       },
       {
         "author": "石原亮",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "책 종류도 많고 접근성도 좋은 지점입니다. 중고책 판매할 때 알라딘포인트로 적립할 경우 판매금액 대비  20% 추가 적립이 됩니다. 아울러 매장 내부에 화장실도 있어서 편합니다."
+        "relative_time": "5 years ago",
+        "text": "This is a branch with a wide variety of books and good accessibility. If you accumulate Aladdin points when selling used books, an additional 20% of the sales amount will be accumulated. Additionally, there is a restroom inside the store, which is convenient."
       },
       {
         "author": "Evening Guide",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "지나가는 길에 책 구입하러 들렀어요.\n중고서적이니 가격 부담없이 읽고 싶은 책 있으면 구입할 수 있으니 좋아요.\n오늘 구입한 책은 더 해빙입니다. 제가 구입한 것 외에도 5권 정도 더 있었습니다.\n제가 사는 동네에도 중고서점이 있으면 좋겠습니다. 강남 부럽습니다...."
+        "relative_time": "4 years ago",
+        "text": "I stopped by to buy a book while passing by.\nIt's a used book, so it's great because you can buy whatever book you want to read without worrying about the price.\nThe book I bought today is The Haebing. In addition to the ones I bought, there were about 5 more books.\nI wish there was a used bookstore in my neighborhood. I envy Gangnam...."
       },
       {
         "author": "YUKI KIM",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6달 전",
-        "text": "매입하는 책과 판매하는 책의 가격차이가 크네요. 그리고 상태 좋은데도 대부분의 책이 매입 거부되고. 중고서적의 존재가 고맙기는 하지만, 그 선한 의미를 좀더 살리며 영업하시면 좋겠습니다."
+        "relative_time": "6 months ago",
+        "text": "There is a big difference in price between the books you buy and the books you sell. And even though they are in good condition, most books are rejected. Although I am thankful for the existence of used books, I wish they would make more use of their good meaning."
       },
       {
         "author": "MiKyoung Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "강남역에서 아이와 시간 보내기 좋아요.\n설민석 한국사를 사고 싶었던 터라 찾아봤는데\n가격이 당근보다 살짝 높거나 비슷해 패스했어요.\n[42가지 마음의 색깔]은 정가 14,000원인데\n판매가 8,200원이었어요. 책 상태에 따라 동일 책이라도 가격이 조금씩 달라요."
+        "relative_time": "2 years ago",
+        "text": "I love spending time with my kids at Gangnam Station.\nI wanted to buy Seol Min-seok's Korean history, so I looked for it.\nThe price was slightly higher or similar to carrots, so I passed.\n[42 Colors of the Heart] has a regular price of 14,000 won.\nThe selling price was 8,200 won. The price of the same book varies slightly depending on the condition of the book."
       }
     ],
     "photos": [
@@ -422,8 +422,8 @@
   },
   {
     "place_id": "ChIJkRmViFqhfDURzuI854tQ9ZY",
-    "display_name": "CU 서초도씨에빛점",
-    "category": "편의점",
+    "display_name": "CU Seocho Dossi Ebit Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -432,8 +432,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울 서초구 강남대로 359 대우도씨에빛 2",
-    "short_address": "서울 서초구 강남대로 359 대우도씨에빛 2",
+    "address": "Daewoo Do Ciebit 2, 359 Gangnam-daero, Seocho-gu, Seoul, South Korea",
+    "short_address": "Daewoo Do Ciebit 2, 359 Gangnam-daero, Seocho-gu, Seoul",
     "location": {
       "lat": 37.497304,
       "lng": 127.02815400000001
@@ -452,29 +452,29 @@
     "google_maps_url": "https://maps.google.com/?cid=10877689036793504462",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15a88951991:0x96f5508be73ce2ce!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "신동윤",
+        "author": "Shin Dong-yoon",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "T멤버스 부스트파크 중 강남권매장. 5g폰은 2배 할인가능."
+        "relative_time": "4 years ago",
+        "text": "Gangnam branch of T Members Boost Park. 2x discount available for 5G phones."
       }
     ],
     "photos": [
@@ -484,8 +484,8 @@
   },
   {
     "place_id": "ChIJERkNyZ2hfDURycMBPlj8QW0",
-    "display_name": "CU 강남센타점",
-    "category": "편의점",
+    "display_name": "CU Gangnam Center Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -494,8 +494,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로 388",
-    "short_address": "강남구 강남대로 388",
+    "address": "388 Gangnam-daero, Gangnam-gu, Seoul, South Korea",
+    "short_address": "388 Gangnam-daero, Gangnam-gu",
     "location": {
       "lat": 37.4974272,
       "lng": 127.02839349999998
@@ -516,8 +516,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -527,8 +527,8 @@
   },
   {
     "place_id": "ChIJcULIsluhfDURSbr_yWk0ktw",
-    "display_name": "CU 뉴삼성전자본점",
-    "category": "편의점",
+    "display_name": "CU New Samsung Electronics Headquarters",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -537,8 +537,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 서초대로74길 11",
-    "short_address": "서초구 서초대로74길 11",
+    "address": "11 Seocho-daero 74-gil, Seocho-gu, Seoul, South Korea",
+    "short_address": "11 Seocho-daero 74-gil, Seocho-gu",
     "location": {
       "lat": 37.496700499999996,
       "lng": 127.02700790000002
@@ -557,18 +557,18 @@
     "google_maps_url": "https://maps.google.com/?cid=15893823663909091913",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15bb2c84271:0xdc923469c9ffba49!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -578,36 +578,36 @@
         "author": "Jason Ham",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "삼성전자 본사 건물 지하 2층에 위치한 편의점\n매장은 크지 않지만 매대 물건은 항상 가득 차 있고 한편에 간단히 앉아서 음식을 먹거나 쉴 수 있는 공간도 있다. 편의점 택배도 접수 가능."
+        "relative_time": "1 month ago",
+        "text": "A convenience store located on the second basement level of the Samsung Electronics headquarters building.\nThe store is not large, but the shelves are always fully stocked and there is also a space where you can simply sit and eat or relax. Convenience store delivery is also available."
       },
       {
-        "author": "김승현 (SeuKim)",
+        "author": "Seunghyeon Kim (SeuKim)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "넓고 쾌적하고\n전기 콘센트에 충전도 가능하고\nㅇ한전 좋음"
+        "relative_time": "3 years ago",
+        "text": "Spacious and comfortable\nIt can also be charged at an electric outlet.\nㅇKEPCO is good"
       },
       {
-        "author": "김병진",
+        "author": "Byeongjin Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9년 전",
-        "text": "쾌적하고 물건이 많습니다.쾌적하고 물건이 많습니다."
+        "relative_time": "9 years ago",
+        "text": "It is comfortable and has a lot of things.It is comfortable and has a lot of things."
       },
       {
         "author": "LC",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10년 전",
-        "text": "추천"
+        "relative_time": "10 years ago",
+        "text": "suggestion"
       },
       {
         "author": "Pendekar Timur",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1달 전",
-        "text": "플라스틱 부식"
+        "relative_time": "1 month ago",
+        "text": "plastic corrosion"
       }
     ],
     "photos": [
@@ -618,15 +618,15 @@
   {
     "place_id": "ChIJr-h-bAChfDURCO1JnkVZWu4",
     "display_name": "CASE FLEX",
-    "category": "선물 가게",
+    "category": "gift shop",
     "types": [
       "gift_shop",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼2동 논현로80길",
-    "short_address": "강남구 역삼2동 논현로80길",
+    "address": "Nonhyeon-ro 80-gil, Yeoksam 2-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Nonhyeon-ro 80-gil, Yeoksam 2-dong, Gangnam-gu",
     "location": {
       "lat": 37.4977326,
       "lng": 127.02798600000001
@@ -647,8 +647,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -657,8 +657,8 @@
         "author": "TooGood",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1달 전",
-        "text": "강남 지하상가를 걷다가 일본에서 인기 있는 산리오 휴대폰 케이스와 말랑말랑한 장난감을 발견해서 그냥 지나칠 수 없었어요.\n\n가격표를 확인도 안 하고 샀는데, 나중에 알고 보니 말랑말랑한 장난감은 7,900원, 휴대폰 케이스는 23,900원이었어요. 좀 비싸게 느껴졌어요. 관광객 바가지 같았죠.\n\n그래도 아이가 너무 좋아해서 결국엔 만족스러웠어요. 좋은 추억이 되었네요.\n\n명동이나 동대문에 비하면 강남에는 이런 잡화점이 별로 없는 것 같아요."
+        "relative_time": "1 month ago",
+        "text": "While walking in Gangnam's underground shopping mall, I found Sanrio phone cases and soft toys, which are popular in Japan, and couldn't pass them up.\n\nI bought it without checking the price tag, but later I found out that the soft toy was 7,900 won and the cell phone case was 23,900 won. It felt a bit expensive. It felt like I was ripping off tourists.\n\nStill, my child loved it so much that I was satisfied in the end. It was a good memory.\n\nCompared to Myeongdong or Dongdaemun, there don't seem to be many general stores like this in Gangnam."
       }
     ],
     "photos": [
@@ -671,8 +671,8 @@
   },
   {
     "place_id": "ChIJa9d5-lmhfDUR__MF19jXZHM",
-    "display_name": "GS25 강남본점",
-    "category": "편의점",
+    "display_name": "GS25 Gangnam Main Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -681,8 +681,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로2길 8",
-    "short_address": "강남구 테헤란로2길 8",
+    "address": "8 Teheran-ro 2-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "8 Teheran-ro 2-gil, Gangnam-gu",
     "location": {
       "lat": 37.497621599999995,
       "lng": 127.0286404
@@ -701,50 +701,50 @@
     "google_maps_url": "https://maps.google.com/?cid=8315008138353177599",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca159fa79d76b:0x7364d7d8d705f3ff!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "현선영",
+        "author": "Hyeon Seon-young",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "택배가 그쪽으로 잘못갔는데 혹시 연락처나 연락할 방도나 아무거라도 주시면 안될까요..?ㅠㅠ 너무 급해요 여기 전화 안받네요 계속 전화중이라고 떠요ㅠ 연락할 방도를 알려주세요 부탁드려요..ㅜㅜ"
+        "relative_time": "3 years ago",
+        "text": "The package went there by mistake. Could you please give me your contact information or a way to contact me?ㅠㅠ It's so urgent. I'm not answering the phone here. It keeps saying I'm on the phone. Please tell me how to contact you..ㅜㅜ"
       },
       {
-        "author": "게임초보",
+        "author": "beginner in game",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "저그 택배가 그쪽으로 잘못 갔는데 연락주실수 있나요ㅜㅜ"
+        "relative_time": "2 years ago",
+        "text": "The package went there by mistake. Can you contact me?"
       },
       {
-        "author": "창민",
+        "author": "changmin",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "갓성비의 시대"
+        "relative_time": "3 years ago",
+        "text": "The era of Godseongbi"
       },
       {
         "author": "cockpit life",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "나는 이 가게를 좋아해요"
+        "relative_time": "5 years ago",
+        "text": "i like this store"
       }
     ],
     "photos": [
@@ -756,8 +756,8 @@
   },
   {
     "place_id": "ChIJGXg681mhfDUR2bVwWYC8krA",
-    "display_name": "에스에이치에듀",
-    "category": "서비스",
+    "display_name": "SH Edu",
+    "category": "service",
     "types": [
       "electronics_store",
       "educational_institution",
@@ -767,8 +767,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로 2길 8, 4층",
-    "short_address": "강남구 테헤란로 2길 8, 4층",
+    "address": "4th floor, 8 Teheran-ro 2-gil, Gangnam-gu, Seoul, Korea",
+    "short_address": "4th floor, 8 Teheran-ro 2-gil, Gangnam-gu",
     "location": {
       "lat": 37.4976213,
       "lng": 127.02869770000001
@@ -797,7 +797,7 @@
   {
     "place_id": "ChIJBwLfi1mhfDURVoXHrcO5a7U",
     "display_name": "GS25",
-    "category": "편의점",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -806,8 +806,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 강남대로 지하 396",
-    "short_address": "서초구 강남대로 지하 396",
+    "address": "396, Gangnam-daero, Seocho-gu, Seoul, Republic of Korea",
+    "short_address": "Basement 396, Gangnam-daero, Seocho-gu",
     "location": {
       "lat": 37.4977977,
       "lng": 127.0276315
@@ -826,18 +826,18 @@
     "google_maps_url": "https://maps.google.com/?cid=13072746593458292054",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1598bdf0207:0xb56bb9c3adc78556!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 6:30 ~ 오후 11:00",
-      "화요일: 오전 6:30 ~ 오후 11:00",
-      "수요일: 오전 6:30 ~ 오후 11:00",
-      "목요일: 오전 6:30 ~ 오후 11:00",
-      "금요일: 오전 6:30 ~ 오후 11:00",
-      "토요일: 오전 6:30 ~ 오후 11:00",
-      "일요일: 오전 6:30 ~ 오후 11:00"
+      "Monday: 6:30 AM - 11:00 PM",
+      "Tuesday: 6:30 AM - 11:00 PM",
+      "Wednesday: 6:30 AM - 11:00 PM",
+      "Thursday: 6:30 AM - 11:00 PM",
+      "Friday: 6:30 AM - 11:00 PM",
+      "Saturday: 6:30 AM - 11:00 PM",
+      "Sunday: 6:30 AM - 11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -847,8 +847,8 @@
   },
   {
     "place_id": "ChIJubo_8FmhfDURxVX7mqiw-pE",
-    "display_name": "GS25 강남3호점",
-    "category": "편의점",
+    "display_name": "GS25 Gangnam 3rd branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -857,8 +857,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 825번지 2층 국민카드미진프라자 강남구 서울특별시 KR",
-    "short_address": "역삼동 825번지 2층 국민카드미진프라자 강남구 서울특별시 KR",
+    "address": "Kookmin Card Mijin Plaza, 2nd floor, 825 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "825 Yeoksam-dong, 2nd floor, Kookmin Card Mijin Plaza, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.4977735,
       "lng": 127.028536
@@ -877,18 +877,18 @@
     "google_maps_url": "https://maps.google.com/?cid=10518914117878371781",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca159f03fbab9:0x91fab0a89afb55c5!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -898,8 +898,8 @@
   },
   {
     "place_id": "ChIJeQME8FmhfDURttMlDqGV5P0",
-    "display_name": "GS25 S강남역2호점",
-    "category": "편의점",
+    "display_name": "GS25 S Gangnam Station 2nd Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -908,8 +908,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 825",
-    "short_address": "강남구 역삼동 825",
+    "address": "825 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "825 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.497818699999996,
       "lng": 127.0285787
@@ -928,18 +928,18 @@
     "google_maps_url": "https://maps.google.com/?cid=18294912105245430710",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca159f0040379:0xfde495a10e25d3b6!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -949,31 +949,31 @@
         "author": "哲",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
-        "text": "여기 나이 드신 아주머니 사장님(혹은 점원)손님이 오든 말든 큰 소리로 떠들면서 인사를 안하심. 영업의 기본마인드가 안되어있는 듯."
+        "relative_time": "1 year ago",
+        "text": "The older lady here, the owner (or clerk), talks loudly and doesn't say hello to customers, regardless of whether they come or not. It seems like they don't have the basic sales mindset."
       },
       {
-        "author": "창민",
+        "author": "changmin",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "갓성비의 시대"
+        "relative_time": "3 years ago",
+        "text": "The era of Godseongbi"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJt7qPfjuhfDURxbAcq9zgJT0",
-    "display_name": "생일축하노래",
-    "category": "선물 가게",
+    "display_name": "happy birthday song",
+    "category": "gift shop",
     "types": [
       "gift_shop",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남역",
-    "short_address": "강남구 강남역",
+    "address": "Gangnam Station, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Gangnam Station, Gangnam-gu",
     "location": {
       "lat": 37.4978996,
       "lng": 127.02763220000001
@@ -992,28 +992,28 @@
     "google_maps_url": "https://maps.google.com/?cid=4406175048820109509",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca13b7e8fbab7:0x3d25e0dcab1cb0c5!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 휴무일",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Closed day",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김결혼식",
+        "author": "Kim wedding ceremony",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "5월24일에는갑니다명기입니다"
+        "relative_time": "1 year ago",
+        "text": "I'm going on May 24th."
       }
     ],
     "photos": [
@@ -1031,8 +1031,8 @@
   },
   {
     "place_id": "ChIJs0Kj6lmhfDURPpFHkd_2A9A",
-    "display_name": "GS25 강남메트로점",
-    "category": "편의점",
+    "display_name": "GS25 Gangnam Metro Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -1041,8 +1041,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 821-1",
-    "short_address": "강남구 역삼동 821-1",
+    "address": "821-1 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "821-1 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.498011,
       "lng": 127.02817639999999
@@ -1061,18 +1061,18 @@
     "google_maps_url": "https://maps.google.com/?cid=14989095424894669118",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca159eaa342b3:0xd003f6df9147913e!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1082,8 +1082,8 @@
         "author": "Irene “MJ” Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
-        "text": "다이어트를 위한 아몬드브리즈나 과일이 많다. 청결에 더 신경쓰면 좋겠다."
+        "relative_time": "6 years ago",
+        "text": "There are many almond breezes and fruits for diet. I wish they paid more attention to cleanliness."
       }
     ],
     "photos": [
@@ -1097,16 +1097,16 @@
   },
   {
     "place_id": "ChIJH89lWlqhfDUR5auKJqw2MjQ",
-    "display_name": "(주)컨펌",
-    "category": "서점",
+    "display_name": "Confirm Co., Ltd.",
+    "category": "bookstore",
     "types": [
       "book_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 서초동 1327-1번지 1128호",
-    "short_address": "서초구 서초동 1327-1번지 1128호",
+    "address": "#1128, 1327-1 Seocho-dong, Seocho-gu, Seoul, Republic of Korea",
+    "short_address": "#1128, 1327-1 Seocho-dong, Seocho-gu",
     "location": {
       "lat": 37.4957913,
       "lng": 127.0273449
@@ -1134,16 +1134,16 @@
   },
   {
     "place_id": "ChIJO3oCJ-ehfDURhUzFqdSNM3M",
-    "display_name": "동선컴퍼니",
-    "category": "선물 가게",
+    "display_name": "Dongseon Company",
+    "category": "gift shop",
     "types": [
       "gift_shop",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로2길 27",
-    "short_address": "강남구 테헤란로2길 27",
+    "address": "27 Teheran-ro 2-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "27 Teheran-ro 2-gil, Gangnam-gu",
     "location": {
       "lat": 37.496554599999996,
       "lng": 127.02963539999999
@@ -1164,8 +1164,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1175,7 +1175,7 @@
   {
     "place_id": "ChIJD8bihlmhfDUR1RVd4DabNcM",
     "display_name": "emart24",
-    "category": "편의점",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -1184,8 +1184,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로 101",
-    "short_address": "강남구 테헤란로 101",
+    "address": "101 Teheran-ro, Gangnam-gu, Seoul, South Korea",
+    "short_address": "101 Teheran-ro, Gangnam-gu",
     "location": {
       "lat": 37.4979448,
       "lng": 127.02707299999999
@@ -1204,18 +1204,18 @@
     "google_maps_url": "https://maps.google.com/?cid=14066319671156348373",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15986e2c60f:0xc3359b36e05d15d5!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1225,7 +1225,7 @@
         "author": "Hana Park",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       }
     ],
@@ -1233,8 +1233,8 @@
   },
   {
     "place_id": "ChIJ2zSiWVehfDURBsv-TYocdw4",
-    "display_name": "CU 강남푸르지오점",
-    "category": "편의점",
+    "display_name": "CU Gangnam Prugio Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -1243,8 +1243,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로4길 6",
-    "short_address": "강남구 테헤란로4길 6",
+    "address": "6 Teheran-ro 4-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "6 Teheran-ro 4-gil, Gangnam-gu",
     "location": {
       "lat": 37.4975958,
       "lng": 127.0295399
@@ -1263,44 +1263,44 @@
     "google_maps_url": "https://maps.google.com/?cid=1042333219099167494",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15759a234db:0xe771c8a4dfecb06!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "킹제임스",
+        "author": "king james",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "상품도 잘 찾아주시고 친절하고 좋은 매장이에요. 출근하면서 매일 들르는 위치도 좋은곳 입니다."
+        "relative_time": "1 month ago",
+        "text": "It's a good, friendly store that helps you find products. It's a great place to stop by every day on the way to work."
       },
       {
-        "author": "Jenny제니",
+        "author": "JennyJenny",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "5년 전",
-        "text": "여기 반값택배는 엉망. 보낸지 일주일인데 접수 중이라고. 고객센터 통화하려면 연결이 이십분. 배송업체 알려주지도 않고 연락줄 때까지 기다리라고. 에라이 반값인지 뭔지 안쓴다."
+        "relative_time": "5 years ago",
+        "text": "The half-price delivery service here is a mess. It's been a week since I sent it, but it's being processed. If you want to call customer service, it takes 20 minutes. They didn't even tell me the shipping company and told me to wait for them to contact me. I don't care if it's half price or something."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJLe2ROQChfDURL5u6NZBe2qY",
-    "display_name": "세븐일레븐 삼성타운점",
-    "category": "편의점",
+    "display_name": "7-Eleven Samsung Town Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -1309,8 +1309,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 서초대로74길 23 111호동 1층",
-    "short_address": "서초구 서초대로74길 23 111호동 1층",
+    "address": "1st floor, Building 111, 23 Seocho-daero 74-gil, Seocho-gu, Seoul, South Korea",
+    "short_address": "1st floor, Building 111, 23 Seocho-daero 74-gil, Seocho-gu",
     "location": {
       "lat": 37.4957256,
       "lng": 127.0268866
@@ -1331,8 +1331,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1342,8 +1342,8 @@
   },
   {
     "place_id": "ChIJg3dCWQChfDURzuBEwbBIYYk",
-    "display_name": "(주)코리아세븐 역삼타워점",
-    "category": "편의점",
+    "display_name": "Korea Seven Yeoksam Tower Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -1352,8 +1352,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 826-27 101호",
-    "short_address": "강남구 역삼동 826-27 101호",
+    "address": "#101, 826-27 Yeoksam-dong, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "Room 101, 826-27 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.49675,
       "lng": 127.03011109999998
@@ -1372,18 +1372,18 @@
     "google_maps_url": "https://maps.google.com/?cid=9899273379931021518",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca10059427783:0x896148b0c144e0ce!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1393,8 +1393,8 @@
   },
   {
     "place_id": "ChIJodO-HlKhfDUR4isPj6x4l7M",
-    "display_name": "세븐일레븐",
-    "category": "편의점",
+    "display_name": "7-Eleven",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -1403,8 +1403,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 827-49",
-    "short_address": "강남구 역삼동 827-49",
+    "address": "827-49 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "827-49 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4970165,
       "lng": 127.0318274
@@ -1423,18 +1423,18 @@
     "google_maps_url": "https://maps.google.com/?cid=12940944736802253794",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1521ebed3a1:0xb39778ac8f0f2be2!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1444,8 +1444,8 @@
   },
   {
     "place_id": "ChIJBf_8OVehfDURWwhY7F1eEI0",
-    "display_name": "세븐일레븐 역삼타운점",
-    "category": "편의점",
+    "display_name": "7-Eleven Yeoksam Town Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -1454,8 +1454,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로84길 28",
-    "short_address": "강남구 강남대로84길 28",
+    "address": "28 Gangnam-daero 84-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "28 Gangnam-daero 84-gil, Gangnam-gu",
     "location": {
       "lat": 37.4969715,
       "lng": 127.0309441
@@ -1474,18 +1474,18 @@
     "google_maps_url": "https://maps.google.com/?cid=10164728116465371227",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15739fcff05:0x8d105e5dec58085b!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1495,8 +1495,8 @@
   },
   {
     "place_id": "ChIJd5wjFlehfDURdMHtGMJwD5M",
-    "display_name": "CU 역삼디오빌점",
-    "category": "편의점",
+    "display_name": "CU Yeoksam Dioville Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -1505,8 +1505,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로84길 33",
-    "short_address": "강남구 강남대로84길 33",
+    "address": "33 Gangnam-daero 84-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "33 Gangnam-daero 84-gil, Gangnam-gu",
     "location": {
       "lat": 37.497516399999995,
       "lng": 127.03107740000002
@@ -1525,18 +1525,18 @@
     "google_maps_url": "https://maps.google.com/?cid=10596812427170267508",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15716239c77:0x930f70c218edc174!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1546,8 +1546,8 @@
   },
   {
     "place_id": "ChIJo16oLFGhfDURmdTpnrTcDeE",
-    "display_name": "세븐일레븐 역삼특허점",
-    "category": "편의점",
+    "display_name": "7-Eleven Yeoksam Patent Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -1556,8 +1556,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동 827-67",
-    "short_address": "강남구 역삼1동 827-67",
+    "address": "827-67, Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "827-67, Yeoksam 1-dong, Gangnam-gu",
     "location": {
       "lat": 37.4958735,
       "lng": 127.0323935
@@ -1565,7 +1565,7 @@
     "rating": 1,
     "rating_stars": "★☆☆☆☆ 1",
     "rating_count": 1,
-    "price_level": "저렴 ($)",
+    "price_level": "Cheap ($)",
     "price_range": null,
     "editorial_summary": "Pit stop for snacks, drinks & daily essentials",
     "generative_summary": null,
@@ -1576,18 +1576,18 @@
     "google_maps_url": "https://maps.google.com/?cid=16216860501549372569",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1512ca85ea3:0xe10ddcb49ee9d499!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1597,7 +1597,7 @@
         "author": "Mason Heo",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "12달 전",
+        "relative_time": "12 months ago",
         "text": null
       }
     ],
@@ -1605,16 +1605,16 @@
   },
   {
     "place_id": "ChIJycPASFehfDURM9w3I2sKR3Y",
-    "display_name": "형우정보통신(주)",
-    "category": "전자제품 판매점",
+    "display_name": "Hyeongwoo Information and Communication Co., Ltd.",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 824-11번지 한라크래식빌딩 1208호 강남구 서울특별시 KR",
-    "short_address": "역삼동 824-11번지 한라크래식빌딩 1208호 강남구 서울특별시 KR",
+    "address": "Room 1208, Halla Classic Building, 824-11 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "Room 1208, Halla Classic Building, 824-11 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.497092099999996,
       "lng": 127.0303724
@@ -1634,7 +1634,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15748c0c3c9:0x76470a6b2337dc33!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": null,
     "accessibility": null,
@@ -1645,7 +1645,7 @@
   {
     "place_id": "ChIJEdJN_1ahfDUR-WFwbG0SopA",
     "display_name": "GS25",
-    "category": "편의점",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -1654,8 +1654,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동 823-8",
-    "short_address": "강남구 역삼1동 823-8",
+    "address": "823-8, Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "823-8 Yeoksam 1-dong, Gangnam-gu",
     "location": {
       "lat": 37.498173,
       "lng": 127.0323328
@@ -1674,57 +1674,57 @@
     "google_maps_url": "https://maps.google.com/?cid=10421912748868788729",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca156ff4dd211:0x90a2126d6c7061f9!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "박형석",
+        "author": "Hyungseok Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "다양하네요 상품이"
+        "relative_time": "7 years ago",
+        "text": "There are various products"
       },
       {
         "author": "Youngtae Ko",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "상품이 많아요~"
+        "relative_time": "7 years ago",
+        "text": "There are a lot of products~"
       },
       {
-        "author": "이승용",
+        "author": "Seungyong Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "테이블이 있어 편한 편의점"
+        "relative_time": "7 years ago",
+        "text": "Convenient convenience store with tables"
       },
       {
-        "author": "김별",
+        "author": "Byeol Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7년 전",
-        "text": "직원이 친절합니다"
+        "relative_time": "7 years ago",
+        "text": "The staff is friendly"
       },
       {
         "author": "firerice3",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "테이블 좋음"
+        "relative_time": "7 years ago",
+        "text": "Good table"
       }
     ],
     "photos": [
@@ -1735,7 +1735,7 @@
   {
     "place_id": "ChIJgT_UTlehfDUReshf6e3ai4k",
     "display_name": "GS25",
-    "category": "편의점",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -1744,8 +1744,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로84길 23",
-    "short_address": "강남구 강남대로84길 23",
+    "address": "23 Gangnam-daero 84-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "23 Gangnam-daero 84-gil, Gangnam-gu",
     "location": {
       "lat": 37.4970431,
       "lng": 127.0302893
@@ -1764,29 +1764,29 @@
     "google_maps_url": "https://maps.google.com/?cid=9911256120316381306",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1574ed43f81:0x898bdaede95fc87a!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "창민",
+        "author": "changmin",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "갓성비의 시대"
+        "relative_time": "3 years ago",
+        "text": "The era of Godseongbi"
       }
     ],
     "photos": [
@@ -1795,8 +1795,8 @@
   },
   {
     "place_id": "ChIJj_HnilahfDUR8YtINuR6ByM",
-    "display_name": "GS25 역삼쌍마",
-    "category": "편의점",
+    "display_name": "GS25 Yeoksam Twin Horse",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -1805,8 +1805,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 828-23",
-    "short_address": "강남구 역삼동 828-23",
+    "address": "828-23 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "828-23 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.497683099999996,
       "lng": 127.0334105
@@ -1825,18 +1825,18 @@
     "google_maps_url": "https://maps.google.com/?cid=2524121236746308593",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1568ae7f18f:0x23077ae436488bf1!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1848,8 +1848,8 @@
   },
   {
     "place_id": "ChIJ7wCxkVahfDUREh5RV4B8tf0",
-    "display_name": "이마트24역삼테헤란점",
-    "category": "편의점",
+    "display_name": "E-Mart 24 Yeoksam Teheran Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -1858,8 +1858,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 828-29번지",
-    "short_address": "강남구 역삼동 828-29번지",
+    "address": "828-29 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "828-29 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.496977799999996,
       "lng": 127.03379710000002
@@ -1878,18 +1878,18 @@
     "google_maps_url": "https://maps.google.com/?cid=18281655153042988562",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15691b100ef:0xfdb57c8057511e12!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1899,16 +1899,16 @@
         "author": "Stein Gunther",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "서울의 ‘테헤란 로드’에 있는 편의점.."
+        "relative_time": "3 years ago",
+        "text": "A convenience store on ‘Tehran Road’ in Seoul.."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJpR3LRVehfDURw7CYf3Allic",
-    "display_name": "보노오디오",
-    "category": "자동차 부품 판매점",
+    "display_name": "Bono Audio",
+    "category": "auto parts store",
     "types": [
       "electronics_store",
       "auto_parts_store",
@@ -1918,8 +1918,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 824 12번지",
-    "short_address": "강남구 역삼동 824 12번지",
+    "address": "12, 824 Yeoksam-dong, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "824 12, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4973594,
       "lng": 127.03023209999999
@@ -1940,8 +1940,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1950,8 +1950,8 @@
   },
   {
     "place_id": "ChIJufQq7YmhfDURGIw7inLQy_s",
-    "display_name": "CU 역삼센타점",
-    "category": "편의점",
+    "display_name": "CU Yeoksam Center Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -1960,8 +1960,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼로9길 28",
-    "short_address": "강남구 역삼로9길 28",
+    "address": "28 Yeoksam-ro 9-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "28 Yeoksam-ro 9-gil, Gangnam-gu",
     "location": {
       "lat": 37.4958914,
       "lng": 127.0338416
@@ -1982,8 +1982,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2004,16 +2004,16 @@
   },
   {
     "place_id": "ChIJVaECtlShfDURwObgeNc9icg",
-    "display_name": "수인 서점",
-    "category": "서점",
+    "display_name": "Suin Bookstore",
+    "category": "bookstore",
     "types": [
       "book_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로14길 8 401호",
-    "short_address": "강남구 테헤란로14길 8 401호",
+    "address": "#401, 8 Teheran-ro 14-gil, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "#401, 8 Teheran-ro 14-gil, Gangnam-gu",
     "location": {
       "lat": 37.4986123,
       "lng": 127.0329177
@@ -2034,8 +2034,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2045,7 +2045,7 @@
   {
     "place_id": "ChIJ6_6GZlahfDURhJl32WJgT10",
     "display_name": "Emart24",
-    "category": "편의점",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -2054,8 +2054,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 735-17번지 735-17번지 강남구 서울특별시 KR",
-    "short_address": "역삼동 735-17번지 735-17번지 강남구 서울특별시 KR",
+    "address": "735-17 Yeoksam-dong, Seoul, Republic of Korea 735-17, Gangnam-gu, Seoul KR",
+    "short_address": "735-17 Yeoksam-dong 735-17 Gangnam-gu Seoul KR",
     "location": {
       "lat": 37.498032599999995,
       "lng": 127.0339099
@@ -2076,8 +2076,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2087,8 +2087,8 @@
   },
   {
     "place_id": "ChIJCXN87FChfDUR7yiQX0K5eeo",
-    "display_name": "GS25 강남쌍용점",
-    "category": "편의점",
+    "display_name": "GS25 Gangnam Ssangyong Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -2097,8 +2097,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울 강남구 테헤란로4길 46",
-    "short_address": "서울 강남구 테헤란로4길 46",
+    "address": "46 Teheran-ro 4-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "46 Teheran-ro 4-gil, Gangnam-gu, Seoul",
     "location": {
       "lat": 37.4953995,
       "lng": 127.03040600000001
@@ -2117,18 +2117,18 @@
     "google_maps_url": "https://maps.google.com/?cid=16895739171779389679",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca150ec7c7309:0xea79b9425f9028ef!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2138,45 +2138,45 @@
         "author": "wonjoon",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "9년 전",
-        "text": "회사원들 밀집도가 높은 교차도로에 위치한 편의점으로 인지도는 전혀 없음. 눈에 띄지 않는 위치의 평범한 GS편의점."
+        "relative_time": "9 years ago",
+        "text": "It is a convenience store located at an intersection with a high concentration of office workers, so it is not well-known at all. An ordinary GS convenience store in an inconspicuous location."
       },
       {
-        "author": "김상훈",
+        "author": "Kim Sang-hoon",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "12년 전",
-        "text": "ㅋㅋ"
+        "relative_time": "12 years ago",
+        "text": "lol"
       },
       {
         "author": "Jay Kim",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "8달 전",
-        "text": "불친절"
+        "relative_time": "8 months ago",
+        "text": "unfriendly"
       },
       {
         "author": "Anchit Gupta",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9년 전",
-        "text": "좋고 편리해요"
+        "relative_time": "9 years ago",
+        "text": "Good and convenient"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJd-vAlVChfDURvpSUUHAOXIc",
-    "display_name": "소예꽃과정원",
-    "category": "선물 가게",
+    "display_name": "Soye Flower Course",
+    "category": "gift shop",
     "types": [
       "gift_shop",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 826-37",
-    "short_address": "강남구 역삼동 826-37",
+    "address": "826-37 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "826-37 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.495349999999995,
       "lng": 127.0303831
@@ -2197,8 +2197,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2208,16 +2208,16 @@
         "author": "Jae Choi",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "12년 전",
-        "text": "좋은"
+        "relative_time": "12 years ago",
+        "text": "good"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJXb2cTuShfDURyLG5t-hJ6I8",
-    "display_name": "GS25역삼태극점",
-    "category": "편의점",
+    "display_name": "GS25 Yeoksam Taegeuk Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -2226,8 +2226,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동 테헤란로4길 46",
-    "short_address": "강남구 역삼1동 테헤란로4길 46",
+    "address": "46, Teheran-ro 4-gil, Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "46 Teheran-ro 4-gil, Yeoksam 1-dong, Gangnam-gu",
     "location": {
       "lat": 37.4953323,
       "lng": 127.0303725
@@ -2248,25 +2248,25 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "박준형",
+        "author": "Junhyung Park",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "편의점이넓어서 좋네요\n직원분도친절해요"
+        "relative_time": "3 years ago",
+        "text": "I like that the convenience store is spacious.\nThe staff is also friendly."
       },
       {
-        "author": "김혜성",
+        "author": "Kim Hye-seong",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       }
     ],
@@ -2276,8 +2276,8 @@
   },
   {
     "place_id": "ChIJSfgJjVGhfDURbQCfVvqMMhg",
-    "display_name": "세븐일레븐 역삼스타공원점",
-    "category": "편의점",
+    "display_name": "7-Eleven Yeoksam Star Park Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -2286,8 +2286,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 논현로79길 25",
-    "short_address": "강남구 논현로79길 25",
+    "address": "25 Nonhyeon-ro 79-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "25 Nonhyeon-ro 79-gil, Gangnam-gu",
     "location": {
       "lat": 37.497335899999996,
       "lng": 127.0360755
@@ -2306,35 +2306,35 @@
     "google_maps_url": "https://maps.google.com/?cid=1743611012568776813",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1518d09f849:0x18328cfa569f006d!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 11:00",
-      "화요일: 오전 9:00 ~ 오후 11:00",
-      "수요일: 오전 9:00 ~ 오후 11:00",
-      "목요일: 오전 9:00 ~ 오후 11:00",
-      "금요일: 오전 9:00 ~ 오후 11:00",
-      "토요일: 오전 9:00 ~ 오후 11:00",
-      "일요일: 오전 9:00 ~ 오후 11:00"
+      "Monday: 9:00 AM - 11:00 PM",
+      "Tuesday: 9:00 AM - 11:00 PM",
+      "Wednesday: 9:00 AM - 11:00 PM",
+      "Thursday: 9:00 AM - 11:00 PM",
+      "Friday: 9:00 AM - 11:00 PM",
+      "Saturday: 9:00 AM - 11:00 PM",
+      "Sunday: 9:00 AM - 11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "정공법",
+        "author": "Jeonggongbeop",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "공원 옆에 있으며, 편의점 골목에 간이테이블 3개(파라솔 포함)를 운영하여 잠깐 사용자들에게 편의를 제공하고 있습니다"
+        "relative_time": "3 years ago",
+        "text": "It is located next to the park, and three simple tables (including parasols) are operated in the convenience store alley to briefly provide convenience to users."
       },
       {
-        "author": "안병호",
+        "author": "Byeongho Ahn",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -2342,16 +2342,16 @@
   },
   {
     "place_id": "ChIJcXbdvFWhfDURMMxHcqG9A8o",
-    "display_name": "아이어사운드",
-    "category": "전자제품 판매점",
+    "display_name": "Ire Sound",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 739 20번지 1층",
-    "short_address": "강남구 역삼동 739 20번지 1층",
+    "address": "1st floor, 739 20, Yeoksam-dong, Gangnam-gu, Seoul, Korea",
+    "short_address": "1st floor, 739 20, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4976152,
       "lng": 127.0365992
@@ -2379,16 +2379,16 @@
   },
   {
     "place_id": "ChIJjfDMlVWhfDURfhS6a24GECs",
-    "display_name": "탠코어아시아(주)",
-    "category": "전자제품 판매점",
+    "display_name": "Tancore Asia Co., Ltd.",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 739-16번지 5층 532호 강남구 서울특별시 KR",
-    "short_address": "역삼동 739-16번지 5층 532호 강남구 서울특별시 KR",
+    "address": "#532, 5th floor, 739-16 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "#532, 5th floor, 739-16 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.498037,
       "lng": 127.0362885
@@ -2416,8 +2416,8 @@
   },
   {
     "place_id": "ChIJr_JpVlShfDUR2zy4OTKGj1Y",
-    "display_name": "CU 역삼우리점",
-    "category": "편의점",
+    "display_name": "CU Yeoksam Woori Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -2426,8 +2426,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼로19길 14",
-    "short_address": "강남구 역삼로19길 14",
+    "address": "14 Yeoksam-ro 19-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "14 Yeoksam-ro 19-gil, Gangnam-gu",
     "location": {
       "lat": 37.4960418,
       "lng": 127.0372429
@@ -2446,18 +2446,18 @@
     "google_maps_url": "https://maps.google.com/?cid=6237351559206288603",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1545669f2af:0x568f863239b83cdb!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2467,8 +2467,8 @@
         "author": "Eugene Yun",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "여기서 뭐든지 살 수 있어요 ㅋㅋㅋ"
+        "relative_time": "6 years ago",
+        "text": "You can buy anything here haha."
       }
     ],
     "photos": [
@@ -2484,16 +2484,16 @@
   },
   {
     "place_id": "ChIJq0kL0FOhfDUR6vFRZWqneYY",
-    "display_name": "고은정보기술(주)",
-    "category": "전자제품 판매점",
+    "display_name": "Goeun Information Technology Co., Ltd.",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 742-32",
-    "short_address": "강남구 역삼동 742-32",
+    "address": "742-32 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "742-32 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.496001799999995,
       "lng": 127.03455380000001
@@ -2522,15 +2522,15 @@
   {
     "place_id": "ChIJqX441kOhfDURGXBkh0hUayk",
     "display_name": "doaz corp",
-    "category": "전자제품 판매점",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼로 169",
-    "short_address": "강남구 역삼로 169",
+    "address": "169 Yeoksam-ro, Gangnam-gu, Seoul, South Korea",
+    "short_address": "169 Yeoksam-ro, Gangnam-gu",
     "location": {
       "lat": 37.495577399999995,
       "lng": 127.03744089999999
@@ -2558,16 +2558,16 @@
   },
   {
     "place_id": "ChIJO5Ayr1ahfDUR88TmY-7tj0I",
-    "display_name": "신도디지털OA",
-    "category": "전자제품 판매점",
+    "display_name": "Sindo Digital OA",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로22길 71",
-    "short_address": "강남구 테헤란로22길 71",
+    "address": "71 Teheran-ro 22-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "71 Teheran-ro 22-gil, Gangnam-gu",
     "location": {
       "lat": 37.495625,
       "lng": 127.0343233
@@ -2586,17 +2586,17 @@
     "google_maps_url": "https://maps.google.com/?cid=4796313736306935027",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca156af32903b:0x428fedee63e6c4f3!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 6:00",
-      "화요일: 오전 10:00 ~ 오후 6:00",
-      "수요일: 오전 10:00 ~ 오후 6:00",
-      "목요일: 오전 10:00 ~ 오후 6:00",
-      "금요일: 오전 10:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 6:00 PM",
+      "Tuesday: 10:00 AM - 6:00 PM",
+      "Wednesday: 10:00 AM - 6:00 PM",
+      "Thursday: 10:00 AM - 6:00 PM",
+      "Friday: 10:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2605,8 +2605,8 @@
   },
   {
     "place_id": "ChIJV5HU5lWhfDURtH8sy2kJPbw",
-    "display_name": "CU 역삼에클라트점",
-    "category": "편의점",
+    "display_name": "CU Yeoksam Eclat Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -2615,8 +2615,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로20길 19",
-    "short_address": "강남구 테헤란로20길 19",
+    "address": "19 Teheran-ro 20-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "19 Teheran-ro 20-gil, Gangnam-gu",
     "location": {
       "lat": 37.4985255,
       "lng": 127.0350086
@@ -2635,18 +2635,18 @@
     "google_maps_url": "https://maps.google.com/?cid=13564008002694709172",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca155e6d49157:0xbc3d0969cb2c7fb4!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2656,8 +2656,8 @@
         "author": "Jin C. HYUN",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9달 전",
-        "text": "사장님이 너무 친절하다. 역삼역 근처 편의점에서 단연 최고의 친절함으로 응대해주신다."
+        "relative_time": "9 months ago",
+        "text": "The owner is so kind. At a convenience store near Yeoksam Station, they serve you with the utmost kindness."
       }
     ],
     "photos": [
@@ -2668,8 +2668,8 @@
   },
   {
     "place_id": "ChIJcyJQCVShfDURj4SU3-K7Aos",
-    "display_name": "세븐일레븐 역삼5호점",
-    "category": "편의점",
+    "display_name": "7-Eleven Yeoksam 5th branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -2678,8 +2678,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동 751-10",
-    "short_address": "강남구 역삼1동 751-10",
+    "address": "751-10 Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "751-10 Yeoksam 1-dong, Gangnam-gu",
     "location": {
       "lat": 37.4949267,
       "lng": 127.0357828
@@ -2687,7 +2687,7 @@
     "rating": 4.5,
     "rating_stars": "★★★★☆ 4.5",
     "rating_count": 2,
-    "price_level": "저렴 ($)",
+    "price_level": "Cheap ($)",
     "price_range": null,
     "editorial_summary": "Pit stop for snacks, drinks & daily essentials",
     "generative_summary": null,
@@ -2698,35 +2698,35 @@
     "google_maps_url": "https://maps.google.com/?cid=10016775104313459855",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15409502273:0x8b02bbe2df94848f!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김정래",
+        "author": "Kim Jeong-rae",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9년 전",
-        "text": "좋아요"
+        "relative_time": "9 years ago",
+        "text": "great"
       },
       {
-        "author": "이학수",
+        "author": "Haksu Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9년 전",
+        "relative_time": "9 years ago",
         "text": null
       }
     ],
@@ -2734,8 +2734,8 @@
   },
   {
     "place_id": "ChIJVbcBQqihfDURl3FxCpZ1mX0",
-    "display_name": "세븐일레븐 역삼명랑점",
-    "category": "편의점",
+    "display_name": "7-Eleven Yeoksam Myeongrang Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -2744,8 +2744,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 논현로 425",
-    "short_address": "강남구 논현로 425",
+    "address": "425 Nonhyeon-ro, Gangnam-gu, Seoul, South Korea",
+    "short_address": "425 Nonhyeon-ro, Gangnam-gu",
     "location": {
       "lat": 37.49799540000001,
       "lng": 127.0379322
@@ -2766,8 +2766,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2778,7 +2778,7 @@
   {
     "place_id": "ChIJ09Ch7lWhfDURs5uUlf2BbwM",
     "display_name": "7-Eleven",
-    "category": "편의점",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -2787,8 +2787,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동 738-23",
-    "short_address": "강남구 역삼1동 738-23",
+    "address": "738-23 Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "738-23 Yeoksam 1-dong, Gangnam-gu",
     "location": {
       "lat": 37.4980443,
       "lng": 127.03793780000001
@@ -2807,18 +2807,18 @@
     "google_maps_url": "https://maps.google.com/?cid=247559430664919987",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca155eea1d0d3:0x36f81fd95949bb3!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2828,8 +2828,8 @@
   },
   {
     "place_id": "ChIJq6wgwqqmfDURcFsa9rXytV0",
-    "display_name": "세븐일레븐 역삼창조점",
-    "category": "편의점",
+    "display_name": "7-Eleven Yeoksam Changjo Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -2838,8 +2838,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 739",
-    "short_address": "강남구 역삼동 739",
+    "address": "739 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "739 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4990441,
       "lng": 127.0362158
@@ -2847,7 +2847,7 @@
     "rating": 3,
     "rating_stars": "★★★☆☆ 3",
     "rating_count": 2,
-    "price_level": "저렴 ($)",
+    "price_level": "Cheap ($)",
     "price_range": null,
     "editorial_summary": "Pit stop for snacks, drinks & daily essentials",
     "generative_summary": null,
@@ -2858,35 +2858,35 @@
     "google_maps_url": "https://maps.google.com/?cid=6752570079643851632",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca6aac220acab:0x5db5f2b5f61a5b70!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "오뚝",
+        "author": "roly",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "5년 전",
-        "text": "세상불친절. 손님이 들어오든 말든 계싼을 하든 말든 자 다음 자 다음 식. 위치가 좋아서 그런가 그냥 대충대충."
+        "relative_time": "5 years ago",
+        "text": "The world is unkind. Whether guests come in or not, whether you pay the bill or not, now, next, next, ceremony. Maybe it's because the location is good, but it's just vague."
       },
       {
-        "author": "개나리",
+        "author": "forsythia",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       }
     ],
@@ -2894,8 +2894,8 @@
   },
   {
     "place_id": "ChIJg1tGYQChfDURc_XCoxUfRek",
-    "display_name": "세븐일레븐 뉴강남센터점",
-    "category": "편의점",
+    "display_name": "7-Eleven New Gangnam Center Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -2904,8 +2904,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 817-11",
-    "short_address": "강남구 역삼동 817-11",
+    "address": "817-11 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "817-11 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.499821399999995,
       "lng": 127.02768389999999
@@ -2924,28 +2924,28 @@
     "google_maps_url": "https://maps.google.com/?cid=16808875362032481651",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca10061465b83:0xe9451f15a3c2f573!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김혜성",
+        "author": "Kim Hye-seong",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3달 전",
+        "relative_time": "3 months ago",
         "text": null
       }
     ],
@@ -2954,7 +2954,7 @@
   {
     "place_id": "ChIJe-srylmhfDURBvUFQYRqrtg",
     "display_name": "GS25",
-    "category": "편의점",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -2963,8 +2963,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로94길 9",
-    "short_address": "강남구 강남대로94길 9",
+    "address": "9, Gangnam-daero 94-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "9, Gangnam-daero 94-gil, Gangnam-gu",
     "location": {
       "lat": 37.4994525,
       "lng": 127.02810799999999
@@ -2983,18 +2983,18 @@
     "google_maps_url": "https://maps.google.com/?cid=15613534074399225094",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca159ca2beb7b:0xd8ae6a844105f506!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3004,8 +3004,8 @@
         "author": "Haim Jung",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "매장이 꽤 넓어 쾌적한 편이지만 서비스 면에서 바로 근처에 있는 CU와 비교된다. 취식대가 있지만 앉을 수 있는 테이블은 없고, 보통 취식대에 냅킨이 있는 경우가 대다수인데 없어서 아쉬웠다."
+        "relative_time": "3 years ago",
+        "text": "The store is quite spacious and comfortable, but in terms of service, it is compared to CU right nearby. There is a dining table, but there are no tables to sit on. Usually, there are napkins at the dining table, but it was disappointing that there were none."
       }
     ],
     "photos": [
@@ -3016,8 +3016,8 @@
   },
   {
     "place_id": "ChIJmWzJrFmhfDURgefOiXGIC78",
-    "display_name": "이마트24금성점",
-    "category": "편의점",
+    "display_name": "E-Mart 24 Geumseong Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3026,8 +3026,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 816-1 번지 역삼빌딩 지상 1층",
-    "short_address": "강남구 역삼동 816-1 번지 역삼빌딩 지상 1층",
+    "address": "1st floor, Yeoksam Building, 816-1 Yeoksam-dong, Gangnam-gu, Seoul, Korea",
+    "short_address": "1st floor, Yeoksam Building, 816-1 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5000904,
       "lng": 127.0270482
@@ -3048,8 +3048,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3059,8 +3059,8 @@
   },
   {
     "place_id": "ChIJ_SGJSLOhfDURT8QrmnLrEeI",
-    "display_name": "이마트24 R강남역삼점",
-    "category": "편의점",
+    "display_name": "E-Mart 24 R Gangnam Station 3 Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3069,8 +3069,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 815-4",
-    "short_address": "강남구 역삼동 815-4",
+    "address": "815-4 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "815-4 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5005883,
       "lng": 127.02712899999999
@@ -3089,36 +3089,36 @@
     "google_maps_url": "https://maps.google.com/?cid=16290060204621153359",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1b3488921fd:0xe211eb729a2bc44f!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "창민",
+        "author": "changmin",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "식사하기 좋은 곳"
+        "relative_time": "3 years ago",
+        "text": "great place to eat"
       },
       {
         "author": "Stein Gunther",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "편의점 🏪"
+        "relative_time": "3 years ago",
+        "text": "Convenience store 🏪"
       }
     ],
     "photos": [
@@ -3128,8 +3128,8 @@
   },
   {
     "place_id": "ChIJvUWwalihfDURl7gIlhP05Nc",
-    "display_name": "GS25 강남시티힐점",
-    "category": "편의점",
+    "display_name": "GS25 Gangnam City Hill Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3138,8 +3138,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 620-9번지 지하1층 시티힐빌딩 강남구 서울특별시 KR",
-    "short_address": "역삼동 620-9번지 지하1층 시티힐빌딩 강남구 서울특별시 KR",
+    "address": "City Hill Building, B1, 620-9 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "620-9 Yeoksam-dong, B1 City Hill Building, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.5009906,
       "lng": 127.02792210000001
@@ -3160,8 +3160,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3171,8 +3171,8 @@
   },
   {
     "place_id": "ChIJs1CiKVihfDUR639xJPNmdGU",
-    "display_name": "CU 역삼강남점",
-    "category": "편의점",
+    "display_name": "CU Yeoksam Gangnam Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3181,7 +3181,7 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.4997106,
@@ -3201,18 +3201,18 @@
     "google_maps_url": "https://maps.google.com/?cid=7310581289603661803",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15829a250b3:0x657466f324717feb!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3222,29 +3222,29 @@
         "author": "Haim Jung",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "점주님으로 보이시는 남자분 정말 너무 열심히 사시고 친절하시고 뭐든지 최선을 다하시는 모습 정말 멋져요. 근처에 학원이 많아서 점심시간대에 손님도 많고 조리대, 쓰레기통 근처가 쉽게 더러워지는데 카운터에 손님 잠깐이라도 없으면 바로 조리대랑 테이블 닦고 손님들이 쓰레기 버리기 편하도록 꾹꾹 눌러주시고 손님 오고갈 때도 한분한분께 정성어린 인사까지..정말 존경스럽습니다. 학원 다니면서 몇 번 방문했는데 청결도와 서비스가 너무 좋아서 한번도 찝찝하거나 불쾌했던 경험이 없어요. 앞으로 더 잘됐으면 좋겠는 곳."
+        "relative_time": "3 years ago",
+        "text": "The man who appears to be the store owner is really hard-working, kind, and does his best in everything he does. It's really cool. There are many academies nearby, so there are a lot of customers during lunch hours, and the countertops and trash cans get dirty easily. If there are no customers at the counter even for a moment, they immediately wipe the countertops and tables, press down to make it easier for customers to throw away trash, and even greet each and every customer with sincerity when they come and go. I really respect them. I visited a few times while attending the academy, and the cleanliness and service were so good that I never had an uncomfortable or unpleasant experience. A place I hope will get better in the future."
       },
       {
         "author": "juuhee kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "자주 이용하는곳인데, 서비스도 좋고 편리해요!!"
+        "relative_time": "4 months ago",
+        "text": "I use this place often, and the service is good and convenient!!"
       },
       {
-        "author": "치킨롤리팝",
+        "author": "Chicken Lollipop",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "진짜진짜 친절하십니다 점주님이신가.. 매번 감사합니다."
+        "relative_time": "5 years ago",
+        "text": "The store owner is really, really kind. Thank you every time."
       },
       {
         "author": "刘丹",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "4달 전",
-        "text": "정말 끔찍한 경험이었어요. 처음 체크아웃했을 때, 그리고 두 번째 체크아웃할 때도 바가지 요금을 냈어요. 호텔에 돌아와서 받은 잔돈이 잘못되었다는 걸 깨닫고 바로 편의점으로 돌아가 계산원에게 잔돈이 부족했다고 말했어요. 계산원은 4만 원을 돌려줬어요. 💢 제대로 된 설명도 안 해줬어요. 문제는 해결되었지만, 아직도 너무 화가 나네요."
+        "relative_time": "4 months ago",
+        "text": "It was a truly horrible experience. I was overcharged the first time I checked out, and also the second time. When I got back to the hotel and realized that the change I had received was wrong, I immediately went back to the convenience store and told the cashier that I didn't have enough change. The cashier returned 40,000 won. 💢 They didn’t even give me a proper explanation. The problem has been resolved, but I'm still very angry."
       }
     ],
     "photos": [
@@ -3259,8 +3259,8 @@
   },
   {
     "place_id": "ChIJf0nhWAChfDURGATb3O0weiE",
-    "display_name": "세븐일레븐 강남스퀘어점",
-    "category": "편의점",
+    "display_name": "7-Eleven Gangnam Square Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3269,8 +3269,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로1길 10",
-    "short_address": "강남구 테헤란로1길 10",
+    "address": "10 Teheran-ro 1-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "10 Teheran-ro 1-gil, Gangnam-gu",
     "location": {
       "lat": 37.4989431,
       "lng": 127.02816899999999
@@ -3289,18 +3289,18 @@
     "google_maps_url": "https://maps.google.com/?cid=2412294348581045272",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca10058e1497f:0x217a30eddcdb0418!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3310,16 +3310,16 @@
   },
   {
     "place_id": "ChIJTSArvFmhfDURwoJN7FIunSc",
-    "display_name": "동양디앤아이(주)",
-    "category": "전자제품 판매점",
+    "display_name": "Dongyang D&I Co., Ltd.",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 820-9번지 17층",
-    "short_address": "강남구 역삼동 820-9번지 17층",
+    "address": "17th floor, 820-9 Yeoksam-dong, Gangnam-gu, Seoul, Korea",
+    "short_address": "17th floor, 820-9 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4989383,
       "lng": 127.02762349999999
@@ -3347,8 +3347,8 @@
   },
   {
     "place_id": "ChIJhRsZwFmhfDURSToAKKOidFg",
-    "display_name": "이마트24강남역점",
-    "category": "편의점",
+    "display_name": "E-Mart 24 Gangnam Station Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3357,8 +3357,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 KR 서울특별시 강남구 역삼동 821번지 F동 2호",
-    "short_address": "KR 서울특별시 강남구 역삼동 821번지 F동 2호",
+    "address": "Seoul, Republic of Korea KR #2, Building F, 821 Yeoksam-dong, Gangnam-gu, Seoul",
+    "short_address": "KR #2, Building F, 821 Yeoksam-dong, Gangnam-gu, Seoul",
     "location": {
       "lat": 37.4986253,
       "lng": 127.02802849999999
@@ -3377,18 +3377,18 @@
     "google_maps_url": "https://maps.google.com/?cid=6373898194270566985",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca159c0191b85:0x5874a2a328003a49!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3398,16 +3398,16 @@
   },
   {
     "place_id": "ChIJhRsZwFmhfDUR9GfpNnqU9mE",
-    "display_name": "텐피엠",
-    "category": "선물 가게",
+    "display_name": "10PM",
+    "category": "gift shop",
     "types": [
       "gift_shop",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 지하쇼핑센터 E 동 18 19호 KR 서울특별시 강남구 역삼동 821번지",
-    "short_address": "지하쇼핑센터 E 동 KR 서울특별시 강남구 역삼동 821번지 18 19호",
+    "address": "#18, #19, Building E, Underground Shopping Center, Seoul, Republic of Korea KR 821 Yeoksam-dong, Gangnam-gu, Seoul",
+    "short_address": "Basement Shopping Center Building E KR 18 #19, 821 Yeoksam-dong, Gangnam-gu, Seoul",
     "location": {
       "lat": 37.4986253,
       "lng": 127.02802849999999
@@ -3428,8 +3428,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3438,16 +3438,16 @@
   },
   {
     "place_id": "ChIJX_G5OpuhfDURWoeUUYLNyFE",
-    "display_name": "삼성 강남",
-    "category": "전자제품 판매점",
+    "display_name": "samsung gangnam",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 강남대로 411",
-    "short_address": "서초구 강남대로 411",
+    "address": "411 Gangnam-daero, Seocho-gu, Seoul, South Korea",
+    "short_address": "411 Gangnam-daero, Seocho-gu",
     "location": {
       "lat": 37.4991974,
       "lng": 127.02651649999999
@@ -3457,7 +3457,7 @@
     "rating_count": 290,
     "price_level": null,
     "price_range": null,
-    "editorial_summary": "매장 내에서 스마트폰과 스마트시계 등을 직접 사용해볼 수 있는 소매점입니다.",
+    "editorial_summary": "This is a retail store where you can try out smartphones and smart watches within the store.",
     "generative_summary": null,
     "review_summary": null,
     "phone": "02-3482-8388",
@@ -3466,59 +3466,59 @@
     "google_maps_url": "https://maps.google.com/?cid=5893186072012425050",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca19b3ab9f15f:0x51c8cd825194875a!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 8:00",
-      "화요일: 오전 10:00 ~ 오후 8:00",
-      "수요일: 오전 10:00 ~ 오후 8:00",
-      "목요일: 오전 10:00 ~ 오후 8:00",
-      "금요일: 오전 10:00 ~ 오후 8:00",
-      "토요일: 오전 10:00 ~ 오후 8:00",
-      "일요일: 오전 10:00 ~ 오후 8:00"
+      "Monday: 10:00 AM - 8:00 PM",
+      "Tuesday: 10:00 AM - 8:00 PM",
+      "Wednesday: 10:00 AM - 8:00 PM",
+      "Thursday: 10:00 AM - 8:00 PM",
+      "Friday: 10:00 AM - 8:00 PM",
+      "Saturday: 10:00 AM - 8:00 PM",
+      "Sunday: 10:00 AM - 8:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
       {
-        "author": "이지영",
+        "author": "Jiyoung Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "노트북 구입하고 싶어서 방문.\n원하는 제품이 없었지만 다른지점으로 안내 해 주셨어요. 너무 친절하셔서 기분좋은 방문었습다"
+        "relative_time": "5 months ago",
+        "text": "I visited because I wanted to buy a laptop.\nThey didn't have the product I wanted, but they directed me to another branch. You were so kind and it was a pleasant visit."
       },
       {
         "author": "Kyuna Min",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
-        "text": "어제 처음으로 강남 삼성 스토어를 방문했습니다. 사람이 정말 많아 다소 정신이 없었지만, 그만큼 분주한 상황에서도 스태프분들이 매우 친절하고 꼼꼼하게 안내해 주셔서 인상 깊었습니다.\n\n특히 새 휴대폰을 찾고 있었는데, 원하는 모델과 필요한 성능 중 어떤 것을 선택해야 할지 고민이 많았던 저에게 상황을 정확히 파악해 주시고, 본인의 경험을 바탕으로 정말 유용한 정보를 알려주셔서 큰 도움이 되었습니다. 상품을 억지로 권하는 것이 아니라 제게 가장 잘 맞는 모델을 편안하게 고를 수 있도록 이끌어 주셔서 감사했습니다.\n\n결정이 쉽지 않아 시간이 꽤 걸렸는데도, 끝까지 미소를 잃지 않고 차분하게 기다려 주시고 인내심 있게 도와주신 스태프분 덕분에 기분 좋게 구매를 마칠 수 있었습니다. 새 휴대폰 구매부터 데이터 쉐어, 기존 휴대폰 판매까지 모두 꼼꼼히 도와주셔서 정말 든든했습니다.\n\n또한 삼성스토어에서 진행된 이벤트 참여중 한국어가 서툰 아이들을 위해 영어로도 친절히 설명해 주시고, 창의적인 프로그램 덕분에 가족 모두 즐거운 추억을 만들 수 있었습니다. 새 휴대폰을 손에 쥔 아들도 매우 만족해했고, 다양한 사은품과 따뜻한 응대로 더욱 행복한 쇼핑이 되었습니다.\n\n모든 스탭프 분들이 친절하셨지만, 특별히 가장 세심하고 친절하게 도와주신 전유진 스태프님을 꼭 칭찬해 드리고 싶습니다. 덕분에 즐겁고 만족스러운 쇼핑이었습니다!"
+        "relative_time": "8 months ago",
+        "text": "I visited the Gangnam Samsung Store for the first time yesterday. There were so many people that it was a bit hectic, but I was impressed by the staff's very friendly and thorough guidance even in such a busy situation.\n\nIn particular, I was looking for a new cell phone, and I had a lot of trouble deciding between the model I wanted and the performance I needed. You were very helpful by accurately understanding the situation and providing really useful information based on your own experience. I was grateful that they did not force me to recommend a product, but rather guided me to comfortably choose the model that best suited me.\n\nAlthough it took quite some time as the decision was not easy, I was able to complete the purchase in a good mood thanks to the staff who waited calmly and patiently helped me without losing a smile until the end. I was very reassured as they thoroughly helped me with everything from purchasing a new phone to sharing data and selling my existing phone.\n\nAdditionally, while participating in an event held at the Samsung Store, explanations were kindly given in English for children who were not good at Korean, and thanks to the creative program, the whole family was able to make fun memories. My son was very satisfied with his new cell phone, and the various free gifts and warm hospitality made his shopping experience even more enjoyable.\n\nAll the staff were very kind, but I would like to especially praise staff member Jeon Yu-jin, who was the most attentive and kind in helping me. Thanks to you, it was a fun and satisfying shopping experience!"
       },
       {
-        "author": "Jae-shin Byun (쭈삼진율)",
+        "author": "Jae-shin Byun (Jju strikeout rate)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2달 전",
-        "text": "상품권 준다해서 먼거리 마다않고 직접 수령 갔는데요 친절한거같으면서도 뭔가 좀... 케이스 재고도없고 s25플러스가 나온지 1년됐다지만 그다음 모델이(26) 없는 상황에서는 최신 모델인데 나온지 1년이나돼 케이스가 별로없다느니.. 이렇게 안내를하면 새걸 사로온 입장에서 좀 그렇네요.. 나온지오래됐으면 보호필름이라도 싸게팔면좋은데 30프로 할인쿠폰 먹여도 15000원대..."
+        "relative_time": "2 months ago",
+        "text": "They said they would give me a gift certificate, so I didn't hesitate to go the distance to pick it up in person. It seemed friendly, but it was a bit... They said there were no cases in stock and it's been a year since the S25 Plus came out, but in a situation where there is no next model (26), it's the latest model, but it's been a year since it came out, so I didn't have many cases... It's a bit unfair to say that they don't have many cases because it's been a year since they came out. Around 15,000 won..."
       },
       {
         "author": "J Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "갤럭시 제품을 다양하게 체험해볼 수 있어 좋음. 평일 낮에 방문하면 한산하고 상담도 오래 받을 수 있어 좋음. 다만 층별 공간이 다소 좁아 계단이나 엘리베이터 이용해 이동해야 하는 것이 불편. 3층 카페 및 이벤트 공간 있어서 좋으나 스탠드식이라 등받이 없이 앉아있기 힘든 사람은 오래 앉아있기 힘들고 카페 공간으로는 조금 어수선한 느낌. 전망은 좋은 편이지만 3층이라 강남대로 보는 뷰 정도이고 2층 전시 겸 체험공간은 주로 갤럭시 제품 위주. 액세서리 구매하기 좋음."
+        "relative_time": "2 years ago",
+        "text": "It's nice to be able to experience a variety of Galaxy products. It is good to visit during the day on a weekday as it is quiet and you can receive consultation for a long time. However, the space on each floor is somewhat narrow, so it is inconvenient to have to use the stairs or elevator to get around. It's nice to have a cafe and event space on the 3rd floor, but since it's a stand-up type, it's hard for people who can't sit without a backrest to sit for long, and it feels a little cluttered as a cafe space. The view is good, but since it is on the 3rd floor, the view is just like Gangnam Street, and the exhibition and experience space on the 2nd floor is mainly focused on Galaxy products. Good for purchasing accessories."
       },
       {
         "author": "B.S Choi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "삼성전자 핸드폰, 모바일 액세서리, 노트북 등이 신제품을 경험할 수 있는 곳입니다.\n3층에서는 신제품을 잘 활용할 수 있도록 다양한 제품페험교육 프로그램이 무료로 진행됩니다."
+        "relative_time": "1 year ago",
+        "text": "This is a place where you can experience new products from Samsung Electronics, including mobile phones, mobile accessories, and laptops.\nOn the 3rd floor, various product experience training programs are offered free of charge to help you make good use of new products."
       }
     ],
     "photos": [
@@ -3536,8 +3536,8 @@
   },
   {
     "place_id": "ChIJGaZFeFehfDUR8HKqLo7WHK4",
-    "display_name": "GS25 강남타운점",
-    "category": "편의점",
+    "display_name": "GS25 Gangnam Town Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3546,8 +3546,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동 테헤란로 115",
-    "short_address": "강남구 역삼1동 테헤란로 115",
+    "address": "115 Teheran-ro, Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "115 Teheran-ro, Yeoksam 1-dong, Gangnam-gu",
     "location": {
       "lat": 37.4989317,
       "lng": 127.0298577
@@ -3566,36 +3566,36 @@
     "google_maps_url": "https://maps.google.com/?cid=12546138568103981808",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1577845a619:0xae1cd68e2eaa72f0!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "창민",
+        "author": "changmin",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "갓성비의 시대"
+        "relative_time": "3 years ago",
+        "text": "The era of Godseongbi"
       },
       {
-        "author": "박정환",
+        "author": "Park Jeong-hwan",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9년 전",
-        "text": "음식 맛나요"
+        "relative_time": "9 years ago",
+        "text": "Is the food delicious?"
       }
     ],
     "photos": [
@@ -3604,8 +3604,8 @@
   },
   {
     "place_id": "ChIJbfD6cFmhfDURm01dDzT0fLY",
-    "display_name": "GS25 강남프리미엄점",
-    "category": "편의점",
+    "display_name": "GS25 Gangnam Premium Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3614,8 +3614,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 서초대로77길 13",
-    "short_address": "서초구 서초대로77길 13",
+    "address": "13 Seocho-daero 77-gil, Seocho-gu, Seoul, South Korea",
+    "short_address": "13 Seocho-daero 77-gil, Seocho-gu",
     "location": {
       "lat": 37.498825,
       "lng": 127.02614489999999
@@ -3634,49 +3634,49 @@
     "google_maps_url": "https://maps.google.com/?cid=13149653516448255387",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15970faf06d:0xb67cf4340f5d4d9b!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김승현 (SeuKim)",
+        "author": "Seunghyeon Kim (SeuKim)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "취식공간도 충분하고 매장도 넓고\n좋네요"
+        "relative_time": "2 years ago",
+        "text": "There is ample space for eating and the store is spacious.\nIt's good"
       },
       {
-        "author": "두리번두리번 (help.doc)",
+        "author": "Look around, look around (help.doc)",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "카페처럼 편한 자리가 다수 있습니다."
+        "relative_time": "5 years ago",
+        "text": "There are many comfortable seats like cafes."
       },
       {
         "author": "Muckomacs",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "일하시는 분들이 정말 친절합니다!"
+        "relative_time": "6 years ago",
+        "text": "The people working are really friendly!"
       },
       {
         "author": "Melon Rabbit",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -3695,8 +3695,8 @@
   },
   {
     "place_id": "ChIJweIqFSihfDURsrI_SSFdswU",
-    "display_name": "세븐일레븐 강남광장점",
-    "category": "편의점",
+    "display_name": "7-Eleven Gangnam Square Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3705,8 +3705,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 서초대로77길 9",
-    "short_address": "서초구 서초대로77길 9",
+    "address": "9, Seocho-daero 77-gil, Seocho-gu, Seoul, South Korea",
+    "short_address": "9, Seocho-daero 77-gil, Seocho-gu",
     "location": {
       "lat": 37.4985508,
       "lng": 127.02619960000001
@@ -3727,8 +3727,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3738,16 +3738,16 @@
   },
   {
     "place_id": "ChIJaaGTVAChfDUR6g8htBVAi-Y",
-    "display_name": "미니소 강남점",
-    "category": "선물 가게",
+    "display_name": "Miniso Gangnam Branch",
+    "category": "gift shop",
     "types": [
       "gift_shop",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 강남대로 429",
-    "short_address": "서초구 강남대로 429",
+    "address": "429 Gangnam-daero, Seocho-gu, Seoul, South Korea",
+    "short_address": "429 Gangnam-daero, Seocho-gu",
     "location": {
       "lat": 37.5008693,
       "lng": 127.0256886
@@ -3766,35 +3766,35 @@
     "google_maps_url": "https://maps.google.com/?cid=16612442112446762986",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1005493a169:0xe68b4015b4210fea!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 10:00",
-      "화요일: 오전 10:00 ~ 오후 10:00",
-      "수요일: 오전 10:00 ~ 오후 10:00",
-      "목요일: 오전 10:00 ~ 오후 10:00",
-      "금요일: 오전 10:00 ~ 오후 10:00",
-      "토요일: 오전 10:00 ~ 오후 10:00",
-      "일요일: 오전 10:00 ~ 오후 10:00"
+      "Monday: 10:00 AM - 10:00 PM",
+      "Tuesday: 10:00 AM - 10:00 PM",
+      "Wednesday: 10:00 AM - 10:00 PM",
+      "Thursday: 10:00 AM - 10:00 PM",
+      "Friday: 10:00 AM - 10:00 PM",
+      "Saturday: 10:00 AM - 10:00 PM",
+      "Sunday: 10:00 AM - 10:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "꽉꽉오리",
+        "author": "duck tightly",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1달 전",
+        "relative_time": "1 month ago",
         "text": "Go to daiso"
       },
       {
-        "author": "권준혁",
+        "author": "Junhyuk Kwon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2주 전",
+        "relative_time": "2 weeks ago",
         "text": null
       }
     ],
@@ -3808,16 +3808,16 @@
   },
   {
     "place_id": "ChIJ_ciMrzSjfDURiyp32TW_yrs",
-    "display_name": "와콤스토어 강남점",
-    "category": "전자제품 판매점",
+    "display_name": "Wacom Store Gangnam Branch",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로102길 14 3층",
-    "short_address": "강남구 강남대로102길 14 3층",
+    "address": "3rd floor, 14 Gangnam-daero 102-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "3rd floor, 14 Gangnam-daero 102-gil, Gangnam-gu",
     "location": {
       "lat": 37.5018909,
       "lng": 127.02701399999998
@@ -3836,18 +3836,18 @@
     "google_maps_url": "https://maps.google.com/?cid=13531838268390713995",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca334af8cc8fd:0xbbcabf35d9772a8b!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 12:00~9:00",
-      "화요일: 오후 12:00~9:00",
-      "수요일: 오후 12:00~9:00",
-      "목요일: 오후 12:00~9:00",
-      "금요일: 오후 12:00~9:00",
-      "토요일: 오후 12:00~9:00",
-      "일요일: 휴무일"
+      "Monday: 12:00-9:00 PM",
+      "Tuesday: 12:00-9:00 PM",
+      "Wednesday: 12:00-9:00 PM",
+      "Thursday: 12:00-9:00 PM",
+      "Friday: 12:00-9:00 PM",
+      "Saturday: 12:00-9:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3857,22 +3857,22 @@
         "author": "Keehoon Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "학원 다니면서 와콤 제품이 필요했는데, 마침 강남에 있어서 얼마나 편했는지 모르겠습니다! 제품들을 전부 체험해 볼 수도 있어서 인터넷으로만 멀뚱멀뚱 고민만 하면서 제품 좋기를 바라면서 주문하는 것 보다 훨씬 나은 것 같아요!"
+        "relative_time": "3 years ago",
+        "text": "I needed a Wacom product while attending an academy, and it happened to be located in Gangnam, so I can't tell you how convenient it was! I think it's much better because you can try out all the products, rather than just ordering them online while wondering about them and hoping they'll be good!"
       },
       {
         "author": "Irene “MJ” Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "와콤의 타블렛을 체험하고 구입할 수 있는 장소. 수업도 이뤄지는 것으로 보임."
+        "relative_time": "4 years ago",
+        "text": "A place where you can experience and purchase Wacom tablets. Classes also appear to be taking place."
       },
       {
         "author": "Kwin 7856 Richard",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "단체 여행객과 커플 모두에게 좋은 분위기이며, 넓고 와콤 하드웨어 매장도 있습니다."
+        "relative_time": "1 year ago",
+        "text": "It has a great atmosphere for both groups and couples, is spacious, and even has a Wacom hardware store."
       }
     ],
     "photos": [
@@ -3886,7 +3886,7 @@
   {
     "place_id": "ChIJERc3llehfDURIRdjIo2JkBw",
     "display_name": "CU",
-    "category": "편의점",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3895,7 +3895,7 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.4995801,
@@ -3915,18 +3915,18 @@
     "google_maps_url": "https://maps.google.com/?cid=2058296268968630049",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15796371711:0x1c90898d22631721!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3936,21 +3936,21 @@
         "author": "Jung Woo Shim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "규모가 큰 편의점입니다\n편리성과 할인제품이 많아요\n주변에 1인 가구가 많아\n장사가 잘되는 곳 입니다\n서울 매출 10위안에 드는 곳"
+        "relative_time": "4 years ago",
+        "text": "It is a large convenience store.\nThere are many convenient and discounted products.\nThere are many single-person households around.\nThis is a place where business is good.\nPlaces in the top 10 sales in Seoul"
       },
       {
         "author": "Y",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "직영점인가? 물건도 엄청많고 직원도 친절하다. 와인코너만 이정도ㄷㄷ"
+        "relative_time": "5 years ago",
+        "text": "Is it a directly managed store? There are a lot of items and the staff is friendly. The wine corner is like this."
       },
       {
-        "author": "장웅",
+        "author": "Jang Woong",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       }
     ],
@@ -3960,8 +3960,8 @@
   },
   {
     "place_id": "ChIJ94cC1FehfDURUsyttyfaPJ8",
-    "display_name": "이마트24 역삼승리점",
-    "category": "편의점",
+    "display_name": "E-Mart 24 Yeoksam Seungri Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -3970,8 +3970,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 636-22",
-    "short_address": "강남구 역삼동 636-22",
+    "address": "636-22 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "636-22 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5004833,
       "lng": 127.0316495
@@ -3990,18 +3990,18 @@
     "google_maps_url": "https://maps.google.com/?cid=11474285814753381458",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca157d40287f7:0x9f3cda27b7adcc52!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4011,16 +4011,16 @@
   },
   {
     "place_id": "ChIJXxoDiP2jfDUR-qUn4sUDGYw",
-    "display_name": "아바",
-    "category": "전자제품 판매점",
+    "display_name": "Abba",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동 테헤란로13길 8-3",
-    "short_address": "강남구 역삼1동 테헤란로13길 8-3",
+    "address": "8-3, Teheran-ro 13-gil, Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "8-3 Teheran-ro 13-gil, Yeoksam 1-dong, Gangnam-gu",
     "location": {
       "lat": 37.500451999999996,
       "lng": 127.0326457
@@ -4048,8 +4048,8 @@
   },
   {
     "place_id": "ChIJPxg0gf2jfDURZ9OyGcLNV_Y",
-    "display_name": "GS25 역삼덕원점",
-    "category": "편의점",
+    "display_name": "GS25 Yeoksam Deokwon Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4058,8 +4058,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 637-19",
-    "short_address": "강남구 역삼동 637-19",
+    "address": "637-19 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "637-19 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5007105,
       "lng": 127.03229940000001
@@ -4078,18 +4078,18 @@
     "google_maps_url": "https://maps.google.com/?cid=17750882689842598759",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fd8134183f:0xf657cdc219b2d367!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4099,8 +4099,8 @@
   },
   {
     "place_id": "ChIJqZ7QuFehfDUR6jM5Qw5AZxQ",
-    "display_name": "세븐일레븐 강남IBC점",
-    "category": "편의점",
+    "display_name": "7-Eleven Gangnam IBC Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4109,8 +4109,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로7길 8",
-    "short_address": "강남구 테헤란로7길 8",
+    "address": "8 Teheran-ro 7-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "8 Teheran-ro 7-gil, Gangnam-gu",
     "location": {
       "lat": 37.4997004,
       "lng": 127.03101679999999
@@ -4129,18 +4129,18 @@
     "google_maps_url": "https://maps.google.com/?cid=1470214233361298410",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca157b8d09ea9:0x1467400e433933ea!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4150,16 +4150,16 @@
   },
   {
     "place_id": "ChIJFb0fi_2jfDURS91RP02PDQc",
-    "display_name": "(유)제이씨라인",
-    "category": "전자제품 판매점",
+    "display_name": "JC Line Co., Ltd.",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 647-11번지 320호 강남구 서울특별시 KR",
-    "short_address": "역삼동 647-11번지 320호 강남구 서울특별시 KR",
+    "address": "#320, 647-11 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "#320, 647-11 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.5003178,
       "lng": 127.033235
@@ -4180,8 +4180,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4190,8 +4190,8 @@
   },
   {
     "place_id": "ChIJm2B1I8KhfDURauddxSIRjEY",
-    "display_name": "CU 역삼시티점",
-    "category": "편의점",
+    "display_name": "CU Yeoksam City Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4200,8 +4200,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로7길 7",
-    "short_address": "강남구 테헤란로7길 7",
+    "address": "7 Teheran-ro 7-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "7 Teheran-ro 7-gil, Gangnam-gu",
     "location": {
       "lat": 37.4993395,
       "lng": 127.03069699999999
@@ -4220,18 +4220,18 @@
     "google_maps_url": "https://maps.google.com/?cid=5083456920432273258",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1c22375609b:0x468c1122c55de76a!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4243,8 +4243,8 @@
   },
   {
     "place_id": "ChIJdenXuXehfDURYhxTOVLIcNo",
-    "display_name": "세븐일레븐 역삼은탑점",
-    "category": "편의점",
+    "display_name": "7-Eleven Yeoksam Euntop Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4253,8 +4253,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동 735-10",
-    "short_address": "강남구 역삼1동 735-10",
+    "address": "735-10 Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "735-10 Yeoksam 1-dong, Gangnam-gu",
     "location": {
       "lat": 37.4990525,
       "lng": 127.03320719999999
@@ -4275,8 +4275,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4286,15 +4286,15 @@
         "author": "So Hy",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "8달 전",
-        "text": "아주머니 진짜 불친절하시고 손님 대하는 태도가 이게 맞나 싶습니다. 응대하는 내내 반지 만지작 거리시면서 다른곳 쳐다보시고 정말 응대의 기본조차 되어있지 않은 가게네요."
+        "relative_time": "8 months ago",
+        "text": "The lady is really unfriendly and I wonder if this is her attitude towards customers. The entire time they were responding, they were fiddling with their rings and looking away. It was a store that didn't even have the basics of customer service."
       },
       {
-        "author": "이준호",
+        "author": "Junho Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "규모에 비해 알차고 아주머니(사장님?)가 정이 있고 친절한 분이심. 다만 비상식적인 언행을 하는 손님에겐 매섭고 단호하게 당장 나가라고 하시기도 함(우연히 봤어요)."
+        "relative_time": "2 years ago",
+        "text": "It's spacious compared to its size, and the lady (the owner?) is a friendly and friendly person. However, they also harshly and firmly tell customers who use unreasonable words and actions to leave immediately (I saw this by chance)."
       }
     ],
     "photos": [
@@ -4303,8 +4303,8 @@
   },
   {
     "place_id": "ChIJa0SOEFahfDURZUQySL0OtgY",
-    "display_name": "NC대학로점",
-    "category": "편의점",
+    "display_name": "NC Daehakro Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4313,8 +4313,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 번지 포스틸타워 735-3 17층",
-    "short_address": "강남구 역삼동 번지 포스틸타워 735-3 17층",
+    "address": "17th floor, Postil Tower 735-3, Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "17th floor, Posteel Tower 735-3, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4993385,
       "lng": 127.0337927
@@ -4335,8 +4335,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4346,16 +4346,16 @@
   },
   {
     "place_id": "ChIJn1QC7P2jfDURoancbdTvDuU",
-    "display_name": "듬북담북",
-    "category": "서점",
+    "display_name": "Dambuk dambuk",
+    "category": "bookstore",
     "types": [
       "book_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 645-19번지",
-    "short_address": "강남구 역삼동 645-19번지",
+    "address": "645-19 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "645-19 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5008556,
       "lng": 127.0336499
@@ -4376,8 +4376,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4386,8 +4386,8 @@
   },
   {
     "place_id": "ChIJu5947v2jfDUR-kSSl-Zj9BA",
-    "display_name": "세븐일레븐 역삼10호점",
-    "category": "편의점",
+    "display_name": "7-Eleven Yeoksam 10th branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4396,8 +4396,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동 645-21",
-    "short_address": "강남구 역삼1동 645-21",
+    "address": "645-21 Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "645-21, Yeoksam 1-dong, Gangnam-gu",
     "location": {
       "lat": 37.500738299999995,
       "lng": 127.03374369999999
@@ -4405,7 +4405,7 @@
     "rating": 3,
     "rating_stars": "★★★☆☆ 3",
     "rating_count": 1,
-    "price_level": "저렴 ($)",
+    "price_level": "Cheap ($)",
     "price_range": null,
     "editorial_summary": "Pit stop for snacks, drinks & daily essentials",
     "generative_summary": null,
@@ -4416,37 +4416,37 @@
     "google_maps_url": "https://maps.google.com/?cid=1221711240960820474",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fdee789fbb:0x10f463e6979244fa!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "재빈",
+        "author": "Jaebin",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "10년 전",
-        "text": "이 근처 편의점 중에서 물건이 많은 편에 속함 주변에 1인 가구가 많아서 그런지 작은 단위로 바나나 같은걸 팜"
+        "relative_time": "10 years ago",
+        "text": "Among the convenience stores around here, it has a large selection of items. Perhaps because there are many single-person households around here, things like bananas are sold in small units."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJGcrT6_2jfDURXIBxsrXclYI",
-    "display_name": "킹마트 역삼점",
-    "category": "편의점",
+    "display_name": "King Mart Yeoksam Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4455,8 +4455,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 645-18번지 1층 강남구 서울특별시 KR",
-    "short_address": "역삼동 645-18번지 1층 강남구 서울특별시 KR",
+    "address": "1st floor, 645-18 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "1st floor, 645-18 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.5010194,
       "lng": 127.03362969999999
@@ -4477,8 +4477,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4488,8 +4488,8 @@
   },
   {
     "place_id": "ChIJpwZbalahfDUR9XjpfAp5C4s",
-    "display_name": "CU 역삼유토빌점",
-    "category": "편의점",
+    "display_name": "CU Yeoksam Utoville Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4498,8 +4498,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 논현로87길 41",
-    "short_address": "강남구 논현로87길 41",
+    "address": "41 Nonhyeon-ro 87-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "41 Nonhyeon-ro 87-gil, Gangnam-gu",
     "location": {
       "lat": 37.4987941,
       "lng": 127.03349379999999
@@ -4518,37 +4518,37 @@
     "google_maps_url": "https://maps.google.com/?cid=10019234881968109813",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1566a5b06a7:0x8b0b790a7ce978f5!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "캐논데일 F300",
+        "author": "Cannondale F300",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "다양한 제품이 준비되어 있습니다"
+        "relative_time": "5 years ago",
+        "text": "A variety of products are available"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJsRkNwP2jfDURKokrZfQKLRU",
-    "display_name": "GS25 역삼베다니점",
-    "category": "편의점",
+    "display_name": "GS25 Yeoksam Bethany Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4557,8 +4557,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로19길 20",
-    "short_address": "강남구 테헤란로19길 20",
+    "address": "20 Teheran-ro 19-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "20 Teheran-ro 19-gil, Gangnam-gu",
     "location": {
       "lat": 37.501343399999996,
       "lng": 127.0333581
@@ -4577,18 +4577,18 @@
     "google_maps_url": "https://maps.google.com/?cid=1525887893534116138",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fdc00d19b1:0x152d0af4652b892a!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4598,8 +4598,8 @@
   },
   {
     "place_id": "ChIJHWevu_2jfDURRl4IT1uaKRE",
-    "display_name": "CU 역삼달샘점",
-    "category": "편의점",
+    "display_name": "CU Yeoksam Dalsaem Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4608,8 +4608,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로19길 29",
-    "short_address": "강남구 테헤란로19길 29",
+    "address": "29 Teheran-ro 19-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "29 Teheran-ro 19-gil, Gangnam-gu",
     "location": {
       "lat": 37.5018605,
       "lng": 127.0328481
@@ -4628,18 +4628,18 @@
     "google_maps_url": "https://maps.google.com/?cid=1236689289648561734",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fdbbaf671d:0x11299a5b4f085e46!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4651,8 +4651,8 @@
   },
   {
     "place_id": "ChIJEXMjeHGjfDURbuJ9y1S-XnM",
-    "display_name": "세븐일레븐 역삼피에스따점",
-    "category": "편의점",
+    "display_name": "7-Eleven Yeoksam PEST Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4661,8 +4661,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로19길 29",
-    "short_address": "강남구 테헤란로19길 29",
+    "address": "29 Teheran-ro 19-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "29 Teheran-ro 19-gil, Gangnam-gu",
     "location": {
       "lat": 37.50193720000001,
       "lng": 127.032878
@@ -4683,8 +4683,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4694,7 +4694,7 @@
         "author": "Lewis Hamilton",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -4702,8 +4702,8 @@
   },
   {
     "place_id": "ChIJ4epxDlahfDUR7z9Rnr1v30A",
-    "display_name": "씨유역삼포스틸점",
-    "category": "편의점",
+    "display_name": "Siyu Yeok Sampo Steel Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4712,8 +4712,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 735-32",
-    "short_address": "강남구 역삼동 735-32",
+    "address": "735-32 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "735-32 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4989584,
       "lng": 127.0342867
@@ -4732,18 +4732,18 @@
     "google_maps_url": "https://maps.google.com/?cid=4674577798429491183",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1560e71eae1:0x40df6fbd9e513fef!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4754,15 +4754,15 @@
   {
     "place_id": "ChIJQ5J9P4qjfDUR0YlmVIfKDWw",
     "display_name": "Huurhunbujo",
-    "category": "전자제품 판매점",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구",
-    "short_address": "강남구",
+    "address": "Gangnam-gu, Seoul, South Korea",
+    "short_address": "Gangnam-gu",
     "location": {
       "lat": 37.4997909,
       "lng": 127.03590709999999
@@ -4790,8 +4790,8 @@
   },
   {
     "place_id": "ChIJTTSlOf6jfDURtgdbiGyfqVs",
-    "display_name": "세븐일레븐역삼GFC점",
-    "category": "편의점",
+    "display_name": "7-Eleven Yeoksam GFC branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4800,8 +4800,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 737번지 B2층 강남파이낸스센터 강남구 서울특별시 KR",
-    "short_address": "역삼동 737번지 B2층 강남파이낸스센터 강남구 서울특별시 KR",
+    "address": "Gangnam Finance Center, B2F, 737 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "Gangnam Finance Center, 2nd Floor, 737 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.500143,
       "lng": 127.03639229999999
@@ -4822,8 +4822,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4833,16 +4833,16 @@
   },
   {
     "place_id": "ChIJTTSlOf6jfDURy7vMBfRQiiw",
-    "display_name": "(주)클리프테크놀러지스",
-    "category": "전자제품 판매점",
+    "display_name": "Cliff Technologies Co., Ltd.",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 737번지 41층",
-    "short_address": "강남구 역삼동 737번지 41층",
+    "address": "41st floor, 737 Yeoksam-dong, Gangnam-gu, Seoul, Korea",
+    "short_address": "41st floor, 737 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4999269,
       "lng": 127.03655260000001
@@ -4870,8 +4870,8 @@
   },
   {
     "place_id": "ChIJTTSlOf6jfDURR-VHc46dsK8",
-    "display_name": "제주스GFC몰점",
-    "category": "편의점",
+    "display_name": "Jejus GFC Mall Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -4880,8 +4880,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 지하2층 737번지 강남파이낸스센터",
-    "short_address": "강남구 역삼동 지하2층 737번지 강남파이낸스센터",
+    "address": "Gangnam Finance Center, 737 B2, Yeoksam-dong, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "Gangnam Finance Center, 737, Basement 2, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4999269,
       "lng": 127.03655260000001
@@ -4902,8 +4902,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4913,16 +4913,16 @@
   },
   {
     "place_id": "ChIJTTSlOf6jfDURzf80F-3guq4",
-    "display_name": "조반니(유)",
-    "category": "서점",
+    "display_name": "Giovanni (You)",
+    "category": "bookstore",
     "types": [
       "book_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 737번지 강남파이낸스센터 5층",
-    "short_address": "강남구 역삼동 737번지 강남파이낸스센터 5층",
+    "address": "5th floor, Gangnam Finance Center, 737 Yeoksam-dong, Gangnam-gu, Seoul, Korea",
+    "short_address": "5th floor, Gangnam Finance Center, 737 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4999269,
       "lng": 127.03655260000001
@@ -4943,8 +4943,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4953,16 +4953,16 @@
   },
   {
     "place_id": "ChIJTTSlOf6jfDURSmyuuSzEWW0",
-    "display_name": "노드롭그라만일렉트로닉씨스템스인터내셔날인크한국지",
-    "category": "전자제품 판매점",
+    "display_name": "Northrop Gramann Electronic Systems International Inc. Korea",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 737번지 21층 강남구 서울특별시 KR",
-    "short_address": "역삼동 737번지 21층 강남구 서울특별시 KR",
+    "address": "21st floor, 737 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "21st floor, 737 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.4999269,
       "lng": 127.03655260000001
@@ -4990,8 +4990,8 @@
   },
   {
     "place_id": "ChIJKfj5_y-jfDURi0HWlaWUAdA",
-    "display_name": "GS25 S역삼역점",
-    "category": "편의점",
+    "display_name": "GS25 S Yeoksam Station Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -5000,8 +5000,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로 지하 156 지하 2층",
-    "short_address": "강남구 테헤란로 지하 156 지하 2층",
+    "address": "2nd basement level, Basement 156, Teheran-ro, Gangnam-gu, Seoul, Korea",
+    "short_address": "2nd floor, Basement 156, Teheran-ro, Gangnam-gu",
     "location": {
       "lat": 37.50048650000001,
       "lng": 127.03593
@@ -5022,8 +5022,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5033,8 +5033,8 @@
   },
   {
     "place_id": "ChIJL7rdH_6jfDURgUVRW6aRfI0",
-    "display_name": "채우다역삼DV점",
-    "category": "편의점",
+    "display_name": "Chaeuda Yeoksam DV Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -5043,8 +5043,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 번지 지하 736-58 대세빌딩 2층 102호",
-    "short_address": "강남구 역삼동 번지 지하 736-58 대세빌딩 2층 102호",
+    "address": "Room 102, 2nd floor, Daese Building, 736-58 Basement, Yeoksam-dong, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "Room 102, 2nd floor, Daese Building, Basement 736-58, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.499213499999996,
       "lng": 127.03591709999999
@@ -5065,8 +5065,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5077,7 +5077,7 @@
   {
     "place_id": "ChIJvVJLW_6jfDURj5ZVKgvJ4HE",
     "display_name": "CU",
-    "category": "편의점",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -5086,8 +5086,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로 지하 156",
-    "short_address": "강남구 테헤란로 지하 156",
+    "address": "Basement 156, Teheran-ro, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Basement 156, Teheran-ro, Gangnam-gu",
     "location": {
       "lat": 37.500741999999995,
       "lng": 127.03640910000001
@@ -5106,18 +5106,18 @@
     "google_maps_url": "https://maps.google.com/?cid=8205779570861119119",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fe5b4b52bd:0x71e0c90b2a55968f!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 6:00 ~ 오후 11:00",
-      "화요일: 오전 6:00 ~ 오후 11:00",
-      "수요일: 오전 6:00 ~ 오후 11:00",
-      "목요일: 오전 6:00 ~ 오후 11:00",
-      "금요일: 오전 6:00 ~ 오후 11:00",
-      "토요일: 오전 6:00 ~ 오후 11:00",
-      "일요일: 오전 6:00 ~ 오후 11:00"
+      "Monday: 6:00 AM - 11:00 PM",
+      "Tuesday: 6:00 AM - 11:00 PM",
+      "Wednesday: 6:00 AM - 11:00 PM",
+      "Thursday: 6:00 AM - 11:00 PM",
+      "Friday: 6:00 AM - 11:00 PM",
+      "Saturday: 6:00 AM - 11:00 PM",
+      "Sunday: 6:00 AM - 11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5127,16 +5127,16 @@
   },
   {
     "place_id": "ChIJj22Xi9ujfDUR0M88hiGtJd0",
-    "display_name": "로우 라이브러리",
-    "category": "서점",
+    "display_name": "raw library",
+    "category": "bookstore",
     "types": [
       "book_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 테헤란로 151 하이츠 빌딩 7층",
-    "short_address": "강남구 역삼동 테헤란로 151 하이츠 빌딩 7층",
+    "address": "7th floor, 151 Heights Building, Teheran-ro, Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "7th floor, 151 Heights Building, Teheran-ro, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5009452,
       "lng": 127.0361278
@@ -5155,18 +5155,18 @@
     "google_maps_url": "https://maps.google.com/?cid=15935333216018026448",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3db8b976d8f:0xdd25ad21863ccfd0!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5175,16 +5175,16 @@
   },
   {
     "place_id": "ChIJjbQ1stejfDURYQNrJckeRdw",
-    "display_name": "더스티 라이브러리",
-    "category": "서점",
+    "display_name": "dusty library",
+    "category": "bookstore",
     "types": [
       "book_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 패스트파이브 KR 서울특별시 강남구 테헤란로 151 역삼하이츠 빌딩",
-    "short_address": "KR 서울특별시 강남구 테헤란로 151 역삼하이츠 빌딩 패스트파이브",
+    "address": "Fast Five KR, Seoul, Republic of Korea Yeoksam Heights Building, 151 Teheran-ro, Gangnam-gu, Seoul",
+    "short_address": "KR Fast Five, Yeoksam Heights Building, 151 Teheran-ro, Gangnam-gu, Seoul",
     "location": {
       "lat": 37.5009452,
       "lng": 127.0361278
@@ -5203,18 +5203,18 @@
     "google_maps_url": "https://maps.google.com/?cid=15872126311002211169",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3d7b235b48d:0xdc451ec9256b0361!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5223,8 +5223,8 @@
   },
   {
     "place_id": "ChIJ9di1Af6jfDURVCH9GDpk4WU",
-    "display_name": "세븐일레븐 역삼캐피탈타워점",
-    "category": "편의점",
+    "display_name": "7-Eleven Yeoksam Capital Tower Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -5233,8 +5233,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 736-1",
-    "short_address": "강남구 역삼동 736-1",
+    "address": "736-1 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "736-1 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4996551,
       "lng": 127.0348548
@@ -5253,18 +5253,18 @@
     "google_maps_url": "https://maps.google.com/?cid=7341259068280742228",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fe01b5d8f5:0x65e1643a18fd2154!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5274,8 +5274,8 @@
   },
   {
     "place_id": "ChIJ0SOV_lWhfDURHfyX4jOwtEI",
-    "display_name": "GS25 역삼캐피탈점",
-    "category": "편의점",
+    "display_name": "GS25 Yeoksam Capital Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -5284,8 +5284,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동 논현로87길 23",
-    "short_address": "강남구 역삼1동 논현로87길 23",
+    "address": "23 Nonhyeon-ro 87-gil, Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "23 Nonhyeon-ro 87-gil, Yeoksam 1-dong, Gangnam-gu",
     "location": {
       "lat": 37.49933680000001,
       "lng": 127.03490900000001
@@ -5304,18 +5304,18 @@
     "google_maps_url": "https://maps.google.com/?cid=4806660439202593821",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca155fe9523d1:0x42b4b033e297fc1d!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5325,28 +5325,28 @@
         "author": "Nick Me",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "9년 전",
-        "text": "보통규모 편의점 저녁시간에도 도시락이 남아 있는편"
+        "relative_time": "9 years ago",
+        "text": "A regular-sized convenience store often has lunch boxes left even during dinner hours."
       },
       {
-        "author": "유연",
+        "author": "softness",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
-        "text": "널찍한 테이블이 있어서 아침먹기 좋아요!"
+        "relative_time": "7 years ago",
+        "text": "It’s great for breakfast because there’s a spacious table!"
       },
       {
-        "author": "박형석",
+        "author": "Hyungseok Park",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       },
       {
-        "author": "심윤광",
+        "author": "Shim Yun-kwang",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       }
     ],
@@ -5354,8 +5354,8 @@
   },
   {
     "place_id": "ChIJy5KNsv-jfDURoZSIMahDfAI",
-    "display_name": "아세아음향",
-    "category": "전자제품 판매점",
+    "display_name": "Asia Acoustics",
+    "category": "electronics store",
     "types": [
       "electronics_store",
       "home_goods_store",
@@ -5364,8 +5364,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동",
-    "short_address": "강남구 역삼동",
+    "address": "Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5002932,
       "lng": 127.03747899999999
@@ -5394,7 +5394,7 @@
   {
     "place_id": "ChIJtTnIZv6jfDUR2dCM5KIWOKQ",
     "display_name": "7-Eleven",
-    "category": "편의점",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "food_store",
@@ -5403,8 +5403,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로25길 6-9",
-    "short_address": "강남구 테헤란로25길 6-9",
+    "address": "6-9 Teheran-ro 25-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "6-9 Teheran-ro 25-gil, Gangnam-gu",
     "location": {
       "lat": 37.5012367,
       "lng": 127.03576129999999
@@ -5423,18 +5423,18 @@
     "google_maps_url": "https://maps.google.com/?cid=11833232909790925017",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fe66c839b5:0xa43816a2e48cd0d9!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5444,7 +5444,7 @@
         "author": "Aboo Bear",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
+        "relative_time": "6 months ago",
         "text": null
       }
     ],

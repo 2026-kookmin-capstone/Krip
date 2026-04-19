@@ -1,15 +1,15 @@
 [
   {
     "place_id": "ChIJDzbov0CkfDURlrxEbybsZDo",
-    "display_name": "(주)나래플러스",
-    "category": "쇼핑몰",
+    "display_name": "Narae Plus Co., Ltd.",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로94길 55-4 한올빌딩 1층",
-    "short_address": "강남구 강남대로94길 55-4 한올빌딩 1층",
+    "address": "1st floor, Hanol Building, 55-4 Gangnam-daero 94-gil, Gangnam-gu, Seoul, Korea",
+    "short_address": "1st floor, Hanol Building, 55-4 Gangnam-daero 94-gil, Gangnam-gu",
     "location": {
       "lat": 37.500745699999996,
       "lng": 127.0317886
@@ -28,20 +28,20 @@
     "google_maps_url": "https://maps.google.com/?cid=4207747601690573974",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca440bfe8360f:0x3a64ec266f44bc96!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -56,14 +56,14 @@
   {
     "place_id": "ChIJHSBXDf2jfDURNiidsPMWWRw",
     "display_name": "LUXDAY, CARBONA",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동 633-10",
-    "short_address": "강남구 역삼1동 633-10",
+    "address": "633-10, Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "633-10 Yeoksam 1-dong, Gangnam-gu",
     "location": {
       "lat": 37.5020436,
       "lng": 127.03132730000002
@@ -84,8 +84,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -94,35 +94,35 @@
         "author": "Tiffany Son",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "9년 전",
-        "text": "저는 다시 방문할 거예요"
+        "relative_time": "9 years ago",
+        "text": "I will visit again"
       },
       {
-        "author": "양재혁",
+        "author": "Jaehyuk Yang",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "WhiteNoise K",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Doohyun Sung (Have)",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "박영재",
+        "author": "Youngjae Park",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -133,15 +133,15 @@
   },
   {
     "place_id": "ChIJKXtv6hyjfDURAJXmVyyeHhw",
-    "display_name": "주식회사 커런시마켓",
-    "category": "쇼핑몰",
+    "display_name": "Currency Market Co., Ltd.",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로 152",
-    "short_address": "강남구 테헤란로 152",
+    "address": "152 Teheran-ro, Gangnam-gu, Seoul, South Korea",
+    "short_address": "152 Teheran-ro, Gangnam-gu",
     "location": {
       "lat": 37.4998097,
       "lng": 127.0366289
@@ -160,18 +160,18 @@
     "google_maps_url": "https://maps.google.com/?cid=2026230795653780736",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca31cea6f7b29:0x1c1e9e2c57e69500!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오전 5:00",
-      "화요일: 오전 10:00 ~ 오전 5:00",
-      "수요일: 오전 10:00 ~ 오전 5:00",
-      "목요일: 오전 10:00 ~ 오전 5:00",
-      "금요일: 오전 10:00 ~ 오전 5:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 5:00 AM",
+      "Tuesday: 10:00 AM - 5:00 AM",
+      "Wednesday: 10:00 AM - 5:00 AM",
+      "Thursday: 10:00 AM - 5:00 AM",
+      "Friday: 10:00 AM - 5:00 AM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -181,15 +181,15 @@
   },
   {
     "place_id": "ChIJZ3LLbv6jfDURFfRvn4rvT7A",
-    "display_name": "마트닷비즈",
-    "category": "쇼핑몰",
+    "display_name": "Mart.biz",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 642-16번지 19층 강남구 서울특별시 KR",
-    "short_address": "역삼동 642-16번지 19층 강남구 서울특별시 KR",
+    "address": "19th floor, 642-16 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "19th floor, 642-16 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.50081060000001,
       "lng": 127.03566509999999
@@ -210,8 +210,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -221,15 +221,15 @@
   },
   {
     "place_id": "ChIJDY7p2sijfDURWzP4nVm8qqE",
-    "display_name": "몽실",
-    "category": "쇼핑몰",
+    "display_name": "Mongsil",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 642-16",
-    "short_address": "강남구 역삼동 642-16",
+    "address": "642-16 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "642-16 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5008108,
       "lng": 127.0356647
@@ -249,11 +249,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3c8dae98e0d:0xa1aabc599df8335b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -263,15 +263,15 @@
   },
   {
     "place_id": "ChIJnT-zjQyjfDURUgfMPnlIego",
-    "display_name": "GFC몰",
-    "category": "쇼핑몰",
+    "display_name": "GFC Mall",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로 152 10 층",
-    "short_address": "강남구 테헤란로 152 10 층",
+    "address": "10th floor, 152 Teheran-ro, Gangnam-gu, Seoul, South Korea",
+    "short_address": "10th floor, 152 Teheran-ro, Gangnam-gu",
     "location": {
       "lat": 37.5009393,
       "lng": 127.03658399999999
@@ -290,26 +290,26 @@
     "google_maps_url": "https://maps.google.com/?cid=754995573119780690",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca30c8db33f9d:0xa7a48793ecc0752!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 6:00 ~ 오전 12:00",
-      "화요일: 오전 6:00 ~ 오전 12:00",
-      "수요일: 오전 6:00 ~ 오전 12:00",
-      "목요일: 오전 6:00 ~ 오전 12:00",
-      "금요일: 오전 6:00 ~ 오전 12:00",
-      "토요일: 오전 6:00 ~ 오전 12:00",
-      "일요일: 오전 6:00 ~ 오전 12:00"
+      "Monday: 6:00 AM - 12:00 AM",
+      "Tuesday: 6:00 AM - 12:00 AM",
+      "Wednesday: 6:00 AM - 12:00 AM",
+      "Thursday: 6:00 AM - 12:00 AM",
+      "Friday: 6:00 AM - 12:00 AM",
+      "Saturday: 6:00 AM - 12:00 AM",
+      "Sunday: 6:00 AM - 12:00 AM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -317,36 +317,36 @@
         "author": "Andrew Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
-        "text": "GFC B2~1층에 걸쳐 있음\n폴바셋, 올리브영을 포함해 나름 다양한 구성을 갖추고 있음. 매장교체주기가 빠르고 이용수요에 비해 수용가능인원풀이 적은 편(카페, 음식점 등)"
+        "relative_time": "5 years ago",
+        "text": "Located across GFC B2 to 1st floors\nIt has a variety of products, including Paul Bassett and Olive Young. The store change cycle is fast and the pool of people that can accommodate it is small compared to the demand (cafes, restaurants, etc.)"
       },
       {
         "author": "hoon sik park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "여러음식점이 있고 역삼역과 바로 이어져있어 좋음"
+        "relative_time": "2 years ago",
+        "text": "It's good because it has several restaurants and is directly connected to Yeoksam Station."
       },
       {
         "author": "DK K",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "ㆍ맛집도 있고, 주차장도 넓은 GFC몰입니다.\nㆍ베이커리, 커피숍, 한식당 등 다수의 편의시설이\n입점 되어져 있습니다.\nㆍ폴바셋 1만원이상 결제시 2시간 무료 주차"
+        "relative_time": "2 years ago",
+        "text": "ㆍGFC Mall has delicious restaurants and a spacious parking lot.\nㆍMany convenient facilities such as bakeries, coffee shops, and Korean restaurants\nIt is in store.\nㆍ2 hours free parking when paying over 10,000 won in Paul Bassett"
       },
       {
-        "author": "진짜허니",
+        "author": "Real honey",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "지하철 2호선 역삼역 일번출구와 연결돼 있습니다 매우 다양한 업종들의 가게 가게들이 입점에 있습니다 식사 후 커피까지 ~~물론 병원도 있습니다 약국도 있네요 제 생각엔 사람 만나기엔 최적의 장소인 거 같습니다 물론 풍족하진 않지만 주차도 가능합니다 한번 가 보십시오 괜찮을 거 같습니다 하지만 안에 있는 식당들이 많지만 아주 맛집이 있는 건 아닙니다, 사람 만나기엔 매우 좋은 곳이 네요 꼭 방문해 보시구요 맛집은 없어요~~&&"
+        "relative_time": "4 years ago",
+        "text": "It is connected to Exit 1 of Yeoksam Station on Subway Line 2. There are shops of a wide variety of businesses. You can even get coffee after your meal. Of course, there is also a hospital. There is also a pharmacy. I think it is the best place to meet people. Of course, it is not rich, but parking is available. I think it will be okay to go there. However, there are many restaurants inside, but they are not very good restaurants. It is a very good place to meet people. You should definitely visit. There are no restaurants~~&&"
       },
       {
-        "author": "메리엘리",
+        "author": "Mary Elly",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "자주 가는 곳입니다."
+        "relative_time": "2 years ago",
+        "text": "This is a place I often go to."
       }
     ],
     "photos": [
@@ -365,14 +365,14 @@
   {
     "place_id": "ChIJMyMAq7KjfDUR2u6LyC0paoo",
     "display_name": "TRDST",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 608-14",
-    "short_address": "강남구 역삼동 608-14",
+    "address": "608-14 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "608-14 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5010145,
       "lng": 127.0363539
@@ -391,20 +391,20 @@
     "google_maps_url": "https://maps.google.com/?cid=9973829601380265690",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3b2ab002333:0x8a6a292dc88beeda!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 5:30",
-      "화요일: 오전 9:00 ~ 오후 5:30",
-      "수요일: 오전 9:00 ~ 오후 5:30",
-      "목요일: 오전 9:00 ~ 오후 5:30",
-      "금요일: 오전 9:00 ~ 오후 5:30",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 5:30 PM",
+      "Tuesday: 9:00 AM - 5:30 PM",
+      "Wednesday: 9:00 AM - 5:30 PM",
+      "Thursday: 9:00 AM - 5:30 PM",
+      "Friday: 9:00 AM - 5:30 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -416,15 +416,15 @@
   },
   {
     "place_id": "ChIJ0SlydgejfDURgxxAzC7ctfg",
-    "display_name": "카마나라 (카마그라 직영점)",
-    "category": "쇼핑몰",
+    "display_name": "Kamanara (Kamagra direct store)",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 642-17",
-    "short_address": "강남구 역삼동 642-17",
+    "address": "642-17 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "642-17 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.501063099999996,
       "lng": 127.0356484
@@ -444,11 +444,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca307767229d1:0xf8b5dc2ecc401c83!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -458,15 +458,15 @@
   },
   {
     "place_id": "ChIJz4VSduajfDURsZ-JCLhxAvk",
-    "display_name": "빠른24시퀵서비스",
-    "category": "쇼핑몰",
+    "display_name": "Fast 24 hour quick service",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동",
-    "short_address": "강남구 역삼동",
+    "address": "Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.499907199999996,
       "lng": 127.0373932
@@ -485,20 +485,20 @@
     "google_maps_url": "https://maps.google.com/?cid=17943028900628635569",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3e6765285cf:0xf90271b808899fb1!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -508,8 +508,8 @@
   },
   {
     "place_id": "ChIJ3cjdYy2lfDURFGkrDxLRtck",
-    "display_name": "리브러쉬 - 구강케어의 혁신, ReBrush",
-    "category": "상점",
+    "display_name": "ReBrush - Innovation in oral care, ReBrush",
+    "category": "store",
     "types": [
       "shopping_mall",
       "home_goods_store",
@@ -518,8 +518,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 논현로87길 25 HB타워",
-    "short_address": "강남구 논현로87길 25 HB타워",
+    "address": "HB Tower, 25 Nonhyeon-ro 87-gil, Gangnam-gu, Seoul, Korea",
+    "short_address": "HB Tower, 25 Nonhyeon-ro 87-gil, Gangnam-gu",
     "location": {
       "lat": 37.499321099999996,
       "lng": 127.03477099999999
@@ -538,20 +538,20 @@
     "google_maps_url": "https://maps.google.com/?cid=14534753247902263572",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca52d63ddc8dd:0xc9b5d1120f2b6914!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 6:00",
-      "화요일: 오전 10:00 ~ 오후 6:00",
-      "수요일: 오전 10:00 ~ 오후 6:00",
-      "목요일: 오전 10:00 ~ 오후 6:00",
-      "금요일: 오전 10:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 6:00 PM",
+      "Tuesday: 10:00 AM - 6:00 PM",
+      "Wednesday: 10:00 AM - 6:00 PM",
+      "Thursday: 10:00 AM - 6:00 PM",
+      "Friday: 10:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -572,16 +572,16 @@
   },
   {
     "place_id": "ChIJe8UcZf6jfDURGkKCK0yykYs",
-    "display_name": "현대당구장",
-    "category": "백화점",
+    "display_name": "Hyundai billiard room",
+    "category": "department store",
     "types": [
       "department_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 642-1번지 지하층 1호 강남구 서울특별시 KR",
-    "short_address": "역삼동 642-1번지 지하층 1호 강남구 서울특별시 KR",
+    "address": "#1 Basement Floor, 642-1 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "#1 Basement Floor, 642-1 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.501219999999996,
       "lng": 127.03546039999999
@@ -600,20 +600,20 @@
     "google_maps_url": "https://maps.google.com/?cid=10057015483112243738",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fe651cc57b:0x8b91b24c2b82421a!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 9:00",
-      "화요일: 오전 10:30 ~ 오후 9:00",
-      "수요일: 오전 10:30 ~ 오후 9:00",
-      "목요일: 오전 10:30 ~ 오후 9:00",
-      "금요일: 오전 10:30 ~ 오후 9:00",
-      "토요일: 오전 10:30 ~ 오후 9:00",
-      "일요일: 오전 10:30 ~ 오후 9:00"
+      "Monday: 10:30 AM - 9:00 PM",
+      "Tuesday: 10:30 AM - 9:00 PM",
+      "Wednesday: 10:30 AM - 9:00 PM",
+      "Thursday: 10:30 AM - 9:00 PM",
+      "Friday: 10:30 AM - 9:00 PM",
+      "Saturday: 10:30 AM - 9:00 PM",
+      "Sunday: 10:30 AM - 9:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -622,23 +622,23 @@
         "author": "Kaine Moon",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "가성비가 좋습니다"
+        "relative_time": "6 years ago",
+        "text": "Good value for money"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJO4KL_v6jfDURsj_LcipLh_I",
-    "display_name": "(주)하우스오브리벨스",
-    "category": "쇼핑몰",
+    "display_name": "House of Vlives Co., Ltd.",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 679-5번지 2층 아주빌딩 강남구 서울특별시 KR",
-    "short_address": "역삼동 679-5번지 2층 아주빌딩 강남구 서울특별시 KR",
+    "address": "2nd floor, Aju Building, 679-5 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "679-5 Yeoksam-dong, 2nd floor, Aju Building, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.5012699,
       "lng": 127.03716299999999
@@ -659,8 +659,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -669,15 +669,15 @@
   },
   {
     "place_id": "ChIJO3_v4XekfDURyAyjnQPHJkM",
-    "display_name": "(주)부스터스",
-    "category": "쇼핑몰",
+    "display_name": "Boosters Co., Ltd.",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 논현로 508 GS타워",
-    "short_address": "강남구 논현로 508 GS타워",
+    "address": "GS Tower, 508 Nonhyeon-ro, Gangnam-gu, Seoul, South Korea",
+    "short_address": "GS Tower, 508 Nonhyeon-ro, Gangnam-gu",
     "location": {
       "lat": 37.5018187,
       "lng": 127.03709470000001
@@ -696,20 +696,20 @@
     "google_maps_url": "https://maps.google.com/?cid=4838773667999714504",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca477e1ef7f3b:0x4326c7039da30cc8!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -721,15 +721,15 @@
   },
   {
     "place_id": "ChIJJXPVwdejfDURdohx6F3RiMw",
-    "display_name": "꿀떡에이전시",
-    "category": "쇼핑몰",
+    "display_name": "Kkultteok Agency",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 테헤란로 204",
-    "short_address": "강남구 역삼동 테헤란로 204",
+    "address": "204 Teheran-ro, Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "204 Teheran-ro, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5008802,
       "lng": 127.0384755
@@ -749,11 +749,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3d7c1d57325:0xcc88d15de8718876!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -762,8 +762,8 @@
   },
   {
     "place_id": "ChIJ4WNZ7eKjfDURUkzqTApUAB8",
-    "display_name": "포레스트헤어",
-    "category": "미용실",
+    "display_name": "Forest Hair",
+    "category": "beauty salon",
     "types": [
       "beauty_salon",
       "shopping_mall",
@@ -771,8 +771,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 포레스트헤어",
-    "short_address": "강남구 포레스트헤어",
+    "address": "Forest Hair, Gangnam-gu, Seoul, Korea",
+    "short_address": "Forest Hair in Gangnam-gu",
     "location": {
       "lat": 37.503707999999996,
       "lng": 127.027279
@@ -791,45 +791,45 @@
     "google_maps_url": "https://maps.google.com/?cid=2233877818392595538",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3e2ed5963e1:0x1f00540a4cea4c52!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 9:00",
-      "화요일: 오전 10:00 ~ 오후 9:00",
-      "수요일: 오전 10:00 ~ 오후 9:00",
-      "목요일: 오전 10:00 ~ 오후 9:00",
-      "금요일: 오전 10:00 ~ 오후 9:00",
-      "토요일: 오전 10:00 ~ 오후 9:00",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 9:00 PM",
+      "Tuesday: 10:00 AM - 9:00 PM",
+      "Wednesday: 10:00 AM - 9:00 PM",
+      "Thursday: 10:00 AM - 9:00 PM",
+      "Friday: 10:00 AM - 9:00 PM",
+      "Saturday: 10:00 AM - 9:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이연주",
+        "author": "Yeonju Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "염색 커트 클리닉 너무 좋아요. 5년째 한국가면 가고있어욤"
+        "relative_time": "6 years ago",
+        "text": "I really like the dye cut clinic. I've been going to Korea for 5 years now."
       },
       {
-        "author": "신우미",
+        "author": "Shin Woo-mi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "친절하고 커트 잘해주세요"
+        "relative_time": "6 years ago",
+        "text": "Please be kind and cut well."
       },
       {
         "author": "N. I.",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "서울에서 최고의 헤어컷을 받았어요. 몇 년에 걸쳐 여러 번 방문했습니다."
+        "relative_time": "2 years ago",
+        "text": "I got the best haircut in Seoul. Visited several times over the years."
       }
     ],
     "photos": [
@@ -842,14 +842,14 @@
   {
     "place_id": "ChIJxSGilz-jfDURYRihhTxmQ7k",
     "display_name": "Jivaka Beauty",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로102길 16",
-    "short_address": "강남구 강남대로102길 16",
+    "address": "16, Gangnam-daero 102-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "16, Gangnam-daero 102-gil, Gangnam-gu",
     "location": {
       "lat": 37.502109,
       "lng": 127.02718199999998
@@ -868,20 +868,20 @@
     "google_maps_url": "https://maps.google.com/?cid=13349626130582280289",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33f97a221c5:0xb943663c85a11861!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -891,36 +891,36 @@
         "author": "TJ Tiffany",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "한국에 온 외국인으로서 한국어가 아직 서툴러서 좋은 클리닉을 찾을 수 있을지 걱정이 많았는데, 지바카를 발견하고 정말 큰 행운을 얻었어요! 가격도 정말 합리적이었고, 무엇보다 영어와 태국어(아마 더 많은 언어도 가능할 거예요!)를 구사하는 직원분들이 계셔서 너무 좋았어요. 예약을 하고 강남에 있는 지바카 클리닉에 갔는데, 모든 과정이 너무 순조로웠고 언어 장벽도 전혀 없었어요! 시술도 완벽하게 끝났고, 결과에 너무 만족해요. 진심으로, 한국 관광객이시라면 의사소통 때문에 걱정하시는 분들께 지바카를 강력 추천합니다!"
+        "relative_time": "7 months ago",
+        "text": "As a foreigner who came to Korea, I was worried about whether I would be able to find a good clinic because my Korean is still not good, but I was very lucky when I found Jibaka! The price was really reasonable, and best of all, I loved that the staff spoke English and Thai (and probably more languages!). I made an appointment and went to the Jibaka Clinic in Gangnam, and the whole process was so smooth and there was no language barrier at all! The procedure was completed perfectly, and I am very satisfied with the results. Seriously, I highly recommend Jibaka to any Korean tourist worried about communication!"
       },
       {
         "author": "LIRONG CHEN",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
-        "text": "저는 친구를 통해 지바카 플랫폼을 알게 되었고, 한국에 도착하기 전부터 이미 고객센터와 소통하고 있었습니다. 한국에서 피부과 예약을 하는 것이 정말 편리했어요. 모든 과정이 영어로 진행되었고, 담당자분들이 제 상황을 친절하게 분석해 주셨습니다. 전반적으로 아주 만족스러운 경험이었어요 👍🏻"
+        "relative_time": "8 months ago",
+        "text": "I learned about the Zibaka platform through a friend, and was already communicating with the customer service center before arriving in Korea. It was really convenient to make a dermatologist appointment in Korea. The entire process was conducted in English, and the staff in charge kindly analyzed my situation. Overall, it was a very satisfying experience 👍🏻"
       },
       {
         "author": "sondra ganbat",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8달 전",
-        "text": "이 에이전시 덕분에 한국 수술 여행이 훨씬 수월했어요. 직원분들이 정말 책임감 있고, 제게 맞는 병원을 찾아주시고, 좋은 조건으로 예약까지 모두 처리해 주셨어요. 수술 후에도 괜찮은지 확인하려고 연락까지 주셨고요. 솔직히 저 혼자서는 이렇게 순조롭게 준비할 수 없었을 거예요! 강력 추천합니다!!"
+        "relative_time": "8 months ago",
+        "text": "Thanks to this agency, my trip to Korea for surgery was much easier. The staff was very responsible, helped me find the hospital that was right for me, and even took care of all my reservations under good conditions. They even contacted me to make sure I was okay after the surgery. Honestly, I wouldn't have been able to prepare this smoothly on my own! Highly recommended!!"
       },
       {
         "author": "syj",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "지바카 뷰티 덕분에 모든 게 정말 편리하고 사용하기 쉬웠어요. 정말 도움이 많이 됐고, 정말 좋은 경험이었어요. 정말 만족스러워서 앞으로도 계속 이용하고 싶어요. 친구들에게도 강력 추천하고 싶어요!"
+        "relative_time": "7 months ago",
+        "text": "Thanks to Zivaka Beauty, everything was so convenient and easy to use. It was really helpful and it was a really good experience. I am really satisfied and would like to continue using it in the future. I would highly recommend it to my friends!"
       },
       {
         "author": "Alexander Kazakov",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "8달 전",
-        "text": "거기서 페이셜 몇 번 받을 예정이었는데, 상담 후 제안된 총 금액이 약 290만 4천 와트(약 1812유로)였습니다.\n\n소위 \"무료 상담\"을 받고 나서 방을 나와서 \"가격\"에 대해 상담을 받았습니다. 15~20분 후에 다시 방으로 돌아오라고 했습니다.\n\n가격을 알려준 후, 다시 생각해보겠다고 했습니다. 결국 1인당 2만 와트를 상담료로 청구했습니다. 제가 따져 물었더니, 서비스를 계속 이용하기로 하면 최종 청구서에서 해당 금액을 공제해 주겠다고 했습니다. 하지만 \"무료 상담\"을 예약하기 전에는 그런 언급이 없었습니다. 허위 광고이고, 특히 제 이메일 확인서에 \"무료 상담\"이라고 적혀 있었으니 위험 신호였습니다.\n\n다른 곳에서 비교해 보는 게 좋겠지만, 솔직히 이건 별로입니다. 외국인을 위해 가격을 조작하는 것 같습니다. 사기처럼 느껴졌습니다."
+        "relative_time": "8 months ago",
+        "text": "I was planning to get a few facials there, but after the consultation the total amount offered was around 2.904 million watts (about 1812 euros).\n\nAfter receiving the so-called \"free consultation\", I left the room and was consulted about the \"price\". I was told to come back to the room in 15-20 minutes.\n\nAfter I told them the price, I said I would reconsider. In the end, we charged 20,000 watts per person as a consultation fee. When I questioned it, they said that if I decided to continue using the service, they would deduct the amount from my final bill. But I wasn't told that before I scheduled my \"free consultation\". It was false advertising, especially since it said \"free consultation\" on my email confirmation, which was a red flag.\n\nIt would be nice to compare elsewhere, but honestly, this isn't great. It seems like they are manipulating the prices for foreigners. It felt like a scam."
       }
     ],
     "photos": [
@@ -930,8 +930,8 @@
   },
   {
     "place_id": "ChIJoUj1-_yjfDURaPJLnYDx9ZI",
-    "display_name": "(주)아나조",
-    "category": "애완동물 관리용품점",
+    "display_name": "Anazo Co., Ltd.",
+    "category": "pet care store",
     "types": [
       "shopping_mall",
       "pet_store",
@@ -941,8 +941,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동",
-    "short_address": "강남구 역삼동",
+    "address": "Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5033759,
       "lng": 127.0315658
@@ -961,13 +961,13 @@
     "google_maps_url": "https://maps.google.com/?cid=10589635633528697448",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fcfbf548a1:0x92f5f1809d4bf268!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": null,
@@ -978,15 +978,15 @@
   },
   {
     "place_id": "ChIJlR8E-PujfDURD2hBCK9wZYg",
-    "display_name": "한국액센",
-    "category": "쇼핑몰",
+    "display_name": "Korea Accent",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 608-23",
-    "short_address": "강남구 역삼동 608-23",
+    "address": "608-23 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "608-23 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5045156,
       "lng": 127.0340214
@@ -1007,8 +1007,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1018,21 +1018,21 @@
         "author": "SJ P",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "8년 전",
-        "text": "지난번에 처음으로 액센을 사용하게 됐는데, 액센의 지난 USB... 하자품이 왔길래 어쩌다보니 그런 게 왔겠거니 하고 큰 불편이 없는 거라서 그냥 사용하다가 이번에 또 액센 USB 구입했더니 배드섹터가 너무 많아 교환.. 하지만 교환 받은 것도 반은 속도가 뚝 떨어지면서 그 부분은 완전히 사용불가.. 고객센터도 참 수동적이고 한심하길래... 다시 교환하는 것을 포기하고 반만 사용 중입니다... 검색해보면 액센 좋다고 하는 글들이 있었으나 그런 글 올리면 포인트 주는 이벤트 때 올라온 글들이라고 하더군요.. 이런 걸 알려주는 글들을 조금 일찍 봤더라면 하는 아쉬움이 있네요... 평균 속도가 4메가 정도 밖에 안 나오니 그 속도에 비하면 저렴하지도 않은 것이 중국산 USB만도 못하고 고객센터 대응도 딱 자기네 파는 물건만큼인 이도저도 다 불량이고 조악하기만... 완전 비추천입니다..."
+        "relative_time": "8 years ago",
+        "text": "Last time, I got to use Accen for the first time, and Accen's last USB... came with a defective product, so I thought it must have happened by chance, so I just used it, but this time I bought another Accen USB, and there were too many bad sectors, so I had to exchange it... But half of the exchanged one also lost speed, and that part was completely unusable... The customer service center was so passive and pathetic... I gave up on replacing it again, and I'm only using half of it... If you search, it says Accen is good. There were posts saying that, but they said they were posted during an event where points were awarded for posting posts like that. I wish I had seen posts saying this earlier... The average speed is only about 4MB, so it's not cheap compared to the speed, and it's not as good as a Chinese USB, and the customer service center is just as good as the products they sell, and they're all defective and poor... Completely not recommended..."
       },
       {
-        "author": "쿄덕",
+        "author": "Kyo-deok",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "9년 전",
-        "text": "내가 이런곳에 갔었었나..?"
+        "relative_time": "9 years ago",
+        "text": "Have I been to a place like this?"
       },
       {
-        "author": "김찌",
+        "author": "kimchi",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "8년 전",
+        "relative_time": "8 years ago",
         "text": null
       }
     ],
@@ -1046,15 +1046,15 @@
   },
   {
     "place_id": "ChIJiTs7jiKjfDURn0cTh12hVV8",
-    "display_name": "점보통상(점보팩)",
-    "category": "쇼핑몰",
+    "display_name": "Jumbosang (jumbo pack)",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 논현로 518",
-    "short_address": "강남구 논현로 518",
+    "address": "518 Nonhyeon-ro, Gangnam-gu, Seoul, South Korea",
+    "short_address": "518 Nonhyeon-ro, Gangnam-gu",
     "location": {
       "lat": 37.502854299999996,
       "lng": 127.03632490000001
@@ -1073,20 +1073,20 @@
     "google_maps_url": "https://maps.google.com/?cid=6869574229693777823",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3228e3b3b89:0x5f55a15d8713479f!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 5:00",
-      "화요일: 오전 9:00 ~ 오후 5:00",
-      "수요일: 오전 9:00 ~ 오후 5:00",
-      "목요일: 오전 9:00 ~ 오후 5:00",
-      "금요일: 오전 9:00 ~ 오후 5:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 5:00 PM",
+      "Tuesday: 9:00 AM - 5:00 PM",
+      "Wednesday: 9:00 AM - 5:00 PM",
+      "Thursday: 9:00 AM - 5:00 PM",
+      "Friday: 9:00 AM - 5:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1096,8 +1096,8 @@
         "author": "Lion Daddy",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "친환경용기제작"
+        "relative_time": "3 years ago",
+        "text": "Eco-friendly container production"
       }
     ],
     "photos": [
@@ -1106,15 +1106,15 @@
   },
   {
     "place_id": "ChIJI-49jA-jfDUR7ssvNH5Z2Sk",
-    "display_name": "주식회사 글로벌에이치엠",
-    "category": "쇼핑몰",
+    "display_name": "Global HM Co., Ltd.",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 667-17 야광맨 2층",
-    "short_address": "강남구 역삼동 667-17 야광맨 2층",
+    "address": "2nd floor, Luminous Man, 667-17 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "2nd floor, Luminous Man, 667-17 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5036833,
       "lng": 127.0361039
@@ -1134,11 +1134,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca30f8c3dee23:0x29d9597e342fcbee!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1150,15 +1150,15 @@
   },
   {
     "place_id": "ChIJ_WyHnP6jfDURJQBlYh-BD-A",
-    "display_name": "뉴드림푸드주식회사",
-    "category": "쇼핑몰",
+    "display_name": "New Dream Food Co., Ltd.",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로25길 31",
-    "short_address": "강남구 테헤란로25길 31",
+    "address": "31 Teheran-ro 25-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "31 Teheran-ro 25-gil, Gangnam-gu",
     "location": {
       "lat": 37.5025592,
       "lng": 127.03497379999999
@@ -1177,18 +1177,18 @@
     "google_maps_url": "https://maps.google.com/?cid=16145265160941273125",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fe9c876cfd:0xe00f811f62650025!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:30 ~ 오후 5:30",
-      "화요일: 오전 9:30 ~ 오후 5:30",
-      "수요일: 오전 9:30 ~ 오후 5:30",
-      "목요일: 오전 9:30 ~ 오후 5:30",
-      "금요일: 오전 9:30 ~ 오후 5:30",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:30 AM - 5:30 PM",
+      "Tuesday: 9:30 AM - 5:30 PM",
+      "Wednesday: 9:30 AM - 5:30 PM",
+      "Thursday: 9:30 AM - 5:30 PM",
+      "Friday: 9:30 AM - 5:30 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1198,15 +1198,15 @@
   },
   {
     "place_id": "ChIJgQS7VPmjfDURyq7WbeYO5Kg",
-    "display_name": "풋풋 시다스 인솔 FootFoot with SIDAS",
-    "category": "쇼핑몰",
+    "display_name": "FootFoot with SIDAS insole",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 628-10",
-    "short_address": "강남구 역삼동 628-10",
+    "address": "628-10 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "628-10 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5042046,
       "lng": 127.03495149999999
@@ -1225,20 +1225,20 @@
     "google_maps_url": "https://maps.google.com/?cid=12169868475909975754",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3f954bb0481:0xa8e40ee66dd6aeca!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 8:00",
-      "화요일: 오전 11:00 ~ 오후 8:00",
-      "수요일: 오전 11:00 ~ 오후 8:00",
-      "목요일: 오전 11:00 ~ 오후 8:00",
-      "금요일: 오전 11:00 ~ 오후 8:00",
-      "토요일: 오전 11:00 ~ 오후 8:00",
-      "일요일: 휴무일"
+      "Monday: 11:00 AM - 8:00 PM",
+      "Tuesday: 11:00 AM - 8:00 PM",
+      "Wednesday: 11:00 AM - 8:00 PM",
+      "Thursday: 11:00 AM - 8:00 PM",
+      "Friday: 11:00 AM - 8:00 PM",
+      "Saturday: 11:00 AM - 8:00 PM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1248,8 +1248,8 @@
         "author": "Ted Koo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "10년 전",
-        "text": "운동을 사랑하고, 즐기는 여러 분의 발은 FootFoot이 건강하게 지켜드립니다."
+        "relative_time": "10 years ago",
+        "text": "For those who love and enjoy exercising, FootFoot will keep your feet healthy."
       }
     ],
     "photos": [
@@ -1264,14 +1264,14 @@
   {
     "place_id": "ChIJy6nWAfyjfDURcFC0Xp-2z2E",
     "display_name": "Магазин сестры хоупа",
-    "category": "쇼핑몰",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동",
-    "short_address": "강남구 역삼1동",
+    "address": "Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Yeoksam 1-dong, Gangnam-gu",
     "location": {
       "lat": 37.5041066,
       "lng": 127.03464740000001
@@ -1292,8 +1292,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1303,15 +1303,15 @@
   },
   {
     "place_id": "ChIJucIqa_mjfDURNs8PTA-2bow",
-    "display_name": "(주)유니프랩코리아",
-    "category": "쇼핑몰",
+    "display_name": "Uniprab Korea Co., Ltd.",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 번지 3층 660-2",
-    "short_address": "강남구 역삼동 번지 3층 660-2",
+    "address": "3rd floor, 660-2, Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "660-2, 3rd floor, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.50508,
       "lng": 127.0360034
@@ -1331,11 +1331,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3f96b2ac2b9:0x8c6eb60f4c0fcf36!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1344,15 +1344,15 @@
   },
   {
     "place_id": "ChIJMSNR6PijfDURyJ-diLG4BIs",
-    "display_name": "헤븐리헤븐",
-    "category": "쇼핑몰",
+    "display_name": "Heavenly Heaven",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동 671-30",
-    "short_address": "강남구 역삼1동 671-30",
+    "address": "671-30 Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "671-30 Yeoksam 1-dong, Gangnam-gu",
     "location": {
       "lat": 37.5042657,
       "lng": 127.0381599
@@ -1373,8 +1373,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1384,35 +1384,35 @@
         "author": "老仁",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "10달 전",
-        "text": "매우 아름답다"
+        "relative_time": "10 months ago",
+        "text": "very beautiful"
       },
       {
         "author": "woojin Kim",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       },
       {
         "author": "ji_sook Korea_kjs",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
         "author": "Myunghee Lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "안주영",
+        "author": "Jooyoung Ahn",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -1425,15 +1425,15 @@
   },
   {
     "place_id": "ChIJnR0CwfijfDURM7yyD_z-QAU",
-    "display_name": "신데렐라",
-    "category": "쇼핑몰",
+    "display_name": "Cinderella",
+    "category": "shopping mall",
     "types": [
       "shopping_mall",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동 671-11",
-    "short_address": "강남구 역삼1동 671-11",
+    "address": "671-11 Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "671-11 Yeoksam 1-dong, Gangnam-gu",
     "location": {
       "lat": 37.5038491,
       "lng": 127.03852099999999
@@ -1453,11 +1453,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3f8c1021d9d:0x540fefc0fb2bc33!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1467,35 +1467,35 @@
         "author": "Myunghee Lee",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "안주영",
+        "author": "Jooyoung Ahn",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "우디러브TV",
+        "author": "Woody Love TV",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "정동욱",
+        "author": "Dongwook Jeong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "정장원",
+        "author": "Jeong Jang-won",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -1507,8 +1507,8 @@
   },
   {
     "place_id": "ChIJVfn_p1ChfDUR3AZ4kBmJ5V8",
-    "display_name": "CU 역삼우인점",
-    "category": "편의점",
+    "display_name": "CU Yeoksam Wooin Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "supermarket",
@@ -1519,8 +1519,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로84길 8",
-    "short_address": "강남구 강남대로84길 8",
+    "address": "8 Gangnam-daero 84-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "8 Gangnam-daero 84-gil, Gangnam-gu",
     "location": {
       "lat": 37.496487099999996,
       "lng": 127.0292687
@@ -1539,18 +1539,18 @@
     "google_maps_url": "https://maps.google.com/?cid=6910079946160867036",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca150a7fff955:0x5fe58919907806dc!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1560,8 +1560,8 @@
         "author": "Comburger Kim",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
-        "text": "우리 동네 CU 매장은 너무 친절해서\n방문할 때마다 과분할 지경인데\n이곳은 CU가 맞나 싶을 의심이 들게 합니다.\n점원분은 뭐가 그리 화가 나계신 것인지 원..."
+        "relative_time": "1 year ago",
+        "text": "Our local CU store is so friendly.\nEvery time I visit, it's almost too much.\nIt makes me wonder if this place is CU.\nI wonder what the clerk is so angry about..."
       }
     ],
     "photos": [
@@ -1571,15 +1571,15 @@
   },
   {
     "place_id": "ChIJ23T4m9KhfDURuhp64t2S8W4",
-    "display_name": "스노우폭스플라워 강남메트로점",
-    "category": "시장",
+    "display_name": "Snow Fox Flower Gangnam Metro Branch",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "테헤란로 101 강남역 지하상가 A-22, 강남구 서울특별시 대한민국",
-    "short_address": "테헤란로 101 강남역 지하상가 A-22, 강남구",
+    "address": "101 Teheran-ro, Gangnam Station Underground Shopping Mall A-22, Gangnam-gu, Seoul South Korea",
+    "short_address": "Teheran-ro 101 Gangnam Station Underground Shopping Mall A-22, Gangnam-gu",
     "location": {
       "lat": 37.4980257,
       "lng": 127.0285321
@@ -1598,29 +1598,29 @@
     "google_maps_url": "https://maps.google.com/?cid=7994332295244421818",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1d29bf874db:0x6ef192dde27a1aba!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:00 ~ 오후 10:30",
-      "화요일: 오전 8:00 ~ 오후 10:30",
-      "수요일: 오전 8:00 ~ 오후 10:30",
-      "목요일: 오전 8:00 ~ 오후 10:30",
-      "금요일: 오전 8:00 ~ 오후 11:00",
-      "토요일: 오전 9:00 ~ 오후 10:30",
-      "일요일: 오전 10:00 ~ 오후 8:00"
+      "Monday: 8:00 AM - 10:30 PM",
+      "Tuesday: 8:00 AM - 10:30 PM",
+      "Wednesday: 8:00 AM - 10:30 PM",
+      "Thursday: 8:00 AM - 10:30 PM",
+      "Friday: 8:00 AM - 11:00 PM",
+      "Saturday: 9:00 AM - 10:30 PM",
+      "Sunday: 10:00 AM - 8:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "총예",
+        "author": "total art",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "강남역 1번 출구 지하에 있는 꽃집.\n출퇴근길 예쁜꽃 구경하면서 기분전환하기 좋다😁✨️\n최근에 여기서 후리지아를 많이 구매해갔었는데 이벤트를 해줘서 가격도 착했다.😀😀😀\n다른 예쁜 꽃들도 많아서 눈이 즐거워지는 곳!ㅎㅎ\n직원분도 친절해서 좋았습니다👍"
+        "relative_time": "1 year ago",
+        "text": "A flower shop located in the basement of Exit 1 of Gangnam Station.\nIt's good to change your mood while looking at pretty flowers on your way to work😁✨️\nI recently bought a lot of freesia here, and the price was good because they had an event.😀😀😀\nThere are many other pretty flowers, so it's a feast for the eyes! Haha\nThe staff was friendly too.👍"
       }
     ],
     "photos": [
@@ -1629,15 +1629,15 @@
   },
   {
     "place_id": "ChIJSSHQ-VqhfDURX3idUCzyIWk",
-    "display_name": "행운플라워",
-    "category": "시장",
+    "display_name": "Lucky flower",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 서초대로74길 27",
-    "short_address": "서초구 서초대로74길 27",
+    "address": "27, Seocho-daero 74-gil, Seocho-gu, Seoul, South Korea",
+    "short_address": "27, Seocho-daero 74-gil, Seocho-gu",
     "location": {
       "lat": 37.495238799999996,
       "lng": 127.02721670000001
@@ -1658,7 +1658,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1667,8 +1667,8 @@
   },
   {
     "place_id": "ChIJycPASFehfDURGUwcmuTRbaw",
-    "display_name": "(주)롯데슈퍼강남역가맹점",
-    "category": "슈퍼마켓",
+    "display_name": "Lotte Super Gangnam Station Franchise Store",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1678,8 +1678,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 824 11번지 1층 110호",
-    "short_address": "강남구 역삼동 824 11번지 1층 110호",
+    "address": "Room 110, 1st floor, 824 11, Yeoksam-dong, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "Room 110, 1st floor, 824 11, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.497092099999996,
       "lng": 127.0303724
@@ -1698,20 +1698,20 @@
     "google_maps_url": "https://maps.google.com/?cid=12424817726753360921",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15748c0c3c9:0xac6dd1e49a1c4c19!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 11:00",
-      "화요일: 오전 9:00 ~ 오후 11:00",
-      "수요일: 오전 9:00 ~ 오후 11:00",
-      "목요일: 오전 9:00 ~ 오후 11:00",
-      "금요일: 오전 9:00 ~ 오후 11:00",
-      "토요일: 오전 9:00 ~ 오후 11:00",
-      "일요일: 오전 9:00 ~ 오후 11:00"
+      "Monday: 9:00 AM - 11:00 PM",
+      "Tuesday: 9:00 AM - 11:00 PM",
+      "Wednesday: 9:00 AM - 11:00 PM",
+      "Thursday: 9:00 AM - 11:00 PM",
+      "Friday: 9:00 AM - 11:00 PM",
+      "Saturday: 9:00 AM - 11:00 PM",
+      "Sunday: 9:00 AM - 11:00 PM"
     ],
     "services": [
-      "배달"
+      "delivery"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1721,16 +1721,16 @@
         "author": "Jay Kim",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "8달 전",
-        "text": "불친절"
+        "relative_time": "8 months ago",
+        "text": "unfriendly"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJhyBpm4OhfDURlFUg0oABGZQ",
-    "display_name": "마켓온",
-    "category": "슈퍼마켓",
+    "display_name": "Market On",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "business_center",
@@ -1745,8 +1745,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 강남대로 359 1401호",
-    "short_address": "서초구 강남대로 359 1401호",
+    "address": "#1401, 359 Gangnam-daero, Seocho-gu, Seoul, Republic of Korea",
+    "short_address": "#1401, 359 Gangnam-daero, Seocho-gu",
     "location": {
       "lat": 37.494724999999995,
       "lng": 127.0286369
@@ -1765,21 +1765,21 @@
     "google_maps_url": "https://maps.google.com/?cid=10671562444823877012",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1839b692087:0x94190180d2205594!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 4:00",
-      "화요일: 오전 11:00 ~ 오후 4:00",
-      "수요일: 오전 11:00 ~ 오후 4:00",
-      "목요일: 오전 11:00 ~ 오후 4:00",
-      "금요일: 오전 11:00 ~ 오후 4:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 11:00 AM - 4:00 PM",
+      "Tuesday: 11:00 AM - 4:00 PM",
+      "Wednesday: 11:00 AM - 4:00 PM",
+      "Thursday: 11:00 AM - 4:00 PM",
+      "Friday: 11:00 AM - 4:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "배달",
-      "화장실"
+      "delivery",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1791,16 +1791,16 @@
   },
   {
     "place_id": "ChIJqTliG0mhfDURoDxa1kKK4Bg",
-    "display_name": "(주)오드엠",
-    "category": "시장",
+    "display_name": "OddM Co., Ltd.",
+    "category": "market",
     "types": [
       "market",
       "corporate_office",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 부강빌딩 3층 4층",
-    "short_address": "강남구 부강빌딩 3층 4층",
+    "address": "3rd floor, 4th floor, Bugang Building, Gangnam-gu, Seoul, Korea",
+    "short_address": "3rd and 4th floors, Bugang Building, Gangnam-gu",
     "location": {
       "lat": 37.4953672,
       "lng": 127.0359965
@@ -1820,7 +1820,7 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1491b6239a9:0x18e08a42d65a3ca0!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
@@ -1830,14 +1830,14 @@
         "author": "Keed Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "사무실"
+        "relative_time": "5 years ago",
+        "text": "office"
       },
       {
-        "author": "손조니",
+        "author": "Johnny Son",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -1847,8 +1847,8 @@
   },
   {
     "place_id": "ChIJn_mRG1WhfDURQ5YEVCnVfZM",
-    "display_name": "현대슈퍼",
-    "category": "슈퍼마켓",
+    "display_name": "Hyundai Super",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1858,8 +1858,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 747-14번지 강남구 서울특별시 KR",
-    "short_address": "역삼동 747-14번지 강남구 서울특별시 KR",
+    "address": "747-14 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "747-14 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.4963572,
       "lng": 127.03825069999999
@@ -1887,8 +1887,8 @@
   },
   {
     "place_id": "ChIJFxteFFWhfDURy-JpWFOecA0",
-    "display_name": "현석마트",
-    "category": "슈퍼마켓",
+    "display_name": "Hyeonseok Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1898,8 +1898,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 논현로 413",
-    "short_address": "강남구 논현로 413",
+    "address": "413 Nonhyeon-ro, Gangnam-gu, Seoul, South Korea",
+    "short_address": "413 Nonhyeon-ro, Gangnam-gu",
     "location": {
       "lat": 37.4969555,
       "lng": 127.0384422
@@ -1918,18 +1918,18 @@
     "google_maps_url": "https://maps.google.com/?cid=968448000687465163",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca155145e1b17:0xd709e535869e2cb!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 8:30 ~ 오후 11:00",
-      "화요일: 오전 8:30 ~ 오후 11:00",
-      "수요일: 오전 8:30 ~ 오후 11:00",
-      "목요일: 오전 8:30 ~ 오후 11:00",
-      "금요일: 오전 8:30 ~ 오후 11:00",
-      "토요일: 오전 8:30 ~ 오후 11:00",
-      "일요일: 오전 8:30 ~ 오후 11:00"
+      "Monday: 8:30 AM - 11:00 PM",
+      "Tuesday: 8:30 AM - 11:00 PM",
+      "Wednesday: 8:30 AM - 11:00 PM",
+      "Thursday: 8:30 AM - 11:00 PM",
+      "Friday: 8:30 AM - 11:00 PM",
+      "Saturday: 8:30 AM - 11:00 PM",
+      "Sunday: 8:30 AM - 11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1939,8 +1939,8 @@
   },
   {
     "place_id": "ChIJ7bhiV1ihfDURXXVb3pYc9xs",
-    "display_name": "니드앤바이편의점",
-    "category": "슈퍼마켓",
+    "display_name": "Need&Buy Convenience Store",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -1950,8 +1950,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 815-4",
-    "short_address": "강남구 역삼동 815-4",
+    "address": "815-4 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "815-4 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5007659,
       "lng": 127.0268277
@@ -1972,18 +1972,18 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "캡틴준마이",
+        "author": "Captain Junmai",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -1991,8 +1991,8 @@
   },
   {
     "place_id": "ChIJibEV_mehfDURlHBm-myl2aM",
-    "display_name": "세븐일레븐",
-    "category": "슈퍼마켓",
+    "display_name": "7-Eleven",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2002,8 +2002,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 서초동",
-    "short_address": "서초구 서초동",
+    "address": "Seocho-dong, Seocho-gu, Seoul, South Korea",
+    "short_address": "Seocho-dong, Seocho-gu",
     "location": {
       "lat": 37.499187299999996,
       "lng": 127.0265077
@@ -2024,8 +2024,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2034,7 +2034,7 @@
         "author": "JIHUN BYUN",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       }
     ],
@@ -2042,8 +2042,8 @@
   },
   {
     "place_id": "ChIJibEV_mehfDUR_ctLbe0iVh0",
-    "display_name": "세븐일레븐 강남본점",
-    "category": "편의점",
+    "display_name": "7-Eleven Gangnam Main Branch",
+    "category": "convenience store",
     "types": [
       "convenience_store",
       "supermarket",
@@ -2054,8 +2054,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 서초대로77길 27",
-    "short_address": "서초구 서초대로77길 27",
+    "address": "27, Seocho-daero 77-gil, Seocho-gu, Seoul, South Korea",
+    "short_address": "27, Seocho-daero 77-gil, Seocho-gu",
     "location": {
       "lat": 37.500088999999996,
       "lng": 127.02562399999998
@@ -2063,7 +2063,7 @@
     "rating": 4,
     "rating_stars": "★★★★☆ 4",
     "rating_count": 1,
-    "price_level": "저렴 ($)",
+    "price_level": "Cheap ($)",
     "price_range": null,
     "editorial_summary": "Pit stop for snacks, drinks & daily essentials",
     "generative_summary": null,
@@ -2074,29 +2074,29 @@
     "google_maps_url": "https://maps.google.com/?cid=2113915478233304061",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca167fe15b189:0x1d5622ed6d4bcbfd!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "유찬종",
+        "author": "Yu Chan-jong",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8년 전",
-        "text": "좋은위치.\n편리함"
+        "relative_time": "8 years ago",
+        "text": "Good location.\nConvenience"
       }
     ],
     "photos": null
@@ -2104,14 +2104,14 @@
   {
     "place_id": "ChIJf2Ej3pGhfDURCchsdiR1bLE",
     "display_name": "JeongA HAM",
-    "category": "시장",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "Gangnam station, 강남구 서울특별시 대한민국",
-    "short_address": "Gangnam station, 강남구",
+    "address": "Gangnam station, Gangnam-gu, Seoul South Korea",
+    "short_address": "Gangnam station, Gangnam-gu",
     "location": {
       "lat": 37.4998262,
       "lng": 127.03141389999998
@@ -2130,18 +2130,18 @@
     "google_maps_url": "https://maps.google.com/?cid=12784722241664108553",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca191de23617f:0xb16c7524766cc809!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 10:00",
-      "화요일: 오전 9:00 ~ 오후 10:00",
-      "수요일: 오전 9:00 ~ 오후 10:00",
-      "목요일: 오전 9:00 ~ 오후 10:00",
-      "금요일: 오전 9:00 ~ 오후 10:00",
-      "토요일: 오전 9:00 ~ 오후 10:00",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 10:00 PM",
+      "Tuesday: 9:00 AM - 10:00 PM",
+      "Wednesday: 9:00 AM - 10:00 PM",
+      "Thursday: 9:00 AM - 10:00 PM",
+      "Friday: 9:00 AM - 10:00 PM",
+      "Saturday: 9:00 AM - 10:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2150,15 +2150,15 @@
   },
   {
     "place_id": "ChIJgYglw1ehfDURHgBpuuDzk2k",
-    "display_name": "햄프톤플라워",
-    "category": "시장",
+    "display_name": "Hampton Flower",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 635-4번지 신관 1층 과학기술회관 강남구 서울특별시 KR",
-    "short_address": "역삼동 635-4번지 신관 1층 과학기술회관 강남구 서울특별시 KR",
+    "address": "Science and Technology Center, 1st floor, new building, 635-4 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "Science and Technology Center, 1st floor, new building, 635-4 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.500426999999995,
       "lng": 127.03083710000001
@@ -2186,8 +2186,8 @@
   },
   {
     "place_id": "ChIJRzFTz_2jfDURbfinPgq9cTA",
-    "display_name": "동산마트",
-    "category": "슈퍼마켓",
+    "display_name": "Dongsan Mart",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2197,8 +2197,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼1동 645-3",
-    "short_address": "강남구 역삼1동 645-3",
+    "address": "645-3, Yeoksam 1-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "645-3, Yeoksam 1-dong, Gangnam-gu",
     "location": {
       "lat": 37.5017773,
       "lng": 127.03364819999997
@@ -2217,35 +2217,35 @@
     "google_maps_url": "https://maps.google.com/?cid=3490779037887363181",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fdcf533147:0x3071bd0a3ea7f86d!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 11:00",
-      "화요일: 오전 9:00 ~ 오후 11:00",
-      "수요일: 오전 9:00 ~ 오후 11:00",
-      "목요일: 오전 9:00 ~ 오후 11:00",
-      "금요일: 오전 9:00 ~ 오후 11:00",
-      "토요일: 오전 9:00 ~ 오후 11:00",
-      "일요일: 오전 9:00 ~ 오후 11:00"
+      "Monday: 9:00 AM - 11:00 PM",
+      "Tuesday: 9:00 AM - 11:00 PM",
+      "Wednesday: 9:00 AM - 11:00 PM",
+      "Thursday: 9:00 AM - 11:00 PM",
+      "Friday: 9:00 AM - 11:00 PM",
+      "Saturday: 9:00 AM - 11:00 PM",
+      "Sunday: 9:00 AM - 11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "주동혁",
+        "author": "Donghyuk Joo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
+        "relative_time": "6 years ago",
         "text": null
       },
       {
-        "author": "강아지",
+        "author": "puppy",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -2253,15 +2253,15 @@
   },
   {
     "place_id": "ChIJ2U7fcv6jfDURHoN_wbg3s2A",
-    "display_name": "(주)플랫바이에이프릴마켓목동",
-    "category": "시장",
+    "display_name": "Flat by April Market Mokdong Co., Ltd.",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 646-15번지 3층",
-    "short_address": "강남구 역삼동 646-15번지 3층",
+    "address": "3rd floor, 646-15 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "3rd floor, 646-15 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5006707,
       "lng": 127.0351734
@@ -2282,8 +2282,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2292,8 +2292,8 @@
   },
   {
     "place_id": "ChIJX8-9e-KjfDURxJQrVVMGxVA",
-    "display_name": "스위트 스페이스",
-    "category": "슈퍼마켓",
+    "display_name": "sweet space",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2303,8 +2303,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 봉은사로2길 23",
-    "short_address": "강남구 봉은사로2길 23",
+    "address": "23 Bongeunsa-ro 2-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "23 Bongeunsa-ro 2-gil, Gangnam-gu",
     "location": {
       "lat": 37.5031167,
       "lng": 127.0261872
@@ -2323,18 +2323,18 @@
     "google_maps_url": "https://maps.google.com/?cid=5820065048427205828",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3e27bbdcf5f:0x50c50653552b94c4!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 11:00",
-      "화요일: 오전 9:00 ~ 오후 11:00",
-      "수요일: 오전 9:00 ~ 오후 11:00",
-      "목요일: 오전 9:00 ~ 오후 11:00",
-      "금요일: 오전 9:00 ~ 오후 11:00",
-      "토요일: 오전 9:00 ~ 오후 11:00",
-      "일요일: 오전 9:00 ~ 오후 11:00"
+      "Monday: 9:00 AM - 11:00 PM",
+      "Tuesday: 9:00 AM - 11:00 PM",
+      "Wednesday: 9:00 AM - 11:00 PM",
+      "Thursday: 9:00 AM - 11:00 PM",
+      "Friday: 9:00 AM - 11:00 PM",
+      "Saturday: 9:00 AM - 11:00 PM",
+      "Sunday: 9:00 AM - 11:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2344,36 +2344,36 @@
         "author": "Janice Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "2023.02.02 목\n달달이들만 파는 줄 알았더니\n잼,오일, 소스, 와인, 맥주, 파스타면, 해외 향신료 들도 팔고있어요\n젤리사러 들어왔다가 이것저것 구경 잘하고 갑니다"
+        "relative_time": "3 years ago",
+        "text": "2023.02.02 Thu\nI thought they only sold sweet dals\nWe also sell jam, oil, sauce, wine, beer, pasta noodles, and foreign spices.\nI came in to buy jelly and had a good look around."
       },
       {
         "author": "Jeong Ho Yoo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "다양한 수입 과자와 식품을 구매할 수 있는 공간입니다. 맥비티 사의 여러 제품이 있어서 다이제스티브 기본맛, 생강맛, 초콜렛 코팅, 오트 크런치 등을 선택할 수 있어 좋습니다. 페퍼리지팜 사의 쿠키도 다양하게 준비되어 있습니다. 그리고 가게의 한 면이 젤리와 사탕으로 가득차 있을 정도로 젤리와 사탕에 진심이라고 생각합니다. 이 외에도 통조림, 쨈, 파스타면, 음료수, 스프 등등 식료품이 많습니다. 행사 상품인 경우는 더욱 저렴하게 구매할 수 있으며, 직원분들도 친절하십니다. 오늘 또 가서 과자를 사와야겠어요."
+        "relative_time": "3 years ago",
+        "text": "This is a space where you can purchase a variety of imported snacks and foods. It's great that McVitie's has a variety of products to choose from, such as Digestive Basic Flavor, Ginger Flavor, Chocolate Coating, and Oat Crunch. We also offer a variety of cookies from Pepperidge Farm. And they think they're serious about gummies and candies, so much so that one side of the store is filled with them. In addition, there are many foodstuffs such as canned food, jam, pasta, drinks, soup, etc. If it's a promotion product, you can purchase it at a cheaper price, and the staff is friendly. I have to go and buy snacks again today."
       },
       {
-        "author": "이민지",
+        "author": "Minji Lee",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "1년 전",
-        "text": "품목이 다양하고 깔끔합니다만 여직원이 너무 불친절합니다. 나쁜 경험을 원하지 않아 재방문 의사는 없습니다"
+        "relative_time": "1 year ago",
+        "text": "The items are varied and clean, but the female staff is very unfriendly. I don't intend to visit again as I don't want a bad experience."
       },
       {
-        "author": "코끼리",
+        "author": "elephant",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "트롤리 젤리 한봉지를 1300원에 살 수 있는 곳. 내가 가본 세계과자점 중 제일 싼 것 같다. 특히 강남역 일대에선 가장 싼 가격을 자랑함.\n또 심심하면 유통기한 임박 제품을 천원에 파는 경우가 많아서 그것도 쏠쏠함"
+        "relative_time": "5 years ago",
+        "text": "A place where you can buy a bag of trolley jelly for 1,300 won. I think it's the cheapest snack shop I've ever been to in the world. In particular, it boasts the lowest price in the Gangnam Station area.\nAlso, if you're bored, there are many cases where products nearing their expiration date are sold for 1,000 won, so that's great too."
       },
       {
-        "author": "김기원",
+        "author": "Kim Ki-won",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "수입과자만 판매하는줄 알았으나 일반 슈퍼만큼이나 여러가지들 많이 팔고, 특히 주류 종류가 많습니다.\n싸지도 비싸지도 않은편"
+        "relative_time": "5 years ago",
+        "text": "I thought they only sold imported snacks, but they sell a lot of things like regular supermarkets, especially alcoholic beverages.\nIt's neither cheap nor expensive"
       }
     ],
     "photos": [
@@ -2391,15 +2391,15 @@
   },
   {
     "place_id": "ChIJsW16_GqhfDURw9rji6BZmMk",
-    "display_name": "THRU(쓰루) 딜리버리센터",
-    "category": "시장",
+    "display_name": "THRU Delivery Center",
+    "category": "market",
     "types": [
       "market",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로 652 신사스퀘어 101호, 107호",
-    "short_address": "강남구 강남대로 652 신사스퀘어 101호, 107호",
+    "address": "Rooms 101 and 107, Sinsa Square, 652 Gangnam-daero, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "Rooms 101 and 107, Sinsa Square, 652 Gangnam-daero, Gangnam-gu",
     "location": {
       "lat": 37.502676099999995,
       "lng": 127.0260437
@@ -2418,21 +2418,21 @@
     "google_maps_url": "https://maps.google.com/?cid=14526459144160139971",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca16afc7a6db1:0xc99859a08be3dac3!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 9:00",
-      "화요일: 오전 10:00 ~ 오후 9:00",
-      "수요일: 오전 10:00 ~ 오후 9:00",
-      "목요일: 오전 10:00 ~ 오후 9:00",
-      "금요일: 오전 10:00 ~ 오후 9:00",
-      "토요일: 오전 10:00 ~ 오전 9:00",
-      "일요일: 오전 10:00 ~ 오후 9:00"
+      "Monday: 10:00 AM - 9:00 PM",
+      "Tuesday: 10:00 AM - 9:00 PM",
+      "Wednesday: 10:00 AM - 9:00 PM",
+      "Thursday: 10:00 AM - 9:00 PM",
+      "Friday: 10:00 AM - 9:00 PM",
+      "Saturday: 10:00 AM - 9:00 AM",
+      "Sunday: 10:00 AM - 9:00 PM"
     ],
     "services": [
-      "포장",
-      "매장식사"
+      "packaging",
+      "Store meal"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2446,8 +2446,8 @@
   },
   {
     "place_id": "ChIJE1q9NPmjfDURm_BV9h9o5ms",
-    "display_name": "GS25 역삼거북점",
-    "category": "슈퍼마켓",
+    "display_name": "GS25 Yeoksam Turtle Branch",
+    "category": "supermarket",
     "types": [
       "supermarket",
       "grocery_store",
@@ -2457,8 +2457,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 667-18",
-    "short_address": "강남구 역삼동 667-18",
+    "address": "667-18 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "667-18 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.5037446,
       "lng": 127.0364023
@@ -2477,18 +2477,18 @@
     "google_maps_url": "https://maps.google.com/?cid=7775016293187842203",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3f934bd5a13:0x6be6681ff655f09b!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2498,35 +2498,35 @@
         "author": "Y C",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "3년 전",
-        "text": "불친절에 아이콘.\nGS에서 왜?\n이런 이상 하고 불친절한 아저씨들만 채용 하는지 회사 이미지 브랜드 거부감 느끼게 하는 편의점.\n정말 두번 다시 가고싶지 않은곳 입니다."
+        "relative_time": "3 years ago",
+        "text": "Icon for unkindness.\nWhy at GS?\nA convenience store that makes you feel rejected by the company's image and brand, as they only hire these strange and unfriendly men.\nIt's a place I really don't want to go to again."
       },
       {
-        "author": "신화철",
+        "author": "Shin Hwa-cheol",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "주차하기가 힘든곳 이네요^^"
+        "relative_time": "7 years ago",
+        "text": "It's a difficult place to park ^^"
       },
       {
-        "author": "한철동",
+        "author": "Hancheol-dong",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9년 전",
-        "text": "친절"
+        "relative_time": "9 years ago",
+        "text": "kindness"
       },
       {
         "author": "Robin C",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       },
       {
-        "author": "김다니엘",
+        "author": "Daniel Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
+        "relative_time": "5 years ago",
         "text": null
       }
     ],
@@ -2534,16 +2534,16 @@
   },
   {
     "place_id": "ChIJ06wQGVqhfDURdx9g66j74Q4",
-    "display_name": "더바미",
-    "category": "의류점",
+    "display_name": "thebami",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로 396 강남역 지하층 E29호 더바미",
-    "short_address": "강남구 강남대로 396 더바미 강남역 지하층 E29호",
+    "address": "The Bami, Room E29, Basement Floor, Gangnam Station, 396 Gangnam-daero, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "Room E29, basement floor of The Bami Gangnam Station, 396 Gangnam-daero, Gangnam-gu",
     "location": {
       "lat": 37.497017199999995,
       "lng": 127.02816809999999
@@ -2564,8 +2564,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2575,8 +2575,8 @@
         "author": "Jane Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "더바미 첫 방문했어요!😄🌸\n다양한 의류가 많고, 직원 언니가 예쁘고 친절해요😚👍\n옷 첫 구매했어요😝🫶\n\nIt was my first visit to The Bami! 😄🌸\nThey have a great variety of clothing, and the staff member was so pretty and kind 😚👍\nI ended up buying my first outfit here 😝🫶"
+        "relative_time": "3 months ago",
+        "text": "This was my first visit to Thebami!😄🌸\nThere are a lot of different clothes, and the staff is pretty and friendly😚👍\nI bought my first clothes😝🫶\n\nIt was my first visit to The Bami! 😄🌸\nThey have a great variety of clothing, and the staff member was so pretty and kind 😚👍\nI ended up buying my first outfit here 😝🫶"
       }
     ],
     "photos": [
@@ -2590,16 +2590,16 @@
   },
   {
     "place_id": "ChIJ06wQGVqhfDURZEpAlrikGig",
-    "display_name": "네이처리퍼블릭강남지하상가점",
-    "category": "화장품 판매점",
+    "display_name": "Nature Republic Gangnam Underground Shopping Mall Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 KR 서울특별시 강남구 역삼동 858번지 지하층 강남역지하상가 A동 1A2호",
-    "short_address": "KR 서울특별시 강남구 역삼동 858번지 지하층 강남역지하상가 A동 1A2호",
+    "address": "Seoul, Republic of Korea KR #1A2, Building A, Gangnam Station Underground Shopping Mall, Basement Floor, 858 Yeoksam-dong, Gangnam-gu, Seoul",
+    "short_address": "KR Room 1A2, Building A, Gangnam Station Underground Shopping Center, Basement Floor, 858 Yeoksam-dong, Gangnam-gu, Seoul",
     "location": {
       "lat": 37.497017199999995,
       "lng": 127.02816809999999
@@ -2620,25 +2620,25 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "우일상 (iswoob)",
+        "author": "Woo Il-sang (iswoob)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "직원분이 진짜 짱친절해요! 성분표도 잘 알려주고 저에게 맞는것도 잘 알려주고 ㅜㅜ 덕분에 이거저거 좋은 아이템 잘 건지고 기분좋은 구매하고 들어가네요~~"
+        "relative_time": "5 years ago",
+        "text": "The staff is really friendly! They gave me a good list of ingredients and told me what was right for me. Thanks to that, I was able to find a lot of good items and made a happy purchase."
       },
       {
-        "author": "Lee샤넬",
+        "author": "LeeChanel",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
+        "relative_time": "1 month ago",
         "text": null
       }
     ],
@@ -2646,16 +2646,16 @@
   },
   {
     "place_id": "ChIJ06wQGVqhfDURXNiudLal6eU",
-    "display_name": "로코코",
-    "category": "의류점",
+    "display_name": "rococo",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 858번지 지하층 F동 11호 강남역지하상가 쇼핑몰 강남구 서울특별시 KR",
-    "short_address": "역삼동 858번지 지하층 F동 11호 강남역지하상가 쇼핑몰 강남구 서울특별시 KR",
+    "address": "#11, Building F, Basement Floor, 858 Yeoksam-dong, Seoul, Republic of Korea Gangnam Station Underground Shopping Mall, Gangnam-gu, Seoul KR",
+    "short_address": "#11, Building F, Basement Floor, 858 Yeoksam-dong, Gangnam Station Underground Shopping Mall, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.497017199999995,
       "lng": 127.02816809999999
@@ -2676,8 +2676,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2686,16 +2686,16 @@
   },
   {
     "place_id": "ChIJ06wQGVqhfDUR2pCmFznWmg0",
-    "display_name": "(주)에이블씨엔씨지하철2호선강남역미샤",
-    "category": "화장품 판매점",
+    "display_name": "Able C&C Subway Line 2 Gangnam Station Missha",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 858번지 지하 지하철 2호 선강남역 지하1층 222동 01호 강남구 서울특별시 KR",
-    "short_address": "역삼동 858번지 지하 지하철 2호 선강남역 지하1층 222동 01호 강남구 서울특별시 KR",
+    "address": "858 Yeoksam-dong, Seoul, South Korea, Subway Line 2, Seongangnam Station Basement 1, Building 222, Room 01, Gangnam-gu, Seoul KR",
+    "short_address": "858 Yeoksam-dong, Underground Subway No. 2, Seongangnam Station Basement 1, Building 222, Room 01, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.497017199999995,
       "lng": 127.02816809999999
@@ -2716,8 +2716,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2726,15 +2726,15 @@
   },
   {
     "place_id": "ChIJHZqY6lmhfDUR_aIQP40jJ48",
-    "display_name": "사랑만들기",
-    "category": "의류점",
+    "display_name": "making love",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.497017199999995,
@@ -2756,8 +2756,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2767,7 +2767,7 @@
   {
     "place_id": "ChIJm6ZYQgChfDUR3llhCb1HmfI",
     "display_name": "Eblin Gangnam Station Sinbundang Line Branch",
-    "category": "여성의류점",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "point_of_interest",
@@ -2775,8 +2775,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 858",
-    "short_address": "강남구 역삼동 858",
+    "address": "858 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "858 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4970559,
       "lng": 127.0281806
@@ -2797,8 +2797,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2809,15 +2809,15 @@
   {
     "place_id": "ChIJ95tJIUShfDURMpe7K6obbnA",
     "display_name": "fvgbhnfh",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 강남대로 396 강남역",
-    "short_address": "강남구 역삼동 강남대로 396 강남역",
+    "address": "Gangnam Station, 396 Gangnam-daero, Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Gangnam Station, 396 Gangnam-daero, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4970559,
       "lng": 127.0281806
@@ -2838,8 +2838,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2848,16 +2848,16 @@
   },
   {
     "place_id": "ChIJi6W-PlqhfDURHakY7yb8hf4",
-    "display_name": "(주)비아엘",
-    "category": "신발 판매점",
+    "display_name": "BIEL Co., Ltd.",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 서초동 1319 11번지 2003호",
-    "short_address": "서초구 서초동 1319 11번지 2003호",
+    "address": "#2003, 1319 11, Seocho-dong, Seocho-gu, Seoul, Republic of Korea",
+    "short_address": "Room 2003, 1319 11th Seocho-dong, Seocho-gu",
     "location": {
       "lat": 37.4966501,
       "lng": 127.02768660000001
@@ -2885,8 +2885,8 @@
   },
   {
     "place_id": "ChIJhSUHPFqhfDURiT42amusWhY",
-    "display_name": "뷰티래쉬",
-    "category": "화장품 판매점",
+    "display_name": "Beauty Lash",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "hair_salon",
@@ -2897,8 +2897,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서초구 서초동 1319-11",
-    "short_address": "서초구 서초동 1319-11",
+    "address": "1319-11 Seocho-dong, Seocho-gu, Seoul, South Korea",
+    "short_address": "1319-11, Seocho-dong, Seocho-gu",
     "location": {
       "lat": 37.4966388,
       "lng": 127.02760789999999
@@ -2917,13 +2917,13 @@
     "google_maps_url": "https://maps.google.com/?cid=1610789394081791625",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15a3c072585:0x165aac6b6a363e89!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 8:00",
-      "화요일: 오전 11:00 ~ 오후 8:00",
-      "수요일: 오전 11:00 ~ 오후 8:00",
-      "목요일: 오전 11:00 ~ 오후 8:00",
-      "금요일: 오전 11:00 ~ 오후 8:00",
-      "토요일: 오전 10:00 ~ 오후 3:00",
-      "일요일: 휴무일"
+      "Monday: 11:00 AM - 8:00 PM",
+      "Tuesday: 11:00 AM - 8:00 PM",
+      "Wednesday: 11:00 AM - 8:00 PM",
+      "Thursday: 11:00 AM - 8:00 PM",
+      "Friday: 11:00 AM - 8:00 PM",
+      "Saturday: 10:00 AM - 3:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": null,
@@ -2931,55 +2931,55 @@
     "parking": null,
     "reviews": [
       {
-        "author": "차효숙",
+        "author": "Cha Hyo-sook",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "눈썹 문신 너무 자연스럽고 맘에 들어서\n매번 이용합니다."
+        "relative_time": "4 years ago",
+        "text": "The eyebrow tattoo looks so natural and I like it.\nI use it every time."
       },
       {
-        "author": "우세이",
+        "author": "Usui",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "친절하고 시술도 잘해주셔요\n\n10년 넘게 이용하고 있어요"
+        "relative_time": "4 years ago",
+        "text": "He is kind and performs the treatment well.\n\nI've been using it for over 10 years"
       },
       {
-        "author": "김지훈",
+        "author": "Jihoon Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "자연눈썹"
+        "relative_time": "4 years ago",
+        "text": "natural eyebrows"
       },
       {
         "author": "ShinYoung Jang.",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "항상만족해여"
+        "relative_time": "5 years ago",
+        "text": "I'm always satisfied"
       },
       {
         "author": "S. Patterson",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "몇 년째 아이라이너와 눈썹 리터치 때문에 여기 오고 있어요(제 눈썹은 얇지만 모양은 좋아요). 저는 눈썹 그리는 게 정말 서툴고 정말 게으르거든요. 아이라이너가 얼굴 전체에 녹아내려 너구리 면접을 본 후로는 다시는 하고 싶지 않은 경험이었어요. 그래서 퍼머넌트 메이크업을 선택했어요. 직원들은 영어를 못 하지만 기본적인 한국어를 구사하고 실력도 좋아서 믿고 맡길 수 있어요. 눈썹은 처음 며칠 동안은 너무 진하고 무서워 보여요(그루초 마크스처럼요). 하지만 시간이 지나면서 자연스럽게 자연스럽게 변해요. 제가 원했던 그대로예요. 아티스트는 눈썹 칼을 꺼내기 전에 제가 그린 모양에 완전히 만족하는지 확인해요.\n\n아이라이너를 조금 더 두껍게 해달라고 요청했는데, 약간 불편했지만 어쩔 수 없었어요. 처음 몇 번은 정말 자연스러운 아이라이너를 받았는데 정말 간지러웠어요.\n\n저는 카카오톡으로 예약해요. 이 가격 덕분에 펜슬이나 젤 등을 사지 않아도 되고 거울 앞에서 시간을 덜 낭비할 수 있어서 정말 만족스러워요. 이것을 속눈썹 익스텐션과 함께 사용하면 피부가 충분히 깨끗해져서 메이크업을 지울 수 있습니다!"
+        "relative_time": "6 years ago",
+        "text": "I've been coming here for eyeliner and eyebrow retouching for several years now (my eyebrows are thin but in great shape). I'm really bad at drawing eyebrows and I'm really lazy. My eyeliner melted all over my face, an experience I never want to have again after interviewing a raccoon. So I chose permanent makeup. The employees don't speak English, but they speak basic Korean and have good skills, so you can trust them. The eyebrows look so dark and scary for the first few days (like Groucho Marks). But over time, it naturally changes naturally. It's exactly what I wanted. The artist makes sure I'm completely satisfied with the shape I've drawn before taking out the eyebrow knife.\n\nI asked for the eyeliner to be a little thicker, and although it was a bit uncomfortable, I had no choice. The first few times I got really natural eyeliner, it really tickled me.\n\nI make a reservation through KakaoTalk. I'm really satisfied with this price because I don't have to buy pencils, gels, etc. and I can waste less time in front of the mirror. If you use this with your eyelash extensions, your skin will be clean enough to remove your makeup!"
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJZ0YJzVWhfDURNOCZo6AkR4k",
-    "display_name": "자나드",
-    "category": "화장품 판매점",
+    "display_name": "jannad",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로 382 메리츠타워 17층",
-    "short_address": "강남구 강남대로 382 메리츠타워 17층",
+    "address": "17th floor, Meritz Tower, 382 Gangnam-daero, Gangnam-gu, Seoul, Korea",
+    "short_address": "17th floor, Meritz Tower, 382 Gangnam-daero, Gangnam-gu",
     "location": {
       "lat": 37.4970794,
       "lng": 127.02871800000001
@@ -2998,18 +2998,18 @@
     "google_maps_url": "https://maps.google.com/?cid=9891915378900721716",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca155cd094667:0x894724a0a399e034!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3022,16 +3022,16 @@
   },
   {
     "place_id": "ChIJ-ZZc9lmhfDURD7cPw60SRnE",
-    "display_name": "벨로뜨",
-    "category": "의류점",
+    "display_name": "belotte",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 825 13번지 602호",
-    "short_address": "강남구 역삼동 825 13번지 602호",
+    "address": "#602, 825 13, Yeoksam-dong, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "#602, 13th floor, 825 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4974272,
       "lng": 127.02839349999998
@@ -3052,8 +3052,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3063,7 +3063,7 @@
   {
     "place_id": "ChIJSbMXWwChfDUR2gOFfHZy4R8",
     "display_name": "Cute hat shop underground",
-    "category": "여성의류점",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "point_of_interest",
@@ -3071,8 +3071,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 858-44",
-    "short_address": "강남구 역삼동 858-44",
+    "address": "858-44 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "858-44 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4975403,
       "lng": 127.02808890000001
@@ -3093,8 +3093,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3103,8 +3103,8 @@
   },
   {
     "place_id": "ChIJLejVN--hfDURMqrHlsme42A",
-    "display_name": "아이비골드앤워치 강남시계수리점 IvyGold and Watch Gangnam",
-    "category": "귀금속 상점",
+    "display_name": "IvyGold and Watch Gangnam Watch Repair Shop",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "point_of_interest",
@@ -3112,8 +3112,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로 396 3번출구 아래 KR 서울특별시 강남구 상가 강남역 지하",
-    "short_address": "강남구 강남대로 396 KR 서울특별시 강남구 상가 강남역 지하 3번출구 아래",
+    "address": "Under Exit 3, 396 Gangnam-daero, Gangnam-gu, Seoul, Republic of Korea KR Underground Gangnam Station, shopping center, Gangnam-gu, Seoul",
+    "short_address": "396 Gangnam-daero, Gangnam-gu KR Under underground exit 3 of Gangnam Station, shopping district, Gangnam-gu, Seoul",
     "location": {
       "lat": 37.4962936,
       "lng": 127.02860779999999
@@ -3132,22 +3132,22 @@
     "google_maps_url": "https://maps.google.com/?cid=6981598436009683506",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1ef37d5e82d:0x60e39ec996c7aa32!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 7:00",
-      "화요일: 오전 11:00 ~ 오후 7:00",
-      "수요일: 오전 11:00 ~ 오후 7:00",
-      "목요일: 오전 11:00 ~ 오후 7:00",
-      "금요일: 오전 11:00 ~ 오후 7:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 11:00 AM - 7:00 PM",
+      "Tuesday: 11:00 AM - 7:00 PM",
+      "Wednesday: 11:00 AM - 7:00 PM",
+      "Thursday: 11:00 AM - 7:00 PM",
+      "Friday: 11:00 AM - 7:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구"
+      "Wheelchair entrance"
     ],
     "parking": null,
     "reviews": [
@@ -3155,14 +3155,14 @@
         "author": "Jin C. HYUN",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "2년 전",
-        "text": "오후 나이드신 사장님이 더 친절하심.\n시계 배터리 교환은 만원 만오천 두 종류가 있으나 왜 오천원이 비싼 이유는 명확하지 않았음.\n가격은 타 시계점이나 크게 차이는 없음.\n오전 11시에 개점."
+        "relative_time": "2 years ago",
+        "text": "In the afternoon, the older owner was more kind.\nThere are two types of watch battery replacement: 10,000 won and 15,000 won, but it was not clear why 5,000 won was more expensive.\nThe price is not much different from other watch stores.\nOpens at 11 am."
       },
       {
-        "author": "ᄀᄏ",
+        "author": "Haha",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -3181,16 +3181,16 @@
   },
   {
     "place_id": "ChIJbd26VQChfDURXElygzT9eQo",
-    "display_name": "앤비쥬",
-    "category": "귀금속 상점",
+    "display_name": "Ann Bijou",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "B4동 1호, 1번지 821, 역삼동 강남구 서울특별시 대한민국",
-    "short_address": "B4동 1호, 1번지 821, 역삼동 강남구",
+    "address": "Building B4, No. 1, 821, Yeoksam-dong, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "Building B4, Room 1, 1st Street 821, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4976264,
       "lng": 127.02773149999999
@@ -3211,8 +3211,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3226,7 +3226,7 @@
   {
     "place_id": "ChIJebau8dShfDURN1W1CZ8N4Xg",
     "display_name": "shinyribbon",
-    "category": "여성의류점",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "point_of_interest",
@@ -3234,8 +3234,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로 지하 396, C-13호",
-    "short_address": "강남구 강남대로 지하 396, C-13호",
+    "address": "Room C-13, Basement 396, Gangnam-daero, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "Room C-13, Basement 396, Gangnam-daero, Gangnam-gu",
     "location": {
       "lat": 37.497417399999996,
       "lng": 127.02724189999999
@@ -3256,8 +3256,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3268,16 +3268,16 @@
   },
   {
     "place_id": "ChIJhRsZwFmhfDURqrtSSBTDg1g",
-    "display_name": "보노보노",
-    "category": "의류점",
+    "display_name": "Bonobono",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 821번지 13호 강남구 서울특별시 KR",
-    "short_address": "역삼동 821번지 13호 강남구 서울특별시 KR",
+    "address": "#13, 821 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "#13, 821 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.497678,
       "lng": 127.02779779999999
@@ -3298,7 +3298,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3307,16 +3307,16 @@
   },
   {
     "place_id": "ChIJhRsZwFmhfDURISrbI2VX-Ko",
-    "display_name": "비프루브강남역점",
-    "category": "화장품 판매점",
+    "display_name": "VPROVE Gangnam Station Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 821번지 강남역지하상가 A동 1A2호 강남구 서울특별시 KR",
-    "short_address": "역삼동 821번지 강남역지하상가 A동 1A2호 강남구 서울특별시 KR",
+    "address": "#1A2, Building A, Gangnam Station Underground Shopping Mall, 821 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "#1A2, Building A, Gangnam Station Underground Shopping Mall, 821 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.497690999999996,
       "lng": 127.0277854
@@ -3337,8 +3337,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3348,16 +3348,16 @@
   },
   {
     "place_id": "ChIJB1uqi1mhfDURVhJkVnOvzIw",
-    "display_name": "포르테",
-    "category": "의류점",
+    "display_name": "forte",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로 396",
-    "short_address": "강남구 강남대로 396",
+    "address": "396 Gangnam-daero, Gangnam-gu, Seoul, South Korea",
+    "short_address": "396 Gangnam-daero, Gangnam-gu",
     "location": {
       "lat": 37.4976918,
       "lng": 127.0277817
@@ -3376,18 +3376,18 @@
     "google_maps_url": "https://maps.google.com/?cid=10145676970464383574",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1598baa5b07:0x8cccaf7356641256!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 10:00",
-      "화요일: 오전 10:00 ~ 오후 10:00",
-      "수요일: 오전 10:00 ~ 오후 10:00",
-      "목요일: 오전 10:00 ~ 오후 10:00",
-      "금요일: 오전 10:00 ~ 오후 10:00",
-      "토요일: 오전 11:00 ~ 오후 9:00",
-      "일요일: 오전 11:00 ~ 오후 9:00"
+      "Monday: 10:00 AM - 10:00 PM",
+      "Tuesday: 10:00 AM - 10:00 PM",
+      "Wednesday: 10:00 AM - 10:00 PM",
+      "Thursday: 10:00 AM - 10:00 PM",
+      "Friday: 10:00 AM - 10:00 PM",
+      "Saturday: 11:00 AM - 9:00 PM",
+      "Sunday: 11:00 AM - 9:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3397,16 +3397,16 @@
   },
   {
     "place_id": "ChIJHZqY6lmhfDURb358FD-rak8",
-    "display_name": "진주",
-    "category": "신발 판매점",
+    "display_name": "pearl",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 821-1번지 강남역지하상가 B동 14호 강남구 서울특별시 KR",
-    "short_address": "역삼동 821-1번지 강남역지하상가 B동 14호 강남구 서울특별시 KR",
+    "address": "#14, Building B, Gangnam Station Underground Shopping Center, 821-1 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "#14, Building B, Gangnam Station Underground Shopping Mall, 821-1 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.497687,
       "lng": 127.0277532
@@ -3427,8 +3427,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3437,16 +3437,16 @@
   },
   {
     "place_id": "ChIJcavHGFehfDURUH60jyDXrfI",
-    "display_name": "(주)뷰티미코스메틱스",
-    "category": "화장품 판매점",
+    "display_name": "Beauty Me Cosmetics Co., Ltd.",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 824 29번지 202동 40호",
-    "short_address": "강남구 역삼동 824 29번지 202동 40호",
+    "address": "#40, Building 202, 824 29 Yeoksam-dong, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "Room 40, Building 202, 824 29, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4973823,
       "lng": 127.0315957
@@ -3467,8 +3467,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3477,16 +3477,16 @@
   },
   {
     "place_id": "ChIJiY-7M1ehfDURVEKAOrCTlqs",
-    "display_name": "(주)네츄럴파마",
-    "category": "화장품 판매점",
+    "display_name": "Natural Pharma Co., Ltd.",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 827 37번지 340호",
-    "short_address": "강남구 역삼동 827 37번지 340호",
+    "address": "#340, 827 37 Yeoksam-dong, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "Room 340, 37, 827 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4965257,
       "lng": 127.03108309999999
@@ -3514,16 +3514,16 @@
   },
   {
     "place_id": "ChIJiY-7M1ehfDURcKp_hAxFMRI",
-    "display_name": "한복이야기",
-    "category": "의류점",
+    "display_name": "Hanbok Story",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 827-37번지 태암빌딩 0호 4층",
-    "short_address": "강남구 역삼동 827-37번지 태암빌딩 0호 4층",
+    "address": "4th floor, Taeam Building #0, 827-37 Yeoksam-dong, Gangnam-gu, Seoul, Korea",
+    "short_address": "4th floor, Taeam Building #0, 827-37 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4965257,
       "lng": 127.03108309999999
@@ -3543,11 +3543,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15733bb8f89:0x1231450c847faa70!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3556,16 +3556,16 @@
   },
   {
     "place_id": "ChIJOf4hFlehfDURwzCdi27wgVM",
-    "display_name": "맥스베이릴리",
-    "category": "신발 판매점",
+    "display_name": "Max Bay Lily",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 824 25번지 대우디오빌플러스 1628호",
-    "short_address": "강남구 역삼동 824 25번지 대우디오빌플러스 1628호",
+    "address": "Room 1628, Daewoo Dioville Plus, 824 25 Yeoksam-dong, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "Room 1628, Daewoo Dioville Plus, 824 25, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.497513999999995,
       "lng": 127.0310602
@@ -3586,8 +3586,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3596,8 +3596,8 @@
   },
   {
     "place_id": "ChIJayYUGlehfDURL7bBBMK-WdI",
-    "display_name": "세인트버넷",
-    "category": "의류점",
+    "display_name": "st burnet",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "tailor",
@@ -3606,8 +3606,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 824-27 지희빌딩 1층 세인트버넷",
-    "short_address": "강남구 824-27 지희빌딩 1층 세인트버넷",
+    "address": "St. Burnet, 1st floor, Jihee Building, 824-27, Gangnam-gu, Seoul, Korea",
+    "short_address": "St. Burnett, 1st floor, Jihee Building, 824-27, Gangnam-gu",
     "location": {
       "lat": 37.497723,
       "lng": 127.03138200000001
@@ -3626,18 +3626,18 @@
     "google_maps_url": "https://maps.google.com/?cid=15157355761404851759",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1571a14266b:0xd259bec204c1b62f!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 8:00",
-      "화요일: 오전 10:00 ~ 오후 8:00",
-      "수요일: 오전 10:00 ~ 오후 8:00",
-      "목요일: 오전 10:00 ~ 오후 8:00",
-      "금요일: 오전 10:00 ~ 오후 8:00",
-      "토요일: 오전 11:00 ~ 오후 8:00",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 8:00 PM",
+      "Tuesday: 10:00 AM - 8:00 PM",
+      "Wednesday: 10:00 AM - 8:00 PM",
+      "Thursday: 10:00 AM - 8:00 PM",
+      "Friday: 10:00 AM - 8:00 PM",
+      "Saturday: 11:00 AM - 8:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3646,7 +3646,7 @@
         "author": "SHL",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -3664,8 +3664,8 @@
   },
   {
     "place_id": "ChIJjcAMA1ehfDUR2ece5ruge0U",
-    "display_name": "한국화장품전문가협회",
-    "category": "협회 또는 조직",
+    "display_name": "Korean Cosmetic Professionals Association",
+    "category": "association or organization",
     "types": [
       "association_or_organization",
       "cosmetics_store",
@@ -3674,8 +3674,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 테헤란로8길 13",
-    "short_address": "강남구 역삼동 테헤란로8길 13",
+    "address": "13 Teheran-ro 8-gil, Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "13 Teheran-ro 8-gil, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.497949299999995,
       "lng": 127.03173539999999
@@ -3694,13 +3694,13 @@
     "google_maps_url": "https://maps.google.com/?cid=5006772139632551897",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca157030cc08d:0x457ba0bbe61ee7d9!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 오전 9:00 ~ 오후 6:00",
-      "일요일: 오전 9:00 ~ 오후 6:00"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: 9:00 AM - 6:00 PM",
+      "Sunday: 9:00 AM - 6:00 PM"
     ],
     "services": null,
     "payment": null,
@@ -3711,14 +3711,14 @@
         "author": "Mihyon Cha",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "이 단체는 정말 보석 같은 존재입니다. 한국에 화장품 관련 제품들을 살펴보러 갔다가 우연히 이들의 워크숍을 알게 되었는데, 정말 많은 것을 배웠습니다. 차원이 다른 경험이었어요! 워크숍에 꼭 한번 참석해 보시길 추천합니다! 지식의 보고라고 할 수 있을 거예요!"
+        "relative_time": "2 years ago",
+        "text": "This organization is truly a gem. I went to Korea to look at cosmetics-related products and came across their workshop by chance, and I learned a lot. It was a completely different experience! I highly recommend attending the workshop! It can be said to be a treasure trove of knowledge!"
       },
       {
         "author": "So Jung Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       }
     ],
@@ -3733,16 +3733,16 @@
   },
   {
     "place_id": "ChIJWYT8EFehfDURArT41sMmySA",
-    "display_name": "베스트드레서",
-    "category": "의류점",
+    "display_name": "Best Dresser",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로84길 33",
-    "short_address": "강남구 강남대로84길 33",
+    "address": "33 Gangnam-daero 84-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "33 Gangnam-daero 84-gil, Gangnam-gu",
     "location": {
       "lat": 37.4978634,
       "lng": 127.031163
@@ -3763,8 +3763,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3773,16 +3773,16 @@
   },
   {
     "place_id": "ChIJfdRWDAehfDURLmbio2vNbFg",
-    "display_name": "모자모자",
-    "category": "의류점",
+    "display_name": "hat hat",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 테헤란로4길 34 강남뉴스텔",
-    "short_address": "강남구 역삼동 테헤란로4길 34 강남뉴스텔",
+    "address": "Gangnam Newstel, 34 Teheran-ro 4-gil, Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Gangnam Newstel, 34 Teheran-ro 4-gil, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4961505,
       "lng": 127.03036010000001
@@ -3803,8 +3803,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3813,8 +3813,8 @@
   },
   {
     "place_id": "ChIJzyBTDvihfDUR_Kt5ZqXaM1E",
-    "display_name": "펀노리터",
-    "category": "어린이집",
+    "display_name": "funnoliter",
+    "category": "daycare center",
     "types": [
       "child_care_agency",
       "point_of_interest",
@@ -3823,8 +3823,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동",
-    "short_address": "강남구 역삼동",
+    "address": "Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.49837,
       "lng": 127.03227749999999
@@ -3843,13 +3843,13 @@
     "google_maps_url": "https://maps.google.com/?cid=5851260744808115196",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1f80e5320cf:0x5133daa56679abfc!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:00 ~ 오후 4:00",
-      "화요일: 오전 10:00 ~ 오후 4:30",
-      "수요일: 오전 10:00 ~ 오후 4:00",
-      "목요일: 오전 10:00 ~ 오후 4:00",
-      "금요일: 오전 10:00 ~ 오후 4:00",
-      "토요일: 오전 10:00 ~ 오후 4:00",
-      "일요일: 휴무일"
+      "Monday: 10:00 AM - 4:00 PM",
+      "Tuesday: 10:00 AM - 4:30 PM",
+      "Wednesday: 10:00 AM - 4:00 PM",
+      "Thursday: 10:00 AM - 4:00 PM",
+      "Friday: 10:00 AM - 4:00 PM",
+      "Saturday: 10:00 AM - 4:00 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": null,
@@ -3860,16 +3860,16 @@
   },
   {
     "place_id": "ChIJKzMHsVChfDURAyj-MylC5TI",
-    "display_name": "도로시안틱",
-    "category": "의류점",
+    "display_name": "dorosiantic",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 번지 1동 동 우정에쉐르 1 12층 1202호 KR 서울특별시 강남구 역삼동 826-29",
-    "short_address": "역삼동 번지 1동 동 KR 서울특별시 강남구 역삼동 826-29 우정에쉐르 1 12층 1202호",
+    "address": "Room 1202, 12th floor, 1-dong, Woojeongesher, Yeoksam-dong, Seoul, Republic of Korea KR 826-29, Yeoksam-dong, Gangnam-gu, Seoul",
+    "short_address": "Yeoksam-dong Address 1-dong KR Room 1202, 12th floor, Woojung Esher 826-29 Yeoksam-dong, Gangnam-gu, Seoul",
     "location": {
       "lat": 37.4962612,
       "lng": 127.03014449999999
@@ -3890,8 +3890,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3901,16 +3901,16 @@
   },
   {
     "place_id": "ChIJ4VW9slChfDUR6BGvprZAF7Y",
-    "display_name": "(유한)제이스나라",
-    "category": "화장품 판매점",
+    "display_name": "(Limited) Jayce Nara",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 826 27번지",
-    "short_address": "강남구 역삼동 826 27번지",
+    "address": "27, 826 Yeoksam-dong, Gangnam-gu, Seoul, Korea",
+    "short_address": "826 27, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4966521,
       "lng": 127.0300128
@@ -3931,8 +3931,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3941,16 +3941,16 @@
   },
   {
     "place_id": "ChIJ4xvluFChfDURYYHg8AvO254",
-    "display_name": "(주)아크컴페니",
-    "category": "의류점",
+    "display_name": "Ark Company Co., Ltd.",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 826-36번지 5층",
-    "short_address": "강남구 역삼동 826-36번지 5층",
+    "address": "5th floor, 826-36 Yeoksam-dong, Gangnam-gu, Seoul, Korea",
+    "short_address": "5th floor, 826-36 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.495781199999996,
       "lng": 127.0305058
@@ -3978,16 +3978,16 @@
   },
   {
     "place_id": "ChIJob4AxFChfDUR6VKCpFQe_zo",
-    "display_name": "반니 비스포크",
-    "category": "의류점",
+    "display_name": "Banni Bespoke",
+    "category": "clothing store",
     "types": [
       "point_of_interest",
       "clothing_store",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 827-20 두원빌딩 1층",
-    "short_address": "강남구 역삼동 827-20 두원빌딩 1층",
+    "address": "1st floor, Duwon Building, 827-20 Yeoksam-dong, Gangnam-gu, Seoul, Korea",
+    "short_address": "1st floor, Duwon Building, 827-20 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.495453,
       "lng": 127.030995
@@ -4006,20 +4006,20 @@
     "google_maps_url": "https://maps.google.com/?cid=4251149922147128041",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca150c400bea1:0x3aff1e54a48252e9!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오전 10:30 ~ 오후 8:00",
-      "수요일: 오전 10:30 ~ 오후 8:00",
-      "목요일: 오전 10:30 ~ 오후 8:00",
-      "금요일: 오전 10:30 ~ 오후 8:00",
-      "토요일: 오전 10:30 ~ 오후 8:00",
-      "일요일: 오전 10:30 ~ 오후 7:00"
+      "Monday: Closed day",
+      "Tuesday: 10:30 AM - 8:00 PM",
+      "Wednesday: 10:30 AM - 8:00 PM",
+      "Thursday: 10:30 AM - 8:00 PM",
+      "Friday: 10:30 AM - 8:00 PM",
+      "Saturday: 10:30 AM - 8:00 PM",
+      "Sunday: 10:30 AM - 7:00 PM"
     ],
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4029,36 +4029,36 @@
         "author": "Kim sang yun",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "1년 전",
-        "text": "상담이 잡혀 방문했습니다. 매니저가 처음부터 거만한 태도로 흰 셔츠를 속옷 취급하며 불쾌한 농담을 반복했습니다. 상담보다는 시시껄렁한 농담이 계속 이어져 매우 불편했습니다. 명함을 주지 않아 기분이 나빠서 제가 직접 명함을 요청했습니다.  참 신사답지 못한 서비스였습니다"
+        "relative_time": "1 year ago",
+        "text": "I visited for a consultation. The manager had an arrogant attitude from the beginning, treating the white shirt like underwear and repeatedly making unpleasant jokes. It was very uncomfortable as the jokes continued rather than counseling. I felt bad because they didn't give me a business card, so I asked for one myself.  It was truly ungentlemanly service."
       },
       {
         "author": "JH KIM",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "강남쪽에 몇안되는 합리적인 가격으로 비스포크(비접착 수제)로 맞춤정장을 할수 있는 곳"
+        "relative_time": "6 years ago",
+        "text": "One of the few places in Gangnam where you can get a bespoke (non-adhesive handmade) custom suit at a reasonable price."
       },
       {
         "author": "a bc",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "옷도 잘만드시는거같고 전반적인 서비스가 좋습니다"
+        "relative_time": "5 years ago",
+        "text": "They seem to make good clothes and the overall service is good."
       },
       {
         "author": "Junbong Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "친절하고 아주 실력 좋은 곳입니다."
+        "relative_time": "3 years ago",
+        "text": "It's a friendly and very talented place."
       },
       {
         "author": "JIEUN JEONG",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "사람들 너무 착함.\n내부가 킹스맨 같이 예쁨."
+        "relative_time": "7 years ago",
+        "text": "People are so nice.\nThe interior is as pretty as Kingsman."
       }
     ],
     "photos": [
@@ -4076,16 +4076,16 @@
   },
   {
     "place_id": "ChIJQ84Rju-hfDURFCokmq_0QRw",
-    "display_name": "금강타월",
-    "category": "의류점",
+    "display_name": "Geumgang Towel",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로4길 13 607호",
-    "short_address": "강남구 테헤란로4길 13 607호",
+    "address": "#607, 13 Teheran-ro 4-gil, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "#607, 13 Teheran-ro 4-gil, Gangnam-gu",
     "location": {
       "lat": 37.4975508,
       "lng": 127.03017190000001
@@ -4106,8 +4106,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4116,16 +4116,16 @@
   },
   {
     "place_id": "ChIJWQjHvFahfDUR94or41f87sU",
-    "display_name": "대구어페럴(주)",
-    "category": "의류점",
+    "display_name": "Daegu Apparel Co., Ltd.",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 828-52번지 강남구 서울특별시 KR",
-    "short_address": "역삼동 828-52번지 강남구 서울특별시 KR",
+    "address": "828-52 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "828-52 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.496236499999995,
       "lng": 127.03394239999999
@@ -4153,8 +4153,8 @@
   },
   {
     "place_id": "ChIJn2raUlehfDUR0VZWuRNmrhs",
-    "display_name": "주수루",
-    "category": "여성의류점",
+    "display_name": "Jusuru",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "point_of_interest",
@@ -4162,8 +4162,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 825-24번지 효성혜링턴타워 428호",
-    "short_address": "강남구 역삼동 825-24번지 효성혜링턴타워 428호",
+    "address": "#428, Hyosung Hyington Tower, 825-24 Yeoksam-dong, Gangnam-gu, Seoul, Korea",
+    "short_address": "Room 428, Hyosung Hyington Tower, 825-24 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4968317,
       "lng": 127.02982840000001
@@ -4183,11 +4183,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15752da6a9f:0x1bae6613b95656d1!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4196,16 +4196,16 @@
   },
   {
     "place_id": "ChIJn2raUlehfDURTp6nCUvyv_M",
-    "display_name": "비에프솔강남점",
-    "category": "신발 판매점",
+    "display_name": "BF Sol Gangnam Branch",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 825-24번지 102-1호 강남역효성해링턴타워더퍼스트 더퍼스트 강남구 서울특별시 KR",
-    "short_address": "역삼동 825-24번지 102-1호 강남역효성해링턴타워더퍼스트 더퍼스트 강남구 서울특별시 KR",
+    "address": "#102-1, 825-24 Yeoksam-dong, Seoul, Republic of Korea Gangnam Station Hyosung Harrington Tower The First The First Gangnam-gu Seoul KR",
+    "short_address": "#102-1, 825-24 Yeoksam-dong, Gangnam Station Hyosung Harrington Tower The First The First Gangnam-gu Seoul KR",
     "location": {
       "lat": 37.4968317,
       "lng": 127.02982840000001
@@ -4224,18 +4224,18 @@
     "google_maps_url": "https://maps.google.com/?cid=17564023475866672718",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15752da6a9f:0xf3bff24b09a79e4e!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 9:00",
-      "화요일: 오전 11:00 ~ 오후 9:00",
-      "수요일: 오전 11:00 ~ 오후 9:00",
-      "목요일: 오전 11:00 ~ 오후 9:00",
-      "금요일: 오전 11:00 ~ 오후 9:00",
-      "토요일: 오전 11:00 ~ 오후 9:00",
-      "일요일: 오전 11:00 ~ 오후 9:00"
+      "Monday: 11:00 AM - 9:00 PM",
+      "Tuesday: 11:00 AM - 9:00 PM",
+      "Wednesday: 11:00 AM - 9:00 PM",
+      "Thursday: 11:00 AM - 9:00 PM",
+      "Friday: 11:00 AM - 9:00 PM",
+      "Saturday: 11:00 AM - 9:00 PM",
+      "Sunday: 11:00 AM - 9:00 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4246,7 +4246,7 @@
   {
     "place_id": "ChIJ1XsQU1ehfDUReF-gq78z1qQ",
     "display_name": "Namu GRIM",
-    "category": "여성의류점",
+    "category": "women's clothing store",
     "types": [
       "womens_clothing_store",
       "point_of_interest",
@@ -4254,8 +4254,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로84길 15",
-    "short_address": "강남구 강남대로84길 15",
+    "address": "15 Gangnam-daero 84-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "15 Gangnam-daero 84-gil, Gangnam-gu",
     "location": {
       "lat": 37.496917499999995,
       "lng": 127.02975850000001
@@ -4274,18 +4274,18 @@
     "google_maps_url": "https://maps.google.com/?cid=11877737965547446136",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca15753107bd5:0xa4d633bfaba05f78!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 11:00 ~ 오후 10:00",
-      "화요일: 오전 11:00 ~ 오후 10:00",
-      "수요일: 오전 11:00 ~ 오후 10:00",
-      "목요일: 오전 11:00 ~ 오후 10:00",
-      "금요일: 오전 11:00 ~ 오후 10:00",
-      "토요일: 오전 11:00 ~ 오후 10:00",
-      "일요일: 오후 12:30~8:30"
+      "Monday: 11:00 AM - 10:00 PM",
+      "Tuesday: 11:00 AM - 10:00 PM",
+      "Wednesday: 11:00 AM - 10:00 PM",
+      "Thursday: 11:00 AM - 10:00 PM",
+      "Friday: 11:00 AM - 10:00 PM",
+      "Saturday: 11:00 AM - 10:00 PM",
+      "Sunday: 12:30-8:30 PM"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4295,16 +4295,16 @@
   },
   {
     "place_id": "ChIJ1WhVolahfDURaCWOJPXh9dM",
-    "display_name": "프리아모",
-    "category": "신발 판매점",
+    "display_name": "Priamo",
+    "category": "shoe store",
     "types": [
       "shoe_store",
       "point_of_interest",
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로14길 48",
-    "short_address": "강남구 테헤란로14길 48",
+    "address": "48 Teheran-ro 14-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "48 Teheran-ro 14-gil, Gangnam-gu",
     "location": {
       "lat": 37.496226199999995,
       "lng": 127.03416639999999
@@ -4323,18 +4323,18 @@
     "google_maps_url": "https://maps.google.com/?cid=15273362154293437800",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca156a25568d5:0xd3f5e1f5248e2568!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4343,8 +4343,8 @@
   },
   {
     "place_id": "ChIJk_VxU1ehfDURFggHleFdL0U",
-    "display_name": "피카소24",
-    "category": "서비스",
+    "display_name": "Picasso24",
+    "category": "service",
     "types": [
       "jewelry_store",
       "point_of_interest",
@@ -4352,8 +4352,8 @@
       "store",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 강남대로84길 15",
-    "short_address": "강남구 강남대로84길 15",
+    "address": "15 Gangnam-daero 84-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "15 Gangnam-daero 84-gil, Gangnam-gu",
     "location": {
       "lat": 37.496950999999996,
       "lng": 127.02969679999998
@@ -4372,13 +4372,13 @@
     "google_maps_url": "https://maps.google.com/?cid=4985306535971719190",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1575371f593:0x452f5de195070816!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 10:30 ~ 오후 7:30",
-      "화요일: 오전 10:30 ~ 오후 7:30",
-      "수요일: 오전 10:30 ~ 오후 7:30",
-      "목요일: 오전 10:30 ~ 오후 7:30",
-      "금요일: 오전 10:30 ~ 오후 7:30",
-      "토요일: 오전 10:30 ~ 오후 7:30",
-      "일요일: 휴무일"
+      "Monday: 10:30 AM - 7:30 PM",
+      "Tuesday: 10:30 AM - 7:30 PM",
+      "Wednesday: 10:30 AM - 7:30 PM",
+      "Thursday: 10:30 AM - 7:30 PM",
+      "Friday: 10:30 AM - 7:30 PM",
+      "Saturday: 10:30 AM - 7:30 PM",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": null,
@@ -4389,36 +4389,36 @@
         "author": "AnnA bellydancer 77",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "강남에 시계수리 잘하는곳을 검색해서 피카소24를 방문하게 되었습니다.\n초음파세척.오버홀. 시계줄 교환 했는데 너무 만족스럽게 잘되서 리뷰남깁니다..\n또 수리할일 생기면 재방문할께요^^\n감사합니다.."
+        "relative_time": "2 years ago",
+        "text": "I searched for a good watch repair place in Gangnam and ended up visiting Picasso 24.\nUltrasonic cleaning. Overhaul. I exchanged the watch strap and was very satisfied with it, so I am leaving a review.\nI will visit again if I need to do any repairs again^^\nThank you.."
       },
       {
-        "author": "이주미",
+        "author": "Lee Joo-mi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "결혼예물 오버홀 했는데 만족스럽습니다..백화점매장에서는 기간도 많이소요되고 수리금액도 비싼데 피카소24에서 기간 금액 만족스럽게 수리완료 되서 감사합니다.^^"
+        "relative_time": "3 years ago",
+        "text": "I overhauled my wedding gift and am satisfied. At department stores, it takes a long time and the repair cost is expensive, but I am grateful that the repair was completed satisfactorily at Picasso 24.^^"
       },
       {
-        "author": "히키키키",
+        "author": "Hikikiki",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "좋네요\n믿고 맡겼는데 수리도 잘 되었어요\n소개받아서 갔는데 받길 잘했어요!\n부모님 시계고 가지고 와서 수리 맡길게요!"
+        "relative_time": "2 years ago",
+        "text": "It's good\nI trusted it and the repair was done well.\nI went after it was introduced, and it was a good thing!\nI'll bring my parents' watch and have it repaired!"
       },
       {
-        "author": "이용민",
+        "author": "Lee Yong-min",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "가격도 합리적이고 서비스도 좋아요\n수리도 잘 되었고 만족합니다\n다음에도 또 방문하고싶어요"
+        "relative_time": "2 years ago",
+        "text": "The price is reasonable and the service is good.\nThe repair went well and I am satisfied.\nI want to visit again next time"
       },
       {
         "author": "Mark Ow",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "3년 전",
-        "text": "이 가게 절대 가지 마세요! 믿을 수 없고 정말 비전문적입니다.\n한 달 전에 시계 수리와 광택 작업을 맡겼는데, 견적은 약 45만 원이었습니다. 2주 후 전화를 했더니 아직 작업이 완료되지 않았다고 했습니다. 다음 주에 다시 연락했지만 여전히 완료되지 않았습니다. 그동안 가게 측에서는 진행 상황을 전혀 알려주지 않았습니다. 제가 귀국하기 전에 시계를 완성해 주겠다고 약속했었는데, 출국 하루 전날 갑자기 시계 무브먼트 전체를 교체해야 한다며 총 비용이 65만 원이라고 했습니다. 저는 이를 거부하고 시계를 돌려달라고 했는데, 어이가 없게도 이미 진행된 작업에 대한 비용 30만 원을 추가로 지불해야 한다고 했습니다. 게다가 시계는 여전히 작동하지 않을 거라고 했습니다. 처음 견적을 받았을 때 수리비 진단 비용으로 1만 원만 청구하겠다고 했는데, 이는 명백히 거짓이었습니다.\n정말 불쾌한 경험이었습니다. 예전에도 다른 정비소를 이용해 봤지만, 이렇게 터무니없고 사기적인 행태는 처음 봅니다."
+        "relative_time": "3 years ago",
+        "text": "Never go to this store! This is unbelievable and truly unprofessional.\nA month ago, I had the watch repaired and polished, and the estimate was about 450,000 won. I called two weeks later and they said the work wasn't done yet. I contacted them again the following week and it still wasn't done. In the meantime, the store did not provide any information about the progress. They had promised to complete the watch before I returned home, but the day before I left the country, they suddenly said that the entire watch movement would need to be replaced and that the total cost would be 650,000 won. I refused and asked for my watch back, but to my surprise, they told me I would have to pay an additional 300,000 won for the work that had already been done. Plus, they said the watch still wouldn't work. When I first received the quote, they said they would only charge me 10,000 won for repair and diagnostic fees, which was obviously false.\nIt was a really unpleasant experience. I have used other repair shops in the past, but this is the first time I have seen such absurd and fraudulent behavior."
       }
     ],
     "photos": [
@@ -4431,16 +4431,16 @@
   },
   {
     "place_id": "ChIJYY6qn1WhfDURRRDksjvsd6Q",
-    "display_name": "(주)워너쉬",
-    "category": "의류점",
+    "display_name": "Wannash Co., Ltd.",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 738 41번지",
-    "short_address": "강남구 역삼동 738 41번지",
+    "address": "41, 738 Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "738 41 Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.49771,
       "lng": 127.0371861
@@ -4461,7 +4461,7 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4470,16 +4470,16 @@
   },
   {
     "place_id": "ChIJYY6qn1WhfDUR30gB60GIBlU",
-    "display_name": "아모레외판",
-    "category": "화장품 판매점",
+    "display_name": "Amore External Sales",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 738-41번지 강남구 서울특별시 KR",
-    "short_address": "역삼동 738-41번지 강남구 서울특별시 KR",
+    "address": "738-41 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "738-41 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.49771,
       "lng": 127.0371861
@@ -4500,8 +4500,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4510,16 +4510,16 @@
   },
   {
     "place_id": "ChIJJVJX_lShfDURYAAc-7gQT9Q",
-    "display_name": "(주)앤",
-    "category": "화장품 판매점",
+    "display_name": "Ann Co., Ltd.",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 747-9번지 4층 강남구 서울특별시 KR",
-    "short_address": "역삼동 747-9번지 4층 강남구 서울특별시 KR",
+    "address": "4th floor, 747-9 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "4th floor, 747-9 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.4961561,
       "lng": 127.03755770000001
@@ -4540,8 +4540,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4550,16 +4550,16 @@
   },
   {
     "place_id": "ChIJF1Led1ahfDURdXsCxop387Q",
-    "display_name": "(주)바를참스킨",
-    "category": "화장품 판매점",
+    "display_name": "Barul Charm Skin Co., Ltd.",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 741-12번지 참진빌딩 강남구 서울특별시 KR",
-    "short_address": "역삼동 741-12번지 참진빌딩 강남구 서울특별시 KR",
+    "address": "Chamjin Building, 741-12 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "741-12 Yeoksam-dong, Chamjin Building, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.4979983,
       "lng": 127.03463450000001
@@ -4580,8 +4580,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4591,15 +4591,15 @@
   {
     "place_id": "ChIJ2bjKmlWhfDURnQX1ADk2nHA",
     "display_name": "COCEUCO",
-    "category": "화장품 판매점",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 논현로85길 5-15",
-    "short_address": "강남구 논현로85길 5-15",
+    "address": "5-15 Nonhyeon-ro 85-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "5-15 Nonhyeon-ro 85-gil, Gangnam-gu",
     "location": {
       "lat": 37.4982994,
       "lng": 127.03676779999998
@@ -4618,18 +4618,18 @@
     "google_maps_url": "https://maps.google.com/?cid=8114420247071884701",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1559acab8d9:0x709c363900f5059d!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4638,16 +4638,16 @@
   },
   {
     "place_id": "ChIJwTvdEVWhfDURk7Z10lgfPuU",
-    "display_name": "가발두피산업협동조합",
-    "category": "화장품 판매점",
+    "display_name": "Wig Scalp Industry Cooperative",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 746 13번지 효제빌딩 201호",
-    "short_address": "강남구 역삼동 746 13번지 효제빌딩 201호",
+    "address": "Room 201, Hyoje Building, 746 13 Yeoksam-dong, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "Room 201, Hyoje Building, 746 13, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4968882,
       "lng": 127.03805949999999
@@ -4668,8 +4668,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4678,16 +4678,16 @@
   },
   {
     "place_id": "ChIJi3xOXlShfDURpaK0QWa_JtU",
-    "display_name": "(주)퓨처뷰티",
-    "category": "화장품 판매점",
+    "display_name": "Future Beauty Co., Ltd.",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 이에프호실 역삼동 번지 7층 747-2 KR 서울특별시 강남구",
-    "short_address": "이에프호실 역삼동 번지 7층 747-2 KR 서울특별시 강남구",
+    "address": "747-2, 7th floor, Yeoksam-dong, Room F, Seoul, South Korea KR Gangnam-gu, Seoul",
+    "short_address": "F Room Yeoksam-dong 7th floor 747-2 KR Gangnam-gu, Seoul",
     "location": {
       "lat": 37.4953743,
       "lng": 127.03715950000002
@@ -4715,8 +4715,8 @@
   },
   {
     "place_id": "ChIJSwLyhVWhfDURUf7xm5IDMWI",
-    "display_name": "(주)에센",
-    "category": "어린이집",
+    "display_name": "Essen Co., Ltd.",
+    "category": "daycare center",
     "types": [
       "child_care_agency",
       "clothing_store",
@@ -4725,8 +4725,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 번지 2층 738-2 211호",
-    "short_address": "강남구 역삼동 번지 2층 738-2 211호",
+    "address": "#211, 2nd floor, 738-2, Yeoksam-dong, Gangnam-gu, Seoul, Republic of Korea",
+    "short_address": "Room 211, 738-2, 2nd floor, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.4985541,
       "lng": 127.0367195
@@ -4754,16 +4754,16 @@
   },
   {
     "place_id": "ChIJSwLyhVWhfDURiF-e73eCugM",
-    "display_name": "(주)쥬베니스",
-    "category": "의류점",
+    "display_name": "Juvenis Co., Ltd.",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 번지 2층 208 1호 KR 서울특별시 강남구 역삼동 738-2",
-    "short_address": "번지 2층 208 KR 서울특별시 강남구 역삼동 738-2 1호",
+    "address": "208 No. 1, 2nd floor, Seoul, Republic of Korea KR 738-2 Yeoksam-dong, Gangnam-gu, Seoul",
+    "short_address": "Address 2nd floor 208 KR #1, 738-2 Yeoksam-dong, Gangnam-gu, Seoul",
     "location": {
       "lat": 37.4985541,
       "lng": 127.0367195
@@ -4791,8 +4791,8 @@
   },
   {
     "place_id": "ChIJ9QDN4f-jfDUR9NdL4Po7Uew",
-    "display_name": "베베숲",
-    "category": "어린이집",
+    "display_name": "Bebe Forest",
+    "category": "daycare center",
     "types": [
       "child_care_agency",
       "clothing_store",
@@ -4801,8 +4801,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 논현로 419",
-    "short_address": "강남구 역삼동 논현로 419",
+    "address": "419 Nonhyeon-ro, Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "419 Nonhyeon-ro, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.497575999999995,
       "lng": 127.03811630000001
@@ -4822,18 +4822,18 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3ffe1cd00f5:0xec513bfae04bd7f4!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": null,
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이준헌 소셜브랜드",
+        "author": "Junheon Lee Social Brand",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "8년 전",
-        "text": "베베숲 아기피부연구소에서 만들어서 믿음이 가요.ㅋ 지금 사용하고 있는데, 민감한 우리 아이 피부에 트러블도 없이 기저귀 교체시 이유식 먹고 입하고 목하고 옷하고 닦을때 유용하게 잘 사용하고 있어요:) 사용 후 우리아이 피부가 촉촉해지고 보습효과도 있는것 같아요~^^  피부자극이 없어요 좋아요.ㅋ"
+        "relative_time": "8 years ago",
+        "text": "I trust it because it is made by Bebe Forest Baby Skin Research Institute. I am using it now, and it does not cause any trouble to my child's sensitive skin. It is useful when changing diapers, eating baby food, putting on clothes, and wiping. :) After using it, my child's skin becomes moisturized and it seems to have a moisturizing effect as well~^^ It is good because it does not irritate the skin."
       }
     ],
     "photos": [
@@ -4843,15 +4843,15 @@
   {
     "place_id": "ChIJ9dskY3ShfDURJws7xRK_4Pc",
     "display_name": "poesiakr",
-    "category": "화장품 판매점",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 테헤란로20길 19",
-    "short_address": "강남구 테헤란로20길 19",
+    "address": "19 Teheran-ro 20-gil, Gangnam-gu, Seoul, South Korea",
+    "short_address": "19 Teheran-ro 20-gil, Gangnam-gu",
     "location": {
       "lat": 37.498543,
       "lng": 127.0350412
@@ -4870,18 +4870,18 @@
     "google_maps_url": "https://maps.google.com/?cid=17861486209490684711",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca1746324dbf5:0xf7e0bf12c53b0b27!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:30 ~ 오전 6:30",
-      "화요일: 오전 9:30 ~ 오전 6:30",
-      "수요일: 오전 9:30 ~ 오후 6:30",
-      "목요일: 오전 9:30 ~ 오후 6:30",
-      "금요일: 오전 9:30 ~ 오후 6:30",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:30 AM - 6:30 AM",
+      "Tuesday: 9:30 AM - 6:30 AM",
+      "Wednesday: 9:30 AM - 6:30 PM",
+      "Thursday: 9:30 AM - 6:30 PM",
+      "Friday: 9:30 AM - 6:30 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4892,16 +4892,16 @@
   },
   {
     "place_id": "ChIJ73TTEFWhfDUReAFVm1CviRE",
-    "display_name": "성화",
-    "category": "귀금속 상점",
+    "display_name": "torch",
+    "category": "jewelry stores",
     "types": [
       "jewelry_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동 번지 지하 746-22 1층",
-    "short_address": "강남구 역삼동 번지 지하 746-22 1층",
+    "address": "1st floor, 746-22 Basement, Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "1st floor, Basement 746-22, Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.496694999999995,
       "lng": 127.03834699999999
@@ -4929,7 +4929,7 @@
         "author": "Anais Marraud",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -4937,16 +4937,16 @@
   },
   {
     "place_id": "ChIJP6mi4dmhfDURJxyUbqTfjNQ",
-    "display_name": "미렌",
-    "category": "화장품 판매점",
+    "display_name": "Mirren",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 영원빌딩 501호",
-    "short_address": "강남구 영원빌딩 501호",
+    "address": "#501, Yeongwon Building, Gangnam-gu, Seoul, Korea",
+    "short_address": "Room 501, Yeongwon Building, Gangnam-gu",
     "location": {
       "lat": 37.4987929,
       "lng": 127.03606
@@ -4967,8 +4967,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4977,16 +4977,16 @@
   },
   {
     "place_id": "ChIJnVzqGwCkfDURX7OOq2bTdRs",
-    "display_name": "(주)에이포스타일",
-    "category": "의류점",
+    "display_name": "A4Style Co., Ltd.",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 역삼동",
-    "short_address": "강남구 역삼동",
+    "address": "Yeoksam-dong, Gangnam-gu, Seoul, South Korea",
+    "short_address": "Yeoksam-dong, Gangnam-gu",
     "location": {
       "lat": 37.498738599999996,
       "lng": 127.03663239999999
@@ -5011,10 +5011,10 @@
     "parking": null,
     "reviews": [
       {
-        "author": "한가해",
+        "author": "I'm free",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": "♡♡♡♡."
       }
     ],
@@ -5022,16 +5022,16 @@
   },
   {
     "place_id": "ChIJyxEnFFWhfDURMNZJkGc63mo",
-    "display_name": "아모레퍼시픽 도곡점",
-    "category": "화장품 판매점",
+    "display_name": "Amore Pacific Dogok Branch",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 강남구 논현로 411",
-    "short_address": "강남구 논현로 411",
+    "address": "411 Nonhyeon-ro, Gangnam-gu, Seoul, South Korea",
+    "short_address": "411 Nonhyeon-ro, Gangnam-gu",
     "location": {
       "lat": 37.4968231,
       "lng": 127.03846899999999
@@ -5050,18 +5050,18 @@
     "google_maps_url": "https://maps.google.com/?cid=7700656629326927408",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca155142711cb:0x6ade3a679049d630!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 9:00 ~ 오후 6:00",
-      "화요일: 오전 9:00 ~ 오후 6:00",
-      "수요일: 오전 9:00 ~ 오후 6:00",
-      "목요일: 오전 9:00 ~ 오후 6:00",
-      "금요일: 오전 9:00 ~ 오후 6:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 9:00 AM - 6:00 PM",
+      "Tuesday: 9:00 AM - 6:00 PM",
+      "Wednesday: 9:00 AM - 6:00 PM",
+      "Thursday: 9:00 AM - 6:00 PM",
+      "Friday: 9:00 AM - 6:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5071,16 +5071,16 @@
   },
   {
     "place_id": "ChIJ3bhsi1WhfDUR2otNiYac7XY",
-    "display_name": "(주)힐프레쉬코리아",
-    "category": "화장품 판매점",
+    "display_name": "Hill Fresh Korea Co., Ltd.",
+    "category": "cosmetics store",
     "types": [
       "cosmetics_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 739-3번지 1층 강남구 서울특별시 KR",
-    "short_address": "역삼동 739-3번지 1층 강남구 서울특별시 KR",
+    "address": "1st floor, 739-3 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "1st floor, 739-3 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.498897,
       "lng": 127.03611790000001
@@ -5101,8 +5101,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5112,15 +5112,15 @@
   {
     "place_id": "ChIJG__KfVWhfDUR8ANcPm3V5s8",
     "display_name": "NAMUGRIM",
-    "category": "의류점",
+    "category": "clothing store",
     "types": [
       "clothing_store",
       "store",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 역삼동 738-27번지 1층 강남구 서울특별시 KR",
-    "short_address": "역삼동 738-27번지 1층 강남구 서울특별시 KR",
+    "address": "1st floor, 738-27 Yeoksam-dong, Seoul, Republic of Korea, Gangnam-gu, Seoul KR",
+    "short_address": "1st floor, 738-27 Yeoksam-dong, Gangnam-gu, Seoul KR",
     "location": {
       "lat": 37.4983824,
       "lng": 127.03775990000001
@@ -5141,8 +5141,8 @@
     "opening_hours": null,
     "services": null,
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,

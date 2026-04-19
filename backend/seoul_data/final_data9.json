@@ -1,15 +1,15 @@
 [
   {
     "place_id": "ChIJaVIopzyjfDURqOM-n_KO2_M",
-    "display_name": "밀크바",
-    "category": "술집",
+    "display_name": "milk bar",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 을지로6가 18-12번지 3층",
-    "short_address": "중구 을지로6가 18-12번지 3층",
+    "address": "3rd floor, 18-12 Euljiro 6-ga, Jung-gu, Seoul, South Korea",
+    "short_address": "3rd floor, 18-12 Euljiro 6-ga, Jung-gu",
     "location": {
       "lat": 37.5689316,
       "lng": 127.0087977
@@ -29,14 +29,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33ca7285269:0xf3db8ef29f3ee3a8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -47,14 +47,14 @@
   {
     "place_id": "ChIJ_6senPujfDURncHNr01S8y8",
     "display_name": "Nutrition Bar",
-    "category": "술집",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 청계천로 279",
-    "short_address": "종로구 청계천로 279",
+    "address": "279 Cheonggyecheon-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "279 Cheonggyecheon-ro, Jongno-gu",
     "location": {
       "lat": 37.570407599999996,
       "lng": 127.00659329999999
@@ -74,14 +74,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3fb9c1eabff:0x2ff3524dafcdc19d!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -92,15 +92,15 @@
   },
   {
     "place_id": "ChIJixgFuTyjfDURcJ9a1WQLGso",
-    "display_name": "어엠비션",
-    "category": "술집",
+    "display_name": "Ambition",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 을지로6가 번지 지하 18-17 밀리오레상가 건물 2층 176 177호",
-    "short_address": "중구 을지로6가 번지 지하 18-17 밀리오레상가 건물 2층 176 177호",
+    "address": "Room 176, 177, 2nd floor, Migliore Shopping Center Building, Basement 18-17, Euljiro 6-ga, Jung-gu, Seoul, Republic of Korea",
+    "short_address": "Room 176 177, 2nd floor, Migliore Shopping Center Building, Basement 18-17, Euljiro 6-ga, Jung-gu",
     "location": {
       "lat": 37.5681243,
       "lng": 127.00869859999999
@@ -120,13 +120,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33cb905188b:0xca1a0b64d55a9f70!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실"
+      "Store meal",
+      "Reservation available",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -135,15 +135,15 @@
   },
   {
     "place_id": "ChIJixgFuTyjfDURs6LzlNjDca4",
-    "display_name": "멜랑주",
-    "category": "술집",
+    "display_name": "mélange",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 번지 3층 45 호 밀리오레상가건물 KR 서울특별시 중구 을지로6가 18-17",
-    "short_address": "번지 3층 45 KR 서울특별시 중구 을지로6가 18-17 호 밀리오레상가건물",
+    "address": "Migliore Shopping Center Building, No. 45, 3rd floor, Seoul, Republic of Korea KR 18-17 Euljiro 6-ga, Jung-gu, Seoul",
+    "short_address": "Address 3rd floor 45 KR Migliore Shopping Center Building, No. 18-17, Euljiro 6-ga, Jung-gu, Seoul",
     "location": {
       "lat": 37.5681243,
       "lng": 127.00869859999999
@@ -163,13 +163,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33cb905188b:0xae71c3d894f3a2b3!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "배달",
-      "매장식사",
-      "화장실"
+      "delivery",
+      "Store meal",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -178,16 +178,16 @@
   },
   {
     "place_id": "ChIJixgFuTyjfDURyS8RLJMJ22Y",
-    "display_name": "에스에스",
-    "category": "호프/생맥주집",
+    "display_name": "SS",
+    "category": "Hop/draft beer house",
     "types": [
       "pub",
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 을지로6가 18-17번지 밀리오레상가건물 1층 65호 중구 서울특별시 KR",
-    "short_address": "을지로6가 18-17번지 밀리오레상가건물 1층 65호 중구 서울특별시 KR",
+    "address": "Room 65, 1st floor, Migliore Shopping Center Building, 18-17 Eulji-ro 6-ga, Seoul, Republic of Korea, Jung-gu, Seoul KR",
+    "short_address": "Room 65, 1st floor, Migliore Shopping Center Building, 18-17 Euljiro 6-ga, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.5681243,
       "lng": 127.00869859999999
@@ -207,14 +207,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33cb905188b:0x66db09932c112fc9!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -224,15 +224,15 @@
   },
   {
     "place_id": "ChIJQQuktySjfDURsj9qgBKmwxs",
-    "display_name": "대영잭크",
-    "category": "술집",
+    "display_name": "Daeyoung Jack",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로6가 262-1번지 동대문종합시장 1층 D동 1639호 종로구 서울특별시 KR",
-    "short_address": "종로6가 262-1번지 동대문종합시장 1층 D동 1639호 종로구 서울특별시 KR",
+    "address": "Room 1639, Building D, 1st floor, Dongdaemun General Market, 262-1 Jongno 6-ga, Seoul, Republic of Korea Seoul, Jongno-gu KR",
+    "short_address": "#1639, Building D, 1st floor, Dongdaemun General Market, 262-1 Jongno 6-ga, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.570661199999996,
       "lng": 127.00725790000001
@@ -252,12 +252,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca324b7a40b41:0x1bc3a612806a3fb2!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실"
+      "Store meal",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -266,15 +266,15 @@
   },
   {
     "place_id": "ChIJQQuktySjfDURHfUgFbVACW0",
-    "display_name": "해비치",
-    "category": "술집",
+    "display_name": "Haevichi",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로6가 262-1번지 34동 4호 동대문종합시장 종로구 서울특별시 KR",
-    "short_address": "종로6가 262-1번지 34동 4호 동대문종합시장 종로구 서울특별시 KR",
+    "address": "Dongdaemun General Market, Room 4, Building 34, 262-1, Jongno 6-ga, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "262-1 Jongno 6-ga, Building 34, Room 4, Dongdaemun General Market, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.570661199999996,
       "lng": 127.00725790000001
@@ -294,12 +294,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca324b7a40b41:0x6d0940b51520f51d!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실"
+      "Store meal",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -308,15 +308,15 @@
   },
   {
     "place_id": "ChIJQQuktySjfDURx4AmCaHpfaA",
-    "display_name": "네모",
-    "category": "술집",
+    "display_name": "square",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로6가 262-1번지",
-    "short_address": "종로구 종로6가 262-1번지",
+    "address": "262-1 Jongno 6-ga, Jongno-gu, Seoul, South Korea",
+    "short_address": "262-1 Jongno 6-ga, Jongno-gu",
     "location": {
       "lat": 37.570661199999996,
       "lng": 127.00725790000001
@@ -336,13 +336,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca324b7a40b41:0xa07de9a1092680c7!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -352,15 +352,15 @@
   },
   {
     "place_id": "ChIJN6m20zyjfDUREtm8zTwN8vo",
-    "display_name": "고도리",
-    "category": "술집",
+    "display_name": "Godori",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 을지로6가 18-35 번지 헬로우APM 2층 66호",
-    "short_address": "중구 을지로6가 18-35 번지 헬로우APM 2층 66호",
+    "address": "Room 66, 2nd floor, Hello APM, 18-35 Euljiro 6-ga, Jung-gu, Seoul, Republic of Korea",
+    "short_address": "Room 66, 2nd floor, Hello APM, 18-35 Euljiro 6-ga, Jung-gu",
     "location": {
       "lat": 37.5674458,
       "lng": 127.00805559999999
@@ -380,14 +380,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33cd3b6a937:0xfaf20d3ccdbcd912!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -397,15 +397,15 @@
   },
   {
     "place_id": "ChIJN6m20zyjfDURGh6Tu-3VtcE",
-    "display_name": "코코아",
-    "category": "술집",
+    "display_name": "cocoa",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 번지 2층 126 헬로우APM 127호 KR 서울특별시 중구 을지로6가 18-35",
-    "short_address": "번지 2층 126 KR 서울특별시 중구 을지로6가 18-35 헬로우APM 127호",
+    "address": "Hello APM #127, 2nd floor, 126, Seoul, Republic of Korea KR 18-35 Euljiro 6-ga, Jung-gu, Seoul",
+    "short_address": "Address 2nd floor 126 KR Hello APM #127, 18-35 Euljiro 6-ga, Jung-gu, Seoul",
     "location": {
       "lat": 37.5674458,
       "lng": 127.00805559999999
@@ -425,13 +425,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33cd3b6a937:0xc1b5d5edbb931e1a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -441,14 +441,14 @@
   {
     "place_id": "ChIJB1oWAQCjfDURQUGDIldg3MI",
     "display_name": "鐘路新進市場（屋台飲み屋）",
-    "category": "술집",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로5가 503-24번지",
-    "short_address": "종로구 종로5가 503-24번지",
+    "address": "503-24 Jongno 5-ga, Jongno-gu, Seoul, South Korea",
+    "short_address": "503-24 Jongno 5-ga, Jongno-gu",
     "location": {
       "lat": 37.569905399999996,
       "lng": 127.0050648
@@ -468,11 +468,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca30001165a07:0xc2dc605722834141!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -481,15 +481,15 @@
   },
   {
     "place_id": "ChIJz13cPjujfDURjWbyhHm-eow",
-    "display_name": "무지개",
-    "category": "술집",
+    "display_name": "rainbow",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로6가 289-3",
-    "short_address": "종로구 종로6가 289-3",
+    "address": "289-3, Jongno 6-ga, Jongno-gu, Seoul, South Korea",
+    "short_address": "289-3 Jongno 6-ga, Jongno-gu",
     "location": {
       "lat": 37.570420299999995,
       "lng": 127.0084165
@@ -509,14 +509,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33b3edc5dcf:0x8c7abe7984f2668d!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -525,15 +525,15 @@
   },
   {
     "place_id": "ChIJl9tGkCSjfDURj7BmSvarMDI",
-    "display_name": "술로장생",
-    "category": "술집",
+    "display_name": "Live long through alcohol",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로5가 268번지",
-    "short_address": "종로구 종로5가 268번지",
+    "address": "268 Jongno 5-ga, Jongno-gu, Seoul, Korea",
+    "short_address": "268 Jongno 5-ga, Jongno-gu",
     "location": {
       "lat": 37.5707922,
       "lng": 127.00590570000001
@@ -553,52 +553,52 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3249046db97:0x3230abf64a66b08f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "Charlie Yun 다이아몬드 국제딜러 윤영진.",
+        "author": "Charlie Yun Youngjin Yoon, international diamond dealer.",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "서울시 동대문근처에 위치하고 있으며 입구는 작지만 안에 들어가면 넓은 공간에 놀라실겁니다. 분위기도 좋아요"
+        "relative_time": "3 years ago",
+        "text": "It is located near Dongdaemun in Seoul. The entrance is small, but once you enter, you will be surprised by the spacious space. The atmosphere is good too"
       },
       {
-        "author": "단식자",
+        "author": "faster",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "여기 술집의 인테리어는 놀랍다.\n사장님의 취향이 반영된 것인지 몰라도 내부 곳곳에 화분으로 꽉 채워 있다. 사장님의 화초사랑에 대해 알만하다.\n혹시 알바는 오후에 출근해서 화초에 물주고 저녁에 서빙하시는 건 아닌지 궁금할 정도다.\n화초인테리어와 야릇한 조명이 술로장생의 컨셉인 듯 하다.\n그외에 나머지는 기대이상이다. 안주도 맛있는 편이고 술도 소주3+맥주1=14000원에 팔고 있다. 맥주2+소주1개도 같은 가격이다.\n다음에 또 갈꺼냐고? 일차보다는 순수하게 이차로 술마시러 갈만하다. 나오는 음악도 취향에 맞다."
+        "relative_time": "2 years ago",
+        "text": "The interior of the bar here is amazing.\nIt may be a reflection of the owner's taste, but the interior is filled with flower pots here and there. It's worth knowing about the owner's love for flowers.\nI wonder if part-time workers come to work in the afternoon, water the plants, and serve food in the evening.\nThe flowery interior and strange lighting seem to be the concept of longevity through drinking.\nOther than that, everything else exceeded expectations. The snacks are delicious and alcohol is sold for 3 soju + 1 beer = 14,000 won. 2 beers and 1 soju are the same price.\nAre you going again next time? It's better to go for a drink purely as a secondary drink rather than as a primary drink. The music that comes on also suits my taste."
       },
       {
         "author": "Mario Lim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "일주일 이내",
-        "text": "친절한 안내와 실내분위기가 가까운 지인들과 대화하기 좋았습니다"
+        "relative_time": "within a week",
+        "text": "The friendly guidance and indoor atmosphere were great for conversing with close acquaintances."
       },
       {
         "author": "moon kiss",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       },
       {
-        "author": "김명선",
+        "author": "Kim Myeong-seon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
+        "relative_time": "1 year ago",
         "text": null
       }
     ],
@@ -617,8 +617,8 @@
   },
   {
     "place_id": "ChIJ-wGQjyOjfDURMVjYmUscEEg",
-    "display_name": "더 그리핀",
-    "category": "술집",
+    "display_name": "The Griffin",
+    "category": "bar",
     "types": [
       "bar",
       "cocktail_bar",
@@ -627,8 +627,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 청계천로 279",
-    "short_address": "종로구 청계천로 279",
+    "address": "279 Cheonggyecheon-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "279 Cheonggyecheon-ro, Jongno-gu",
     "location": {
       "lat": 37.570381,
       "lng": 127.00887800000001
@@ -636,7 +636,7 @@
     "rating": 4.4,
     "rating_stars": "★★★★☆ 4.4",
     "rating_count": 137,
-    "price_level": "비쌈 ($$$)",
+    "price_level": "Expensive ($$$)",
     "price_range": {
       "min": "40000 KRW",
       "max": "50000 KRW"
@@ -650,37 +650,37 @@
     "google_maps_url": "https://maps.google.com/?cid=5192681481387399217",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3238f9001fb:0x48101c4b99d85831!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 6:00 ~ 오전 1:00",
-      "화요일: 오후 6:00 ~ 오전 1:00",
-      "수요일: 오후 6:00 ~ 오전 1:00",
-      "목요일: 오후 6:00 ~ 오전 1:00",
-      "금요일: 오후 6:00 ~ 오전 1:00",
-      "토요일: 오후 6:00 ~ 오전 1:00",
-      "일요일: 오후 6:00 ~ 오전 1:00"
+      "Monday: 6:00 PM - 1:00 AM",
+      "Tuesday: 6:00 PM - 1:00 AM",
+      "Wednesday: 6:00 PM - 1:00 AM",
+      "Thursday: 6:00 PM - 1:00 AM",
+      "Friday: 6:00 PM - 1:00 AM",
+      "Saturday: 6:00 PM - 1:00 AM",
+      "Sunday: 6:00 PM - 1:00 AM"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "야외석",
-      "화장실",
-      "단체적합",
-      "점심",
-      "저녁",
-      "맥주",
-      "와인",
-      "칵테일",
-      "커피",
-      "디저트"
+      "Store meal",
+      "Reservation available",
+      "outdoor seating",
+      "restroom",
+      "group fitness",
+      "lunch",
+      "dinner",
+      "beer",
+      "wine",
+      "cocktail",
+      "coffee",
+      "dessert"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -688,36 +688,36 @@
         "author": "Gwynne Lee",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "11달 전",
-        "text": "믹솔로지스트가 아예 없는듯. 바텐더가 레시피 못외워서 다른 직원에게 물어보면서 만들어줌. 그러면서 예전 바텐더대회 수상했던 분이 계셨을때의 가격은 그대로. 카드단말기도 안되어서 수기작성함. 좋아했던 바인데 이제 미련없이 떠날듯."
+        "relative_time": "11 months ago",
+        "text": "There seems to be no mixologist at all. The bartender couldn't remember the recipe, so he asked another employee to make it for him. At the same time, the price is the same as when the winner of the previous bartending competition was there. There was no card terminal, so I wrote it by hand. It's a bar I liked, but now I'm leaving without any regrets."
       },
       {
         "author": "Zyo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "2025년 세계바텐더 대회 우승한 맹이도님이 계세요"
+        "relative_time": "4 months ago",
+        "text": "Maeng Ido is the winner of the 2025 World Bartending Competition."
       },
       {
         "author": "Hye Kyoung Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "11달 전",
-        "text": "뷰도 예쁘고 작지만 서비스고 알찬 곳이에요."
+        "relative_time": "11 months ago",
+        "text": "It's a small place with a pretty view and great service."
       },
       {
         "author": "Hwang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "야외 테라스에서 DDP가 한 눈에 보이는 뛰어난 전경이 매력이다."
+        "relative_time": "6 years ago",
+        "text": "The attraction is the excellent view of DDP from the outdoor terrace."
       },
       {
         "author": "eunjung cho",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
-        "text": "서울의 야경을 가까이서 볼수 있습니다. 동대문과 서울 성곽에 새로움이 느낄 수 있습니다."
+        "relative_time": "7 years ago",
+        "text": "You can see the night view of Seoul up close. You can feel the newness of Dongdaemun and Seoul Fortress."
       }
     ],
     "photos": [
@@ -735,15 +735,15 @@
   },
   {
     "place_id": "ChIJ82CBojujfDUR_UUiIuklG1g",
-    "display_name": "양파남",
-    "category": "술집",
+    "display_name": "Onion man",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 KR 서울특별시 중구 신당동 217-1번지 1층 가-4호",
-    "short_address": "KR 서울특별시 중구 신당동 217-1번지 1층 가-4호",
+    "address": "Seoul, Republic of Korea KR 1st floor, A-4, 217-1 Sindang-dong, Jung-gu, Seoul",
+    "short_address": "KR #A-4, 1st floor, 217-1 Sindang-dong, Jung-gu, Seoul",
     "location": {
       "lat": 37.5694216,
       "lng": 127.01103149999999
@@ -763,13 +763,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33ba28160f3:0x581b25e9222245fd!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -779,15 +779,15 @@
   },
   {
     "place_id": "ChIJUbS7iDujfDURfYe9Ji1nuLY",
-    "display_name": "흑백",
-    "category": "술집",
+    "display_name": "black and white",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동 775번지 제일평화시장 1층 71호",
-    "short_address": "중구 신당동 775번지 제일평화시장 1층 71호",
+    "address": "Room 71, 1st floor, Jeil Pyeonghwa Market, 775 Sindang-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "Room 71, 1st floor, Jeil Pyeonghwa Market, 775 Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.5684231,
       "lng": 127.01123599999998
@@ -807,13 +807,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33b88bbb451:0xb6b8672d26bd877d!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -823,15 +823,15 @@
   },
   {
     "place_id": "ChIJUbS7iDujfDURzf4_s39Uy2w",
-    "display_name": "바네사룸",
-    "category": "술집",
+    "display_name": "vanessa room",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 신당동 774 775 제일평화시장 1층 115호 KR 서울특별시 중구 신당동 775번지",
-    "short_address": "신당동 774 775 KR 서울특별시 중구 신당동 775번지 제일평화시장 1층 115호",
+    "address": "Room 115, 1st floor, Jeil Pyeonghwa Market, 774 775 Sindang-dong, Seoul, South Korea KR 775 Sindang-dong, Jung-gu, Seoul",
+    "short_address": "Sindang-dong 774 775 KR Room 115, 1st floor, Jeil Pyeonghwa Market, 775 Sindang-dong, Jung-gu, Seoul",
     "location": {
       "lat": 37.5684231,
       "lng": 127.01123599999998
@@ -851,15 +851,15 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33b88bbb451:0x6ccb547fb33ffecd!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -869,8 +869,8 @@
   },
   {
     "place_id": "ChIJZych7TujfDURJB__-On46Hw",
-    "display_name": "벙커",
-    "category": "와인 바",
+    "display_name": "bunker",
+    "category": "wine bar",
     "types": [
       "wine_bar",
       "bar",
@@ -878,8 +878,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 번지 3층 50 51호 KR 서울특별시 중구 신당동 777",
-    "short_address": "번지 3층 50 KR 서울특별시 중구 신당동 777 51호",
+    "address": "3rd floor, #50, #51, Seoul, Republic of Korea KR 777 Sindang-dong, Jung-gu, Seoul",
+    "short_address": "Address 3rd floor 50 KR #51, 777 Sindang-dong, Jung-gu, Seoul",
     "location": {
       "lat": 37.5686442,
       "lng": 127.0119168
@@ -899,13 +899,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33bed212767:0x7ce8f8e9f8ff1f24!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "와인"
+      "Store meal",
+      "restroom",
+      "wine"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -915,15 +915,15 @@
   },
   {
     "place_id": "ChIJZych7TujfDUR6FoYZOCcFe0",
-    "display_name": "째즈세컨드",
-    "category": "술집",
+    "display_name": "jazz second",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동 777번지 맥스타일 B1 층 39호",
-    "short_address": "중구 신당동 777번지 맥스타일 B1 층 39호",
+    "address": "Room 39, Maxtyle B1, 777 Sindang-dong, Jung-gu, Seoul, Korea",
+    "short_address": "Room 39, Maxtyle B1, 777 Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.5686442,
       "lng": 127.0119168
@@ -943,13 +943,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33bed212767:0xed159ce064185ae8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -959,7 +959,7 @@
         "author": "POLO WIN",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -967,15 +967,15 @@
   },
   {
     "place_id": "ChIJNYpByjujfDUR2Ep7KTWbMjg",
-    "display_name": "걸스",
-    "category": "술집",
+    "display_name": "Girls",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 436-78",
-    "short_address": "종로구 창신동 436-78",
+    "address": "436-78 Changsin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "436-78 Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.570032,
       "lng": 127.0119414
@@ -995,12 +995,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33bca418a35:0x38329b35297b4ad8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실"
+      "Store meal",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1010,16 +1010,16 @@
   },
   {
     "place_id": "ChIJLVF_BjujfDURZsSXDAXwVIk",
-    "display_name": "뉴키즈노래주점",
-    "category": "호프/생맥주집",
+    "display_name": "New Kids Song Bar",
+    "category": "Hop/draft beer house",
     "types": [
       "pub",
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 창신동 439-1번지 창신동종합상가 2층 종로구 서울특별시 KR",
-    "short_address": "창신동 439-1번지 창신동종합상가 2층 종로구 서울특별시 KR",
+    "address": "2nd floor, Changsin-dong General Shopping Center, 439-1 Changsin-dong, Seoul, Republic of Korea Seoul, Jongno-gu KR",
+    "short_address": "439-1 Changsin-dong, 2nd floor, Changsin-dong General Shopping Center, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5704253,
       "lng": 127.0101737
@@ -1039,13 +1039,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33b067f512d:0x8954f0050c97c466!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1055,15 +1055,15 @@
   },
   {
     "place_id": "ChIJ7eDzfTmjfDURppDdV9D97dA",
-    "display_name": "투위",
-    "category": "술집",
+    "display_name": "Twowi",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 다동 60호 호 KR 서울특별시 중구 신당동 217-92번지 1층",
-    "short_address": "다동 KR 서울특별시 중구 신당동 217-92번지 1층 60호 호",
+    "address": "#60, Dadong, Seoul, Republic of Korea KR 1st floor, 217-92 Sindang-dong, Jung-gu, Seoul",
+    "short_address": "Dadong KR Room 60, 1st floor, 217-92 Sindang-dong, Jung-gu, Seoul",
     "location": {
       "lat": 37.5694218,
       "lng": 127.01321850000001
@@ -1083,13 +1083,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3397df3e0ed:0xd0edfdd057dd90a6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1099,15 +1099,15 @@
   },
   {
     "place_id": "ChIJkbLKVjqjfDURrXZARcL6B-s",
-    "display_name": "블루7090라이브",
-    "category": "술집",
+    "display_name": "Blue 7090 Live",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 번지 지하 463-1 1층",
-    "short_address": "종로구 창신동 번지 지하 463-1 1층",
+    "address": "1st floor, Basement 463-1, Changsin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "1st floor, Basement 463-1, Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.5709932,
       "lng": 127.01084309999999
@@ -1127,13 +1127,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33a56cab291:0xeb07fac2454076ad!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1143,15 +1143,15 @@
   },
   {
     "place_id": "ChIJ2UghhzmjfDURR0mXiVpGsxc",
-    "display_name": "누벨",
-    "category": "술집",
+    "display_name": "nouvelle",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 서쪽호 1층 35호 KR 서울특별시 종로구 창신동 436-65번지 다동",
-    "short_address": "KR 서울특별시 종로구 창신동 436-65번지 다동 서쪽호 1층 35호",
+    "address": "#35, 1st floor, West Building, Seoul, Republic of Korea KR 436-65 Changsin-dong, Jongno-gu, Seoul, Dadong",
+    "short_address": "KR Room 35, 1st floor, West Building, Dadong, 436-65 Changsin-dong, Jongno-gu, Seoul",
     "location": {
       "lat": 37.570063499999996,
       "lng": 127.01334360000001
@@ -1171,13 +1171,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca339872148d9:0x17b3465a89974947!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1187,15 +1187,15 @@
   },
   {
     "place_id": "ChIJ2UghhzmjfDURf6DLIWdGQZY",
-    "display_name": "팝스타",
-    "category": "술집",
+    "display_name": "pop star",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 창신동 436-65번지 종로구 서울특별시 KR",
-    "short_address": "창신동 436-65번지 종로구 서울특별시 KR",
+    "address": "436-65 Changsin-dong, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "436-65 Changsin-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.570063499999996,
       "lng": 127.01334360000001
@@ -1215,13 +1215,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca339872148d9:0x9641466721cba07f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1231,15 +1231,15 @@
   },
   {
     "place_id": "ChIJ_3PuWjqjfDUR5opO4XNWLt0",
-    "display_name": "신세계셀프호프",
-    "category": "술집",
+    "display_name": "Shinsegae Self Hope",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 창신동 464-34번지 종로구 서울특별시 KR",
-    "short_address": "창신동 464-34번지 종로구 서울특별시 KR",
+    "address": "464-34 Changsin-dong, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "464-34 Changsin-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5712194,
       "lng": 127.01105980000001
@@ -1259,13 +1259,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33a5aee73ff:0xdd2e5673e14e8ae6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1274,15 +1274,15 @@
   },
   {
     "place_id": "ChIJe7XYCTmjfDURd6onpWjgfCg",
-    "display_name": "어거스트라운지",
-    "category": "술집",
+    "display_name": "August Lounge",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 E동 04호 KR 서울특별시 중구 신당동 193-2번지 지하1층",
-    "short_address": "KR 서울특별시 중구 신당동 193-2번지 지하1층 E동 04호",
+    "address": "Building E, Room 04, Seoul, Republic of Korea KR 193-2 Sindang-dong, Jung-gu, Seoul, Basement 1",
+    "short_address": "KR Room 04, Building E, Basement 1, 193-2 Sindang-dong, Jung-gu, Seoul",
     "location": {
       "lat": 37.5691202,
       "lng": 127.0149759
@@ -1302,13 +1302,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33909d8b57b:0x287ce068a527aa77!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1318,15 +1318,15 @@
   },
   {
     "place_id": "ChIJe7XYCTmjfDURav1sz3J3sf4",
-    "display_name": "피오니",
-    "category": "술집",
+    "display_name": "Peony",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 KR 서울특별시 중구 신당동 193-2번지 지하2층 A동 10호",
-    "short_address": "KR 서울특별시 중구 신당동 193-2번지 지하2층 A동 10호",
+    "address": "Seoul, Republic of Korea KR Room 10, Building A, Basement 2, 193-2 Sindang-dong, Jung-gu, Seoul",
+    "short_address": "KR Room 10, Building A, B2F, 193-2 Sindang-dong, Jung-gu, Seoul",
     "location": {
       "lat": 37.5691202,
       "lng": 127.0149759
@@ -1346,13 +1346,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33909d8b57b:0xfeb17772cf6cfd6a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1362,15 +1362,15 @@
   },
   {
     "place_id": "ChIJe7XYCTmjfDUR4uWIFLH8070",
-    "display_name": "쭈쭈바",
-    "category": "술집",
+    "display_name": "Jjujjuba",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 신당동 193-2번지 B동 2층 16호 디오트 중구 서울특별시 KR",
-    "short_address": "신당동 193-2번지 B동 2층 16호 디오트 중구 서울특별시 KR",
+    "address": "Room 16, Building B, 2nd floor, 193-2 Sindang-dong, Seoul, Republic of Korea Diot Jung-gu Seoul KR",
+    "short_address": "Room 16, 2nd floor, Building B, 193-2 Sindang-dong, DIOT Jung-gu, Seoul KR",
     "location": {
       "lat": 37.5691202,
       "lng": 127.0149759
@@ -1390,14 +1390,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33909d8b57b:0xbdd3fcb11488e5e2!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1407,15 +1407,15 @@
   },
   {
     "place_id": "ChIJe7XYCTmjfDURqaNb8x2eu8k",
-    "display_name": "라이브포에버",
-    "category": "술집",
+    "display_name": "Live Forever",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 KR 서울특별시 중구 신당동 193-2번지 4층 G동 1호",
-    "short_address": "KR 서울특별시 중구 신당동 193-2번지 4층 G동 1호",
+    "address": "Seoul, Republic of Korea KR #1, Building G, 4th floor, 193-2 Sindang-dong, Jung-gu, Seoul",
+    "short_address": "KR #1, Building G, 4th floor, 193-2 Sindang-dong, Jung-gu, Seoul",
     "location": {
       "lat": 37.5691202,
       "lng": 127.0149759
@@ -1435,14 +1435,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33909d8b57b:0xc9bb9e1df35ba3a9!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1451,15 +1451,15 @@
   },
   {
     "place_id": "ChIJ-XGnpjmjfDURxBgImPvORa8",
-    "display_name": "더블",
-    "category": "술집",
+    "display_name": "double",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 KR 서울특별시 중구 신당동 217-91번지 청평화시장 4층 가 51호",
-    "short_address": "KR 서울특별시 중구 신당동 217-91번지 청평화시장 4층 가 51호",
+    "address": "Seoul, Republic of Korea KR #51, 4th floor, Cheongpyeonghwa Market, 217-91 Sindang-dong, Jung-gu, Seoul",
+    "short_address": "KR #51, 4th floor, Cheongpyeonghwa Market, 217-91 Sindang-dong, Jung-gu, Seoul",
     "location": {
       "lat": 37.569427999999995,
       "lng": 127.01492539999998
@@ -1479,12 +1479,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca339a6a771f9:0xaf45cefb980818c4!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실"
+      "Store meal",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -1493,15 +1493,15 @@
   },
   {
     "place_id": "ChIJ-XGnpjmjfDURXpHeN7OzMAc",
-    "display_name": "죠뱅",
-    "category": "술집",
+    "display_name": "Jobin",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동 217-91번지 3층 43호",
-    "short_address": "중구 신당동 217-91번지 3층 43호",
+    "address": "Room 43, 3rd floor, 217-91 Sindang-dong, Jung-gu, Seoul, Korea",
+    "short_address": "Room 43, 3rd floor, 217-91 Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.569427999999995,
       "lng": 127.01492539999998
@@ -1521,13 +1521,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca339a6a771f9:0x730b3b337de915e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1537,15 +1537,15 @@
   },
   {
     "place_id": "ChIJ68edvjmjfDURTj3U2UN5y8I",
-    "display_name": "희싸롱",
-    "category": "술집",
+    "display_name": "Hee Salon",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 번지 라동 436-64 2층 31호",
-    "short_address": "종로구 창신동 번지 라동 436-64 2층 31호",
+    "address": "Room 31, 2nd floor, 436-64, Ra-dong, Changsin-dong, Jongno-gu, Seoul, Republic of Korea",
+    "short_address": "#31, 2nd floor, 436-64 Ra-dong, Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.5700745,
       "lng": 127.0147607
@@ -1565,13 +1565,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca339be9dc7eb:0xc2cb7943d9d43d4e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1581,16 +1581,16 @@
   },
   {
     "place_id": "ChIJ5yGfTzmjfDURX9TPzLdtNSU",
-    "display_name": "해브앤해브",
-    "category": "호프/생맥주집",
+    "display_name": "Have and Have",
+    "category": "Hop/draft beer house",
     "types": [
       "pub",
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 번지 3층 11 호 호 KR 서울특별시 중구 신당동 198-3",
-    "short_address": "번지 3층 11 KR 서울특별시 중구 신당동 198-3 호 호",
+    "address": "Room 11, 3rd floor, Seoul, Republic of Korea KR 198-3 Sindang-dong, Jung-gu, Seoul",
+    "short_address": "Address 3rd floor 11 KR 198-3 Sindang-dong, Jung-gu, Seoul",
     "location": {
       "lat": 37.56768050000001,
       "lng": 127.0140157
@@ -1610,14 +1610,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3394f9f21e7:0x25356db7cccfd45f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1627,15 +1627,15 @@
   },
   {
     "place_id": "ChIJ5yGfTzmjfDURttL9auS7YMo",
-    "display_name": "데님홀릭스",
-    "category": "술집",
+    "display_name": "Denim Holics",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 신당동 198-3번지 5층 106호",
-    "short_address": "중구 신당동 198-3번지 5층 106호",
+    "address": "Room 106, 5th floor, 198-3 Sindang-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "Room 106, 5th floor, 198-3, Sindang-dong, Jung-gu",
     "location": {
       "lat": 37.56768050000001,
       "lng": 127.0140157
@@ -1655,13 +1655,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3394f9f21e7:0xca60bbe46afdd2b6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1671,15 +1671,15 @@
   },
   {
     "place_id": "ChIJ5yGfTzmjfDURDuKoFiBCD5I",
-    "display_name": "파티",
-    "category": "술집",
+    "display_name": "party",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 신당동 198-3번지 신당동아파트 PM패션몰5층 23 24 25호 매장호수17호 중구 서울특별시 KR",
-    "short_address": "신당동 198-3번지 신당동아파트 PM패션몰5층 23 24 25호 매장호수17호 중구 서울특별시 KR",
+    "address": "5th floor, PM Fashion Mall, Shindang-dong Apartment, 198-3, Sindang-dong, Seoul, Republic of Korea #23 24 25 Store No. 17 Jung-gu Seoul KR",
+    "short_address": "198-3 Sindang-dong, 5th floor, PM Fashion Mall, Sindang-dong Apartment, No. 23, 24, 25, Store No. 17, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.56768050000001,
       "lng": 127.0140157
@@ -1699,15 +1699,15 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3394f9f21e7:0x920f422016a8e20e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1717,15 +1717,15 @@
   },
   {
     "place_id": "ChIJ5yGfTzmjfDURe_-oBfGoLrA",
-    "display_name": "바이란",
-    "category": "술집",
+    "display_name": "Byran",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 신당동 198-3번지 신당동아파트 PM패션몰1층 68동 2호 중구 서울특별시 KR",
-    "short_address": "신당동 198-3번지 신당동아파트 PM패션몰1층 68동 2호 중구 서울특별시 KR",
+    "address": "PM Fashion Mall 1st floor, 198-3 Sindang-dong, Seoul, Republic of Korea, Building 68, No. 2, Jung-gu, Seoul KR",
+    "short_address": "198-3 Sindang-dong, Sindang-dong Apartment, PM Fashion Mall, 1st floor, Building 68, Room 2, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.56768050000001,
       "lng": 127.0140157
@@ -1745,13 +1745,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3394f9f21e7:0xb02ea8f105a8ff7b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1761,15 +1761,15 @@
   },
   {
     "place_id": "ChIJi_XTaGOjfDURvlzfNx4BXjM",
-    "display_name": "동묘 어묵당",
-    "category": "술집",
+    "display_name": "Dongmyo Fish Cake Dang",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로44길 94",
-    "short_address": "종로구 종로44길 94",
+    "address": "94 Jongno 44-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "94 Jongno 44-gil, Jongno-gu",
     "location": {
       "lat": 37.5706677,
       "lng": 127.0154814
@@ -1789,14 +1789,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca36368d3f58b:0x335e011e37df5cbe!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1806,15 +1806,15 @@
         "author": "Phillip Jai",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "어제 지인 미팅 있어 근처 갔다 이곳에서 늦은 점심으로 오뎅탁와 육사시미 육회 등 먹었어요\n일단 이곳은 어두운 조명 입니다. 그리고 규모 작아요 그래서 단체 오시면 힘들겠어요 그리고 너무 시끄러운게 힘들더라고요 젊은 사람들 점심에 오셔서 육회비빔밥 등등 먹던데 낮술도 많이 드시더라고요 맛은 좋은편 입니다. 재방문은 하고 싶지만 소음이 걱정 이라서 저는 ㅋㅋ"
+        "relative_time": "3 years ago",
+        "text": "Yesterday, I had a meeting with an acquaintance, so I went nearby and ate oden table, yuk sashimi, and other dishes for a late lunch here.\nFirst of all, the lighting here is dark. And it's small, so it might be difficult if you come in a group, and it's difficult because it's so noisy. Young people come for lunch and eat beef bibimbap, etc., and they also drink a lot during the day. The taste is good. I want to visit again, but I'm worried about the noise."
       },
       {
-        "author": "박선아",
+        "author": "Park Seon-ah",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "어묵당세트(꼬치세트+육회)\n동묘세트(꼬치세트+문어숙회)\n맛있어요. 분위기도 괜찮고 친절해서\n좋았어요."
+        "relative_time": "2 years ago",
+        "text": "Fish cake set (skewer set + raw meat)\nDongmyo set (skewer set + boiled octopus)\nIt's delicious. The atmosphere is nice and friendly.\nIt was good."
       }
     ],
     "photos": [
@@ -1832,15 +1832,15 @@
   },
   {
     "place_id": "ChIJUQrsJACjfDURt3KMosXtLL0",
-    "display_name": "꼬릿집",
-    "category": "술집",
+    "display_name": "tail house",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 403-3",
-    "short_address": "종로구 창신동 403-3",
+    "address": "403-3, Changsin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "403-3 Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.5706677,
       "lng": 127.0154814
@@ -1862,23 +1862,23 @@
     "google_maps_url": "https://maps.google.com/?cid=13631531605235102391",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca30024ec0a51:0xbd2cedc5a28c72b7!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 5:00 ~ 오전 12:00",
-      "화요일: 오후 5:00 ~ 오전 12:00",
-      "수요일: 오후 5:00 ~ 오전 12:00",
-      "목요일: 오후 5:00 ~ 오전 12:00",
-      "금요일: 오후 5:00 ~ 오전 12:00",
-      "토요일: 오후 5:00 ~ 오전 12:00",
-      "일요일: 오후 5:00 ~ 오전 12:00"
+      "Monday: 5:00 PM - 12:00 AM",
+      "Tuesday: 5:00 PM - 12:00 AM",
+      "Wednesday: 5:00 PM - 12:00 AM",
+      "Thursday: 5:00 PM - 12:00 AM",
+      "Friday: 5:00 PM - 12:00 AM",
+      "Saturday: 5:00 PM - 12:00 AM",
+      "Sunday: 5:00 PM - 12:00 AM"
     ],
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1888,35 +1888,35 @@
         "author": "Final E",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "분위기도 너무 좋고 전반적으로 모든 메뉴가 후회 없어요🙏😂😂"
+        "relative_time": "1 year ago",
+        "text": "The atmosphere is great and overall, I have no regrets about all the menu items🙏😂😂"
       },
       {
-        "author": "주주",
+        "author": "shareholder",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "전골에 파전 꼭 추천드려요. 사장님이 식폭행해서 힘들정도로 서비스도 챙겨주셨어요"
+        "relative_time": "1 year ago",
+        "text": "I definitely recommend green onion pancakes with hotpot. The owner was so abusive that it was difficult to provide good service."
       },
       {
-        "author": "박기태",
+        "author": "Park Ki-tae",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "국가대표 사장님 잘 먹었습니다*^^*"
+        "relative_time": "2 years ago",
+        "text": "The national team president had a good meal*^^*"
       },
       {
         "author": "I.J.",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       },
       {
         "author": "Hayden",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       }
     ],
@@ -1935,15 +1935,15 @@
   },
   {
     "place_id": "ChIJnS7lf9ujfDURUpq6NrlsWEY",
-    "display_name": "바 나비(Bar Nahbi)",
-    "category": "술집",
+    "display_name": "Bar Nahbi",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로44길 94 바 나비 1층",
-    "short_address": "종로구 종로44길 94 바 나비 1층",
+    "address": "1st floor, Bar Nabi, 94 Jongno 44-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "1st floor, Bar Nabi, 94 Jongno 44-gil, Jongno-gu",
     "location": {
       "lat": 37.5706718,
       "lng": 127.01548340000001
@@ -1962,23 +1962,23 @@
     "google_maps_url": "https://maps.google.com/?cid=5068920923348441682",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3db7fe52e9d:0x46586cb936ba9a52!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 5:00 ~ 오전 12:00",
-      "화요일: 오후 5:00 ~ 오전 12:00",
-      "수요일: 오후 5:00 ~ 오전 12:00",
-      "목요일: 오후 5:00 ~ 오전 12:00",
-      "금요일: 오후 5:00 ~ 오전 12:00",
-      "토요일: 오후 5:00 ~ 오전 12:00",
-      "일요일: 휴무일"
+      "Monday: 5:00 PM - 12:00 AM",
+      "Tuesday: 5:00 PM - 12:00 AM",
+      "Wednesday: 5:00 PM - 12:00 AM",
+      "Thursday: 5:00 PM - 12:00 AM",
+      "Friday: 5:00 PM - 12:00 AM",
+      "Saturday: 5:00 PM - 12:00 AM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -1988,8 +1988,8 @@
         "author": "morie marie",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "한국지지미라든지 한국소주가 맛있다"
+        "relative_time": "4 months ago",
+        "text": "Korean fried rice and Korean soju are delicious."
       }
     ],
     "photos": [
@@ -2005,15 +2005,15 @@
   },
   {
     "place_id": "ChIJxQWu0TmjfDURHj1vhrjU8ks",
-    "display_name": "왈패호프",
-    "category": "술집",
+    "display_name": "Walpaehof",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 창신동 404-1번지 종로구 서울특별시 KR",
-    "short_address": "창신동 404-1번지 종로구 서울특별시 KR",
+    "address": "404-1 Changsin-dong, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "404-1 Changsin-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5708114,
       "lng": 127.01539629999999
@@ -2033,13 +2033,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca339d1ae05c5:0x4bf2d4b8866f3d1e!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2048,15 +2048,15 @@
   },
   {
     "place_id": "ChIJqQNOADyjfDURTe4Rp7VYzr4",
-    "display_name": "블랙81",
-    "category": "술집",
+    "display_name": "black81",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 신당동 199-1번지 4층 69호 디자이너클럽 중구 서울특별시 KR",
-    "short_address": "신당동 199-1번지 4층 69호 디자이너클럽 중구 서울특별시 KR",
+    "address": "Designer Club, #69, 4th floor, 199-1 Sindang-dong, Seoul, Republic of Korea, Jung-gu, Seoul KR",
+    "short_address": "#69, 4th floor, 199-1 Sindang-dong, Designer Club, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.567388699999995,
       "lng": 127.01306759999999
@@ -2076,13 +2076,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33c004e03a9:0xbece58b5a711ee4d!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2093,14 +2093,14 @@
   {
     "place_id": "ChIJZYwA3iSjfDURt9hyVg_Y3Co",
     "display_name": "10BAR",
-    "category": "술집",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로6가 번지 지하 150-3 1층",
-    "short_address": "종로구 종로6가 번지 지하 150-3 1층",
+    "address": "1st floor, Basement 150-3, Jongno 6-ga, Jongno-gu, Seoul, Korea",
+    "short_address": "1st floor, Basement 150-3, Jongno 6-ga, Jongno-gu",
     "location": {
       "lat": 37.5719307,
       "lng": 127.00649279999999
@@ -2120,14 +2120,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca324de008c65:0x2adcd80f5672d8b7!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2136,16 +2136,16 @@
   },
   {
     "place_id": "ChIJawmH3SSjfDURdlVuS4mQj34",
-    "display_name": "선술집",
-    "category": "호프/생맥주집",
+    "display_name": "pub",
+    "category": "Hop/draft beer house",
     "types": [
       "pub",
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로6가 141-1번지 지하1층 수상빌딩 종로구 서울특별시 KR",
-    "short_address": "종로6가 141-1번지 지하1층 수상빌딩 종로구 서울특별시 KR",
+    "address": "141-1 Jongro 6-ga, Seoul, Republic of Korea Water Building, 1st Basement Floor, Jongno-gu, Seoul KR",
+    "short_address": "141-1 Jongno 6-ga, 1st basement floor, floating building, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5718108,
       "lng": 127.0064876
@@ -2165,14 +2165,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca324dd87096b:0x7e8f90894b6e5576!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2182,15 +2182,15 @@
   },
   {
     "place_id": "ChIJ5TcIpbKjfDURZ9zM_wJFimQ",
-    "display_name": "토토로 노래방",
-    "category": "술집",
+    "display_name": "totoro karaoke",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로5.6가동 종로41길 ２５",
-    "short_address": "종로구 종로5.6가동 종로41길 ２５",
+    "address": "25 Jongno 41-gil, Jongno 5.6-ga-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "25 Jongno 41-gil, Jongno 5.6-ga-dong, Jongno-gu",
     "location": {
       "lat": 37.57231,
       "lng": 127.00627829999999
@@ -2210,14 +2210,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3b2a50837e5:0x648a4502ffccdc67!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2227,15 +2227,15 @@
   },
   {
     "place_id": "ChIJZc4oHiWjfDURZ8XKB5BmREI",
-    "display_name": "7080아지트",
-    "category": "술집",
+    "display_name": "7080 hideout",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로6가 242-1번지 지하동 1층 8호 한덕빌딩 종로구 서울특별시 KR",
-    "short_address": "종로6가 242-1번지 지하동 1층 8호 한덕빌딩 종로구 서울특별시 KR",
+    "address": "#8, Handeok Building, 1st floor, Basement Building, 242-1 Jongno 6-ga, Seoul, Republic of Korea Seoul, Jongno-gu KR",
+    "short_address": "#8, Handeok Building, 1st Floor, Basement Building, 242-1 Jongno 6-ga, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.57231,
       "lng": 127.00627829999999
@@ -2255,14 +2255,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3251e28ce65:0x4244669007cac567!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2272,14 +2272,14 @@
         "author": "junjin",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "8달 전",
-        "text": "친절하고 음식이 맛있어요"
+        "relative_time": "8 months ago",
+        "text": "Friendly and the food is delicious"
       },
       {
-        "author": "선정환",
+        "author": "Seon Seon-hwan",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
+        "relative_time": "4 years ago",
         "text": null
       }
     ],
@@ -2287,15 +2287,15 @@
   },
   {
     "place_id": "ChIJlZ2sdfKjfDUR2toZmw-u7ys",
-    "display_name": "엘지포차",
-    "category": "술집",
+    "display_name": "LG Pocha",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로39길 16",
-    "short_address": "종로구 종로39길 16",
+    "address": "16 Jongno 39-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "16 Jongno 39-gil, Jongno-gu",
     "location": {
       "lat": 37.5719139,
       "lng": 127.00610469999998
@@ -2318,16 +2318,16 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3f275ac9d95:0x2befae0f9b19dada!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "예약가능",
-      "야외석",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "Reservation available",
+      "outdoor seating",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2337,36 +2337,36 @@
         "author": "Rella Lee (Rella)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "LG Twins 경기가 있던 날 방문해서 정말 예약안하면 절대 방문할 수 없었을거 같아요. 엘지트윈스팬 사장님의 사랑을 듬뿍느낄수 있는 공간이고 같이 응원도 하면서 즐기니 더 신나더라구요 여기 안주도 좋아요 1군에서 3군까지 다양하고 맛도 좋아요. 먼저 양푼이돼지김치찌개 양이 어마무시 안에 고기랑 내용물도 실하고 어묵은 2개 주시는데 무조건 더 주문하세요 너무 맛있어요. 라면사리는 필수 아시죠??? 여기 제일 인기메뉴 수제안주 돈가스 이건 무조건 시키셔야해요 푸짐하고 두툼하니 너무 맛나요. 계란말이도 정겨우니 맛나고 오징어무침 저는 이거 완전 제 취향이라 계속 먹게 되더라구요 마무리로는 레몬크림 새우치킨 이것도 별미 경기가 있어서 바쁜 날은 안되는 메뉴도 많으니 그 점은 미리 알고 방문하시면 좋아요. 야장도 있으니 너무 좋았답니다."
+        "relative_time": "1 year ago",
+        "text": "I visited on the day of the LG Twins game, so I really don't think I would have been able to visit if I hadn't made a reservation. It's a space where you can feel the love of the LG Twinspan owner, and it's even more exciting to have fun while cheering together. The snacks here are also good. They range from group 1 to group 3 and are delicious. First of all, the amount of Yangpuni Pork Kimchi Stew is enormous and there is a lot of meat and contents inside, and they give you 2 fish cakes, so be sure to order more. It is so delicious. You know that ramen noodles are essential??? The most popular menu item here is the homemade side dish, pork cutlet. You must order this. It’s generous and thick and so delicious. The egg rolls are cozy and delicious, and the seasoned squid is my favorite, so I keep eating it. To finish, the lemon cream shrimp chicken also has a delicacy competition, so many menu items are not available on busy days, so it's good to know that in advance before visiting. It was so nice to have a night market."
       },
       {
         "author": "JUJU on that beat",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "컨셉 제대로인 포차였어요! 평소에 가보고 싶었던 곳인데 사장님이 정말 야구에 진심이신 것 같더라구요~ 안주도 2차로 딱이고 맛있었어용 돈가스, 오징어숙회, 스팸국 등 다 하나같이 맛있어서 또 방문하고싶네요!"
+        "relative_time": "1 year ago",
+        "text": "It was a pocha with the right concept! It's a place I've always wanted to go, and the owner seems to be really serious about baseball. The snacks were perfect for a second meal and were delicious. The pork cutlet, boiled squid, and spam soup were all delicious, so I want to visit again!"
       },
       {
         "author": "Marco Park",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "LG TWINS팬의 성지\n비싸지 않는 가격과 푸짐한 양 경기가 있을경우 팬들이 모여 응원할 수 있는곳\n사장님이 손수 준비하신 LG팬을 위한 굿즈 LG팬이 아니더라고 프로야구 사랑하는 분들은 꼭 한번 가봐야 하는곳"
+        "relative_time": "2 years ago",
+        "text": "Mecca for LG TWINS fans\nA place where fans can gather and cheer when there is a game with reasonable prices and plenty of food.\nGoods for LG fans prepared by the owner himself. Even if you are not an LG fan, anyone who loves professional baseball must visit this place."
       },
       {
-        "author": "단식자",
+        "author": "faster",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "사무실 근처에 이런 곳이 있어서 뭔가 싶었는데\n어제 날이 날인 만큼 구경가고 싶었다.\n점심먹고 잠시 들렀는데 저녁장사인지라 점심엔 닫혀있었다.\n가게 앞에서 사진 구경하고 왔다.\n어젠 엘지 우승해서 난리 났겠네.\n\n+ 이곳으로 이차옴. 평소에 궁금했는데.\n시그니처 메뉴인 돈까스 안주가 푸짐하고 두툼하게 나와서 만족했다. 벽은 온통 엘지 관련 아이템이 가득했다.\n2023년은 엘지에게 상징적인 해라서 화장실 비번까지 2023으로 바꿔놓은 센스."
+        "relative_time": "2 years ago",
+        "text": "There was a place like this near my office, so I was curious.\nSince yesterday was a day, I wanted to go see it.\nI stopped by after lunch, but it was closed for lunch because it was a dinner business.\nI came to look at photos in front of the store.\nThere must have been an uproar because LG won yesterday.\n\n+ I came here again. I've always been curious.\nI was satisfied with the signature menu, pork cutlet snacks, which were generous and thick. The entire wall was filled with LG-related items.\nSince 2023 is a symbolic year for LG, they even changed the bathroom password to 2023."
       },
       {
-        "author": "정경윤",
+        "author": "Jeong Kyeong-yoon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "엘지팬이라면 한번쯤가서  야구보면서한잔하기정말좋은곳입니다"
+        "relative_time": "3 years ago",
+        "text": "If you're an LG fan, it's a great place to go at least once and have a drink while watching baseball."
       }
     ],
     "photos": [
@@ -2384,15 +2384,15 @@
   },
   {
     "place_id": "ChIJWbc4xSSjfDURPQkEKr1CbOk",
-    "display_name": "아레나",
-    "category": "술집",
+    "display_name": "arena",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로6가 124-1번지 2층 종로구 서울특별시 KR",
-    "short_address": "종로6가 124-1번지 2층 종로구 서울특별시 KR",
+    "address": "2nd floor, 124-1 Jongno 6-ga, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "2nd floor, 124-1 Jongno 6-ga, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.571378599999996,
       "lng": 127.00706389999998
@@ -2412,23 +2412,23 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca324c538b759:0xe96c42bd2a04093d!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "봉추",
+        "author": "bongchu",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": "🤣🤣🤣"
       }
     ],
@@ -2436,15 +2436,15 @@
   },
   {
     "place_id": "ChIJUZIfziSjfDURZ1Eqv9uUg0s",
-    "display_name": "희수",
-    "category": "술집",
+    "display_name": "Hee-su",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로6가 번지 1층 121-1",
-    "short_address": "종로구 종로6가 번지 1층 121-1",
+    "address": "121-1, 1st floor, Jongno 6-ga, Jongno-gu, Seoul, Korea",
+    "short_address": "121-1, 1st floor, Jongno 6-ga, Jongno-gu",
     "location": {
       "lat": 37.571300400000005,
       "lng": 127.0074068
@@ -2464,13 +2464,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca324ce1f9251:0x4b8394dbbf2a5167!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2480,15 +2480,15 @@
   },
   {
     "place_id": "ChIJqeXHFyWjfDUR9Ou7RWFerq8",
-    "display_name": "미스트비어바",
-    "category": "술집",
+    "display_name": "Mist Beer Bar",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로6가 번지 1층 215-52",
-    "short_address": "종로구 종로6가 번지 1층 215-52",
+    "address": "215-52, 1st floor, Jongno 6-ga, Jongno-gu, Seoul, South Korea",
+    "short_address": "215-52, 1st floor, Jongno 6-ga, Jongno-gu",
     "location": {
       "lat": 37.5729319,
       "lng": 127.0064002
@@ -2508,13 +2508,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32517c7e5a9:0xafae5e6145bbebf4!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2524,15 +2524,15 @@
   },
   {
     "place_id": "ChIJt1rOFSWjfDURDwYQYgAWPEA",
-    "display_name": "양주골웰빙막걸리",
-    "category": "술집",
+    "display_name": "Yangjugol Wellbeing Makgeolli",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로6가 213-2번지 지상1층 종로구 서울특별시 KR",
-    "short_address": "종로6가 213-2번지 지상1층 종로구 서울특별시 KR",
+    "address": "1st floor, 213-2 Jongno 6-ga, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "1st floor, 213-2 Jongno 6-ga, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5731782,
       "lng": 127.00634149999999
@@ -2552,13 +2552,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32515ce5ab7:0x403c16006210060f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2568,15 +2568,15 @@
   },
   {
     "place_id": "ChIJUxKb0YqjfDURsUWOTHArK-A",
-    "display_name": "무제",
-    "category": "술집",
+    "display_name": "Untitled",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로5.6가동 201-3",
-    "short_address": "종로구 종로5.6가동 201-3",
+    "address": "201-3, Jongno 5.6-ga, Jongno-gu, Seoul, South Korea",
+    "short_address": "201-3, Jongno 5.6-ga-dong, Jongno-gu",
     "location": {
       "lat": 37.5734851,
       "lng": 127.0075311
@@ -2598,25 +2598,25 @@
     "google_maps_url": "https://maps.google.com/?cid=16153052249815139761",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca38ad19b1253:0xe02b2b704c8e45b1!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오후 6:00 ~ 오전 12:00",
-      "수요일: 오후 6:00 ~ 오전 12:00",
-      "목요일: 오후 6:00 ~ 오전 12:00",
-      "금요일: 오후 5:00 ~ 오전 12:00",
-      "토요일: 오후 5:00 ~ 오전 12:00",
-      "일요일: 오후 6:00 ~ 오전 12:00"
+      "Monday: Closed day",
+      "Tuesday: 6:00 PM - 12:00 AM",
+      "Wednesday: 6:00 PM - 12:00 AM",
+      "Thursday: 6:00 PM - 12:00 AM",
+      "Friday: 5:00 PM - 12:00 AM",
+      "Saturday: 5:00 PM - 12:00 AM",
+      "Sunday: 6:00 PM - 12:00 AM"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "단체적합",
-      "맥주",
-      "와인"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "group fitness",
+      "beer",
+      "wine"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2626,36 +2626,36 @@
         "author": "ambilove Kang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "화요나 와인에 곁들여 양갈비, 스튜, 파스타 등을 즐길수 있는 1인 요리 식당. 특히 토마토가 들어있는 스튜가 일품. 한적한 서울성곽박물관 주변에서 나름 분위기 좋은 식당인듯."
+        "relative_time": "2 years ago",
+        "text": "A one-person restaurant where you can enjoy lamb ribs, stew, pasta, etc. with a glass of wine or wine. The stew containing tomatoes is especially excellent. It seems to be a restaurant with a nice atmosphere in the quiet surroundings of the Seoul Fortress Wall Museum."
       },
       {
-        "author": "김예은",
+        "author": "Kim Ye-eun",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "우선 음식이 다 너무 맛있고 사장님이 너무 친절하셔서 즐거웠어요!\n분위기도 좋고 가격도 가성비 좋아서 마음에 들어요!"
+        "relative_time": "1 year ago",
+        "text": "First of all, the food was all so delicious and the owner was so kind that it was fun!\nI like it because the atmosphere is nice and the price is good value for money!"
       },
       {
         "author": "Park",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "밥먹고 흥인지문 공원 걷기에 좋습니다\n공원따라 이화벽화마을까지 올라가는 코스 좋았어요\n사장님도 친절하심\n음식은 먹을만했어요"
+        "relative_time": "2 years ago",
+        "text": "Good for eating and walking around Heunginjimun Park\nThe course that went up to Ihwa Mural Village along the park was nice.\nThe owner is also kind.\nThe food was edible"
       },
       {
-        "author": "송은찬",
+        "author": "Eunchan Song",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "11달 전",
-        "text": "3달에 한번씩 가는데도 사장님이 얼굴 다 기억합니다... 음식 무조건 평타 이상이고 서비스 분위기 친절함 다됩니다 요기"
+        "relative_time": "11 months ago",
+        "text": "Even though I go once every three months, the owner remembers all the faces... The food is always above average and the service atmosphere is friendly."
       },
       {
         "author": "M J",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "너무너무 맛있었습니다\n커플끼리 가기 너무 좋은 곳이에요 추천합니다!"
+        "relative_time": "1 month ago",
+        "text": "It was so so delicious\nIt's a great place to go as a couple. I recommend it!"
       }
     ],
     "photos": [
@@ -2673,8 +2673,8 @@
   },
   {
     "place_id": "ChIJYwvVBSWjfDURIfENvbAd2CI",
-    "display_name": "제세에프비",
-    "category": "와인 바",
+    "display_name": "jessefb",
+    "category": "wine bar",
     "types": [
       "wine_bar",
       "bar",
@@ -2682,8 +2682,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로6가 230",
-    "short_address": "종로구 종로6가 230",
+    "address": "230 Jongno 6-ga, Jongno-gu, Seoul, South Korea",
+    "short_address": "230 Jongno 6-ga, Jongno-gu",
     "location": {
       "lat": 37.573042699999995,
       "lng": 127.0054433
@@ -2703,13 +2703,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca32505d50b63:0x22d81db0bd0df121!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "와인"
+      "Store meal",
+      "restroom",
+      "wine"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2719,15 +2719,15 @@
   },
   {
     "place_id": "ChIJg9WQVySjfDURNeSopZRhNJw",
-    "display_name": "비어포차",
-    "category": "술집",
+    "display_name": "Beer Pocha",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 효제동 171-23",
-    "short_address": "종로구 효제동 171-23",
+    "address": "171-23 Hyoje-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "171-23 Hyoje-dong, Jongno-gu",
     "location": {
       "lat": 37.572227399999996,
       "lng": 127.0050228
@@ -2747,14 +2747,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3245790d583:0x9c346194a5a8e435!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2764,15 +2764,15 @@
   },
   {
     "place_id": "ChIJxUZUXiSjfDURMn8RjJ0-MK4",
-    "display_name": "아이프라임",
-    "category": "술집",
+    "display_name": "iPrime",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 효제동 176-1번지 종로구 서울특별시 KR",
-    "short_address": "효제동 176-1번지 종로구 서울특별시 KR",
+    "address": "176-1 Hyoje-dong, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "176-1 Hyoje-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.571753699999995,
       "lng": 127.0049556
@@ -2792,12 +2792,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3245e5446c5:0xae303e9d8c117f32!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실"
+      "Store meal",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -2807,8 +2807,8 @@
   },
   {
     "place_id": "ChIJhyWYjyOjfDURE2upWDAUQZ8",
-    "display_name": "JW메리어트동대문스퀘어서울 더 라운지",
-    "category": "라운지 바",
+    "display_name": "JW Marriott Dongdaemun Square Seoul The Lounge",
+    "category": "lounge bar",
     "types": [
       "lounge_bar",
       "night_club",
@@ -2816,8 +2816,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 청계천로 279",
-    "short_address": "종로구 청계천로 279",
+    "address": "279 Cheonggyecheon-ro, Jongno-gu, Seoul, South Korea",
+    "short_address": "279 Cheonggyecheon-ro, Jongno-gu",
     "location": {
       "lat": 37.570692199999996,
       "lng": 127.00878050000001
@@ -2836,32 +2836,32 @@
     "google_maps_url": "https://maps.google.com/?cid=11475475523395218195",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3238f982587:0x9f41143058a96b13!9m1!1b1",
     "opening_hours": [
-      "월요일: 오전 7:00 ~ 오후 11:00",
-      "화요일: 오전 7:00 ~ 오후 11:00",
-      "수요일: 오전 7:00 ~ 오후 11:00",
-      "목요일: 오전 7:00 ~ 오후 11:00",
-      "금요일: 오전 7:00 ~ 오후 11:00",
-      "토요일: 오전 7:00 ~ 오후 11:00",
-      "일요일: 오전 7:00 ~ 오후 11:00"
+      "Monday: 7:00 AM - 11:00 PM",
+      "Tuesday: 7:00 AM - 11:00 PM",
+      "Wednesday: 7:00 AM - 11:00 PM",
+      "Thursday: 7:00 AM - 11:00 PM",
+      "Friday: 7:00 AM - 11:00 PM",
+      "Saturday: 7:00 AM - 11:00 PM",
+      "Sunday: 7:00 AM - 11:00 PM"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "단체적합",
-      "맥주",
-      "와인",
-      "칵테일"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "group fitness",
+      "beer",
+      "wine",
+      "cocktail"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": [
-      "휠체어입구",
-      "휠체어화장실",
-      "휠체어주차"
+      "Wheelchair entrance",
+      "wheelchair restroom",
+      "Wheelchair parking"
     ],
     "parking": null,
     "reviews": [
@@ -2869,36 +2869,36 @@
         "author": "Ashley Jang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "몇년전부터 가보려고 찜해둔 곳인데 이번 딸기시즌에 다녀오게 되었네요\n카페가 생각보다 크진 않았지만 1층이라 통창 너머로 보이는 동대문뷰가 인상적이었고 핑크색 테이블 냅킨 등 딸기컨셉이 과하지 않으면서 포인트는 살릴 수 있게 신경쓴 흔적이 보입니다\n디저트 종류가 아주 다양하진 않아도 종류별로 하나씩은 다 먹어보고 싶게 데코도 예쁘게 해놨고 먹음직스러웠어요\n생딸기가 생각보다 신선하고 당도가 있어서 다행이었고, 달달한 디저트 사이사이 입이 좀 쉴 수 있게 핫푸드(파스타 크림새우 들기름막국수 등)도 있어서 번갈아가며 먹으니 더 알찼습니다\n중간에 서빙된 어니언스프도 입가심하듯이 먹고나니 느끼한 속이 조금 풀린 듯 했어요\n눈이 즐거운 경험이었고 떡볶이 등 매콤한 음식이 하나정도 있었다면 덜 느끼하게 디저트를 즐길 수 있지 않았을까 하는 아쉬움이 남네요"
+        "relative_time": "1 month ago",
+        "text": "It's a place I've been meaning to visit for several years, and I ended up going this strawberry season.\nThe cafe wasn't as big as I thought, but since it was on the first floor, the view of Dongdaemun through the large windows was impressive, and you can see that they took care to keep the strawberry concept, such as pink table napkins, without being excessive.\nAlthough there wasn't a wide variety of desserts, they were decorated beautifully and were delicious so I wanted to try at least one of each type.\nI was fortunate that the fresh strawberries were fresher and sweeter than I expected, and there were also hot foods (pasta, cream shrimp, perilla oil buckwheat noodles, etc.) to give my mouth a break between the sweet desserts, so eating them in turns made it more enjoyable.\nAfter eating the onion soup served in the middle, I felt like my stomach was relieved a bit.\nIt was a pleasant experience for the eyes, and I regret that I would have been able to enjoy the dessert less greasy if there had been at least one spicy food such as tteokbokki."
       },
       {
         "author": "Artist Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "예약없이는 못간다고 알고 있어서 네이버로 예약하고 갔어요.\n\n구성은 2인 기준으로\n웰컴 음료 2잔(망고 에이드, 망고라떼, 망고 칵테일 중 1택)\n다과\n커피 or 티 선택 2잔\n망고 빙수\n냉 파스타\n\n이렇게 나오는데, 주말이라 사람이 많아서 그런지 서비스는 좀 늦게 나왔고\n\n에프터눈 티 다 먹고 나서 차가 나왔어요...ㅎ\n너무 늦게 나외서 좀 아쉽\n\n냉파스타는 의외로 엄청 맛있었고\n망고 빙수도 진짜 굳이었어요\n\n에프터눈 티가 원래 비싼데\n다른 곳보다 구성이 많은 편이라\n개인적으로는 만족했어요"
+        "relative_time": "2 years ago",
+        "text": "I knew I couldn't go without a reservation, so I made a reservation through Naver and went.\n\nComposition is based on 2 people.\n2 welcome drinks (choose one from mango ade, mango latte, or mango cocktail)\nrefreshments\n2 cups of coffee or tea of your choice\nmango shaved ice\ncold pasta\n\nIt came out like this, but because it was the weekend and there were a lot of people, the service came out a little late.\n\nAfter I finished my afternoon tea, tea came out... haha\nIt's a shame I left out so late\n\nThe cold pasta was surprisingly delicious.\nThe mango shaved ice was really good too.\n\nAfternoon tea is usually expensive.\nIt has more composition than other places.\nPersonally, I was satisfied"
       },
       {
         "author": "WANGYOUNG LEE",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "이곳은 1F이지만 동대문을 품고 있는 발군의 위치입니다. 호텔로비와 더라운지사이에 출입문이 있어 체크인 고객분들과의 동선도 겹치지 않아 좋아 보였습니다.\n\n지금은 딸기시즌이며 바비인형시즌이었습니다. 벌써 200팀이상이 다녀가셔서 여권커버였나? 사은품준다는건 품절인지 안내가 없더군요. 그런데 오늘은 평일이어서 그런지 애프터눈티 이용고객은 저혼자였답니다.\n\n먼저 비쥬얼이 극강입니다. 라운지도 바비로 맵핑되어 있고 딸기딸기한 스위츠들과 기본제공되는 딸기음료만으로도 벅차오르는 감동입니다. 거기에 흥인지문까지~\n\n그렇지만 애프터눈티의 꽃인 스콘은 크로아상이 포함되며 빠집니다. 세이보리도 약하고 스위츠류는 전부 맛이 같습니다. 딸기음료들도 달달하여 뭔가 궁합이 안맞습니다.\n\n직원분들은 친절하였고 설명도 잘해주었습니다. 다음은 망고시즌이라고 말씀주셔서 공식인별을 옛날부터 보았는데, 키위도 보이고 망고도 보였습니다.\n\n대부분의 애프터눈티가 딸기, 망고, 초콜릿, 밤등등 계절에 맞게 테마를 잡고 구성했던 거 같습니다. 다음시즌에는 보다 맛있는것이 많아졌으면 하는 바람입니다."
+        "relative_time": "5 years ago",
+        "text": "Although this place is on the 1st floor, it is an excellent location embracing Dongdaemun. There was an entrance door between the hotel lobby and the lounge, so the movement lines with check-in customers did not overlap, so it looked good.\n\nIt's strawberry season and Barbie doll season. Was it because more than 200 teams had already visited so it was a passport cover? There was no information about whether the free gift was sold out or not. But today was a weekday, so I was the only customer enjoying the afternoon tea.\n\nFirst of all, the visuals are superb. The lounge is also mapped to Barbie, and the strawberry-flavored sweets and strawberry drinks provided as standard are enough to fill you with excitement. And even Heunginjimun~\n\nHowever, scones, the flower of afternoon tea, are included and omitted with croissants. The savory is weak and all the sweets taste the same. The strawberry drinks are also sweet, so something doesn't go well with them.\n\nThe staff were friendly and explained things well. They said next was mango season, so I saw the official sign for a long time, and I saw kiwis and mangoes.\n\nMost afternoon teas seem to be themed according to the season, such as strawberry, mango, chocolate, chestnuts, etc. I hope there will be more delicious things next season."
       },
       {
         "author": "Irene “MJ” Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "4년 전",
-        "text": "늘 호텔 앞의 길이 공사장이라 창가뷰는 어수선합니다. 주차공간이 조금 부족합니다. 최대 3시간 주차비용을 제공합니다. 그래도 특별한 스페셜 행사가 없는 평소에 늘 아늑해서 좋습니다."
+        "relative_time": "4 years ago",
+        "text": "The road in front of the hotel is always under construction, so the window view is messy. Parking space is a bit lacking. We provide parking costs for up to 3 hours. Still, it's nice because it's always cozy when there's no special event going on."
       },
       {
         "author": "Jihye Lee",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5년 전",
-        "text": "가격은 비싸지만 그래도 다른 호텔과 비교해서 좋은 애프터눈티 세트라고 생각합니다\n여름철 빙수 세트는 정말 최고 ㅎ\n예약안하면 자리가 없어 대기하거나 돌아가야하니 예약 꼭 하시길"
+        "relative_time": "5 years ago",
+        "text": "It's expensive, but I think it's a good afternoon tea set compared to other hotels.\nThe summer shaved ice set is really the best.\nBe sure to make a reservation because if you don't make a reservation, there will be no space and you will have to wait or turn away."
       }
     ],
     "photos": [
@@ -2916,15 +2916,15 @@
   },
   {
     "place_id": "ChIJa-29qCWjfDURTeEiYBEQTeU",
-    "display_name": "투에스",
-    "category": "술집",
+    "display_name": "2S",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 충신동",
-    "short_address": "종로구 충신동",
+    "address": "Chungsin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "Chungsin-dong, Jongno-gu",
     "location": {
       "lat": 37.5733281,
       "lng": 127.0048837
@@ -2944,13 +2944,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca325a8bded6b:0xe54d10116022e14d!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -2959,16 +2959,16 @@
   },
   {
     "place_id": "ChIJnU9wYzqjfDURCHMky-fqyfo",
-    "display_name": "신왕불닭발호프",
-    "category": "호프/생맥주집",
+    "display_name": "Shinwang Buldak Foot Hope",
+    "category": "Hop/draft beer house",
     "types": [
       "pub",
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 창신동 572-1번지 종로구 서울특별시 KR",
-    "short_address": "창신동 572-1번지 종로구 서울특별시 KR",
+    "address": "572-1 Changsin-dong, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "572-1 Changsin-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5722641,
       "lng": 127.01079349999998
@@ -2988,14 +2988,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33a63704f9d:0xfac9eae7cb247308!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3005,16 +3005,16 @@
   },
   {
     "place_id": "ChIJpdhPYzqjfDUR7YZSM6o0NJM",
-    "display_name": "두꺼비핵꾜",
-    "category": "호프/생맥주집",
+    "display_name": "Toad hack",
+    "category": "Hop/draft beer house",
     "types": [
       "pub",
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신제2동",
-    "short_address": "종로구 창신제2동",
+    "address": "Changsin 2-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "Changsinje 2-dong, Jongno-gu",
     "location": {
       "lat": 37.572345299999995,
       "lng": 127.01080150000001
@@ -3034,40 +3034,40 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33a634fd8a5:0x933434aa335286ed!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "고정미",
+        "author": "Go Jeong-mi",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "13년 전",
-        "text": "조용하고 친절하고 좋습니다ᆞ\n2 층 이라서  긋이고 더구나 호프 500cc  한잔에 2000 원이라서 더욱 맘에  드네요"
+        "relative_time": "13 years ago",
+        "text": "Quiet, friendly and nice.\nI like it even more because it's on the second floor, and a 500cc glass of hops costs 2,000 won."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJ3YfJviejfDURwMHbNVr6mVk",
-    "display_name": "무지개호프",
-    "category": "술집",
+    "display_name": "Rainbow Hope",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 창신길 12",
-    "short_address": "종로구 창신동 창신길 12",
+    "address": "12 Changsin-gil, Changsin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "12 Changsin-gil, Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.5721026,
       "lng": 127.0106541
@@ -3090,14 +3090,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca327bec987dd:0x5999fa5a35dbc1c0!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3107,36 +3107,36 @@
         "author": "NY H",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "갑오징어가 진짜 진짜 푸짐하고 맛있어요!!\n와 이거 먹으면 오징어 1년은 생각 안나겠다 ㅋ\n하고 이틀만에 그리워서 광광웁니다😂\n오징어 좋아하는 분들은 마음의 준비하구 가세욥..\n많은 리뷰들이 말하 듯.. 4~6인 팟 만들어서 가는 것을 추천드려용💛\n4인팟 만들엇는데... 남았어요..ㅠ (아까웡..)\n다만 요즘 sns로 많이 유명해져서 예약하는 것을 추천드립니다!\n사장님도 되게 유쾌하셔서 즐거운 시간이었어요 ㅎㅎ\n(타이밍 안 좋으면 되게 시끄러운 팟과 만날 수 있음 주의!)"
+        "relative_time": "4 months ago",
+        "text": "The cuttlefish is really, really plentiful and delicious!!\nWow, if I eat this, I won’t remember squid for a year haha.\nAnd after two days, I miss you so much that I’m crying😂\nFor those who like squid, prepare yourselves and go.\nAs many reviews say... I recommend making a pot for 4 to 6 people💛\nI made a 4-inch pot... but I still have some left...ㅠ (What a waste...)\nHowever, it has become very famous on social media these days, so I recommend making a reservation!\nThe owner was very cheerful and it was a fun time haha.\n(Be careful, if your timing is not good, you may encounter a very noisy pot!)"
       },
       {
         "author": "Richard",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "5달 전",
-        "text": "1. 특별한 안주가 있는 호프집\n통통한 반건조 갑오징어\n\n2.  적당히 부드럽고, 씹는 맛도 좋다\n특제 소스도 잘어울린다\n\n3. 알배추와는 궁합이 잘 맞는듯"
+        "relative_time": "5 months ago",
+        "text": "1. A pub with special snacks\nPlump semi-dried cuttlefish\n\n2. Moderately soft and has a good chew\nThe special sauce goes well too.\n\n3. It seems to go well with cabbage."
       },
       {
-        "author": "한성은",
+        "author": "Hanseong",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "이보다 멋들어진 오징어는 없다.\n\n당일 예약만 받는 자신감.\n오후 4시가 되면 부리나케 전화를 걸어 당일 예약을 한다. 말해야 하는 필수문장은 “저희 오징어 먹을 거예요.“\n예약할 때 말 안 하고 가서 주문하면 약간 혼난다. (오징어가 워낙 두꺼워 굽는 데 오래 걸린다)\n\n매번 갈 때마다 오징어 양에 기가 눌려 다른 메뉴는 못 먹어봤는데 ‘과일 치킨’ 이라는 메뉴가 항상 궁금하다. 오징어에 과일치킨까지 먹으려면 6명은 가야지 싶다.\n\n색다른 오징어구이와 비법양념장 거기에 음식점에서 보기 힘든 알배추까지 세트.\n동대문 근처를 간다면 꼭 드셔보시라.\n아니 이걸 먹으러 꼭 가보시라.\n\n+ 히든 메뉴 라면도 있음."
+        "relative_time": "1 year ago",
+        "text": "There is no cuttlefish more stylish than this.\n\nConfidence in accepting only same-day reservations.\nAt 4 p.m., make a phone call and make a same-day reservation. The essential sentence you must say is “We are going to eat squid.”\nIf you order without telling them when making a reservation, you'll get a little scolded. (The squid is so thick that it takes a long time to cook)\n\nEvery time I go, I'm so overwhelmed by the amount of squid that I can't try the other menu items, but I'm always curious about the 'Fruit Chicken' menu. I think it would take 6 people to eat squid and fruit chicken.\n\nA unique set of grilled squid, secret sauce, and cabbage roe, which is hard to find in restaurants.\nIf you go near Dongdaemun, be sure to try it.\nNo, you must go and eat this.\n\n+ Hidden menu ramen is also available."
       },
       {
-        "author": "노승애",
+        "author": "Noh Seung-ae",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1년 전",
-        "text": "갑오징어는 무조건 무지개로!!\n진짜 비싸지만 맛있어서 재방문하게 되네요\n알배추와 소스의 조화도 무척이나 좋음:)\n*미리 전화로 갑오징어 유무 확인필요*"
+        "relative_time": "1 year ago",
+        "text": "Cuttlefish is always rainbow!!\nIt's really expensive, but it's so delicious that I'll come back again.\nThe combination of cabbage and sauce is also very good :)\n*Need to check the presence of cuttlefish by phone in advance*"
       },
       {
-        "author": "이미선",
+        "author": "Mi-seon Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "옥이네 건생선 웨이팅 지옥이고, 양이 아쉬운분들 꼭 추천!! 갑오징어에 사시사철 배추쌈 제공, 특제찍먹소스는 진짜넘사벽!  이 집에 히든은, 돈가스메뉴인데. 집에서 솜씨 좋은 엄마가 직접만든 돈가스에 소스까지 만들어서 느끼할까 걱정되서 골고루 듬뿍주는 제철 과일이 최고임,"
+        "relative_time": "2 years ago",
+        "text": "The waiting time for Okine's dried fish is hell, and I definitely recommend it to those who don't like the portion size!! Cuttlefish served with cabbage wrap all year round, and the special dipping sauce is truly amazing!  Hidden in this house is the pork cutlet menu. I was worried that the pork cutlet and sauce made by my mother at home would be greasy, so seasonal fruits that are generously distributed are the best."
       }
     ],
     "photos": [
@@ -3154,15 +3154,15 @@
   },
   {
     "place_id": "ChIJD8TZ6ASjfDURZ3Aik-RKHKk",
-    "display_name": "발리호프",
-    "category": "술집",
+    "display_name": "Ballyhof",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 Seoul, Jongno District, Changsin-gil, 10",
-    "short_address": "종로구 창신길 10",
+    "address": "South Korea Seoul, Jongno District, Changsin-gil, 10",
+    "short_address": "10 Changsin-gil, Jongno-gu",
     "location": {
       "lat": 37.5720282,
       "lng": 127.0105962
@@ -3182,45 +3182,45 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca304e8d9c40f:0xa91c4ae493227067!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "단식자",
+        "author": "faster",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "2년 전",
-        "text": "창신동에 90년대 호프집이 3군데 모여있다.\n무지개호프, 발리호프, 브롱스호프\n발리호프는 딱 중간정도라고 보면 된다.\n규모는 지하에 위치한 브롱스호프가 가장큰데 안주 맛은 가장 없다.\n무지개호프는 가장 규모가 적긴 한데 여긴 안주 맛집이다. 치킨집도 아닌데 통닭 튀겨가는 동네 주민이 있다.\n발리호프는 규모도 중간 안주 맛도 중간정도라 할 수 있다.\n5시 정도에는 사장님 혼자 운영하시는데 저녁시간부터는 사모님인지 오셔서 같이 하신다.\n치킨맛은 쏘쏘고 다른안주도 보통수준. 근데 노가리에서 심하게 쩐내가 나서 이거 먹어도 되는지 망설여 지긴 했다. 화장실은 밖에 나가지 않고 홀안에 있어 들락날락하기 편했다."
+        "relative_time": "2 years ago",
+        "text": "There are three pubs from the 90s gathered in Changsin-dong.\nRainbow Hope, Bally Hope, Bronx Hope\nBallyhof can be considered to be just in the middle.\nThe Bronx Hope, located in the basement, is the largest, but the snacks are the worst.\nRainbow Hope is the smallest, but it is a great snack restaurant. It's not even a chicken restaurant, but there's a local resident who serves fried whole chicken.\nBally Hope can be said to be medium in size and medium in taste.\nThe owner runs the business alone around 5 o'clock, but starting in the evening, his wife comes and joins him.\nThe chicken taste was spicy and the other snacks were average. However, the smell of nogari was so strong that I was hesitant to eat it. The bathroom was located in the hall rather than outside, so it was easy to get in and out of."
       },
       {
         "author": "Tell the truth",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "3주 전",
-        "text": "일단 영업시간을 준수 하지 않습니다.\n서비스는 보통 및 이하\n가실 때는 좀 늦었다 싶으면 밖에 써놓은 12시 까지 영업 믿지 마시고\n꼭 전화 부터  하고 방문 하시길 바랍니다\n하시고"
+        "relative_time": "3 weeks ago",
+        "text": "First of all, business hours are not observed.\nService is average and below\nIf you think it's a bit late when you go, don't believe the sign outside that says it's open until 12 o'clock.\nPlease make sure to call first before visiting.\nDo it"
       },
       {
         "author": "Manoline Héris",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1주 전",
+        "relative_time": "1 week ago",
         "text": null
       },
       {
         "author": "TAIQIN PIAO",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -3239,16 +3239,16 @@
   },
   {
     "place_id": "ChIJw4Bd9TqjfDURWKZgNuKVtEg",
-    "display_name": "브롱스 호프",
-    "category": "호프/생맥주집",
+    "display_name": "Bronx Hope",
+    "category": "Hop/draft beer house",
     "types": [
       "pub",
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 562",
-    "short_address": "종로구 창신동 562",
+    "address": "562 Changsin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "562 Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.5718452,
       "lng": 127.01047750000001
@@ -3268,50 +3268,50 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33af55d80c3:0x48b495e23660a658!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "배달",
-      "포장",
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "단체적합",
-      "저녁",
-      "맥주"
+      "delivery",
+      "packaging",
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "group fitness",
+      "dinner",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "단식자",
+        "author": "faster",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "2년 전",
-        "text": "다른 것은 둘째 치고 안주가 너무 맛이 없다.\n특히 돈까스 안주. 소스가 맹맛.\n그럼에도 불구하고 좌석은 무지 넓다. 몇 십명 와서 회식해도 된다."
+        "relative_time": "2 years ago",
+        "text": "Aside from everything else, the snacks were not very tasty.\nEspecially pork cutlet snacks. The sauce is bland.\nNevertheless, the seats are very spacious. A few dozen people can come and have a company dinner."
       },
       {
         "author": "ryan huh",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6년 전",
-        "text": "굳 양주 최적회!!!!!"
+        "relative_time": "6 years ago",
+        "text": "Definitely the best restaurant in Yangju!!!!!"
       },
       {
-        "author": "손두권",
+        "author": "Son Du-kwon",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "6년 전",
-        "text": "좋아요"
+        "relative_time": "6 years ago",
+        "text": "great"
       },
       {
-        "author": "김지수",
+        "author": "Jisoo Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "1달 전",
-        "text": "지하에 위치하고 있는데다 레트로한 이름과 간판 때문에 첫방문을 많이 미루다 드디어 갔습니다. 좀 더 일찍 방문했어야 했다고 생각이 들만큼 괜찮은 호프집이었습니다. 인근 젊은 호프집과 비교해서도 손색 없으며, 오히려 레트로한 감성을 원하시는 분이라면 더 알맞는 장소라고 봅니다."
+        "relative_time": "1 month ago",
+        "text": "Because it is located in the basement and because of the retro name and sign, I postponed my first visit for a long time and finally went. It was a good pub that made me think I should have visited earlier. It's comparable to other young pubs nearby, and I think it's a better place for those who want a retro feel."
       }
     ],
     "photos": [
@@ -3321,15 +3321,15 @@
   },
   {
     "place_id": "ChIJpz-Z9tajfDUR7ALZQcXG2to",
-    "display_name": "ソウルメイト서울메이트 Seoulmate ジャパニーズバー Bar",
-    "category": "술집",
+    "display_name": "ソウルメイト Seoulmate Seoulmate Bar",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로 298 2층",
-    "short_address": "종로구 종로 298 2층",
+    "address": "2nd floor, 298 Jongno, Jongno-gu, Seoul, South Korea",
+    "short_address": "2nd floor, 298 Jongno, Jongno-gu",
     "location": {
       "lat": 37.5715642,
       "lng": 127.0109942
@@ -3351,22 +3351,22 @@
     "google_maps_url": "https://maps.google.com/?cid=15770135595706811116",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3d6f6993fa7:0xdadac6c541d902ec!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 7:00 ~ 오전 4:00",
-      "화요일: 오후 7:00 ~ 오전 4:00",
-      "수요일: 오후 7:00 ~ 오전 4:00",
-      "목요일: 오후 7:00 ~ 오전 4:00",
-      "금요일: 오후 7:00 ~ 오전 4:00",
-      "토요일: 오후 7:00 ~ 오전 4:00",
-      "일요일: 오후 7:00 ~ 오전 4:00"
+      "Monday: 7:00 PM - 4:00 AM",
+      "Tuesday: 7:00 PM - 4:00 AM",
+      "Wednesday: 7:00 PM - 4:00 AM",
+      "Thursday: 7:00 PM - 4:00 AM",
+      "Friday: 7:00 PM - 4:00 AM",
+      "Saturday: 7:00 PM - 4:00 AM",
+      "Sunday: 7:00 PM - 4:00 AM"
     ],
     "services": [
-      "포장",
-      "매장식사",
-      "화장실"
+      "packaging",
+      "Store meal",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3376,36 +3376,36 @@
         "author": "Energy cola",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "술 마시면서 일본어 배울 수 있는 곳! 일본인 직원분들이 한국어도 잘 해주셔서 초보자도 부담 없이 대화하고 배움. 분위기 좋고 하이볼 최고예요!"
+        "relative_time": "2 months ago",
+        "text": "A place where you can learn Japanese while drinking! The Japanese staff speak Korean well, so even beginners can converse and learn without burden. The atmosphere is great and the highballs are the best!"
       },
       {
         "author": "Jose Namkung",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4달 전",
-        "text": "동대문에 이렇게 분위기 좋은 바 있는지 몰랐어요!\n한시간에 무제한으로 칵테일 마실수 있는데 종류도 다양하고 맛있었습니다!\n다양한 친구도 사귈수 있었어서 서울에 오면 또 들릴예정이에요!"
+        "relative_time": "4 months ago",
+        "text": "I didn’t know there was a bar with such a great atmosphere in Dongdaemun!\nYou can drink unlimited cocktails per hour, and the variety was varied and delicious!\nI was able to make a lot of friends, so I plan to stop by again when I come to Seoul!"
       },
       {
         "author": "Ken",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "한국에 처음 생겼다고 할수있는  일본식 바에요\n일본 문화 좋아하는 분들은 무조건 가세요\n여기가 시부야인가? 동대문인가? 헷갈렸어요\n사장님도 착하시고 편한 분위기를 만들어 줍니다 **혼술하기도 최고!  스다마사키 뮤비도 볼수있어요\n\n韓国にはあまりない日本風のバーです。\n日本文化好きの方はぜひいらしてください。\nここが渋谷なのか東大門なのか間違えました。\n社長も優しくて楽な雰囲気を作ってくれます。\n**一人飲みするのも最高です。"
+        "relative_time": "1 year ago",
+        "text": "It's a Japanese-style bar that was first opened in Korea.\nIf you like Japanese culture, definitely go there.\nIs this Shibuya? Is it Dongdaemun? I was confused\nThe owner is nice and creates a comfortable atmosphere. **It's also great for drinking alone!  You can also watch Suda Masaki’s music video.\n\nIt's similar to Korean and Japanese.\nIt's good to change Japanese culture.\nGo to the main gate and go to the eastern large gate.\nIt's like a long time, it's a breeze and it's raining.\n**One person eats, eats, eats, eats, eats, eats, eats, eats, eats, etc."
       },
       {
-        "author": "장준호",
+        "author": "Junho Jang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7달 전",
-        "text": "한국식 바만 다니다 일본식 바를 처음 경험해보았는데 완전 의미있는 시간이었어요. 사장님과 직원분들 모두 친절하시고 술도 맛있어 너무 행복했던 시간이었습니다. 시간 가는 줄 몰랐어요! 한국여행 온 일본인관광객 뿐만 아니라 한국인 모두에게 추천해주고 싶어요!!"
+        "relative_time": "7 months ago",
+        "text": "I used to only go to Korean bars, but it was my first time experiencing a Japanese bar, and it was a very meaningful time. The owner and staff were all friendly and the drinks were delicious, so it was a very happy time. I lost track of time! I would like to recommend it not only to Japanese tourists who come to Korea, but also to all Koreans!!"
       },
       {
         "author": "STRANGER K",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "친절한 사장님. 고급 서비스. 부담 없는 대화. 가볍게 방문하기 좋습니다. 관광객에게도 추천! ( ˘ ³˘)♥︎"
+        "relative_time": "1 year ago",
+        "text": "Friendly boss. Advanced service. Casual conversation. Good for a casual visit. Recommended for tourists too! ( ˘ ³˘)♥︎"
       }
     ],
     "photos": [
@@ -3423,15 +3423,15 @@
   },
   {
     "place_id": "ChIJ05PjcjqjfDUR_F3zuTlxg6k",
-    "display_name": "다인호프",
-    "category": "술집",
+    "display_name": "Dinehof",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 540-1",
-    "short_address": "종로구 창신동 540-1",
+    "address": "540-1 Changsin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "540-1 Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.572154999999995,
       "lng": 127.0117425
@@ -3451,14 +3451,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33a72e393d3:0xa9837139b9f35dfc!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3468,14 +3468,14 @@
         "author": "TAIQIN PIAO",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       },
       {
-        "author": "김정수",
+        "author": "Kim Jeong-su",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9년 전",
+        "relative_time": "9 years ago",
         "text": null
       }
     ],
@@ -3486,15 +3486,15 @@
   },
   {
     "place_id": "ChIJlZQyczqjfDURJ9G84YH0phA",
-    "display_name": "사과나무",
-    "category": "술집",
+    "display_name": "apple tree",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 538-1번지 대원빌딩 2층",
-    "short_address": "종로구 창신동 538-1번지 대원빌딩 2층",
+    "address": "2nd floor, Daewon Building, 538-1 Changsin-dong, Jongno-gu, Seoul, Korea",
+    "short_address": "2nd floor, Daewon Building, 538-1 Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.5721801,
       "lng": 127.011844
@@ -3514,11 +3514,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33a73329495:0x10a6f481e1bcd127!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3527,8 +3527,8 @@
         "author": "Kai Lee",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "1주 전",
-        "text": "종로 술집 사과나무\n가볍게 낮술 할 수 있는 동네 다방 스타일 술집. 가게 전반적으로 1980, 90년대 감성이 아직도 유지되고 있다. 문자 그대로 제대로 말라버린 마른 안주와 적당히 미지근한 느낌의 병맥주와 함께라면 흡사 내가 살아보지 않은 시절로 타임리프하는 기분이 들기도 함. 나이 지긋한 어르신들이 많아서 살짝 시끄럽고 가게 전반적으로 날파리가 있는 등 위생이 염려되기는 했음."
+        "relative_time": "1 week ago",
+        "text": "Jongno pub apple tree\nA local cafe-style bar where you can have a light lunch. The 1980s and 1990s sensibility is still maintained throughout the store. With dry snacks that have literally dried out and bottled beer that is moderately lukewarm, it feels like a time leap to a time I never lived in. There were a lot of elderly people there, so it was a bit noisy and there were flies throughout the store, so I was concerned about hygiene."
       }
     ],
     "photos": [
@@ -3540,15 +3540,15 @@
   },
   {
     "place_id": "ChIJRcl1CzqjfDURtNN3wgAtHqQ",
-    "display_name": "싱싱노래방",
-    "category": "술집",
+    "display_name": "Fresh Karaoke",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 534번지 2층",
-    "short_address": "종로구 창신동 534번지 2층",
+    "address": "2nd floor, 534 Changsin-dong, Jongno-gu, Seoul, Korea",
+    "short_address": "2nd floor, 534 Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.572281499999995,
       "lng": 127.01200909999999
@@ -3568,13 +3568,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33a0b75c945:0xa41e2d00c277d3b4!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3584,15 +3584,15 @@
   },
   {
     "place_id": "ChIJRcl1CzqjfDURGsXGCPvJHi8",
-    "display_name": "창신호프",
-    "category": "술집",
+    "display_name": "Changsin Hope",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 창신동 534번지 1층 종로구 서울특별시 KR",
-    "short_address": "창신동 534번지 1층 종로구 서울특별시 KR",
+    "address": "1st floor, 534 Changsin-dong, Seoul, Republic of Korea, Jongno-gu, Seoul KR",
+    "short_address": "1st floor, 534 Changsin-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.572281499999995,
       "lng": 127.01200909999999
@@ -3612,13 +3612,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33a0b75c945:0x2f1ec9fb08c6c51a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3628,7 +3628,7 @@
         "author": "Kook Han",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
+        "relative_time": "3 years ago",
         "text": null
       }
     ],
@@ -3636,15 +3636,15 @@
   },
   {
     "place_id": "ChIJQQrngTCjfDURwUlfJGDduXA",
-    "display_name": "올레포차",
-    "category": "술집",
+    "display_name": "Olle Pocha",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 582 33번지 1층",
-    "short_address": "종로구 창신동 582 33번지 1층",
+    "address": "1st floor, 582 33 Changsin-dong, Jongno-gu, Seoul, Korea",
+    "short_address": "1st floor, 582 33, Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.5729919,
       "lng": 127.01076579999999
@@ -3664,13 +3664,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33081e70a41:0x70b9dd60245f49c1!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3680,8 +3680,8 @@
   },
   {
     "place_id": "ChIJDea68TqjfDURO56FheH1MYg",
-    "display_name": "사오마이3",
-    "category": "술집",
+    "display_name": "Shaomai 3",
+    "category": "bar",
     "types": [
       "karaoke",
       "night_club",
@@ -3689,8 +3689,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 번지 2층 696-1",
-    "short_address": "종로구 창신동 번지 2층 696-1",
+    "address": "696-1, 2nd floor, Changsin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "696-1, 2nd floor, Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.5717174,
       "lng": 127.00995619999999
@@ -3710,12 +3710,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33af1bae60d:0x8831f5e185859e3b!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실",
-      "맥주"
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3724,15 +3724,15 @@
   },
   {
     "place_id": "ChIJQxOlRumjfDURBRqr4aP23ZU",
-    "display_name": "현선이네포차",
-    "category": "술집",
+    "display_name": "Hyeonseonine Pocha",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신제1동 377",
-    "short_address": "종로구 창신제1동 377",
+    "address": "377 Changsinje 1-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "377 Changsinje 1-dong, Jongno-gu",
     "location": {
       "lat": 37.57207940000001,
       "lng": 127.01296559999999
@@ -3751,22 +3751,22 @@
     "google_maps_url": "https://maps.google.com/?cid=10799058665230506501",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3e946a51343:0x95ddf6a3e1ab1a05!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 3:00~9:00",
-      "화요일: 오후 3:00~9:00",
-      "수요일: 오후 3:00~9:00",
-      "목요일: 오후 3:00~9:00",
-      "금요일: 오후 3:00~9:00",
-      "토요일: 휴무일",
-      "일요일: 휴무일"
+      "Monday: 3:00-9:00 PM",
+      "Tuesday: 3:00-9:00 PM",
+      "Wednesday: 3:00-9:00 PM",
+      "Thursday: 3:00-9:00 PM",
+      "Friday: 3:00-9:00 PM",
+      "Saturday: Closed day",
+      "Sunday: Closed day"
     ],
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3776,8 +3776,8 @@
         "author": "EB",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "4년 전",
-        "text": "혼술 가성비 끝판왕, 일반 포차는 혼자가기 부담되는 가격이라면 이곳은 다양한 안주에 당연히 맛도 따라와 부담없이 즐길 수 있는 곳입니다. 가게는 도로 포차건물로 나만 알고 싶은 그런 술집"
+        "relative_time": "4 years ago",
+        "text": "The ultimate in cost-effectiveness for drinking alone. If the regular Pocha is too expensive to go alone, this is a place where you can enjoy a variety of snacks and, of course, taste. The store is a bar on the street that only I want to know about."
       }
     ],
     "photos": [
@@ -3796,14 +3796,14 @@
   {
     "place_id": "ChIJ2T79_zOjfDURp1kNqU4J5JM",
     "display_name": "Black chill",
-    "category": "술집",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로 319",
-    "short_address": "종로구 종로 319",
+    "address": "319 Jongno, Jongno-gu, Seoul, South Korea",
+    "short_address": "319 Jongno, Jongno-gu",
     "location": {
       "lat": 37.5724468,
       "lng": 127.01313780000001
@@ -3823,14 +3823,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca333fffd3ed9:0x93e4094ea90d59a7!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -3840,22 +3840,22 @@
         "author": "EB",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "1층엔 카페인것같은데 올라오시면 펍입니다. 2층 올라오면 안이 안보여 부담스러울수도 있지만, 문제는 커피와 칵테일 모두 진심인곳 분위기도 좋고 별 5개가 아깝지가 않습니다. 커피 진짜 맛있어요. 연유커피 최고"
+        "relative_time": "3 years ago",
+        "text": "It looks like a cafe on the first floor, but when you come up, it's a pub. When you go up to the second floor, it can be a bit intimidating because you can't see the inside, but the problem is that both the coffee and cocktails are genuine, and the atmosphere is good and it deserves 5 stars. The coffee is really delicious. The best condensed milk coffee"
       },
       {
-        "author": "전인영",
+        "author": "Jeon In-young",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "베트남에서 마시던 커피 맛 그대로"
+        "relative_time": "3 years ago",
+        "text": "The coffee tastes just like the one I drank in Vietnam."
       },
       {
         "author": "Jimin Pham 910",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "친구들과 함께 쉬기에 좋은 곳이에요. 고객 서비스도 최고예요!!! 꼭 다시 올 거예요."
+        "relative_time": "3 years ago",
+        "text": "It's a great place to relax with friends. Customer service is also the best!!! I will definitely come back again."
       }
     ],
     "photos": [
@@ -3872,16 +3872,16 @@
   },
   {
     "place_id": "ChIJT9fIVzejfDURemKt6bZw7KU",
-    "display_name": "압구정호프",
-    "category": "호프/생맥주집",
+    "display_name": "Apgujeong Hope",
+    "category": "Hop/draft beer house",
     "types": [
       "pub",
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 339-1",
-    "short_address": "종로구 창신동 339-1",
+    "address": "339-1 Changsin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "339-1 Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.5719371,
       "lng": 127.01371169999999
@@ -3901,31 +3901,31 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33757c8d74f:0xa5ec70b6e9ad627a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김종봉",
+        "author": "Jongbong Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "9년 전",
-        "text": "오랜만에 재미있게 맥주 마신곳입니다."
+        "relative_time": "9 years ago",
+        "text": "This is a place where I had fun drinking beer after a long time."
       },
       {
-        "author": "김영일",
+        "author": "Kim Young-il",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "12년 전",
+        "relative_time": "12 years ago",
         "text": null
       }
     ],
@@ -3933,15 +3933,15 @@
   },
   {
     "place_id": "ChIJhX7-bTejfDURPaVEelc5QFU",
-    "display_name": "욱형",
-    "category": "술집",
+    "display_name": "Woohyung",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신제1동",
-    "short_address": "종로구 창신제1동",
+    "address": "Changsinje 1-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "Changsinje 1-dong, Jongno-gu",
     "location": {
       "lat": 37.5722279,
       "lng": 127.01518630000001
@@ -3961,12 +3961,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3376dfe7e85:0x554039577a44a53d!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실"
+      "Store meal",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -3975,15 +3975,15 @@
   },
   {
     "place_id": "ChIJQ5V3WgCjfDURAxuSOnw2tw0",
-    "display_name": "팡팡노래방",
-    "category": "술집",
+    "display_name": "Pang Pang Karaoke",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 328-3 2층",
-    "short_address": "종로구 창신동 328-3 2층",
+    "address": "2nd floor, 328-3, Changsin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "2nd floor, 328-3, Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.572406900000004,
       "lng": 127.0148033
@@ -4003,13 +4003,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3005a779543:0xdb7367c3a921b03!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합"
+      "Store meal",
+      "restroom",
+      "group fitness"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4018,15 +4018,15 @@
   },
   {
     "place_id": "ChIJk3dOknSjfDUR0u7dTnI8UIo",
-    "display_name": "추억의 포장마차",
-    "category": "술집",
+    "display_name": "Food stalls of memories",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신제1동 327-2",
-    "short_address": "종로구 창신제1동 327-2",
+    "address": "327-2, Changsinje 1-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "327-2, Changsinje 1-dong, Jongno-gu",
     "location": {
       "lat": 37.5724926,
       "lng": 127.01527339999998
@@ -4046,14 +4046,14 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca374924e7793:0x8a503c724eddeed2!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4063,15 +4063,15 @@
         "author": "Chun sup Jang",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "2년 전",
-        "text": "옛날 느낌으로 제법 큰공간 영맨, 올드맨이 함께하는공간. 조금 늦은시간에도 사람이 많으나 테이블\n교체가 빠르다. 옛 낭만을 느끼려면 괜찮은 공간."
+        "relative_time": "2 years ago",
+        "text": "A fairly large space with an old-fashioned feel, a space where young men and old men come together. Even though it was a bit late, there were a lot of people, but there were tables.\nReplacement is quick. A good place to feel the old romance."
       },
       {
         "author": "Jean Tsai",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "겨울에 따끈한 우동을 먹는 건 정말 기분 좋은 일이죠. 국물도 훌륭하고, 면발도 쫄깃쫄깃쫄깃해요. 어묵도 맛있었는데, 일행이 너무 많아서 남은 건 포장해 왔어요. 사장님도 친절하시고, 손님들이 즐겁게 먹고 마시고 이야기 나누는 분위기도 정말 좋았어요."
+        "relative_time": "2 months ago",
+        "text": "It feels really good to eat warm udon in winter. The broth is great, and the noodles are chewy. The fish cake was delicious, but since there were so many people in the group, we packed the rest. The owner was friendly, and the atmosphere was really nice as the customers had fun eating, drinking, and talking."
       }
     ],
     "photos": [
@@ -4089,15 +4089,15 @@
   },
   {
     "place_id": "ChIJ48WbiOyjfDURJ7oTgA0fn5A",
-    "display_name": "비턴 동묘역점",
-    "category": "술집",
+    "display_name": "Beaton Dongmyo Station Branch",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신제1동 종로 336",
-    "short_address": "종로구 창신제1동 종로 336",
+    "address": "336 Jongno, Changsinje 1-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "336 Jongno, Changsinje 1-dong, Jongno-gu",
     "location": {
       "lat": 37.572581199999995,
       "lng": 127.01498009999999
@@ -4116,22 +4116,22 @@
     "google_maps_url": "https://maps.google.com/?cid=10421082205602429479",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3ec889bc5e3:0x909f1f0d8013ba27!9m1!1b1",
     "opening_hours": [
-      "월요일: 24시간 영업",
-      "화요일: 24시간 영업",
-      "수요일: 24시간 영업",
-      "목요일: 24시간 영업",
-      "금요일: 24시간 영업",
-      "토요일: 24시간 영업",
-      "일요일: 24시간 영업"
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
     ],
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4141,16 +4141,16 @@
         "author": "JY Bae",
         "rating": 1,
         "rating_stars": "★",
-        "relative_time": "6년 전",
-        "text": "글쎄... 굳이 찾아갈  필요는 없을듯... 동네 아저씨, 아줌마들이 모이는 호프집같은 느낌..."
+        "relative_time": "6 years ago",
+        "text": "Well... I don't think there's any need to go there... It feels like a pub where local men and women gather..."
       }
     ],
     "photos": null
   },
   {
     "place_id": "ChIJaR20ZDejfDURpoQ5scIX5PI",
-    "display_name": "르빗",
-    "category": "와인 바",
+    "display_name": "LeWitt",
+    "category": "wine bar",
     "types": [
       "wine_bar",
       "food",
@@ -4158,8 +4158,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 동 삼우텍스프라자 시즌빌딩 6호 KR 서울특별시 종로구 창신동 328-18번지 2층 H동",
-    "short_address": "동 KR 서울특별시 종로구 창신동 328-18번지 2층 H동 삼우텍스프라자 시즌빌딩 6호",
+    "address": "Building H, 2nd floor, 328-18 Changsin-dong, Jongno-gu, Seoul, Republic of Korea, Samwootex Plaza Season Building, No. 6",
+    "short_address": "KR #6, Samwootex Plaza Season Building, Building H, 2nd floor, 328-18 Changsin-dong, Jongno-gu, Seoul",
     "location": {
       "lat": 37.5716999,
       "lng": 127.0151853
@@ -4179,13 +4179,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33764b41d69:0xf2e417c2b13984a6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "와인"
+      "Store meal",
+      "restroom",
+      "wine"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4195,15 +4195,15 @@
   },
   {
     "place_id": "ChIJaR20ZDejfDURvXBCPHB7kYU",
-    "display_name": "에즈룸",
-    "category": "술집",
+    "display_name": "ezrum",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 KR 서울특별시 종로구 창신동 328-18번지 2층 H5호",
-    "short_address": "KR 서울특별시 종로구 창신동 328-18번지 2층 H5호",
+    "address": "Seoul, Republic of Korea KR Room H5, 2nd floor, 328-18 Changsin-dong, Jongno-gu, Seoul",
+    "short_address": "KR Room H5, 2nd floor, 328-18 Changsin-dong, Jongno-gu, Seoul",
     "location": {
       "lat": 37.5716999,
       "lng": 127.0151853
@@ -4223,15 +4223,15 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33764b41d69:0x85917b703c4270bd!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4241,8 +4241,8 @@
   },
   {
     "place_id": "ChIJaR20ZDejfDUR9n5OV5sPEHo",
-    "display_name": "트랙넘버원",
-    "category": "와인 바",
+    "display_name": "track number one",
+    "category": "wine bar",
     "types": [
       "wine_bar",
       "food",
@@ -4250,8 +4250,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 328-18",
-    "short_address": "종로구 창신동 328-18",
+    "address": "328-18 Changsin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "328-18 Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.5716999,
       "lng": 127.0151853
@@ -4271,13 +4271,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33764b41d69:0x7a100f9b574e7ef6!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "와인"
+      "Store meal",
+      "restroom",
+      "wine"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4287,15 +4287,15 @@
   },
   {
     "place_id": "ChIJSy__112jfDURh-pixmoVAoo",
-    "display_name": "동묘마케트",
-    "category": "술집",
+    "display_name": "Dongmyo Market",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로54길 17-10",
-    "short_address": "종로구 종로54길 17-10",
+    "address": "17-10 Jongno 54-gil, Jongno-gu, Seoul, South Korea",
+    "short_address": "17-10 Jongno 54-gil, Jongno-gu",
     "location": {
       "lat": 37.5717697,
       "lng": 127.01449230000001
@@ -4317,64 +4317,64 @@
     "google_maps_url": "https://maps.google.com/?cid=9944534475526564487",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca35dd7ff2f4b:0x8a02156ac662ea87!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 5:30 ~ 오전 12:30",
-      "화요일: 오후 5:30 ~ 오전 12:30",
-      "수요일: 오후 5:30 ~ 오전 12:30",
-      "목요일: 오후 5:30 ~ 오전 12:30",
-      "금요일: 오후 5:30 ~ 오전 1:30",
-      "토요일: 오후 5:30 ~ 오전 1:30",
-      "일요일: 오후 5:30 ~ 오전 12:00"
+      "Monday: 5:30 PM - 12:30 AM",
+      "Tuesday: 5:30 PM - 12:30 AM",
+      "Wednesday: 5:30 PM - 12:30 AM",
+      "Thursday: 5:30 PM - 12:30 AM",
+      "Friday: 5:30 PM - 1:30 AM",
+      "Saturday: 5:30 PM - 1:30 AM",
+      "Sunday: 5:30 PM - 12:00 AM"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "단체적합",
-      "맥주",
-      "와인"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "group fitness",
+      "beer",
+      "wine"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "곽도연",
+        "author": "Kwak Do-yeon",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "골목 안쪽에 있어서 “여기에 음식점이 있어?” 싶었는데, 문을 여는 순간 분위기가 확 달라지는 곳이에요. 따뜻한 조명과 아늑한 공간 덕분에 감성 제대로 느끼면서 식사할 수 있었습니다.\n\n와인을 잔/병으로 자유롭게 고를 수 있고, 원하는 와인잔을 직접 선택하는 시스템이 재미있어요. 와인뿐만 아니라 소주, 맥주, 논알콜 술까지 다양하게 준비되어 있어서 술을 마시지 않는 사람과 함께 와도 부담 없는 곳이에요. 간단한 과자를 먹을 수 있는 스낵바도 있어서 가볍게 즐기기 좋았습니다.\n\n우삼겹 라구 떡볶이와 화이트 와인을 먹었는데 조합이 정말 좋았어요. 살짝 매콤한 라구 소스에 고기 풍미가 진하고, 면처럼 긴 떡 덕분에 먹는 재미까지 있었어요. 화이트 와인은 상큼하고 무난해서 음식이랑 잘 어울렸고, 칠링백을 주셔서 끝까지 시원하게 마실 수 있었습니다.\n\n파스타, 리조또 등 메뉴도 다양해서 다음에 다른 메뉴 먹으러 꼭 재방문하고 싶은 곳이에요. 분위기 좋은 동묘 와인바 찾는 분들께 추천합니다 🍷"
+        "relative_time": "2 months ago",
+        "text": "It’s inside an alley, so “Is there a restaurant here?” I thought this was a place where the atmosphere completely changes the moment you open the door. Thanks to the warm lighting and cozy space, I was able to enjoy my meal while feeling the right emotions.\n\nYou can freely choose your wine by the glass/bottle, and the system of choosing the wine glass you want is fun. Not only wine, but also soju, beer, and non-alcoholic drinks are available, so it's a place where you don't have to worry if you come with someone who doesn't drink alcohol. There was also a snack bar where you could eat light snacks, so it was nice to have a light meal.\n\nI had beef pork ragu tteokbokki and white wine, and the combination was really good. The slightly spicy ragu sauce had a rich meat flavor, and the long, noodle-like rice cake made it fun to eat. The white wine was refreshing and neutral, so it went well with the food, and they gave me a chilling bag so I could drink it until the end.\n\nThe menu has a variety of pasta, risotto, etc., so I definitely want to visit again next time to try other dishes. Recommended to those looking for a wine bar in Dongmyo with a good atmosphere 🍷"
       },
       {
         "author": "jeolmi",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "분위기가 완전 신비로워요. 도심에서 자주 볼 수 없는 구조라 있는 내내 즐거웠구요' 술 한 잔 하기에 너무 좋은 동묘술집입니다. 숨겨진 공간에 있기 때문에  아는 사람들만 찾아가는데 동묘 방문시 꼭 한 번 들러보시길 추천하는 곳이에요."
+        "relative_time": "1 month ago",
+        "text": "The atmosphere is completely mysterious. It's a structure you don't often see in the city, so I had fun the whole time.' Dongmyo Bar is a great place to have a drink. Since it is in a hidden place, only people in the know visit it, but it is a place I recommend you to visit at least once when you visit Dongmyo Shrine."
       },
       {
-        "author": "혜성",
+        "author": "comet",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "동묘 힙한 캐주얼 감성 식당 동묘마케트 완전 추천이요🥰👍 이색적인 분위기에 가성비 좋은 음식들로 한 가득이고 매우 친절하셔요🤭💚"
+        "relative_time": "1 month ago",
+        "text": "I highly recommend Dongmyo Market, a hip casual restaurant in Dongmyo🥰👍 It has a unique atmosphere, full of good value for money food, and they are very friendly🤭💚"
       },
       {
-        "author": "익명의 사용자",
+        "author": "anonymous user",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1달 전",
-        "text": "분위기도 좋고 소개팅, 데이트하기에 딱 좋은 공간 같아요 ^^ 파스타도 엄마가 맛있다고 칭찬하시고 제가 먹은 찹스테이크도 완전 별 다섯개..ㅎㅎ"
+        "relative_time": "1 month ago",
+        "text": "The atmosphere is nice and it seems like the perfect place for a blind date or date ^^ My mom praised the pasta as being delicious and the chop steak I ate was also a complete 5 star...haha."
       },
       {
-        "author": "므미닝",
+        "author": "Mmining",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "1차로 식사겸 가기에도\n2차로 가볍게 술마시러 가기에도 좋아요\n와인 맥주 소주 위스키 무알콜주류까지 술도 다양하고\n간단하게먹을수잇는 스낵존도잇고\n분위기도 아늑하니 좋음"
+        "relative_time": "2 months ago",
+        "text": "Even for a first meal\nIt's also good for a second drink.\nThere is a wide variety of alcohol including wine, beer, soju, whiskey and non-alcoholic liquor.\nThere is also a snack zone where you can grab a quick bite to eat.\nThe atmosphere is nice and cozy too."
       }
     ],
     "photos": [
@@ -4392,16 +4392,16 @@
   },
   {
     "place_id": "ChIJ3S8XbEyjfDUR19nPDZhefAY",
-    "display_name": "빅테일",
-    "category": "칵테일바",
+    "display_name": "big tail",
+    "category": "cocktail bar",
     "types": [
       "cocktail_bar",
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 330-57 빅테일",
-    "short_address": "종로구 창신동 330-57 빅테일",
+    "address": "Big Tail, 330-57 Changsin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "330-57 Big Tail, Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.571683799999995,
       "lng": 127.01448839999999
@@ -4423,62 +4423,62 @@
     "google_maps_url": "https://maps.google.com/?cid=467352468499454423",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca34c6c172fdd:0x67c5e980dcfd9d7!9m1!1b1",
     "opening_hours": [
-      "월요일: 휴무일",
-      "화요일: 오후 6:00 ~ 오전 1:00",
-      "수요일: 오후 6:00 ~ 오전 1:00",
-      "목요일: 오후 6:00 ~ 오전 1:00",
-      "금요일: 오후 6:00 ~ 오전 2:00",
-      "토요일: 오후 6:00 ~ 오전 2:00",
-      "일요일: 오후 6:00 ~ 오전 1:00"
+      "Monday: Closed day",
+      "Tuesday: 6:00 PM - 1:00 AM",
+      "Wednesday: 6:00 PM - 1:00 AM",
+      "Thursday: 6:00 PM - 1:00 AM",
+      "Friday: 6:00 PM - 2:00 AM",
+      "Saturday: 6:00 PM - 2:00 AM",
+      "Sunday: 6:00 PM - 1:00 AM"
     ],
     "services": [
-      "포장",
-      "매장식사",
-      "화장실",
-      "칵테일"
+      "packaging",
+      "Store meal",
+      "restroom",
+      "cocktail"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이종상",
+        "author": "Lee Jong-sang",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2달 전",
-        "text": "동묘맛집 술집으로 유명한\n빅테일 라이브바에 다녀왔어요.\n\n라이브 공연이 있어서\n분위기가 정말 좋고,\n음악 들으면서 술 마시기\n딱 좋은 곳이었습니다\n\n칵테일 종류도 다양하고 맛도 깔끔해서\n부담 없이 즐기기 좋았습니다\n동묘에서 분위기 있는 술집이나\n라이브바 찾으신다면\n빅테일 가보시길 추천합니다."
+        "relative_time": "2 months ago",
+        "text": "Famous for Dongmyo Restaurant and Bar\nI went to Big Tail Live Bar.\n\nThere is a live performance\nThe atmosphere is really nice,\nDrinking while listening to music\nIt was just the right place\n\nThere are a variety of cocktails and the taste is refreshing.\nIt was nice to enjoy it without any pressure\nA bar with an atmosphere in Dongmyo\nIf you are looking for a live bar\nI recommend going to Big Tail."
       },
       {
-        "author": "햇찌밍",
+        "author": "Hatchiming",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "동묘에서 분위기 좋은 술집 찾는다면 여기요🍸\n라이브 공연이 있어서 술보다 노래에 더 취했던 곳이에요.\n기타 소리 들으면서 칵테일 마시니까 하루 피로가 싹 풀리더라구요🎶\n직원분들도 친절하고 분위기 너무 좋아서 또 가고 싶은 곳이에요!"
+        "relative_time": "5 months ago",
+        "text": "If you are looking for a bar with a good atmosphere in Dongmyo, this is it🍸\nThere was a live performance here, so I got more drunk on the music than on the alcohol.\nDrinking a cocktail while listening to the guitar made all the fatigue from the day go away🎶\nThe staff is friendly and the atmosphere is so nice that I want to go there again!"
       },
       {
         "author": "MIHEE JEONG",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "동묘 골목에서 색다른 분위기 즐기기 좋은 곳이에요. 클래식 칵테일 선택지가 정말 많고, 취향 말하면 추천도 잘 해주셔서 편했습니다. 3L 메가 사이즈 칵테일은 같이 나눠 마시는 재미가 확실해요. 디트로이트 피자랑 파스타도 퀄리티가 좋아서 식사 겸 술자리로 만족했고, 토요일 라이브 공연까지 있으면 더 특별할 듯합니다. 예약은 전화나 인스타 DM 가능해요."
+        "relative_time": "3 months ago",
+        "text": "It’s a great place to enjoy a unique atmosphere in Dongmyo Alley. There were a lot of classic cocktails to choose from, and they made good recommendations if I told them what I liked, so it was convenient. The 3L mega size cocktail is definitely fun to share. The Detroit pizza and pasta were of good quality, so I was satisfied with my meal and drinks, and it would be even more special if there was a live performance on Saturday. Reservations can be made by phone or Instagram DM."
       },
       {
         "author": "Kylo",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3달 전",
-        "text": "1. 칵테일이 다양하고 맛있다\n2. 안주가 맛있고 예쁘다\n3. 라이브공연도 한다\n\n동묘 데이트할 때 꼭 가보세요!!"
+        "relative_time": "3 months ago",
+        "text": "1. Cocktails are diverse and delicious\n2. The snacks are delicious and pretty.\n3. There are also live performances.\n\nBe sure to visit Dongmyo on your date!!"
       },
       {
-        "author": "권혁인",
+        "author": "Kwon Hyuk-in",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5달 전",
-        "text": "칵테일 진짜 맛있었음. 올드패션드 묵직하고 향 좋았고, 아이리쉬카밤은 불쇼까지! 디트로이트피자도 같이 시켰는데 치즈 듬뿍에 바삭한 엣지까지 완벽. 조용한 골목 안이라 데이트하기 딱 좋았고, 주말엔 공연도 있는데 무료!!"
+        "relative_time": "5 months ago",
+        "text": "The cocktail was really delicious. The Old Fashioned was heavy and had a good scent, and the Irish Kabam even had a fire show! I also ordered the Detroit pizza and it was perfect, with plenty of cheese and crispy edges. It's perfect for a date because it's in a quiet alley, and there are performances on weekends that are free!!"
       }
     ],
     "photos": [
@@ -4496,15 +4496,15 @@
   },
   {
     "place_id": "ChIJ6zN9WTejfDUR_VVmaYQHG9k",
-    "display_name": "이리오슈호프",
-    "category": "술집",
+    "display_name": "Irioshhof",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 창신동 330-5번지 2층 종로구 서울특별시 KR",
-    "short_address": "창신동 330-5번지 2층 종로구 서울특별시 KR",
+    "address": "2nd floor, 330-5 Changsin-dong, Seoul, Republic of Korea Seoul, Jongno-gu KR",
+    "short_address": "2nd floor, 330-5 Changsin-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5720429,
       "lng": 127.0140725
@@ -4524,13 +4524,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca337597d33eb:0xd91b0784696655fd!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4539,15 +4539,15 @@
   },
   {
     "place_id": "ChIJLxzFPzejfDURL7LC-pl0Csg",
-    "display_name": "에이치티라운지",
-    "category": "술집",
+    "display_name": "HT Lounge",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 번지 3층 302-5",
-    "short_address": "종로구 창신동 번지 3층 302-5",
+    "address": "302-5, 3rd floor, Changsin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "302-5, 3rd floor, Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.5728627,
       "lng": 127.01448629999999
@@ -4567,13 +4567,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3373fc51c2f:0xc80a7499fac2b22f!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4586,15 +4586,15 @@
   },
   {
     "place_id": "ChIJ8SbyWjejfDURBd8lcCtdzTI",
-    "display_name": "뉴욕야시장 동묘역점",
-    "category": "술집",
+    "display_name": "New York Night Market Dongmyo Station Branch",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 종로 326",
-    "short_address": "종로구 종로 326",
+    "address": "326 Jongno, Jongno-gu, Seoul, South Korea",
+    "short_address": "326 Jongro, Jongno-gu",
     "location": {
       "lat": 37.572260899999996,
       "lng": 127.01396770000001
@@ -4602,7 +4602,7 @@
     "rating": 3.7,
     "rating_stars": "★★★☆☆ 3.7",
     "rating_count": 37,
-    "price_level": "보통 ($$)",
+    "price_level": "Average ($$)",
     "price_range": null,
     "editorial_summary": null,
     "generative_summary": null,
@@ -4614,53 +4614,53 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3375af226f1:0x32cd5d2b7025df05!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "이도윤",
+        "author": "Lee Do-yoon",
         "rating": 2,
         "rating_stars": "★★",
-        "relative_time": "6년 전",
-        "text": "오랜만에 친구만나 2차로....스테이크와..페파로니 피자주문..\n재로들이 너무 아닌듯..그러니  당연히 맛도\n그냥 생맥주만..."
+        "relative_time": "6 years ago",
+        "text": "I met a friend for the second time after a long time and ordered steak and pepperoni pizza.\nIt doesn't seem like it's too expensive...so of course it tastes good too.\nJust draft beer..."
       },
       {
         "author": "Yoon Chul Han",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "5년 전",
-        "text": "가볍게 맥주 한잔하면서 먹기에 좋은 안주가 많이 있습니다."
+        "relative_time": "5 years ago",
+        "text": "There are many snacks that are great to eat while drinking a light beer."
       },
       {
-        "author": "zozo “쪼쪼”",
+        "author": "zozo “zozoo”",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "3년 전",
-        "text": "시키는 메뉴마다 없음ㅜ 잘 안나가는 메뉴는 발주를 안핫는듯 한데.. 없는건 품절 표시 좀 해주세요. 세번을 빠꾸먹었네요."
+        "relative_time": "3 years ago",
+        "text": "There is no menu for every order. It seems like they don't order menus that don't sell well.. Please indicate that items that are not available are sold out. I ate it three times in quick succession."
       },
       {
-        "author": "김경민",
+        "author": "Kyungmin Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "3년 전",
-        "text": "가장 더웠던날에 방문했었음... 하필\n\n이집에 오뎅탕이 맛난거 같음. 우리 빼고 대부분 오뎅탕을 시켜서 가스레인지를 사용하고 있었음.... 죽도록 더움 ㅠㅠ\n\n한여름엔 오뎅탕 안팔면 안됨?"
+        "relative_time": "3 years ago",
+        "text": "I visited on the hottest day... of course.\n\nI think the oden soup at this place is delicious. Except for us, most people ordered oden soup and were using the gas stove... It was so hot.\n\nIs it okay not to sell odeng soup in the middle of summer?"
       },
       {
         "author": "Tina",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "5년 전",
-        "text": "음식도 맛있고 분위기도 끝내줘요. 비어는덤이에요 ^^"
+        "relative_time": "5 years ago",
+        "text": "The food is delicious and the atmosphere is awesome. It’s an empty bonus ^^"
       }
     ],
     "photos": [
@@ -4678,15 +4678,15 @@
   },
   {
     "place_id": "ChIJz4k3nTejfDUR29a9e46Ztnk",
-    "display_name": "신라궁스텐드빠",
-    "category": "술집",
+    "display_name": "Silla Palace Stand Bar",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 숭인동 316-2",
-    "short_address": "종로구 숭인동 316-2",
+    "address": "316-2, Sungin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "316-2, Sungin-dong, Jongno-gu",
     "location": {
       "lat": 37.571701,
       "lng": 127.01596979999998
@@ -4706,13 +4706,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca3379d3789cf:0x79b6998e7bbdd6db!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4722,8 +4722,8 @@
   },
   {
     "place_id": "ChIJtWd2EDejfDURtGi89wzo7cw",
-    "display_name": "애플단란주점",
-    "category": "술집",
+    "display_name": "Apple Danran Bar",
+    "category": "bar",
     "types": [
       "karaoke",
       "night_club",
@@ -4731,8 +4731,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 KR 서울특별시 종로구 창신동 290번지 B01호",
-    "short_address": "KR 서울특별시 종로구 창신동 290번지 B01호",
+    "address": "Seoul, Republic of Korea KR Room B01, 290 Changsin-dong, Jongno-gu, Seoul",
+    "short_address": "KR Room B01, 290 Changsin-dong, Jongno-gu, Seoul",
     "location": {
       "lat": 37.5731101,
       "lng": 127.01509659999999
@@ -4752,12 +4752,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca337107667b5:0xccede80cf7bc68b4!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실",
-      "맥주"
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4766,15 +4766,15 @@
   },
   {
     "place_id": "ChIJYUxsRjejfDURUT6kpwt_MeY",
-    "display_name": "추억콘써트7080",
-    "category": "술집",
+    "display_name": "Memories Concert 7080",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 창신동 207번지 하동 1층 종로구 서울특별시 KR",
-    "short_address": "창신동 207번지 하동 1층 종로구 서울특별시 KR",
+    "address": "1st floor, Hadong, 207 Changsin-dong, Seoul, Republic of Korea Seoul, Jongno-gu KR",
+    "short_address": "1st floor, Hadong, 207 Changsin-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.5727143,
       "lng": 127.01397829999999
@@ -4794,22 +4794,22 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca337466c4c61:0xe6317f0ba7a43e51!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주"
+      "Store meal",
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "박창규",
+        "author": "Park Chang-gyu",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       }
     ],
@@ -4817,8 +4817,8 @@
   },
   {
     "place_id": "ChIJ7wXj1TmjfDUR6bBNOSPYtoQ",
-    "display_name": "희훈",
-    "category": "술집",
+    "display_name": "Heehun",
+    "category": "bar",
     "types": [
       "bar",
       "wine_bar",
@@ -4827,8 +4827,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 393-12",
-    "short_address": "종로구 창신동 393-12",
+    "address": "393-12 Changsin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "393-12 Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.571176699999995,
       "lng": 127.01555450000001
@@ -4850,26 +4850,26 @@
     "google_maps_url": "https://maps.google.com/?cid=9563068504564674793",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca339d5e305ef:0x84b6d823394db0e9!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 5:00 ~ 오전 2:00",
-      "화요일: 오후 5:00 ~ 오전 3:00",
-      "수요일: 오후 5:00 ~ 오전 3:00",
-      "목요일: 오후 5:00 ~ 오전 3:00",
-      "금요일: 오후 5:00 ~ 오전 3:00",
-      "토요일: 오후 5:00 ~ 오전 3:00",
-      "일요일: 휴무일"
+      "Monday: 5:00 PM - 2:00 AM",
+      "Tuesday: 5:00 PM - 3:00 AM",
+      "Wednesday: 5:00 PM - 3:00 AM",
+      "Thursday: 5:00 PM - 3:00 AM",
+      "Friday: 5:00 PM - 3:00 AM",
+      "Saturday: 5:00 PM - 3:00 AM",
+      "Sunday: Closed day"
     ],
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "단체적합",
-      "맥주",
-      "와인",
-      "칵테일"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "group fitness",
+      "beer",
+      "wine",
+      "cocktail"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -4879,36 +4879,36 @@
         "author": "Andrew Kim",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "7달 전",
-        "text": "지인 소개로 방문한 곳. 매장이 크고 넓진 않지만 힙한 감성을 느낄 수 있다."
+        "relative_time": "7 months ago",
+        "text": "I visited this place after being introduced by an acquaintance. Although the store is not large and spacious, you can feel the hip sensibility."
       },
       {
-        "author": "단식자",
+        "author": "faster",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "건물2층에 있는 요리주점.\n길에서는 잘 안보이는데 안주맛과 분위기로 힙한 장소로 꾸민 주인장에게 박수.\n테이블에 비해 사람이 많이 온다. 그것도 젊은 사람들로 붐빈다.\n근처에 있는 나침반, 증류주관차와 비슷한 컨셉이다.\n테이블 조명을 놔서 은은한 분위기가 난다.\n화장실이 좀 불편하긴 하다. 남녀 공용이다. 좁은데라 어쩔 수 없다고 생각한다. 희훈이라는 가게심볼에 애정을 갖고 있는 듯하다. 사용하는 잔에 희훈심볼을 새겨놨다. 근처에 마크앤전도 비슷하게 잔에다 써놨다. 젊은이의 에너지를 빨아먹으러 다시 가도 괜찮겠다 생각한다."
+        "relative_time": "2 years ago",
+        "text": "A restaurant on the second floor of the building.\nIt's hard to see from the street, but I applaud the owner for creating a hip place with great snacks and atmosphere.\nThere are more people than there are tables. It's also crowded with young people.\nIt is a similar concept to the nearby compass and distillation locomotive.\nThe table lighting creates a soft atmosphere.\nThe bathroom is a bit uncomfortable. It is for both men and women. I think it can't be helped because it's narrow. He seems to have affection for the store symbol, Hee-Hoon. The Heehun symbol is engraved on the cup used. Nearby, Mark & ​​Jeon also wrote something similar on their glasses. I think it would be okay to go back to sucking up the energy of young people."
       },
       {
         "author": "mina",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "건물2층에 꽤 힙한 술집이 있다. 상호도 희훈. 내부는 좁은 편이어서 테이블이 몇개 없지만 회전은 빠른 것 같았다. 소주 맥주 안주로 크림짬뽕해물탕과 치즈플레터를 주문했는데 의외로 잘 어울린다. 특히 크림짬뽕해물탕이 칼칼하면서 고소하다."
+        "relative_time": "2 years ago",
+        "text": "There is a pretty hip bar on the second floor of the building. Also known as Heehun. The interior is narrow, so there are only a few tables, but the turnover seems to be quick. I ordered cream jjamppong seafood stew and cheese platter as a side dish for soju beer, and it went surprisingly well. In particular, the cream jjamppong seafood soup is spicy and savory."
       },
       {
-        "author": "1 “‪소패니‬”",
+        "author": "1 “Sofanny”",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "2년 전",
-        "text": "우연히 들르고 들어가는 입구가 좁은데 비해 식당 안은 사람도 많고 어수선했다. 음식도 맛있고 별 단점은 없음"
+        "relative_time": "2 years ago",
+        "text": "I happened to stop by and although the entrance was narrow, the inside of the restaurant was crowded and cluttered. The food is delicious and there are no downsides."
       },
       {
         "author": "Eun P",
         "rating": 4,
         "rating_stars": "★★★★",
-        "relative_time": "3년 전",
-        "text": "하이볼에 간단히 술먹기 좋은 집\n생맥주도 맛있습니다."
+        "relative_time": "3 years ago",
+        "text": "A great place to have a quick drink with a highball\nDraft beer is also delicious."
       }
     ],
     "photos": [
@@ -4926,14 +4926,14 @@
   },
   {
     "place_id": "ChIJKYgs5DmjfDURVn3nownS8Iw",
-    "display_name": "(주)토이콘서트",
-    "category": "술집",
+    "display_name": "Toy Concert Co., Ltd.",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시",
+    "address": "Seoul, South Korea",
     "short_address": null,
     "location": {
       "lat": 37.5712446,
@@ -4954,15 +4954,15 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca339e42c8829:0x8cf0d209a3e77d56!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "예약가능",
-      "화장실",
-      "단체적합",
-      "맥주"
+      "Store meal",
+      "Reservation available",
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -4971,15 +4971,15 @@
   },
   {
     "place_id": "ChIJDYMSozejfDURmBbqx7WsnPc",
-    "display_name": "옛골민속주점",
-    "category": "술집",
+    "display_name": "Old Folk Bar",
+    "category": "bar",
     "types": [
       "bar",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 숭인동 296-21",
-    "short_address": "종로구 숭인동 296-21",
+    "address": "296-21 Sungin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "296-21 Sungin-dong, Jongno-gu",
     "location": {
       "lat": 37.5722662,
       "lng": 127.0164265
@@ -4999,21 +4999,21 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca337a312830d:0xf79cacb5c7ea1698!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "매장식사",
-      "화장실"
+      "Store meal",
+      "restroom"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
     "reviews": [
       {
-        "author": "김천호",
+        "author": "Cheonho Kim",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "7년 전",
+        "relative_time": "7 years ago",
         "text": null
       }
     ],
@@ -5022,7 +5022,7 @@
   {
     "place_id": "ChIJ04u4cACjfDURvwvDXSHeSGg",
     "display_name": "my name is Cafe & Bar",
-    "category": "칵테일바",
+    "category": "cocktail bar",
     "types": [
       "cocktail_bar",
       "cafe",
@@ -5031,8 +5031,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 퇴계로81길 7-12 3층",
-    "short_address": "중구 퇴계로81길 7-12 3층",
+    "address": "3rd floor, 7-12 Toegye-ro 81-gil, Jung-gu, Seoul, South Korea",
+    "short_address": "3rd floor, 7-12 Toegye-ro 81-gil, Jung-gu",
     "location": {
       "lat": 37.5661591,
       "lng": 127.01758439999999
@@ -5054,24 +5054,24 @@
     "google_maps_url": "https://maps.google.com/?cid=7514500213156023231",
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca30070b88bd3:0x6848de215dc30bbf!9m1!1b1",
     "opening_hours": [
-      "월요일: 오후 12:00 ~ 오전 12:00",
-      "화요일: 오후 12:00 ~ 오전 12:00",
-      "수요일: 오후 12:00 ~ 오전 12:00",
-      "목요일: 오후 12:00 ~ 오전 12:00",
-      "금요일: 오후 12:00 ~ 오전 2:00",
-      "토요일: 오후 1:00 ~ 오전 2:00",
-      "일요일: 오후 1:00 ~ 오전 12:00"
+      "Monday: 12:00 PM - 12:00 AM",
+      "Tuesday: 12:00 PM - 12:00 AM",
+      "Wednesday: 12:00 PM - 12:00 AM",
+      "Thursday: 12:00 PM - 12:00 AM",
+      "Friday: 12:00 PM - 2:00 AM",
+      "Saturday: 1:00 PM - 2:00 AM",
+      "Sunday: 1:00 PM - 12:00 AM"
     ],
     "services": [
-      "매장식사",
-      "화장실",
-      "맥주",
-      "와인",
-      "칵테일"
+      "Store meal",
+      "restroom",
+      "beer",
+      "wine",
+      "cocktail"
     ],
     "payment": [
-      "신용카드",
-      "체크카드",
+      "credit card",
+      "check card",
       "NFC"
     ],
     "accessibility": null,
@@ -5081,36 +5081,36 @@
         "author": "B K",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "6달 전",
-        "text": "꽤 좋은 카페겸 바\n근처에 왔다가 시간이 남아서 간곳인데 좋았다.\n크지않지만 분위기도 좋고 저녁에오면 칵테일하나시켜서 먹기 좋은 구조인데 나는 술약속이 따로있어서 커피를 마셨다. 그런데 기대보다 커피도맛있어서 만족했던곳.\n단점이라면 계단을 꽤 올라가야한다.\n직원분들도 매너좋고 친절하시다.\n근데 대부분의 손님은 여성분들이신듯하다.\n일하는 분들이 다 잘생겨서 그런가...\n함께시킨 디저트도 맛있었다.\n신당에서 커피한잔 하기도 좋고 간단하게 칵테일한잔 하기에도 좋아보이는 곳"
+        "relative_time": "6 months ago",
+        "text": "Pretty good cafe and bar\nI went there because I had some time left over from a nearby place, and it was nice.\nIt's not big, but the atmosphere is nice and it's nice to order a cocktail in the evening, but I had a separate drink plan so I drank coffee. However, I was satisfied because the coffee was better than I expected.\nThe downside is that you have to climb quite a few stairs.\nThe staff are also polite and friendly.\nBut most of the customers seem to be women.\nIs it because all the people working there are good-looking?\nThe accompanying dessert was also delicious.\nIt's a great place to have a cup of coffee in Sindang or a simple cocktail."
       },
       {
         "author": "Winnie Lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "신당역에 또 하나의 숨겨진 멋진카페\n삼층이라 계단 올라가는 거는 각오 하셔야 하구요\n창가에서 보는 신당 시장에 뷰도 좋고 QR로 주문도 할 수 있어서 편리하며 손님들에게는 본인의 이름을 적을 수 있는 스티커를 주어 벽에 부칠 수 있습니다\n감성과 맛. 완벽한 곳\n아이스라떼 은근히 실패 하기 쉬운데 여기는 맛있습니다"
+        "relative_time": "1 year ago",
+        "text": "Another great hidden cafe in Sindang Station\nIt's on the third floor, so be prepared to climb the stairs.\nThere is a nice view of Shindang Market from the window, and it is convenient to order via QR. Customers are given stickers to write their names on and post them on the wall.\nEmotion and taste. perfect place\nIt's easy to fail at an iced latte, but this one is delicious."
       },
       {
-        "author": "이동현 (커넥터리)",
+        "author": "Lee Dong-hyun (connector)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "신당 중앙시장 이층에 숨겨져있는 분위기 좋은 카페.\n커피 맛도 좋았다.\n카페 이름이 마이네임이즈인게 메뉴가 나오면 가벼운 기록을 할 수 있는 메모지를 준다. 재밌는 요소가 있다.\n많은 눈바람이 날리는 날에 방문해서 더 운치있었다.\n\nInsta. connector_lee"
+        "relative_time": "1 year ago",
+        "text": "A cafe with a nice atmosphere hidden on the second floor of Sindang Jungang Market.\nThe coffee tasted good too.\nThe name of the cafe is My Name Is, and when the menu appears, they give you a notepad so you can make light notes. There are fun elements.\nIt was even more charming because I visited on a day with lots of snow and wind blowing.\n\nInsta. connector_lee"
       },
       {
-        "author": "인간너구리 (RHOin)",
+        "author": "Human Raccoon (RHOin)",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "커피 종류도 다양하고 말차롤 맛있다\n말차라떼는 조금 아쉽"
+        "relative_time": "2 years ago",
+        "text": "There are various types of coffee and the matcha rolls are delicious.\nThe matcha latte was a bit disappointing."
       },
       {
         "author": "jin lee",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "2년 전",
-        "text": "분위기도 좋고 하이볼 종류도 많고 커피도 원두별로 다양했어요 모카롤도 부드럽고 맛있었습니당"
+        "relative_time": "2 years ago",
+        "text": "The atmosphere was nice, there were many types of highballs, and the coffee beans were varied. The mocha roll was soft and delicious."
       }
     ],
     "photos": [
@@ -5128,15 +5128,15 @@
   },
   {
     "place_id": "ChIJ3YLQpiKjfDUR0euA7LP2ueo",
-    "display_name": "황진이노래터",
-    "category": "나이트클럽",
+    "display_name": "Hwang Jini’s Song Story",
+    "category": "nightclub",
     "types": [
       "night_club",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 광희동1가 182-20번지 하1층 중구 서울특별시 KR",
-    "short_address": "광희동1가 182-20번지 하1층 중구 서울특별시 KR",
+    "address": "182-20, Gwanghui-dong 1-ga, Seoul, South Korea, lower 1st floor, Jung-gu, Seoul KR",
+    "short_address": "182-20 Gwanghui-dong 1-ga, lower 1st floor, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.5653309,
       "lng": 127.00685779999999
@@ -5156,12 +5156,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca322a6d082dd:0xeab9f6b3ec80ebd1!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실",
-      "단체적합",
-      "맥주"
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5170,15 +5170,15 @@
   },
   {
     "place_id": "ChIJo3VZ2yKjfDUR3bxqtUbVgSg",
-    "display_name": "히든싱어",
-    "category": "나이트클럽",
+    "display_name": "Hidden singer",
+    "category": "nightclub",
     "types": [
       "night_club",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 을지로6가 번지 지하 18-52 1층",
-    "short_address": "중구 을지로6가 번지 지하 18-52 1층",
+    "address": "1st floor, Basement 18-52, Euljiro 6-ga, Jung-gu, Seoul, Korea",
+    "short_address": "1st floor, Basement 18-52, Euljiro 6-ga, Jung-gu",
     "location": {
       "lat": 37.566946300000005,
       "lng": 127.00683289999999
@@ -5198,12 +5198,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca322db5975a3:0x2881d546b56abcdd!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실",
-      "단체적합"
+      "restroom",
+      "group fitness"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5212,7 +5212,7 @@
         "author": "Yoonmo Chung",
         "rating": 3,
         "rating_stars": "★★★",
-        "relative_time": "2년 전",
+        "relative_time": "2 years ago",
         "text": null
       }
     ],
@@ -5220,15 +5220,15 @@
   },
   {
     "place_id": "ChIJY2fUEhijfDURSgkAFoNuSvg",
-    "display_name": "바나나노래하는곳",
-    "category": "나이트클럽",
+    "display_name": "Banana Singing Place",
+    "category": "nightclub",
     "types": [
       "night_club",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 마른내로 165-1",
-    "short_address": "중구 마른내로 165-1",
+    "address": "165-1 Mareunnae-ro, Jung-gu, Seoul, South Korea",
+    "short_address": "165-1 Mareunnae-ro, Jung-gu",
     "location": {
       "lat": 37.5646254,
       "lng": 127.0064999
@@ -5248,10 +5248,10 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca31812d46763:0xf84a6e831600094a!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실"
+      "restroom"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5260,15 +5260,15 @@
   },
   {
     "place_id": "ChIJkRCGJz-jfDURlbKL2Fz3LOM",
-    "display_name": "쎄븐노래타운",
-    "category": "나이트클럽",
+    "display_name": "Seven Song Town",
+    "category": "nightclub",
     "types": [
       "night_club",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 중구 흥인동",
-    "short_address": "중구 흥인동",
+    "address": "Heungin-dong, Jung-gu, Seoul, South Korea",
+    "short_address": "Heungin-dong, Jung-gu",
     "location": {
       "lat": 37.5657959,
       "lng": 127.01589469999999
@@ -5288,11 +5288,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33f27861091:0xe32cf75cd88bb295!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실",
-      "맥주"
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5301,8 +5301,8 @@
   },
   {
     "place_id": "ChIJsZGjWj6jfDUR6PyVg7Rgwyk",
-    "display_name": "1번가7080",
-    "category": "술집",
+    "display_name": "1st Street 7080",
+    "category": "bar",
     "types": [
       "karaoke",
       "night_club",
@@ -5310,8 +5310,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 무학동 33번지 지층 중구 서울특별시 KR",
-    "short_address": "무학동 33번지 지층 중구 서울특별시 KR",
+    "address": "Ground floor, 33 Muhak-dong, Seoul, South Korea, Jung-gu, Seoul KR",
+    "short_address": "33 Muhak-dong, ground floor, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.563917499999995,
       "lng": 127.015178
@@ -5331,12 +5331,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33e5aa391b1:0x29c360b48395fce8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실",
-      "맥주"
+      "restroom",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5345,8 +5345,8 @@
   },
   {
     "place_id": "ChIJSxWsbj6jfDUR1aJfI2T4wVg",
-    "display_name": "전품은막걸리",
-    "category": "양조장",
+    "display_name": "All products are makgeolli",
+    "category": "brewery",
     "types": [
       "brewery",
       "manufacturer",
@@ -5355,8 +5355,8 @@
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 신당동 240-6번지 신당동 1층 중구 서울특별시 KR",
-    "short_address": "신당동 240-6번지 신당동 1층 중구 서울특별시 KR",
+    "address": "1st floor, Sindang-dong, 240-6, Sindang-dong, Seoul, South Korea, Jung-gu, Seoul KR",
+    "short_address": "240-6 Sindang-dong, 1st floor, Sindang-dong, Jung-gu, Seoul KR",
     "location": {
       "lat": 37.563956999999995,
       "lng": 127.0141836
@@ -5384,15 +5384,15 @@
   },
   {
     "place_id": "ChIJQ_bVCDujfDUR-S_Hk_ikoIU",
-    "display_name": "히든싱어2",
-    "category": "나이트클럽",
+    "display_name": "Hidden Singer 2",
+    "category": "nightclub",
     "types": [
       "night_club",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 번지 지하 438-14 1층",
-    "short_address": "종로구 창신동 번지 지하 438-14 1층",
+    "address": "1st floor, 438-14 Basement, Changsin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "1st floor, 438-14 Basement, Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.570147899999995,
       "lng": 127.0101898
@@ -5412,11 +5412,11 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33b08d5f643:0x85a0a4f893c72ff9!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실",
-      "단체적합"
+      "restroom",
+      "group fitness"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5425,15 +5425,15 @@
   },
   {
     "place_id": "ChIJmWor_jqjfDURlVmecDXcRpk",
-    "display_name": "동대문호텔비즈니스클럽",
-    "category": "나이트클럽",
+    "display_name": "Dongdaemun Hotel Business Club",
+    "category": "nightclub",
     "types": [
       "night_club",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 종로구 창신동 번지 7층 442-3",
-    "short_address": "종로구 창신동 번지 7층 442-3",
+    "address": "442-3, 7th floor, Changsin-dong, Jongno-gu, Seoul, South Korea",
+    "short_address": "442-3, 7th floor, Changsin-dong, Jongno-gu",
     "location": {
       "lat": 37.5708294,
       "lng": 127.0103348
@@ -5453,13 +5453,13 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca33afe2b6a99:0x9946dc35709e5995!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실",
-      "단체적합",
-      "맥주"
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드",
-      "체크카드"
+      "credit card",
+      "check card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5468,15 +5468,15 @@
   },
   {
     "place_id": "ChIJJfB8UjejfDURyN07yVjeVm0",
-    "display_name": "스케치7080노래주점",
-    "category": "나이트클럽",
+    "display_name": "Sketch 7080 Song Bar",
+    "category": "nightclub",
     "types": [
       "night_club",
       "point_of_interest",
       "establishment"
     ],
-    "address": "대한민국 서울특별시 창신동 174-1번지 2층 종로구 서울특별시 KR",
-    "short_address": "창신동 174-1번지 2층 종로구 서울특별시 KR",
+    "address": "2nd floor, 174-1 Changsin-dong, Seoul, Republic of Korea Seoul, Jongno-gu KR",
+    "short_address": "2nd floor, 174-1 Changsin-dong, Jongno-gu, Seoul KR",
     "location": {
       "lat": 37.572562399999995,
       "lng": 127.013374
@@ -5496,12 +5496,12 @@
     "google_map_review_link": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x357ca337527cf025:0x6d56de58c93bddc8!9m1!1b1",
     "opening_hours": null,
     "services": [
-      "화장실",
-      "단체적합",
-      "맥주"
+      "restroom",
+      "group fitness",
+      "beer"
     ],
     "payment": [
-      "신용카드"
+      "credit card"
     ],
     "accessibility": null,
     "parking": null,
@@ -5510,8 +5510,8 @@
         "author": "Jc Kim",
         "rating": 5,
         "rating_stars": "★★★★★",
-        "relative_time": "1년 전",
-        "text": "분위기 완전 끝장 넘 좋앗어요"
+        "relative_time": "1 year ago",
+        "text": "The atmosphere is really great."
       }
     ],
     "photos": null
