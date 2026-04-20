@@ -65,6 +65,8 @@ class FriendshipService:
             existing.addressee_id = addressee_id
             existing.status = FriendshipStatus.PENDING
             await friendship_repo.update(existing)
+            # onupdate=func.now() 로 updated_at 이 expire 되므로 명시 refresh 로 async 로드
+            await self._session.refresh(existing)
             return self._to_dto(existing, viewer_id=requester_id, peer=addressee)
 
         friendship = Friendship(
