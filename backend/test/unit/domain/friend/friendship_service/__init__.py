@@ -1,0 +1,1 @@
+# FriendshipService tests package
