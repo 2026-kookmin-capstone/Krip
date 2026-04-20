@@ -35,3 +35,17 @@ def generate_favorite_place_id() -> str:
     timestamp = int(datetime.now().timestamp())
     unique_part = uuid.uuid4().hex[:8]
     return f"FP_{timestamp}_{unique_part}"
+
+
+def generate_friendship_id() -> str:
+    """친구 관계 고유 ID 생성"""
+    timestamp = int(datetime.now().timestamp())
+    unique_part = uuid.uuid4().hex[:8]
+    return f"FS_{timestamp}_{unique_part}"
+
+
+def generate_user_block_id() -> str:
+    """유저 차단 고유 ID 생성"""
+    timestamp = int(datetime.now().timestamp())
+    unique_part = uuid.uuid4().hex[:8]
+    return f"BLK_{timestamp}_{unique_part}"

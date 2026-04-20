@@ -1,0 +1,1 @@
+# Friend domain tests package
