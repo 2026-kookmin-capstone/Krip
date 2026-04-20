@@ -14,6 +14,8 @@ from app.domain.menu_ai.service.menu_ocr import MenuOcrService
 from app.domain.tour.service.place import PlaceService
 from app.domain.tour.service.favorite_place import FavoritePlaceService
 from app.domain.tour.service.tour_search_history import TourSearchHistoryService
+from app.domain.friend.service.friendship import FriendshipService
+from app.domain.friend.service.user_block import UserBlockService
 from app.database.session import UnitOfWork
 from app.config.setting import settings
 
@@ -58,3 +60,7 @@ class Container(containers.DeclarativeContainer):
     place_service = providers.Factory(PlaceService, uow=uow)
     favorite_place_service = providers.Factory(FavoritePlaceService, uow=uow)
     tour_search_history_service = providers.Factory(TourSearchHistoryService)
+
+    # 친구
+    friendship_service = providers.Factory(FriendshipService, uow=uow)
+    user_block_service = providers.Factory(UserBlockService, uow=uow)
