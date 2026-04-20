@@ -47,12 +47,14 @@ class UserRepository:
     async def hard_delete_by_id(self, user_id: str) -> bool:
         """유저 하드 탈퇴 — DB CASCADE로 연관 데이터 전체 삭제
 
-        삭제 대상:
+        삭제 대상 (모두 FK ondelete="CASCADE"):
             - user_detail_inform (프로필)
             - user_travel_style (여행 스타일)
             - tripmate_post (게시글) → tripmate_post_image, tripmate_post_like
-            - tripmate_post_like (좋아요)
+            - tripmate_post_like (좋아요 누른 입장)
             - favorite_place (즐겨찾기)
+            - friendship (requester/addressee 양측)
+            - user_block (blocker/blocked 양측)
         """
         stmt = delete(User).where(User.user_id == user_id)
         result = await self.session.execute(stmt)
