@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Request, Depends
 from dependency_injector.wiring import Provide, inject
 
-from app.domain.friend.service.friend_detail import FriendDetailService
+from app.domain.friend.service.friend_detail import FriendDetailService, UserNotFoundError
 from app.domain.friend.schema.friend_detail import FriendDetailResponse
 from app.container import Container
 
@@ -22,6 +22,8 @@ async def get_friend_detail(
 
     try:
         result = await service.get_friend_detail(viewer_id=viewer_id, peer_id=user_id)
+    except UserNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
