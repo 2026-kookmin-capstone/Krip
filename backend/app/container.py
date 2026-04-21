@@ -16,6 +16,7 @@ from app.domain.tour.service.favorite_place import FavoritePlaceService
 from app.domain.tour.service.tour_search_history import TourSearchHistoryService
 from app.domain.friend.service.friendship import FriendshipService
 from app.domain.friend.service.user_block import UserBlockService
+from app.domain.friend.service.friend_detail import FriendDetailService
 from app.database.session import UnitOfWork
 from app.config.setting import settings
 
@@ -64,3 +65,4 @@ class Container(containers.DeclarativeContainer):
     # 친구
     friendship_service = providers.Factory(FriendshipService, uow=uow)
     user_block_service = providers.Factory(UserBlockService, uow=uow)
+    friend_detail_service = providers.Factory(FriendDetailService, uow=uow)

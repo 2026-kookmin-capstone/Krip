@@ -1,16 +1,18 @@
 from datetime import datetime, timezone
 from types import SimpleNamespace
-from typing import Optional
+from typing import List, Optional
 
 from app.domain.friend.model.friendship import FriendshipStatus
 from app.domain.auth.model.user_detail_inform import Gender
+from app.domain.auth.model.user_travel_style import TravelStyle
 
 
 class UserFactory:
     """User + UserDetailInform 조합을 간단히 만드는 팩토리.
 
     SQLAlchemy 모델을 직접 쓰면 세션 의존성이 번거롭기에 SimpleNamespace로
-    `user.user_id`, `user.detail.user_name` 같은 속성 접근만 유사하게 제공한다.
+    `user.user_id`, `user.detail.user_name`, `user.travel_styles[i].style`
+    같은 속성 접근만 유사하게 제공한다.
     """
 
     _counter = 0
@@ -23,18 +25,27 @@ class UserFactory:
         age: int = 20,
         gender: Gender = Gender.MALE,
         nationality: str = "KR",
+        travel_styles: Optional[List[TravelStyle]] = None,
+        detail: object = "default",
     ) -> SimpleNamespace:
+        """detail=None 을 전달하면 2차 회원가입 미완료 케이스를 재현할 수 있다."""
         cls._counter += 1
         uid = user_id or f"USER_test_{cls._counter:04d}"
         uname = user_name or f"user{cls._counter}"
-        detail = SimpleNamespace(
-            user_id=uid,
-            user_name=uname,
-            age=age,
-            gender=gender,
-            nationality=nationality,
-        )
-        return SimpleNamespace(user_id=uid, detail=detail)
+
+        if detail == "default":
+            detail_obj = SimpleNamespace(
+                user_id=uid,
+                user_name=uname,
+                age=age,
+                gender=gender,
+                nationality=nationality,
+            )
+        else:
+            detail_obj = detail  # None 또는 사용자 지정
+
+        styles = [SimpleNamespace(style=s) for s in (travel_styles or [])]
+        return SimpleNamespace(user_id=uid, detail=detail_obj, travel_styles=styles)
 
     @classmethod
     def reset_counter(cls) -> None:

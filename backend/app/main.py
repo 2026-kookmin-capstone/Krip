@@ -54,6 +54,7 @@ def create_app() -> FastAPI:
         "app.domain.tour.router.tour_search_history",
         "app.domain.friend.router.friendship",
         "app.domain.friend.router.user_block",
+        "app.domain.friend.router.detail",
     ])
 
 

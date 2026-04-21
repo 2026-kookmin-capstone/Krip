@@ -18,6 +18,8 @@ from fastapi.testclient import TestClient
 import app.database.model  # noqa: F401 — 매퍼 선 등록 (dto 가 enum 타입 참조)
 from app.container import Container
 from app.domain.auth.model.user_detail_inform import Gender
+from app.domain.auth.model.user_travel_style import TravelStyle
+from app.domain.friend.dto.friend_detail import FriendDetailData
 from app.domain.friend.dto.friendship import (
     FriendPeerData,
     FriendshipData,
@@ -26,6 +28,7 @@ from app.domain.friend.dto.friendship import (
 from app.domain.friend.dto.user_block import UserBlockData
 from app.domain.friend.model.friendship import FriendshipStatus
 from app.domain.friend.router import friend_router
+from app.domain.friend.service.friend_detail import UserNotFoundError
 
 
 pytestmark = pytest.mark.integration
@@ -42,9 +45,11 @@ def http():
 
     friendship_mock = AsyncMock()
     block_mock = AsyncMock()
+    detail_mock = AsyncMock()
 
     container.friendship_service.override(providers.Object(friendship_mock))
     container.user_block_service.override(providers.Object(block_mock))
+    container.friend_detail_service.override(providers.Object(detail_mock))
 
     app = FastAPI()
     app.container = container
@@ -61,11 +66,12 @@ def http():
     container.wire(modules=[
         "app.domain.friend.router.friendship",
         "app.domain.friend.router.user_block",
+        "app.domain.friend.router.detail",
     ])
 
     try:
         with TestClient(app) as client:
-            yield client, friendship_mock, block_mock
+            yield client, friendship_mock, block_mock, detail_mock
     finally:
         container.unwire()
 
@@ -97,7 +103,7 @@ def _friendship_dto(
 
 class TestSendFriendRequestEndpoint:
     def test_returns_201_with_payload_on_success(self, http):
-        client, friendship_mock, _ = http
+        client, friendship_mock, _, _ = http
         friendship_mock.send_request.return_value = _friendship_dto()
 
         resp = client.post(
@@ -114,7 +120,7 @@ class TestSendFriendRequestEndpoint:
         assert body["is_requester"] is True
 
     def test_returns_400_on_value_error(self, http):
-        client, friendship_mock, _ = http
+        client, friendship_mock, _, _ = http
         friendship_mock.send_request.side_effect = ValueError("이미 친구 요청을 보낸 상대입니다.")
 
         resp = client.post(
@@ -127,7 +133,7 @@ class TestSendFriendRequestEndpoint:
         assert resp.json()["detail"] == "이미 친구 요청을 보낸 상대입니다."
 
     def test_returns_422_on_missing_body(self, http):
-        client, _, _ = http
+        client, _, _, _ = http
 
         resp = client.post(
             "/api/friend/friendships/requests",
@@ -144,7 +150,7 @@ class TestSendFriendRequestEndpoint:
 
 class TestAcceptEndpoint:
     def test_returns_200_with_message(self, http):
-        client, friendship_mock, _ = http
+        client, friendship_mock, _, _ = http
         friendship_mock.accept_request.return_value = None
 
         resp = client.patch(
@@ -156,7 +162,7 @@ class TestAcceptEndpoint:
         assert resp.json() == {"message": "친구 요청을 수락했습니다."}
 
     def test_maps_value_error_to_400(self, http):
-        client, friendship_mock, _ = http
+        client, friendship_mock, _, _ = http
         friendship_mock.accept_request.side_effect = ValueError("존재하지 않는 친구 요청입니다.")
 
         resp = client.patch(
@@ -168,7 +174,7 @@ class TestAcceptEndpoint:
         assert "존재하지 않는" in resp.json()["detail"]
 
     def test_maps_permission_error_to_403(self, http):
-        client, friendship_mock, _ = http
+        client, friendship_mock, _, _ = http
         friendship_mock.accept_request.side_effect = PermissionError("요청 수락 권한이 없습니다.")
 
         resp = client.patch(
@@ -185,7 +191,7 @@ class TestAcceptEndpoint:
 
 class TestGetFriendsEndpoint:
     def test_returns_list_with_cursor(self, http):
-        client, friendship_mock, _ = http
+        client, friendship_mock, _, _ = http
         friendship_mock.get_friends.return_value = FriendshipListData(
             items=[_friendship_dto(status=FriendshipStatus.ACCEPTED)],
             next_cursor="FS_cursor",
@@ -205,7 +211,7 @@ class TestGetFriendsEndpoint:
 
 class TestBlockEndpoint:
     def test_returns_201_on_success(self, http):
-        client, _, block_mock = http
+        client, _, block_mock, _ = http
         block_mock.block_user.return_value = UserBlockData(
             block_id="BLK_1",
             blocked=FriendPeerData(
@@ -229,7 +235,7 @@ class TestBlockEndpoint:
         assert resp.json()["blocked"]["user_id"] == "USER_b"
 
     def test_returns_400_on_value_error(self, http):
-        client, _, block_mock = http
+        client, _, block_mock, _ = http
         block_mock.block_user.side_effect = ValueError("이미 차단한 유저입니다.")
 
         resp = client.post(
@@ -239,3 +245,67 @@ class TestBlockEndpoint:
         )
 
         assert resp.status_code == 400
+
+
+# ──────────────────────────────────────────────────────────────────
+# GET /api/friend/detail/{user_id} — 친구 상세 조회
+# ──────────────────────────────────────────────────────────────────
+
+def _friend_detail_dto(user_id: str = "USER_b") -> FriendDetailData:
+    return FriendDetailData(
+        user_id=user_id,
+        user_name="피어",
+        age=25,
+        gender=Gender.MALE,
+        nationality="KR",
+        travel_styles=[TravelStyle.FOOD],
+        friendship_id=None,
+        friendship_status=None,
+        is_requester=None,
+        i_blocked_peer=False,
+    )
+
+
+class TestDetailEndpoint:
+    def test_returns_200_with_public_profile(self, http):
+        client, _, _, detail_mock = http
+        detail_mock.get_friend_detail.return_value = _friend_detail_dto()
+
+        resp = client.get(
+            "/api/friend/detail/USER_b",
+            headers={"X-User-Id": "USER_a"},
+        )
+
+        assert resp.status_code == 200
+        body = resp.json()
+        assert body["user_id"] == "USER_b"
+        assert body["user_name"] == "피어"
+        assert body["travel_styles"] == ["food"]
+        # 민감 정보는 응답에 없어야 함
+        assert "email" not in body
+        assert "phone_number" not in body
+        assert "auth_provider" not in body
+
+    def test_returns_404_on_user_not_found(self, http):
+        client, _, _, detail_mock = http
+        detail_mock.get_friend_detail.side_effect = UserNotFoundError("존재하지 않는 유저입니다.")
+
+        resp = client.get(
+            "/api/friend/detail/USER_ghost",
+            headers={"X-User-Id": "USER_a"},
+        )
+
+        assert resp.status_code == 404
+        assert resp.json()["detail"] == "존재하지 않는 유저입니다."
+
+    def test_returns_400_on_incomplete_profile(self, http):
+        client, _, _, detail_mock = http
+        detail_mock.get_friend_detail.side_effect = ValueError("2차 회원가입이 완료되지 않은 유저입니다.")
+
+        resp = client.get(
+            "/api/friend/detail/USER_b",
+            headers={"X-User-Id": "USER_a"},
+        )
+
+        assert resp.status_code == 400
+        assert "2차 회원가입" in resp.json()["detail"]
