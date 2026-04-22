@@ -44,14 +44,26 @@ def make_mock_session() -> MagicMock:
 
 
 def make_chat_room_repo_mock() -> AsyncMock:
+    """기본 반환은 GROUP 방 — 기존 Phase 1 테스트의 `send_message` 가 차단 체크(4) 를
+    skip 하도록. DIRECT 시나리오는 각 테스트에서 override.
+    """
+    from app.domain.chat.model.chat_room import ChatRoomType as _CRT
     mock = AsyncMock()
     mock.update_last_message.return_value = None
+    mock.find_by_id.return_value = SimpleNamespace(
+        chat_room_id="CR_1",
+        type=_CRT.GROUP,
+        creator_id=None,
+        direct_user_a_id=None,
+        direct_user_b_id=None,
+    )
     return mock
 
 
 def make_chat_member_repo_mock() -> AsyncMock:
     mock = AsyncMock()
     mock.find_active_member_ids.return_value = ["U_A", "U_B"]
+    mock.is_active_member.return_value = True
     return mock
 
 
@@ -59,6 +71,9 @@ def make_message_repo_mock() -> AsyncMock:
     mock = AsyncMock()
     mock.insert.return_value = None
     mock.get_max_server_seq.return_value = 0
+    mock.find_by_id.return_value = None
+    mock.update_content.return_value = True
+    mock.soft_delete.return_value = True
     return mock
 
 

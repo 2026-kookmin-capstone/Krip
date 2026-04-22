@@ -76,6 +76,7 @@ class TestBlockUserTransactionIntegrity:
     async def test_friendship_preserved_when_block_insert_fails(
         self, uow, seed_users, session_factory, monkeypatch
     ):
+        from unittest.mock import AsyncMock, MagicMock
         a, b, _ = await seed_users(3)
 
         # 사전 세팅: 친구관계(ACCEPTED) + 차단 row 둘 다 이미 존재
@@ -90,7 +91,9 @@ class TestBlockUserTransactionIntegrity:
 
         monkeypatch.setattr(UserBlockRepository, "has_blocker_blocked", fake_check)
 
-        service = UserBlockService(uow=uow)
+        block_cache_stub = MagicMock()
+        block_cache_stub.invalidate_block_cache = AsyncMock()
+        service = UserBlockService(uow=uow, block_cache_service=block_cache_stub)
         with pytest.raises(ValueError, match="이미 차단"):
             await service.block_user(user_id=a, target_user_id=b)
 

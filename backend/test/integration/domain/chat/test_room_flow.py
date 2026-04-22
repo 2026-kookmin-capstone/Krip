@@ -30,6 +30,14 @@ def fanout_stub() -> MagicMock:
     return mock
 
 
+@pytest.fixture
+def chat_service_stub() -> AsyncMock:
+    """1:1 방은 시스템 메시지를 발행하지 않으므로 실제 호출되지 않는다 — 생성자 채움용 stub."""
+    mock = MagicMock(name="chat-service")
+    mock.send_system_message = AsyncMock()
+    return mock
+
+
 @pytest.fixture(autouse=True)
 def stub_redis(monkeypatch):
     """Redis 연결 없이 테스트 — SADD/EXPIRE no-op."""
@@ -56,10 +64,10 @@ def stub_redis(monkeypatch):
 
 class TestCreateDirectRoomFlow:
     async def test_creates_room_and_two_members(
-        self, uow, seed_users, session_factory, fanout_stub,
+        self, uow, seed_users, session_factory, fanout_stub, chat_service_stub,
     ):
         a, b, _ = await seed_users(3)
-        service = RoomService(uow=uow, fanout_service=fanout_stub)
+        service = RoomService(uow=uow, fanout_service=fanout_stub, chat_service=chat_service_stub)
 
         result = await service.create_direct_room(me_id=a, peer_user_id=b)
 
@@ -76,12 +84,12 @@ class TestCreateDirectRoomFlow:
         assert fanout_stub.fan_out_to_user.await_count == 2
 
     async def test_canonical_order_persisted(
-        self, uow, seed_users, session_factory, fanout_stub,
+        self, uow, seed_users, session_factory, fanout_stub, chat_service_stub,
     ):
         """me, peer 순서에 상관없이 항상 direct_user_a_id < direct_user_b_id."""
         a, b, _ = await seed_users(3)
         low, high = sorted([a, b])
-        service = RoomService(uow=uow, fanout_service=fanout_stub)
+        service = RoomService(uow=uow, fanout_service=fanout_stub, chat_service=chat_service_stub)
 
         await service.create_direct_room(me_id=high, peer_user_id=low)
 
@@ -92,10 +100,10 @@ class TestCreateDirectRoomFlow:
             assert row.direct_user_a_id < row.direct_user_b_id
 
     async def test_idempotent_returns_same_room_id(
-        self, uow, seed_users, session_factory, fanout_stub,
+        self, uow, seed_users, session_factory, fanout_stub, chat_service_stub,
     ):
         a, b, _ = await seed_users(3)
-        service = RoomService(uow=uow, fanout_service=fanout_stub)
+        service = RoomService(uow=uow, fanout_service=fanout_stub, chat_service=chat_service_stub)
 
         first = await service.create_direct_room(me_id=a, peer_user_id=b)
         second = await service.create_direct_room(me_id=a, peer_user_id=b)
@@ -112,11 +120,11 @@ class TestCreateDirectRoomFlow:
         assert fanout_stub.fan_out_to_user.await_count == 2  # 첫 호출만
 
     async def test_reverse_direction_returns_same_room(
-        self, uow, seed_users, fanout_stub, session_factory,
+        self, uow, seed_users, fanout_stub, chat_service_stub, session_factory,
     ):
         """A→B 방 생성 후 B→A 로 호출해도 같은 방 반환 (canonical 덕)."""
         a, b, _ = await seed_users(3)
-        service = RoomService(uow=uow, fanout_service=fanout_stub)
+        service = RoomService(uow=uow, fanout_service=fanout_stub, chat_service=chat_service_stub)
 
         first = await service.create_direct_room(me_id=a, peer_user_id=b)
         second = await service.create_direct_room(me_id=b, peer_user_id=a)
@@ -127,28 +135,28 @@ class TestCreateDirectRoomFlow:
             rooms = (await s.execute(select(ChatRoom))).scalars().all()
             assert len(rooms) == 1
 
-    async def test_self_raises(self, uow, seed_users, fanout_stub):
+    async def test_self_raises(self, uow, seed_users, fanout_stub, chat_service_stub):
         (a,) = await seed_users(1)
-        service = RoomService(uow=uow, fanout_service=fanout_stub)
+        service = RoomService(uow=uow, fanout_service=fanout_stub, chat_service=chat_service_stub)
 
         with pytest.raises(ValueError, match="자기 자신"):
             await service.create_direct_room(me_id=a, peer_user_id=a)
 
-    async def test_unknown_peer_raises(self, uow, seed_users, fanout_stub):
+    async def test_unknown_peer_raises(self, uow, seed_users, fanout_stub, chat_service_stub):
         (a,) = await seed_users(1)
-        service = RoomService(uow=uow, fanout_service=fanout_stub)
+        service = RoomService(uow=uow, fanout_service=fanout_stub, chat_service=chat_service_stub)
 
         with pytest.raises(ValueError, match="존재하지 않는"):
             await service.create_direct_room(me_id=a, peer_user_id="USER_ghost")
 
-    async def test_blocked_raises(self, uow, seed_users, session_factory, fanout_stub):
+    async def test_blocked_raises(self, uow, seed_users, session_factory, fanout_stub, chat_service_stub):
         a, b, _ = await seed_users(3)
 
         async with session_factory() as s:
             s.add(UserBlock(blocker_id=a, blocked_id=b))
             await s.commit()
 
-        service = RoomService(uow=uow, fanout_service=fanout_stub)
+        service = RoomService(uow=uow, fanout_service=fanout_stub, chat_service=chat_service_stub)
 
         with pytest.raises(ValueError, match="차단한"):
             await service.create_direct_room(me_id=a, peer_user_id=b)
@@ -160,10 +168,10 @@ class TestCreateDirectRoomFlow:
 
 class TestListUserRoomIdsFlow:
     async def test_returns_only_active_rooms(
-        self, uow, seed_users, session_factory, fanout_stub,
+        self, uow, seed_users, session_factory, fanout_stub, chat_service_stub,
     ):
         a, b, c = await seed_users(3)
-        service = RoomService(uow=uow, fanout_service=fanout_stub)
+        service = RoomService(uow=uow, fanout_service=fanout_stub, chat_service=chat_service_stub)
 
         # a-b 방, a-c 방 두 개 생성 후 a 가 두 번째만 나감
         r1 = await service.create_direct_room(me_id=a, peer_user_id=b)

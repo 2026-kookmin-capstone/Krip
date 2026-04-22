@@ -66,13 +66,16 @@ class TestFriendDetailFlow:
 
     async def test_block_removes_friendship_and_sets_flag(self, uow, seed_users):
         """차단 시 friendship 은 삭제되고 i_blocked_peer 만 true 로 남음."""
+        from unittest.mock import AsyncMock, MagicMock
         a, b, _ = await seed_users(3)
 
         friendship_service = FriendshipService(uow=uow)
         created = await friendship_service.send_request(requester_id=a, addressee_id=b)
         await friendship_service.accept_request(friendship_id=created.friendship_id, user_id=b)
 
-        block_service = UserBlockService(uow=uow)
+        block_cache_stub = MagicMock()
+        block_cache_stub.invalidate_block_cache = AsyncMock()
+        block_service = UserBlockService(uow=uow, block_cache_service=block_cache_stub)
         await block_service.block_user(user_id=a, target_user_id=b)
 
         detail_service = FriendDetailService(uow=uow)

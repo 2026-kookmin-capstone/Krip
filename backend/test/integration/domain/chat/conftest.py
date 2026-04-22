@@ -120,6 +120,12 @@ def patch_external_clients(monkeypatch, redis_hot, redis_dedupe, mongo_db):
     monkeypatch.setattr(
         "app.domain.chat.service.room_service.get_redis_client", _hot,
     )
+    monkeypatch.setattr(
+        "app.domain.chat.service.message_history_service.get_redis_client", _hot,
+    )
+    monkeypatch.setattr(
+        "app.domain.chat.service.block_cache_service.get_redis_client", _hot,
+    )
     # mongodb 싱글톤의 database 속성 교체 (최초엔 None 이므로 raising=False)
     monkeypatch.setattr(
         "app.database.session.mongodb.database", mongo_db, raising=False,
@@ -149,13 +155,22 @@ def session_service(chat_fanout_stub, patch_external_clients) -> SessionService:
 
 
 @pytest_asyncio.fixture
-async def direct_room(uow, seed_users, chat_fanout_stub, patch_external_clients):
-    """(room_id, user_a, user_b) 반환. RoomService 를 거쳐 방 + 멤버 + Redis 캐시까지 세팅."""
+async def direct_room(
+    uow, seed_users, chat_fanout_stub, chat_service, patch_external_clients,
+):
+    """(room_id, user_a, user_b) 반환. RoomService 를 거쳐 방 + 멤버 + Redis 캐시까지 세팅.
+
+    Phase 2 에서 RoomService 가 ChatService (시스템 메시지용) 에 의존하게 됐으므로
+    `chat_service` fixture 도 주입. 1:1 방 생성은 시스템 메시지를 발행하지 않으므로
+    실제로 호출되진 않지만 생성자 인자는 채워야 한다.
+    """
     # 순환 import 회피를 위해 fixture 내부 import
     from app.domain.chat.service.room_service import RoomService
 
     user_a, user_b = await seed_users(2)
-    room_svc = RoomService(uow=uow, fanout_service=chat_fanout_stub)
+    room_svc = RoomService(
+        uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+    )
     result = await room_svc.create_direct_room(me_id=user_a, peer_user_id=user_b)
     chat_fanout_stub.reset_mock()  # 방 생성으로 찍힌 호출 제거
     return result.chat_room_id, user_a, user_b
