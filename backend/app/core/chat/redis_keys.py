@@ -10,6 +10,7 @@
 # ─────────────────────────────────────────────────────────────
 SESSION_TTL = 90            # sess:{sid}, ws_route:{sid}, sessions ZSET score 연장 주기와 동일
 ROOM_MEMBERS_TTL = 600      # room:members:{R} 캐시 — RDB fallback 전제이므로 짧게 잡아도 됨
+ROOM_BLOCKS_TTL = 600       # room:blocks:{R} 캐시 — friend 도메인 hook 미호출 시 stale 상한
 RATE_LIMIT_TTL = 1          # rate:msg:{uid} — 1초 윈도우
 DEDUPE_TTL = 600            # dedupe:{uid}:{cmid} — 클라 재전송 최대 갭보다 충분히 길게
 

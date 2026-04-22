@@ -41,8 +41,18 @@ class RefreshOp(BaseModel):
     token: str = Field(..., description="새 access token")
 
 
+class ReadOp(BaseModel):
+    """읽음 포인터 갱신 요청 — 방의 `up_to_server_seq` 까지 읽은 것으로 표시."""
+    op: Literal["read"]
+    room_id: str = Field(..., description="읽음 처리할 방 ID")
+    up_to_server_seq: int = Field(
+        ..., ge=1,
+        description="이 seq 까지 읽었다는 포인터 (regress 는 DB 레벨 GREATEST 로 무시)",
+    )
+
+
 ClientRequest = Annotated[
-    Union[SendOp, RefreshOp],
+    Union[SendOp, RefreshOp, ReadOp],
     Field(discriminator="op"),
 ]
 
@@ -108,10 +118,61 @@ class ServerRestartEvent(BaseModel):
     type: Literal["server_restart"]
 
 
+class MessageUpdatedEvent(BaseModel):
+    """메시지 편집 완료 — 방 구독자 전체에 브로드캐스트."""
+    type: Literal["message.updated"]
+    sender_session_id: Optional[str] = Field(
+        None, description="편집 트리거 세션 ID — 본인 에코 차단용",
+    )
+    message_id: str = Field(..., description="편집된 메시지 ID")
+    content: Any = Field(..., description="새 본문")
+    edited_at: datetime = Field(..., description="편집 시각")
+
+
+class MessageDeletedEvent(BaseModel):
+    """메시지 soft delete — 방 구독자 전체에 브로드캐스트. 클라는 "삭제된 메시지입니다" 로 치환."""
+    type: Literal["message.deleted"]
+    sender_session_id: Optional[str] = Field(
+        None, description="삭제 트리거 세션 ID — 본인 에코 차단용",
+    )
+    message_id: str = Field(..., description="삭제된 메시지 ID")
+    deleted_at: datetime = Field(..., description="삭제 시각")
+
+
 class RoomJoinedEvent(BaseModel):
     """방이 새로 생성되었거나 초대됨 — WS 의 로컬 dict 에 해당 방 등록."""
     type: Literal["room_joined"]
     room_id: str = Field(..., description="참여할 방 ID")
+
+
+class RoomLeftEvent(BaseModel):
+    """본인이 방에서 나가거나 강퇴됨 — WS 의 로컬 dict 에서 해당 방 구독 해제."""
+    type: Literal["room_left"]
+    room_id: str = Field(..., description="떠나는 방 ID")
+
+
+class ReadEvent(BaseModel):
+    """방의 다른 세션/유저에게 "누가 어디까지 읽었다" 를 알림."""
+    type: Literal["read"]
+    user_id: str = Field(..., description="읽음 처리한 유저")
+    up_to_server_seq: int = Field(..., description="최종 반영된 last_read_message_server_seq")
+    sender_session_id: str = Field(
+        ..., description="발신 세션 ID — 발신자 본인 WS 자기 에코 차단용",
+    )
+
+
+class ReadAckEvent(BaseModel):
+    """read op 처리 성공 — 발신 세션 직송."""
+    type: Literal["read_ack"]
+    room_id: str = Field(..., description="읽음 처리된 방 ID")
+    up_to_server_seq: int = Field(..., description="최종 반영된 last_read_message_server_seq")
+
+
+class ReadFailedEvent(BaseModel):
+    """read op 처리 실패 — 발신 세션 직송. 사유는 reason 문자열."""
+    type: Literal["read_failed"]
+    room_id: str = Field(..., description="실패한 방 ID")
+    reason: str = Field(..., description="실패 사유")
 
 
 class UnreadSyncedEvent(BaseModel):
@@ -127,11 +188,17 @@ ServerEvent = Annotated[
         ConnectedEvent,
         MessageSentEvent,
         MessageNewEvent,
+        MessageUpdatedEvent,
+        MessageDeletedEvent,
         SessionRevokedEvent,
         AuthExpiredEvent,
         ServerErrorEvent,
         ServerRestartEvent,
         RoomJoinedEvent,
+        RoomLeftEvent,
+        ReadEvent,
+        ReadAckEvent,
+        ReadFailedEvent,
         UnreadSyncedEvent,
     ],
     Field(discriminator="type"),

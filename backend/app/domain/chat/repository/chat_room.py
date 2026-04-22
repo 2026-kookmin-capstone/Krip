@@ -113,6 +113,9 @@ class ChatRoomRepository:
         않다 — Service 에서 이 호출이 실패하면 `dirty:chat_room` Redis SET 에 방 ID 를
         적재하고 reconcile job 이 최종 정합성 복구.
         """
+        # synchronize_session=False — bulk UPDATE 후 메모리의 ChatRoom 인스턴스를
+        # expire 시키지 않아 뒤따르는 `_to_dto` 접근에서 GENERATED 컬럼 lazy load 가
+        # 발생하지 않도록 한다 (async session 에서 lazy load → MissingGreenlet).
         stmt = (
             update(ChatRoom)
             .where(ChatRoom.chat_room_id == chat_room_id)
@@ -121,5 +124,6 @@ class ChatRoomRepository:
                 last_message_server_seq=server_seq,
                 last_message_at=at,
             )
+            .execution_options(synchronize_session=False)
         )
         await self.session.execute(stmt)

@@ -8,6 +8,10 @@ from app.domain.chat.schema.room import (
     ChatRoomPeerResponse,
     ChatRoomResponse,
     CreateDirectRoomBody,
+    CreateGroupRoomBody,
+    InviteMembersBody,
+    InviteMembersResponse,
+    KickMemberBody,
     LastMessagePreviewResponse,
 )
 from app.domain.chat.service.exceptions import ChatRoomNotFoundError
@@ -39,6 +43,105 @@ async def create_direct_room(
         raise HTTPException(status_code=400, detail=str(e))
 
     return _to_room_response(result)
+
+
+# ──────────────────── 그룹 방 생성 ────────────────────
+
+@router.post("/group", status_code=201)
+@inject
+async def create_group_room(
+    request: Request,
+    body: CreateGroupRoomBody,
+    service: RoomService = Depends(Provide[Container.room_service]),
+) -> ChatRoomResponse:
+    """그룹 방 생성 (creator 포함 최대 100명). 멤버는 친구 관계여야 함."""
+    user_id: str = request.state.user_id
+
+    try:
+        result = await service.create_group_room(
+            me_id=user_id, title=body.title, member_ids=body.member_ids,
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    return _to_room_response(result)
+
+
+# ──────────────────── 멤버 초대 ────────────────────
+
+@router.post("/{chat_room_id}/invite")
+@inject
+async def invite_members(
+    request: Request,
+    chat_room_id: str,
+    body: InviteMembersBody,
+    service: RoomService = Depends(Provide[Container.room_service]),
+) -> InviteMembersResponse:
+    """그룹 방에 멤버 초대. 친구만 가능, 이미 멤버는 스킵."""
+    user_id: str = request.state.user_id
+
+    try:
+        invited, skipped = await service.invite_members(
+            me_id=user_id, room_id=chat_room_id, user_ids=body.user_ids,
+        )
+    except ChatRoomNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    return InviteMembersResponse(
+        invited_user_ids=invited,
+        skipped_already_member=skipped,
+    )
+
+
+# ──────────────────── 퇴장 ────────────────────
+
+@router.post("/{chat_room_id}/leave", status_code=204)
+@inject
+async def leave_room(
+    request: Request,
+    chat_room_id: str,
+    service: RoomService = Depends(Provide[Container.room_service]),
+) -> None:
+    """그룹 방에서 본인 퇴장. direct 방은 거절."""
+    user_id: str = request.state.user_id
+
+    try:
+        await service.leave_room(me_id=user_id, room_id=chat_room_id)
+    except ChatRoomNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+# ──────────────────── 강퇴 ────────────────────
+
+@router.post("/{chat_room_id}/kick", status_code=204)
+@inject
+async def kick_member(
+    request: Request,
+    chat_room_id: str,
+    body: KickMemberBody,
+    service: RoomService = Depends(Provide[Container.room_service]),
+) -> None:
+    """그룹 방에서 특정 멤버 강퇴. creator 전용."""
+    user_id: str = request.state.user_id
+
+    try:
+        await service.kick_member(
+            me_id=user_id, room_id=chat_room_id, target_user_id=body.user_id,
+        )
+    except ChatRoomNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 # ──────────────────── 방 리스트 ────────────────────

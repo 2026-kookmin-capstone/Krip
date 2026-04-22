@@ -1,21 +1,90 @@
 from typing import List, Optional
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from datetime import datetime
 
 from app.domain.chat.model.chat_room import ChatRoomType
 
 
+# 그룹 방 멤버 수 상한 — 본인 포함 100명 (99 초대 + 본인). 상한 자체는 협의 값으로
+# 운영하면서 조정. Redis `room:members:{R}` SADD 크기 + fan-out 지연을 고려.
+_MAX_GROUP_MEMBERS = 99
+_MAX_INVITE_BATCH = 50
+
+
 # ──────────────────── Request ────────────────────
 
 class CreateDirectRoomBody(BaseModel):
-    peer_user_id: str = Field(..., description="대화할 상대 유저 ID")
-
-    class Config:
-        json_schema_extra = {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "peer_user_id": "USER_1700000000_abcdef12",
             }
         }
+    )
+
+    peer_user_id: str = Field(..., description="대화할 상대 유저 ID")
+
+
+class CreateGroupRoomBody(BaseModel):
+    model_config = ConfigDict(
+        json_schema_extra={
+            "example": {
+                "title": "캡스톤 디자인 7팀",
+                "member_ids": [
+                    "USER_1700000000_abcdef12",
+                    "USER_1700000001_abcdef13",
+                ],
+            }
+        }
+    )
+
+    title: str = Field(..., min_length=1, max_length=100, description="방 제목")
+    member_ids: List[str] = Field(
+        ...,
+        min_length=1,
+        max_length=_MAX_GROUP_MEMBERS,
+        description="초대할 유저 ID 목록 (본인 제외, 친구만 허용)",
+    )
+
+
+class InviteMembersBody(BaseModel):
+    model_config = ConfigDict(
+        json_schema_extra={
+            "example": {
+                "user_ids": ["USER_1700000002_abcdef14"],
+            }
+        }
+    )
+
+    user_ids: List[str] = Field(
+        ...,
+        min_length=1,
+        max_length=_MAX_INVITE_BATCH,
+        description="초대할 유저 ID 목록 (친구만 허용)",
+    )
+
+
+class KickMemberBody(BaseModel):
+    model_config = ConfigDict(
+        json_schema_extra={
+            "example": {
+                "user_id": "USER_1700000002_abcdef14",
+            }
+        }
+    )
+
+    user_id: str = Field(..., description="강퇴할 유저 ID (요청자는 creator 여야 함)")
+
+
+# ──────────────────── Response — 그룹 관리 액션 ────────────────────
+
+class InviteMembersResponse(BaseModel):
+    """invite 엔드포인트 응답 — 실제로 초대된 user_id 만 반환 (이미 멤버/비친구 제외)."""
+    invited_user_ids: List[str] = Field(..., description="이번 호출로 초대된 user_id 목록")
+    skipped_already_member: List[str] = Field(
+        default_factory=list,
+        description="이미 활성 멤버라 skip 된 user_id 목록",
+    )
 
 
 # ──────────────────── Response — 내부 구성요소 ────────────────────

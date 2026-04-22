@@ -1,6 +1,6 @@
 from typing import Optional
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from sqlalchemy import func, select, update
 
 from app.domain.chat.model.chat_room_member import ChatRoomMember
 
@@ -80,3 +80,62 @@ class ChatRoomMemberRepository:
         """변경사항 flush"""
         await self.session.flush()
         return member
+
+
+    async def mark_read(
+        self, chat_room_id: str, user_id: str, new_seq: int,
+    ) -> Optional[int]:
+        """`last_read_message_server_seq` 를 `GREATEST(COALESCE(기존, 0), new_seq)` 로 갱신.
+
+        - `is_left=false` 인 활성 멤버 row 에만 반영 — 탈퇴자의 읽음 갱신은 의미 없음.
+        - RETURNING 으로 갱신 후 최종 seq 를 돌려받아 클라 ACK 에 사용.
+        - 동일 유저가 여러 세션에서 동시에 다른 seq 로 read 를 보낼 때 regress 방지 —
+          과거 seq 가 DB 에 내려오더라도 `GREATEST` 가 한 번에 올라간 포인터를 지킨다.
+        - `synchronize_session=False` — 시스템 메시지 처리 시 `update_last_message`
+          에서 같은 이유로 채택한 선택과 동일 (§Phase 2 #2 디버깅 노트).
+
+        Returns:
+            갱신된 `last_read_message_server_seq`. 활성 멤버가 아니면 None.
+        """
+        stmt = (
+            update(ChatRoomMember)
+            .where(
+                ChatRoomMember.chat_room_id == chat_room_id,
+                ChatRoomMember.user_id == user_id,
+                ChatRoomMember.is_left.is_(False),
+            )
+            .values(
+                last_read_message_server_seq=func.greatest(
+                    func.coalesce(ChatRoomMember.last_read_message_server_seq, 0),
+                    new_seq,
+                ),
+                last_read_at=func.now(),
+            )
+            .returning(ChatRoomMember.last_read_message_server_seq)
+            .execution_options(synchronize_session=False)
+        )
+        result = await self.session.execute(stmt)
+        return result.scalar_one_or_none()
+
+
+    async def count_readers_up_to(
+        self,
+        chat_room_id: str,
+        server_seq: int,
+        exclude_user_id: str,
+    ) -> int:
+        """특정 `server_seq` 이상 읽은 활성 멤버 수 (발신자 본인 제외).
+
+        카톡 미읽음 숫자 뱃지 = "방 활성 멤버 수 - (이 카운트 + 1)" 공식의 그 카운트.
+        지금은 라우터에서 쓰진 않지만 Phase 2 체크리스트에 명시된 집계라 서비스 레이어에
+        미리 마련. 실시간 fan-out 만으로는 정확하지 않을 때 API 경로에서 권위있는 값을
+        돌려주는 용도로 확장.
+        """
+        stmt = select(func.count()).select_from(ChatRoomMember).where(
+            ChatRoomMember.chat_room_id == chat_room_id,
+            ChatRoomMember.is_left.is_(False),
+            ChatRoomMember.user_id != exclude_user_id,
+            ChatRoomMember.last_read_message_server_seq >= server_seq,
+        )
+        result = await self.session.execute(stmt)
+        return int(result.scalar_one())

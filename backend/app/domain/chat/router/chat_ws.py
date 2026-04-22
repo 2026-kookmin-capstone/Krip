@@ -21,9 +21,9 @@ from fastapi import APIRouter, Depends, WebSocket, WebSocketDisconnect
 from dependency_injector.wiring import Provide, inject
 import asyncio
 
-from app.domain.chat.schema.ws_event import ClientRequest, RefreshOp, SendOp
+from app.domain.chat.schema.ws_event import ClientRequest, ReadOp, RefreshOp, SendOp
 from app.domain.chat.service.chat_service import ChatService
-from app.domain.chat.service.exceptions import UpstreamError
+from app.domain.chat.service.exceptions import ChatRoomNotFoundError, UpstreamError
 from app.domain.chat.service.fanout_service import FanoutService
 from app.domain.chat.service.message_history_service import MessageHistoryService
 from app.domain.chat.service.room_service import RoomService
@@ -131,6 +131,7 @@ async def ws_chat(
             user_id=user_id,
             session_svc=session_svc,
             chat_svc=chat_svc,
+            room_svc=room_svc,
         )
     except WebSocketDisconnect:
         logger.debug("WS 정상 종료: session_id={}", session_id)
@@ -197,6 +198,7 @@ async def _receive_loop(
     user_id: str,
     session_svc: SessionService,
     chat_svc: ChatService,
+    room_svc: RoomService,
 ) -> None:
     """op 디스패처. 매 op 진입 시 Redis 에서 세션 유효성 확인."""
     while True:
@@ -237,10 +239,37 @@ async def _receive_loop(
                     session_svc=session_svc,
                     req=req,
                 )
+            elif isinstance(req, ReadOp):
+                await _handle_read(
+                    websocket=websocket,
+                    session_id=session_id,
+                    user_id=user_id,
+                    room_svc=room_svc,
+                    req=req,
+                )
         except PermissionError as e:
-            await websocket.send_json({"type": "server_error", "reason": str(e)})
+            # read op 는 `read_failed` 이벤트로 실패 사유를 전달 — 다른 op 는
+            # `server_error` 규약 유지.
+            if isinstance(req, ReadOp):
+                await websocket.send_json({
+                    "type": "read_failed", "room_id": req.room_id, "reason": str(e),
+                })
+            else:
+                await websocket.send_json({"type": "server_error", "reason": str(e)})
         except ValueError as e:
-            await websocket.send_json({"type": "server_error", "reason": str(e)})
+            if isinstance(req, ReadOp):
+                await websocket.send_json({
+                    "type": "read_failed", "room_id": req.room_id, "reason": str(e),
+                })
+            else:
+                await websocket.send_json({"type": "server_error", "reason": str(e)})
+        except ChatRoomNotFoundError as e:
+            if isinstance(req, ReadOp):
+                await websocket.send_json({
+                    "type": "read_failed", "room_id": req.room_id, "reason": str(e),
+                })
+            else:
+                await websocket.send_json({"type": "server_error", "reason": str(e)})
         except UpstreamError as e:
             # 외부 저장소 지속 실패 — 연결은 유지, 클라가 재시도 가능
             await websocket.send_json({"type": "server_error", "reason": str(e)})
@@ -299,6 +328,28 @@ async def _handle_refresh(
 
     new_jti = payload.get("jti") or req.token[:32]
     await session_svc.update_token_jti(session_id, new_jti)
+
+
+async def _handle_read(
+    *,
+    websocket: WebSocket,
+    session_id: str,
+    user_id: str,
+    room_svc: RoomService,
+    req: ReadOp,
+) -> None:
+    """`op=read` — RoomService.mark_read 로 포인터 갱신 + ack/fan-out.
+
+    `mark_read` 내부에서 `read_ack` 발신 세션 직송 + `read` 이벤트 방 브로드캐스트까지
+    수행하므로 여기서는 별도 추가 전송이 없다. 실패 시 예외는 `_receive_loop` 의
+    분기에서 `read_failed` 로 변환된다.
+    """
+    await room_svc.mark_read(
+        me_id=user_id,
+        me_session_id=session_id,
+        room_id=req.room_id,
+        up_to_server_seq=req.up_to_server_seq,
+    )
 
 
 # ──────────────────── heartbeat ────────────────────

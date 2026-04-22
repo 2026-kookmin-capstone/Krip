@@ -3,6 +3,9 @@
 beanie 대신 raw dict 을 쓰는 이유는 `app/domain/chat/model/chat_message.py` 의 모듈 주석
 참조. Service 계층은 이 리포지토리의 반환 dict 을 `ChatMessageData` dataclass 로 매핑한다.
 """
+from datetime import datetime
+from typing import Any, Optional
+
 from pymongo import ASCENDING, DESCENDING
 from motor.motor_asyncio import AsyncIOMotorCollection, AsyncIOMotorDatabase
 
@@ -83,6 +86,11 @@ class ChatMessageRepository:
         return [doc async for doc in cursor]
 
 
+    async def find_by_id(self, message_id: str) -> Optional[dict]:
+        """단일 메시지 조회. 편집/삭제 권한 체크 용."""
+        return await self.collection.find_one({"_id": message_id})
+
+
     async def find_by_ids(self, message_ids: list[str]) -> dict[str, dict]:
         """여러 `_id` 를 한 번에 조회해 `{id: doc}` 맵 반환. 방 리스트 미리보기 배치용.
 
@@ -93,3 +101,34 @@ class ChatMessageRepository:
             return {}
         cursor = self.collection.find({"_id": {"$in": message_ids}})
         return {doc["_id"]: doc async for doc in cursor}
+
+
+    # ──────────────────── Update (편집 / 삭제) ────────────────────
+
+    async def update_content(
+        self, message_id: str, new_content: Any, edited_at: datetime,
+    ) -> bool:
+        """본문 교체 + `edited_at` 세팅. 편집 시 사용.
+
+        Returns:
+            실제 modify 됐으면 True. 이미 같은 content 였거나 매칭 실패면 False —
+            service 단은 find_by_id 로 pre-check 하므로 False 는 동시성 race 케이스.
+        """
+        res = await self.collection.update_one(
+            {"_id": message_id},
+            {"$set": {"content": new_content, "edited_at": edited_at}},
+        )
+        return res.modified_count == 1
+
+
+    async def soft_delete(self, message_id: str, deleted_at: datetime) -> bool:
+        """soft delete — `deleted_at` 세팅 + `content=null`. 실제 row 는 보존.
+
+        히스토리 조회 시 `deleted_at != null` 은 service 에서 content=None 으로
+        마스킹되어 클라는 "삭제된 메시지입니다" 플레이스홀더 렌더.
+        """
+        res = await self.collection.update_one(
+            {"_id": message_id},
+            {"$set": {"deleted_at": deleted_at, "content": None}},
+        )
+        return res.modified_count == 1

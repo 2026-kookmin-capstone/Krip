@@ -71,6 +71,7 @@ def create_app() -> FastAPI:
         "app.domain.friend.router.user_block",
         "app.domain.friend.router.detail",
         "app.domain.chat.router.chat_rest",
+        "app.domain.chat.router.chat_message_rest",
         "app.domain.chat.router.chat_ws",
     ])
 
