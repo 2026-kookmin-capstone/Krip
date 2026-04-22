@@ -4,12 +4,12 @@
 메시지 id 만으로 접근할 수 있게 하고, 클라가 검색/알림 링크에서 바로 진입하는 케이스도
 고려.
 """
-from datetime import datetime
-from typing import Any
 
-from fastapi import APIRouter, Depends, HTTPException, Request
+from typing import Any
 from pydantic import BaseModel, ConfigDict, Field
+from fastapi import APIRouter, Depends, HTTPException, Request
 from dependency_injector.wiring import Provide, inject
+from datetime import datetime
 
 from app.domain.chat.service.chat_service import ChatService
 from app.container import Container
