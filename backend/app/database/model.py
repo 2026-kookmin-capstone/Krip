@@ -7,3 +7,5 @@ from app.domain.tripmate.model.tripmate_post_like import TripmatePostLike
 from app.domain.tour.model.favorite_place import FavoritePlace
 from app.domain.friend.model.friendship import Friendship
 from app.domain.friend.model.user_block import UserBlock
+from app.domain.chat.model.chat_room import ChatRoom
+from app.domain.chat.model.chat_room_member import ChatRoomMember

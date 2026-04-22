@@ -61,6 +61,7 @@ from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHist
 from app.domain.tripmate.model.tripmate_image import TripmateImage
 from app.domain.tour.model.place import Place
 from app.domain.tour.model.tour_search_history import TourSearchHistory
+from app.domain.chat.model.chat_message import create_indexes as create_chat_message_indexes
 
 
 class MongoDB:
@@ -89,6 +90,9 @@ class MongoDB:
                 TourSearchHistory,
             ]
         )
+
+        # 채팅 메시지는 motor 네이티브로 다루므로 beanie document 대신 인덱스만 초기화
+        await create_chat_message_indexes(self.database)
         
     async def disconnect(self):
         """MongoDB 연결 종료"""
