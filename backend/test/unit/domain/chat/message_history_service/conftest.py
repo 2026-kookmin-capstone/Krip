@@ -1,6 +1,6 @@
 import pytest
 
-from app.domain.chat.service.message_history_service import MessageHistoryService
+from app.domain.chat.service.message_history import MessageHistoryService
 
 from test.unit.domain.chat.message_history_service.mock_factory import (
     FakeUnitOfWork,
@@ -55,31 +55,31 @@ def service(
 ):
     """Mock 레포/Redis 가 주입된 MessageHistoryService. mongodb.database 는 우회."""
     monkeypatch.setattr(
-        "app.domain.chat.service.message_history_service.ChatRoomRepository",
+        "app.domain.chat.service.message_history.ChatRoomRepository",
         lambda session: chat_room_repo_mock,
     )
     monkeypatch.setattr(
-        "app.domain.chat.service.message_history_service.ChatRoomMemberRepository",
+        "app.domain.chat.service.message_history.ChatRoomMemberRepository",
         lambda session: chat_member_repo_mock,
     )
     monkeypatch.setattr(
-        "app.domain.chat.service.message_history_service.ChatMessageRepository",
+        "app.domain.chat.service.message_history.ChatMessageRepository",
         lambda db: message_repo_mock,
     )
     monkeypatch.setattr(
-        "app.domain.chat.service.message_history_service.UserRepository",
+        "app.domain.chat.service.message_history.UserRepository",
         lambda session: user_repo_mock,
     )
     # mongodb singleton 의 database 접근 회피
     monkeypatch.setattr(
-        "app.domain.chat.service.message_history_service.mongodb",
+        "app.domain.chat.service.message_history.mongodb",
         type("FakeMongo", (), {"database": None})(),
     )
 
     async def _get_client():
         return redis_mock
     monkeypatch.setattr(
-        "app.domain.chat.service.message_history_service.get_redis_client",
+        "app.domain.chat.service.message_history.get_redis_client",
         _get_client,
     )
 

@@ -7,10 +7,10 @@ Redis `room:blocks:{R}` 캐시를 **즉시** 무효화하고, 다음 `send_messa
 import pytest
 import pytest_asyncio
 
-from app.core.chat.redis_keys import room_blocks_key
+from app.core.chat.redis_key import room_blocks_key
 from app.domain.chat.model.chat_message import MessageType
-from app.domain.chat.service.block_cache_service import BlockCacheService
-from app.domain.chat.service.room_service import RoomService
+from app.domain.chat.service.block_cache import BlockCacheService
+from app.domain.chat.service.room import RoomService
 from app.domain.friend.service.user_block import UserBlockService
 
 
@@ -19,20 +19,20 @@ pytestmark = pytest.mark.integration
 
 class TestBlockCacheInvalidationFlow:
     async def test_block_invalidates_cache_and_next_send_is_rejected(
-        self, uow, seed_users, chat_fanout_stub, chat_service, redis_hot,
+        self, uow, seed_users, chat_fanout_stub, message_service, redis_hot,
         patch_external_clients,
     ):
         """정상 대화 → block 후 즉시 송신 거절 (캐시 TTL 대기 없음)."""
         a, b, _ = await seed_users(3)
 
         room_svc = RoomService(
-            uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await room_svc.create_direct_room(me_id=a, peer_user_id=b)
         room_id = room.chat_room_id
 
         # 1) 차단 전: 정상 송신 → room:blocks 캐시에 __none__ sentinel 적재됨
-        await chat_service.send_message(
+        await message_service.send_message(
             sender_user_id=a, sender_session_id="WS_A", room_id=room_id,
             client_msg_id="cm-1", msg_type=MessageType.TEXT, content="hi",
         )
@@ -48,20 +48,20 @@ class TestBlockCacheInvalidationFlow:
 
         # 4) 다음 송신 → miss-through 로 user_block 재조회 → 차단 감지 → 거절
         with pytest.raises(PermissionError, match="차단"):
-            await chat_service.send_message(
+            await message_service.send_message(
                 sender_user_id=a, sender_session_id="WS_A", room_id=room_id,
                 client_msg_id="cm-2", msg_type=MessageType.TEXT, content="blocked",
             )
 
     async def test_unblock_allows_immediate_next_send(
-        self, uow, seed_users, chat_fanout_stub, chat_service, redis_hot,
+        self, uow, seed_users, chat_fanout_stub, message_service, redis_hot,
         patch_external_clients,
     ):
         """차단 → 해제 즉시 송신 가능 (TTL 대기 없음)."""
         a, b, _ = await seed_users(3)
 
         room_svc = RoomService(
-            uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await room_svc.create_direct_room(me_id=a, peer_user_id=b)
         room_id = room.chat_room_id
@@ -72,7 +72,7 @@ class TestBlockCacheInvalidationFlow:
         # 차단 상태에서 송신 거절 확인
         await block_service.block_user(user_id=a, target_user_id=b)
         with pytest.raises(PermissionError):
-            await chat_service.send_message(
+            await message_service.send_message(
                 sender_user_id=a, sender_session_id="WS_A", room_id=room_id,
                 client_msg_id="cm-a1", msg_type=MessageType.TEXT, content="x",
             )
@@ -82,7 +82,7 @@ class TestBlockCacheInvalidationFlow:
         assert not await redis_hot.exists(room_blocks_key(room_id))
 
         # 즉시 송신 가능
-        ack = await chat_service.send_message(
+        ack = await message_service.send_message(
             sender_user_id=a, sender_session_id="WS_A", room_id=room_id,
             client_msg_id="cm-a2", msg_type=MessageType.TEXT, content="restored",
         )
@@ -91,13 +91,13 @@ class TestBlockCacheInvalidationFlow:
         assert await redis_hot.sismember(room_blocks_key(room_id), "__none__")
 
     async def test_peer_blocking_sender_also_rejects(
-        self, uow, seed_users, chat_fanout_stub, chat_service, redis_hot,
+        self, uow, seed_users, chat_fanout_stub, message_service, redis_hot,
         patch_external_clients,
     ):
         """상대가 나를 차단했어도 내 송신은 거절 (양방향 체크)."""
         a, b, _ = await seed_users(3)
         room_svc = RoomService(
-            uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await room_svc.create_direct_room(me_id=a, peer_user_id=b)
 
@@ -107,13 +107,13 @@ class TestBlockCacheInvalidationFlow:
         await block_service.block_user(user_id=b, target_user_id=a)
 
         with pytest.raises(PermissionError, match="차단"):
-            await chat_service.send_message(
+            await message_service.send_message(
                 sender_user_id=a, sender_session_id="WS_A", room_id=room.chat_room_id,
                 client_msg_id="cm-peer-1", msg_type=MessageType.TEXT, content="nope",
             )
 
     async def test_group_room_unaffected_by_block(
-        self, uow, seed_users, chat_fanout_stub, chat_service,
+        self, uow, seed_users, chat_fanout_stub, message_service,
         patch_external_clients, session_factory,
     ):
         """그룹 방은 차단 관계와 무관 — 같은 방에 있으면 메시지는 계속 전달."""
@@ -127,7 +127,7 @@ class TestBlockCacheInvalidationFlow:
             await s.commit()
 
         room_svc = RoomService(
-            uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await room_svc.create_group_room(me_id=a, title="T", member_ids=[b])
 
@@ -137,7 +137,7 @@ class TestBlockCacheInvalidationFlow:
         block_service = UserBlockService(uow=uow, block_cache_service=block_cache)
         await block_service.block_user(user_id=a, target_user_id=b)
 
-        ack = await chat_service.send_message(
+        ack = await message_service.send_message(
             sender_user_id=a, sender_session_id="WS_A", room_id=room.chat_room_id,
             client_msg_id="cm-g-1", msg_type=MessageType.TEXT, content="group msg",
         )

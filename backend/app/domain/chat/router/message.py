@@ -11,7 +11,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from dependency_injector.wiring import Provide, inject
 from datetime import datetime
 
-from app.domain.chat.service.chat_service import ChatService
+from app.domain.chat.service.message import MessageService
 from app.container import Container
 
 
@@ -44,7 +44,7 @@ async def edit_message(
     request: Request,
     message_id: str,
     body: EditMessageBody,
-    service: ChatService = Depends(Provide[Container.chat_service]),
+    service: MessageService = Depends(Provide[Container.message_service]),
 ) -> EditMessageResponse:
     """본인 메시지 5분 이내 편집. 편집 후 방 전체에 `message.updated` 발행."""
     user_id: str = request.state.user_id
@@ -73,7 +73,7 @@ async def edit_message(
 async def delete_message(
     request: Request,
     message_id: str,
-    service: ChatService = Depends(Provide[Container.chat_service]),
+    service: MessageService = Depends(Provide[Container.message_service]),
 ) -> None:
     """본인 메시지 OR 그룹방 creator 의 soft delete. 방 전체에 `message.deleted` 발행."""
     user_id: str = request.state.user_id

@@ -19,7 +19,7 @@ from app.core.redis import get_redis_client, get_redis_dedupe_client, close_redi
 from app.container import Container
 from app.config.setting import settings
 from app.database.session import init_mongodb, close_mongodb
-from app.core.chat.lua_scripts import lua_scripts
+from app.core.chat.lua_script import lua_scripts
 from app.api.v1.router import api_router
 
 

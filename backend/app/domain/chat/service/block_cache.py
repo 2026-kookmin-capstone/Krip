@@ -14,7 +14,7 @@ friend 도메인이 block/unblock 을 처리할 때 이 서비스를 호출해 c
 """
 from app.database.session import UnitOfWork, transactional
 from app.domain.chat.repository.chat_room import ChatRoomRepository
-from app.core.chat.redis_keys import room_blocks_key
+from app.core.chat.redis_key import room_blocks_key
 from app.core.logger import get_logger
 from app.core.redis import get_redis_client
 

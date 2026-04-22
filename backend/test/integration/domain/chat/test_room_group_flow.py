@@ -1,19 +1,19 @@
 """RoomService 그룹 방 통합 테스트 (PHASE_2 #1 + #2).
 
 실제 Postgres + Redis + Mongo 를 엮어 생성/초대/퇴장/강퇴의 RDB+Redis+Mongo 부수효과
-및 시스템 메시지 타임라인 기록까지 검증한다. `chat_fanout_stub` / `chat_service` 는
-상위 conftest 의 fixture 재사용 (같은 fanout 인스턴스를 RoomService 와 ChatService 가
+및 시스템 메시지 타임라인 기록까지 검증한다. `chat_fanout_stub` / `message_service` 는
+상위 conftest 의 fixture 재사용 (같은 fanout 인스턴스를 RoomService 와 MessageService 가
 공유해야 호출 카운트 일관).
 """
 import pytest
 import pytest_asyncio
 from sqlalchemy import select
 
-from app.core.chat.redis_keys import room_members_key, room_seq_key, unread_key
+from app.core.chat.redis_key import room_members_key, room_seq_key, unread_key
 from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
 from app.domain.chat.model.chat_room_member import ChatRoomMember
-from app.domain.chat.service.exceptions import ChatRoomNotFoundError
-from app.domain.chat.service.room_service import RoomService
+from app.domain.chat.service.exception import ChatRoomNotFoundError
+from app.domain.chat.service.room import RoomService
 from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 
 
@@ -45,13 +45,13 @@ async def seed_friendship(session_factory):
 class TestCreateGroupRoomFlow:
     async def test_creates_room_with_members_and_caches(
         self, uow, seed_users, seed_friendship, chat_fanout_stub,
-        session_factory, redis_hot, patch_external_clients, chat_service,
+        session_factory, redis_hot, patch_external_clients, message_service,
     ):
         a, b, c = await seed_users(3)
         await seed_friendship(a, b)
         await seed_friendship(a, c)
 
-        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service)
+        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, message_service=message_service)
         dto = await service.create_group_room(
             me_id=a, title="캡스톤 7팀", member_ids=[b, c],
         )
@@ -89,11 +89,11 @@ class TestCreateGroupRoomFlow:
             assert call.args[1]["room_id"] == dto.chat_room_id
 
     async def test_non_friend_target_raises(
-        self, uow, seed_users, chat_fanout_stub, patch_external_clients, chat_service,
+        self, uow, seed_users, chat_fanout_stub, patch_external_clients, message_service,
     ):
         a, b, _ = await seed_users(3)
         # friendship 맺지 않음
-        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service)
+        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, message_service=message_service)
         with pytest.raises(ValueError, match="친구가 아닌"):
             await service.create_group_room(
                 me_id=a, title="T", member_ids=[b],
@@ -107,13 +107,13 @@ class TestCreateGroupRoomFlow:
 class TestInviteMembersFlow:
     async def test_invite_new_member_and_rejoin_preserves_last_read(
         self, uow, seed_users, seed_friendship, chat_fanout_stub,
-        session_factory, redis_hot, patch_external_clients, chat_service,
+        session_factory, redis_hot, patch_external_clients, message_service,
     ):
         a, b, c = await seed_users(3)
         await seed_friendship(a, b)
         await seed_friendship(a, c)
 
-        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service)
+        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, message_service=message_service)
         # 1) a + b 2명 방 생성
         room_dto = await service.create_group_room(
             me_id=a, title="T", member_ids=[b],
@@ -164,12 +164,12 @@ class TestInviteMembersFlow:
         assert invited_targets == {b, c}
 
     async def test_already_active_member_is_skipped(
-        self, uow, seed_users, seed_friendship, chat_fanout_stub, patch_external_clients, chat_service,
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, patch_external_clients, message_service,
     ):
         a, b, _ = await seed_users(3)
         await seed_friendship(a, b)
 
-        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service)
+        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, message_service=message_service)
         room_dto = await service.create_group_room(
             me_id=a, title="T", member_ids=[b],
         )
@@ -182,12 +182,12 @@ class TestInviteMembersFlow:
         assert skipped == [b]
 
     async def test_inviter_must_be_active_member(
-        self, uow, seed_users, seed_friendship, chat_fanout_stub, patch_external_clients, chat_service,
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, patch_external_clients, message_service,
     ):
         a, b, c = await seed_users(3)
         await seed_friendship(a, b)
 
-        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service)
+        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, message_service=message_service)
         room = await service.create_group_room(
             me_id=a, title="T", member_ids=[b],
         )
@@ -199,10 +199,10 @@ class TestInviteMembersFlow:
             )
 
     async def test_direct_room_rejects_invite(
-        self, uow, seed_users, chat_fanout_stub, patch_external_clients, chat_service,
+        self, uow, seed_users, chat_fanout_stub, patch_external_clients, message_service,
     ):
         a, b, _ = await seed_users(3)
-        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service)
+        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, message_service=message_service)
         direct = await service.create_direct_room(me_id=a, peer_user_id=b)
 
         with pytest.raises(ValueError, match="그룹 방에만"):
@@ -218,12 +218,12 @@ class TestInviteMembersFlow:
 class TestLeaveRoomFlow:
     async def test_leave_removes_from_redis_and_marks_is_left(
         self, uow, seed_users, seed_friendship, chat_fanout_stub,
-        session_factory, redis_hot, patch_external_clients, chat_service,
+        session_factory, redis_hot, patch_external_clients, message_service,
     ):
         a, b, _ = await seed_users(3)
         await seed_friendship(a, b)
 
-        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service)
+        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, message_service=message_service)
         room = await service.create_group_room(
             me_id=a, title="T", member_ids=[b],
         )
@@ -248,10 +248,10 @@ class TestLeaveRoomFlow:
         assert call.args[1] == {"type": "room_left", "room_id": room.chat_room_id}
 
     async def test_direct_room_rejects_leave(
-        self, uow, seed_users, chat_fanout_stub, patch_external_clients, chat_service,
+        self, uow, seed_users, chat_fanout_stub, patch_external_clients, message_service,
     ):
         a, b, _ = await seed_users(3)
-        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service)
+        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, message_service=message_service)
         direct = await service.create_direct_room(me_id=a, peer_user_id=b)
 
         with pytest.raises(ValueError, match="그룹 방만"):
@@ -265,12 +265,12 @@ class TestLeaveRoomFlow:
 class TestKickMemberFlow:
     async def test_creator_kicks_target(
         self, uow, seed_users, seed_friendship, chat_fanout_stub,
-        session_factory, redis_hot, patch_external_clients, chat_service,
+        session_factory, redis_hot, patch_external_clients, message_service,
     ):
         a, b, _ = await seed_users(3)
         await seed_friendship(a, b)
 
-        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service)
+        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, message_service=message_service)
         room = await service.create_group_room(
             me_id=a, title="T", member_ids=[b],
         )
@@ -293,13 +293,13 @@ class TestKickMemberFlow:
         assert call.args[1]["type"] == "room_left"
 
     async def test_non_creator_cannot_kick(
-        self, uow, seed_users, seed_friendship, chat_fanout_stub, patch_external_clients, chat_service,
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, patch_external_clients, message_service,
     ):
         a, b, c = await seed_users(3)
         await seed_friendship(a, b)
         await seed_friendship(a, c)
 
-        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service)
+        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, message_service=message_service)
         room = await service.create_group_room(
             me_id=a, title="T", member_ids=[b, c],
         )
@@ -311,14 +311,14 @@ class TestKickMemberFlow:
             )
 
     async def test_creator_after_leaving_loses_kick_permission(
-        self, uow, seed_users, seed_friendship, chat_fanout_stub, patch_external_clients, chat_service,
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, patch_external_clients, message_service,
     ):
         """PHASE_2 P5 — creator 가 leave 하면 권한 승계 없이 kick 불가."""
         a, b, c = await seed_users(3)
         await seed_friendship(a, b)
         await seed_friendship(a, c)
 
-        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service)
+        service = RoomService(uow=uow, fanout_service=chat_fanout_stub, message_service=message_service)
         room = await service.create_group_room(
             me_id=a, title="T", member_ids=[b, c],
         )

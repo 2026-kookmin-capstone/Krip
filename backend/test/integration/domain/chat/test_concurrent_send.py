@@ -10,7 +10,7 @@ import pytest
 
 from app.database.session import UnitOfWork
 from app.domain.chat.model.chat_message import MessageType
-from app.domain.chat.service.chat_service import ChatService
+from app.domain.chat.service.message import MessageService
 
 
 pytestmark = pytest.mark.integration
@@ -27,7 +27,7 @@ class TestConcurrentSendProducesMonotonicSeq:
         self, session_factory, direct_room, chat_fanout_stub, mongo_db, monkeypatch,
     ):
         monkeypatch.setattr(
-            "app.domain.chat.service.chat_service.RATE_LIMIT_THRESHOLD",
+            "app.domain.chat.service.message.RATE_LIMIT_THRESHOLD",
             _CONCURRENT_COUNT * 2,
         )
 
@@ -35,7 +35,7 @@ class TestConcurrentSendProducesMonotonicSeq:
 
         async def send(i: int):
             uow = UnitOfWork(session=session_factory)
-            svc = ChatService(uow=uow, fanout_service=chat_fanout_stub)
+            svc = MessageService(uow=uow, fanout_service=chat_fanout_stub)
             uid = user_a if i % 2 == 0 else user_b
             return await svc.send_message(
                 sender_user_id=uid,

@@ -170,6 +170,6 @@ class TestFanoutModeGuard:
         from app.config import setting as setting_module
         monkeypatch.setattr(setting_module.settings, "FANOUT_MODE", "node_channel")
 
-        from app.domain.chat.service.fanout_service import FanoutService
+        from app.domain.chat.service.fanout import FanoutService
         with pytest.raises(NotImplementedError, match="Phase 4"):
             FanoutService()

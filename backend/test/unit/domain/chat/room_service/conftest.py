@@ -1,6 +1,6 @@
 import pytest
 
-from app.domain.chat.service.room_service import RoomService
+from app.domain.chat.service.room import RoomService
 
 from test.unit.domain.chat.room_service.mock_factory import (
     FakeUnitOfWork,
@@ -73,10 +73,10 @@ def fanout_mock():
 
 
 @pytest.fixture
-def chat_service_mock():
+def message_service_mock():
     """RoomService 가 Phase 2 #2 에서 system 메시지 발행용으로 의존하는 stub."""
     from unittest.mock import AsyncMock, MagicMock
-    mock = MagicMock(name="chat_service")
+    mock = MagicMock(name="message_service")
     mock.send_system_message = AsyncMock()
     return mock
 
@@ -98,43 +98,43 @@ def service(
     message_repo_mock,
     fanout_mock,
     redis_mock,
-    chat_service_mock,
+    message_service_mock,
 ):
     """Mock 레포 + Mock Redis / Fanout 이 주입된 RoomService."""
     monkeypatch.setattr(
-        "app.domain.chat.service.room_service.ChatRoomRepository",
+        "app.domain.chat.service.room.ChatRoomRepository",
         lambda session: chat_room_repo_mock,
     )
     monkeypatch.setattr(
-        "app.domain.chat.service.room_service.ChatRoomMemberRepository",
+        "app.domain.chat.service.room.ChatRoomMemberRepository",
         lambda session: chat_member_repo_mock,
     )
     monkeypatch.setattr(
-        "app.domain.chat.service.room_service.UserBlockRepository",
+        "app.domain.chat.service.room.UserBlockRepository",
         lambda session: user_block_repo_mock,
     )
     monkeypatch.setattr(
-        "app.domain.chat.service.room_service.UserRepository",
+        "app.domain.chat.service.room.UserRepository",
         lambda session: user_repo_mock,
     )
     monkeypatch.setattr(
-        "app.domain.chat.service.room_service.FriendshipRepository",
+        "app.domain.chat.service.room.FriendshipRepository",
         lambda session: friendship_repo_mock,
     )
     # invite 시 ChatMessageRepository(mongodb.database) 를 만들지만 mongo 연결은 불필요.
     monkeypatch.setattr(
-        "app.domain.chat.service.room_service.ChatMessageRepository",
+        "app.domain.chat.service.room.ChatMessageRepository",
         lambda db: message_repo_mock,
     )
 
     async def _get_client():
         return redis_mock
     monkeypatch.setattr(
-        "app.domain.chat.service.room_service.get_redis_client",
+        "app.domain.chat.service.room.get_redis_client",
         _get_client,
     )
 
     uow = FakeUnitOfWork(mock_session)
     return RoomService(
-        uow=uow, fanout_service=fanout_mock, chat_service=chat_service_mock,
+        uow=uow, fanout_service=fanout_mock, message_service=message_service_mock,
     )

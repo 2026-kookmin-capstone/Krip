@@ -8,7 +8,7 @@ from types import SimpleNamespace
 import pytest
 
 from app.domain.chat.model.chat_room import ChatRoomType
-from app.domain.chat.service.exceptions import ChatRoomNotFoundError
+from app.domain.chat.service.exception import ChatRoomNotFoundError
 
 from test.unit.domain.chat.room_service.model_factory import ChatRoomFactory
 
@@ -373,14 +373,14 @@ class TestKickMember:
 
 
 # ──────────────────────────────────────────────────────────────────
-# 시스템 메시지 발행 (PHASE_2 #2) — RoomService 가 ChatService 에 정확한 payload 로
+# 시스템 메시지 발행 (PHASE_2 #2) — RoomService 가 MessageService 에 정확한 payload 로
 # 위임하는지만 검증. 실제 Mongo 저장/fan-out 은 통합에서.
 # ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestSystemMessageEmission:
     async def test_create_group_emits_created_action(
-        self, service, friendship_repo_mock, chat_room_repo_mock, chat_service_mock,
+        self, service, friendship_repo_mock, chat_room_repo_mock, message_service_mock,
     ):
         friendship_repo_mock.find_accepted_friend_ids_with.return_value = {"U_B"}
 
@@ -393,8 +393,8 @@ class TestSystemMessageEmission:
             me_id="U_A", title="T", member_ids=["U_B"],
         )
 
-        chat_service_mock.send_system_message.assert_awaited_once()
-        kwargs = chat_service_mock.send_system_message.call_args.kwargs
+        message_service_mock.send_system_message.assert_awaited_once()
+        kwargs = message_service_mock.send_system_message.call_args.kwargs
         assert kwargs["action"] == "created"
         assert kwargs["actor_id"] == "U_A"
         assert kwargs["room_id"] == "CR_G"
@@ -402,7 +402,7 @@ class TestSystemMessageEmission:
 
     async def test_invite_emits_join_action_with_targets(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
-        friendship_repo_mock, chat_service_mock, redis_mock,
+        friendship_repo_mock, message_service_mock, redis_mock,
     ):
         chat_room_repo_mock.find_by_id.return_value = ChatRoomFactory.create(
             chat_room_id="CR_G", type_=ChatRoomType.GROUP,
@@ -416,15 +416,15 @@ class TestSystemMessageEmission:
             me_id="U_A", room_id="CR_G", user_ids=["U_B"],
         )
 
-        chat_service_mock.send_system_message.assert_awaited_once()
-        kwargs = chat_service_mock.send_system_message.call_args.kwargs
+        message_service_mock.send_system_message.assert_awaited_once()
+        kwargs = message_service_mock.send_system_message.call_args.kwargs
         assert kwargs["action"] == "join"
         assert kwargs["actor_id"] == "U_A"
         assert kwargs["target_ids"] == ["U_B"]
 
     async def test_invite_with_only_skipped_does_not_emit(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
-        friendship_repo_mock, chat_service_mock,
+        friendship_repo_mock, message_service_mock,
     ):
         """이미 멤버만 지정 → 실제 초대 0 → 시스템 메시지 불필요."""
         chat_room_repo_mock.find_by_id.return_value = ChatRoomFactory.create(
@@ -440,10 +440,10 @@ class TestSystemMessageEmission:
             me_id="U_A", room_id="CR_G", user_ids=["U_B"],
         )
 
-        chat_service_mock.send_system_message.assert_not_awaited()
+        message_service_mock.send_system_message.assert_not_awaited()
 
     async def test_leave_emits_leave_action(
-        self, service, chat_room_repo_mock, chat_member_repo_mock, chat_service_mock,
+        self, service, chat_room_repo_mock, chat_member_repo_mock, message_service_mock,
     ):
         chat_room_repo_mock.find_by_id.return_value = ChatRoomFactory.create(
             chat_room_id="CR_G", type_=ChatRoomType.GROUP,
@@ -454,14 +454,14 @@ class TestSystemMessageEmission:
 
         await service.leave_room(me_id="U_A", room_id="CR_G")
 
-        chat_service_mock.send_system_message.assert_awaited_once()
-        kwargs = chat_service_mock.send_system_message.call_args.kwargs
+        message_service_mock.send_system_message.assert_awaited_once()
+        kwargs = message_service_mock.send_system_message.call_args.kwargs
         assert kwargs["action"] == "leave"
         assert kwargs["actor_id"] == "U_A"
         assert kwargs.get("target_ids") is None
 
     async def test_kick_emits_kick_action_with_target(
-        self, service, chat_room_repo_mock, chat_member_repo_mock, chat_service_mock,
+        self, service, chat_room_repo_mock, chat_member_repo_mock, message_service_mock,
     ):
         chat_room_repo_mock.find_by_id.return_value = ChatRoomFactory.create(
             chat_room_id="CR_G", type_=ChatRoomType.GROUP, creator_id="U_A",
@@ -475,8 +475,8 @@ class TestSystemMessageEmission:
             me_id="U_A", room_id="CR_G", target_user_id="U_B",
         )
 
-        chat_service_mock.send_system_message.assert_awaited_once()
-        kwargs = chat_service_mock.send_system_message.call_args.kwargs
+        message_service_mock.send_system_message.assert_awaited_once()
+        kwargs = message_service_mock.send_system_message.call_args.kwargs
         assert kwargs["action"] == "kick"
         assert kwargs["actor_id"] == "U_A"
         assert kwargs["target_ids"] == ["U_B"]

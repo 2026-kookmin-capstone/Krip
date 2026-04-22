@@ -7,9 +7,9 @@ import pytest
 import pytest_asyncio
 
 from app.domain.chat.model.chat_message import MessageType
-from app.domain.chat.service.chat_service import ChatService
-from app.domain.chat.service.message_history_service import MessageHistoryService
-from app.domain.chat.service.room_service import RoomService
+from app.domain.chat.service.message import MessageService
+from app.domain.chat.service.message_history import MessageHistoryService
+from app.domain.chat.service.room import RoomService
 from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 
 
@@ -31,17 +31,17 @@ async def seed_friendship(session_factory):
 
 @pytest_asyncio.fixture
 async def room_with_message(
-    uow, seed_users, seed_friendship, chat_fanout_stub, chat_service,
+    uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
     patch_external_clients,
 ):
     """그룹 방 + a 가 text 메시지 1 건 전송. (room_id, a, b, message_id, server_seq) 반환."""
     a, b, _ = await seed_users(3)
     await seed_friendship(a, b)
     room_svc = RoomService(
-        uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+        uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
     )
     room = await room_svc.create_group_room(me_id=a, title="T", member_ids=[b])
-    ack = await chat_service.send_message(
+    ack = await message_service.send_message(
         sender_user_id=a,
         sender_session_id="WS_A",
         room_id=room.chat_room_id,
@@ -58,13 +58,13 @@ async def room_with_message(
 
 class TestEditMessageFlow:
     async def test_edit_updates_mongo_and_fans_out(
-        self, room_with_message, chat_service, mongo_db, chat_fanout_stub,
+        self, room_with_message, message_service, mongo_db, chat_fanout_stub,
         patch_external_clients,
     ):
         room_id, a, _, message_id, _ = room_with_message
         chat_fanout_stub.reset_mock()
 
-        result = await chat_service.edit_message(
+        result = await message_service.edit_message(
             message_id=message_id, editor_user_id=a, editor_session_id="WS_A",
             new_content="edited!",
         )
@@ -83,25 +83,25 @@ class TestEditMessageFlow:
         assert payload["message_id"] == message_id
 
     async def test_non_owner_cannot_edit(
-        self, room_with_message, chat_service, patch_external_clients,
+        self, room_with_message, message_service, patch_external_clients,
     ):
         _, _, b, message_id, _ = room_with_message
         with pytest.raises(PermissionError):
-            await chat_service.edit_message(
+            await message_service.edit_message(
                 message_id=message_id, editor_user_id=b, editor_session_id="WS_B",
                 new_content="hacked",
             )
 
     async def test_edit_after_soft_delete_rejected(
-        self, room_with_message, chat_service, patch_external_clients,
+        self, room_with_message, message_service, patch_external_clients,
     ):
         """삭제된 메시지는 편집 불가."""
         _, a, _, message_id, _ = room_with_message
-        await chat_service.delete_message(
+        await message_service.delete_message(
             message_id=message_id, deleter_user_id=a, deleter_session_id="WS_A",
         )
         with pytest.raises(ValueError, match="삭제된"):
-            await chat_service.edit_message(
+            await message_service.edit_message(
                 message_id=message_id, editor_user_id=a, editor_session_id="WS_A",
                 new_content="zombie",
             )
@@ -113,12 +113,12 @@ class TestEditMessageFlow:
 
 class TestDeleteMessageFlow:
     async def test_own_delete_masks_content_in_history(
-        self, room_with_message, chat_service, mongo_db, uow,
+        self, room_with_message, message_service, mongo_db, uow,
         patch_external_clients,
     ):
         room_id, a, _, message_id, server_seq = room_with_message
 
-        await chat_service.delete_message(
+        await message_service.delete_message(
             message_id=message_id, deleter_user_id=a, deleter_session_id="WS_A",
         )
 
@@ -137,26 +137,26 @@ class TestDeleteMessageFlow:
         assert hit.deleted_at is not None
 
     async def test_group_creator_can_delete_others_message(
-        self, uow, seed_users, seed_friendship, chat_fanout_stub, chat_service,
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
         patch_external_clients,
     ):
         a, b, _ = await seed_users(3)
         await seed_friendship(a, b)
         room_svc = RoomService(
-            uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await room_svc.create_group_room(me_id=a, title="T", member_ids=[b])
         # b 가 보낸 메시지를 방장 a 가 삭제
-        ack = await chat_service.send_message(
+        ack = await message_service.send_message(
             sender_user_id=b, sender_session_id="WS_B", room_id=room.chat_room_id,
             client_msg_id="cm-b-1", msg_type=MessageType.TEXT, content="x",
         )
-        await chat_service.delete_message(
+        await message_service.delete_message(
             message_id=ack.message_id, deleter_user_id=a, deleter_session_id="WS_A",
         )
 
     async def test_regular_member_cannot_delete_others(
-        self, uow, seed_users, seed_friendship, chat_fanout_stub, chat_service,
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
         patch_external_clients,
     ):
         """creator 가 아닌 일반 멤버는 타인 메시지 삭제 불가."""
@@ -164,26 +164,26 @@ class TestDeleteMessageFlow:
         await seed_friendship(a, b)
         await seed_friendship(a, c)
         room_svc = RoomService(
-            uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await room_svc.create_group_room(me_id=a, title="T", member_ids=[b, c])
-        ack = await chat_service.send_message(
+        ack = await message_service.send_message(
             sender_user_id=b, sender_session_id="WS_B", room_id=room.chat_room_id,
             client_msg_id="cm-b-2", msg_type=MessageType.TEXT, content="x",
         )
         with pytest.raises(PermissionError):
-            await chat_service.delete_message(
+            await message_service.delete_message(
                 message_id=ack.message_id, deleter_user_id=c, deleter_session_id="WS_C",
             )
 
     async def test_system_message_cannot_be_deleted(
-        self, uow, seed_users, seed_friendship, chat_fanout_stub, chat_service,
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
         mongo_db, patch_external_clients,
     ):
         a, b, _ = await seed_users(3)
         await seed_friendship(a, b)
         room_svc = RoomService(
-            uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await room_svc.create_group_room(me_id=a, title="T", member_ids=[b])
 
@@ -194,18 +194,18 @@ class TestDeleteMessageFlow:
         assert sys_doc is not None
 
         with pytest.raises(PermissionError, match="시스템"):
-            await chat_service.delete_message(
+            await message_service.delete_message(
                 message_id=sys_doc["_id"], deleter_user_id=a, deleter_session_id="WS_A",
             )
 
     async def test_second_delete_is_rejected(
-        self, room_with_message, chat_service, patch_external_clients,
+        self, room_with_message, message_service, patch_external_clients,
     ):
         _, a, _, message_id, _ = room_with_message
-        await chat_service.delete_message(
+        await message_service.delete_message(
             message_id=message_id, deleter_user_id=a, deleter_session_id="WS_A",
         )
         with pytest.raises(ValueError, match="이미 삭제"):
-            await chat_service.delete_message(
+            await message_service.delete_message(
                 message_id=message_id, deleter_user_id=a, deleter_session_id="WS_A",
             )

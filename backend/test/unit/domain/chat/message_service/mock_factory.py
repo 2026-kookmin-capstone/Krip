@@ -1,4 +1,4 @@
-"""ChatService 단위 테스트용 Mock 팩토리."""
+"""MessageService 단위 테스트용 Mock 팩토리."""
 from types import SimpleNamespace
 from unittest.mock import AsyncMock, MagicMock
 

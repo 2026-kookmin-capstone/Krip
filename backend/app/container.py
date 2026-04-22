@@ -17,12 +17,12 @@ from app.domain.tour.service.tour_search_history import TourSearchHistoryService
 from app.domain.friend.service.friendship import FriendshipService
 from app.domain.friend.service.user_block import UserBlockService
 from app.domain.friend.service.friend_detail import FriendDetailService
-from app.domain.chat.service.block_cache_service import BlockCacheService
-from app.domain.chat.service.chat_service import ChatService
-from app.domain.chat.service.fanout_service import FanoutService
-from app.domain.chat.service.message_history_service import MessageHistoryService
-from app.domain.chat.service.room_service import RoomService
-from app.domain.chat.service.session_service import SessionService
+from app.domain.chat.service.block_cache import BlockCacheService
+from app.domain.chat.service.message import MessageService
+from app.domain.chat.service.fanout import FanoutService
+from app.domain.chat.service.message_history import MessageHistoryService
+from app.domain.chat.service.room import RoomService
+from app.domain.chat.service.session import SessionService
 from app.database.session import UnitOfWork
 from app.config.setting import settings
 
@@ -73,11 +73,11 @@ class Container(containers.DeclarativeContainer):
     session_service = providers.Singleton(SessionService, fanout_service=fanout_service)
 
     # 채팅 — 비즈 (Factory: 호출마다 UoW 새로 바인딩)
-    #   - chat_service / block_cache_service 는 room_service / user_block_service 보다
+    #   - message_service / block_cache_service 는 room_service / user_block_service 보다
     #     먼저 선언 (system 메시지 발행 / 차단 캐시 무효화 훅 의존성)
-    chat_service = providers.Factory(ChatService, uow=uow, fanout_service=fanout_service)
+    message_service = providers.Factory(MessageService, uow=uow, fanout_service=fanout_service)
     room_service = providers.Factory(
-        RoomService, uow=uow, fanout_service=fanout_service, chat_service=chat_service,
+        RoomService, uow=uow, fanout_service=fanout_service, message_service=message_service,
     )
     message_history_service = providers.Factory(MessageHistoryService, uow=uow)
     block_cache_service = providers.Factory(BlockCacheService, uow=uow)

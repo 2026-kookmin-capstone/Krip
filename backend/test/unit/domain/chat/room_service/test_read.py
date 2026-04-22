@@ -7,7 +7,7 @@ payload 를 정확히 검증한다.
 import pytest
 
 from app.domain.chat.model.chat_room import ChatRoomType
-from app.domain.chat.service.exceptions import ChatRoomNotFoundError
+from app.domain.chat.service.exception import ChatRoomNotFoundError
 
 from test.unit.domain.chat.room_service.model_factory import ChatRoomFactory
 

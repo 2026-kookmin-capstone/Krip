@@ -1,8 +1,8 @@
 import pytest
 
-from app.domain.chat.service.chat_service import ChatService
+from app.domain.chat.service.message import MessageService
 
-from test.unit.domain.chat.chat_service.mock_factory import (
+from test.unit.domain.chat.message_service.mock_factory import (
     FakeUnitOfWork,
     make_chat_member_repo_mock,
     make_chat_room_repo_mock,
@@ -68,22 +68,22 @@ def service(
     redis_dedupe_mock,
     lua_mock,
 ):
-    """Mock 레포 + Mock Redis(hot/dedupe) + Mock Lua 가 주입된 ChatService."""
+    """Mock 레포 + Mock Redis(hot/dedupe) + Mock Lua 가 주입된 MessageService."""
     monkeypatch.setattr(
-        "app.domain.chat.service.chat_service.ChatRoomRepository",
+        "app.domain.chat.service.message.ChatRoomRepository",
         lambda session: chat_room_repo_mock,
     )
     monkeypatch.setattr(
-        "app.domain.chat.service.chat_service.ChatRoomMemberRepository",
+        "app.domain.chat.service.message.ChatRoomMemberRepository",
         lambda session: chat_member_repo_mock,
     )
     monkeypatch.setattr(
-        "app.domain.chat.service.chat_service.ChatMessageRepository",
+        "app.domain.chat.service.message.ChatMessageRepository",
         lambda db: message_repo_mock,
     )
     # mongodb.database 참조 회피 — Repository 가 mock 이라 db 인자는 무시됨
     monkeypatch.setattr(
-        "app.domain.chat.service.chat_service.mongodb",
+        "app.domain.chat.service.message.mongodb",
         type("FakeMongo", (), {"database": None})(),
     )
 
@@ -92,11 +92,11 @@ def service(
     async def _dedupe():
         return redis_dedupe_mock
 
-    monkeypatch.setattr("app.domain.chat.service.chat_service.get_redis_client", _hot)
-    monkeypatch.setattr("app.domain.chat.service.chat_service.get_redis_dedupe_client", _dedupe)
+    monkeypatch.setattr("app.domain.chat.service.message.get_redis_client", _hot)
+    monkeypatch.setattr("app.domain.chat.service.message.get_redis_dedupe_client", _dedupe)
 
     # lua_scripts 전체 교체
-    monkeypatch.setattr("app.domain.chat.service.chat_service.lua_scripts", lua_mock)
+    monkeypatch.setattr("app.domain.chat.service.message.lua_scripts", lua_mock)
 
     uow = FakeUnitOfWork(mock_session)
-    return ChatService(uow=uow, fanout_service=fanout_mock)
+    return MessageService(uow=uow, fanout_service=fanout_mock)

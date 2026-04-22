@@ -1,17 +1,17 @@
-"""ChatService 단위 테스트 — 송신 11단계 핫패스 / 재시도 / dedupe / unread."""
+"""MessageService 단위 테스트 — 송신 11단계 핫패스 / 재시도 / dedupe / unread."""
 from unittest.mock import AsyncMock
 
 import pytest
 from pymongo.errors import DuplicateKeyError
 
-from app.core.chat.redis_keys import (
+from app.core.chat.redis_key import (
     DIRTY_CHAT_ROOM_KEY,
     RATE_LIMIT_THRESHOLD,
     dedupe_key,
     rate_msg_key,
 )
 from app.domain.chat.model.chat_message import MessageType
-from app.domain.chat.service.exceptions import UpstreamError
+from app.domain.chat.service.exception import UpstreamError
 
 
 # ──────────────────────────────────────────────────────────────────
@@ -284,7 +284,7 @@ class TestRdbUpdateFailureDegrade:
     async def test_update_last_message_failure_adds_to_dirty_queue(
         self, service, chat_room_repo_mock, redis_mock, mock_session,
     ):
-        from test.unit.domain.chat.chat_service.mock_factory import RaisingAsyncContextManager
+        from test.unit.domain.chat.message_service.mock_factory import RaisingAsyncContextManager
 
         # begin_nested() 가 실패하는 SAVEPOINT 반환 → update_last_message 는 호출 전 롤백 유발
         mock_session.begin_nested.return_value = RaisingAsyncContextManager(
@@ -663,7 +663,7 @@ class TestDirectBlockCheck:
         mock = AsyncMock()
         mock.find_blocks_between.return_value = []
         monkeypatch.setattr(
-            "app.domain.chat.service.chat_service.UserBlockRepository",
+            "app.domain.chat.service.message.UserBlockRepository",
             lambda session: mock,
         )
         return mock

@@ -11,9 +11,9 @@
 import time
 
 from app.util.id_generator import generate_session_id
-from app.domain.chat.service.fanout_service import FanoutService
+from app.domain.chat.service.fanout import FanoutService
 from app.config.setting import settings
-from app.core.chat.redis_keys import (
+from app.core.chat.redis_key import (
     sess_key,
     sessions_key,
     ws_route_key,

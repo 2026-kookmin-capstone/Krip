@@ -22,12 +22,12 @@ from dependency_injector.wiring import Provide, inject
 import asyncio
 
 from app.domain.chat.schema.ws_event import ClientRequest, ReadOp, RefreshOp, SendOp
-from app.domain.chat.service.chat_service import ChatService
-from app.domain.chat.service.exceptions import ChatRoomNotFoundError, UpstreamError
-from app.domain.chat.service.fanout_service import FanoutService
-from app.domain.chat.service.message_history_service import MessageHistoryService
-from app.domain.chat.service.room_service import RoomService
-from app.domain.chat.service.session_service import SessionService
+from app.domain.chat.service.message import MessageService
+from app.domain.chat.service.exception import ChatRoomNotFoundError, UpstreamError
+from app.domain.chat.service.fanout import FanoutService
+from app.domain.chat.service.message_history import MessageHistoryService
+from app.domain.chat.service.room import RoomService
+from app.domain.chat.service.session import SessionService
 from app.config.setting import settings
 from app.container import Container
 from app.core.logger import get_logger
@@ -60,7 +60,7 @@ async def ws_chat(
     fanout: FanoutService = Depends(Provide[Container.fanout_service]),
     session_svc: SessionService = Depends(Provide[Container.session_service]),
     room_svc: RoomService = Depends(Provide[Container.room_service]),
-    chat_svc: ChatService = Depends(Provide[Container.chat_service]),
+    chat_svc: MessageService = Depends(Provide[Container.message_service]),
     history_svc: MessageHistoryService = Depends(Provide[Container.message_history_service]),
 ) -> None:
     # 1. Origin 검증
@@ -197,7 +197,7 @@ async def _receive_loop(
     session_id: str,
     user_id: str,
     session_svc: SessionService,
-    chat_svc: ChatService,
+    chat_svc: MessageService,
     room_svc: RoomService,
 ) -> None:
     """op 디스패처. 매 op 진입 시 Redis 에서 세션 유효성 확인."""
@@ -280,10 +280,10 @@ async def _handle_send(
     websocket: WebSocket,
     session_id: str,
     user_id: str,
-    chat_svc: ChatService,
+    chat_svc: MessageService,
     req: SendOp,
 ) -> None:
-    """`op=send` — ChatService.send_message 실행 후 ACK 직송."""
+    """`op=send` — MessageService.send_message 실행 후 ACK 직송."""
     ack = await chat_svc.send_message(
         sender_user_id=user_id,
         sender_session_id=session_id,

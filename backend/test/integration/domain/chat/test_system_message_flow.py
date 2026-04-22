@@ -1,6 +1,6 @@
 """시스템 메시지 타임라인 통합 테스트 (PHASE_2 #2).
 
-그룹 방 생성/초대/퇴장/강퇴 시 `ChatService.send_system_message` 가 실제 Mongo
+그룹 방 생성/초대/퇴장/강퇴 시 `MessageService.send_system_message` 가 실제 Mongo
 `chat_message` 에 `type=system` 문서를 적재하고, `chat_room.last_message_*` 에도
 반영되며, unread 는 증가하지 않는지 end-to-end 검증.
 
@@ -11,10 +11,10 @@ import pytest
 import pytest_asyncio
 from sqlalchemy import select
 
-from app.core.chat.redis_keys import unread_key
+from app.core.chat.redis_key import unread_key
 from app.domain.chat.model.chat_room import ChatRoom
 from app.domain.chat.model.chat_room_member import ChatRoomMember
-from app.domain.chat.service.room_service import RoomService
+from app.domain.chat.service.room import RoomService
 from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 
 
@@ -44,14 +44,14 @@ async def _fetch_system_messages(mongo_db, room_id: str) -> list[dict]:
 
 class TestSystemMessageTimeline:
     async def test_create_group_writes_created_system_message(
-        self, uow, seed_users, seed_friendship, chat_fanout_stub, chat_service,
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
         session_factory, mongo_db, patch_external_clients,
     ):
         a, b, _ = await seed_users(3)
         await seed_friendship(a, b)
 
         service = RoomService(
-            uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await service.create_group_room(
             me_id=a, title="T", member_ids=[b],
@@ -71,7 +71,7 @@ class TestSystemMessageTimeline:
             assert fresh.last_message_id == m["_id"]
 
     async def test_invite_writes_join_system_message_with_target_ids(
-        self, uow, seed_users, seed_friendship, chat_fanout_stub, chat_service,
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
         mongo_db, patch_external_clients,
     ):
         a, b, c = await seed_users(3)
@@ -79,7 +79,7 @@ class TestSystemMessageTimeline:
         await seed_friendship(a, c)
 
         service = RoomService(
-            uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await service.create_group_room(
             me_id=a, title="T", member_ids=[b],
@@ -96,14 +96,14 @@ class TestSystemMessageTimeline:
         assert msgs[-1]["content"]["actor_id"] == a
 
     async def test_leave_writes_leave_system_message(
-        self, uow, seed_users, seed_friendship, chat_fanout_stub, chat_service,
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
         mongo_db, patch_external_clients,
     ):
         a, b, _ = await seed_users(3)
         await seed_friendship(a, b)
 
         service = RoomService(
-            uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await service.create_group_room(
             me_id=a, title="T", member_ids=[b],
@@ -116,14 +116,14 @@ class TestSystemMessageTimeline:
         assert "target_ids" not in msgs[-1]["content"]
 
     async def test_kick_writes_kick_system_message_with_target(
-        self, uow, seed_users, seed_friendship, chat_fanout_stub, chat_service,
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
         mongo_db, patch_external_clients,
     ):
         a, b, _ = await seed_users(3)
         await seed_friendship(a, b)
 
         service = RoomService(
-            uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await service.create_group_room(
             me_id=a, title="T", member_ids=[b],
@@ -138,7 +138,7 @@ class TestSystemMessageTimeline:
         assert msgs[-1]["content"]["target_ids"] == [b]
 
     async def test_system_messages_do_not_bump_unread(
-        self, uow, seed_users, seed_friendship, chat_fanout_stub, chat_service,
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
         redis_hot, patch_external_clients,
     ):
         """PHASE_2 H3: 시스템 메시지는 unread 를 증가시키지 않는다.
@@ -151,7 +151,7 @@ class TestSystemMessageTimeline:
         await seed_friendship(a, c)
 
         service = RoomService(
-            uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await service.create_group_room(
             me_id=a, title="T", member_ids=[b],

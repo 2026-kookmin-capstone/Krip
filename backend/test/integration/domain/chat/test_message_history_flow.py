@@ -11,9 +11,9 @@ import pytest_asyncio
 
 from app.domain.chat.dto.message import MessageListData
 from app.domain.chat.model.chat_message import MessageType
-from app.domain.chat.service.chat_service import ChatService
-from app.domain.chat.service.message_history_service import MessageHistoryService
-from app.domain.chat.service.room_service import RoomService
+from app.domain.chat.service.message import MessageService
+from app.domain.chat.service.message_history import MessageHistoryService
+from app.domain.chat.service.room import RoomService
 from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 
 
@@ -35,7 +35,7 @@ async def seed_friendship(session_factory):
 
 @pytest_asyncio.fixture
 async def room_with_messages(
-    uow, seed_users, seed_friendship, chat_fanout_stub, chat_service,
+    uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
     patch_external_clients,
 ):
     """그룹 방 + 실제 `send_message` 호출로 N 건 적재한 픽스처.
@@ -47,14 +47,14 @@ async def room_with_messages(
     await seed_friendship(a, b)
 
     room_svc = RoomService(
-        uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+        uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
     )
     room = await room_svc.create_group_room(me_id=a, title="hist", member_ids=[b])
     room_id = room.chat_room_id
 
     text_seqs: list[int] = []
     for i in range(10):
-        ack = await chat_service.send_message(
+        ack = await message_service.send_message(
             sender_user_id=a,
             sender_session_id=f"WS_A_{i}",
             room_id=room_id,
@@ -109,13 +109,13 @@ class TestFindMessagesBeforeFlow:
         assert len(combined) == len(set(combined)), "페이지 간 중복 발생"
 
     async def test_empty_room_returns_empty_page(
-        self, uow, seed_users, seed_friendship, chat_fanout_stub, chat_service,
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
         patch_external_clients,
     ):
         a, b, _ = await seed_users(3)
         await seed_friendship(a, b)
         room_svc = RoomService(
-            uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await room_svc.create_group_room(me_id=a, title="empty", member_ids=[b])
 
@@ -189,7 +189,7 @@ class TestFindMessagesAfterFlow:
 
 class TestPermissionFlow:
     async def test_non_member_cannot_read(
-        self, uow, seed_users, seed_friendship, chat_fanout_stub, chat_service,
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
         patch_external_clients,
     ):
         a, b, c = await seed_users(3)
@@ -197,7 +197,7 @@ class TestPermissionFlow:
         # c 는 방에 들어있지 않음
 
         room_svc = RoomService(
-            uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await room_svc.create_group_room(me_id=a, title="T", member_ids=[b])
 
@@ -212,13 +212,13 @@ class TestPermissionFlow:
             )
 
     async def test_left_member_cannot_read(
-        self, uow, seed_users, seed_friendship, chat_fanout_stub, chat_service,
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
         patch_external_clients,
     ):
         a, b, _ = await seed_users(3)
         await seed_friendship(a, b)
         room_svc = RoomService(
-            uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await room_svc.create_group_room(me_id=a, title="T", member_ids=[b])
         await room_svc.leave_room(me_id=b, room_id=room.chat_room_id)

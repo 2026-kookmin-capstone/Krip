@@ -7,10 +7,10 @@ import pytest
 import pytest_asyncio
 from sqlalchemy import select
 
-from app.core.chat.redis_keys import unread_key
+from app.core.chat.redis_key import unread_key
 from app.domain.chat.model.chat_room_member import ChatRoomMember
-from app.domain.chat.service.exceptions import ChatRoomNotFoundError
-from app.domain.chat.service.room_service import RoomService
+from app.domain.chat.service.exception import ChatRoomNotFoundError
+from app.domain.chat.service.room import RoomService
 from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 
 
@@ -32,14 +32,14 @@ async def seed_friendship(session_factory):
 
 class TestMarkReadFlow:
     async def test_sets_last_read_and_resets_unread(
-        self, uow, seed_users, seed_friendship, chat_fanout_stub, chat_service,
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
         session_factory, redis_hot, patch_external_clients,
     ):
         a, b, _ = await seed_users(3)
         await seed_friendship(a, b)
 
         service = RoomService(
-            uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await service.create_group_room(me_id=a, title="T", member_ids=[b])
 
@@ -83,7 +83,7 @@ class TestMarkReadFlow:
         }
 
     async def test_greatest_prevents_regress(
-        self, uow, seed_users, seed_friendship, chat_fanout_stub, chat_service,
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
         session_factory, patch_external_clients,
     ):
         """이미 높은 seq 가 기록된 뒤 과거 seq 로 호출 → 기존 값 유지, 반환도 기존 값."""
@@ -91,7 +91,7 @@ class TestMarkReadFlow:
         await seed_friendship(a, b)
 
         service = RoomService(
-            uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await service.create_group_room(me_id=a, title="T", member_ids=[b])
 
@@ -113,10 +113,10 @@ class TestMarkReadFlow:
             assert b_row.last_read_message_server_seq == 20
 
     async def test_room_not_found_raises(
-        self, uow, chat_fanout_stub, chat_service, patch_external_clients,
+        self, uow, chat_fanout_stub, message_service, patch_external_clients,
     ):
         service = RoomService(
-            uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         with pytest.raises(ChatRoomNotFoundError):
             await service.mark_read(
@@ -125,14 +125,14 @@ class TestMarkReadFlow:
             )
 
     async def test_left_member_cannot_mark_read(
-        self, uow, seed_users, seed_friendship, chat_fanout_stub, chat_service,
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
         session_factory, patch_external_clients,
     ):
         a, b, _ = await seed_users(3)
         await seed_friendship(a, b)
 
         service = RoomService(
-            uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await service.create_group_room(me_id=a, title="T", member_ids=[b])
         await service.leave_room(me_id=b, room_id=room.chat_room_id)
@@ -144,7 +144,7 @@ class TestMarkReadFlow:
             )
 
     async def test_count_readers_up_to_excludes_sender_and_left(
-        self, uow, seed_users, seed_friendship, chat_fanout_stub, chat_service,
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
         session_factory, patch_external_clients,
     ):
         """카톡 숫자 뱃지 계산용 집계 — 탈퇴자/발신자 본인 제외, seq 이상 읽은 멤버만."""
@@ -155,7 +155,7 @@ class TestMarkReadFlow:
         await seed_friendship(a, c)
 
         service = RoomService(
-            uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await service.create_group_room(me_id=a, title="T", member_ids=[b, c])
 

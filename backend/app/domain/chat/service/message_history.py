@@ -23,7 +23,7 @@ from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
 from app.domain.chat.repository.chat_message import ChatMessageRepository
 from app.domain.chat.repository.chat_room import ChatRoomRepository
 from app.database.session import UnitOfWork, mongodb, transactional
-from app.core.chat.redis_keys import unread_key
+from app.core.chat.redis_key import unread_key
 from app.core.logger import get_logger
 from app.core.redis import get_redis_client
 

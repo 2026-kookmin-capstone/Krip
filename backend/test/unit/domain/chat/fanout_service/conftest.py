@@ -3,7 +3,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from app.domain.chat.service.fanout_service import FanoutService
+from app.domain.chat.service.fanout import FanoutService
 
 
 def make_ws(session_id: str, user_id: str) -> MagicMock:

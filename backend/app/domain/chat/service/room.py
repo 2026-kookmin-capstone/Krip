@@ -4,9 +4,8 @@ Phase 1: 1:1 방 생성 — idempotent, canonical 정렬, 차단 체크
 Phase 2: 그룹 방 생성 / 초대 / 퇴장 / 강퇴 — 친구 정책, 재초대 시 last_read 유지,
          Redis SREM → RDB UPDATE 순서 (C3)
 """
-from datetime import datetime, timezone
-
 from sqlalchemy.exc import IntegrityError
+from datetime import datetime, timezone
 
 from app.domain.auth.repository.user import UserRepository
 from app.domain.chat.dto.room import ChatRoomData, ChatRoomPeerData
@@ -15,11 +14,11 @@ from app.domain.chat.model.chat_room_member import ChatRoomMember
 from app.domain.chat.repository.chat_room import ChatRoomRepository
 from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
 from app.domain.chat.repository.chat_message import ChatMessageRepository
-from app.domain.chat.service.exceptions import ChatRoomNotFoundError
+from app.domain.chat.service.exception import ChatRoomNotFoundError
 from app.domain.friend.repository.friendship import FriendshipRepository
 from app.domain.friend.repository.user_block import UserBlockRepository
 from app.database.session import UnitOfWork, mongodb, transactional
-from app.core.chat.redis_keys import (
+from app.core.chat.redis_key import (
     room_members_key,
     room_seq_key,
     unread_key,
@@ -35,11 +34,11 @@ logger = get_logger("chat.room")
 class RoomService:
     """채팅방 생명주기 — 생성·멤버 등록·구독 이벤트 발행."""
 
-    def __init__(self, uow: UnitOfWork, fanout_service, chat_service):
-        # fanout_service / chat_service 는 type hint 생략 (순환 import 회피)
+    def __init__(self, uow: UnitOfWork, fanout_service, message_service):
+        # fanout_service / message_service 는 type hint 생략 (순환 import 회피)
         self.uow = uow
         self._fanout = fanout_service
-        self._chat_service = chat_service
+        self._message_service = message_service
 
 
     # ──────────────────── 1:1 방 생성 ────────────────────
@@ -196,7 +195,7 @@ class RoomService:
             )
 
         # 타임라인 시스템 메시지 — "A 님이 방을 만들었습니다"
-        await self._chat_service.send_system_message(
+        await self._message_service.send_system_message(
             room_id=room_id,
             action="created",
             actor_id=me_id,
@@ -297,7 +296,7 @@ class RoomService:
             )
 
         # 타임라인 시스템 메시지 — "A 님이 B, C 를 초대했습니다"
-        await self._chat_service.send_system_message(
+        await self._message_service.send_system_message(
             room_id=room_id,
             action="join",
             actor_id=me_id,
@@ -347,7 +346,7 @@ class RoomService:
         )
 
         # 타임라인 시스템 메시지 — "A 님이 방을 나갔습니다"
-        await self._chat_service.send_system_message(
+        await self._message_service.send_system_message(
             room_id=room_id,
             action="leave",
             actor_id=me_id,
@@ -401,7 +400,7 @@ class RoomService:
         )
 
         # 타임라인 시스템 메시지 — "A 님이 B 를 내보냈습니다"
-        await self._chat_service.send_system_message(
+        await self._message_service.send_system_message(
             room_id=room_id,
             action="kick",
             actor_id=me_id,

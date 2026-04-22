@@ -10,7 +10,7 @@ import asyncio
 
 import pytest
 
-from app.core.chat.redis_keys import sess_key, sessions_key, ws_route_key
+from app.core.chat.redis_key import sess_key, sessions_key, ws_route_key
 
 
 pytestmark = pytest.mark.integration
@@ -28,7 +28,7 @@ class TestSessionAutoExpiresOnTtl:
     ):
         # session_service 모듈에 바인딩된 SESSION_TTL 을 가로챈다.
         monkeypatch.setattr(
-            "app.domain.chat.service.session_service.SESSION_TTL", _SHORT_TTL,
+            "app.domain.chat.service.session.SESSION_TTL", _SHORT_TTL,
         )
 
         user_id = "USER_TTL"
@@ -53,7 +53,7 @@ class TestSessionAutoExpiresOnTtl:
     ):
         """heartbeat 호출로 TTL 이 연장되어 만료 타이밍이 뒤로 밀림."""
         monkeypatch.setattr(
-            "app.domain.chat.service.session_service.SESSION_TTL", _SHORT_TTL,
+            "app.domain.chat.service.session.SESSION_TTL", _SHORT_TTL,
         )
 
         user_id = "USER_HB"

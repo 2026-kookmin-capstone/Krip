@@ -1,6 +1,6 @@
 """채팅 도메인 통합 테스트 공통 fixture (chat 서브디렉토리 전용).
 
-실 Postgres (상위 conftest) + 실 Redis (hot/dedupe) + 실 Mongo 를 엮어 ChatService /
+실 Postgres (상위 conftest) + 실 Redis (hot/dedupe) + 실 Mongo 를 엮어 MessageService /
 SessionService / RoomService 를 조립한다. Redis / Mongo 연결은 다음 환경변수로 제공:
 
     REDIS_TEST_URL    예) redis://localhost:6479
@@ -8,7 +8,7 @@ SessionService / RoomService 를 조립한다. Redis / Mongo 연결은 다음 �
 
 환경변수 누락 시 pytest.skip — POSTGRES_TEST_URL 과 동일 패턴.
 
-이 conftest 의 patch fixture 는 **opt-in** (autouse 아님). ``chat_service`` /
+이 conftest 의 patch fixture 는 **opt-in** (autouse 아님). ``message_service`` /
 ``session_service`` / ``direct_room`` 을 주입하는 테스트에만 Redis/Mongo 가 요구된다.
 기존 ``test_room_flow.py`` / ``test_db_constraints.py`` 는 Redis 를 자체 stub 하므로
 영향이 없다.
@@ -21,10 +21,10 @@ import pytest_asyncio
 import redis.asyncio as aioredis
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from app.core.chat.lua_scripts import lua_scripts
+from app.core.chat.lua_script import lua_scripts
 from app.domain.chat.model.chat_message import create_indexes as create_chat_message_indexes
-from app.domain.chat.service.chat_service import ChatService
-from app.domain.chat.service.session_service import SessionService
+from app.domain.chat.service.message import MessageService
+from app.domain.chat.service.session import SessionService
 
 
 def _require_env(name: str) -> str:
@@ -96,7 +96,7 @@ async def mongo_db():
 
 @pytest.fixture
 def patch_external_clients(monkeypatch, redis_hot, redis_dedupe, mongo_db):
-    """ChatService / SessionService / RoomService 가 참조하는 전역 의존성을 실 연결로 교체.
+    """MessageService / SessionService / RoomService 가 참조하는 전역 의존성을 실 연결로 교체.
 
     각 서비스 모듈에서 ``from app.core.redis import get_redis_client`` 으로 import 된
     심볼을 **바인딩된 모듈 경로** 에서 직접 setattr 해야 한다. 원본 ``app.core.redis``
@@ -109,22 +109,22 @@ def patch_external_clients(monkeypatch, redis_hot, redis_dedupe, mongo_db):
         return redis_dedupe
 
     monkeypatch.setattr(
-        "app.domain.chat.service.chat_service.get_redis_client", _hot,
+        "app.domain.chat.service.message.get_redis_client", _hot,
     )
     monkeypatch.setattr(
-        "app.domain.chat.service.chat_service.get_redis_dedupe_client", _dedupe,
+        "app.domain.chat.service.message.get_redis_dedupe_client", _dedupe,
     )
     monkeypatch.setattr(
-        "app.domain.chat.service.session_service.get_redis_client", _hot,
+        "app.domain.chat.service.session.get_redis_client", _hot,
     )
     monkeypatch.setattr(
-        "app.domain.chat.service.room_service.get_redis_client", _hot,
+        "app.domain.chat.service.room.get_redis_client", _hot,
     )
     monkeypatch.setattr(
-        "app.domain.chat.service.message_history_service.get_redis_client", _hot,
+        "app.domain.chat.service.message_history.get_redis_client", _hot,
     )
     monkeypatch.setattr(
-        "app.domain.chat.service.block_cache_service.get_redis_client", _hot,
+        "app.domain.chat.service.block_cache.get_redis_client", _hot,
     )
     # mongodb 싱글톤의 database 속성 교체 (최초엔 None 이므로 raising=False)
     monkeypatch.setattr(
@@ -143,10 +143,10 @@ def chat_fanout_stub() -> MagicMock:
 
 
 @pytest.fixture
-def chat_service(uow, chat_fanout_stub, patch_external_clients) -> ChatService:
+def message_service(uow, chat_fanout_stub, patch_external_clients) -> MessageService:
     """공유 서비스 인스턴스. 동시 호출 테스트에서는 task 별 신규 인스턴스를 만들어야
     한다 (``@transactional`` 이 ``self._session`` 을 변경하므로 인스턴스 공유 시 race)."""
-    return ChatService(uow=uow, fanout_service=chat_fanout_stub)
+    return MessageService(uow=uow, fanout_service=chat_fanout_stub)
 
 
 @pytest.fixture
@@ -156,20 +156,20 @@ def session_service(chat_fanout_stub, patch_external_clients) -> SessionService:
 
 @pytest_asyncio.fixture
 async def direct_room(
-    uow, seed_users, chat_fanout_stub, chat_service, patch_external_clients,
+    uow, seed_users, chat_fanout_stub, message_service, patch_external_clients,
 ):
     """(room_id, user_a, user_b) 반환. RoomService 를 거쳐 방 + 멤버 + Redis 캐시까지 세팅.
 
-    Phase 2 에서 RoomService 가 ChatService (시스템 메시지용) 에 의존하게 됐으므로
-    `chat_service` fixture 도 주입. 1:1 방 생성은 시스템 메시지를 발행하지 않으므로
+    Phase 2 에서 RoomService 가 MessageService (시스템 메시지용) 에 의존하게 됐으므로
+    `message_service` fixture 도 주입. 1:1 방 생성은 시스템 메시지를 발행하지 않으므로
     실제로 호출되진 않지만 생성자 인자는 채워야 한다.
     """
     # 순환 import 회피를 위해 fixture 내부 import
-    from app.domain.chat.service.room_service import RoomService
+    from app.domain.chat.service.room import RoomService
 
     user_a, user_b = await seed_users(2)
     room_svc = RoomService(
-        uow=uow, fanout_service=chat_fanout_stub, chat_service=chat_service,
+        uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
     )
     result = await room_svc.create_direct_room(me_id=user_a, peer_user_id=user_b)
     chat_fanout_stub.reset_mock()  # 방 생성으로 찍힌 호출 제거

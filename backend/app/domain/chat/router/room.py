@@ -14,9 +14,9 @@ from app.domain.chat.schema.room import (
     KickMemberBody,
     LastMessagePreviewResponse,
 )
-from app.domain.chat.service.exceptions import ChatRoomNotFoundError
-from app.domain.chat.service.message_history_service import MessageHistoryService
-from app.domain.chat.service.room_service import RoomService
+from app.domain.chat.service.exception import ChatRoomNotFoundError
+from app.domain.chat.service.message_history import MessageHistoryService
+from app.domain.chat.service.room import RoomService
 from app.container import Container
 
 

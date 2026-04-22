@@ -3,7 +3,7 @@ from unittest.mock import AsyncMock
 
 import pytest
 
-from app.core.chat.redis_keys import (
+from app.core.chat.redis_key import (
     MAX_SESSIONS_PER_USER,
     sess_key,
     sessions_key,

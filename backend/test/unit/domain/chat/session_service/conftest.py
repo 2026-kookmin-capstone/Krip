@@ -1,6 +1,6 @@
 import pytest
 
-from app.domain.chat.service.session_service import SessionService
+from app.domain.chat.service.session import SessionService
 
 from test.unit.domain.chat.session_service.mock_factory import (
     make_mock_fanout,
@@ -26,7 +26,7 @@ def service(monkeypatch, redis_mock, fanout_mock):
         return redis_mock
 
     monkeypatch.setattr(
-        "app.domain.chat.service.session_service.get_redis_client",
+        "app.domain.chat.service.session.get_redis_client",
         _get_client,
     )
     return SessionService(fanout_service=fanout_mock)

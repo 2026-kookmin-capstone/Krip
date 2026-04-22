@@ -24,11 +24,11 @@ from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
 from app.domain.chat.repository.chat_message import ChatMessageRepository
 from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
 from app.domain.chat.repository.chat_room import ChatRoomRepository
-from app.domain.chat.service.exceptions import UpstreamError
+from app.domain.chat.service.exception import UpstreamError
 from app.domain.friend.repository.user_block import UserBlockRepository
 from app.database.session import UnitOfWork, mongodb, transactional
-from app.core.chat.lua_scripts import lua_scripts
-from app.core.chat.redis_keys import (
+from app.core.chat.lua_script import lua_scripts
+from app.core.chat.redis_key import (
     DEDUPE_TTL,
     DIRTY_CHAT_ROOM_KEY,
     RATE_LIMIT_THRESHOLD,
@@ -59,7 +59,7 @@ _MAX_INSERT_ATTEMPTS = 3
 EDIT_TIME_LIMIT = timedelta(minutes=5)
 
 
-class ChatService:
+class MessageService:
     """메시지 송신 핫패스."""
 
     def __init__(self, uow: UnitOfWork, fanout_service):
