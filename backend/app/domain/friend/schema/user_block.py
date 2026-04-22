@@ -1,6 +1,6 @@
 from typing import List, Optional
 from datetime import datetime
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from app.domain.friend.schema.friendship import FriendPeerResponse
 
@@ -8,14 +8,15 @@ from app.domain.friend.schema.friendship import FriendPeerResponse
 # ──────────────────── Request ────────────────────
 
 class BlockUserBody(BaseModel):
-    target_user_id: str = Field(..., description="차단할 유저 ID")
-
-    class Config:
-        json_schema_extra = {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "target_user_id": "USER_1700000000_abcdef12",
             }
         }
+    )
+
+    target_user_id: str = Field(..., description="차단할 유저 ID")
 
 
 # ──────────────────── Response ────────────────────
