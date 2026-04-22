@@ -20,9 +20,17 @@ beanie 가 아닌 **motor 네이티브** 로 다루는 이유:
 """
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from pymongo import ASCENDING, DESCENDING
-
+import enum
 
 COLLECTION_NAME = "chat_message"
+
+
+class MessageType(str, enum.Enum):
+    """메시지 type 필드 값. MongoDB 에는 value(소문자) 로 저장된다."""
+    TEXT = "text"
+    IMAGE = "image"    
+    FILE = "file"      
+    SYSTEM = "system" 
 
 
 async def create_indexes(db: AsyncIOMotorDatabase) -> None:

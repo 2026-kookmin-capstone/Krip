@@ -1,0 +1,294 @@
+"""메시지 송신 서비스 — 핫패스 11단계
+
+단계 요약:
+    1. 입력 검증 (Pydantic 레벨에서 이미 처리 — 본 서비스는 비즈 검증)
+    2. 멤버십 확인 (Redis room:members 캐시 miss-through)
+    3. Rate limit (`incr_with_ttl.lua` — INCR+EXPIRE 원자)
+    4. 차단 체크 (Phase 2 에서 구체화. Phase 1 은 1:1 방 생성 시점에 이미 차단됨)
+    5. dedupe (`SET dedupe:{uid}:{cmid} 1 NX EX 600`)
+    6. server_seq 채번 — 2단계 Lua + 키 부재 시 Mongo max 로 복구
+    7. Mongo insert + UNIQUE 충돌 시 `force_jump.lua` 로 최대 3회 재시도
+    8. RDB last_message_* 갱신 — SAVEPOINT 실패 시 `dirty:chat_room` 에 적재
+    9. unread pipeline (`transaction=False` + `min_count > 0` 조건 분기. 시스템 메시지 skip)
+    10. fan_out_to_room (발신자 skip 은 FanoutService 내부)
+    11. 발신 세션에 `message.sent` 직송 (ACK)
+"""
+from pymongo.errors import DuplicateKeyError
+import random
+from datetime import datetime, timezone
+
+from app.util.id_generator import generate_message_id
+from app.domain.chat.dto.message import MessageSentAckData
+from app.domain.chat.model.chat_message import MessageType
+from app.domain.chat.repository.chat_message import ChatMessageRepository
+from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
+from app.domain.chat.repository.chat_room import ChatRoomRepository
+from app.domain.chat.service.exceptions import UpstreamError
+from app.database.session import UnitOfWork, mongodb, transactional
+from app.core.chat.lua_scripts import lua_scripts
+from app.core.chat.redis_keys import (
+    DEDUPE_TTL,
+    DIRTY_CHAT_ROOM_KEY,
+    RATE_LIMIT_THRESHOLD,
+    RATE_LIMIT_TTL,
+    ROOM_MEMBERS_TTL,
+    SEQ_FORCE_JUMP_GAP,
+    SEQ_FORCE_JUMP_JITTER_MAX,
+    SEQ_RECOVER_GAP,
+    dedupe_key,
+    rate_msg_key,
+    room_members_key,
+    room_seq_key,
+    unread_key,
+)
+from app.core.logger import get_logger
+from app.core.redis import get_redis_client, get_redis_dedupe_client
+
+
+logger = get_logger("chat.send")
+
+
+# force_jump / Mongo insert 재시도 상한
+_MAX_INSERT_ATTEMPTS = 3
+
+
+class ChatService:
+    """메시지 송신 핫패스."""
+
+    def __init__(self, uow: UnitOfWork, fanout_service):
+        self.uow = uow
+        self._fanout = fanout_service
+
+
+    @transactional
+    async def send_message(
+        self,
+        *,
+        sender_user_id: str,
+        sender_session_id: str,
+        room_id: str,
+        client_msg_id: str,
+        msg_type: MessageType,
+        content: str,
+    ) -> MessageSentAckData:
+        """WS `op=send` 처리 진입점. ACK DTO 반환. 실패는 예외로 전파."""
+
+        member_repo = ChatRoomMemberRepository(self._session)
+        chat_room_repo = ChatRoomRepository(self._session)
+        message_repo = ChatMessageRepository(mongodb.database)
+
+        redis_hot = await get_redis_client()
+        redis_dedupe = await get_redis_dedupe_client()
+
+
+        # ─── (2) 멤버십 검증 — 캐시 miss 시 RDB 에서 전체 멤버 로드 ───
+        await self._ensure_membership(
+            redis_hot, member_repo, room_id=room_id, user_id=sender_user_id,
+        )
+
+
+        # ─── (3) Rate limit (Lua 원자) ───
+        count = await lua_scripts.incr_with_ttl(
+            keys=[rate_msg_key(sender_user_id)],
+            args=[RATE_LIMIT_TTL],
+        )
+        if count > RATE_LIMIT_THRESHOLD:
+            raise ValueError("메시지 전송 속도 제한에 걸렸습니다. 잠시 후 다시 시도해주세요.")
+
+
+        # ─── (4) 차단 체크 — Phase 1 은 1:1 방 생성 시 이미 차단됐으면 생성 자체가 거절됨.
+        #        Phase 2 에서 `room:blocks:{R}` 캐시 + user_block 조회 추가 예정. ───
+
+
+        # ─── (5) dedupe — NX 로 선점. 이미 있으면 재전송으로 간주하고 중단 ───
+        dedupe_k = dedupe_key(sender_user_id, client_msg_id)
+        first_time = await redis_dedupe.set(dedupe_k, "1", nx=True, ex=DEDUPE_TTL)
+        if not first_time:
+            # 재전송. 원본 저장은 이미 끝났으므로 같은 의미로 응답 (저장되진 않음).
+            # Phase 2 에서 dedupe 값에 실제 ACK payload 를 저장하는 방식으로 확장 가능.
+            raise ValueError("이미 처리된 메시지입니다 (dedupe).")
+
+
+        # ─── (6) server_seq 채번 — 2단계 Lua + 복구 ───
+        try:
+            server_seq = await self._allocate_seq(
+                message_repo, redis_hot, room_id=room_id,
+            )
+        except Exception:
+            await redis_dedupe.delete(dedupe_k)
+            raise
+
+
+        # ─── (7) Mongo insert + DuplicateKey 재시도 (최대 3회) ───
+        now = datetime.now(timezone.utc)
+        message_id = generate_message_id()
+        doc = {
+            "_id": message_id,
+            "chat_room_id": room_id,
+            "server_seq": server_seq,
+            "sender_id": sender_user_id,
+            "type": msg_type.value,
+            "content": content,
+            "created_at": now,
+            "edited_at": None,
+            "deleted_at": None,
+        }
+
+        for attempt in range(_MAX_INSERT_ATTEMPTS):
+            try:
+                await message_repo.insert(doc)
+                break
+            except DuplicateKeyError:
+                # seq 강제 점프 — jitter 는 os.urandom 기반 random (main.py 에서 seed)
+                jitter = random.randint(1, SEQ_FORCE_JUMP_JITTER_MAX)
+                new_seq = await lua_scripts.force_jump(
+                    keys=[room_seq_key(room_id)],
+                    args=[SEQ_FORCE_JUMP_GAP, jitter],
+                )
+                server_seq = int(new_seq)
+                doc["server_seq"] = server_seq
+        else:
+            # 3회 연속 실패 — dedupe 해제해 클라가 재시도 가능하도록
+            await redis_dedupe.delete(dedupe_k)
+            logger.error(
+                "메시지 저장 {}회 연속 실패: room_id={}, user_id={}",
+                _MAX_INSERT_ATTEMPTS, room_id, sender_user_id,
+            )
+            raise UpstreamError("메시지 저장에 실패했습니다. 잠시 후 다시 시도해주세요.")
+
+
+        # ─── (8) RDB last_message_* 갱신 — SAVEPOINT 격리 + 실패 시 dirty 큐 ───
+        try:
+            async with self._session.begin_nested():
+                await chat_room_repo.update_last_message(
+                    chat_room_id=room_id,
+                    message_id=message_id,
+                    server_seq=server_seq,
+                    at=now,
+                )
+        except Exception as e:
+            logger.warning(
+                "last_message_* 갱신 실패 → dirty 큐 적재: room_id={}, err={}",
+                room_id, type(e).__name__,
+            )
+            await redis_hot.sadd(DIRTY_CHAT_ROOM_KEY, room_id)
+
+
+        # ─── (9) unread 증가 — 발신자 제외. 시스템 메시지는 skip (H3) ───
+        if msg_type != MessageType.SYSTEM:
+            await self._bump_unread(redis_hot, room_id=room_id, sender_user_id=sender_user_id)
+
+
+        # ─── (10) 방에 브로드캐스트 — fan-out 내부에서 발신자 skip ───
+        await self._fanout.fan_out_to_room(
+            room_id,
+            {
+                "type": "message.new",
+                "sender_session_id": sender_session_id,
+                "message": {
+                    "message_id": message_id,
+                    "chat_room_id": room_id,
+                    "server_seq": server_seq,
+                    "sender_id": sender_user_id,
+                    "type": msg_type.value,
+                    "content": content,
+                    "created_at": now.isoformat(),
+                },
+            },
+        )
+
+
+        # ─── (11) 발신 세션에 ACK 직송 ───
+        return MessageSentAckData(
+            client_msg_id=client_msg_id,
+            message_id=message_id,
+            server_seq=server_seq,
+            created_at=now,
+        )
+
+
+    # ──────────────────────────────────────────────────────────
+    # 내부 헬퍼
+    # ──────────────────────────────────────────────────────────
+
+    @staticmethod
+    async def _ensure_membership(
+        redis_hot,
+        member_repo: ChatRoomMemberRepository,
+        *,
+        room_id: str,
+        user_id: str,
+    ) -> None:
+        """`room:members:{R}` 캐시를 조회해 멤버십 검증. miss 시 **방 멤버 전체**를 RDB 에서
+        한 번에 로드 후 SADD (§5.1-2). 퇴장한 유저는 cache miss 가 복원해도 is_left=false
+        에서 제외되므로 자연히 차단.
+        """
+        key = room_members_key(room_id)
+        is_member = await redis_hot.sismember(key, user_id)
+        if is_member:
+            return
+
+        members = await member_repo.find_active_member_ids(room_id)
+        if not members:
+            raise ValueError("존재하지 않는 방이거나 멤버가 없습니다.")
+
+        pipe = redis_hot.pipeline(transaction=False)
+        pipe.sadd(key, *members)
+        pipe.expire(key, ROOM_MEMBERS_TTL)
+        await pipe.execute()
+
+        if user_id not in members:
+            raise PermissionError("이 방의 멤버가 아닙니다.")
+
+
+    @staticmethod
+    async def _allocate_seq(
+        message_repo: ChatMessageRepository,
+        redis_hot,
+        *,
+        room_id: str,
+    ) -> int:
+        """§5.1-6 의 2단계 채번.
+
+        핫패스: `incr_fast.lua` → 키가 있으면 INCR 결과 반환, 없으면 -1.
+        복구: Mongo max 조회 후 `recover_and_incr.lua` 에 `base = max + SEQ_RECOVER_GAP`
+              전달. 진짜 첫 메시지(mongo_max=0) 는 base=0 으로 → 자연스럽게 seq=1.
+        """
+        seq = await lua_scripts.incr_fast(keys=[room_seq_key(room_id)])
+        seq = int(seq)
+        if seq != -1:
+            return seq
+
+        # 복구 경로
+        mongo_max = await message_repo.get_max_server_seq(room_id)
+        base = mongo_max + SEQ_RECOVER_GAP if mongo_max > 0 else 0
+        recovered = await lua_scripts.recover_and_incr(
+            keys=[room_seq_key(room_id)],
+            args=[base],
+        )
+        return int(recovered)
+
+
+    @staticmethod
+    async def _bump_unread(redis_hot, *, room_id: str, sender_user_id: str) -> None:
+        """§5.1-9. 방 멤버 전체 (발신자 제외) unread HINCRBY 를 pipeline 으로 1 RTT.
+
+        transaction=False — 100명 방에서도 Redis single-thread 가 다른 명령을 블로킹하지
+        않도록 비원자 배치. 실패해도 치명적이지 않음 (Phase 3 의 복구 경로로 수렴).
+        """
+        key = room_members_key(room_id)
+        members = await redis_hot.smembers(key)
+        recipients = [uid for uid in members if uid != sender_user_id]
+        if not recipients:
+            return
+
+        pipe = redis_hot.pipeline(transaction=False)
+        for uid in recipients:
+            pipe.hincrby(unread_key(uid), room_id, 1)
+        try:
+            await pipe.execute()
+        except Exception as e:
+            logger.warning(
+                "unread pipeline 실패 (무시하고 진행): room_id={}, err={}",
+                room_id, type(e).__name__,
+            )
