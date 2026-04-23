@@ -7,7 +7,7 @@ from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
 from app.domain.chat.model.chat_room_member import ChatRoomMember
 
 
-# 방 리스트 페이지 크기 (ARCHITECTURE_LITE §5.4)
+# 방 리스트 페이지 크기
 PAGE_SIZE = 30
 
 

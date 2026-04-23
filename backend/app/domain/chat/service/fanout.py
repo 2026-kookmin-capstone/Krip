@@ -1,7 +1,7 @@
 """채팅 이벤트 fan-out.
 
 Phase 1~3 는 단일 FastAPI 프로세스의 메모리 dict 로 동작하고, Phase 4 에서 다중 노드
-`node:{node_id}` Pub/Sub 모델로 전환한다 (`ARCHITECTURE_LITE.md` §3.3). 동일한 인터페이스
+`node:{node_id}` Pub/Sub 모델로 전환한다. 동일한 인터페이스
 (`fan_out_to_room` / `fan_out_to_user` / `fan_out_to_session`) 뒤에 두 모드를 숨겨
 Phase 4 전환 시 서비스/라우터 코드는 건드리지 않도록 한다.
 
@@ -65,7 +65,7 @@ class FanoutService:
         """WS 종료 시 모든 dict 에서 제거.
 
         **반드시 `ws.close()` 또는 Redis 정리보다 먼저** 호출되어야 dispatcher 가
-        이미 close 된 소켓에 push 하지 않는다 (§3.4 종료 순서). 빈 set 은 함께 pop 해
+        이미 close 된 소켓에 push 하지 않는다. 빈 set 은 함께 pop 해
         메모리 누수 방지.
         """
         sid: str | None = getattr(ws, "session_id", None)

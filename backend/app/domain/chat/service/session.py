@@ -1,6 +1,6 @@
 """WS 세션의 Redis 상태 관리.
 
-관리 대상 키 (`ARCHITECTURE_LITE.md` §3.3 / §3.4 / §7.3):
+관리 대상 키:
     - sess:{session_id}       HASH  : user_id, node_id, token_jti, connected_at (TTL 90s)
     - sessions:{user_id}      ZSET  : score=만료시각(ms), member=session_id
     - ws_route:{session_id}   STRING: node_id (TTL 90s, Phase 4 fan_out_to_session 에서 사용)
@@ -85,7 +85,7 @@ class SessionService:
     # ──────────────────── heartbeat / refresh ────────────────────
 
     async def heartbeat(self, session_id: str, user_id: str) -> None:
-        """ping/pong 시 세 키 TTL 을 pipeline 한 번으로 원자 연장 (§7.3).
+        """ping/pong 시 세 키 TTL 을 pipeline 한 번으로 원자 연장.
 
         `ZADD XX` 로 이미 있는 멤버의 score 만 갱신 — 죽은 세션이 heartbeat 으로 부활하는
         일을 방지.
@@ -128,7 +128,7 @@ class SessionService:
     async def terminate_session(self, session_id: str, user_id: str) -> None:
         """WS 종료 / 명시 로그아웃 시 Redis 상태 전부 정리.
 
-        호출 순서 주의 (§3.4 종료): FanoutService.unregister_ws 로 **로컬 dict 먼저**
+        호출 순서 주의: FanoutService.unregister_ws 로 **로컬 dict 먼저**
         제거 → Redis 정리 → WS close. 이 함수는 Redis 정리만 책임.
         """
         redis = await get_redis_client()

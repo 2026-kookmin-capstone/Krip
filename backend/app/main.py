@@ -33,7 +33,7 @@ def create_app() -> FastAPI:
         # startup
         setup_logging()
 
-        # force_jump Lua 호출 시 사용할 jitter 엔트로피 보강 (PHASE_1.md §3)
+        # force_jump Lua 호출 시 사용할 jitter 엔트로피 보강
         random.seed(int.from_bytes(os.urandom(16), "big"))
 
         await init_mongodb()

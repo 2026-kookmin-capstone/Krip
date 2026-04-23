@@ -1,5 +1,5 @@
 from typing import Any, List, Optional
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from datetime import datetime
 
 
@@ -33,3 +33,21 @@ class MessageHistoryResponse(BaseModel):
             "값 (= messages[-1].server_seq). has_more=false 면 null"
         ),
     )
+
+
+# ──────────────────── 편집 ────────────────────
+
+class EditMessageBody(BaseModel):
+    model_config = ConfigDict(
+        json_schema_extra={
+            "example": {"content": "수정된 본문입니다."},
+        }
+    )
+
+    content: str = Field(..., min_length=1, max_length=2000, description="새 본문")
+
+
+class EditMessageResponse(BaseModel):
+    message_id: str
+    content: Any
+    edited_at: datetime

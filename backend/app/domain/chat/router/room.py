@@ -166,10 +166,10 @@ async def get_messages(
     request: Request,
     chat_room_id: str,
     before_server_seq: Optional[int] = Query(
-        None, description="이 seq 미만의 메시지를 최신순으로 (위로 스크롤, §5.5)",
+        None, description="이 seq 미만의 메시지를 최신순으로 - 위로 스크롤",
     ),
     after_server_seq: Optional[int] = Query(
-        None, description="이 seq 초과의 메시지를 과거순으로 (catch-up, §5.6)",
+        None, description="이 seq 초과의 메시지를 과거순으로 - 아래로 스크롤",
     ),
     limit: int = Query(50, ge=1, le=200, description="페이지 크기"),
     service: MessageHistoryService = Depends(Provide[Container.message_history_service]),

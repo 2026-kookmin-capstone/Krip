@@ -241,7 +241,7 @@ class MessageService:
         user_id: str,
     ) -> None:
         """`room:members:{R}` 캐시를 조회해 멤버십 검증. miss 시 **방 멤버 전체**를 RDB 에서
-        한 번에 로드 후 SADD (§5.1-2). 퇴장한 유저는 cache miss 가 복원해도 is_left=false
+        한 번에 로드 후 SADD. 퇴장한 유저는 cache miss 가 복원해도 is_left=false
         에서 제외되므로 자연히 차단.
         """
         key = room_members_key(room_id)
@@ -269,8 +269,7 @@ class MessageService:
         *,
         room_id: str,
     ) -> int:
-        """§5.1-6 의 2단계 채번.
-
+        """
         핫패스: `incr_fast.lua` → 키가 있으면 INCR 결과 반환, 없으면 -1.
         복구: Mongo max 조회 후 `recover_and_incr.lua` 에 `base = max + SEQ_RECOVER_GAP`
               전달. 진짜 첫 메시지(mongo_max=0) 는 base=0 으로 → 자연스럽게 seq=1.
@@ -554,7 +553,7 @@ class MessageService:
 
         Redis `room:blocks:{R}` SET 이 진실의 최전선. 캐시 miss 면 `user_block`
         양방향을 조회해 재구성하고 `__none__` sentinel 로 "차단 없음" 도 명시적으로
-        기록한다 (key 존재 = 캐시 채워짐). PHASE_2 §5.1 (4) 구현.
+        기록한다 (key 존재 = 캐시 채워짐).
         """
         # 상대 user_id 파생 — 탈퇴로 NULL 이면 차단 체크 의미 없음
         peer_id = (
@@ -586,7 +585,7 @@ class MessageService:
 
     @staticmethod
     async def _bump_unread(redis_hot, *, room_id: str, sender_user_id: str) -> None:
-        """§5.1-9. 방 멤버 전체 (발신자 제외) unread HINCRBY 를 pipeline 으로 1 RTT.
+        """방 멤버 전체 (발신자 제외) unread HINCRBY 를 pipeline 으로 1 RTT.
 
         transaction=False — 100명 방에서도 Redis single-thread 가 다른 명령을 블로킹하지
         않도록 비원자 배치. 실패해도 치명적이지 않음 (Phase 3 의 복구 경로로 수렴).

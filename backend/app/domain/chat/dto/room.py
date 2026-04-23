@@ -9,8 +9,8 @@ from app.domain.chat.model.chat_room import ChatRoomType
 class ChatRoomPeerData:
     """1:1 방의 상대방 프로필 DTO.
 
-    탈퇴 정책(ON DELETE SET NULL) 에 따라 상대가 탈퇴한 경우 `user_id` 가 None —
-    클라는 이 경우 "탈퇴한 사용자" 로 표시한다.
+    탈퇴 정책(ON DELETE SET NULL) 에 따라 상대가 탈퇴한 경우 
+    `user_id` 가 None — 클라는 이 경우 "탈퇴한 사용자" 로 표시한다.
     """
     user_id: Optional[str]
     user_name: Optional[str]
@@ -32,7 +32,7 @@ class ChatRoomData:
     """방 리스트 1건 응답 DTO.
 
     - `type='DIRECT'` 이면 `peer` 채움, `title` 은 None.
-    - `type='GROUP'` 이면 `title` 채움, `peer` 는 None (Phase 2 에서 사용).
+    - `type='GROUP'` 이면 `title` 채움, `peer` 는 None
     - `last_message` 는 아직 메시지가 없는 신규 방은 None.
     - `unread_count` 는 Redis `unread:{user_id}` 에서 병합 (없으면 0).
     """

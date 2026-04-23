@@ -1,7 +1,7 @@
-"""WebSocket 이벤트 스키마 — Pydantic v2 discriminated union 2종.
+"""WebSocket 이벤트 스키마
 
 **규약**
-- **클라 → 서버 요청** 은 `op` (동사) — `send` / `refresh` / ... (Phase 2 에서 read/edit/delete 추가)
+- **클라 → 서버 요청** 은 `op` (동사) — `send` / `refresh` / read / edit / delete
 - **서버 → 클라 이벤트** 는 `type` (명사) — `message.new` / `session_revoked` / ...
 
 두 discriminator 는 **서로 다른 필드명** 을 사용한다. 같은 필드명을 공유하면 union 해상이

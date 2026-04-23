@@ -1,39 +1,18 @@
-"""메시지 편집 / 삭제 REST 엔드포인트 (Phase 2 #5).
+"""메시지 편집 / 삭제 REST 엔드포인트
 
 방 관리(`/chat/rooms/*`) 와 별개로 `/chat/messages/{id}` 경로를 쓴다 — 방 id 를 몰라도
-메시지 id 만으로 접근할 수 있게 하고, 클라가 검색/알림 링크에서 바로 진입하는 케이스도
-고려.
+메시지 id 만으로 접근할 수 있게 하고, 클라가 검색/알림 링크에서 바로 진입하는 케이스도 고려.
 """
 
-from typing import Any
-from pydantic import BaseModel, ConfigDict, Field
 from fastapi import APIRouter, Depends, HTTPException, Request
 from dependency_injector.wiring import Provide, inject
-from datetime import datetime
 
+from app.domain.chat.schema.message import EditMessageBody, EditMessageResponse
 from app.domain.chat.service.message import MessageService
 from app.container import Container
 
 
 router = APIRouter(prefix="/messages", tags=["채팅 - 메시지 편집/삭제"])
-
-
-# ──────────────────── Request / Response ────────────────────
-
-class EditMessageBody(BaseModel):
-    model_config = ConfigDict(
-        json_schema_extra={
-            "example": {"content": "수정된 본문입니다."},
-        }
-    )
-
-    content: str = Field(..., min_length=1, max_length=2000, description="새 본문")
-
-
-class EditMessageResponse(BaseModel):
-    message_id: str
-    content: Any
-    edited_at: datetime
 
 
 # ──────────────────── 편집 ────────────────────

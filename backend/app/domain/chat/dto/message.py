@@ -28,7 +28,7 @@ class ChatMessageData:
 class MessageListData:
     """히스토리 페이징 응답 DTO.
 
-    - `next_cursor` 는 `messages[-1].server_seq` (정렬 방향 무관, §5.5/5.6 공통 규약).
+    - `next_cursor` 는 `messages[-1].server_seq`
     - `has_more` 가 False 면 `next_cursor` 는 None.
     """
     messages: List[ChatMessageData]

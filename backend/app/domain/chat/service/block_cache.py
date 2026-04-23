@@ -1,10 +1,10 @@
-"""차단 캐시 무효화 훅 (PHASE_2 #6 H5).
+"""차단 캐시 무효화 훅
 
 friend 도메인이 block/unblock 을 처리할 때 이 서비스를 호출해 chat 쪽의
 `room:blocks:{R}` Redis 캐시를 무효화한다. chat 이 자기 Redis 키 규약(키 이름, 포맷)의
 소유권을 유지하도록 **모든 캐시 조작은 이 파일에만** 존재.
 
-호출 계약 (PHASE_2 #6):
+호출 계약:
     block  : `UserBlockService.block_user`   — DB INSERT → `invalidate_block_cache`
              (fail-closed. 캐시 warm-up 은 lazy: 다음 send_message 가 miss 시 재구성)
     unblock: `UserBlockService.unblock_user` — `invalidate_block_cache` → DB DELETE
@@ -12,11 +12,11 @@ friend 도메인이 block/unblock 을 처리할 때 이 서비스를 호출해 c
 
 두 유저 사이에 1:1 방이 없으면 할 일 없음 — 그룹 방은 차단과 무관하므로 대상에서 제외.
 """
-from app.database.session import UnitOfWork, transactional
-from app.domain.chat.repository.chat_room import ChatRoomRepository
-from app.core.chat.redis_key import room_blocks_key
-from app.core.logger import get_logger
 from app.core.redis import get_redis_client
+from app.core.logger import get_logger
+from app.core.chat.redis_key import room_blocks_key
+from app.domain.chat.repository.chat_room import ChatRoomRepository
+from app.database.session import UnitOfWork, transactional
 
 
 logger = get_logger("chat.block_cache")

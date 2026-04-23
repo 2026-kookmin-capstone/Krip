@@ -1,17 +1,13 @@
 """Lua 스크립트 로더 및 레지스트리.
 
 - 앱 startup 시 1회 `.lua` 파일을 읽어 redis-py 의 `register_script()` 로 래핑.
-- `register_script()` 는 EVALSHA 우선 / NOSCRIPT 시 EVAL 자동 fallback — SHA 캐싱
-  로직을 우리가 짤 필요 없음 (PHASE_1.md §10 "Lua 스크립트 4종 파일 로드 + SHA 캐싱
-  확인" 요건 충족).
+- `register_script()` 는 EVALSHA 우선 / NOSCRIPT 시 EVAL 자동 fallback — SHA 캐싱 로직을 우리가 짤 필요 없음
 - hot 클라이언트에 바인딩하고, dedupe 호출 시엔 `client=` 인자로 override.
 """
-from pathlib import Path
 from typing import Optional
-
-from redis.asyncio import Redis
 from redis.commands.core import AsyncScript
-
+from redis.asyncio import Redis
+from pathlib import Path
 
 _LUA_DIR = Path(__file__).parent / "lua"
 

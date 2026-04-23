@@ -1,9 +1,9 @@
 """방 리스트 / 메시지 히스토리 조회 서비스.
 
 REST 로 제공되는 읽기 경로 3개:
-    GET /chat/rooms                                  — 방 리스트 (§5.4)
-    GET /chat/rooms/{id}/messages?before_server_seq= — 위로 스크롤 (§5.5)
-    GET /chat/rooms/{id}/messages?after_server_seq=  — catch-up (§5.6)
+    GET /chat/rooms                                  — 방 리스트
+    GET /chat/rooms/{id}/messages?before_server_seq= — 위로 스크롤
+    GET /chat/rooms/{id}/messages?after_server_seq=  — catch-up
 
 공통 규약:
     `next_cursor = messages[-1].server_seq`  (정렬 방향 무관, 클라는 그대로 다음 호출에 전달)
@@ -45,7 +45,7 @@ class MessageHistoryService:
 
     @transactional
     async def list_rooms(self, me_id: str) -> ChatRoomListData:
-        """§5.4 — 내가 속한 활성 방을 effective_last_at DESC 로 LIMIT 30.
+        """ 내가 속한 활성 방을 effective_last_at DESC 로 LIMIT 30.
 
         1. RDB: chat_room + chat_room_member JOIN + peer_user_id 파생
         2. RDB: 1:1 방의 peer 프로필 배치 조회 (N+1 허용 — 방 최대 30개)
@@ -103,7 +103,7 @@ class MessageHistoryService:
         before_server_seq: int,
         limit: int,
     ) -> MessageListData:
-        """§5.5 — `server_seq < before` 인 메시지를 DESC 로 limit 건 + has_more 판정."""
+        """`server_seq < before` 인 메시지를 DESC 로 limit 건 + has_more 판정."""
         await self._assert_room_member(room_id, me_id)
 
         message_repo = ChatMessageRepository(mongodb.database)
@@ -120,7 +120,7 @@ class MessageHistoryService:
         after_server_seq: int,
         limit: int,
     ) -> MessageListData:
-        """§5.6 — `server_seq > after` 인 메시지를 ASC 로 limit 건 + has_more 판정."""
+        """`server_seq > after` 인 메시지를 ASC 로 limit 건 + has_more 판정."""
         await self._assert_room_member(room_id, me_id)
 
         message_repo = ChatMessageRepository(mongodb.database)
@@ -135,7 +135,7 @@ class MessageHistoryService:
 
         WS 연결 직후 `unread_synced` 이벤트 송신용. Redis 가 비어 있으면 빈 dict 를
         돌려주는데, Phase 3 에서 이 자리에 `recover_unread_for_user` 백그라운드 복구를
-        연결할 예정 (ARCHITECTURE §3.4 step 8).
+        연결할 예정.
 
         @transactional 미적용: RDB 터치 없음.
         """

@@ -156,7 +156,7 @@ async def ws_chat(
 # ──────────────────── 인증 ────────────────────
 
 def _is_allowed_origin(origin: str | None) -> bool:
-    """CORS 설정과 동일한 Origin 화이트리스트 — ARCHITECTURE §7.2."""
+    """CORS 설정과 동일한 Origin 화이트리스트"""
     if origin is None:
         return False
     allowed = {settings.FRONTEND_URL, settings.LOCAL_FRONTEND_URL}

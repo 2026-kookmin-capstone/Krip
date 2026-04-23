@@ -127,9 +127,8 @@ class ChatRoomMemberRepository:
         """특정 `server_seq` 이상 읽은 활성 멤버 수 (발신자 본인 제외).
 
         카톡 미읽음 숫자 뱃지 = "방 활성 멤버 수 - (이 카운트 + 1)" 공식의 그 카운트.
-        지금은 라우터에서 쓰진 않지만 Phase 2 체크리스트에 명시된 집계라 서비스 레이어에
-        미리 마련. 실시간 fan-out 만으로는 정확하지 않을 때 API 경로에서 권위있는 값을
-        돌려주는 용도로 확장.
+        지금은 라우터에서 쓰진 않지만 실시간 fan-out 만으로는 정확하지 않을 때 API 경로에서 
+        권위있는 값을 돌려주는 용도로 확장.
         """
         stmt = select(func.count()).select_from(ChatRoomMember).where(
             ChatRoomMember.chat_room_id == chat_room_id,
