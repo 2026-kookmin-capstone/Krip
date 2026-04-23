@@ -1,6 +1,6 @@
 from typing import Optional
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, update, case
+from sqlalchemy import select, update, case, or_
 from datetime import datetime
 
 from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
@@ -119,6 +119,44 @@ class ChatRoomRepository:
         stmt = (
             update(ChatRoom)
             .where(ChatRoom.chat_room_id == chat_room_id)
+            .values(
+                last_message_id=message_id,
+                last_message_server_seq=server_seq,
+                last_message_at=at,
+            )
+            .execution_options(synchronize_session=False)
+        )
+        await self.session.execute(stmt)
+
+
+    async def update_last_message_if_greater(
+        self,
+        chat_room_id: str,
+        message_id: str,
+        server_seq: int,
+        at: datetime,
+    ) -> None:
+        """reconcile job 전용 — `:server_seq` 가 기존보다 클 때만 UPDATE.
+
+        `update_last_message` 는 송신 경로(이미 최신 seq 를 알고 있음)라 단순 덮어쓰기지만,
+        reconcile 은 **송신과 병렬로 돌 수 있어** regress 위험이 있다. 예:
+
+            [T0] reconcile 이 방 R 을 SPOP, Mongo 조회해 seq=100 찾음
+            [T1] 같은 방에 새 메시지 도착 → last_message_server_seq=101 로 갱신됨
+            [T2] reconcile 이 UPDATE 실행 — 단순 덮어쓰기면 100 으로 후퇴!
+
+        `WHERE` 절에 GREATEST 가드를 박아 **기존 값 ≥ new 면 no-op** 으로 처리.
+        NULL 컬럼(한 번도 메시지 없던 방이 dirty 로 들어온 이상 시나리오) 도 커버.
+        """
+        stmt = (
+            update(ChatRoom)
+            .where(
+                ChatRoom.chat_room_id == chat_room_id,
+                or_(
+                    ChatRoom.last_message_server_seq.is_(None),
+                    ChatRoom.last_message_server_seq < server_seq,
+                ),
+            )
             .values(
                 last_message_id=message_id,
                 last_message_server_seq=server_seq,

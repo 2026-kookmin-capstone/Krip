@@ -103,6 +103,72 @@ class ChatMessageRepository:
         return {doc["_id"]: doc async for doc in cursor}
 
 
+    async def find_last_by_rooms(self, room_ids: list[str]) -> dict[str, dict]:
+        """여러 방의 **각 방별 최신 메시지 1건** 을 배치 aggregate 로 조회.
+
+        reconcile job 전용 — `dirty:chat_room` SPOP 배치 이후 RDB `last_message_*` 를
+        Mongo 진실값으로 강제 정렬시킬 때 사용한다.
+
+        파이프라인:
+            1) $match chat_room_id in batch  — 인덱스 (chat_room_id, server_seq) 활용
+            2) $sort {chat_room_id: 1, server_seq: -1}  — 그룹 입력 정렬
+            3) $group _id=chat_room_id, $first 로 최상단 1건 선택
+
+        Returns:
+            `{room_id: {"message_id", "server_seq", "created_at"}}`. 방에 메시지가 없으면 key 없음.
+        """
+        if not room_ids:
+            return {}
+        pipeline = [
+            {"$match": {"chat_room_id": {"$in": room_ids}}},
+            {"$sort": {"chat_room_id": 1, "server_seq": -1}},
+            {"$group": {
+                "_id": "$chat_room_id",
+                "message_id": {"$first": "$_id"},
+                "server_seq": {"$first": "$server_seq"},
+                "created_at": {"$first": "$created_at"},
+            }},
+        ]
+        cursor = self.collection.aggregate(pipeline)
+        return {
+            doc["_id"]: {
+                "message_id": doc["message_id"],
+                "server_seq": int(doc["server_seq"]),
+                "created_at": doc["created_at"],
+            }
+            async for doc in cursor
+        }
+
+
+    async def count_after_seq(
+        self,
+        chat_room_id: str,
+        after_seq: int,
+        limit: int = 1000,
+    ) -> int:
+        """`server_seq > after_seq` 인 메시지 개수. unread 복구 전용.
+
+        **`type != "system"` 필터 필수**: 프로덕션 송신 경로(`message.py:199`) 가
+        `if msg_type != MessageType.SYSTEM: _bump_unread(...)` 로 시스템 메시지를
+        skip 하므로, 복구도 동일 세맨틱을 맞추지 않으면 "복구 후 카운트가 부풀려짐" 버그.
+        (H3 — "시스템 메시지는 미읽음 수를 증가시키지 않는다" 와 일관)
+
+        `limit` 으로 **최대 N 건까지만 카운트** (999+ 캡 로직 지원). limit 보다 많아도
+        limit 을 돌려주므로 호출측이 `min(count, 999)` 적용 후 `HSET`.
+
+        hint 로 UNIQUE 인덱스(chat_room_id, server_seq) 사용 — 풀 스캔 방지.
+        """
+        return await self.collection.count_documents(
+            {
+                "chat_room_id": chat_room_id,
+                "server_seq": {"$gt": after_seq},
+                "type": {"$ne": "system"},
+            },
+            limit=limit,
+            hint=[("chat_room_id", ASCENDING), ("server_seq", ASCENDING)],
+        )
+
+
     # ──────────────────── Update (편집 / 삭제) ────────────────────
 
     async def update_content(

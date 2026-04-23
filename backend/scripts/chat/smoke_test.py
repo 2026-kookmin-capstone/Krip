@@ -20,13 +20,17 @@ import sys
 import time
 from datetime import datetime, timedelta, timezone
 
+import os
+
 import httpx
 import jwt
 import websockets
 
 
-BASE_URL = "http://127.0.0.1:8100"
-WS_URL = "ws://127.0.0.1:8100/api/ws/chat"
+# 로컬에서 다른 서비스가 8100 을 쓰고 있는 경우 SMOKE_PORT=8110 같은 override 가능
+_PORT = int(os.getenv("SMOKE_PORT", "8100"))
+BASE_URL = f"http://127.0.0.1:{_PORT}"
+WS_URL = f"ws://127.0.0.1:{_PORT}/api/ws/chat"
 ORIGIN = "http://localhost:3000"
 
 JWT_SECRET = "smoke-jwt-secret-key-for-local-testing"

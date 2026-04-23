@@ -28,6 +28,7 @@ from app.domain.chat.service.fanout import FanoutService
 from app.domain.chat.service.message_history import MessageHistoryService
 from app.domain.chat.service.room import RoomService
 from app.domain.chat.service.session import SessionService
+from app.domain.chat.worker.reconcile import recover_unread_for_user
 from app.config.setting import settings
 from app.container import Container
 from app.core.logger import get_logger
@@ -107,13 +108,16 @@ async def ws_chat(
     # 7. connected 이벤트 — 클라가 session_id 를 수신해 향후 비교/로깅에 사용
     await websocket.send_json({"type": "connected", "session_id": session_id})
 
-    # 7-a. unread 초기 동기화 — Redis 현재값 그대로 push
-    #      Redis 가 비어있으면 빈 dict → Phase 3 에서 `recover_unread_for_user` 백그라운드
-    #      복구를 이 자리에 연결 예정.
+    # 7-a. unread 초기 동기화 — Redis 에 값이 있으면 즉시 push, 없으면 백그라운드 복구.
+    #   복구 완료 시 `unread_synced` 를 뒤늦게라도 push 해 클라 UI 가 싱크되도록 한다.
+    #   recover 자체는 RDB + Mongo count 조합이라 느릴 수 있으므로 fire-and-forget.
     try:
         counts = await history_svc.get_unread_counts(user_id)
         if counts:
             await websocket.send_json({"type": "unread_synced", "counts": counts})
+        else:
+            # Redis 비어있음 → Phase 3 복구 경로. 태스크 참조는 _spawn_* 가 내부 set 에 보관.
+            _spawn_recover_unread(websocket, user_id)
     except Exception as e:
         logger.warning("unread 동기화 실패 (무시하고 진행): user_id={}, err={}", user_id, e)
 
@@ -164,6 +168,55 @@ async def ws_chat(
             await session_svc.terminate_session(session_id, user_id)
         except Exception as e:
             logger.warning("세션 종료 실패 (무시): session_id={}, err={}", session_id, e)
+
+
+# ──────────────────── unread 백그라운드 복구 ────────────────────
+
+# 활성 복구 태스크 강한 참조 — Python asyncio 가 `create_task` 반환값을 버리면
+# GC 가 태스크를 중간에 수거할 수 있다는 공식 경고에 대응. 완료 시 self-remove.
+_ACTIVE_RECOVER_TASKS: set[asyncio.Task] = set()
+
+
+def _spawn_recover_unread(websocket: WebSocket, user_id: str) -> None:
+    """`_recover_unread_and_notify` 를 백그라운드 태스크로 spawn 하고 참조를 보관.
+
+    모듈 상수 `_ACTIVE_RECOVER_TASKS` 에 강한 참조를 유지해 중간 GC 방지. `add_done_callback`
+    으로 완료 시 self-remove — 장시간 켜진 서버에서 집합이 누적되지 않도록.
+    """
+    task = asyncio.create_task(
+        _recover_unread_and_notify(websocket, user_id),
+        name=f"chat-unread-recover-{user_id}",
+    )
+    _ACTIVE_RECOVER_TASKS.add(task)
+    task.add_done_callback(_ACTIVE_RECOVER_TASKS.discard)
+
+
+async def _recover_unread_and_notify(websocket: WebSocket, user_id: str) -> None:
+    """recover_unread_for_user 실행 후 WS 가 여전히 살아있으면 결과를 push.
+
+    복구는 RDB + Mongo count 조합이라 수 초 걸릴 수 있으므로 WS 핸들러를 블로킹하지 않기
+    위해 fire-and-forget 태스크로 호출된다. 태스크가 끝나기 전에 WS 가 끊길 수 있으므로
+    connection state 를 확인한 뒤 전송. 실패는 warning 로그만.
+    """
+    try:
+        counts = await recover_unread_for_user(user_id)
+    except Exception as e:
+        logger.warning("unread 백그라운드 복구 실패: user_id={}, err={}", user_id, e)
+        return
+
+    if not counts:
+        # Redis 반영 실패로 recover 가 빈 dict 을 돌려줬을 수 있음 — WS push 생략.
+        # 다음 재연결에서 다시 시도됨 (Redis 여전히 비어있기 때문).
+        return
+
+    # WS 가 이미 닫혔으면 send_json 이 예외를 던짐 — 조용히 먹음
+    try:
+        await websocket.send_json({"type": "unread_synced", "counts": counts})
+    except Exception as e:
+        logger.debug(
+            "unread 복구 결과 push 실패 (WS 이미 종료 가능): user_id={}, err={}",
+            user_id, type(e).__name__,
+        )
 
 
 # ──────────────────── 인증 ────────────────────

@@ -20,6 +20,10 @@ from app.container import Container
 from app.config.setting import settings
 from app.database.session import init_mongodb, close_mongodb
 from app.core.chat.lua_script import lua_scripts
+from app.domain.chat.worker.reconcile import (
+    start_reconcile_scheduler,
+    stop_reconcile_scheduler,
+)
 from app.api.v1.router import api_router
 
 
@@ -43,13 +47,18 @@ def create_app() -> FastAPI:
         await get_redis_dedupe_client()
         lua_scripts.load(hot_redis)
 
+        # 채팅 reconcile 워커 — last_message_* 정합성 복구 + unread 복구 entry point 주입
+        # (ws.py 의 recover_unread 경로도 같은 session_factory 공유)
+        start_reconcile_scheduler(app.container.session_factory())
+
         MenuOcr().load()
         await TourPlanner().load()
         logger.info("Starting application in {} mode", settings.ENVIRONMENT)
 
         yield
 
-        # shutdown
+        # shutdown — reconcile 이 Mongo/Redis 를 쓰므로 이 둘을 닫기 전에 먼저 멈춘다
+        await stop_reconcile_scheduler()
         await close_mongodb()
         await close_redis()
         logger.info("Application shutting down")

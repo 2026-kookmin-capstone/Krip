@@ -10,8 +10,9 @@
 #   2) .env.smoke 를 export 후 alembic 마이그레이션
 #   3) 테스트 유저 2명 DB 시드
 #   4) FastAPI 서버를 백그라운드로 기동 → /docs 헬스체크
-#   5) Python E2E (smoke_test.py) 실행
-#   6) 종료 시 FastAPI kill + docker compose down -v
+#   5) Python E2E (smoke_test.py) 실행 — Phase 1+2 시나리오
+#   6) Python E2E (smoke_phase3.py) 실행 — reconcile job + unread recovery
+#   (종료) FastAPI kill + docker compose down -v
 #
 # 환경변수:
 #   KEEP_STACK=1  테스트 후에도 컨테이너/서버 유지 (디버깅용)
@@ -29,6 +30,11 @@ LOG_DIR=scripts/chat/.logs
 # backend/ 를 명시적으로 얹어야 `import app.*` 가 해석된다. uvicorn 은 자체적으로
 # cwd 를 sys.path 에 넣어 문제 없지만 일관성 위해 함께 export.
 export PYTHONPATH="$(pwd)${PYTHONPATH:+:$PYTHONPATH}"
+
+# venv 자동 감지 — pyenv shim 뒤에 가려진 전역 python 이 alembic/uvicorn 을 못 찾는 상황 방지
+if [[ -x "$(pwd)/.venv/bin/python" ]]; then
+  export PATH="$(pwd)/.venv/bin:$PATH"
+fi
 
 mkdir -p "$LOG_DIR"
 
@@ -70,7 +76,7 @@ set -a
 # shellcheck disable=SC1090
 source "$ENV_FILE"
 set +a
-alembic upgrade head >"$LOG_DIR/alembic.log" 2>&1 || {
+python -m alembic upgrade head >"$LOG_DIR/alembic.log" 2>&1 || {
   echo "FAIL: alembic 실패 — $LOG_DIR/alembic.log 확인"
   tail -40 "$LOG_DIR/alembic.log"
   exit 1
@@ -82,11 +88,15 @@ echo "[3/5] seed test users..."
 python scripts/chat/seed_users.py
 
 # ─────────────────── 4) FastAPI 기동 ───────────────────
-echo "[4/5] start FastAPI (uvicorn)..."
+# SMOKE_PORT override — 로컬에서 8100 이 점유됐을 때 `SMOKE_PORT=8110 ./run_smoke.sh` 로 피할 수 있게.
+# smoke_test.py / smoke_phase3.py 도 같은 env 를 읽는다.
+SMOKE_PORT="${SMOKE_PORT:-8100}"
+export SMOKE_PORT
+echo "[4/6] start FastAPI (uvicorn) on port $SMOKE_PORT..."
 if [[ "${VERBOSE:-0}" == "1" ]]; then
-  uvicorn app.main:app --host 127.0.0.1 --port 8100 --log-level info &
+  python -m uvicorn app.main:app --host 127.0.0.1 --port "$SMOKE_PORT" --log-level info &
 else
-  uvicorn app.main:app --host 127.0.0.1 --port 8100 --log-level info \
+  python -m uvicorn app.main:app --host 127.0.0.1 --port "$SMOKE_PORT" --log-level info \
     >"$LOG_DIR/uvicorn.log" 2>&1 &
 fi
 APP_PID=$!
@@ -94,7 +104,7 @@ echo "      PID=$APP_PID"
 
 # /docs health 대기 (최대 20초)
 for i in {1..40}; do
-  if curl -fsS "http://127.0.0.1:8100/docs" >/dev/null 2>&1; then
+  if curl -fsS "http://127.0.0.1:$SMOKE_PORT/docs" >/dev/null 2>&1; then
     echo "      health OK ($i/40)"
     break
   fi
@@ -106,6 +116,10 @@ for i in {1..40}; do
   sleep 0.5
 done
 
-# ─────────────────── 5) smoke test ───────────────────
-echo "[5/5] run smoke_test.py..."
-python scripts/chat/smoke_test.py
+# ─────────────────── 5) smoke test (Phase 1+2) ───────────────────
+echo "[5/6] run smoke_test.py (Phase 1+2)..."
+SMOKE_PORT="$SMOKE_PORT" python scripts/chat/smoke_test.py
+
+# ─────────────────── 6) smoke test (Phase 3) ───────────────────
+echo "[6/6] run smoke_phase3.py (reconcile + unread recovery)..."
+SMOKE_PORT="$SMOKE_PORT" python scripts/chat/smoke_phase3.py

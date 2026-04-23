@@ -74,6 +74,43 @@ class ChatRoomMemberRepository:
         return list(result.scalars().all())
 
 
+    async def find_last_read_seqs(
+        self,
+        user_id: str,
+        room_ids: Optional[list[str]] = None,
+    ) -> dict[str, int]:
+        """유저의 방별 `last_read_message_server_seq` 배치 조회 (is_left=false 만).
+
+        unread 복구 전용 — "내가 아직 안 읽은 메시지" 를 Mongo 에서 카운트하려면
+        방별 마지막 읽은 seq 가 필요하다.
+
+        NULL 인 경우 0 으로 돌려 "0 초과" 즉 "전체 메시지" 가 미읽음 카운트 대상이 되게 함
+        (`GREATEST(COALESCE(..., 0), ...)` 와 같은 관점).
+
+        Args:
+            user_id: 복구 대상 유저
+            room_ids: 특정 방들로 한정 (재초대 플로우 등). `None` 이면 유저의 활성 방 전체
+
+        Returns:
+            `{chat_room_id: last_read_seq}`. is_left=true 이거나 미가입 방은 포함 안 됨.
+        """
+        conditions = [
+            ChatRoomMember.user_id == user_id,
+            ChatRoomMember.is_left.is_(False),
+        ]
+        if room_ids is not None:
+            if not room_ids:
+                return {}
+            conditions.append(ChatRoomMember.chat_room_id.in_(room_ids))
+
+        stmt = select(
+            ChatRoomMember.chat_room_id,
+            ChatRoomMember.last_read_message_server_seq,
+        ).where(*conditions)
+        result = await self.session.execute(stmt)
+        return {row[0]: int(row[1] or 0) for row in result.all()}
+
+
     # ──────────────────── Update ────────────────────
 
     async def update(self, member: ChatRoomMember) -> ChatRoomMember:
