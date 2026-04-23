@@ -83,7 +83,14 @@ class MessageBody(BaseModel):
     server_seq: int
     sender_id: Optional[str] = None
     type: str
-    content: Any
+    content: Any = Field(
+        ...,
+        description=(
+            "본문 — `type` 에 따라 모양이 달라짐. "
+            "`text`: str / `image`·`file`: dict / `system`: SystemContent 변종 하나 "
+            "(`action` 이 discriminator) / 삭제된 메시지: null"
+        ),
+    )
     created_at: datetime
 
 
@@ -202,4 +209,60 @@ ServerEvent = Annotated[
         UnreadSyncedEvent,
     ],
     Field(discriminator="type"),
+]
+
+
+# ════════════════════════════════════════════════════════════════════
+# 시스템 메시지 content payload (`action` discriminator)
+# ════════════════════════════════════════════════════════════════════
+# `message.new` 이벤트에서 `message.type == "system"` 일 때의 `message.content` 모양.
+# `MessageService.send_system_message` 가 방 관리 액션을 타임라인에 기록하기 위해
+# 발행하며, 각 action 별로 싣는 필드가 다르므로 discriminated union 으로 명시한다.
+#
+# `actor_id` 가 `Optional[str]` 인 이유:
+#   - 메시지 발행 이후 actor 가 탈퇴하면 FK `ON DELETE SET NULL` 로 null 이 되는 표현을
+#     content 에도 일관되게 반영 (`ChatRoom` 모델 docstring 탈퇴 정책 참고).
+#
+# `target_ids` 가 `join` / `kick` 에만 존재하는 이유:
+#   - `created` / `leave` 는 actor 본인이 곧 대상 → 추가 대상이 없음.
+#   - 서버는 `message.py` 에서 비어있으면 키 자체를 생략 → 스키마도 그 형상을 반영.
+
+class SystemContentCreated(BaseModel):
+    """방이 처음 생성됨 — `actor_id` 가 creator."""
+    action: Literal["created"]
+    actor_id: Optional[str] = Field(..., description="방을 만든 유저. 이후 탈퇴하면 null")
+
+
+class SystemContentJoin(BaseModel):
+    """새 멤버 합류 — `actor_id` 가 `target_ids` 를 초대."""
+    action: Literal["join"]
+    actor_id: Optional[str] = Field(..., description="초대를 수행한 유저. 이후 탈퇴하면 null")
+    target_ids: list[str] = Field(
+        ..., min_length=1, description="새로 합류한 유저 ID 목록 — 항상 1명 이상",
+    )
+
+
+class SystemContentLeave(BaseModel):
+    """멤버 본인이 방을 떠남 — `actor_id` 본인이 대상."""
+    action: Literal["leave"]
+    actor_id: Optional[str] = Field(..., description="방을 나간 유저. 나가는 동시에 탈퇴한 케이스는 null")
+
+
+class SystemContentKick(BaseModel):
+    """강퇴 — `actor_id`(그룹 creator) 가 `target_ids` 를 내보냄."""
+    action: Literal["kick"]
+    actor_id: Optional[str] = Field(..., description="강퇴를 실행한 creator. 이후 탈퇴하면 null")
+    target_ids: list[str] = Field(
+        ..., min_length=1, description="강퇴당한 유저 ID 목록 — 현재 구현은 단건이지만 스키마는 복수 대응",
+    )
+
+
+SystemContent = Annotated[
+    Union[
+        SystemContentCreated,
+        SystemContentJoin,
+        SystemContentLeave,
+        SystemContentKick,
+    ],
+    Field(discriminator="action"),
 ]

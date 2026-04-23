@@ -48,7 +48,7 @@ class MessageHistoryService:
         """ 내가 속한 활성 방을 effective_last_at DESC 로 LIMIT 30.
 
         1. RDB: chat_room + chat_room_member JOIN + peer_user_id 파생
-        2. RDB: 1:1 방의 peer 프로필 배치 조회 (N+1 허용 — 방 최대 30개)
+        2. RDB: 1:1 방의 peer 프로필 배치 조회 (`find_by_ids_with_profile` 1 쿼리)
         3. Redis: HGETALL unread:{me}
         4. Mongo: last_message_id 배치 조회 (미리보기)
         """
@@ -60,13 +60,9 @@ class MessageHistoryService:
         # 1. 방 + peer_user_id 파생
         rows = await chat_room_repo.find_rooms_of_user(me_id)
 
-        # 2. peer 프로필 일괄 조회 (Phase 1 은 N+1 허용, Phase 3 에서 batch 메서드 추가 검토)
+        # 2. peer 프로필 배치 조회 — 탈퇴한 유저(=결과에 없음)는 호출측 .get 으로 None fallback
         peer_ids = [pid for _, pid in rows if pid is not None]
-        peer_map = {}
-        for pid in peer_ids:
-            user = await user_repo.find_by_id_with_profile(pid)
-            if user is not None:
-                peer_map[pid] = user
+        peer_map = await user_repo.find_by_ids_with_profile(peer_ids)
 
         # 3. unread
         unread_raw = await redis_hot.hgetall(unread_key(me_id))

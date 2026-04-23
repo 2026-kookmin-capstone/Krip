@@ -203,10 +203,12 @@ class TestListRooms:
     ):
         room = _mk_room(chat_room_id="CR_d", type_=ChatRoomType.DIRECT)
         chat_room_repo_mock.find_rooms_of_user.return_value = [(room, "U_B")]
-        user_repo_mock.find_by_id_with_profile.return_value = SimpleNamespace(
-            user_id="U_B",
-            detail=SimpleNamespace(user_name="peer_name"),
-        )
+        user_repo_mock.find_by_ids_with_profile.return_value = {
+            "U_B": SimpleNamespace(
+                user_id="U_B",
+                detail=SimpleNamespace(user_name="peer_name"),
+            ),
+        }
         redis_mock.hgetall.return_value = {"CR_d": "3"}
         message_repo_mock.find_by_ids.return_value = {}
 

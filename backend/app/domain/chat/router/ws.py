@@ -139,13 +139,26 @@ async def ws_chat(
         logger.exception("WS 수신 루프 예외: session_id={}, err={}", session_id, e)
     finally:
         # 10. 종료 순서: ① 로컬 dict 먼저 → ② heartbeat 정리 대기 → ③ Redis 정리
-        fanout.unregister_ws(websocket)
+        # 각 단계는 서로 독립이므로 한 쪽 실패가 다음 단계를 막지 않도록 개별 try 로 격리한다.
+        # cleanup path 는 본 요청 처리가 끝난 뒤이므로 warning 으로만 남기고 진행한다.
+        # (CancelledError 는 BaseException 이라 `except Exception` 에 잡히지 않아 정상 전파됨)
+        try:
+            fanout.unregister_ws(websocket)
+        except Exception as e:
+            logger.warning(
+                "fanout unregister 실패 (무시): session_id={}, err={}", session_id, e,
+            )
 
         # heartbeat task 를 cancel 만 하고 반환하면 pending 상태로 GC 되어
         # "Task was destroyed but it is pending!" 경고 노이즈 + 리소스 누수 위험.
         # gather(return_exceptions=True) 로 CancelledError 소화까지 기다림 (bounded).
-        heartbeat_task.cancel()
-        await asyncio.gather(heartbeat_task, return_exceptions=True)
+        try:
+            heartbeat_task.cancel()
+            await asyncio.gather(heartbeat_task, return_exceptions=True)
+        except Exception as e:
+            logger.warning(
+                "heartbeat 정리 실패 (무시): session_id={}, err={}", session_id, e,
+            )
 
         try:
             await session_svc.terminate_session(session_id, user_id)

@@ -54,6 +54,7 @@ def make_message_repo_mock() -> AsyncMock:
 def make_user_repo_mock() -> AsyncMock:
     mock = AsyncMock()
     mock.find_by_id_with_profile.return_value = None
+    mock.find_by_ids_with_profile.return_value = {}
     return mock
 
 
