@@ -3,6 +3,7 @@ import { NavLink, Outlet } from "react-router-dom";
 
 const TAB_ITEMS = [
   { to: "/home", label: "Home", icon: "●" },
+  { to: "/plan", label: "Plan", icon: "▤" },
   { to: "/menu", label: "Menu", icon: "◫" },
   { to: "/mate", label: "Mate", icon: "◎" },
   { to: "/chat", label: "Chat", icon: "◌" },
@@ -50,7 +51,7 @@ const styles: Record<string, CSSProperties> = {
     right: 16,
     bottom: 14,
     display: "grid",
-    gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
+    gridTemplateColumns: "repeat(6, minmax(0, 1fr))",
     gap: 8,
     padding: 10,
     borderRadius: 24,
@@ -79,7 +80,14 @@ const styles: Record<string, CSSProperties> = {
     color: "var(--text-primary)",
   },
   navIcon: {
-    fontSize: "1rem",
+    width: 20,
+    height: 20,
+    borderRadius: "50%",
+    background: "rgba(1,192,192,0.12)",
+    color: "var(--brand-primary-deep)",
+    display: "grid",
+    placeItems: "center",
+    fontSize: "0.72rem",
     lineHeight: 1,
   },
 };
