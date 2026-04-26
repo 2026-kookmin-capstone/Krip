@@ -3,16 +3,17 @@ import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate,} from
 import AppShell from "./components/AppShell";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import HomePage from "./pages/HomePage";
+import HomePage from "./features/tour/HomePage";
 import MenuPage from "./pages/MenuPage";
-import MatePage from "./pages/MatePage";
-import ChatPage from "./pages/ChatPage";
+import MatePage from "./features/mate/MatePage";
+import ChatPage from "./features/friend-chat/ChatPage";
+import ChatRoomPage from "./features/friend-chat/ChatRoomPage";
 import MyPage from "./pages/MyPage";
 import PlaceholderPage from "./pages/PlaceholderPage";
-import PlanSelectionPage from "./pages/PlanSelectionPage";
-import AiPlanDesignPage from "./pages/AiPlanDesignPage";
-import AiPlanResultPage from "./pages/AiPlanResultPage";
-import ManualPlanPage from "./pages/Manualplanpage";
+import PlanSelectionPage from "./features/plan/PlanSelectionPage";
+import AiPlanDesignPage from "./features/plan/AiPlanDesignPage";
+import AiPlanResultPage from "./features/plan/AiPlanResultPage";
+import ManualPlanPage from "./features/plan/Manualplanpage";
 import {
   clearPreferences,
   clonePreferences,
@@ -111,7 +112,7 @@ export default function App() {
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/my" element={<MyPage />} />
         </Route>
-        <Route path="/chat/:id" element={<PlaceholderPage />} />
+        <Route path="/chat/:id" element={<ChatRoomPage />} />
         <Route path="/spots/:id" element={<PlaceholderPage />} />
         <Route path="/profile/:id" element={<PlaceholderPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />

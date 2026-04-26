@@ -16,7 +16,7 @@ import {
   type FriendPeer,
   type Friendship,
   type UserBlock,
-} from "../api/friend";
+} from "../../api/friend";
 
 type ChatTab = "chats" | "requests" | "friends";
 type LoadingKey = "received" | "sent" | "friends" | "blocks";
@@ -215,7 +215,7 @@ export default function ChatPage() {
                     <strong style={styles.rowTitle}>{chat.name}</strong>
                     <span style={styles.rowSubtitle}>{chat.subtitle}</span>
                   </span>
-                  <span style={styles.chevron}>›</span>
+                  <span style={styles.chevron}>{">"}</span>
                 </button>
               ))
             ) : (
@@ -829,3 +829,4 @@ const styles: Record<string, CSSProperties> = {
     lineHeight: 1.55,
   },
 };
+

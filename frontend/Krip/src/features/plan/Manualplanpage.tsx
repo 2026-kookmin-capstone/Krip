@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import type { CSSProperties } from "react";
-import { getTourPlaces, type TourPlaceApiItem } from "../api/auth/auth";
+import { getTourPlaces, type TourPlaceApiItem } from "../../api/auth/auth";
 import {
   ACCENT,
   BRAND,
@@ -10,7 +10,7 @@ import {
   getSavedPlanById,
   upsertSavedPlan,
   type SavedManualStop,
-} from "../api/aiPlanShared";
+} from "../../api/aiPlanShared";
 
 type ShareTarget = "kakao" | "link" | "mail" | "message";
 

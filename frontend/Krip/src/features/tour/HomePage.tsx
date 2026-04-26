@@ -1,11 +1,4 @@
-import {
-  startTransition,
-  useDeferredValue,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+﻿import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties, MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -22,7 +15,7 @@ import {
   type TourPlaceApiItem,
   type TourPlacesParams,
   type UserProfile,
-} from "../api/auth/auth";
+} from "../../api/auth/auth";
 
 const DEFAULT_LOCATION = { lat: 37.5665, lng: 126.978 };
 const DEFAULT_LOCATION_LABEL = "Central Seoul";
@@ -105,7 +98,7 @@ function formatDistance(distanceKm: number): string {
 function formatRating(rating?: number, reviewCount?: number): string {
   if (!Number.isFinite(rating)) return "No rating available";
   if (!Number.isFinite(reviewCount)) return `Rating ${rating?.toFixed(1)}`;
-  return `Rating ${rating?.toFixed(1)} · ${reviewCount?.toLocaleString()} reviews`;
+  return `Rating ${rating?.toFixed(1)} 쨌 ${reviewCount?.toLocaleString()} reviews`;
 }
 
 function formatPriceRange(
@@ -136,89 +129,18 @@ function haversineDistance(
   return earthRadiusKm * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
-function toPlaceCategory(value: unknown, types: unknown): PlaceCategory {
-  const normalized = String(value || "").trim().toLowerCase();
-  const normalizedTypes = Array.isArray(types)
-    ? types.map((item) => String(item).trim().toLowerCase())
-    : [];
-
-  const restaurantKeywords = [
-    "식당",
-    "음식점",
-    "맛집",
-    "레스토랑",
-    "카페",
-    "커피",
-    "바",
-    "주점",
-    "restaurant",
-    "food",
-    "cafe",
-    "coffee",
-    "bar",
-    "bakery",
-    "meal",
-  ];
-
-  const activityKeywords = [
-    "액티비티",
-    "체험",
-    "공원",
-    "쇼핑",
-    "전시",
-    "공연",
-    "놀이",
-    "게임",
-    "테마파크",
-    "영화관",
-    "activity",
-    "amusement",
-    "shopping",
-    "museum",
-    "park",
-    "stadium",
-    "movie_theater",
-    "bowling",
-    "spa",
-    "gym",
-  ];
-
-  const matchesKeyword = (keywords: string[]) =>
-    keywords.some(
-      (keyword) =>
-        normalized.includes(keyword) ||
-        normalizedTypes.some((type) => type.includes(keyword))
-    );
-
-  if (matchesKeyword(restaurantKeywords)) {
-    return "Food";
-  }
-
-  if (matchesKeyword(activityKeywords)) {
-    return "Activities";
-  }
-
-  return "Attractions";
-}
-
 function sanitizeTags(value: unknown): PlaceTag[] {
-  if (!Array.isArray(value)) {
-    return [];
-  }
+  if (!Array.isArray(value)) return [];
 
   const tagMap: Record<string, PlaceTag> = {
-    실내: "Indoor",
     indoor: "Indoor",
-    실외: "Outdoor",
     outdoor: "Outdoor",
-    관광객많음: "Crowded",
     crowded: "Crowded",
-    관광객적은: "Quiet",
     quiet: "Quiet",
   };
 
   return value
-    .map((item) => tagMap[String(item).trim().toLowerCase()] || tagMap[String(item).trim()] || null)
+    .map((item) => tagMap[String(item).trim().toLowerCase()] || null)
     .filter((item): item is PlaceTag => Boolean(item));
 }
 
@@ -230,113 +152,30 @@ function getBackendCategory(item: TourPlaceApiItem): PlaceCategory {
 function getCategoryGroup(category: string): string {
   const normalized = category.trim().toLowerCase();
 
-  if (
-    [
-      "식당",
-      "음식점",
-      "맛집",
-      "레스토랑",
-      "카페",
-      "커피",
-      "바",
-      "주점",
-      "베이커리",
-      "restaurant",
-      "food",
-      "cafe",
-      "coffee",
-      "bar",
-      "bakery",
-      "meal",
-      "meal_takeaway",
-    ].some((keyword) => normalized.includes(keyword))
-  ) {
-    return CATEGORY_GROUPS.FOOD_AND_DRINK;
-  }
+  const groups: Array<{ group: string; keywords: string[] }> = [
+    {
+      group: CATEGORY_GROUPS.FOOD_AND_DRINK,
+      keywords: ["restaurant", "food", "cafe", "coffee", "bar", "bakery", "meal"],
+    },
+    {
+      group: CATEGORY_GROUPS.STAY,
+      keywords: ["lodging", "hotel", "hostel", "guesthouse", "resort"],
+    },
+    {
+      group: CATEGORY_GROUPS.SHOPPING,
+      keywords: ["shopping", "store", "mall", "department_store", "supermarket"],
+    },
+    {
+      group: CATEGORY_GROUPS.ESSENTIALS,
+      keywords: ["convenience", "pharmacy", "drugstore", "exchange", "bank", "atm"],
+    },
+    {
+      group: CATEGORY_GROUPS.ATTRACTIONS,
+      keywords: ["activity", "amusement", "museum", "park", "gallery", "tourist", "attraction", "landmark", "stadium", "spa", "gym"],
+    },
+  ];
 
-  if (
-    [
-      "호텔",
-      "모텔",
-      "게스트하우스",
-      "리조트",
-      "숙소",
-      "lodging",
-      "hotel",
-      "hostel",
-      "guesthouse",
-      "resort",
-    ].some((keyword) => normalized.includes(keyword))
-  ) {
-    return CATEGORY_GROUPS.STAY;
-  }
-
-  if (
-    [
-      "쇼핑",
-      "일반매장",
-      "마트",
-      "상점",
-      "기념품",
-      "백화점",
-      "쇼핑몰",
-      "shopping",
-      "store",
-      "mall",
-      "department_store",
-      "supermarket",
-    ].some((keyword) => normalized.includes(keyword))
-  ) {
-    return CATEGORY_GROUPS.SHOPPING;
-  }
-
-  if (
-    [
-      "편의점",
-      "약국",
-      "병원",
-      "atm",
-      "환전",
-      "편의시설",
-      "convenience",
-      "pharmacy",
-      "drugstore",
-      "exchange",
-      "bank",
-    ].some((keyword) => normalized.includes(keyword))
-  ) {
-    return CATEGORY_GROUPS.ESSENTIALS;
-  }
-
-  if (
-    [
-      "관광",
-      "명소",
-      "공원",
-      "박물관",
-      "미술관",
-      "전시",
-      "체험",
-      "공연",
-      "놀이",
-      "activity",
-      "amusement",
-      "museum",
-      "park",
-      "gallery",
-      "tourist",
-      "attraction",
-      "landmark",
-      "movie_theater",
-      "stadium",
-      "spa",
-      "gym",
-    ].some((keyword) => normalized.includes(keyword))
-  ) {
-    return CATEGORY_GROUPS.ATTRACTIONS;
-  }
-
-  return CATEGORY_GROUPS.OTHER;
+  return groups.find((item) => item.keywords.some((keyword) => normalized.includes(keyword)))?.group || CATEGORY_GROUPS.OTHER;
 }
 
 function toNumber(value: unknown, fallback: number): number {
@@ -495,26 +334,46 @@ export default function HomePage() {
   }, [navigate]);
 
   useEffect(() => {
-    if (!navigator.geolocation) return undefined;
+    if (!navigator.geolocation) {
+      setLocationLabel(DEFAULT_LOCATION_LABEL);
+      return undefined;
+    }
+
+    const applyPosition = ({ coords }: GeolocationPosition): void => {
+      setCurrentLocation({
+        lat: coords.latitude,
+        lng: coords.longitude,
+      });
+      setLocationLabel(CURRENT_LOCATION_LABEL);
+    };
+
+    const handlePositionError = (): void => {
+      setLocationLabel(DEFAULT_LOCATION_LABEL);
+    };
 
     navigator.geolocation.getCurrentPosition(
-      ({ coords }) => {
-        setCurrentLocation({
-          lat: coords.latitude,
-          lng: coords.longitude,
-        });
-        setLocationLabel(CURRENT_LOCATION_LABEL);
-      },
-      () => {
-        setLocationLabel(DEFAULT_LOCATION_LABEL);
-      },
+      applyPosition,
+      handlePositionError,
       {
         enableHighAccuracy: true,
-        timeout: 6000,
+        maximumAge: 0,
+        timeout: 15000,
       }
     );
 
-    return undefined;
+    const watchId = navigator.geolocation.watchPosition(
+      ({ coords }) => {
+        applyPosition({ coords } as GeolocationPosition);
+      },
+      handlePositionError,
+      {
+        enableHighAccuracy: true,
+        maximumAge: 0,
+        timeout: 15000,
+      }
+    );
+
+    return () => navigator.geolocation.clearWatch(watchId);
   }, []);
 
   async function fetchPlaces(
@@ -609,9 +468,7 @@ export default function HomePage() {
         ...place,
         favoriteId: place.favoriteId || favoriteIdByPlaceId.get(place.id),
         isFavorite: place.initialIsFavorite || favoriteIds.has(place.id),
-        distanceKm: Number.isFinite(place.rawDistanceMeters)
-          ? (place.rawDistanceMeters as number) / 1000
-          : haversineDistance(currentLocation, place.coords),
+        distanceKm: haversineDistance(currentLocation, place.coords),
       })),
     [currentLocation, favoriteIdByPlaceId, favoriteIds, placesSource]
   );
@@ -621,9 +478,7 @@ export default function HomePage() {
       favoritePlaces.map((place) => ({
         ...place,
         isFavorite: true,
-        distanceKm: Number.isFinite(place.rawDistanceMeters)
-          ? (place.rawDistanceMeters as number) / 1000
-          : haversineDistance(currentLocation, place.coords),
+        distanceKm: haversineDistance(currentLocation, place.coords),
       })),
     [currentLocation, favoritePlaces]
   );
@@ -1031,13 +886,13 @@ export default function HomePage() {
                   onClick={closePlaceDetail}
                   aria-label="Close details"
                 >
-                  ×
+                  횞
                 </button>
               </div>
               <div>
                 <h2 style={styles.modalTitle}>{selectedPlace.name}</h2>
                 <p style={styles.modalDistance}>
-                  {locationLabel} · {formatDistance(selectedPlace.distanceKm)}
+                  {locationLabel} 쨌 {formatDistance(selectedPlace.distanceKm)}
                 </p>
               </div>
             </div>
@@ -1142,7 +997,7 @@ export default function HomePage() {
                         <span>
                           {[review.rating ? `${review.rating}` : null, review.relativeTime]
                             .filter(Boolean)
-                            .join(" · ")}
+                            .join(" 쨌 ")}
                         </span>
                       </div>
                       <p style={styles.reviewBody}>
@@ -1250,7 +1105,7 @@ export default function HomePage() {
                         onClick={() => void removeRecentSearch(keyword)}
                         aria-label={`Delete ${keyword}`}
                       >
-                        ×
+                        횞
                       </button>
                     </div>
                   ))}
@@ -1969,3 +1824,4 @@ const styles: Record<string, CSSProperties> = {
     lineHeight: 1.5,
   },
 };
+

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import type { CSSProperties } from "react";
-import { getTourPlaces, type TourPlaceApiItem } from "../api/auth/auth";
+import { getTourPlaces, type TourPlaceApiItem } from "../../api/auth/auth";
 import {
   ACCENT,
   BRAND,
@@ -13,7 +13,7 @@ import {
   upsertSavedPlan,
   type AiPreferenceState,
   type AiRouteStop,
-} from "../api/aiPlanShared";
+} from "../../api/aiPlanShared";
 
 interface AiPlanResultPageProps {
   preferences: AiPreferenceState;
@@ -246,6 +246,9 @@ export default function AiPlanResultPage({
             {"<"}
           </button>
           <span style={styles.headerBadge}>AI Result</span>
+          <button type="button" onClick={onEdit} style={styles.editButton}>
+            Edit
+          </button>
         </div>
 
         <div style={styles.titleBlock}>
@@ -319,6 +322,12 @@ export default function AiPlanResultPage({
           )}
         </section>
 
+        {!isLoading && unmatchedKeywords.length > 0 ? (
+          <p style={styles.unmatchedNote}>
+            Some keywords did not match the current place data: {unmatchedKeywords.join(", ")}
+          </p>
+        ) : null}
+
         <button
           type="button"
           onClick={handleSave}
@@ -366,6 +375,15 @@ const styles: Record<string, CSSProperties> = {
     fontWeight: 800,
     cursor: "pointer",
   },
+  editButton: {
+    border: "1px solid #d6eeee",
+    borderRadius: 14,
+    padding: "10px 12px",
+    background: "#ffffff",
+    color: "#204444",
+    fontWeight: 800,
+    cursor: "pointer",
+  },
   headerBadge: {
     display: "inline-flex",
     alignItems: "center",
@@ -375,6 +393,12 @@ const styles: Record<string, CSSProperties> = {
     color: BRAND,
     fontSize: 12,
     fontWeight: 800,
+  },
+  unmatchedNote: {
+    margin: 0,
+    color: "#6b7d7d",
+    fontSize: 13,
+    lineHeight: 1.5,
   },
   titleBlock: {
     display: "flex",
