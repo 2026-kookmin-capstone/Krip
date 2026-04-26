@@ -152,7 +152,7 @@ async def list_rooms(
     request: Request,
     service: MessageHistoryService = Depends(Provide[Container.message_history_service]),
 ) -> ChatRoomListResponse:
-    """내가 속한 활성 방 리스트 (effective_last_at 최신순 30개)."""
+    """내가 속한 활성 방 리스트 (effective_last_at 최신순, 최대 500개)."""
     user_id: str = request.state.user_id
     result = await service.list_rooms(me_id=user_id)
     return _to_list_response(result)

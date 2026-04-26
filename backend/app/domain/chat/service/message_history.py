@@ -45,7 +45,7 @@ class MessageHistoryService:
 
     @transactional
     async def list_rooms(self, me_id: str) -> ChatRoomListData:
-        """ 내가 속한 활성 방을 effective_last_at DESC 로 LIMIT 30.
+        """ 내가 속한 활성 방을 effective_last_at DESC 로 LIMIT PAGE_SIZE (500).
 
         1. RDB: chat_room + chat_room_member JOIN + peer_user_id 파생
         2. RDB: 1:1 방의 peer 프로필 배치 조회 (`find_by_ids_with_profile` 1 쿼리)

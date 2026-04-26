@@ -7,8 +7,8 @@ from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
 from app.domain.chat.model.chat_room_member import ChatRoomMember
 
 
-# 방 리스트 페이지 크기
-PAGE_SIZE = 30
+# 방 리스트 페이지 크기 (폭주 방어용 상한, 정식 페이지네이션 도입 전)
+PAGE_SIZE = 500
 
 
 class ChatRoomRepository:
@@ -69,7 +69,8 @@ class ChatRoomRepository:
         반환값은 `(ChatRoom, peer_user_id)` 튜플 — 1:1 방은 상대방 user_id 를 함께
         계산해 반환한다 (그룹방은 None). peer 프로필 배치 조회는 Service 계층에서.
 
-        LIMIT 30 의 단일 페이지. 커서 페이지네이션은 다음 개발 에서 추가.
+        LIMIT `PAGE_SIZE` 의 단일 페이지 500개.
+        커서 페이지네이션은 정식 출시 시 도입 예정 — 그때 PAGE_SIZE 도 30으로 환원.
         """
         # 1:1 방의 상대방 user_id 파생 (내가 a 면 b, 내가 b 면 a, 그룹이면 None)
         peer_user_id = case(

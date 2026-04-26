@@ -130,52 +130,53 @@ class MessageService:
             raise ValueError("이미 처리된 메시지입니다 (dedupe).")
 
 
-        # ─── (6) server_seq 채번 — 2단계 Lua + 복구 ───
+        # ─── (6)+(7) seq 채번 + Mongo insert ───
+        # Mongo 저장 성공이 dedupe 유지의 경계. 이 블록 안 어디서 throw 되든 dedupe 를
+        # 풀어 클라가 같은 client_msg_id 로 재시도 가능하게 한다.
+        # (이전 구현은 DuplicateKeyError 만 잡아 ConnectionTimeout 등 다른 Mongo 예외 시
+        #  dedupe 가 영구 잔존 → 같은 메시지 10분간 차단되는 버그가 있었음.)
         try:
             server_seq = await self._allocate_seq(
                 message_repo, redis_hot, room_id=room_id,
             )
+
+            now = datetime.now(timezone.utc)
+            message_id = generate_message_id()
+            doc = {
+                "_id": message_id,
+                "chat_room_id": room_id,
+                "server_seq": server_seq,
+                "sender_id": sender_user_id,
+                "type": msg_type.value,
+                "content": content,
+                "created_at": now,
+                "edited_at": None,
+                "deleted_at": None,
+            }
+
+            for attempt in range(_MAX_INSERT_ATTEMPTS):
+                try:
+                    await message_repo.insert(doc)
+                    break
+                except DuplicateKeyError:
+                    # seq 강제 점프 — jitter 는 os.urandom 기반 random (main.py 에서 seed)
+                    jitter = random.randint(1, SEQ_FORCE_JUMP_JITTER_MAX)
+                    new_seq = await lua_scripts.force_jump(
+                        keys=[room_seq_key(room_id)],
+                        args=[SEQ_FORCE_JUMP_GAP, jitter],
+                    )
+                    server_seq = int(new_seq)
+                    doc["server_seq"] = server_seq
+            else:
+                logger.error(
+                    "메시지 저장 {}회 연속 DuplicateKey: room_id={}, user_id={}",
+                    _MAX_INSERT_ATTEMPTS, room_id, sender_user_id,
+                )
+                raise UpstreamError("메시지 저장에 실패했습니다. 잠시 후 다시 시도해주세요.")
+
         except Exception:
             await redis_dedupe.delete(dedupe_k)
             raise
-
-
-        # ─── (7) Mongo insert + DuplicateKey 재시도 (최대 3회) ───
-        now = datetime.now(timezone.utc)
-        message_id = generate_message_id()
-        doc = {
-            "_id": message_id,
-            "chat_room_id": room_id,
-            "server_seq": server_seq,
-            "sender_id": sender_user_id,
-            "type": msg_type.value,
-            "content": content,
-            "created_at": now,
-            "edited_at": None,
-            "deleted_at": None,
-        }
-
-        for attempt in range(_MAX_INSERT_ATTEMPTS):
-            try:
-                await message_repo.insert(doc)
-                break
-            except DuplicateKeyError:
-                # seq 강제 점프 — jitter 는 os.urandom 기반 random (main.py 에서 seed)
-                jitter = random.randint(1, SEQ_FORCE_JUMP_JITTER_MAX)
-                new_seq = await lua_scripts.force_jump(
-                    keys=[room_seq_key(room_id)],
-                    args=[SEQ_FORCE_JUMP_GAP, jitter],
-                )
-                server_seq = int(new_seq)
-                doc["server_seq"] = server_seq
-        else:
-            # 3회 연속 실패 — dedupe 해제해 클라가 재시도 가능하도록
-            await redis_dedupe.delete(dedupe_k)
-            logger.error(
-                "메시지 저장 {}회 연속 실패: room_id={}, user_id={}",
-                _MAX_INSERT_ATTEMPTS, room_id, sender_user_id,
-            )
-            raise UpstreamError("메시지 저장에 실패했습니다. 잠시 후 다시 시도해주세요.")
 
 
         # ─── (8) RDB last_message_* 갱신 — SAVEPOINT 격리 + 실패 시 dirty 큐 ───

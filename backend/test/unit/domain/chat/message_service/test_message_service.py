@@ -276,6 +276,69 @@ class TestDuplicateKeyRetry:
 
 
 # ──────────────────────────────────────────────────────────────────
+# Dedupe 해제 경계 — Mongo 저장 성공 전 어떤 실패든 dedupe 풀어 클라 재시도 허용
+#
+# regression: 이전 구현은 (7) Mongo insert 단계에서 `except DuplicateKeyError` 만
+# 잡아 ConnectionFailure 등 다른 Mongo 예외가 나면 dedupe 가 영구 잔존해
+# 같은 client_msg_id 가 DEDUPE_TTL(10분) 동안 차단되던 버그가 있었음.
+# (6)+(7) 단계를 단일 try/except 로 묶어 모든 비-DuplicateKey 예외도 커버.
+# ──────────────────────────────────────────────────────────────────
+
+@pytest.mark.unit
+class TestDedupeReleaseOnFailure:
+    async def test_mongo_connection_failure_clears_dedupe(
+        self, service, message_repo_mock, redis_dedupe_mock,
+    ):
+        """Mongo ConnectionFailure → 즉시 propagate + dedupe DEL.
+
+        DuplicateKey 가 아닌 Mongo 예외 (네트워크 / 타임아웃) 시 dedupe 가 정리되지
+        않으면 같은 client_msg_id 로 재시도가 영구 차단된다.
+        """
+        from pymongo.errors import ConnectionFailure
+        message_repo_mock.insert.side_effect = ConnectionFailure("simulated")
+
+        with pytest.raises(ConnectionFailure):
+            await service.send_message(
+                sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+                client_msg_id="cm-conn", msg_type=MessageType.TEXT, content="x",
+            )
+
+        redis_dedupe_mock.delete.assert_awaited()
+        args, _ = redis_dedupe_mock.delete.call_args
+        assert args[0] == dedupe_key("U_A", "cm-conn")
+
+    async def test_seq_allocation_failure_clears_dedupe(
+        self, service, lua_mock, redis_dedupe_mock,
+    ):
+        """seq 채번 (incr_fast Lua) 실패 시에도 dedupe 정리 — 기존 동작 회귀 보호."""
+        lua_mock.incr_fast.side_effect = RuntimeError("redis lua error")
+
+        with pytest.raises(RuntimeError):
+            await service.send_message(
+                sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+                client_msg_id="cm-seq", msg_type=MessageType.TEXT, content="x",
+            )
+
+        redis_dedupe_mock.delete.assert_awaited()
+        args, _ = redis_dedupe_mock.delete.call_args
+        assert args[0] == dedupe_key("U_A", "cm-seq")
+
+    async def test_happy_path_keeps_dedupe(
+        self, service, redis_dedupe_mock,
+    ):
+        """정상 송신 시 dedupe 는 유지 — 같은 client_msg_id 재전송을 차단해야 함.
+
+        regression: dedupe 해제 try/except 가 너무 넓어져 성공 경로까지 풀어버리면
+        dedupe 자체의 목적이 무너진다. 경계가 'Mongo insert 성공' 직전까지여야 함.
+        """
+        await service.send_message(
+            sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+            client_msg_id="cm-ok", msg_type=MessageType.TEXT, content="x",
+        )
+        redis_dedupe_mock.delete.assert_not_called()
+
+
+# ──────────────────────────────────────────────────────────────────
 # RDB UPDATE 실패 → dirty 큐
 # ──────────────────────────────────────────────────────────────────
 
