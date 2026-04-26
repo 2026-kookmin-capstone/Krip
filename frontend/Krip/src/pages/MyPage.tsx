@@ -1,12 +1,21 @@
 import type { CSSProperties } from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getMyProfile, logoutUser, withdrawUser, type UserProfile } from "../api/auth/auth";
+import {
+  getMyProfile,
+  logoutUser,
+  uploadMyProfileImage,
+  withdrawUser,
+  type UserProfile,
+} from "../api/auth/auth";
 
 export default function MyPage() {
   const navigate = useNavigate();
+  const profileImageInputRef = useRef<HTMLInputElement>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isWithdrawing, setIsWithdrawing] = useState(false);
+  const [isUploadingProfileImage, setIsUploadingProfileImage] = useState(false);
+  const [profileImagePreview, setProfileImagePreview] = useState("");
 
   useEffect(() => {
     getMyProfile()
@@ -52,7 +61,48 @@ export default function MyPage() {
     }
   }
 
+  async function handleProfileImageChange(
+    event: React.ChangeEvent<HTMLInputElement>
+  ): Promise<void> {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (!["image/jpeg", "image/png", "image/webp", "image/gif"].includes(file.type)) {
+      window.alert("Please choose a JPG, PNG, WEBP, or GIF image.");
+      event.target.value = "";
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      window.alert("Please choose an image smaller than 10MB.");
+      event.target.value = "";
+      return;
+    }
+
+    const previewUrl = URL.createObjectURL(file);
+    setProfileImagePreview(previewUrl);
+    setIsUploadingProfileImage(true);
+
+    try {
+      const updatedProfile = await uploadMyProfileImage(file);
+      if (updatedProfile) {
+        setProfile((current) => ({ ...current, ...updatedProfile }) as UserProfile);
+      } else {
+        const refreshedProfile = await getMyProfile();
+        if (refreshedProfile) setProfile(refreshedProfile);
+      }
+    } catch (error) {
+      setProfileImagePreview("");
+      window.alert(toErrorMessage(error, "Profile photo upload failed. Please try again."));
+    } finally {
+      setIsUploadingProfileImage(false);
+      event.target.value = "";
+      URL.revokeObjectURL(previewUrl);
+    }
+  }
+
   const avatarText = profile?.user_name?.slice(0, 2) ?? "";
+  const profileImageUrl = profileImagePreview || getProfileImageUrl(profile);
   const nameText = profile?.user_name ?? "";
   const metaText = [
     profile?.nationality,
@@ -67,6 +117,7 @@ export default function MyPage() {
     .join(" / ");
 
   const infoItems = [
+    { label: "User ID", value: profile?.user_id ?? "" },
     { label: "Email", value: profile?.email ?? "" },
     { label: "Phone", value: profile?.phone_number ?? "" },
     {
@@ -84,7 +135,33 @@ export default function MyPage() {
   return (
     <div style={styles.page}>
       <div style={styles.profileCard}>
-        <div style={styles.avatar}>{avatarText}</div>
+        <div style={styles.avatarWrap}>
+          <button
+            type="button"
+            style={styles.avatarButton}
+            onClick={() => profileImageInputRef.current?.click()}
+            disabled={isUploadingProfileImage}
+            aria-label="Change profile photo"
+          >
+            {profileImageUrl ? (
+              <img src={profileImageUrl} alt="" style={styles.avatarImage} />
+            ) : (
+              <span style={styles.avatarText}>{avatarText}</span>
+            )}
+            {isUploadingProfileImage ? (
+              <span style={styles.avatarOverlay}>Uploading...</span>
+            ) : (
+              <span style={styles.avatarEditBadge}>Change</span>
+            )}
+          </button>
+          <input
+            ref={profileImageInputRef}
+            type="file"
+            accept="image/jpeg,image/png,image/webp,image/gif"
+            style={styles.hiddenInput}
+            onChange={(event) => void handleProfileImageChange(event)}
+          />
+        </div>
         <h1 style={styles.name}>{nameText}</h1>
         <p style={styles.meta}>{metaText}</p>
       </div>
@@ -162,17 +239,58 @@ const styles: Record<string, CSSProperties> = {
     border: "1px solid rgba(5,181,187,0.14)",
     boxShadow: "var(--shadow-soft)",
   },
-  avatar: {
+  avatarWrap: {
+    position: "relative",
+  },
+  avatarButton: {
     width: 88,
     height: 88,
+    position: "relative",
+    padding: 0,
+    border: "none",
     borderRadius: "50%",
     display: "grid",
     placeItems: "center",
     background: "linear-gradient(135deg, var(--brand-primary), var(--brand-primary-deep))",
     color: "#ffffff",
+    overflow: "hidden",
+    cursor: "pointer",
+    boxShadow: "0 12px 24px rgba(5,181,187,0.24)",
+  },
+  avatarText: {
     fontWeight: 800,
     fontSize: "1.6rem",
-    boxShadow: "0 12px 24px rgba(5,181,187,0.24)",
+  },
+  avatarImage: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+  },
+  avatarEditBadge: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    padding: "5px 4px 6px",
+    background: "rgba(24,26,32,0.62)",
+    color: "#ffffff",
+    fontSize: "0.68rem",
+    fontWeight: 800,
+  },
+  avatarOverlay: {
+    position: "absolute",
+    inset: 0,
+    display: "grid",
+    placeItems: "center",
+    padding: 10,
+    background: "rgba(24,26,32,0.58)",
+    color: "#ffffff",
+    fontSize: "0.72rem",
+    fontWeight: 800,
+    textAlign: "center",
+  },
+  hiddenInput: {
+    display: "none",
   },
   name: {
     margin: "14px 0 0",
@@ -233,6 +351,7 @@ const styles: Record<string, CSSProperties> = {
     color: "var(--text-secondary)",
     fontWeight: 700,
     textAlign: "right",
+    overflowWrap: "anywhere",
   },
   logoutButton: {
     display: "block",
@@ -267,6 +386,23 @@ const styles: Record<string, CSSProperties> = {
     cursor: "not-allowed",
   },
 };
+
+function getProfileImageUrl(profile: UserProfile | null): string {
+  if (!profile) return "";
+  return (
+    profile.profile_image_url ||
+    profile.profileImageUrl ||
+    profile.avatar_url ||
+    profile.image_url ||
+    profile.imageUrl ||
+    ""
+  );
+}
+
+function toErrorMessage(error: unknown, fallback: string): string {
+  const apiError = error as { message?: string };
+  return apiError.message || fallback;
+}
 
 const SAVED_PLAN_PANEL_ID = "krip-saved-plan-panel";
 const SAVED_PLAN_STORAGE_KEY = "krip-saved-trip-plans";

@@ -16,6 +16,11 @@ export interface UserProfile {
   gender?: string;
   nationality?: string;
   travel_styles?: string[];
+  image_url?: string;
+  imageUrl?: string;
+  profile_image_url?: string;
+  profileImageUrl?: string;
+  avatar_url?: string;
 }
 
 export interface RegisterPayload {
@@ -200,6 +205,7 @@ async function authRequest<T>(
   const { headers, ...rest } = options;
   const response = await fetch(`${API_BASE_URL}${path}`, {
     credentials: "include",
+    cache: "no-store",
     headers: getAuthHeaders(headers),
     ...rest,
   });
@@ -284,6 +290,16 @@ export async function withdrawUser(): Promise<Record<string, unknown> | string |
 
 export function getMyProfile(): Promise<UserProfile | null> {
   return authRequest("/api/auth/profile/me");
+}
+
+export function uploadMyProfileImage(file: File): Promise<UserProfile | null> {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  return authRequest("/api/auth/profile/image", {
+    method: "POST",
+    body: formData,
+  });
 }
 
 export function addTourPlaceFavorite(
