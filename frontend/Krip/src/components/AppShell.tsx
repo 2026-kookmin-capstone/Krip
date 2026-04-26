@@ -110,7 +110,7 @@ function readStoredChatUnreadCount(): number {
 
       return (
         sum +
-        Object.values(value as Record<string, unknown>).reduce((roomSum, roomValue) => {
+        Object.values(value as Record<string, unknown>).reduce<number>((roomSum, roomValue) => {
           const count = Number(roomValue || 0);
           return roomSum + (Number.isFinite(count) ? count : 0);
         }, 0)

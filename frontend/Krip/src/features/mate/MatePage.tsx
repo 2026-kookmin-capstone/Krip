@@ -14,15 +14,15 @@ import {
   type CompanionType,
   type PreferredGender,
   type TripMatePost,
-} from "../api/mate";
+} from "../../api/mate";
 import {
   deleteSearchHistoryAll,
   deleteSearchHistoryOne,
   getSearchHistory,
-} from "../api/searchHistory";
-import { uploadImages } from "../api/image";
-import { getMyProfile } from "../api/auth";
-import { getFriendDetail, sendFriendRequest, type FriendshipStatus } from "../api/friend";
+} from "../../api/searchHistory";
+import { uploadImages } from "../../api/image";
+import { getMyProfile } from "../../api/auth";
+import { getFriendDetail, sendFriendRequest, type FriendshipStatus } from "../../api/friend";
 
 const COMPANION_FILTERS = ["all", "sole", "friend", "couple", "family"] as const;
 const COMPANION_OPTIONS: CompanionType[] = ["friend", "family", "couple", "sole"];
@@ -1164,9 +1164,11 @@ function PostModal({
             <button type="button" style={styles.secondaryButton} onClick={onViewProfile}>
               View Profile
             </button>
-            <button type="button" style={styles.secondaryButton} onClick={onChat}>
-              Chat
-            </button>
+            {!isOwnPost ? (
+              <button type="button" style={styles.secondaryButton} onClick={onChat}>
+                Chat
+              </button>
+            ) : null}
           </div>
         </div>
       </div>

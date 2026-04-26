@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
-import { BRAND } from "../api/aiPlanShared";
+import { BRAND } from "../../api/aiPlanShared";
 
 interface PlanSelectionPageProps {
   onSelectAI?: () => void;
