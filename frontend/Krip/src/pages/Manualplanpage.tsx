@@ -10,7 +10,7 @@ import {
   getSavedPlanById,
   upsertSavedPlan,
   type SavedManualStop,
-} from "../team/api/aiPlanShared";
+} from "../api/aiPlanShared";
 
 type ShareTarget = "kakao" | "link" | "mail" | "message";
 
