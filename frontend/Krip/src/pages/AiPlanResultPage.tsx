@@ -13,7 +13,7 @@ import {
   upsertSavedPlan,
   type AiPreferenceState,
   type AiRouteStop,
-} from "../team/api/aiPlanShared";
+} from "../api/aiPlanShared";
 
 interface AiPlanResultPageProps {
   preferences: AiPreferenceState;

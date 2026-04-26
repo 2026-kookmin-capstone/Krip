@@ -187,6 +187,8 @@ function buildQueryString(params: TourPlacesParams = {}): string {
     searchParams.set(key, String(value));
   });
 
+  searchParams.set("_ts", String(Date.now()));
+
   const queryString = searchParams.toString();
   return queryString ? `?${queryString}` : "";
 }
@@ -269,6 +271,17 @@ export function logoutUser(): Promise<Record<string, unknown> | null> {
   });
 }
 
+export async function withdrawUser(): Promise<Record<string, unknown> | string | null> {
+  const result = await authRequest<Record<string, unknown> | string>("/api/auth/withdraw", {
+    method: "DELETE",
+  });
+
+  removeToken();
+  localStorage.removeItem("accessToken");
+
+  return result;
+}
+
 export function getMyProfile(): Promise<UserProfile | null> {
   return authRequest("/api/auth/profile/me");
 }
@@ -287,12 +300,27 @@ export function addTourPlaceFavorite(
   });
 }
 
-export function removeTourPlaceFavorite(
-  placeId: string
+function deleteTourPlaceFavorite(
+  favoriteOrPlaceId: string
 ): Promise<Record<string, unknown> | null> {
-  return authRequest(`/api/tour/places/favorites/${encodeURIComponent(placeId)}`, {
+  return authRequest(`/api/tour/places/favorites/${encodeURIComponent(favoriteOrPlaceId)}`, {
     method: "DELETE",
   });
+}
+
+export async function removeTourPlaceFavorite(
+  favoriteOrPlaceId: string,
+  fallbackPlaceId?: string
+): Promise<Record<string, unknown> | null> {
+  try {
+    return await deleteTourPlaceFavorite(favoriteOrPlaceId);
+  } catch (error) {
+    if (!fallbackPlaceId || fallbackPlaceId === favoriteOrPlaceId) {
+      throw error;
+    }
+
+    return deleteTourPlaceFavorite(fallbackPlaceId);
+  }
 }
 
 export async function getTourPlaceFavorites(): Promise<FavoritePlacesResponse> {
@@ -343,6 +371,7 @@ export async function getTourPlaces(
 ): Promise<TourPlacesResponse> {
   const response = await fetch(`${API_BASE_URL}/api/tour/places${buildQueryString(params)}`, {
     method: "GET",
+    cache: "no-store",
     credentials: "include",
     headers: getTourPlacesHeaders(),
   });

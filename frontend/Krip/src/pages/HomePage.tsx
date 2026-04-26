@@ -593,16 +593,27 @@ export default function HomePage() {
     [favoritePlaces]
   );
 
+  const favoriteIdByPlaceId = useMemo(
+    () =>
+      new Map(
+        favoritePlaces
+          .filter((place) => place.favoriteId)
+          .map((place) => [place.id, place.favoriteId as string])
+      ),
+    [favoritePlaces]
+  );
+
   const places = useMemo<PlaceWithMeta[]>(
     () =>
       placesSource.map((place) => ({
         ...place,
+        favoriteId: place.favoriteId || favoriteIdByPlaceId.get(place.id),
         isFavorite: place.initialIsFavorite || favoriteIds.has(place.id),
         distanceKm: Number.isFinite(place.rawDistanceMeters)
           ? (place.rawDistanceMeters as number) / 1000
           : haversineDistance(currentLocation, place.coords),
       })),
-    [currentLocation, favoriteIds, placesSource]
+    [currentLocation, favoriteIdByPlaceId, favoriteIds, placesSource]
   );
 
   const favoritePlacesWithMeta = useMemo<PlaceWithMeta[]>(
@@ -773,7 +784,7 @@ export default function HomePage() {
 
     try {
       if (place.isFavorite) {
-        await removeTourPlaceFavorite(place.id);
+        await removeTourPlaceFavorite(place.favoriteId || place.id, place.id);
         syncPlaceFavoriteState(place.id, false);
       } else {
         await addTourPlaceFavorite(place.id);

@@ -12,7 +12,7 @@ import {
   transportOptions,
   styleTokens,
   type AiPreferenceState,
-} from "../team/api/aiPlanShared";
+} from "../api/aiPlanShared";
 
 interface AiPlanDesignPageProps {
   value: AiPreferenceState;

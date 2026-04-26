@@ -21,7 +21,7 @@ import {
   loadPreferences,
   savePreferences,
   type AiPreferenceState,
-} from "./team/api/aiPlanShared";
+} from "./api/aiPlanShared";
 
 function AiPlanDesignRoute() {
   const navigate = useNavigate();

@@ -1,11 +1,12 @@
 import type { CSSProperties } from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getMyProfile, logoutUser, type UserProfile } from "../api/auth/auth";
+import { getMyProfile, logoutUser, withdrawUser, type UserProfile } from "../api/auth/auth";
 
 export default function MyPage() {
   const navigate = useNavigate();
   const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [isWithdrawing, setIsWithdrawing] = useState(false);
 
   useEffect(() => {
     getMyProfile()
@@ -24,6 +25,30 @@ export default function MyPage() {
       await logoutUser();
     } finally {
       navigate("/login");
+    }
+  }
+
+  async function handleWithdraw(): Promise<void> {
+    const confirmed = window.confirm(
+      "Delete your account permanently? All user data will be removed."
+    );
+
+    if (!confirmed || isWithdrawing) {
+      return;
+    }
+
+    setIsWithdrawing(true);
+
+    try {
+      await withdrawUser();
+      navigate("/login", { replace: true });
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Account withdrawal failed. Please try again.";
+      window.alert(message);
+      setIsWithdrawing(false);
     }
   }
 
@@ -99,6 +124,18 @@ export default function MyPage() {
 
       <button type="button" style={styles.logoutButton} onClick={handleLogout}>
         Log Out
+      </button>
+
+      <button
+        type="button"
+        style={{
+          ...styles.withdrawButton,
+          ...(isWithdrawing ? styles.withdrawButtonDisabled : {}),
+        }}
+        onClick={handleWithdraw}
+        disabled={isWithdrawing}
+      >
+        {isWithdrawing ? "Deleting Account..." : "Delete Account"}
       </button>
     </div>
   );
@@ -210,6 +247,24 @@ const styles: Record<string, CSSProperties> = {
     fontWeight: 800,
     cursor: "pointer",
     boxShadow: "0 12px 24px rgba(5,181,187,0.22)",
+  },
+  withdrawButton: {
+    display: "block",
+    width: "100%",
+    maxWidth: 720,
+    margin: "12px auto 0",
+    border: "1px solid rgba(220,38,38,0.22)",
+    borderRadius: 18,
+    padding: "15px 16px",
+    background: "rgba(255,255,255,0.92)",
+    color: "#dc2626",
+    fontWeight: 800,
+    cursor: "pointer",
+    boxShadow: "var(--shadow-soft)",
+  },
+  withdrawButtonDisabled: {
+    opacity: 0.62,
+    cursor: "not-allowed",
   },
 };
 
