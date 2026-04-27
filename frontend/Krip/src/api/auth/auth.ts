@@ -18,9 +18,13 @@ export interface UserProfile {
   travel_styles?: string[];
   image_url?: string;
   imageUrl?: string;
-  profile_image_url?: string;
+  profile_image_url?: string | null;
   profileImageUrl?: string;
   avatar_url?: string;
+}
+
+export interface ProfileImageResponse {
+  profile_image_url: string | null;
 }
 
 export interface RegisterPayload {
@@ -292,13 +296,29 @@ export function getMyProfile(): Promise<UserProfile | null> {
   return authRequest("/api/auth/profile/me");
 }
 
-export function uploadMyProfileImage(file: File): Promise<UserProfile | null> {
+function buildProfileImageFormData(file: File): FormData {
   const formData = new FormData();
   formData.append("file", file);
+  return formData;
+}
 
+export function uploadMyProfileImage(file: File): Promise<ProfileImageResponse | null> {
   return authRequest("/api/auth/profile/image", {
     method: "POST",
-    body: formData,
+    body: buildProfileImageFormData(file),
+  });
+}
+
+export function replaceMyProfileImage(file: File): Promise<ProfileImageResponse | null> {
+  return authRequest("/api/auth/profile/image", {
+    method: "PUT",
+    body: buildProfileImageFormData(file),
+  });
+}
+
+export function deleteMyProfileImage(): Promise<Record<string, string> | null> {
+  return authRequest("/api/auth/profile/image", {
+    method: "DELETE",
   });
 }
 

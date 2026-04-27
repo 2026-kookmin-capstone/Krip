@@ -9,6 +9,7 @@ export interface FriendPeer {
   age: number;
   gender: FriendGender;
   nationality: string;
+  profile_image_url: string | null;
 }
 
 export interface Friendship {
