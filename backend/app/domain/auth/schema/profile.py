@@ -78,3 +78,11 @@ class ProfileResponse(BaseModel):
                 "profile_image_url": "https://cdn.example.com/profile/abc.jpg",
             }
         }
+
+
+class ProfileImageResponse(BaseModel):
+    profile_image_url: str = Field(
+        ...,
+        description="저장된 프로필 이미지 URL",
+        examples=["https://cdn.example.com/profile/abc.jpg"],
+    )

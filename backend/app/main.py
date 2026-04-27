@@ -66,9 +66,9 @@ def create_app() -> FastAPI:
     # DI Container 초기화 및 wiring
     container = Container()
     container.wire(modules=[
-        "app.domain.auth.router.login.login",
-        "app.domain.auth.router.login.register",
-        "app.domain.auth.router.profile.me",
+        "app.domain.auth.router.login",
+        "app.domain.auth.router.register",
+        "app.domain.auth.router.profile",
         "app.domain.auth.router.withdraw",
         "app.domain.tripmate.router.tripmate_post",
         "app.domain.tripmate.router.tripmate_search_history",

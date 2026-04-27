@@ -20,3 +20,9 @@ class ProfileData:
     nationality: str
     travel_styles: List[TravelStyle]
     profile_image_url: Optional[str] = None
+
+
+@dataclass
+class ProfileImageData:
+    """프로필 이미지 추가/수정 결과 DTO"""
+    profile_image_url: str
