@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel, Field
 
 from app.domain.auth.model.user_travel_style import TravelStyle
@@ -56,7 +56,12 @@ class ProfileResponse(BaseModel):
         description="여행 스타일 목록",
         examples=[["activity", "food"]],
     )
-    
+    profile_image_url: Optional[str] = Field(
+        None,
+        description="프로필 이미지 URL (없으면 null)",
+        examples=["https://cdn.example.com/profile/abc.jpg"],
+    )
+
     class Config:
         json_schema_extra = {
             "example": {
@@ -70,5 +75,14 @@ class ProfileResponse(BaseModel):
                 "gender": "male",
                 "nationality": "korea",
                 "travel_styles": ["activity", "food"],
+                "profile_image_url": "https://cdn.example.com/profile/abc.jpg",
             }
         }
+
+
+class ProfileImageResponse(BaseModel):
+    profile_image_url: str = Field(
+        ...,
+        description="저장된 프로필 이미지 URL",
+        examples=["https://cdn.example.com/profile/abc.jpg"],
+    )

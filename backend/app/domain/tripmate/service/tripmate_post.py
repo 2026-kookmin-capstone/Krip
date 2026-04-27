@@ -12,6 +12,7 @@ from app.core.object_storage import get_object_storage
 from app.domain.tripmate.model.tripmate_post_image import TripmatePostImage
 from app.domain.tripmate.dto.tripmate_post import TripmatePostCreateData, TripmatePostData, TripmatePostListData, PostAuthorData
 from app.domain.auth.model.user_detail_inform import Gender
+from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
 
 
 logger = get_logger("tripmate.post.service")
@@ -50,6 +51,7 @@ class TripmatePostService:
         """
         post_repo = TripmatePostRepository(self._session)
         image_repo = TripmatePostImageRepository(self._session)
+        detail_repo = UserDetailInformRepository(self._session)
 
         post = TripmatePost(
             user_id=user_id,
@@ -80,7 +82,12 @@ class TripmatePostService:
         except Exception as e:
             logger.warning("임시저장 삭제 실패 (user_id={}): {}", user_id, e)
 
-        return self._to_create_dto(post, image_urls=saved_urls)
+        detail = await detail_repo.find_by_user_id(user_id)
+        return self._to_create_dto(
+            post,
+            image_urls=saved_urls,
+            profile_image_url=detail.profile_image_url if detail else None,
+        )
 
 
     # ──────────────────── 게시글 단건 조회 ────────────────────
@@ -286,7 +293,11 @@ class TripmatePostService:
         )
 
     @staticmethod
-    def _to_create_dto(post: TripmatePost, image_urls: List[str]) -> TripmatePostCreateData:
+    def _to_create_dto(
+        post: TripmatePost,
+        image_urls: List[str],
+        profile_image_url: Optional[str] = None,
+    ) -> TripmatePostCreateData:
         return TripmatePostCreateData(
             post_id=post.post_id,
             user_id=post.user_id,
@@ -303,10 +314,12 @@ class TripmatePostService:
             created_at=post.created_at,
             updated_at=post.updated_at,
             image_urls=image_urls,
+            profile_image_url=profile_image_url,
         )
 
     @staticmethod
     def _to_dto(post: TripmatePost, like_count: int, is_liked: bool, image_urls: List[str]) -> TripmatePostData:
+        detail = post.user.detail if post.user else None
         return TripmatePostData(
             post_id=post.post_id,
             user_id=post.user_id,
@@ -326,6 +339,7 @@ class TripmatePostService:
             like_count=like_count,
             is_liked=is_liked,
             image_urls=image_urls,
+            profile_image_url=detail.profile_image_url if detail else None,
         )
 
     def _to_list_dto(self, posts: list[TripmatePost]) -> TripmatePostListData:

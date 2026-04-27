@@ -14,6 +14,7 @@ class FriendPeerData:
     age: int
     gender: Gender
     nationality: str
+    profile_image_url: Optional[str] = None
 
 
 @dataclass

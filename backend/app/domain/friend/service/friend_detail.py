@@ -62,4 +62,5 @@ class FriendDetailService:
             friendship_status=friendship_status,
             is_requester=is_requester,
             i_blocked_peer=i_blocked,
+            profile_image_url=peer.detail.profile_image_url,
         )

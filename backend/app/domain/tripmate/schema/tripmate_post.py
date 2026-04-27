@@ -75,6 +75,7 @@ class PostCreateResponse(BaseModel):
     created_at: datetime = Field(..., description="게시글 작성일")
     updated_at: datetime = Field(..., description="게시글 수정일")
     image_urls: List[str] = Field(..., description="첨부 이미지 URL 목록")
+    profile_image_url: Optional[str] = Field(None, description="작성자 프로필 이미지 URL (없으면 null)")
 
 
 class PostDetailResponse(BaseModel):
@@ -96,6 +97,7 @@ class PostDetailResponse(BaseModel):
     like_count: int = Field(..., description="좋아요 수")
     is_liked: bool = Field(..., description="현재 유저의 좋아요 여부")
     image_urls: List[str] = Field(..., description="첨부 이미지 URL 목록")
+    profile_image_url: Optional[str] = Field(None, description="작성자 프로필 이미지 URL (없으면 null)")
 
 
 class PostListResponse(BaseModel):

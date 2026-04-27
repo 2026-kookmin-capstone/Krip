@@ -38,4 +38,5 @@ async def get_friend_detail(
         friendship_status=result.friendship_status,
         is_requester=result.is_requester,
         i_blocked_peer=result.i_blocked_peer,
+        profile_image_url=result.profile_image_url,
     )

@@ -26,3 +26,4 @@ class FriendDetailResponse(BaseModel):
         None, description="현재 유저가 요청을 보낸 쪽인지 (관계가 없으면 null)"
     )
     i_blocked_peer: bool = Field(..., description="내가 상대를 차단했는지")
+    profile_image_url: Optional[str] = Field(None, description="프로필 이미지 URL (없으면 null)")

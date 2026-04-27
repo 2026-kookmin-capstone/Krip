@@ -20,6 +20,7 @@ class UserDetailInform(Base):
     age = Column(Integer, nullable=False)
     gender = Column(Enum(Gender), nullable=False)
     nationality = Column(String(50), nullable=False)  # 국적
+    profile_image_url = Column(String(2048), nullable=True)
 
     user = relationship("User", back_populates="detail")
 

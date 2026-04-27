@@ -33,6 +33,7 @@ class TripmatePostCreateData:
     created_at: datetime
     updated_at: datetime
     image_urls: List[str]
+    profile_image_url: Optional[str] = None
 
 
 @dataclass
@@ -56,6 +57,7 @@ class TripmatePostData:
     like_count: int
     is_liked: bool
     image_urls: List[str]
+    profile_image_url: Optional[str] = None
 
 
 @dataclass
