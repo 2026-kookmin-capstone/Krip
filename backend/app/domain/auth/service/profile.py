@@ -30,4 +30,5 @@ class ProfileService:
             gender=user.detail.gender,
             nationality=user.detail.nationality,
             travel_styles=[s.style for s in user.travel_styles],
+            profile_image_url=user.detail.profile_image_url,
         )

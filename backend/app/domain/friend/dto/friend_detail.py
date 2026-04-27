@@ -26,3 +26,5 @@ class FriendDetailData:
     friendship_status: Optional[FriendshipStatus]  # pending / accepted / rejected
     is_requester: Optional[bool]            # viewer 가 요청자인지. 관계 없으면 None
     i_blocked_peer: bool                    # 내가 상대를 차단했는가
+
+    profile_image_url: Optional[str] = None

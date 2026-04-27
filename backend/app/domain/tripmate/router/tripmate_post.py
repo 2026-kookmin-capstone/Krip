@@ -66,6 +66,7 @@ async def create_post(
         created_at=result.created_at,
         updated_at=result.updated_at,
         image_urls=result.image_urls,
+        profile_image_url=result.profile_image_url,
     )
 
 
@@ -342,6 +343,7 @@ def _to_post_response(dto) -> PostDetailResponse:
         like_count=dto.like_count,
         is_liked=dto.is_liked,
         image_urls=dto.image_urls,
+        profile_image_url=dto.profile_image_url,
     )
 
 

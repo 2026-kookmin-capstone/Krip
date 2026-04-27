@@ -28,6 +28,7 @@ class FriendPeerResponse(BaseModel):
     age: int = Field(..., description="상대 나이")
     gender: Gender = Field(..., description="상대 성별 (male / female)")
     nationality: str = Field(..., description="상대 국적")
+    profile_image_url: Optional[str] = Field(None, description="프로필 이미지 URL (없으면 null)")
 
 
 class FriendshipResponse(BaseModel):

@@ -35,5 +35,6 @@ async def get_my_profile(
         age=profile.age,
         gender=profile.gender,
         travel_styles=profile.travel_styles,
-        nationality=profile.nationality
+        nationality=profile.nationality,
+        profile_image_url=profile.profile_image_url,
     )

@@ -40,6 +40,7 @@ class UserFactory:
                 age=age,
                 gender=gender,
                 nationality=nationality,
+                profile_image_url=None,
             )
         else:
             detail_obj = detail  # None 또는 사용자 지정

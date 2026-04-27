@@ -170,6 +170,7 @@ def _to_friendship_response(dto) -> FriendshipResponse:
             age=dto.peer.age,
             gender=dto.peer.gender,
             nationality=dto.peer.nationality,
+            profile_image_url=dto.peer.profile_image_url,
         ),
         is_requester=dto.is_requester,
         created_at=dto.created_at,

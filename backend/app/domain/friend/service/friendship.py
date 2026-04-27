@@ -237,6 +237,7 @@ class FriendshipService:
             age=detail.age,
             gender=detail.gender,
             nationality=detail.nationality,
+            profile_image_url=detail.profile_image_url,
         )
 
     @classmethod

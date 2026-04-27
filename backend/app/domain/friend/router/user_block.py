@@ -76,6 +76,7 @@ def _to_block_response(dto) -> UserBlockResponse:
             age=dto.blocked.age,
             gender=dto.blocked.gender,
             nationality=dto.blocked.nationality,
+            profile_image_url=dto.blocked.profile_image_url,
         ),
         created_at=dto.created_at,
     )
