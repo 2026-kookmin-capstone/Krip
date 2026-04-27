@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { type ChatRoom } from "../../api/chat";
 import {
   acceptFriendRequest,
   blockUser,
@@ -17,6 +18,8 @@ import {
   type Friendship,
   type UserBlock,
 } from "../../api/friend";
+import { useChat } from "./ChatProvider";
+import { reportChatNetworkError } from "../../utils/chatDiagnostics";
 
 type ChatTab = "chats" | "requests" | "friends";
 type LoadingKey = "received" | "sent" | "friends" | "blocks";
@@ -29,6 +32,13 @@ const TABS: Array<{ key: ChatTab; label: string }> = [
 
 export default function ChatPage() {
   const navigate = useNavigate();
+  const {
+    rooms: chatRooms,
+    roomsLoading: chatLoading,
+    connectionState: chatConnectionStatus,
+    refreshRooms,
+    openDirectChat,
+  } = useChat();
   const [tab, setTab] = useState<ChatTab>("chats");
   const [receivedRequests, setReceivedRequests] = useState<Friendship[]>([]);
   const [sentRequests, setSentRequests] = useState<Friendship[]>([]);
@@ -52,18 +62,7 @@ export default function ChatPage() {
   const [error, setError] = useState("");
 
   const pendingCount = receivedRequests.length + sentRequests.length;
-  const chatRows = useMemo(
-    () =>
-      friends.map((friend) => ({
-        id: friend.friendship_id,
-        userId: friend.peer.user_id,
-        name: friend.peer.user_name,
-        subtitle: `${friend.peer.nationality} / ${friend.peer.age} / ${formatGender(
-          friend.peer.gender
-        )}`,
-      })),
-    [friends]
-  );
+  const chatRows = useMemo(() => chatRooms.map(toChatRow), [chatRooms]);
 
   useEffect(() => {
     void refreshAll();
@@ -122,9 +121,20 @@ export default function ChatPage() {
   async function refreshAll(): Promise<void> {
     setError("");
     try {
-      await Promise.all([loadReceived(), loadSent(), loadFriends(), loadBlocks()]);
+      await Promise.all([
+        refreshRooms(),
+        loadReceived(),
+        loadSent(),
+        loadFriends(),
+        loadBlocks(),
+      ]);
       window.dispatchEvent(new CustomEvent("krip:friend-chat-notifications-updated"));
     } catch (loadError) {
+      reportChatNetworkError({
+        action: "refresh_chat_page",
+        detail: toErrorMessage(loadError, "Failed to load friend data."),
+        extra: getErrorStatus(loadError),
+      });
       setError(toErrorMessage(loadError, "Failed to load friend data."));
     }
   }
@@ -160,6 +170,25 @@ export default function ChatPage() {
 
   function isBusy(id: string): boolean {
     return actionId === id;
+  }
+
+  async function handleOpenDirectChat(userId: string): Promise<void> {
+    setActionId(`chat:${userId}`);
+    setError("");
+
+    try {
+      const room = await openDirectChat(userId);
+      navigate(`/chat/${room.chat_room_id}`);
+    } catch (chatError) {
+      reportChatNetworkError({
+        action: "open_direct_chat",
+        detail: toErrorMessage(chatError, "Failed to open chat."),
+        extra: getErrorStatus(chatError),
+      });
+      setError(toErrorMessage(chatError, "Failed to open chat."));
+    } finally {
+      setActionId("");
+    }
   }
 
   return (
@@ -202,19 +231,28 @@ export default function ChatPage() {
 
         {tab === "chats" ? (
           <section style={styles.list}>
-            {chatRows.length > 0 ? (
+            <p style={styles.statusText}>WebSocket: {chatConnectionStatus}</p>
+            {chatLoading && chatRows.length === 0 ? (
+              <p style={styles.mutedText}>Loading chats...</p>
+            ) : chatRows.length > 0 ? (
               chatRows.map((chat) => (
                 <button
                   key={chat.id}
                   type="button"
                   style={styles.chatRow}
-                  onClick={() => navigate(`/chat/${chat.userId}`)}
+                  onClick={() => navigate(`/chat/${chat.id}`)}
                 >
                   <Avatar name={chat.name} />
                   <span style={styles.rowMain}>
                     <strong style={styles.rowTitle}>{chat.name}</strong>
                     <span style={styles.rowSubtitle}>{chat.subtitle}</span>
+                    <span style={styles.rowSubtitle}>{chat.preview}</span>
                   </span>
+                  {chat.unreadCount > 0 ? (
+                    <span style={styles.unreadBadge}>
+                      {chat.unreadCount >= 999 ? "999+" : chat.unreadCount}
+                    </span>
+                  ) : null}
                   <span style={styles.chevron}>{">"}</span>
                 </button>
               ))
@@ -343,7 +381,7 @@ export default function ChatPage() {
                     <FriendCard
                       key={friend.friendship_id}
                       item={friend}
-                      onChat={() => navigate(`/chat/${friend.peer.user_id}`)}
+                      onChat={() => void handleOpenDirectChat(friend.peer.user_id)}
                       onDelete={() => {
                         setActionId(`delete:${friend.friendship_id}`);
                         void runAction(
@@ -504,7 +542,7 @@ function FriendCard({
 function PeerSummary({ peer }: { peer: FriendPeer }) {
   return (
     <div style={styles.peerSummary}>
-      <Avatar name={peer.user_name} />
+      <Avatar name={peer.user_name} imageUrl={peer.profile_image_url} />
       <span style={styles.rowMain}>
         <strong style={styles.rowTitle}>{peer.user_name}</strong>
         <span style={styles.rowSubtitle}>
@@ -516,8 +554,16 @@ function PeerSummary({ peer }: { peer: FriendPeer }) {
   );
 }
 
-function Avatar({ name }: { name: string }) {
-  return <span style={styles.avatar}>{name.slice(0, 1).toUpperCase() || "U"}</span>;
+function Avatar({ name, imageUrl }: { name: string; imageUrl?: string | null }) {
+  return (
+    <span style={styles.avatar}>
+      {imageUrl ? (
+        <img src={imageUrl} alt="" style={styles.avatarImage} />
+      ) : (
+        name.slice(0, 1).toUpperCase() || "U"
+      )}
+    </span>
+  );
 }
 
 function EmptyCard({ title, copy }: { title: string; copy: string }) {
@@ -535,12 +581,47 @@ function formatGender(gender: string): string {
   return gender;
 }
 
+function toChatRow(room: ChatRoom): {
+  id: string;
+  name: string;
+  subtitle: string;
+  preview: string;
+  unreadCount: number;
+} {
+  const name =
+    room.type === "direct"
+      ? room.peer?.user_name || "Deleted User"
+      : room.title || "Group Chat";
+  const subtitle = room.type === "direct" ? "Direct message" : "Group chat";
+
+  return {
+    id: room.chat_room_id,
+    name,
+    subtitle,
+    preview: renderLastMessage(room.last_message),
+    unreadCount: room.unread_count,
+  };
+}
+
+function renderLastMessage(lastMessage: ChatRoom["last_message"]): string {
+  if (!lastMessage) return "No messages yet.";
+  if (lastMessage.content === null) return "Deleted message.";
+  if (lastMessage.type === "system") return "System message";
+  if (typeof lastMessage.content === "string") return lastMessage.content;
+  return "";
+}
+
 function toErrorMessage(error: unknown, fallback: string): string {
   const apiError = error as {
     response?: { data?: { detail?: string; message?: string } };
     message?: string;
   };
   return apiError.response?.data?.detail || apiError.response?.data?.message || apiError.message || fallback;
+}
+
+function getErrorStatus(error: unknown): number | undefined {
+  const apiError = error as { response?: { status?: number } };
+  return apiError.response?.status;
 }
 
 const styles: Record<string, CSSProperties> = {
@@ -735,6 +816,12 @@ const styles: Record<string, CSSProperties> = {
     background: "linear-gradient(135deg, var(--brand-primary), var(--brand-primary-deep))",
     color: "#ffffff",
     fontWeight: 800,
+    overflow: "hidden",
+  },
+  avatarImage: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
   },
   rowMain: {
     minWidth: 0,
@@ -812,6 +899,24 @@ const styles: Record<string, CSSProperties> = {
     color: "var(--neutral-700)",
     lineHeight: 1.5,
   },
+  statusText: {
+    margin: "0 0 2px",
+    color: "var(--neutral-700)",
+    fontSize: "0.78rem",
+    fontWeight: 800,
+  },
+  unreadBadge: {
+    display: "inline-grid",
+    placeItems: "center",
+    minWidth: 24,
+    height: 24,
+    padding: "0 7px",
+    borderRadius: 999,
+    background: "var(--brand-secondary)",
+    color: "var(--text-primary)",
+    fontSize: "0.76rem",
+    fontWeight: 900,
+  },
   emptyCard: {
     padding: 22,
     borderRadius: 24,
@@ -829,4 +934,3 @@ const styles: Record<string, CSSProperties> = {
     lineHeight: 1.55,
   },
 };
-

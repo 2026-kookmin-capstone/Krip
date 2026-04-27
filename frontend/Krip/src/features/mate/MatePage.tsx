@@ -22,6 +22,7 @@ import {
 } from "../../api/searchHistory";
 import { uploadImages } from "../../api/image";
 import { getMyProfile } from "../../api/auth";
+import { createDirectChatRoom } from "../../api/chat";
 import { getFriendDetail, sendFriendRequest, type FriendshipStatus } from "../../api/friend";
 
 const COMPANION_FILTERS = ["all", "sole", "friend", "couple", "family"] as const;
@@ -86,8 +87,7 @@ export default function MatePage() {
   const [friendStates, setFriendStates] = useState<Record<string, MateFriendState>>({});
   const [friendRequestingUserId, setFriendRequestingUserId] = useState<string | null>(null);
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
-  const [chatTarget, setChatTarget] = useState<TripMatePost | null>(null);
-  const [chatMessage, setChatMessage] = useState("");
+  const [chatOpeningPostId, setChatOpeningPostId] = useState<string | null>(null);
 
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [menuOpenPostId, setMenuOpenPostId] = useState<string | null>(null);
@@ -445,6 +445,20 @@ export default function MatePage() {
     }
   }
 
+  async function handleStartChat(post: TripMatePost): Promise<void> {
+    if (chatOpeningPostId) return;
+
+    setChatOpeningPostId(post.post_id);
+    try {
+      const room = await createDirectChatRoom(post.user_id);
+      navigate(`/chat/${room.chat_room_id}`);
+    } catch (chatError) {
+      window.alert(toErrorMessage(chatError, "Failed to open chat. Please try again."));
+    } finally {
+      setChatOpeningPostId(null);
+    }
+  }
+
   return (
     <div style={styles.page}>
       <div style={styles.shell}>
@@ -605,9 +619,7 @@ export default function MatePage() {
                   >
                     <div style={styles.cardHeader}>
                       <div style={styles.authorBlock}>
-                        <div style={styles.avatar}>
-                          {post.author.user_name?.slice(0, 1).toUpperCase() || "T"}
-                        </div>
+                        <AuthorAvatar post={post} />
                         <div>
                           <p style={styles.authorName}>{post.author.user_name}</p>
                           <p style={styles.authorMeta}>
@@ -989,7 +1001,7 @@ export default function MatePage() {
             setSelectedPost(null);
           }}
           onChat={() => {
-            setChatTarget(selectedPost);
+            void handleStartChat(selectedPost);
             setSelectedPost(null);
           }}
         />
@@ -1003,33 +1015,6 @@ export default function MatePage() {
         <div style={styles.menuBackdrop} onClick={() => setMenuOpenPostId(null)} />
       ) : null}
 
-      {chatTarget ? (
-        <div style={styles.modalOverlay} onClick={() => setChatTarget(null)}>
-          <div style={styles.chatSheet} onClick={(event) => event.stopPropagation()}>
-            <div style={styles.sheetHandle} />
-            <h2 style={styles.sheetTitle}>Message {chatTarget.author.user_name}</h2>
-            <textarea
-              value={chatMessage}
-              onChange={(event) => setChatMessage(event.target.value)}
-              placeholder="Write your first message..."
-              rows={4}
-              style={{ ...styles.input, ...styles.textarea }}
-            />
-            <button
-              type="button"
-              style={styles.primaryButton}
-              onClick={() => {
-                if (!chatMessage.trim()) return;
-                navigate("/chat");
-                setChatTarget(null);
-                setChatMessage("");
-              }}
-            >
-              Start Chat
-            </button>
-          </div>
-        </div>
-      ) : null}
     </div>
   );
 }
@@ -1051,6 +1036,27 @@ function Field({
       </span>
       {children}
     </label>
+  );
+}
+
+function AuthorAvatar({
+  post,
+  size = "default",
+}: {
+  post: TripMatePost;
+  size?: "default" | "large";
+}) {
+  const avatarStyle =
+    size === "large" ? { ...styles.avatar, ...styles.largeAvatar } : styles.avatar;
+
+  return (
+    <div style={avatarStyle}>
+      {post.profile_image_url ? (
+        <img src={post.profile_image_url} alt="" style={styles.avatarImage} />
+      ) : (
+        post.author.user_name?.slice(0, 1).toUpperCase() || "T"
+      )}
+    </div>
   );
 }
 
@@ -1103,9 +1109,7 @@ function PostModal({
 
         <div style={styles.modalBody}>
           <div style={styles.authorBlock}>
-            <div style={{ ...styles.avatar, ...styles.largeAvatar }}>
-              {post.author.user_name?.slice(0, 1).toUpperCase() || "T"}
-            </div>
+            <AuthorAvatar post={post} size="large" />
             <div>
               <p style={styles.authorName}>{post.author.user_name}</p>
               <p style={styles.authorMeta}>
@@ -1530,6 +1534,12 @@ const styles: Record<string, CSSProperties> = {
     background: "linear-gradient(135deg, var(--brand-primary), var(--brand-primary-deep))",
     color: "#ffffff",
     fontWeight: 800,
+    overflow: "hidden",
+  },
+  avatarImage: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
   },
   largeAvatar: {
     width: 60,

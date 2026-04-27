@@ -8,6 +8,7 @@ import MenuPage from "./pages/MenuPage";
 import MatePage from "./features/mate/MatePage";
 import ChatPage from "./features/friend-chat/ChatPage";
 import ChatRoomPage from "./features/friend-chat/ChatRoomPage";
+import { ChatProvider } from "./features/friend-chat/ChatProvider";
 import MyPage from "./pages/MyPage";
 import PlaceholderPage from "./pages/PlaceholderPage";
 import PlanSelectionPage from "./features/plan/PlanSelectionPage";
@@ -97,26 +98,28 @@ function ManualPlanRoute() {
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route element={<AppShell />}>
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/plan" element={<PlanSelectionPage />} />
-          <Route path="/plan/ai" element={<AiPlanDesignRoute />} />
-          <Route path="/plan/ai/result" element={<AiPlanResultRoute />} />
-          <Route path="/plan/manual" element={<ManualPlanRoute />} />
-          <Route path="/menu" element={<MenuPage />} />
-          <Route path="/mate" element={<MatePage />} />
-          <Route path="/chat" element={<ChatPage />} />
-          <Route path="/my" element={<MyPage />} />
-        </Route>
-        <Route path="/chat/:id" element={<ChatRoomPage />} />
-        <Route path="/spots/:id" element={<PlaceholderPage />} />
-        <Route path="/profile/:id" element={<PlaceholderPage />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      <ChatProvider>
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route element={<AppShell />}>
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/plan" element={<PlanSelectionPage />} />
+            <Route path="/plan/ai" element={<AiPlanDesignRoute />} />
+            <Route path="/plan/ai/result" element={<AiPlanResultRoute />} />
+            <Route path="/plan/manual" element={<ManualPlanRoute />} />
+            <Route path="/menu" element={<MenuPage />} />
+            <Route path="/mate" element={<MatePage />} />
+            <Route path="/chat" element={<ChatPage />} />
+            <Route path="/my" element={<MyPage />} />
+          </Route>
+          <Route path="/chat/:id" element={<ChatRoomPage />} />
+          <Route path="/spots/:id" element={<PlaceholderPage />} />
+          <Route path="/profile/:id" element={<PlaceholderPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </ChatProvider>
     </BrowserRouter>
   );
 }

@@ -2,8 +2,10 @@ import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
+  deleteMyProfileImage,
   getMyProfile,
   logoutUser,
+  replaceMyProfileImage,
   uploadMyProfileImage,
   withdrawUser,
   type UserProfile,
@@ -13,8 +15,11 @@ export default function MyPage() {
   const navigate = useNavigate();
   const profileImageInputRef = useRef<HTMLInputElement>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [activeTab, setActiveTab] = useState<"styles" | "info">("styles");
   const [isWithdrawing, setIsWithdrawing] = useState(false);
   const [isUploadingProfileImage, setIsUploadingProfileImage] = useState(false);
+  const [isDeletingProfileImage, setIsDeletingProfileImage] = useState(false);
+  const [isProfileImageMenuOpen, setIsProfileImageMenuOpen] = useState(false);
   const [profileImagePreview, setProfileImagePreview] = useState("");
 
   useEffect(() => {
@@ -67,14 +72,16 @@ export default function MyPage() {
     const file = event.target.files?.[0];
     if (!file) return;
 
+    setIsProfileImageMenuOpen(false);
+
     if (!["image/jpeg", "image/png", "image/webp", "image/gif"].includes(file.type)) {
       window.alert("Please choose a JPG, PNG, WEBP, or GIF image.");
       event.target.value = "";
       return;
     }
 
-    if (file.size > 10 * 1024 * 1024) {
-      window.alert("Please choose an image smaller than 10MB.");
+    if (file.size > 5 * 1024 * 1024) {
+      window.alert("Please choose an image smaller than 5MB.");
       event.target.value = "";
       return;
     }
@@ -84,9 +91,32 @@ export default function MyPage() {
     setIsUploadingProfileImage(true);
 
     try {
-      const updatedProfile = await uploadMyProfileImage(file);
-      if (updatedProfile) {
-        setProfile((current) => ({ ...current, ...updatedProfile }) as UserProfile);
+      let updatedImage = null;
+
+      if (getProfileImageUrl(profile)) {
+        try {
+          updatedImage = await replaceMyProfileImage(file);
+        } catch (replaceError) {
+          if (getApiStatus(replaceError) !== 404) {
+            throw replaceError;
+          }
+
+          updatedImage = await uploadMyProfileImage(file);
+        }
+      } else {
+        try {
+          updatedImage = await uploadMyProfileImage(file);
+        } catch (uploadError) {
+          if (getApiStatus(uploadError) !== 409) {
+            throw uploadError;
+          }
+
+          updatedImage = await replaceMyProfileImage(file);
+        }
+      }
+
+      if (updatedImage) {
+        setProfile((current) => ({ ...current, ...updatedImage }) as UserProfile);
       } else {
         const refreshedProfile = await getMyProfile();
         if (refreshedProfile) setProfile(refreshedProfile);
@@ -101,8 +131,40 @@ export default function MyPage() {
     }
   }
 
+  async function handleProfileImageDelete(): Promise<void> {
+    if (isDeletingProfileImage || isUploadingProfileImage) {
+      return;
+    }
+
+    setIsDeletingProfileImage(true);
+
+    try {
+      await deleteMyProfileImage();
+      setProfile((current) =>
+        current
+          ? {
+              ...current,
+              profile_image_url: null,
+              profileImageUrl: "",
+              avatar_url: "",
+              image_url: "",
+              imageUrl: "",
+            }
+          : current
+      );
+      setProfileImagePreview("");
+      setIsProfileImageMenuOpen(false);
+    } catch (error) {
+      window.alert(toErrorMessage(error, "Profile photo delete failed. Please try again."));
+    } finally {
+      setIsDeletingProfileImage(false);
+    }
+  }
+
   const avatarText = profile?.user_name?.slice(0, 2) ?? "";
   const profileImageUrl = profileImagePreview || getProfileImageUrl(profile);
+  const canDeleteProfileImage =
+    Boolean(getProfileImageUrl(profile)) && !profileImagePreview;
   const nameText = profile?.user_name ?? "";
   const metaText = [
     profile?.nationality,
@@ -139,8 +201,8 @@ export default function MyPage() {
           <button
             type="button"
             style={styles.avatarButton}
-            onClick={() => profileImageInputRef.current?.click()}
-            disabled={isUploadingProfileImage}
+            onClick={() => setIsProfileImageMenuOpen((current) => !current)}
+            disabled={isUploadingProfileImage || isDeletingProfileImage}
             aria-label="Change profile photo"
           >
             {profileImageUrl ? (
@@ -150,10 +212,35 @@ export default function MyPage() {
             )}
             {isUploadingProfileImage ? (
               <span style={styles.avatarOverlay}>Uploading...</span>
+            ) : isDeletingProfileImage ? (
+              <span style={styles.avatarOverlay}>Deleting...</span>
             ) : (
               <span style={styles.avatarEditBadge}>Change</span>
             )}
           </button>
+          {isProfileImageMenuOpen ? (
+            <div style={styles.avatarMenu}>
+              <button
+                type="button"
+                style={styles.avatarMenuButton}
+                onClick={() => profileImageInputRef.current?.click()}
+              >
+                Upload Photo
+              </button>
+              <button
+                type="button"
+                style={{
+                  ...styles.avatarMenuButton,
+                  ...styles.avatarMenuDanger,
+                  ...(!canDeleteProfileImage ? styles.avatarMenuButtonDisabled : {}),
+                }}
+                onClick={() => void handleProfileImageDelete()}
+                disabled={!canDeleteProfileImage || isDeletingProfileImage}
+              >
+                Delete Photo
+              </button>
+            </div>
+          ) : null}
           <input
             ref={profileImageInputRef}
             type="file"
@@ -166,7 +253,32 @@ export default function MyPage() {
         <p style={styles.meta}>{metaText}</p>
       </div>
 
-      {profile?.travel_styles?.length ? (
+      <section style={styles.tabSection}>
+        <div style={styles.tabPanel}>
+          <button
+            type="button"
+            style={{
+              ...styles.tabButton,
+              ...(activeTab === "styles" ? styles.tabButtonActive : {}),
+            }}
+            onClick={() => setActiveTab("styles")}
+          >
+            Travel Styles
+          </button>
+          <button
+            type="button"
+            style={{
+              ...styles.tabButton,
+              ...(activeTab === "info" ? styles.tabButtonActive : {}),
+            }}
+            onClick={() => setActiveTab("info")}
+          >
+            My Info
+          </button>
+        </div>
+      </section>
+
+      {activeTab === "styles" && profile?.travel_styles?.length ? (
         <section style={styles.section}>
           <h2 style={styles.sectionTitle}>Travel Styles</h2>
           <div style={styles.tagWrap}>
@@ -179,7 +291,13 @@ export default function MyPage() {
         </section>
       ) : null}
 
-      {infoItems.length ? (
+      {activeTab === "styles" && !profile?.travel_styles?.length ? (
+        <section style={styles.section}>
+          <div style={styles.emptyPanel}>No travel styles yet.</div>
+        </section>
+      ) : null}
+
+      {activeTab === "info" && infoItems.length ? (
         <section style={styles.section}>
           <h2 style={styles.sectionTitle}>Basic Information</h2>
           <div style={styles.infoList}>
@@ -196,6 +314,12 @@ export default function MyPage() {
               </div>
             ))}
           </div>
+        </section>
+      ) : null}
+
+      {activeTab === "info" && infoItems.length === 0 ? (
+        <section style={styles.section}>
+          <div style={styles.emptyPanel}>No basic information available.</div>
         </section>
       ) : null}
 
@@ -241,6 +365,10 @@ const styles: Record<string, CSSProperties> = {
   },
   avatarWrap: {
     position: "relative",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 10,
   },
   avatarButton: {
     width: 88,
@@ -289,6 +417,35 @@ const styles: Record<string, CSSProperties> = {
     fontWeight: 800,
     textAlign: "center",
   },
+  avatarMenu: {
+    zIndex: 6,
+    width: 168,
+    padding: 8,
+    borderRadius: 16,
+    background: "#ffffff",
+    border: "1px solid var(--border-soft)",
+    boxShadow: "0 16px 34px rgba(33,33,33,0.16)",
+  },
+  avatarMenuButton: {
+    width: "100%",
+    minHeight: 38,
+    border: "none",
+    borderRadius: 12,
+    padding: "0 12px",
+    background: "transparent",
+    color: "var(--text-secondary)",
+    fontWeight: 800,
+    textAlign: "left",
+    cursor: "pointer",
+  },
+  avatarMenuDanger: {
+    color: "#dc2626",
+  },
+  avatarMenuButtonDisabled: {
+    color: "var(--neutral-500)",
+    cursor: "not-allowed",
+    opacity: 0.58,
+  },
   hiddenInput: {
     display: "none",
   },
@@ -304,6 +461,33 @@ const styles: Record<string, CSSProperties> = {
   section: {
     maxWidth: 720,
     margin: "18px auto 0",
+  },
+  tabSection: {
+    maxWidth: 720,
+    margin: "18px auto 0",
+  },
+  tabPanel: {
+    display: "grid",
+    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+    gap: 8,
+    padding: 8,
+    borderRadius: 22,
+    background: "rgba(255,255,255,0.88)",
+    border: "1px solid var(--border-soft)",
+    boxShadow: "var(--shadow-soft)",
+  },
+  tabButton: {
+    minHeight: 44,
+    border: "none",
+    borderRadius: 16,
+    background: "transparent",
+    color: "var(--neutral-700)",
+    fontWeight: 800,
+    cursor: "pointer",
+  },
+  tabButtonActive: {
+    background: "linear-gradient(135deg, rgba(5,181,187,0.16), rgba(228,247,247,0.96))",
+    color: "var(--text-primary)",
   },
   sectionTitle: {
     margin: "0 0 10px",
@@ -352,6 +536,14 @@ const styles: Record<string, CSSProperties> = {
     fontWeight: 700,
     textAlign: "right",
     overflowWrap: "anywhere",
+  },
+  emptyPanel: {
+    padding: 22,
+    borderRadius: 24,
+    background: "rgba(255,255,255,0.88)",
+    border: "1px solid var(--border-soft)",
+    color: "var(--neutral-700)",
+    boxShadow: "var(--shadow-soft)",
   },
   logoutButton: {
     display: "block",
@@ -402,6 +594,11 @@ function getProfileImageUrl(profile: UserProfile | null): string {
 function toErrorMessage(error: unknown, fallback: string): string {
   const apiError = error as { message?: string };
   return apiError.message || fallback;
+}
+
+function getApiStatus(error: unknown): number | undefined {
+  const apiError = error as { status?: number; response?: { status?: number } };
+  return apiError.status || apiError.response?.status;
 }
 
 const SAVED_PLAN_PANEL_ID = "krip-saved-plan-panel";

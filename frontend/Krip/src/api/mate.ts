@@ -14,6 +14,7 @@ export interface Author {
 export interface TripMatePost {
   post_id: string;
   user_id: string;
+  profile_image_url: string | null;
   author: Author;
   title: string;
   content: string;
@@ -100,6 +101,13 @@ export async function updateTripMatePost(
   const { data } = await client.put<TripMatePost>(
     `/api/tripmate/posts/${encodeURIComponent(postId)}`,
     body
+  );
+  return data;
+}
+
+export async function getTripMatePost(postId: string): Promise<TripMatePost> {
+  const { data } = await client.get<TripMatePost>(
+    `/api/tripmate/posts/${encodeURIComponent(postId)}`
   );
   return data;
 }
