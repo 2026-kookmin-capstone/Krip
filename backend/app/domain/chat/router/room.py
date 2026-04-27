@@ -158,6 +158,30 @@ async def list_rooms(
     return _to_list_response(result)
 
 
+# ──────────────────── 단건 방 조회 ────────────────────
+
+@router.get("/{chat_room_id}")
+@inject
+async def get_room(
+    request: Request,
+    chat_room_id: str,
+    service: MessageHistoryService = Depends(Provide[Container.message_history_service]),
+) -> ChatRoomResponse:
+    """방 1건 상세 조회 — `room_joined` WS 이벤트 수신 후 메타 fetch 용."""
+    user_id: str = request.state.user_id
+
+    try:
+        result = await service.get_room(me_id=user_id, room_id=chat_room_id)
+    except ChatRoomNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    return _to_room_response(result)
+
+
 # ──────────────────── 메시지 히스토리 ────────────────────
 
 @router.get("/{chat_room_id}/messages")

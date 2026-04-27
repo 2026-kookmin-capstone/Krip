@@ -18,10 +18,11 @@ from app.domain.chat.dto.room import (
     ChatRoomPeerData,
     LastMessagePreviewData,
 )
-from app.domain.chat.model.chat_room import ChatRoom
+from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
 from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
 from app.domain.chat.repository.chat_message import ChatMessageRepository
 from app.domain.chat.repository.chat_room import ChatRoomRepository
+from app.domain.chat.service.exception import ChatRoomNotFoundError
 from app.database.session import UnitOfWork, mongodb, transactional
 from app.core.chat.redis_key import unread_key
 from app.core.logger import get_logger
@@ -86,6 +87,59 @@ class MessageHistoryService:
         ]
 
         return ChatRoomListData(items=items, next_cursor=None)
+
+
+    # ──────────────────── 단건 방 조회 ────────────────────
+
+    @transactional
+    async def get_room(self, *, me_id: str, room_id: str) -> ChatRoomData:
+        """방 1건 상세 조회 — `room_joined` 이벤트 수신 후 메타 fetch 등에 사용.
+
+        list_rooms 와 동일한 응답 스키마를 단건으로 반환한다 (peer / unread / last_message
+        모두 채움). 권한 체크 우선순위:
+            1. 방 존재 여부 → 404
+            2. 활성 멤버 여부 → 403  (탈퇴자는 방을 못 봄)
+        """
+        chat_room_repo = ChatRoomRepository(self._session)
+        member_repo = ChatRoomMemberRepository(self._session)
+        user_repo = UserRepository(self._session)
+        message_repo = ChatMessageRepository(mongodb.database)
+        redis_hot = await get_redis_client()
+
+        room = await chat_room_repo.find_by_id(room_id)
+        if room is None:
+            raise ChatRoomNotFoundError("존재하지 않는 방입니다.")
+
+        if not await member_repo.is_active_member(room_id, me_id):
+            raise PermissionError("이 방의 멤버가 아닙니다.")
+
+        # peer_user_id 파생 — 1:1 방의 상대방 (그룹은 None)
+        peer_user_id: Optional[str] = None
+        if room.type == ChatRoomType.DIRECT:
+            if room.direct_user_a_id == me_id:
+                peer_user_id = room.direct_user_b_id
+            else:
+                peer_user_id = room.direct_user_a_id
+
+        peer_user = (
+            await user_repo.find_by_id_with_profile(peer_user_id)
+            if peer_user_id else None
+        )
+
+        unread_raw = await redis_hot.hget(unread_key(me_id), room_id)
+        unread_count = int(unread_raw) if unread_raw is not None else 0
+
+        last_message_doc: Optional[dict] = None
+        if room.last_message_id:
+            last_message_doc = await message_repo.find_by_id(room.last_message_id)
+
+        return self._room_to_dto(
+            room=room,
+            peer_user_id=peer_user_id,
+            peer_user=peer_user,
+            unread_count=unread_count,
+            last_message_doc=last_message_doc,
+        )
 
 
     # ──────────────────── 히스토리 페이징 ────────────────────
