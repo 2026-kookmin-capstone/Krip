@@ -98,7 +98,7 @@ function formatDistance(distanceKm: number): string {
 function formatRating(rating?: number, reviewCount?: number): string {
   if (!Number.isFinite(rating)) return "No rating available";
   if (!Number.isFinite(reviewCount)) return `Rating ${rating?.toFixed(1)}`;
-  return `Rating ${rating?.toFixed(1)} 쨌 ${reviewCount?.toLocaleString()} reviews`;
+  return `Rating ${rating?.toFixed(1)} / ${reviewCount?.toLocaleString()} reviews`;
 }
 
 function formatPriceRange(
@@ -886,13 +886,13 @@ export default function HomePage() {
                   onClick={closePlaceDetail}
                   aria-label="Close details"
                 >
-                  횞
+                  x
                 </button>
               </div>
               <div>
                 <h2 style={styles.modalTitle}>{selectedPlace.name}</h2>
                 <p style={styles.modalDistance}>
-                  {locationLabel} 쨌 {formatDistance(selectedPlace.distanceKm)}
+                  {locationLabel} / {formatDistance(selectedPlace.distanceKm)}
                 </p>
               </div>
             </div>
@@ -997,7 +997,7 @@ export default function HomePage() {
                         <span>
                           {[review.rating ? `${review.rating}` : null, review.relativeTime]
                             .filter(Boolean)
-                            .join(" 쨌 ")}
+                            .join(" / ")}
                         </span>
                       </div>
                       <p style={styles.reviewBody}>
@@ -1824,4 +1824,3 @@ const styles: Record<string, CSSProperties> = {
     lineHeight: 1.5,
   },
 };
-
