@@ -1,5 +1,5 @@
-from typing import Optional
-from sqlalchemy import select, or_, and_
+from typing import Iterable, Optional
+from sqlalchemy import select, or_, and_, case
 from sqlalchemy.orm import joinedload
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -30,6 +30,40 @@ class FriendshipRepository:
     async def find_by_id(self, friendship_id: str) -> Optional[Friendship]:
         """friendship_id로 단건 조회"""
         return await self.session.get(Friendship, friendship_id)
+
+
+    async def find_accepted_friend_ids_with(
+        self, me_id: str, target_ids: Iterable[str],
+    ) -> set[str]:
+        """`me_id` 와 ACCEPTED 친구 관계인 `target_ids` 의 서브셋 반환.
+
+        그룹 채팅 초대 시 "친구만 초대 가능" 정책 체크에 사용 — N 번 단발 조회를
+        1 번 쿼리로 묶는다. ``block`` 발생 시 friendship 이 `UserBlockService`
+        에서 삭제되므로 차단 관계도 자연히 걸러진다.
+        """
+        targets = list(target_ids)
+        if not targets:
+            return set()
+
+        peer_id = case(
+            (Friendship.requester_id == me_id, Friendship.addressee_id),
+            else_=Friendship.requester_id,
+        )
+        stmt = select(peer_id).where(
+            Friendship.status == FriendshipStatus.ACCEPTED,
+            or_(
+                and_(
+                    Friendship.requester_id == me_id,
+                    Friendship.addressee_id.in_(targets),
+                ),
+                and_(
+                    Friendship.addressee_id == me_id,
+                    Friendship.requester_id.in_(targets),
+                ),
+            ),
+        )
+        result = await self.session.execute(stmt)
+        return set(result.scalars().all())
 
 
     async def find_between(

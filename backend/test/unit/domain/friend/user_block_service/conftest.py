@@ -48,12 +48,22 @@ def user_repo_mock():
 
 
 @pytest.fixture
+def block_cache_service_stub():
+    """PHASE_2 #6 — UserBlockService 가 주입받는 chat 도메인 훅. 단위는 mock."""
+    from unittest.mock import AsyncMock, MagicMock
+    mock = MagicMock(name="block_cache")
+    mock.invalidate_block_cache = AsyncMock()
+    return mock
+
+
+@pytest.fixture
 def service(
     monkeypatch,
     mock_session,
     friendship_repo_mock,
     block_repo_mock,
     user_repo_mock,
+    block_cache_service_stub,
 ):
     monkeypatch.setattr(
         "app.domain.friend.service.user_block.UserBlockRepository",
@@ -69,4 +79,4 @@ def service(
     )
 
     uow = FakeUnitOfWork(mock_session)
-    return UserBlockService(uow=uow)
+    return UserBlockService(uow=uow, block_cache_service=block_cache_service_stub)

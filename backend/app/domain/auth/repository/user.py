@@ -34,6 +34,22 @@ class UserRepository:
         return result.unique().scalar_one_or_none()
 
 
+    async def find_by_ids_with_profile(self, user_ids: list[str]) -> dict[str, User]:
+        """여러 유저 + 상세정보 + 여행스타일을 한 번에 조회해 `{user_id: User}` 맵 반환.
+
+        방 리스트 peer 프로필 배치용. 입력이 비면 쿼리 스킵. 누락된 id 는 결과 dict 에
+        key 없음 — 호출측이 `.get()` 으로 탈퇴/부재 분기.
+        """
+        if not user_ids:
+            return {}
+        stmt = select(User).options(
+            joinedload(User.detail),
+            joinedload(User.travel_styles),
+        ).where(User.user_id.in_(user_ids))
+        result = await self.session.execute(stmt)
+        return {u.user_id: u for u in result.unique().scalars().all()}
+
+
     async def save(self, user: User) -> User:
         self.session.add(user)
         await self.session.flush()

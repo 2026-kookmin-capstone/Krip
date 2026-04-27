@@ -1,4 +1,5 @@
-from typing import Optional
+from typing import Literal, Optional
+import socket
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import Field
 
@@ -42,7 +43,18 @@ class Settings(BaseSettings):
     # Redis 정보
     REDIS_HOST: str = Field("hyeonsang-redis", description="REDIS HOST")
     REDIS_PORT: int = Field(6379, description="REDIS PORT")
-    REDIS_DB: int = Field(0, description="REDIS DB")
+    REDIS_DB: int = Field(0, description="REDIS DB — 세션/시퀀스/unread 등 핫 데이터")
+    REDIS_DB_DEDUPE: int = Field(1, description="REDIS DB — dedupe 키 전용 격리 (KEYS 사고 방지)")
+
+    # WebSocket / 채팅 fan-out 설정
+    FANOUT_MODE: Literal["in_process", "node_channel"] = Field(
+        "in_process",
+        description="채팅 fan-out 모드.",
+    )
+    NODE_ID: str = Field(
+        default_factory=socket.gethostname,
+        description="노드 식별자. 기본값은 hostname(k8s pod name).",
+    )
     
     # 인증 정보
     ACCESS_TOKEN: str = Field(..., description="API 접근 토큰")
@@ -85,6 +97,12 @@ class Settings(BaseSettings):
     @property
     def REDIS_URL(self) -> str:
         return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}/{self.REDIS_DB}"
+
+    @property
+    def REDIS_URL_DEDUPE(self) -> str:
+        """dedupe 키 전용 Redis URL. DB 번호만 분리하여 운영자의 `KEYS dedupe:*` 실수가
+        세션/시퀀스 등 핫 데이터에 영향을 주지 않도록 격리한다."""
+        return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}/{self.REDIS_DB_DEDUPE}"
     
     @property
     def is_production(self) -> bool:
