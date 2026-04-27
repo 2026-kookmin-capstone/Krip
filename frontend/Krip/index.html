@@ -2,11 +2,36 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>krip</title>
+    <title>Krip</title>
   </head>
   <body>
+    <div
+      id="app-loader"
+      aria-hidden="true"
+      style="
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background:
+          radial-gradient(circle at top left, rgba(5, 181, 187, 0.16), transparent 26%),
+          radial-gradient(circle at top right, rgba(5, 181, 187, 0.1), transparent 28%),
+          linear-gradient(180deg, rgba(228, 247, 247, 0.5), transparent 24%),
+          #fafafa;
+        transition: opacity 220ms ease;
+      "
+    >
+      <img
+        id="app-loader-image"
+        alt="Krip loading"
+        src="/loading.png"
+        style="width: min(100vw, 28rem); height: auto; display: block;"
+      />
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

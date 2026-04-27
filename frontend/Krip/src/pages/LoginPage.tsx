@@ -31,16 +31,15 @@ export default function LoginPage() {
   return (
     <div style={styles.wrapper}>
       <div style={styles.center}>
-        <img src="/logo.png" alt="Krip logo" style={styles.logo} />
-        <h1 style={styles.appName}>KRIP</h1>
-        <p style={styles.tagline}>KOREA-TRIP</p>
-      </div>
-
-      <div style={styles.bottom}>
-        <button style={styles.googleBtn} onClick={handleGoogleLogin}>
-          <GoogleIcon />
-          Sign in with Google
-        </button>
+        <div style={styles.heroFrame}>
+          <img src="/loading.png" alt="Krip login" style={styles.heroImage} />
+          <div style={styles.bottom}>
+            <button style={styles.googleBtn} onClick={handleGoogleLogin}>
+              <GoogleIcon />
+              Sign in with Google
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -64,47 +63,63 @@ function GoogleIcon() {
 
 const styles: Record<string, CSSProperties> = {
   wrapper: {
-    position: "relative", width: "100vw", height: "100dvh",
+    position: "relative",
+    width: "100vw",
+    minHeight: "100dvh",
     background:
-      "radial-gradient(circle at top left, rgba(5,181,187,0.2), transparent 32%), radial-gradient(circle at top right, rgba(5,181,187,0.12), transparent 34%), linear-gradient(180deg, rgba(228,247,247,0.7), transparent 28%), var(--surface-base)",
-    display: "flex", flexDirection: "column", alignItems: "center",
-    justifyContent: "space-between", overflow: "hidden",
+      "linear-gradient(180deg, #18bcc1 0%, #18bcc1 68%, #14b4ba 100%)",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "space-between",
+    overflow: "hidden",
     fontFamily: "'Nunito', 'Apple SD Gothic Neo', sans-serif",
   },
   center: {
-    flex: 1, display: "flex", flexDirection: "column",
-    alignItems: "center", justifyContent: "center", gap: 12,
+    flex: 1,
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "20px 20px 0",
   },
-  logo: {
-    width: 110,
-    height: 110,
-    borderRadius: 24,
-    boxShadow: "var(--shadow-soft)",
-    border: "1px solid rgba(5,181,187,0.12)",
+  heroFrame: {
+    position: "relative",
+    width: "min(100%, 430px)",
   },
-  appName: {
-    margin: 0,
-    fontSize: "2.2rem",
-    fontWeight: 800,
-    color: "var(--text-primary)",
-    letterSpacing: "-0.5px",
-  },
-  tagline: {
-    margin: 0,
-    fontSize: "0.9rem",
-    color: "var(--neutral-700)",
-    letterSpacing: "0.08em",
-    textTransform: "uppercase",
+  heroImage: {
+    width: "100%",
+    maxHeight: "74dvh",
+    objectFit: "contain",
+    display: "block",
   },
   bottom: {
-    width: "100%", maxWidth: 400, padding: "0 24px 48px",
-    display: "flex", flexDirection: "column", alignItems: "center", position: "relative", zIndex: 1,
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: "5.5%",
+    width: "100%",
+    padding: "0 34px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    zIndex: 1,
   },
   googleBtn: {
-    display: "flex", alignItems: "center", justifyContent: "center",
-    width: "100%", padding: "14px 0", borderRadius: 18, border: "1px solid rgba(5,181,187,0.18)",
-    background: "linear-gradient(135deg, var(--brand-primary), #12c0c6)",
-    color: "#ffffff", fontSize: "1rem", fontWeight: 800,
-    cursor: "pointer", boxShadow: "0 12px 28px rgba(5,181,187,0.24)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "86%",
+    minHeight: 52,
+    padding: "0 18px",
+    borderRadius: 16,
+    border: "1px solid rgba(255,255,255,0.78)",
+    background: "#ffffff",
+    color: "#256f72",
+    fontSize: "0.95rem",
+    fontWeight: 800,
+    cursor: "pointer",
+    boxShadow: "0 18px 36px rgba(14, 90, 93, 0.18)",
   },
 };
