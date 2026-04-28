@@ -1,0 +1,88 @@
+# version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: krip-postgres
+    environment:
+      POSTGRES_USER: cho
+      POSTGRES_PASSWORD: hyeonsang
+      POSTGRES_DB: chohyeonsang
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data
+    networks:
+      - krip-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cho -d chohyeonsang"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  mongodb:
+    image: mongo:7-jammy
+    container_name: krip-mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: cho
+      MONGO_INITDB_ROOT_PASSWORD: hyeonsang
+      MONGO_INITDB_DATABASE: chohyeonsang
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - krip-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: krip-redis
+    volumes:
+      - redis-data:/data
+    networks:
+      - krip-network
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: krip-backend
+    env_file:
+      - ./backend/.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - krip-network
+    volumes:
+      - ./backend/app:/backend/app:ro
+      - ./backend/migration:/backend/migration
+      - ./backend/data:/backend/data
+      - ./backend/logs:/backend/logs
+      - ./backend/scripts:/backend/scripts:ro           # 업로드 스크립트
+      - ./backend/seoul_data:/backend/seoul_data:ro     # 장소 JSON 데이터    
+
+networks:
+  krip-network:
+    driver: bridge
+
+volumes:
+  postgresql-data:
+    name: krip-postgres-data
+  mongodb-data:
+    name: krip-mongodb-data
+  redis-data:
+    name: krip-redis-data
