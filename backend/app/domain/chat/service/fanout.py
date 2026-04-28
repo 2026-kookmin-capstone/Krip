@@ -87,6 +87,58 @@ class FanoutService:
                     del self._room_subs[room_id]
 
 
+    # ──────────────────── 동적 방 구독 (invite / leave / kick) ────────────────────
+
+    def subscribe_user_to_room(self, user_id: str, room_id: str) -> None:
+        """유저의 모든 로컬 세션을 방 구독에 추가. invite / 방 생성 시 호출.
+
+        WS 가 처음 연결될 때 (`ws.py` 의 `list_user_room_ids` 경로) 구독되는 정적
+        등록과 짝을 이루는 동적 등록 — 그 이후 새로 가입한 방에 대해 호출. 호출 전에
+        RDB `chat_room_member` 와 Redis `room_members` 캐시가 먼저 갱신되어야 한다
+        (시스템 메시지 fan-out 이전에 구독되어야 자기 초대된 메시지 수신).
+
+        오프라인 유저는 `_user_subs.get(user_id, ())` 가 빈 set 이라 no-op — 다음 WS
+        연결 시 정적 등록 경로로 자연스럽게 채워진다.
+
+        Idempotent — `set.add` 로 중복 호출 안전. unregister 진행 중인 dead WS 는
+        `_local_ws_by_session` 부재로 가드.
+        """
+        for ws in list(self._user_subs.get(user_id, ())):
+            sid = getattr(ws, "session_id", None)
+            if sid is None or sid not in self._local_ws_by_session:
+                continue  # 이미 끊긴 WS — skip
+            self.register_ws_to_room(ws, room_id)
+
+
+    def unsubscribe_user_from_room(self, user_id: str, room_id: str) -> None:
+        """유저의 모든 로컬 세션을 방 구독에서 제거. leave / kick 시 호출.
+
+        반드시 leave/kick 의 시스템 메시지 (`fan_out_to_room`) **이전** 에 호출 —                                                                                                                                             
+        1) leak 차단 보장: send_system_message 가 실패해도 이미 구독 해제됨      
+        2) UX: 퇴장 당사자는 `room_left` 이벤트만 받고 자기 퇴장 시스템 메시지는 수신 안 함                                                                                                                                   
+            (카톡/슬랙/디스코드 표준 동작)  
+        Redis `room_members` SREM 은 송신 경로 (`_ensure_membership`) 차단용으로
+        먼저 처리되며, 이 메서드는 수신 경로 (`_room_subs`) 차단용으로 별도 동작.
+
+        오프라인 유저는 `_user_subs.get(user_id, ())` 가 빈 set 이라 no-op.
+        """
+        affected = list(self._user_subs.get(user_id, ()))
+        if not affected:
+            return
+
+        room_set = self._room_subs.get(room_id)
+        for ws in affected:
+            rooms = getattr(ws, "subscribed_rooms", None)
+            if rooms is not None:
+                rooms.discard(room_id)
+            if room_set is not None:
+                room_set.discard(ws)
+
+        # 방의 마지막 구독자가 빠졌으면 빈 set 정리 (메모리 누수 방지)
+        if room_set is not None and not room_set:
+            del self._room_subs[room_id]
+
+
     # ──────────────────── Fan-out ────────────────────
 
     async def fan_out_to_room(self, room_id: str, payload: dict) -> None:
