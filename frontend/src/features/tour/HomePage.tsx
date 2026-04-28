@@ -129,6 +129,17 @@ function haversineDistance(
   return earthRadiusKm * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
+function getPlaceDistanceKm(
+  place: Place,
+  currentLocation: { lat: number; lng: number }
+): number {
+  if (Number.isFinite(place.rawDistanceMeters)) {
+    return Number(place.rawDistanceMeters) / 1000;
+  }
+
+  return haversineDistance(currentLocation, place.coords);
+}
+
 function sanitizeTags(value: unknown): PlaceTag[] {
   if (!Array.isArray(value)) return [];
 
@@ -468,7 +479,7 @@ export default function HomePage() {
         ...place,
         favoriteId: place.favoriteId || favoriteIdByPlaceId.get(place.id),
         isFavorite: place.initialIsFavorite || favoriteIds.has(place.id),
-        distanceKm: haversineDistance(currentLocation, place.coords),
+        distanceKm: getPlaceDistanceKm(place, currentLocation),
       })),
     [currentLocation, favoriteIdByPlaceId, favoriteIds, placesSource]
   );
@@ -478,7 +489,7 @@ export default function HomePage() {
       favoritePlaces.map((place) => ({
         ...place,
         isFavorite: true,
-        distanceKm: haversineDistance(currentLocation, place.coords),
+        distanceKm: getPlaceDistanceKm(place, currentLocation),
       })),
     [currentLocation, favoritePlaces]
   );

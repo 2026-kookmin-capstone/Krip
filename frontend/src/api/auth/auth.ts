@@ -172,13 +172,17 @@ function toErrorMessage(value: unknown, fallback: string): string {
 }
 
 function getAuthHeaders(headers: RequestHeaders = {}): RequestHeaders {
+  if (!AUTHORIZATION_BEARER) return headers;
+
   return {
     ...headers,
-    Authorization: "Bearer krip3accesss1secret2token0",
+    Authorization: AUTHORIZATION_BEARER,
   };
 }
 
 function getTourPlacesHeaders(headers: RequestHeaders = {}): RequestHeaders {
+  if (!TOUR_PLACES_AUTHORIZATION_BEARER) return headers;
+
   return {
     ...headers,
     Authorization: TOUR_PLACES_AUTHORIZATION_BEARER,
@@ -252,11 +256,9 @@ export function createLoginUrl(): string {
   const url = new URL("/api/auth/login", API_BASE_URL);
   url.searchParams.set("type", "google");
 
-  const isLocalHost =
-    window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1";
+  const shouldUseLocalLogin = import.meta.env.VITE_AUTH_IS_LOCAL === "true";
 
-  if (isLocalHost) {
+  if (shouldUseLocalLogin) {
     url.searchParams.set("is_local", "true");
   }
 
