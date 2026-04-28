@@ -1,0 +1,1 @@
+# FriendDetailService tests package
