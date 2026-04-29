@@ -38,7 +38,7 @@ SEARCH_RADIUS_METERS = 2500
 # 사용자 화면 페이지네이션 default(PAGE_SIZE=30)는 여기에 부족하다.
 # 그룹 분류 후 OTHER 제거 + 음식 필터 + 검색점 간 중복 제거를 거쳐도
 # BASE_CAPS 합(62)과 HARD_CAP(80)을 그룹별로 채울 수 있도록 넉넉히 잡는다.
-SEARCH_LIMIT_PER_POINT = 150
+SEARCH_LIMIT_PER_POINT = 200
 
 
 class TourPlannerGraphOrchestrator:

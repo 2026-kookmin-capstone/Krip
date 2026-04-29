@@ -100,9 +100,9 @@ def classify(types: List[str]) -> str:
 # ──────────────────── 그룹별 cap (균형 분배) ────────────────────
 
 
-# 기본 cap (스타일 무관) — 합 62
+# 기본 cap (스타일 무관) — 합 67
 BASE_CAPS: Dict[str, int] = {
-    GROUP_MEAL: 20,
+    GROUP_MEAL: 25,
     GROUP_CAFE: 12,
     GROUP_ATTRACTION: 12,
     GROUP_SHOPPING: 8,
