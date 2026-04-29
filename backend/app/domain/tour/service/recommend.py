@@ -98,7 +98,6 @@ class RecommendService:
                             reason=p.reason,
                             estimated_cost_krw=p.estimated_cost_krw,
                             stay_minutes=p.stay_minutes,
-                            is_additional=p.is_additional,
                         )
                         for p in day.places
                     ],

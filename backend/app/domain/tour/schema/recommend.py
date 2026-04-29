@@ -108,7 +108,6 @@ class TourPlaceDetailResponse(BaseModel):
     reason: str = Field(..., description="Reason and highlights (English).")  # 추천 이유
     estimated_cost_krw: int = Field(..., ge=0, description="Estimated per-person spend in KRW. 0 means free.")  # 예상 1인 지출 (무료=0)
     stay_minutes: int = Field(..., gt=0, description="Recommended stay in minutes (positive).")  # 권장 체류 시간 (양수)
-    is_additional: bool = Field(..., description="True if this is the user-required must-visit place.")  # 추가 장소 여부
 
 
 class TourMovementHopResponse(BaseModel):
@@ -169,7 +168,6 @@ class TourRecommendResponse(BaseModel):
                                 "reason": "Foreigner-friendly Hongdae cafe famous for its resident sheep and brunch menu. A relaxed kickoff for a couple's morning.",
                                 "estimated_cost_krw": 18000,
                                 "stay_minutes": 90,
-                                "is_additional": False,
                             },
                             {
                                 "place_id": "ChIJExampleYeonnamPark",
@@ -181,7 +179,6 @@ class TourRecommendResponse(BaseModel):
                                 "reason": "A linear park threading through Yeonnam-dong, ideal for a slow walk between cafes and small shops with plenty of photo spots.",
                                 "estimated_cost_krw": 0,
                                 "stay_minutes": 60,
-                                "is_additional": False,
                             },
                             {
                                 "place_id": "ChIJ0X7IQw2jfDURa8XanOsn0cw",
@@ -193,7 +190,6 @@ class TourRecommendResponse(BaseModel):
                                 "reason": "Halal-certified Korean restaurant near Jongno, offering traditional dishes that comply with halal requirements — a comfortable lunch choice for Muslim travelers.",
                                 "estimated_cost_krw": 18000,
                                 "stay_minutes": 75,
-                                "is_additional": False,
                             },
                             {
                                 "place_id": "ChIJExampleBukchon",
@@ -205,7 +201,6 @@ class TourRecommendResponse(BaseModel):
                                 "reason": "Preserved hanok neighborhood with sweeping rooftop views over Seoul. The user-designated must-visit on this trip.",
                                 "estimated_cost_krw": 0,
                                 "stay_minutes": 90,
-                                "is_additional": True,
                             },
                             {
                                 "place_id": "ChIJExampleInsadong",
@@ -217,7 +212,6 @@ class TourRecommendResponse(BaseModel):
                                 "reason": "Traditional craft and souvenir street within walking distance of Bukchon — calligraphy, ceramics, and tea houses.",
                                 "estimated_cost_krw": 7000,
                                 "stay_minutes": 60,
-                                "is_additional": False,
                             },
                             {
                                 "place_id": "ChIJExampleMyeongdong",
@@ -229,7 +223,6 @@ class TourRecommendResponse(BaseModel):
                                 "reason": "Seoul's iconic shopping district with halal-friendly street food and cosmetic shops, lively in the evening for couples.",
                                 "estimated_cost_krw": 22000,
                                 "stay_minutes": 90,
-                                "is_additional": False,
                             },
                             {
                                 "place_id": "ChIJExampleNSeoulTower",
@@ -241,7 +234,6 @@ class TourRecommendResponse(BaseModel):
                                 "reason": "Closing the day with Seoul's most iconic night view from Namsan, a short cable car ride from Myeongdong.",
                                 "estimated_cost_krw": 5000,
                                 "stay_minutes": 60,
-                                "is_additional": False,
                             },
                         ],
                         "movements": [
