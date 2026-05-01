@@ -16,6 +16,21 @@ def _validate_visit_time(v: Optional[str]) -> Optional[str]:
     return v
 
 
+def _validate_title(v: Optional[str]) -> Optional[str]:
+    """제목 정규화 — 양 끝 공백 제거 후 빈 값 거부.
+
+    - None: 통과 (제목 미지정)
+    - 공백만: ValueError (의도하지 않은 입력)
+    - 정상: strip 결과 반환 (leading/trailing 공백 자동 제거)
+    """
+    if v is None:
+        return v
+    stripped = v.strip()
+    if not stripped:
+        raise ValueError("title 은 공백만으로 구성될 수 없습니다.")
+    return stripped
+
+
 # ──────────────────── Request ────────────────────
 
 
@@ -36,6 +51,11 @@ class CreatePlanRequest(BaseModel):
     title: Optional[str] = Field(None, max_length=100, description="플랜 이름 (선택)")
     travel_days: int = Field(..., ge=1, description="여행 일수 (1 이상)")
     items: List[CreatePlanItemInput] = Field(..., min_length=1, description="카드 목록 (1개 이상)")
+
+    @field_validator("title")
+    @classmethod
+    def _check_title(cls, v: Optional[str]) -> Optional[str]:
+        return _validate_title(v)
 
     class Config:
         json_schema_extra = {
@@ -70,6 +90,43 @@ class MoveItemRequest(BaseModel):
         None,
         description="이 카드 다음 자리로 이동. null 이면 target day 의 맨 앞.",
     )
+
+
+class UpdatePlanRequest(BaseModel):
+    """플랜 메타 수정 (현재 title 만 지원)
+
+    - body 에 키가 반드시 있어야 함 (Field(...) required)
+    - 값이 null 이면 플랜 이름 제거
+    - 양 끝 공백은 자동 제거, 공백만으로 구성된 값은 거부
+    """
+    title: Optional[str] = Field(
+        ...,
+        max_length=100,
+        description="플랜 이름. null 보내면 제목 제거.",
+    )
+
+    @field_validator("title")
+    @classmethod
+    def _check_title(cls, v: Optional[str]) -> Optional[str]:
+        return _validate_title(v)
+
+
+class UpdateItemRequest(BaseModel):
+    """카드 교체 (PUT 의미 — 변경 가능한 필드 전부 명시)
+
+    - place_id 가 바뀌면 display_name / address 스냅샷도 새 Place 기준으로 갱신됨
+    - day_number / position 은 변경 안 함 (이동은 /move 엔드포인트 사용)
+    """
+    place_id: str = Field(..., min_length=1, max_length=255, description="MongoDB Place ID")
+    visit_time: Optional[str] = Field(
+        ...,
+        description="방문 시각 'HH:MM' (24h). null 보내면 시각 미정.",
+    )
+
+    @field_validator("visit_time")
+    @classmethod
+    def _check_visit_time(cls, v: Optional[str]) -> Optional[str]:
+        return _validate_visit_time(v)
 
 
 # ──────────────────── Response ────────────────────

@@ -3,10 +3,13 @@ from dependency_injector.wiring import Provide, inject
 
 from app.schema.common import MessageResponse
 from app.domain.tour.service.tour_plan import TourPlanService
+from app.domain.tour.service.exception import TourPlanItemNotFoundError
 from app.domain.tour.dto.tour_plan import TourPlanItemCreateInput
 from app.domain.tour.schema.tour_plan import (
     CreatePlanRequest,
+    UpdatePlanRequest,
     AddItemRequest,
+    UpdateItemRequest,
     MoveItemRequest,
     PlanItemResponse,
     PlanDetailResponse,
@@ -88,6 +91,49 @@ async def get_plan(
     return _to_plan_detail_response(result)
 
 
+@router.patch("/{plan_id}")
+@inject
+async def update_plan(
+    request: Request,
+    plan_id: str,
+    body: UpdatePlanRequest,
+    plan_service: TourPlanService = Depends(Provide[Container.tour_plan_service]),
+) -> PlanSummaryResponse:
+    """플랜 메타 수정 (현재 title 만 지원)"""
+    user_id: str = request.state.user_id
+
+    try:
+        result = await plan_service.update_plan_title(
+            plan_id=plan_id, user_id=user_id, title=body.title,
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+
+    return _to_plan_summary_response(result)
+
+
+@router.post("/{plan_id}/days", status_code=201)
+@inject
+async def add_day(
+    request: Request,
+    plan_id: str,
+    plan_service: TourPlanService = Depends(Provide[Container.tour_plan_service]),
+) -> PlanSummaryResponse:
+    """플랜에 빈 일차 추가 (travel_days += 1, 새 day 는 카드 0개)"""
+    user_id: str = request.state.user_id
+
+    try:
+        result = await plan_service.add_day(plan_id=plan_id, user_id=user_id)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+
+    return _to_plan_summary_response(result)
+
+
 @router.delete("/{plan_id}")
 @inject
 async def delete_plan(
@@ -138,7 +184,41 @@ async def add_item(
     return _to_plan_item_response(result)
 
 
-@router.patch("/{plan_id}/items/{item_id}")
+@router.put("/{plan_id}/items/{item_id}")
+@inject
+async def update_item(
+    request: Request,
+    plan_id: str,
+    item_id: str,
+    body: UpdateItemRequest,
+    plan_service: TourPlanService = Depends(Provide[Container.tour_plan_service]),
+) -> PlanItemResponse:
+    """카드 교체 — place_id + visit_time 일괄 수정.
+
+    place_id 변경 시 display_name / address 스냅샷도 새 Place 기준으로 갱신.
+    day_number / position 변경은 /move 엔드포인트 사용.
+    """
+    user_id: str = request.state.user_id
+
+    try:
+        result = await plan_service.update_item(
+            item_id=item_id,
+            user_id=user_id,
+            place_id=body.place_id,
+            visit_time=body.visit_time,
+            expected_plan_id=plan_id,
+        )
+    except TourPlanItemNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+
+    return _to_plan_item_response(result)
+
+
+@router.patch("/{plan_id}/items/{item_id}/move")
 @inject
 async def move_item(
     request: Request,
@@ -156,7 +236,10 @@ async def move_item(
             user_id=user_id,
             target_day_number=body.target_day_number,
             after_item_id=body.after_item_id,
+            expected_plan_id=plan_id,
         )
+    except TourPlanItemNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except PermissionError as e:
@@ -177,7 +260,13 @@ async def remove_item(
     user_id: str = request.state.user_id
 
     try:
-        await plan_service.remove_item(item_id=item_id, user_id=user_id)
+        await plan_service.remove_item(
+            item_id=item_id,
+            user_id=user_id,
+            expected_plan_id=plan_id,
+        )
+    except TourPlanItemNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
     except PermissionError as e:
