@@ -8,7 +8,7 @@ from app.domain.tour.repository.tour_plan_item import TourPlanItemRepository
 from app.domain.tour.repository.place import PlaceRepository
 from app.domain.tour.model.tour_plan import TourPlan
 from app.domain.tour.model.tour_plan_item import TourPlanItem
-from app.domain.tour.service.exception import TourPlanItemNotFoundError
+from app.domain.tour.service.exception import TourPlanNotFoundError, TourPlanItemNotFoundError
 from app.domain.tour.dto.tour_plan import (
     TourPlanItemCreateInput,
     TourPlanItemData,
@@ -103,7 +103,7 @@ class TourPlanService:
 
         plan = await plan_repo.find_by_id_with_items(plan_id)
         if plan is None:
-            raise ValueError("존재하지 않는 플랜입니다.")
+            raise TourPlanNotFoundError("존재하지 않는 플랜입니다.")
         if plan.user_id != user_id:
             raise PermissionError("플랜 조회 권한이 없습니다.")
 
@@ -136,17 +136,21 @@ class TourPlanService:
     ) -> TourPlanSummaryData:
         """플랜 title 수정 — null 이면 제목 제거.
 
-        title 컬럼 변경 → SQLAlchemy onupdate 가 plan.updated_at 자동 갱신.
+        updated_at 은 명시적 Python touch — server-side onupdate 에 위임하면
+        flush 후 attribute 가 expire 되어 _to_summary_dto 에서 lazy refresh 가
+        트리거되며 async 컨텍스트에서 MissingGreenlet 위험. add_item 등 다른
+        메서드와 동일 패턴으로 통일.
         """
         plan_repo = TourPlanRepository(self._session)
 
         plan = await plan_repo.find_by_id(plan_id)
         if plan is None:
-            raise ValueError("존재하지 않는 플랜입니다.")
+            raise TourPlanNotFoundError("존재하지 않는 플랜입니다.")
         if plan.user_id != user_id:
             raise PermissionError("플랜 수정 권한이 없습니다.")
 
         plan.title = title
+        plan.updated_at = datetime.now(timezone.utc)
         await plan_repo.update(plan)
 
         return self._to_summary_dto(plan)
@@ -156,24 +160,65 @@ class TourPlanService:
 
     @transactional
     async def add_day(self, plan_id: str, user_id: str) -> TourPlanSummaryData:
-        """플랜에 빈 일차 추가 — travel_days += 1.
+        """플랜에 빈 일차 추가 — travel_days += 1 (monotonic 증가).
 
-        - 새 일차는 카드 0개 상태로 시작
-        - travel_days 컬럼 변경 → onupdate 가 plan.updated_at 자동 갱신
-        - 중간 삽입은 미지원 (append only)
+        - travel_days 는 "max_day_number" 의미 (단조 증가). 새 day = 기존 max + 1.
+        - remove_day 로 생긴 gap 은 재사용하지 않음 — day_number 의 단조성 보장.
+        - 새 일차는 카드 0개 상태로 시작.
+        - updated_at 은 명시적 Python touch (lazy refresh 회피, update_plan_title 와 동일 이유).
+        - 중간 삽입은 미지원 (append only).
         """
         plan_repo = TourPlanRepository(self._session)
 
         plan = await plan_repo.find_by_id(plan_id)
         if plan is None:
-            raise ValueError("존재하지 않는 플랜입니다.")
+            raise TourPlanNotFoundError("존재하지 않는 플랜입니다.")
         if plan.user_id != user_id:
             raise PermissionError("플랜 수정 권한이 없습니다.")
 
         plan.travel_days += 1
+        plan.updated_at = datetime.now(timezone.utc)
         await plan_repo.update(plan)
 
         return self._to_summary_dto(plan)
+
+
+    # ──────────────────── 플랜 일차 삭제 ────────────────────
+
+    @transactional
+    async def remove_day(self, plan_id: str, user_id: str, day_number: int) -> None:
+        """플랜의 특정 일차 삭제 — 해당 day 의 모든 카드를 일괄 제거.
+
+        설계 철학: **gap 보존 + 단조 증가 day_number (단순 monotonic 모델)**
+        - travel_days 는 그대로 유지 (max_day_number 의미)
+          → 삭제된 day_number 자리에 gap 생김 (예: {1,2,3,4,5} → remove(3) → {1,2,4,5}).
+        - 뒷 일차의 day_number 를 당기지 않음 (cascading UPDATE 회피, day_number 가
+          외부 참조에 안전한 monotonic ID 처럼 동작).
+        - 이후 add_day 는 max+1 로 새 day_number 부여 (gap 재사용 X — 단조 증가).
+        - gap day 는 valid 슬롯 — 같은 day_number 로 add_item / move_item 호출하면
+          정상적으로 재채워짐 (의도된 동작; deleted_days 별도 추적 안 함).
+          UX 상 "삭제된 day" 표시는 frontend 가 items 의 day_number 분포로 추론.
+
+        구현:
+        - bulk DELETE 1 번으로 해당 day 의 모든 카드 제거 (빈 day 도 idempotent).
+        - plan row 미변경 → onupdate 가 안 터져서 명시적 plan.updated_at touch.
+        """
+        plan_repo = TourPlanRepository(self._session)
+        item_repo = TourPlanItemRepository(self._session)
+
+        plan = await plan_repo.find_by_id(plan_id)
+        if plan is None:
+            raise TourPlanNotFoundError("존재하지 않는 플랜입니다.")
+        if plan.user_id != user_id:
+            raise PermissionError("플랜 수정 권한이 없습니다.")
+        if not (1 <= day_number <= plan.travel_days):
+            raise ValueError(f"day_number 가 범위를 벗어났습니다: {day_number}")
+
+        await item_repo.delete_by_plan_and_day(plan_id, day_number)
+
+        # 카드 변경은 plan row 를 안 건드리므로 onupdate 가 안 터짐 → 명시적 touch
+        plan.updated_at = datetime.now(timezone.utc)
+        await plan_repo.update(plan)
 
 
     # ──────────────────── 플랜 삭제 ────────────────────
@@ -185,7 +230,7 @@ class TourPlanService:
 
         plan = await plan_repo.find_by_id(plan_id)
         if plan is None:
-            raise ValueError("존재하지 않는 플랜입니다.")
+            raise TourPlanNotFoundError("존재하지 않는 플랜입니다.")
         if plan.user_id != user_id:
             raise PermissionError("플랜 삭제 권한이 없습니다.")
 
@@ -209,7 +254,7 @@ class TourPlanService:
 
         plan = await plan_repo.find_by_id(plan_id)
         if plan is None:
-            raise ValueError("존재하지 않는 플랜입니다.")
+            raise TourPlanNotFoundError("존재하지 않는 플랜입니다.")
         if plan.user_id != user_id:
             raise PermissionError("플랜 수정 권한이 없습니다.")
         if not (1 <= day_number <= plan.travel_days):

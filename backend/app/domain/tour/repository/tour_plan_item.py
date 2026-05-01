@@ -1,5 +1,5 @@
 from typing import Optional
-from sqlalchemy import select
+from sqlalchemy import select, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.domain.tour.model.tour_plan_item import TourPlanItem
@@ -65,3 +65,16 @@ class TourPlanItemRepository:
     async def delete(self, item: TourPlanItem) -> None:
         """카드 단건 삭제"""
         await self.session.delete(item)
+
+
+    async def delete_by_plan_and_day(self, plan_id: str, day_number: int) -> None:
+        """특정 plan/day 의 카드 일괄 삭제.
+
+        remove_day 에서 사용 — N 번 단건 DELETE 대신 1 번 bulk DELETE.
+        빈 day 에 대해서도 idempotent (0 rows 영향, 에러 없음).
+        """
+        stmt = delete(TourPlanItem).where(
+            TourPlanItem.plan_id == plan_id,
+            TourPlanItem.day_number == day_number,
+        )
+        await self.session.execute(stmt)

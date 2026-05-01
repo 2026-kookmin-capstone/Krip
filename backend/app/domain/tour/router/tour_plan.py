@@ -3,7 +3,7 @@ from dependency_injector.wiring import Provide, inject
 
 from app.schema.common import MessageResponse
 from app.domain.tour.service.tour_plan import TourPlanService
-from app.domain.tour.service.exception import TourPlanItemNotFoundError
+from app.domain.tour.service.exception import TourPlanNotFoundError, TourPlanItemNotFoundError
 from app.domain.tour.dto.tour_plan import TourPlanItemCreateInput
 from app.domain.tour.schema.tour_plan import (
     CreatePlanRequest,
@@ -83,8 +83,10 @@ async def get_plan(
 
     try:
         result = await plan_service.get_plan(plan_id=plan_id, user_id=user_id)
-    except ValueError as e:
+    except TourPlanNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     except PermissionError as e:
         raise HTTPException(status_code=403, detail=str(e))
 
@@ -106,8 +108,10 @@ async def update_plan(
         result = await plan_service.update_plan_title(
             plan_id=plan_id, user_id=user_id, title=body.title,
         )
-    except ValueError as e:
+    except TourPlanNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     except PermissionError as e:
         raise HTTPException(status_code=403, detail=str(e))
 
@@ -121,17 +125,54 @@ async def add_day(
     plan_id: str,
     plan_service: TourPlanService = Depends(Provide[Container.tour_plan_service]),
 ) -> PlanSummaryResponse:
-    """플랜에 빈 일차 추가 (travel_days += 1, 새 day 는 카드 0개)"""
+    """플랜에 빈 일차 추가 (travel_days += 1, 새 day = 기존 max + 1).
+
+    travel_days 는 monotonic 증가 — remove_day 로 생긴 gap 은 재사용하지 않음.
+    """
     user_id: str = request.state.user_id
 
     try:
         result = await plan_service.add_day(plan_id=plan_id, user_id=user_id)
-    except ValueError as e:
+    except TourPlanNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     except PermissionError as e:
         raise HTTPException(status_code=403, detail=str(e))
 
     return _to_plan_summary_response(result)
+
+
+@router.delete("/{plan_id}/days/{day_number}")
+@inject
+async def remove_day(
+    request: Request,
+    plan_id: str,
+    day_number: int,
+    plan_service: TourPlanService = Depends(Provide[Container.tour_plan_service]),
+) -> MessageResponse:
+    """플랜의 일차 삭제 — 해당 day 의 모든 카드 일괄 제거.
+
+    설계: gap 보존 + 단조 증가 day_number.
+    - travel_days 는 그대로 유지 (삭제된 day_number 자리에 gap)
+    - 뒷 일차 당기기 X (cascading UPDATE 회피)
+    - 이후 add_day 는 max+1 로 진행 (gap 재사용 X)
+    """
+    user_id: str = request.state.user_id
+
+    try:
+        await plan_service.remove_day(
+            plan_id=plan_id, user_id=user_id, day_number=day_number,
+        )
+    except TourPlanNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except ValueError as e:
+        # 비즈니스 검증 실패 (day_number 범위 등) → 400
+        raise HTTPException(status_code=400, detail=str(e))
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+
+    return MessageResponse(message="일차가 삭제되었습니다.")
 
 
 @router.delete("/{plan_id}")
@@ -146,8 +187,10 @@ async def delete_plan(
 
     try:
         await plan_service.delete_plan(plan_id=plan_id, user_id=user_id)
-    except ValueError as e:
+    except TourPlanNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     except PermissionError as e:
         raise HTTPException(status_code=403, detail=str(e))
 
@@ -176,6 +219,8 @@ async def add_item(
             place_id=body.place_id,
             visit_time=body.visit_time,
         )
+    except TourPlanNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except PermissionError as e:
@@ -268,7 +313,7 @@ async def remove_item(
     except TourPlanItemNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
     except ValueError as e:
-        raise HTTPException(status_code=404, detail=str(e))
+        raise HTTPException(status_code=400, detail=str(e))
     except PermissionError as e:
         raise HTTPException(status_code=403, detail=str(e))
 
