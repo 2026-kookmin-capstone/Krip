@@ -655,3 +655,39 @@ class TestComputePosition:
         items = [TourPlanItemFactory.create(item_id="A", position=1024.0)]
         with pytest.raises(ValueError, match="after_item_id"):
             TourPlanService._compute_position(items, "GHOST")
+
+
+# ──────────────────────────────────────────────────────────────────
+# generate_share_token
+# ──────────────────────────────────────────────────────────────────
+
+@pytest.mark.unit
+class TestGenerateShareToken:
+    """Tests for TourPlanService.generate_share_token."""
+
+    async def test_raises_not_found(self, service, plan_repo_mock):
+        plan_repo_mock.find_by_id.return_value = None
+
+        with pytest.raises(TourPlanNotFoundError):
+            await service.generate_share_token(plan_id="TP_x", user_id="USER_a")
+
+    async def test_raises_permission(self, service, plan_repo_mock):
+        plan_repo_mock.find_by_id.return_value = TourPlanFactory.create(user_id="USER_other")
+
+        with pytest.raises(PermissionError):
+            await service.generate_share_token(plan_id="TP_x", user_id="USER_a")
+
+    async def test_returns_token_and_expiry(self, service, plan_repo_mock):
+        plan = TourPlanFactory.create(user_id="USER_a")
+        plan_repo_mock.find_by_id.return_value = plan
+
+        from app.util.share_token import decode_share_token
+
+        result = await service.generate_share_token(plan_id=plan.plan_id, user_id="USER_a")
+
+        assert result.share_token  # non-empty
+        # 라운드트립 — 토큰 디코드 시 plan_id 복원
+        assert decode_share_token(result.share_token) == plan.plan_id
+        # 만료는 미래
+        from datetime import datetime, timezone
+        assert result.expires_at > datetime.now(timezone.utc)

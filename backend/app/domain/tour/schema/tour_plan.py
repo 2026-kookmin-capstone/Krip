@@ -167,3 +167,9 @@ class PlanSummaryResponse(BaseModel):
 class PlanListResponse(BaseModel):
     """플랜 목록 응답"""
     plans: List[PlanSummaryResponse] = Field(..., description="플랜 목록 (최신순)")
+
+
+class ShareTokenResponse(BaseModel):
+    """플랜 공유 토큰 응답"""
+    share_token: str = Field(..., description="JWT 공유 토큰. 공개 조회 URL: /api/public/share/plan/{token}")
+    expires_at: datetime = Field(..., description="토큰 만료 시각")

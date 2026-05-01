@@ -65,6 +65,11 @@ class Settings(BaseSettings):
     USER_LOGIN_JWT_EXPIRATION_DAYS: int = Field(1, description="USER LOGIN JWT 토큰 만료 기간 (일)")
     USER_LOGIN_COOKIE_NAME: str = Field("utk", description="USER LOGIN 쿠키명")
     
+    # 공유 JWT 설정
+    SHARE_JWT_SECRET_KEY: str = Field("your-share-secret-here", description="플랜 share JWT 비밀키")
+    SHARE_JWT_ALGORITHM: str = Field("HS256", description="플랜 share JWT 알고리즘")
+    SHARE_JWT_EXPIRATION_DAYS: int = Field(30, description="플랜 share 토큰 만료 기간 (일)")
+    
     # Google OAuth
     GOOGLE_CLIENT_ID: str = Field(..., description="구글 OAuth ID")
     GOOGLE_CLIENT_SECRET: str = Field(..., description="구글 OAuth Secret")

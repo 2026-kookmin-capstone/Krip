@@ -15,8 +15,10 @@ from app.domain.tour.dto.tour_plan import (
     TourPlanData,
     TourPlanSummaryData,
     TourPlanListData,
+    ShareTokenData,
 )
 from app.database.session import UnitOfWork, transactional
+from app.util.share_token import encode_share_token
 
 
 # 카드 position 의 기본 간격. 큰 값일수록 같은 자리 반복 삽입 시 float 정밀도 여유 ↑
@@ -154,6 +156,29 @@ class TourPlanService:
         await plan_repo.update(plan)
 
         return self._to_summary_dto(plan)
+
+
+    # ──────────────────── 플랜 공유 토큰 발급 ────────────────────
+
+    @transactional
+    async def generate_share_token(self, plan_id: str, user_id: str) -> ShareTokenData:
+        """플랜 공유 토큰 발급 — JWT 로 plan_id 서명.
+
+        - 본인 소유 플랜만 발급 가능
+        - 토큰은 settings.SHARE_JWT_EXPIRATION_DAYS 일 후 만료
+        - 동일 plan 에 여러 번 호출 가능 (각각 다른 토큰, 모두 유효)
+        - 개별 revoke 미지원 (필요 시 SHARE_JWT_SECRET_KEY 회전으로 일괄 무효화)
+        """
+        plan_repo = TourPlanRepository(self._session)
+
+        plan = await plan_repo.find_by_id(plan_id)
+        if plan is None:
+            raise TourPlanNotFoundError("존재하지 않는 플랜입니다.")
+        if plan.user_id != user_id:
+            raise PermissionError("플랜 공유 권한이 없습니다.")
+
+        token, expires_at = encode_share_token(plan_id)
+        return ShareTokenData(share_token=token, expires_at=expires_at)
 
 
     # ──────────────────── 플랜 일차 추가 ────────────────────

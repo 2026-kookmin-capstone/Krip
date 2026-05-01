@@ -15,6 +15,7 @@ from app.domain.tour.schema.tour_plan import (
     PlanDetailResponse,
     PlanSummaryResponse,
     PlanListResponse,
+    ShareTokenResponse,
 )
 from app.container import Container
 
@@ -116,6 +117,35 @@ async def update_plan(
         raise HTTPException(status_code=403, detail=str(e))
 
     return _to_plan_summary_response(result)
+
+
+@router.post("/{plan_id}/share", status_code=201)
+@inject
+async def share_plan(
+    request: Request,
+    plan_id: str,
+    plan_service: TourPlanService = Depends(Provide[Container.tour_plan_service]),
+) -> ShareTokenResponse:
+    """플랜 공유 토큰 발급 — JWT 로 plan_id 서명.
+
+    이 토큰을 GET /api/public/share/plan/{share_token} 으로 호출하면 인증 없이
+    plan 조회 가능. 만료 / 비밀키 회전으로 무효화.
+    """
+    user_id: str = request.state.user_id
+
+    try:
+        result = await plan_service.generate_share_token(plan_id=plan_id, user_id=user_id)
+    except TourPlanNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+
+    return ShareTokenResponse(
+        share_token=result.share_token,
+        expires_at=result.expires_at,
+    )
 
 
 @router.post("/{plan_id}/days", status_code=201)

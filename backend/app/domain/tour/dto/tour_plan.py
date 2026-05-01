@@ -54,3 +54,10 @@ class TourPlanSummaryData:
 class TourPlanListData:
     """플랜 목록 응답 DTO"""
     plans: List[TourPlanSummaryData]
+
+
+@dataclass
+class ShareTokenData:
+    """플랜 공유 토큰 발급 응답 DTO"""
+    share_token: str
+    expires_at: datetime
