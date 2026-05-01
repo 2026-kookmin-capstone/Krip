@@ -1,0 +1,224 @@
+from fastapi import APIRouter, HTTPException, Request, Depends
+from dependency_injector.wiring import Provide, inject
+
+from app.schema.common import MessageResponse
+from app.domain.tour.service.tour_plan import TourPlanService
+from app.domain.tour.dto.tour_plan import TourPlanItemCreateInput
+from app.domain.tour.schema.tour_plan import (
+    CreatePlanRequest,
+    AddItemRequest,
+    MoveItemRequest,
+    PlanItemResponse,
+    PlanDetailResponse,
+    PlanSummaryResponse,
+    PlanListResponse,
+)
+from app.container import Container
+
+
+router = APIRouter(prefix="/plans", tags=["여행 플랜"])
+
+
+# ──────────────────── 플랜 CRUD ────────────────────
+
+
+@router.post("", status_code=201)
+@inject
+async def create_plan(
+    request: Request,
+    body: CreatePlanRequest,
+    plan_service: TourPlanService = Depends(Provide[Container.tour_plan_service]),
+) -> PlanDetailResponse:
+    """플랜 + 카드 일괄 생성
+
+    (AI 추천 결과도 여기로)
+    """
+    user_id: str = request.state.user_id
+
+    try:
+        result = await plan_service.create_plan(
+            user_id=user_id,
+            title=body.title,
+            travel_days=body.travel_days,
+            items=[
+                TourPlanItemCreateInput(
+                    day_number=it.day_number,
+                    place_id=it.place_id,
+                    visit_time=it.visit_time,
+                )
+                for it in body.items
+            ],
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    return _to_plan_detail_response(result)
+
+
+@router.get("")
+@inject
+async def get_plans(
+    request: Request,
+    plan_service: TourPlanService = Depends(Provide[Container.tour_plan_service]),
+) -> PlanListResponse:
+    """내 플랜 목록 조회 (최신순)"""
+    user_id: str = request.state.user_id
+
+    result = await plan_service.get_plans(user_id=user_id)
+    return PlanListResponse(plans=[_to_plan_summary_response(p) for p in result.plans])
+
+
+@router.get("/{plan_id}")
+@inject
+async def get_plan(
+    request: Request,
+    plan_id: str,
+    plan_service: TourPlanService = Depends(Provide[Container.tour_plan_service]),
+) -> PlanDetailResponse:
+    """플랜 단건 조회"""
+    user_id: str = request.state.user_id
+
+    try:
+        result = await plan_service.get_plan(plan_id=plan_id, user_id=user_id)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+
+    return _to_plan_detail_response(result)
+
+
+@router.delete("/{plan_id}")
+@inject
+async def delete_plan(
+    request: Request,
+    plan_id: str,
+    plan_service: TourPlanService = Depends(Provide[Container.tour_plan_service]),
+) -> MessageResponse:
+    """플랜 삭제 (cascade 로 카드 자동 삭제)"""
+    user_id: str = request.state.user_id
+
+    try:
+        await plan_service.delete_plan(plan_id=plan_id, user_id=user_id)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+
+    return MessageResponse(message="플랜이 삭제되었습니다.")
+
+
+# ──────────────────── 카드 편집 ────────────────────
+
+
+@router.post("/{plan_id}/items", status_code=201)
+@inject
+async def add_item(
+    request: Request,
+    plan_id: str,
+    body: AddItemRequest,
+    plan_service: TourPlanService = Depends(Provide[Container.tour_plan_service]),
+) -> PlanItemResponse:
+    """카드 추가 (해당 day 의 맨 끝에 삽입)"""
+    user_id: str = request.state.user_id
+
+    try:
+        result = await plan_service.add_item(
+            plan_id=plan_id,
+            user_id=user_id,
+            day_number=body.day_number,
+            place_id=body.place_id,
+            visit_time=body.visit_time,
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+
+    return _to_plan_item_response(result)
+
+
+@router.patch("/{plan_id}/items/{item_id}")
+@inject
+async def move_item(
+    request: Request,
+    plan_id: str,
+    item_id: str,
+    body: MoveItemRequest,
+    plan_service: TourPlanService = Depends(Provide[Container.tour_plan_service]),
+) -> MessageResponse:
+    """카드 이동 — target_day 의 after_item_id 다음 자리 (null 이면 맨 앞)"""
+    user_id: str = request.state.user_id
+
+    try:
+        await plan_service.move_item(
+            item_id=item_id,
+            user_id=user_id,
+            target_day_number=body.target_day_number,
+            after_item_id=body.after_item_id,
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+
+    return MessageResponse(message="카드가 이동되었습니다.")
+
+
+@router.delete("/{plan_id}/items/{item_id}")
+@inject
+async def remove_item(
+    request: Request,
+    plan_id: str,
+    item_id: str,
+    plan_service: TourPlanService = Depends(Provide[Container.tour_plan_service]),
+) -> MessageResponse:
+    """카드 삭제"""
+    user_id: str = request.state.user_id
+
+    try:
+        await plan_service.remove_item(item_id=item_id, user_id=user_id)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+
+    return MessageResponse(message="카드가 삭제되었습니다.")
+
+
+# ──────────────────── 내부 변환 유틸 ────────────────────
+
+
+def _to_plan_item_response(item) -> PlanItemResponse:
+    return PlanItemResponse(
+        item_id=item.item_id,
+        day_number=item.day_number,
+        position=item.position,
+        place_id=item.place_id,
+        display_name=item.display_name,
+        address=item.address,
+        visit_time=item.visit_time,
+        rating=item.rating,
+    )
+
+
+def _to_plan_detail_response(plan) -> PlanDetailResponse:
+    return PlanDetailResponse(
+        plan_id=plan.plan_id,
+        user_id=plan.user_id,
+        title=plan.title,
+        travel_days=plan.travel_days,
+        created_at=plan.created_at,
+        updated_at=plan.updated_at,
+        items=[_to_plan_item_response(i) for i in plan.items],
+    )
+
+
+def _to_plan_summary_response(plan) -> PlanSummaryResponse:
+    return PlanSummaryResponse(
+        plan_id=plan.plan_id,
+        title=plan.title,
+        travel_days=plan.travel_days,
+        created_at=plan.created_at,
+        updated_at=plan.updated_at,
+    )

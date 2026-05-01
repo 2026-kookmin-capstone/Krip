@@ -15,6 +15,7 @@ from app.domain.tour.service.place import PlaceService
 from app.domain.tour.service.favorite_place import FavoritePlaceService
 from app.domain.tour.service.tour_search_history import TourSearchHistoryService
 from app.domain.tour.service.recommend import RecommendService
+from app.domain.tour.service.tour_plan import TourPlanService
 from app.domain.friend.service.friendship import FriendshipService
 from app.domain.friend.service.user_block import UserBlockService
 from app.domain.friend.service.friend_detail import FriendDetailService
@@ -69,6 +70,7 @@ class Container(containers.DeclarativeContainer):
     favorite_place_service = providers.Factory(FavoritePlaceService, uow=uow)
     tour_search_history_service = providers.Factory(TourSearchHistoryService)
     recommend_service = providers.Factory(RecommendService)
+    tour_plan_service = providers.Factory(TourPlanService, uow=uow)
 
     # 채팅 — 인프라 (Singleton: 프로세스 내 전역 상태 유지)
     fanout_service = providers.Singleton(FanoutService)

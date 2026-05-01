@@ -11,19 +11,19 @@ from app.middleware.tracking import (
     SecurityHeadersMiddleware,
 )
 from app.middleware.auth import BearerTokenMiddleware, LoginCookieMiddleware, RegisterCheckMiddleware
+from app.domain.chat.worker.reconcile import (
+    start_reconcile_scheduler,
+    stop_reconcile_scheduler,
+)
+from app.database.session import init_mongodb, close_mongodb
 import app.database.model # Relation Lazy Load 문제 해결하기 위한 import!
 from app.core.ai.tour_planner.load import TourPlanner
 from app.core.logger import setup_logging, get_logger
 from app.core.ai.menu_ocr.load import MenuOcr
 from app.core.redis import get_redis_client, get_redis_dedupe_client, close_redis
+from app.core.chat.lua_script import lua_scripts
 from app.container import Container
 from app.config.setting import settings
-from app.database.session import init_mongodb, close_mongodb
-from app.core.chat.lua_script import lua_scripts
-from app.domain.chat.worker.reconcile import (
-    start_reconcile_scheduler,
-    stop_reconcile_scheduler,
-)
 from app.api.v1.router import api_router
 
 
@@ -77,6 +77,7 @@ def create_app() -> FastAPI:
         "app.domain.tour.router.place",
         "app.domain.tour.router.recommend",
         "app.domain.tour.router.tour_search_history",
+        "app.domain.tour.router.tour_plan",
         "app.domain.friend.router.friendship",
         "app.domain.friend.router.user_block",
         "app.domain.friend.router.detail",
