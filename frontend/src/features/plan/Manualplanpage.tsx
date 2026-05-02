@@ -218,12 +218,14 @@ function ShareSheet({ onClose }: { onClose: () => void }) {
     }
 
     if (target === "mail") {
-      window.location.href = `mailto:?subject=Trip plan invite&body=Join my trip plan: ${shareLink}`;
+      window.location.assign(
+        `mailto:?subject=Trip plan invite&body=Join my trip plan: ${shareLink}`
+      );
       onClose();
       return;
     }
 
-    window.location.href = `sms:?body=Join my trip plan ${shareLink}`;
+    window.location.assign(`sms:?body=Join my trip plan ${shareLink}`);
     onClose();
   };
 
@@ -347,6 +349,7 @@ export default function ManualPlanPage({ onBack }: ManualPlanPageProps) {
       return;
     }
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTripTitle(savedPlan.title || "Manual Trip Plan");
     setStartDate(savedPlan.manualStartDate || DEFAULT_START_DATE);
     setEndDate(savedPlan.manualEndDate || savedPlan.manualStartDate || DEFAULT_START_DATE);
@@ -356,12 +359,14 @@ export default function ManualPlanPage({ onBack }: ManualPlanPageProps) {
 
   useEffect(() => {
     if (!tripDates.includes(activeDate) && tripDates.length > 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setActiveDate(tripDates[0]);
     }
   }, [activeDate, tripDates]);
 
   useEffect(() => {
     if (!query.trim()) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSearchResults([]);
       setErrorMessage("");
       setIsLoading(false);

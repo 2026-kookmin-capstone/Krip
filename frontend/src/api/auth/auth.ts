@@ -65,7 +65,24 @@ export interface TourPlaceApiItem {
   location?: {
     lat?: number;
     lng?: number;
+    latitude?: number;
+    longitude?: number;
+    lon?: number;
+    x?: number;
+    y?: number;
   } | null;
+  coordinates?:
+    | {
+        lat?: number;
+        lng?: number;
+        latitude?: number;
+        longitude?: number;
+        lon?: number;
+        x?: number;
+        y?: number;
+      }
+    | [number, number]
+    | null;
   tags?: string[];
   types?: string[];
   distance?: number;

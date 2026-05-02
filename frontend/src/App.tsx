@@ -15,6 +15,8 @@ import PlanSelectionPage from "./features/plan/PlanSelectionPage";
 import AiPlanDesignPage from "./features/plan/AiPlanDesignPage";
 import AiPlanResultPage from "./features/plan/AiPlanResultPage";
 import ManualPlanPage from "./features/plan/Manualplanpage";
+import "./lib/firebase";
+import { requestPermission } from "./lib/fcm";
 import {
   clearPreferences,
   clonePreferences,
@@ -96,6 +98,10 @@ function ManualPlanRoute() {
 }
 
 export default function App() {
+  useEffect(() => {
+    requestPermission();
+  }, []);
+
   return (
     <BrowserRouter>
       <ChatProvider>
