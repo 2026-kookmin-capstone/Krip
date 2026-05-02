@@ -1,19 +1,14 @@
 {
-  "headers": [
+  "routes": [
     {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Permissions-Policy",
-          "value": "geolocation=(self)"
-        }
-      ]
-    }
-  ],
-  "rewrites": [
+      "handle": "filesystem"
+    },
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "src": "/.*",
+      "dest": "/index.html",
+      "headers": {
+        "Permissions-Policy": "geolocation=(self)"
+      }
     }
   ]
 }
