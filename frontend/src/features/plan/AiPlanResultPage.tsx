@@ -196,6 +196,7 @@ export default function AiPlanResultPage({
   useEffect(() => {
     const savedPlan = getSavedPlanById(planId);
     if (savedPlan?.type === "ai" && savedPlan.aiRouteStops) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setRouteStops(savedPlan.aiRouteStops);
       setIsLoading(false);
       return;

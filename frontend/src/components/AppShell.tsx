@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { getMyProfile } from "../api/auth/auth";
 import { getReceivedFriendRequests } from "../api/friend";
+import { listenForegroundMessages, registerFcmToken } from "../lib/fcm";
 
 const TAB_ITEMS = [
   { to: "/home", label: "Home", icon: "H" },
@@ -17,8 +18,24 @@ export default function AppShell() {
   const [friendChatNotificationCount, setFriendChatNotificationCount] = useState(0);
 
   useEffect(() => {
-    getMyProfile().catch((error) => {
-      console.warn("Failed to load /api/auth/profile/me", error);
+    getMyProfile()
+      .then(() =>
+        registerFcmToken()
+          .then((token) => {
+            if (token) {
+              console.log(`Push token issued: ${token}`);
+            }
+          })
+          .catch((error) => {
+            console.warn("Failed to register FCM token", error);
+          })
+      )
+      .catch((error) => {
+        console.warn("Failed to load /api/auth/profile/me", error);
+      });
+
+    listenForegroundMessages().catch((error) => {
+      console.warn("Failed to listen for foreground FCM messages", error);
     });
   }, []);
 

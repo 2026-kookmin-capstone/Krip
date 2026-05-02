@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { createLoginUrl } from "../api/auth/auth";
+import { createLoginUrl, getMyProfile } from "../api/auth/auth";
 
 type LoginStatus = "complete" | "new" | "in_progress";
 
@@ -22,6 +22,21 @@ export default function LoginPage() {
     } else if (status === "new" || status === "in_progress") {
       navigate("/register", { state: { email, name } });
     }
+  }, [navigate]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("status")) return;
+
+    getMyProfile()
+      .then((profile) => {
+        if (profile) {
+          navigate("/home", { replace: true });
+        }
+      })
+      .catch(() => {
+        // Stay on the login page when there is no valid session.
+      });
   }, [navigate]);
 
   function handleGoogleLogin(): void {

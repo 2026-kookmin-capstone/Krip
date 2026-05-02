@@ -898,6 +898,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useChat(): ChatContextValue {
   const context = useContext(ChatContext);
   if (!context) {
