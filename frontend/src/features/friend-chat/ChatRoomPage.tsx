@@ -11,6 +11,7 @@ export default function ChatRoomPage() {
   const navigate = useNavigate();
   const bottomRef = useRef<HTMLDivElement>(null);
   const scrollModeRef = useRef<"bottom" | "preserve">("bottom");
+  const shouldForceScrollToBottomRef = useRef(true);
   const scrollSnapshotRef = useRef<{ height: number; top: number } | null>(null);
   const {
     connectionState,
@@ -77,6 +78,7 @@ export default function ChatRoomPage() {
   useEffect(() => {
     if (!roomId) return;
 
+    shouldForceScrollToBottomRef.current = true;
     setActiveRoomId(roomId);
     void loadInitialMessages(roomId);
 
@@ -111,8 +113,23 @@ export default function ChatRoomPage() {
       return;
     }
 
-    if (isNearBottom()) {
-      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    const shouldForceScroll = shouldForceScrollToBottomRef.current;
+    if (shouldForceScroll) {
+      shouldForceScrollToBottomRef.current = false;
+    }
+
+    if (shouldForceScroll || isNearBottom()) {
+      bottomRef.current?.scrollIntoView({
+        behavior: shouldForceScroll ? "auto" : "smooth",
+        block: "end",
+      });
+
+      if (shouldForceScroll) {
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: "auto",
+        });
+      }
     }
   }, [messages]);
 
