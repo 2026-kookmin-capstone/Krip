@@ -29,15 +29,22 @@ export async function registerFcmToken(): Promise<string | null> {
     return null;
   }
 
-  if (localStorage.getItem(FCM_TOKEN_STORAGE_KEY) === currentToken) {
+  const storedToken = localStorage.getItem(FCM_TOKEN_STORAGE_KEY);
+  console.log("FCM token generated:", currentToken);
+  localStorage.setItem(FCM_TOKEN_STORAGE_KEY, currentToken);
+
+  if (storedToken === currentToken) {
     return currentToken;
   }
 
-  await client.post("/notification/new", {
-    token: currentToken,
-  });
+  try {
+    await client.post("/notification/new", {
+      token: currentToken,
+    });
+  } catch (error) {
+    console.warn("Failed to save FCM token to backend", error);
+  }
 
-  localStorage.setItem(FCM_TOKEN_STORAGE_KEY, currentToken);
   return currentToken;
 }
 
