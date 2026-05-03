@@ -10,19 +10,23 @@ REST 로 제공되는 읽기 경로 3개:
 """
 from typing import Optional
 
-from app.domain.auth.repository.user import UserRepository
+from app.domain.friend.repository.friendship import FriendshipRepository
 from app.domain.chat.dto.message import ChatMessageData, MessageListData
 from app.domain.chat.dto.room import (
     ChatRoomData,
     ChatRoomListData,
     ChatRoomPeerData,
     LastMessagePreviewData,
+    RoomMemberData,
+    RoomMemberListData,
 )
 from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
 from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
 from app.domain.chat.repository.chat_message import ChatMessageRepository
 from app.domain.chat.repository.chat_room import ChatRoomRepository
 from app.domain.chat.service.exception import ChatRoomNotFoundError
+from app.domain.auth.repository.user import UserRepository
+from app.domain.auth.model.user import User
 from app.database.session import UnitOfWork, mongodb, transactional
 from app.core.chat.redis_key import unread_key
 from app.core.logger import get_logger
@@ -142,6 +146,76 @@ class MessageHistoryService:
         )
 
 
+    # ──────────────────── 그룹 방 참여자 목록 ────────────────────
+
+    @transactional
+    async def list_room_members(
+        self, *, me_id: str, room_id: str,
+    ) -> RoomMemberListData:
+        """그룹 방의 활성 참여자 목록 (joined_at 오름차순).
+
+        권한: 활성 멤버만 조회 가능. direct 방은 `peer` 필드로 충분하므로 거절.
+            1. 방 존재 → 404
+            2. 활성 멤버 여부 → 403
+            3. group 타입만 허용 → 400
+        """
+        chat_room_repo = ChatRoomRepository(self._session)
+        member_repo = ChatRoomMemberRepository(self._session)
+
+        room = await chat_room_repo.find_by_id(room_id)
+        if room is None:
+            raise ChatRoomNotFoundError("존재하지 않는 방입니다.")
+        if not await member_repo.is_active_member(room_id, me_id):
+            raise PermissionError("이 방의 멤버가 아닙니다.")
+        if room.type != ChatRoomType.GROUP:
+            raise ValueError("그룹 방의 참여자 목록만 조회할 수 있습니다.")
+
+        users = await member_repo.find_active_member_users(room_id)
+        return RoomMemberListData(items=[self._user_to_member_dto(u) for u in users])
+
+
+    # ──────────────────── 그룹 방 초대 가능 친구 목록 ────────────────────
+
+    @transactional
+    async def list_invitable_friends(
+        self, *, me_id: str, room_id: str,
+    ) -> RoomMemberListData:
+        """방에 아직 들어오지 않은 내 친구 목록 — 그룹 방 초대 UI 용.
+
+        권한 체크는 참여자 목록과 동일 (활성 멤버 + group 타입). 친구 ID 전체에서
+        활성 멤버 ID 를 차집합 — 재초대 가능한 탈퇴자(`is_left=true`) 도 후보에 포함된다.
+        """
+        chat_room_repo = ChatRoomRepository(self._session)
+        member_repo = ChatRoomMemberRepository(self._session)
+        friendship_repo = FriendshipRepository(self._session)
+        user_repo = UserRepository(self._session)
+
+        room = await chat_room_repo.find_by_id(room_id)
+        if room is None:
+            raise ChatRoomNotFoundError("존재하지 않는 방입니다.")
+        if not await member_repo.is_active_member(room_id, me_id):
+            raise PermissionError("이 방의 멤버가 아닙니다.")
+        if room.type != ChatRoomType.GROUP:
+            raise ValueError("그룹 방에만 친구를 초대할 수 있습니다.")
+
+        friend_ids = await friendship_repo.find_accepted_friend_ids(me_id)
+        if not friend_ids:
+            return RoomMemberListData(items=[])
+
+        active_ids = set(await member_repo.find_active_member_ids(room_id))
+        invitable_ids = friend_ids - active_ids
+        if not invitable_ids:
+            return RoomMemberListData(items=[])
+
+        users_map = await user_repo.find_by_ids_with_profile(sorted(invitable_ids))
+        items = [
+            self._user_to_member_dto(users_map[uid])
+            for uid in sorted(invitable_ids)
+            if uid in users_map
+        ]
+        return RoomMemberListData(items=items)
+
+
     # ──────────────────── 히스토리 페이징 ────────────────────
 
     @transactional
@@ -204,6 +278,21 @@ class MessageHistoryService:
 
 
     @staticmethod
+    def _user_to_member_dto(user: User) -> RoomMemberData:
+        """User + detail → RoomMemberData. detail 없는 케이스는 닉네임을 빈 문자열 fallback.
+
+        활성 멤버는 정상 가입자만 들어오므로 detail 결손은 사실상 발생 안 하지만
+        join 결과 누락 방어용으로 한 단계 안전 장치를 둔다.
+        """
+        detail = user.detail
+        return RoomMemberData(
+            user_id=user.user_id,
+            user_name=detail.user_name if detail else "",
+            profile_image_url=detail.profile_image_url if detail else None,
+        )
+
+
+    @staticmethod
     def _room_to_dto(
         *,
         room: ChatRoom,
@@ -218,16 +307,21 @@ class MessageHistoryService:
             if peer_user is None:
                 # 탈퇴한 사용자 — user_id 는 아직 있지만 User row 자체가 사라진 경우는
                 # SET NULL 로 이미 peer_user_id=None 이 되므로 여기 진입하지 않지만, 방어.
-                peer_dto = ChatRoomPeerData(user_id=peer_user_id, user_name=None)
+                peer_dto = ChatRoomPeerData(
+                    user_id=peer_user_id, user_name=None, profile_image_url=None,
+                )
             else:
                 detail = peer_user.detail
                 peer_dto = ChatRoomPeerData(
                     user_id=peer_user.user_id,
                     user_name=detail.user_name if detail else None,
+                    profile_image_url=detail.profile_image_url if detail else None,
                 )
         elif room.type.value == "direct":
             # 1:1 방인데 peer 가 탈퇴로 NULL 된 상태
-            peer_dto = ChatRoomPeerData(user_id=None, user_name=None)
+            peer_dto = ChatRoomPeerData(
+                user_id=None, user_name=None, profile_image_url=None,
+            )
 
         last_message_dto: Optional[LastMessagePreviewData] = None
         if last_message_doc is not None:

@@ -32,6 +32,27 @@ class FriendshipRepository:
         return await self.session.get(Friendship, friendship_id)
 
 
+    async def find_accepted_friend_ids(self, me_id: str) -> set[str]:
+        """`me_id` 의 모든 ACCEPTED 친구 user_id 집합.
+
+        그룹 방 초대 가능 친구 후보 추출용 — 친구 ID 만 필요할 때 프로필 join 없이
+        빠르게 가져와 차집합 연산에 쓴다.
+        """
+        peer_id = case(
+            (Friendship.requester_id == me_id, Friendship.addressee_id),
+            else_=Friendship.requester_id,
+        )
+        stmt = select(peer_id).where(
+            Friendship.status == FriendshipStatus.ACCEPTED,
+            or_(
+                Friendship.requester_id == me_id,
+                Friendship.addressee_id == me_id,
+            ),
+        )
+        result = await self.session.execute(stmt)
+        return set(result.scalars().all())
+
+
     async def find_accepted_friend_ids_with(
         self, me_id: str, target_ids: Iterable[str],
     ) -> set[str]:

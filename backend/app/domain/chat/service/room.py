@@ -544,10 +544,11 @@ class RoomService:
     @staticmethod
     async def _to_dto(room: ChatRoom, me_id: str, peer) -> ChatRoomData:
         """DTO 변환. 신규 1:1 방은 last_message 가 항상 None."""
-        # peer 가 User ORM 객체 (User + detail) 로 오는 경우 detail 에서 user_name 추출
+        # peer 가 User ORM 객체 (User + detail) 로 오는 경우 detail 에서 프로필 추출
         peer_dto = ChatRoomPeerData(
             user_id=peer.user_id,
             user_name=peer.detail.user_name if peer.detail else None,
+            profile_image_url=peer.detail.profile_image_url if peer.detail else None,
         )
         return ChatRoomData(
             chat_room_id=room.chat_room_id,

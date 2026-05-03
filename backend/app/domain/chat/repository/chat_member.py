@@ -1,8 +1,10 @@
 from typing import Optional
+from sqlalchemy.orm import joinedload
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import func, select, update
 
 from app.domain.chat.model.chat_room_member import ChatRoomMember
+from app.domain.auth.model.user import User
 
 
 class ChatRoomMemberRepository:
@@ -38,6 +40,26 @@ class ChatRoomMemberRepository:
 
 
     # ──────────────────── Read (목록) ────────────────────
+
+    async def find_active_member_users(self, chat_room_id: str) -> list[User]:
+        """방의 활성 멤버를 User + detail 까지 한 번에 로드 (joined_at 오름차순).
+
+        참여자 목록 노출용 — 방 입장 순서대로 보여주기 위해 joined_at 정렬을 그대로 둔다.
+        탈퇴자(`is_left=true`) 는 제외 — 클라는 활성 멤버만 표시한다.
+        """
+        stmt = (
+            select(User)
+            .options(joinedload(User.detail))
+            .join(ChatRoomMember, ChatRoomMember.user_id == User.user_id)
+            .where(
+                ChatRoomMember.chat_room_id == chat_room_id,
+                ChatRoomMember.is_left.is_(False),
+            )
+            .order_by(ChatRoomMember.joined_at.asc(), User.user_id.asc())
+        )
+        result = await self.session.execute(stmt)
+        return list(result.unique().scalars().all())
+
 
     async def find_active_member_ids(self, chat_room_id: str) -> list[str]:
         """방의 활성 멤버 user_id 목록 (is_left=false).
