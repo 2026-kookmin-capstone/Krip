@@ -61,6 +61,11 @@ class ProfileResponse(BaseModel):
         description="프로필 이미지 URL (없으면 null)",
         examples=["https://cdn.example.com/profile/abc.jpg"],
     )
+    notification_muted: bool = Field(
+        ...,
+        description="전역 알림 차단 여부 (true = 모든 푸시 차단)",
+        examples=[False],
+    )
 
     class Config:
         json_schema_extra = {
@@ -76,6 +81,7 @@ class ProfileResponse(BaseModel):
                 "nationality": "korea",
                 "travel_styles": ["activity", "food"],
                 "profile_image_url": "https://cdn.example.com/profile/abc.jpg",
+                "notification_muted": False,
             }
         }
 
