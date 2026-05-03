@@ -26,6 +26,7 @@ from app.domain.chat.service.fanout import FanoutService
 from app.domain.chat.service.message_history import MessageHistoryService
 from app.domain.chat.service.room import RoomService
 from app.domain.chat.service.session import SessionService
+from app.domain.notification.service.fcm import FcmService
 from app.database.session import UnitOfWork
 from app.config.setting import settings
 
@@ -96,3 +97,6 @@ class Container(containers.DeclarativeContainer):
         UserBlockService, uow=uow, block_cache_service=block_cache_service,
     )
     friend_detail_service = providers.Factory(FriendDetailService, uow=uow)
+
+    # 알림 (FCM 디바이스 토큰 등록/해제 + 푸시 발송)
+    fcm_service = providers.Factory(FcmService, uow=uow)

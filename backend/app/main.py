@@ -99,6 +99,7 @@ def create_app() -> FastAPI:
         "app.domain.chat.router.message",
         "app.domain.chat.router.ws",
         "app.domain.public.router.share",
+        "app.domain.notification.router.fcm_token",
     ])
 
 

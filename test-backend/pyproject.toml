@@ -1,0 +1,8 @@
+[project]
+name = "test-backend"
+version = "0.1.0"
+description = "FCM 발송 테스트용 격리 환경"
+requires-python = ">=3.10"
+dependencies = [
+    "firebase-admin>=6.5.0",
+]

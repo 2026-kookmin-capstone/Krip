@@ -84,3 +84,10 @@ def generate_tour_plan_item_id() -> str:
     timestamp = int(datetime.now().timestamp())
     unique_part = uuid.uuid4().hex[:8]
     return f"TPI_{timestamp}_{unique_part}"
+
+
+def generate_fcm_token_id() -> str:
+    """FCM 디바이스 토큰 row 고유 ID 생성"""
+    timestamp = int(datetime.now().timestamp())
+    unique_part = uuid.uuid4().hex[:8]
+    return f"FCM_{timestamp}_{unique_part}"
