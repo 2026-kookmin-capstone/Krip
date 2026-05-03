@@ -1,4 +1,5 @@
 from typing import List, Optional
+from pymongo import IndexModel
 from pydantic import BaseModel, Field
 from beanie import Document, Indexed
 
@@ -92,3 +93,7 @@ class Place(Document):
 
     class Settings:
         name = "place"  # MongoDB 컬렉션명
+        # $geoNear 쿼리는 2dsphere 인덱스가 반드시 필요. init_beanie 시점에 자동 생성/idempotent.
+        indexes = [
+            IndexModel([("location", "2dsphere")], name="location_2dsphere"),
+        ]

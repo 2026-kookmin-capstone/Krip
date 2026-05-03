@@ -70,3 +70,17 @@ def generate_session_id() -> str:
     timestamp = int(datetime.now().timestamp())
     unique_part = uuid.uuid4().hex[:8]
     return f"WS_{timestamp}_{unique_part}"
+
+
+def generate_tour_plan_id() -> str:
+    """여행 플랜 고유 ID 생성"""
+    timestamp = int(datetime.now().timestamp())
+    unique_part = uuid.uuid4().hex[:8]
+    return f"TP_{timestamp}_{unique_part}"
+
+
+def generate_tour_plan_item_id() -> str:
+    """여행 플랜 카드(아이템) 고유 ID 생성"""
+    timestamp = int(datetime.now().timestamp())
+    unique_part = uuid.uuid4().hex[:8]
+    return f"TPI_{timestamp}_{unique_part}"

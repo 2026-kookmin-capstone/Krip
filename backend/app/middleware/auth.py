@@ -31,6 +31,7 @@ class BearerTokenMiddleware(BaseHTTPMiddleware):
     # 인증을 건너뛸 경로 prefix
     EXCLUDE_PREFIXES: Sequence[str] = (
         "/api/auth/login",
+        "/api/public",  # 외부 사용자 공개 endpoint (share 토큰 등)
     )
 
 
@@ -107,6 +108,7 @@ class LoginCookieMiddleware(BaseHTTPMiddleware):
     # 쿠키 검증을 건너뛸 경로 prefix
     EXCLUDE_PREFIXES: Sequence[str] = (
         "/api/auth/login",
+        "/api/public",  # 외부 사용자 공개 endpoint (share 토큰 등)
     )
 
 
@@ -190,12 +192,13 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
         "/openapi.json",
     )
 
-    # 검증을 건너뛸 경로 prefix (로그인, 회원가입, 로그아웃, 탈퇴)
+    # 검증을 건너뛸 경로 prefix (로그인, 회원가입, 로그아웃, 탈퇴, 공개 endpoint)
     EXCLUDE_PREFIXES: Sequence[str] = (
         "/api/auth/login",
         "/api/auth/register",
         "/api/auth/logout",
         "/api/auth/withdraw",
+        "/api/public",  # 외부 사용자 공개 endpoint (share 토큰 등)
     )
 
 
