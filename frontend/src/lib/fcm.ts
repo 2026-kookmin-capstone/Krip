@@ -4,8 +4,9 @@ import client from "../api/client";
 import { firebaseApp } from "./firebase";
 
 const FCM_TOKEN_STORAGE_KEY = "FCMtoken";
+let fcmTokenRegistrationPromise: Promise<string | null> | null = null;
 
-export async function registerFcmToken(): Promise<string | null> {
+async function issueAndRegisterFcmToken(): Promise<string | null> {
   const vapidKey = import.meta.env.VITE_FIREBASE_VAPID_KEY;
   if (!vapidKey || !("Notification" in window)) {
     return null;
@@ -30,7 +31,6 @@ export async function registerFcmToken(): Promise<string | null> {
   }
 
   const storedToken = localStorage.getItem(FCM_TOKEN_STORAGE_KEY);
-  console.log("FCM token generated:", currentToken);
   localStorage.setItem(FCM_TOKEN_STORAGE_KEY, currentToken);
 
   if (storedToken === currentToken) {
@@ -48,22 +48,36 @@ export async function registerFcmToken(): Promise<string | null> {
   return currentToken;
 }
 
-export function requestPermission(): void {
+export function registerFcmToken(): Promise<string | null> {
+  if (!fcmTokenRegistrationPromise) {
+    fcmTokenRegistrationPromise = issueAndRegisterFcmToken().finally(() => {
+      fcmTokenRegistrationPromise = null;
+    });
+  }
+
+  return fcmTokenRegistrationPromise;
+}
+
+export async function requestPermission(): Promise<void> {
   if (!("Notification" in window) || Notification.permission !== "default") {
     return;
   }
 
-  void Notification.requestPermission()
-    .then((permission) => {
-      if (permission === "granted") {
-        console.log("Push permission granted");
-      } else if (permission === "denied") {
-        console.log("Push permission denied");
-      }
-    })
-    .catch((error) => {
-      console.log("Error while requesting push permission", error);
-    });
+  try {
+    const permission = await Notification.requestPermission();
+
+    if (permission === "granted") {
+      console.log("Push permission granted");
+      await registerFcmToken();
+      return;
+    }
+
+    if (permission === "denied") {
+      console.log("Push permission denied");
+    }
+  } catch (error) {
+    console.log("Error while requesting push permission", error);
+  }
 }
 
 export async function listenForegroundMessages(): Promise<void> {

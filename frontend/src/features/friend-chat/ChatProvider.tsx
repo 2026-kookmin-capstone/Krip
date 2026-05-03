@@ -810,6 +810,14 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         handleSocketEventRef.current(parseSocketEvent(socketEvent.data));
       };
 
+      ws.onerror = () => {
+        reportChatNetworkError({
+          action: "websocket_error",
+          detail: "WebSocket connection failed.",
+          extra: getChatWebSocketUrl(),
+        });
+      };
+
       ws.onclose = (socketEvent) => {
         if (socketRef.current === ws) socketRef.current = null;
 
@@ -844,7 +852,16 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         window.clearTimeout(reconnectTimerRef.current);
         reconnectTimerRef.current = null;
       }
-      socketRef.current?.close(1000);
+      const socket = socketRef.current;
+      if (socket) {
+        if (socket.readyState === WebSocket.CONNECTING) {
+          socket.onopen = () => socket.close(1000);
+          socket.onmessage = null;
+          socket.onclose = null;
+        } else {
+          socket.close(1000);
+        }
+      }
       socketRef.current = null;
     };
   }, [isChatRoute, navigate, refreshRooms]);
