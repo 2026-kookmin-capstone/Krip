@@ -6,6 +6,7 @@ postgresql-data/
 
 .DS_Store
 .env
+krip-firebase-secret-key.json
 *.log*
 
 # AI model weights
