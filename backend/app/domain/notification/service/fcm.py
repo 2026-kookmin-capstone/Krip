@@ -3,12 +3,14 @@ from firebase_admin.exceptions import FirebaseError
 from firebase_admin import messaging
 import asyncio
 
-from app.core.fcm import get_fcm_app
-from app.core.logger import get_logger
 from app.domain.notification.repository.fcm_token import FcmTokenRepository
 from app.domain.notification.model.fcm_token import FcmToken
 from app.domain.notification.dto.fcm_token import FcmTokenData
+from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
+from app.domain.auth.repository.user import UserRepository
 from app.database.session import UnitOfWork, transactional
+from app.core.logger import get_logger
+from app.core.fcm import get_fcm_app
 
 
 logger = get_logger("fcm_service")
@@ -87,9 +89,20 @@ class FcmService:
         """채팅 새 메시지 푸시 — 클라이언트가 알림 탭 시 방으로 라우팅할 수 있도록
         `type / chatRoomId / senderId / url` 데이터 페이로드 포함.
 
+        가드 체인 (모두 통과해야 발송):
+          1. 방별 차단 — `chat_room_member.notification_muted` 가 True 면 skip
+             (활성 멤버가 아닌 경우도 skip — 탈퇴 / 미가입 보호)
+          2. 전역 차단 — `_send_to_user` 내부에서 `users.notification_muted` 체크
+
         FCM 규격상 data 값은 모두 string. 호출자는 이미 string 화된 ID 를 넘긴다.
-        반환: 발송 성공한 디바이스 수.
+        반환: 발송 성공한 디바이스 수 (차단된 경우 0).
         """
+        # (1) 방별 차단 가드
+        member_repo = ChatRoomMemberRepository(self._session)
+        member = await member_repo.find(chat_room_id, user_id)
+        if member is None or member.is_left or member.notification_muted is True:
+            return 0
+
         data = {
             "type": "chat",
             "chatRoomId": chat_room_id,
@@ -114,7 +127,14 @@ class FcmService:
         """user_id 의 모든 토큰으로 multicast + 만료 토큰 자동 정리.
 
         반드시 `@transactional` 컨텍스트 안에서 호출해야 한다 (self._session 사용).
+        전역 차단 가드 — `users.notification_muted is True` 면 발송 자체 skip.
         """
+        # 전역 차단 가드 (모든 발송 경로의 공통 진입점)
+        user_repo = UserRepository(self._session)
+        user = await user_repo.find_by_id(user_id)
+        if user is None or user.notification_muted is True:
+            return 0
+
         repo = FcmTokenRepository(self._session)
         rows = await repo.find_by_user_id(user_id)
         if not rows:

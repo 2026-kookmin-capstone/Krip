@@ -27,6 +27,7 @@ from app.domain.chat.service.message_history import MessageHistoryService
 from app.domain.chat.service.room import RoomService
 from app.domain.chat.service.session import SessionService
 from app.domain.notification.service.fcm import FcmService
+from app.domain.notification.service.mute import MuteService
 from app.database.session import UnitOfWork
 from app.config.setting import settings
 
@@ -83,6 +84,7 @@ class Container(containers.DeclarativeContainer):
 
     # 알림 (FCM) — message_service 가 의존하므로 그보다 먼저 선언.
     fcm_service = providers.Factory(FcmService, uow=uow)
+    mute_service = providers.Factory(MuteService, uow=uow)
 
     # 채팅 — 비즈 (Factory: 호출마다 UoW 새로 바인딩)
     #   - message_service / block_cache_service 는 room_service / user_block_service 보다
