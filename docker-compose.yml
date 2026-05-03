@@ -73,7 +73,8 @@ services:
       - ./backend/data:/backend/data
       - ./backend/logs:/backend/logs
       - ./backend/scripts:/backend/scripts:ro           # 업로드 스크립트
-      - ./backend/seoul_data:/backend/seoul_data:ro     # 장소 JSON 데이터    
+      - ./backend/seoul_data:/backend/seoul_data:ro     # 장소 JSON 데이터 
+      - ./backend/secrets:/backend/secrets:ro           # FCM 토큰
 
 networks:
   krip-network:
