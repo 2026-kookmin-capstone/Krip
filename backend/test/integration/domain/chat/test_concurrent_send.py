@@ -24,7 +24,7 @@ _CONCURRENT_COUNT = 10
 
 class TestConcurrentSendProducesMonotonicSeq:
     async def test_concurrent_sends_yield_unique_monotonic_seq(
-        self, session_factory, direct_room, chat_fanout_stub, mongo_db, monkeypatch,
+        self, session_factory, direct_room, chat_fanout_stub, chat_fcm_stub, mongo_db, monkeypatch,
     ):
         monkeypatch.setattr(
             "app.domain.chat.service.message.RATE_LIMIT_THRESHOLD",
@@ -35,7 +35,7 @@ class TestConcurrentSendProducesMonotonicSeq:
 
         async def send(i: int):
             uow = UnitOfWork(session=session_factory)
-            svc = MessageService(uow=uow, fanout_service=chat_fanout_stub)
+            svc = MessageService(uow=uow, fanout_service=chat_fanout_stub, fcm_service=chat_fcm_stub)
             uid = user_a if i % 2 == 0 else user_b
             return await svc.send_message(
                 sender_user_id=uid,

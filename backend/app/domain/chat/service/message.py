@@ -1,4 +1,4 @@
-"""메시지 송신 서비스 — 핫패스 11단계
+"""메시지 송신 서비스 — 핫패스 12단계
 
 단계 요약:
     1. 입력 검증 (Pydantic 레벨에서 이미 처리 — 본 서비스는 비즈 검증)
@@ -11,11 +11,13 @@
     8. RDB last_message_* 갱신 — SAVEPOINT 실패 시 `dirty:chat_room` 에 적재
     9. unread pipeline (`transaction=False` + `min_count > 0` 조건 분기. 시스템 메시지 skip)
     10. fan_out_to_room (발신자 skip 은 FanoutService 내부)
-    11. 발신 세션에 `message.sent` 직송 (ACK)
+    11. FCM 푸시 (fire-and-forget. 시스템 메시지 skip. 실패해도 ACK 정상)
+    12. 발신 세션에 `message.sent` 직송 (ACK)
 """
 from pymongo.errors import DuplicateKeyError
 import random
 from datetime import datetime, timedelta, timezone
+import asyncio
 
 from app.util.id_generator import generate_message_id
 from app.domain.chat.dto.message import MessageSentAckData
@@ -26,7 +28,8 @@ from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
 from app.domain.chat.repository.chat_room import ChatRoomRepository
 from app.domain.chat.service.exception import UpstreamError
 from app.domain.friend.repository.user_block import UserBlockRepository
-from app.database.session import UnitOfWork, mongodb, transactional
+from app.domain.notification.service.fcm import FcmService
+from app.database.session import UnitOfWork, _current_session, mongodb, transactional
 from app.core.chat.lua_script import lua_scripts
 from app.core.chat.redis_key import (
     DEDUPE_TTL,
@@ -58,13 +61,21 @@ _MAX_INSERT_ATTEMPTS = 3
 # 메시지 편집 허용 시간 — 카톡과 동일한 5 분 (Phase 2 #5)
 EDIT_TIME_LIMIT = timedelta(minutes=5)
 
+# FCM 푸시 본문 미리보기 길이 — 길면 잘라서 "..." 추가.
+_PUSH_BODY_PREVIEW_LIMIT = 100
+
+# fire-and-forget 백그라운드 task 핸들 보관소 — Python 가 미참조 task 를 GC 로
+# 회수하는 이슈 방지 (asyncio 공식 권장 패턴).
+_PUSH_TASKS: set[asyncio.Task] = set()
+
 
 class MessageService:
     """메시지 송신 핫패스."""
 
-    def __init__(self, uow: UnitOfWork, fanout_service):
+    def __init__(self, uow: UnitOfWork, fanout_service, fcm_service: FcmService):
         self.uow = uow
         self._fanout = fanout_service
+        self._fcm = fcm_service
 
 
     @transactional
@@ -220,7 +231,20 @@ class MessageService:
         )
 
 
-        # ─── (11) 발신 세션에 ACK 직송 ───
+        # ─── (11) FCM 푸시 — fire-and-forget. 발신자 ACK 지연을 막기 위해 task 로 분리.
+        #   - 시스템 메시지(JOIN/LEAVE/KICK) 는 unread 와 동일하게 skip (H3 일관성)
+        #   - 어떤 예외도 비즈에 영향 없음 (helper 가 모든 예외 swallow)
+        #   - 트랜잭션 밖에서 실행되지만 단계 7(Mongo) + 10(fanout) 까지 도달했다는 건
+        #     메시지가 이미 "출시" 됐다는 뜻 → 후속 롤백은 사실상 발생 안 함.
+        if msg_type != MessageType.SYSTEM:
+            self._spawn_push_task(
+                room_id=room_id,
+                sender_user_id=sender_user_id,
+                content=content,
+            )
+
+
+        # ─── (12) 발신 세션에 ACK 직송 ───
         return MessageSentAckData(
             client_msg_id=client_msg_id,
             message_id=message_id,
@@ -605,5 +629,70 @@ class MessageService:
         except Exception as e:
             logger.warning(
                 "unread pipeline 실패 (무시하고 진행): room_id={}, err={}",
+                room_id, type(e).__name__,
+            )
+
+
+    # ──────────────────────────────────────────────────────────
+    # FCM 푸시 (fire-and-forget)
+    # ──────────────────────────────────────────────────────────
+
+    def _spawn_push_task(
+        self, *, room_id: str, sender_user_id: str, content: str,
+    ) -> None:
+        """푸시 task 를 백그라운드로 띄움. 모듈 레벨 set 에 핸들 보관해 GC 회수 방지."""
+        task = asyncio.create_task(
+            self._push_chat_to_recipients(
+                room_id=room_id,
+                sender_user_id=sender_user_id,
+                content=content,
+            )
+        )
+        _PUSH_TASKS.add(task)
+        task.add_done_callback(_PUSH_TASKS.discard)
+
+
+    async def _push_chat_to_recipients(
+        self, *, room_id: str, sender_user_id: str, content: str,
+    ) -> None:
+        """발신자 제외한 방 멤버 전체에게 FCM 푸시 multicast.
+
+        fire-and-forget 컨텍스트 — 어떤 예외도 raise 하지 않는다.
+        멤버 목록은 Redis `room:members:{R}` 에서 다시 읽음 (`_bump_unread` 와 시점 분리).
+        """
+        # create_task 는 부모 Context 를 복사하므로 _current_session 에 부모(이미 닫힌)
+        # 세션이 박혀있다. 명시적으로 끊어줘야 send_chat_push 의 @transactional 이
+        # 좀비 세션에 "참여" 하지 않고 자기 own UoW 로 새 트랜잭션을 연다.
+        _current_session.set(None)
+        try:
+            redis_hot = await get_redis_client()
+            members = await redis_hot.smembers(room_members_key(room_id))
+            recipients = [uid for uid in members if uid != sender_user_id]
+            if not recipients:
+                return
+
+            body = (
+                content[:_PUSH_BODY_PREVIEW_LIMIT] + "..."
+                if len(content) > _PUSH_BODY_PREVIEW_LIMIT
+                else content
+            )
+
+            # 각 유저는 독립 트랜잭션으로 병렬 발송. 한 명 실패가 다른 사람에 영향 없음.
+            await asyncio.gather(
+                *[
+                    self._fcm.send_chat_push(
+                        user_id=uid,
+                        chat_room_id=room_id,
+                        sender_id=sender_user_id,
+                        title="새 메시지",
+                        body=body,
+                    )
+                    for uid in recipients
+                ],
+                return_exceptions=True,
+            )
+        except Exception as e:
+            logger.warning(
+                "FCM 푸시 helper 실패 (무시): room_id={}, err={}",
                 room_id, type(e).__name__,
             )
