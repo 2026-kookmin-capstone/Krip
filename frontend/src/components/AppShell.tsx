@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { useEffect, useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { getMyProfile } from "../api/auth/auth";
 import { getReceivedFriendRequests } from "../api/friend";
 import { listenForegroundMessages, registerFcmToken } from "../lib/fcm";
@@ -15,17 +15,15 @@ const TAB_ITEMS = [
 ] as const;
 
 export default function AppShell() {
+  const location = useLocation();
+  const isFriendChatRoute =
+    location.pathname === "/chat" || location.pathname.startsWith("/chat/");
   const [friendChatNotificationCount, setFriendChatNotificationCount] = useState(0);
 
   useEffect(() => {
     getMyProfile()
       .then(() =>
         registerFcmToken()
-          .then((token) => {
-            if (token) {
-              console.log(`Push token issued: ${token}`);
-            }
-          })
           .catch((error) => {
             console.warn("Failed to register FCM token", error);
           })
@@ -40,6 +38,10 @@ export default function AppShell() {
   }, []);
 
   useEffect(() => {
+    if (isFriendChatRoute) {
+      return undefined;
+    }
+
     let isMounted = true;
 
     async function refreshFriendChatNotifications(): Promise<void> {
@@ -73,7 +75,7 @@ export default function AppShell() {
       window.removeEventListener("storage", handleRefresh);
       window.removeEventListener("krip:friend-chat-notifications-updated", handleRefresh);
     };
-  }, []);
+  }, [isFriendChatRoute]);
 
   return (
     <div style={styles.shell}>

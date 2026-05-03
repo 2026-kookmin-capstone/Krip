@@ -99,7 +99,7 @@ function ManualPlanRoute() {
 
 export default function App() {
   useEffect(() => {
-    requestPermission();
+    void requestPermission();
   }, []);
 
   return (
