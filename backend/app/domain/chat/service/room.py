@@ -530,7 +530,10 @@ class RoomService:
 
     @staticmethod
     def _to_group_dto(room: ChatRoom) -> ChatRoomData:
-        """그룹 방 생성 직후 DTO — peer 는 항상 None, last_message 도 None."""
+        """그룹 방 생성 직후 DTO — peer 는 항상 None, last_message 도 None.
+
+        notification_muted 는 방금 만든 멤버 row 라 NULL → False 로 노출.
+        """
         return ChatRoomData(
             chat_room_id=room.chat_room_id,
             type=room.type,
@@ -540,6 +543,7 @@ class RoomService:
             unread_count=0,
             last_message_at=room.last_message_at,
             effective_last_at=room.effective_last_at or room.created_at,
+            notification_muted=False,
         )
 
 
@@ -547,7 +551,12 @@ class RoomService:
 
     @staticmethod
     async def _to_dto(room: ChatRoom, me_id: str, peer) -> ChatRoomData:
-        """DTO 변환. 신규 1:1 방은 last_message 가 항상 None."""
+        """DTO 변환. 신규 1:1 방은 last_message 가 항상 None.
+
+        idempotent 재활용 케이스에도 mute 는 False 로 응답한다 — 직전에 직접 끄는
+        UX 가 아니므로 방 생성 응답에서 차단 상태를 보일 필요가 없다고 판단.
+        클라이언트는 list/get 으로 정확한 mute 를 다시 받는다.
+        """
         # peer 가 User ORM 객체 (User + detail) 로 오는 경우 detail 에서 프로필 추출
         peer_dto = ChatRoomPeerData(
             user_id=peer.user_id,
@@ -563,4 +572,5 @@ class RoomService:
             unread_count=0,
             last_message_at=room.last_message_at,
             effective_last_at=room.effective_last_at or room.created_at,
+            notification_muted=False,
         )

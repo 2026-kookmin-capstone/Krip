@@ -66,7 +66,7 @@ class MessageHistoryService:
         rows = await chat_room_repo.find_rooms_of_user(me_id)
 
         # 2. peer 프로필 배치 조회 — 탈퇴한 유저(=결과에 없음)는 호출측 .get 으로 None fallback
-        peer_ids = [pid for _, pid in rows if pid is not None]
+        peer_ids = [pid for _, pid, _ in rows if pid is not None]
         peer_map = await user_repo.find_by_ids_with_profile(peer_ids)
 
         # 3. unread
@@ -74,7 +74,7 @@ class MessageHistoryService:
         unread_map = {k: int(v) for k, v in unread_raw.items()}
 
         # 4. last_message 본문 배치
-        message_ids = [r.last_message_id for r, _ in rows if r.last_message_id]
+        message_ids = [r.last_message_id for r, _, _ in rows if r.last_message_id]
         messages_by_id = await message_repo.find_by_ids(message_ids)
 
         items = [
@@ -86,8 +86,9 @@ class MessageHistoryService:
                 last_message_doc=(
                     messages_by_id.get(room.last_message_id) if room.last_message_id else None
                 ),
+                notification_muted=mute is True,
             )
-            for room, peer_user_id in rows
+            for room, peer_user_id, mute in rows
         ]
 
         return ChatRoomListData(items=items, next_cursor=None)
@@ -114,7 +115,9 @@ class MessageHistoryService:
         if room is None:
             raise ChatRoomNotFoundError("존재하지 않는 방입니다.")
 
-        if not await member_repo.is_active_member(room_id, me_id):
+        # 권한 체크 + mute 상태를 한 번의 조회로 — is_active_member 별도 호출 불필요.
+        member = await member_repo.find(room_id, me_id)
+        if member is None or member.is_left:
             raise PermissionError("이 방의 멤버가 아닙니다.")
 
         # peer_user_id 파생 — 1:1 방의 상대방 (그룹은 None)
@@ -143,6 +146,7 @@ class MessageHistoryService:
             peer_user=peer_user,
             unread_count=unread_count,
             last_message_doc=last_message_doc,
+            notification_muted=member.notification_muted is True,
         )
 
 
@@ -300,6 +304,7 @@ class MessageHistoryService:
         peer_user,
         unread_count: int,
         last_message_doc: Optional[dict],
+        notification_muted: bool,
     ) -> ChatRoomData:
         """방 1건을 DTO 로 변환. 탈퇴한 peer 는 user_id/user_name 모두 None."""
         peer_dto: Optional[ChatRoomPeerData] = None
@@ -343,6 +348,7 @@ class MessageHistoryService:
             unread_count=unread_count,
             last_message_at=room.last_message_at,
             effective_last_at=room.effective_last_at or room.created_at,
+            notification_muted=notification_muted,
         )
 
 
