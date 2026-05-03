@@ -9,11 +9,12 @@ from app.domain.chat.model.chat_room import ChatRoomType
 class ChatRoomPeerData:
     """1:1 방의 상대방 프로필 DTO.
 
-    탈퇴 정책(ON DELETE SET NULL) 에 따라 상대가 탈퇴한 경우 
+    탈퇴 정책(ON DELETE SET NULL) 에 따라 상대가 탈퇴한 경우
     `user_id` 가 None — 클라는 이 경우 "탈퇴한 사용자" 로 표시한다.
     """
     user_id: Optional[str]
     user_name: Optional[str]
+    profile_image_url: Optional[str] = None
 
 
 @dataclass
@@ -51,3 +52,20 @@ class ChatRoomListData:
     """방 리스트 응답 DTO."""
     items: List[ChatRoomData]
     next_cursor: Optional[str]
+
+
+@dataclass
+class RoomMemberData:
+    """그룹 방 참여자 / 초대 가능 친구 목록의 공통 미리보기 DTO.
+
+    활성 멤버 (is_left=false) 또는 ACCEPTED 친구만 담기므로 user_id/user_name 은 항상 보장.
+    """
+    user_id: str
+    user_name: str
+    profile_image_url: Optional[str] = None
+
+
+@dataclass
+class RoomMemberListData:
+    """참여자 / 초대 가능 친구 목록 응답 DTO."""
+    items: List[RoomMemberData]

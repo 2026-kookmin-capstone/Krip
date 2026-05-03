@@ -93,6 +93,7 @@ class ChatRoomPeerResponse(BaseModel):
     """1:1 방 상대방 프로필. 탈퇴한 경우 필드가 모두 null — 클라는 '탈퇴한 사용자' 로 표시."""
     user_id: Optional[str] = Field(None, description="상대 유저 ID (탈퇴 시 null)")
     user_name: Optional[str] = Field(None, description="상대 닉네임 (탈퇴 시 null)")
+    profile_image_url: Optional[str] = Field(None, description="프로필 이미지 URL (없으면 null)")
 
 
 class LastMessagePreviewResponse(BaseModel):
@@ -129,3 +130,16 @@ class ChatRoomListResponse(BaseModel):
     next_cursor: Optional[str] = Field(
         None, description="다음 페이지 커서 (마지막 페이지면 null). Phase 1 은 항상 null"
     )
+
+
+# ──────────────────── Response — 참여자 / 초대 가능 친구 ────────────────────
+
+class RoomMemberResponse(BaseModel):
+    """그룹 방 참여자 / 초대 가능 친구 목록의 공통 미리보기 응답."""
+    user_id: str = Field(..., description="유저 ID")
+    user_name: str = Field(..., description="유저 이름")
+    profile_image_url: Optional[str] = Field(None, description="프로필 이미지 URL (없으면 null)")
+
+
+class RoomMemberListResponse(BaseModel):
+    items: List[RoomMemberResponse] = Field(..., description="유저 목록")
