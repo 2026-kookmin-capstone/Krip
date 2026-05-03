@@ -14,13 +14,18 @@ class UserFactory:
         cls,
         user_id: Optional[str] = None,
         user_name: Optional[str] = None,
+        profile_image_url: Optional[str] = None,
         detail: object = "default",
     ) -> SimpleNamespace:
         cls._counter += 1
         uid = user_id or f"USER_test_{cls._counter:04d}"
         uname = user_name or f"user{cls._counter}"
         if detail == "default":
-            detail_obj = SimpleNamespace(user_id=uid, user_name=uname)
+            detail_obj = SimpleNamespace(
+                user_id=uid,
+                user_name=uname,
+                profile_image_url=profile_image_url,
+            )
         else:
             detail_obj = detail
         return SimpleNamespace(user_id=uid, detail=detail_obj)

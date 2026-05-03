@@ -9,6 +9,7 @@ from types import SimpleNamespace
 import pytest
 
 from app.domain.chat.model.chat_room import ChatRoomType
+from app.domain.chat.service.exception import ChatRoomNotFoundError
 
 
 NOW = datetime(2026, 4, 22, 12, 0, 0, tzinfo=timezone.utc)
@@ -206,7 +207,10 @@ class TestListRooms:
         user_repo_mock.find_by_ids_with_profile.return_value = {
             "U_B": SimpleNamespace(
                 user_id="U_B",
-                detail=SimpleNamespace(user_name="peer_name"),
+                detail=SimpleNamespace(
+                    user_name="peer_name",
+                    profile_image_url="https://cdn.example.com/u_b.jpg",
+                ),
             ),
         }
         redis_mock.hgetall.return_value = {"CR_d": "3"}
@@ -218,6 +222,7 @@ class TestListRooms:
         assert item.type == ChatRoomType.DIRECT
         assert item.peer.user_id == "U_B"
         assert item.peer.user_name == "peer_name"
+        assert item.peer.profile_image_url == "https://cdn.example.com/u_b.jpg"
         assert item.unread_count == 3
         assert item.last_message is None
 
@@ -237,7 +242,7 @@ class TestListRooms:
     async def test_direct_peer_withdrawn_returns_null_profile(
         self, service, chat_room_repo_mock, redis_mock, message_repo_mock,
     ):
-        """direct 방이지만 peer 가 탈퇴 → peer_user_id=None → peer 는 (None, None)."""
+        """direct 방이지만 peer 가 탈퇴 → peer_user_id=None → peer 는 모두 None."""
         room = _mk_room(chat_room_id="CR_orphan", type_=ChatRoomType.DIRECT)
         chat_room_repo_mock.find_rooms_of_user.return_value = [(room, None)]
         redis_mock.hgetall.return_value = {}
@@ -246,6 +251,7 @@ class TestListRooms:
         result = await service.list_rooms(me_id="U_A")
         assert result.items[0].peer.user_id is None
         assert result.items[0].peer.user_name is None
+        assert result.items[0].peer.profile_image_url is None
 
     async def test_last_message_preview_masks_deleted(
         self, service, chat_room_repo_mock, redis_mock, message_repo_mock,
@@ -271,6 +277,141 @@ class TestListRooms:
 # ──────────────────────────────────────────────────────────────────
 # get_unread_counts
 # ──────────────────────────────────────────────────────────────────
+
+def _mk_user(
+    user_id: str,
+    user_name: str = "u",
+    profile_image_url: str | None = None,
+) -> SimpleNamespace:
+    return SimpleNamespace(
+        user_id=user_id,
+        detail=SimpleNamespace(
+            user_name=user_name,
+            profile_image_url=profile_image_url,
+        ),
+    )
+
+
+# ──────────────────────────────────────────────────────────────────
+# list_room_members (그룹 방 참여자 목록)
+# ──────────────────────────────────────────────────────────────────
+
+@pytest.mark.unit
+class TestListRoomMembers:
+    async def test_room_not_found_raises(self, service, chat_room_repo_mock):
+        chat_room_repo_mock.find_by_id.return_value = None
+        with pytest.raises(ChatRoomNotFoundError):
+            await service.list_room_members(me_id="U_A", room_id="CR_X")
+
+    async def test_non_member_raises(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+    ):
+        chat_room_repo_mock.find_by_id.return_value = _mk_room(type_=ChatRoomType.GROUP)
+        chat_member_repo_mock.is_active_member.return_value = False
+        with pytest.raises(PermissionError):
+            await service.list_room_members(me_id="U_X", room_id="CR_1")
+
+    async def test_direct_room_raises(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+    ):
+        chat_room_repo_mock.find_by_id.return_value = _mk_room(type_=ChatRoomType.DIRECT)
+        chat_member_repo_mock.is_active_member.return_value = True
+        with pytest.raises(ValueError, match="그룹 방"):
+            await service.list_room_members(me_id="U_A", room_id="CR_d")
+
+    async def test_returns_active_members_with_profile(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+    ):
+        chat_room_repo_mock.find_by_id.return_value = _mk_room(type_=ChatRoomType.GROUP)
+        chat_member_repo_mock.is_active_member.return_value = True
+        chat_member_repo_mock.find_active_member_users.return_value = [
+            _mk_user("U_A", "alice", "https://cdn.example.com/a.jpg"),
+            _mk_user("U_B", "bob", None),
+        ]
+
+        result = await service.list_room_members(me_id="U_A", room_id="CR_g")
+
+        assert len(result.items) == 2
+        assert result.items[0].user_id == "U_A"
+        assert result.items[0].user_name == "alice"
+        assert result.items[0].profile_image_url == "https://cdn.example.com/a.jpg"
+        assert result.items[1].user_id == "U_B"
+        assert result.items[1].profile_image_url is None
+
+
+# ──────────────────────────────────────────────────────────────────
+# list_invitable_friends (그룹 방 초대 가능 친구 목록)
+# ──────────────────────────────────────────────────────────────────
+
+@pytest.mark.unit
+class TestListInvitableFriends:
+    async def test_room_not_found_raises(self, service, chat_room_repo_mock):
+        chat_room_repo_mock.find_by_id.return_value = None
+        with pytest.raises(ChatRoomNotFoundError):
+            await service.list_invitable_friends(me_id="U_A", room_id="CR_X")
+
+    async def test_non_member_raises(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+    ):
+        chat_room_repo_mock.find_by_id.return_value = _mk_room(type_=ChatRoomType.GROUP)
+        chat_member_repo_mock.is_active_member.return_value = False
+        with pytest.raises(PermissionError):
+            await service.list_invitable_friends(me_id="U_X", room_id="CR_g")
+
+    async def test_direct_room_raises(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+    ):
+        chat_room_repo_mock.find_by_id.return_value = _mk_room(type_=ChatRoomType.DIRECT)
+        chat_member_repo_mock.is_active_member.return_value = True
+        with pytest.raises(ValueError, match="그룹 방"):
+            await service.list_invitable_friends(me_id="U_A", room_id="CR_d")
+
+    async def test_no_friends_returns_empty(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+        friendship_repo_mock,
+    ):
+        chat_room_repo_mock.find_by_id.return_value = _mk_room(type_=ChatRoomType.GROUP)
+        chat_member_repo_mock.is_active_member.return_value = True
+        friendship_repo_mock.find_accepted_friend_ids.return_value = set()
+
+        result = await service.list_invitable_friends(me_id="U_A", room_id="CR_g")
+        assert result.items == []
+
+    async def test_all_friends_already_in_room_returns_empty(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+        friendship_repo_mock,
+    ):
+        chat_room_repo_mock.find_by_id.return_value = _mk_room(type_=ChatRoomType.GROUP)
+        chat_member_repo_mock.is_active_member.return_value = True
+        friendship_repo_mock.find_accepted_friend_ids.return_value = {"U_B", "U_C"}
+        chat_member_repo_mock.find_active_member_ids.return_value = ["U_A", "U_B", "U_C"]
+
+        result = await service.list_invitable_friends(me_id="U_A", room_id="CR_g")
+        assert result.items == []
+
+    async def test_returns_friends_not_in_room_with_profile(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+        friendship_repo_mock, user_repo_mock,
+    ):
+        chat_room_repo_mock.find_by_id.return_value = _mk_room(type_=ChatRoomType.GROUP)
+        chat_member_repo_mock.is_active_member.return_value = True
+        friendship_repo_mock.find_accepted_friend_ids.return_value = {"U_B", "U_C", "U_D"}
+        # U_C 만 이미 방 멤버 → U_B, U_D 가 초대 가능
+        chat_member_repo_mock.find_active_member_ids.return_value = ["U_A", "U_C"]
+        user_repo_mock.find_by_ids_with_profile.return_value = {
+            "U_B": _mk_user("U_B", "bob", "https://cdn.example.com/b.jpg"),
+            "U_D": _mk_user("U_D", "dave", None),
+        }
+
+        result = await service.list_invitable_friends(me_id="U_A", room_id="CR_g")
+
+        # 정렬은 user_id ASC (서비스가 sorted 사용)
+        assert [m.user_id for m in result.items] == ["U_B", "U_D"]
+        assert result.items[0].profile_image_url == "https://cdn.example.com/b.jpg"
+        assert result.items[1].profile_image_url is None
+        # 호출 인자도 sorted invitable_ids
+        user_repo_mock.find_by_ids_with_profile.assert_awaited_once_with(["U_B", "U_D"])
+
 
 @pytest.mark.unit
 class TestGetUnreadCounts:
