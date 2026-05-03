@@ -78,13 +78,6 @@ async def login_callback(
         auth_provider_id=user_info.id,
     )
 
-    payload = {
-        "user_id": result.user_id,
-        "exp": datetime.now(timezone.utc) + timedelta(days=settings.USER_LOGIN_JWT_EXPIRATION_DAYS),
-        "iat": datetime.now(timezone.utc),
-    }
-    token = jwt.encode(payload, settings.USER_LOGIN_JWT_SECRET_KEY, algorithm=settings.USER_LOGIN_JWT_ALGORITHM)
-
     redirect_to = settings.FRONTEND_URL if redirect_url == 'server' else settings.LOCAL_FRONTEND_URL
 
     params = {"status": result.status.value}
@@ -94,6 +87,16 @@ async def login_callback(
         params["name"] = user_info.name
 
     response = RedirectResponse(url=f"{redirect_to}?{urlencode(params)}")
+
+    # status 가 WITHDRAWAL_PENDING 이어도 쿠키는 발급한다 — 프론트가 status 또는 보호
+    # 경로에서 받는 419 를 보고 /api/auth/withdraw/cancel 화면으로 라우팅. RegisterCheck
+    # 미들웨어가 INACTIVE 유저의 보호 경로 진입을 419 로 차단하므로 보안상 문제 없음.
+    payload = {
+        "user_id": result.user_id,
+        "exp": datetime.now(timezone.utc) + timedelta(days=settings.USER_LOGIN_JWT_EXPIRATION_DAYS),
+        "iat": datetime.now(timezone.utc),
+    }
+    token = jwt.encode(payload, settings.USER_LOGIN_JWT_SECRET_KEY, algorithm=settings.USER_LOGIN_JWT_ALGORITHM)
 
     response.set_cookie(
         key=settings.USER_LOGIN_COOKIE_NAME,

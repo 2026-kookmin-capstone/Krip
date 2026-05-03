@@ -15,6 +15,10 @@ from app.domain.chat.worker.reconcile import (
     start_reconcile_scheduler,
     stop_reconcile_scheduler,
 )
+from app.domain.auth.worker.withdraw_purge import (
+    start_withdraw_purge_scheduler,
+    stop_withdraw_purge_scheduler,
+)
 from app.database.session import init_mongodb, close_mongodb
 import app.database.model # Relation Lazy Load 문제 해결하기 위한 import!
 from app.core.ai.tour_planner.load import TourPlanner
@@ -51,13 +55,18 @@ def create_app() -> FastAPI:
         # (ws.py 의 recover_unread 경로도 같은 session_factory 공유)
         start_reconcile_scheduler(app.container.session_factory())
 
+        # 탈퇴 영구 삭제 워커 — 매일 KST 04:00 발화. RDB / Mongo / S3 / Redis 모두 사용하므로
+        # init_mongodb / Redis pre-warm 이후에 시작.
+        start_withdraw_purge_scheduler(app.container.session_factory())
+
         MenuOcr().load()
         await TourPlanner().load()
         logger.info("Starting application in {} mode", settings.ENVIRONMENT)
 
         yield
 
-        # shutdown — reconcile 이 Mongo/Redis 를 쓰므로 이 둘을 닫기 전에 먼저 멈춘다
+        # shutdown — 워커들이 Mongo/Redis 를 쓰므로 이 둘을 닫기 전에 먼저 멈춘다
+        await stop_withdraw_purge_scheduler()
         await stop_reconcile_scheduler()
         await close_mongodb()
         await close_redis()
