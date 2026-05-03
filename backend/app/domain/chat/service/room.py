@@ -234,6 +234,9 @@ class RoomService:
         재초대 (기존 is_left=true): `last_read` 유지 — 탈퇴 전 읽은 시점 보존. unread 는
         `current_seq - last_read` 로 재계산 (naive, Phase 3 의 recover_unread_for_user
         로 정밀화 예정).
+        재초대 시 `notification_muted` 는 NULL 로 리셋 — 새로 들어오는 시점이라 과거의
+        mute 선호를 무의식적으로 끌고 가는 게 더 어색함. 다시 끄고 싶으면 사용자가
+        명시적으로 토글.
 
         Returns:
             (invited, skipped_already_member) — 실제 초대된 / 이미 멤버라 스킵된
@@ -277,6 +280,7 @@ class RoomService:
             if existing is not None and existing.is_left:
                 existing.is_left = False
                 existing.joined_at = datetime.now(timezone.utc)
+                existing.notification_muted = None
                 rejoined.append((uid, existing.last_read_message_server_seq or 0))
                 invited.append(uid)
             else:

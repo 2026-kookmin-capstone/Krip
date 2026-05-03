@@ -658,7 +658,8 @@ class MessageService:
         """발신자 제외한 방 멤버 전체에게 FCM 푸시 multicast.
 
         fire-and-forget 컨텍스트 — 어떤 예외도 raise 하지 않는다.
-        멤버 목록은 Redis `room:members:{R}` 에서 다시 읽음 (`_bump_unread` 와 시점 분리).
+        FcmService 의 bulk send_chat_push 가 N 명을 한 트랜잭션 + 한 multicast 로
+        fan-out 하므로 여기선 단순히 recipients 한 번에 넘긴다.
         """
         # create_task 는 부모 Context 를 복사하므로 _current_session 에 부모(이미 닫힌)
         # 세션이 박혀있다. 명시적으로 끊어줘야 send_chat_push 의 @transactional 이
@@ -677,19 +678,12 @@ class MessageService:
                 else content
             )
 
-            # 각 유저는 독립 트랜잭션으로 병렬 발송. 한 명 실패가 다른 사람에 영향 없음.
-            await asyncio.gather(
-                *[
-                    self._fcm.send_chat_push(
-                        user_id=uid,
-                        chat_room_id=room_id,
-                        sender_id=sender_user_id,
-                        title="새 메시지",
-                        body=body,
-                    )
-                    for uid in recipients
-                ],
-                return_exceptions=True,
+            await self._fcm.send_chat_push(
+                user_ids=recipients,
+                chat_room_id=room_id,
+                sender_id=sender_user_id,
+                title="새 메시지",
+                body=body,
             )
         except Exception as e:
             logger.warning(

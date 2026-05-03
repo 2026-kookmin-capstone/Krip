@@ -1,4 +1,3 @@
-from typing import Optional
 from firebase_admin.exceptions import FirebaseError
 from firebase_admin import messaging
 import asyncio
@@ -19,13 +18,11 @@ logger = get_logger("fcm_service")
 class FcmService:
     """FCM 토큰 등록/해제 + 푸시 발송 서비스.
 
-    - 발송은 user_id 기준 → 해당 유저의 모든 디바이스에 multicast 1회 호출.
-    - 응답에서 `UnregisteredError`(앱 삭제 또는 토큰 만료) 토큰은 즉시 DB 에서 정리.
+    - 발송은 채팅방 fan-out 단위 → 가드/조회/발송/정리를 **한 트랜잭션 + 한 multicast**
+      로 묶어 N+1 을 회피한다 (그룹방 100명도 DB 쿼리 3회 + FCM 호출 1회로 끝).
+    - `UnregisteredError` 토큰은 응답 후 bulk delete 로 즉시 정리.
     - `firebase_admin.messaging` 은 동기 SDK 라 `asyncio.to_thread` 로 감싸
       이벤트 루프를 막지 않는다.
-    - FCM 발송이 외부 네트워크 호출이라 트랜잭션이 일시적으로 길어질 수 있으나,
-      성공한 토큰과 만료 토큰 정리를 같은 트랜잭션에서 원자적으로 마무리할 수 있어
-      `@transactional` 안에서 처리한다.
     """
 
     def __init__(self, uow: UnitOfWork):
@@ -74,73 +71,64 @@ class FcmService:
         await repo.delete(existing)
 
 
-    # ──────────────────── 채팅 푸시 ────────────────────
+    # ──────────────────── 채팅 푸시 (bulk) ────────────────────
 
     @transactional
     async def send_chat_push(
         self,
         *,
-        user_id: str,
+        user_ids: list[str],
         chat_room_id: str,
         sender_id: str,
         title: str,
         body: str,
     ) -> int:
-        """채팅 새 메시지 푸시 — 클라이언트가 알림 탭 시 방으로 라우팅할 수 있도록
-        `type / chatRoomId / senderId / url` 데이터 페이로드 포함.
+        """채팅 새 메시지 푸시 — N 명에게 한 트랜잭션 + 한 multicast 로 fan-out.
 
-        가드 체인 (모두 통과해야 발송):
-          1. 방별 차단 — `chat_room_member.notification_muted` 가 True 면 skip
-             (활성 멤버가 아닌 경우도 skip — 탈퇴 / 미가입 보호)
-          2. 전역 차단 — `_send_to_user` 내부에서 `users.notification_muted` 체크
+        가드 체인 (SQL `IN` 으로 일괄 적용):
+          1. 방별 — `chat_room_member`: `is_left=false` AND `notification_muted IS NOT TRUE`
+          2. 전역 — `users.notification_muted IS NOT TRUE`
+          3. 위 둘을 통과한 user 들의 모든 FCM 토큰을 모아 `MulticastMessage` 1회
+          4. `UnregisteredError` 토큰은 bulk DELETE 로 정리
 
-        FCM 규격상 data 값은 모두 string. 호출자는 이미 string 화된 ID 를 넘긴다.
-        반환: 발송 성공한 디바이스 수 (차단된 경우 0).
+        그룹방 100명도 DB 쿼리 3회 + FCM 호출 1회로 끝 (이전: 300+ 쿼리, 100 트랜잭션).
+
+        Args:
+            user_ids: 발송 후보. 보통 발신자 제외한 방의 활성 멤버 목록.
+            chat_room_id, sender_id, title, body: 알림 내용. data 페이로드 자동 빌드.
+        Returns:
+            multicast 성공 디바이스 수 (모두 차단됐거나 토큰 없으면 0).
         """
-        # (1) 방별 차단 가드
-        member_repo = ChatRoomMemberRepository(self._session)
-        member = await member_repo.find(chat_room_id, user_id)
-        if member is None or member.is_left or member.notification_muted is True:
+        if not user_ids:
             return 0
 
+        # (1) 방별 가드 — is_left=false AND room mute 안 함
+        member_repo = ChatRoomMemberRepository(self._session)
+        pushable_in_room = await member_repo.find_pushable_user_ids_in_room(
+            chat_room_id, user_ids,
+        )
+        if not pushable_in_room:
+            return 0
+
+        # (2) 전역 가드 — global mute 안 함
+        user_repo = UserRepository(self._session)
+        allowed = await user_repo.find_unmuted_user_ids(list(pushable_in_room))
+        if not allowed:
+            return 0
+
+        # (3) 토큰 일괄 조회
+        token_repo = FcmTokenRepository(self._session)
+        rows = await token_repo.find_by_user_ids(list(allowed))
+        if not rows:
+            return 0
+
+        tokens = [r.token for r in rows]
         data = {
             "type": "chat",
             "chatRoomId": chat_room_id,
             "senderId": sender_id,
             "url": f"/chat/{chat_room_id}",
         }
-        return await self._send_to_user(
-            user_id=user_id, title=title, body=body, data=data,
-        )
-
-
-    # ──────────────────── 내부 ────────────────────
-
-    async def _send_to_user(
-        self,
-        *,
-        user_id: str,
-        title: str,
-        body: str,
-        data: Optional[dict[str, str]] = None,
-    ) -> int:
-        """user_id 의 모든 토큰으로 multicast + 만료 토큰 자동 정리.
-
-        반드시 `@transactional` 컨텍스트 안에서 호출해야 한다 (self._session 사용).
-        전역 차단 가드 — `users.notification_muted is True` 면 발송 자체 skip.
-        """
-        # 전역 차단 가드 (모든 발송 경로의 공통 진입점)
-        user_repo = UserRepository(self._session)
-        user = await user_repo.find_by_id(user_id)
-        if user is None or user.notification_muted is True:
-            return 0
-
-        repo = FcmTokenRepository(self._session)
-        rows = await repo.find_by_user_id(user_id)
-        if not rows:
-            return 0
-
-        tokens = [r.token for r in rows]
         multicast = messaging.MulticastMessage(
             tokens=tokens,
             notification=messaging.Notification(title=title, body=body),
@@ -153,10 +141,13 @@ class FcmService:
             )
         except FirebaseError as e:
             # 글로벌 실패 (인증/네트워크) — 토큰 정리 없이 0 반환. 비즈는 계속.
-            logger.warning("FCM multicast 실패 user_id={} error={}", user_id, e)
+            logger.warning(
+                "FCM multicast 실패 chat_room_id={} count={} error={}",
+                chat_room_id, len(tokens), e,
+            )
             return 0
 
-        # 토큰별 응답 검사 — 앱 삭제로 인한 UnregisteredError 면 즉시 DB 정리.
+        # (4) 만료 토큰 bulk 정리
         invalid_tokens: list[str] = []
         for token, resp in zip(tokens, batch.responses):
             if resp.success:
@@ -166,15 +157,15 @@ class FcmService:
                 invalid_tokens.append(token)
             else:
                 logger.warning(
-                    "FCM 발송 실패 user_id={} token_prefix={} error={}",
-                    user_id, token[:16], err,
+                    "FCM 발송 실패 chat_room_id={} token_prefix={} error={}",
+                    chat_room_id, token[:16], err,
                 )
 
         if invalid_tokens:
-            await repo.delete_by_tokens(invalid_tokens)
+            await token_repo.delete_by_tokens(invalid_tokens)
             logger.info(
-                "FCM 만료 토큰 정리 user_id={} count={}",
-                user_id, len(invalid_tokens),
+                "FCM 만료 토큰 정리 chat_room_id={} count={}",
+                chat_room_id, len(invalid_tokens),
             )
 
         return batch.success_count

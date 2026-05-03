@@ -45,6 +45,15 @@ class FcmTokenRepository:
         return list(result.scalars().all())
 
 
+    async def find_by_user_ids(self, user_ids: list[str]) -> list[FcmToken]:
+        """여러 유저의 모든 토큰을 한 번에 조회 — 그룹방 fan-out 용 bulk."""
+        if not user_ids:
+            return []
+        stmt = select(FcmToken).where(FcmToken.user_id.in_(user_ids))
+        result = await self.session.execute(stmt)
+        return list(result.scalars().all())
+
+
     # ──────────────────── Update ────────────────────
 
     async def update(self, fcm_token: FcmToken) -> FcmToken:

@@ -46,6 +46,22 @@ class UserRepository:
         return result.unique().scalar_one_or_none()
 
 
+    async def find_unmuted_user_ids(self, user_ids: list[str]) -> set[str]:
+        """입력된 `user_ids` 중 전역 알림 차단이 아닌 id 집합.
+
+        `notification_muted IS NOT TRUE` — NULL/False 둘 다 "차단 아님" 으로 본다
+        (저장 정규화상 False 는 거의 없지만 정의상 둘 다 통과).
+        """
+        if not user_ids:
+            return set()
+        stmt = select(User.user_id).where(
+            User.user_id.in_(user_ids),
+            User.notification_muted.is_not(True),
+        )
+        result = await self.session.execute(stmt)
+        return set(result.scalars().all())
+
+
     async def find_by_ids_with_profile(self, user_ids: list[str]) -> dict[str, User]:
         """여러 유저 + 상세정보 + 여행스타일을 한 번에 조회해 `{user_id: User}` 맵 반환.
 
