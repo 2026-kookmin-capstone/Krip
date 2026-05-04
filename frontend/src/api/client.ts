@@ -40,6 +40,14 @@ client.interceptors.response.use(
       localStorage.removeItem("accessToken");
     }
 
+    if (
+      error.response?.status === 419 &&
+      (!error.response.data?.status ||
+        error.response.data.status === "withdrawal_pending")
+    ) {
+      window.dispatchEvent(new CustomEvent("krip:withdrawal-pending"));
+    }
+
     return Promise.reject(error);
   }
 );

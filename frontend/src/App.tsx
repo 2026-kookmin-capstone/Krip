@@ -4,6 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate,} from
 import AppShell from "./components/AppShell";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import WithdrawalPendingPage from "./pages/WithdrawalPendingPage";
 import HomePage from "./features/tour/HomePage";
 import MenuPage from "./pages/MenuPage";
 import MatePage from "./features/mate/MatePage";
@@ -103,6 +104,7 @@ type ChatToastState = {
   path?: string;
   title: string;
   body: string;
+  imageUrl?: string | null;
   toastId: number;
 };
 
@@ -161,7 +163,13 @@ function ChatMessageToast() {
         setToast(null);
       }}
     >
-      <span style={chatToastStyles.icon}>C</span>
+      <span style={chatToastStyles.icon}>
+        <img
+          src={toast.imageUrl || "/default-profile.svg"}
+          alt=""
+          style={chatToastStyles.iconImage}
+        />
+      </span>
       <span style={chatToastStyles.text}>
         <strong style={chatToastStyles.title}>{toast.title}</strong>
         <span style={chatToastStyles.body}>{toast.body}</span>
@@ -169,6 +177,24 @@ function ChatMessageToast() {
       <span style={chatToastStyles.action}>Open</span>
     </button>
   );
+}
+
+function WithdrawalPendingRedirect() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    function handleWithdrawalPending(): void {
+      navigate("/withdrawal-pending", { replace: true });
+    }
+
+    window.addEventListener("krip:withdrawal-pending", handleWithdrawalPending);
+
+    return () => {
+      window.removeEventListener("krip:withdrawal-pending", handleWithdrawalPending);
+    };
+  }, [navigate]);
+
+  return null;
 }
 
 export default function App() {
@@ -186,6 +212,7 @@ export default function App() {
           <Route path="/" element={<LoginPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/withdrawal-pending" element={<WithdrawalPendingPage />} />
           <Route element={<AppShell />}>
             <Route path="/home" element={<HomePage />} />
             <Route path="/plan" element={<PlanSelectionPage />} />
@@ -202,6 +229,7 @@ export default function App() {
           <Route path="/profile/:id" element={<PlaceholderPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        <WithdrawalPendingRedirect />
         <ChatMessageToast />
       </ChatProvider>
     </BrowserRouter>
@@ -234,13 +262,14 @@ const chatToastStyles: Record<string, CSSProperties> = {
     width: 40,
     height: 40,
     borderRadius: "50%",
-    display: "grid",
-    placeItems: "center",
     background: "linear-gradient(135deg, var(--brand-primary), #12c0c6)",
-    color: "#ffffff",
-    fontSize: "0.82rem",
-    fontWeight: 900,
     flexShrink: 0,
+    overflow: "hidden",
+  },
+  iconImage: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
   },
   text: {
     flex: 1,

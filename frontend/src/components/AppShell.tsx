@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { useEffect, useState } from "react";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { getMyProfile } from "../api/auth/auth";
 import { getReceivedFriendRequests } from "../api/friend";
 import { registerFcmToken } from "../lib/fcm";
@@ -16,6 +16,7 @@ const TAB_ITEMS = [
 
 export default function AppShell() {
   const location = useLocation();
+  const navigate = useNavigate();
   const isFriendChatRoute =
     location.pathname === "/chat" || location.pathname.startsWith("/chat/");
   const [friendChatNotificationCount, setFriendChatNotificationCount] = useState(0);
@@ -29,9 +30,14 @@ export default function AppShell() {
           })
       )
       .catch((error) => {
+        if (isWithdrawalPendingError(error)) {
+          navigate("/withdrawal-pending", { replace: true });
+          return;
+        }
+
         console.warn("Failed to load /api/auth/profile/me", error);
       });
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     if (isFriendChatRoute) {
@@ -102,6 +108,25 @@ export default function AppShell() {
         ))}
       </nav>
     </div>
+  );
+}
+
+function isWithdrawalPendingError(error: unknown): boolean {
+  const apiError = error as {
+    status?: number;
+    response?: {
+      status?: number;
+      data?: {
+        status?: string;
+      };
+    };
+  };
+
+  return (
+    apiError.status === 419 ||
+    (apiError.response?.status === 419 &&
+      (!apiError.response.data?.status ||
+        apiError.response.data.status === "withdrawal_pending"))
   );
 }
 

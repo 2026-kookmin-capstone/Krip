@@ -7,6 +7,7 @@ export type ChatMessageType = "text" | "image" | "file" | "system";
 export interface ChatPeer {
   user_id: string | null;
   user_name: string | null;
+  profile_image_url?: string | null;
 }
 
 export interface LastMessagePreview {

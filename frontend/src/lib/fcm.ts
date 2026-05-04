@@ -108,6 +108,12 @@ function dispatchForegroundNotificationToast(payload: MessagePayload): void {
     payload.data?.chat_room_id ||
     extractChatRoomId(payload.data?.url);
   const path = payload.data?.url || (roomId ? `/chat/${roomId}` : "/chat");
+  const imageUrl =
+    payload.data?.profile_image_url ||
+    payload.data?.profileImageUrl ||
+    payload.data?.senderProfileImageUrl ||
+    payload.data?.imageUrl ||
+    null;
 
   window.dispatchEvent(
     new CustomEvent("krip:chat-message-toast", {
@@ -116,6 +122,7 @@ function dispatchForegroundNotificationToast(payload: MessagePayload): void {
         path,
         title,
         body,
+        imageUrl,
       },
     })
   );

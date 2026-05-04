@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createLoginUrl, getMyProfile } from "../api/auth/auth";
 
-type LoginStatus = "complete" | "new" | "in_progress";
+type LoginStatus = "complete" | "new" | "in_progress" | "withdrawal_pending";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -21,6 +21,8 @@ export default function LoginPage() {
       navigate("/home");
     } else if (status === "new" || status === "in_progress") {
       navigate("/register", { state: { email, name } });
+    } else if (status === "withdrawal_pending") {
+      navigate("/withdrawal-pending", { replace: true });
     }
   }, [navigate]);
 

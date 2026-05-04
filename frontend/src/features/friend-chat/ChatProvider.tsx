@@ -10,6 +10,7 @@ import {
 } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getMyProfile } from "../../api/auth";
+import { getFriendDetail } from "../../api/friend";
 import {
   createDirectChatRoom,
   getChatMessages,
@@ -119,6 +120,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const pendingReadRef = useRef<{ roomId: string; serverSeq: number } | null>(null);
   const inFlightReadRef = useRef<{ roomId: string; serverSeq: number } | null>(null);
   const lastReadSeqByRoomRef = useRef<Record<string, number>>({});
+  const peerImageCacheRef = useRef<Record<string, string | null>>({});
   const [rooms, setRooms] = useState<ChatRoom[]>([]);
   const [roomsLoading, setRoomsLoading] = useState(false);
   const [connectionState, setConnectionState] = useState<ConnectionState>("closed");
@@ -145,15 +147,54 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     roomPageStateByRoomRef.current = roomPageStateByRoom;
   }, [roomPageStateByRoom]);
 
+  const enrichRoomProfileImages = useCallback(
+    async (roomsToEnrich: ChatRoom[]): Promise<ChatRoom[]> => {
+      return Promise.all(
+        roomsToEnrich.map(async (room) => {
+          const peerId = room.type === "direct" ? room.peer?.user_id : null;
+          if (!peerId || room.peer?.profile_image_url) {
+            return room;
+          }
+
+          if (peerId in peerImageCacheRef.current) {
+            return {
+              ...room,
+              peer: {
+                ...room.peer,
+                profile_image_url: peerImageCacheRef.current[peerId],
+              },
+            };
+          }
+
+          try {
+            const detail = await getFriendDetail(peerId);
+            peerImageCacheRef.current[peerId] = detail.profile_image_url ?? null;
+            return {
+              ...room,
+              peer: {
+                ...room.peer,
+                profile_image_url: detail.profile_image_url ?? null,
+              },
+            };
+          } catch {
+            peerImageCacheRef.current[peerId] = null;
+            return room;
+          }
+        })
+      );
+    },
+    []
+  );
+
   const refreshRooms = useCallback(async (): Promise<void> => {
     setRoomsLoading(true);
     try {
       const response = await getChatRooms();
-      setRooms(response.items);
+      setRooms(await enrichRoomProfileImages(response.items));
     } finally {
       setRoomsLoading(false);
     }
-  }, []);
+  }, [enrichRoomProfileImages]);
 
   const sendSocketPayload = useCallback((payload: Record<string, unknown>): boolean => {
     const socket = socketRef.current;
@@ -412,16 +453,16 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     const existingRoom = roomsRef.current.find((room) => room.chat_room_id === roomId);
     if (existingRoom) return existingRoom;
 
-    const room = await getChatRoom(roomId);
+    const [room] = await enrichRoomProfileImages([await getChatRoom(roomId)]);
     setRooms((current) => moveRoomToTop(upsertRoom(current, room), room.chat_room_id));
     return room;
-  }, []);
+  }, [enrichRoomProfileImages]);
 
   const openDirectChat = useCallback(async (userId: string): Promise<ChatRoom> => {
-    const room = await createDirectChatRoom(userId);
+    const [room] = await enrichRoomProfileImages([await createDirectChatRoom(userId)]);
     setRooms((current) => moveRoomToTop(upsertRoom(current, room), room.chat_room_id));
     return room;
-  }, []);
+  }, [enrichRoomProfileImages]);
 
   const sendMessagePayload = useCallback(
     (clientMsgId: string): void => {
@@ -571,7 +612,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const loadJoinedRoom = useCallback(
     async (roomId: string): Promise<void> => {
       try {
-        const room = await getChatRoom(roomId);
+        const [room] = await enrichRoomProfileImages([await getChatRoom(roomId)]);
         setRooms((current) => moveRoomToTop(upsertRoom(current, room), room.chat_room_id));
       } catch {
         reportChatNetworkError({
@@ -582,7 +623,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         void refreshRooms();
       }
     },
-    [refreshRooms]
+    [enrichRoomProfileImages, refreshRooms]
   );
 
   const confirmOptimisticMessage = useCallback(
@@ -654,7 +695,11 @@ export function ChatProvider({ children }: { children: ReactNode }) {
             if (event.message.chat_room_id !== activeRoomIdRef.current) {
               incrementStoredChatUnreadCount(event.message.chat_room_id);
             }
-            dispatchChatToast(event.message, getRoomTitle(roomsRef.current, event.message.chat_room_id));
+            dispatchChatToast(
+              event.message,
+              getRoomTitle(roomsRef.current, event.message.chat_room_id),
+              getRoomProfileImageUrl(roomsRef.current, event.message.chat_room_id)
+            );
           }
           if (event.message.chat_room_id === activeRoomIdRef.current) {
             sendRead(event.message.chat_room_id, event.message.server_seq);
@@ -1037,13 +1082,18 @@ function sortByServerSeq(a: ChatMessage, b: ChatMessage): number {
   return a.server_seq - b.server_seq;
 }
 
-function dispatchChatToast(message: ChatMessage, roomTitle: string): void {
+function dispatchChatToast(
+  message: ChatMessage,
+  roomTitle: string,
+  imageUrl?: string | null
+): void {
   window.dispatchEvent(
     new CustomEvent("krip:chat-message-toast", {
       detail: {
         roomId: message.chat_room_id,
         title: roomTitle || "New message",
         body: formatChatToastBody(message),
+        imageUrl,
       },
     })
   );
@@ -1091,6 +1141,11 @@ function clearStoredChatUnreadCount(roomId: string): void {
 function getRoomTitle(rooms: ChatRoom[], roomId: string): string {
   const room = rooms.find((item) => item.chat_room_id === roomId);
   return room?.title || room?.peer?.user_name || "New message";
+}
+
+function getRoomProfileImageUrl(rooms: ChatRoom[], roomId: string): string | null {
+  const room = rooms.find((item) => item.chat_room_id === roomId);
+  return room?.type === "direct" ? room.peer?.profile_image_url ?? null : null;
 }
 
 function formatChatToastBody(message: ChatMessage): string {
