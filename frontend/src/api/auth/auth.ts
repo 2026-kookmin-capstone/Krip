@@ -264,6 +264,10 @@ async function authRequest<T>(
     removeToken();
   }
 
+  if (response.status === 419) {
+    window.dispatchEvent(new CustomEvent("krip:withdrawal-pending"));
+  }
+
   const error: ApiError = new Error(detail);
   error.status = response.status;
   throw error;
@@ -309,6 +313,12 @@ export async function withdrawUser(): Promise<Record<string, unknown> | string |
   localStorage.removeItem("accessToken");
 
   return result;
+}
+
+export function cancelWithdrawUser(): Promise<Record<string, unknown> | null> {
+  return authRequest("/api/auth/withdraw/cancel", {
+    method: "POST",
+  });
 }
 
 export function getMyProfile(): Promise<UserProfile | null> {

@@ -244,7 +244,7 @@ export default function ChatPage() {
                   style={styles.chatRow}
                   onClick={() => navigate(`/chat/${chat.id}`)}
                 >
-                  <Avatar name={chat.name} />
+                  <Avatar name={chat.name} imageUrl={chat.imageUrl} />
                   <span style={styles.rowMain}>
                     <strong style={styles.rowTitle}>{chat.name}</strong>
                     <span style={styles.rowSubtitle}>{chat.subtitle}</span>
@@ -586,6 +586,7 @@ function formatGender(gender: string): string {
 function toChatRow(room: ChatRoom): {
   id: string;
   name: string;
+  imageUrl: string | null;
   subtitle: string;
   preview: string;
   unreadCount: number;
@@ -599,6 +600,7 @@ function toChatRow(room: ChatRoom): {
   return {
     id: room.chat_room_id,
     name,
+    imageUrl: room.type === "direct" ? room.peer?.profile_image_url ?? null : null,
     subtitle,
     preview: renderLastMessage(room.last_message),
     unreadCount: room.unread_count,
