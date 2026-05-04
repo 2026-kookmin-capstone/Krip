@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, DateTime, Boolean, Enum, UniqueConstraint, Index
+from sqlalchemy import Column, String, DateTime, Boolean, Enum, UniqueConstraint, Index, text
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 import enum
@@ -32,6 +32,14 @@ class User(Base):
     __table_args__ = (
         UniqueConstraint("auth_provider", "auth_provider_id", name="uq_provider_account"),
         Index("ix_provider_lookup", "auth_provider", "auth_provider_id"),
+        # 탐색용 — `WHERE status='active' ORDER BY created_at DESC, user_id DESC` 를 정확히 커버.
+        # ACTIVE 가 압도적 다수라 단순 status 인덱스는 planner 가 스킵 → partial 로 강제 사용.
+        Index(
+            "ix_users_active_created",
+            "created_at",
+            "user_id",
+            postgresql_where=text("status = 'ACTIVE'"),
+        ),
     )
 
     def __repr__(self):

@@ -1,9 +1,9 @@
 from typing import Optional
-from sqlalchemy import select, delete
-from sqlalchemy.orm import joinedload
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import joinedload
+from sqlalchemy import select, delete
 
-from app.domain.auth.model.user import User
+from app.domain.auth.model.user import User, UserStatus
 
 
 class UserRepository:
@@ -60,6 +60,23 @@ class UserRepository:
         )
         result = await self.session.execute(stmt)
         return set(result.scalars().all())
+
+
+    async def find_active_others_with_profile(self, exclude_user_id: str) -> list[User]:
+        """`exclude_user_id` 를 제외한 ACTIVE 유저 + 상세정보 + 여행스타일을 일괄 조회.
+
+        탐색 목록용 — INACTIVE(탈퇴 유예) / SUSPENDED 유저는 노출하지 않는다.
+        detail 미존재(2차 회원가입 미완료) 는 호출측에서 필터.
+        """
+        stmt = select(User).options(
+            joinedload(User.detail),
+            joinedload(User.travel_styles),
+        ).where(
+            User.user_id != exclude_user_id,
+            User.status == UserStatus.ACTIVE,
+        ).order_by(User.created_at.desc(), User.user_id.desc())
+        result = await self.session.execute(stmt)
+        return list(result.unique().scalars().all())
 
 
     async def find_by_ids_with_profile(self, user_ids: list[str]) -> dict[str, User]:
