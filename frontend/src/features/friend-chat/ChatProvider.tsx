@@ -943,9 +943,7 @@ function appendMessagesDeduped(
   const nextMessages = [...messages];
 
   incomingMessages.forEach((incomingMessage) => {
-    const existingIndex = nextMessages.findIndex(
-      (message) => message.message_id === incomingMessage.message_id
-    );
+    const existingIndex = findExistingServerMessageIndex(nextMessages, incomingMessage);
 
     if (existingIndex >= 0) {
       nextMessages[existingIndex] = {
@@ -975,6 +973,25 @@ function appendMessagesDeduped(
   return nextMessages.sort(sortByServerSeq);
 }
 
+function findExistingServerMessageIndex(
+  messages: ChatMessage[],
+  incomingMessage: ChatMessage
+): number {
+  if (incomingMessage.server_seq !== Number.MAX_SAFE_INTEGER) {
+    const serverSeqIndex = messages.findIndex(
+      (message) => message.server_seq === incomingMessage.server_seq
+    );
+
+    if (serverSeqIndex >= 0) {
+      return serverSeqIndex;
+    }
+  }
+
+  return messages.findIndex(
+    (message) => message.message_id === incomingMessage.message_id
+  );
+}
+
 function findMatchingOptimisticMessageIndex(
   messages: ChatMessage[],
   serverMessage: ChatMessage,
@@ -984,41 +1001,14 @@ function findMatchingOptimisticMessageIndex(
     return -1;
   }
 
-  const candidates = messages
-    .map((message, index) => ({ message, index }))
-    .filter(({ message }) => {
-      if (!message.client_msg_id || message.status !== "sending") return false;
-      if (message.chat_room_id !== serverMessage.chat_room_id) return false;
-      if (message.sender_id !== serverMessage.sender_id) return false;
-      if (message.type !== serverMessage.type) return false;
-      if (message.content !== serverMessage.content) return false;
+  return messages.findIndex((message) => {
+    if (!message.client_msg_id || message.status !== "sending") return false;
+    if (message.chat_room_id !== serverMessage.chat_room_id) return false;
+    if (message.sender_id !== serverMessage.sender_id) return false;
+    if (message.type !== serverMessage.type) return false;
 
-      const optimisticTime = Date.parse(message.created_at);
-      const serverTime = Date.parse(serverMessage.created_at);
-      if (!Number.isFinite(optimisticTime) || !Number.isFinite(serverTime)) {
-        return true;
-      }
-
-      return Math.abs(serverTime - optimisticTime) <= 10 * 60 * 1000;
-    })
-    .sort((a, b) => {
-      const aDistance = getTimeDistance(a.message.created_at, serverMessage.created_at);
-      const bDistance = getTimeDistance(b.message.created_at, serverMessage.created_at);
-      return aDistance - bDistance;
-    });
-
-  return candidates[0]?.index ?? -1;
-}
-
-function getTimeDistance(a: string, b: string): number {
-  const first = Date.parse(a);
-  const second = Date.parse(b);
-
-  if (!Number.isFinite(first) || !Number.isFinite(second)) {
-    return Number.MAX_SAFE_INTEGER;
-  }
-
-  return Math.abs(first - second);
+    return message.content === serverMessage.content;
+  });
 }
 
 function getReplacedClientMsgIds(
