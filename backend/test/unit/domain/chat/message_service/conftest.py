@@ -8,6 +8,7 @@ from test.unit.domain.chat.message_service.mock_factory import (
     make_chat_room_repo_mock,
     make_dedupe_redis_mock,
     make_fanout_mock,
+    make_fcm_mock,
     make_lua_mock,
     make_message_repo_mock,
     make_mock_session,
@@ -41,6 +42,11 @@ def fanout_mock():
 
 
 @pytest.fixture
+def fcm_mock():
+    return make_fcm_mock()
+
+
+@pytest.fixture
 def redis_mock():
     return make_redis_mock()
 
@@ -64,6 +70,7 @@ def service(
     chat_member_repo_mock,
     message_repo_mock,
     fanout_mock,
+    fcm_mock,
     redis_mock,
     redis_dedupe_mock,
     lua_mock,
@@ -99,4 +106,4 @@ def service(
     monkeypatch.setattr("app.domain.chat.service.message.lua_scripts", lua_mock)
 
     uow = FakeUnitOfWork(mock_session)
-    return MessageService(uow=uow, fanout_service=fanout_mock)
+    return MessageService(uow=uow, fanout_service=fanout_mock, fcm_service=fcm_mock)

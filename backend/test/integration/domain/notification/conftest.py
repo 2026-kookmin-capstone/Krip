@@ -1,0 +1,120 @@
+"""notification 도메인 통합 테스트 공통 fixture.
+
+서비스 → 레포지토리 → 실 PostgreSQL 까지 검증한다. FCM 외부 SDK 만 mock —
+실제 네트워크 호출 없이 가드 체인과 토큰 정리 로직의 정확성을 본다.
+
+실 Redis/Mongo 는 불필요 (mute / fcm-token 도메인은 RDB 만 터치).
+"""
+from unittest.mock import AsyncMock, MagicMock
+
+import pytest
+import pytest_asyncio
+from sqlalchemy import select
+
+from app.domain.auth.model.user import User
+from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
+from app.domain.chat.model.chat_room_member import ChatRoomMember
+from app.domain.notification.model.fcm_token import FcmToken
+from app.domain.notification.service.fcm import FcmService
+from app.domain.notification.service.mute import MuteService
+
+
+@pytest.fixture
+def mute_service(uow) -> MuteService:
+    return MuteService(uow=uow)
+
+
+@pytest.fixture
+def fcm_service(uow) -> FcmService:
+    return FcmService(uow=uow)
+
+
+@pytest_asyncio.fixture
+async def seed_room_with_members(session_factory, seed_users):
+    """그룹방 1개 + 활성 멤버 N명 시드. (room_id, [user_id...]) 반환.
+
+    members 의 `notification_muted` 는 모두 NULL 로 시작 — 테스트에서 변경.
+    """
+    async def _seed(member_count: int = 2):
+        user_ids = await seed_users(member_count)
+        async with session_factory() as session:
+            room = ChatRoom(
+                type=ChatRoomType.GROUP,
+                title="IT room",
+                creator_id=user_ids[0],
+            )
+            session.add(room)
+            await session.flush()  # chat_room_id 생성
+            for uid in user_ids:
+                session.add(ChatRoomMember(
+                    chat_room_id=room.chat_room_id,
+                    user_id=uid,
+                ))
+            await session.commit()
+            return room.chat_room_id, user_ids
+
+    return _seed
+
+
+@pytest_asyncio.fixture
+async def fcm_messaging_stub(monkeypatch):
+    """`firebase_admin.messaging.send_each_for_multicast` 와 `get_fcm_app` 을 stub.
+
+    테스트마다 `set_responses(success=[...], errors=[...])` 로 응답 시나리오 주입.
+    """
+    state = {"calls": [], "responses": [], "errors": []}
+
+    def _set_responses(success: list[bool], errors: list | None = None):
+        state["responses"] = success
+        state["errors"] = errors or [None] * len(success)
+
+    def _fake_send_each_for_multicast(message, app=None):
+        # SDK 가 동기 함수 — service 가 asyncio.to_thread 로 감싸 호출.
+        state["calls"].append(list(message.tokens))
+        responses = []
+        for ok, err in zip(state["responses"], state["errors"]):
+            r = MagicMock()
+            r.success = ok
+            r.exception = err
+            responses.append(r)
+        batch = MagicMock()
+        batch.responses = responses
+        batch.success_count = sum(1 for ok in state["responses"] if ok)
+        return batch
+
+    monkeypatch.setattr(
+        "app.domain.notification.service.fcm.messaging.send_each_for_multicast",
+        _fake_send_each_for_multicast,
+    )
+    monkeypatch.setattr(
+        "app.domain.notification.service.fcm.get_fcm_app",
+        lambda: MagicMock(name="fcm-app"),
+    )
+
+    return type("FcmStub", (), {
+        "set_responses": staticmethod(_set_responses),
+        "calls": state["calls"],
+    })()
+
+
+# ──────────────────── 검증 helper ────────────────────
+
+async def fetch_user(session_factory, user_id: str) -> User | None:
+    async with session_factory() as session:
+        result = await session.execute(
+            select(User).where(User.user_id == user_id)
+        )
+        return result.scalar_one_or_none()
+
+
+async def fetch_member(session_factory, room_id: str, user_id: str) -> ChatRoomMember | None:
+    async with session_factory() as session:
+        return await session.get(ChatRoomMember, (room_id, user_id))
+
+
+async def fetch_tokens_by_user(session_factory, user_id: str) -> list[FcmToken]:
+    async with session_factory() as session:
+        result = await session.execute(
+            select(FcmToken).where(FcmToken.user_id == user_id)
+        )
+        return list(result.scalars().all())

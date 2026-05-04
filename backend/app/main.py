@@ -25,6 +25,7 @@ from app.core.ai.tour_planner.load import TourPlanner
 from app.core.logger import setup_logging, get_logger
 from app.core.ai.menu_ocr.load import MenuOcr
 from app.core.redis import get_redis_client, get_redis_dedupe_client, close_redis
+from app.core.fcm import init_fcm, close_fcm
 from app.core.chat.lua_script import lua_scripts
 from app.container import Container
 from app.config.setting import settings
@@ -51,6 +52,9 @@ def create_app() -> FastAPI:
         await get_redis_dedupe_client()
         lua_scripts.load(hot_redis)
 
+        # FCM Admin SDK 초기화 — 워커가 푸시를 보낼 수 있어야 하므로 워커 시작 전에 호출.
+        init_fcm()
+
         # 채팅 reconcile 워커 — last_message_* 정합성 복구 + unread 복구 entry point 주입
         # (ws.py 의 recover_unread 경로도 같은 session_factory 공유)
         start_reconcile_scheduler(app.container.session_factory())
@@ -68,6 +72,7 @@ def create_app() -> FastAPI:
         # shutdown — 워커들이 Mongo/Redis 를 쓰므로 이 둘을 닫기 전에 먼저 멈춘다
         await stop_withdraw_purge_scheduler()
         await stop_reconcile_scheduler()
+        close_fcm()
         await close_mongodb()
         await close_redis()
         logger.info("Application shutting down")
@@ -94,6 +99,8 @@ def create_app() -> FastAPI:
         "app.domain.chat.router.message",
         "app.domain.chat.router.ws",
         "app.domain.public.router.share",
+        "app.domain.notification.router.fcm_token",
+        "app.domain.notification.router.mute",
     ])
 
 

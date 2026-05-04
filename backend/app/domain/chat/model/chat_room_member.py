@@ -1,8 +1,8 @@
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 from sqlalchemy import (
     Column, String, DateTime, BigInteger, Boolean, ForeignKey, Index, literal_column,
 )
-from sqlalchemy.orm import relationship
-from sqlalchemy.sql import func
 
 from app.database.session import Base
 
@@ -26,6 +26,8 @@ class ChatRoomMember(Base):
     last_read_message_server_seq = Column(BigInteger, nullable=True)  # NULL = 아직 한 건도 안 읽음
     last_read_at = Column(DateTime(timezone=True), nullable=True)
     is_left = Column(Boolean, nullable=False, server_default="false")
+    # 이 방에 한정된 알림 차단 — True 면 차단, NULL = 기본(허용). 본인이 끈 방만 row 에 True.
+    notification_muted = Column(Boolean, nullable=True)
 
     chat_room = relationship("ChatRoom", backref="members")
     user = relationship("User", backref="chat_room_memberships")

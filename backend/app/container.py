@@ -26,6 +26,8 @@ from app.domain.chat.service.fanout import FanoutService
 from app.domain.chat.service.message_history import MessageHistoryService
 from app.domain.chat.service.room import RoomService
 from app.domain.chat.service.session import SessionService
+from app.domain.notification.service.fcm import FcmService
+from app.domain.notification.service.mute import MuteService
 from app.database.session import UnitOfWork
 from app.config.setting import settings
 
@@ -80,10 +82,16 @@ class Container(containers.DeclarativeContainer):
     fanout_service = providers.Singleton(FanoutService)
     session_service = providers.Singleton(SessionService, fanout_service=fanout_service)
 
+    # 알림 (FCM) — message_service 가 의존하므로 그보다 먼저 선언.
+    fcm_service = providers.Factory(FcmService, uow=uow)
+    mute_service = providers.Factory(MuteService, uow=uow)
+
     # 채팅 — 비즈 (Factory: 호출마다 UoW 새로 바인딩)
     #   - message_service / block_cache_service 는 room_service / user_block_service 보다
     #     먼저 선언 (system 메시지 발행 / 차단 캐시 무효화 훅 의존성)
-    message_service = providers.Factory(MessageService, uow=uow, fanout_service=fanout_service)
+    message_service = providers.Factory(
+        MessageService, uow=uow, fanout_service=fanout_service, fcm_service=fcm_service,
+    )
     room_service = providers.Factory(
         RoomService, uow=uow, fanout_service=fanout_service, message_service=message_service,
     )

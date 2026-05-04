@@ -45,6 +45,7 @@ class ChatRoomData:
     unread_count: int
     last_message_at: Optional[datetime]
     effective_last_at: datetime
+    notification_muted: bool = False
 
 
 @dataclass

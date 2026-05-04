@@ -85,6 +85,15 @@ def make_fanout_mock() -> MagicMock:
     return fanout
 
 
+def make_fcm_mock() -> MagicMock:
+    """FCM 발송은 fire-and-forget — push 가 호출되든 말든 본 비즈 테스트는 영향 없음."""
+    fcm = MagicMock(name="fcm")
+    fcm.send_chat_push = AsyncMock(return_value=0)
+    fcm.register_token = AsyncMock()
+    fcm.unregister_token = AsyncMock()
+    return fcm
+
+
 def _make_trackable_pipe() -> MagicMock:
     pipe = MagicMock(name="pipeline")
     for name in ("sadd", "expire", "hincrby", "hset", "zadd", "set", "delete", "zrem"):

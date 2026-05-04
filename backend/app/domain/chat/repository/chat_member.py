@@ -86,6 +86,28 @@ class ChatRoomMemberRepository:
         return result.scalar_one_or_none() is not None
 
 
+    async def find_pushable_user_ids_in_room(
+        self, chat_room_id: str, user_ids: list[str],
+    ) -> set[str]:
+        """이 방에서 입력된 `user_ids` 중 푸시 받을 수 있는 id 집합.
+
+        조건:
+          - `is_left = false` — 활성 멤버
+          - `notification_muted IS NOT TRUE` — 방별 차단 아님
+        그룹방 fan-out 의 첫 가드 — N+1 회피 위해 IN-list 한 쿼리.
+        """
+        if not user_ids:
+            return set()
+        stmt = select(ChatRoomMember.user_id).where(
+            ChatRoomMember.chat_room_id == chat_room_id,
+            ChatRoomMember.user_id.in_(user_ids),
+            ChatRoomMember.is_left.is_(False),
+            ChatRoomMember.notification_muted.is_not(True),
+        )
+        result = await self.session.execute(stmt)
+        return set(result.scalars().all())
+
+
     async def find_user_room_ids(self, user_id: str) -> list[str]:
         """유저가 속한 활성 방 ID 목록 (is_left=false). WS 연결 시 초기 방 구독용."""
         stmt = select(ChatRoomMember.chat_room_id).where(

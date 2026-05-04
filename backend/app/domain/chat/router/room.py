@@ -314,6 +314,7 @@ def _to_room_response(dto) -> ChatRoomResponse:
         unread_count=dto.unread_count,
         last_message_at=dto.last_message_at,
         effective_last_at=dto.effective_last_at,
+        notification_muted=dto.notification_muted,
     )
 
 

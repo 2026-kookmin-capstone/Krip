@@ -20,6 +20,7 @@ class ProfileData:
     nationality: str
     travel_styles: List[TravelStyle]
     profile_image_url: Optional[str] = None
+    notification_muted: bool = False
 
 
 @dataclass

@@ -69,4 +69,5 @@ def make_user_repo_mock() -> AsyncMock:
 def make_redis_mock() -> MagicMock:
     redis = MagicMock(name="redis")
     redis.hgetall = AsyncMock(return_value={})
+    redis.hget = AsyncMock(return_value=None)
     return redis

@@ -203,7 +203,7 @@ class TestListRooms:
         message_repo_mock,
     ):
         room = _mk_room(chat_room_id="CR_d", type_=ChatRoomType.DIRECT)
-        chat_room_repo_mock.find_rooms_of_user.return_value = [(room, "U_B")]
+        chat_room_repo_mock.find_rooms_of_user.return_value = [(room, "U_B", None)]
         user_repo_mock.find_by_ids_with_profile.return_value = {
             "U_B": SimpleNamespace(
                 user_id="U_B",
@@ -230,7 +230,7 @@ class TestListRooms:
         self, service, chat_room_repo_mock, redis_mock, message_repo_mock,
     ):
         room = _mk_room(chat_room_id="CR_g", type_=ChatRoomType.GROUP, title="T")
-        chat_room_repo_mock.find_rooms_of_user.return_value = [(room, None)]
+        chat_room_repo_mock.find_rooms_of_user.return_value = [(room, None, None)]
         redis_mock.hgetall.return_value = {}
         message_repo_mock.find_by_ids.return_value = {}
 
@@ -244,7 +244,7 @@ class TestListRooms:
     ):
         """direct 방이지만 peer 가 탈퇴 → peer_user_id=None → peer 는 모두 None."""
         room = _mk_room(chat_room_id="CR_orphan", type_=ChatRoomType.DIRECT)
-        chat_room_repo_mock.find_rooms_of_user.return_value = [(room, None)]
+        chat_room_repo_mock.find_rooms_of_user.return_value = [(room, None, None)]
         redis_mock.hgetall.return_value = {}
         message_repo_mock.find_by_ids.return_value = {}
 
@@ -260,7 +260,7 @@ class TestListRooms:
             chat_room_id="CR_1", type_=ChatRoomType.GROUP, title="T",
             last_message_id="MSG_last",
         )
-        chat_room_repo_mock.find_rooms_of_user.return_value = [(room, None)]
+        chat_room_repo_mock.find_rooms_of_user.return_value = [(room, None, None)]
         redis_mock.hgetall.return_value = {}
         message_repo_mock.find_by_ids.return_value = {
             "MSG_last": _mk_doc(
@@ -272,6 +272,150 @@ class TestListRooms:
         assert result.items[0].last_message is not None
         assert result.items[0].last_message.content is None  # 삭제 마스킹
         assert result.items[0].last_message.server_seq == 10
+
+    async def test_notification_muted_true_exposed_as_true(
+        self, service, chat_room_repo_mock, redis_mock, message_repo_mock,
+    ):
+        """방별 mute=True 인 row 는 응답에 그대로 True 노출."""
+        room = _mk_room(chat_room_id="CR_m", type_=ChatRoomType.GROUP, title="T")
+        chat_room_repo_mock.find_rooms_of_user.return_value = [(room, None, True)]
+        redis_mock.hgetall.return_value = {}
+        message_repo_mock.find_by_ids.return_value = {}
+
+        result = await service.list_rooms(me_id="U_A")
+        assert result.items[0].notification_muted is True
+
+    async def test_notification_muted_null_normalizes_to_false(
+        self, service, chat_room_repo_mock, redis_mock, message_repo_mock,
+    ):
+        """DB NULL (기본 unmuted) → 응답에선 False 로 coerce — 클라가 null 분기 안 해도 됨."""
+        room = _mk_room(chat_room_id="CR_u", type_=ChatRoomType.GROUP, title="T")
+        chat_room_repo_mock.find_rooms_of_user.return_value = [(room, None, None)]
+        redis_mock.hgetall.return_value = {}
+        message_repo_mock.find_by_ids.return_value = {}
+
+        result = await service.list_rooms(me_id="U_A")
+        assert result.items[0].notification_muted is False
+
+    async def test_notification_muted_false_treated_as_unmuted(
+        self, service, chat_room_repo_mock, redis_mock, message_repo_mock,
+    ):
+        """레거시/이상치로 False 가 들어와도 `is True` 비교라 False 로 노출 (방어)."""
+        room = _mk_room(chat_room_id="CR_f", type_=ChatRoomType.GROUP, title="T")
+        chat_room_repo_mock.find_rooms_of_user.return_value = [(room, None, False)]
+        redis_mock.hgetall.return_value = {}
+        message_repo_mock.find_by_ids.return_value = {}
+
+        result = await service.list_rooms(me_id="U_A")
+        assert result.items[0].notification_muted is False
+
+
+# ──────────────────────────────────────────────────────────────────
+# get_room — 단건 방 조회 (권한 체크 + mute 노출 통합)
+# ──────────────────────────────────────────────────────────────────
+
+@pytest.mark.unit
+class TestGetRoom:
+    """`get_room` 은 `member_repo.find()` 한 번으로 권한 체크 + mute 획득을 통합한다.
+    `is_active_member` 의 boolean 단순 체크가 mute 정보를 누락하므로 `find()` 로 갈아끼웠고,
+    이 변경의 정합성을 보장하는 테스트들이다.
+    """
+
+    async def test_room_not_found_raises(self, service, chat_room_repo_mock):
+        chat_room_repo_mock.find_by_id.return_value = None
+        with pytest.raises(ChatRoomNotFoundError):
+            await service.get_room(me_id="U_A", room_id="CR_X")
+
+    async def test_non_member_raises_permission_error(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+    ):
+        """member row 자체가 없는 케이스 (가입 이력 없음)."""
+        room = _mk_room(chat_room_id="CR_1", type_=ChatRoomType.GROUP, title="T")
+        chat_room_repo_mock.find_by_id.return_value = room
+        chat_member_repo_mock.find.return_value = None
+
+        with pytest.raises(PermissionError):
+            await service.get_room(me_id="U_A", room_id="CR_1")
+
+    async def test_left_member_raises_permission_error(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+    ):
+        """탈퇴자 (`is_left=True`) 도 비멤버와 동일하게 거절 — `find()` 통합 후에도 보장."""
+        room = _mk_room(chat_room_id="CR_1", type_=ChatRoomType.GROUP, title="T")
+        chat_room_repo_mock.find_by_id.return_value = room
+        chat_member_repo_mock.find.return_value = SimpleNamespace(
+            chat_room_id="CR_1", user_id="U_A", is_left=True, notification_muted=None,
+        )
+
+        with pytest.raises(PermissionError):
+            await service.get_room(me_id="U_A", room_id="CR_1")
+
+    async def test_active_member_with_mute_true_exposes_true(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+        redis_mock, message_repo_mock,
+    ):
+        """활성 멤버 + mute=True → 응답에 True 노출 + last_message/peer 정상."""
+        room = _mk_room(chat_room_id="CR_g", type_=ChatRoomType.GROUP, title="T")
+        chat_room_repo_mock.find_by_id.return_value = room
+        chat_member_repo_mock.find.return_value = SimpleNamespace(
+            chat_room_id="CR_g", user_id="U_A", is_left=False, notification_muted=True,
+        )
+        redis_mock.hget.return_value = None
+        message_repo_mock.find_by_id.return_value = None
+
+        result = await service.get_room(me_id="U_A", room_id="CR_g")
+        assert result.notification_muted is True
+        assert result.title == "T"
+        assert result.peer is None  # group
+
+    async def test_active_member_with_mute_null_exposes_false(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+        redis_mock, message_repo_mock,
+    ):
+        room = _mk_room(chat_room_id="CR_g", type_=ChatRoomType.GROUP, title="T")
+        chat_room_repo_mock.find_by_id.return_value = room
+        chat_member_repo_mock.find.return_value = SimpleNamespace(
+            chat_room_id="CR_g", user_id="U_A", is_left=False, notification_muted=None,
+        )
+        redis_mock.hget.return_value = None
+        message_repo_mock.find_by_id.return_value = None
+
+        result = await service.get_room(me_id="U_A", room_id="CR_g")
+        assert result.notification_muted is False
+
+    async def test_direct_room_loads_peer_profile(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+        user_repo_mock, redis_mock, message_repo_mock,
+    ):
+        """1:1 방 — peer_user_id 파생 + 프로필 로드 + mute 노출까지 한 흐름에서 검증."""
+        room = SimpleNamespace(
+            chat_room_id="CR_d",
+            type=ChatRoomType.DIRECT,
+            title=None,
+            direct_user_a_id="U_A",
+            direct_user_b_id="U_B",
+            last_message_id=None,
+            last_message_server_seq=None,
+            last_message_at=None,
+            created_at=NOW,
+            effective_last_at=NOW,
+        )
+        chat_room_repo_mock.find_by_id.return_value = room
+        chat_member_repo_mock.find.return_value = SimpleNamespace(
+            chat_room_id="CR_d", user_id="U_A", is_left=False, notification_muted=None,
+        )
+        user_repo_mock.find_by_id_with_profile.return_value = SimpleNamespace(
+            user_id="U_B",
+            detail=SimpleNamespace(user_name="peer", profile_image_url=None),
+        )
+        redis_mock.hget.return_value = b"7"
+
+        result = await service.get_room(me_id="U_A", room_id="CR_d")
+        assert result.type == ChatRoomType.DIRECT
+        assert result.peer.user_id == "U_B"
+        assert result.peer.user_name == "peer"
+        assert result.unread_count == 7
+        assert result.notification_muted is False
 
 
 # ──────────────────────────────────────────────────────────────────

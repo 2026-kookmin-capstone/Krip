@@ -68,6 +68,7 @@ async def get_my_profile(
         travel_styles=profile.travel_styles,
         nationality=profile.nationality,
         profile_image_url=profile.profile_image_url,
+        notification_muted=profile.notification_muted,
     )
 
 

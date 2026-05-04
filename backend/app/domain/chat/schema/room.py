@@ -123,6 +123,9 @@ class ChatRoomResponse(BaseModel):
     effective_last_at: datetime = Field(
         ..., description="정렬 기준 시각 — last_message_at 없으면 created_at 으로 fallback"
     )
+    notification_muted: bool = Field(
+        ..., description="이 방의 알림 차단 여부 (true = 이 방 푸시 차단)"
+    )
 
 
 class ChatRoomListResponse(BaseModel):

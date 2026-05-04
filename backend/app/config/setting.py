@@ -86,6 +86,12 @@ class Settings(BaseSettings):
     
     # LLM
     GOOGLE_GEMINI_API_KEY: str = Field(..., description="구글 제미나이 API 키")
+
+    # FCM (Firebase Cloud Messaging)
+    FCM_CREDENTIALS_PATH: str = Field(
+        "secrets/krip-firebase-secret-key.json",
+        description="Firebase Admin SDK 서비스 계정 JSON 경로 (backend/ 기준 상대 또는 절대)",
+    )
     
     @property
     def POSTGRES_URL(self) -> str:

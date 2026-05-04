@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, DateTime, Enum, UniqueConstraint, Index
+from sqlalchemy import Column, String, DateTime, Boolean, Enum, UniqueConstraint, Index
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 import enum
@@ -21,6 +21,8 @@ class User(Base):
     auth_provider = Column(Enum(OAuthProvider), nullable=False)
     auth_provider_id = Column(String(255), nullable=False)
     status = Column(Enum(UserStatus), nullable=False, default=UserStatus.ACTIVE)
+    # 전역 알림 차단 — True 면 모든 푸시 차단, NULL = 기본(허용). 명시적 차단만 row 에 적힘.
+    notification_muted = Column(Boolean, nullable=True)
     created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
     updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())
 
