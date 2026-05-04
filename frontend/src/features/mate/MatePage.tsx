@@ -24,6 +24,12 @@ import { uploadImages } from "../../api/image";
 import { getMyProfile } from "../../api/auth";
 import { createDirectChatRoom } from "../../api/chat";
 import { getFriendDetail, sendFriendRequest, type FriendshipStatus } from "../../api/friend";
+import { getRecommendationCandidates } from "../../api/recommendation";
+import {
+  recommendTravelers,
+  type RecommendationCandidate,
+  type RecommendedTraveler,
+} from "../../utils/mateRecommendation";
 
 const COMPANION_FILTERS = ["all", "sole", "friend", "couple", "family"] as const;
 const COMPANION_OPTIONS: CompanionType[] = ["friend", "family", "couple", "sole"];
@@ -42,6 +48,8 @@ const GENDER_LABELS: Record<PreferredGender, string> = {
   male: "Male",
   female: "Female",
 };
+
+const DEFAULT_PROFILE_IMAGE_URL = "/default-profile.svg";
 
 const EMPTY_FORM = {
   title: "",
@@ -76,6 +84,14 @@ export default function MatePage() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [filter, setFilter] = useState<CompanionType | "all">("all");
+  const [currentRecommendationProfile, setCurrentRecommendationProfile] = useState<{
+    user_id?: string | null;
+    travel_styles?: string[];
+    nationality?: string;
+  }>({});
+  const [recommendationCandidates, setRecommendationCandidates] = useState<
+    RecommendationCandidate[]
+  >([]);
 
   const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -83,7 +99,12 @@ export default function MatePage() {
   const [showHistory, setShowHistory] = useState(false);
 
   const [selectedPost, setSelectedPost] = useState<TripMatePost | null>(null);
+  const [selectedRecommendedTraveler, setSelectedRecommendedTraveler] =
+    useState<RecommendedTraveler | null>(null);
   const [friendRequested, setFriendRequested] = useState<Set<string>>(new Set());
+  const [recommendedFriendRequested, setRecommendedFriendRequested] = useState<
+    Set<string>
+  >(new Set());
   const [friendStates, setFriendStates] = useState<Record<string, MateFriendState>>({});
   const [friendRequestingUserId, setFriendRequestingUserId] = useState<string | null>(null);
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
@@ -167,10 +188,27 @@ export default function MatePage() {
   useEffect(() => {
     void loadSearchHistory();
     getMyProfile()
-      .then((profile) => setCurrentUserId(profile?.user_id ?? null))
+      .then((profile) => {
+        setCurrentUserId(profile?.user_id ?? null);
+        setCurrentRecommendationProfile({
+          user_id: profile?.user_id ?? null,
+          travel_styles: profile?.travel_styles ?? [],
+          nationality: profile?.nationality,
+        });
+      })
       .catch((error) => {
         console.warn("Failed to load /api/auth/profile/me", error);
         setCurrentUserId(null);
+        setCurrentRecommendationProfile({});
+      });
+  }, []);
+
+  useEffect(() => {
+    getRecommendationCandidates()
+      .then((response) => setRecommendationCandidates(response.items ?? []))
+      .catch((error) => {
+        console.warn("Failed to load recommendation candidates", error);
+        setRecommendationCandidates([]);
       });
   }, []);
 
@@ -220,6 +258,11 @@ export default function MatePage() {
         ? posts
         : posts.filter((post) => post.companion_type === filter),
     [filter, posts]
+  );
+
+  const mateRecommendations = useMemo(
+    () => recommendTravelers(currentRecommendationProfile, recommendationCandidates, 10),
+    [currentRecommendationProfile, recommendationCandidates]
   );
 
   function resetEditor(): void {
@@ -358,6 +401,22 @@ export default function MatePage() {
     }
   }
 
+  async function handleSendRecommendedFriendRequest(
+    traveler: RecommendedTraveler
+  ): Promise<void> {
+    if (friendRequestingUserId) return;
+
+    setFriendRequestingUserId(traveler.user_id);
+    try {
+      await sendFriendRequest(traveler.user_id);
+      setRecommendedFriendRequested((current) => new Set(current).add(traveler.user_id));
+    } catch (friendError) {
+      window.alert(toErrorMessage(friendError, "Failed to send friend request. Please try again."));
+    } finally {
+      setFriendRequestingUserId(null);
+    }
+  }
+
   async function handleSubmit(): Promise<void> {
     if (imageUploading) {
       window.alert("Please wait until the image upload is complete.");
@@ -451,6 +510,21 @@ export default function MatePage() {
     setChatOpeningPostId(post.post_id);
     try {
       const room = await createDirectChatRoom(post.user_id);
+      navigate(`/chat/${room.chat_room_id}`);
+    } catch (chatError) {
+      window.alert(toErrorMessage(chatError, "Failed to open chat. Please try again."));
+    } finally {
+      setChatOpeningPostId(null);
+    }
+  }
+
+  async function handleStartRecommendedChat(traveler: RecommendedTraveler): Promise<void> {
+    if (chatOpeningPostId) return;
+
+    setChatOpeningPostId(traveler.user_id);
+    try {
+      const room = await createDirectChatRoom(traveler.user_id);
+      setSelectedRecommendedTraveler(null);
       navigate(`/chat/${room.chat_room_id}`);
     } catch (chatError) {
       window.alert(toErrorMessage(chatError, "Failed to open chat. Please try again."));
@@ -563,6 +637,57 @@ export default function MatePage() {
                   </div>
                 </div>
               ) : null}
+            </section>
+
+            <section style={styles.recommendationPanel}>
+              <div style={styles.recommendationHeader}>
+                <div>
+                  <p style={styles.recommendationEyebrow}>Recommended</p>
+                  <h2 style={styles.recommendationTitle}>Travelers for you</h2>
+                </div>
+                <span style={styles.recommendationSource}>
+                  {currentRecommendationProfile.travel_styles?.length
+                    ? currentRecommendationProfile.travel_styles.join(" / ")
+                    : "No styles yet"}
+                </span>
+              </div>
+
+              <div style={styles.recommendationList}>
+                {mateRecommendations.length > 0 ? (
+                  mateRecommendations.map((recommendation) => (
+                    <button
+                      key={recommendation.user_id}
+                      type="button"
+                      style={styles.recommendationItem}
+                      onClick={() => setSelectedRecommendedTraveler(recommendation)}
+                    >
+                      {recommendation.profile_image_url ? (
+                        <img
+                          src={recommendation.profile_image_url}
+                          alt={recommendation.user_name}
+                          style={styles.recommendationPhoto}
+                        />
+                      ) : (
+                        <img
+                          src={DEFAULT_PROFILE_IMAGE_URL}
+                          alt=""
+                          style={styles.recommendationPhoto}
+                        />
+                      )}
+                      <span style={styles.recommendationText}>
+                        <strong style={styles.recommendationName}>
+                          {recommendation.user_name}
+                        </strong>
+                        <span style={styles.recommendationScore}>
+                          {(recommendation.similarity_score * 100).toFixed(0)}%
+                        </span>
+                      </span>
+                    </button>
+                  ))
+                ) : (
+                  <p style={styles.recommendationEmpty}>No recommended travelers yet.</p>
+                )}
+              </div>
             </section>
 
             <section style={styles.filtersSection}>
@@ -1007,6 +1132,24 @@ export default function MatePage() {
         />
       ) : null}
 
+      {selectedRecommendedTraveler ? (
+        <RecommendedTravelerModal
+          traveler={selectedRecommendedTraveler}
+          friendRequested={recommendedFriendRequested.has(
+            selectedRecommendedTraveler.user_id
+          )}
+          isSendingFriendRequest={
+            friendRequestingUserId === selectedRecommendedTraveler.user_id
+          }
+          isOpeningChat={chatOpeningPostId === selectedRecommendedTraveler.user_id}
+          onClose={() => setSelectedRecommendedTraveler(null)}
+          onAddFriend={() =>
+            void handleSendRecommendedFriendRequest(selectedRecommendedTraveler)
+          }
+          onChat={() => void handleStartRecommendedChat(selectedRecommendedTraveler)}
+        />
+      ) : null}
+
       {expandedImage ? (
         <ImageLightbox src={expandedImage} onClose={() => setExpandedImage(null)} />
       ) : null}
@@ -1054,8 +1197,94 @@ function AuthorAvatar({
       {post.profile_image_url ? (
         <img src={post.profile_image_url} alt="" style={styles.avatarImage} />
       ) : (
-        post.author.user_name?.slice(0, 1).toUpperCase() || "T"
+        <img src={DEFAULT_PROFILE_IMAGE_URL} alt="" style={styles.avatarImage} />
       )}
+    </div>
+  );
+}
+
+function RecommendedTravelerModal({
+  traveler,
+  friendRequested,
+  isSendingFriendRequest,
+  isOpeningChat,
+  onClose,
+  onAddFriend,
+  onChat,
+}: {
+  traveler: RecommendedTraveler;
+  friendRequested: boolean;
+  isSendingFriendRequest: boolean;
+  isOpeningChat: boolean;
+  onClose: () => void;
+  onAddFriend: () => void;
+  onChat: () => void;
+}) {
+  const profileEntries = Object.entries(traveler).filter(
+    ([key]) => key !== "similarity_score" && key !== "profile_image_url"
+  );
+
+  return (
+    <div style={styles.modalOverlay} onClick={onClose}>
+      <div style={styles.recommendedModalCard} onClick={(event) => event.stopPropagation()}>
+        <div style={styles.recommendedModalHeader}>
+          {traveler.profile_image_url ? (
+            <img
+              src={traveler.profile_image_url}
+              alt={traveler.user_name}
+              style={styles.recommendedModalPhoto}
+            />
+          ) : (
+            <img
+              src={DEFAULT_PROFILE_IMAGE_URL}
+              alt=""
+              style={styles.recommendedModalPhoto}
+            />
+          )}
+          <div style={styles.recommendedModalTitleBlock}>
+            <p style={styles.recommendationEyebrow}>Recommended Traveler</p>
+            <h2 style={styles.recommendedModalTitle}>{traveler.user_name}</h2>
+            <p style={styles.recommendedModalScore}>
+              Match {(traveler.similarity_score * 100).toFixed(0)}%
+            </p>
+          </div>
+          <button type="button" style={styles.modalCloseButton} onClick={onClose}>
+            x
+          </button>
+        </div>
+
+        <div style={styles.recommendedInfoGrid}>
+          {profileEntries.map(([key, value]) => (
+            <div key={key} style={styles.recommendedInfoItem}>
+              <span style={styles.recommendedInfoLabel}>{formatProfileKey(key)}</span>
+              <span style={styles.recommendedInfoValue}>{formatProfileValue(value)}</span>
+            </div>
+          ))}
+        </div>
+
+        <div style={styles.modalButtonGrid}>
+          <button
+            type="button"
+            style={friendRequested ? styles.secondaryButton : styles.primaryButton}
+            onClick={onAddFriend}
+            disabled={friendRequested || isSendingFriendRequest}
+          >
+            {isSendingFriendRequest
+              ? "Sending..."
+              : friendRequested
+                ? "Request Sent"
+                : "Add Friend"}
+          </button>
+          <button
+            type="button"
+            style={styles.secondaryButton}
+            onClick={onChat}
+            disabled={isOpeningChat}
+          >
+            {isOpeningChat ? "Opening..." : "Chat"}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -1178,6 +1407,20 @@ function PostModal({
       </div>
     </div>
   );
+}
+
+function formatProfileKey(key: string): string {
+  return key
+    .split("_")
+    .map((part) => part.slice(0, 1).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function formatProfileValue(value: unknown): string {
+  if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) return value.join(", ");
+  if (typeof value === "object") return JSON.stringify(value);
+  return String(value);
 }
 
 function ImageLightbox({ src, onClose }: { src: string; onClose: () => void }) {
@@ -1497,6 +1740,123 @@ const styles: Record<string, CSSProperties> = {
     background: "linear-gradient(135deg, rgba(248,180,0,0.2), rgba(255,233,179,0.92))",
     color: "var(--text-primary)",
     boxShadow: "0 12px 24px rgba(248,180,0,0.14)",
+  },
+  recommendationPanel: {
+    padding: "14px 16px",
+    borderRadius: 22,
+    background: "rgba(255,255,255,0.72)",
+    border: "1px solid rgba(5,181,187,0.12)",
+  },
+  recommendationHeader: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 14,
+    marginBottom: 12,
+  },
+  recommendationEyebrow: {
+    margin: 0,
+    color: "var(--brand-primary-deep)",
+    fontSize: "0.74rem",
+    fontWeight: 800,
+    letterSpacing: "0.12em",
+    textTransform: "uppercase",
+  },
+  recommendationTitle: {
+    margin: "4px 0 0",
+    color: "var(--text-primary)",
+    fontSize: "1.1rem",
+    lineHeight: 1.2,
+  },
+  recommendationSource: {
+    maxWidth: 170,
+    padding: "7px 10px",
+    borderRadius: 999,
+    background: "rgba(5,181,187,0.1)",
+    color: "var(--brand-primary-deep)",
+    fontSize: "0.76rem",
+    fontWeight: 800,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+  recommendationLabel: {
+    color: "var(--neutral-700)",
+    fontSize: "0.76rem",
+    fontWeight: 800,
+  },
+  recommendationSelect: {
+    minHeight: 38,
+    border: "1px solid rgba(5,181,187,0.18)",
+    borderRadius: 14,
+    padding: "0 10px",
+    background: "#ffffff",
+    color: "var(--text-primary)",
+    fontWeight: 800,
+  },
+  recommendationList: {
+    display: "flex",
+    gap: 10,
+    overflowX: "auto",
+    paddingBottom: 2,
+  },
+  recommendationItem: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 8,
+    minWidth: 82,
+    padding: "8px 6px",
+    border: "none",
+    background: "transparent",
+    cursor: "pointer",
+  },
+  recommendationPhoto: {
+    width: 62,
+    height: 62,
+    borderRadius: "50%",
+    objectFit: "cover",
+    border: "3px solid rgba(255,255,255,0.95)",
+    boxShadow: "0 10px 22px rgba(5,181,187,0.16)",
+  },
+  recommendationPhotoFallback: {
+    width: 62,
+    height: 62,
+    borderRadius: "50%",
+    display: "grid",
+    placeItems: "center",
+    background: "linear-gradient(135deg, var(--brand-primary), #12c0c6)",
+    color: "#ffffff",
+    border: "3px solid rgba(255,255,255,0.95)",
+    boxShadow: "0 10px 22px rgba(5,181,187,0.16)",
+    fontWeight: 900,
+  },
+  recommendationText: {
+    width: "100%",
+    textAlign: "center",
+  },
+  recommendationName: {
+    display: "block",
+    color: "var(--text-primary)",
+    fontSize: "0.84rem",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+  recommendationScore: {
+    margin: "2px 0 0",
+    color: "var(--neutral-700)",
+    fontSize: "0.7rem",
+    fontWeight: 700,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+  recommendationEmpty: {
+    margin: 0,
+    color: "var(--neutral-700)",
+    fontSize: "0.86rem",
+    fontWeight: 700,
   },
   listSection: {
     display: "flex",
@@ -1938,6 +2298,90 @@ const styles: Record<string, CSSProperties> = {
     background: "var(--surface-panel)",
     boxShadow: "0 28px 72px rgba(24,26,32,0.18)",
     animation: "slideUpModal 280ms cubic-bezier(0.22, 1, 0.36, 1)",
+  },
+  recommendedModalCard: {
+    width: "100%",
+    maxWidth: 760,
+    maxHeight: "88dvh",
+    overflowY: "auto",
+    borderRadius: "30px 30px 0 0",
+    background: "var(--surface-panel)",
+    boxShadow: "0 28px 72px rgba(24,26,32,0.18)",
+    padding: 20,
+    display: "flex",
+    flexDirection: "column",
+    gap: 18,
+    animation: "slideUpModal 280ms cubic-bezier(0.22, 1, 0.36, 1)",
+  },
+  recommendedModalHeader: {
+    display: "flex",
+    alignItems: "center",
+    gap: 14,
+  },
+  recommendedModalPhoto: {
+    width: 74,
+    height: 74,
+    borderRadius: "50%",
+    objectFit: "cover",
+    border: "3px solid rgba(255,255,255,0.95)",
+    boxShadow: "0 14px 30px rgba(5,181,187,0.18)",
+    flexShrink: 0,
+  },
+  recommendedModalPhotoFallback: {
+    width: 74,
+    height: 74,
+    borderRadius: "50%",
+    display: "grid",
+    placeItems: "center",
+    background: "linear-gradient(135deg, var(--brand-primary), #12c0c6)",
+    color: "#ffffff",
+    border: "3px solid rgba(255,255,255,0.95)",
+    boxShadow: "0 14px 30px rgba(5,181,187,0.18)",
+    fontWeight: 900,
+    fontSize: "1.5rem",
+    flexShrink: 0,
+  },
+  recommendedModalTitleBlock: {
+    flex: 1,
+    minWidth: 0,
+  },
+  recommendedModalTitle: {
+    margin: "4px 0",
+    color: "var(--text-primary)",
+    fontSize: "1.45rem",
+    lineHeight: 1.12,
+  },
+  recommendedModalScore: {
+    margin: 0,
+    color: "var(--neutral-700)",
+    fontWeight: 800,
+  },
+  recommendedInfoGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+    gap: 10,
+  },
+  recommendedInfoItem: {
+    padding: 12,
+    borderRadius: 16,
+    background: "rgba(228,247,247,0.44)",
+    border: "1px solid rgba(5,181,187,0.1)",
+    minWidth: 0,
+  },
+  recommendedInfoLabel: {
+    display: "block",
+    marginBottom: 5,
+    color: "var(--brand-primary-deep)",
+    fontSize: "0.74rem",
+    fontWeight: 900,
+  },
+  recommendedInfoValue: {
+    display: "block",
+    color: "var(--text-primary)",
+    fontSize: "0.9rem",
+    fontWeight: 700,
+    overflowWrap: "anywhere",
+    lineHeight: 1.35,
   },
   modalHero: {
     minHeight: 210,
