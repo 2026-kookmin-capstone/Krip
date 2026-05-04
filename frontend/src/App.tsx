@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import type { CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate,} from "react-router-dom";
 import AppShell from "./components/AppShell";
 import LoginPage from "./pages/LoginPage";
@@ -16,7 +17,7 @@ import AiPlanDesignPage from "./features/plan/AiPlanDesignPage";
 import AiPlanResultPage from "./features/plan/AiPlanResultPage";
 import ManualPlanPage from "./features/plan/Manualplanpage";
 import "./lib/firebase";
-import { requestPermission } from "./lib/fcm";
+import { listenForegroundMessages, requestPermission } from "./lib/fcm";
 import {
   clearPreferences,
   clonePreferences,
@@ -97,9 +98,85 @@ function ManualPlanRoute() {
   return <ManualPlanPage onBack={() => navigate("/plan")} />;
 }
 
+type ChatToastState = {
+  roomId?: string;
+  path?: string;
+  title: string;
+  body: string;
+  toastId: number;
+};
+
+function ChatMessageToast() {
+  const navigate = useNavigate();
+  const [toast, setToast] = useState<ChatToastState | null>(null);
+  const toastSequenceRef = useRef(0);
+
+  useEffect(() => {
+    let timeoutId: number | undefined;
+    let animationFrameId: number | undefined;
+
+    function handleChatToast(event: Event): void {
+      const detail = (event as CustomEvent<ChatToastState>).detail;
+      if (!detail?.roomId && !detail?.path) return;
+
+      toastSequenceRef.current += 1;
+      setToast(null);
+      if (animationFrameId) {
+        window.cancelAnimationFrame(animationFrameId);
+      }
+      animationFrameId = window.requestAnimationFrame(() => {
+        setToast({
+          ...detail,
+          toastId: toastSequenceRef.current,
+        });
+      });
+      if (timeoutId) {
+        window.clearTimeout(timeoutId);
+      }
+      timeoutId = window.setTimeout(() => setToast(null), 4200);
+    }
+
+    window.addEventListener("krip:chat-message-toast", handleChatToast);
+
+    return () => {
+      if (timeoutId) {
+        window.clearTimeout(timeoutId);
+      }
+      if (animationFrameId) {
+        window.cancelAnimationFrame(animationFrameId);
+      }
+      window.removeEventListener("krip:chat-message-toast", handleChatToast);
+    };
+  }, []);
+
+  if (!toast) return null;
+
+  return (
+    <button
+      key={toast.toastId}
+      type="button"
+      style={chatToastStyles.toast}
+      onClick={() => {
+        navigate(toast.path || `/chat/${toast.roomId}`);
+        setToast(null);
+      }}
+    >
+      <span style={chatToastStyles.icon}>C</span>
+      <span style={chatToastStyles.text}>
+        <strong style={chatToastStyles.title}>{toast.title}</strong>
+        <span style={chatToastStyles.body}>{toast.body}</span>
+      </span>
+      <span style={chatToastStyles.action}>Open</span>
+    </button>
+  );
+}
+
 export default function App() {
   useEffect(() => {
     void requestPermission();
+    listenForegroundMessages().catch((error) => {
+      console.warn("Failed to listen for foreground FCM messages", error);
+    });
   }, []);
 
   return (
@@ -125,7 +202,72 @@ export default function App() {
           <Route path="/profile/:id" element={<PlaceholderPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        <ChatMessageToast />
       </ChatProvider>
     </BrowserRouter>
   );
 }
+
+const chatToastStyles: Record<string, CSSProperties> = {
+  toast: {
+    position: "fixed",
+    top: 16,
+    left: "50%",
+    transform: "translateX(-50%)",
+    animation: "slideDownToast 650ms cubic-bezier(0.22, 1, 0.36, 1)",
+    zIndex: 80,
+    width: "min(calc(100% - 32px), 420px)",
+    minHeight: 68,
+    display: "flex",
+    alignItems: "center",
+    gap: 12,
+    padding: "12px 14px",
+    border: "1px solid rgba(5,181,187,0.18)",
+    borderRadius: 22,
+    background: "rgba(255,255,255,0.96)",
+    boxShadow: "0 20px 46px rgba(24,26,32,0.16)",
+    backdropFilter: "blur(16px)",
+    cursor: "pointer",
+    textAlign: "left",
+  },
+  icon: {
+    width: 40,
+    height: 40,
+    borderRadius: "50%",
+    display: "grid",
+    placeItems: "center",
+    background: "linear-gradient(135deg, var(--brand-primary), #12c0c6)",
+    color: "#ffffff",
+    fontSize: "0.82rem",
+    fontWeight: 900,
+    flexShrink: 0,
+  },
+  text: {
+    flex: 1,
+    minWidth: 0,
+    display: "flex",
+    flexDirection: "column",
+    gap: 3,
+  },
+  title: {
+    color: "var(--text-primary)",
+    fontSize: "0.94rem",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+  body: {
+    color: "var(--neutral-700)",
+    fontSize: "0.82rem",
+    fontWeight: 700,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+  action: {
+    color: "var(--brand-primary-deep)",
+    fontSize: "0.78rem",
+    fontWeight: 900,
+    flexShrink: 0,
+  },
+};

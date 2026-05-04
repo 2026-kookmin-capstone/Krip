@@ -97,7 +97,10 @@ const ChatContext = createContext<ChatContextValue | null>(null);
 export function ChatProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const isChatRoute = location.pathname === "/chat" || location.pathname.startsWith("/chat/");
+  const shouldConnectChatSocket =
+    location.pathname !== "/" &&
+    location.pathname !== "/login" &&
+    location.pathname !== "/register";
   const socketRef = useRef<WebSocket | null>(null);
   const reconnectTimerRef = useRef<number | null>(null);
   const reconnectAttemptRef = useRef(0);
@@ -173,6 +176,8 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         room_id: roomId,
         up_to_server_seq: serverSeq,
       };
+
+      clearStoredChatUnreadCount(roomId);
 
       if (sendSocketPayload(payload)) {
         inFlightReadRef.current = { roomId, serverSeq };
@@ -645,6 +650,12 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         case "message.new":
           mergeServerMessages(event.message.chat_room_id, [event.message]);
           updateRoomLastMessage(event.message);
+          if (event.message.sender_id !== currentUserIdRef.current) {
+            if (event.message.chat_room_id !== activeRoomIdRef.current) {
+              incrementStoredChatUnreadCount(event.message.chat_room_id);
+            }
+            dispatchChatToast(event.message, getRoomTitle(roomsRef.current, event.message.chat_room_id));
+          }
           if (event.message.chat_room_id === activeRoomIdRef.current) {
             sendRead(event.message.chat_room_id, event.message.server_seq);
           }
@@ -761,7 +772,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   }, [handleSocketEvent]);
 
   useEffect(() => {
-    if (!isChatRoute) {
+    if (!shouldConnectChatSocket) {
       shouldReconnectRef.current = false;
       if (reconnectTimerRef.current) {
         window.clearTimeout(reconnectTimerRef.current);
@@ -864,7 +875,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
       }
       socketRef.current = null;
     };
-  }, [isChatRoute, navigate, refreshRooms]);
+  }, [navigate, refreshRooms, shouldConnectChatSocket]);
 
   useEffect(() => {
     return () => {
@@ -1024,6 +1035,81 @@ function getReplacedClientMsgIds(
 
 function sortByServerSeq(a: ChatMessage, b: ChatMessage): number {
   return a.server_seq - b.server_seq;
+}
+
+function dispatchChatToast(message: ChatMessage, roomTitle: string): void {
+  window.dispatchEvent(
+    new CustomEvent("krip:chat-message-toast", {
+      detail: {
+        roomId: message.chat_room_id,
+        title: roomTitle || "New message",
+        body: formatChatToastBody(message),
+      },
+    })
+  );
+}
+
+function incrementStoredChatUnreadCount(roomId: string): void {
+  const storageKey = "krip-chat-unread-by-room";
+  let unreadByRoom: Record<string, number> = {};
+
+  try {
+    const raw = window.localStorage.getItem(storageKey);
+    const parsed = raw ? (JSON.parse(raw) as unknown) : {};
+    if (parsed && typeof parsed === "object") {
+      unreadByRoom = parsed as Record<string, number>;
+    }
+  } catch {
+    unreadByRoom = {};
+  }
+
+  unreadByRoom[roomId] = Math.max(0, Number(unreadByRoom[roomId] || 0)) + 1;
+  window.localStorage.setItem(storageKey, JSON.stringify(unreadByRoom));
+  window.dispatchEvent(new Event("krip:friend-chat-notifications-updated"));
+}
+
+function clearStoredChatUnreadCount(roomId: string): void {
+  const storageKey = "krip-chat-unread-by-room";
+
+  try {
+    const raw = window.localStorage.getItem(storageKey);
+    const parsed = raw ? (JSON.parse(raw) as unknown) : {};
+    if (!parsed || typeof parsed !== "object") return;
+
+    const unreadByRoom = parsed as Record<string, number>;
+    if (!(roomId in unreadByRoom)) return;
+
+    delete unreadByRoom[roomId];
+    window.localStorage.setItem(storageKey, JSON.stringify(unreadByRoom));
+    window.dispatchEvent(new Event("krip:friend-chat-notifications-updated"));
+  } catch {
+    window.localStorage.removeItem(storageKey);
+    window.dispatchEvent(new Event("krip:friend-chat-notifications-updated"));
+  }
+}
+
+function getRoomTitle(rooms: ChatRoom[], roomId: string): string {
+  const room = rooms.find((item) => item.chat_room_id === roomId);
+  return room?.title || room?.peer?.user_name || "New message";
+}
+
+function formatChatToastBody(message: ChatMessage): string {
+  if (message.deleted_at) return "Deleted message";
+  if (message.type === "image") return "Sent an image";
+  if (message.type === "file") return "Sent a file";
+  if (message.type === "system") return "System message";
+
+  if (typeof message.content === "string") {
+    return message.content;
+  }
+
+  if (message.content && typeof message.content === "object") {
+    const value = message.content as Record<string, unknown>;
+    if (typeof value.text === "string") return value.text;
+    if (typeof value.message === "string") return value.message;
+  }
+
+  return "New message";
 }
 
 function getLastServerSeq(messages: ChatMessage[]): number {

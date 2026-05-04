@@ -1,10 +1,12 @@
 import { getMessaging, getToken, isSupported, onMessage } from "firebase/messaging";
+import type { MessagePayload } from "firebase/messaging";
 
 import client from "../api/client";
 import { firebaseApp } from "./firebase";
 
 const FCM_TOKEN_STORAGE_KEY = "FCMtoken";
 let fcmTokenRegistrationPromise: Promise<string | null> | null = null;
+let foregroundMessageListenerStarted = false;
 
 async function issueAndRegisterFcmToken(): Promise<string | null> {
   const vapidKey = import.meta.env.VITE_FIREBASE_VAPID_KEY;
@@ -81,13 +83,47 @@ export async function requestPermission(): Promise<void> {
 }
 
 export async function listenForegroundMessages(): Promise<void> {
+  if (foregroundMessageListenerStarted) {
+    return;
+  }
+
   const supported = await isSupported();
   if (!supported) {
     return;
   }
 
   const messaging = getMessaging(firebaseApp);
+  foregroundMessageListenerStarted = true;
   onMessage(messaging, (payload) => {
     console.log("Received foreground notification:", payload);
+    dispatchForegroundNotificationToast(payload);
   });
+}
+
+function dispatchForegroundNotificationToast(payload: MessagePayload): void {
+  const title = payload.notification?.title || payload.data?.title || "Krip";
+  const body = payload.notification?.body || payload.data?.body || "New notification";
+  const roomId =
+    payload.data?.chatRoomId ||
+    payload.data?.chat_room_id ||
+    extractChatRoomId(payload.data?.url);
+  const path = payload.data?.url || (roomId ? `/chat/${roomId}` : "/chat");
+
+  window.dispatchEvent(
+    new CustomEvent("krip:chat-message-toast", {
+      detail: {
+        roomId,
+        path,
+        title,
+        body,
+      },
+    })
+  );
+}
+
+function extractChatRoomId(url?: string): string | undefined {
+  if (!url) return undefined;
+
+  const match = url.match(/\/chat\/([^/?#]+)/);
+  return match?.[1];
 }
