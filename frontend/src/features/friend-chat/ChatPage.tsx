@@ -24,6 +24,8 @@ import { reportChatNetworkError } from "../../utils/chatDiagnostics";
 type ChatTab = "chats" | "requests" | "friends";
 type LoadingKey = "received" | "sent" | "friends" | "blocks";
 
+const DEFAULT_PROFILE_IMAGE_URL = "/default-profile.svg";
+
 const TABS: Array<{ key: ChatTab; label: string }> = [
   { key: "chats", label: "Chats" },
   { key: "requests", label: "Requests" },
@@ -558,9 +560,9 @@ function Avatar({ name, imageUrl }: { name: string; imageUrl?: string | null }) 
   return (
     <span style={styles.avatar}>
       {imageUrl ? (
-        <img src={imageUrl} alt="" style={styles.avatarImage} />
+        <img src={imageUrl} alt={name} style={styles.avatarImage} />
       ) : (
-        name.slice(0, 1).toUpperCase() || "U"
+        <img src={DEFAULT_PROFILE_IMAGE_URL} alt={name} style={styles.avatarImage} />
       )}
     </span>
   );

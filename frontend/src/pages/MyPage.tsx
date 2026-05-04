@@ -11,6 +11,8 @@ import {
   type UserProfile,
 } from "../api/auth/auth";
 
+const DEFAULT_PROFILE_IMAGE_URL = "/default-profile.svg";
+
 export default function MyPage() {
   const navigate = useNavigate();
   const profileImageInputRef = useRef<HTMLInputElement>(null);
@@ -161,8 +163,8 @@ export default function MyPage() {
     }
   }
 
-  const avatarText = profile?.user_name?.slice(0, 2) ?? "";
-  const profileImageUrl = profileImagePreview || getProfileImageUrl(profile);
+  const profileImageUrl =
+    profileImagePreview || getProfileImageUrl(profile) || DEFAULT_PROFILE_IMAGE_URL;
   const canDeleteProfileImage =
     Boolean(getProfileImageUrl(profile)) && !profileImagePreview;
   const nameText = profile?.user_name ?? "";
@@ -205,11 +207,7 @@ export default function MyPage() {
             disabled={isUploadingProfileImage || isDeletingProfileImage}
             aria-label="Change profile photo"
           >
-            {profileImageUrl ? (
-              <img src={profileImageUrl} alt="" style={styles.avatarImage} />
-            ) : (
-              <span style={styles.avatarText}>{avatarText}</span>
-            )}
+            <img src={profileImageUrl} alt="" style={styles.avatarImage} />
             {isUploadingProfileImage ? (
               <span style={styles.avatarOverlay}>Uploading...</span>
             ) : isDeletingProfileImage ? (
