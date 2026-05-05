@@ -60,6 +60,7 @@ from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHist
 from app.domain.tripmate.model.tripmate_image import TripmateImage
 from app.domain.tour.model.place import Place
 from app.domain.tour.model.tour_search_history import TourSearchHistory
+from app.domain.friend.model.search_history import FriendSearchHistory
 from app.domain.chat.model.chat_message import create_indexes as create_chat_message_indexes
 from app.domain.auth.model.withdrawal_request import WithdrawalRequest
 from app.config.setting import settings
@@ -90,6 +91,7 @@ class MongoDB:
                 TripmateImage,
                 Place,
                 TourSearchHistory,
+                FriendSearchHistory,
             ]
         )
 

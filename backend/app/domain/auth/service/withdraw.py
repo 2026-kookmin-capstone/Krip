@@ -13,6 +13,7 @@ from app.domain.tripmate.model.tripmate_image import TripmateImage
 from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
 from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHistory
 from app.domain.tour.model.tour_search_history import TourSearchHistory
+from app.domain.friend.model.search_history import FriendSearchHistory
 from app.database.session import UnitOfWork, transactional
 from app.core.object_storage import get_object_storage
 from app.core.cache.redis_cache import get_redis_cache_manager
@@ -278,6 +279,7 @@ class WithdrawService:
             await TripmatePostDraft.find({"user_id": user_id}).delete()
             await TripmateSearchHistory.find({"user_id": user_id}).delete()
             await TourSearchHistory.find({"user_id": user_id}).delete()
+            await FriendSearchHistory.find({"user_id": user_id}).delete()
             logger.info("탈퇴 영구 삭제 — MongoDB 유저 데이터 삭제 완료 (user_id={})", user_id)
         except Exception as e:
             logger.error(
