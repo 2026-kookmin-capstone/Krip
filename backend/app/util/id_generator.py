@@ -91,3 +91,17 @@ def generate_fcm_token_id() -> str:
     timestamp = int(datetime.now().timestamp())
     unique_part = uuid.uuid4().hex[:8]
     return f"FCM_{timestamp}_{unique_part}"
+
+
+def generate_feed_image_id() -> str:
+    """피드 이미지 고유 ID 생성 — timestamp prefix 라 문자열 정렬 = 시간순."""
+    timestamp = int(datetime.now().timestamp())
+    unique_part = uuid.uuid4().hex[:8]
+    return f"FI_{timestamp}_{unique_part}"
+
+
+def generate_feed_image_comment_id() -> str:
+    """피드 이미지 댓글 고유 ID 생성 — timestamp prefix 라 문자열 정렬 = 시간순."""
+    timestamp = int(datetime.now().timestamp())
+    unique_part = uuid.uuid4().hex[:8]
+    return f"FIC_{timestamp}_{unique_part}"
