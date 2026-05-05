@@ -20,6 +20,8 @@ from app.domain.public.service.share_plan import SharePlanService
 from app.domain.friend.service.friendship import FriendshipService
 from app.domain.friend.service.user_block import UserBlockService
 from app.domain.friend.service.friend_detail import FriendDetailService
+from app.domain.friend.service.search import FriendSearchService
+from app.domain.friend.service.search_history import FriendSearchHistoryService
 from app.domain.chat.service.block_cache import BlockCacheService
 from app.domain.chat.service.message import MessageService
 from app.domain.chat.service.fanout import FanoutService
@@ -104,3 +106,5 @@ class Container(containers.DeclarativeContainer):
         UserBlockService, uow=uow, block_cache_service=block_cache_service,
     )
     friend_detail_service = providers.Factory(FriendDetailService, uow=uow)
+    friend_search_service = providers.Factory(FriendSearchService, uow=uow)
+    friend_search_history_service = providers.Factory(FriendSearchHistoryService)
