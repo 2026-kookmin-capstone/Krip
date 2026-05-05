@@ -23,7 +23,16 @@ import {
 import { uploadImages } from "../../api/image";
 import { getMyProfile } from "../../api/auth";
 import { createDirectChatRoom } from "../../api/chat";
-import { getFriendDetail, sendFriendRequest, type FriendshipStatus } from "../../api/friend";
+import {
+  deleteFriendSearchHistoryAll,
+  deleteFriendSearchHistoryOne,
+  getFriendDetail,
+  getFriendSearchHistory,
+  searchFriendUsers,
+  sendFriendRequest,
+  type FriendSearchUser,
+  type FriendshipStatus,
+} from "../../api/friend";
 import { getRecommendationCandidates } from "../../api/recommendation";
 import {
   recommendTravelers,
@@ -77,12 +86,17 @@ export default function MatePage() {
   const draftTimer = useRef<ReturnType<typeof setInterval> | null>(null);
   const draftFormRef = useRef(EMPTY_FORM);
   const draftImageUrlsRef = useRef<string[]>([]);
+  const suggestionRequestIdRef = useRef(0);
 
   const [tab, setTab] = useState<Tab>("list");
   const [posts, setPosts] = useState<TripMatePost[]>([]);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [userResults, setUserResults] = useState<FriendSearchUser[]>([]);
+  const [userNextCursor, setUserNextCursor] = useState<string | null>(null);
+  const [userSearchLoading, setUserSearchLoading] = useState(false);
+  const [userSearchError, setUserSearchError] = useState("");
   const [filter, setFilter] = useState<CompanionType | "all">("all");
   const [currentRecommendationProfile, setCurrentRecommendationProfile] = useState<{
     user_id?: string | null;
@@ -96,6 +110,8 @@ export default function MatePage() {
   const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
+  const [suggestedUsers, setSuggestedUsers] = useState<FriendSearchUser[]>([]);
+  const [suggestionLoading, setSuggestionLoading] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
 
   const [selectedPost, setSelectedPost] = useState<TripMatePost | null>(null);
@@ -129,8 +145,16 @@ export default function MatePage() {
 
   async function loadSearchHistory(): Promise<void> {
     try {
-      const response = await getSearchHistory();
-      setSearchHistory(response.histories.map((item) => item.search_name));
+      const [postHistory, userHistory] = await Promise.all([
+        getSearchHistory(),
+        getFriendSearchHistory(),
+      ]);
+      setSearchHistory(
+        dedupeSearchHistory([
+          ...postHistory.histories.map((item) => item.search_name),
+          ...userHistory.histories.map((item) => item.search_name),
+        ])
+      );
     } catch {
       setSearchHistory([]);
     }
@@ -160,9 +184,84 @@ export default function MatePage() {
     }
   }
 
+  async function fetchUsers(keyword: string, cursor?: string): Promise<void> {
+    const nextKeyword = keyword.trim();
+    if (!nextKeyword) {
+      setUserResults([]);
+      setUserNextCursor(null);
+      setUserSearchError("");
+      return;
+    }
+
+    setUserSearchLoading(true);
+    setUserSearchError("");
+
+    try {
+      const response = await searchFriendUsers(nextKeyword, cursor);
+      setUserResults((current) =>
+        cursor ? [...current, ...response.items] : response.items
+      );
+      setUserNextCursor(response.next_cursor);
+    } catch (error) {
+      setUserSearchError(
+        error instanceof Error ? error.message : "Failed to search users."
+      );
+      if (!cursor) {
+        setUserResults([]);
+        setUserNextCursor(null);
+      }
+    } finally {
+      setUserSearchLoading(false);
+    }
+  }
+
   useEffect(() => {
     void fetchPosts();
   }, [searchQuery]);
+
+  useEffect(() => {
+    if (!searchQuery) {
+      setUserResults([]);
+      setUserNextCursor(null);
+      setUserSearchError("");
+      return;
+    }
+
+    void fetchUsers(searchQuery);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    const keyword = searchInput.trim();
+    if (!showHistory || !keyword) {
+      setSuggestedUsers([]);
+      setSuggestionLoading(false);
+      return undefined;
+    }
+
+    const requestId = suggestionRequestIdRef.current + 1;
+    suggestionRequestIdRef.current = requestId;
+    setSuggestionLoading(true);
+
+    const timerId = window.setTimeout(() => {
+      searchFriendUsers(keyword)
+        .then((response) => {
+          if (suggestionRequestIdRef.current !== requestId) return;
+          setSuggestedUsers(response.items.slice(0, 5));
+        })
+        .catch(() => {
+          if (suggestionRequestIdRef.current !== requestId) return;
+          setSuggestedUsers([]);
+        })
+        .finally(() => {
+          if (suggestionRequestIdRef.current !== requestId) return;
+          setSuggestionLoading(false);
+        });
+    }, 250);
+
+    return () => {
+      window.clearTimeout(timerId);
+    };
+  }, [searchInput, showHistory]);
 
   useEffect(() => {
     if (!selectedPost || selectedPost.user_id === currentUserId || friendStates[selectedPost.user_id]) {
@@ -260,6 +359,17 @@ export default function MatePage() {
     [filter, posts]
   );
 
+  const visibleSearchHistory = useMemo(() => {
+    const keyword = searchInput.trim().toLowerCase();
+    if (!keyword) return searchHistory;
+
+    return searchHistory.filter((item) => item.toLowerCase().includes(keyword));
+  }, [searchHistory, searchInput]);
+
+  const hasSearchSuggestions =
+    showHistory &&
+    (suggestionLoading || suggestedUsers.length > 0 || visibleSearchHistory.length > 0);
+
   const mateRecommendations = useMemo(
     () => recommendTravelers(currentRecommendationProfile, recommendationCandidates, 10),
     [currentRecommendationProfile, recommendationCandidates]
@@ -291,12 +401,18 @@ export default function MatePage() {
   }
 
   async function handleDeleteSearchHistory(term: string): Promise<void> {
-    await deleteSearchHistoryOne(term);
+    await Promise.allSettled([
+      deleteSearchHistoryOne(term),
+      deleteFriendSearchHistoryOne(term),
+    ]);
     setSearchHistory((current) => current.filter((item) => item !== term));
   }
 
   async function handleClearSearchHistory(): Promise<void> {
-    await deleteSearchHistoryAll();
+    await Promise.allSettled([
+      deleteSearchHistoryAll(),
+      deleteFriendSearchHistoryAll(),
+    ]);
     setSearchHistory([]);
   }
 
@@ -414,6 +530,44 @@ export default function MatePage() {
       window.alert(toErrorMessage(friendError, "Failed to send friend request. Please try again."));
     } finally {
       setFriendRequestingUserId(null);
+    }
+  }
+
+  async function handleSendSearchUserFriendRequest(user: FriendSearchUser): Promise<void> {
+    if (friendRequestingUserId) return;
+
+    setFriendRequestingUserId(user.user_id);
+    try {
+      const friendship = await sendFriendRequest(user.user_id);
+      setUserResults((current) =>
+        current.map((item) =>
+          item.user_id === user.user_id
+            ? {
+                ...item,
+                friendship_status: friendship.status,
+                is_requester: friendship.is_requester,
+              }
+            : item
+        )
+      );
+    } catch (friendError) {
+      window.alert(toErrorMessage(friendError, "Failed to send friend request. Please try again."));
+    } finally {
+      setFriendRequestingUserId(null);
+    }
+  }
+
+  async function handleStartSearchUserChat(user: FriendSearchUser): Promise<void> {
+    if (chatOpeningPostId) return;
+
+    setChatOpeningPostId(user.user_id);
+    try {
+      const room = await createDirectChatRoom(user.user_id);
+      navigate(`/chat/${room.chat_room_id}`);
+    } catch (chatError) {
+      window.alert(toErrorMessage(chatError, "Failed to open chat. Please try again."));
+    } finally {
+      setChatOpeningPostId(null);
     }
   }
 
@@ -578,7 +732,10 @@ export default function MatePage() {
                   <input
                     ref={searchRef}
                     value={searchInput}
-                    onChange={(event) => setSearchInput(event.target.value)}
+                    onChange={(event) => {
+                      setSearchInput(event.target.value);
+                      setShowHistory(true);
+                    }}
                     onFocus={() => {
                       setShowHistory(true);
                       void loadSearchHistory();
@@ -602,20 +759,49 @@ export default function MatePage() {
                 </button>
               </div>
 
-              {showHistory && searchHistory.length > 0 ? (
+              {hasSearchSuggestions ? (
                 <div style={styles.historyPanel}>
                   <div style={styles.historyHeader}>
-                    <span style={styles.historyTitle}>Recent Searches</span>
-                    <button
-                      type="button"
-                      style={styles.linkButton}
-                      onMouseDown={() => void handleClearSearchHistory()}
-                    >
-                      Clear
-                    </button>
+                    <span style={styles.historyTitle}>
+                      {searchInput.trim() ? "Suggestions" : "Recent Searches"}
+                    </span>
+                    {visibleSearchHistory.length > 0 ? (
+                      <button
+                        type="button"
+                        style={styles.linkButton}
+                        onMouseDown={() => void handleClearSearchHistory()}
+                      >
+                        Clear
+                      </button>
+                    ) : null}
                   </div>
+                  {suggestionLoading ? (
+                    <p style={styles.suggestionHint}>Searching users...</p>
+                  ) : null}
+                  {suggestedUsers.length > 0 ? (
+                    <div style={styles.historyList}>
+                      {suggestedUsers.map((user) => (
+                        <button
+                          key={user.user_id}
+                          type="button"
+                          style={styles.suggestionUserItem}
+                          onMouseDown={() => handleSearch(user.user_name)}
+                        >
+                          <img
+                            src={user.profile_image_url || DEFAULT_PROFILE_IMAGE_URL}
+                            alt=""
+                            style={styles.suggestionAvatar}
+                          />
+                          <span style={styles.suggestionUserText}>
+                            <strong style={styles.suggestionName}>{user.user_name}</strong>
+                            <span style={styles.suggestionMeta}>{user.user_id}</span>
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  ) : null}
                   <div style={styles.historyList}>
-                    {searchHistory.map((term) => (
+                    {visibleSearchHistory.map((term) => (
                       <div key={term} style={styles.historyItem}>
                         <button
                           type="button"
@@ -638,6 +824,57 @@ export default function MatePage() {
                 </div>
               ) : null}
             </section>
+
+            {searchQuery ? (
+              <section style={styles.userSearchPanel}>
+                <div style={styles.userSearchHeader}>
+                  <div>
+                    <p style={styles.recommendationEyebrow}>Users</p>
+                    <h2 style={styles.recommendationTitle}>People matching "{searchQuery}"</h2>
+                  </div>
+                  {userSearchLoading ? (
+                    <span style={styles.userSearchStatus}>Searching...</span>
+                  ) : null}
+                </div>
+
+                {userSearchError ? (
+                  <p style={styles.userSearchError}>{userSearchError}</p>
+                ) : userSearchLoading && userResults.length === 0 ? (
+                  <div style={styles.loadingState}>
+                    <span style={styles.spinner} />
+                    <p style={styles.emptyCopy}>Searching users...</p>
+                  </div>
+                ) : userResults.length === 0 ? (
+                  <p style={styles.recommendationEmpty}>No users found.</p>
+                ) : (
+                  <div style={styles.userResultList}>
+                    {userResults.map((user) => (
+                      <UserSearchCard
+                        key={user.user_id}
+                        user={user}
+                        busy={
+                          friendRequestingUserId === user.user_id ||
+                          chatOpeningPostId === user.user_id
+                        }
+                        onSendRequest={() => void handleSendSearchUserFriendRequest(user)}
+                        onChat={() => void handleStartSearchUserChat(user)}
+                      />
+                    ))}
+                  </div>
+                )}
+
+                {userNextCursor ? (
+                  <button
+                    type="button"
+                    style={styles.loadMoreButton}
+                    onClick={() => void fetchUsers(searchQuery, userNextCursor)}
+                    disabled={userSearchLoading}
+                  >
+                    {userSearchLoading ? "Loading..." : "Load More Users"}
+                  </button>
+                ) : null}
+              </section>
+            ) : null}
 
             <section style={styles.recommendationPanel}>
               <div style={styles.recommendationHeader}>
@@ -1203,6 +1440,64 @@ function AuthorAvatar({
   );
 }
 
+function UserSearchCard({
+  user,
+  busy,
+  onSendRequest,
+  onChat,
+}: {
+  user: FriendSearchUser;
+  busy: boolean;
+  onSendRequest: () => void;
+  onChat: () => void;
+}) {
+  const isFriend = user.friendship_status === "accepted";
+  const hasPendingRequest = user.friendship_status === "pending";
+  const canSendRequest = !user.i_blocked_peer && !isFriend && !hasPendingRequest;
+
+  return (
+    <div style={styles.userResultCard}>
+      <div style={styles.userResultSummary}>
+        <img
+          src={user.profile_image_url || DEFAULT_PROFILE_IMAGE_URL}
+          alt={user.user_name}
+          style={styles.userResultAvatar}
+        />
+        <div style={styles.userResultText}>
+          <strong style={styles.userResultName}>{user.user_name}</strong>
+          <span style={styles.userResultMeta}>{user.nationality || "Unknown"}</span>
+          <span style={styles.userResultStyles}>
+            {user.travel_styles.length > 0 ? user.travel_styles.join(" / ") : "No styles"}
+          </span>
+          <span style={styles.userResultId}>{user.user_id}</span>
+        </div>
+      </div>
+      {isFriend ? (
+        <button type="button" style={styles.secondaryButton} onClick={onChat} disabled={busy}>
+          {busy ? "Opening..." : "Chat"}
+        </button>
+      ) : (
+        <button
+          type="button"
+          style={canSendRequest ? styles.primaryButton : styles.secondaryButton}
+          onClick={onSendRequest}
+          disabled={!canSendRequest || busy}
+        >
+          {busy
+            ? "Sending..."
+            : hasPendingRequest
+              ? user.is_requester
+                ? "Request Sent"
+                : "Pending"
+              : user.i_blocked_peer
+                ? "Blocked"
+                : "Add Friend"}
+        </button>
+      )}
+    </div>
+  );
+}
+
 function RecommendedTravelerModal({
   traveler,
   friendRequested,
@@ -1507,6 +1802,22 @@ function stringifyApiMessage(value: unknown): string {
   return String(value);
 }
 
+function dedupeSearchHistory(items: string[]): string[] {
+  const seen = new Set<string>();
+  const nextItems: string[] = [];
+
+  items.forEach((item) => {
+    const value = item.trim();
+    const key = value.toLowerCase();
+    if (!value || seen.has(key)) return;
+
+    seen.add(key);
+    nextItems.push(value);
+  });
+
+  return nextItems.slice(0, 10);
+}
+
 function toFriendlyValidationMessage(errorItem: {
   loc?: unknown[];
   msg?: string;
@@ -1680,6 +1991,49 @@ const styles: Record<string, CSSProperties> = {
     flexDirection: "column",
     gap: 8,
   },
+  suggestionHint: {
+    margin: "0 0 10px",
+    color: "var(--neutral-700)",
+    fontSize: "0.82rem",
+    fontWeight: 800,
+  },
+  suggestionUserItem: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    padding: "10px 12px",
+    border: "none",
+    borderRadius: 14,
+    background: "rgba(5,181,187,0.08)",
+    color: "var(--text-primary)",
+    cursor: "pointer",
+    textAlign: "left",
+  },
+  suggestionAvatar: {
+    width: 34,
+    height: 34,
+    borderRadius: "50%",
+    objectFit: "cover",
+    flexShrink: 0,
+  },
+  suggestionUserText: {
+    minWidth: 0,
+    display: "flex",
+    flexDirection: "column",
+    gap: 2,
+  },
+  suggestionName: {
+    color: "var(--text-primary)",
+    fontSize: "0.9rem",
+  },
+  suggestionMeta: {
+    color: "var(--neutral-700)",
+    fontSize: "0.72rem",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
   historyItem: {
     display: "flex",
     alignItems: "center",
@@ -1715,6 +2069,88 @@ const styles: Record<string, CSSProperties> = {
     fontWeight: 800,
     cursor: "pointer",
     padding: 0,
+  },
+  userSearchPanel: {
+    padding: "14px 16px",
+    borderRadius: 22,
+    background: "rgba(255,255,255,0.82)",
+    border: "1px solid rgba(248,180,0,0.16)",
+    display: "flex",
+    flexDirection: "column",
+    gap: 12,
+  },
+  userSearchHeader: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 14,
+  },
+  userSearchStatus: {
+    color: "var(--neutral-700)",
+    fontSize: "0.78rem",
+    fontWeight: 800,
+  },
+  userSearchError: {
+    margin: 0,
+    color: "#b91c1c",
+    fontSize: "0.86rem",
+    fontWeight: 800,
+  },
+  userResultList: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+  },
+  userResultCard: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 12,
+    padding: 12,
+    borderRadius: 18,
+    background: "rgba(255,255,255,0.9)",
+    border: "1px solid var(--border-soft)",
+  },
+  userResultSummary: {
+    display: "flex",
+    alignItems: "center",
+    gap: 12,
+    minWidth: 0,
+    flex: 1,
+  },
+  userResultAvatar: {
+    width: 48,
+    height: 48,
+    borderRadius: "50%",
+    objectFit: "cover",
+    flexShrink: 0,
+  },
+  userResultText: {
+    minWidth: 0,
+    display: "flex",
+    flexDirection: "column",
+    gap: 3,
+  },
+  userResultName: {
+    color: "var(--text-primary)",
+    fontSize: "0.95rem",
+  },
+  userResultMeta: {
+    color: "var(--neutral-700)",
+    fontSize: "0.78rem",
+    fontWeight: 800,
+  },
+  userResultStyles: {
+    color: "var(--neutral-700)",
+    fontSize: "0.76rem",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+  userResultId: {
+    color: "var(--neutral-500)",
+    fontSize: "0.7rem",
+    overflowWrap: "anywhere",
   },
   filtersSection: {
     display: "flex",
