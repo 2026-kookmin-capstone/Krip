@@ -273,6 +273,65 @@ class TestListRooms:
         assert result.items[0].last_message.content is None  # 삭제 마스킹
         assert result.items[0].last_message.server_seq == 10
 
+    async def test_last_message_preview_keeps_system_content_dict(
+        self, service, chat_room_repo_mock, redis_mock, message_repo_mock,
+    ):
+        """system 메시지가 last_message 인 방 — content 의 dict 형태가 그대로 보존돼야 함.
+
+        방 생성 직후처럼 system(`created`) 메시지가 가장 최근 메시지인 케이스.
+        DTO 가 dict 를 그대로 들고 가야 라우터의 `LastMessagePreviewResponse` 가
+        같은 모양으로 직렬화될 수 있다 (회귀 방지 — 과거 `Optional[str]` 로 좁혀져
+        500 이 발생했음).
+        """
+        room = _mk_room(
+            chat_room_id="CR_sys", type_=ChatRoomType.GROUP, title="sys",
+            last_message_id="MSG_sys",
+        )
+        chat_room_repo_mock.find_rooms_of_user.return_value = [(room, None, None)]
+        redis_mock.hgetall.return_value = {}
+        payload = {"action": "created", "actor_id": "U_A"}
+        message_repo_mock.find_by_ids.return_value = {
+            "MSG_sys": _mk_doc(
+                "MSG_sys", 1,
+                sender_id=None,
+                msg_type="system",
+                content=payload,
+            )
+        }
+
+        result = await service.list_rooms(me_id="U_A")
+        item = result.items[0]
+        assert item.last_message is not None
+        assert item.last_message.type == "system"
+        assert item.last_message.sender_id is None
+        assert item.last_message.content == payload  # dict 보존 (str 변환 / drop 없음)
+
+    async def test_last_message_preview_keeps_image_content_dict(
+        self, service, chat_room_repo_mock, redis_mock, message_repo_mock,
+    ):
+        """image 메시지가 last_message 인 방 — dict content 가 그대로 보존."""
+        room = _mk_room(
+            chat_room_id="CR_img", type_=ChatRoomType.GROUP, title="img",
+            last_message_id="MSG_img",
+        )
+        chat_room_repo_mock.find_rooms_of_user.return_value = [(room, None, None)]
+        redis_mock.hgetall.return_value = {}
+        payload = {"url": "https://cdn.example.com/p.jpg", "name": "p.jpg"}
+        message_repo_mock.find_by_ids.return_value = {
+            "MSG_img": _mk_doc(
+                "MSG_img", 5,
+                sender_id="U_A",
+                msg_type="image",
+                content=payload,
+            )
+        }
+
+        result = await service.list_rooms(me_id="U_A")
+        item = result.items[0]
+        assert item.last_message is not None
+        assert item.last_message.type == "image"
+        assert item.last_message.content == payload
+
     async def test_notification_muted_true_exposed_as_true(
         self, service, chat_room_repo_mock, redis_mock, message_repo_mock,
     ):
