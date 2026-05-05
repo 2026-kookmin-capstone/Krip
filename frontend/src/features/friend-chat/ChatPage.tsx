@@ -1,7 +1,8 @@
 import type { CSSProperties } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { type ChatRoom } from "../../api/chat";
+import { getMyProfile } from "../../api/auth";
+import { type ChatRoom, type SystemContent } from "../../api/chat";
 import {
   acceptFriendRequest,
   blockUser,
@@ -38,6 +39,7 @@ export default function ChatPage() {
     rooms: chatRooms,
     roomsLoading: chatLoading,
     connectionState: chatConnectionStatus,
+    currentUserId,
     refreshRooms,
     openDirectChat,
   } = useChat();
@@ -62,9 +64,43 @@ export default function ChatPage() {
   const [targetUserId, setTargetUserId] = useState("");
   const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
+  const [currentUserName, setCurrentUserName] = useState<string | null>(null);
 
   const pendingCount = receivedRequests.length + sentRequests.length;
-  const chatRows = useMemo(() => chatRooms.map(toChatRow), [chatRooms]);
+  const displayNamesById = useMemo(() => {
+    const names = new Map<string, string>();
+
+    if (currentUserId && currentUserName) {
+      names.set(currentUserId, currentUserName);
+    }
+
+    friends.forEach((friend) => {
+      names.set(friend.peer.user_id, friend.peer.user_name);
+    });
+
+    chatRooms.forEach((room) => {
+      if (room.peer?.user_id && room.peer.user_name) {
+        names.set(room.peer.user_id, room.peer.user_name);
+      }
+
+      room.members?.forEach((member) => {
+        if (member.user_id && member.user_name) {
+          names.set(member.user_id, member.user_name);
+        }
+      });
+    });
+
+    return names;
+  }, [chatRooms, currentUserId, currentUserName, friends]);
+  const resolveDisplayName = useCallback(
+    (userId: string | null): string =>
+      userId === null ? "(알 수 없음)" : displayNamesById.get(userId) || "탈퇴한 사용자",
+    [displayNamesById]
+  );
+  const chatRows = useMemo(
+    () => chatRooms.map((room) => toChatRow(room, resolveDisplayName)),
+    [chatRooms, resolveDisplayName]
+  );
 
   useEffect(() => {
     void refreshAll();
@@ -120,11 +156,21 @@ export default function ChatPage() {
     }
   }
 
+  async function loadCurrentUserName(): Promise<void> {
+    try {
+      const profile = await getMyProfile();
+      setCurrentUserName(profile?.user_name ?? null);
+    } catch {
+      setCurrentUserName(null);
+    }
+  }
+
   async function refreshAll(): Promise<void> {
     setError("");
     try {
       await Promise.all([
         refreshRooms(),
+        loadCurrentUserName(),
         loadReceived(),
         loadSent(),
         loadFriends(),
@@ -583,7 +629,10 @@ function formatGender(gender: string): string {
   return gender;
 }
 
-function toChatRow(room: ChatRoom): {
+function toChatRow(
+  room: ChatRoom,
+  resolveDisplayName: (userId: string | null) => string
+): {
   id: string;
   name: string;
   imageUrl: string | null;
@@ -602,17 +651,68 @@ function toChatRow(room: ChatRoom): {
     name,
     imageUrl: room.type === "direct" ? room.peer?.profile_image_url ?? null : null,
     subtitle,
-    preview: renderLastMessage(room.last_message),
+    preview: renderLastMessage(room.last_message, resolveDisplayName),
     unreadCount: room.unread_count,
   };
 }
 
-function renderLastMessage(lastMessage: ChatRoom["last_message"]): string {
+function renderLastMessage(
+  lastMessage: ChatRoom["last_message"],
+  resolveDisplayName: (userId: string | null) => string
+): string {
   if (!lastMessage) return "No messages yet.";
-  if (lastMessage.content === null) return "Deleted message.";
-  if (lastMessage.type === "system") return "System message";
+  if (lastMessage.content === null) return "삭제된 메시지입니다";
+  if (lastMessage.type === "system") {
+    return renderSystemLastMessage(lastMessage.content, resolveDisplayName);
+  }
   if (typeof lastMessage.content === "string") return lastMessage.content;
   return "";
+}
+
+function renderSystemLastMessage(
+  content: ChatRoom["last_message"]["content"],
+  resolveDisplayName: (userId: string | null) => string
+): string {
+  if (!isSystemContent(content)) return "System message";
+
+  const actorName = resolveDisplayName(content.actor_id);
+  if (content.action === "created") {
+    return `${actorName}님이 채팅방을 만들었습니다`;
+  }
+  if (content.action === "join") {
+    const targetNames = content.target_ids.map(resolveDisplayName);
+    if (targetNames.length === 1 && (!content.actor_id || content.actor_id === content.target_ids[0])) {
+      return `${targetNames[0]}님이 들어왔습니다`;
+    }
+    return `${actorName}님이 ${formatTargetNames(targetNames)}님을 초대했습니다`;
+  }
+  if (content.action === "leave") {
+    return `${actorName}님이 나갔습니다`;
+  }
+  if (content.action === "kick") {
+    return `${actorName}님이 ${formatTargetNames(content.target_ids.map(resolveDisplayName))}님을 내보냈습니다`;
+  }
+
+  return "System message";
+}
+
+function isSystemContent(content: unknown): content is SystemContent {
+  if (!content || typeof content !== "object") return false;
+
+  const value = content as Partial<SystemContent>;
+  if (value.action === "created" || value.action === "leave") {
+    return "actor_id" in value;
+  }
+  if (value.action === "join" || value.action === "kick") {
+    return "actor_id" in value && Array.isArray(value.target_ids);
+  }
+  return false;
+}
+
+function formatTargetNames(names: string[]): string {
+  if (names.length === 0) return "(알 수 없음)";
+  if (names.length === 1) return names[0];
+  return `${names[0]} 외 ${names.length - 1}명`;
 }
 
 function toErrorMessage(error: unknown, fallback: string): string {
