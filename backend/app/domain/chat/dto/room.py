@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Any, List, Optional
 from dataclasses import dataclass
 from datetime import datetime
 
@@ -19,12 +19,17 @@ class ChatRoomPeerData:
 
 @dataclass
 class LastMessagePreviewData:
-    """방 리스트 미리보기용 최신 메시지 요약."""
+    """방 리스트 미리보기용 최신 메시지 요약.
+
+    `content` 는 `ChatMessageData.content` 와 동일한 다형 — type 에 따라
+    text=str, image/file=dict, system=`{action, actor_id, target_ids?}`,
+    삭제된 메시지(`deleted_at != null`) 는 None.
+    """
     message_id: str
     server_seq: int
     sender_id: Optional[str]
     type: str              # MessageType.value — "text" | "image" | "file" | "system"
-    content: Optional[str]  # 삭제된 메시지(`deleted_at != null`) 는 None
+    content: Any
     created_at: datetime
 
 
