@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Any, List, Optional
 from pydantic import BaseModel, ConfigDict, Field
 from datetime import datetime
 
@@ -102,7 +102,13 @@ class LastMessagePreviewResponse(BaseModel):
     server_seq: int = Field(..., description="방 내부 단조 시퀀스")
     sender_id: Optional[str] = Field(None, description="보낸 유저 ID (시스템 메시지면 null)")
     type: str = Field(..., description="메시지 종류 (text / image / file / system)")
-    content: Optional[str] = Field(None, description="미리보기 본문 (삭제된 메시지는 null)")
+    content: Optional[Any] = Field(
+        None,
+        description=(
+            "미리보기 본문 — type 에 따라 다름. text=str, image/file=dict, system=object, "
+            "삭제된 메시지는 null"
+        ),
+    )
     created_at: datetime = Field(..., description="보낸 시각")
 
 
