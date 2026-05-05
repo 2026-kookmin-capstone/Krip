@@ -27,3 +27,13 @@ class ProfileData:
 class ProfileImageData:
     """프로필 이미지 추가/수정 결과 DTO"""
     profile_image_url: str
+
+
+@dataclass
+class OtherUserProfileData:
+    """탐색 목록용 타 유저 프로필 DTO — 최소 공개 정보만."""
+    user_id: str
+    user_name: str
+    nationality: str
+    travel_styles: List[TravelStyle]
+    profile_image_url: Optional[str] = None

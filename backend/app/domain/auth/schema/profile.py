@@ -92,3 +92,38 @@ class ProfileImageResponse(BaseModel):
         description="저장된 프로필 이미지 URL",
         examples=["https://cdn.example.com/profile/abc.jpg"],
     )
+
+
+class OtherUserProfileResponse(BaseModel):
+    user_id: str = Field(
+        ...,
+        description="유저 고유 ID",
+        examples=["USER_1712345678_abc12345"],
+    )
+    user_name: str = Field(
+        ...,
+        description="사용자 이름",
+        examples=["조현상"],
+    )
+    nationality: str = Field(
+        ...,
+        description="국적",
+        examples=["korea"],
+    )
+    travel_styles: List[TravelStyle] = Field(
+        ...,
+        description="여행 스타일 목록",
+        examples=[["activity", "food"]],
+    )
+    profile_image_url: Optional[str] = Field(
+        None,
+        description="프로필 이미지 URL (없으면 null)",
+        examples=["https://cdn.example.com/profile/abc.jpg"],
+    )
+
+
+class OtherUserProfileListResponse(BaseModel):
+    users: List[OtherUserProfileResponse] = Field(
+        ...,
+        description="본인을 제외한 ACTIVE 유저 목록 (최신 가입순)",
+    )

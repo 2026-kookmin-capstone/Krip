@@ -3,7 +3,7 @@ from typing import BinaryIO
 from app.util.storage_prefix import profile_prefix
 from app.domain.auth.repository.user import UserRepository
 from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
-from app.domain.auth.dto.profile import ProfileData, ProfileImageData
+from app.domain.auth.dto.profile import ProfileData, ProfileImageData, OtherUserProfileData
 from app.domain.auth.service.exception import (
     ProfileNotRegisteredError,
     ProfileImageAlreadyExistsError,
@@ -21,6 +21,28 @@ class ProfileService:
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
         self.storage = get_object_storage()
+
+
+    @transactional
+    async def get_all_other_users(self, user_id: str) -> list[OtherUserProfileData]:
+        """본인을 제외한 ACTIVE 유저 목록 조회.
+
+        2차 회원가입 미완료(detail=None) 유저는 user_name 등 필수 필드가 없어 제외한다.
+        """
+        user_repo = UserRepository(self._session)
+        users = await user_repo.find_active_others_with_profile(user_id)
+
+        return [
+            OtherUserProfileData(
+                user_id=u.user_id,
+                user_name=u.detail.user_name,
+                nationality=u.detail.nationality,
+                travel_styles=[s.style for s in u.travel_styles],
+                profile_image_url=u.detail.profile_image_url,
+            )
+            for u in users
+            if u.detail is not None
+        ]
 
 
     @transactional
