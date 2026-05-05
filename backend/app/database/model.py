@@ -12,6 +12,6 @@ from app.domain.friend.model.user_block import UserBlock
 from app.domain.chat.model.chat_room import ChatRoom
 from app.domain.chat.model.chat_room_member import ChatRoomMember
 from app.domain.notification.model.fcm_token import FcmToken
-from app.domain.feed.model.feed_image import FeedImage
-from app.domain.feed.model.feed_image_like import FeedImageLike
-from app.domain.feed.model.feed_image_comment import FeedImageComment
+from app.domain.feed.model.feed_post import FeedPost
+from app.domain.feed.model.feed_post_like import FeedPostLike
+from app.domain.feed.model.feed_post_comment import FeedPostComment
