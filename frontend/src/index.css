@@ -144,3 +144,15 @@ textarea:focus-visible {
     transform: translate(-50%, 0) scale(1);
   }
 }
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(42px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

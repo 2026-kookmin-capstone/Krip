@@ -39,6 +39,8 @@ import {
   type RecommendationCandidate,
   type RecommendedTraveler,
 } from "../../utils/mateRecommendation";
+import NotificationBell from "../../components/NotificationBell";
+import FeedPopup from "../../components/FeedPopup";
 
 const COMPANION_FILTERS = ["all", "sole", "friend", "couple", "family"] as const;
 const COMPANION_OPTIONS: CompanionType[] = ["friend", "family", "couple", "sole"];
@@ -124,6 +126,7 @@ export default function MatePage() {
   const [friendStates, setFriendStates] = useState<Record<string, MateFriendState>>({});
   const [friendRequestingUserId, setFriendRequestingUserId] = useState<string | null>(null);
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
+  const [feedPopupUserId, setFeedPopupUserId] = useState<string | null>(null);
   const [chatOpeningPostId, setChatOpeningPostId] = useState<string | null>(null);
 
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
@@ -406,6 +409,8 @@ export default function MatePage() {
       deleteFriendSearchHistoryOne(term),
     ]);
     setSearchHistory((current) => current.filter((item) => item !== term));
+    setShowHistory(true);
+    searchRef.current?.focus();
   }
 
   async function handleClearSearchHistory(): Promise<void> {
@@ -698,13 +703,16 @@ export default function MatePage() {
               Meet people planning similar routes, dates, and travel styles around Seoul.
             </p>
           </div>
-          <button
-            type="button"
-            style={styles.headerButton}
-            onClick={() => handleTabChange(tab === "list" ? "write" : "list")}
-          >
-            {tab === "list" ? "Write Post" : "View Posts"}
-          </button>
+          <div style={styles.headerActions}>
+            <NotificationBell />
+            <button
+              type="button"
+              style={styles.headerButton}
+              onClick={() => handleTabChange(tab === "list" ? "write" : "list")}
+            >
+              {tab === "list" ? "Write Post" : "View Posts"}
+            </button>
+          </div>
         </header>
 
         <section style={styles.tabPanel}>
@@ -740,7 +748,7 @@ export default function MatePage() {
                       setShowHistory(true);
                       void loadSearchHistory();
                     }}
-                    onBlur={() => window.setTimeout(() => setShowHistory(false), 150)}
+                    onBlur={() => window.setTimeout(() => setShowHistory(false), 220)}
                     onKeyDown={(event) => {
                       if (event.key === "Enter") {
                         handleSearch(searchInput);
@@ -813,7 +821,11 @@ export default function MatePage() {
                         <button
                           type="button"
                           style={styles.iconButton}
-                          onMouseDown={() => void handleDeleteSearchHistory(term)}
+                          onMouseDown={(event) => {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            void handleDeleteSearchHistory(term);
+                          }}
                           aria-label={`Delete ${term}`}
                         >
                           x
@@ -858,6 +870,7 @@ export default function MatePage() {
                         }
                         onSendRequest={() => void handleSendSearchUserFriendRequest(user)}
                         onChat={() => void handleStartSearchUserChat(user)}
+                        onViewFeed={() => setFeedPopupUserId(user.user_id)}
                       />
                     ))}
                   </div>
@@ -1359,7 +1372,7 @@ export default function MatePage() {
             setSelectedPost(null);
           }}
           onViewProfile={() => {
-            navigate(`/profile/${selectedPost.user_id}`);
+            setFeedPopupUserId(selectedPost.user_id);
             setSelectedPost(null);
           }}
           onChat={() => {
@@ -1384,6 +1397,15 @@ export default function MatePage() {
             void handleSendRecommendedFriendRequest(selectedRecommendedTraveler)
           }
           onChat={() => void handleStartRecommendedChat(selectedRecommendedTraveler)}
+          onViewFeed={() => setFeedPopupUserId(selectedRecommendedTraveler.user_id)}
+        />
+      ) : null}
+
+      {feedPopupUserId ? (
+        <FeedPopup
+          key={feedPopupUserId}
+          userId={feedPopupUserId}
+          onClose={() => setFeedPopupUserId(null)}
         />
       ) : null}
 
@@ -1445,11 +1467,13 @@ function UserSearchCard({
   busy,
   onSendRequest,
   onChat,
+  onViewFeed,
 }: {
   user: FriendSearchUser;
   busy: boolean;
   onSendRequest: () => void;
   onChat: () => void;
+  onViewFeed: () => void;
 }) {
   const isFriend = user.friendship_status === "accepted";
   const hasPendingRequest = user.friendship_status === "pending";
@@ -1472,28 +1496,33 @@ function UserSearchCard({
           <span style={styles.userResultId}>{user.user_id}</span>
         </div>
       </div>
-      {isFriend ? (
-        <button type="button" style={styles.secondaryButton} onClick={onChat} disabled={busy}>
-          {busy ? "Opening..." : "Chat"}
+      <div style={styles.userResultActions}>
+        {isFriend ? (
+          <button type="button" style={styles.secondaryButton} onClick={onChat} disabled={busy}>
+            {busy ? "Opening..." : "Chat"}
+          </button>
+        ) : (
+          <button
+            type="button"
+            style={canSendRequest ? styles.primaryButton : styles.secondaryButton}
+            onClick={onSendRequest}
+            disabled={!canSendRequest || busy}
+          >
+            {busy
+              ? "Sending..."
+              : hasPendingRequest
+                ? user.is_requester
+                  ? "Request Sent"
+                  : "Pending"
+                : user.i_blocked_peer
+                  ? "Blocked"
+                  : "Add Friend"}
+          </button>
+        )}
+        <button type="button" style={styles.secondaryButton} onClick={onViewFeed}>
+          Feed
         </button>
-      ) : (
-        <button
-          type="button"
-          style={canSendRequest ? styles.primaryButton : styles.secondaryButton}
-          onClick={onSendRequest}
-          disabled={!canSendRequest || busy}
-        >
-          {busy
-            ? "Sending..."
-            : hasPendingRequest
-              ? user.is_requester
-                ? "Request Sent"
-                : "Pending"
-              : user.i_blocked_peer
-                ? "Blocked"
-                : "Add Friend"}
-        </button>
-      )}
+      </div>
     </div>
   );
 }
@@ -1506,6 +1535,7 @@ function RecommendedTravelerModal({
   onClose,
   onAddFriend,
   onChat,
+  onViewFeed,
 }: {
   traveler: RecommendedTraveler;
   friendRequested: boolean;
@@ -1514,6 +1544,7 @@ function RecommendedTravelerModal({
   onClose: () => void;
   onAddFriend: () => void;
   onChat: () => void;
+  onViewFeed: () => void;
 }) {
   const profileEntries = Object.entries(traveler).filter(
     ([key]) => key !== "similarity_score" && key !== "profile_image_url"
@@ -1577,6 +1608,9 @@ function RecommendedTravelerModal({
             disabled={isOpeningChat}
           >
             {isOpeningChat ? "Opening..." : "Chat"}
+          </button>
+          <button type="button" style={styles.secondaryButton} onClick={onViewFeed}>
+            Feed
           </button>
         </div>
       </div>
@@ -1690,7 +1724,7 @@ function PostModal({
               </button>
             ) : null}
             <button type="button" style={styles.secondaryButton} onClick={onViewProfile}>
-              View Profile
+              View Feed
             </button>
             {!isOwnPost ? (
               <button type="button" style={styles.secondaryButton} onClick={onChat}>
@@ -1883,6 +1917,12 @@ const styles: Record<string, CSSProperties> = {
     color: "var(--neutral-700)",
     fontSize: "0.95rem",
     lineHeight: 1.5,
+  },
+  headerActions: {
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    flexShrink: 0,
   },
   headerButton: {
     border: "1px solid rgba(5,181,187,0.2)",
@@ -2117,6 +2157,12 @@ const styles: Record<string, CSSProperties> = {
     gap: 12,
     minWidth: 0,
     flex: 1,
+  },
+  userResultActions: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "flex-end",
+    gap: 8,
   },
   userResultAvatar: {
     width: 48,
