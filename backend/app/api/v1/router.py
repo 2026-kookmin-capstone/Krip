@@ -8,6 +8,7 @@ from app.domain.friend.router import friend_router
 from app.domain.chat.router import chat_rest_router, chat_ws_router
 from app.domain.public.router import public_router
 from app.domain.notification.router import notification_router
+from app.domain.feed.router import feed_router
 
 
 api_router = APIRouter(prefix="/api")
@@ -21,3 +22,4 @@ api_router.include_router(chat_rest_router)
 api_router.include_router(chat_ws_router)
 api_router.include_router(public_router)
 api_router.include_router(notification_router)
+api_router.include_router(feed_router)
