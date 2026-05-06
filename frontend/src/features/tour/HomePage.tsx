@@ -16,6 +16,7 @@ import {
   type TourPlacesParams,
   type UserProfile,
 } from "../../api/auth/auth";
+import NotificationBell from "../../components/NotificationBell";
 
 const DEFAULT_LOCATION = { lat: 37.5665, lng: 126.978 };
 const DEFAULT_LOCATION_LABEL = "Central Seoul";
@@ -937,9 +938,12 @@ export default function HomePage() {
               Nearby places curated for {user.user_name}.
             </p>
           </div>
-          <button style={styles.logoutButton} onClick={handleLogout}>
-            Log Out
-          </button>
+          <div style={styles.headerActions}>
+            <NotificationBell />
+            <button style={styles.logoutButton} onClick={handleLogout}>
+              Log Out
+            </button>
+          </div>
         </header>
 
         <section style={styles.searchPanel}>
@@ -1354,6 +1358,7 @@ export default function HomePage() {
           </div>
         </div>
       ) : null}
+
     </div>
   );
 }
@@ -1489,6 +1494,42 @@ const styles: Record<string, CSSProperties> = {
     fontSize: "0.95rem",
     lineHeight: 1.5,
     color: "var(--neutral-700)",
+  },
+  headerActions: {
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    flexShrink: 0,
+  },
+  notificationButton: {
+    position: "relative",
+    width: 48,
+    height: 48,
+    border: "1px solid rgba(5,181,187,0.18)",
+    borderRadius: "50%",
+    display: "grid",
+    placeItems: "center",
+    background: "rgba(255,255,255,0.94)",
+    color: "var(--brand-primary-deep)",
+    boxShadow: "var(--shadow-soft)",
+    cursor: "pointer",
+  },
+  notificationBadge: {
+    position: "absolute",
+    top: -4,
+    right: -4,
+    minWidth: 20,
+    height: 20,
+    padding: "0 6px",
+    borderRadius: 999,
+    display: "grid",
+    placeItems: "center",
+    background: "#ef4444",
+    color: "#ffffff",
+    border: "2px solid rgba(255,255,255,0.96)",
+    fontSize: "0.64rem",
+    fontWeight: 900,
+    lineHeight: 1,
   },
   logoutButton: {
     border: "1px solid rgba(248,180,0,0.22)",
@@ -1941,6 +1982,141 @@ const styles: Record<string, CSSProperties> = {
     fontWeight: 800,
     fontSize: "1rem",
     cursor: "pointer",
+  },
+  notificationOverlay: {
+    position: "fixed",
+    inset: 0,
+    zIndex: 90,
+    background: "rgba(24,26,32,0.26)",
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  notificationPanel: {
+    width: "min(390px, 92vw)",
+    height: "100dvh",
+    padding: "22px 18px 28px",
+    background: "rgba(255,255,255,0.98)",
+    boxShadow: "-24px 0 54px rgba(24,26,32,0.18)",
+    borderLeft: "1px solid var(--border-soft)",
+    display: "flex",
+    flexDirection: "column",
+    gap: 16,
+    animation: "slideInFromRight 260ms cubic-bezier(0.22, 1, 0.36, 1)",
+  },
+  notificationHeader: {
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    gap: 14,
+  },
+  notificationTitle: {
+    margin: "4px 0 0",
+    color: "var(--text-primary)",
+    fontSize: "1.45rem",
+    lineHeight: 1.1,
+  },
+  notificationCloseButton: {
+    width: 38,
+    height: 38,
+    border: "1px solid rgba(5,181,187,0.16)",
+    borderRadius: "50%",
+    background: "rgba(255,255,255,0.9)",
+    color: "var(--text-secondary)",
+    fontWeight: 900,
+    cursor: "pointer",
+  },
+  notificationTabs: {
+    display: "grid",
+    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+    gap: 8,
+    padding: 6,
+    borderRadius: 18,
+    background: "var(--surface-muted)",
+  },
+  notificationTab: {
+    minHeight: 42,
+    border: "none",
+    borderRadius: 14,
+    background: "transparent",
+    color: "var(--neutral-700)",
+    fontWeight: 900,
+    cursor: "pointer",
+  },
+  notificationTabActive: {
+    background: "#ffffff",
+    color: "var(--text-primary)",
+    boxShadow: "0 8px 20px rgba(24,26,32,0.08)",
+  },
+  notificationTabBadge: {
+    display: "inline-grid",
+    placeItems: "center",
+    minWidth: 18,
+    height: 18,
+    marginLeft: 6,
+    padding: "0 5px",
+    borderRadius: 999,
+    background: "var(--brand-secondary)",
+    color: "var(--text-primary)",
+    fontSize: "0.68rem",
+  },
+  notificationList: {
+    minHeight: 0,
+    overflowY: "auto",
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+    paddingRight: 2,
+  },
+  notificationItem: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    gap: 12,
+    padding: 12,
+    border: "1px solid var(--border-soft)",
+    borderRadius: 18,
+    background: "rgba(255,255,255,0.9)",
+    color: "var(--text-primary)",
+    textAlign: "left",
+    cursor: "pointer",
+  },
+  notificationItemIcon: {
+    width: 42,
+    height: 42,
+    borderRadius: "50%",
+    display: "grid",
+    placeItems: "center",
+    flexShrink: 0,
+    background: "rgba(248,180,0,0.18)",
+    color: "var(--text-primary)",
+    fontWeight: 900,
+  },
+  notificationAvatar: {
+    width: 42,
+    height: 42,
+    borderRadius: "50%",
+    objectFit: "cover",
+    flexShrink: 0,
+  },
+  notificationItemText: {
+    minWidth: 0,
+    display: "flex",
+    flexDirection: "column",
+    gap: 3,
+    color: "var(--neutral-700)",
+    fontSize: "0.82rem",
+  },
+  notificationEmpty: {
+    minHeight: 180,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+    padding: 22,
+    borderRadius: 20,
+    background: "var(--surface-muted)",
+    textAlign: "center",
   },
   searchSheet: {
     width: "100%",

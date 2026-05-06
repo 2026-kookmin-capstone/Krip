@@ -21,6 +21,7 @@ import {
 } from "../../api/friend";
 import { useChat } from "./ChatProvider";
 import { reportChatNetworkError } from "../../utils/chatDiagnostics";
+import FeedPopup from "../../components/FeedPopup";
 
 type ChatTab = "chats" | "requests" | "friends";
 type LoadingKey = "received" | "sent" | "friends" | "blocks";
@@ -65,6 +66,7 @@ export default function ChatPage() {
   const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
   const [currentUserName, setCurrentUserName] = useState<string | null>(null);
+  const [feedPopupUserId, setFeedPopupUserId] = useState<string | null>(null);
 
   const pendingCount = receivedRequests.length + sentRequests.length;
   const displayNamesById = useMemo(() => {
@@ -430,6 +432,7 @@ export default function ChatPage() {
                       key={friend.friendship_id}
                       item={friend}
                       onChat={() => void handleOpenDirectChat(friend.peer.user_id)}
+                      onViewFeed={() => setFeedPopupUserId(friend.peer.user_id)}
                       onDelete={() => {
                         setActionId(`delete:${friend.friendship_id}`);
                         void runAction(
@@ -503,6 +506,14 @@ export default function ChatPage() {
             </div>
           </section>
         ) : null}
+
+        {feedPopupUserId ? (
+          <FeedPopup
+            key={feedPopupUserId}
+            userId={feedPopupUserId}
+            onClose={() => setFeedPopupUserId(null)}
+          />
+        ) : null}
       </div>
     </div>
   );
@@ -559,12 +570,14 @@ function RequestSection({
 function FriendCard({
   item,
   onChat,
+  onViewFeed,
   onDelete,
   onBlock,
   busy,
 }: {
   item: Friendship;
   onChat: () => void;
+  onViewFeed: () => void;
   onDelete: () => void;
   onBlock: () => void;
   busy: boolean;
@@ -575,6 +588,9 @@ function FriendCard({
       <div style={styles.actionRow}>
         <button type="button" style={styles.primaryButton} onClick={onChat}>
           Chat
+        </button>
+        <button type="button" style={styles.secondaryButton} onClick={onViewFeed}>
+          Feed
         </button>
         <button type="button" style={styles.secondaryButton} disabled={busy} onClick={onDelete}>
           Delete
