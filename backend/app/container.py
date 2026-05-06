@@ -30,6 +30,7 @@ from app.domain.chat.service.room import RoomService
 from app.domain.chat.service.session import SessionService
 from app.domain.notification.service.fcm import FcmService
 from app.domain.notification.service.mute import MuteService
+from app.domain.feed.service.feed_post import FeedPostService
 from app.database.session import UnitOfWork
 from app.config.setting import settings
 
@@ -108,3 +109,6 @@ class Container(containers.DeclarativeContainer):
     friend_detail_service = providers.Factory(FriendDetailService, uow=uow)
     friend_search_service = providers.Factory(FriendSearchService, uow=uow)
     friend_search_history_service = providers.Factory(FriendSearchHistoryService)
+
+    # 피드
+    feed_post_service = providers.Factory(FeedPostService, uow=uow)

@@ -22,10 +22,11 @@
       Pillow 기본 89MP 임계는 89~178MP 구간을 경고만 주고 통과시키므로 명시 cap 필요.
     - **포맷 화이트리스트 (#7)**: 라우터의 content-type 검증을 우회한 BMP/TIFF/GIF 등을 디코딩 가능 포맷이라도
       `_FORMAT_TO_CONTENT_TYPE` 의 3종이 아니면 거절. 거짓 content-type 헤더로 들어와도 차단.
-    - **Animation/GIF 거절은 라우터 책임**: Feed 는 정지 이미지 전용. 라우터가 **GIF 전체** 와
-      **animated WEBP/APNG** 를 거절한다고 가정. thumbnail.py 는 JPEG/PNG/WEBP 정지 이미지만 다루며,
-      라우터 계약 위반 시 multi-frame raw bytes vs first-frame thumbnail mismatch 발생 가능
-      (라우터 측 회귀 테스트로 보장).
+    - **Animation 거절 (#8)**: Feed 는 정지 이미지 전용. 라우터의 content-type 만으로는
+      animated WEBP / APNG 를 정지본과 구분할 수 없어 (둘 다 `image/webp` / `image/png`),
+      `_decode` 가 헤더 디코딩 직후 `is_animated` 로 차단. small/medium 은 first-frame JPEG
+      이고 original 은 raw bytes 보존 fast-path 가 있어 multi-frame 입력 시 표시 불일치 위험.
+      GIF 는 포맷 화이트리스트 (#7) 에서 별도로 거절.
     - **JPEG `optimize=False` (#5)**: 동기 업로드 흐름의 latency 절감 (Huffman 최적화 100~300ms vs 5~10% 절감).
       PNG 는 호출 빈도 낮고 무손실이라 `optimize=True` 유지.
     - **ICC 프로파일은 보존하지 않음 (#6)**: casual photo feed scope 외. Phase 2 에서 사진가 모드 도입 시 재검토.
@@ -151,6 +152,16 @@ def _decode(src_bytes: bytes) -> tuple[Image.Image, str, bool]:
                 if src_format not in _FORMAT_TO_CONTENT_TYPE:
                     logger.warning("미지원 이미지 포맷: {}", src_format)
                     raise ValueError("지원하지 않는 이미지 포맷입니다.")
+
+                # (#8) animated WEBP / APNG 차단. content-type 만으로 정지본과 구분 불가하므로
+                # 라우터에서 못 잡고 여기서 헤더 디코딩 직후 거절. JPEG / 정적 PNG 는 속성 자체가
+                # 없거나 False 라 `getattr` 기본값으로 안전 통과.
+                if getattr(img, "is_animated", False):
+                    logger.warning(
+                        "애니메이션 이미지 거절: format={}, n_frames={}",
+                        src_format, getattr(img, "n_frames", "?"),
+                    )
+                    raise ValueError("애니메이션 이미지는 업로드할 수 없습니다.")
 
                 # (#1) dimension 사전 차단 — header 의 width / height 만 읽어 거름.
                 # 픽셀 디코딩 (`load`) 전이라 봄 이미지의 메모리 할당 자체가 일어나지 않음.

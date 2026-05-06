@@ -79,6 +79,27 @@ class ObjectStorage:
         key = self._make_key(file_name, f"{_PREFIX_PERM}/{prefix}")
         return await asyncio.to_thread(self._upload, file, key, content_type)
 
+
+    async def upload_to_key(
+        self,
+        file: "BinaryIO | bytes",
+        *,
+        prefix: str,
+        filename: str,
+        content_type: str,
+    ) -> str:
+        """결정적 키 (`{_PREFIX_PERM}/{prefix}/{filename}`) 로 업로드 → URL 반환.
+
+        `upload_perm` 과 달리 자동 UUID 생성 없이 호출자가 지정한 filename 을 그대로 사용한다.
+        피드 다해상도 변형 (`small.jpg` / `medium.jpg` / `original.{ext}`) 처럼 같은 디렉터리
+        하위에 결정적 이름으로 묶어야 하는 케이스 전용.
+        """
+        key = f"{_PREFIX_PERM}/{prefix}/{filename}"
+        if isinstance(file, (bytes, bytearray)):
+            import io
+            file = io.BytesIO(file)
+        return await asyncio.to_thread(self._upload, file, key, content_type)
+
     # ──────────────────── 이동 (tmp → perm) ────────────────────
 
     async def move_to_perm(self, temp_url: str, *, prefix: str) -> str:
