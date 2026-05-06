@@ -1,0 +1,106 @@
+"""피드 게시물 좋아요 서비스.
+
+권한 정책:
+    - 모든 진입점 (`add_like` / `remove_like` / `get_liked_user_ids`) 이 게시물을 볼 수
+      있는지 먼저 검증 — `access.load_viewable_post`. 보이지 않는 글에 좋아요 시도 시 거절.
+    - 차단 관계 → 403 (FeedBlockedError)
+    - visibility 미충족 (PRIVATE / FRIENDS-only 비친구) → 404 (FeedNotFoundError)
+    - 본인 글에 본인이 좋아요는 허용 (인스타도 가능). 차단/visibility 모두 fast-path 통과.
+
+중복 / 미존재 정책:
+    - `add_like`: 이미 좋아요 → 400 (tripmate 패턴, idempotent 안 함)
+    - `remove_like`: 안 누른 상태 → 400
+
+동시성 (race) 정책:
+    - 같은 (user, post) 를 거의 동시에 두 번 클릭해 양쪽 모두 `find_by_user_and_post` 의
+      None 분기를 통과한 뒤 늦게 도착한 INSERT 가 composite PK 충돌로 `IntegrityError` 를
+      내는 케이스가 있다. 의미상 "이미 좋아요 누름" 과 동치 → 동일 메시지의 `ValueError`
+      로 일원화 (라우터 400). 클라이언트는 일반 중복 케이스와 같은 코드로 처리 가능.
+    - SQLAlchemy 의존성을 라우터로 누출시키지 않기 위해 본 모듈 (service) 에서 변환.
+      변환 직후 함수에서 빠져나오므로 같은 session 의 추가 쿼리 (PendingRollbackError 위험)
+      는 없고, `@transactional` 의 __aexit__ 가 rollback 실행 → 트랜잭션 정합 보장.
+
+응답: `(post_id, like_count)` — 클라이언트가 액션 직후 UI 즉시 갱신 가능.
+"""
+from sqlalchemy.exc import IntegrityError
+
+from app.domain.feed.service.access import load_viewable_post
+from app.domain.feed.repository.feed_post_like import FeedPostLikeRepository
+from app.domain.feed.model.feed_post_like import FeedPostLike
+from app.database.session import UnitOfWork, transactional
+from app.core.logger import get_logger
+
+
+logger = get_logger("feed.post.like.service")
+
+
+class FeedPostLikeService:
+    def __init__(self, uow: UnitOfWork):
+        self.uow = uow
+
+
+    # ──────────────────── 추가 ────────────────────
+
+    @transactional
+    async def add_like(self, user_id: str, post_id: str) -> int:
+        """좋아요 추가 — 게시물 가시성 검증 후 INSERT, 새 like_count 반환.
+
+        흐름:
+            1. `load_viewable_post` — 미존재/차단/visibility 검증
+            2. 중복 검사 (composite PK 로 빠른 lookup)
+            3. INSERT + count
+
+        race 처리: 거의 동시에 두 요청이 2번 분기를 통과 후 한 쪽이 INSERT 실패 →
+        composite PK 위반 `IntegrityError` 를 catch 해 동일 메시지의 `ValueError` 로
+        변환. 라우터의 `except ValueError` 가 그대로 400 매핑. 자세한 근거는 모듈 docstring.
+        """
+        post = await load_viewable_post(self._session, viewer_id=user_id, post_id=post_id)
+        like_repo = FeedPostLikeRepository(self._session)
+
+        existing = await like_repo.find_by_user_and_post(user_id, post.post_id)
+        if existing is not None:
+            raise ValueError("이미 좋아요를 누른 게시물입니다.")
+
+        try:
+            await like_repo.save(FeedPostLike(user_id=user_id, post_id=post.post_id))
+        except IntegrityError:
+            raise ValueError("이미 좋아요를 누른 게시물입니다.") from None
+        like_count = await like_repo.count_by_post(post.post_id)
+        logger.info("피드 좋아요 추가 (user_id={}, post_id={})", user_id, post.post_id)
+        return like_count
+
+
+    # ──────────────────── 취소 ────────────────────
+
+    @transactional
+    async def remove_like(self, user_id: str, post_id: str) -> int:
+        """좋아요 취소 — 게시물 가시성 검증 후 DELETE, 새 like_count 반환.
+
+        가시성 검증을 add 와 동일하게 수행 — 중간에 owner 가 visibility 를 PRIVATE 로 바꾸면
+        viewer 의 좋아요 취소 액션도 거절된다 (UX 자연스러움 vs 정합성 트레이드오프, 후자 채택).
+        """
+        post = await load_viewable_post(self._session, viewer_id=user_id, post_id=post_id)
+        like_repo = FeedPostLikeRepository(self._session)
+
+        existing = await like_repo.find_by_user_and_post(user_id, post.post_id)
+        if existing is None:
+            raise ValueError("좋아요를 누르지 않은 게시물입니다.")
+
+        await like_repo.delete_by_user_and_post(user_id, post.post_id)
+        like_count = await like_repo.count_by_post(post.post_id)
+        logger.info("피드 좋아요 취소 (user_id={}, post_id={})", user_id, post.post_id)
+        return like_count
+
+
+    # ──────────────────── 조회 ────────────────────
+
+    @transactional
+    async def get_liked_user_ids(self, viewer_id: str, post_id: str) -> list[str]:
+        """좋아요 누른 유저 ID 목록 — 게시물 가시성 검증 후 최신순 일괄 반환.
+
+        viewer 가 게시물을 볼 수 없으면 좋아요 목록도 못 본다 (transitive 가시성).
+        프로필 정보 (닉네임 / 이미지) 는 별도 batch 조회 endpoint 로 분리 — MVP 는 ID 만.
+        """
+        post = await load_viewable_post(self._session, viewer_id=viewer_id, post_id=post_id)
+        like_repo = FeedPostLikeRepository(self._session)
+        return await like_repo.find_user_ids_by_post(post.post_id)
