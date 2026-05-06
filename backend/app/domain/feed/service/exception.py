@@ -6,6 +6,7 @@ Router 가 HTTPException 으로 매핑 (도메인 컨벤션):
     FeedBlockedError                → 403  (PermissionError 하위 — 차단 관계 명시 위해 분리)
     FeedNotFoundError               → 404  (게시물 미존재 / visibility 미충족)
     FeedPostCommentNotFoundError    → 404  (댓글 미존재 / post 매칭 실패)
+    PopupTargetNotFoundError        → 404  (popup 대상 user 미존재 / 회원가입 미완료)
 """
 
 
@@ -32,4 +33,14 @@ class FeedPostCommentNotFoundError(ValueError):
     `FeedNotFoundError` 와 분리 (둘 다 ValueError 하위지만 의미 분기). 라우터가 명시적
     catch 하면 메시지/로깅에서 "게시물" / "댓글" 구분 가능. `delete_comment` 의 post_id
     mismatch 도 본 예외로 일원화 (enumeration 차단).
+    """
+
+
+class PopupTargetNotFoundError(ValueError):
+    """popup 대상 유저 미존재 — Router 에서 404 로 매핑.
+
+    `GET /feed/popup/{user_id}` 진입 시 user 자체가 없거나 (탈퇴 등), `user_detail_inform`
+    이 결손 (2차 회원가입 미완료) 인 경우 발생. user 존재/회원가입 상태가 노출되지 않도록
+    두 케이스 모두 본 예외 한 가지로 일원화 (`get_my_profile` 의 ProfileNotRegisteredError
+    와 별개 — popup 은 타 유저 진입점이라 enumeration 회피 우선).
     """

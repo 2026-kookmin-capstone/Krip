@@ -107,6 +107,7 @@ def create_app() -> FastAPI:
         "app.domain.feed.router.feed_user",
         "app.domain.feed.router.feed_post_like",
         "app.domain.feed.router.feed_post_comment",
+        "app.domain.feed.router.feed_popup",
     ])
 
 

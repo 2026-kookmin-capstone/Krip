@@ -33,6 +33,7 @@ from app.domain.notification.service.mute import MuteService
 from app.domain.feed.service.feed_post import FeedPostService
 from app.domain.feed.service.feed_post_like import FeedPostLikeService
 from app.domain.feed.service.feed_post_comment import FeedPostCommentService
+from app.domain.feed.service.feed_popup import FeedPopupService
 from app.database.session import UnitOfWork
 from app.config.setting import settings
 
@@ -116,3 +117,4 @@ class Container(containers.DeclarativeContainer):
     feed_post_service = providers.Factory(FeedPostService, uow=uow)
     feed_post_like_service = providers.Factory(FeedPostLikeService, uow=uow)
     feed_post_comment_service = providers.Factory(FeedPostCommentService, uow=uow)
+    feed_popup_service = providers.Factory(FeedPopupService, uow=uow)

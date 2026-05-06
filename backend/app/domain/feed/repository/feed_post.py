@@ -111,8 +111,9 @@ class FeedPostRepository:
         owner_id: str,
         visibilities: list[FeedVisibility],
         cursor: Optional[str] = None,
+        limit: int = PAGE_SIZE,
     ) -> list[FeedPostWithCounts]:
-        """소유자 + visibility 부분집합 조건으로 PAGE_SIZE 만큼 조회 + 카운트 합성.
+        """소유자 + visibility 부분집합 조건으로 limit 만큼 조회 + 카운트 합성.
 
         viewer 관계에 따라 service 가 `visibilities` 를 결정한다:
             - 본인     → [PRIVATE, FRIENDS, PUBLIC]
@@ -125,7 +126,10 @@ class FeedPostRepository:
         scalar_subquery 패턴 그대로 `created_at` 을 한 번 lookup 해 튜플 비교.
 
         좋아요/댓글 수: correlated scalar subquery 2개로 같은 SELECT 에 합성. PG 가 LIMIT
-        30 적용 후 30 row × 2 carry 만 평가 → 인덱스 scan 으로 처리. N+1 회피.
+        적용 후 row × 2 carry 만 평가 → 인덱스 scan 으로 처리. N+1 회피.
+
+        `limit` 은 default PAGE_SIZE (커서 페이지네이션 일반 케이스). popup 처럼 고정 N
+        개만 필요한 경우 호출측이 직접 지정 (예: 9 개).
         """
         if not visibilities:
             # 빈 list 면 IN ([]) 가 되어 쿼리 자체가 의미 없음. 즉시 빈 결과.
@@ -159,7 +163,7 @@ class FeedPostRepository:
 
         stmt = (
             stmt.order_by(FeedPost.created_at.desc(), FeedPost.post_id.desc())
-            .limit(PAGE_SIZE)
+            .limit(limit)
         )
         result = await self.session.execute(stmt)
         return [
