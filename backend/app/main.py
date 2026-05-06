@@ -104,6 +104,7 @@ def create_app() -> FastAPI:
         "app.domain.notification.router.fcm_token",
         "app.domain.notification.router.mute",
         "app.domain.feed.router.feed_post",
+        "app.domain.feed.router.feed_user",
     ])
 
 

@@ -19,7 +19,10 @@ cleanup 보장 — public 메서드의 wrapper try 가 commit 실패까지 catch
     - DB row 가 살아있는 채로 S3 가 먼저 사라지면 broken URL 노출
     - DB 가 먼저 지워지면 orphan S3 가 남을 수 있지만 사용자에겐 invisible
 
-가시성 / 친구·차단 합성 (다른 유저 피드 조회) 은 본 서비스 scope 밖 — M3 의 별도 메서드.
+가시성 / 친구·차단 합성 (다른 유저 피드 조회) — `get_user_feed` 가 진입점.
+viewer↔owner 차단은 `FeedBlockedError` 로 진입 자체 차단, 친구/비친구는 `visibility`
+부분집합으로 좁혀 단일 SQL 로 페이지네이션. 규칙은 `service/visibility.py::can_view`
+가 단일 진입점.
 """
 from typing import Optional
 import asyncio
@@ -27,10 +30,14 @@ import asyncio
 from app.util.id_generator import generate_feed_post_id
 from app.util.storage_prefix import feed_post_prefix
 from app.domain.feed.service.thumbnail import process_feed_image
-from app.domain.feed.service.exception import FeedNotFoundError
+from app.domain.feed.service.visibility import can_view
+from app.domain.feed.service.exception import FeedBlockedError, FeedNotFoundError
 from app.domain.feed.repository.feed_post import FeedPostRepository, PAGE_SIZE
 from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
 from app.domain.feed.dto.feed_post import FeedPostData, FeedPostListData
+from app.domain.friend.model.friendship import FriendshipStatus
+from app.domain.friend.repository.friendship import FriendshipRepository
+from app.domain.friend.repository.user_block import UserBlockRepository
 from app.database.session import UnitOfWork, transactional
 from app.core.object_storage import get_object_storage
 from app.core.logger import get_logger
@@ -191,6 +198,82 @@ class FeedPostService:
         """본인 게시물 단건 조회 — 권한 검증 포함 (다른 유저 게시물 조회는 M3)."""
         post = await self._load_owned_post(user_id, post_id)
         return self._to_dto(post)
+
+
+    @transactional
+    async def get_user_feed(
+        self,
+        viewer_id: str,
+        owner_id: str,
+        cursor: Optional[str] = None,
+    ) -> FeedPostListData:
+        """다른 유저 피드 — 친구/차단/visibility 합성.
+
+        흐름:
+            1. viewer 의 owner 피드 접근 권한 + 노출 visibility 부분집합 결정
+               (본인/친구/비친구/차단 4 케이스 → `_resolve_viewer_visibilities`)
+            2. visibility 부분집합으로 컴파운드 인덱스 IN-scan + 커서 페이지네이션
+
+        viewer == owner 면 본인 피드와 동일한 결과 (모든 visibility) — 프론트가 단일
+        엔드포인트로 본인/타인 분기 없이 호출 가능. 차단 관계면 `FeedBlockedError`
+        (라우터에서 403). 응답의 `visibility` 는 service 가 이미 PRIVATE 을 필터링했으므로
+        타 유저 케이스에서 FRIENDS / PUBLIC 만 노출 — 라우터 docstring 에 명시.
+        """
+        visibilities = await self._resolve_viewer_visibilities(viewer_id, owner_id)
+        repo = FeedPostRepository(self._session)
+        posts = await repo.find_by_owner(
+            owner_id=owner_id,
+            visibilities=visibilities,
+            cursor=cursor,
+        )
+        next_cursor = posts[-1].post_id if len(posts) == PAGE_SIZE else None
+        return FeedPostListData(
+            posts=[self._to_dto(p) for p in posts],
+            next_cursor=next_cursor,
+        )
+
+
+    async def _resolve_viewer_visibilities(
+        self,
+        viewer_id: str,
+        owner_id: str,
+    ) -> list[FeedVisibility]:
+        """viewer 가 owner 피드에서 볼 수 있는 visibility 부분집합 결정.
+
+        규칙은 `visibility.py::can_view` 가 단일 진입점 — 본 메서드는 enum 에 대해 iterate
+        해 부분집합을 만든다. 새 visibility 값이 추가되어도 can_view 만 수정하면 자동 반영.
+
+        본인 fast-path: 차단/친구 조회 없이 모든 visibility 반환 (DB hit 2건 절약).
+
+        raises:
+            FeedBlockedError: 양방향 차단 어느 쪽이든 존재 시. 빈 목록 대신 명시적 에러로
+                              "친구 추가/피드 보기 진입 자체 차단" UX 를 보장 (plan §5.2).
+        """
+        if viewer_id == owner_id:
+            return list(FeedVisibility)
+
+        block_repo = UserBlockRepository(self._session)
+        friend_repo = FriendshipRepository(self._session)
+
+        blocks = await block_repo.find_blocks_between(viewer_id, owner_id)
+        if blocks:
+            raise FeedBlockedError("차단 관계인 유저의 피드에 접근할 수 없습니다.")
+
+        friendship = await friend_repo.find_between(viewer_id, owner_id)
+        is_friend = (
+            friendship is not None and friendship.status == FriendshipStatus.ACCEPTED
+        )
+
+        return [
+            v for v in FeedVisibility
+            if can_view(
+                viewer_id=viewer_id,
+                owner_id=owner_id,
+                image_visibility=v,
+                is_friend=is_friend,
+                is_blocked_either_way=False,  # 위에서 이미 거절됨 — 여기 도달 시 항상 False
+            )
+        ]
 
 
     # ──────────────────── 변경 ────────────────────
