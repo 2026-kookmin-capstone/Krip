@@ -18,9 +18,22 @@ import pytest
 from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
 from app.domain.feed.service.exception import FeedNotFoundError
 
+from test.unit.domain.feed.mock_factory import make_feed_post_with_counts
 
-def _mk_post(post_id="FDP_x", user_id="USER_owner", visibility=FeedVisibility.PUBLIC, caption="hi"):
-    """SQLAlchemy 모델 인스턴스 — 실제 DB 저장 없이 MagicMock 으로 attribute 만 채움."""
+
+def _mk_row(
+    post_id="FDP_x",
+    user_id="USER_owner",
+    visibility=FeedVisibility.PUBLIC,
+    caption="hi",
+    *,
+    like_count=0,
+    comment_count=0,
+):
+    """`FeedPostWithCounts(post, like_count, comment_count)` 합성 — repo 의 단일 SELECT
+    결과를 시뮬레이션. 테스트가 `row.post.x = ...` 로 mutate 검증할 수 있도록 frozen=True
+    의 row 안에 mutable spec=FeedPost MagicMock 을 넣는다.
+    """
     post = MagicMock(spec=FeedPost)
     post.post_id = post_id
     post.user_id = user_id
@@ -31,7 +44,9 @@ def _mk_post(post_id="FDP_x", user_id="USER_owner", visibility=FeedVisibility.PU
     post.thumbnail_medium_url = "https://x/m.jpg"
     post.created_at = datetime.now(timezone.utc)
     post.updated_at = datetime.now(timezone.utc)
-    return post
+    return make_feed_post_with_counts(
+        post, like_count=like_count, comment_count=comment_count,
+    )
 
 
 # ──────────────────── 미존재 / 권한 거부 ────────────────────
@@ -44,7 +59,7 @@ class TestLoadOwnedPostMissingOrForbidden:
             await service.get_my_post(user_id="USER_a", post_id="FDP_missing")
 
     async def test_get_my_post_other_owner_raises_permission(self, service, repo_mock):
-        repo_mock.find_by_post_id.return_value = _mk_post(user_id="USER_owner")
+        repo_mock.find_by_post_id.return_value = _mk_row(user_id="USER_owner")
         with pytest.raises(PermissionError):
             await service.get_my_post(user_id="USER_intruder", post_id="FDP_x")
 
@@ -56,21 +71,21 @@ class TestLoadOwnedPostMissingOrForbidden:
             )
 
     async def test_update_visibility_other_owner_raises_permission(self, service, repo_mock):
-        repo_mock.find_by_post_id.return_value = _mk_post(user_id="USER_owner")
+        repo_mock.find_by_post_id.return_value = _mk_row(user_id="USER_owner")
         with pytest.raises(PermissionError):
             await service.update_visibility(
                 user_id="USER_intruder", post_id="FDP_x", visibility=FeedVisibility.PRIVATE,
             )
 
     async def test_update_caption_other_owner_raises_permission(self, service, repo_mock):
-        repo_mock.find_by_post_id.return_value = _mk_post(user_id="USER_owner")
+        repo_mock.find_by_post_id.return_value = _mk_row(user_id="USER_owner")
         with pytest.raises(PermissionError):
             await service.update_caption(
                 user_id="USER_intruder", post_id="FDP_x", caption="nope",
             )
 
     async def test_delete_post_other_owner_raises_permission(self, service, repo_mock, storage_mock):
-        repo_mock.find_by_post_id.return_value = _mk_post(user_id="USER_owner")
+        repo_mock.find_by_post_id.return_value = _mk_row(user_id="USER_owner")
         with pytest.raises(PermissionError):
             await service.delete_post(user_id="USER_intruder", post_id="FDP_x")
         # 권한 거부면 storage 호출도 일어나면 안 됨 — 인가 검증 회귀 가드.
@@ -82,43 +97,54 @@ class TestLoadOwnedPostMissingOrForbidden:
 @pytest.mark.unit
 class TestUpdateVisibilitySuccess:
     async def test_owner_can_change_visibility(self, service, repo_mock):
-        post = _mk_post(user_id="USER_owner", visibility=FeedVisibility.PUBLIC)
-        repo_mock.find_by_post_id.return_value = post
+        row = _mk_row(user_id="USER_owner", visibility=FeedVisibility.PUBLIC)
+        repo_mock.find_by_post_id.return_value = row
 
         result = await service.update_visibility(
             user_id="USER_owner", post_id="FDP_x", visibility=FeedVisibility.FRIENDS,
         )
         assert result.visibility == FeedVisibility.FRIENDS
-        # post 객체에도 mutate 적용 (다음 조회/캐시 일관성)
-        assert post.visibility == FeedVisibility.FRIENDS
+        # row.post 객체에도 mutate 적용 (다음 조회/캐시 일관성)
+        assert row.post.visibility == FeedVisibility.FRIENDS
+
+    async def test_visibility_change_preserves_counts(self, service, repo_mock):
+        """visibility 수정은 좋아요/댓글 수에 무관 — row 의 카운트 그대로 응답."""
+        row = _mk_row(user_id="USER_owner", like_count=7, comment_count=3)
+        repo_mock.find_by_post_id.return_value = row
+
+        result = await service.update_visibility(
+            user_id="USER_owner", post_id="FDP_x", visibility=FeedVisibility.PRIVATE,
+        )
+        assert result.like_count == 7
+        assert result.comment_count == 3
 
 
 @pytest.mark.unit
 class TestUpdateCaptionSuccess:
     async def test_owner_can_set_non_empty_caption(self, service, repo_mock):
-        post = _mk_post(user_id="USER_owner", caption=None)
-        repo_mock.find_by_post_id.return_value = post
+        row = _mk_row(user_id="USER_owner", caption=None)
+        repo_mock.find_by_post_id.return_value = row
 
         result = await service.update_caption(
             user_id="USER_owner", post_id="FDP_x", caption="새 캡션",
         )
         assert result.caption == "새 캡션"
-        assert post.caption == "새 캡션"
+        assert row.post.caption == "새 캡션"
 
     async def test_owner_can_clear_with_empty_string(self, service, repo_mock):
         """빈 문자열 → 정규화 → None 으로 저장 (PATCH 와 POST 동일 규칙)."""
-        post = _mk_post(user_id="USER_owner", caption="이전 캡션")
-        repo_mock.find_by_post_id.return_value = post
+        row = _mk_row(user_id="USER_owner", caption="이전 캡션")
+        repo_mock.find_by_post_id.return_value = row
 
         result = await service.update_caption(
             user_id="USER_owner", post_id="FDP_x", caption="",
         )
         assert result.caption is None
-        assert post.caption is None
+        assert row.post.caption is None
 
     async def test_owner_can_clear_with_whitespace(self, service, repo_mock):
-        post = _mk_post(user_id="USER_owner", caption="이전")
-        repo_mock.find_by_post_id.return_value = post
+        row = _mk_row(user_id="USER_owner", caption="이전")
+        repo_mock.find_by_post_id.return_value = row
 
         result = await service.update_caption(
             user_id="USER_owner", post_id="FDP_x", caption="   \n\t  ",
@@ -132,19 +158,19 @@ class TestUpdateCaptionSuccess:
 class TestDeletePost:
     async def test_owner_delete_calls_db_then_storage(self, service, repo_mock, storage_mock):
         """auth/profile 패턴: DB row 삭제 후 S3 prefix 정리 (best-effort)."""
-        post = _mk_post(user_id="USER_owner", post_id="FDP_x")
-        repo_mock.find_by_post_id.return_value = post
+        row = _mk_row(user_id="USER_owner", post_id="FDP_x")
+        repo_mock.find_by_post_id.return_value = row
 
         await service.delete_post(user_id="USER_owner", post_id="FDP_x")
 
-        repo_mock.delete.assert_awaited_once_with(post)
+        repo_mock.delete.assert_awaited_once_with(row.post)
         # prefix 는 `{user_id}/feed/{post_id}` 형식
         storage_mock.delete_by_prefix.assert_awaited_once_with("USER_owner/feed/FDP_x")
 
     async def test_storage_failure_is_swallowed(self, service, repo_mock, storage_mock):
         """S3 삭제 실패해도 사용자 작업은 성공 (orphan 만 남음). best-effort 보장 회귀."""
-        post = _mk_post(user_id="USER_owner", post_id="FDP_x")
-        repo_mock.find_by_post_id.return_value = post
+        row = _mk_row(user_id="USER_owner", post_id="FDP_x")
+        repo_mock.find_by_post_id.return_value = row
         storage_mock.delete_by_prefix.side_effect = RuntimeError("S3 down")
 
         # raise 되지 않아야 함
@@ -176,11 +202,11 @@ class TestGetMyFeed:
     async def test_next_cursor_is_last_post_id_when_full_page(
         self, service, repo_mock, monkeypatch,
     ):
-        """PAGE_SIZE 만큼 차면 next_cursor = 마지막 row 의 post_id."""
+        """PAGE_SIZE 만큼 차면 next_cursor = 마지막 row.post.post_id."""
         # PAGE_SIZE 를 작게 패치해 fixture 로 가짜 row N개로 충족.
         monkeypatch.setattr("app.domain.feed.service.feed_post.PAGE_SIZE", 2)
-        posts = [_mk_post(post_id=f"FDP_{i}", user_id="USER_a") for i in range(2)]
-        repo_mock.find_by_owner.return_value = posts
+        rows = [_mk_row(post_id=f"FDP_{i}", user_id="USER_a") for i in range(2)]
+        repo_mock.find_by_owner.return_value = rows
 
         result = await service.get_my_feed(user_id="USER_a", cursor=None)
         assert result.next_cursor == "FDP_1"
@@ -189,8 +215,20 @@ class TestGetMyFeed:
         self, service, repo_mock, monkeypatch,
     ):
         monkeypatch.setattr("app.domain.feed.service.feed_post.PAGE_SIZE", 5)
-        posts = [_mk_post(post_id=f"FDP_{i}", user_id="USER_a") for i in range(3)]
-        repo_mock.find_by_owner.return_value = posts
+        rows = [_mk_row(post_id=f"FDP_{i}", user_id="USER_a") for i in range(3)]
+        repo_mock.find_by_owner.return_value = rows
 
         result = await service.get_my_feed(user_id="USER_a", cursor=None)
         assert result.next_cursor is None
+
+    async def test_response_includes_like_and_comment_counts(self, service, repo_mock):
+        """list 응답의 각 DTO 가 row 의 카운트를 정확 매핑."""
+        repo_mock.find_by_owner.return_value = [
+            _mk_row(post_id="FDP_a", like_count=10, comment_count=2),
+            _mk_row(post_id="FDP_b", like_count=0, comment_count=5),
+        ]
+        result = await service.get_my_feed(user_id="USER_a")
+        assert result.posts[0].like_count == 10
+        assert result.posts[0].comment_count == 2
+        assert result.posts[1].like_count == 0
+        assert result.posts[1].comment_count == 5

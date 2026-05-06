@@ -44,19 +44,24 @@ def service(
 ):
     """FeedPostRepository / ObjectStorage / Friendship / UserBlock 모두 mock 주입.
 
-    `_resolve_viewer_visibilities` 가 `FriendshipRepository(self._session)` /
-    `UserBlockRepository(self._session)` 를 직접 인스턴스화하므로 양쪽 모두 monkeypatch.
+    Friendship / UserBlock repo 의 인스턴스화는 `service/access.py` 의 free function
+    안에서 일어나므로 그쪽 경로를 monkeypatch (feed_post.py 가 아닌 access.py).
+    FeedPostRepository 는 access 와 service 양쪽 모두에서 인스턴스화 → 두 경로 다 패치.
     """
     monkeypatch.setattr(
         "app.domain.feed.service.feed_post.FeedPostRepository",
         lambda session: repo_mock,
     )
     monkeypatch.setattr(
-        "app.domain.feed.service.feed_post.FriendshipRepository",
+        "app.domain.feed.service.access.FeedPostRepository",
+        lambda session: repo_mock,
+    )
+    monkeypatch.setattr(
+        "app.domain.feed.service.access.FriendshipRepository",
         lambda session: friendship_repo_mock,
     )
     monkeypatch.setattr(
-        "app.domain.feed.service.feed_post.UserBlockRepository",
+        "app.domain.feed.service.access.UserBlockRepository",
         lambda session: block_repo_mock,
     )
     monkeypatch.setattr(

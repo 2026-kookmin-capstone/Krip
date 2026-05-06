@@ -1,9 +1,19 @@
 """feed 도메인 단위 테스트 공용 Mock 팩토리.
 
 `@transactional` 의 `async with self.uow as session:` 패턴을 충족하는 FakeUnitOfWork +
-FeedPostRepository / ObjectStorage 의 AsyncMock 을 한 곳에서 만든다.
+FeedPostRepository / ObjectStorage 의 AsyncMock + 도메인 모델의 spec'd MagicMock 을 한 곳
+에서 만든다. 테스트 파일이 직접 conftest 에서 helper 를 import 하지 않도록 cross-test
+재사용 가능한 helper 는 모두 본 모듈에 모은다.
 """
+from typing import Optional
+from datetime import datetime, timezone
 from unittest.mock import AsyncMock, MagicMock
+
+from app.domain.auth.model.user import User
+from app.domain.auth.model.user_detail_inform import UserDetailInform
+from app.domain.feed.model.feed_post_comment import FeedPostComment
+from app.domain.feed.model.feed_post_like import FeedPostLike
+from app.domain.feed.dto.feed_post import FeedPostWithCounts
 
 
 class FakeUnitOfWork:
@@ -57,3 +67,94 @@ def make_user_block_repo_mock() -> AsyncMock:
     mock = AsyncMock()
     mock.find_blocks_between.return_value = []  # 기본: 차단 없음
     return mock
+
+
+# ──────────────────── 모델 인스턴스 helper ────────────────────
+
+def make_feed_post_with_counts(
+    post,
+    *,
+    like_count: int = 0,
+    comment_count: int = 0,
+) -> FeedPostWithCounts:
+    """`FeedPostWithCounts(post, like_count, comment_count)` 합성 helper.
+
+    repo (`find_by_post_id` / `find_by_owner`) 가 반환하는 row 형태를 테스트에서 합성할 때
+    사용. spec=FeedPost 같은 mock post 를 넣고 카운트만 지정.
+    """
+    return FeedPostWithCounts(
+        post=post, like_count=like_count, comment_count=comment_count,
+    )
+
+
+def make_feed_post_like_mock(
+    *,
+    user_id: str = "USER_a",
+    post_id: str = "FDP_x",
+    user_name: str = "Alice",
+    profile_image_url: Optional[str] = None,
+    detail_present: bool = True,
+) -> MagicMock:
+    """`FeedPostLike` (with joinedload `user.detail`) spec'd MagicMock.
+
+    `find_with_user_by_post` 의 단일 JOIN 결과 한 row 를 시뮬레이션 — service 의
+    `_to_liked_user_dto` 가 `like.user.detail` 체이닝을 정확히 매핑하는지 검증할 때 사용.
+
+    `detail_present=False` 로 회원가입 미완료 (detail 결손) 케이스 fallback 도 표현 가능.
+    """
+    like = MagicMock(spec=FeedPostLike)
+    like.user_id = user_id
+    like.post_id = post_id
+    like.created_at = datetime.now(timezone.utc)
+
+    user = MagicMock(spec=User)
+    user.user_id = user_id
+    if detail_present:
+        detail = MagicMock(spec=UserDetailInform)
+        detail.user_id = user_id
+        detail.user_name = user_name
+        detail.profile_image_url = profile_image_url
+        user.detail = detail
+    else:
+        user.detail = None
+    like.user = user
+    return like
+
+
+def make_feed_post_comment_mock(
+    *,
+    comment_id: str = "FDC_x",
+    post_id: str = "FDP_x",
+    user_id: str = "USER_author",
+    content: str = "hi",
+    user_name: str = "Alice",
+    profile_image_url: Optional[str] = None,
+    detail_present: bool = True,
+) -> MagicMock:
+    """`FeedPostComment` (with joinedload `user.detail`) spec'd MagicMock.
+
+    `find_by_id` / `find_by_post` 의 단일 JOIN 결과 한 row 시뮬레이션 — service 의
+    `_to_dto` 가 `comment.user.detail` 체이닝을 정확히 매핑하는지 검증할 때 사용.
+    `make_feed_post_like_mock` 와 동일 패턴 (좋아요/댓글 mock 일관).
+
+    `detail_present=False` 로 회원가입 미완료 (detail 결손) 케이스 fallback 표현 가능.
+    """
+    c = MagicMock(spec=FeedPostComment)
+    c.comment_id = comment_id
+    c.post_id = post_id
+    c.user_id = user_id
+    c.content = content
+    c.created_at = c.updated_at = datetime.now(timezone.utc)
+
+    user = MagicMock(spec=User)
+    user.user_id = user_id
+    if detail_present:
+        detail = MagicMock(spec=UserDetailInform)
+        detail.user_id = user_id
+        detail.user_name = user_name
+        detail.profile_image_url = profile_image_url
+        user.detail = detail
+    else:
+        user.detail = None
+    c.user = user
+    return c

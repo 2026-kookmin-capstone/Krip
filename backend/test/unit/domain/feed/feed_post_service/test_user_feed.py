@@ -17,8 +17,18 @@ from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
 from app.domain.feed.service.exception import FeedBlockedError
 from app.domain.friend.model.friendship import FriendshipStatus
 
+from test.unit.domain.feed.mock_factory import make_feed_post_with_counts
 
-def _mk_post(post_id="FDP_x", user_id="USER_owner", visibility=FeedVisibility.PUBLIC):
+
+def _mk_row(
+    post_id="FDP_x",
+    user_id="USER_owner",
+    visibility=FeedVisibility.PUBLIC,
+    *,
+    like_count=0,
+    comment_count=0,
+):
+    """`FeedPostWithCounts` 합성 — repo (`find_by_owner`) 의 단일 SELECT row 형태."""
     post = MagicMock(spec=FeedPost)
     post.post_id = post_id
     post.user_id = user_id
@@ -29,7 +39,9 @@ def _mk_post(post_id="FDP_x", user_id="USER_owner", visibility=FeedVisibility.PU
     post.thumbnail_medium_url = "https://x/m.jpg"
     post.created_at = datetime.now(timezone.utc)
     post.updated_at = datetime.now(timezone.utc)
-    return post
+    return make_feed_post_with_counts(
+        post, like_count=like_count, comment_count=comment_count,
+    )
 
 
 def _accepted_friendship() -> SimpleNamespace:
@@ -124,8 +136,8 @@ class TestPagination:
         block_repo_mock.find_blocks_between.return_value = []
         friendship_repo_mock.find_between.return_value = None
         repo_mock.find_by_owner.return_value = [
-            _mk_post(post_id="FDP_0"),
-            _mk_post(post_id="FDP_1"),
+            _mk_row(post_id="FDP_0"),
+            _mk_row(post_id="FDP_1"),
         ]
 
         result = await service.get_user_feed(viewer_id="USER_a", owner_id="USER_b")
@@ -137,7 +149,7 @@ class TestPagination:
         monkeypatch.setattr("app.domain.feed.service.feed_post.PAGE_SIZE", 5)
         block_repo_mock.find_blocks_between.return_value = []
         friendship_repo_mock.find_between.return_value = None
-        repo_mock.find_by_owner.return_value = [_mk_post(post_id=f"FDP_{i}") for i in range(3)]
+        repo_mock.find_by_owner.return_value = [_mk_row(post_id=f"FDP_{i}") for i in range(3)]
 
         result = await service.get_user_feed(viewer_id="USER_a", owner_id="USER_b")
         assert result.next_cursor is None

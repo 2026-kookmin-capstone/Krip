@@ -71,6 +71,18 @@ class TestUploadCaptionNormalization:
         )
         assert result.caption == "안녕"
 
+    async def test_new_post_has_zero_counts(
+        self, service, repo_mock, storage_mock, stub_thumbnail,
+    ):
+        """신규 업로드 직후엔 좋아요/댓글 항상 0 — service 가 reload 없이 0 으로 합성."""
+        storage_mock.upload_to_key.return_value = "https://x/url"
+        result = await service.upload_post(
+            user_id="USER_a", file_bytes=b"x",
+            visibility=FeedVisibility.PUBLIC, caption="hi",
+        )
+        assert result.like_count == 0
+        assert result.comment_count == 0
+
 
 @pytest.mark.unit
 class TestUploadCleanupOnFailure:

@@ -63,6 +63,8 @@ class TestFeedPostResponse:
             "original_url": "https://x/o.jpg",
             "thumbnail_small_url": "https://x/s.jpg",
             "thumbnail_medium_url": "https://x/m.jpg",
+            "like_count": 0,
+            "comment_count": 0,
             "created_at": datetime.now(timezone.utc),
             "updated_at": datetime.now(timezone.utc),
         }
@@ -72,10 +74,17 @@ class TestFeedPostResponse:
     def test_full_payload_validates(self):
         FeedPostResponse(**self._payload())
 
+    def test_counts_are_serialized(self):
+        """카운트 필드가 응답에 정확히 노출되는지 — 새 필드 회귀 가드."""
+        resp = FeedPostResponse(**self._payload(like_count=42, comment_count=7))
+        assert resp.like_count == 42
+        assert resp.comment_count == 7
+
     @pytest.mark.parametrize(
         "missing_field",
         ["post_id", "user_id", "visibility",
          "original_url", "thumbnail_small_url", "thumbnail_medium_url",
+         "like_count", "comment_count",
          "created_at", "updated_at"],
     )
     def test_missing_required_field_raises(self, missing_field):
