@@ -11,6 +11,7 @@ from unittest.mock import AsyncMock, MagicMock
 
 from app.domain.auth.model.user import User
 from app.domain.auth.model.user_detail_inform import UserDetailInform
+from app.domain.auth.model.user_travel_style import TravelStyle, UserTravelStyle
 from app.domain.feed.model.feed_post_comment import FeedPostComment
 from app.domain.feed.model.feed_post_like import FeedPostLike
 from app.domain.feed.dto.feed_post import FeedPostWithCounts
@@ -158,3 +159,47 @@ def make_feed_post_comment_mock(
         user.detail = None
     c.user = user
     return c
+
+
+def make_user_with_profile_mock(
+    *,
+    user_id: str = "USER_owner",
+    user_name: str = "조현상",
+    nationality: str = "korea",
+    travel_styles: Optional[list[TravelStyle]] = None,
+    profile_image_url: Optional[str] = "https://x/p.jpg",
+    detail_present: bool = True,
+) -> MagicMock:
+    """`User` + `detail` + `travel_styles` 한 묶음의 spec'd MagicMock.
+
+    `UserRepository.find_by_id_with_profile` 의 단일 SELECT (joinedload detail +
+    travel_styles) 결과를 시뮬레이션 — popup service 의 `user.detail.user_name` /
+    `[s.style for s in user.travel_styles]` 체이닝 매핑을 검증할 때 사용.
+
+    `detail_present=False` 로 회원가입 미완료 (detail 결손) 케이스 표현 가능.
+    `travel_styles=None` (default) → `[ACTIVITY]` 1건 (특별한 의미 없는 baseline).
+    """
+    user = MagicMock(spec=User)
+    user.user_id = user_id
+
+    if detail_present:
+        detail = MagicMock(spec=UserDetailInform)
+        detail.user_id = user_id
+        detail.user_name = user_name
+        detail.nationality = nationality
+        detail.profile_image_url = profile_image_url
+        user.detail = detail
+    else:
+        user.detail = None
+
+    styles = travel_styles if travel_styles is not None else [TravelStyle.ACTIVITY]
+    user.travel_styles = [_mk_travel_style(user_id=user_id, style=s) for s in styles]
+    return user
+
+
+def _mk_travel_style(*, user_id: str, style: TravelStyle) -> MagicMock:
+    """internal — `UserTravelStyle` row mock. `make_user_with_profile_mock` 전용."""
+    s = MagicMock(spec=UserTravelStyle)
+    s.user_id = user_id
+    s.style = style
+    return s
