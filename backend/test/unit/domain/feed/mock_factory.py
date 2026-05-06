@@ -43,3 +43,17 @@ def make_object_storage_mock() -> MagicMock:
     storage.upload_to_key = AsyncMock()
     storage.delete_by_prefix = AsyncMock()
     return storage
+
+
+def make_friendship_repo_mock() -> AsyncMock:
+    """FriendshipRepository — `_resolve_viewer_visibilities` 가 `find_between` 만 사용."""
+    mock = AsyncMock()
+    mock.find_between.return_value = None  # 기본: 관계 없음
+    return mock
+
+
+def make_user_block_repo_mock() -> AsyncMock:
+    """UserBlockRepository — `_resolve_viewer_visibilities` 가 `find_blocks_between` 만 사용."""
+    mock = AsyncMock()
+    mock.find_blocks_between.return_value = []  # 기본: 차단 없음
+    return mock
