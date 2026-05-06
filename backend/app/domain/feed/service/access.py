@@ -87,9 +87,13 @@ async def load_viewable_post(
         FeedNotFoundError, FeedBlockedError
     """
     repo = FeedPostRepository(session)
-    post = await repo.find_by_post_id(post_id)
-    if post is None:
+    row = await repo.find_by_post_id(post_id)
+    if row is None:
         raise FeedNotFoundError("존재하지 않는 게시물입니다.")
+
+    # 좋아요/댓글 access 검증은 카운트 무관 — `.post` 만 unwrap (메서드 분화 회피로 카운트
+    # subquery 오버헤드 ~0.5ms 감수).
+    post = row.post
 
     # 본인 fast-path — 모든 visibility 접근 가능 (차단/친구 조회 skip).
     if post.user_id == viewer_id:

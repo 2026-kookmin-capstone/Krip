@@ -211,6 +211,8 @@ def _to_response(post: FeedPostData) -> FeedPostResponse:
         original_url=post.original_url,
         thumbnail_small_url=post.thumbnail_small_url,
         thumbnail_medium_url=post.thumbnail_medium_url,
+        like_count=post.like_count,
+        comment_count=post.comment_count,
         created_at=post.created_at,
         updated_at=post.updated_at,
     )

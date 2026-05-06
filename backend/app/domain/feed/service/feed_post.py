@@ -35,7 +35,11 @@ from app.domain.feed.service.access import resolve_viewer_visibilities
 from app.domain.feed.service.exception import FeedNotFoundError
 from app.domain.feed.repository.feed_post import FeedPostRepository, PAGE_SIZE
 from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
-from app.domain.feed.dto.feed_post import FeedPostData, FeedPostListData
+from app.domain.feed.dto.feed_post import (
+    FeedPostData,
+    FeedPostListData,
+    FeedPostWithCounts,
+)
 from app.database.session import UnitOfWork, transactional
 from app.core.object_storage import get_object_storage
 from app.core.logger import get_logger
@@ -130,7 +134,8 @@ class FeedPostService:
             await self._safe_cleanup(prefix)
             raise
 
-        return self._to_dto(post)
+        # 신규 업로드 → 좋아요/댓글 0 명백. reload 없이 row 합성 (round-trip 절약).
+        return self._to_dto(FeedPostWithCounts(post=post, like_count=0, comment_count=0))
 
 
     @transactional
@@ -179,14 +184,14 @@ class FeedPostService:
         next_cursor 는 friend 도메인 컨벤션 그대로 `len(items) == PAGE_SIZE` 면 마지막 post_id.
         """
         repo = FeedPostRepository(self._session)
-        posts = await repo.find_by_owner(
+        rows = await repo.find_by_owner(
             owner_id=user_id,
             visibilities=list(FeedVisibility),  # 본인은 모든 visibility 조회 가능
             cursor=cursor,
         )
-        next_cursor = posts[-1].post_id if len(posts) == PAGE_SIZE else None
+        next_cursor = rows[-1].post.post_id if len(rows) == PAGE_SIZE else None
         return FeedPostListData(
-            posts=[self._to_dto(p) for p in posts],
+            posts=[self._to_dto(r) for r in rows],
             next_cursor=next_cursor,
         )
 
@@ -194,8 +199,8 @@ class FeedPostService:
     @transactional
     async def get_my_post(self, user_id: str, post_id: str) -> FeedPostData:
         """본인 게시물 단건 조회 — 권한 검증 포함 (다른 유저 게시물 조회는 M3)."""
-        post = await self._load_owned_post(user_id, post_id)
-        return self._to_dto(post)
+        row = await self._load_owned_post(user_id, post_id)
+        return self._to_dto(row)
 
 
     @transactional
@@ -224,14 +229,14 @@ class FeedPostService:
             self._session, viewer_id=viewer_id, owner_id=owner_id,
         )
         repo = FeedPostRepository(self._session)
-        posts = await repo.find_by_owner(
+        rows = await repo.find_by_owner(
             owner_id=owner_id,
             visibilities=visibilities,
             cursor=cursor,
         )
-        next_cursor = posts[-1].post_id if len(posts) == PAGE_SIZE else None
+        next_cursor = rows[-1].post.post_id if len(rows) == PAGE_SIZE else None
         return FeedPostListData(
-            posts=[self._to_dto(p) for p in posts],
+            posts=[self._to_dto(r) for r in rows],
             next_cursor=next_cursor,
         )
 
@@ -245,12 +250,15 @@ class FeedPostService:
         post_id: str,
         visibility: FeedVisibility,
     ) -> FeedPostData:
-        """공개 범위 변경 — 본인만 가능. 즉시 반영 (다음 조회부터 새 visibility 로 필터)."""
-        post = await self._load_owned_post(user_id, post_id)
-        post.visibility = visibility
+        """공개 범위 변경 — 본인만 가능. 즉시 반영 (다음 조회부터 새 visibility 로 필터).
+
+        visibility 변경은 좋아요/댓글 수에 영향 없음 → row 의 카운트 그대로 응답에 재사용.
+        """
+        row = await self._load_owned_post(user_id, post_id)
+        row.post.visibility = visibility
         repo = FeedPostRepository(self._session)
-        await repo.update(post)
-        return self._to_dto(post)
+        await repo.update(row.post)
+        return self._to_dto(row)
 
 
     @transactional
@@ -260,12 +268,15 @@ class FeedPostService:
         post_id: str,
         caption: Optional[str],
     ) -> FeedPostData:
-        """캡션 변경 — 본인만 가능. null / 빈 문자열 / 공백만 입력 시 캡션 삭제."""
-        post = await self._load_owned_post(user_id, post_id)
-        post.caption = _normalize_caption(caption)
+        """캡션 변경 — 본인만 가능. null / 빈 문자열 / 공백만 입력 시 캡션 삭제.
+
+        caption 변경도 좋아요/댓글 수에 영향 없음 → 카운트 그대로 재사용.
+        """
+        row = await self._load_owned_post(user_id, post_id)
+        row.post.caption = _normalize_caption(caption)
         repo = FeedPostRepository(self._session)
-        await repo.update(post)
-        return self._to_dto(post)
+        await repo.update(row.post)
+        return self._to_dto(row)
 
 
     # ──────────────────── 삭제 ────────────────────
@@ -296,7 +307,8 @@ class FeedPostService:
     @transactional
     async def _delete_post_row(self, user_id: str, post_id: str) -> str:
         """삭제 흐름의 트랜잭션 부분 — 권한 검증 후 PG row 삭제. 정리할 prefix 반환."""
-        post = await self._load_owned_post(user_id, post_id)
+        row = await self._load_owned_post(user_id, post_id)
+        post = row.post
         prefix = feed_post_prefix(post.user_id, post.post_id)
 
         repo = FeedPostRepository(self._session)
@@ -307,19 +319,23 @@ class FeedPostService:
 
     # ──────────────────── 내부 헬퍼 ────────────────────
 
-    async def _load_owned_post(self, user_id: str, post_id: str) -> FeedPost:
-        """post_id 로 게시물 로드 + 본인 소유 검증.
+    async def _load_owned_post(self, user_id: str, post_id: str) -> FeedPostWithCounts:
+        """post_id 로 게시물 로드 + 본인 소유 검증 — 좋아요/댓글 카운트 포함 row 반환.
 
         - 미존재 → FeedNotFoundError (404)
         - 본인 아님 → PermissionError (403, builtin 사용 — tripmate 패턴)
+
+        반환 타입이 `FeedPostWithCounts` 라 호출처 (`get_my_post` / `update_visibility` /
+        `update_caption` / `_delete_post_row`) 가 카운트도 함께 받음 — `_to_dto` 가 그대로
+        사용하거나 `.post` 로 unwrap.
         """
         repo = FeedPostRepository(self._session)
-        post = await repo.find_by_post_id(post_id)
-        if post is None:
+        row = await repo.find_by_post_id(post_id)
+        if row is None:
             raise FeedNotFoundError("존재하지 않는 게시물입니다.")
-        if post.user_id != user_id:
+        if row.post.user_id != user_id:
             raise PermissionError("게시물에 대한 권한이 없습니다.")
-        return post
+        return row
 
 
     async def _safe_cleanup(self, prefix: str) -> None:
@@ -338,8 +354,14 @@ class FeedPostService:
 
 
     @staticmethod
-    def _to_dto(post: FeedPost) -> FeedPostData:
-        """SQLAlchemy 모델 → DTO. 라우터 직전에서 단일 위치로 변환을 모은다."""
+    def _to_dto(row: FeedPostWithCounts) -> FeedPostData:
+        """`FeedPostWithCounts` (post + counts) → DTO. 단일 변환 진입점.
+
+        repository 의 단일 SELECT 결과를 그대로 매핑 — 카운트는 응답 시점 스냅샷.
+        업로드 직후 등 카운트가 명백히 0 인 경우 service 가 row 를 합성해서 호출
+        (`upload_post` 참조).
+        """
+        post = row.post
         return FeedPostData(
             post_id=post.post_id,
             user_id=post.user_id,
@@ -348,6 +370,8 @@ class FeedPostService:
             original_url=post.original_url,
             thumbnail_small_url=post.thumbnail_small_url,
             thumbnail_medium_url=post.thumbnail_medium_url,
+            like_count=row.like_count,
+            comment_count=row.comment_count,
             created_at=post.created_at,
             updated_at=post.updated_at,
         )
