@@ -1,7 +1,7 @@
 """피드 게시물 좋아요 서비스.
 
 권한 정책:
-    - 모든 진입점 (`add_like` / `remove_like` / `get_liked_user_ids`) 이 게시물을 볼 수
+    - 모든 진입점 (`add_like` / `remove_like` / `get_liked_users`) 이 게시물을 볼 수
       있는지 먼저 검증 — `access.load_viewable_post`. 보이지 않는 글에 좋아요 시도 시 거절.
     - 차단 관계 → 403 (FeedBlockedError)
     - visibility 미충족 (PRIVATE / FRIENDS-only 비친구) → 404 (FeedNotFoundError)
@@ -27,6 +27,7 @@ from sqlalchemy.exc import IntegrityError
 from app.domain.feed.service.access import load_viewable_post
 from app.domain.feed.repository.feed_post_like import FeedPostLikeRepository
 from app.domain.feed.model.feed_post_like import FeedPostLike
+from app.domain.feed.dto.feed_post_like import LikedUserData
 from app.database.session import UnitOfWork, transactional
 from app.core.logger import get_logger
 
@@ -95,12 +96,38 @@ class FeedPostLikeService:
     # ──────────────────── 조회 ────────────────────
 
     @transactional
-    async def get_liked_user_ids(self, viewer_id: str, post_id: str) -> list[str]:
-        """좋아요 누른 유저 ID 목록 — 게시물 가시성 검증 후 최신순 일괄 반환.
+    async def get_liked_users(
+        self, viewer_id: str, post_id: str,
+    ) -> list[LikedUserData]:
+        """좋아요 누른 유저 목록 — 가시성 검증 후 프로필 포함 단일 JOIN 쿼리로 일괄 반환.
 
         viewer 가 게시물을 볼 수 없으면 좋아요 목록도 못 본다 (transitive 가시성).
-        프로필 정보 (닉네임 / 이미지) 는 별도 batch 조회 endpoint 로 분리 — MVP 는 ID 만.
+        repository (`find_with_user_by_post`) 가 `feed_post_like ⨝ users ⨝ user_detail_inform`
+        을 단일 SELECT 로 로드 — N+1 / batch 라운드트립 회피.
+
+        detail 결손 (회원가입 미완료 등 비정상) 케이스는 `_to_liked_user_dto` 가 빈 문자열 /
+        None 으로 fallback (chat 도메인 컨벤션 일치).
         """
         post = await load_viewable_post(self._session, viewer_id=viewer_id, post_id=post_id)
         like_repo = FeedPostLikeRepository(self._session)
-        return await like_repo.find_user_ids_by_post(post.post_id)
+        likes = await like_repo.find_with_user_by_post(post.post_id)
+        return [self._to_liked_user_dto(like) for like in likes]
+
+
+    # ──────────────────── 내부 유틸 ────────────────────
+
+    @staticmethod
+    def _to_liked_user_dto(like: FeedPostLike) -> LikedUserData:
+        """FeedPostLike (with joinedload user.detail) → LikedUserData.
+
+        FK CASCADE 로 user 결손은 발생 안 하지만 (like 가 함께 삭제됨), detail 결손은
+        회원가입 미완료 등 비정상 상태에서 가능 — 빈 문자열 / None fallback 으로 응답
+        형태 일관성 유지 (chat `_user_to_member_dto` 동일 패턴).
+        """
+        user = like.user
+        detail = user.detail if user is not None else None
+        return LikedUserData(
+            user_id=like.user_id,
+            user_name=detail.user_name if detail is not None else "",
+            profile_image_url=detail.profile_image_url if detail is not None else None,
+        )

@@ -12,6 +12,13 @@
     - 캡션: 빈 → None 정규화 (없음 의미)
     - 댓글: 빈 → 400 (추가 액션이라 빈 본문 무의미). schema 의 `min_length=1` 1차 차단,
       서비스의 `_normalize_content` (strip 후 빈) 2차 차단, DB CHECK 가 마지막 방어선.
+
+작성자 프로필 (user_name / profile_image_url) 응답 포함:
+    - repository 의 모든 read (`find_by_id` / `find_by_post`) 가 `joinedload(user.detail)`
+      로 단일 JOIN 쿼리 → DTO 변환 시 lazy-load 없이 닉네임/이미지 채움.
+    - `create_comment` 는 INSERT 직후 `find_by_id(saved.comment_id)` 로 reload (round-trip
+      1회 추가) — async session 에서 relationship lazy-load 가 막혀 있어 explicit reload
+      가 가장 명확한 패턴. 동일 트랜잭션의 read-your-own-writes 보장.
 """
 from typing import Optional
 
@@ -54,7 +61,12 @@ class FeedPostCommentService:
         post_id: str,
         content: str,
     ) -> FeedPostCommentData:
-        """댓글 작성 — 게시물 가시성 검증 후 INSERT."""
+        """댓글 작성 — 게시물 가시성 검증 후 INSERT, 작성자 프로필 포함 응답.
+
+        INSERT 직후 같은 row 를 `find_by_id(saved.comment_id)` 로 reload — joinedload 가
+        user.detail 까지 한 쿼리에 채워, 응답 DTO 가 닉네임/프로필 이미지 즉시 포함.
+        async session 에서 attribute lazy-load 가 막혀 있어 explicit reload 가 필요.
+        """
         post = await load_viewable_post(self._session, viewer_id=user_id, post_id=post_id)
         normalized = _normalize_content(content)
 
@@ -70,7 +82,9 @@ class FeedPostCommentService:
             "피드 댓글 작성 (user_id={}, post_id={}, comment_id={})",
             user_id, post.post_id, saved.comment_id,
         )
-        return self._to_dto(saved)
+        # joinedload 포함 reload — user.detail 까지 같은 SELECT 로 채움
+        loaded = await repo.find_by_id(saved.comment_id)
+        return self._to_dto(loaded)
 
 
     # ──────────────────── 목록 ────────────────────
@@ -125,10 +139,20 @@ class FeedPostCommentService:
 
     @staticmethod
     def _to_dto(c: FeedPostComment) -> FeedPostCommentData:
+        """FeedPostComment (with joinedload user.detail) → FeedPostCommentData.
+
+        FK CASCADE 로 user 결손은 발생 안 하지만 (comment 가 함께 삭제됨), detail 결손은
+        회원가입 미완료 등 비정상 상태에서 가능 — 빈 문자열 / None fallback (chat / like
+        도메인의 동일 패턴).
+        """
+        user = c.user
+        detail = user.detail if user is not None else None
         return FeedPostCommentData(
             comment_id=c.comment_id,
             post_id=c.post_id,
             user_id=c.user_id,
+            user_name=detail.user_name if detail is not None else "",
+            profile_image_url=detail.profile_image_url if detail is not None else None,
             content=c.content,
             created_at=c.created_at,
             updated_at=c.updated_at,

@@ -26,10 +26,18 @@ class CreateCommentRequest(BaseModel):
 # ──────────────────── Response ────────────────────
 
 class CommentResponse(BaseModel):
-    """댓글 단건 응답."""
+    """댓글 단건 응답 — 작성자 프로필 정보 포함.
+
+    `user_name` / `profile_image_url` 은 repository 의 단일 JOIN 쿼리 (`feed_post_comment
+    ⨝ users ⨝ user_detail_inform`) 결과로 채움. 클라이언트가 별도 batch 조회 없이 즉시 표시.
+    """
     comment_id: str = Field(..., description="댓글 고유 ID")
     post_id: str = Field(..., description="대상 게시물 ID")
     user_id: str = Field(..., description="작성자 유저 ID")
+    user_name: str = Field(..., description="작성자 닉네임 (detail 결손 시 빈 문자열)")
+    profile_image_url: Optional[str] = Field(
+        None, description="작성자 프로필 이미지 URL (없으면 null)",
+    )
     content: str = Field(..., description="댓글 본문")
     created_at: datetime = Field(..., description="작성 시각")
     updated_at: datetime = Field(..., description="마지막 수정 시각")

@@ -124,6 +124,8 @@ def _to_response(c: FeedPostCommentData) -> CommentResponse:
         comment_id=c.comment_id,
         post_id=c.post_id,
         user_id=c.user_id,
+        user_name=c.user_name,
+        profile_image_url=c.profile_image_url,
         content=c.content,
         created_at=c.created_at,
         updated_at=c.updated_at,

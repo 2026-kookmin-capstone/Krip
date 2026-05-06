@@ -1,9 +1,10 @@
 """FeedPostLike 리포지토리 — composite PK `(user_id, post_id)`.
 
-`tripmate_post_like` 패턴 그대로:
-    - `find_by_user_and_post` : 단건 조회 (composite PK lookup)
-    - `count_by_post`         : 좋아요 수 (인덱스 prefix=post_id)
-    - `find_user_ids_by_post` : 누른 유저 목록 (최신순)
+`tripmate_post_like` 패턴 + 좋아요 목록은 프로필까지 한 쿼리로 일괄 로드:
+    - `find_by_user_and_post`  : 단건 조회 (composite PK lookup)
+    - `count_by_post`          : 좋아요 수 (인덱스 prefix=post_id)
+    - `find_with_user_by_post` : 누른 유저 + 프로필 (`feed_post_like ⨝ users ⨝
+                                  user_detail_inform`) 단일 SELECT, 최신순
     - `delete_by_user_and_post`: 단건 삭제
 
 `delete_by_user_id` / `delete_by_post_id` 는 두지 않음 — 양쪽 FK ON DELETE CASCADE 가
@@ -12,7 +13,9 @@
 from typing import Optional
 from sqlalchemy import select, func, delete
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import joinedload
 
+from app.domain.auth.model.user import User
 from app.domain.feed.model.feed_post_like import FeedPostLike
 
 
@@ -46,15 +49,29 @@ class FeedPostLikeRepository:
         return result.scalar_one()
 
 
-    async def find_user_ids_by_post(self, post_id: str) -> list[str]:
-        """게시물에 좋아요 누른 유저 ID 목록 (최신순). MVP 는 페이지네이션 없이 일괄 반환."""
+    async def find_with_user_by_post(self, post_id: str) -> list[FeedPostLike]:
+        """좋아요 누른 유저 + 프로필을 한 쿼리에 일괄 로드 (최신순).
+
+        `joinedload(FeedPostLike.user).joinedload(User.detail)` 가 LEFT OUTER JOIN 으로
+        `feed_post_like ⨝ users ⨝ user_detail_inform` 을 단일 SELECT 에 합성 → 별도 batch
+        조회 (`find_by_ids_with_profile`) 라운드트립 불필요. like 목록 N건 ↔ DB hit 1회.
+
+        `result.unique()` 는 joinedload 가 outer-join 결과 row 를 곱셈으로 펼치는 케이스의
+        ORM 객체 중복 제거 — uselist=False 인 detail 관계라 사실상 1:1 이지만 SQLAlchemy
+        joinedload 권장 패턴 (chat / friend 도메인 동일).
+
+        탈퇴 user → FK CASCADE 로 like 자체가 삭제되므로 dangling row 없음. detail 결손
+        (회원가입 미완료 등) 케이스만 service 단의 fallback 책임.
+        MVP 는 페이지네이션 없이 일괄 반환 (좋아요 N 이 큰 경우 후속에 cursor 도입).
+        """
         stmt = (
-            select(FeedPostLike.user_id)
+            select(FeedPostLike)
+            .options(joinedload(FeedPostLike.user).joinedload(User.detail))
             .where(FeedPostLike.post_id == post_id)
             .order_by(FeedPostLike.created_at.desc())
         )
         result = await self.session.execute(stmt)
-        return list(result.scalars().all())
+        return list(result.unique().scalars().all())
 
 
     # ──────────────────── Delete ────────────────────

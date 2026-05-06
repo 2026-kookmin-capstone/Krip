@@ -19,7 +19,12 @@ from dependency_injector.wiring import Provide, inject
 
 from app.domain.feed.service.feed_post_like import FeedPostLikeService
 from app.domain.feed.service.exception import FeedNotFoundError
-from app.domain.feed.schema.feed_post_like import LikeResponse, LikedUsersResponse
+from app.domain.feed.schema.feed_post_like import (
+    LikedUserItem,
+    LikedUsersResponse,
+    LikeResponse,
+)
+from app.domain.feed.dto.feed_post_like import LikedUserData
 from app.container import Container
 
 
@@ -81,10 +86,10 @@ async def get_liked_users(
     post_id: str,
     like_service: FeedPostLikeService = Depends(Provide[Container.feed_post_like_service]),
 ) -> LikedUsersResponse:
-    """좋아요 누른 유저 ID 목록 — 최신순. 프로필 정보는 후속 batch 조회로 분리."""
+    """좋아요 누른 유저 목록 — 최신순. 단일 JOIN 쿼리로 닉네임/프로필 이미지까지 포함."""
     viewer_id: str = request.state.user_id
     try:
-        user_ids = await like_service.get_liked_user_ids(
+        users = await like_service.get_liked_users(
             viewer_id=viewer_id, post_id=post_id,
         )
     except FeedNotFoundError as e:
@@ -92,4 +97,18 @@ async def get_liked_users(
     except PermissionError as e:
         raise HTTPException(status_code=403, detail=str(e))
 
-    return LikedUsersResponse(post_id=post_id, user_ids=user_ids)
+    return LikedUsersResponse(
+        post_id=post_id,
+        users=[_to_liked_user_item(u) for u in users],
+    )
+
+
+# ──────────────────── 내부 유틸 ────────────────────
+
+def _to_liked_user_item(user: LikedUserData) -> LikedUserItem:
+    """DTO → Pydantic 1:1 매핑."""
+    return LikedUserItem(
+        user_id=user.user_id,
+        user_name=user.user_name,
+        profile_image_url=user.profile_image_url,
+    )
