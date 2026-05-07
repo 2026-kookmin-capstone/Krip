@@ -11,6 +11,14 @@ import {
   type UserProfile,
 } from "../api/auth/auth";
 import {
+  createTourPlanShareToken,
+  deleteTourPlan,
+  listTourPlans,
+  updateTourPlanTitle,
+  type PlanSummaryResponse,
+  type SharePlanResponse,
+} from "../api/aiPlanShared";
+import {
   createFeedComment,
   createFeedPost,
   deleteFeedComment,
@@ -64,6 +72,11 @@ export default function MyPage() {
   const [isFeedPostMenuOpen, setIsFeedPostMenuOpen] = useState(false);
   const [commentInput, setCommentInput] = useState("");
   const [isFeedActionRunning, setIsFeedActionRunning] = useState(false);
+  const [savedPlans, setSavedPlans] = useState<PlanSummaryResponse[]>([]);
+  const [isLoadingPlans, setIsLoadingPlans] = useState(false);
+  const [planMessage, setPlanMessage] = useState("");
+  const [shareInfo, setShareInfo] = useState<SharePlanResponse | null>(null);
+  const [shareLink, setShareLink] = useState("");
 
   useEffect(() => {
     getMyProfile()
@@ -80,6 +93,10 @@ export default function MyPage() {
 
   useEffect(() => {
     void loadFeedPosts();
+  }, []);
+
+  useEffect(() => {
+    refreshPlans();
   }, []);
 
   useEffect(() => {
@@ -103,6 +120,72 @@ export default function MyPage() {
       if (!cursor) setFeedPosts([]);
     } finally {
       setIsFeedLoading(false);
+    }
+  }
+
+  function refreshPlans(): void {
+    setIsLoadingPlans(true);
+    setPlanMessage("");
+
+    void listTourPlans()
+      .then((plans) => setSavedPlans(plans))
+      .catch((error) => {
+        setSavedPlans([]);
+        setPlanMessage(toErrorMessage(error, "Failed to load saved plans."));
+      })
+      .finally(() => setIsLoadingPlans(false));
+  }
+
+  async function handleRenamePlan(plan: PlanSummaryResponse): Promise<void> {
+    const nextTitle = window.prompt("Plan title", plan.title || "");
+    if (nextTitle === null) return;
+
+    try {
+      await updateTourPlanTitle(plan.plan_id, nextTitle.trim() || null);
+      refreshPlans();
+    } catch (error) {
+      setPlanMessage(toErrorMessage(error, "Failed to update plan title."));
+    }
+  }
+
+  async function handleDeletePlan(plan: PlanSummaryResponse): Promise<void> {
+    if (!window.confirm(`Delete ${plan.title || "this plan"}?`)) return;
+
+    try {
+      await deleteTourPlan(plan.plan_id);
+      setSavedPlans((current) =>
+        current.filter((item) => item.plan_id !== plan.plan_id)
+      );
+      setPlanMessage("Plan deleted.");
+      setShareInfo(null);
+      setShareLink("");
+    } catch (error) {
+      setPlanMessage(toErrorMessage(error, "Failed to delete plan."));
+    }
+  }
+
+  async function handleSharePlan(plan: PlanSummaryResponse): Promise<void> {
+    try {
+      const share = await createTourPlanShareToken(plan.plan_id);
+      const url = `${window.location.origin}/share/plan/${share.share_token}`;
+      setShareInfo(share);
+      setShareLink(url);
+      setPlanMessage(
+        `Share link ready. Expires ${new Date(share.expires_at).toLocaleString()}`
+      );
+    } catch (error) {
+      setPlanMessage(toErrorMessage(error, "Failed to create share link."));
+    }
+  }
+
+  async function handleCopyShareLink(): Promise<void> {
+    if (!shareLink) return;
+
+    try {
+      await navigator.clipboard.writeText(shareLink);
+      setPlanMessage("Share link copied.");
+    } catch {
+      window.prompt("Copy this share link", shareLink);
     }
   }
 
@@ -558,6 +641,97 @@ export default function MyPage() {
             {isFeedLoading ? "Loading..." : "Load More"}
           </button>
         ) : null}
+      </section>
+
+      <section style={styles.section}>
+        <div style={styles.planPanel}>
+          <div style={styles.planHeader}>
+            <div>
+              <h2 style={styles.sectionTitle}>Saved Plans</h2>
+              <p style={styles.planCopy}>
+                AI and manual plans saved to the backend appear here.
+              </p>
+            </div>
+            <button
+              type="button"
+              style={styles.planRefreshButton}
+              onClick={refreshPlans}
+              disabled={isLoadingPlans}
+            >
+              {isLoadingPlans ? "Loading" : "Refresh"}
+            </button>
+          </div>
+
+          {planMessage ? <p style={styles.planMessage}>{planMessage}</p> : null}
+          {shareInfo ? (
+            <div style={styles.shareReadyRow}>
+              <span>
+                Public link expires {new Date(shareInfo.expires_at).toLocaleString()}.
+              </span>
+              <button
+                type="button"
+                style={styles.planPrimaryButton}
+                onClick={() => void handleCopyShareLink()}
+              >
+                Copy Link
+              </button>
+            </div>
+          ) : null}
+
+          {isLoadingPlans ? (
+            <div style={styles.emptyPanel}>Loading saved plans...</div>
+          ) : savedPlans.length === 0 ? (
+            <div style={styles.emptyPanel}>No saved plans yet.</div>
+          ) : (
+            <div style={styles.planList}>
+              {savedPlans.map((plan) => (
+                <article key={plan.plan_id} style={styles.planCard}>
+                  <div style={styles.planCardBody}>
+                    <strong style={styles.planTitle}>
+                      {plan.title || "Untitled plan"}
+                    </strong>
+                    <span style={styles.planMeta}>
+                      {plan.travel_days} day max - Updated{" "}
+                      {new Date(plan.updated_at).toLocaleString()}
+                    </span>
+                  </div>
+                  <div style={styles.planActions}>
+                    <button
+                      type="button"
+                      style={styles.planPrimaryButton}
+                      onClick={() =>
+                        navigate(`/plan/manual?planId=${encodeURIComponent(plan.plan_id)}`)
+                      }
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      style={styles.planGhostButton}
+                      onClick={() => void handleRenamePlan(plan)}
+                    >
+                      Rename
+                    </button>
+                    <button
+                      type="button"
+                      style={styles.planGhostButton}
+                      onClick={() => void handleSharePlan(plan)}
+                    >
+                      Share
+                    </button>
+                    <button
+                      type="button"
+                      style={styles.planDangerButton}
+                      onClick={() => void handleDeletePlan(plan)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
       </section>
 
       {isSettingsOpen ? (
@@ -1227,6 +1401,133 @@ const styles: Record<string, CSSProperties> = {
     color: "var(--text-secondary)",
     fontWeight: 900,
     cursor: "pointer",
+  },
+  planPanel: {
+    padding: 18,
+    borderRadius: 18,
+    background: "rgba(255,255,255,0.92)",
+    border: "1px solid var(--border-soft)",
+    boxShadow: "var(--shadow-soft)",
+    display: "flex",
+    flexDirection: "column",
+    gap: 14,
+  },
+  planHeader: {
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    gap: 12,
+  },
+  planCopy: {
+    margin: "4px 0 0",
+    color: "var(--neutral-700)",
+    fontSize: "0.86rem",
+    lineHeight: 1.45,
+  },
+  planRefreshButton: {
+    minHeight: 38,
+    border: "none",
+    borderRadius: 12,
+    background: "var(--brand-primary-soft)",
+    color: "var(--brand-primary-deep)",
+    padding: "0 12px",
+    fontSize: "0.78rem",
+    fontWeight: 900,
+    cursor: "pointer",
+    whiteSpace: "nowrap",
+  },
+  planMessage: {
+    margin: 0,
+    color: "var(--brand-primary-deep)",
+    fontSize: "0.82rem",
+    fontWeight: 800,
+    lineHeight: 1.5,
+  },
+  shareReadyRow: {
+    display: "flex",
+    flexWrap: "wrap",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 10,
+    padding: "10px 12px",
+    borderRadius: 14,
+    background: "rgba(5,181,187,0.1)",
+    color: "var(--brand-primary-deep)",
+    fontSize: "0.82rem",
+    fontWeight: 800,
+  },
+  planList: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+  },
+  planCard: {
+    display: "grid",
+    gridTemplateColumns: "minmax(0, 1fr)",
+    gap: 14,
+    alignItems: "start",
+    padding: 14,
+    borderRadius: 14,
+    background: "#ffffff",
+    border: "1px solid var(--border-soft)",
+  },
+  planCardBody: {
+    minWidth: 0,
+    display: "flex",
+    flexDirection: "column",
+    gap: 6,
+  },
+  planTitle: {
+    color: "var(--text-primary)",
+    fontSize: "0.95rem",
+    overflowWrap: "anywhere",
+  },
+  planMeta: {
+    color: "var(--neutral-700)",
+    fontSize: "0.78rem",
+    fontWeight: 700,
+  },
+  planActions: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "flex-start",
+    gap: 8,
+  },
+  planPrimaryButton: {
+    minHeight: 36,
+    border: "none",
+    borderRadius: 12,
+    background: "var(--brand-primary)",
+    color: "#ffffff",
+    padding: "0 11px",
+    fontSize: "0.76rem",
+    fontWeight: 900,
+    cursor: "pointer",
+    whiteSpace: "nowrap",
+  },
+  planGhostButton: {
+    minHeight: 36,
+    border: "none",
+    borderRadius: 12,
+    background: "rgba(5,181,187,0.12)",
+    color: "var(--brand-primary-deep)",
+    padding: "0 11px",
+    fontSize: "0.76rem",
+    fontWeight: 900,
+    cursor: "pointer",
+    whiteSpace: "nowrap",
+  },
+  planDangerButton: {
+    minHeight: 36,
+    border: "none",
+    borderRadius: 12,
+    background: "rgba(220,38,38,0.1)",
+    color: "#dc2626",
+    padding: "0 11px",
+    fontSize: "0.76rem",
+    fontWeight: 900,
+    cursor: "pointer",
+    whiteSpace: "nowrap",
   },
   settingsBackdrop: {
     position: "fixed",
