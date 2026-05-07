@@ -13,7 +13,7 @@ import ChatPage from "./features/friend-chat/ChatPage";
 import ChatRoomPage from "./features/friend-chat/ChatRoomPage";
 import { ChatProvider } from "./features/friend-chat/ChatProvider";
 import MyPage from "./pages/MyPage";
-import PublicSharedPlanPage from "./pages/PublicSharedPlanPage";
+import PublicSharedPlanPage from "./pages/SharedPlanPage";
 import PlaceholderPage from "./pages/PlaceholderPage";
 import PlanSelectionPage from "./features/plan/PlanSelectionPage";
 import AiPlanDesignPage from "./features/plan/AiPlanDesignPage";

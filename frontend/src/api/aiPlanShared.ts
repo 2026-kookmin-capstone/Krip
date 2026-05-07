@@ -1147,7 +1147,3 @@ export async function loadGoogleMapsApi(): Promise<typeof window.google | null> 
 
   return googleMapsPromise;
 }
-
-
-
-

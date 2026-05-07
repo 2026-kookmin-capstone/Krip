@@ -14,11 +14,9 @@ import {
   getTourPlan,
   loadGoogleMapsApi,
   moveTourPlanItem,
-  normalizePlaceKey,
   updateTourPlanItem,
   updateTourPlanTitle,
   type PlanDetailResponse,
-  type TourRecommendPlace,
 } from "../../api/aiPlanShared";
 
 type ShareTarget = "kakao" | "link" | "mail" | "message";
@@ -286,48 +284,6 @@ function normalizePlaces(payload: TourPlaceApiItem[]): TourPlace[] {
   return normalized.filter((item): item is TourPlace => Boolean(item));
 }
 
-function mergeRecommendedDescriptions(
-  places: TourPlace[],
-  recommendedPlaces: TourRecommendPlace[]
-): TourPlace[] {
-  const byId = new Map(
-    recommendedPlaces.map((place) => [String(place.place_id), place])
-  );
-  const byName = new Map(
-    recommendedPlaces.map((place) => [
-      normalizePlaceKey(place.display_name || ""),
-      place,
-    ])
-  );
-
-  return places.map((place) => {
-    const recommended =
-      byId.get(place.id) || byName.get(normalizePlaceKey(place.name));
-
-    if (!recommended) return place;
-
-    const latitude = Number(recommended.location?.lat);
-    const longitude = Number(recommended.location?.lng);
-
-    return {
-      ...place,
-      category: recommended.category || place.category,
-      summary: recommended.description || place.summary,
-      address: recommended.address || place.address,
-      rating:
-        typeof recommended.rating === "number"
-          ? recommended.rating
-          : place.rating,
-      latitude: Number.isFinite(latitude) ? latitude : place.latitude,
-      longitude: Number.isFinite(longitude) ? longitude : place.longitude,
-    };
-  });
-}
-
-async function fetchManualRecommendationPool(): Promise<TourRecommendPlace[]> {
-  return [];
-}
-
 async function fetchPlaces(query: string): Promise<TourPlace[]> {
   if (!query.trim()) return [];
 
@@ -337,9 +293,7 @@ async function fetchPlaces(query: string): Promise<TourPlace[]> {
     keyword: query.trim(),
   });
 
-  const places = normalizePlaces(response.items);
-  const recommendedPlaces = await fetchManualRecommendationPool();
-  return mergeRecommendedDescriptions(places, recommendedPlaces);
+  return normalizePlaces(response.items);
 }
 
 function getDayNumberByDate(dates: string[]): Map<string, number> {

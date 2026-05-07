@@ -1083,15 +1083,3 @@ function positionSavedPlanPanel(): void {
     toggle.textContent = isOpen ? "View Saved Plans" : "Hide Saved Plans";
   };
 }
-
-if (false && typeof window !== "undefined") {
-  const syncSavedPlanUi = () => {
-    renderSavedPlanPanel();
-    positionSavedPlanPanel();
-  };
-
-  window.addEventListener("load", syncSavedPlanUi);
-  window.addEventListener(SAVED_PLAN_EVENT, syncSavedPlanUi);
-  window.setTimeout(syncSavedPlanUi, 30);
-  window.setInterval(positionSavedPlanPanel, 800);
-}
