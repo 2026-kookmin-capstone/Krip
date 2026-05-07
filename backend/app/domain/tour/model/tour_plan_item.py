@@ -16,6 +16,9 @@ class TourPlanItem(Base):
     """
 
     __tablename__ = "tour_plan_item"
+    # `eager_defaults=True` — server-eval `updated_at` 을 RETURNING 으로 즉시 ORM 반영.
+    # async 환경에서 lazy-load (MissingGreenlet) 회피 표준 패턴.
+    __mapper_args__ = {"eager_defaults": True}
 
     item_id = Column(String(50), primary_key=True, default=generate_tour_plan_item_id)  # 카드 고유 ID
     plan_id = Column(String(50), ForeignKey("tour_plan.plan_id", ondelete="CASCADE"), nullable=False)  # 소속 플랜 ID

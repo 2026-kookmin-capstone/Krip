@@ -17,6 +17,9 @@ class FcmToken(Base):
     """
 
     __tablename__ = "fcm_token"
+    # `eager_defaults=True` — server-eval `updated_at` 을 RETURNING 으로 즉시 ORM 반영.
+    # async 환경에서 lazy-load (MissingGreenlet) 회피 표준 패턴.
+    __mapper_args__ = {"eager_defaults": True}
 
     fcm_token_id = Column(String(50), primary_key=True, default=generate_fcm_token_id)
     user_id = Column(String(50), ForeignKey("users.user_id", ondelete="CASCADE"), nullable=False)

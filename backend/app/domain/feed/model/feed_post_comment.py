@@ -23,6 +23,10 @@ class FeedPostComment(Base):
     """피드 게시물 댓글."""
     __tablename__ = "feed_post_comment"
 
+    # `eager_defaults=True` — server-eval `updated_at` 을 RETURNING 으로 즉시 ORM 반영.
+    # async 환경에서 lazy-load (MissingGreenlet) 회피 표준 패턴.
+    __mapper_args__ = {"eager_defaults": True}
+
     comment_id = Column(String(50), primary_key=True, default=generate_feed_post_comment_id)  # 댓글 고유 ID
     post_id = Column(String(50), ForeignKey("feed_post.post_id", ondelete="CASCADE"), nullable=False)  # 대상 게시물 ID
     user_id = Column(String(50), ForeignKey("users.user_id", ondelete="CASCADE"), nullable=False)  # 작성자 ID

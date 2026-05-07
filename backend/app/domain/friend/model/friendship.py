@@ -25,6 +25,9 @@ class Friendship(Base):
     """
 
     __tablename__ = "friendship"
+    # `eager_defaults=True` — server-eval `updated_at` 을 RETURNING 으로 즉시 ORM 반영.
+    # async 환경에서 lazy-load (MissingGreenlet) 회피 표준 패턴.
+    __mapper_args__ = {"eager_defaults": True}
 
     friendship_id = Column(String(50), primary_key=True, default=generate_friendship_id)
     requester_id = Column(String(50), ForeignKey("users.user_id", ondelete="CASCADE"), nullable=False)  # 요청 보낸 유저
