@@ -41,20 +41,44 @@ def like_repo_mock():
 
 
 @pytest.fixture
+def detail_repo_mock():
+    """fan-out payload 합성 시 actor detail fetch 용. 결손(None) default — actor_name=""."""
+    mock = AsyncMock()
+    mock.find_by_user_id.return_value = None
+    return mock
+
+
+@pytest.fixture
+def notification_service_mock():
+    """알림 fan-out 진입점 mock — 호출 검증용. 본인→본인 skip 가드는 service 가 처리."""
+    mock = AsyncMock()
+    mock.notify_feed_like.return_value = None
+    return mock
+
+
+@pytest.fixture
 def viewable_post_stub():
     """`load_viewable_post` 가 반환할 stub post — 가시성 통과 케이스 default."""
     return _mk_post()
 
 
 @pytest.fixture
-def service(monkeypatch, mock_session, like_repo_mock, viewable_post_stub):
+def service(
+    monkeypatch, mock_session,
+    like_repo_mock, detail_repo_mock, viewable_post_stub, notification_service_mock,
+):
     """가시성 통과 default 로 주입된 like service.
 
     개별 테스트가 `load_viewable_post` 의 raise 동작을 보고 싶으면 monkeypatch 직접 갱신.
+    fan-out 은 `notification_service_mock` 으로 호출만 검증, 실 Mongo 비접근.
     """
     monkeypatch.setattr(
         "app.domain.feed.service.feed_post_like.FeedPostLikeRepository",
         lambda session: like_repo_mock,
+    )
+    monkeypatch.setattr(
+        "app.domain.feed.service.feed_post_like.UserDetailInformRepository",
+        lambda session: detail_repo_mock,
     )
     # 기본: load_viewable_post 가 stub post 반환 (가시성 통과)
     async def _stub_load(session, *, viewer_id, post_id):
@@ -64,4 +88,7 @@ def service(monkeypatch, mock_session, like_repo_mock, viewable_post_stub):
         _stub_load,
     )
 
-    return FeedPostLikeService(uow=FakeUnitOfWork(mock_session))
+    return FeedPostLikeService(
+        uow=FakeUnitOfWork(mock_session),
+        notification_service=notification_service_mock,
+    )

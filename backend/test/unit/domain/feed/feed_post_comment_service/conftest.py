@@ -39,7 +39,16 @@ def viewable_post_stub():
 
 
 @pytest.fixture
-def service(monkeypatch, mock_session, comment_repo_mock, viewable_post_stub):
+def notification_service_mock():
+    """알림 fan-out 진입점 mock — comment 의 actor 정보는 dto 의 user_name 을 그대로 사용
+    하므로 별도 detail repo mock 불필요. 본인→본인 skip 가드는 service 가 처리."""
+    mock = AsyncMock()
+    mock.notify_feed_comment.return_value = None
+    return mock
+
+
+@pytest.fixture
+def service(monkeypatch, mock_session, comment_repo_mock, viewable_post_stub, notification_service_mock):
     monkeypatch.setattr(
         "app.domain.feed.service.feed_post_comment.FeedPostCommentRepository",
         lambda session: comment_repo_mock,
@@ -52,4 +61,7 @@ def service(monkeypatch, mock_session, comment_repo_mock, viewable_post_stub):
         _stub_load,
     )
 
-    return FeedPostCommentService(uow=FakeUnitOfWork(mock_session))
+    return FeedPostCommentService(
+        uow=FakeUnitOfWork(mock_session),
+        notification_service=notification_service_mock,
+    )
