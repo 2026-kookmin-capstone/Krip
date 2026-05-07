@@ -13,7 +13,6 @@ import {
   getReceivedFriendRequests,
   getSentFriendRequests,
   rejectFriendRequest,
-  sendFriendRequest,
   unblockUser,
   type FriendPeer,
   type Friendship,
@@ -42,7 +41,6 @@ export default function ChatPage() {
     connectionState: chatConnectionStatus,
     currentUserId,
     refreshRooms,
-    openDirectChat,
   } = useChat();
   const [tab, setTab] = useState<ChatTab>("chats");
   const [receivedRequests, setReceivedRequests] = useState<Friendship[]>([]);
@@ -62,11 +60,13 @@ export default function ChatPage() {
     blocks: false,
   });
   const [actionId, setActionId] = useState("");
-  const [targetUserId, setTargetUserId] = useState("");
   const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
   const [currentUserName, setCurrentUserName] = useState<string | null>(null);
   const [feedPopupUserId, setFeedPopupUserId] = useState<string | null>(null);
+  const [isGroupModalOpen, setIsGroupModalOpen] = useState(false);
+  const [groupTitle, setGroupTitle] = useState("");
+  const [selectedGroupMemberIds, setSelectedGroupMemberIds] = useState<Set<string>>(new Set());
 
   const pendingCount = receivedRequests.length + sentRequests.length;
   const displayNamesById = useMemo(() => {
@@ -96,7 +96,7 @@ export default function ChatPage() {
   }, [chatRooms, currentUserId, currentUserName, friends]);
   const resolveDisplayName = useCallback(
     (userId: string | null): string =>
-      userId === null ? "(알 수 없음)" : displayNamesById.get(userId) || "탈퇴한 사용자",
+      userId === null ? "(Unknown)" : displayNamesById.get(userId) || "Deleted User",
     [displayNamesById]
   );
   const chatRows = useMemo(
@@ -203,21 +203,6 @@ export default function ChatPage() {
     }
   }
 
-  async function handleSendRequest(): Promise<void> {
-    const nextTarget = targetUserId.trim();
-    if (!nextTarget) {
-      setError("Enter a user ID to send a friend request.");
-      return;
-    }
-
-    setActionId(`send:${nextTarget}`);
-    await runAction(
-      () => sendFriendRequest(nextTarget),
-      "Friend request sent."
-    );
-    setTargetUserId("");
-  }
-
   function isBusy(id: string): boolean {
     return actionId === id;
   }
@@ -227,8 +212,7 @@ export default function ChatPage() {
     setError("");
 
     try {
-      const room = await openDirectChat(userId);
-      navigate(`/chat/${room.chat_room_id}`);
+      navigate(`/chat/${userId}`);
     } catch (chatError) {
       reportChatNetworkError({
         action: "open_direct_chat",
@@ -238,6 +222,66 @@ export default function ChatPage() {
       setError(toErrorMessage(chatError, "Failed to open chat."));
     } finally {
       setActionId("");
+    }
+  }
+
+  function toggleGroupMember(userId: string): void {
+    setSelectedGroupMemberIds((current) => {
+      const next = new Set(current);
+      if (next.has(userId)) {
+        next.delete(userId);
+      } else {
+        if (next.size >= 99) {
+          setError("A group chat can invite up to 99 friends.");
+          return next;
+        }
+        next.add(userId);
+      }
+      return next;
+    });
+  }
+
+  function closeGroupModal(): void {
+    setIsGroupModalOpen(false);
+    setGroupTitle("");
+    setSelectedGroupMemberIds(new Set());
+  }
+
+  async function handleCreateGroupRoom(): Promise<void> {
+    const memberIds = Array.from(selectedGroupMemberIds);
+    if (memberIds.length === 0) {
+      setError("Select at least one friend to create a group chat.");
+      return;
+    }
+
+    setError("");
+    setNotice("");
+
+    try {
+      const draftId = `GROUP_DRAFT_${Date.now()}`;
+      const selectedMembers = friends
+        .filter((friend) => selectedGroupMemberIds.has(friend.peer.user_id))
+        .map((friend) => friend.peer);
+
+      window.sessionStorage.setItem(
+        `krip-chat-group-draft:${draftId}`,
+        JSON.stringify({
+          title: groupTitle.trim() || "Group Chat",
+          memberIds,
+          members: selectedMembers,
+        })
+      );
+      setIsGroupModalOpen(false);
+      setGroupTitle("");
+      setSelectedGroupMemberIds(new Set());
+      navigate(`/chat/${draftId}`);
+    } catch (createError) {
+      reportChatNetworkError({
+        action: "prepare_group_chat",
+        detail: toErrorMessage(createError, "Failed to prepare group chat."),
+        extra: getErrorStatus(createError),
+      });
+      setError(toErrorMessage(createError, "Failed to prepare group chat."));
     }
   }
 
@@ -252,9 +296,18 @@ export default function ChatPage() {
               Manage chats, friend requests, friends, and blocked users in one place.
             </p>
           </div>
-          <button type="button" style={styles.refreshButton} onClick={() => void refreshAll()}>
-            Refresh
-          </button>
+          <div style={styles.headerActions}>
+            <button type="button" style={styles.refreshButton} onClick={() => void refreshAll()}>
+              Refresh
+            </button>
+            <button
+              type="button"
+              style={styles.primaryHeaderButton}
+              onClick={() => setIsGroupModalOpen(true)}
+            >
+              New Group
+            </button>
+          </div>
         </header>
 
         <section style={styles.segment}>
@@ -317,26 +370,6 @@ export default function ChatPage() {
 
         {tab === "requests" ? (
           <section style={styles.stack}>
-            <div style={styles.panel}>
-              <h2 style={styles.sectionTitle}>Send Request</h2>
-              <div style={styles.inputRow}>
-                <input
-                  value={targetUserId}
-                  onChange={(event) => setTargetUserId(event.target.value)}
-                  placeholder="USER_1700000000_abcdef12"
-                  style={styles.input}
-                />
-                <button
-                  type="button"
-                  style={styles.primaryButton}
-                  onClick={() => void handleSendRequest()}
-                  disabled={Boolean(actionId)}
-                >
-                  Send
-                </button>
-              </div>
-            </div>
-
             <RequestSection
               title="Received Requests"
               emptyTitle="No received requests"
@@ -514,6 +547,76 @@ export default function ChatPage() {
             onClose={() => setFeedPopupUserId(null)}
           />
         ) : null}
+
+        {isGroupModalOpen ? (
+          <div style={styles.groupModalBackdrop} role="dialog" aria-modal="true">
+            <section style={styles.groupModal}>
+              <div style={styles.groupModalHeader}>
+                <div>
+                  <p style={styles.groupModalEyebrow}>Friends only</p>
+                  <h2 style={styles.groupModalTitle}>New Group Chat</h2>
+                </div>
+                <button type="button" style={styles.closeButton} onClick={closeGroupModal}>
+                  Close
+                </button>
+              </div>
+
+              <label style={styles.groupField}>
+                <span style={styles.groupLabel}>Room name</span>
+                <input
+                  value={groupTitle}
+                  onChange={(event) => setGroupTitle(event.target.value)}
+                  placeholder="Group Chat"
+                  style={styles.input}
+                  maxLength={40}
+                />
+              </label>
+
+              <div style={styles.groupMemberList}>
+                {friends.length > 0 ? (
+                  friends.map((friend) => {
+                    const selected = selectedGroupMemberIds.has(friend.peer.user_id);
+                    return (
+                      <button
+                        key={friend.friendship_id}
+                        type="button"
+                        style={{
+                          ...styles.groupMemberRow,
+                          ...(selected ? styles.groupMemberRowSelected : {}),
+                        }}
+                        onClick={() => toggleGroupMember(friend.peer.user_id)}
+                      >
+                        <PeerSummary peer={friend.peer} />
+                        <span style={selected ? styles.checkedCircle : styles.emptyCircle}>
+                          {selected ? "✓" : ""}
+                        </span>
+                      </button>
+                    );
+                  })
+                ) : (
+                  <EmptyCard
+                    title="No friends available"
+                    copy="Group chats can only invite accepted friends."
+                  />
+                )}
+              </div>
+
+              <div style={styles.groupModalActions}>
+                <button type="button" style={styles.secondaryButton} onClick={closeGroupModal}>
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  style={styles.primaryButton}
+                  onClick={() => void handleCreateGroupRoom()}
+                  disabled={selectedGroupMemberIds.size === 0}
+                >
+                  Start Chat
+                </button>
+              </div>
+            </section>
+          </div>
+        ) : null}
       </div>
     </div>
   );
@@ -677,7 +780,7 @@ function renderLastMessage(
   resolveDisplayName: (userId: string | null) => string
 ): string {
   if (!lastMessage) return "No messages yet.";
-  if (lastMessage.content === null) return "삭제된 메시지입니다";
+  if (lastMessage.content === null) return "Deleted message.";
   if (lastMessage.type === "system") {
     return renderSystemLastMessage(lastMessage.content, resolveDisplayName);
   }
@@ -693,20 +796,20 @@ function renderSystemLastMessage(
 
   const actorName = resolveDisplayName(content.actor_id);
   if (content.action === "created") {
-    return `${actorName}님이 채팅방을 만들었습니다`;
+    return `${actorName} created the chat room.`;
   }
   if (content.action === "join") {
     const targetNames = content.target_ids.map(resolveDisplayName);
     if (targetNames.length === 1 && (!content.actor_id || content.actor_id === content.target_ids[0])) {
-      return `${targetNames[0]}님이 들어왔습니다`;
+      return `${targetNames[0]} joined.`;
     }
-    return `${actorName}님이 ${formatTargetNames(targetNames)}님을 초대했습니다`;
+    return `${actorName} invited ${formatTargetNames(targetNames)}.`;
   }
   if (content.action === "leave") {
-    return `${actorName}님이 나갔습니다`;
+    return `${actorName} left.`;
   }
   if (content.action === "kick") {
-    return `${actorName}님이 ${formatTargetNames(content.target_ids.map(resolveDisplayName))}님을 내보냈습니다`;
+    return `${actorName} removed ${formatTargetNames(content.target_ids.map(resolveDisplayName))}.`;
   }
 
   return "System message";
@@ -726,9 +829,9 @@ function isSystemContent(content: unknown): content is SystemContent {
 }
 
 function formatTargetNames(names: string[]): string {
-  if (names.length === 0) return "(알 수 없음)";
+  if (names.length === 0) return "(Unknown)";
   if (names.length === 1) return names[0];
-  return `${names[0]} 외 ${names.length - 1}명`;
+  return `${names[0]} and ${names.length - 1} others`;
 }
 
 function toErrorMessage(error: unknown, fallback: string): string {
@@ -766,6 +869,12 @@ const styles: Record<string, CSSProperties> = {
     gap: 16,
     paddingTop: 8,
   },
+  headerActions: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "flex-end",
+    gap: 10,
+  },
   eyebrow: {
     margin: 0,
     color: "var(--brand-primary-deep)",
@@ -796,6 +905,16 @@ const styles: Record<string, CSSProperties> = {
     fontWeight: 800,
     cursor: "pointer",
     boxShadow: "var(--shadow-soft)",
+  },
+  primaryHeaderButton: {
+    border: "1px solid rgba(5,181,187,0.22)",
+    borderRadius: 999,
+    padding: "12px 16px",
+    background: "linear-gradient(135deg, var(--brand-primary), #12c0c6)",
+    color: "#ffffff",
+    fontWeight: 900,
+    cursor: "pointer",
+    boxShadow: "0 12px 24px rgba(5,181,187,0.2)",
   },
   segment: {
     padding: 8,
@@ -875,11 +994,6 @@ const styles: Record<string, CSSProperties> = {
     color: "var(--text-primary)",
     fontSize: "1.05rem",
     fontWeight: 800,
-  },
-  inputRow: {
-    display: "grid",
-    gridTemplateColumns: "1fr auto",
-    gap: 10,
   },
   input: {
     width: "100%",
@@ -1052,5 +1166,113 @@ const styles: Record<string, CSSProperties> = {
     margin: "8px 0 0",
     color: "var(--neutral-700)",
     lineHeight: 1.55,
+  },
+  groupModalBackdrop: {
+    position: "fixed",
+    inset: 0,
+    zIndex: 80,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 18,
+    background: "rgba(24,26,32,0.48)",
+  },
+  groupModal: {
+    width: "100%",
+    maxWidth: 520,
+    maxHeight: "86dvh",
+    overflowY: "auto",
+    display: "flex",
+    flexDirection: "column",
+    gap: 16,
+    padding: 20,
+    borderRadius: 28,
+    background: "#ffffff",
+    boxShadow: "0 28px 72px rgba(24,26,32,0.22)",
+  },
+  groupModalHeader: {
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    gap: 14,
+  },
+  groupModalEyebrow: {
+    margin: 0,
+    color: "var(--brand-primary-deep)",
+    fontSize: "0.74rem",
+    fontWeight: 900,
+    textTransform: "uppercase",
+    letterSpacing: "0.12em",
+  },
+  groupModalTitle: {
+    margin: "5px 0 0",
+    color: "var(--text-primary)",
+    fontSize: "1.35rem",
+    lineHeight: 1.15,
+  },
+  closeButton: {
+    border: "1px solid rgba(5,181,187,0.16)",
+    borderRadius: 999,
+    padding: "9px 12px",
+    background: "rgba(255,255,255,0.9)",
+    color: "var(--text-secondary)",
+    fontWeight: 800,
+    cursor: "pointer",
+  },
+  groupField: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 8,
+  },
+  groupLabel: {
+    color: "var(--text-secondary)",
+    fontSize: "0.86rem",
+    fontWeight: 900,
+  },
+  groupMemberList: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+  },
+  groupMemberRow: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 12,
+    padding: 12,
+    border: "1px solid var(--border-soft)",
+    borderRadius: 18,
+    background: "rgba(255,255,255,0.92)",
+    cursor: "pointer",
+    textAlign: "left",
+  },
+  groupMemberRowSelected: {
+    borderColor: "rgba(5,181,187,0.34)",
+    background: "rgba(228,247,247,0.7)",
+  },
+  emptyCircle: {
+    width: 24,
+    height: 24,
+    borderRadius: "50%",
+    border: "2px solid rgba(5,181,187,0.2)",
+    flexShrink: 0,
+  },
+  checkedCircle: {
+    width: 24,
+    height: 24,
+    borderRadius: "50%",
+    display: "grid",
+    placeItems: "center",
+    background: "var(--brand-primary)",
+    color: "#ffffff",
+    fontSize: "0.78rem",
+    fontWeight: 900,
+    flexShrink: 0,
+  },
+  groupModalActions: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: 10,
   },
 };

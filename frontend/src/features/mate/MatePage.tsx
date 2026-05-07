@@ -22,7 +22,6 @@ import {
 } from "../../api/searchHistory";
 import { uploadImages } from "../../api/image";
 import { getMyProfile } from "../../api/auth";
-import { createDirectChatRoom } from "../../api/chat";
 import {
   deleteFriendSearchHistoryAll,
   deleteFriendSearchHistoryOne,
@@ -128,6 +127,7 @@ export default function MatePage() {
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
   const [feedPopupUserId, setFeedPopupUserId] = useState<string | null>(null);
   const [chatOpeningPostId, setChatOpeningPostId] = useState<string | null>(null);
+  const [toastMessage, setToastMessage] = useState("");
 
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [menuOpenPostId, setMenuOpenPostId] = useState<string | null>(null);
@@ -140,6 +140,13 @@ export default function MatePage() {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [imageUploading, setImageUploading] = useState(false);
+
+  function showToast(message: string): void {
+    setToastMessage(message);
+    window.setTimeout(() => {
+      setToastMessage((current) => (current === message ? "" : current));
+    }, 2800);
+  }
 
   useEffect(() => {
     draftFormRef.current = form;
@@ -439,7 +446,7 @@ export default function MatePage() {
         ...response.images.map((image) => image.image_url),
       ]);
     } catch (uploadError) {
-      window.alert(toErrorMessage(uploadError, "Image upload failed. Please try again."));
+      showToast(toErrorMessage(uploadError, "Image upload failed. Please try again."));
       setImagePreviews((current) => current.slice(0, current.length - selectedFiles.length));
     } finally {
       setImageUploading(false);
@@ -468,7 +475,7 @@ export default function MatePage() {
     } catch (draftError) {
       setDraftStatus("");
       if (showError) {
-        window.alert(toErrorMessage(draftError, "Failed to save draft. Please try again."));
+        showToast(toErrorMessage(draftError, "Failed to save draft. Please try again."));
       }
     } finally {
       window.setTimeout(() => {
@@ -516,7 +523,7 @@ export default function MatePage() {
         },
       }));
     } catch (friendError) {
-      window.alert(toErrorMessage(friendError, "Failed to send friend request. Please try again."));
+      showToast(toErrorMessage(friendError, "Failed to send friend request. Please try again."));
     } finally {
       setFriendRequestingUserId(null);
     }
@@ -532,7 +539,7 @@ export default function MatePage() {
       await sendFriendRequest(traveler.user_id);
       setRecommendedFriendRequested((current) => new Set(current).add(traveler.user_id));
     } catch (friendError) {
-      window.alert(toErrorMessage(friendError, "Failed to send friend request. Please try again."));
+      showToast(toErrorMessage(friendError, "Failed to send friend request. Please try again."));
     } finally {
       setFriendRequestingUserId(null);
     }
@@ -556,7 +563,7 @@ export default function MatePage() {
         )
       );
     } catch (friendError) {
-      window.alert(toErrorMessage(friendError, "Failed to send friend request. Please try again."));
+      showToast(toErrorMessage(friendError, "Failed to send friend request. Please try again."));
     } finally {
       setFriendRequestingUserId(null);
     }
@@ -567,10 +574,9 @@ export default function MatePage() {
 
     setChatOpeningPostId(user.user_id);
     try {
-      const room = await createDirectChatRoom(user.user_id);
-      navigate(`/chat/${room.chat_room_id}`);
+      navigate(`/chat/${user.user_id}`);
     } catch (chatError) {
-      window.alert(toErrorMessage(chatError, "Failed to open chat. Please try again."));
+      showToast(toErrorMessage(chatError, "Failed to open chat. Please try again."));
     } finally {
       setChatOpeningPostId(null);
     }
@@ -578,7 +584,7 @@ export default function MatePage() {
 
   async function handleSubmit(): Promise<void> {
     if (imageUploading) {
-      window.alert("Please wait until the image upload is complete.");
+      showToast("Please wait until the image upload is complete.");
       return;
     }
 
@@ -589,12 +595,12 @@ export default function MatePage() {
       !form.travel_start_date ||
       !form.travel_end_date
     ) {
-      window.alert("Please fill in all required fields.");
+      showToast("Please fill in all required fields.");
       return;
     }
 
     if (form.content.trim().length < 10) {
-      window.alert("Please enter at least 10 characters in the intro.");
+      showToast("Please enter at least 10 characters in the intro.");
       return;
     }
 
@@ -626,7 +632,7 @@ export default function MatePage() {
       const status = apiError.response?.status ?? "Network Error";
       const message = toErrorMessage(error, "Please try again.");
 
-      window.alert(`${editingPostId ? "Update" : "Create"} failed (${status})\n${message}`);
+      showToast(`${editingPostId ? "Update" : "Create"} failed (${status}). ${message}`);
     } finally {
       setSubmitting(false);
     }
@@ -659,7 +665,7 @@ export default function MatePage() {
       await deleteTripMatePost(post.post_id);
       setPosts((current) => current.filter((item) => item.post_id !== post.post_id));
     } catch {
-      window.alert("Failed to delete the post.");
+      showToast("Failed to delete the post.");
     }
   }
 
@@ -668,10 +674,9 @@ export default function MatePage() {
 
     setChatOpeningPostId(post.post_id);
     try {
-      const room = await createDirectChatRoom(post.user_id);
-      navigate(`/chat/${room.chat_room_id}`);
+      navigate(`/chat/${post.user_id}`);
     } catch (chatError) {
-      window.alert(toErrorMessage(chatError, "Failed to open chat. Please try again."));
+      showToast(toErrorMessage(chatError, "Failed to open chat. Please try again."));
     } finally {
       setChatOpeningPostId(null);
     }
@@ -682,11 +687,10 @@ export default function MatePage() {
 
     setChatOpeningPostId(traveler.user_id);
     try {
-      const room = await createDirectChatRoom(traveler.user_id);
       setSelectedRecommendedTraveler(null);
-      navigate(`/chat/${room.chat_room_id}`);
+      navigate(`/chat/${traveler.user_id}`);
     } catch (chatError) {
-      window.alert(toErrorMessage(chatError, "Failed to open chat. Please try again."));
+      showToast(toErrorMessage(chatError, "Failed to open chat. Please try again."));
     } finally {
       setChatOpeningPostId(null);
     }
@@ -1417,6 +1421,7 @@ export default function MatePage() {
         <div style={styles.menuBackdrop} onClick={() => setMenuOpenPostId(null)} />
       ) : null}
 
+      {toastMessage ? <div style={styles.toast}>{toastMessage}</div> : null}
     </div>
   );
 }
@@ -1497,11 +1502,7 @@ function UserSearchCard({
         </div>
       </div>
       <div style={styles.userResultActions}>
-        {isFriend ? (
-          <button type="button" style={styles.secondaryButton} onClick={onChat} disabled={busy}>
-            {busy ? "Opening..." : "Chat"}
-          </button>
-        ) : (
+        {!isFriend ? (
           <button
             type="button"
             style={canSendRequest ? styles.primaryButton : styles.secondaryButton}
@@ -1518,7 +1519,10 @@ function UserSearchCard({
                   ? "Blocked"
                   : "Add Friend"}
           </button>
-        )}
+        ) : null}
+        <button type="button" style={styles.secondaryButton} onClick={onChat} disabled={busy}>
+          {busy ? "Opening..." : "Chat"}
+        </button>
         <button type="button" style={styles.secondaryButton} onClick={onViewFeed}>
           Feed
         </button>
@@ -1724,7 +1728,7 @@ function PostModal({
               </button>
             ) : null}
             <button type="button" style={styles.secondaryButton} onClick={onViewProfile}>
-              View Feed
+              Feed
             </button>
             {!isOwnPost ? (
               <button type="button" style={styles.secondaryButton} onClick={onChat}>
@@ -3008,5 +3012,21 @@ const styles: Record<string, CSSProperties> = {
     inset: 0,
     zIndex: 10,
     background: "transparent",
+  },
+  toast: {
+    position: "fixed",
+    left: "50%",
+    bottom: 96,
+    zIndex: 120,
+    maxWidth: "min(88vw, 420px)",
+    transform: "translateX(-50%)",
+    padding: "12px 16px",
+    borderRadius: 16,
+    background: "rgba(24,26,32,0.92)",
+    color: "#ffffff",
+    fontSize: "0.9rem",
+    fontWeight: 800,
+    lineHeight: 1.35,
+    boxShadow: "0 18px 40px rgba(24,26,32,0.22)",
   },
 };

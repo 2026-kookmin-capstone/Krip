@@ -22,6 +22,10 @@ export interface ChatRoomMember extends ChatPeer {
   role?: string | null;
 }
 
+export interface ChatRoomMembersResponse {
+  items: ChatRoomMember[];
+}
+
 export interface LastMessagePreview {
   message_id: string;
   server_seq: number;
@@ -106,6 +110,13 @@ export async function getChatRooms(): Promise<ChatRoomListResponse> {
 export async function getChatRoom(chatRoomId: string): Promise<ChatRoom> {
   const { data } = await client.get<ChatRoom>(
     `/api/chat/rooms/${encodeURIComponent(chatRoomId)}`
+  );
+  return data;
+}
+
+export async function getChatRoomMembers(chatRoomId: string): Promise<ChatRoomMembersResponse> {
+  const { data } = await client.get<ChatRoomMembersResponse>(
+    `/api/chat/rooms/${encodeURIComponent(chatRoomId)}/members`
   );
   return data;
 }
