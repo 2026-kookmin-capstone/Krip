@@ -1,22 +1,38 @@
 """notification 도메인 통합 테스트 공통 fixture.
 
-서비스 → 레포지토리 → 실 PostgreSQL 까지 검증한다. FCM 외부 SDK 만 mock —
+서비스 → 레포지토리 → 실 PostgreSQL/Mongo 까지 검증한다. FCM 외부 SDK 만 mock —
 실제 네트워크 호출 없이 가드 체인과 토큰 정리 로직의 정확성을 본다.
 
-실 Redis/Mongo 는 불필요 (mute / fcm-token 도메인은 RDB 만 터치).
+fcm-token / mute 흐름은 RDB 만 터치 (실 Mongo 불필요). 인박스 (`inbox` 컬렉션)
+흐름은 실 Mongo 가 필요하므로 `mongo_db` / `inbox_service` fixture 가 opt-in 으로
+제공됨 — chat 도메인의 ``patch_external_clients`` 패턴과 일관.
 """
+import os
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 import pytest_asyncio
+from motor.motor_asyncio import AsyncIOMotorClient
 from sqlalchemy import select
 
 from app.domain.auth.model.user import User
 from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
 from app.domain.chat.model.chat_room_member import ChatRoomMember
 from app.domain.notification.model.fcm_token import FcmToken
+from app.domain.notification.model.inbox import InboxItem
 from app.domain.notification.service.fcm import FcmService
 from app.domain.notification.service.mute import MuteService
+from app.domain.notification.service.inbox import InboxService
+
+
+def _require_mongo_url() -> str:
+    url = os.getenv("MONGODB_TEST_URL")
+    if not url:
+        pytest.skip(
+            "MONGODB_TEST_URL 환경변수가 설정되지 않아 인박스 통합 테스트를 건너뜁니다.",
+            allow_module_level=False,
+        )
+    return url
 
 
 @pytest.fixture
@@ -118,3 +134,34 @@ async def fetch_tokens_by_user(session_factory, user_id: str) -> list[FcmToken]:
             select(FcmToken).where(FcmToken.user_id == user_id)
         )
         return list(result.scalars().all())
+
+
+# ──────────────────── 인박스 (Mongo) — opt-in fixtures ────────────────────
+
+@pytest_asyncio.fixture
+async def mongo_db():
+    """`inbox` 컬렉션 초기화 + beanie init.
+
+    매 테스트 전/후 컬렉션 drop — 인덱스도 함께 사라지므로 init_beanie 가 재생성. partial
+    unique 인덱스가 실 mongo 에 적용되어 dedup 흐름이 검증되는 것이 핵심.
+    """
+    from beanie import init_beanie
+
+    url = _require_mongo_url()
+    client = AsyncIOMotorClient(url, tz_aware=True)
+    db = client.get_default_database()
+
+    await db.inbox.drop()
+    await init_beanie(database=db, document_models=[InboxItem])
+
+    try:
+        yield db
+    finally:
+        await db.inbox.drop()
+        client.close()
+
+
+@pytest.fixture
+def inbox_service(mongo_db) -> InboxService:
+    """인박스 서비스 — stateless. 매 테스트마다 fresh 인스턴스로 충분."""
+    return InboxService()

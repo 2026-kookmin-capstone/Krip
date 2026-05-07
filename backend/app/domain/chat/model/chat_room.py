@@ -35,6 +35,9 @@ class ChatRoom(Base):
     """
 
     __tablename__ = "chat_room"
+    # `eager_defaults=True` — server-eval `updated_at` 을 RETURNING 으로 즉시 ORM 반영.
+    # async 환경에서 lazy-load (MissingGreenlet) 회피 표준 패턴.
+    __mapper_args__ = {"eager_defaults": True}
 
     chat_room_id = Column(String(50), primary_key=True, default=generate_chat_room_id)
     type = Column(Enum(ChatRoomType), nullable=False)

@@ -63,6 +63,7 @@ from app.domain.tour.model.tour_search_history import TourSearchHistory
 from app.domain.friend.model.search_history import FriendSearchHistory
 from app.domain.chat.model.chat_message import create_indexes as create_chat_message_indexes
 from app.domain.auth.model.withdrawal_request import WithdrawalRequest
+from app.domain.notification.model.inbox import InboxItem
 from app.config.setting import settings
 
 
@@ -92,6 +93,7 @@ class MongoDB:
                 Place,
                 TourSearchHistory,
                 FriendSearchHistory,
+                InboxItem,
             ]
         )
 

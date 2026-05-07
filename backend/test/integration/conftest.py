@@ -72,13 +72,22 @@ async def uow(session_factory) -> UnitOfWork:
 
 @pytest_asyncio.fixture
 async def seed_users(session_factory) -> Callable[..., "list[str]"]:
-    """원하는 개수만큼 테스트용 유저를 생성하고 ID 리스트를 반환하는 팩토리."""
+    """원하는 개수만큼 테스트용 유저를 생성하고 ID 리스트를 반환하는 팩토리.
+
+    운영의 `User.user_id` 는 `default=generate_user_id` 로 INSERT 시점에 hash 가 부여되어
+    중복이 자연 회피된다. 본 fixture 는 디버깅 용이성을 위해 명시적 `USER_IT_{idx:03d}` 를
+    부여하므로, 같은 테스트 함수 안에서 여러 번 호출되어도 충돌하지 않도록 closure 카운터
+    를 유지한다 (호출 간 idx 누적). fixture 자체는 함수 스코프라 테스트 간 자동 격리.
+    """
+    counter = {"value": 0}
 
     async def _seed(count: int = 3) -> list[str]:
         async with session_factory() as session:
             user_ids: list[str] = []
-            for i in range(count):
-                uid = f"USER_IT_{i:03d}"
+            for _ in range(count):
+                idx = counter["value"]
+                counter["value"] += 1
+                uid = f"USER_IT_{idx:03d}"
                 user_ids.append(uid)
                 session.add(
                     User(
@@ -92,8 +101,8 @@ async def seed_users(session_factory) -> Callable[..., "list[str]"]:
                     UserDetailInform(
                         user_id=uid,
                         email=f"it_{uid}@example.com",
-                        user_name=f"user{i}",
-                        age=20 + i,
+                        user_name=f"user{idx}",
+                        age=20 + (idx % 60),
                         gender=Gender.MALE,
                         nationality="KR",
                     )

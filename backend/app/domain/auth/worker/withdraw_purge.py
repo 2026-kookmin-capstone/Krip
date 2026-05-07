@@ -22,6 +22,7 @@ import asyncio
 
 from app.domain.auth.repository.withdrawal_request import WithdrawalRequestRepository
 from app.domain.auth.service.withdraw import WithdrawService
+from app.domain.notification.service.inbox import InboxService
 from app.database.session import UnitOfWork
 from app.core.logger import get_logger
 
@@ -100,7 +101,11 @@ async def purge_due_withdrawals_once() -> int:
     failed = 0
     for req in due:
         # 매 유저마다 새 UoW 로 isolated. 한 유저의 RDB 트랜잭션이 다른 유저로 leak 되지 않게.
-        service = WithdrawService(uow=UnitOfWork(session=factory))
+        # InboxService 는 stateless (Mongo 단독) 라 매 사이클 새로 만들어도 비용 0.
+        service = WithdrawService(
+            uow=UnitOfWork(session=factory),
+            inbox_service=InboxService(),
+        )
         try:
             await asyncio.wait_for(
                 service.purge(req.user_id),

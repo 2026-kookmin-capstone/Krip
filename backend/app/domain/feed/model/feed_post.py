@@ -50,6 +50,12 @@ class FeedPost(Base):
     """
     __tablename__ = "feed_post"
 
+    # `eager_defaults=True` — server_default / onupdate 컬럼 (`updated_at = func.now()`) 을
+    # INSERT/UPDATE 의 RETURNING 절로 즉시 ORM 에 반영. 미적용 시 onupdate 컬럼이 stale
+    # 마킹 → `_to_dto` 등 후속 access 가 lazy-load 발동 → async 경계에서 MissingGreenlet.
+    # SQLAlchemy 2.x async 환경에서 server-eval 컬럼을 안전하게 다루는 표준 패턴.
+    __mapper_args__ = {"eager_defaults": True}
+
     post_id = Column(String(50), primary_key=True, default=generate_feed_post_id)  # 피드 게시물 고유 ID
     user_id = Column(String(50), ForeignKey("users.user_id", ondelete="CASCADE"), nullable=False)  # 업로드한 유저 ID
     visibility = Column(

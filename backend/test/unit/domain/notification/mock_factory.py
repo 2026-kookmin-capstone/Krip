@@ -66,6 +66,24 @@ class ChatRoomMemberRepositoryMockFactory:
         return mock
 
 
+class InboxRepositoryMockFactory:
+    """인박스 (Mongo) Repository Mock — beanie/motor 의존 없이 동작 검증용.
+
+    각 메서드 default 는 "비어 있음" / "no-op" 흐름. 개별 테스트가 케이스별 override.
+    """
+
+    @classmethod
+    def create(cls) -> AsyncMock:
+        mock = AsyncMock()
+        mock.insert.return_value = None
+        mock.find_by_recipient.return_value = []
+        mock.count_unread.return_value = 0
+        mock.hide.return_value = False  # default: 미존재/타인소유
+        mock.mark_all_read.return_value = 0
+        mock.delete_by_user.return_value = 0
+        return mock
+
+
 # ──────────────────── FCM batch response helper ────────────────────
 
 def make_fcm_batch_response(

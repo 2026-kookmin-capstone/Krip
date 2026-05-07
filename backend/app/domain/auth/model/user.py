@@ -17,6 +17,10 @@ class UserStatus(str, enum.Enum):
 class User(Base):
     __tablename__ = "users"
 
+    # `eager_defaults=True` — server-eval `updated_at` 을 RETURNING 으로 즉시 ORM 반영.
+    # async 환경에서 lazy-load (MissingGreenlet) 회피 표준 패턴.
+    __mapper_args__ = {"eager_defaults": True}
+
     user_id = Column(String(50), primary_key=True, default=generate_user_id)
     auth_provider = Column(Enum(OAuthProvider), nullable=False)
     auth_provider_id = Column(String(255), nullable=False)
