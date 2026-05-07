@@ -14,6 +14,7 @@ from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
 from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHistory
 from app.domain.tour.model.tour_search_history import TourSearchHistory
 from app.domain.friend.model.search_history import FriendSearchHistory
+from app.domain.notification.service.notification import NotificationService
 from app.database.session import UnitOfWork, transactional
 from app.core.object_storage import get_object_storage
 from app.core.cache.redis_cache import get_redis_cache_manager
@@ -66,8 +67,9 @@ class WithdrawService:
         cancel UI 로 라우팅. `/api/auth/withdraw/cancel` 은 prefix 제외 대상이라 419 우회.
     """
 
-    def __init__(self, uow: UnitOfWork):
+    def __init__(self, uow: UnitOfWork, notification_service: NotificationService):
         self.uow = uow
+        self.notification_service = notification_service
         self.storage = get_object_storage()
         self.withdrawal_request_repo = WithdrawalRequestRepository()
 
@@ -286,6 +288,11 @@ class WithdrawService:
                 "탈퇴 영구 삭제 — MongoDB 삭제 실패, orphan 정리 필요 (user_id={}): {}",
                 user_id, e,
             )
+
+        # 알림 cascade (recipient/actor 양쪽 매칭) — NotificationService 가 self-swallow.
+        # 다음 worker 사이클에서 STALE_DOC 가드가 이미 RDB 상으론 사라진 user 의 doc 만 청소
+        # 하므로, 알림 cascade 가 실패해도 stale 알림은 TTL 30일로 자연 정리되어 안전.
+        await self.notification_service.cascade_user_withdrawn(user_id)
 
         # Object Storage
         try:

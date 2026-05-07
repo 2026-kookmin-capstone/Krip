@@ -11,13 +11,14 @@
       cap 으로 999+ 표시 지원 — `count_documents(limit=cap+1)`.
     - hide / mark_read: query 에 `recipient_id` 포함해 atomic 권한 검증. 다른 유저 알림에
       대한 modify 시도는 매칭 실패 → modified_count=0.
-    - cascade delete: 게시물/댓글/유저 삭제 시 일괄 hard delete. 인덱스 활용.
+    - cascade delete: 유저 탈퇴 시만 hard delete (recipient/actor 매칭). 게시물/댓글 삭제는
+      cascade 안 함 — 좋아요 취소 알림 보존 정책과 대칭, stale 은 TTL 30일로 자연 정리.
 """
 from typing import Optional
 from datetime import datetime, timezone
 from beanie import PydanticObjectId
 
-from app.domain.notification.model.notification import Notification, TargetType
+from app.domain.notification.model.notification import Notification
 
 
 # 알림창 페이지 크기 — 모바일 한 화면에 fit.
@@ -115,25 +116,7 @@ class NotificationRepository:
         return res.modified_count
 
 
-    # ──────────────────── Cascade (게시물/댓글/유저 정리) ────────────────────
-
-    async def delete_by_target(
-        self, target_type: TargetType, target_id: str,
-    ) -> int:
-        """게시물 삭제 cascade — `(target_type, target_id)` 매칭 알림 hard delete."""
-        coll = Notification.get_motor_collection()
-        res = await coll.delete_many(
-            {"target_type": target_type.value, "target_id": target_id},
-        )
-        return res.deleted_count
-
-
-    async def delete_by_comment(self, comment_id: str) -> int:
-        """댓글 삭제 cascade — `comment_id` 매칭 알림 hard delete (sparse 인덱스)."""
-        coll = Notification.get_motor_collection()
-        res = await coll.delete_many({"comment_id": comment_id})
-        return res.deleted_count
-
+    # ──────────────────── Cascade (유저 탈퇴만) ────────────────────
 
     async def delete_by_user(self, user_id: str) -> int:
         """유저 탈퇴 cascade — recipient 또는 actor 매칭 알림 일괄 hard delete.

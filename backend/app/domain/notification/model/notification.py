@@ -67,7 +67,10 @@ class Notification(Document):
     # ──────────────────── 대상 (deep link / cascade) ────────────────────
     target_type: TargetType = Field(..., description="대상 리소스 타입")
     target_id: str = Field(..., description="대상 리소스 ID (feed_post.post_id 등)")
-    comment_id: Optional[str] = Field(None, description="FEED_COMMENT 인 경우 댓글 ID — cascade 키")
+    comment_id: Optional[str] = Field(
+        None,
+        description="FEED_COMMENT 인 경우 댓글 ID",
+    )
 
     # ──────────────────── 표시용 snapshot (denormalize) ────────────────────
     # 알림 발생 시점에 박아 두는 값 — 이후 변경되어도 갱신 안 함.
@@ -113,18 +116,9 @@ class Notification(Document):
                 unique=True,
                 partialFilterExpression={"display": True},
             ),
-            # 게시물 삭제 시 관련 알림 일괄 정리.
-            IndexModel(
-                [("target_type", ASCENDING), ("target_id", ASCENDING)],
-                name="ix_notification_target",
-            ),
-            # 댓글 삭제 시 관련 알림 일괄 정리. sparse — 댓글 알림에만 존재.
-            IndexModel(
-                [("comment_id", ASCENDING)],
-                name="ix_notification_comment",
-                sparse=True,
-            ),
             # 탈퇴 시 actor_id 매칭 정리. recipient_id 는 위 compound 인덱스 prefix 로 커버.
+            # (게시물/댓글 삭제는 cascade 안 함 — 좋아요 취소 알림 보존 정책과 대칭. stale
+            # 알림은 deep link 클릭 시 클라가 404 처리, TTL 30일로 자연 정리.)
             IndexModel(
                 [("actor_id", ASCENDING)],
                 name="ix_notification_actor",

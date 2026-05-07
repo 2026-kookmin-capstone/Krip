@@ -19,6 +19,14 @@
     - `create_comment` 는 INSERT 직후 `find_by_id(saved.comment_id)` 로 reload (round-trip
       1회 추가) — async session 에서 relationship lazy-load 가 막혀 있어 explicit reload
       가 가장 명확한 패턴. 동일 트랜잭션의 read-your-own-writes 보장.
+
+알림 통합:
+    - `create_comment`: 트랜잭션 분리 (`_create_comment_tx` → outer). RDB 커밋 후 fan-out
+      best-effort. dto 의 user_name/profile 이 그대로 알림 snapshot 으로 사용 (joinedload
+      덕에 추가 fetch 불필요).
+    - `delete_comment`: 알림 cascade 안 함 — 좋아요 취소 알림 보존 정책과 대칭. stale 댓글
+      알림은 deep link 404 + TTL 30일로 자연 정리.
+    - 본인→본인 댓글은 fan-out skip (caller 가드 + NotificationService 가드).
 """
 from typing import Optional
 
@@ -27,7 +35,12 @@ from app.domain.feed.service.access import load_viewable_post
 from app.domain.feed.service.exception import FeedPostCommentNotFoundError
 from app.domain.feed.repository.feed_post_comment import FeedPostCommentRepository, PAGE_SIZE
 from app.domain.feed.model.feed_post_comment import FeedPostComment
-from app.domain.feed.dto.feed_post_comment import FeedPostCommentData, FeedPostCommentListData
+from app.domain.feed.dto.feed_post_comment import (
+    FeedPostCommentData,
+    FeedPostCommentListData,
+    CreateCommentResult,
+)
+from app.domain.notification.service.notification import NotificationService
 from app.database.session import UnitOfWork, transactional
 from app.core.logger import get_logger
 
@@ -48,24 +61,52 @@ def _normalize_content(content: str) -> str:
 
 
 class FeedPostCommentService:
-    def __init__(self, uow: UnitOfWork):
+    def __init__(self, uow: UnitOfWork, notification_service: NotificationService):
         self.uow = uow
+        self.notification_service = notification_service
 
 
     # ──────────────────── 작성 ────────────────────
 
-    @transactional
     async def create_comment(
         self,
         user_id: str,
         post_id: str,
         content: str,
     ) -> FeedPostCommentData:
-        """댓글 작성 — 게시물 가시성 검증 후 INSERT, 작성자 프로필 포함 응답.
+        """댓글 작성 — 트랜잭션 내 INSERT + reload, 트랜잭션 밖에서 알림 fan-out (best-effort).
 
-        INSERT 직후 같은 row 를 `find_by_id(saved.comment_id)` 로 reload — joinedload 가
-        user.detail 까지 한 쿼리에 채워, 응답 DTO 가 닉네임/프로필 이미지 즉시 포함.
-        async session 에서 attribute lazy-load 가 막혀 있어 explicit reload 가 필요.
+        본인→본인 댓글은 fan-out skip. Mongo 일시 장애 시 알림 누락되어도 사용자 응답 정상.
+        """
+        result = await self._create_comment_tx(
+            user_id=user_id, post_id=post_id, content=content,
+        )
+        if result.notify_recipient_id is not None:
+            await self.notification_service.notify_feed_comment(
+                recipient_id=result.notify_recipient_id,
+                actor_id=user_id,
+                actor_name=result.dto.user_name,
+                actor_profile_image_url=result.dto.profile_image_url,
+                post_id=post_id,
+                post_preview=result.notify_post_preview,
+                comment_id=result.dto.comment_id,
+                comment_content=result.dto.content,
+            )
+        return result.dto
+
+
+    @transactional
+    async def _create_comment_tx(
+        self,
+        *,
+        user_id: str,
+        post_id: str,
+        content: str,
+    ) -> CreateCommentResult:
+        """댓글 작성 트랜잭션 — 가시성 검증 → INSERT → reload → fan-out payload 합성.
+
+        joinedload(user.detail) 로 dto 변환 시 닉네임/프로필 자동 채움 → 별도 detail fetch
+        불필요. 본인→본인이면 `notify_recipient_id=None` 으로 outer 에서 skip.
         """
         post = await load_viewable_post(self._session, viewer_id=user_id, post_id=post_id)
         normalized = _normalize_content(content)
@@ -84,7 +125,21 @@ class FeedPostCommentService:
         )
         # joinedload 포함 reload — user.detail 까지 같은 SELECT 로 채움
         loaded = await repo.find_by_id(saved.comment_id)
-        return self._to_dto(loaded)
+        dto = self._to_dto(loaded)
+
+        # 본인→본인 — outer 가 fan-out skip
+        if post.user_id == user_id:
+            return CreateCommentResult(
+                dto=dto,
+                notify_recipient_id=None,
+                notify_post_preview=None,
+            )
+
+        return CreateCommentResult(
+            dto=dto,
+            notify_recipient_id=post.user_id,
+            notify_post_preview=post.thumbnail_small_url,
+        )
 
 
     # ──────────────────── 목록 ────────────────────
@@ -116,7 +171,7 @@ class FeedPostCommentService:
         post_id: str,
         comment_id: str,
     ) -> None:
-        """댓글 삭제 — 작성자 본인만.
+        """댓글 삭제 — 작성자 본인만. 알림은 cascade 안 함 (정책상 보존).
 
         post_id 도 받아 path 일관성 + comment ↔ post 매칭 검증. 다른 post 의 comment_id 가
         넘어오면 `FeedPostCommentNotFoundError` (mismatch == not found 로 일원화).

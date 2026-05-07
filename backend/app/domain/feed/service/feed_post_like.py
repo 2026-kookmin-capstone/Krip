@@ -20,6 +20,13 @@
       변환 직후 함수에서 빠져나오므로 같은 session 의 추가 쿼리 (PendingRollbackError 위험)
       는 없고, `@transactional` 의 __aexit__ 가 rollback 실행 → 트랜잭션 정합 보장.
 
+알림 fan-out (`add_like` 전용):
+    - `_add_like_tx` (트랜잭션 내) → outer `add_like` (트랜잭션 밖) 에서 fan-out 호출.
+      RDB 커밋 후 Mongo insert → RDB 롤백된 좋아요에 대한 알림 발사 회피.
+    - 본인→본인 좋아요는 caller 가드로 Mongo 호출 자체 skip (NotificationService 도 가드,
+      이중 안전망).
+    - actor 닉네임/프로필은 같은 트랜잭션 안에서 fetch — payload 합성 후 outer 에 넘김.
+
 응답: `(post_id, like_count)` — 클라이언트가 액션 직후 UI 즉시 갱신 가능.
 """
 from sqlalchemy.exc import IntegrityError
@@ -27,7 +34,9 @@ from sqlalchemy.exc import IntegrityError
 from app.domain.feed.service.access import load_viewable_post
 from app.domain.feed.repository.feed_post_like import FeedPostLikeRepository
 from app.domain.feed.model.feed_post_like import FeedPostLike
-from app.domain.feed.dto.feed_post_like import LikedUserData
+from app.domain.feed.dto.feed_post_like import AddLikePayload, LikedUserData
+from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
+from app.domain.notification.service.notification import NotificationService
 from app.database.session import UnitOfWork, transactional
 from app.core.logger import get_logger
 
@@ -36,24 +45,43 @@ logger = get_logger("feed.post.like.service")
 
 
 class FeedPostLikeService:
-    def __init__(self, uow: UnitOfWork):
+    def __init__(self, uow: UnitOfWork, notification_service: NotificationService):
         self.uow = uow
+        self.notification_service = notification_service
 
 
     # ──────────────────── 추가 ────────────────────
 
-    @transactional
     async def add_like(self, user_id: str, post_id: str) -> int:
-        """좋아요 추가 — 게시물 가시성 검증 후 INSERT, 새 like_count 반환.
+        """좋아요 추가 — 트랜잭션 내 INSERT 후, 트랜잭션 밖에서 알림 fan-out (best-effort).
+
+        본인→본인 좋아요는 fan-out skip (caller 가드 + NotificationService 가드 이중).
+        Mongo 일시 장애로 알림 누락되어도 사용자 응답은 정상 (`_safe_insert` swallow).
+        """
+        payload = await self._add_like_tx(user_id=user_id, post_id=post_id)
+        if payload.recipient_id != user_id:
+            await self.notification_service.notify_feed_like(
+                recipient_id=payload.recipient_id,
+                actor_id=user_id,
+                actor_name=payload.actor_name,
+                actor_profile_image_url=payload.actor_profile_image_url,
+                post_id=post_id,
+                post_preview=payload.post_preview,
+            )
+        return payload.like_count
+
+
+    @transactional
+    async def _add_like_tx(self, *, user_id: str, post_id: str) -> AddLikePayload:
+        """좋아요 추가 트랜잭션 — 가시성 검증 → INSERT → count → fan-out payload 합성.
 
         흐름:
             1. `load_viewable_post` — 미존재/차단/visibility 검증
             2. 중복 검사 (composite PK 로 빠른 lookup)
             3. INSERT + count
+            4. payload 합성 (본인이면 detail fetch skip — outer 가 어차피 fan-out 안 함)
 
-        race 처리: 거의 동시에 두 요청이 2번 분기를 통과 후 한 쪽이 INSERT 실패 →
-        composite PK 위반 `IntegrityError` 를 catch 해 동일 메시지의 `ValueError` 로
-        변환. 라우터의 `except ValueError` 가 그대로 400 매핑. 자세한 근거는 모듈 docstring.
+        race 처리는 모듈 docstring 참조.
         """
         post = await load_viewable_post(self._session, viewer_id=user_id, post_id=post_id)
         like_repo = FeedPostLikeRepository(self._session)
@@ -68,7 +96,27 @@ class FeedPostLikeService:
             raise ValueError("이미 좋아요를 누른 게시물입니다.") from None
         like_count = await like_repo.count_by_post(post.post_id)
         logger.info("피드 좋아요 추가 (user_id={}, post_id={})", user_id, post.post_id)
-        return like_count
+
+        # 본인→본인 — outer 가 fan-out skip 하므로 detail fetch 생략.
+        if post.user_id == user_id:
+            return AddLikePayload(
+                like_count=like_count,
+                recipient_id=post.user_id,
+                actor_name="",
+                actor_profile_image_url=None,
+                post_preview=None,
+            )
+
+        # 외부 actor — 같은 트랜잭션 안에서 detail fetch (round-trip 1회).
+        detail_repo = UserDetailInformRepository(self._session)
+        detail = await detail_repo.find_by_user_id(user_id)
+        return AddLikePayload(
+            like_count=like_count,
+            recipient_id=post.user_id,
+            actor_name=detail.user_name if detail is not None else "",
+            actor_profile_image_url=detail.profile_image_url if detail is not None else None,
+            post_preview=post.thumbnail_small_url,
+        )
 
 
     # ──────────────────── 취소 ────────────────────

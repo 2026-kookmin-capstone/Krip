@@ -61,14 +61,26 @@ class Container(containers.DeclarativeContainer):
 
     uow = providers.Factory(UnitOfWork, session=session_factory)
 
+    # 알림창 (Mongo, stateless) — fan-out / cascade 진입점. RDB 의존성이 없어 가장 먼저
+    # 선언 → 모든 도메인 service 가 자기 자리에서 자유롭게 의존할 수 있도록.
+    notification_service = providers.Factory(NotificationService)
+
     # 서비스 계층 주입
     signup_service = providers.Factory(SignupService, uow=uow)
     register_service = providers.Factory(RegisterService, uow=uow)
     profile_service = providers.Factory(ProfileService, uow=uow)
-    withdraw_service = providers.Factory(WithdrawService, uow=uow)
+    withdraw_service = providers.Factory(
+        WithdrawService, uow=uow, notification_service=notification_service,
+    )
     tripmate_post_draft_service = providers.Factory(TripmatePostDraftService)
-    tripmate_post_service = providers.Factory(TripmatePostService, uow=uow, draft_service=tripmate_post_draft_service)
-    tripmate_post_like_service = providers.Factory(TripmatePostLikeService, uow=uow)
+    tripmate_post_service = providers.Factory(
+        TripmatePostService,
+        uow=uow,
+        draft_service=tripmate_post_draft_service,
+    )
+    tripmate_post_like_service = providers.Factory(
+        TripmatePostLikeService, uow=uow, notification_service=notification_service,
+    )
     tripmate_search_history_service = providers.Factory(TripmateSearchHistoryService)
     tripmate_image_service = providers.Factory(TripmateImageService, uow=uow)
 
@@ -92,9 +104,6 @@ class Container(containers.DeclarativeContainer):
     # 알림 (FCM) — message_service 가 의존하므로 그보다 먼저 선언.
     fcm_service = providers.Factory(FcmService, uow=uow)
     mute_service = providers.Factory(MuteService, uow=uow)
-    # 알림창 (Mongo) — RDB 의존성 없는 stateless service. fan-out 이 best-effort 라
-    # caller 트랜잭션 커밋 후 호출.
-    notification_service = providers.Factory(NotificationService)
 
     # 채팅 — 비즈 (Factory: 호출마다 UoW 새로 바인딩)
     #   - message_service / block_cache_service 는 room_service / user_block_service 보다
@@ -108,7 +117,7 @@ class Container(containers.DeclarativeContainer):
     message_history_service = providers.Factory(MessageHistoryService, uow=uow)
     block_cache_service = providers.Factory(BlockCacheService, uow=uow)
 
-    # 친구 — chat 의 block_cache_service 에 의존 (PHASE_2 #6)
+    # 친구 — chat 의 block_cache_service 에 의존
     friendship_service = providers.Factory(FriendshipService, uow=uow)
     user_block_service = providers.Factory(
         UserBlockService, uow=uow, block_cache_service=block_cache_service,
@@ -117,8 +126,12 @@ class Container(containers.DeclarativeContainer):
     friend_search_service = providers.Factory(FriendSearchService, uow=uow)
     friend_search_history_service = providers.Factory(FriendSearchHistoryService)
 
-    # 피드
+    # 피드 — 좋아요/댓글 fan-out 만 알림 의존 (게시물/댓글 삭제는 cascade 안 함).
     feed_post_service = providers.Factory(FeedPostService, uow=uow)
-    feed_post_like_service = providers.Factory(FeedPostLikeService, uow=uow)
-    feed_post_comment_service = providers.Factory(FeedPostCommentService, uow=uow)
+    feed_post_like_service = providers.Factory(
+        FeedPostLikeService, uow=uow, notification_service=notification_service,
+    )
+    feed_post_comment_service = providers.Factory(
+        FeedPostCommentService, uow=uow, notification_service=notification_service,
+    )
     feed_popup_service = providers.Factory(FeedPopupService, uow=uow)

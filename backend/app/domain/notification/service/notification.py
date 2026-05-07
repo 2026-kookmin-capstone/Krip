@@ -16,9 +16,11 @@ API 매핑:
     notify_tripmate_like ← tripmate_post_like.add_like
 
 cascade 호출 매핑:
-    cascade_post_deleted     ← feed_post / tripmate_post 삭제 service
-    cascade_comment_deleted  ← feed_post_comment 삭제 service
-    cascade_user_withdrawn   ← withdraw_purge worker
+    cascade_user_withdrawn   ← withdraw_purge worker (유저 자체가 사라져 알림 의미 소멸)
+
+게시물/댓글 삭제는 cascade 안 함 — 좋아요 취소 알림 보존 정책과 대칭. "그 시점에 좋아요/댓글이
+있었다" 는 이벤트 사실은 게시물·댓글 삭제 후에도 보존. deep link 클릭 시 클라가 404 처리,
+target_preview 썸네일이 깨질 수 있으나 TTL 30일로 자연 정리.
 """
 from typing import Optional
 from pymongo.errors import DuplicateKeyError
@@ -236,41 +238,27 @@ class NotificationService:
         logger.info("알림 hide (recipient_id={}, notification_id={})", recipient_id, notification_id)
 
 
-    # ──────────────────── Cascade ────────────────────
-
-    async def cascade_post_deleted(
-        self, target_type: TargetType, target_id: str,
-    ) -> int:
-        """게시물 삭제 시 호출 — 관련 알림 일괄 hard delete. 삭제된 row 수 반환."""
-        deleted = await self.repo.delete_by_target(target_type, target_id)
-        if deleted > 0:
-            logger.info(
-                "알림 cascade post_deleted (target_type={}, target_id={}, deleted={})",
-                target_type.value, target_id, deleted,
-            )
-        return deleted
-
-
-    async def cascade_comment_deleted(self, comment_id: str) -> int:
-        """댓글 삭제 시 호출 — 매칭 알림 hard delete."""
-        deleted = await self.repo.delete_by_comment(comment_id)
-        if deleted > 0:
-            logger.info(
-                "알림 cascade comment_deleted (comment_id={}, deleted={})",
-                comment_id, deleted,
-            )
-        return deleted
-
+    # ──────────────────── Cascade (유저 탈퇴만) ────────────────────
 
     async def cascade_user_withdrawn(self, user_id: str) -> int:
-        """유저 탈퇴 시 호출 — recipient/actor 어느 쪽이든 매칭되는 알림 hard delete."""
-        deleted = await self.repo.delete_by_user(user_id)
-        if deleted > 0:
-            logger.info(
-                "알림 cascade user_withdrawn (user_id={}, deleted={})",
-                user_id, deleted,
+        """유저 탈퇴 cascade — recipient/actor 어느 쪽이든 매칭되는 알림 hard delete. best-effort.
+
+        실패 시 stale 잔존 → withdraw_purge worker 가 재시도되거나 TTL 30일로 자연 정리.
+        """
+        try:
+            deleted = await self.repo.delete_by_user(user_id)
+            if deleted > 0:
+                logger.info(
+                    "알림 cascade user_withdrawn (user_id={}, deleted={})",
+                    user_id, deleted,
+                )
+            return deleted
+        except Exception as e:
+            logger.warning(
+                "알림 cascade user_withdrawn 실패 (user_id={}, error={})",
+                user_id, e,
             )
-        return deleted
+            return 0
 
 
     # ──────────────────── 내부 유틸 ────────────────────
