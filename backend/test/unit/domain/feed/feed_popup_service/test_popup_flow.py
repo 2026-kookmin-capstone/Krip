@@ -92,7 +92,7 @@ class TestPopupAssembly:
     async def test_maps_profile_fields(self, service, user_repo_mock, feed_repo_mock):
         user_repo_mock.find_by_id_with_profile.return_value = make_user_with_profile_mock(
             user_id="USER_owner", user_name="조현상", nationality="korea",
-            travel_styles=[TravelStyle.ACTIVITY, TravelStyle.FOOD],
+            travel_styles=[TravelStyle.ACTIVITY, TravelStyle.FOOD_TOUR],
             profile_image_url="https://x/p.jpg",
         )
         feed_repo_mock.find_by_owner.return_value = []
@@ -102,7 +102,7 @@ class TestPopupAssembly:
         assert result.user_id == "USER_owner"
         assert result.user_name == "조현상"
         assert result.nationality == "korea"
-        assert result.travel_styles == [TravelStyle.ACTIVITY, TravelStyle.FOOD]
+        assert result.travel_styles == [TravelStyle.ACTIVITY, TravelStyle.FOOD_TOUR]
         assert result.profile_image_url == "https://x/p.jpg"
         assert result.feed_items == []
 

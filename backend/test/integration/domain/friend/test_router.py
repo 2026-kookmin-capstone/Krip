@@ -259,7 +259,7 @@ def _friend_detail_dto(user_id: str = "USER_b") -> FriendDetailData:
         age=25,
         gender=Gender.MALE,
         nationality="KR",
-        travel_styles=[TravelStyle.FOOD],
+        travel_styles=[TravelStyle.FOOD_TOUR],
         friendship_id=None,
         friendship_status=None,
         is_requester=None,
@@ -281,7 +281,7 @@ class TestDetailEndpoint:
         body = resp.json()
         assert body["user_id"] == "USER_b"
         assert body["user_name"] == "피어"
-        assert body["travel_styles"] == ["food"]
+        assert body["travel_styles"] == ["food_tour"]
         # 민감 정보는 응답에 없어야 함
         assert "email" not in body
         assert "phone_number" not in body
@@ -364,7 +364,7 @@ def _search_item_dto(
         user_id=user_id,
         user_name=user_name,
         nationality="KR",
-        travel_styles=[TravelStyle.FOOD],
+        travel_styles=[TravelStyle.FOOD_TOUR],
         friendship_status=friendship_status,
         is_requester=is_requester,
         i_blocked_peer=False,
@@ -398,7 +398,7 @@ class TestSearchEndpoint:
         assert item["user_id"] == "USER_b"
         assert item["user_name"] == "영희"
         assert item["nationality"] == "KR"
-        assert item["travel_styles"] == ["food"]
+        assert item["travel_styles"] == ["food_tour"]
         assert item["friendship_status"] is None
         assert item["is_requester"] is None
         assert item["i_blocked_peer"] is False

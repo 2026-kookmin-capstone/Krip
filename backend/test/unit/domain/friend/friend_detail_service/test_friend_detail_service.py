@@ -42,7 +42,7 @@ class TestGetFriendDetail:
             user_id="USER_b",
             user_name="영희",
             age=28,
-            travel_styles=[TravelStyle.FOOD, TravelStyle.ACTIVITY],
+            travel_styles=[TravelStyle.FOOD_TOUR, TravelStyle.ACTIVITY],
         )
         friendship_repo_mock.find_between.return_value = None
         block_repo_mock.has_blocker_blocked.return_value = False
@@ -52,7 +52,7 @@ class TestGetFriendDetail:
         assert result.user_id == "USER_b"
         assert result.user_name == "영희"
         assert result.age == 28
-        assert result.travel_styles == [TravelStyle.FOOD, TravelStyle.ACTIVITY]
+        assert result.travel_styles == [TravelStyle.FOOD_TOUR, TravelStyle.ACTIVITY]
         assert result.friendship_id is None
         assert result.friendship_status is None
         assert result.is_requester is None

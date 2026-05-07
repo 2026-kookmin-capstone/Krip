@@ -270,7 +270,7 @@ class TestProfileFields:
         a, b, _ = await seed_users(3)
 
         async with session_factory() as s:
-            s.add(UserTravelStyle(user_id=b, style=TravelStyle.FOOD))
+            s.add(UserTravelStyle(user_id=b, style=TravelStyle.FOOD_TOUR))
             s.add(UserTravelStyle(user_id=b, style=TravelStyle.ACTIVITY))
             await s.commit()
 
@@ -278,7 +278,7 @@ class TestProfileFields:
         result = await search_service.search(viewer_id=a, keyword="user1")
 
         item = next(it for it in result.items if it.user_id == b)
-        assert set(item.travel_styles) == {TravelStyle.FOOD, TravelStyle.ACTIVITY}
+        assert set(item.travel_styles) == {TravelStyle.FOOD_TOUR, TravelStyle.ACTIVITY}
 
     async def test_returns_public_profile_fields_only(self, uow, seed_users):
         """민감 정보(email, phone_number, age, gender 등) 는 응답 DTO 에 없음."""
