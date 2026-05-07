@@ -41,7 +41,7 @@ class FeedPopupResponse(BaseModel):
     travel_styles: List[TravelStyle] = Field(
         ...,
         description="여행 스타일 목록",
-        examples=[["activity", "food"]],
+        examples=[["activity", "food_tour", "budget_moderate"]],
     )
     profile_image_url: Optional[str] = Field(
         None,

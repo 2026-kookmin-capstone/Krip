@@ -27,7 +27,7 @@ def _kwargs_baseline(**overrides):
         "age": 25,
         "gender": Gender.MALE,
         "nationality": "KR",
-        "travel_styles": [TravelStyle.ACTIVITY, TravelStyle.RELAXATION],
+        "travel_styles": [TravelStyle.ACTIVITY, TravelStyle.HEALING],
     }
     base.update(overrides)
     return base
@@ -78,7 +78,7 @@ class TestRegisterDetail:
         user_repo_mock.find_by_id.return_value = UserFactory.create(user_id="USER_a")
         detail_repo_mock.find_by_user_id.return_value = None
 
-        styles_input = [TravelStyle.ACTIVITY, TravelStyle.RELAXATION, TravelStyle.SHOPPING]
+        styles_input = [TravelStyle.ACTIVITY, TravelStyle.HEALING, TravelStyle.SHOPPING]
         await service.register_detail(**_kwargs_baseline(travel_styles=styles_input))
 
         saved_styles = style_repo_mock.save_all.await_args.args[0]

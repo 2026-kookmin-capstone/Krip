@@ -72,7 +72,7 @@ class TestSearchDtoMapping:
             user_id="USER_b",
             user_name="영희",
             nationality="KR",
-            travel_styles=[TravelStyle.FOOD],
+            travel_styles=[TravelStyle.FOOD_TOUR],
         )
         peer.detail.profile_image_url = "https://cdn/x.png"
         search_repo_mock.search_active_users.return_value = [peer]
@@ -85,7 +85,7 @@ class TestSearchDtoMapping:
         assert item.user_id == "USER_b"
         assert item.user_name == "영희"
         assert item.nationality == "KR"
-        assert item.travel_styles == [TravelStyle.FOOD]
+        assert item.travel_styles == [TravelStyle.FOOD_TOUR]
         assert item.profile_image_url == "https://cdn/x.png"
         assert item.friendship_status is None
         assert item.is_requester is None

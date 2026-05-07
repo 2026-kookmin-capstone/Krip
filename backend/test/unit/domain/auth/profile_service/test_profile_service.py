@@ -143,7 +143,7 @@ class TestProfileFieldMapping:
             ),
             travel_styles=[
                 _mk_travel_style(TravelStyle.ACTIVITY),
-                _mk_travel_style(TravelStyle.FOOD),
+                _mk_travel_style(TravelStyle.FOOD_TOUR),
             ],
         )
 
@@ -159,7 +159,7 @@ class TestProfileFieldMapping:
         assert result.gender == Gender.FEMALE
         assert result.nationality == "korea"
         assert result.profile_image_url == "https://cdn.example.com/me.jpg"
-        assert result.travel_styles == [TravelStyle.ACTIVITY, TravelStyle.FOOD]
+        assert result.travel_styles == [TravelStyle.ACTIVITY, TravelStyle.FOOD_TOUR]
         assert result.notification_muted is True
 
     async def test_empty_travel_styles_returns_empty_list(
