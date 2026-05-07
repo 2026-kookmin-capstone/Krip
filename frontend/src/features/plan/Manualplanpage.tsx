@@ -96,7 +96,7 @@ function normalizePlaces(payload: TourPlaceApiItem[]): TourPlace[] {
     return {
       id,
       name,
-      category: String(item.category || item.type || item.place_type || "장소"),
+      category: String(item.category || item.type || item.place_type || "Place"),
       summary: String(
         item.summary ||
           item.description ||

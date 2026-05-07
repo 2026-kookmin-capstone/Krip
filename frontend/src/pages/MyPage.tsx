@@ -64,6 +64,14 @@ export default function MyPage() {
   const [isFeedPostMenuOpen, setIsFeedPostMenuOpen] = useState(false);
   const [commentInput, setCommentInput] = useState("");
   const [isFeedActionRunning, setIsFeedActionRunning] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+
+  function showToast(message: string): void {
+    setToastMessage(message);
+    window.setTimeout(() => {
+      setToastMessage((current) => (current === message ? "" : current));
+    }, 2800);
+  }
 
   useEffect(() => {
     getMyProfile()
@@ -111,13 +119,13 @@ export default function MyPage() {
     if (!file) return;
 
     if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
-      window.alert("Please choose a JPG, PNG, or WEBP image.");
+      showToast("Please choose a JPG, PNG, or WEBP image.");
       event.target.value = "";
       return;
     }
 
     if (file.size > 10 * 1024 * 1024) {
-      window.alert("Please choose an image smaller than 10MB.");
+      showToast("Please choose an image smaller than 10MB.");
       event.target.value = "";
       return;
     }
@@ -130,7 +138,7 @@ export default function MyPage() {
   async function handleFeedUpload(): Promise<void> {
     if (!feedFile || isFeedUploading) return;
     if (feedPosts.length >= 100) {
-      window.alert("The maximum feed photo limit is 100.");
+      showToast("The maximum feed photo limit is 100.");
       return;
     }
 
@@ -198,7 +206,7 @@ export default function MyPage() {
     try {
       updateFeedPostState(await updateFeedPostVisibility(selectedFeedPost.post_id, visibility));
     } catch (error) {
-      window.alert(toErrorMessage(error, "Failed to update visibility."));
+      showToast(toErrorMessage(error, "Failed to update visibility."));
     } finally {
       setIsFeedActionRunning(false);
     }
@@ -218,7 +226,7 @@ export default function MyPage() {
       setIsFeedPostEditing(false);
       setIsFeedPostMenuOpen(false);
     } catch (error) {
-      window.alert(toErrorMessage(error, "Failed to update caption."));
+      showToast(toErrorMessage(error, "Failed to update caption."));
     } finally {
       setIsFeedActionRunning(false);
     }
@@ -236,7 +244,7 @@ export default function MyPage() {
       );
       setSelectedFeedPost(null);
     } catch (error) {
-      window.alert(toErrorMessage(error, "Failed to delete feed photo."));
+      showToast(toErrorMessage(error, "Failed to delete feed photo."));
     } finally {
       setIsFeedActionRunning(false);
     }
@@ -257,10 +265,10 @@ export default function MyPage() {
           updateFeedPostState({ ...selectedFeedPost, like_count: response.like_count });
           setSelectedFeedLikes((await getFeedPostLikes(selectedFeedPost.post_id)).users);
         } catch (unlikeError) {
-          window.alert(toErrorMessage(unlikeError, "Failed to update like."));
+          showToast(toErrorMessage(unlikeError, "Failed to update like."));
         }
       } else {
-        window.alert(toErrorMessage(error, "Failed to update like."));
+        showToast(toErrorMessage(error, "Failed to update like."));
       }
     } finally {
       setIsFeedActionRunning(false);
@@ -281,7 +289,7 @@ export default function MyPage() {
       });
       setCommentInput("");
     } catch (error) {
-      window.alert(toErrorMessage(error, "Failed to add comment."));
+      showToast(toErrorMessage(error, "Failed to add comment."));
     } finally {
       setIsFeedActionRunning(false);
     }
@@ -302,7 +310,7 @@ export default function MyPage() {
         comment_count: Math.max(0, selectedFeedPost.comment_count - 1),
       });
     } catch (error) {
-      window.alert(toErrorMessage(error, "Failed to delete comment."));
+      showToast(toErrorMessage(error, "Failed to delete comment."));
     } finally {
       setIsFeedActionRunning(false);
     }
@@ -328,7 +336,7 @@ export default function MyPage() {
       await withdrawUser();
       navigate("/login", { replace: true });
     } catch (error) {
-      window.alert(toErrorMessage(error, "Account withdrawal failed. Please try again."));
+      showToast(toErrorMessage(error, "Account withdrawal failed. Please try again."));
       setIsWithdrawing(false);
     }
   }
@@ -342,13 +350,13 @@ export default function MyPage() {
     setIsProfileImageMenuOpen(false);
 
     if (!["image/jpeg", "image/png", "image/webp", "image/gif"].includes(file.type)) {
-      window.alert("Please choose a JPG, PNG, WEBP, or GIF image.");
+      showToast("Please choose a JPG, PNG, WEBP, or GIF image.");
       event.target.value = "";
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      window.alert("Please choose an image smaller than 5MB.");
+      showToast("Please choose an image smaller than 5MB.");
       event.target.value = "";
       return;
     }
@@ -370,7 +378,7 @@ export default function MyPage() {
       }
     } catch (error) {
       setProfileImagePreview("");
-      window.alert(toErrorMessage(error, "Profile photo upload failed. Please try again."));
+      showToast(toErrorMessage(error, "Profile photo upload failed. Please try again."));
     } finally {
       setIsUploadingProfileImage(false);
       event.target.value = "";
@@ -400,7 +408,7 @@ export default function MyPage() {
       setProfileImagePreview("");
       setIsProfileImageMenuOpen(false);
     } catch (error) {
-      window.alert(toErrorMessage(error, "Profile photo delete failed. Please try again."));
+      showToast(toErrorMessage(error, "Profile photo delete failed. Please try again."));
     } finally {
       setIsDeletingProfileImage(false);
     }
@@ -490,14 +498,14 @@ export default function MyPage() {
               onClick={() => setIsSettingsOpen(true)}
               aria-label="Open settings"
             >
-              ⚙
+              &#9881;
             </button>
             <button
               type="button"
               style={styles.newPostButton}
               onClick={() => {
                 if (feedPosts.length >= 100) {
-                  window.alert("The maximum feed photo limit is 100.");
+                  showToast("The maximum feed photo limit is 100.");
                   return;
                 }
                 feedImageInputRef.current?.click();
@@ -537,7 +545,7 @@ export default function MyPage() {
               >
                 <img src={getFeedImageUrl(post)} alt="" style={styles.feedTileImage} />
                 <span style={styles.feedTileMeta}>
-                  {post.like_count} likes · {post.comment_count} comments
+                  {post.like_count} likes / {post.comment_count} comments
                 </span>
               </button>
             ))}
@@ -673,6 +681,7 @@ export default function MyPage() {
           onCommentDelete={(comment) => void handleCommentDelete(comment)}
         />
       ) : null}
+      {toastMessage ? <div style={styles.toast}>{toastMessage}</div> : null}
     </div>
   );
 }
@@ -707,7 +716,7 @@ function CreatePostModal({
       <div style={styles.createPostModal}>
         <div style={styles.createPostTopBar}>
           <button type="button" style={styles.createPostIconButton} onClick={onBack}>
-            ←
+            &lt;
           </button>
           <strong style={styles.createPostTitle}>Create New Post</strong>
           <button
@@ -1337,24 +1346,26 @@ const styles: Record<string, CSSProperties> = {
     zIndex: 80,
     display: "grid",
     placeItems: "center",
-    padding: 20,
+    padding: 0,
     background: "rgba(8,12,16,0.74)",
   },
   createPostModal: {
-    width: "min(1220px, 100%)",
-    maxHeight: "92dvh",
+    width: "100%",
+    height: "100dvh",
+    maxHeight: "100dvh",
     display: "flex",
     flexDirection: "column",
     overflow: "hidden",
-    borderRadius: 4,
+    borderRadius: 0,
     background: "#24262d",
     color: "#f5f6f7",
     boxShadow: "0 28px 90px rgba(0,0,0,0.38)",
   },
   createPostTopBar: {
-    height: 52,
+    height: 54,
+    flexShrink: 0,
     display: "grid",
-    gridTemplateColumns: "72px 1fr 100px",
+    gridTemplateColumns: "56px minmax(0, 1fr) 82px",
     alignItems: "center",
     borderBottom: "1px solid rgba(255,255,255,0.1)",
   },
@@ -1376,7 +1387,7 @@ const styles: Record<string, CSSProperties> = {
   },
   shareButton: {
     justifySelf: "end",
-    marginRight: 16,
+    marginRight: 10,
     border: "none",
     background: "transparent",
     color: "#7f9cff",
@@ -1387,11 +1398,16 @@ const styles: Record<string, CSSProperties> = {
   },
   createPostFrame: {
     minHeight: 0,
-    display: "grid",
-    gridTemplateColumns: "minmax(520px, 1fr) 390px",
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    overflowY: "auto",
   },
   createPostImagePane: {
-    minHeight: 680,
+    width: "100%",
+    aspectRatio: "1 / 1",
+    maxHeight: "52dvh",
+    flexShrink: 0,
     display: "grid",
     placeItems: "center",
     background: "#ffffff",
@@ -1400,16 +1416,15 @@ const styles: Record<string, CSSProperties> = {
   createPostImage: {
     width: "100%",
     height: "100%",
-    maxHeight: "calc(92dvh - 52px)",
     objectFit: "contain",
     display: "block",
   },
   createPostSidePane: {
     minHeight: 0,
-    maxHeight: "calc(92dvh - 52px)",
+    flex: 1,
     display: "flex",
     flexDirection: "column",
-    overflowY: "auto",
+    overflowY: "visible",
     background: "#24262d",
   },
   createPostAuthor: {
@@ -1431,7 +1446,7 @@ const styles: Record<string, CSSProperties> = {
     fontWeight: 900,
   },
   createPostTextarea: {
-    minHeight: 300,
+    minHeight: 132,
     border: "none",
     padding: "10px 18px",
     background: "transparent",
@@ -1494,25 +1509,25 @@ const styles: Record<string, CSSProperties> = {
     zIndex: 60,
     display: "grid",
     placeItems: "center",
-    padding: 18,
+    padding: 0,
     background: "rgba(16,34,35,0.42)",
   },
   feedModal: {
     position: "relative",
-    width: "min(1160px, 100%)",
-    height: "min(88dvh, 760px)",
-    display: "grid",
-    gridTemplateColumns: "minmax(520px, 1fr) 430px",
+    width: "100%",
+    height: "100dvh",
+    display: "flex",
+    flexDirection: "column",
     overflow: "hidden",
-    borderRadius: 6,
+    borderRadius: 0,
     background: "#ffffff",
     boxShadow: "0 24px 70px rgba(15,23,42,0.28)",
   },
   modalCloseButton: {
     position: "absolute",
-    top: -46,
-    right: 0,
-    zIndex: 2,
+    top: 10,
+    right: 10,
+    zIndex: 4,
     width: 36,
     height: 36,
     border: "none",
@@ -1524,7 +1539,10 @@ const styles: Record<string, CSSProperties> = {
     cursor: "pointer",
   },
   feedModalImagePane: {
-    minHeight: 0,
+    height: "48dvh",
+    minHeight: 260,
+    maxHeight: 520,
+    flexShrink: 0,
     display: "grid",
     placeItems: "center",
     background: "#050608",
@@ -1537,19 +1555,20 @@ const styles: Record<string, CSSProperties> = {
   },
   feedModalSidePane: {
     minHeight: 0,
+    flex: 1,
     display: "flex",
     flexDirection: "column",
     background: "#ffffff",
     color: "var(--text-primary)",
-    borderLeft: "1px solid var(--neutral-200)",
+    borderTop: "1px solid var(--neutral-200)",
   },
   feedPostHeader: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     gap: 12,
-    minHeight: 84,
-    padding: "12px 16px",
+    minHeight: 68,
+    padding: "10px 14px",
     borderBottom: "1px solid var(--neutral-200)",
   },
   feedPostAuthor: {
@@ -1559,8 +1578,8 @@ const styles: Record<string, CSSProperties> = {
     minWidth: 0,
   },
   feedPostAvatar: {
-    width: 60,
-    height: 60,
+    width: 48,
+    height: 48,
     borderRadius: "50%",
     objectFit: "cover",
     background: "#3a3d45",
@@ -1673,11 +1692,12 @@ const styles: Record<string, CSSProperties> = {
     flex: 1,
     minHeight: 0,
     overflowY: "auto",
-    padding: "8px 16px",
+    padding: "8px 14px",
   },
   feedPostFooter: {
+    flexShrink: 0,
     borderTop: "1px solid var(--neutral-200)",
-    padding: "12px 16px 14px",
+    padding: "10px 14px calc(12px + env(safe-area-inset-bottom))",
     display: "flex",
     flexDirection: "column",
     gap: 8,
@@ -1756,8 +1776,8 @@ const styles: Record<string, CSSProperties> = {
     flex: 1,
   },
   feedCommentAvatar: {
-    width: 51,
-    height: 51,
+    width: 42,
+    height: 42,
     borderRadius: "50%",
     objectFit: "cover",
     background: "var(--neutral-100)",
@@ -1783,6 +1803,22 @@ const styles: Record<string, CSSProperties> = {
     fontSize: "0.78rem",
     fontWeight: 900,
     cursor: "pointer",
+  },
+  toast: {
+    position: "fixed",
+    left: "50%",
+    bottom: 96,
+    zIndex: 160,
+    maxWidth: "min(88vw, 420px)",
+    transform: "translateX(-50%)",
+    padding: "12px 16px",
+    borderRadius: 16,
+    background: "rgba(24,26,32,0.92)",
+    color: "#ffffff",
+    fontSize: "0.9rem",
+    fontWeight: 800,
+    lineHeight: 1.35,
+    boxShadow: "0 18px 40px rgba(24,26,32,0.22)",
   },
 };
 
