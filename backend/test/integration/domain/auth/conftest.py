@@ -1,12 +1,12 @@
 """auth 도메인 통합 테스트 공통 fixture.
 
-`WithdrawService.purge` 가 RDB hard_delete + Mongo 정리 + 알림 cascade + Object Storage
+`WithdrawService.purge` 가 RDB hard_delete + Mongo 정리 + 인박스 cascade + Object Storage
 cleanup + Redis 캐시 무효화를 단계별로 수행한다. 통합 테스트는:
     - 실 PostgreSQL — `_purge_rdb` 의 SELECT FOR UPDATE + status 분기 + hard delete
-    - 실 Mongo — `withdrawal_request` doc + 알림 cascade
+    - 실 Mongo — `withdrawal_request` doc + 인박스 cascade
     - Storage / Redis — mock (외부 인프라)
 
-`MONGODB_TEST_URL` 미설정 시 skip — 알림 cascade 가 Mongo 의존이라 통합 테스트의 핵심.
+`MONGODB_TEST_URL` 미설정 시 skip — 인박스 cascade 가 Mongo 의존이라 통합 테스트의 핵심.
 """
 import os
 from unittest.mock import AsyncMock, MagicMock
@@ -19,8 +19,8 @@ from app.domain.auth.model.withdrawal_request import WithdrawalRequest
 from app.domain.auth.service.register import RegisterService
 from app.domain.auth.service.signup import SignupService
 from app.domain.auth.service.withdraw import WithdrawService
-from app.domain.notification.model.notification import Notification
-from app.domain.notification.service.notification import NotificationService
+from app.domain.notification.model.inbox import InboxItem
+from app.domain.notification.service.inbox import InboxService
 from app.domain.tripmate.model.tripmate_image import TripmateImage
 from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
 from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHistory
@@ -40,7 +40,7 @@ def _require_mongo_url() -> str:
 
 @pytest_asyncio.fixture
 async def mongo_db():
-    """`_purge_external` 이 건드리는 모든 컬렉션 + 알림 컬렉션 초기화.
+    """`_purge_external` 이 건드리는 모든 컬렉션 + 인박스 컬렉션 초기화.
 
     init_beanie 에 6 개 Document 등록 — withdraw 의 cascade 매트릭스를 모두 cover.
     """
@@ -50,9 +50,9 @@ async def mongo_db():
     client = AsyncIOMotorClient(url, tz_aware=True)
     db = client.get_default_database()
 
-    # withdraw 가 정리 대상으로 호출하는 컬렉션 + 알림 컬렉션 모두 drop
+    # withdraw 가 정리 대상으로 호출하는 컬렉션 + 인박스 컬렉션 모두 drop
     for col in [
-        "notification",
+        "inbox",
         "withdrawal_request",
         "tripmate_image",
         "tripmate_post_draft",
@@ -65,7 +65,7 @@ async def mongo_db():
     await init_beanie(
         database=db,
         document_models=[
-            Notification,
+            InboxItem,
             WithdrawalRequest,
             TripmateImage,
             TripmatePostDraft,
@@ -79,7 +79,7 @@ async def mongo_db():
         yield db
     finally:
         for col in [
-            "notification",
+            "inbox",
             "withdrawal_request",
             "tripmate_image",
             "tripmate_post_draft",
@@ -115,15 +115,15 @@ def redis_cache_mock(monkeypatch) -> AsyncMock:
 
 
 @pytest.fixture
-def notification_service(mongo_db) -> NotificationService:
-    return NotificationService()
+def inbox_service(mongo_db) -> InboxService:
+    return InboxService()
 
 
 @pytest.fixture
 def withdraw_service(
-    uow, notification_service, storage_mock, redis_cache_mock,
+    uow, inbox_service, storage_mock, redis_cache_mock,
 ) -> WithdrawService:
-    return WithdrawService(uow=uow, notification_service=notification_service)
+    return WithdrawService(uow=uow, inbox_service=inbox_service)
 
 
 # ──────────────────── RDB 전용 service (mongo 의존 X) ────────────────────

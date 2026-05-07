@@ -49,8 +49,8 @@ def detail_repo_mock():
 
 
 @pytest.fixture
-def notification_service_mock():
-    """알림 fan-out 진입점 mock — 호출 검증용. 본인→본인 skip 가드는 service 가 처리."""
+def inbox_service_mock():
+    """인박스 fan-out 진입점 mock — 호출 검증용. 본인→본인 skip 가드는 service 가 처리."""
     mock = AsyncMock()
     mock.notify_feed_like.return_value = None
     return mock
@@ -65,12 +65,12 @@ def viewable_post_stub():
 @pytest.fixture
 def service(
     monkeypatch, mock_session,
-    like_repo_mock, detail_repo_mock, viewable_post_stub, notification_service_mock,
+    like_repo_mock, detail_repo_mock, viewable_post_stub, inbox_service_mock,
 ):
     """가시성 통과 default 로 주입된 like service.
 
     개별 테스트가 `load_viewable_post` 의 raise 동작을 보고 싶으면 monkeypatch 직접 갱신.
-    fan-out 은 `notification_service_mock` 으로 호출만 검증, 실 Mongo 비접근.
+    fan-out 은 `inbox_service_mock` 으로 호출만 검증, 실 Mongo 비접근.
     """
     monkeypatch.setattr(
         "app.domain.feed.service.feed_post_like.FeedPostLikeRepository",
@@ -90,5 +90,5 @@ def service(
 
     return FeedPostLikeService(
         uow=FakeUnitOfWork(mock_session),
-        notification_service=notification_service_mock,
+        inbox_service=inbox_service_mock,
     )

@@ -5,7 +5,7 @@ from app.domain.tripmate.repository.tripmate_post_like import TripmatePostLikeRe
 from app.domain.tripmate.repository.tripmate_post import TripmatePostRepository
 from app.domain.tripmate.model.tripmate_post_like import TripmatePostLike
 from app.domain.tripmate.dto.tripmate_post_like import AddLikePayload
-from app.domain.notification.service.notification import NotificationService
+from app.domain.notification.service.inbox import InboxService
 from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
 from app.core.logger import get_logger
 
@@ -14,9 +14,9 @@ logger = get_logger("tripmate.post.like.service")
 
 
 class TripmatePostLikeService:
-    def __init__(self, uow: UnitOfWork, notification_service: NotificationService):
+    def __init__(self, uow: UnitOfWork, inbox_service: InboxService):
         self.uow = uow
-        self.notification_service = notification_service
+        self.inbox_service = inbox_service
 
 
     # ──────────────────── 좋아요 누른 유저 조회 ────────────────────
@@ -42,14 +42,14 @@ class TripmatePostLikeService:
     # ──────────────────── 좋아요 추가 ────────────────────
 
     async def add_like(self, user_id: str, post_id: str) -> int:
-        """좋아요 추가 — 트랜잭션 내 INSERT 후, 트랜잭션 밖에서 알림 fan-out (best-effort).
+        """좋아요 추가 — 트랜잭션 내 INSERT 후, 트랜잭션 밖에서 인박스 fan-out (best-effort).
 
-        본인→본인 좋아요는 fan-out skip (caller 가드 + NotificationService 가드 이중).
-        Mongo 일시 장애로 알림 누락되어도 사용자 응답 정상.
+        본인→본인 좋아요는 fan-out skip (caller 가드 + InboxService 가드 이중).
+        Mongo 일시 장애로 인박스 누락되어도 사용자 응답 정상.
         """
         payload = await self._add_like_tx(user_id=user_id, post_id=post_id)
         if payload.recipient_id != user_id:
-            await self.notification_service.notify_tripmate_like(
+            await self.inbox_service.notify_tripmate_like(
                 recipient_id=payload.recipient_id,
                 actor_id=user_id,
                 actor_name=payload.actor_name,

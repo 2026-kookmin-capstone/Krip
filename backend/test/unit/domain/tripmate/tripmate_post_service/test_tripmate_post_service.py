@@ -314,8 +314,8 @@ class TestUpdatePost:
 class TestDeletePost:
     """Tests for TripmatePostService.delete_post.
 
-    알림 cascade 는 정책상 하지 않음 — 좋아요 취소 알림 보존 정책과 대칭. 본 service 가
-    notification_service 를 의존하지 않는 것을 별도로 검증할 필요 없음 (의존 자체 없음).
+    인박스 cascade 는 정책상 하지 않음 — 좋아요 취소 인박스 보존 정책과 대칭. 본 service 가
+    inbox_service 를 의존하지 않는 것을 별도로 검증할 필요 없음 (의존 자체 없음).
     """
 
     async def test_raises_when_not_found(self, service, post_repo_mock):

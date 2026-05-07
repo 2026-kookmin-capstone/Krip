@@ -20,13 +20,13 @@
       1회 추가) — async session 에서 relationship lazy-load 가 막혀 있어 explicit reload
       가 가장 명확한 패턴. 동일 트랜잭션의 read-your-own-writes 보장.
 
-알림 통합:
+인박스 통합:
     - `create_comment`: 트랜잭션 분리 (`_create_comment_tx` → outer). RDB 커밋 후 fan-out
-      best-effort. dto 의 user_name/profile 이 그대로 알림 snapshot 으로 사용 (joinedload
+      best-effort. dto 의 user_name/profile 이 그대로 인박스 snapshot 으로 사용 (joinedload
       덕에 추가 fetch 불필요).
-    - `delete_comment`: 알림 cascade 안 함 — 좋아요 취소 알림 보존 정책과 대칭. stale 댓글
-      알림은 deep link 404 + TTL 30일로 자연 정리.
-    - 본인→본인 댓글은 fan-out skip (caller 가드 + NotificationService 가드).
+    - `delete_comment`: 인박스 cascade 안 함 — 좋아요 취소 인박스 보존 정책과 대칭. stale 댓글
+      항목은 deep link 404 + TTL 30일로 자연 정리.
+    - 본인→본인 댓글은 fan-out skip (caller 가드 + InboxService 가드).
 """
 from typing import Optional
 
@@ -40,7 +40,7 @@ from app.domain.feed.dto.feed_post_comment import (
     FeedPostCommentListData,
     CreateCommentResult,
 )
-from app.domain.notification.service.notification import NotificationService
+from app.domain.notification.service.inbox import InboxService
 from app.database.session import UnitOfWork, transactional
 from app.core.logger import get_logger
 
@@ -61,9 +61,9 @@ def _normalize_content(content: str) -> str:
 
 
 class FeedPostCommentService:
-    def __init__(self, uow: UnitOfWork, notification_service: NotificationService):
+    def __init__(self, uow: UnitOfWork, inbox_service: InboxService):
         self.uow = uow
-        self.notification_service = notification_service
+        self.inbox_service = inbox_service
 
 
     # ──────────────────── 작성 ────────────────────
@@ -74,15 +74,15 @@ class FeedPostCommentService:
         post_id: str,
         content: str,
     ) -> FeedPostCommentData:
-        """댓글 작성 — 트랜잭션 내 INSERT + reload, 트랜잭션 밖에서 알림 fan-out (best-effort).
+        """댓글 작성 — 트랜잭션 내 INSERT + reload, 트랜잭션 밖에서 인박스 fan-out (best-effort).
 
-        본인→본인 댓글은 fan-out skip. Mongo 일시 장애 시 알림 누락되어도 사용자 응답 정상.
+        본인→본인 댓글은 fan-out skip. Mongo 일시 장애 시 인박스 누락되어도 사용자 응답 정상.
         """
         result = await self._create_comment_tx(
             user_id=user_id, post_id=post_id, content=content,
         )
         if result.notify_recipient_id is not None:
-            await self.notification_service.notify_feed_comment(
+            await self.inbox_service.notify_feed_comment(
                 recipient_id=result.notify_recipient_id,
                 actor_id=user_id,
                 actor_name=result.dto.user_name,

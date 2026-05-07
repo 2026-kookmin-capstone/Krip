@@ -20,10 +20,10 @@
       변환 직후 함수에서 빠져나오므로 같은 session 의 추가 쿼리 (PendingRollbackError 위험)
       는 없고, `@transactional` 의 __aexit__ 가 rollback 실행 → 트랜잭션 정합 보장.
 
-알림 fan-out (`add_like` 전용):
+인박스 fan-out (`add_like` 전용):
     - `_add_like_tx` (트랜잭션 내) → outer `add_like` (트랜잭션 밖) 에서 fan-out 호출.
-      RDB 커밋 후 Mongo insert → RDB 롤백된 좋아요에 대한 알림 발사 회피.
-    - 본인→본인 좋아요는 caller 가드로 Mongo 호출 자체 skip (NotificationService 도 가드,
+      RDB 커밋 후 Mongo insert → RDB 롤백된 좋아요에 대한 인박스 항목 발사 회피.
+    - 본인→본인 좋아요는 caller 가드로 Mongo 호출 자체 skip (InboxService 도 가드,
       이중 안전망).
     - actor 닉네임/프로필은 같은 트랜잭션 안에서 fetch — payload 합성 후 outer 에 넘김.
 
@@ -36,7 +36,7 @@ from app.domain.feed.repository.feed_post_like import FeedPostLikeRepository
 from app.domain.feed.model.feed_post_like import FeedPostLike
 from app.domain.feed.dto.feed_post_like import AddLikePayload, LikedUserData
 from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
-from app.domain.notification.service.notification import NotificationService
+from app.domain.notification.service.inbox import InboxService
 from app.database.session import UnitOfWork, transactional
 from app.core.logger import get_logger
 
@@ -45,22 +45,22 @@ logger = get_logger("feed.post.like.service")
 
 
 class FeedPostLikeService:
-    def __init__(self, uow: UnitOfWork, notification_service: NotificationService):
+    def __init__(self, uow: UnitOfWork, inbox_service: InboxService):
         self.uow = uow
-        self.notification_service = notification_service
+        self.inbox_service = inbox_service
 
 
     # ──────────────────── 추가 ────────────────────
 
     async def add_like(self, user_id: str, post_id: str) -> int:
-        """좋아요 추가 — 트랜잭션 내 INSERT 후, 트랜잭션 밖에서 알림 fan-out (best-effort).
+        """좋아요 추가 — 트랜잭션 내 INSERT 후, 트랜잭션 밖에서 인박스 fan-out (best-effort).
 
-        본인→본인 좋아요는 fan-out skip (caller 가드 + NotificationService 가드 이중).
-        Mongo 일시 장애로 알림 누락되어도 사용자 응답은 정상 (`_safe_insert` swallow).
+        본인→본인 좋아요는 fan-out skip (caller 가드 + InboxService 가드 이중).
+        Mongo 일시 장애로 인박스 누락되어도 사용자 응답은 정상 (`_safe_insert` swallow).
         """
         payload = await self._add_like_tx(user_id=user_id, post_id=post_id)
         if payload.recipient_id != user_id:
-            await self.notification_service.notify_feed_like(
+            await self.inbox_service.notify_feed_like(
                 recipient_id=payload.recipient_id,
                 actor_id=user_id,
                 actor_name=payload.actor_name,

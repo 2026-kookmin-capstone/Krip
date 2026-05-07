@@ -1,15 +1,15 @@
-"""WithdrawService.purge e2e 통합 테스트 (RDB + Mongo + 알림 cascade).
+"""WithdrawService.purge e2e 통합 테스트 (RDB + Mongo + 인박스 cascade).
 
 소프트 탈뙤 → 영구 삭제 흐름의 분산 정합성 검증. unit 테스트가 mock 으로 검증할 수 없는
 영역:
     - `_purge_rdb` 의 SELECT FOR UPDATE + status 분기 + hard_delete 실 트랜잭션
     - `_purge_external` 단계별 best-effort 가 실 mongo 컬렉션에 반영
-    - 알림 cascade — `recipient_id == user_id` OR `actor_id == user_id` 매칭 모두 삭제
+    - 인박스 cascade — `recipient_id == user_id` OR `actor_id == user_id` 매칭 모두 삭제
     - STALE_DOC outcome (cancel 후 worker 진입) — RDB 보존 + doc 만 청소
 
 검증 매트릭스:
 
-    | 시나리오                | RDB user | Mongo user data | 알림 cascade |
+    | 시나리오                | RDB user | Mongo user data | 인박스 cascade |
     |---|---|---|---|
     | 정상 purge (INACTIVE)   | hard delete | drop          | recipient/actor 삭제 |
     | 미존재 user (NO_USER)   | -           | drop          | cascade 호출 (idempotent) |
@@ -20,9 +20,9 @@ from sqlalchemy import select
 
 from app.domain.auth.model.user import User, UserStatus
 from app.domain.auth.model.withdrawal_request import WithdrawalRequest
-from app.domain.notification.model.notification import (
-    Notification,
-    NotificationType,
+from app.domain.notification.model.inbox import (
+    InboxItem,
+    InboxItemType,
     TargetType,
 )
 
@@ -33,7 +33,7 @@ pytestmark = pytest.mark.integration
 # ──────────────────── 정상 purge — INACTIVE → DELETED ────────────────────
 
 class TestPurgeDeletedOutcome:
-    """status=INACTIVE 인 user 의 영구 삭제 — RDB hard delete + Mongo 정리 + 알림 cascade."""
+    """status=INACTIVE 인 user 의 영구 삭제 — RDB hard delete + Mongo 정리 + 인박스 cascade."""
 
     async def test_hard_deletes_user_from_rdb(
         self, withdraw_service, session_factory, seed_users,
@@ -49,38 +49,38 @@ class TestPurgeDeletedOutcome:
             )
             assert result.scalar_one_or_none() is None
 
-    async def test_cascade_deletes_recipient_and_actor_notifications(
+    async def test_cascade_deletes_recipient_and_actor_inbox_items(
         self, withdraw_service, session_factory, seed_users, mongo_db,
     ):
-        """탈뙤 user 가 받은(recipient) 알림 + 보낸(actor) 알림 모두 삭제. 무관한 알림 보존."""
+        """탈뙤 user 가 받은(recipient) 항목 + 보낸(actor) 항목 모두 삭제. 무관한 항목 보존."""
         target_user, other_user = await seed_users(2)
         await _set_inactive(session_factory, target_user)
 
-        # target 이 받은 알림
-        await Notification(
+        # target 이 받은 항목
+        await InboxItem(
             recipient_id=target_user, actor_id=other_user,
-            type=NotificationType.FEED_LIKE,
+            type=InboxItemType.FEED_LIKE,
             target_type=TargetType.FEED_POST,
             target_id="FDP_1", actor_name="x",
         ).insert()
-        # target 이 보낸 알림
-        await Notification(
+        # target 이 보낸 항목
+        await InboxItem(
             recipient_id=other_user, actor_id=target_user,
-            type=NotificationType.FEED_LIKE,
+            type=InboxItemType.FEED_LIKE,
             target_type=TargetType.FEED_POST,
             target_id="FDP_2", actor_name="x",
         ).insert()
-        # 무관한 알림 (보존되어야)
-        await Notification(
+        # 무관한 항목 (보존되어야)
+        await InboxItem(
             recipient_id=other_user, actor_id="USER_unrelated",
-            type=NotificationType.FEED_LIKE,
+            type=InboxItemType.FEED_LIKE,
             target_type=TargetType.FEED_POST,
             target_id="FDP_3", actor_name="x",
         ).insert()
 
         await withdraw_service.purge(user_id=target_user)
 
-        coll = Notification.get_motor_collection()
+        coll = InboxItem.get_motor_collection()
         # target 관련 2건 삭제, 무관한 1건 보존
         assert await coll.count_documents({}) == 1
         remaining = await coll.find_one({})
@@ -120,14 +120,14 @@ class TestPurgeStaleDocOutcome:
         self, withdraw_service, session_factory, seed_users, mongo_db,
         storage_mock,
     ):
-        """status=ACTIVE → RDB hard delete / Storage cleanup / 알림 cascade 모두 skip."""
+        """status=ACTIVE → RDB hard delete / Storage cleanup / 인박스 cascade 모두 skip."""
         user_id, other_user = await seed_users(2)
         # status 는 ACTIVE 그대로 (cancel 한 직후 가정)
 
-        # 알림 1건 시드 (cascade 안 되어야)
-        await Notification(
+        # 인박스 1건 시드 (cascade 안 되어야)
+        await InboxItem(
             recipient_id=user_id, actor_id=other_user,
-            type=NotificationType.FEED_LIKE,
+            type=InboxItemType.FEED_LIKE,
             target_type=TargetType.FEED_POST,
             target_id="FDP_1", actor_name="x",
         ).insert()
@@ -151,9 +151,9 @@ class TestPurgeStaleDocOutcome:
             assert user is not None
             assert user.status == UserStatus.ACTIVE
 
-        # 알림 보존 (cascade 안 함)
-        notif_coll = Notification.get_motor_collection()
-        assert await notif_coll.count_documents({"recipient_id": user_id}) == 1
+        # 인박스 보존 (cascade 안 함)
+        inbox_coll = InboxItem.get_motor_collection()
+        assert await inbox_coll.count_documents({"recipient_id": user_id}) == 1
 
         # Storage cleanup 호출 안 됨
         storage_mock.delete_by_prefix.assert_not_awaited()
@@ -174,9 +174,9 @@ class TestPurgeNoUserOutcome:
         # RDB 에 user 없는 상태 — 외부 정리만 진행
         await withdraw_service.purge(user_id="USER_ghost")
 
-        # 알림 cascade 호출 (idempotent — 0건 삭제)
-        notif_coll = Notification.get_motor_collection()
-        assert await notif_coll.count_documents({}) == 0
+        # 인박스 cascade 호출 (idempotent — 0건 삭제)
+        inbox_coll = InboxItem.get_motor_collection()
+        assert await inbox_coll.count_documents({}) == 0
 
         # 외부 cleanup 도 호출됨
         storage_mock.delete_by_prefix.assert_awaited_once_with("USER_ghost")

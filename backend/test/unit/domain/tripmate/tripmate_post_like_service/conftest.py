@@ -13,7 +13,7 @@ from test.unit.domain.tripmate.mock_factory import (
     TripmatePostRepositoryMockFactory,
     UserDetailInformRepositoryMockFactory,
     make_mock_session,
-    make_notification_service_mock,
+    make_inbox_service_mock,
 )
 from test.unit.domain.tripmate.tripmate_post_like_service.model_factory import (
     TripmatePostFactory,
@@ -42,18 +42,18 @@ def detail_repo_mock():
 
 
 @pytest.fixture
-def notification_service_mock():
-    return make_notification_service_mock()
+def inbox_service_mock():
+    return make_inbox_service_mock()
 
 
 @pytest.fixture
 def service(
     monkeypatch, mock_session,
-    post_repo_mock, like_repo_mock, detail_repo_mock, notification_service_mock,
+    post_repo_mock, like_repo_mock, detail_repo_mock, inbox_service_mock,
 ):
     """service 가 RDB 트랜잭션 안에서 인스턴스화하는 모든 repo 를 mock 으로 치환.
 
-    fan-out 은 `notification_service_mock` 으로 호출만 검증, 실제 Mongo 비접근.
+    fan-out 은 `inbox_service_mock` 으로 호출만 검증, 실제 Mongo 비접근.
     """
     monkeypatch.setattr(
         "app.domain.tripmate.service.tripmate_post_like.TripmatePostRepository",
@@ -69,7 +69,7 @@ def service(
     )
     return TripmatePostLikeService(
         uow=FakeUnitOfWork(mock_session),
-        notification_service=notification_service_mock,
+        inbox_service=inbox_service_mock,
     )
 
 

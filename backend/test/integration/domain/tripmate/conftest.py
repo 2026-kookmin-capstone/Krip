@@ -1,6 +1,6 @@
 """tripmate 도메인 통합 테스트 공통 fixture.
 
-서비스 → 레포지토리 → 실 PostgreSQL/Mongo 까지 검증한다. 알림 fan-out 흐름 검증을 위해
+서비스 → 레포지토리 → 실 PostgreSQL/Mongo 까지 검증한다. 인박스 fan-out 흐름 검증을 위해
 실 Mongo 가 필요하며, MONGODB_TEST_URL 환경변수 미설정 시 skip.
 
 feed 도메인의 conftest 와 패턴 일관 — 도메인별 격리 유지.
@@ -12,8 +12,8 @@ import pytest
 import pytest_asyncio
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from app.domain.notification.model.notification import Notification
-from app.domain.notification.service.notification import NotificationService
+from app.domain.notification.model.inbox import InboxItem
+from app.domain.notification.service.inbox import InboxService
 from app.domain.tripmate.model.tripmate_image import TripmateImage
 from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
 from app.domain.tripmate.service.tripmate_image import TripmateImageService
@@ -35,7 +35,7 @@ def _require_mongo_url() -> str:
 async def mongo_db():
     """tripmate 도메인 통합 테스트용 컬렉션 초기화 + beanie init.
 
-    `notification` (fan-out 통합), `tripmate_post_draft` / `tripmate_image` (Phase C 의 draft
+    `inbox` (fan-out 통합), `tripmate_post_draft` / `tripmate_image` (Phase C 의 draft
     / image 테스트). 매 테스트 fresh — drop + init_beanie 재호출로 인덱스 재생성.
     """
     from beanie import init_beanie
@@ -44,29 +44,29 @@ async def mongo_db():
     client = AsyncIOMotorClient(url, tz_aware=True)
     db = client.get_default_database()
 
-    for col in ["notification", "tripmate_post_draft", "tripmate_image"]:
+    for col in ["inbox", "tripmate_post_draft", "tripmate_image"]:
         await db[col].drop()
     await init_beanie(
         database=db,
-        document_models=[Notification, TripmatePostDraft, TripmateImage],
+        document_models=[InboxItem, TripmatePostDraft, TripmateImage],
     )
 
     try:
         yield db
     finally:
-        for col in ["notification", "tripmate_post_draft", "tripmate_image"]:
+        for col in ["inbox", "tripmate_post_draft", "tripmate_image"]:
             await db[col].drop()
         client.close()
 
 
 @pytest.fixture
-def notification_service(mongo_db) -> NotificationService:
-    return NotificationService()
+def inbox_service(mongo_db) -> InboxService:
+    return InboxService()
 
 
 @pytest.fixture
-def tripmate_post_like_service(uow, notification_service) -> TripmatePostLikeService:
-    return TripmatePostLikeService(uow=uow, notification_service=notification_service)
+def tripmate_post_like_service(uow, inbox_service) -> TripmatePostLikeService:
+    return TripmatePostLikeService(uow=uow, inbox_service=inbox_service)
 
 
 # ──────────────────── tripmate_post_service (S3 + Mongo image mock) ────────────────────

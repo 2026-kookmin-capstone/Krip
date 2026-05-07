@@ -4,7 +4,7 @@ WithdrawService 의 의존성:
     - UoW + UserRepository (RDB)         — monkeypatch + mock
     - WithdrawalRequestRepository (Mongo) — `__init__` 안 인스턴스화 → monkeypatch
     - get_object_storage()                — 모듈 함수 → monkeypatch
-    - NotificationService                 — DI 주입 (cascade_user_withdrawn)
+    - InboxService                        — DI 주입 (cascade_user_withdrawn)
     - Beanie Document 5종 (purge 전용)    — `Document.find().delete()` chain stub
     - invalidate_registered_cache         — 모듈 함수 → monkeypatch (Redis 비접근)
 
@@ -21,7 +21,7 @@ from test.unit.domain.auth.mock_factory import (
     FakeBeanieDocumentClass,
     FakeUnitOfWork,
     make_mock_session,
-    make_notification_service_mock,
+    make_inbox_service_mock,
     make_object_storage_mock,
     make_user_repo_mock,
     make_withdrawal_request_repo_mock,
@@ -50,8 +50,8 @@ def storage_mock():
 
 
 @pytest.fixture
-def notification_service_mock():
-    return make_notification_service_mock()
+def inbox_service_mock():
+    return make_inbox_service_mock()
 
 
 @pytest.fixture
@@ -78,7 +78,7 @@ def service(
     user_repo_mock,
     withdrawal_request_repo_mock,
     storage_mock,
-    notification_service_mock,
+    inbox_service_mock,
     beanie_stubs,
     invalidate_cache_mock,
 ):
@@ -115,7 +115,7 @@ def service(
 
     return WithdrawService(
         uow=FakeUnitOfWork(mock_session),
-        notification_service=notification_service_mock,
+        inbox_service=inbox_service_mock,
     )
 
 

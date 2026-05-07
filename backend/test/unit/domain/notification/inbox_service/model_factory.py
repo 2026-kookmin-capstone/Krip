@@ -1,6 +1,6 @@
-"""NotificationService 단위 테스트용 도메인 객체 팩토리.
+"""InboxService 단위 테스트용 도메인 객체 팩토리.
 
-beanie Document `Notification` 을 직접 인스턴스화하면 `init_beanie` 미호출 환경에서
+beanie Document `InboxItem` 을 직접 인스턴스화하면 `init_beanie` 미호출 환경에서
 `CollectionWasNotInitialized` 가 raise 됨 (motor_collection 접근). 단위 테스트는 mongo
 비접근이므로 friend / chat 도메인의 SimpleNamespace 패턴과 동일하게 attribute 흉내내는
 가벼운 객체로 대체 — service 의 `_to_dto` 가 attribute 만 접근하므로 동작에 영향 없음.
@@ -11,20 +11,20 @@ from typing import Optional
 
 from beanie import PydanticObjectId
 
-from app.domain.notification.model.notification import NotificationType, TargetType
+from app.domain.notification.model.inbox import InboxItemType, TargetType
 
 
-class NotificationFactory:
+class InboxItemFactory:
     _counter = 0
 
     @classmethod
     def create(
         cls,
         *,
-        notification_id: Optional[PydanticObjectId] = None,
+        inbox_item_id: Optional[PydanticObjectId] = None,
         recipient_id: str = "USER_recipient",
         actor_id: str = "USER_actor",
-        type: NotificationType = NotificationType.FEED_LIKE,
+        type: InboxItemType = InboxItemType.FEED_LIKE,
         target_type: TargetType = TargetType.FEED_POST,
         target_id: str = "FDP_test",
         comment_id: Optional[str] = None,
@@ -38,7 +38,7 @@ class NotificationFactory:
     ) -> SimpleNamespace:
         cls._counter += 1
         return SimpleNamespace(
-            id=notification_id or PydanticObjectId(),
+            id=inbox_item_id or PydanticObjectId(),
             recipient_id=recipient_id,
             actor_id=actor_id,
             type=type,

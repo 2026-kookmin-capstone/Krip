@@ -30,7 +30,7 @@ class AddLikePayload:
     """좋아요 추가 service 내부 transfer.
 
     트랜잭션 안에서 합성 → 트랜잭션 밖 outer 가 fan-out 호출에 사용. router 에는
-    `like_count` 만 노출되고 나머지 snapshot 필드는 NotificationService 로만 전달.
+    `like_count` 만 노출되고 나머지 snapshot 필드는 InboxService 로만 전달.
     `recipient_id == actor_id` 면 outer 가 fan-out 자체를 skip → snapshot 필드는
     그 경우 더미 값 (트랜잭션 안에서 detail fetch 도 생략).
     """

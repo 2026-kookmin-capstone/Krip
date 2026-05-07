@@ -66,8 +66,8 @@ def make_withdrawal_request_repo_mock() -> AsyncMock:
     return mock
 
 
-def make_notification_service_mock() -> AsyncMock:
-    """알림 cascade 진입점 mock — withdraw_service 가 탈퇴 cascade 호출 검증용."""
+def make_inbox_service_mock() -> AsyncMock:
+    """인박스 cascade 진입점 mock — withdraw_service 가 탈퇴 cascade 호출 검증용."""
     mock = AsyncMock()
     mock.cascade_user_withdrawn.return_value = 0
     return mock

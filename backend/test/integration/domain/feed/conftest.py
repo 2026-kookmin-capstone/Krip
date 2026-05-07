@@ -1,10 +1,10 @@
 """feed 도메인 통합 테스트 공통 fixture.
 
-서비스 → 레포지토리 → 실 PostgreSQL/Mongo 까지 검증한다. 알림 fan-out 흐름 검증을 위해
+서비스 → 레포지토리 → 실 PostgreSQL/Mongo 까지 검증한다. 인박스 fan-out 흐름 검증을 위해
 실 Mongo 가 필요하며, MONGODB_TEST_URL 환경변수 미설정 시 skip.
 
-`feed_post_like_service` / `feed_post_comment_service` 는 NotificationService 의존성을 받기
-때문에 fan-out 통합 시 실 mongo 컬렉션에 알림이 적재되는 흐름까지 e2e 로 검증 가능.
+`feed_post_like_service` / `feed_post_comment_service` 는 InboxService 의존성을 받기
+때문에 fan-out 통합 시 실 mongo 컬렉션에 인박스 항목이 적재되는 흐름까지 e2e 로 검증 가능.
 """
 import os
 
@@ -14,8 +14,8 @@ from motor.motor_asyncio import AsyncIOMotorClient
 
 from app.domain.feed.service.feed_post_comment import FeedPostCommentService
 from app.domain.feed.service.feed_post_like import FeedPostLikeService
-from app.domain.notification.model.notification import Notification
-from app.domain.notification.service.notification import NotificationService
+from app.domain.notification.model.inbox import InboxItem
+from app.domain.notification.service.inbox import InboxService
 
 
 def _require_mongo_url() -> str:
@@ -30,7 +30,7 @@ def _require_mongo_url() -> str:
 
 @pytest_asyncio.fixture
 async def mongo_db():
-    """`notification` 컬렉션 초기화 + beanie init.
+    """`inbox` 컬렉션 초기화 + beanie init.
 
     매 테스트 fresh — drop + 인덱스 재생성으로 격리. partial unique 인덱스가 fan-out 의
     멱등 흐름을 보장하는지 검증되는 영역.
@@ -41,24 +41,24 @@ async def mongo_db():
     client = AsyncIOMotorClient(url, tz_aware=True)
     db = client.get_default_database()
 
-    await db.notification.drop()
-    await init_beanie(database=db, document_models=[Notification])
+    await db.inbox.drop()
+    await init_beanie(database=db, document_models=[InboxItem])
 
     try:
         yield db
     finally:
-        await db.notification.drop()
+        await db.inbox.drop()
         client.close()
 
 
 @pytest.fixture
-def notification_service(mongo_db) -> NotificationService:
-    return NotificationService()
+def inbox_service(mongo_db) -> InboxService:
+    return InboxService()
 
 
 @pytest.fixture
-def feed_post_like_service(uow, notification_service) -> FeedPostLikeService:
-    return FeedPostLikeService(uow=uow, notification_service=notification_service)
+def feed_post_like_service(uow, inbox_service) -> FeedPostLikeService:
+    return FeedPostLikeService(uow=uow, inbox_service=inbox_service)
 
 
 # ──────────────────── feed_post_service (S3 + Pillow mock) ────────────────────
@@ -103,14 +103,14 @@ def process_feed_image_mock(monkeypatch):
 
 @pytest.fixture
 def feed_post_service(uow, feed_storage_mock, process_feed_image_mock):
-    """FeedPostService — 알림 의존성 없음 (게시물/댓글 cascade 제거 정책)."""
+    """FeedPostService — 인박스 의존성 없음 (게시물/댓글 cascade 제거 정책)."""
     from app.domain.feed.service.feed_post import FeedPostService
     return FeedPostService(uow=uow)
 
 
 @pytest.fixture
-def feed_post_comment_service(uow, notification_service) -> FeedPostCommentService:
-    return FeedPostCommentService(uow=uow, notification_service=notification_service)
+def feed_post_comment_service(uow, inbox_service) -> FeedPostCommentService:
+    return FeedPostCommentService(uow=uow, inbox_service=inbox_service)
 
 
 @pytest_asyncio.fixture

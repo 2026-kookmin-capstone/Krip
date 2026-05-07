@@ -30,7 +30,7 @@ from app.domain.chat.service.room import RoomService
 from app.domain.chat.service.session import SessionService
 from app.domain.notification.service.fcm import FcmService
 from app.domain.notification.service.mute import MuteService
-from app.domain.notification.service.notification import NotificationService
+from app.domain.notification.service.inbox import InboxService
 from app.domain.feed.service.feed_post import FeedPostService
 from app.domain.feed.service.feed_post_like import FeedPostLikeService
 from app.domain.feed.service.feed_post_comment import FeedPostCommentService
@@ -61,16 +61,16 @@ class Container(containers.DeclarativeContainer):
 
     uow = providers.Factory(UnitOfWork, session=session_factory)
 
-    # 알림창 (Mongo, stateless) — fan-out / cascade 진입점. RDB 의존성이 없어 가장 먼저
+    # 인박스 (Mongo, stateless) — fan-out / cascade 진입점. RDB 의존성이 없어 가장 먼저
     # 선언 → 모든 도메인 service 가 자기 자리에서 자유롭게 의존할 수 있도록.
-    notification_service = providers.Factory(NotificationService)
+    inbox_service = providers.Factory(InboxService)
 
     # 서비스 계층 주입
     signup_service = providers.Factory(SignupService, uow=uow)
     register_service = providers.Factory(RegisterService, uow=uow)
     profile_service = providers.Factory(ProfileService, uow=uow)
     withdraw_service = providers.Factory(
-        WithdrawService, uow=uow, notification_service=notification_service,
+        WithdrawService, uow=uow, inbox_service=inbox_service,
     )
     tripmate_post_draft_service = providers.Factory(TripmatePostDraftService)
     tripmate_post_service = providers.Factory(
@@ -79,7 +79,7 @@ class Container(containers.DeclarativeContainer):
         draft_service=tripmate_post_draft_service,
     )
     tripmate_post_like_service = providers.Factory(
-        TripmatePostLikeService, uow=uow, notification_service=notification_service,
+        TripmatePostLikeService, uow=uow, inbox_service=inbox_service,
     )
     tripmate_search_history_service = providers.Factory(TripmateSearchHistoryService)
     tripmate_image_service = providers.Factory(TripmateImageService, uow=uow)
@@ -126,12 +126,12 @@ class Container(containers.DeclarativeContainer):
     friend_search_service = providers.Factory(FriendSearchService, uow=uow)
     friend_search_history_service = providers.Factory(FriendSearchHistoryService)
 
-    # 피드 — 좋아요/댓글 fan-out 만 알림 의존 (게시물/댓글 삭제는 cascade 안 함).
+    # 피드 — 좋아요/댓글 fan-out 만 인박스 의존 (게시물/댓글 삭제는 cascade 안 함).
     feed_post_service = providers.Factory(FeedPostService, uow=uow)
     feed_post_like_service = providers.Factory(
-        FeedPostLikeService, uow=uow, notification_service=notification_service,
+        FeedPostLikeService, uow=uow, inbox_service=inbox_service,
     )
     feed_post_comment_service = providers.Factory(
-        FeedPostCommentService, uow=uow, notification_service=notification_service,
+        FeedPostCommentService, uow=uow, inbox_service=inbox_service,
     )
     feed_popup_service = providers.Factory(FeedPopupService, uow=uow)

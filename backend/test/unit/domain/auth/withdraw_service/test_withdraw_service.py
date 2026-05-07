@@ -171,7 +171,7 @@ class TestPurge:
 
     async def test_deleted_outcome_proceeds_to_external_cleanup(
         self, service, user_repo_mock,
-        notification_service_mock, withdrawal_request_repo_mock,
+        inbox_service_mock, withdrawal_request_repo_mock,
     ):
         """status==INACTIVE → hard_delete_by_id + 외부 정리 진행 → 알림 cascade 호출."""
         user = UserFactory.create(user_id="USER_a", status=UserStatus.INACTIVE)
@@ -180,12 +180,12 @@ class TestPurge:
         await service.purge(user_id="USER_a")
 
         user_repo_mock.hard_delete_by_id.assert_awaited_once_with("USER_a")
-        notification_service_mock.cascade_user_withdrawn.assert_awaited_once_with("USER_a")
+        inbox_service_mock.cascade_user_withdrawn.assert_awaited_once_with("USER_a")
         # withdrawal_request doc 도 마지막에 청소
         withdrawal_request_repo_mock.delete_by_user_id.assert_awaited_once_with("USER_a")
 
     async def test_no_user_outcome_still_runs_external_cleanup(
-        self, service, user_repo_mock, notification_service_mock,
+        self, service, user_repo_mock, inbox_service_mock,
     ):
         """RDB 에 user 없음 (이전 사이클 외부 정리 잔존) → 외부 정리 idempotent 재시도."""
         user_repo_mock.find_by_id_for_update.return_value = None
@@ -193,11 +193,11 @@ class TestPurge:
         await service.purge(user_id="USER_a")
 
         user_repo_mock.hard_delete_by_id.assert_not_awaited()  # 이미 삭제됨
-        notification_service_mock.cascade_user_withdrawn.assert_awaited_once_with("USER_a")
+        inbox_service_mock.cascade_user_withdrawn.assert_awaited_once_with("USER_a")
 
     async def test_stale_doc_outcome_skips_external(
         self, service, user_repo_mock,
-        notification_service_mock, withdrawal_request_repo_mock,
+        inbox_service_mock, withdrawal_request_repo_mock,
         beanie_stubs, storage_mock, invalidate_cache_mock,
     ):
         """status != INACTIVE (cancel 복구 등) → 외부 리소스 보존, doc 만 즉시 청소.
@@ -210,7 +210,7 @@ class TestPurge:
         await service.purge(user_id="USER_a")
 
         user_repo_mock.hard_delete_by_id.assert_not_awaited()
-        notification_service_mock.cascade_user_withdrawn.assert_not_awaited()
+        inbox_service_mock.cascade_user_withdrawn.assert_not_awaited()
         storage_mock.delete_by_prefix.assert_not_awaited()
         invalidate_cache_mock.assert_not_awaited()
         for stub in beanie_stubs.values():
@@ -236,7 +236,7 @@ class TestPurge:
 
 @pytest.mark.unit
 class TestPurgeExternal:
-    """Tests for WithdrawService._purge_external — 다단계 best-effort + 알림 cascade.
+    """Tests for WithdrawService._purge_external — 다단계 best-effort + 인박스 cascade.
 
     internal 메서드 직접 호출 — 단계 격리 검증. 한 단계 실패가 다음 단계로 전파되지 않음.
     """
@@ -259,13 +259,13 @@ class TestPurgeExternal:
 
         invalidate_cache_mock.assert_awaited_once_with("USER_a")
 
-    async def test_calls_notification_cascade(
-        self, service, notification_service_mock,
+    async def test_calls_inbox_cascade(
+        self, service, inbox_service_mock,
     ):
-        """알림 cascade — recipient/actor 매칭 알림 일괄 hard delete."""
+        """인박스 cascade — recipient/actor 매칭 항목 일괄 hard delete."""
         await service._purge_external(user_id="USER_a")
 
-        notification_service_mock.cascade_user_withdrawn.assert_awaited_once_with("USER_a")
+        inbox_service_mock.cascade_user_withdrawn.assert_awaited_once_with("USER_a")
 
     async def test_cleans_withdrawal_request_doc_at_end(
         self, service, withdrawal_request_repo_mock,
@@ -275,25 +275,25 @@ class TestPurgeExternal:
 
         withdrawal_request_repo_mock.delete_by_user_id.assert_awaited_once_with("USER_a")
 
-    async def test_mongo_failure_does_not_block_storage_or_notification(
-        self, service, beanie_stubs, storage_mock, notification_service_mock,
+    async def test_mongo_failure_does_not_block_storage_or_inbox(
+        self, service, beanie_stubs, storage_mock, inbox_service_mock,
     ):
-        """Mongo 단계 실패해도 Storage / Notification 단계 진행 — 단계 격리."""
+        """Mongo 단계 실패해도 Storage / Inbox 단계 진행 — 단계 격리."""
         beanie_stubs["TripmateImage"].find = lambda _: _RaisingQuery()
 
         await service._purge_external(user_id="USER_a")
 
         storage_mock.delete_by_prefix.assert_awaited_once()
-        notification_service_mock.cascade_user_withdrawn.assert_awaited_once()
+        inbox_service_mock.cascade_user_withdrawn.assert_awaited_once()
 
-    async def test_storage_failure_does_not_block_notification(
-        self, service, storage_mock, notification_service_mock,
+    async def test_storage_failure_does_not_block_inbox(
+        self, service, storage_mock, inbox_service_mock,
     ):
         storage_mock.delete_by_prefix.side_effect = RuntimeError("s3 down")
 
         await service._purge_external(user_id="USER_a")
 
-        notification_service_mock.cascade_user_withdrawn.assert_awaited_once()
+        inbox_service_mock.cascade_user_withdrawn.assert_awaited_once()
 
     async def test_doc_cleanup_failure_does_not_propagate(
         self, service, withdrawal_request_repo_mock,

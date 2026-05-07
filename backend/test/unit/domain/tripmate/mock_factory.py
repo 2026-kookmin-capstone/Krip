@@ -1,7 +1,7 @@
 """tripmate 도메인 단위 테스트 공용 Mock 팩토리.
 
 `@transactional` 의 `async with self.uow as session:` 패턴을 충족하는 FakeUnitOfWork +
-TripmatePost / TripmatePostLike / UserDetailInform / NotificationService 의 AsyncMock 을
+TripmatePost / TripmatePostLike / UserDetailInform / InboxService 의 AsyncMock 을
 한 곳에서 관리한다. friend / notification 도메인의 `*RepositoryMockFactory` 패턴과 일관.
 """
 from unittest.mock import AsyncMock, MagicMock
@@ -72,8 +72,8 @@ class UserDetailInformRepositoryMockFactory:
 
 # ──────────────────── External service mocks ────────────────────
 
-def make_notification_service_mock() -> AsyncMock:
-    """알림 fan-out 진입점 mock — 호출 검증용. 본인→본인 skip 가드는 service 가 처리."""
+def make_inbox_service_mock() -> AsyncMock:
+    """인박스 fan-out 진입점 mock — 호출 검증용. 본인→본인 skip 가드는 service 가 처리."""
     mock = AsyncMock()
     mock.notify_tripmate_like.return_value = None
     mock.notify_feed_like.return_value = None

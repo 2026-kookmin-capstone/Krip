@@ -42,7 +42,7 @@ class CreateCommentResult:
     """댓글 작성 service 내부 transfer.
 
     트랜잭션 안에서 응답 dto + fan-out 필요 정보를 한 번에 합성. router 에는 `dto` 만
-    노출, `notify_*` 필드는 outer 가 NotificationService 로 전달. `notify_recipient_id`
+    노출, `notify_*` 필드는 outer 가 InboxService 로 전달. `notify_recipient_id`
     가 None 이면 본인→본인 댓글 — outer 가 fan-out skip.
     """
     dto: FeedPostCommentData

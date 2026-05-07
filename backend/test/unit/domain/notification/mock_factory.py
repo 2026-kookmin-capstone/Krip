@@ -66,8 +66,8 @@ class ChatRoomMemberRepositoryMockFactory:
         return mock
 
 
-class NotificationRepositoryMockFactory:
-    """알림창 (Mongo) Repository Mock — beanie/motor 의존 없이 동작 검증용.
+class InboxRepositoryMockFactory:
+    """인박스 (Mongo) Repository Mock — beanie/motor 의존 없이 동작 검증용.
 
     각 메서드 default 는 "비어 있음" / "no-op" 흐름. 개별 테스트가 케이스별 override.
     """

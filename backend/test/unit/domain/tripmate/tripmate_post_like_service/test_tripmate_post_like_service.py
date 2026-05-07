@@ -1,11 +1,11 @@
-"""TripmatePostLikeService — 좋아요 추가/취소/조회 + 알림 fan-out 통합 단위 테스트.
+"""TripmatePostLikeService — 좋아요 추가/취소/조회 + 인박스 fan-out 통합 단위 테스트.
 
 검증 대상:
     - `get_liked_user_ids`: 게시글 존재 가드 + ID 목록 반환
     - `add_like`: 트랜잭션 분리 + 본인→본인 fan-out skip + actor snapshot + detail 결손 fallback
-    - `remove_like`: 좋아요 취소는 알림 변경 없음 (정책 — Q1: 좋아요 취소해도 알림 보존)
+    - `remove_like`: 좋아요 취소는 인박스 변경 없음 (정책 — Q1: 좋아요 취소해도 인박스 보존)
 
-fan-out 은 `notification_service_mock` 으로 호출 인자 검증, 실 Mongo 비접근.
+fan-out 은 `inbox_service_mock` 으로 호출 인자 검증, 실 Mongo 비접근.
 """
 import pytest
 
@@ -71,7 +71,7 @@ class TestAddLike:
         like_repo_mock.save.assert_awaited_once()
 
     async def test_external_like_calls_fanout_with_actor_snapshot(
-        self, service, post_repo_mock, detail_repo_mock, notification_service_mock,
+        self, service, post_repo_mock, detail_repo_mock, inbox_service_mock,
     ):
         """외부 actor → detail fetch → fan-out 에 닉네임/프로필 전달."""
         post = TripmatePostFactory.create(
@@ -86,7 +86,7 @@ class TestAddLike:
 
         await service.add_like(user_id="USER_actor", post_id="TMP_x")
 
-        notification_service_mock.notify_tripmate_like.assert_awaited_once_with(
+        inbox_service_mock.notify_tripmate_like.assert_awaited_once_with(
             recipient_id="USER_owner",
             actor_id="USER_actor",
             actor_name="요한",
@@ -96,7 +96,7 @@ class TestAddLike:
         )
 
     async def test_self_like_skips_fanout_but_inserts_rdb(
-        self, service, post_repo_mock, like_repo_mock, notification_service_mock,
+        self, service, post_repo_mock, like_repo_mock, inbox_service_mock,
     ):
         """본인이 본인 글에 좋아요 — RDB INSERT 는 진행, fan-out 만 skip."""
         post = TripmatePostFactory.create(user_id="USER_a")
@@ -105,7 +105,7 @@ class TestAddLike:
         await service.add_like(user_id="USER_a", post_id=post.post_id)
 
         like_repo_mock.save.assert_awaited_once()
-        notification_service_mock.notify_tripmate_like.assert_not_awaited()
+        inbox_service_mock.notify_tripmate_like.assert_not_awaited()
 
     async def test_self_like_skips_detail_fetch(
         self, service, post_repo_mock, detail_repo_mock,
@@ -119,7 +119,7 @@ class TestAddLike:
         detail_repo_mock.find_by_user_id.assert_not_awaited()
 
     async def test_external_like_falls_back_when_detail_missing(
-        self, service, post_repo_mock, detail_repo_mock, notification_service_mock,
+        self, service, post_repo_mock, detail_repo_mock, inbox_service_mock,
     ):
         """detail 결손 (회원가입 미완료 등) — actor_name="" / profile_image_url=None fallback.
 
@@ -131,12 +131,12 @@ class TestAddLike:
 
         await service.add_like(user_id="USER_actor", post_id="TMP_x")
 
-        call = notification_service_mock.notify_tripmate_like.await_args.kwargs
+        call = inbox_service_mock.notify_tripmate_like.await_args.kwargs
         assert call["actor_name"] == ""
         assert call["actor_profile_image_url"] is None
 
     async def test_raises_when_post_not_found(
-        self, service, post_repo_mock, like_repo_mock, notification_service_mock,
+        self, service, post_repo_mock, like_repo_mock, inbox_service_mock,
     ):
         post_repo_mock.find_by_id.return_value = None
 
@@ -144,10 +144,10 @@ class TestAddLike:
             await service.add_like(user_id="USER_a", post_id="TMP_x")
 
         like_repo_mock.save.assert_not_awaited()
-        notification_service_mock.notify_tripmate_like.assert_not_awaited()
+        inbox_service_mock.notify_tripmate_like.assert_not_awaited()
 
     async def test_raises_when_already_liked(
-        self, service, post_repo_mock, like_repo_mock, notification_service_mock,
+        self, service, post_repo_mock, like_repo_mock, inbox_service_mock,
     ):
         """중복 좋아요 — 400 매핑용 ValueError. RDB INSERT / fan-out 모두 skip."""
         post = TripmatePostFactory.create()
@@ -158,7 +158,7 @@ class TestAddLike:
             await service.add_like(user_id="USER_a", post_id=post.post_id)
 
         like_repo_mock.save.assert_not_awaited()
-        notification_service_mock.notify_tripmate_like.assert_not_awaited()
+        inbox_service_mock.notify_tripmate_like.assert_not_awaited()
 
 
 # ──────────────────────────────────────────────────────────────────
@@ -191,11 +191,11 @@ class TestRemoveLike:
         like_repo_mock.delete_by_user_and_post.assert_not_awaited()
 
     async def test_does_not_call_fanout(
-        self, service, like_repo_mock, notification_service_mock,
+        self, service, like_repo_mock, inbox_service_mock,
     ):
         """좋아요 취소 정책 (Q1) — 알림 보존, 변경 없음."""
         like_repo_mock.find_by_user_and_post.return_value = object()
 
         await service.remove_like(user_id="USER_a", post_id="TMP_x")
 
-        notification_service_mock.notify_tripmate_like.assert_not_awaited()
+        inbox_service_mock.notify_tripmate_like.assert_not_awaited()
