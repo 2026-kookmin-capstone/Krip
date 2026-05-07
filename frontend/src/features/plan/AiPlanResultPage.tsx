@@ -1,16 +1,27 @@
 ﻿import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
-import { API_BASE_URL, TOUR_PLACES_AUTHORIZATION_BEARER } from "../../api/auth/config";
 import {
   ACCENT,
   BRAND,
+  KRW_PER_BUDGET_UNIT,
   buildPlanTitle,
   budgetCategoryLabel,
-  getSavedPlanById,
+  createTourPlan,
+  flattenRecommendedPlacesV2,
+  formatKrw,
+  getAiPlanDayInputs,
+  getTourPlan,
+  getTourRecommendationsV2,
   loadGoogleMapsApi,
-  upsertSavedPlan,
+  tourPlanToCreateItems,
+  tourPlanV2ToRouteStops,
   type AiPreferenceState,
-  type AiRouteStop,
+  type MovementHopV2,
+  type PlanDetailResponse,
+  type PlaceDetailV2,
+  type TimelineSlotV2,
+  type TourDayResponseV2,
+  type TourRecommendResponseV2,
 } from "../../api/aiPlanShared";
 
 declare global {
@@ -48,273 +59,85 @@ interface AiPlanResultPageProps {
   onEdit: () => void;
 }
 
-interface AiPlanDayInput {
-  departureCluster: string;
-  arrivalCluster: string;
-  startTime: string;
-  endTime: string;
-  additionalPlaceId: string | null;
-}
-
-type AiPreferenceStateV2 = AiPreferenceState & {
-  days?: AiPlanDayInput[];
-  additionalPlaceId?: string | null;
-  additionalPlaceName?: string;
-};
-
-type FoodPreference = "halal" | "vegetarian" | "any";
-type StyleCode =
-  | "activity"
-  | "famous_attractions"
-  | "healing"
-  | "culture_history"
-  | "shopping"
-  | "food_tour"
-  | "photo_aesthetic"
-  | "festival_event";
-
-type CompanionCode =
-  | "solo"
-  | "couple"
-  | "spouse"
-  | "friends_colleagues"
-  | "family_parents"
-  | "family_with_kids";
-
-interface TourRecommendV2Request {
-  travel_days: number;
-  food_preference: FoodPreference;
-  days: Array<{
-    departure_cluster: string;
-    arrival_cluster: string;
-    additional_place_id: string | null;
-    transport: "public_transport";
-    start_time: string;
-    end_time: string;
-    companion: CompanionCode;
-    budget_per_person_krw: number;
-    styles: StyleCode[];
-    schedule_density: "relaxed" | "packed";
-  }>;
-}
-
-interface TimelineSlot {
-  time: string;
-  place_id: string;
-  title: string;
-}
-
-interface PlaceDetail {
-  place_id: string;
-  display_name: string;
-  category: string;
-  address: string;
-  location: { lat: number; lng: number };
-  rating: number | null;
-  reason: string;
-  estimated_cost_krw: number;
-  stay_minutes: number;
-}
-
-interface MovementHop {
-  from_place: string;
-  to_place: string;
-  method: string;
-}
-
-interface BudgetItem {
-  label: string;
-  amount_krw: number;
-}
-
-interface TourDayResponse {
-  day: number;
-  timeline: TimelineSlot[];
-  places: PlaceDetail[];
-  movements: MovementHop[];
-  budget_breakdown: BudgetItem[];
-  budget_total_krw: number;
-  summary: string;
-}
-
-interface TourRecommendV2Response {
-  tour_plan: TourDayResponse[];
-}
-
-const DEFAULT_CLUSTER = "Myeongdong / Euljiro";
-
 function readPlanId(): string | null {
   if (typeof window === "undefined") return null;
   return new URLSearchParams(window.location.search).get("planId");
 }
 
-function toPlanValue(value: AiPreferenceState): AiPreferenceStateV2 {
-  return value as AiPreferenceStateV2;
-}
-
-function getDayInputs(value: AiPreferenceStateV2): AiPlanDayInput[] {
-  const travelDays = Math.max(1, Math.min(3, value.durationDays || 1));
-  const existing = Array.isArray(value.days) ? value.days : [];
-
-  return Array.from({ length: travelDays }, (_, index) => ({
-    departureCluster:
-      existing[index]?.departureCluster || value.departure || DEFAULT_CLUSTER,
-    arrivalCluster:
-      existing[index]?.arrivalCluster || value.arrival || DEFAULT_CLUSTER,
-    startTime: existing[index]?.startTime || value.startTime || "10:00",
-    endTime: existing[index]?.endTime || value.endTime || "21:00",
-    additionalPlaceId:
-      existing[index]?.additionalPlaceId ?? value.additionalPlaceId ?? null,
-  }));
-}
-
-function mapFoodPreference(value: AiPreferenceState): FoodPreference {
-  if (value.foodNeed === "Halal Food") return "halal";
-  if (value.foodNeed === "Vegan") return "vegetarian";
-  return "any";
-}
-
-function mapCompanion(value: AiPreferenceState): CompanionCode {
-  if (value.companion === "Couple") return "couple";
-  if (value.companion === "Friends") return "friends_colleagues";
-  if (value.companion === "Family") return "family_parents";
-  return "solo";
-}
-
-function mapStyle(token: string): StyleCode {
-  const normalized = token.toLowerCase();
-  if (normalized.includes("food")) return "food_tour";
-  if (normalized.includes("shopping")) return "shopping";
-  if (normalized.includes("culture") || normalized.includes("history")) return "culture_history";
-  if (normalized.includes("relaxation") || normalized.includes("wellness")) return "healing";
-  if (normalized.includes("festival") || normalized.includes("event")) return "festival_event";
-  if (normalized.includes("photo") || normalized.includes("aesthetic")) return "photo_aesthetic";
-  if (normalized.includes("hot")) return "famous_attractions";
-  return "activity";
-}
-
-function uniqueStyles(styles: string[]): StyleCode[] {
-  const mapped = styles.map(mapStyle);
-  const unique = Array.from(new Set(mapped));
-  return unique.length > 0 ? unique : ["activity"];
-}
-
-function buildRecommendRequest(preferences: AiPreferenceState): TourRecommendV2Request {
-  const planValue = toPlanValue(preferences);
-  const days = getDayInputs(planValue);
-  const styles = uniqueStyles(preferences.styles);
-
-  return {
-    travel_days: days.length,
-    food_preference: mapFoodPreference(preferences),
-    days: days.map((day) => ({
-      departure_cluster: day.departureCluster,
-      arrival_cluster: day.arrivalCluster,
-      additional_place_id: day.additionalPlaceId || null,
-      transport: "public_transport",
-      start_time: day.startTime,
-      end_time: day.endTime,
-      companion: mapCompanion(preferences),
-      budget_per_person_krw: Math.max(0, Math.round(preferences.budgetValue * 10000)),
-      styles,
-      schedule_density: preferences.pace === "Packed" ? "packed" : "relaxed",
-    })),
-  };
-}
-
-async function getTourRecommendationsV2(
-  preferences: AiPreferenceState
-): Promise<TourRecommendV2Response> {
-  const response = await fetch(`${API_BASE_URL}/api/tour/recommend`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        Authorization: TOUR_PLACES_AUTHORIZATION_BEARER,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(buildRecommendRequest(preferences)),
-    });
-
-    if (!response.ok) {
-      let detail = "Failed to load recommended tour plan.";
-      try {
-        const data = (await response.json()) as { detail?: unknown; message?: unknown };
-        const message = data.detail || data.message;
-        detail = typeof message === "string" ? message : detail;
-      } catch {
-        // Keep default message.
-      }
-      const error = new Error(detail) as Error & { status?: number };
-      error.status = response.status;
-      throw error;
-    }
-
-    const payload = (await response.json()) as Partial<TourRecommendV2Response>;
-    return {
-      tour_plan: Array.isArray(payload.tour_plan) ? payload.tour_plan : [],
-    };
-}
-
 function buildRouteTitle(preferences: AiPreferenceState): string {
-  const planValue = toPlanValue(preferences);
-  const days = getDayInputs(planValue);
+  const days = getAiPlanDayInputs(preferences);
   return buildPlanTitle(
     "ai",
     `${days[0]?.departureCluster || "Seoul"} to ${days[days.length - 1]?.arrivalCluster || "Seoul"}`
   );
 }
 
-function formatKrw(value: number): string {
-  if (!value) return "₩—";
-  return `₩${value.toLocaleString()}`;
-}
-
-function flattenPlaces(plan: TourRecommendV2Response | null): PlaceDetail[] {
-  const seen = new Set<string>();
-  const places: PlaceDetail[] = [];
-
-  plan?.tour_plan.forEach((day) => {
-    day.places.forEach((place) => {
-      if (!seen.has(place.place_id)) {
-        seen.add(place.place_id);
-        places.push(place);
-      }
-    });
+function getTimelineSlotsByPlace(day: TourDayResponseV2): Map<string, TimelineSlotV2[]> {
+  const slotsByPlace = new Map<string, TimelineSlotV2[]>();
+  day.timeline.forEach((slot) => {
+    const currentSlots = slotsByPlace.get(slot.place_id) || [];
+    slotsByPlace.set(slot.place_id, [...currentSlots, slot]);
   });
-
-  return places;
+  return slotsByPlace;
 }
 
-function placeToRouteStop(place: PlaceDetail, day: number, index: number): AiRouteStop {
+function getMovementAfterPlace(
+  day: TourDayResponseV2,
+  place: PlaceDetailV2 | undefined
+): MovementHopV2 | null {
+  if (!place) return null;
+
+  const placeIndex = day.places.findIndex(
+    (item) => item.place_id === place.place_id
+  );
+  const nextPlace = day.places[placeIndex + 1];
+  if (!nextPlace) return null;
+
+  return (
+    day.movements.find(
+      (movement) =>
+        movement.from_place === place.display_name &&
+        movement.to_place === nextPlace.display_name
+    ) || null
+  );
+}
+
+function savedPlanToRecommendation(plan: PlanDetailResponse): TourRecommendResponseV2 {
+  const dayNumbers = Array.from(
+    new Set(plan.items.map((item) => item.day_number))
+  ).sort((left, right) => left - right);
+
   return {
-    id: place.place_id,
-    name: place.display_name,
-    category: place.category,
-    summary: place.reason,
-    address: place.address,
-    latitude: place.location?.lat,
-    longitude: place.location?.lng,
-    keyword: place.category,
-    day,
-    order: index + 1,
-    rating: place.rating,
-    eventType: "place",
+    tour_plan: dayNumbers.map((dayNumber) => {
+      const items = plan.items.filter((item) => item.day_number === dayNumber);
+      return {
+        day: dayNumber,
+        timeline: items.map((item) => ({
+          time: item.visit_time || "--:--",
+          place_id: item.place_id,
+          title: item.display_name,
+        })),
+        places: items.map((item) => ({
+          place_id: item.place_id,
+          display_name: item.display_name,
+          category: "Saved place",
+          address: item.address,
+          location: { lat: 0, lng: 0 },
+          rating: item.rating,
+          reason: "Saved in your trip plan.",
+          estimated_cost_krw: 0,
+          stay_minutes: 60,
+        })),
+        movements: [],
+        budget_breakdown: [],
+        budget_total_krw: 0,
+        summary: plan.title || "Saved trip plan",
+      };
+    }),
   };
 }
 
-function toRouteStops(plan: TourRecommendV2Response | null): AiRouteStop[] {
-  return plan
-    ? plan.tour_plan.flatMap((day) =>
-        day.places.map((place, index) => placeToRouteStop(place, day.day, index))
-      )
-    : [];
-}
-
-function getPlaceMap(day: TourDayResponse): Map<string, PlaceDetail> {
-  return new Map(day.places.map((place) => [place.place_id, place]));
-}
-
-function GoogleMapPreview({ places }: { places: PlaceDetail[] }) {
+function GoogleMapPreview({ places }: { places: PlaceDetailV2[] }) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const [mapReady, setMapReady] = useState(false);
   const [mapError, setMapError] = useState("");
@@ -330,11 +153,12 @@ function GoogleMapPreview({ places }: { places: PlaceDetail[] }) {
   );
 
   useEffect(() => {
-    let markers: GoogleMarker[] = [];
+    const markers: GoogleMarker[] = [];
     let polyline: GooglePolyline | null = null;
     let cancelled = false;
 
     if (!mapRef.current || positionedPlaces.length === 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setMapReady(false);
       setMapError("");
       return undefined;
@@ -466,7 +290,7 @@ export default function AiPlanResultPage({
   preferences,
   onBack,
 }: AiPlanResultPageProps) {
-  const [plan, setPlan] = useState<TourRecommendV2Response | null>(null);
+  const [plan, setPlan] = useState<TourRecommendResponseV2 | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [saveMessage, setSaveMessage] = useState("");
@@ -475,6 +299,7 @@ export default function AiPlanResultPage({
   const planId = useMemo(() => readPlanId(), []);
   useEffect(() => {
     if (!isLoading) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLoadingSeconds(0);
       return undefined;
     }
@@ -497,47 +322,15 @@ export default function AiPlanResultPage({
           : "Finalizing your Seoul itinerary";
 
   useEffect(() => {
-    const savedPlan = getSavedPlanById(planId);
-    if (savedPlan?.type === "ai" && savedPlan.aiRouteStops) {
-      setPlan({
-        tour_plan: [
-          {
-            day: 1,
-            timeline: savedPlan.aiRouteStops.map((stop) => ({
-              time: stop.timeLabel || "--:--",
-              place_id: stop.id,
-              title: stop.name,
-            })),
-            places: savedPlan.aiRouteStops.map((stop) => ({
-              place_id: stop.id,
-              display_name: stop.name,
-              category: stop.category,
-              address: stop.address,
-              location: {
-                lat: stop.latitude || 0,
-                lng: stop.longitude || 0,
-              },
-              rating: stop.rating ?? null,
-              reason: stop.summary,
-              estimated_cost_krw: 0,
-              stay_minutes: 60,
-            })),
-            movements: [],
-            budget_breakdown: [],
-            budget_total_krw: 0,
-            summary: savedPlan.summary,
-          },
-        ],
-      });
-      setIsLoading(false);
-      return;
-    }
-
     let cancelled = false;
     setIsLoading(true);
     setErrorMessage("");
 
-    void getTourRecommendationsV2(preferences)
+    const request = planId
+      ? getTourPlan(planId).then(savedPlanToRecommendation)
+      : getTourRecommendationsV2(preferences);
+
+    void request
       .then((result) => {
         if (cancelled) return;
         setPlan(result);
@@ -558,14 +351,20 @@ export default function AiPlanResultPage({
     };
   }, [planId, preferences]);
 
-  const allPlaces = useMemo(() => flattenPlaces(plan), [plan]);
-  const routeStops = useMemo(() => toRouteStops(plan), [plan]);
+  const allPlaces = useMemo(() => flattenRecommendedPlacesV2(plan), [plan]);
+  const routeStops = useMemo(() => tourPlanV2ToRouteStops(plan), [plan]);
   const budgetTotal = plan?.tour_plan.reduce(
     (sum, day) => sum + day.budget_total_krw,
     0
   ) || 0;
-  const budgetLimit = Math.max(0, preferences.budgetValue * 10000);
-  const isOverBudget = budgetLimit > 0 && budgetTotal > budgetLimit;
+  const dailyBudgetLimit = Math.max(0, preferences.budgetValue * KRW_PER_BUDGET_UNIT);
+  const tripBudgetLimit = dailyBudgetLimit * Math.max(1, preferences.durationDays || 1);
+  const hasDailyBudgetOverrun = Boolean(
+    plan?.tour_plan.some((day) => day.budget_total_krw > dailyBudgetLimit)
+  );
+  const isOverBudget =
+    dailyBudgetLimit > 0 &&
+    (budgetTotal > tripBudgetLimit || hasDailyBudgetOverrun);
   const summary = plan?.tour_plan.map((day) => day.summary).filter(Boolean).join(" ") ||
     `This itinerary uses ${routeStops.length} places returned by the recommendation API.`;
 
@@ -599,16 +398,25 @@ export default function AiPlanResultPage({
     );
   }
   const handleSave = () => {
-    const saved = upsertSavedPlan({
-      id: planId || undefined,
-      type: "ai",
-      title: buildRouteTitle(preferences),
-      summary,
-      aiPreferences: preferences,
-      aiRouteStops: routeStops,
-    });
+    const items = tourPlanToCreateItems(plan);
+    if (items.length === 0) {
+      setSaveMessage("There are no places to save yet.");
+      return;
+    }
 
-    setSaveMessage(`Saved to My Page (${saved.title})`);
+    void createTourPlan({
+      title: buildRouteTitle(preferences),
+      travel_days: Math.max(1, plan?.tour_plan.length || preferences.durationDays || 1),
+      items,
+    })
+      .then((saved) => {
+        setSaveMessage(`Saved to My Page (${saved.title || "Untitled plan"})`);
+      })
+      .catch((error) => {
+        setSaveMessage(
+          error instanceof Error ? error.message : "Failed to save plan."
+        );
+      });
   };
 
   return (
@@ -670,41 +478,58 @@ export default function AiPlanResultPage({
           ) : (
             <div style={styles.timelineList}>
               {plan.tour_plan.map((day) => {
-                const placeMap = getPlaceMap(day);
+                const slotsByPlace = getTimelineSlotsByPlace(day);
+                const dayOverBudget =
+                  dailyBudgetLimit > 0 && day.budget_total_krw > dailyBudgetLimit;
                 return (
                   <section key={day.day} style={styles.dayRouteBlock}>
                     <div style={styles.dayRouteHeader}>
                       <strong style={styles.dayRouteTitle}>Day {day.day}</strong>
-                      <span style={styles.dayRouteCluster}>{formatKrw(day.budget_total_krw)}</span>
+                      <span style={styles.dayRouteCluster}>
+                        {formatKrw(day.budget_total_krw)}
+                        {dayOverBudget ? " - Over budget" : ""}
+                      </span>
                     </div>
-                    {day.timeline.map((slot, index) => {
-                      const place = placeMap.get(slot.place_id);
-                      const movement = day.movements[index];
+                    {day.places.map((place, index) => {
+                      const placeSlots = slotsByPlace.get(place.place_id) || [];
+                      const primarySlot = placeSlots[0];
+                      const movement = getMovementAfterPlace(day, place);
                       return (
-                        <div key={`${day.day}-${slot.place_id}-${index}`}>
+                        <div key={`${day.day}-${place.place_id}-${index}`}>
                           <div style={styles.timelineItem}>
-                            <div style={styles.timelineTime}>{slot.time}</div>
+                            <div style={styles.timelineTime}>
+                              {primarySlot?.time || "--:--"}
+                            </div>
                             <div style={styles.timelineDot}>{index + 1}</div>
                             <div style={styles.timelineCard}>
                               <div style={styles.timelineTitleRow}>
-                                <strong style={styles.timelineItemTitle}>{slot.title}</strong>
-                                {typeof place?.rating === "number" ? (
+                                <strong style={styles.timelineItemTitle}>
+                                  {primarySlot?.title || place.display_name}
+                                </strong>
+                                {typeof place.rating === "number" ? (
                                   <span style={styles.ratingBadge}>{place.rating.toFixed(1)}</span>
                                 ) : null}
                               </div>
-                              {place?.reason ? (
-                                <p style={styles.timelineCopy}>{place.reason}</p>
-                              ) : null}
-                              {place?.address ? (
-                                <p style={styles.poiAddress}>{place.address}</p>
-                              ) : null}
-                              {place ? (
-                                <div style={styles.poiMetaRow}>
-                                  <span>{place.category}</span>
-                                  <span>{place.stay_minutes} min</span>
-                                  <span>{formatKrw(place.estimated_cost_krw)}</span>
+                              {placeSlots.length > 1 ? (
+                                <div style={styles.slotList}>
+                                  {placeSlots.slice(1).map((slot) => (
+                                    <span key={`${slot.time}-${slot.title}`}>
+                                      {slot.time} {slot.title}
+                                    </span>
+                                  ))}
                                 </div>
                               ) : null}
+                              {place.reason ? (
+                                <p style={styles.timelineCopy}>{place.reason}</p>
+                              ) : null}
+                              {place.address ? (
+                                <p style={styles.poiAddress}>{place.address}</p>
+                              ) : null}
+                              <div style={styles.poiMetaRow}>
+                                <span>{place.category}</span>
+                                <span>{place.stay_minutes} min</span>
+                                <span>{formatKrw(place.estimated_cost_krw)}</span>
+                              </div>
                             </div>
                           </div>
                           {movement ? (
@@ -737,6 +562,9 @@ export default function AiPlanResultPage({
           <div style={{ ...styles.stateCard, ...(isOverBudget ? styles.warningCard : {}) }}>
             Total budget: {formatKrw(budgetTotal)}
             {isOverBudget ? " - Budget may be exceeded." : ""}
+            {preferences.foodNeed
+              ? ` ${preferences.foodNeed} dining data can be sparse, so meal slots may be missing in some areas.`
+              : ""}
           </div>
         ) : null}
 
@@ -991,6 +819,15 @@ const styles: Record<string, CSSProperties> = {
     color: "#557071",
     lineHeight: 1.6,
     fontSize: 13,
+  },
+  slotList: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 4,
+    marginTop: 8,
+    color: "#5d7576",
+    fontSize: 12,
+    fontWeight: 700,
   },
   dayRouteBlock: {
     display: "flex",

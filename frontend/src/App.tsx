@@ -4,6 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate,} from
 import AppShell from "./components/AppShell";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import OnboardingPage from "./pages/OnboardingPage";
 import WithdrawalPendingPage from "./pages/WithdrawalPendingPage";
 import HomePage from "./features/tour/HomePage";
 import MenuPage from "./pages/MenuPage";
@@ -12,6 +13,7 @@ import ChatPage from "./features/friend-chat/ChatPage";
 import ChatRoomPage from "./features/friend-chat/ChatRoomPage";
 import { ChatProvider } from "./features/friend-chat/ChatProvider";
 import MyPage from "./pages/MyPage";
+import PublicSharedPlanPage from "./pages/PublicSharedPlanPage";
 import PlaceholderPage from "./pages/PlaceholderPage";
 import PlanSelectionPage from "./features/plan/PlanSelectionPage";
 import AiPlanDesignPage from "./features/plan/AiPlanDesignPage";
@@ -23,7 +25,6 @@ import {
   clearPreferences,
   clonePreferences,
   defaultPreferences,
-  getSavedPlanById,
   loadPreferences,
   savePreferences,
   type AiPreferenceState,
@@ -34,10 +35,6 @@ function AiPlanDesignRoute() {
   const location = useLocation();
   const planId = new URLSearchParams(location.search).get("planId");
   const [preferences, setPreferences] = useState<AiPreferenceState>(() => {
-    const savedPlan = getSavedPlanById(planId);
-    if (savedPlan?.type === "ai" && savedPlan.aiPreferences) {
-      return clonePreferences(savedPlan.aiPreferences);
-    }
     return clonePreferences(defaultPreferences);
   });
   const [isGenerating, setIsGenerating] = useState(false);
@@ -76,10 +73,6 @@ function AiPlanResultRoute() {
   const location = useLocation();
   const planId = new URLSearchParams(location.search).get("planId");
   const preferences = useMemo(() => {
-    const savedPlan = getSavedPlanById(planId);
-    if (savedPlan?.type === "ai" && savedPlan.aiPreferences) {
-      return clonePreferences(savedPlan.aiPreferences);
-    }
     return clonePreferences(loadPreferences());
   }, [planId]);
 
@@ -212,6 +205,7 @@ export default function App() {
           <Route path="/" element={<LoginPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/register/onboarding" element={<OnboardingPage />} />
           <Route path="/withdrawal-pending" element={<WithdrawalPendingPage />} />
           <Route element={<AppShell />}>
             <Route path="/home" element={<HomePage />} />
@@ -224,6 +218,7 @@ export default function App() {
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/my" element={<MyPage />} />
           </Route>
+          <Route path="/share/plan/:shareToken" element={<PublicSharedPlanPage />} />
           <Route path="/chat/:id" element={<ChatRoomPage />} />
           <Route path="/spots/:id" element={<PlaceholderPage />} />
           <Route path="/profile/:id" element={<PlaceholderPage />} />

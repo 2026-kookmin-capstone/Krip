@@ -3,6 +3,10 @@ import type { CSSProperties } from "react";
 import { getTourPlaces, type TourPlaceApiItem } from "../../api/auth/auth";
 import {
   BRAND,
+  BUDGET_SLIDER_MAX,
+  BUDGET_SLIDER_MIN,
+  BUDGET_SLIDER_STEP,
+  budgetCategoryHint,
   budgetCategoryIcon,
   budgetCategoryFromValue,
   budgetCategoryLabel,
@@ -10,8 +14,11 @@ import {
   companionOptions,
   durationOptions,
   foodNeeds,
+  getAiPlanDayInputs,
+  seoulClusterKeys,
   styleTokens,
   type AiPreferenceState,
+  type AiPlanDayInput,
 } from "../../api/aiPlanShared";
 
 interface AiPlanDesignPageProps {
@@ -20,14 +27,6 @@ interface AiPlanDesignPageProps {
   onChange: (next: AiPreferenceState) => void;
   onSubmit: () => void;
   isGenerating: boolean;
-}
-
-interface AiPlanDayInput {
-  departureCluster: string;
-  arrivalCluster: string;
-  startTime: string;
-  endTime: string;
-  additionalPlaceId: string | null;
 }
 
 type AiPreferenceStateV2 = AiPreferenceState & {
@@ -43,47 +42,6 @@ interface ExtraPlaceOption {
   category: string;
 }
 
-const CLUSTERS = [
-  "Myeongdong / Euljiro",
-  "Gangnam Station",
-  "Hongdae / Hapjeong",
-  "Itaewon",
-  "Jamsil",
-  "Konkuk Univ. Station (Kondae)",
-  "Sinchon / Yonsei Univ.",
-  "Jongno / Insadong",
-  "Yeouido",
-  "Seongsu-dong",
-  "Mangwon / Yeonnam-dong",
-  "Euljiro 3-ga / Chungmuro",
-  "Apgujeong / Cheongdam",
-  "Garosu-gil (Sinsa)",
-  "Bukchon / Samcheong-dong",
-  "Gwangjang Market / Dongdaemun",
-  "Yongsan / Haebangchon (HBC)",
-  "Hannam-dong",
-  "Mullae-dong",
-  "Songridan-gil (Songpa)",
-  "Seoul Forest / Ttukseom",
-  "Mapo / Gongdeok",
-  "Nakseongdae / Sharosu-gil",
-  "Hyehwa / Daehangno",
-  "Hoegi / Kyung Hee Univ.",
-  "Noryangjin / Dongjak",
-  "Wangsimni / Sangwangsimni",
-  "Dosan Park / Hak-dong",
-  "Samseong / COEX",
-  "Bangbae / Seorae Village",
-  "Sangsu-dong",
-  "Ikseon-dong",
-  "Banpo Hangang Park",
-  "N Seoul Tower Area (Namsan)",
-  "DDP / Dongdaemun",
-  "Seongbuk-dong",
-  "Yeonhui-dong",
-  "Ssangmun / Suyu",
-];
-
 const paceOptions = [
   { value: "Slow", label: "Relaxed" },
   { value: "Packed", label: "Packed" },
@@ -94,19 +52,7 @@ function toPlanValue(value: AiPreferenceState): AiPreferenceStateV2 {
 }
 
 function getDayInputs(value: AiPreferenceStateV2): AiPlanDayInput[] {
-  const travelDays = Math.max(1, Math.min(3, value.durationDays || 1));
-  const existing = Array.isArray(value.days) ? value.days : [];
-
-  return Array.from({ length: travelDays }, (_, index) => ({
-    departureCluster:
-      existing[index]?.departureCluster || value.departure || CLUSTERS[0],
-    arrivalCluster:
-      existing[index]?.arrivalCluster || value.arrival || CLUSTERS[0],
-    startTime: existing[index]?.startTime || value.startTime || "10:00",
-    endTime: existing[index]?.endTime || value.endTime || "21:00",
-    additionalPlaceId:
-      existing[index]?.additionalPlaceId ?? value.additionalPlaceId ?? null,
-  }));
+  return getAiPlanDayInputs(value);
 }
 
 function normalizePlace(item: TourPlaceApiItem): ExtraPlaceOption | null {
@@ -163,6 +109,14 @@ export default function AiPlanDesignPage({
   const [extraResults, setExtraResults] = useState<ExtraPlaceOption[]>([]);
   const [isSearchingExtra, setIsSearchingExtra] = useState(false);
   const [extraSearchMessage, setExtraSearchMessage] = useState("");
+  const [extraPlaceDayIndex, setExtraPlaceDayIndex] = useState(0);
+  const [extraPlaceQueries, setExtraPlaceQueries] = useState<
+    Record<number, string>
+  >({});
+  const selectedExtraPlaceQuery =
+    extraPlaceQueries[extraPlaceDayIndex] ??
+    dayInputs[extraPlaceDayIndex]?.additionalPlaceName ??
+    (dayInputs.some((day) => day.additionalPlaceId) ? "" : value.extraPlace);
 
   const emitChange = (next: AiPreferenceStateV2) => {
     onChange(next as AiPreferenceState);
@@ -196,6 +150,7 @@ export default function AiPlanDesignPage({
 
   const setDuration = (durationDays: number) => {
     const currentDays = getDayInputs({ ...planValue, durationDays });
+    setExtraPlaceDayIndex((current) => Math.min(current, durationDays - 1));
     emitChange({
       ...planValue,
       durationDays,
@@ -225,12 +180,14 @@ export default function AiPlanDesignPage({
   };
 
   const searchExtraPlace = () => {
-    const keyword = planValue.extraPlace.trim();
+    const keyword = selectedExtraPlaceQuery.trim();
     setExtraResults([]);
     setExtraSearchMessage("");
 
     if (!keyword) {
-      setExtraSearchMessage("Enter a place keyword first.");
+      setExtraSearchMessage(
+        `Enter a place keyword for Day ${extraPlaceDayIndex + 1}.`
+      );
       return;
     }
 
@@ -257,35 +214,62 @@ export default function AiPlanDesignPage({
   };
 
   const selectExtraPlace = (place: ExtraPlaceOption) => {
-    const nextDays = dayInputs.map((day) => ({
-      ...day,
-      additionalPlaceId: place.placeId,
-    }));
+    const nextDays = dayInputs.map((day, index) =>
+      index === extraPlaceDayIndex
+        ? {
+            ...day,
+            additionalPlaceId: place.placeId,
+            additionalPlaceName: place.name,
+          }
+        : day
+    );
 
     emitChange({
       ...planValue,
       extraPlace: place.name,
-      additionalPlaceId: place.placeId,
-      additionalPlaceName: place.name,
+      additionalPlaceId: nextDays[0]?.additionalPlaceId ?? null,
+      additionalPlaceName: nextDays[0]?.additionalPlaceName || "",
       days: nextDays,
     });
-    setExtraSearchMessage(`${place.name} will be included in the recommendation.`);
+    setExtraPlaceQueries((current) => ({
+      ...current,
+      [extraPlaceDayIndex]: place.name,
+    }));
+    setExtraSearchMessage(
+      `${place.name} will be included on Day ${extraPlaceDayIndex + 1}.`
+    );
   };
 
-  const clearExtraPlace = () => {
-    const nextDays = dayInputs.map((day) => ({
-      ...day,
-      additionalPlaceId: null,
-    }));
+  const clearExtraPlace = (dayIndex?: number) => {
+    const shouldClearAll = typeof dayIndex !== "number";
+    const nextDays = dayInputs.map((day, index) =>
+      shouldClearAll || index === dayIndex
+        ? {
+            ...day,
+            additionalPlaceId: null,
+            additionalPlaceName: "",
+          }
+        : day
+    );
     emitChange({
       ...planValue,
-      extraPlace: "",
-      additionalPlaceId: null,
-      additionalPlaceName: "",
+      extraPlace: shouldClearAll
+        ? ""
+        : nextDays[0]?.additionalPlaceName || planValue.extraPlace,
+      additionalPlaceId: nextDays[0]?.additionalPlaceId ?? null,
+      additionalPlaceName: nextDays[0]?.additionalPlaceName || "",
       days: nextDays,
     });
-    setExtraResults([]);
-    setExtraSearchMessage("");
+    if (shouldClearAll) {
+      setExtraPlaceQueries({});
+      setExtraResults([]);
+      setExtraSearchMessage("");
+    } else {
+      setExtraPlaceQueries((current) => ({
+        ...current,
+        [dayIndex]: "",
+      }));
+    }
   };
 
   const hasInvalidTime = dayInputs.some((day) => day.startTime >= day.endTime);
@@ -360,7 +344,7 @@ export default function AiPlanDesignPage({
                       }
                       style={styles.textInput}
                     >
-                      {CLUSTERS.map((cluster) => (
+                      {seoulClusterKeys.map((cluster) => (
                         <option key={cluster} value={cluster}>
                           {cluster}
                         </option>
@@ -376,7 +360,7 @@ export default function AiPlanDesignPage({
                       }
                       style={styles.textInput}
                     >
-                      {CLUSTERS.map((cluster) => (
+                      {seoulClusterKeys.map((cluster) => (
                         <option key={cluster} value={cluster}>
                           {cluster}
                         </option>
@@ -480,21 +464,25 @@ export default function AiPlanDesignPage({
                 <span style={styles.budgetIcon}>
                   {budgetCategoryIcon(value.budgetCategory)}
                 </span>
-                {budgetCategoryLabel(value.budgetCategory)} ₩{formatBudgetValue(value.budgetValue)}
+                {budgetCategoryLabel(value.budgetCategory)}
               </span>
             </div>
+            <p style={styles.helperText}>
+              {budgetCategoryHint(value.budgetCategory)} target, current per person/day ₩
+              {formatBudgetValue(value.budgetValue)}
+            </p>
             <input
               type="range"
-              min={5}
-              max={500}
-              step={5}
+              min={BUDGET_SLIDER_MIN}
+              max={BUDGET_SLIDER_MAX}
+              step={BUDGET_SLIDER_STEP}
               value={value.budgetValue}
               onChange={(event) => handleBudgetChange(Number(event.target.value))}
               style={styles.rangeInput}
             />
             <div style={styles.rangeLabels}>
-              <span>₩50,000</span>
-              <span>₩5,000,000</span>
+              <span>₩{formatBudgetValue(BUDGET_SLIDER_MIN)}</span>
+              <span>₩{formatBudgetValue(BUDGET_SLIDER_MAX)}</span>
             </div>
           </div>
 
@@ -517,27 +505,33 @@ export default function AiPlanDesignPage({
                 />
               ))}
             </div>
+            {value.foodNeed ? (
+              <p style={styles.helperText}>
+                Some areas may have limited {value.foodNeed.toLowerCase()} dining data, so lunch or dinner slots may be omitted.
+              </p>
+            ) : null}
           </div>
 
           <div style={styles.fieldBlock}>
             <span style={styles.fieldLegend}>Extra Place</span>
             <div style={styles.searchRow}>
               <input
-                value={value.extraPlace}
+                value={selectedExtraPlaceQuery}
                 onChange={(event) => {
+                  const nextQuery = event.target.value;
+                  setExtraPlaceQueries((current) => ({
+                    ...current,
+                    [extraPlaceDayIndex]: nextQuery,
+                  }));
+                  setExtraResults([]);
+                  setExtraSearchMessage("");
                   emitChange({
                     ...planValue,
-                    extraPlace: event.target.value,
-                    additionalPlaceId: null,
-                    additionalPlaceName: "",
-                    days: dayInputs.map((day) => ({
-                      ...day,
-                      additionalPlaceId: null,
-                    })),
+                    extraPlace: nextQuery,
                   });
                 }}
                 style={styles.textInput}
-                placeholder="Search a place and select one result"
+                placeholder={`Search a place for Day ${extraPlaceDayIndex + 1}`}
               />
               <button
                 type="button"
@@ -548,12 +542,49 @@ export default function AiPlanDesignPage({
                 {isSearchingExtra ? "..." : "Search"}
               </button>
             </div>
-            {planValue.additionalPlaceId ? (
-              <div style={styles.selectedPlaceRow}>
-                <span>{planValue.additionalPlaceName || value.extraPlace}</span>
-                <button type="button" onClick={clearExtraPlace} style={styles.clearButton}>
-                  Clear
-                </button>
+            {dayInputs.length > 1 ? (
+              <div style={styles.segmentedWrap}>
+                {dayInputs.map((day, index) => (
+                  <button
+                    key={`extra-day-${index + 1}`}
+                    type="button"
+                    onClick={() => {
+                      setExtraPlaceDayIndex(index);
+                      setExtraResults([]);
+                      setExtraSearchMessage("");
+                    }}
+                    style={{
+                      ...styles.segmentButton,
+                      ...(extraPlaceDayIndex === index
+                        ? styles.segmentButtonActive
+                        : {}),
+                    }}
+                  >
+                    Day {index + 1}
+                    {day.additionalPlaceId ? " added" : ""}
+                  </button>
+                ))}
+              </div>
+            ) : null}
+            {dayInputs.some((day) => day.additionalPlaceId) ? (
+              <div style={styles.extraResults}>
+                {dayInputs.map((day, index) =>
+                  day.additionalPlaceId ? (
+                    <div key={`selected-extra-${index + 1}`} style={styles.selectedPlaceRow}>
+                      <span>
+                        Day {index + 1}:{" "}
+                        {day.additionalPlaceName || "Selected place"}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => clearExtraPlace(index)}
+                        style={styles.clearButton}
+                      >
+                        Clear
+                      </button>
+                    </div>
+                  ) : null
+                )}
               </div>
             ) : null}
             {extraSearchMessage ? (
@@ -588,6 +619,7 @@ export default function AiPlanDesignPage({
         >
           {isGenerating ? "Generating plan..." : "Generate AI itinerary"}
         </button>
+        <p style={styles.timeoutHint}>Recommendation requests can take up to 120 seconds.</p>
       </div>
     </div>
   );
@@ -875,5 +907,12 @@ const styles: Record<string, CSSProperties> = {
     opacity: 0.45,
     cursor: "not-allowed",
     boxShadow: "none",
+  },
+  timeoutHint: {
+    margin: "-8px 0 0",
+    color: "#5d7576",
+    fontSize: 12,
+    fontWeight: 800,
+    textAlign: "center",
   },
 };

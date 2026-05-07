@@ -11,10 +11,17 @@ export const SAVED_PLANS_EVENT = "krip:saved-plans-updated";
 export const DEFAULT_MAP_CENTER = { lat: 37.5665, lng: 126.978 };
 export const INCHEON_AIRPORT_CENTER = { lat: 37.4602, lng: 126.4407 };
 export const SEOUL_SHILLA_HOTEL_CENTER = { lat: 37.5564, lng: 127.0056 };
+export const TOUR_RECOMMEND_TIMEOUT_MS = 120000;
 
 export type PaceOption = "Slow" | "Balanced" | "Packed";
 export type TransportOption = "Public Transit" | "Taxi" | "Walk";
-export type CompanionOption = "Solo" | "Friends" | "Family" | "Couple";
+export type CompanionOption =
+  | "Solo"
+  | "Couple"
+  | "Spouse"
+  | "Friends"
+  | "Family"
+  | "Family with Kids";
 export type BudgetCategory = "Low" | "Moderate" | "High";
 export type PlannerMode = "ai" | "manual";
 
@@ -86,6 +93,56 @@ export interface SavedTripPlan {
   manualStops?: SavedManualStop[];
 }
 
+export interface PlanSummaryResponse {
+  plan_id: string;
+  title: string | null;
+  travel_days: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PlanItemResponse {
+  item_id: string;
+  day_number: number;
+  position: number;
+  place_id: string;
+  display_name: string;
+  address: string;
+  visit_time: string | null;
+  rating: number | null;
+}
+
+export interface PlanDetailResponse extends PlanSummaryResponse {
+  user_id?: string;
+  items: PlanItemResponse[];
+}
+
+export interface PlanListResponse {
+  plans: PlanSummaryResponse[];
+}
+
+export interface CreatePlanItemRequest {
+  day_number: number;
+  place_id: string;
+  visit_time?: string | null;
+}
+
+export interface MovePlanItemRequest {
+  target_day_number: number;
+  after_item_id: string | null;
+}
+
+export interface CreatePlanRequest {
+  title: string | null;
+  travel_days: number;
+  items: CreatePlanItemRequest[];
+}
+
+export interface SharePlanResponse {
+  share_token: string;
+  expires_at: string;
+}
+
 export interface TourRecommendRequest {
   travel_days: number;
   travel_style: "맛집 탐방" | "쇼핑" | "문화/역사" | "카페" | "자연/공원";
@@ -123,6 +180,7 @@ export interface AiPlanDayInput {
   startTime: string;
   endTime: string;
   additionalPlaceId: string | null;
+  additionalPlaceName?: string;
 }
 
 export type FoodPreferenceCode = "halal" | "vegetarian" | "any";
@@ -242,12 +300,23 @@ export const transportOptions: TransportOption[] = [
 ];
 export const companionOptions: CompanionOption[] = [
   "Solo",
+  "Couple",
+  "Spouse",
   "Friends",
   "Family",
-  "Couple",
+  "Family with Kids",
 ];
-export const foodNeeds = ["Halal Food", "Vegan"];
+export const foodNeeds = ["Halal Food", "Vegetarian"];
 export const durationOptions = [1, 2, 3];
+export const KRW_PER_BUDGET_UNIT = 10000;
+export const BUDGET_SLIDER_MIN = 5;
+export const BUDGET_SLIDER_MAX = 50;
+export const BUDGET_SLIDER_STEP = 1;
+export const BUDGET_TIER_HINTS = {
+  Low: "$40-$70 / day",
+  Moderate: "$100-$200 / day",
+  High: "$250+ / day",
+} satisfies Record<BudgetCategory, string>;
 export const seoulClusterKeys = [
   "Myeongdong / Euljiro",
   "Gangnam Station",
@@ -294,27 +363,38 @@ export function getAiPlanDayInputs(value: AiPreferenceState): AiPlanDayInput[] {
   const existing = Array.isArray(value.days) ? value.days : [];
   const defaultCluster = seoulClusterKeys[0];
 
-  return Array.from({ length: travelDays }, (_, index) => ({
-    departureCluster:
-      existing[index]?.departureCluster || value.departure || defaultCluster,
-    arrivalCluster:
-      existing[index]?.arrivalCluster || value.arrival || defaultCluster,
-    startTime: existing[index]?.startTime || value.startTime || "10:00",
-    endTime: existing[index]?.endTime || value.endTime || "21:00",
-    additionalPlaceId:
-      existing[index]?.additionalPlaceId ?? value.additionalPlaceId ?? null,
-  }));
+  return Array.from({ length: travelDays }, (_, index) => {
+    const existingDay = existing[index];
+    const shouldUseLegacyAdditionalPlace = !existingDay && index === 0;
+
+    return {
+      departureCluster:
+        existingDay?.departureCluster || value.departure || defaultCluster,
+      arrivalCluster:
+        existingDay?.arrivalCluster || value.arrival || defaultCluster,
+      startTime: existingDay?.startTime || value.startTime || "10:00",
+      endTime: existingDay?.endTime || value.endTime || "21:00",
+      additionalPlaceId:
+        existingDay?.additionalPlaceId ??
+        (shouldUseLegacyAdditionalPlace ? value.additionalPlaceId ?? null : null),
+      additionalPlaceName:
+        existingDay?.additionalPlaceName ||
+        (shouldUseLegacyAdditionalPlace ? value.additionalPlaceName || "" : ""),
+    };
+  });
 }
 
 export function toFoodPreferenceCode(value: AiPreferenceState): FoodPreferenceCode {
   if (value.foodNeed === "Halal Food") return "halal";
-  if (value.foodNeed === "Vegan") return "vegetarian";
+  if (value.foodNeed === "Vegetarian" || value.foodNeed === "Vegan") return "vegetarian";
   return "any";
 }
 
 export function toCompanionCode(value: AiPreferenceState): CompanionCode {
   if (value.companion === "Couple") return "couple";
+  if (value.companion === "Spouse") return "spouse";
   if (value.companion === "Friends") return "friends_colleagues";
+  if (value.companion === "Family with Kids") return "family_with_kids";
   if (value.companion === "Family") return "family_parents";
   return "solo";
 }
@@ -359,7 +439,10 @@ export function toRecommendRequestV2(
       start_time: day.startTime,
       end_time: day.endTime,
       companion: toCompanionCode(preferences),
-      budget_per_person_krw: Math.max(0, Math.round(preferences.budgetValue * 10000)),
+      budget_per_person_krw: Math.max(
+        0,
+        Math.round(preferences.budgetValue * KRW_PER_BUDGET_UNIT)
+      ),
       styles,
       schedule_density: toScheduleDensityCode(preferences.pace),
     })),
@@ -368,7 +451,7 @@ export function toRecommendRequestV2(
 
 export async function getTourRecommendationsV2(
   preferences: AiPreferenceState,
-  timeoutMs = 120000
+  timeoutMs = TOUR_RECOMMEND_TIMEOUT_MS
 ): Promise<TourRecommendResponseV2> {
   const controller = new AbortController();
   const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
@@ -405,6 +488,12 @@ export async function getTourRecommendationsV2(
     return {
       tour_plan: Array.isArray(data.tour_plan) ? data.tour_plan : [],
     };
+  } catch (error) {
+    if (error instanceof DOMException && error.name === "AbortError") {
+      throw new Error("Recommendation timed out after 120 seconds.");
+    }
+
+    throw error;
   } finally {
     window.clearTimeout(timeout);
   }
@@ -465,8 +554,8 @@ export function formatKrw(value: number): string {
 }
 
 export function budgetCategoryFromValue(value: number): BudgetCategory {
-  if (value <= 170) return "Low";
-  if (value >= 335) return "High";
+  if (value <= 10) return "Low";
+  if (value >= 35) return "High";
   return "Moderate";
 }
 
@@ -476,6 +565,10 @@ export function budgetCategoryLabel(category: BudgetCategory): string {
   return "Moderate Budget";
 }
 
+export function budgetCategoryHint(category: BudgetCategory): string {
+  return BUDGET_TIER_HINTS[category];
+}
+
 export function budgetCategoryIcon(category: BudgetCategory): string {
   if (category === "Low") return "$";
   if (category === "High") return "$$$";
@@ -483,16 +576,20 @@ export function budgetCategoryIcon(category: BudgetCategory): string {
 }
 
 export function formatBudgetValue(value: number): string {
-  return (value * 10000).toLocaleString();
+  return (value * KRW_PER_BUDGET_UNIT).toLocaleString();
 }
 
 export function clonePreferences(
   value?: Partial<AiPreferenceState> | null
 ): AiPreferenceState {
-  const budgetValue =
+  const rawBudgetValue =
     typeof value?.budgetValue === "number"
       ? value.budgetValue
       : defaultPreferences.budgetValue;
+  const budgetValue = Math.max(
+    BUDGET_SLIDER_MIN,
+    Math.min(BUDGET_SLIDER_MAX, rawBudgetValue)
+  );
 
   return {
     ...defaultPreferences,
@@ -594,6 +691,231 @@ export function createAiSummary(
     preferences.styles.length > 0 ? preferences.styles.join(", ") : "no style selected";
   const budgetLabel = budgetCategoryLabel(preferences.budgetCategory);
   return `This is a ${budgetLabel.toLowerCase()} itinerary connecting ${stopCount} locations, based on ${activeStyles}`;
+}
+
+async function parsePlanApiError(
+  response: Response,
+  fallback: string
+): Promise<Error & { status?: number }> {
+  let detail = fallback;
+
+  try {
+    const data = (await response.json()) as { detail?: unknown; message?: unknown };
+    const message = data.detail || data.message;
+    detail = typeof message === "string" ? message : fallback;
+  } catch {
+    // Keep fallback for non-JSON responses.
+  }
+
+  const error = new Error(detail) as Error & { status?: number };
+  error.status = response.status;
+  return error;
+}
+
+async function planApiFetch<T>(
+  path: string,
+  options: RequestInit = {},
+  fallback = "Plan request failed."
+): Promise<T> {
+  const response = await fetch(`${API_BASE_URL}${path}`, {
+    credentials: "include",
+    ...options,
+    headers: {
+      Authorization: TOUR_PLACES_AUTHORIZATION_BEARER,
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+  if (!response.ok) {
+    throw await parsePlanApiError(response, fallback);
+  }
+
+  return (await response.json()) as T;
+}
+
+function normalizeVisitTime(value?: string | null): string | null {
+  if (!value) return null;
+  return /^\d{2}:\d{2}$/.test(value) ? value : null;
+}
+
+export function tourPlanToCreateItems(
+  response: TourRecommendResponseV2 | null
+): CreatePlanItemRequest[] {
+  if (!response) return [];
+
+  return response.tour_plan.flatMap((day) => {
+    const firstSlotByPlace = new Map<string, TimelineSlotV2>();
+    day.timeline.forEach((slot) => {
+      if (!firstSlotByPlace.has(slot.place_id)) {
+        firstSlotByPlace.set(slot.place_id, slot);
+      }
+    });
+
+    return day.places.map((place) => ({
+      day_number: day.day,
+      place_id: place.place_id,
+      visit_time: normalizeVisitTime(firstSlotByPlace.get(place.place_id)?.time),
+    }));
+  });
+}
+
+export function routeStopsToCreateItems(
+  stops: SavedManualStop[]
+): CreatePlanItemRequest[] {
+  const sortedDates = Array.from(new Set(stops.map((stop) => stop.visitDate))).sort();
+  const dayByDate = new Map(
+    sortedDates.map((date, index) => [date, index + 1] as const)
+  );
+
+  return stops.map((stop) => ({
+    day_number: dayByDate.get(stop.visitDate) || 1,
+    place_id: stop.id,
+    visit_time: normalizeVisitTime(stop.visitTime),
+  }));
+}
+
+export async function createTourPlan(
+  payload: CreatePlanRequest
+): Promise<PlanDetailResponse> {
+  return planApiFetch<PlanDetailResponse>(
+    "/api/tour/plans",
+    {
+      method: "POST",
+      body: JSON.stringify(payload),
+    },
+    "Failed to save plan."
+  );
+}
+
+export async function listTourPlans(): Promise<PlanSummaryResponse[]> {
+  const data = await planApiFetch<PlanListResponse>(
+    "/api/tour/plans",
+    { method: "GET" },
+    "Failed to load saved plans."
+  );
+  return Array.isArray(data.plans) ? data.plans : [];
+}
+
+export async function getTourPlan(
+  planId: string
+): Promise<PlanDetailResponse> {
+  return planApiFetch<PlanDetailResponse>(
+    `/api/tour/plans/${encodeURIComponent(planId)}`,
+    { method: "GET" },
+    "Failed to load saved plan."
+  );
+}
+
+export async function updateTourPlanTitle(
+  planId: string,
+  title: string | null
+): Promise<PlanSummaryResponse> {
+  return planApiFetch<PlanSummaryResponse>(
+    `/api/tour/plans/${encodeURIComponent(planId)}`,
+    {
+      method: "PATCH",
+      body: JSON.stringify({ title }),
+    },
+    "Failed to update plan title."
+  );
+}
+
+export async function deleteTourPlan(planId: string): Promise<void> {
+  await planApiFetch<{ message: string }>(
+    `/api/tour/plans/${encodeURIComponent(planId)}`,
+    { method: "DELETE" },
+    "Failed to delete plan."
+  );
+}
+
+export async function createTourPlanShareToken(
+  planId: string
+): Promise<SharePlanResponse> {
+  return planApiFetch<SharePlanResponse>(
+    `/api/tour/plans/${encodeURIComponent(planId)}/share`,
+    { method: "POST" },
+    "Failed to create share link."
+  );
+}
+
+export async function addTourPlanDay(
+  planId: string
+): Promise<PlanSummaryResponse> {
+  return planApiFetch<PlanSummaryResponse>(
+    `/api/tour/plans/${encodeURIComponent(planId)}/days`,
+    { method: "POST" },
+    "Failed to add day."
+  );
+}
+
+export async function createTourPlanItem(
+  planId: string,
+  payload: CreatePlanItemRequest
+): Promise<PlanItemResponse> {
+  return planApiFetch<PlanItemResponse>(
+    `/api/tour/plans/${encodeURIComponent(planId)}/items`,
+    {
+      method: "POST",
+      body: JSON.stringify(payload),
+    },
+    "Failed to add place."
+  );
+}
+
+export async function updateTourPlanItem(
+  planId: string,
+  itemId: string,
+  payload: Omit<CreatePlanItemRequest, "day_number">
+): Promise<PlanItemResponse> {
+  return planApiFetch<PlanItemResponse>(
+    `/api/tour/plans/${encodeURIComponent(planId)}/items/${encodeURIComponent(itemId)}`,
+    {
+      method: "PUT",
+      body: JSON.stringify(payload),
+    },
+    "Failed to update place."
+  );
+}
+
+export async function moveTourPlanItem(
+  planId: string,
+  itemId: string,
+  payload: MovePlanItemRequest
+): Promise<void> {
+  await planApiFetch<{ message: string }>(
+    `/api/tour/plans/${encodeURIComponent(planId)}/items/${encodeURIComponent(itemId)}/move`,
+    {
+      method: "PATCH",
+      body: JSON.stringify(payload),
+    },
+    "Failed to move place."
+  );
+}
+
+export async function deleteTourPlanItem(
+  planId: string,
+  itemId: string
+): Promise<void> {
+  await planApiFetch<{ message: string }>(
+    `/api/tour/plans/${encodeURIComponent(planId)}/items/${encodeURIComponent(itemId)}`,
+    { method: "DELETE" },
+    "Failed to delete place."
+  );
+}
+
+export async function getPublicSharedPlan(
+  shareToken: string
+): Promise<PlanDetailResponse> {
+  const response = await fetch(
+    `${API_BASE_URL}/api/public/share/plan/${encodeURIComponent(shareToken)}`
+  );
+
+  if (!response.ok) {
+    throw await parsePlanApiError(response, "Failed to load shared plan.");
+  }
+
+  return (await response.json()) as PlanDetailResponse;
 }
 
 export function timeToMinutes(value: string): number {

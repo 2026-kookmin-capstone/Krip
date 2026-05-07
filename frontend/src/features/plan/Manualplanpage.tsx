@@ -5,17 +5,20 @@ import {
   ACCENT,
   BRAND,
   DEFAULT_MAP_CENTER,
+  addTourPlanDay,
   buildPlanTitle,
+  createTourPlanItem,
+  createTourPlan,
   createPlanId,
-  flattenRecommendedPlaces,
-  getSavedPlanById,
+  deleteTourPlanItem,
+  getTourPlan,
   loadGoogleMapsApi,
+  moveTourPlanItem,
   normalizePlaceKey,
-  postTourRecommend,
-  upsertSavedPlan,
-  type SavedManualStop,
+  updateTourPlanItem,
+  updateTourPlanTitle,
+  type PlanDetailResponse,
   type TourRecommendPlace,
-  type TourRecommendRequest,
 } from "../../api/aiPlanShared";
 
 type ShareTarget = "kakao" | "link" | "mail" | "message";
@@ -39,8 +42,8 @@ interface PlannedStop extends TourPlace {
   plannedId: string;
   visitDate: string;
   visitTime: string;
-  durationMinutes: number;
-  note: string;
+  backendItemId?: string;
+  backendDayNumber?: number;
 }
 
 declare global {
@@ -79,7 +82,35 @@ interface GoogleLatLngBounds {
   extend: (position: { lat: number; lng: number }) => void;
 }
 
-const DEFAULT_START_DATE = new Date().toISOString().slice(0, 10);
+const DEFAULT_START_DATE = formatDateOnly(new Date());
+const MANUAL_PLAN_DATE_METADATA_KEY = "krip-manual-plan-date-metadata";
+
+function formatDateOnly(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function parseDateOnly(value: string): Date | null {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return null;
+
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const parsed = new Date(year, month - 1, day);
+
+  if (
+    parsed.getFullYear() !== year ||
+    parsed.getMonth() !== month - 1 ||
+    parsed.getDate() !== day
+  ) {
+    return null;
+  }
+
+  return parsed;
+}
 
 function readPlanId(): string | null {
   if (typeof window === "undefined") return null;
@@ -95,20 +126,130 @@ function formatDateLabel(value: string): string {
 
 function enumerateTripDates(startDate: string, endDate: string): string[] {
   const days: string[] = [];
-  const start = new Date(`${startDate}T00:00:00`);
-  const end = new Date(`${endDate}T00:00:00`);
+  const start = parseDateOnly(startDate);
+  const end = parseDateOnly(endDate);
 
-  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime()) || start > end) {
+  if (!start || !end || start > end) {
     return days;
   }
 
   const cursor = new Date(start);
   while (cursor <= end) {
-    days.push(cursor.toISOString().slice(0, 10));
+    days.push(formatDateOnly(cursor));
     cursor.setDate(cursor.getDate() + 1);
   }
 
   return days;
+}
+
+function readManualPlanDateMetadata(): Record<string, Record<string, string>> {
+  if (typeof window === "undefined") return {};
+
+  try {
+    const raw = window.localStorage.getItem(MANUAL_PLAN_DATE_METADATA_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw) as Record<string, Record<string, string>>;
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveManualPlanDateMetadata(
+  planId: string,
+  dayNumberByDate: Map<string, number>
+): void {
+  if (typeof window === "undefined") return;
+
+  const current = readManualPlanDateMetadata();
+  const dateByDayNumber = Object.fromEntries(
+    Array.from(dayNumberByDate.entries()).map(([date, dayNumber]) => [
+      String(dayNumber),
+      date,
+    ])
+  );
+
+  window.localStorage.setItem(
+    MANUAL_PLAN_DATE_METADATA_KEY,
+    JSON.stringify({ ...current, [planId]: dateByDayNumber })
+  );
+}
+
+function getStableFallbackDate(plan: PlanDetailResponse): string {
+  const parsed = new Date(plan.created_at);
+  return Number.isNaN(parsed.getTime())
+    ? DEFAULT_START_DATE
+    : formatDateOnly(parsed);
+}
+
+function addDays(date: string, days: number): string {
+  const parsed = parseDateOnly(date);
+  if (!parsed) return DEFAULT_START_DATE;
+  parsed.setDate(parsed.getDate() + days);
+  return formatDateOnly(parsed);
+}
+
+function savedPlanToStops(
+  plan: PlanDetailResponse,
+  dateByDayNumber: Record<string, string> = {}
+): PlannedStop[] {
+  const sortedDays = Array.from(
+    new Set(plan.items.map((item) => item.day_number))
+  ).sort((left, right) => left - right);
+  const fallbackStartDate = getStableFallbackDate(plan);
+  const dateByDay = new Map(
+    sortedDays.map((dayNumber, index) => [
+      dayNumber,
+      dateByDayNumber[String(dayNumber)] || addDays(fallbackStartDate, index),
+    ] as const)
+  );
+
+  return plan.items.map((item) => ({
+    plannedId: item.item_id,
+    backendItemId: item.item_id,
+    backendDayNumber: item.day_number,
+    id: item.place_id,
+    name: item.display_name,
+    category: "Saved place",
+    summary: "",
+    address: item.address,
+    rating: typeof item.rating === "number" ? item.rating : undefined,
+    visitDate: dateByDay.get(item.day_number) || DEFAULT_START_DATE,
+    visitTime: item.visit_time || "10:00",
+  }));
+}
+
+function applySavedItemsToCurrentStops(
+  currentStops: PlannedStop[],
+  saved: PlanDetailResponse,
+  dayNumberByDate: Map<string, number>
+): PlannedStop[] {
+  const remainingItems = [...saved.items];
+
+  return currentStops.map((stop) => {
+    const dayNumber = dayNumberByDate.get(stop.visitDate) || stop.backendDayNumber || 1;
+    const matchedIndex = remainingItems.findIndex(
+      (item) =>
+        item.day_number === dayNumber &&
+        item.place_id === stop.id &&
+        (item.visit_time || "10:00") === stop.visitTime
+    );
+    const matchedItem =
+      matchedIndex >= 0 ? remainingItems.splice(matchedIndex, 1)[0] : undefined;
+
+    if (!matchedItem) return stop;
+
+    return {
+      ...stop,
+      plannedId: matchedItem.item_id,
+      backendItemId: matchedItem.item_id,
+      backendDayNumber: matchedItem.day_number,
+      name: matchedItem.display_name || stop.name,
+      address: matchedItem.address || stop.address,
+      rating:
+        typeof matchedItem.rating === "number" ? matchedItem.rating : stop.rating,
+    };
+  });
 }
 
 function normalizePlaces(payload: TourPlaceApiItem[]): TourPlace[] {
@@ -184,34 +325,7 @@ function mergeRecommendedDescriptions(
 }
 
 async function fetchManualRecommendationPool(): Promise<TourRecommendPlace[]> {
-  const baseRequest: Omit<TourRecommendRequest, "travel_style"> = {
-    travel_days: 1,
-    budget: "중간",
-    companion_type: "친구",
-    schedule_density: "널널하게",
-  };
-  const styles: TourRecommendRequest["travel_style"][] = [
-    "맛집 탐방",
-    "쇼핑",
-    "문화/역사",
-    "카페",
-    "자연/공원",
-  ];
-
-  const responses = await Promise.allSettled(
-    styles.map((travelStyle) =>
-      postTourRecommend({
-        ...baseRequest,
-        travel_style: travelStyle,
-      })
-    )
-  );
-
-  return responses.flatMap((result) =>
-    result.status === "fulfilled"
-      ? flattenRecommendedPlaces(result.value)
-      : []
-  );
+  return [];
 }
 
 async function fetchPlaces(query: string): Promise<TourPlace[]> {
@@ -226,6 +340,112 @@ async function fetchPlaces(query: string): Promise<TourPlace[]> {
   const places = normalizePlaces(response.items);
   const recommendedPlaces = await fetchManualRecommendationPool();
   return mergeRecommendedDescriptions(places, recommendedPlaces);
+}
+
+function getDayNumberByDate(dates: string[]): Map<string, number> {
+  return new Map(dates.map((date, index) => [date, index + 1]));
+}
+
+function plannedStopsToCreateItems(
+  stops: PlannedStop[],
+  dayNumberByDate: Map<string, number>
+) {
+  return stops.map((stop) => ({
+    day_number: dayNumberByDate.get(stop.visitDate) || 1,
+    place_id: stop.id,
+    visit_time: stop.visitTime,
+  }));
+}
+
+async function updateExistingBackendPlan(
+  plan: PlanDetailResponse,
+  title: string,
+  stops: PlannedStop[],
+  tripDates: string[]
+): Promise<{ saved: PlanDetailResponse; dayNumberByDate: Map<string, number> }> {
+
+  await updateTourPlanTitle(plan.plan_id, title);
+
+  const activeDayNumbers = Array.from(
+    new Set(plan.items.map((item) => item.day_number))
+  ).sort((a, b) => a - b);
+
+  const currentActiveDays = activeDayNumbers.length;
+  const targetTravelDays = Math.max(1, tripDates.length);
+
+  const extendedDayNumbers = [...activeDayNumbers];
+  for (let i = currentActiveDays; i < targetTravelDays; i++) {
+    await addTourPlanDay(plan.plan_id);
+    // add_day는 항상 현재 travel_days + 1을 부여 (명세)
+    // 매 호출마다 travel_days가 1씩 증가하므로:
+    extendedDayNumbers.push(plan.travel_days + 1 + (i - currentActiveDays));
+  }
+
+  // 3. dayNumberByDate를 extendedDayNumbers 기준으로 단일 구성
+  const dayNumberByDate = new Map(
+    tripDates.map((date, index) => [
+      date,
+      extendedDayNumbers[index] ?? index + 1,
+    ])
+  );
+  // 4. 삭제된 stops의 백엔드 item 제거
+  const activeBackendIds = new Set(
+    stops.map((stop) => stop.backendItemId).filter(Boolean)
+  );
+  await Promise.all(
+    plan.items
+      .filter((item) => !activeBackendIds.has(item.item_id))
+      .map((item) => deleteTourPlanItem(plan.plan_id, item.item_id))
+  );
+
+  // 5. day 순서대로 정렬 후 업데이트/생성
+  const sortedStops = [...stops].sort((left, right) => {
+    const leftDay = dayNumberByDate.get(left.visitDate) || 1;
+    const rightDay = dayNumberByDate.get(right.visitDate) || 1;
+    if (leftDay !== rightDay) return leftDay - rightDay;
+    return left.visitTime.localeCompare(right.visitTime);
+  });
+
+  const backendIdByPlannedId = new Map<string, string>();
+  for (const stop of sortedStops) {
+    const dayNumber = dayNumberByDate.get(stop.visitDate) || 1;
+    if (stop.backendItemId) {
+      const updated = await updateTourPlanItem(plan.plan_id, stop.backendItemId, {
+        place_id: stop.id,
+        visit_time: stop.visitTime,
+      });
+      backendIdByPlannedId.set(stop.plannedId, updated.item_id);
+    } else {
+      const created = await createTourPlanItem(plan.plan_id, {
+        day_number: dayNumber,
+        place_id: stop.id,
+        visit_time: stop.visitTime,
+      });
+      backendIdByPlannedId.set(stop.plannedId, created.item_id);
+    }
+  }
+
+  // 6. 순서 및 day 이동
+  for (const [index, stop] of sortedStops.entries()) {
+    const itemId = backendIdByPlannedId.get(stop.plannedId);
+    if (!itemId) continue;
+
+    const dayNumber = dayNumberByDate.get(stop.visitDate) || 1;
+    const previousSameDay = [...sortedStops]
+      .slice(0, index)
+      .reverse()
+      .find((candidate) => candidate.visitDate === stop.visitDate);
+
+    await moveTourPlanItem(plan.plan_id, itemId, {
+      target_day_number: dayNumber,
+      after_item_id: previousSameDay
+        ? backendIdByPlannedId.get(previousSameDay.plannedId) || null
+        : null,
+    });
+  }
+
+  const saved = await getTourPlan(plan.plan_id);
+  return { saved, dayNumberByDate };
 }
 
 async function loadKakaoSdk(): Promise<typeof window.Kakao | null> {
@@ -389,11 +609,12 @@ function MapPreview({ stops }: { stops: PlannedStop[] }) {
   );
 
   useEffect(() => {
-    let markers: GoogleMarker[] = [];
+    const markers: GoogleMarker[] = [];
     let polyline: GooglePolyline | null = null;
     let cancelled = false;
 
     if (!mapRef.current || positionedStops.length === 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setMapReady(false);
       setMapError("");
       return undefined;
@@ -508,6 +729,7 @@ export default function ManualPlanPage({ onBack }: ManualPlanPageProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [tripStops, setTripStops] = useState<PlannedStop[]>([]);
+  const [loadedPlan, setLoadedPlan] = useState<PlanDetailResponse | null>(null);
   const [editingStopId, setEditingStopId] = useState<string | null>(null);
   const [showShare, setShowShare] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
@@ -519,17 +741,38 @@ export default function ManualPlanPage({ onBack }: ManualPlanPageProps) {
   );
 
   useEffect(() => {
-    const savedPlan = getSavedPlanById(planId);
-    if (!savedPlan || savedPlan.type !== "manual") {
+    if (!planId) {
       return;
     }
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setTripTitle(savedPlan.title || "Manual Trip Plan");
-    setStartDate(savedPlan.manualStartDate || DEFAULT_START_DATE);
-    setEndDate(savedPlan.manualEndDate || savedPlan.manualStartDate || DEFAULT_START_DATE);
-    setActiveDate(savedPlan.manualStartDate || DEFAULT_START_DATE);
-    setTripStops(savedPlan.manualStops || []);
+    let cancelled = false;
+    void getTourPlan(planId)
+      .then((savedPlan) => {
+        if (cancelled) return;
+        const dateMetadata = readManualPlanDateMetadata()[savedPlan.plan_id] || {};
+        const stops = savedPlanToStops(savedPlan, dateMetadata);
+        const dates = Array.from(new Set(stops.map((stop) => stop.visitDate))).sort();
+        const firstDate = dates[0] || DEFAULT_START_DATE;
+        const lastDate = dates[dates.length - 1] || firstDate;
+
+        setLoadedPlan(savedPlan);
+        setTripTitle(savedPlan.title || "Manual Trip Plan");
+        setStartDate(firstDate);
+        setEndDate(lastDate);
+        setActiveDate(firstDate);
+        setTripStops(stops);
+      })
+      .catch((error) => {
+        if (!cancelled) {
+          setErrorMessage(
+            error instanceof Error ? error.message : "Failed to load saved plan."
+          );
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [planId]);
 
   useEffect(() => {
@@ -594,15 +837,24 @@ export default function ManualPlanPage({ onBack }: ManualPlanPageProps) {
         plannedId: createPlanId("manual"),
         visitDate: targetDate,
         visitTime: getNextVisitTime(targetDate),
-        durationMinutes: 90,
-        note: "",
       },
     ]);
   };
 
   const updateStop = (plannedId: string, patch: Partial<PlannedStop>) => {
     setTripStops((current) =>
-      current.map((stop) => (stop.plannedId === plannedId ? { ...stop, ...patch } : stop))
+      current.map((stop) =>
+        stop.plannedId === plannedId
+          ? {
+              ...stop,
+              ...patch,
+              backendDayNumber:
+                patch.visitDate && patch.visitDate !== stop.visitDate
+                  ? undefined
+                  : stop.backendDayNumber,
+            }
+          : stop
+      )
     );
   };
 
@@ -611,18 +863,61 @@ export default function ManualPlanPage({ onBack }: ManualPlanPageProps) {
   };
 
   const handleSave = () => {
-    const manualStops: SavedManualStop[] = tripStops.map((stop) => ({ ...stop }));
-    const saved = upsertSavedPlan({
-      id: planId || undefined,
-      type: "manual",
-      title: buildPlanTitle("manual", tripTitle),
-      summary: `${tripDates.length} day plan with ${tripStops.length} saved stops`,
-      manualStartDate: startDate,
-      manualEndDate: endDate,
-      manualStops,
-    });
+    const dayNumberByDate = getDayNumberByDate(tripDates);
+    const items = plannedStopsToCreateItems(tripStops, dayNumberByDate);
+    if (items.length === 0) {
+      setSaveMessage("Add at least one place before saving.");
+      return;
+    }
 
-    setSaveMessage(`Saved to My Page (${saved.title})`);
+    const title = buildPlanTitle("manual", tripTitle);
+    if (loadedPlan) {
+      void updateExistingBackendPlan(loadedPlan, title, tripStops, tripDates)
+        .then(({ saved, dayNumberByDate }) => {
+          // ✅ updateExistingBackendPlan이 실제로 사용한 매핑으로 저장
+          saveManualPlanDateMetadata(saved.plan_id, dayNumberByDate);
+          setLoadedPlan(saved);
+          setTripStops((current) =>
+            applySavedItemsToCurrentStops(current, saved, dayNumberByDate)
+          );
+          setSaveMessage(`Saved to My Page (${saved.title || "Untitled plan"})`);
+        })
+        .catch((error) => {
+          setSaveMessage(
+            error instanceof Error ? error.message : "Failed to save plan."
+          );
+        });
+    } else {
+      void createTourPlan({
+        title,
+        travel_days: Math.max(1, tripDates.length),
+        items,
+      })
+        .then((saved) => {
+          const actualDayNumbers = Array.from(
+            new Set(saved.items.map((item) => item.day_number))
+          ).sort((a, b) => a - b);
+
+          const correctedMap = new Map(
+            tripDates.map((date, index) => [
+              date,
+              actualDayNumbers[index] ?? index + 1,
+            ])
+          );
+
+          saveManualPlanDateMetadata(saved.plan_id, correctedMap);
+          setLoadedPlan(saved);
+          setTripStops((current) =>
+            applySavedItemsToCurrentStops(current, saved, correctedMap)
+          );
+          setSaveMessage(`Saved to My Page (${saved.title || "Untitled plan"})`);
+        })
+        .catch((error) => {
+          setSaveMessage(
+            error instanceof Error ? error.message : "Failed to save plan."
+          );
+        });
+    }
   };
 
   return (
@@ -814,22 +1109,11 @@ export default function ManualPlanPage({ onBack }: ManualPlanPageProps) {
                             <input type="time" value={stop.visitTime} onChange={(event) => updateStop(stop.plannedId, { visitTime: event.target.value })} style={styles.input} />
                           </label>
                         </div>
-                        <div style={styles.stopEditors}>
-                          <label style={styles.fieldLabel}>
-                            Duration
-                            <input type="number" min={30} step={30} value={stop.durationMinutes} onChange={(event) => updateStop(stop.plannedId, { durationMinutes: Number(event.target.value) || 30 })} style={styles.input} />
-                          </label>
-                          <label style={styles.fieldLabel}>
-                            Note
-                            <input value={stop.note} onChange={(event) => updateStop(stop.plannedId, { note: event.target.value })} style={styles.input} placeholder="Add note" />
-                          </label>
-                        </div>
                       </>
                     ) : (
                       <div style={styles.stopMetaRow}>
                         <span>{formatDateLabel(stop.visitDate)}</span>
                         <span>{stop.visitTime}</span>
-                        <span>{stop.durationMinutes} min</span>
                       </div>
                     )}
                   </div>

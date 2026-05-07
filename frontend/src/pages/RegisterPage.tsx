@@ -1,52 +1,35 @@
 import type { CSSProperties, ReactNode } from "react";
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { registerUser } from "../api/auth/auth";
-
-type TravelStyleKey =
-  | "activity"
-  | "relaxation"
-  | "tourism"
-  | "shopping"
-  | "food";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface RegisterLocationState {
   email?: string;
   name?: string;
+  registerForm?: RegisterFormState;
 }
 
-interface RegisterFormState {
+export interface RegisterFormState {
   email: string;
   user_name: string;
   phone_number: string;
   age: string;
   gender: string;
   nationality: string;
-  travel_styles: TravelStyleKey[];
 }
-
-const TRAVEL_STYLES: Array<{ key: TravelStyleKey; label: string }> = [
-  { key: "activity", label: "⚡ Activity" },
-  { key: "relaxation", label: "🏖️ Relaxation" },
-  { key: "tourism", label: "🏛️ Sightseeing" },
-  { key: "shopping", label: "🛍️ Shopping" },
-  { key: "food", label: "🍜 Food" },
-];
 
 export default function RegisterPage() {
   const navigate = useNavigate();
   const { state } = useLocation() as { state: RegisterLocationState | null };
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [error, setError] = useState("");
 
   const [form, setForm] = useState<RegisterFormState>({
-    email: state?.email || "",
-    user_name: state?.name || "",
-    phone_number: "",
-    age: "",
-    gender: "",
-    nationality: "korea",
-    travel_styles: [],
+    email: state?.registerForm?.email || state?.email || "",
+    user_name: state?.registerForm?.user_name || state?.name || "",
+    phone_number: state?.registerForm?.phone_number || "",
+    age: state?.registerForm?.age || "",
+    gender: state?.registerForm?.gender || "",
+    nationality: state?.registerForm?.nationality || "korea",
   });
 
   function setField<Key extends keyof RegisterFormState>(
@@ -56,39 +39,21 @@ export default function RegisterPage() {
     setForm((f) => ({ ...f, [key]: value }));
   }
 
-  function toggleStyle(key: TravelStyleKey): void {
-    setForm((f) => ({
-      ...f,
-      travel_styles: f.travel_styles.includes(key)
-        ? f.travel_styles.filter((s) => s !== key)
-        : [...f.travel_styles, key],
-    }));
-  }
-
-  async function handleSubmit(): Promise<void> {
+  function handleNext(): void {
     setError("");
     if (!form.email || !form.user_name || !form.phone_number || !form.age || !form.gender || !form.nationality) {
       setError("Please fill in all required fields.");
       return;
     }
 
-    setLoading(true);
-    try {
-      await registerUser({ ...form, age: Number(form.age) });
-      navigate("/home");
-    } catch (e) {
-      const message =
-        e instanceof Error ? e.message : "Something went wrong while completing sign up.";
-      setError(message);
-    } finally {
-      setLoading(false);
-    }
+    navigate("/register/onboarding", { state: { registerForm: form } });
   }
 
   return (
     <div style={s.wrapper}>
       <div style={s.card}>
         <div style={s.header}>
+          <Progress current={1} total={2} />
           <span style={s.step}>Sign Up</span>
           <h2 style={s.title}>Traveler Details</h2>
           <p style={s.sub}>Tell us a little about yourself to personalize your trip.</p>
@@ -120,19 +85,11 @@ export default function RegisterPage() {
               type="tel"
               value={form.phone_number}
               onChange={(e) => setField("phone_number", e.target.value)}
-                placeholder="+82 10-1234-5678"
+              placeholder="+82 10-1234-5678"
             />
           </Field>
 
-          <div
-            style={
-              {
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: 12,
-              } as CSSProperties
-            }
-          >
+          <div style={s.twoColumn}>
             <Field label="Age *">
               <input
                 style={s.input}
@@ -145,8 +102,11 @@ export default function RegisterPage() {
             </Field>
 
             <Field label="Gender *">
-              <div style={{ display: "flex", gap: 8 } as CSSProperties}>
-                {[["male", "Male"], ["female", "Female"]].map(([val, label]) => (
+              <div style={s.segmentRow}>
+                {[
+                  ["male", "Male"],
+                  ["female", "Female"],
+                ].map(([val, label]) => (
                   <button
                     type="button"
                     key={val}
@@ -173,31 +133,24 @@ export default function RegisterPage() {
               <option value="other">Other</option>
             </select>
           </Field>
-
-          <Field label="Travel Styles (multiple choice)">
-            <div style={s.styleGrid}>
-              {TRAVEL_STYLES.map(({ key, label }) => (
-                <button
-                  key={key}
-                  type="button"
-                  style={{
-                    ...s.styleBtn,
-                    ...(form.travel_styles.includes(key) ? s.styleBtnActive : {}),
-                  }}
-                  onClick={() => toggleStyle(key)}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-          </Field>
         </div>
 
         {error && <p style={s.error}>{error}</p>}
 
-        <button style={{ ...s.submitBtn, opacity: loading ? 0.7 : 1 }} onClick={handleSubmit} disabled={loading}>
-          {loading ? "Submitting..." : "Complete Sign Up"}
+        <button style={{ ...s.submitBtn, opacity: loading ? 0.7 : 1 }} onClick={handleNext} disabled={loading}>
+          Next Page
         </button>
+      </div>
+    </div>
+  );
+}
+
+function Progress({ current, total }: { current: number; total: number }) {
+  return (
+    <div style={s.progressWrap}>
+      <div style={s.progressText}>Step {current} of {total}</div>
+      <div style={s.progressTrack}>
+        <div style={{ ...s.progressFill, width: `${(current / total) * 100}%` }} />
       </div>
     </div>
   );
@@ -211,21 +164,8 @@ function Field({
   children: ReactNode;
 }) {
   return (
-    <div
-      style={{ display: "flex", flexDirection: "column", gap: 6 } as CSSProperties}
-    >
-      <label
-        style={
-          {
-            fontSize: "0.8rem",
-            fontWeight: 600,
-            color: "var(--neutral-700)",
-            letterSpacing: "0.03em",
-          } as CSSProperties
-        }
-      >
-        {label}
-      </label>
+    <div style={s.field}>
+      <label style={s.label}>{label}</label>
       {children}
     </div>
   );
@@ -252,39 +192,66 @@ const s: Record<string, CSSProperties> = {
     border: "1px solid var(--border-soft)",
   },
   header: { marginBottom: 24 },
+  progressWrap: { display: "flex", flexDirection: "column", gap: 8, marginBottom: 18 },
+  progressText: { color: "var(--brand-primary-deep)", fontSize: "0.78rem", fontWeight: 800 },
+  progressTrack: { width: "100%", height: 8, borderRadius: 999, background: "rgba(5,181,187,0.12)", overflow: "hidden" },
+  progressFill: { height: "100%", borderRadius: 999, background: "linear-gradient(135deg, var(--brand-primary), #12c0c6)" },
   step: { fontSize: "0.75rem", fontWeight: 700, color: "var(--brand-primary-deep)", textTransform: "uppercase", letterSpacing: "0.1em" },
   title: { margin: "6px 0 4px", fontSize: "1.5rem", fontWeight: 800, color: "var(--text-primary)" },
   sub: { margin: 0, fontSize: "0.85rem", color: "var(--neutral-700)" },
   fields: { display: "flex", flexDirection: "column", gap: 16 },
+  field: { display: "flex", flexDirection: "column", gap: 6 },
+  label: {
+    fontSize: "0.8rem",
+    fontWeight: 600,
+    color: "var(--neutral-700)",
+    letterSpacing: "0.03em",
+  },
   input: {
-    width: "100%", padding: "11px 14px", borderRadius: 10,
-    border: "1.5px solid rgba(5,181,187,0.16)", fontSize: "0.95rem",
-    outline: "none", background: "var(--surface-muted)", color: "var(--text-primary)",
+    width: "100%",
+    padding: "11px 14px",
+    borderRadius: 10,
+    border: "1.5px solid rgba(5,181,187,0.16)",
+    fontSize: "0.95rem",
+    outline: "none",
+    background: "var(--surface-muted)",
+    color: "var(--text-primary)",
     boxSizing: "border-box",
   },
+  twoColumn: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: 12,
+  },
+  segmentRow: { display: "flex", gap: 8 },
   genderBtn: {
-    flex: 1, padding: "11px 0", borderRadius: 10,
-    border: "1.5px solid rgba(5,181,187,0.14)", background: "rgba(255,255,255,0.86)",
-    color: "var(--neutral-700)", fontWeight: 700, cursor: "pointer", fontSize: "0.9rem",
+    flex: 1,
+    padding: "11px 0",
+    borderRadius: 10,
+    border: "1.5px solid rgba(5,181,187,0.14)",
+    background: "rgba(255,255,255,0.86)",
+    color: "var(--neutral-700)",
+    fontWeight: 700,
+    cursor: "pointer",
+    fontSize: "0.9rem",
   },
   genderBtnActive: {
-    background: "linear-gradient(135deg, rgba(5,181,187,0.2), rgba(228,247,247,0.96))", border: "1.5px solid rgba(5,181,187,0.12)", color: "var(--text-primary)",
-  },
-  styleGrid: { display: "flex", flexWrap: "wrap", gap: 8 },
-  styleBtn: {
-    padding: "8px 14px", borderRadius: 20,
-    border: "1.5px solid rgba(5,181,187,0.14)", background: "rgba(255,255,255,0.86)",
-    color: "var(--neutral-700)", fontWeight: 600, cursor: "pointer", fontSize: "0.85rem",
-  },
-  styleBtnActive: {
-    background: "linear-gradient(135deg, rgba(5,181,187,0.18), rgba(228,247,247,0.96))", border: "1.5px solid rgba(5,181,187,0.12)", color: "var(--text-primary)",
+    background: "linear-gradient(135deg, rgba(5,181,187,0.2), rgba(228,247,247,0.96))",
+    border: "1.5px solid rgba(5,181,187,0.12)",
+    color: "var(--text-primary)",
   },
   error: { margin: "12px 0 0", color: "#e05555", fontSize: "0.85rem", textAlign: "center" },
   submitBtn: {
-    marginTop: 24, width: "100%", padding: "14px 0",
-    borderRadius: 14, border: "1px solid rgba(5,181,187,0.18)",
+    marginTop: 24,
+    width: "100%",
+    padding: "14px 0",
+    borderRadius: 14,
+    border: "1px solid rgba(5,181,187,0.18)",
     background: "linear-gradient(135deg, var(--brand-primary), #12c0c6)",
-    color: "#ffffff", fontSize: "1rem", fontWeight: 800,
-    cursor: "pointer", boxShadow: "0 12px 24px rgba(5,181,187,0.22)",
+    color: "#ffffff",
+    fontSize: "1rem",
+    fontWeight: 800,
+    cursor: "pointer",
+    boxShadow: "0 12px 24px rgba(5,181,187,0.22)",
   },
 };
