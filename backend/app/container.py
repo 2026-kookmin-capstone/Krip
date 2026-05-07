@@ -30,6 +30,7 @@ from app.domain.chat.service.room import RoomService
 from app.domain.chat.service.session import SessionService
 from app.domain.notification.service.fcm import FcmService
 from app.domain.notification.service.mute import MuteService
+from app.domain.notification.service.notification import NotificationService
 from app.domain.feed.service.feed_post import FeedPostService
 from app.domain.feed.service.feed_post_like import FeedPostLikeService
 from app.domain.feed.service.feed_post_comment import FeedPostCommentService
@@ -91,6 +92,9 @@ class Container(containers.DeclarativeContainer):
     # 알림 (FCM) — message_service 가 의존하므로 그보다 먼저 선언.
     fcm_service = providers.Factory(FcmService, uow=uow)
     mute_service = providers.Factory(MuteService, uow=uow)
+    # 알림창 (Mongo) — RDB 의존성 없는 stateless service. fan-out 이 best-effort 라
+    # caller 트랜잭션 커밋 후 호출.
+    notification_service = providers.Factory(NotificationService)
 
     # 채팅 — 비즈 (Factory: 호출마다 UoW 새로 바인딩)
     #   - message_service / block_cache_service 는 room_service / user_block_service 보다
