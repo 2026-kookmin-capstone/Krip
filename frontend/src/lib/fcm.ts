@@ -3,6 +3,7 @@ import type { MessagePayload } from "firebase/messaging";
 
 import client from "../api/client";
 import { firebaseApp } from "./firebase";
+import { rememberLikeNotification } from "./notifications";
 
 const FCM_TOKEN_STORAGE_KEY = "FCMtoken";
 let fcmTokenRegistrationPromise: Promise<string | null> | null = null;
@@ -94,26 +95,71 @@ export async function listenForegroundMessages(): Promise<void> {
 
   const messaging = getMessaging(firebaseApp);
   foregroundMessageListenerStarted = true;
+
   onMessage(messaging, (payload) => {
     console.log("Received foreground notification:", payload);
-    dispatchForegroundNotificationToast(payload);
+    handleNotificationPayload(payload);
+  });
+
+  navigator.serviceWorker?.addEventListener("message", (event) => {
+    const payload =
+      event.data?.type === "KRIP_FCM_BACKGROUND_MESSAGE"
+        ? event.data.payload
+        : null;
+    if (!payload) return;
+
+    console.log("Received background notification message:", payload);
+    handleNotificationPayload(payload as MessagePayload);
   });
 }
 
-function dispatchForegroundNotificationToast(payload: MessagePayload): void {
+function handleNotificationPayload(payload: MessagePayload): void {
   const title = payload.notification?.title || payload.data?.title || "Krip";
   const body = payload.notification?.body || payload.data?.body || "New notification";
+  const likeNotification = isLikeNotificationPayload(payload);
   const roomId =
     payload.data?.chatRoomId ||
     payload.data?.chat_room_id ||
     extractChatRoomId(payload.data?.url);
-  const path = payload.data?.url || (roomId ? `/chat/${roomId}` : "/chat");
+  const path =
+    payload.data?.url || (roomId ? `/chat/${roomId}` : likeNotification ? "/mate" : "/chat");
   const imageUrl =
     payload.data?.profile_image_url ||
     payload.data?.profileImageUrl ||
     payload.data?.senderProfileImageUrl ||
     payload.data?.imageUrl ||
     null;
+
+  if (likeNotification) {
+    rememberLikeNotification({
+      id:
+        payload.data?.notification_id ||
+        payload.data?.notificationId ||
+        payload.data?.like_id ||
+        payload.data?.likeId ||
+        `${Date.now()}-${title}-${body}`,
+      actorName:
+        payload.data?.actor_name ||
+        payload.data?.actorName ||
+        payload.data?.liker_name ||
+        payload.data?.likerName ||
+        payload.data?.user_name ||
+        payload.data?.sender_name ||
+        extractActorName(title, body),
+      targetTitle:
+        payload.data?.post_title ||
+        payload.data?.postTitle ||
+        payload.data?.feed_title ||
+        payload.data?.feedTitle ||
+        payload.data?.target_title ||
+        payload.data?.targetTitle ||
+        body,
+      body,
+      createdAt: payload.data?.created_at || payload.data?.createdAt || new Date().toISOString(),
+      path,
+      imageUrl,
+    });
+  }
 
   window.dispatchEvent(
     new CustomEvent("krip:chat-message-toast", {
@@ -126,6 +172,45 @@ function dispatchForegroundNotificationToast(payload: MessagePayload): void {
       },
     })
   );
+}
+
+function isLikeNotificationPayload(payload: MessagePayload): boolean {
+  const data = payload.data ?? {};
+  const type = [
+    data.type,
+    data.notification_type,
+    data.notificationType,
+    data.event_type,
+    data.eventType,
+    data.action,
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+  const text = `${payload.notification?.title || ""} ${payload.notification?.body || ""} ${
+    data.title || ""
+  } ${data.body || ""}`.toLowerCase();
+
+  return (
+    type.includes("like") ||
+    type.includes("liked") ||
+    type.includes("post_liked") ||
+    type.includes("feed_liked") ||
+    text.includes("liked") ||
+    text.includes("\uC88B\uC544\uC694") ||
+    text.includes("\uC88B\uC544")
+  );
+}
+
+function extractActorName(title: string, body: string): string {
+  const text = `${title} ${body}`.trim();
+  const englishMatch = text.match(/^(.+?)\s+liked\b/i);
+  if (englishMatch?.[1]) return englishMatch[1].trim();
+
+  const koreanMatch = text.match(/^(.+?)(?:\uB2D8\uC774|\uC774|\uAC00)\s*.*(?:\uC88B\uC544\uC694|\uC88B\uC544)/);
+  if (koreanMatch?.[1]) return koreanMatch[1].trim();
+
+  return "Someone";
 }
 
 function extractChatRoomId(url?: string): string | undefined {

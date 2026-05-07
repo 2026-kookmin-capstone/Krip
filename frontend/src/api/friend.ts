@@ -45,6 +45,31 @@ export interface FriendDetail extends FriendPeer {
   i_blocked_peer: boolean;
 }
 
+export interface FriendSearchUser {
+  user_id: string;
+  user_name: string;
+  profile_image_url: string | null;
+  nationality: string;
+  travel_styles: string[];
+  friendship_status: FriendshipStatus | null;
+  is_requester: boolean | null;
+  i_blocked_peer: boolean;
+}
+
+export interface FriendSearchResponse {
+  items: FriendSearchUser[];
+  next_cursor: string | null;
+}
+
+export interface FriendSearchHistoryItem {
+  search_name: string;
+  created_at: string;
+}
+
+export interface FriendSearchHistoryResponse {
+  histories: FriendSearchHistoryItem[];
+}
+
 export interface MessageResponse {
   message: string;
 }
@@ -105,6 +130,43 @@ export async function getFriends(cursor?: string): Promise<FriendshipListRespons
   const { data } = await client.get<FriendshipListResponse>("/api/friend/friendships", {
     params: cursorParams(cursor),
   });
+  return data;
+}
+
+export async function searchFriendUsers(
+  keyword: string,
+  cursor?: string
+): Promise<FriendSearchResponse> {
+  const { data } = await client.get<FriendSearchResponse>("/api/friend/search", {
+    params: { keyword, ...cursorParams(cursor) },
+  });
+  return {
+    items: Array.isArray(data.items) ? data.items : [],
+    next_cursor: data.next_cursor ?? null,
+  };
+}
+
+export async function getFriendSearchHistory(): Promise<FriendSearchHistoryResponse> {
+  const { data } = await client.get<FriendSearchHistoryResponse>(
+    "/api/friend/search/history"
+  );
+  return {
+    histories: Array.isArray(data.histories) ? data.histories : [],
+  };
+}
+
+export async function deleteFriendSearchHistoryOne(
+  searchName: string
+): Promise<MessageResponse> {
+  const { data } = await client.delete<MessageResponse>(
+    "/api/friend/search/history/one",
+    { params: { search_name: searchName } }
+  );
+  return data;
+}
+
+export async function deleteFriendSearchHistoryAll(): Promise<MessageResponse> {
+  const { data } = await client.delete<MessageResponse>("/api/friend/search/history");
   return data;
 }
 

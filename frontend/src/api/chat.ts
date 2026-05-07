@@ -4,10 +4,26 @@ import { API_BASE_URL } from "./auth/config";
 export type ChatRoomType = "direct" | "group";
 export type ChatMessageType = "text" | "image" | "file" | "system";
 
+export type SystemContent =
+  | { action: "created"; actor_id: string | null }
+  | { action: "join"; actor_id: string | null; target_ids: string[] }
+  | { action: "leave"; actor_id: string | null }
+  | { action: "kick"; actor_id: string | null; target_ids: string[] };
+
+export type LastMessageContent = string | SystemContent | null;
+
 export interface ChatPeer {
   user_id: string | null;
   user_name: string | null;
   profile_image_url?: string | null;
+}
+
+export interface ChatRoomMember extends ChatPeer {
+  role?: string | null;
+}
+
+export interface ChatRoomMembersResponse {
+  items: ChatRoomMember[];
 }
 
 export interface LastMessagePreview {
@@ -15,7 +31,7 @@ export interface LastMessagePreview {
   server_seq: number;
   sender_id: string | null;
   type: ChatMessageType;
-  content: unknown;
+  content: LastMessageContent;
   created_at: string;
 }
 
@@ -24,6 +40,7 @@ export interface ChatRoom {
   type: ChatRoomType;
   title: string | null;
   peer: ChatPeer | null;
+  members?: ChatRoomMember[];
   last_message: LastMessagePreview | null;
   unread_count: number;
   last_message_at: string | null;
@@ -93,6 +110,13 @@ export async function getChatRooms(): Promise<ChatRoomListResponse> {
 export async function getChatRoom(chatRoomId: string): Promise<ChatRoom> {
   const { data } = await client.get<ChatRoom>(
     `/api/chat/rooms/${encodeURIComponent(chatRoomId)}`
+  );
+  return data;
+}
+
+export async function getChatRoomMembers(chatRoomId: string): Promise<ChatRoomMembersResponse> {
+  const { data } = await client.get<ChatRoomMembersResponse>(
+    `/api/chat/rooms/${encodeURIComponent(chatRoomId)}/members`
   );
   return data;
 }

@@ -18,15 +18,33 @@ import {
   withdrawUser,
   type UserProfile,
 } from "../api/auth/auth";
+import {
+  createFeedComment,
+  createFeedPost,
+  deleteFeedComment,
+  deleteFeedPost,
+  getFeedComments,
+  getFeedPostLikes,
+  getMyFeedPosts,
+  likeFeedPost,
+  unlikeFeedPost,
+  updateFeedPostCaption,
+  updateFeedPostVisibility,
+  type FeedComment,
+  type FeedLikeUser,
+  type FeedPost,
+  type FeedVisibility,
+} from "../api/feed";
 
 const DEFAULT_PROFILE_IMAGE_URL = "/default-profile.svg";
 
 export default function MyPage() {
   const navigate = useNavigate();
   const profileImageInputRef = useRef<HTMLInputElement>(null);
+  const feedImageInputRef = useRef<HTMLInputElement>(null);
+
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [activeTab, setActiveTab] = useState<"styles" | "info">("styles");
-  const [isWithdrawing, setIsWithdrawing] = useState(false);
+  const [profileImagePreview, setProfileImagePreview] = useState("");
   const [isUploadingProfileImage, setIsUploadingProfileImage] = useState(false);
   const [isDeletingProfileImage, setIsDeletingProfileImage] = useState(false);
   const [isProfileImageMenuOpen, setIsProfileImageMenuOpen] = useState(false);
@@ -36,17 +54,54 @@ export default function MyPage() {
   const [planMessage, setPlanMessage] = useState("");
   const [shareInfo, setShareInfo] = useState<SharePlanResponse | null>(null);
   const [shareLink, setShareLink] = useState("");
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isStatusEditing, setIsStatusEditing] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+  const [statusDraft, setStatusDraft] = useState("");
+  const [isWithdrawing, setIsWithdrawing] = useState(false);
+
+  const [feedPosts, setFeedPosts] = useState<FeedPost[]>([]);
+  const [feedNextCursor, setFeedNextCursor] = useState<string | null>(null);
+  const [isFeedLoading, setIsFeedLoading] = useState(false);
+  const [isFeedUploading, setIsFeedUploading] = useState(false);
+  const [feedError, setFeedError] = useState("");
+  const [feedFile, setFeedFile] = useState<File | null>(null);
+  const [feedPreviewUrl, setFeedPreviewUrl] = useState("");
+  const [feedVisibility, setFeedVisibility] = useState<FeedVisibility>("public");
+  const [feedCaption, setFeedCaption] = useState("");
+
+  const [selectedFeedPost, setSelectedFeedPost] = useState<FeedPost | null>(null);
+  const [selectedFeedLikes, setSelectedFeedLikes] = useState<FeedLikeUser[]>([]);
+  const [selectedFeedComments, setSelectedFeedComments] = useState<FeedComment[]>([]);
+  const [selectedCaptionDraft, setSelectedCaptionDraft] = useState("");
+  const [isFeedPostEditing, setIsFeedPostEditing] = useState(false);
+  const [isFeedPostMenuOpen, setIsFeedPostMenuOpen] = useState(false);
+  const [commentInput, setCommentInput] = useState("");
+  const [isFeedActionRunning, setIsFeedActionRunning] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+
+  function showToast(message: string): void {
+    setToastMessage(message);
+    window.setTimeout(() => {
+      setToastMessage((current) => (current === message ? "" : current));
+    }, 2800);
+  }
 
   useEffect(() => {
     getMyProfile()
       .then((data) => {
+        setProfile(data);
         if (data) {
-          setProfile(data);
+          const nextStatus = getInitialStatusMessage(data);
+          setStatusMessage(nextStatus);
+          setStatusDraft(nextStatus);
         }
       })
-      .catch(() => {
-        setProfile(null);
-      });
+      .catch(() => setProfile(null));
+  }, []);
+
+  useEffect(() => {
+    void loadFeedPosts();
   }, []);
 
   const refreshPlans = () => {
@@ -121,10 +176,235 @@ export default function MyPage() {
       setPlanMessage("Share link copied.");
     } catch {
       window.prompt("Copy this share link", shareLink);
+  useEffect(() => {
+    return () => {
+      if (feedPreviewUrl) URL.revokeObjectURL(feedPreviewUrl);
+    };
+  }, [feedPreviewUrl]);
+
+  async function loadFeedPosts(cursor?: string): Promise<void> {
+    setIsFeedLoading(true);
+    setFeedError("");
+
+    try {
+      const response = await getMyFeedPosts(cursor);
+      setFeedPosts((current) =>
+        cursor ? [...current, ...response.posts] : response.posts
+      );
+      setFeedNextCursor(response.next_cursor);
+    } catch (error) {
+      setFeedError(toErrorMessage(error, "Failed to load feed."));
+      if (!cursor) setFeedPosts([]);
+    } finally {
+      setIsFeedLoading(false);
+    }
+  }
+
+  function handleFeedFileSelect(event: React.ChangeEvent<HTMLInputElement>): void {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+      showToast("Please choose a JPG, PNG, or WEBP image.");
+      event.target.value = "";
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      showToast("Please choose an image smaller than 10MB.");
+      event.target.value = "";
+      return;
+    }
+
+    if (feedPreviewUrl) URL.revokeObjectURL(feedPreviewUrl);
+    setFeedFile(file);
+    setFeedPreviewUrl(URL.createObjectURL(file));
+  }
+
+  async function handleFeedUpload(): Promise<void> {
+    if (!feedFile || isFeedUploading) return;
+    if (feedPosts.length >= 100) {
+      showToast("The maximum feed photo limit is 100.");
+      return;
+    }
+
+    setIsFeedUploading(true);
+    setFeedError("");
+
+    try {
+      const post = await createFeedPost({
+        file: feedFile,
+        visibility: feedVisibility,
+        caption: feedCaption,
+      });
+      setFeedPosts((current) => [post, ...current].slice(0, 100));
+      closeFeedComposer();
+    } catch (error) {
+      setFeedError(toErrorMessage(error, "Feed upload failed. Please try again."));
+    } finally {
+      setIsFeedUploading(false);
+    }
+  }
+
+  function closeFeedComposer(): void {
+    if (feedPreviewUrl) URL.revokeObjectURL(feedPreviewUrl);
+    setFeedFile(null);
+    setFeedPreviewUrl("");
+    setFeedCaption("");
+    setFeedVisibility("public");
+    if (feedImageInputRef.current) feedImageInputRef.current.value = "";
+  }
+
+  async function openFeedPost(post: FeedPost): Promise<void> {
+    setSelectedFeedPost(post);
+    setSelectedCaptionDraft(post.caption || "");
+    setIsFeedPostEditing(false);
+    setIsFeedPostMenuOpen(false);
+    setCommentInput("");
+    setSelectedFeedLikes([]);
+    setSelectedFeedComments([]);
+
+    try {
+      const [likes, comments] = await Promise.all([
+        getFeedPostLikes(post.post_id),
+        getFeedComments(post.post_id),
+      ]);
+      setSelectedFeedLikes(likes.users);
+      setSelectedFeedComments(comments.comments);
+    } catch {
+      // Secondary feed data should not block opening the photo.
+    }
+  }
+
+  function updateFeedPostState(post: FeedPost): void {
+    setFeedPosts((current) =>
+      current.map((item) => (item.post_id === post.post_id ? post : item))
+    );
+    setSelectedFeedPost((current) =>
+      current?.post_id === post.post_id ? post : current
+    );
+  }
+
+  async function handleSelectedVisibilityChange(visibility: FeedVisibility): Promise<void> {
+    if (!selectedFeedPost || isFeedActionRunning) return;
+
+    setIsFeedActionRunning(true);
+    try {
+      updateFeedPostState(await updateFeedPostVisibility(selectedFeedPost.post_id, visibility));
+    } catch (error) {
+      showToast(toErrorMessage(error, "Failed to update visibility."));
+    } finally {
+      setIsFeedActionRunning(false);
+    }
+  }
+
+  async function handleSelectedCaptionSave(): Promise<void> {
+    if (!selectedFeedPost || isFeedActionRunning) return;
+
+    setIsFeedActionRunning(true);
+    try {
+      updateFeedPostState(
+        await updateFeedPostCaption(
+          selectedFeedPost.post_id,
+          selectedCaptionDraft.trim() || null
+        )
+      );
+      setIsFeedPostEditing(false);
+      setIsFeedPostMenuOpen(false);
+    } catch (error) {
+      showToast(toErrorMessage(error, "Failed to update caption."));
+    } finally {
+      setIsFeedActionRunning(false);
+    }
+  }
+
+  async function handleSelectedDelete(): Promise<void> {
+    if (!selectedFeedPost || isFeedActionRunning) return;
+    if (!window.confirm("Delete this post?")) return;
+
+    setIsFeedActionRunning(true);
+    try {
+      await deleteFeedPost(selectedFeedPost.post_id);
+      setFeedPosts((current) =>
+        current.filter((item) => item.post_id !== selectedFeedPost.post_id)
+      );
+      setSelectedFeedPost(null);
+    } catch (error) {
+      showToast(toErrorMessage(error, "Failed to delete feed photo."));
+    } finally {
+      setIsFeedActionRunning(false);
+    }
+  }
+
+  async function handleSelectedLike(): Promise<void> {
+    if (!selectedFeedPost || isFeedActionRunning) return;
+
+    setIsFeedActionRunning(true);
+    try {
+      const response = await likeFeedPost(selectedFeedPost.post_id);
+      updateFeedPostState({ ...selectedFeedPost, like_count: response.like_count });
+      setSelectedFeedLikes((await getFeedPostLikes(selectedFeedPost.post_id)).users);
+    } catch (error) {
+      if (getApiStatus(error) === 400) {
+        try {
+          const response = await unlikeFeedPost(selectedFeedPost.post_id);
+          updateFeedPostState({ ...selectedFeedPost, like_count: response.like_count });
+          setSelectedFeedLikes((await getFeedPostLikes(selectedFeedPost.post_id)).users);
+        } catch (unlikeError) {
+          showToast(toErrorMessage(unlikeError, "Failed to update like."));
+        }
+      } else {
+        showToast(toErrorMessage(error, "Failed to update like."));
+      }
+    } finally {
+      setIsFeedActionRunning(false);
+    }
+  }
+
+  async function handleCommentSubmit(): Promise<void> {
+    const content = commentInput.trim();
+    if (!selectedFeedPost || !content || isFeedActionRunning) return;
+
+    setIsFeedActionRunning(true);
+    try {
+      const comment = await createFeedComment(selectedFeedPost.post_id, content);
+      setSelectedFeedComments((current) => [comment, ...current]);
+      updateFeedPostState({
+        ...selectedFeedPost,
+        comment_count: selectedFeedPost.comment_count + 1,
+      });
+      setCommentInput("");
+    } catch (error) {
+      showToast(toErrorMessage(error, "Failed to add comment."));
+    } finally {
+      setIsFeedActionRunning(false);
+    }
+  }
+
+  async function handleCommentDelete(comment: FeedComment): Promise<void> {
+    if (!selectedFeedPost || isFeedActionRunning) return;
+    if (!window.confirm("Delete this comment?")) return;
+
+    setIsFeedActionRunning(true);
+    try {
+      await deleteFeedComment(selectedFeedPost.post_id, comment.comment_id);
+      setSelectedFeedComments((current) =>
+        current.filter((item) => item.comment_id !== comment.comment_id)
+      );
+      updateFeedPostState({
+        ...selectedFeedPost,
+        comment_count: Math.max(0, selectedFeedPost.comment_count - 1),
+      });
+    } catch (error) {
+      showToast(toErrorMessage(error, "Failed to delete comment."));
+    } finally {
+      setIsFeedActionRunning(false);
     }
   }
 
   async function handleLogout(): Promise<void> {
+    if (!window.confirm("Log out of your account?")) return;
+
     try {
       await logoutUser();
     } finally {
@@ -133,25 +413,16 @@ export default function MyPage() {
   }
 
   async function handleWithdraw(): Promise<void> {
-    const confirmed = window.confirm(
-      "Delete your account permanently? All user data will be removed."
-    );
-
-    if (!confirmed || isWithdrawing) {
+    if (!window.confirm("Delete your account permanently? All user data will be removed.")) {
       return;
     }
 
     setIsWithdrawing(true);
-
     try {
       await withdrawUser();
       navigate("/login", { replace: true });
     } catch (error) {
-      const message =
-        error instanceof Error
-          ? error.message
-          : "Account withdrawal failed. Please try again.";
-      window.alert(message);
+      showToast(toErrorMessage(error, "Account withdrawal failed. Please try again."));
       setIsWithdrawing(false);
     }
   }
@@ -165,13 +436,13 @@ export default function MyPage() {
     setIsProfileImageMenuOpen(false);
 
     if (!["image/jpeg", "image/png", "image/webp", "image/gif"].includes(file.type)) {
-      window.alert("Please choose a JPG, PNG, WEBP, or GIF image.");
+      showToast("Please choose a JPG, PNG, WEBP, or GIF image.");
       event.target.value = "";
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      window.alert("Please choose an image smaller than 5MB.");
+      showToast("Please choose an image smaller than 5MB.");
       event.target.value = "";
       return;
     }
@@ -181,29 +452,9 @@ export default function MyPage() {
     setIsUploadingProfileImage(true);
 
     try {
-      let updatedImage = null;
-
-      if (getProfileImageUrl(profile)) {
-        try {
-          updatedImage = await replaceMyProfileImage(file);
-        } catch (replaceError) {
-          if (getApiStatus(replaceError) !== 404) {
-            throw replaceError;
-          }
-
-          updatedImage = await uploadMyProfileImage(file);
-        }
-      } else {
-        try {
-          updatedImage = await uploadMyProfileImage(file);
-        } catch (uploadError) {
-          if (getApiStatus(uploadError) !== 409) {
-            throw uploadError;
-          }
-
-          updatedImage = await replaceMyProfileImage(file);
-        }
-      }
+      const updatedImage = getProfileImageUrl(profile)
+        ? await replaceMyProfileImage(file)
+        : await uploadMyProfileImage(file);
 
       if (updatedImage) {
         setProfile((current) => ({ ...current, ...updatedImage }) as UserProfile);
@@ -213,7 +464,7 @@ export default function MyPage() {
       }
     } catch (error) {
       setProfileImagePreview("");
-      window.alert(toErrorMessage(error, "Profile photo upload failed. Please try again."));
+      showToast(toErrorMessage(error, "Profile photo upload failed. Please try again."));
     } finally {
       setIsUploadingProfileImage(false);
       event.target.value = "";
@@ -222,12 +473,10 @@ export default function MyPage() {
   }
 
   async function handleProfileImageDelete(): Promise<void> {
-    if (isDeletingProfileImage || isUploadingProfileImage) {
-      return;
-    }
+    if (isDeletingProfileImage || isUploadingProfileImage) return;
+    if (!window.confirm("Delete your profile photo?")) return;
 
     setIsDeletingProfileImage(true);
-
     try {
       await deleteMyProfileImage();
       setProfile((current) =>
@@ -245,9 +494,19 @@ export default function MyPage() {
       setProfileImagePreview("");
       setIsProfileImageMenuOpen(false);
     } catch (error) {
-      window.alert(toErrorMessage(error, "Profile photo delete failed. Please try again."));
+      showToast(toErrorMessage(error, "Profile photo delete failed. Please try again."));
     } finally {
       setIsDeletingProfileImage(false);
+    }
+  }
+
+  function handleStatusSave(): void {
+    const nextStatus = statusDraft.trim();
+    setStatusMessage(nextStatus);
+    setStatusDraft(nextStatus);
+    setIsStatusEditing(false);
+    if (profile?.user_id) {
+      window.localStorage.setItem(getStatusStorageKey(profile.user_id), nextStatus);
     }
   }
 
@@ -256,37 +515,17 @@ export default function MyPage() {
   const canDeleteProfileImage =
     Boolean(getProfileImageUrl(profile)) && !profileImagePreview;
   const nameText = profile?.user_name ?? "";
-  const metaText = [
-    profile?.nationality,
-    profile?.age ? `${profile.age}` : "",
-    profile?.gender === "male"
-      ? "Male"
-      : profile?.gender === "female"
-        ? "Female"
-        : "",
-  ]
-    .filter(Boolean)
-    .join(" / ");
-
   const infoItems = [
     { label: "User ID", value: profile?.user_id ?? "" },
     { label: "Email", value: profile?.email ?? "" },
     { label: "Phone", value: profile?.phone_number ?? "" },
-    {
-      label: "Gender",
-      value:
-        profile?.gender === "male"
-          ? "Male"
-          : profile?.gender === "female"
-            ? "Female"
-            : "",
-    },
+    { label: "Gender", value: formatGender(profile?.gender) },
     { label: "Nationality", value: profile?.nationality ?? "" },
   ].filter((item) => item.value);
 
   return (
     <div style={styles.page}>
-      <div style={styles.profileCard}>
+      <section style={styles.socialProfile}>
         <div style={styles.avatarWrap}>
           <button
             type="button"
@@ -335,79 +574,439 @@ export default function MyPage() {
             onChange={(event) => void handleProfileImageChange(event)}
           />
         </div>
-        <h1 style={styles.name}>{nameText}</h1>
-        <p style={styles.meta}>{metaText}</p>
-      </div>
 
-      <section style={styles.tabSection}>
-        <div style={styles.tabPanel}>
-          <button
-            type="button"
-            style={{
-              ...styles.tabButton,
-              ...(activeTab === "styles" ? styles.tabButtonActive : {}),
-            }}
-            onClick={() => setActiveTab("styles")}
-          >
-            Travel Styles
-          </button>
-          <button
-            type="button"
-            style={{
-              ...styles.tabButton,
-              ...(activeTab === "info" ? styles.tabButtonActive : {}),
-            }}
-            onClick={() => setActiveTab("info")}
-          >
-            My Info
-          </button>
+        <div style={styles.socialProfileBody}>
+          <div style={styles.socialNameRow}>
+            <h1 style={styles.name}>{nameText || "Unknown"}</h1>
+            <button
+              type="button"
+              style={styles.settingsButton}
+              onClick={() => setIsSettingsOpen(true)}
+              aria-label="Open settings"
+            >
+              &#9881;
+            </button>
+            <button
+              type="button"
+              style={styles.newPostButton}
+              onClick={() => {
+                if (feedPosts.length >= 100) {
+                  showToast("The maximum feed photo limit is 100.");
+                  return;
+                }
+                feedImageInputRef.current?.click();
+              }}
+              aria-label="Create new post"
+            >
+              +
+            </button>
+          </div>
+          <p style={styles.statusMessage}>
+            {statusMessage || "No status message yet."}
+          </p>
+          <span style={styles.profileStat}>
+            <strong>{feedPosts.length}</strong> posts
+          </span>
         </div>
       </section>
 
-      {activeTab === "styles" && profile?.travel_styles?.length ? (
-        <section style={styles.section}>
-          <h2 style={styles.sectionTitle}>Travel Styles</h2>
-          <div style={styles.tagWrap}>
-            {profile.travel_styles.map((style) => (
-              <span key={style} style={styles.tag}>
-                {style}
-              </span>
-            ))}
-          </div>
-        </section>
-      ) : null}
+      <section style={styles.section}>
+        <input
+          ref={feedImageInputRef}
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          style={styles.hiddenInput}
+          onChange={handleFeedFileSelect}
+        />
+        {feedError ? <p style={styles.errorText}>{feedError}</p> : null}
 
-      {activeTab === "styles" && !profile?.travel_styles?.length ? (
-        <section style={styles.section}>
-          <div style={styles.emptyPanel}>No travel styles yet.</div>
-        </section>
-      ) : null}
-
-      {activeTab === "info" && infoItems.length ? (
-        <section style={styles.section}>
-          <h2 style={styles.sectionTitle}>Basic Information</h2>
-          <div style={styles.infoList}>
-            {infoItems.map((item, index) => (
-              <div
-                key={item.label}
-                style={{
-                  ...styles.infoRow,
-                  ...(index === infoItems.length - 1 ? styles.infoRowLast : {}),
-                }}
+        {feedPosts.length ? (
+          <div style={styles.feedGrid}>
+            {feedPosts.map((post) => (
+              <button
+                key={post.post_id}
+                type="button"
+                style={styles.feedTile}
+                onClick={() => void openFeedPost(post)}
               >
-                <span style={styles.infoLabel}>{item.label}</span>
-                <span style={styles.infoValue}>{item.value}</span>
-              </div>
+                <img src={getFeedImageUrl(post)} alt="" style={styles.feedTileImage} />
+                <span style={styles.feedTileMeta}>
+                  {post.like_count} likes / {post.comment_count} comments
+                </span>
+              </button>
             ))}
           </div>
-        </section>
+        ) : (
+          <div style={styles.emptyPanel}>
+            {isFeedLoading ? "Loading feed..." : "No feed photos yet."}
+          </div>
+        )}
+
+        {feedNextCursor ? (
+          <button
+            type="button"
+            style={styles.loadMoreButton}
+            disabled={isFeedLoading}
+            onClick={() => void loadFeedPosts(feedNextCursor)}
+          >
+            {isFeedLoading ? "Loading..." : "Load More"}
+          </button>
+        ) : null}
+      </section>
+
+      {isSettingsOpen ? (
+        <div style={styles.settingsBackdrop} onClick={() => setIsSettingsOpen(false)}>
+          <div style={styles.settingsPanel} onClick={(event) => event.stopPropagation()}>
+            <div style={styles.settingsHeader}>
+              <strong>Settings</strong>
+              <button
+                type="button"
+                style={styles.settingsCloseButton}
+                onClick={() => setIsSettingsOpen(false)}
+              >
+                x
+              </button>
+            </div>
+            <button
+              type="button"
+              style={styles.settingsActionButton}
+              onClick={() => setIsStatusEditing((current) => !current)}
+            >
+              Edit Status Message
+            </button>
+            {isStatusEditing ? (
+              <div style={styles.statusEditor}>
+                <textarea
+                  value={statusDraft}
+                  maxLength={80}
+                  style={styles.statusTextarea}
+                  placeholder="Write a short status message."
+                  onChange={(event) => setStatusDraft(event.target.value)}
+                />
+                <button type="button" style={styles.primaryButton} onClick={handleStatusSave}>
+                  Save Status
+                </button>
+              </div>
+            ) : null}
+            <div style={styles.settingsInfoBlock}>
+              <strong style={styles.settingsInfoTitle}>My Information</strong>
+              <div style={styles.infoList}>
+                {infoItems.map((item, index) => (
+                  <div
+                    key={item.label}
+                    style={{
+                      ...styles.infoRow,
+                      ...(index === infoItems.length - 1 ? styles.infoRowLast : {}),
+                    }}
+                  >
+                    <span style={styles.infoLabel}>{item.label}</span>
+                    <span style={styles.infoValue}>{item.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <button type="button" style={styles.settingsActionButton} onClick={handleLogout}>
+              Log Out
+            </button>
+            <button
+              type="button"
+              style={{ ...styles.settingsActionButton, ...styles.settingsDangerButton }}
+              onClick={handleWithdraw}
+              disabled={isWithdrawing}
+            >
+              {isWithdrawing ? "Deleting Account..." : "Delete Account"}
+            </button>
+          </div>
+        </div>
       ) : null}
 
-      {activeTab === "info" && infoItems.length === 0 ? (
-        <section style={styles.section}>
-          <div style={styles.emptyPanel}>No basic information available.</div>
-        </section>
+      {feedPreviewUrl ? (
+        <CreatePostModal
+          profileImageUrl={profileImageUrl}
+          userName={nameText || "Unknown"}
+          caption={feedCaption}
+          visibility={feedVisibility}
+          isUploading={isFeedUploading}
+          disabled={!feedFile || feedPosts.length >= 100}
+          previewUrl={feedPreviewUrl}
+          onBack={closeFeedComposer}
+          onCaptionChange={setFeedCaption}
+          onVisibilityChange={setFeedVisibility}
+          onShare={() => void handleFeedUpload()}
+        />
       ) : null}
+
+      {selectedFeedPost ? (
+        <FeedPostModal
+          post={selectedFeedPost}
+          profileImageUrl={profileImageUrl}
+          userName={nameText || "Unknown"}
+          likes={selectedFeedLikes}
+          comments={selectedFeedComments}
+          captionDraft={selectedCaptionDraft}
+          commentInput={commentInput}
+          isEditing={isFeedPostEditing}
+          isMenuOpen={isFeedPostMenuOpen}
+          isBusy={isFeedActionRunning}
+          onClose={() => setSelectedFeedPost(null)}
+          onToggleMenu={() => setIsFeedPostMenuOpen((current) => !current)}
+          onToggleEdit={() => {
+            setIsFeedPostEditing((current) => !current);
+            setIsFeedPostMenuOpen(false);
+          }}
+          onDelete={() => {
+            setIsFeedPostMenuOpen(false);
+            void handleSelectedDelete();
+          }}
+          onCaptionDraftChange={setSelectedCaptionDraft}
+          onVisibilityChange={(visibility) => void handleSelectedVisibilityChange(visibility)}
+          onSaveCaption={() => void handleSelectedCaptionSave()}
+          onLike={() => void handleSelectedLike()}
+          onCommentInputChange={setCommentInput}
+          onCommentSubmit={() => void handleCommentSubmit()}
+          onCommentDelete={(comment) => void handleCommentDelete(comment)}
+        />
+      ) : null}
+      {toastMessage ? <div style={styles.toast}>{toastMessage}</div> : null}
+    </div>
+  );
+}
+
+function CreatePostModal({
+  profileImageUrl,
+  userName,
+  caption,
+  visibility,
+  isUploading,
+  disabled,
+  previewUrl,
+  onBack,
+  onCaptionChange,
+  onVisibilityChange,
+  onShare,
+}: {
+  profileImageUrl: string;
+  userName: string;
+  caption: string;
+  visibility: FeedVisibility;
+  isUploading: boolean;
+  disabled: boolean;
+  previewUrl: string;
+  onBack: () => void;
+  onCaptionChange: (value: string) => void;
+  onVisibilityChange: (value: FeedVisibility) => void;
+  onShare: () => void;
+}) {
+  return (
+    <div style={styles.createPostBackdrop}>
+      <div style={styles.createPostModal}>
+        <div style={styles.createPostTopBar}>
+          <button type="button" style={styles.createPostIconButton} onClick={onBack}>
+            &lt;
+          </button>
+          <strong style={styles.createPostTitle}>Create New Post</strong>
+          <button
+            type="button"
+            style={{ ...styles.shareButton, ...(disabled ? styles.buttonDisabled : {}) }}
+            disabled={disabled}
+            onClick={onShare}
+          >
+            {isUploading ? "Sharing..." : "Share"}
+          </button>
+        </div>
+        <div style={styles.createPostFrame}>
+          <div style={styles.createPostImagePane}>
+            <img src={previewUrl} alt="" style={styles.createPostImage} />
+          </div>
+          <aside style={styles.createPostSidePane}>
+            <div style={styles.createPostAuthor}>
+              <img src={profileImageUrl} alt="" style={styles.createPostAvatar} />
+              <strong style={styles.createPostAuthorName}>{userName}</strong>
+            </div>
+            <textarea
+              maxLength={100}
+              value={caption}
+              placeholder="Write a caption..."
+              style={styles.createPostTextarea}
+              onChange={(event) => onCaptionChange(event.target.value)}
+            />
+            <p style={styles.createPostCounter}>{caption.length}/100</p>
+            <div style={styles.createPostDivider} />
+            <div style={styles.createPostSectionHeader}>
+              <strong>Visibility</strong>
+            </div>
+            <div style={styles.visibilityList}>
+              {(["public", "friends", "private"] as FeedVisibility[]).map((item) => (
+                <button
+                  key={item}
+                  type="button"
+                  style={{
+                    ...styles.visibilityListItem,
+                    ...(visibility === item ? styles.visibilityListItemActive : {}),
+                  }}
+                  onClick={() => onVisibilityChange(item)}
+                >
+                  <span>{getVisibilityLabel(item)}</span>
+                  <span style={styles.visibilityDot} />
+                </button>
+              ))}
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FeedPostModal({
+  post,
+  profileImageUrl,
+  userName,
+  likes,
+  comments,
+  captionDraft,
+  commentInput,
+  isEditing,
+  isMenuOpen,
+  isBusy,
+  onClose,
+  onToggleMenu,
+  onToggleEdit,
+  onDelete,
+  onCaptionDraftChange,
+  onVisibilityChange,
+  onSaveCaption,
+  onLike,
+  onCommentInputChange,
+  onCommentSubmit,
+  onCommentDelete,
+}: {
+  post: FeedPost;
+  profileImageUrl: string;
+  userName: string;
+  likes: FeedLikeUser[];
+  comments: FeedComment[];
+  captionDraft: string;
+  commentInput: string;
+  isEditing: boolean;
+  isMenuOpen: boolean;
+  isBusy: boolean;
+  onClose: () => void;
+  onToggleMenu: () => void;
+  onToggleEdit: () => void;
+  onDelete: () => void;
+  onCaptionDraftChange: (value: string) => void;
+  onVisibilityChange: (value: FeedVisibility) => void;
+  onSaveCaption: () => void;
+  onLike: () => void;
+  onCommentInputChange: (value: string) => void;
+  onCommentSubmit: () => void;
+  onCommentDelete: (comment: FeedComment) => void;
+}) {
+  return (
+    <div style={styles.modalBackdrop} onClick={onClose}>
+      <div style={styles.feedModal} onClick={(event) => event.stopPropagation()}>
+        <button type="button" style={styles.modalCloseButton} onClick={onClose}>
+          x
+        </button>
+        <div style={styles.feedModalImagePane}>
+          <img src={post.original_url} alt="" style={styles.feedModalImage} />
+        </div>
+        <aside style={styles.feedModalSidePane}>
+          <header style={styles.feedPostHeader}>
+            <div style={styles.feedPostAuthor}>
+              <img src={profileImageUrl} alt="" style={styles.feedPostAvatar} />
+              <div>
+                <strong style={styles.feedPostAuthorName}>{userName}</strong>
+                <p style={styles.feedPostVisibility}>{getVisibilityLabel(post.visibility)}</p>
+              </div>
+            </div>
+            <div style={styles.feedPostHeaderActions}>
+              <button type="button" style={styles.feedPostMoreButton} onClick={onToggleMenu}>
+                ...
+              </button>
+              {isMenuOpen ? (
+                <div style={styles.feedPostMenu}>
+                  <button type="button" style={styles.feedPostMenuButton} onClick={onToggleEdit}>
+                    {isEditing ? "Cancel edit" : "Edit"}
+                  </button>
+                  <button
+                    type="button"
+                    style={{ ...styles.feedPostMenuButton, ...styles.feedPostMenuDanger }}
+                    disabled={isBusy}
+                    onClick={onDelete}
+                  >
+                    Delete
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          </header>
+
+          {isEditing ? (
+            <section style={styles.feedEditPanel}>
+              <textarea
+                maxLength={100}
+                value={captionDraft}
+                placeholder="Caption"
+                style={styles.feedEditTextarea}
+                onChange={(event) => onCaptionDraftChange(event.target.value)}
+              />
+              <p style={styles.feedEditCounter}>{captionDraft.length}/100</p>
+              <div style={styles.visibilityRow}>
+                {(["public", "friends", "private"] as FeedVisibility[]).map((item) => (
+                  <button
+                    key={item}
+                    type="button"
+                    style={{
+                      ...styles.visibilityChip,
+                      ...(post.visibility === item ? styles.visibilityChipActive : {}),
+                    }}
+                    disabled={isBusy}
+                    onClick={() => onVisibilityChange(item)}
+                  >
+                    {getVisibilityLabel(item)}
+                  </button>
+                ))}
+              </div>
+              <button type="button" style={styles.primaryButton} disabled={isBusy} onClick={onSaveCaption}>
+                Save Changes
+              </button>
+            </section>
+          ) : null}
+
+          <div style={styles.feedDiscussion}>
+            {post.caption ? (
+              <article style={styles.commentItem}>
+                <img src={profileImageUrl} alt="" style={styles.feedCommentAvatar} />
+                <div style={styles.feedPostCommentMain}>
+                  <strong style={styles.commentAuthor}>{userName}</strong>
+                  <p style={styles.commentText}>{post.caption}</p>
+                </div>
+              </article>
+            ) : null}
+            {comments.map((comment) => (
+              <article key={comment.comment_id} style={styles.commentItem}>
+                <img
+                  src={comment.profile_image_url || DEFAULT_PROFILE_IMAGE_URL}
+                  alt=""
+                  style={styles.feedCommentAvatar}
+                />
+                <div style={styles.feedPostCommentMain}>
+                  <strong style={styles.commentAuthor}>{comment.user_name || "Unknown"}</strong>
+                  <p style={styles.commentText}>{comment.content}</p>
+                </div>
+                <button
+                  type="button"
+                  style={styles.commentDeleteButton}
+                  disabled={isBusy}
+                  onClick={() => onCommentDelete(comment)}
+                >
+                  Delete
+                </button>
+              </article>
+            ))}
+          </div>
 
       <section style={styles.section}>
         <div style={styles.planPanel}>
@@ -513,6 +1112,57 @@ export default function MyPage() {
       >
         {isWithdrawing ? "Deleting Account..." : "Delete Account"}
       </button>
+          <footer style={styles.feedPostFooter}>
+            <div style={styles.feedPostActionButtons}>
+              <button
+                type="button"
+                style={styles.feedIconAction}
+                disabled={isBusy}
+                onClick={onLike}
+                aria-label="Like"
+              >
+                Like
+              </button>
+            </div>
+            <strong style={styles.feedLikeSummary}>{post.like_count} likes</strong>
+            {likes.length ? (
+              <div style={styles.likesList}>
+                {likes.slice(0, 4).map((user) => (
+                  <span key={user.user_id} style={styles.likeUser}>
+                    {user.profile_image_url ? (
+                      <img src={user.profile_image_url} alt="" style={styles.likeAvatar} />
+                    ) : null}
+                    {user.user_name || "Unknown"}
+                  </span>
+                ))}
+              </div>
+            ) : null}
+            <form
+              style={styles.commentForm}
+              onSubmit={(event) => {
+                event.preventDefault();
+                onCommentSubmit();
+              }}
+            >
+              <input
+                type="text"
+                maxLength={500}
+                value={commentInput}
+                placeholder="Add a comment..."
+                style={styles.feedCommentInput}
+                onChange={(event) => onCommentInputChange(event.target.value)}
+              />
+              <button
+                type="submit"
+                style={styles.feedPostSubmitButton}
+                disabled={!commentInput.trim() || isBusy}
+              >
+                Post
+              </button>
+            </form>
+          </footer>
+        </aside>
+      </div>
     </div>
   );
 }
@@ -520,49 +1170,81 @@ export default function MyPage() {
 const styles: Record<string, CSSProperties> = {
   page: {
     minHeight: "100dvh",
-    padding: "24px 16px 0",
+    padding: "28px 16px 110px",
     background: "transparent",
     fontFamily: "'Nunito', 'Apple SD Gothic Neo', sans-serif",
   },
-  profileCard: {
-    maxWidth: 720,
+  socialProfile: {
+    maxWidth: 880,
     margin: "0 auto",
-    padding: 28,
-    borderRadius: 32,
-    background:
-      "linear-gradient(180deg, rgba(5,181,187,0.12), rgba(255,255,255,0.98) 38%)",
-    display: "flex",
-    flexDirection: "column",
+    display: "grid",
+    gridTemplateColumns: "136px minmax(0, 1fr)",
+    gap: 28,
     alignItems: "center",
-    textAlign: "center",
-    border: "1px solid rgba(5,181,187,0.14)",
-    boxShadow: "var(--shadow-soft)",
+    padding: "8px 0 24px",
+    borderBottom: "1px solid var(--neutral-200)",
+  },
+  socialProfileBody: {
+    minWidth: 0,
+  },
+  socialNameRow: {
+    display: "flex",
+    alignItems: "center",
+    gap: 12,
+    flexWrap: "wrap",
+  },
+  settingsButton: {
+    width: 38,
+    height: 38,
+    border: "1px solid var(--border-soft)",
+    borderRadius: "50%",
+    padding: 0,
+    background: "#ffffff",
+    color: "var(--text-secondary)",
+    fontSize: "1.08rem",
+    fontWeight: 900,
+    cursor: "pointer",
+  },
+  newPostButton: {
+    width: 38,
+    height: 38,
+    border: "1px solid rgba(5,181,187,0.18)",
+    borderRadius: "50%",
+    padding: 0,
+    background: "linear-gradient(135deg, var(--brand-primary), #12c0c6)",
+    color: "#ffffff",
+    fontSize: "1.35rem",
+    lineHeight: 1,
+    fontWeight: 900,
+    cursor: "pointer",
+    boxShadow: "0 10px 18px rgba(5,181,187,0.18)",
+  },
+  statusMessage: {
+    margin: "10px 0 12px",
+    color: "var(--text-secondary)",
+    lineHeight: 1.5,
+    overflowWrap: "anywhere",
+  },
+  profileStat: {
+    color: "var(--neutral-700)",
+    fontWeight: 800,
   },
   avatarWrap: {
     position: "relative",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: 10,
   },
   avatarButton: {
-    width: 88,
-    height: 88,
+    width: 136,
+    height: 136,
     position: "relative",
     padding: 0,
-    border: "none",
+    border: "4px solid #ffffff",
     borderRadius: "50%",
     display: "grid",
     placeItems: "center",
-    background: "linear-gradient(135deg, var(--brand-primary), var(--brand-primary-deep))",
-    color: "#ffffff",
+    background: "var(--neutral-100)",
     overflow: "hidden",
     cursor: "pointer",
-    boxShadow: "0 12px 24px rgba(5,181,187,0.24)",
-  },
-  avatarText: {
-    fontWeight: 800,
-    fontSize: "1.6rem",
+    boxShadow: "0 16px 34px rgba(33,33,33,0.14)",
   },
   avatarImage: {
     width: "100%",
@@ -574,11 +1256,11 @@ const styles: Record<string, CSSProperties> = {
     left: 0,
     right: 0,
     bottom: 0,
-    padding: "5px 4px 6px",
+    padding: "7px 4px 8px",
     background: "rgba(24,26,32,0.62)",
     color: "#ffffff",
-    fontSize: "0.68rem",
-    fontWeight: 800,
+    fontSize: "0.72rem",
+    fontWeight: 900,
   },
   avatarOverlay: {
     position: "absolute",
@@ -588,11 +1270,14 @@ const styles: Record<string, CSSProperties> = {
     padding: 10,
     background: "rgba(24,26,32,0.58)",
     color: "#ffffff",
-    fontSize: "0.72rem",
-    fontWeight: 800,
+    fontSize: "0.74rem",
+    fontWeight: 900,
     textAlign: "center",
   },
   avatarMenu: {
+    position: "absolute",
+    left: 0,
+    top: 148,
     zIndex: 6,
     width: 168,
     padding: 8,
@@ -609,7 +1294,7 @@ const styles: Record<string, CSSProperties> = {
     padding: "0 12px",
     background: "transparent",
     color: "var(--text-secondary)",
-    fontWeight: 800,
+    fontWeight: 900,
     textAlign: "left",
     cursor: "pointer",
   },
@@ -625,78 +1310,211 @@ const styles: Record<string, CSSProperties> = {
     display: "none",
   },
   name: {
-    margin: "14px 0 0",
+    margin: 0,
     color: "var(--text-primary)",
-    fontSize: "1.6rem",
-  },
-  meta: {
-    margin: "8px 0 0",
-    color: "var(--neutral-700)",
+    fontSize: "1.8rem",
+    lineHeight: 1.15,
   },
   section: {
-    maxWidth: 720,
-    margin: "18px auto 0",
-  },
-  tabSection: {
-    maxWidth: 720,
-    margin: "18px auto 0",
-  },
-  tabPanel: {
-    display: "grid",
-    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-    gap: 8,
-    padding: 8,
-    borderRadius: 22,
-    background: "rgba(255,255,255,0.88)",
-    border: "1px solid var(--border-soft)",
-    boxShadow: "var(--shadow-soft)",
-  },
-  tabButton: {
-    minHeight: 44,
-    border: "none",
-    borderRadius: 16,
-    background: "transparent",
-    color: "var(--neutral-700)",
-    fontWeight: 800,
-    cursor: "pointer",
-  },
-  tabButtonActive: {
-    background: "linear-gradient(135deg, rgba(5,181,187,0.16), rgba(228,247,247,0.96))",
-    color: "var(--text-primary)",
+    maxWidth: 880,
+    margin: "20px auto 0",
   },
   sectionTitle: {
-    margin: "0 0 10px",
+    margin: "0 0 8px",
     color: "var(--text-primary)",
     fontSize: "1rem",
+    fontWeight: 900,
+  },
+  feedUploadPanel: {
+    padding: 16,
+    borderRadius: 18,
+    background: "rgba(255,255,255,0.92)",
+    border: "1px solid var(--border-soft)",
+    boxShadow: "var(--shadow-soft)",
+    marginBottom: 16,
+  },
+  feedUploadHeader: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 12,
+  },
+  feedHelp: {
+    margin: 0,
+    color: "var(--neutral-700)",
+    fontSize: "0.86rem",
+    lineHeight: 1.45,
+  },
+  secondaryButton: {
+    minHeight: 38,
+    border: "1px solid rgba(5,181,187,0.18)",
+    borderRadius: 12,
+    padding: "0 14px",
+    background: "#ffffff",
+    color: "var(--brand-primary-deep)",
+    fontWeight: 900,
+    cursor: "pointer",
+  },
+  primaryButton: {
+    minHeight: 42,
+    border: "none",
+    borderRadius: 12,
+    padding: "0 14px",
+    background: "linear-gradient(135deg, var(--brand-primary), #12c0c6)",
+    color: "#ffffff",
+    fontWeight: 900,
+    cursor: "pointer",
+  },
+  buttonDisabled: {
+    opacity: 0.55,
+    cursor: "not-allowed",
+  },
+  errorText: {
+    margin: "12px 0 0",
+    color: "#dc2626",
+    fontSize: "0.86rem",
     fontWeight: 800,
   },
-  tagWrap: {
-    display: "flex",
-    flexWrap: "wrap",
-    gap: 8,
+  feedGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+    gap: 6,
   },
-  tag: {
-    padding: "8px 12px",
-    borderRadius: 999,
-    background: "var(--brand-primary-soft)",
-    color: "var(--brand-primary-deep)",
-    fontSize: "0.86rem",
-    fontWeight: 700,
-    border: "1px solid rgba(5,181,187,0.08)",
+  feedTile: {
+    position: "relative",
+    padding: 0,
+    border: "none",
+    borderRadius: 4,
+    overflow: "hidden",
+    background: "var(--neutral-100)",
+    aspectRatio: "1 / 1",
+    cursor: "pointer",
+  },
+  feedTileImage: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    display: "block",
+  },
+  feedTileMeta: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    padding: "18px 8px 8px",
+    background: "linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,0.62))",
+    color: "#ffffff",
+    fontSize: "0.72rem",
+    fontWeight: 900,
+    textAlign: "left",
+  },
+  emptyPanel: {
+    padding: 28,
+    borderRadius: 18,
+    background: "rgba(255,255,255,0.9)",
+    border: "1px solid var(--border-soft)",
+    color: "var(--neutral-700)",
+    boxShadow: "var(--shadow-soft)",
+  },
+  loadMoreButton: {
+    width: "100%",
+    minHeight: 44,
+    marginTop: 14,
+    border: "1px solid var(--border-soft)",
+    borderRadius: 14,
+    background: "#ffffff",
+    color: "var(--text-secondary)",
+    fontWeight: 900,
+    cursor: "pointer",
+  },
+  settingsBackdrop: {
+    position: "fixed",
+    inset: 0,
+    zIndex: 88,
+    display: "grid",
+    placeItems: "center",
+    padding: 18,
+    background: "rgba(16,34,35,0.42)",
+  },
+  settingsPanel: {
+    width: "min(460px, 100%)",
+    maxHeight: "86dvh",
+    overflowY: "auto",
+    borderRadius: 22,
+    background: "#ffffff",
+    boxShadow: "0 24px 70px rgba(15,23,42,0.28)",
+    padding: 18,
+    display: "flex",
+    flexDirection: "column",
+    gap: 12,
+  },
+  settingsHeader: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    color: "var(--text-primary)",
+    fontSize: "1.1rem",
+  },
+  settingsCloseButton: {
+    width: 34,
+    height: 34,
+    border: "none",
+    borderRadius: "50%",
+    background: "var(--neutral-100)",
+    color: "var(--text-primary)",
+    fontWeight: 900,
+    cursor: "pointer",
+  },
+  settingsActionButton: {
+    width: "100%",
+    minHeight: 46,
+    border: "1px solid var(--neutral-200)",
+    borderRadius: 14,
+    padding: "0 14px",
+    background: "#ffffff",
+    color: "var(--text-secondary)",
+    textAlign: "left",
+    fontWeight: 900,
+    cursor: "pointer",
+  },
+  settingsDangerButton: {
+    color: "#dc2626",
+  },
+  statusEditor: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+  },
+  statusTextarea: {
+    minHeight: 90,
+    border: "1px solid var(--neutral-200)",
+    borderRadius: 14,
+    padding: 12,
+    resize: "vertical",
+    outline: "none",
+    color: "var(--text-primary)",
+    fontFamily: "inherit",
+  },
+  settingsInfoBlock: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+  },
+  settingsInfoTitle: {
+    color: "var(--text-primary)",
   },
   infoList: {
-    borderRadius: 24,
+    borderRadius: 16,
     background: "rgba(255,255,255,0.88)",
     border: "1px solid var(--border-soft)",
     overflow: "hidden",
-    boxShadow: "var(--shadow-soft)",
   },
   infoRow: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     gap: 16,
-    padding: "14px 16px",
+    padding: "12px 14px",
     borderBottom: "1px solid var(--neutral-200)",
   },
   infoRowLast: {
@@ -704,21 +1522,86 @@ const styles: Record<string, CSSProperties> = {
   },
   infoLabel: {
     color: "var(--neutral-700)",
-    fontSize: "0.9rem",
+    fontSize: "0.88rem",
   },
   infoValue: {
     color: "var(--text-secondary)",
-    fontWeight: 700,
+    fontWeight: 800,
     textAlign: "right",
     overflowWrap: "anywhere",
   },
-  emptyPanel: {
-    padding: 22,
-    borderRadius: 24,
-    background: "rgba(255,255,255,0.88)",
-    border: "1px solid var(--border-soft)",
-    color: "var(--neutral-700)",
-    boxShadow: "var(--shadow-soft)",
+  createPostBackdrop: {
+    position: "fixed",
+    inset: 0,
+    zIndex: 80,
+    display: "grid",
+    placeItems: "center",
+    padding: 0,
+    background: "rgba(8,12,16,0.74)",
+  },
+  createPostModal: {
+    width: "100%",
+    height: "100dvh",
+    maxHeight: "100dvh",
+    display: "flex",
+    flexDirection: "column",
+    overflow: "hidden",
+    borderRadius: 0,
+    background: "#24262d",
+    color: "#f5f6f7",
+    boxShadow: "0 28px 90px rgba(0,0,0,0.38)",
+  },
+  createPostTopBar: {
+    height: 54,
+    flexShrink: 0,
+    display: "grid",
+    gridTemplateColumns: "56px minmax(0, 1fr) 82px",
+    alignItems: "center",
+    borderBottom: "1px solid rgba(255,255,255,0.1)",
+  },
+  createPostIconButton: {
+    width: 44,
+    height: 44,
+    marginLeft: 10,
+    border: "none",
+    background: "transparent",
+    color: "#ffffff",
+    fontSize: "1.65rem",
+    cursor: "pointer",
+  },
+  createPostTitle: {
+    justifySelf: "center",
+    color: "#ffffff",
+    fontSize: "1rem",
+    fontWeight: 900,
+  },
+  shareButton: {
+    justifySelf: "end",
+    marginRight: 10,
+    border: "none",
+    background: "transparent",
+    color: "#7f9cff",
+    fontSize: "0.9rem",
+    fontWeight: 900,
+    cursor: "pointer",
+    whiteSpace: "nowrap",
+  },
+  createPostFrame: {
+    minHeight: 0,
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    overflowY: "auto",
+  },
+  createPostImagePane: {
+    width: "100%",
+    aspectRatio: "1 / 1",
+    maxHeight: "52dvh",
+    flexShrink: 0,
+    display: "grid",
+    placeItems: "center",
+    background: "#ffffff",
+    overflow: "hidden",
   },
   planPanel: {
     padding: 20,
@@ -843,36 +1726,412 @@ const styles: Record<string, CSSProperties> = {
     cursor: "pointer",
   },
   logoutButton: {
-    display: "block",
+  createPostImage: {
     width: "100%",
-    maxWidth: 720,
-    margin: "18px auto 0",
-    border: "1px solid rgba(5,181,187,0.18)",
-    borderRadius: 18,
-    padding: "15px 16px",
-    background: "linear-gradient(135deg, var(--brand-primary), #12c0c6)",
+    height: "100%",
+    objectFit: "contain",
+    display: "block",
+  },
+  createPostSidePane: {
+    minHeight: 0,
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    overflowY: "visible",
+    background: "#24262d",
+  },
+  createPostAuthor: {
+    display: "flex",
+    alignItems: "center",
+    gap: 12,
+    padding: "18px 18px 8px",
+  },
+  createPostAvatar: {
+    width: 32,
+    height: 32,
+    borderRadius: "50%",
+    objectFit: "cover",
+    background: "#3a3d45",
+  },
+  createPostAuthorName: {
     color: "#ffffff",
-    fontWeight: 800,
-    cursor: "pointer",
-    boxShadow: "0 12px 24px rgba(5,181,187,0.22)",
+    fontSize: "0.9rem",
+    fontWeight: 900,
   },
-  withdrawButton: {
-    display: "block",
+  createPostTextarea: {
+    minHeight: 132,
+    border: "none",
+    padding: "10px 18px",
+    background: "transparent",
+    color: "#f5f6f7",
+    fontSize: "0.95rem",
+    lineHeight: 1.5,
+    resize: "none",
+    outline: "none",
+    fontFamily: "inherit",
+  },
+  createPostCounter: {
+    margin: "0 18px 12px",
+    color: "#8f939c",
+    fontSize: "0.78rem",
+    textAlign: "right",
+  },
+  createPostDivider: {
+    height: 1,
+    background: "rgba(255,255,255,0.08)",
+  },
+  createPostSectionHeader: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: "16px 18px 10px",
+    color: "#ffffff",
+    fontSize: "0.92rem",
+  },
+  visibilityList: {
+    display: "flex",
+    flexDirection: "column",
+    paddingBottom: 14,
+  },
+  visibilityListItem: {
+    minHeight: 46,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 12,
+    border: "none",
+    padding: "0 18px",
+    background: "transparent",
+    color: "#d8dbe0",
+    fontWeight: 900,
+    cursor: "pointer",
+  },
+  visibilityListItemActive: {
+    color: "#ffffff",
+    background: "rgba(255,255,255,0.06)",
+  },
+  visibilityDot: {
+    width: 12,
+    height: 12,
+    borderRadius: "50%",
+    border: "2px solid currentColor",
+  },
+  modalBackdrop: {
+    position: "fixed",
+    inset: 0,
+    zIndex: 60,
+    display: "grid",
+    placeItems: "center",
+    padding: 0,
+    background: "rgba(16,34,35,0.42)",
+  },
+  feedModal: {
+    position: "relative",
     width: "100%",
-    maxWidth: 720,
-    margin: "12px auto 0",
-    border: "1px solid rgba(220,38,38,0.22)",
-    borderRadius: 18,
-    padding: "15px 16px",
-    background: "rgba(255,255,255,0.92)",
-    color: "#dc2626",
-    fontWeight: 800,
-    cursor: "pointer",
-    boxShadow: "var(--shadow-soft)",
+    height: "100dvh",
+    display: "flex",
+    flexDirection: "column",
+    overflow: "hidden",
+    borderRadius: 0,
+    background: "#ffffff",
+    boxShadow: "0 24px 70px rgba(15,23,42,0.28)",
   },
-  withdrawButtonDisabled: {
-    opacity: 0.62,
-    cursor: "not-allowed",
+  modalCloseButton: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    zIndex: 4,
+    width: 36,
+    height: 36,
+    border: "none",
+    borderRadius: "50%",
+    background: "rgba(16,34,35,0.72)",
+    color: "#ffffff",
+    fontSize: "1.1rem",
+    lineHeight: 1,
+    cursor: "pointer",
+  },
+  feedModalImagePane: {
+    height: "48dvh",
+    minHeight: 260,
+    maxHeight: 520,
+    flexShrink: 0,
+    display: "grid",
+    placeItems: "center",
+    background: "#050608",
+  },
+  feedModalImage: {
+    width: "100%",
+    height: "100%",
+    objectFit: "contain",
+    background: "#050608",
+  },
+  feedModalSidePane: {
+    minHeight: 0,
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    background: "#ffffff",
+    color: "var(--text-primary)",
+    borderTop: "1px solid var(--neutral-200)",
+  },
+  feedPostHeader: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 12,
+    minHeight: 68,
+    padding: "10px 14px",
+    borderBottom: "1px solid var(--neutral-200)",
+  },
+  feedPostAuthor: {
+    display: "flex",
+    alignItems: "center",
+    gap: 12,
+    minWidth: 0,
+  },
+  feedPostAvatar: {
+    width: 48,
+    height: 48,
+    borderRadius: "50%",
+    objectFit: "cover",
+    background: "#3a3d45",
+    flexShrink: 0,
+  },
+  feedPostAuthorName: {
+    display: "block",
+    color: "var(--text-primary)",
+    fontSize: "0.92rem",
+    fontWeight: 900,
+  },
+  feedPostVisibility: {
+    margin: "3px 0 0",
+    color: "var(--neutral-700)",
+    fontSize: "0.76rem",
+    fontWeight: 800,
+  },
+  feedPostHeaderActions: {
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+  },
+  feedPostMoreButton: {
+    width: 34,
+    height: 34,
+    border: "none",
+    borderRadius: "50%",
+    background: "transparent",
+    color: "var(--text-primary)",
+    fontSize: "1.28rem",
+    fontWeight: 900,
+    cursor: "pointer",
+  },
+  feedPostMenu: {
+    position: "absolute",
+    top: 42,
+    right: 0,
+    zIndex: 4,
+    width: 156,
+    overflow: "hidden",
+    borderRadius: 14,
+    background: "#ffffff",
+    border: "1px solid var(--neutral-200)",
+    boxShadow: "0 16px 34px rgba(33,33,33,0.16)",
+  },
+  feedPostMenuButton: {
+    width: "100%",
+    minHeight: 42,
+    border: "none",
+    borderBottom: "1px solid var(--neutral-200)",
+    padding: "0 14px",
+    background: "#ffffff",
+    color: "var(--text-secondary)",
+    textAlign: "left",
+    fontWeight: 900,
+    cursor: "pointer",
+  },
+  feedPostMenuDanger: {
+    color: "#dc2626",
+    borderBottom: "none",
+  },
+  feedEditPanel: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+    padding: 14,
+    borderBottom: "1px solid var(--neutral-200)",
+    background: "#f7fbfb",
+  },
+  feedEditTextarea: {
+    minHeight: 112,
+    border: "1px solid var(--neutral-200)",
+    borderRadius: 12,
+    padding: 12,
+    background: "#ffffff",
+    color: "var(--text-primary)",
+    resize: "vertical",
+    outline: "none",
+    fontFamily: "inherit",
+  },
+  feedEditCounter: {
+    margin: "-4px 0 0",
+    color: "var(--neutral-700)",
+    fontSize: "0.76rem",
+    textAlign: "right",
+  },
+  visibilityRow: {
+    display: "flex",
+    gap: 8,
+    flexWrap: "wrap",
+  },
+  visibilityChip: {
+    minHeight: 34,
+    border: "1px solid var(--border-soft)",
+    borderRadius: 999,
+    padding: "0 12px",
+    background: "#ffffff",
+    color: "var(--neutral-700)",
+    fontSize: "0.82rem",
+    fontWeight: 900,
+    cursor: "pointer",
+  },
+  visibilityChipActive: {
+    background: "var(--brand-primary-soft)",
+    borderColor: "rgba(5,181,187,0.24)",
+    color: "var(--brand-primary-deep)",
+  },
+  feedDiscussion: {
+    flex: 1,
+    minHeight: 0,
+    overflowY: "auto",
+    padding: "8px 14px",
+  },
+  feedPostFooter: {
+    flexShrink: 0,
+    borderTop: "1px solid var(--neutral-200)",
+    padding: "10px 14px calc(12px + env(safe-area-inset-bottom))",
+    display: "flex",
+    flexDirection: "column",
+    gap: 8,
+  },
+  feedPostActionButtons: {
+    display: "flex",
+    alignItems: "center",
+    gap: 14,
+  },
+  feedIconAction: {
+    border: "none",
+    background: "transparent",
+    color: "var(--text-primary)",
+    fontWeight: 900,
+    padding: 0,
+    cursor: "pointer",
+  },
+  feedLikeSummary: {
+    color: "var(--text-primary)",
+    fontSize: "0.9rem",
+  },
+  likesList: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: 8,
+  },
+  likeUser: {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: 6,
+    padding: "6px 10px",
+    borderRadius: 999,
+    background: "var(--neutral-100)",
+    color: "var(--text-secondary)",
+    fontSize: "0.8rem",
+    fontWeight: 800,
+  },
+  likeAvatar: {
+    width: 20,
+    height: 20,
+    borderRadius: "50%",
+    objectFit: "cover",
+  },
+  commentForm: {
+    display: "grid",
+    gridTemplateColumns: "minmax(0, 1fr) auto",
+    gap: 8,
+  },
+  feedCommentInput: {
+    width: "100%",
+    minHeight: 40,
+    border: "none",
+    borderRadius: 0,
+    padding: 0,
+    background: "transparent",
+    color: "var(--text-primary)",
+    outline: "none",
+    fontWeight: 700,
+  },
+  feedPostSubmitButton: {
+    border: "none",
+    background: "transparent",
+    color: "var(--brand-primary-deep)",
+    fontWeight: 900,
+    cursor: "pointer",
+  },
+  commentItem: {
+    display: "flex",
+    justifyContent: "space-between",
+    gap: 12,
+    padding: "10px 0",
+    borderTop: "1px solid var(--neutral-200)",
+  },
+  feedPostCommentMain: {
+    minWidth: 0,
+    flex: 1,
+  },
+  feedCommentAvatar: {
+    width: 42,
+    height: 42,
+    borderRadius: "50%",
+    objectFit: "cover",
+    background: "var(--neutral-100)",
+    flexShrink: 0,
+  },
+  commentAuthor: {
+    display: "block",
+    color: "var(--text-primary)",
+    fontSize: "0.86rem",
+  },
+  commentText: {
+    margin: "4px 0 0",
+    color: "var(--neutral-700)",
+    fontSize: "0.88rem",
+    lineHeight: 1.45,
+    overflowWrap: "anywhere",
+  },
+  commentDeleteButton: {
+    alignSelf: "flex-start",
+    border: "none",
+    background: "transparent",
+    color: "#dc2626",
+    fontSize: "0.78rem",
+    fontWeight: 900,
+    cursor: "pointer",
+  },
+  toast: {
+    position: "fixed",
+    left: "50%",
+    bottom: 96,
+    zIndex: 160,
+    maxWidth: "min(88vw, 420px)",
+    transform: "translateX(-50%)",
+    padding: "12px 16px",
+    borderRadius: 16,
+    background: "rgba(24,26,32,0.92)",
+    color: "#ffffff",
+    fontSize: "0.9rem",
+    fontWeight: 800,
+    lineHeight: 1.35,
+    boxShadow: "0 18px 40px rgba(24,26,32,0.22)",
   },
 };
 
@@ -888,128 +2147,35 @@ function getProfileImageUrl(profile: UserProfile | null): string {
   );
 }
 
-function toErrorMessage(error: unknown, fallback: string): string {
-  const apiError = error as { message?: string };
-  return apiError.message || fallback;
+function getFeedImageUrl(post: FeedPost): string {
+  return post.thumbnail_medium_url || post.thumbnail_small_url || post.original_url;
 }
 
-function getApiStatus(error: unknown): number | undefined {
-  const apiError = error as { status?: number; response?: { status?: number } };
-  return apiError.status || apiError.response?.status;
+function getVisibilityLabel(visibility: FeedVisibility): string {
+  if (visibility === "public") return "Public";
+  if (visibility === "friends") return "Friends";
+  return "Private";
 }
 
-const SAVED_PLAN_PANEL_ID = "krip-saved-plan-panel";
-const SAVED_PLAN_STORAGE_KEY = "krip-saved-trip-plans";
-const SAVED_PLAN_EVENT = "krip:saved-plans-updated";
-
-interface MyPageSavedPlanRecord {
-  id: string;
-  type: "ai" | "manual";
-  title: string;
-  summary: string;
-  updatedAt: string;
-}
-
-function readSavedPlanRecords(): MyPageSavedPlanRecord[] {
-  try {
-    const raw = window.localStorage.getItem(SAVED_PLAN_STORAGE_KEY);
-    if (!raw) return [];
-    const parsed = JSON.parse(raw) as MyPageSavedPlanRecord[];
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
+function getInitialStatusMessage(profile: UserProfile): string {
+  const profileStatus =
+    profile.status ||
+    (profile as UserProfile & { status_message?: string | null }).status_message ||
+    "";
+  if (profile.user_id) {
+    return window.localStorage.getItem(getStatusStorageKey(profile.user_id)) || profileStatus;
   }
+  return profileStatus;
 }
 
-function ensureSavedPlanPanel(): HTMLDivElement | null {
-  if (window.location.pathname !== "/my") {
-    document.getElementById(SAVED_PLAN_PANEL_ID)?.remove();
-    return null;
-  }
-
-  let panel = document.getElementById(SAVED_PLAN_PANEL_ID) as HTMLDivElement | null;
-  if (panel) return panel;
-
-  panel = document.createElement("div");
-  panel.id = SAVED_PLAN_PANEL_ID;
-  panel.style.maxWidth = "720px";
-  panel.style.margin = "18px auto 110px";
-  panel.style.padding = "20px";
-  panel.style.borderRadius = "24px";
-  panel.style.background = "rgba(255,255,255,0.94)";
-  panel.style.border = "1px solid var(--border-soft)";
-  panel.style.boxShadow = "var(--shadow-soft)";
-
-  const page = document.querySelector("div");
-  if (!page || !page.parentElement) return null;
-  page.parentElement.appendChild(panel);
-  return panel;
+function getStatusStorageKey(userId: string): string {
+  return `krip:my-page-status:${userId}`;
 }
 
-function renderSavedPlanPanel(): void {
-  const panel = ensureSavedPlanPanel();
-  if (!panel) return;
-
-  const plans = readSavedPlanRecords();
-  const cards =
-    plans.length > 0
-      ? plans
-          .map(
-            (plan) => `
-              <article style="padding:14px 0;border-top:1px solid #eef4f4;">
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-                  <div>
-                    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-                      <strong style="font-size:15px;color:#102223;">${plan.title}</strong>
-                      <span style="padding:5px 9px;border-radius:999px;background:rgba(1,192,192,0.12);color:#01C0C0;font-size:11px;font-weight:800;text-transform:uppercase;">${plan.type}</span>
-                    </div>
-                    <p style="margin:6px 0 0;color:#577071;font-size:13px;line-height:1.5;">${plan.summary}</p>
-                    <p style="margin:6px 0 0;color:#7a8f8f;font-size:12px;">${new Date(plan.updatedAt).toLocaleString()}</p>
-                  </div>
-                  <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
-                    <button data-plan-action="open" data-plan-id="${plan.id}" data-plan-type="${plan.type}" style="border:none;border-radius:12px;padding:10px 12px;background:#01C0C0;color:#fff;font-size:12px;font-weight:800;cursor:pointer;">Open</button>
-                    <button data-plan-action="delete" data-plan-id="${plan.id}" style="border:none;border-radius:12px;padding:10px 12px;background:rgba(255,190,15,0.18);color:#7a5400;font-size:12px;font-weight:800;cursor:pointer;">Delete</button>
-                  </div>
-                </div>
-              </article>
-            `
-          )
-          .join("")
-      : `<p style="margin:0;color:#577071;font-size:14px;line-height:1.6;">Saved AI and manual trip plans will appear here.</p>`;
-
-  panel.innerHTML = `
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      <div>
-        <h2 style="margin:0;color:#102223;font-size:18px;">Saved Plans</h2>
-        <p style="margin:6px 0 0;color:#577071;font-size:13px;line-height:1.5;">Review, reopen, or delete the itineraries you saved from AI and manual planning.</p>
-      </div>
-      ${cards}
-    </div>
-  `;
-
-  panel.querySelectorAll<HTMLButtonElement>("[data-plan-action]").forEach((button) => {
-    button.onclick = () => {
-      const action = button.dataset.planAction;
-      const planId = button.dataset.planId;
-      const planType = button.dataset.planType;
-      if (!planId) return;
-
-      if (action === "delete") {
-        const nextPlans = readSavedPlanRecords().filter((plan) => plan.id !== planId);
-        window.localStorage.setItem(SAVED_PLAN_STORAGE_KEY, JSON.stringify(nextPlans));
-        window.dispatchEvent(new CustomEvent(SAVED_PLAN_EVENT));
-        renderSavedPlanPanel();
-        return;
-      }
-
-      if (planType === "ai") {
-        window.location.href = `/plan/ai/result?planId=${planId}`;
-        return;
-      }
-
-      window.location.href = `/plan/manual?planId=${planId}`;
-    };
-  });
+function formatGender(gender?: string): string {
+  if (gender === "male") return "Male";
+  if (gender === "female") return "Female";
+  return gender || "";
 }
 
 if (false && typeof window !== "undefined") {
@@ -1082,4 +2248,13 @@ function positionSavedPlanPanel(): void {
     panel.style.display = isOpen ? "none" : "block";
     toggle.textContent = isOpen ? "View Saved Plans" : "Hide Saved Plans";
   };
+}
+function toErrorMessage(error: unknown, fallback: string): string {
+  const apiError = error as { message?: string };
+  return apiError.message || fallback;
+}
+
+function getApiStatus(error: unknown): number | undefined {
+  const apiError = error as { status?: number; response?: { status?: number } };
+  return apiError.status || apiError.response?.status;
 }

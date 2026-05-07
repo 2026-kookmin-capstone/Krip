@@ -47,17 +47,13 @@ export default function LoginPage() {
 
   return (
     <div style={styles.wrapper}>
-      <div style={styles.center}>
-        <div style={styles.heroFrame}>
-          <img src="/loading.png" alt="Krip login" style={styles.heroImage} />
-          <div style={styles.bottom}>
-            <button style={styles.googleBtn} onClick={handleGoogleLogin}>
-              <GoogleIcon />
-              Sign in with Google
-            </button>
-          </div>
-        </div>
+      <div style={styles.imageWrap}>
+        <img src="/loading.png" alt="Krip login" style={styles.heroImage} />
       </div>
+      <button type="button" style={styles.googleBtn} onClick={handleGoogleLogin}>
+        <GoogleIcon />
+        Sign in with Google
+      </button>
     </div>
   );
 }
@@ -82,56 +78,40 @@ const styles: Record<string, CSSProperties> = {
   wrapper: {
     position: "relative",
     width: "100vw",
-    minHeight: "100dvh",
-    background:
-      "linear-gradient(180deg, #18bcc1 0%, #18bcc1 68%, #14b4ba 100%)",
+    height: "100dvh",
+    background: "#ffffff",
     display: "flex",
-    flexDirection: "column",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "center",
     overflow: "hidden",
     fontFamily: "'Nunito', 'Apple SD Gothic Neo', sans-serif",
   },
-  center: {
-    flex: 1,
+  imageWrap: {
     width: "100%",
+    height: "100%",
     display: "flex",
-    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    padding: "20px 20px 0",
-  },
-  heroFrame: {
-    position: "relative",
-    width: "min(100%, 430px)",
   },
   heroImage: {
-    width: "100%",
-    maxHeight: "74dvh",
+    width: "100vw",
+    height: "100dvh",
     objectFit: "contain",
     display: "block",
   },
-  bottom: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: "5.5%",
-    width: "100%",
-    padding: "0 34px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    zIndex: 1,
-  },
   googleBtn: {
+    position: "fixed",
+    left: "50%",
+    bottom: "max(28px, env(safe-area-inset-bottom))",
+    transform: "translateX(-50%)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    width: "86%",
+    width: "min(84vw, 360px)",
     minHeight: 52,
     padding: "0 18px",
     borderRadius: 16,
-    border: "1px solid rgba(255,255,255,0.78)",
+    border: "1px solid rgba(0,0,0,0.08)",
     background: "#ffffff",
     color: "#256f72",
     fontSize: "0.95rem",
