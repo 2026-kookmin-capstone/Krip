@@ -35,6 +35,15 @@ export interface RegisterPayload {
   gender: string;
   nationality: string;
   travel_styles: string[];
+  food_preferences?: string[];
+  density_preference?: string;
+  budget_preference?: string;
+  walking_preference?: string;
+  transport_preferences?: string[];
+  companion_preference?: string;
+  time_preferences?: string[];
+  communication_preference?: string;
+  planning_preference?: string;
 }
 
 export interface TourPlaceApiItem {
