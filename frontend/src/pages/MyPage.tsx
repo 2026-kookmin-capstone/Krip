@@ -30,6 +30,7 @@ import {
 
 const DEFAULT_PROFILE_IMAGE_URL = "/default-profile.svg";
 
+
 export default function MyPage() {
   const navigate = useNavigate();
   const profileImageInputRef = useRef<HTMLInputElement>(null);
