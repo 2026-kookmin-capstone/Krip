@@ -1,0 +1,234 @@
+import client from "./client";
+
+export type FeedVisibility = "private" | "friends" | "public";
+
+export interface FeedPost {
+  post_id: string;
+  user_id: string;
+  visibility: FeedVisibility;
+  caption: string | null;
+  original_url: string;
+  thumbnail_small_url: string;
+  thumbnail_medium_url: string;
+  like_count: number;
+  comment_count: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface FeedPostListResponse {
+  posts: FeedPost[];
+  next_cursor: string | null;
+}
+
+export interface FeedLikeUser {
+  user_id: string;
+  user_name: string;
+  profile_image_url: string | null;
+}
+
+export interface FeedLikeUsersResponse {
+  post_id: string;
+  users: FeedLikeUser[];
+}
+
+export interface FeedComment {
+  comment_id: string;
+  post_id: string;
+  user_id: string;
+  user_name: string;
+  profile_image_url: string | null;
+  content: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface FeedCommentListResponse {
+  comments: FeedComment[];
+  next_cursor: string | null;
+}
+
+export interface FeedPopupResponse {
+  user_id: string;
+  user_name: string;
+  nationality: string;
+  travel_styles: string[];
+  profile_image_url: string | null;
+  status_message?: string | null;
+  message?: string | null;
+  feed: {
+    items: FeedPost[];
+  };
+}
+
+function cursorParams(cursor?: string): { cursor?: string } {
+  return cursor ? { cursor } : {};
+}
+
+export async function createFeedPost({
+  file,
+  visibility = "public",
+  caption,
+}: {
+  file: File;
+  visibility?: FeedVisibility;
+  caption?: string;
+}): Promise<FeedPost> {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("visibility", visibility);
+  if (caption !== undefined) {
+    formData.append("caption", caption);
+  }
+
+  const { data } = await client.post<FeedPost>("/api/feed/posts", formData);
+  return data;
+}
+
+export async function getMyFeedPosts(cursor?: string): Promise<FeedPostListResponse> {
+  const { data } = await client.get<FeedPostListResponse>("/api/feed/me", {
+    params: cursorParams(cursor),
+  });
+  return {
+    posts: Array.isArray(data.posts) ? data.posts : [],
+    next_cursor: data.next_cursor ?? null,
+  };
+}
+
+export async function getUserFeedPosts(
+  userId: string,
+  cursor?: string
+): Promise<FeedPostListResponse> {
+  const { data } = await client.get<FeedPostListResponse>(
+    `/api/feed/users/${encodeURIComponent(userId)}`,
+    { params: cursorParams(cursor) }
+  );
+  return {
+    posts: Array.isArray(data.posts) ? data.posts : [],
+    next_cursor: data.next_cursor ?? null,
+  };
+}
+
+export async function getFeedPost(postId: string): Promise<FeedPost> {
+  const { data } = await client.get<FeedPost>(
+    `/api/feed/posts/${encodeURIComponent(postId)}`
+  );
+  return data;
+}
+
+export async function updateFeedPostVisibility(
+  postId: string,
+  visibility: FeedVisibility
+): Promise<FeedPost> {
+  const path = `/api/feed/posts/${encodeURIComponent(postId)}/visibility`;
+
+  try {
+    const { data } = await client.patch<FeedPost>(path, { visibility });
+    return data;
+  } catch (error) {
+    const status = getApiStatus(error);
+    if (status && ![400, 422, 500].includes(status)) {
+      throw error;
+    }
+
+    const { data } = await client.patch<FeedPost>(path, null, {
+      params: { visibility },
+    });
+    return data;
+  }
+}
+
+export async function updateFeedPostCaption(
+  postId: string,
+  caption: string | null
+): Promise<FeedPost> {
+  const { data } = await client.patch<FeedPost>(
+    `/api/feed/posts/${encodeURIComponent(postId)}/caption`,
+    { caption }
+  );
+  return data;
+}
+
+export async function deleteFeedPost(postId: string): Promise<void> {
+  await client.delete(`/api/feed/posts/${encodeURIComponent(postId)}`);
+}
+
+export async function likeFeedPost(
+  postId: string
+): Promise<{ post_id: string; like_count: number }> {
+  const { data } = await client.post<{ post_id: string; like_count: number }>(
+    `/api/feed/posts/${encodeURIComponent(postId)}/like`
+  );
+  return data;
+}
+
+export async function unlikeFeedPost(
+  postId: string
+): Promise<{ post_id: string; like_count: number }> {
+  const { data } = await client.delete<{ post_id: string; like_count: number }>(
+    `/api/feed/posts/${encodeURIComponent(postId)}/like`
+  );
+  return data;
+}
+
+export async function getFeedPostLikes(postId: string): Promise<FeedLikeUsersResponse> {
+  const { data } = await client.get<FeedLikeUsersResponse>(
+    `/api/feed/posts/${encodeURIComponent(postId)}/likes`
+  );
+  return {
+    post_id: data.post_id,
+    users: Array.isArray(data.users) ? data.users : [],
+  };
+}
+
+export async function createFeedComment(
+  postId: string,
+  content: string
+): Promise<FeedComment> {
+  const { data } = await client.post<FeedComment>(
+    `/api/feed/posts/${encodeURIComponent(postId)}/comments`,
+    { content }
+  );
+  return data;
+}
+
+export async function getFeedComments(
+  postId: string,
+  cursor?: string
+): Promise<FeedCommentListResponse> {
+  const { data } = await client.get<FeedCommentListResponse>(
+    `/api/feed/posts/${encodeURIComponent(postId)}/comments`,
+    { params: cursorParams(cursor) }
+  );
+  return {
+    comments: Array.isArray(data.comments) ? data.comments : [],
+    next_cursor: data.next_cursor ?? null,
+  };
+}
+
+export async function getFeedPopup(userId: string): Promise<FeedPopupResponse> {
+  const { data } = await client.get<FeedPopupResponse>(
+    `/api/feed/popup/${encodeURIComponent(userId)}`
+  );
+  return {
+    ...data,
+    travel_styles: Array.isArray(data.travel_styles) ? data.travel_styles : [],
+    feed: {
+      items: Array.isArray(data.feed?.items) ? data.feed.items : [],
+    },
+  };
+}
+
+export async function deleteFeedComment(
+  postId: string,
+  commentId: string
+): Promise<void> {
+  await client.delete(
+    `/api/feed/posts/${encodeURIComponent(postId)}/comments/${encodeURIComponent(commentId)}`
+  );
+}
+
+function getApiStatus(error: unknown): number | undefined {
+  const apiError = error as { status?: number; response?: { status?: number } };
+  return apiError.status || apiError.response?.status;
+}

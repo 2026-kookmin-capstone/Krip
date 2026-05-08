@@ -20,7 +20,7 @@ class TestFriendDetailFlow:
 
         # b 에 travel_style 2건 추가
         async with session_factory() as s:
-            s.add(UserTravelStyle(user_id=b, style=TravelStyle.FOOD))
+            s.add(UserTravelStyle(user_id=b, style=TravelStyle.FOOD_TOUR))
             s.add(UserTravelStyle(user_id=b, style=TravelStyle.ACTIVITY))
             await s.commit()
 
@@ -30,7 +30,7 @@ class TestFriendDetailFlow:
         # 공개 프로필만 노출
         assert result.user_id == b
         assert result.user_name == "user1"
-        assert set(result.travel_styles) == {TravelStyle.FOOD, TravelStyle.ACTIVITY}
+        assert set(result.travel_styles) == {TravelStyle.FOOD_TOUR, TravelStyle.ACTIVITY}
 
         # DTO 자체에 민감 필드가 없음을 확인 (auth_provider / status / email / phone_number)
         assert not hasattr(result, "email")

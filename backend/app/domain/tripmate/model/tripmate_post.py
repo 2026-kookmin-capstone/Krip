@@ -23,6 +23,9 @@ class CompanionType(str, enum.Enum):
 class TripmatePost(Base):
     """여행 메이트 모집 게시글"""
     __tablename__ = "tripmate_post"
+    # `eager_defaults=True` — server-eval `updated_at` 을 RETURNING 으로 즉시 ORM 반영.
+    # async 환경에서 lazy-load (MissingGreenlet) 회피 표준 패턴.
+    __mapper_args__ = {"eager_defaults": True}
 
     post_id = Column(String(50), primary_key=True, default=generate_tripmate_post_id)  # 게시글 고유 ID
     user_id = Column(String(50), ForeignKey("users.user_id", ondelete="CASCADE"), nullable=False)  # 작성자 ID

@@ -16,10 +16,22 @@ import {
   type TourPlacesParams,
   type UserProfile,
 } from "../../api/auth/auth";
+import NotificationBell from "../../components/NotificationBell";
 
 const DEFAULT_LOCATION = { lat: 37.5665, lng: 126.978 };
 const DEFAULT_LOCATION_LABEL = "Central Seoul";
+const DETECTING_LOCATION_LABEL = "Detecting your location";
 const CURRENT_LOCATION_LABEL = "Using your current location";
+const GEOLOCATION_OPTIONS: PositionOptions = {
+  enableHighAccuracy: true,
+  maximumAge: 60000,
+  timeout: 30000,
+};
+const GEOLOCATION_WATCH_OPTIONS: PositionOptions = {
+  enableHighAccuracy: true,
+  maximumAge: 60000,
+  timeout: 30000,
+};
 const SEARCH_SUGGESTION_LIMIT = 8;
 const ALL_CATEGORY = "All";
 const CATEGORY_GROUPS = {
@@ -34,6 +46,7 @@ const CATEGORY_GROUPS = {
 const SORT_FILTERS = ["Nearest", "Top Rated", "Most Reviewed", "Favorites"] as const;
 
 type SortFilter = (typeof SORT_FILTERS)[number];
+type LocationStatus = "detecting" | "ready" | "approximate" | "fallback";
 type PlaceCategory = string;
 type PlaceTag = "Indoor" | "Outdoor" | "Crowded" | "Quiet";
 
@@ -51,6 +64,7 @@ interface Place {
   reviewCount: number;
   rating?: number;
   rawDistanceMeters?: number;
+  hasCoordinates: boolean;
   address?: string;
   shortAddress?: string;
   phone?: string;
@@ -112,6 +126,21 @@ function formatPriceRange(
   return "No price information";
 }
 
+function formatCoordinate(value: number): string {
+  return Number.isFinite(value) ? value.toFixed(6) : "";
+}
+
+function formatAccuracy(value: number | null): string {
+  if (!Number.isFinite(value)) return "";
+
+  const meters = Number(value);
+  if (meters >= 1000) {
+    return `Accuracy ±${(meters / 1000).toFixed(1)}km`;
+  }
+
+  return `Accuracy ±${Math.round(meters)}m`;
+}
+
 function haversineDistance(
   from: { lat: number; lng: number },
   to: { lat: number; lng: number }
@@ -127,6 +156,69 @@ function haversineDistance(
     Math.cos(startLat) * Math.cos(endLat) * Math.sin(lngDelta / 2) ** 2;
 
   return earthRadiusKm * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function getPlaceDistanceKm(
+  place: Place,
+  currentLocation: { lat: number; lng: number }
+): number {
+  if (place.hasCoordinates) {
+    return haversineDistance(currentLocation, place.coords);
+  }
+
+  if (Number.isFinite(place.rawDistanceMeters) && Number(place.rawDistanceMeters) > 100) {
+    return Number(place.rawDistanceMeters) / 1000;
+  }
+
+  if (Number.isFinite(place.rawDistanceMeters)) {
+    return Number(place.rawDistanceMeters);
+  }
+
+  return Number.MAX_SAFE_INTEGER;
+}
+
+function getLocationErrorMessage(error?: GeolocationPositionError): string {
+  if (!error) {
+    return "This browser does not support location. Using the default Seoul location.";
+  }
+
+  if (error.code === error.PERMISSION_DENIED) {
+    return "Location permission is blocked. Allow location from the browser site settings.";
+  }
+
+  if (error.code === error.POSITION_UNAVAILABLE) {
+    return "Current location is unavailable. Check OS location services.";
+  }
+
+  if (error.code === error.TIMEOUT) {
+    return "Location request timed out. Tap Use my location to try again.";
+  }
+
+  return "Using the default Seoul location.";
+}
+
+async function getApproximateLocation(): Promise<{ lat: number; lng: number } | null> {
+  try {
+    const response = await fetch("https://ipapi.co/json/", {
+      cache: "no-store",
+    });
+    if (!response.ok) return null;
+
+    const data = (await response.json()) as {
+      latitude?: number | string;
+      longitude?: number | string;
+    };
+    const lat = Number(data.latitude);
+    const lng = Number(data.longitude);
+
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+      return null;
+    }
+
+    return { lat, lng };
+  } catch {
+    return null;
+  }
 }
 
 function sanitizeTags(value: unknown): PlaceTag[] {
@@ -183,8 +275,53 @@ function toNumber(value: unknown, fallback: number): number {
   return Number.isFinite(parsed) ? parsed : fallback;
 }
 
-function mapTourPlace(item: TourPlaceApiItem): Place {
+function getPlaceCoordinates(item: TourPlaceApiItem): {
+  lat: number;
+  lng: number;
+  hasCoordinates: boolean;
+} {
   const location = item.location || {};
+  const coordinates = item.coordinates;
+  const arrayCoordinates = Array.isArray(coordinates) ? coordinates : [];
+  const objectCoordinates =
+    coordinates && !Array.isArray(coordinates) && typeof coordinates === "object"
+      ? coordinates
+      : {};
+  const lat = Number(
+    item.latitude ??
+      item.lat ??
+      location.latitude ??
+      location.lat ??
+      location.y ??
+      objectCoordinates.latitude ??
+      objectCoordinates.lat ??
+      objectCoordinates.y ??
+      arrayCoordinates[1]
+  );
+  const lng = Number(
+    item.longitude ??
+      item.lng ??
+      location.longitude ??
+      location.lng ??
+      location.lon ??
+      location.x ??
+      objectCoordinates.longitude ??
+      objectCoordinates.lng ??
+      objectCoordinates.lon ??
+      objectCoordinates.x ??
+      arrayCoordinates[0]
+  );
+  const hasCoordinates = Number.isFinite(lat) && Number.isFinite(lng);
+
+  return {
+    lat: hasCoordinates ? lat : DEFAULT_LOCATION.lat,
+    lng: hasCoordinates ? lng : DEFAULT_LOCATION.lng,
+    hasCoordinates,
+  };
+}
+
+function mapTourPlace(item: TourPlaceApiItem): Place {
+  const coordinates = getPlaceCoordinates(item);
   const description =
     item.description ||
     item.review_summary ||
@@ -210,6 +347,7 @@ function mapTourPlace(item: TourPlaceApiItem): Place {
     ),
     rating: Number.isFinite(Number(item.rating)) ? Number(item.rating) : undefined,
     rawDistanceMeters: toNumber(item.distance, Number.NaN),
+    hasCoordinates: coordinates.hasCoordinates,
     address: item.address ? String(item.address) : undefined,
     shortAddress: item.short_address ? String(item.short_address) : undefined,
     phone: item.phone ? String(item.phone) : undefined,
@@ -257,8 +395,8 @@ function mapTourPlace(item: TourPlaceApiItem): Place {
         }))
       : [],
     coords: {
-      lat: toNumber(item.latitude ?? item.lat ?? location.lat, DEFAULT_LOCATION.lat),
-      lng: toNumber(item.longitude ?? item.lng ?? location.lng, DEFAULT_LOCATION.lng),
+      lat: coordinates.lat,
+      lng: coordinates.lng,
     },
     thumbnail: {
       colors: ["#e9e9e9", "#d9d9d9"],
@@ -307,6 +445,10 @@ export default function HomePage() {
   const [placesError, setPlacesError] = useState("");
   const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [currentLocation, setCurrentLocation] = useState(DEFAULT_LOCATION);
+  const [locationAccuracy, setLocationAccuracy] = useState<number | null>(null);
+  const [locationStatus, setLocationStatus] = useState<LocationStatus>("detecting");
+  const [locationError, setLocationError] = useState("");
+  const hasGpsLocationRef = useRef(false);
 
   useEffect(() => {
     getMyProfile()
@@ -333,44 +475,115 @@ export default function HomePage() {
       });
   }, [navigate]);
 
-  useEffect(() => {
-    if (!navigator.geolocation) {
+  function applyCurrentPosition(coords: GeolocationCoordinates): void {
+    hasGpsLocationRef.current = true;
+    setCurrentLocation({
+      lat: coords.latitude,
+      lng: coords.longitude,
+    });
+    setLocationAccuracy(coords.accuracy);
+    setLocationLabel(CURRENT_LOCATION_LABEL);
+    setLocationStatus("ready");
+    setLocationError("");
+  }
+
+  async function applyApproximateLocationFallback(
+    error?: GeolocationPositionError
+  ): Promise<void> {
+    if (hasGpsLocationRef.current) {
+      return;
+    }
+
+    const approximateLocation = await getApproximateLocation();
+    if (hasGpsLocationRef.current) {
+      return;
+    }
+
+    if (approximateLocation) {
+      setCurrentLocation(approximateLocation);
+      setLocationAccuracy(null);
+      setLocationLabel("Using approximate location");
+      setLocationStatus("approximate");
+      setLocationError(
+        "GPS was unavailable, so nearby places are sorted from an approximate network location."
+      );
+      return;
+    }
+
+    setLocationLabel(DEFAULT_LOCATION_LABEL);
+    setLocationAccuracy(null);
+    setLocationStatus("fallback");
+    setLocationError(getLocationErrorMessage(error));
+  }
+
+  function handleLocationError(error?: GeolocationPositionError): void {
+    if (hasGpsLocationRef.current) {
+      return;
+    }
+
+    void applyApproximateLocationFallback(error);
+  }
+
+  function requestCurrentLocation(): void {
+    if (!window.isSecureContext) {
       setLocationLabel(DEFAULT_LOCATION_LABEL);
+      setLocationStatus("fallback");
+      setLocationError("Location only works on HTTPS. Open the deployed HTTPS site.");
+      return;
+    }
+
+    if (!navigator.geolocation) {
+      handleLocationError();
+      return;
+    }
+
+    setLocationLabel(DETECTING_LOCATION_LABEL);
+    setLocationStatus("detecting");
+    setLocationError("");
+
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => applyCurrentPosition(coords),
+      handleLocationError,
+      GEOLOCATION_OPTIONS
+    );
+  }
+
+  useEffect(() => {
+    if (navigator.permissions?.query) {
+      navigator.permissions
+        .query({ name: "geolocation" as PermissionName })
+        .then((permissionStatus) => {
+          if (permissionStatus.state === "denied") {
+            setLocationLabel(DEFAULT_LOCATION_LABEL);
+            setLocationStatus("fallback");
+            setLocationError(
+              "Location permission is blocked. Allow location from the browser site settings."
+            );
+          }
+
+          permissionStatus.onchange = () => {
+            if (permissionStatus.state !== "denied") {
+              requestCurrentLocation();
+            }
+          };
+        })
+        .catch(() => {
+          // Some browsers do not expose geolocation permission state.
+        });
+    }
+
+    requestCurrentLocation();
+
+    if (!navigator.geolocation) {
       return undefined;
     }
 
-    const applyPosition = ({ coords }: GeolocationPosition): void => {
-      setCurrentLocation({
-        lat: coords.latitude,
-        lng: coords.longitude,
-      });
-      setLocationLabel(CURRENT_LOCATION_LABEL);
-    };
-
-    const handlePositionError = (): void => {
-      setLocationLabel(DEFAULT_LOCATION_LABEL);
-    };
-
-    navigator.geolocation.getCurrentPosition(
-      applyPosition,
-      handlePositionError,
-      {
-        enableHighAccuracy: true,
-        maximumAge: 0,
-        timeout: 15000,
-      }
-    );
-
     const watchId = navigator.geolocation.watchPosition(
       ({ coords }) => {
-        applyPosition({ coords } as GeolocationPosition);
+        applyCurrentPosition(coords);
       },
-      handlePositionError,
-      {
-        enableHighAccuracy: true,
-        maximumAge: 0,
-        timeout: 15000,
-      }
+      handleLocationError,
+      GEOLOCATION_WATCH_OPTIONS
     );
 
     return () => navigator.geolocation.clearWatch(watchId);
@@ -420,6 +633,8 @@ export default function HomePage() {
   }
 
   useEffect(() => {
+    if (locationStatus === "detecting") return;
+
     setIsFetchingMore(false);
     setNextCursor(null);
 
@@ -430,7 +645,7 @@ export default function HomePage() {
         setPlacesError(message);
         setPlacesSource([]);
       });
-  }, [currentLocation.lat, currentLocation.lng, searchInput]);
+  }, [currentLocation.lat, currentLocation.lng, locationStatus, searchInput]);
 
   useEffect(() => {
     fetchFavoritePlaces().catch((error) => {
@@ -468,7 +683,7 @@ export default function HomePage() {
         ...place,
         favoriteId: place.favoriteId || favoriteIdByPlaceId.get(place.id),
         isFavorite: place.initialIsFavorite || favoriteIds.has(place.id),
-        distanceKm: haversineDistance(currentLocation, place.coords),
+        distanceKm: getPlaceDistanceKm(place, currentLocation),
       })),
     [currentLocation, favoriteIdByPlaceId, favoriteIds, placesSource]
   );
@@ -478,7 +693,7 @@ export default function HomePage() {
       favoritePlaces.map((place) => ({
         ...place,
         isFavorite: true,
-        distanceKm: haversineDistance(currentLocation, place.coords),
+        distanceKm: getPlaceDistanceKm(place, currentLocation),
       })),
     [currentLocation, favoritePlaces]
   );
@@ -704,6 +919,14 @@ export default function HomePage() {
     );
   }
 
+  const locationCoordinatesText = `${formatCoordinate(currentLocation.lat)}, ${formatCoordinate(
+    currentLocation.lng
+  )}`;
+  const locationAccuracyText = formatAccuracy(locationAccuracy);
+  const locationDetailText = locationAccuracyText
+    ? `${locationCoordinatesText} · ${locationAccuracyText}`
+    : locationCoordinatesText;
+
   return (
     <div style={styles.page}>
       <div style={styles.shell}>
@@ -715,9 +938,12 @@ export default function HomePage() {
               Nearby places curated for {user.user_name}.
             </p>
           </div>
-          <button style={styles.logoutButton} onClick={handleLogout}>
-            Log Out
-          </button>
+          <div style={styles.headerActions}>
+            <NotificationBell />
+            <button style={styles.logoutButton} onClick={handleLogout}>
+              Log Out
+            </button>
+          </div>
         </header>
 
         <section style={styles.searchPanel}>
@@ -748,9 +974,22 @@ export default function HomePage() {
 
           <div style={styles.locationBar}>
             <span style={styles.locationBadge}>{locationLabel}</span>
+            <button
+              type="button"
+              style={styles.locationButton}
+              onClick={requestCurrentLocation}
+            >
+              Use my location
+            </button>
             <span style={styles.locationHint}>
-              Viewing {filteredPlaces.length} places sorted by {activeSort.toLowerCase()}
+              {locationError ||
+                `Viewing ${filteredPlaces.length} places sorted by ${activeSort.toLowerCase()} near ${locationDetailText}`}
             </span>
+            {locationError ? (
+              <span style={styles.locationHint}>
+                Current basis: {locationDetailText}
+              </span>
+            ) : null}
           </div>
         </section>
 
@@ -855,7 +1094,9 @@ export default function HomePage() {
           ) : (
             <div style={styles.emptyState}>
               <p style={styles.emptyTitle}>
-                {placesError ||
+                {locationStatus === "detecting"
+                  ? "Finding places near you..."
+                  : placesError ||
                   (activeSort === "Favorites"
                     ? "No favorite places yet."
                     : "No places available yet.")}
@@ -1117,6 +1358,7 @@ export default function HomePage() {
           </div>
         </div>
       ) : null}
+
     </div>
   );
 }
@@ -1253,6 +1495,42 @@ const styles: Record<string, CSSProperties> = {
     lineHeight: 1.5,
     color: "var(--neutral-700)",
   },
+  headerActions: {
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    flexShrink: 0,
+  },
+  notificationButton: {
+    position: "relative",
+    width: 48,
+    height: 48,
+    border: "1px solid rgba(5,181,187,0.18)",
+    borderRadius: "50%",
+    display: "grid",
+    placeItems: "center",
+    background: "rgba(255,255,255,0.94)",
+    color: "var(--brand-primary-deep)",
+    boxShadow: "var(--shadow-soft)",
+    cursor: "pointer",
+  },
+  notificationBadge: {
+    position: "absolute",
+    top: -4,
+    right: -4,
+    minWidth: 20,
+    height: 20,
+    padding: "0 6px",
+    borderRadius: 999,
+    display: "grid",
+    placeItems: "center",
+    background: "#ef4444",
+    color: "#ffffff",
+    border: "2px solid rgba(255,255,255,0.96)",
+    fontSize: "0.64rem",
+    fontWeight: 900,
+    lineHeight: 1,
+  },
   logoutButton: {
     border: "1px solid rgba(248,180,0,0.22)",
     borderRadius: 999,
@@ -1325,6 +1603,16 @@ const styles: Record<string, CSSProperties> = {
     color: "var(--brand-primary-deep)",
     fontSize: "0.82rem",
     fontWeight: 700,
+  },
+  locationButton: {
+    border: "1px solid rgba(5,181,187,0.2)",
+    borderRadius: 999,
+    padding: "8px 12px",
+    background: "rgba(255,255,255,0.92)",
+    color: "var(--brand-primary-deep)",
+    fontSize: "0.82rem",
+    fontWeight: 800,
+    cursor: "pointer",
   },
   locationHint: {
     color: "var(--neutral-700)",
@@ -1694,6 +1982,141 @@ const styles: Record<string, CSSProperties> = {
     fontWeight: 800,
     fontSize: "1rem",
     cursor: "pointer",
+  },
+  notificationOverlay: {
+    position: "fixed",
+    inset: 0,
+    zIndex: 90,
+    background: "rgba(24,26,32,0.26)",
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  notificationPanel: {
+    width: "min(390px, 92vw)",
+    height: "100dvh",
+    padding: "22px 18px 28px",
+    background: "rgba(255,255,255,0.98)",
+    boxShadow: "-24px 0 54px rgba(24,26,32,0.18)",
+    borderLeft: "1px solid var(--border-soft)",
+    display: "flex",
+    flexDirection: "column",
+    gap: 16,
+    animation: "slideInFromRight 260ms cubic-bezier(0.22, 1, 0.36, 1)",
+  },
+  notificationHeader: {
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    gap: 14,
+  },
+  notificationTitle: {
+    margin: "4px 0 0",
+    color: "var(--text-primary)",
+    fontSize: "1.45rem",
+    lineHeight: 1.1,
+  },
+  notificationCloseButton: {
+    width: 38,
+    height: 38,
+    border: "1px solid rgba(5,181,187,0.16)",
+    borderRadius: "50%",
+    background: "rgba(255,255,255,0.9)",
+    color: "var(--text-secondary)",
+    fontWeight: 900,
+    cursor: "pointer",
+  },
+  notificationTabs: {
+    display: "grid",
+    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+    gap: 8,
+    padding: 6,
+    borderRadius: 18,
+    background: "var(--surface-muted)",
+  },
+  notificationTab: {
+    minHeight: 42,
+    border: "none",
+    borderRadius: 14,
+    background: "transparent",
+    color: "var(--neutral-700)",
+    fontWeight: 900,
+    cursor: "pointer",
+  },
+  notificationTabActive: {
+    background: "#ffffff",
+    color: "var(--text-primary)",
+    boxShadow: "0 8px 20px rgba(24,26,32,0.08)",
+  },
+  notificationTabBadge: {
+    display: "inline-grid",
+    placeItems: "center",
+    minWidth: 18,
+    height: 18,
+    marginLeft: 6,
+    padding: "0 5px",
+    borderRadius: 999,
+    background: "var(--brand-secondary)",
+    color: "var(--text-primary)",
+    fontSize: "0.68rem",
+  },
+  notificationList: {
+    minHeight: 0,
+    overflowY: "auto",
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+    paddingRight: 2,
+  },
+  notificationItem: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    gap: 12,
+    padding: 12,
+    border: "1px solid var(--border-soft)",
+    borderRadius: 18,
+    background: "rgba(255,255,255,0.9)",
+    color: "var(--text-primary)",
+    textAlign: "left",
+    cursor: "pointer",
+  },
+  notificationItemIcon: {
+    width: 42,
+    height: 42,
+    borderRadius: "50%",
+    display: "grid",
+    placeItems: "center",
+    flexShrink: 0,
+    background: "rgba(248,180,0,0.18)",
+    color: "var(--text-primary)",
+    fontWeight: 900,
+  },
+  notificationAvatar: {
+    width: 42,
+    height: 42,
+    borderRadius: "50%",
+    objectFit: "cover",
+    flexShrink: 0,
+  },
+  notificationItemText: {
+    minWidth: 0,
+    display: "flex",
+    flexDirection: "column",
+    gap: 3,
+    color: "var(--neutral-700)",
+    fontSize: "0.82rem",
+  },
+  notificationEmpty: {
+    minHeight: 180,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+    padding: 22,
+    borderRadius: 20,
+    background: "var(--surface-muted)",
+    textAlign: "center",
   },
   searchSheet: {
     width: "100%",

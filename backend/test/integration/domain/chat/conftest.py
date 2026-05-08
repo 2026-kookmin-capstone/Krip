@@ -143,10 +143,20 @@ def chat_fanout_stub() -> MagicMock:
 
 
 @pytest.fixture
-def message_service(uow, chat_fanout_stub, patch_external_clients) -> MessageService:
+def chat_fcm_stub() -> MagicMock:
+    """FCM 발송은 fire-and-forget — 본 비즈 테스트는 push 호출 여부와 무관."""
+    mock = MagicMock(name="chat-fcm")
+    mock.send_chat_push = AsyncMock(return_value=0)
+    mock.register_token = AsyncMock()
+    mock.unregister_token = AsyncMock()
+    return mock
+
+
+@pytest.fixture
+def message_service(uow, chat_fanout_stub, chat_fcm_stub, patch_external_clients) -> MessageService:
     """공유 서비스 인스턴스. 동시 호출 테스트에서는 task 별 신규 인스턴스를 만들어야
     한다 (``@transactional`` 이 ``self._session`` 을 변경하므로 인스턴스 공유 시 race)."""
-    return MessageService(uow=uow, fanout_service=chat_fanout_stub)
+    return MessageService(uow=uow, fanout_service=chat_fanout_stub, fcm_service=chat_fcm_stub)
 
 
 @pytest.fixture

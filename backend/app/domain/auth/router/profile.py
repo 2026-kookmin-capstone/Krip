@@ -8,7 +8,12 @@ from app.domain.auth.service.exception import (
     ProfileImageAlreadyExistsError,
     ProfileImageNotFoundError,
 )
-from app.domain.auth.schema.profile import ProfileResponse, ProfileImageResponse
+from app.domain.auth.schema.profile import (
+    ProfileResponse,
+    ProfileImageResponse,
+    OtherUserProfileResponse,
+    OtherUserProfileListResponse,
+)
 from app.core.logger import get_logger
 from app.container import Container
 
@@ -68,6 +73,32 @@ async def get_my_profile(
         travel_styles=profile.travel_styles,
         nationality=profile.nationality,
         profile_image_url=profile.profile_image_url,
+        notification_muted=profile.notification_muted,
+    )
+
+
+@router.get("/all")
+@inject
+async def get_all_other_users(
+    request: Request,
+    profile_service: ProfileService = Depends(Provide[Container.profile_service]),
+) -> OtherUserProfileListResponse:
+    """본인을 제외한 ACTIVE 유저 전체 목록"""
+    user_id: str = request.state.user_id
+
+    profiles = await profile_service.get_all_other_users(user_id)
+
+    return OtherUserProfileListResponse(
+        users=[
+            OtherUserProfileResponse(
+                user_id=p.user_id,
+                user_name=p.user_name,
+                nationality=p.nationality,
+                travel_styles=p.travel_styles,
+                profile_image_url=p.profile_image_url,
+            )
+            for p in profiles
+        ]
     )
 
 

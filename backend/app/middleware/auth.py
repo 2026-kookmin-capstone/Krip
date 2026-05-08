@@ -31,6 +31,7 @@ class BearerTokenMiddleware(BaseHTTPMiddleware):
     # 인증을 건너뛸 경로 prefix
     EXCLUDE_PREFIXES: Sequence[str] = (
         "/api/auth/login",
+        "/api/public",  # 외부 사용자 공개 endpoint (share 토큰 등)
     )
 
 
@@ -107,6 +108,7 @@ class LoginCookieMiddleware(BaseHTTPMiddleware):
     # 쿠키 검증을 건너뛸 경로 prefix
     EXCLUDE_PREFIXES: Sequence[str] = (
         "/api/auth/login",
+        "/api/public",  # 외부 사용자 공개 endpoint (share 토큰 등)
     )
 
 
@@ -172,11 +174,21 @@ class LoginCookieMiddleware(BaseHTTPMiddleware):
         return await call_next(request)
 
 
-class RegisterCheckMiddleware(BaseHTTPMiddleware):
-    """2차 회원가입 완료 여부 검증 미들웨어
+WITHDRAWAL_PENDING_STATUS_CODE = 419  # 비표준: "회원이 탈퇴 처리 중" 신호용 커스텀 코드
 
-    user_id로 2차 회원가입 완료 여부를 확인한다.
-    Redis 캐시를 우선 조회하고, 캐시 미스 시 DB를 조회하여 결과를 캐싱한다.
+
+class RegisterCheckMiddleware(BaseHTTPMiddleware):
+    """2차 회원가입 완료 + 활성 상태 검증 미들웨어
+
+    user_id 기준으로 다음을 검증:
+        - 유저 존재 → 401
+        - status == INACTIVE (탈퇴 유예 중) → 419 (커스텀)
+        - 2차 회원가입 미완료 → 403
+        - 그 외 정상 → REGISTERED 플래그 캐싱 후 통과
+
+    Redis 캐시(`REGISTERED:{uid}`) 는 "ACTIVE & 2차 회원가입 완료" 의 양성 결과만 저장한다.
+    탈퇴 요청 시 `WithdrawService` 가 같은 키를 invalidate 하므로, INACTIVE 전환 직후
+    다음 보호 경로 요청에서 DB 재조회 → 419 응답으로 자연스럽게 전환된다.
     """
 
     REDIS_KEY_PREFIX = KeyCategory.REGISTERED
@@ -190,12 +202,13 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
         "/openapi.json",
     )
 
-    # 검증을 건너뛸 경로 prefix (로그인, 회원가입, 로그아웃, 탈퇴)
+    # 검증을 건너뛸 경로 prefix (로그인, 회원가입, 로그아웃, 탈퇴, 공개 endpoint)
     EXCLUDE_PREFIXES: Sequence[str] = (
         "/api/auth/login",
         "/api/auth/register",
         "/api/auth/logout",
         "/api/auth/withdraw",
+        "/api/public",  # 외부 사용자 공개 endpoint (share 토큰 등)
     )
 
 
@@ -256,6 +269,19 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
                 content={"detail": "존재하지 않는 유저입니다."},
             )
 
+        # 탈퇴 유예 중인 유저 — detail 존재 여부와 무관하게 즉시 차단.
+        # 419 는 비표준이지만 "회원이 탈퇴 처리 중" 시그널로 프론트가 분기.
+        from app.domain.auth.model.user import UserStatus
+        if user.status == UserStatus.INACTIVE:
+            reg_logger.warning("탈퇴 유예 중 유저 접근 차단")
+            return JSONResponse(
+                status_code=WITHDRAWAL_PENDING_STATUS_CODE,
+                content={
+                    "detail": "회원 탈퇴가 진행 중입니다. 30일 유예 기간 종료 후 영구 삭제됩니다.",
+                    "status": "withdrawal_pending",
+                },
+            )
+
         if user.detail is None:
             reg_logger.warning("2차 회원가입 미완료")
             return JSONResponse(
@@ -263,7 +289,7 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
                 content={"detail": "2차 회원가입이 필요합니다."},
             )
 
-        # 3. Redis 캐시 저장
+        # 3. Redis 캐시 저장 — ACTIVE & 2차 가입 완료된 양성 결과만 캐싱
         await cache.set_flag(cache_key, self.CACHE_TTL)
 
         return await call_next(request)

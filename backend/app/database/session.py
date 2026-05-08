@@ -55,13 +55,16 @@ from typing import Optional
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 from beanie import init_beanie
 
-from app.config.setting import settings
 from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
 from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHistory
 from app.domain.tripmate.model.tripmate_image import TripmateImage
 from app.domain.tour.model.place import Place
 from app.domain.tour.model.tour_search_history import TourSearchHistory
+from app.domain.friend.model.search_history import FriendSearchHistory
 from app.domain.chat.model.chat_message import create_indexes as create_chat_message_indexes
+from app.domain.auth.model.withdrawal_request import WithdrawalRequest
+from app.domain.notification.model.inbox import InboxItem
+from app.config.setting import settings
 
 
 class MongoDB:
@@ -83,11 +86,14 @@ class MongoDB:
         await init_beanie(
             database=self.database,
             document_models=[
+                WithdrawalRequest,
                 TripmatePostDraft,
                 TripmateSearchHistory,
                 TripmateImage,
                 Place,
                 TourSearchHistory,
+                FriendSearchHistory,
+                InboxItem,
             ]
         )
 

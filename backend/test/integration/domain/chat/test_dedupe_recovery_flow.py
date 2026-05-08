@@ -25,7 +25,7 @@ pytestmark = pytest.mark.integration
 
 class TestDedupeRecoveryAfterMongoFailure:
     async def test_dedupe_key_cleared_after_mongo_connection_failure(
-        self, session_factory, direct_room, chat_fanout_stub, redis_dedupe,
+        self, session_factory, direct_room, chat_fanout_stub, chat_fcm_stub, redis_dedupe,
     ):
         """Mongo insert 가 ConnectionFailure → 실 Redis dedupe 키가 삭제됨.
 
@@ -40,7 +40,7 @@ class TestDedupeRecoveryAfterMongoFailure:
             new=AsyncMock(side_effect=ConnectionFailure("simulated network down")),
         ):
             uow = UnitOfWork(session=session_factory)
-            svc = MessageService(uow=uow, fanout_service=chat_fanout_stub)
+            svc = MessageService(uow=uow, fanout_service=chat_fanout_stub, fcm_service=chat_fcm_stub)
             with pytest.raises(ConnectionFailure):
                 await svc.send_message(
                     sender_user_id=user_a,
@@ -58,7 +58,7 @@ class TestDedupeRecoveryAfterMongoFailure:
         )
 
     async def test_retry_with_same_client_msg_id_succeeds_after_recovery(
-        self, session_factory, direct_room, chat_fanout_stub,
+        self, session_factory, direct_room, chat_fanout_stub, chat_fcm_stub,
         redis_dedupe, mongo_db,
     ):
         """장애 중 실패 → 장애 복구 후 같은 client_msg_id 로 재시도 → 정상 송신.
@@ -75,7 +75,7 @@ class TestDedupeRecoveryAfterMongoFailure:
             new=AsyncMock(side_effect=ConnectionFailure("transient")),
         ):
             uow1 = UnitOfWork(session=session_factory)
-            svc1 = MessageService(uow=uow1, fanout_service=chat_fanout_stub)
+            svc1 = MessageService(uow=uow1, fanout_service=chat_fanout_stub, fcm_service=chat_fcm_stub)
             with pytest.raises(ConnectionFailure):
                 await svc1.send_message(
                     sender_user_id=user_a,
@@ -88,7 +88,7 @@ class TestDedupeRecoveryAfterMongoFailure:
 
         # 2차 — Mongo 정상 복구. 같은 cmid 로 재시도 → 통과해야 함
         uow2 = UnitOfWork(session=session_factory)
-        svc2 = MessageService(uow=uow2, fanout_service=chat_fanout_stub)
+        svc2 = MessageService(uow=uow2, fanout_service=chat_fanout_stub, fcm_service=chat_fcm_stub)
         ack = await svc2.send_message(
             sender_user_id=user_a,
             sender_session_id="WS_A",
@@ -111,7 +111,7 @@ class TestDedupeRecoveryAfterMongoFailure:
         assert docs[0]["sender_id"] == user_a
 
     async def test_happy_path_dedupe_persists_to_block_resend(
-        self, session_factory, direct_room, chat_fanout_stub, redis_dedupe,
+        self, session_factory, direct_room, chat_fanout_stub, chat_fcm_stub, redis_dedupe,
     ):
         """정상 송신 후 dedupe 는 TTL 동안 유지 — 같은 cmid 재전송 거절 확인.
 
@@ -122,7 +122,7 @@ class TestDedupeRecoveryAfterMongoFailure:
         cmid = "cm-happy-block"
 
         uow1 = UnitOfWork(session=session_factory)
-        svc1 = MessageService(uow=uow1, fanout_service=chat_fanout_stub)
+        svc1 = MessageService(uow=uow1, fanout_service=chat_fanout_stub, fcm_service=chat_fcm_stub)
         ack = await svc1.send_message(
             sender_user_id=user_a,
             sender_session_id="WS_A",
@@ -141,7 +141,7 @@ class TestDedupeRecoveryAfterMongoFailure:
 
         # 같은 cmid 재전송은 ValueError ("이미 처리된 메시지")
         uow2 = UnitOfWork(session=session_factory)
-        svc2 = MessageService(uow=uow2, fanout_service=chat_fanout_stub)
+        svc2 = MessageService(uow=uow2, fanout_service=chat_fanout_stub, fcm_service=chat_fcm_stub)
         with pytest.raises(ValueError, match="이미 처리된"):
             await svc2.send_message(
                 sender_user_id=user_a,

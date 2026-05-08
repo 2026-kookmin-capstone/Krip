@@ -23,7 +23,24 @@ import {
 import { uploadImages } from "../../api/image";
 import { getMyProfile } from "../../api/auth";
 import { createDirectChatRoom } from "../../api/chat";
-import { getFriendDetail, sendFriendRequest, type FriendshipStatus } from "../../api/friend";
+import {
+  deleteFriendSearchHistoryAll,
+  deleteFriendSearchHistoryOne,
+  getFriendDetail,
+  getFriendSearchHistory,
+  searchFriendUsers,
+  sendFriendRequest,
+  type FriendSearchUser,
+  type FriendshipStatus,
+} from "../../api/friend";
+import { getRecommendationCandidates } from "../../api/recommendation";
+import {
+  recommendTravelers,
+  type RecommendationCandidate,
+  type RecommendedTraveler,
+} from "../../utils/mateRecommendation";
+import NotificationBell from "../../components/NotificationBell";
+import FeedPopup from "../../components/FeedPopup";
 
 const COMPANION_FILTERS = ["all", "sole", "friend", "couple", "family"] as const;
 const COMPANION_OPTIONS: CompanionType[] = ["friend", "family", "couple", "sole"];
@@ -42,6 +59,8 @@ const GENDER_LABELS: Record<PreferredGender, string> = {
   male: "Male",
   female: "Female",
 };
+
+const DEFAULT_PROFILE_IMAGE_URL = "/default-profile.svg";
 
 const EMPTY_FORM = {
   title: "",
@@ -69,24 +88,45 @@ export default function MatePage() {
   const draftTimer = useRef<ReturnType<typeof setInterval> | null>(null);
   const draftFormRef = useRef(EMPTY_FORM);
   const draftImageUrlsRef = useRef<string[]>([]);
+  const suggestionRequestIdRef = useRef(0);
 
   const [tab, setTab] = useState<Tab>("list");
   const [posts, setPosts] = useState<TripMatePost[]>([]);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [userResults, setUserResults] = useState<FriendSearchUser[]>([]);
+  const [userNextCursor, setUserNextCursor] = useState<string | null>(null);
+  const [userSearchLoading, setUserSearchLoading] = useState(false);
+  const [userSearchError, setUserSearchError] = useState("");
   const [filter, setFilter] = useState<CompanionType | "all">("all");
+  const [currentRecommendationProfile, setCurrentRecommendationProfile] = useState<{
+    user_id?: string | null;
+    travel_styles?: string[];
+    nationality?: string;
+  }>({});
+  const [recommendationCandidates, setRecommendationCandidates] = useState<
+    RecommendationCandidate[]
+  >([]);
 
   const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
+  const [suggestedUsers, setSuggestedUsers] = useState<FriendSearchUser[]>([]);
+  const [suggestionLoading, setSuggestionLoading] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
 
   const [selectedPost, setSelectedPost] = useState<TripMatePost | null>(null);
+  const [selectedRecommendedTraveler, setSelectedRecommendedTraveler] =
+    useState<RecommendedTraveler | null>(null);
   const [friendRequested, setFriendRequested] = useState<Set<string>>(new Set());
+  const [recommendedFriendRequested, setRecommendedFriendRequested] = useState<
+    Set<string>
+  >(new Set());
   const [friendStates, setFriendStates] = useState<Record<string, MateFriendState>>({});
   const [friendRequestingUserId, setFriendRequestingUserId] = useState<string | null>(null);
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
+  const [feedPopupUserId, setFeedPopupUserId] = useState<string | null>(null);
   const [chatOpeningPostId, setChatOpeningPostId] = useState<string | null>(null);
 
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
@@ -108,8 +148,16 @@ export default function MatePage() {
 
   async function loadSearchHistory(): Promise<void> {
     try {
-      const response = await getSearchHistory();
-      setSearchHistory(response.histories.map((item) => item.search_name));
+      const [postHistory, userHistory] = await Promise.all([
+        getSearchHistory(),
+        getFriendSearchHistory(),
+      ]);
+      setSearchHistory(
+        dedupeSearchHistory([
+          ...postHistory.histories.map((item) => item.search_name),
+          ...userHistory.histories.map((item) => item.search_name),
+        ])
+      );
     } catch {
       setSearchHistory([]);
     }
@@ -139,9 +187,84 @@ export default function MatePage() {
     }
   }
 
+  async function fetchUsers(keyword: string, cursor?: string): Promise<void> {
+    const nextKeyword = keyword.trim();
+    if (!nextKeyword) {
+      setUserResults([]);
+      setUserNextCursor(null);
+      setUserSearchError("");
+      return;
+    }
+
+    setUserSearchLoading(true);
+    setUserSearchError("");
+
+    try {
+      const response = await searchFriendUsers(nextKeyword, cursor);
+      setUserResults((current) =>
+        cursor ? [...current, ...response.items] : response.items
+      );
+      setUserNextCursor(response.next_cursor);
+    } catch (error) {
+      setUserSearchError(
+        error instanceof Error ? error.message : "Failed to search users."
+      );
+      if (!cursor) {
+        setUserResults([]);
+        setUserNextCursor(null);
+      }
+    } finally {
+      setUserSearchLoading(false);
+    }
+  }
+
   useEffect(() => {
     void fetchPosts();
   }, [searchQuery]);
+
+  useEffect(() => {
+    if (!searchQuery) {
+      setUserResults([]);
+      setUserNextCursor(null);
+      setUserSearchError("");
+      return;
+    }
+
+    void fetchUsers(searchQuery);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    const keyword = searchInput.trim();
+    if (!showHistory || !keyword) {
+      setSuggestedUsers([]);
+      setSuggestionLoading(false);
+      return undefined;
+    }
+
+    const requestId = suggestionRequestIdRef.current + 1;
+    suggestionRequestIdRef.current = requestId;
+    setSuggestionLoading(true);
+
+    const timerId = window.setTimeout(() => {
+      searchFriendUsers(keyword)
+        .then((response) => {
+          if (suggestionRequestIdRef.current !== requestId) return;
+          setSuggestedUsers(response.items.slice(0, 5));
+        })
+        .catch(() => {
+          if (suggestionRequestIdRef.current !== requestId) return;
+          setSuggestedUsers([]);
+        })
+        .finally(() => {
+          if (suggestionRequestIdRef.current !== requestId) return;
+          setSuggestionLoading(false);
+        });
+    }, 250);
+
+    return () => {
+      window.clearTimeout(timerId);
+    };
+  }, [searchInput, showHistory]);
 
   useEffect(() => {
     if (!selectedPost || selectedPost.user_id === currentUserId || friendStates[selectedPost.user_id]) {
@@ -167,10 +290,27 @@ export default function MatePage() {
   useEffect(() => {
     void loadSearchHistory();
     getMyProfile()
-      .then((profile) => setCurrentUserId(profile?.user_id ?? null))
+      .then((profile) => {
+        setCurrentUserId(profile?.user_id ?? null);
+        setCurrentRecommendationProfile({
+          user_id: profile?.user_id ?? null,
+          travel_styles: profile?.travel_styles ?? [],
+          nationality: profile?.nationality,
+        });
+      })
       .catch((error) => {
         console.warn("Failed to load /api/auth/profile/me", error);
         setCurrentUserId(null);
+        setCurrentRecommendationProfile({});
+      });
+  }, []);
+
+  useEffect(() => {
+    getRecommendationCandidates()
+      .then((response) => setRecommendationCandidates(response.items ?? []))
+      .catch((error) => {
+        console.warn("Failed to load recommendation candidates", error);
+        setRecommendationCandidates([]);
       });
   }, []);
 
@@ -222,6 +362,22 @@ export default function MatePage() {
     [filter, posts]
   );
 
+  const visibleSearchHistory = useMemo(() => {
+    const keyword = searchInput.trim().toLowerCase();
+    if (!keyword) return searchHistory;
+
+    return searchHistory.filter((item) => item.toLowerCase().includes(keyword));
+  }, [searchHistory, searchInput]);
+
+  const hasSearchSuggestions =
+    showHistory &&
+    (suggestionLoading || suggestedUsers.length > 0 || visibleSearchHistory.length > 0);
+
+  const mateRecommendations = useMemo(
+    () => recommendTravelers(currentRecommendationProfile, recommendationCandidates, 10),
+    [currentRecommendationProfile, recommendationCandidates]
+  );
+
   function resetEditor(): void {
     setEditingPostId(null);
     setForm(EMPTY_FORM);
@@ -248,12 +404,20 @@ export default function MatePage() {
   }
 
   async function handleDeleteSearchHistory(term: string): Promise<void> {
-    await deleteSearchHistoryOne(term);
+    await Promise.allSettled([
+      deleteSearchHistoryOne(term),
+      deleteFriendSearchHistoryOne(term),
+    ]);
     setSearchHistory((current) => current.filter((item) => item !== term));
+    setShowHistory(true);
+    searchRef.current?.focus();
   }
 
   async function handleClearSearchHistory(): Promise<void> {
-    await deleteSearchHistoryAll();
+    await Promise.allSettled([
+      deleteSearchHistoryAll(),
+      deleteFriendSearchHistoryAll(),
+    ]);
     setSearchHistory([]);
   }
 
@@ -358,6 +522,60 @@ export default function MatePage() {
     }
   }
 
+  async function handleSendRecommendedFriendRequest(
+    traveler: RecommendedTraveler
+  ): Promise<void> {
+    if (friendRequestingUserId) return;
+
+    setFriendRequestingUserId(traveler.user_id);
+    try {
+      await sendFriendRequest(traveler.user_id);
+      setRecommendedFriendRequested((current) => new Set(current).add(traveler.user_id));
+    } catch (friendError) {
+      window.alert(toErrorMessage(friendError, "Failed to send friend request. Please try again."));
+    } finally {
+      setFriendRequestingUserId(null);
+    }
+  }
+
+  async function handleSendSearchUserFriendRequest(user: FriendSearchUser): Promise<void> {
+    if (friendRequestingUserId) return;
+
+    setFriendRequestingUserId(user.user_id);
+    try {
+      const friendship = await sendFriendRequest(user.user_id);
+      setUserResults((current) =>
+        current.map((item) =>
+          item.user_id === user.user_id
+            ? {
+                ...item,
+                friendship_status: friendship.status,
+                is_requester: friendship.is_requester,
+              }
+            : item
+        )
+      );
+    } catch (friendError) {
+      window.alert(toErrorMessage(friendError, "Failed to send friend request. Please try again."));
+    } finally {
+      setFriendRequestingUserId(null);
+    }
+  }
+
+  async function handleStartSearchUserChat(user: FriendSearchUser): Promise<void> {
+    if (chatOpeningPostId) return;
+
+    setChatOpeningPostId(user.user_id);
+    try {
+      const room = await createDirectChatRoom(user.user_id);
+      navigate(`/chat/${room.chat_room_id}`);
+    } catch (chatError) {
+      window.alert(toErrorMessage(chatError, "Failed to open chat. Please try again."));
+    } finally {
+      setChatOpeningPostId(null);
+    }
+  }
+
   async function handleSubmit(): Promise<void> {
     if (imageUploading) {
       window.alert("Please wait until the image upload is complete.");
@@ -459,6 +677,21 @@ export default function MatePage() {
     }
   }
 
+  async function handleStartRecommendedChat(traveler: RecommendedTraveler): Promise<void> {
+    if (chatOpeningPostId) return;
+
+    setChatOpeningPostId(traveler.user_id);
+    try {
+      const room = await createDirectChatRoom(traveler.user_id);
+      setSelectedRecommendedTraveler(null);
+      navigate(`/chat/${room.chat_room_id}`);
+    } catch (chatError) {
+      window.alert(toErrorMessage(chatError, "Failed to open chat. Please try again."));
+    } finally {
+      setChatOpeningPostId(null);
+    }
+  }
+
   return (
     <div style={styles.page}>
       <div style={styles.shell}>
@@ -470,13 +703,16 @@ export default function MatePage() {
               Meet people planning similar routes, dates, and travel styles around Seoul.
             </p>
           </div>
-          <button
-            type="button"
-            style={styles.headerButton}
-            onClick={() => handleTabChange(tab === "list" ? "write" : "list")}
-          >
-            {tab === "list" ? "Write Post" : "View Posts"}
-          </button>
+          <div style={styles.headerActions}>
+            <NotificationBell />
+            <button
+              type="button"
+              style={styles.headerButton}
+              onClick={() => handleTabChange(tab === "list" ? "write" : "list")}
+            >
+              {tab === "list" ? "Write Post" : "View Posts"}
+            </button>
+          </div>
         </header>
 
         <section style={styles.tabPanel}>
@@ -504,12 +740,15 @@ export default function MatePage() {
                   <input
                     ref={searchRef}
                     value={searchInput}
-                    onChange={(event) => setSearchInput(event.target.value)}
+                    onChange={(event) => {
+                      setSearchInput(event.target.value);
+                      setShowHistory(true);
+                    }}
                     onFocus={() => {
                       setShowHistory(true);
                       void loadSearchHistory();
                     }}
-                    onBlur={() => window.setTimeout(() => setShowHistory(false), 150)}
+                    onBlur={() => window.setTimeout(() => setShowHistory(false), 220)}
                     onKeyDown={(event) => {
                       if (event.key === "Enter") {
                         handleSearch(searchInput);
@@ -528,20 +767,49 @@ export default function MatePage() {
                 </button>
               </div>
 
-              {showHistory && searchHistory.length > 0 ? (
+              {hasSearchSuggestions ? (
                 <div style={styles.historyPanel}>
                   <div style={styles.historyHeader}>
-                    <span style={styles.historyTitle}>Recent Searches</span>
-                    <button
-                      type="button"
-                      style={styles.linkButton}
-                      onMouseDown={() => void handleClearSearchHistory()}
-                    >
-                      Clear
-                    </button>
+                    <span style={styles.historyTitle}>
+                      {searchInput.trim() ? "Suggestions" : "Recent Searches"}
+                    </span>
+                    {visibleSearchHistory.length > 0 ? (
+                      <button
+                        type="button"
+                        style={styles.linkButton}
+                        onMouseDown={() => void handleClearSearchHistory()}
+                      >
+                        Clear
+                      </button>
+                    ) : null}
                   </div>
+                  {suggestionLoading ? (
+                    <p style={styles.suggestionHint}>Searching users...</p>
+                  ) : null}
+                  {suggestedUsers.length > 0 ? (
+                    <div style={styles.historyList}>
+                      {suggestedUsers.map((user) => (
+                        <button
+                          key={user.user_id}
+                          type="button"
+                          style={styles.suggestionUserItem}
+                          onMouseDown={() => handleSearch(user.user_name)}
+                        >
+                          <img
+                            src={user.profile_image_url || DEFAULT_PROFILE_IMAGE_URL}
+                            alt=""
+                            style={styles.suggestionAvatar}
+                          />
+                          <span style={styles.suggestionUserText}>
+                            <strong style={styles.suggestionName}>{user.user_name}</strong>
+                            <span style={styles.suggestionMeta}>{user.user_id}</span>
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  ) : null}
                   <div style={styles.historyList}>
-                    {searchHistory.map((term) => (
+                    {visibleSearchHistory.map((term) => (
                       <div key={term} style={styles.historyItem}>
                         <button
                           type="button"
@@ -553,7 +821,11 @@ export default function MatePage() {
                         <button
                           type="button"
                           style={styles.iconButton}
-                          onMouseDown={() => void handleDeleteSearchHistory(term)}
+                          onMouseDown={(event) => {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            void handleDeleteSearchHistory(term);
+                          }}
                           aria-label={`Delete ${term}`}
                         >
                           x
@@ -563,6 +835,109 @@ export default function MatePage() {
                   </div>
                 </div>
               ) : null}
+            </section>
+
+            {searchQuery ? (
+              <section style={styles.userSearchPanel}>
+                <div style={styles.userSearchHeader}>
+                  <div>
+                    <p style={styles.recommendationEyebrow}>Users</p>
+                    <h2 style={styles.recommendationTitle}>People matching "{searchQuery}"</h2>
+                  </div>
+                  {userSearchLoading ? (
+                    <span style={styles.userSearchStatus}>Searching...</span>
+                  ) : null}
+                </div>
+
+                {userSearchError ? (
+                  <p style={styles.userSearchError}>{userSearchError}</p>
+                ) : userSearchLoading && userResults.length === 0 ? (
+                  <div style={styles.loadingState}>
+                    <span style={styles.spinner} />
+                    <p style={styles.emptyCopy}>Searching users...</p>
+                  </div>
+                ) : userResults.length === 0 ? (
+                  <p style={styles.recommendationEmpty}>No users found.</p>
+                ) : (
+                  <div style={styles.userResultList}>
+                    {userResults.map((user) => (
+                      <UserSearchCard
+                        key={user.user_id}
+                        user={user}
+                        busy={
+                          friendRequestingUserId === user.user_id ||
+                          chatOpeningPostId === user.user_id
+                        }
+                        onSendRequest={() => void handleSendSearchUserFriendRequest(user)}
+                        onChat={() => void handleStartSearchUserChat(user)}
+                        onViewFeed={() => setFeedPopupUserId(user.user_id)}
+                      />
+                    ))}
+                  </div>
+                )}
+
+                {userNextCursor ? (
+                  <button
+                    type="button"
+                    style={styles.loadMoreButton}
+                    onClick={() => void fetchUsers(searchQuery, userNextCursor)}
+                    disabled={userSearchLoading}
+                  >
+                    {userSearchLoading ? "Loading..." : "Load More Users"}
+                  </button>
+                ) : null}
+              </section>
+            ) : null}
+
+            <section style={styles.recommendationPanel}>
+              <div style={styles.recommendationHeader}>
+                <div>
+                  <p style={styles.recommendationEyebrow}>Recommended</p>
+                  <h2 style={styles.recommendationTitle}>Travelers for you</h2>
+                </div>
+                <span style={styles.recommendationSource}>
+                  {currentRecommendationProfile.travel_styles?.length
+                    ? currentRecommendationProfile.travel_styles.join(" / ")
+                    : "No styles yet"}
+                </span>
+              </div>
+
+              <div style={styles.recommendationList}>
+                {mateRecommendations.length > 0 ? (
+                  mateRecommendations.map((recommendation) => (
+                    <button
+                      key={recommendation.user_id}
+                      type="button"
+                      style={styles.recommendationItem}
+                      onClick={() => setSelectedRecommendedTraveler(recommendation)}
+                    >
+                      {recommendation.profile_image_url ? (
+                        <img
+                          src={recommendation.profile_image_url}
+                          alt={recommendation.user_name}
+                          style={styles.recommendationPhoto}
+                        />
+                      ) : (
+                        <img
+                          src={DEFAULT_PROFILE_IMAGE_URL}
+                          alt=""
+                          style={styles.recommendationPhoto}
+                        />
+                      )}
+                      <span style={styles.recommendationText}>
+                        <strong style={styles.recommendationName}>
+                          {recommendation.user_name}
+                        </strong>
+                        <span style={styles.recommendationScore}>
+                          {(recommendation.similarity_score * 100).toFixed(0)}%
+                        </span>
+                      </span>
+                    </button>
+                  ))
+                ) : (
+                  <p style={styles.recommendationEmpty}>No recommended travelers yet.</p>
+                )}
+              </div>
             </section>
 
             <section style={styles.filtersSection}>
@@ -997,13 +1372,40 @@ export default function MatePage() {
             setSelectedPost(null);
           }}
           onViewProfile={() => {
-            navigate(`/profile/${selectedPost.user_id}`);
+            setFeedPopupUserId(selectedPost.user_id);
             setSelectedPost(null);
           }}
           onChat={() => {
             void handleStartChat(selectedPost);
             setSelectedPost(null);
           }}
+        />
+      ) : null}
+
+      {selectedRecommendedTraveler ? (
+        <RecommendedTravelerModal
+          traveler={selectedRecommendedTraveler}
+          friendRequested={recommendedFriendRequested.has(
+            selectedRecommendedTraveler.user_id
+          )}
+          isSendingFriendRequest={
+            friendRequestingUserId === selectedRecommendedTraveler.user_id
+          }
+          isOpeningChat={chatOpeningPostId === selectedRecommendedTraveler.user_id}
+          onClose={() => setSelectedRecommendedTraveler(null)}
+          onAddFriend={() =>
+            void handleSendRecommendedFriendRequest(selectedRecommendedTraveler)
+          }
+          onChat={() => void handleStartRecommendedChat(selectedRecommendedTraveler)}
+          onViewFeed={() => setFeedPopupUserId(selectedRecommendedTraveler.user_id)}
+        />
+      ) : null}
+
+      {feedPopupUserId ? (
+        <FeedPopup
+          key={feedPopupUserId}
+          userId={feedPopupUserId}
+          onClose={() => setFeedPopupUserId(null)}
         />
       ) : null}
 
@@ -1054,8 +1456,164 @@ function AuthorAvatar({
       {post.profile_image_url ? (
         <img src={post.profile_image_url} alt="" style={styles.avatarImage} />
       ) : (
-        post.author.user_name?.slice(0, 1).toUpperCase() || "T"
+        <img src={DEFAULT_PROFILE_IMAGE_URL} alt="" style={styles.avatarImage} />
       )}
+    </div>
+  );
+}
+
+function UserSearchCard({
+  user,
+  busy,
+  onSendRequest,
+  onChat,
+  onViewFeed,
+}: {
+  user: FriendSearchUser;
+  busy: boolean;
+  onSendRequest: () => void;
+  onChat: () => void;
+  onViewFeed: () => void;
+}) {
+  const isFriend = user.friendship_status === "accepted";
+  const hasPendingRequest = user.friendship_status === "pending";
+  const canSendRequest = !user.i_blocked_peer && !isFriend && !hasPendingRequest;
+
+  return (
+    <div style={styles.userResultCard}>
+      <div style={styles.userResultSummary}>
+        <img
+          src={user.profile_image_url || DEFAULT_PROFILE_IMAGE_URL}
+          alt={user.user_name}
+          style={styles.userResultAvatar}
+        />
+        <div style={styles.userResultText}>
+          <strong style={styles.userResultName}>{user.user_name}</strong>
+          <span style={styles.userResultMeta}>{user.nationality || "Unknown"}</span>
+          <span style={styles.userResultStyles}>
+            {user.travel_styles.length > 0 ? user.travel_styles.join(" / ") : "No styles"}
+          </span>
+          <span style={styles.userResultId}>{user.user_id}</span>
+        </div>
+      </div>
+      <div style={styles.userResultActions}>
+        {isFriend ? (
+          <button type="button" style={styles.secondaryButton} onClick={onChat} disabled={busy}>
+            {busy ? "Opening..." : "Chat"}
+          </button>
+        ) : (
+          <button
+            type="button"
+            style={canSendRequest ? styles.primaryButton : styles.secondaryButton}
+            onClick={onSendRequest}
+            disabled={!canSendRequest || busy}
+          >
+            {busy
+              ? "Sending..."
+              : hasPendingRequest
+                ? user.is_requester
+                  ? "Request Sent"
+                  : "Pending"
+                : user.i_blocked_peer
+                  ? "Blocked"
+                  : "Add Friend"}
+          </button>
+        )}
+        <button type="button" style={styles.secondaryButton} onClick={onViewFeed}>
+          Feed
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function RecommendedTravelerModal({
+  traveler,
+  friendRequested,
+  isSendingFriendRequest,
+  isOpeningChat,
+  onClose,
+  onAddFriend,
+  onChat,
+  onViewFeed,
+}: {
+  traveler: RecommendedTraveler;
+  friendRequested: boolean;
+  isSendingFriendRequest: boolean;
+  isOpeningChat: boolean;
+  onClose: () => void;
+  onAddFriend: () => void;
+  onChat: () => void;
+  onViewFeed: () => void;
+}) {
+  const profileEntries = Object.entries(traveler).filter(
+    ([key]) => key !== "similarity_score" && key !== "profile_image_url"
+  );
+
+  return (
+    <div style={styles.modalOverlay} onClick={onClose}>
+      <div style={styles.recommendedModalCard} onClick={(event) => event.stopPropagation()}>
+        <div style={styles.recommendedModalHeader}>
+          {traveler.profile_image_url ? (
+            <img
+              src={traveler.profile_image_url}
+              alt={traveler.user_name}
+              style={styles.recommendedModalPhoto}
+            />
+          ) : (
+            <img
+              src={DEFAULT_PROFILE_IMAGE_URL}
+              alt=""
+              style={styles.recommendedModalPhoto}
+            />
+          )}
+          <div style={styles.recommendedModalTitleBlock}>
+            <p style={styles.recommendationEyebrow}>Recommended Traveler</p>
+            <h2 style={styles.recommendedModalTitle}>{traveler.user_name}</h2>
+            <p style={styles.recommendedModalScore}>
+              Match {(traveler.similarity_score * 100).toFixed(0)}%
+            </p>
+          </div>
+          <button type="button" style={styles.modalCloseButton} onClick={onClose}>
+            x
+          </button>
+        </div>
+
+        <div style={styles.recommendedInfoGrid}>
+          {profileEntries.map(([key, value]) => (
+            <div key={key} style={styles.recommendedInfoItem}>
+              <span style={styles.recommendedInfoLabel}>{formatProfileKey(key)}</span>
+              <span style={styles.recommendedInfoValue}>{formatProfileValue(value)}</span>
+            </div>
+          ))}
+        </div>
+
+        <div style={styles.modalButtonGrid}>
+          <button
+            type="button"
+            style={friendRequested ? styles.secondaryButton : styles.primaryButton}
+            onClick={onAddFriend}
+            disabled={friendRequested || isSendingFriendRequest}
+          >
+            {isSendingFriendRequest
+              ? "Sending..."
+              : friendRequested
+                ? "Request Sent"
+                : "Add Friend"}
+          </button>
+          <button
+            type="button"
+            style={styles.secondaryButton}
+            onClick={onChat}
+            disabled={isOpeningChat}
+          >
+            {isOpeningChat ? "Opening..." : "Chat"}
+          </button>
+          <button type="button" style={styles.secondaryButton} onClick={onViewFeed}>
+            Feed
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -1166,7 +1724,7 @@ function PostModal({
               </button>
             ) : null}
             <button type="button" style={styles.secondaryButton} onClick={onViewProfile}>
-              View Profile
+              View Feed
             </button>
             {!isOwnPost ? (
               <button type="button" style={styles.secondaryButton} onClick={onChat}>
@@ -1178,6 +1736,20 @@ function PostModal({
       </div>
     </div>
   );
+}
+
+function formatProfileKey(key: string): string {
+  return key
+    .split("_")
+    .map((part) => part.slice(0, 1).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function formatProfileValue(value: unknown): string {
+  if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) return value.join(", ");
+  if (typeof value === "object") return JSON.stringify(value);
+  return String(value);
 }
 
 function ImageLightbox({ src, onClose }: { src: string; onClose: () => void }) {
@@ -1264,6 +1836,22 @@ function stringifyApiMessage(value: unknown): string {
   return String(value);
 }
 
+function dedupeSearchHistory(items: string[]): string[] {
+  const seen = new Set<string>();
+  const nextItems: string[] = [];
+
+  items.forEach((item) => {
+    const value = item.trim();
+    const key = value.toLowerCase();
+    if (!value || seen.has(key)) return;
+
+    seen.add(key);
+    nextItems.push(value);
+  });
+
+  return nextItems.slice(0, 10);
+}
+
 function toFriendlyValidationMessage(errorItem: {
   loc?: unknown[];
   msg?: string;
@@ -1329,6 +1917,12 @@ const styles: Record<string, CSSProperties> = {
     color: "var(--neutral-700)",
     fontSize: "0.95rem",
     lineHeight: 1.5,
+  },
+  headerActions: {
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    flexShrink: 0,
   },
   headerButton: {
     border: "1px solid rgba(5,181,187,0.2)",
@@ -1437,6 +2031,49 @@ const styles: Record<string, CSSProperties> = {
     flexDirection: "column",
     gap: 8,
   },
+  suggestionHint: {
+    margin: "0 0 10px",
+    color: "var(--neutral-700)",
+    fontSize: "0.82rem",
+    fontWeight: 800,
+  },
+  suggestionUserItem: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    padding: "10px 12px",
+    border: "none",
+    borderRadius: 14,
+    background: "rgba(5,181,187,0.08)",
+    color: "var(--text-primary)",
+    cursor: "pointer",
+    textAlign: "left",
+  },
+  suggestionAvatar: {
+    width: 34,
+    height: 34,
+    borderRadius: "50%",
+    objectFit: "cover",
+    flexShrink: 0,
+  },
+  suggestionUserText: {
+    minWidth: 0,
+    display: "flex",
+    flexDirection: "column",
+    gap: 2,
+  },
+  suggestionName: {
+    color: "var(--text-primary)",
+    fontSize: "0.9rem",
+  },
+  suggestionMeta: {
+    color: "var(--neutral-700)",
+    fontSize: "0.72rem",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
   historyItem: {
     display: "flex",
     alignItems: "center",
@@ -1473,6 +2110,94 @@ const styles: Record<string, CSSProperties> = {
     cursor: "pointer",
     padding: 0,
   },
+  userSearchPanel: {
+    padding: "14px 16px",
+    borderRadius: 22,
+    background: "rgba(255,255,255,0.82)",
+    border: "1px solid rgba(248,180,0,0.16)",
+    display: "flex",
+    flexDirection: "column",
+    gap: 12,
+  },
+  userSearchHeader: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 14,
+  },
+  userSearchStatus: {
+    color: "var(--neutral-700)",
+    fontSize: "0.78rem",
+    fontWeight: 800,
+  },
+  userSearchError: {
+    margin: 0,
+    color: "#b91c1c",
+    fontSize: "0.86rem",
+    fontWeight: 800,
+  },
+  userResultList: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+  },
+  userResultCard: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 12,
+    padding: 12,
+    borderRadius: 18,
+    background: "rgba(255,255,255,0.9)",
+    border: "1px solid var(--border-soft)",
+  },
+  userResultSummary: {
+    display: "flex",
+    alignItems: "center",
+    gap: 12,
+    minWidth: 0,
+    flex: 1,
+  },
+  userResultActions: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "flex-end",
+    gap: 8,
+  },
+  userResultAvatar: {
+    width: 48,
+    height: 48,
+    borderRadius: "50%",
+    objectFit: "cover",
+    flexShrink: 0,
+  },
+  userResultText: {
+    minWidth: 0,
+    display: "flex",
+    flexDirection: "column",
+    gap: 3,
+  },
+  userResultName: {
+    color: "var(--text-primary)",
+    fontSize: "0.95rem",
+  },
+  userResultMeta: {
+    color: "var(--neutral-700)",
+    fontSize: "0.78rem",
+    fontWeight: 800,
+  },
+  userResultStyles: {
+    color: "var(--neutral-700)",
+    fontSize: "0.76rem",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+  userResultId: {
+    color: "var(--neutral-500)",
+    fontSize: "0.7rem",
+    overflowWrap: "anywhere",
+  },
   filtersSection: {
     display: "flex",
     flexDirection: "column",
@@ -1497,6 +2222,123 @@ const styles: Record<string, CSSProperties> = {
     background: "linear-gradient(135deg, rgba(248,180,0,0.2), rgba(255,233,179,0.92))",
     color: "var(--text-primary)",
     boxShadow: "0 12px 24px rgba(248,180,0,0.14)",
+  },
+  recommendationPanel: {
+    padding: "14px 16px",
+    borderRadius: 22,
+    background: "rgba(255,255,255,0.72)",
+    border: "1px solid rgba(5,181,187,0.12)",
+  },
+  recommendationHeader: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 14,
+    marginBottom: 12,
+  },
+  recommendationEyebrow: {
+    margin: 0,
+    color: "var(--brand-primary-deep)",
+    fontSize: "0.74rem",
+    fontWeight: 800,
+    letterSpacing: "0.12em",
+    textTransform: "uppercase",
+  },
+  recommendationTitle: {
+    margin: "4px 0 0",
+    color: "var(--text-primary)",
+    fontSize: "1.1rem",
+    lineHeight: 1.2,
+  },
+  recommendationSource: {
+    maxWidth: 170,
+    padding: "7px 10px",
+    borderRadius: 999,
+    background: "rgba(5,181,187,0.1)",
+    color: "var(--brand-primary-deep)",
+    fontSize: "0.76rem",
+    fontWeight: 800,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+  recommendationLabel: {
+    color: "var(--neutral-700)",
+    fontSize: "0.76rem",
+    fontWeight: 800,
+  },
+  recommendationSelect: {
+    minHeight: 38,
+    border: "1px solid rgba(5,181,187,0.18)",
+    borderRadius: 14,
+    padding: "0 10px",
+    background: "#ffffff",
+    color: "var(--text-primary)",
+    fontWeight: 800,
+  },
+  recommendationList: {
+    display: "flex",
+    gap: 10,
+    overflowX: "auto",
+    paddingBottom: 2,
+  },
+  recommendationItem: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 8,
+    minWidth: 82,
+    padding: "8px 6px",
+    border: "none",
+    background: "transparent",
+    cursor: "pointer",
+  },
+  recommendationPhoto: {
+    width: 62,
+    height: 62,
+    borderRadius: "50%",
+    objectFit: "cover",
+    border: "3px solid rgba(255,255,255,0.95)",
+    boxShadow: "0 10px 22px rgba(5,181,187,0.16)",
+  },
+  recommendationPhotoFallback: {
+    width: 62,
+    height: 62,
+    borderRadius: "50%",
+    display: "grid",
+    placeItems: "center",
+    background: "linear-gradient(135deg, var(--brand-primary), #12c0c6)",
+    color: "#ffffff",
+    border: "3px solid rgba(255,255,255,0.95)",
+    boxShadow: "0 10px 22px rgba(5,181,187,0.16)",
+    fontWeight: 900,
+  },
+  recommendationText: {
+    width: "100%",
+    textAlign: "center",
+  },
+  recommendationName: {
+    display: "block",
+    color: "var(--text-primary)",
+    fontSize: "0.84rem",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+  recommendationScore: {
+    margin: "2px 0 0",
+    color: "var(--neutral-700)",
+    fontSize: "0.7rem",
+    fontWeight: 700,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+  recommendationEmpty: {
+    margin: 0,
+    color: "var(--neutral-700)",
+    fontSize: "0.86rem",
+    fontWeight: 700,
   },
   listSection: {
     display: "flex",
@@ -1938,6 +2780,90 @@ const styles: Record<string, CSSProperties> = {
     background: "var(--surface-panel)",
     boxShadow: "0 28px 72px rgba(24,26,32,0.18)",
     animation: "slideUpModal 280ms cubic-bezier(0.22, 1, 0.36, 1)",
+  },
+  recommendedModalCard: {
+    width: "100%",
+    maxWidth: 760,
+    maxHeight: "88dvh",
+    overflowY: "auto",
+    borderRadius: "30px 30px 0 0",
+    background: "var(--surface-panel)",
+    boxShadow: "0 28px 72px rgba(24,26,32,0.18)",
+    padding: 20,
+    display: "flex",
+    flexDirection: "column",
+    gap: 18,
+    animation: "slideUpModal 280ms cubic-bezier(0.22, 1, 0.36, 1)",
+  },
+  recommendedModalHeader: {
+    display: "flex",
+    alignItems: "center",
+    gap: 14,
+  },
+  recommendedModalPhoto: {
+    width: 74,
+    height: 74,
+    borderRadius: "50%",
+    objectFit: "cover",
+    border: "3px solid rgba(255,255,255,0.95)",
+    boxShadow: "0 14px 30px rgba(5,181,187,0.18)",
+    flexShrink: 0,
+  },
+  recommendedModalPhotoFallback: {
+    width: 74,
+    height: 74,
+    borderRadius: "50%",
+    display: "grid",
+    placeItems: "center",
+    background: "linear-gradient(135deg, var(--brand-primary), #12c0c6)",
+    color: "#ffffff",
+    border: "3px solid rgba(255,255,255,0.95)",
+    boxShadow: "0 14px 30px rgba(5,181,187,0.18)",
+    fontWeight: 900,
+    fontSize: "1.5rem",
+    flexShrink: 0,
+  },
+  recommendedModalTitleBlock: {
+    flex: 1,
+    minWidth: 0,
+  },
+  recommendedModalTitle: {
+    margin: "4px 0",
+    color: "var(--text-primary)",
+    fontSize: "1.45rem",
+    lineHeight: 1.12,
+  },
+  recommendedModalScore: {
+    margin: 0,
+    color: "var(--neutral-700)",
+    fontWeight: 800,
+  },
+  recommendedInfoGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+    gap: 10,
+  },
+  recommendedInfoItem: {
+    padding: 12,
+    borderRadius: 16,
+    background: "rgba(228,247,247,0.44)",
+    border: "1px solid rgba(5,181,187,0.1)",
+    minWidth: 0,
+  },
+  recommendedInfoLabel: {
+    display: "block",
+    marginBottom: 5,
+    color: "var(--brand-primary-deep)",
+    fontSize: "0.74rem",
+    fontWeight: 900,
+  },
+  recommendedInfoValue: {
+    display: "block",
+    color: "var(--text-primary)",
+    fontSize: "0.9rem",
+    fontWeight: 700,
+    overflowWrap: "anywhere",
+    lineHeight: 1.35,
   },
   modalHero: {
     minHeight: 210,

@@ -1,117 +1,62 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
-import { getTourPlaces, type TourPlaceApiItem } from "../../api/auth/auth";
 import {
   ACCENT,
   BRAND,
-  DEFAULT_MAP_CENTER,
+  KRW_PER_BUDGET_UNIT,
   buildPlanTitle,
   budgetCategoryLabel,
-  createAiSummary,
-  distributeTimeLabels,
-  getSavedPlanById,
-  upsertSavedPlan,
+  createTourPlan,
+  flattenRecommendedPlacesV2,
+  formatKrw,
+  getAiPlanDayInputs,
+  getTourPlan,
+  getTourRecommendationsV2,
+  loadGoogleMapsApi,
+  tourPlanToCreateItems,
+  tourPlanV2ToRouteStops,
   type AiPreferenceState,
-  type AiRouteStop,
+  type MovementHopV2,
+  type PlanDetailResponse,
+  type PlaceDetailV2,
+  type TimelineSlotV2,
+  type TourDayResponseV2,
+  type TourRecommendResponseV2,
 } from "../../api/aiPlanShared";
+
+declare global {
+  interface Window {
+    google?: {
+      maps?: {
+        Map: new (element: HTMLElement, options: Record<string, unknown>) => GoogleMap;
+        Marker: new (options: Record<string, unknown>) => GoogleMarker;
+        Polyline: new (options: Record<string, unknown>) => GooglePolyline;
+        LatLngBounds: new () => GoogleLatLngBounds;
+      };
+    };
+  }
+}
+
+interface GoogleMap {
+  fitBounds: (bounds: GoogleLatLngBounds) => void;
+}
+
+interface GoogleMarker {
+  setMap: (map: GoogleMap | null) => void;
+}
+
+interface GooglePolyline {
+  setMap: (map: GoogleMap | null) => void;
+}
+
+interface GoogleLatLngBounds {
+  extend: (position: { lat: number; lng: number }) => void;
+}
 
 interface AiPlanResultPageProps {
   preferences: AiPreferenceState;
   onBack: () => void;
   onEdit: () => void;
-}
-
-interface RouteFetchState {
-  routeStops: AiRouteStop[];
-  unmatchedKeywords: string[];
-}
-
-function normalizeItem(item: TourPlaceApiItem, keyword: string): AiRouteStop | null {
-  const latitude = Number(item.latitude ?? item.lat ?? item.location?.lat);
-  const longitude = Number(item.longitude ?? item.lng ?? item.location?.lng);
-
-  const id = String(item.place_id || item.id || "");
-  const name = String(item.display_name || item.name || item.title || "");
-  if (!id || !name) {
-    return null;
-  }
-
-  return {
-    id,
-    name,
-    category: String(item.category || item.type || item.place_type || "Place"),
-    summary: String(
-      item.summary ||
-        item.description ||
-        item.review_summary ||
-        item.generative_summary ||
-        item.editorial_summary ||
-        ""
-    ),
-    address: String(item.short_address || item.address || ""),
-    latitude: Number.isFinite(latitude) ? latitude : undefined,
-    longitude: Number.isFinite(longitude) ? longitude : undefined,
-    keyword,
-  };
-}
-
-async function fetchRouteStops(
-  preferences: AiPreferenceState
-): Promise<RouteFetchState> {
-  const rawKeywords = [
-    preferences.departure,
-    ...preferences.styles,
-    preferences.extraPlace,
-    preferences.arrival,
-    preferences.foodNeed,
-  ];
-
-  const keywords = rawKeywords
-    .map((item) => item.trim())
-    .filter(Boolean)
-    .filter((item, index, array) => array.indexOf(item) === index);
-
-  const routeStops: AiRouteStop[] = [];
-  const unmatchedKeywords: string[] = [];
-  const usedIds = new Set<string>();
-
-  for (const keyword of keywords) {
-    try {
-      const response = await getTourPlaces({
-        lat: DEFAULT_MAP_CENTER.lat,
-        lng: DEFAULT_MAP_CENTER.lng,
-        keyword,
-      });
-
-      const matched = response.items
-        .map((item) => normalizeItem(item, keyword))
-        .find((item) => item && !usedIds.has(item.id));
-
-      if (!matched) {
-        unmatchedKeywords.push(keyword);
-        continue;
-      }
-
-      usedIds.add(matched.id);
-      routeStops.push(matched);
-    } catch {
-      unmatchedKeywords.push(keyword);
-    }
-  }
-
-  const timeLabels = distributeTimeLabels(
-    preferences.startTime,
-    preferences.endTime,
-    routeStops.length
-  );
-
-  return {
-    routeStops: routeStops.map((stop, index) => ({
-      ...stop,
-      timeLabel: timeLabels[index],
-    })),
-    unmatchedKeywords,
-  };
 }
 
 function readPlanId(): string | null {
@@ -120,60 +65,186 @@ function readPlanId(): string | null {
 }
 
 function buildRouteTitle(preferences: AiPreferenceState): string {
+  const days = getAiPlanDayInputs(preferences);
   return buildPlanTitle(
     "ai",
-    `${preferences.departure || "Start"} to ${preferences.arrival || "End"}`
+    `${days[0]?.departureCluster || "Seoul"} to ${days[days.length - 1]?.arrivalCluster || "Seoul"}`
   );
 }
 
-function MapPreview({ routeStops }: { routeStops: AiRouteStop[] }) {
-  const positionedStops = routeStops.filter(
-    (stop): stop is AiRouteStop & { latitude: number; longitude: number } =>
-      typeof stop.latitude === "number" && typeof stop.longitude === "number"
+function getTimelineSlotsByPlace(day: TourDayResponseV2): Map<string, TimelineSlotV2[]> {
+  const slotsByPlace = new Map<string, TimelineSlotV2[]>();
+  day.timeline.forEach((slot) => {
+    const currentSlots = slotsByPlace.get(slot.place_id) || [];
+    slotsByPlace.set(slot.place_id, [...currentSlots, slot]);
+  });
+  return slotsByPlace;
+}
+
+function getMovementAfterPlace(
+  day: TourDayResponseV2,
+  place: PlaceDetailV2 | undefined
+): MovementHopV2 | null {
+  if (!place) return null;
+
+  const placeIndex = day.places.findIndex(
+    (item) => item.place_id === place.place_id
+  );
+  const nextPlace = day.places[placeIndex + 1];
+  if (!nextPlace) return null;
+
+  return (
+    day.movements.find(
+      (movement) =>
+        movement.from_place === place.display_name &&
+        movement.to_place === nextPlace.display_name
+    ) || null
+  );
+}
+
+function savedPlanToRecommendation(plan: PlanDetailResponse): TourRecommendResponseV2 {
+  const dayNumbers = Array.from(
+    new Set(plan.items.map((item) => item.day_number))
+  ).sort((left, right) => left - right);
+
+  return {
+    tour_plan: dayNumbers.map((dayNumber) => {
+      const items = plan.items.filter((item) => item.day_number === dayNumber);
+      return {
+        day: dayNumber,
+        timeline: items.map((item) => ({
+          time: item.visit_time || "--:--",
+          place_id: item.place_id,
+          title: item.display_name,
+        })),
+        places: items.map((item) => ({
+          place_id: item.place_id,
+          display_name: item.display_name,
+          category: "Saved place",
+          address: item.address,
+          location: { lat: 0, lng: 0 },
+          rating: item.rating,
+          reason: "Saved in your trip plan.",
+          estimated_cost_krw: 0,
+          stay_minutes: 60,
+        })),
+        movements: [],
+        budget_breakdown: [],
+        budget_total_krw: 0,
+        summary: plan.title || "Saved trip plan",
+      };
+    }),
+  };
+}
+
+function GoogleMapPreview({ places }: { places: PlaceDetailV2[] }) {
+  const mapRef = useRef<HTMLDivElement | null>(null);
+  const [mapReady, setMapReady] = useState(false);
+  const [mapError, setMapError] = useState("");
+
+  const positionedPlaces = useMemo(
+    () =>
+      places.filter(
+        (place) =>
+          typeof place.location?.lat === "number" &&
+          typeof place.location?.lng === "number"
+      ),
+    [places]
   );
 
-  const latitudes = positionedStops.map((stop) => stop.latitude);
-  const longitudes = positionedStops.map((stop) => stop.longitude);
-  const latMin = latitudes.length ? Math.min(...latitudes) : DEFAULT_MAP_CENTER.lat - 0.01;
-  const latMax = latitudes.length ? Math.max(...latitudes) : DEFAULT_MAP_CENTER.lat + 0.01;
-  const lngMin = longitudes.length ? Math.min(...longitudes) : DEFAULT_MAP_CENTER.lng - 0.01;
-  const lngMax = longitudes.length ? Math.max(...longitudes) : DEFAULT_MAP_CENTER.lng + 0.01;
-  const latRange = latMax - latMin || 0.02;
-  const lngRange = lngMax - lngMin || 0.02;
+  useEffect(() => {
+    const markers: GoogleMarker[] = [];
+    let polyline: GooglePolyline | null = null;
+    let cancelled = false;
+
+    if (!mapRef.current || positionedPlaces.length === 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setMapReady(false);
+      setMapError("");
+      return undefined;
+    }
+
+    void loadGoogleMapsApi()
+      .then((google) => {
+        if (cancelled || !google?.maps || !mapRef.current) return;
+
+        try {
+          const map = new google.maps.Map(mapRef.current, {
+            center: positionedPlaces[0].location,
+            zoom: 12,
+            disableDefaultUI: true,
+            zoomControl: true,
+            mapId: "d67e58693d403acacaa713aa",
+          });
+
+          const bounds = new google.maps.LatLngBounds();
+          positionedPlaces.forEach((place, index) => {
+            const position = place.location;
+            bounds.extend(position);
+            markers.push(
+              new google.maps.Marker({
+                position,
+                map,
+                label: String(index + 1),
+                title: place.display_name,
+              })
+            );
+          });
+
+          if (positionedPlaces.length > 1) {
+            polyline = new google.maps.Polyline({
+              path: positionedPlaces.map((place) => place.location),
+              geodesic: true,
+              strokeColor: BRAND,
+              strokeOpacity: 0.9,
+              strokeWeight: 3,
+              map,
+            });
+          }
+
+          map.fitBounds(bounds);
+          setMapReady(true);
+          setMapError("");
+        } catch (error) {
+          setMapReady(false);
+          setMapError(error instanceof Error ? error.message : "Google Map could not be rendered.");
+        }
+      })
+      .catch((error) => {
+        if (!cancelled) {
+          setMapReady(false);
+          setMapError(error instanceof Error ? error.message : "Google Maps failed to load.");
+        }
+      });
+
+    return () => {
+      cancelled = true;
+      markers.forEach((marker) => marker.setMap(null));
+      polyline?.setMap(null);
+    };
+  }, [positionedPlaces]);
+
+  const hasApiKey = Boolean(import.meta.env.VITE_GOOGLE_MAPS_API_KEY);
 
   return (
     <div style={styles.mapCard}>
-      <div style={styles.mapCanvas}>
-        <div style={styles.mapRoadHorizontalA} />
-        <div style={styles.mapRoadHorizontalB} />
-        <div style={styles.mapRoadVerticalA} />
-        <div style={styles.mapRoadVerticalB} />
-        {positionedStops.length > 0 ? (
-          positionedStops.map((stop, index) => {
-            const left = ((stop.longitude - lngMin) / lngRange) * 100;
-            const top = 100 - ((stop.latitude - latMin) / latRange) * 100;
-            return (
-              <div
-                key={stop.id}
-                style={{
-                  ...styles.mapPin,
-                  left: `${Math.max(8, Math.min(92, left))}%`,
-                  top: `${Math.max(8, Math.min(88, top))}%`,
-                }}
-              >
-                {index + 1}
-              </div>
-            );
-          })
-        ) : (
+      <div style={styles.mapViewport}>
+        <div style={styles.mapCanvasGoogle} ref={mapRef} />
+        {positionedPlaces.length === 0 ? (
           <div style={styles.mapEmpty}>Location coordinates will appear here when the API returns them.</div>
-        )}
+        ) : !hasApiKey ? (
+          <div style={styles.mapEmpty}>Add `VITE_GOOGLE_MAPS_API_KEY` to render the live map.</div>
+        ) : mapError ? (
+          <div style={styles.mapEmpty}>{mapError}</div>
+        ) : !mapReady ? (
+          <div style={styles.mapEmpty}>Loading Google Map...</div>
+        ) : null}
       </div>
       <div style={styles.mapLegend}>
-        {routeStops.map((stop, index) => (
-          <div key={stop.id} style={styles.mapLegendItem}>
+        {positionedPlaces.map((place, index) => (
+          <div key={place.place_id} style={styles.mapLegendItem}>
             <span style={styles.mapLegendIndex}>{index + 1}</span>
-            <span style={styles.mapLegendText}>{stop.name}</span>
+            <span style={styles.mapLegendText}>{place.display_name}</span>
           </div>
         ))}
       </div>
@@ -181,38 +252,98 @@ function MapPreview({ routeStops }: { routeStops: AiRouteStop[] }) {
   );
 }
 
+function LoadingPlanScreen({
+  progress,
+  step,
+  seconds,
+}: {
+  progress: number;
+  step: string;
+  seconds: number;
+}) {
+  return (
+    <div style={styles.loadingScreen}>
+      <div style={styles.loadingHero}>
+        <span style={styles.loadingBadge}>AI is planning</span>
+        <h2 style={styles.loadingTitle}>Creating your route</h2>
+        <p style={styles.loadingCopy}>
+          Recommendation may take a little while because the itinerary is generated day by day.
+        </p>
+        <div style={styles.progressTrack}>
+          <div style={{ ...styles.progressFill, width: `${progress}%` }} />
+        </div>
+        <div style={styles.progressMeta}>
+          <span>{step}</span>
+          <strong>{Math.round(progress)}%</strong>
+        </div>
+      </div>
+      <div style={styles.loadingSteps}>
+        <div style={styles.loadingStepItem}>Preferences checked</div>
+        <div style={styles.loadingStepItem}>Places and movement requested</div>
+        <div style={styles.loadingStepItem}>Budget and timeline composing</div>
+      </div>
+      <p style={styles.loadingFooter}>{seconds}s elapsed</p>
+    </div>
+  );
+}
 export default function AiPlanResultPage({
   preferences,
   onBack,
-  onEdit,
 }: AiPlanResultPageProps) {
-  const [routeStops, setRouteStops] = useState<AiRouteStop[]>([]);
-  const [unmatchedKeywords, setUnmatchedKeywords] = useState<string[]>([]);
+  const [plan, setPlan] = useState<TourRecommendResponseV2 | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
   const [saveMessage, setSaveMessage] = useState("");
+  const [loadingSeconds, setLoadingSeconds] = useState(0);
 
   const planId = useMemo(() => readPlanId(), []);
-
   useEffect(() => {
-    const savedPlan = getSavedPlanById(planId);
-    if (savedPlan?.type === "ai" && savedPlan.aiRouteStops) {
-      setRouteStops(savedPlan.aiRouteStops);
-      setIsLoading(false);
-      return;
+    if (!isLoading) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setLoadingSeconds(0);
+      return undefined;
     }
 
-    let cancelled = false;
+    const interval = window.setInterval(() => {
+      setLoadingSeconds((current) => current + 1);
+    }, 1000);
 
-    void fetchRouteStops(preferences)
+    return () => window.clearInterval(interval);
+  }, [isLoading]);
+
+  const loadingProgress = Math.min(95, 12 + loadingSeconds * 2.2);
+  const loadingStep =
+    loadingSeconds < 8
+      ? "Reading your travel preferences"
+      : loadingSeconds < 20
+        ? "Finding places that match your route"
+        : loadingSeconds < 40
+          ? "Arranging timeline, movement, and budget"
+          : "Finalizing your Seoul itinerary";
+
+  useEffect(() => {
+    let cancelled = false;
+    setIsLoading(true);
+    setErrorMessage("");
+
+    const request = planId
+      ? getTourPlan(planId).then(savedPlanToRecommendation)
+      : getTourRecommendationsV2(preferences);
+
+    void request
       .then((result) => {
         if (cancelled) return;
-        setRouteStops(result.routeStops);
-        setUnmatchedKeywords(result.unmatchedKeywords);
+        setPlan(result);
+      })
+      .catch((error) => {
+        if (cancelled) return;
+        setPlan(null);
+        setErrorMessage(
+          error instanceof Error ? error.message : "Failed to load recommended plan."
+        );
       })
       .finally(() => {
-        if (!cancelled) {
-          setIsLoading(false);
-        }
+        if (!cancelled) setIsLoading(false);
       });
 
     return () => {
@@ -220,22 +351,72 @@ export default function AiPlanResultPage({
     };
   }, [planId, preferences]);
 
-  const summary = useMemo(
-    () => createAiSummary(preferences, routeStops.length),
-    [preferences, routeStops.length]
+  const allPlaces = useMemo(() => flattenRecommendedPlacesV2(plan), [plan]);
+  const routeStops = useMemo(() => tourPlanV2ToRouteStops(plan), [plan]);
+  const budgetTotal = plan?.tour_plan.reduce(
+    (sum, day) => sum + day.budget_total_krw,
+    0
+  ) || 0;
+  const dailyBudgetLimit = Math.max(0, preferences.budgetValue * KRW_PER_BUDGET_UNIT);
+  const tripBudgetLimit = dailyBudgetLimit * Math.max(1, preferences.durationDays || 1);
+  const hasDailyBudgetOverrun = Boolean(
+    plan?.tour_plan.some((day) => day.budget_total_krw > dailyBudgetLimit)
   );
+  const isOverBudget =
+    dailyBudgetLimit > 0 &&
+    (budgetTotal > tripBudgetLimit || hasDailyBudgetOverrun);
+  const summary = plan?.tour_plan.map((day) => day.summary).filter(Boolean).join(" ") ||
+    `This itinerary uses ${routeStops.length} places returned by the recommendation API.`;
 
+
+  if (isLoading) {
+    return (
+      <div style={styles.page}>
+        <div style={styles.phoneFrame}>
+          <div style={styles.headerRow}>
+            <button type="button" onClick={onBack} style={styles.iconButton}>
+              {"<"}
+            </button>
+            <span style={styles.headerBadge}>AI Result</span>
+          </div>
+
+          <div style={styles.titleBlock}>
+            <span style={styles.eyebrow}>Recommendation API V2</span>
+            <h1 style={styles.title}>Creating your itinerary</h1>
+            <p style={styles.copy}>
+              We are waiting for the recommendation server to finish the route.
+            </p>
+          </div>
+
+          <LoadingPlanScreen
+            progress={loadingProgress}
+            step={loadingStep}
+            seconds={loadingSeconds}
+          />
+        </div>
+      </div>
+    );
+  }
   const handleSave = () => {
-    const saved = upsertSavedPlan({
-      id: planId || undefined,
-      type: "ai",
-      title: buildRouteTitle(preferences),
-      summary,
-      aiPreferences: preferences,
-      aiRouteStops: routeStops,
-    });
+    const items = tourPlanToCreateItems(plan);
+    if (items.length === 0) {
+      setSaveMessage("There are no places to save yet.");
+      return;
+    }
 
-    setSaveMessage(`Saved to My Page (${saved.title})`);
+    void createTourPlan({
+      title: buildRouteTitle(preferences),
+      travel_days: Math.max(1, plan?.tour_plan.length || preferences.durationDays || 1),
+      items,
+    })
+      .then((saved) => {
+        setSaveMessage(`Saved to My Page (${saved.title || "Untitled plan"})`);
+      })
+      .catch((error) => {
+        setSaveMessage(
+          error instanceof Error ? error.message : "Failed to save plan."
+        );
+      });
   };
 
   return (
@@ -246,13 +427,10 @@ export default function AiPlanResultPage({
             {"<"}
           </button>
           <span style={styles.headerBadge}>AI Result</span>
-          <button type="button" onClick={onEdit} style={styles.editButton}>
-            Edit
-          </button>
         </div>
 
         <div style={styles.titleBlock}>
-          <span style={styles.eyebrow}>Generated Plan</span>
+          <span style={styles.eyebrow}>Recommendation API V2</span>
           <h1 style={styles.title}>{buildRouteTitle(preferences)}</h1>
           <p style={styles.copy}>{summary}</p>
         </div>
@@ -280,59 +458,121 @@ export default function AiPlanResultPage({
           </div>
         </div>
 
-        <MapPreview routeStops={routeStops} />
+        <GoogleMapPreview places={allPlaces} />
 
         <section style={styles.timelineSection}>
           <div style={styles.timelineHeader}>
             <div>
-              <h2 style={styles.timelineTitle}>API-based route</h2>
+              <h2 style={styles.timelineTitle}>Timeline</h2>
               <p style={styles.timelineRoute}>
-                Stops are composed from the current API response and your selected tokens.
+                Timeline, movements, and budget are rendered directly from `/api/tour/recommend` V2.
               </p>
             </div>
-            <span style={styles.timelineBadge}>
-              {preferences.transport || "Transport not selected"}
-            </span>
+            <span style={styles.timelineBadge}>Public Transit</span>
           </div>
 
-          {isLoading ? (
-            <div style={styles.stateCard}>Loading place data...</div>
-          ) : routeStops.length === 0 ? (
-            <div style={styles.stateCard}>
-              No matching places have been returned yet. Once the API provides results, this screen will render them automatically.
-            </div>
+          {errorMessage ? (
+            <div style={styles.stateCard}>{errorMessage}</div>
+          ) : !plan || plan.tour_plan.length === 0 ? (
+            <div style={styles.stateCard}>No plan has been returned yet.</div>
           ) : (
             <div style={styles.timelineList}>
-              {routeStops.map((stop, index) => (
-                <div key={stop.id} style={styles.timelineItem}>
-                  <div style={styles.timelineTime}>{stop.timeLabel || "--:--"}</div>
-                  <div style={styles.timelineDot}>{index + 1}</div>
-                  <div style={styles.timelineCard}>
-                    <strong style={styles.timelineItemTitle}>{stop.name}</strong>
-                    <p style={styles.timelineCopy}>
-                      {stop.summary || "Summary will appear when the API returns it."}
-                    </p>
-                    <p style={styles.poiAddress}>
-                      {stop.address || "Address will appear when the API returns it."}
-                    </p>
-                  </div>
-                </div>
-              ))}
+              {plan.tour_plan.map((day) => {
+                const slotsByPlace = getTimelineSlotsByPlace(day);
+                const dayOverBudget =
+                  dailyBudgetLimit > 0 && day.budget_total_krw > dailyBudgetLimit;
+                return (
+                  <section key={day.day} style={styles.dayRouteBlock}>
+                    <div style={styles.dayRouteHeader}>
+                      <strong style={styles.dayRouteTitle}>Day {day.day}</strong>
+                      <span style={styles.dayRouteCluster}>
+                        {formatKrw(day.budget_total_krw)}
+                        {dayOverBudget ? " - Over budget" : ""}
+                      </span>
+                    </div>
+                    {day.places.map((place, index) => {
+                      const placeSlots = slotsByPlace.get(place.place_id) || [];
+                      const primarySlot = placeSlots[0];
+                      const movement = getMovementAfterPlace(day, place);
+                      return (
+                        <div key={`${day.day}-${place.place_id}-${index}`}>
+                          <div style={styles.timelineItem}>
+                            <div style={styles.timelineTime}>
+                              {primarySlot?.time || "--:--"}
+                            </div>
+                            <div style={styles.timelineDot}>{index + 1}</div>
+                            <div style={styles.timelineCard}>
+                              <div style={styles.timelineTitleRow}>
+                                <strong style={styles.timelineItemTitle}>
+                                  {primarySlot?.title || place.display_name}
+                                </strong>
+                                {typeof place.rating === "number" ? (
+                                  <span style={styles.ratingBadge}>{place.rating.toFixed(1)}</span>
+                                ) : null}
+                              </div>
+                              {placeSlots.length > 1 ? (
+                                <div style={styles.slotList}>
+                                  {placeSlots.slice(1).map((slot) => (
+                                    <span key={`${slot.time}-${slot.title}`}>
+                                      {slot.time} {slot.title}
+                                    </span>
+                                  ))}
+                                </div>
+                              ) : null}
+                              {place.reason ? (
+                                <p style={styles.timelineCopy}>{place.reason}</p>
+                              ) : null}
+                              {place.address ? (
+                                <p style={styles.poiAddress}>{place.address}</p>
+                              ) : null}
+                              <div style={styles.poiMetaRow}>
+                                <span>{place.category}</span>
+                                <span>{place.stay_minutes} min</span>
+                                <span>{formatKrw(place.estimated_cost_krw)}</span>
+                              </div>
+                            </div>
+                          </div>
+                          {movement ? (
+                            <div style={styles.movementCard}>
+                              {movement.from_place} to {movement.to_place}: {movement.method}
+                            </div>
+                          ) : null}
+                        </div>
+                      );
+                    })}
+                    {day.summary ? <p style={styles.daySummary}>{day.summary}</p> : null}
+                    {day.budget_breakdown.length > 0 ? (
+                      <div style={styles.budgetList}>
+                        {day.budget_breakdown.map((item) => (
+                          <div key={`${day.day}-${item.label}`} style={styles.budgetItem}>
+                            <span>{item.label}</span>
+                            <strong>{formatKrw(item.amount_krw)}</strong>
+                          </div>
+                        ))}
+                      </div>
+                    ) : null}
+                  </section>
+                );
+              })}
             </div>
           )}
         </section>
 
-        {!isLoading && unmatchedKeywords.length > 0 ? (
-          <p style={styles.unmatchedNote}>
-            Some keywords did not match the current place data: {unmatchedKeywords.join(", ")}
-          </p>
+        {plan ? (
+          <div style={{ ...styles.stateCard, ...(isOverBudget ? styles.warningCard : {}) }}>
+            Total budget: {formatKrw(budgetTotal)}
+            {isOverBudget ? " - Budget may be exceeded." : ""}
+            {preferences.foodNeed
+              ? ` ${preferences.foodNeed} dining data can be sparse, so meal slots may be missing in some areas.`
+              : ""}
+          </div>
         ) : null}
 
         <button
           type="button"
           onClick={handleSave}
           style={styles.primaryAction}
-          disabled={routeStops.length === 0}
+          disabled={!plan || routeStops.length === 0}
         >
           Save plan to My Page
         </button>
@@ -375,15 +615,6 @@ const styles: Record<string, CSSProperties> = {
     fontWeight: 800,
     cursor: "pointer",
   },
-  editButton: {
-    border: "1px solid #d6eeee",
-    borderRadius: 14,
-    padding: "10px 12px",
-    background: "#ffffff",
-    color: "#204444",
-    fontWeight: 800,
-    cursor: "pointer",
-  },
   headerBadge: {
     display: "inline-flex",
     alignItems: "center",
@@ -393,12 +624,6 @@ const styles: Record<string, CSSProperties> = {
     color: BRAND,
     fontSize: 12,
     fontWeight: 800,
-  },
-  unmatchedNote: {
-    margin: 0,
-    color: "#6b7d7d",
-    fontSize: 13,
-    lineHeight: 1.5,
   },
   titleBlock: {
     display: "flex",
@@ -456,77 +681,28 @@ const styles: Record<string, CSSProperties> = {
     background: "#ffffff",
     border: "1px solid #dceeee",
   },
-  mapCanvas: {
+  mapViewport: {
     position: "relative",
-    minHeight: 180,
+    minHeight: 220,
     borderRadius: 18,
-    background:
-      "linear-gradient(145deg, #edf8f8 0%, #fff6dd 100%)",
     overflow: "hidden",
+    background: "#eef7f7",
   },
-  mapRoadHorizontalA: {
+  mapCanvasGoogle: {
     position: "absolute",
-    left: "-8%",
-    right: "-8%",
-    top: "24%",
-    height: 16,
-    borderRadius: 999,
-    background: "rgba(255,255,255,0.75)",
-    transform: "rotate(-7deg)",
-  },
-  mapRoadHorizontalB: {
-    position: "absolute",
-    left: "-6%",
-    right: "-6%",
-    top: "62%",
-    height: 18,
-    borderRadius: 999,
-    background: "rgba(255,255,255,0.72)",
-    transform: "rotate(5deg)",
-  },
-  mapRoadVerticalA: {
-    position: "absolute",
-    top: "-8%",
-    bottom: "-8%",
-    left: "28%",
-    width: 16,
-    borderRadius: 999,
-    background: "rgba(255,255,255,0.7)",
-    transform: "rotate(8deg)",
-  },
-  mapRoadVerticalB: {
-    position: "absolute",
-    top: "-10%",
-    bottom: "-10%",
-    right: "24%",
-    width: 14,
-    borderRadius: 999,
-    background: "rgba(255,255,255,0.68)",
-    transform: "rotate(-10deg)",
-  },
-  mapPin: {
-    position: "absolute",
-    width: 26,
-    height: 26,
-    marginLeft: -13,
-    marginTop: -13,
-    borderRadius: "50%",
-    background: ACCENT,
-    color: "#533800",
-    display: "grid",
-    placeItems: "center",
-    fontSize: 12,
-    fontWeight: 900,
-    boxShadow: "0 8px 16px rgba(255,190,15,0.28)",
+    inset: 0,
   },
   mapEmpty: {
-    height: "100%",
+    position: "absolute",
+    inset: 0,
     display: "grid",
     placeItems: "center",
     textAlign: "center",
     color: "#537070",
     padding: "0 20px",
     lineHeight: 1.6,
+    background: "#eef7f7",
+    zIndex: 1,
   },
   mapLegend: {
     display: "flex",
@@ -620,14 +796,199 @@ const styles: Record<string, CSSProperties> = {
     border: "1px solid #dceeee",
     boxShadow: "0 10px 24px rgba(16, 34, 35, 0.05)",
   },
+  timelineTitleRow: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 8,
+  },
   timelineItemTitle: {
     color: "#102223",
     fontSize: 14,
+  },
+  ratingBadge: {
+    padding: "5px 8px",
+    borderRadius: 999,
+    background: "rgba(255,190,15,0.2)",
+    color: "#7a5400",
+    fontSize: 11,
+    fontWeight: 900,
   },
   timelineCopy: {
     margin: "8px 0 0",
     color: "#557071",
     lineHeight: 1.6,
+    fontSize: 13,
+  },
+  slotList: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 4,
+    marginTop: 8,
+    color: "#5d7576",
+    fontSize: 12,
+    fontWeight: 700,
+  },
+  dayRouteBlock: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+  },
+  dayRouteHeader: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 10,
+    padding: "0 2px",
+  },
+  dayRouteTitle: {
+    color: "#102223",
+    fontSize: 16,
+  },
+  dayRouteCluster: {
+    color: BRAND,
+    fontSize: 12,
+    fontWeight: 800,
+  },
+  loadingScreen: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 14,
+  },
+  loadingHero: {
+    padding: 20,
+    borderRadius: 22,
+    background: "#ffffff",
+    border: "1px solid #dceeee",
+    boxShadow: "0 12px 30px rgba(16, 34, 35, 0.06)",
+    display: "flex",
+    flexDirection: "column",
+    gap: 12,
+  },
+  loadingBadge: {
+    width: "fit-content",
+    padding: "7px 10px",
+    borderRadius: 999,
+    background: "rgba(1, 192, 192, 0.12)",
+    color: BRAND,
+    fontSize: 12,
+    fontWeight: 900,
+  },
+  loadingTitle: {
+    margin: 0,
+    color: "#102223",
+    fontSize: 22,
+  },
+  loadingCopy: {
+    margin: 0,
+    color: "#557071",
+    fontSize: 13,
+    lineHeight: 1.6,
+  },
+  progressTrack: {
+    height: 12,
+    borderRadius: 999,
+    background: "#e8f6f6",
+    overflow: "hidden",
+  },
+  progressFill: {
+    height: "100%",
+    borderRadius: 999,
+    background: `linear-gradient(90deg, ${BRAND} 0%, ${ACCENT} 100%)`,
+    transition: "width 500ms ease",
+  },
+  progressMeta: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 10,
+    color: "#486566",
+    fontSize: 12,
+    fontWeight: 800,
+  },
+  loadingSteps: {
+    display: "grid",
+    gap: 8,
+  },
+  loadingStepItem: {
+    padding: "12px 14px",
+    borderRadius: 16,
+    background: "#ffffff",
+    border: "1px solid #dceeee",
+    color: "#204444",
+    fontSize: 13,
+    fontWeight: 800,
+  },
+  loadingFooter: {
+    margin: 0,
+    textAlign: "center",
+    color: "#5d7576",
+    fontSize: 12,
+    fontWeight: 800,
+  },  stateCard: {
+    padding: 18,
+    borderRadius: 18,
+    background: "#ffffff",
+    border: "1px solid #dceeee",
+    color: "#516a6b",
+    lineHeight: 1.6,
+    fontSize: 13,
+  },
+  warningCard: {
+    border: "1px solid rgba(255,190,15,0.65)",
+    background: "rgba(255,190,15,0.12)",
+    color: "#7a5400",
+    fontWeight: 800,
+  },
+  poiAddress: {
+    margin: "8px 0 0",
+    color: BRAND,
+    fontSize: 12,
+    fontWeight: 800,
+  },
+  poiMetaRow: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: 8,
+    marginTop: 10,
+    color: "#5d7576",
+    fontSize: 12,
+    fontWeight: 700,
+  },
+  movementCard: {
+    margin: "8px 0 8px 92px",
+    padding: "10px 12px",
+    borderRadius: 14,
+    background: "rgba(1,192,192,0.1)",
+    color: "#0b6161",
+    fontSize: 12,
+    fontWeight: 800,
+    lineHeight: 1.5,
+  },
+  daySummary: {
+    margin: 0,
+    padding: 14,
+    borderRadius: 16,
+    background: "#f6fcfc",
+    color: "#486566",
+    lineHeight: 1.6,
+    fontSize: 13,
+  },
+  budgetList: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 8,
+    padding: 14,
+    borderRadius: 16,
+    background: "#ffffff",
+    border: "1px solid #dceeee",
+  },
+  budgetItem: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 10,
+    color: "#204444",
     fontSize: 13,
   },
   primaryAction: {
@@ -646,21 +1007,6 @@ const styles: Record<string, CSSProperties> = {
     textAlign: "center",
     color: BRAND,
     fontSize: 13,
-    fontWeight: 800,
-  },
-  stateCard: {
-    padding: 18,
-    borderRadius: 18,
-    background: "#ffffff",
-    border: "1px solid #dceeee",
-    color: "#516a6b",
-    lineHeight: 1.6,
-    fontSize: 13,
-  },
-  poiAddress: {
-    margin: "8px 0 0",
-    color: BRAND,
-    fontSize: 12,
     fontWeight: 800,
   },
 };

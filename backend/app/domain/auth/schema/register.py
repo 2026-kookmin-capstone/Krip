@@ -39,7 +39,7 @@ class RegisterRequest(BaseModel):
     travel_styles: List[TravelStyle] = Field(
         default_factory=list,
         description="여행 스타일 (복수 선택 가능)",
-        examples=[["activity", "food"]],
+        examples=[["activity", "food_tour", "budget_moderate"]],
     )
 
     class Config:
@@ -51,7 +51,7 @@ class RegisterRequest(BaseModel):
                 "age": 25,
                 "gender": "male",
                 "nationality": "korea",
-                "travel_styles": ["activity", "food"],
+                "travel_styles": ["activity", "food_tour", "budget_moderate"],
             }
         }
 

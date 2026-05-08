@@ -65,6 +65,11 @@ class Settings(BaseSettings):
     USER_LOGIN_JWT_EXPIRATION_DAYS: int = Field(1, description="USER LOGIN JWT 토큰 만료 기간 (일)")
     USER_LOGIN_COOKIE_NAME: str = Field("utk", description="USER LOGIN 쿠키명")
     
+    # 공유 JWT 설정
+    SHARE_JWT_SECRET_KEY: str = Field("your-share-secret-here", description="플랜 share JWT 비밀키")
+    SHARE_JWT_ALGORITHM: str = Field("HS256", description="플랜 share JWT 알고리즘")
+    SHARE_JWT_EXPIRATION_DAYS: int = Field(30, description="플랜 share 토큰 만료 기간 (일)")
+    
     # Google OAuth
     GOOGLE_CLIENT_ID: str = Field(..., description="구글 OAuth ID")
     GOOGLE_CLIENT_SECRET: str = Field(..., description="구글 OAuth Secret")
@@ -81,6 +86,12 @@ class Settings(BaseSettings):
     
     # LLM
     GOOGLE_GEMINI_API_KEY: str = Field(..., description="구글 제미나이 API 키")
+
+    # FCM (Firebase Cloud Messaging)
+    FCM_CREDENTIALS_PATH: str = Field(
+        "secrets/krip-firebase-secret-key.json",
+        description="Firebase Admin SDK 서비스 계정 JSON 경로 (backend/ 기준 상대 또는 절대)",
+    )
     
     @property
     def POSTGRES_URL(self) -> str:
@@ -112,7 +123,8 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
-        case_sensitive=True
+        case_sensitive=True,
+        extra="ignore",  # .env / shell 의 미선언 변수 (LANGCHAIN_* 등) 허용
     )
 
 

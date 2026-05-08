@@ -13,6 +13,8 @@ from app.domain.chat.schema.room import (
     InviteMembersResponse,
     KickMemberBody,
     LastMessagePreviewResponse,
+    RoomMemberListResponse,
+    RoomMemberResponse,
 )
 from app.domain.chat.service.exception import ChatRoomNotFoundError
 from app.domain.chat.service.message_history import MessageHistoryService
@@ -182,6 +184,54 @@ async def get_room(
     return _to_room_response(result)
 
 
+# ──────────────────── 그룹 방 참여자 목록 ────────────────────
+
+@router.get("/{chat_room_id}/members")
+@inject
+async def list_room_members(
+    request: Request,
+    chat_room_id: str,
+    service: MessageHistoryService = Depends(Provide[Container.message_history_service]),
+) -> RoomMemberListResponse:
+    """그룹 방의 활성 참여자 프로필 목록 (joined_at 오름차순). 1:1 방은 400."""
+    user_id: str = request.state.user_id
+
+    try:
+        result = await service.list_room_members(me_id=user_id, room_id=chat_room_id)
+    except ChatRoomNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    return _to_member_list_response(result)
+
+
+# ──────────────────── 그룹 방 초대 가능 친구 목록 ────────────────────
+
+@router.get("/{chat_room_id}/invitable-friends")
+@inject
+async def list_invitable_friends(
+    request: Request,
+    chat_room_id: str,
+    service: MessageHistoryService = Depends(Provide[Container.message_history_service]),
+) -> RoomMemberListResponse:
+    """방에 아직 들어오지 않은 내 친구 프로필 목록 — 그룹 방 초대 UI 용."""
+    user_id: str = request.state.user_id
+
+    try:
+        result = await service.list_invitable_friends(me_id=user_id, room_id=chat_room_id)
+    except ChatRoomNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    return _to_member_list_response(result)
+
+
 # ──────────────────── 메시지 히스토리 ────────────────────
 
 @router.get("/{chat_room_id}/messages")
@@ -237,7 +287,11 @@ async def get_messages(
 
 def _to_room_response(dto) -> ChatRoomResponse:
     peer = (
-        ChatRoomPeerResponse(user_id=dto.peer.user_id, user_name=dto.peer.user_name)
+        ChatRoomPeerResponse(
+            user_id=dto.peer.user_id,
+            user_name=dto.peer.user_name,
+            profile_image_url=dto.peer.profile_image_url,
+        )
         if dto.peer is not None else None
     )
     last = (
@@ -260,6 +314,7 @@ def _to_room_response(dto) -> ChatRoomResponse:
         unread_count=dto.unread_count,
         last_message_at=dto.last_message_at,
         effective_last_at=dto.effective_last_at,
+        notification_muted=dto.notification_muted,
     )
 
 
@@ -281,6 +336,19 @@ def _to_message_response(dto) -> ChatMessageResponse:
         created_at=dto.created_at,
         edited_at=dto.edited_at,
         deleted_at=dto.deleted_at,
+    )
+
+
+def _to_member_list_response(dto) -> RoomMemberListResponse:
+    return RoomMemberListResponse(
+        items=[
+            RoomMemberResponse(
+                user_id=item.user_id,
+                user_name=item.user_name,
+                profile_image_url=item.profile_image_url,
+            )
+            for item in dto.items
+        ],
     )
 
 
