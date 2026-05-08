@@ -5,12 +5,14 @@ import type { ChatMessage, ChatRoom } from "../../api/chat";
 import { useChat } from "./ChatProvider";
 
 const BOTTOM_THRESHOLD_PX = 160;
+const DEFAULT_PROFILE_IMAGE_URL = "/default-profile.svg";
 
 export default function ChatRoomPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const bottomRef = useRef<HTMLDivElement>(null);
   const scrollModeRef = useRef<"bottom" | "preserve">("bottom");
+  const shouldForceScrollToBottomRef = useRef(true);
   const scrollSnapshotRef = useRef<{ height: number; top: number } | null>(null);
   const {
     connectionState,
@@ -42,6 +44,8 @@ export default function ChatRoomPage() {
     if (room.type === "direct") return room.peer?.user_name || "Deleted User";
     return room.title || "Group Chat";
   }, [room]);
+  const roomProfileImageUrl =
+    room?.type === "direct" ? room.peer?.profile_image_url || DEFAULT_PROFILE_IMAGE_URL : DEFAULT_PROFILE_IMAGE_URL;
 
   useEffect(() => {
     let cancelled = false;
@@ -77,6 +81,7 @@ export default function ChatRoomPage() {
   useEffect(() => {
     if (!roomId) return;
 
+    shouldForceScrollToBottomRef.current = true;
     setActiveRoomId(roomId);
     void loadInitialMessages(roomId);
 
@@ -111,8 +116,23 @@ export default function ChatRoomPage() {
       return;
     }
 
-    if (isNearBottom()) {
-      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    const shouldForceScroll = shouldForceScrollToBottomRef.current;
+    if (shouldForceScroll) {
+      shouldForceScrollToBottomRef.current = false;
+    }
+
+    if (shouldForceScroll || isNearBottom()) {
+      bottomRef.current?.scrollIntoView({
+        behavior: shouldForceScroll ? "auto" : "smooth",
+        block: "end",
+      });
+
+      if (shouldForceScroll) {
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: "auto",
+        });
+      }
     }
   }, [messages]);
 
@@ -141,7 +161,9 @@ export default function ChatRoomPage() {
         <button type="button" style={styles.backButton} onClick={() => navigate("/chat")}>
           Back
         </button>
-        <div style={styles.avatar}>{roomName.slice(0, 1).toUpperCase()}</div>
+        <div style={styles.avatar}>
+          <img src={roomProfileImageUrl} alt={roomName} style={styles.avatarImage} />
+        </div>
         <span style={styles.headerText}>
           <strong style={styles.roomName}>{roomName}</strong>
           <span style={styles.connectionText}>{connectionState}</span>
@@ -173,6 +195,13 @@ export default function ChatRoomPage() {
                 ...(mine ? styles.messageRowMine : {}),
               }}
             >
+              {!mine ? (
+                <img
+                  src={roomProfileImageUrl}
+                  alt={roomName}
+                  style={styles.messageAvatar}
+                />
+              ) : null}
               <div
                 style={{
                   ...styles.bubble,
@@ -305,11 +334,14 @@ const styles: Record<string, CSSProperties> = {
     width: 36,
     height: 36,
     borderRadius: "50%",
-    display: "grid",
-    placeItems: "center",
+    overflow: "hidden",
     background: "var(--brand-primary-soft)",
-    color: "var(--brand-primary-deep)",
-    fontWeight: 900,
+    flexShrink: 0,
+  },
+  avatarImage: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
   },
   headerText: {
     minWidth: 0,
@@ -360,6 +392,14 @@ const styles: Record<string, CSSProperties> = {
   },
   messageRowMine: {
     flexDirection: "row-reverse",
+  },
+  messageAvatar: {
+    width: 30,
+    height: 30,
+    borderRadius: "50%",
+    objectFit: "cover",
+    flexShrink: 0,
+    boxShadow: "0 6px 14px rgba(24,26,32,0.08)",
   },
   bubble: {
     maxWidth: "min(72%, 420px)",

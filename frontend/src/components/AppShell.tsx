@@ -1,8 +1,9 @@
 import type { CSSProperties } from "react";
 import { useEffect, useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { getMyProfile } from "../api/auth/auth";
 import { getReceivedFriendRequests } from "../api/friend";
+import { registerFcmToken } from "../lib/fcm";
 
 const TAB_ITEMS = [
   { to: "/home", label: "Home", icon: "H" },
@@ -14,15 +15,35 @@ const TAB_ITEMS = [
 ] as const;
 
 export default function AppShell() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isFriendChatRoute =
+    location.pathname === "/chat" || location.pathname.startsWith("/chat/");
   const [friendChatNotificationCount, setFriendChatNotificationCount] = useState(0);
 
   useEffect(() => {
-    getMyProfile().catch((error) => {
-      console.warn("Failed to load /api/auth/profile/me", error);
-    });
-  }, []);
+    getMyProfile()
+      .then(() =>
+        registerFcmToken()
+          .catch((error) => {
+            console.warn("Failed to register FCM token", error);
+          })
+      )
+      .catch((error) => {
+        if (isWithdrawalPendingError(error)) {
+          navigate("/withdrawal-pending", { replace: true });
+          return;
+        }
+
+        console.warn("Failed to load /api/auth/profile/me", error);
+      });
+  }, [navigate]);
 
   useEffect(() => {
+    if (isFriendChatRoute) {
+      return undefined;
+    }
+
     let isMounted = true;
 
     async function refreshFriendChatNotifications(): Promise<void> {
@@ -56,7 +77,7 @@ export default function AppShell() {
       window.removeEventListener("storage", handleRefresh);
       window.removeEventListener("krip:friend-chat-notifications-updated", handleRefresh);
     };
-  }, []);
+  }, [isFriendChatRoute]);
 
   return (
     <div style={styles.shell}>
@@ -87,6 +108,25 @@ export default function AppShell() {
         ))}
       </nav>
     </div>
+  );
+}
+
+function isWithdrawalPendingError(error: unknown): boolean {
+  const apiError = error as {
+    status?: number;
+    response?: {
+      status?: number;
+      data?: {
+        status?: string;
+      };
+    };
+  };
+
+  return (
+    apiError.status === 419 ||
+    (apiError.response?.status === 419 &&
+      (!apiError.response.data?.status ||
+        apiError.response.data.status === "withdrawal_pending"))
   );
 }
 

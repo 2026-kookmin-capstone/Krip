@@ -10,6 +10,7 @@ import {
 } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getMyProfile } from "../../api/auth";
+import { getFriendDetail } from "../../api/friend";
 import {
   createDirectChatRoom,
   getChatMessages,
@@ -97,7 +98,10 @@ const ChatContext = createContext<ChatContextValue | null>(null);
 export function ChatProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const isChatRoute = location.pathname === "/chat" || location.pathname.startsWith("/chat/");
+  const shouldConnectChatSocket =
+    location.pathname !== "/" &&
+    location.pathname !== "/login" &&
+    location.pathname !== "/register";
   const socketRef = useRef<WebSocket | null>(null);
   const reconnectTimerRef = useRef<number | null>(null);
   const reconnectAttemptRef = useRef(0);
@@ -116,6 +120,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const pendingReadRef = useRef<{ roomId: string; serverSeq: number } | null>(null);
   const inFlightReadRef = useRef<{ roomId: string; serverSeq: number } | null>(null);
   const lastReadSeqByRoomRef = useRef<Record<string, number>>({});
+  const peerImageCacheRef = useRef<Record<string, string | null>>({});
   const [rooms, setRooms] = useState<ChatRoom[]>([]);
   const [roomsLoading, setRoomsLoading] = useState(false);
   const [connectionState, setConnectionState] = useState<ConnectionState>("closed");
@@ -142,15 +147,54 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     roomPageStateByRoomRef.current = roomPageStateByRoom;
   }, [roomPageStateByRoom]);
 
+  const enrichRoomProfileImages = useCallback(
+    async (roomsToEnrich: ChatRoom[]): Promise<ChatRoom[]> => {
+      return Promise.all(
+        roomsToEnrich.map(async (room) => {
+          const peerId = room.type === "direct" ? room.peer?.user_id : null;
+          if (!peerId || room.peer?.profile_image_url) {
+            return room;
+          }
+
+          if (peerId in peerImageCacheRef.current) {
+            return {
+              ...room,
+              peer: {
+                ...room.peer,
+                profile_image_url: peerImageCacheRef.current[peerId],
+              },
+            };
+          }
+
+          try {
+            const detail = await getFriendDetail(peerId);
+            peerImageCacheRef.current[peerId] = detail.profile_image_url ?? null;
+            return {
+              ...room,
+              peer: {
+                ...room.peer,
+                profile_image_url: detail.profile_image_url ?? null,
+              },
+            };
+          } catch {
+            peerImageCacheRef.current[peerId] = null;
+            return room;
+          }
+        })
+      );
+    },
+    []
+  );
+
   const refreshRooms = useCallback(async (): Promise<void> => {
     setRoomsLoading(true);
     try {
       const response = await getChatRooms();
-      setRooms(response.items);
+      setRooms(await enrichRoomProfileImages(response.items));
     } finally {
       setRoomsLoading(false);
     }
-  }, []);
+  }, [enrichRoomProfileImages]);
 
   const sendSocketPayload = useCallback((payload: Record<string, unknown>): boolean => {
     const socket = socketRef.current;
@@ -173,6 +217,8 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         room_id: roomId,
         up_to_server_seq: serverSeq,
       };
+
+      clearStoredChatUnreadCount(roomId);
 
       if (sendSocketPayload(payload)) {
         inFlightReadRef.current = { roomId, serverSeq };
@@ -407,16 +453,16 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     const existingRoom = roomsRef.current.find((room) => room.chat_room_id === roomId);
     if (existingRoom) return existingRoom;
 
-    const room = await getChatRoom(roomId);
+    const [room] = await enrichRoomProfileImages([await getChatRoom(roomId)]);
     setRooms((current) => moveRoomToTop(upsertRoom(current, room), room.chat_room_id));
     return room;
-  }, []);
+  }, [enrichRoomProfileImages]);
 
   const openDirectChat = useCallback(async (userId: string): Promise<ChatRoom> => {
-    const room = await createDirectChatRoom(userId);
+    const [room] = await enrichRoomProfileImages([await createDirectChatRoom(userId)]);
     setRooms((current) => moveRoomToTop(upsertRoom(current, room), room.chat_room_id));
     return room;
-  }, []);
+  }, [enrichRoomProfileImages]);
 
   const sendMessagePayload = useCallback(
     (clientMsgId: string): void => {
@@ -566,7 +612,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const loadJoinedRoom = useCallback(
     async (roomId: string): Promise<void> => {
       try {
-        const room = await getChatRoom(roomId);
+        const [room] = await enrichRoomProfileImages([await getChatRoom(roomId)]);
         setRooms((current) => moveRoomToTop(upsertRoom(current, room), room.chat_room_id));
       } catch {
         reportChatNetworkError({
@@ -577,7 +623,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         void refreshRooms();
       }
     },
-    [refreshRooms]
+    [enrichRoomProfileImages, refreshRooms]
   );
 
   const confirmOptimisticMessage = useCallback(
@@ -645,6 +691,16 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         case "message.new":
           mergeServerMessages(event.message.chat_room_id, [event.message]);
           updateRoomLastMessage(event.message);
+          if (event.message.sender_id !== currentUserIdRef.current) {
+            if (event.message.chat_room_id !== activeRoomIdRef.current) {
+              incrementStoredChatUnreadCount(event.message.chat_room_id);
+            }
+            dispatchChatToast(
+              event.message,
+              getRoomTitle(roomsRef.current, event.message.chat_room_id),
+              getRoomProfileImageUrl(roomsRef.current, event.message.chat_room_id)
+            );
+          }
           if (event.message.chat_room_id === activeRoomIdRef.current) {
             sendRead(event.message.chat_room_id, event.message.server_seq);
           }
@@ -761,7 +817,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   }, [handleSocketEvent]);
 
   useEffect(() => {
-    if (!isChatRoute) {
+    if (!shouldConnectChatSocket) {
       shouldReconnectRef.current = false;
       if (reconnectTimerRef.current) {
         window.clearTimeout(reconnectTimerRef.current);
@@ -810,6 +866,14 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         handleSocketEventRef.current(parseSocketEvent(socketEvent.data));
       };
 
+      ws.onerror = () => {
+        reportChatNetworkError({
+          action: "websocket_error",
+          detail: "WebSocket connection failed.",
+          extra: getChatWebSocketUrl(),
+        });
+      };
+
       ws.onclose = (socketEvent) => {
         if (socketRef.current === ws) socketRef.current = null;
 
@@ -844,10 +908,19 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         window.clearTimeout(reconnectTimerRef.current);
         reconnectTimerRef.current = null;
       }
-      socketRef.current?.close(1000);
+      const socket = socketRef.current;
+      if (socket) {
+        if (socket.readyState === WebSocket.CONNECTING) {
+          socket.onopen = () => socket.close(1000);
+          socket.onmessage = null;
+          socket.onclose = null;
+        } else {
+          socket.close(1000);
+        }
+      }
       socketRef.current = null;
     };
-  }, [isChatRoute, navigate, refreshRooms]);
+  }, [navigate, refreshRooms, shouldConnectChatSocket]);
 
   useEffect(() => {
     return () => {
@@ -898,6 +971,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useChat(): ChatContextValue {
   const context = useContext(ChatContext);
   if (!context) {
@@ -925,9 +999,7 @@ function appendMessagesDeduped(
   const nextMessages = [...messages];
 
   incomingMessages.forEach((incomingMessage) => {
-    const existingIndex = nextMessages.findIndex(
-      (message) => message.message_id === incomingMessage.message_id
-    );
+    const existingIndex = findExistingServerMessageIndex(nextMessages, incomingMessage);
 
     if (existingIndex >= 0) {
       nextMessages[existingIndex] = {
@@ -957,6 +1029,25 @@ function appendMessagesDeduped(
   return nextMessages.sort(sortByServerSeq);
 }
 
+function findExistingServerMessageIndex(
+  messages: ChatMessage[],
+  incomingMessage: ChatMessage
+): number {
+  if (incomingMessage.server_seq !== Number.MAX_SAFE_INTEGER) {
+    const serverSeqIndex = messages.findIndex(
+      (message) => message.server_seq === incomingMessage.server_seq
+    );
+
+    if (serverSeqIndex >= 0) {
+      return serverSeqIndex;
+    }
+  }
+
+  return messages.findIndex(
+    (message) => message.message_id === incomingMessage.message_id
+  );
+}
+
 function findMatchingOptimisticMessageIndex(
   messages: ChatMessage[],
   serverMessage: ChatMessage,
@@ -966,41 +1057,14 @@ function findMatchingOptimisticMessageIndex(
     return -1;
   }
 
-  const candidates = messages
-    .map((message, index) => ({ message, index }))
-    .filter(({ message }) => {
-      if (!message.client_msg_id || message.status !== "sending") return false;
-      if (message.chat_room_id !== serverMessage.chat_room_id) return false;
-      if (message.sender_id !== serverMessage.sender_id) return false;
-      if (message.type !== serverMessage.type) return false;
-      if (message.content !== serverMessage.content) return false;
+  return messages.findIndex((message) => {
+    if (!message.client_msg_id || message.status !== "sending") return false;
+    if (message.chat_room_id !== serverMessage.chat_room_id) return false;
+    if (message.sender_id !== serverMessage.sender_id) return false;
+    if (message.type !== serverMessage.type) return false;
 
-      const optimisticTime = Date.parse(message.created_at);
-      const serverTime = Date.parse(serverMessage.created_at);
-      if (!Number.isFinite(optimisticTime) || !Number.isFinite(serverTime)) {
-        return true;
-      }
-
-      return Math.abs(serverTime - optimisticTime) <= 10 * 60 * 1000;
-    })
-    .sort((a, b) => {
-      const aDistance = getTimeDistance(a.message.created_at, serverMessage.created_at);
-      const bDistance = getTimeDistance(b.message.created_at, serverMessage.created_at);
-      return aDistance - bDistance;
-    });
-
-  return candidates[0]?.index ?? -1;
-}
-
-function getTimeDistance(a: string, b: string): number {
-  const first = Date.parse(a);
-  const second = Date.parse(b);
-
-  if (!Number.isFinite(first) || !Number.isFinite(second)) {
-    return Number.MAX_SAFE_INTEGER;
-  }
-
-  return Math.abs(first - second);
+    return message.content === serverMessage.content;
+  });
 }
 
 function getReplacedClientMsgIds(
@@ -1016,6 +1080,91 @@ function getReplacedClientMsgIds(
 
 function sortByServerSeq(a: ChatMessage, b: ChatMessage): number {
   return a.server_seq - b.server_seq;
+}
+
+function dispatchChatToast(
+  message: ChatMessage,
+  roomTitle: string,
+  imageUrl?: string | null
+): void {
+  window.dispatchEvent(
+    new CustomEvent("krip:chat-message-toast", {
+      detail: {
+        roomId: message.chat_room_id,
+        title: roomTitle || "New message",
+        body: formatChatToastBody(message),
+        imageUrl,
+      },
+    })
+  );
+}
+
+function incrementStoredChatUnreadCount(roomId: string): void {
+  const storageKey = "krip-chat-unread-by-room";
+  let unreadByRoom: Record<string, number> = {};
+
+  try {
+    const raw = window.localStorage.getItem(storageKey);
+    const parsed = raw ? (JSON.parse(raw) as unknown) : {};
+    if (parsed && typeof parsed === "object") {
+      unreadByRoom = parsed as Record<string, number>;
+    }
+  } catch {
+    unreadByRoom = {};
+  }
+
+  unreadByRoom[roomId] = Math.max(0, Number(unreadByRoom[roomId] || 0)) + 1;
+  window.localStorage.setItem(storageKey, JSON.stringify(unreadByRoom));
+  window.dispatchEvent(new Event("krip:friend-chat-notifications-updated"));
+}
+
+function clearStoredChatUnreadCount(roomId: string): void {
+  const storageKey = "krip-chat-unread-by-room";
+
+  try {
+    const raw = window.localStorage.getItem(storageKey);
+    const parsed = raw ? (JSON.parse(raw) as unknown) : {};
+    if (!parsed || typeof parsed !== "object") return;
+
+    const unreadByRoom = parsed as Record<string, number>;
+    if (!(roomId in unreadByRoom)) return;
+
+    delete unreadByRoom[roomId];
+    window.localStorage.setItem(storageKey, JSON.stringify(unreadByRoom));
+    window.dispatchEvent(new Event("krip:friend-chat-notifications-updated"));
+  } catch {
+    window.localStorage.removeItem(storageKey);
+    window.dispatchEvent(new Event("krip:friend-chat-notifications-updated"));
+  }
+}
+
+function getRoomTitle(rooms: ChatRoom[], roomId: string): string {
+  const room = rooms.find((item) => item.chat_room_id === roomId);
+  return room?.title || room?.peer?.user_name || "New message";
+}
+
+function getRoomProfileImageUrl(rooms: ChatRoom[], roomId: string): string | null {
+  const room = rooms.find((item) => item.chat_room_id === roomId);
+  return room?.type === "direct" ? room.peer?.profile_image_url ?? null : null;
+}
+
+function formatChatToastBody(message: ChatMessage): string {
+  if (message.deleted_at) return "Deleted message";
+  if (message.type === "image") return "Sent an image";
+  if (message.type === "file") return "Sent a file";
+  if (message.type === "system") return "System message";
+
+  if (typeof message.content === "string") {
+    return message.content;
+  }
+
+  if (message.content && typeof message.content === "object") {
+    const value = message.content as Record<string, unknown>;
+    if (typeof value.text === "string") return value.text;
+    if (typeof value.message === "string") return value.message;
+  }
+
+  return "New message";
 }
 
 function getLastServerSeq(messages: ChatMessage[]): number {
