@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Any, List, Optional
 from pydantic import BaseModel, ConfigDict, Field
 from datetime import datetime
 
@@ -93,6 +93,7 @@ class ChatRoomPeerResponse(BaseModel):
     """1:1 방 상대방 프로필. 탈퇴한 경우 필드가 모두 null — 클라는 '탈퇴한 사용자' 로 표시."""
     user_id: Optional[str] = Field(None, description="상대 유저 ID (탈퇴 시 null)")
     user_name: Optional[str] = Field(None, description="상대 닉네임 (탈퇴 시 null)")
+    profile_image_url: Optional[str] = Field(None, description="프로필 이미지 URL (없으면 null)")
 
 
 class LastMessagePreviewResponse(BaseModel):
@@ -101,7 +102,13 @@ class LastMessagePreviewResponse(BaseModel):
     server_seq: int = Field(..., description="방 내부 단조 시퀀스")
     sender_id: Optional[str] = Field(None, description="보낸 유저 ID (시스템 메시지면 null)")
     type: str = Field(..., description="메시지 종류 (text / image / file / system)")
-    content: Optional[str] = Field(None, description="미리보기 본문 (삭제된 메시지는 null)")
+    content: Optional[Any] = Field(
+        None,
+        description=(
+            "미리보기 본문 — type 에 따라 다름. text=str, image/file=dict, system=object, "
+            "삭제된 메시지는 null"
+        ),
+    )
     created_at: datetime = Field(..., description="보낸 시각")
 
 
@@ -122,6 +129,9 @@ class ChatRoomResponse(BaseModel):
     effective_last_at: datetime = Field(
         ..., description="정렬 기준 시각 — last_message_at 없으면 created_at 으로 fallback"
     )
+    notification_muted: bool = Field(
+        ..., description="이 방의 알림 차단 여부 (true = 이 방 푸시 차단)"
+    )
 
 
 class ChatRoomListResponse(BaseModel):
@@ -129,3 +139,16 @@ class ChatRoomListResponse(BaseModel):
     next_cursor: Optional[str] = Field(
         None, description="다음 페이지 커서 (마지막 페이지면 null). Phase 1 은 항상 null"
     )
+
+
+# ──────────────────── Response — 참여자 / 초대 가능 친구 ────────────────────
+
+class RoomMemberResponse(BaseModel):
+    """그룹 방 참여자 / 초대 가능 친구 목록의 공통 미리보기 응답."""
+    user_id: str = Field(..., description="유저 ID")
+    user_name: str = Field(..., description="유저 이름")
+    profile_image_url: Optional[str] = Field(None, description="프로필 이미지 URL (없으면 null)")
+
+
+class RoomMemberListResponse(BaseModel):
+    items: List[RoomMemberResponse] = Field(..., description="유저 목록")

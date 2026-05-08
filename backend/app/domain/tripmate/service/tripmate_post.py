@@ -252,6 +252,9 @@ class TripmatePostService:
             except Exception as e:
                 logger.warning("삭제 시 이미지 정리 실패 (post_id={}): {}", post_id, e)
 
+        # 알림은 cascade 하지 않음 — 좋아요 취소 알림 보존 정책과 대칭. stale 알림은
+        # deep link 404 + TTL 30일로 자연 정리.
+
 
     # ──────────────────── 게시글 Display 토글 ────────────────────
 

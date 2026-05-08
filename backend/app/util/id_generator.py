@@ -70,3 +70,38 @@ def generate_session_id() -> str:
     timestamp = int(datetime.now().timestamp())
     unique_part = uuid.uuid4().hex[:8]
     return f"WS_{timestamp}_{unique_part}"
+
+
+def generate_tour_plan_id() -> str:
+    """여행 플랜 고유 ID 생성"""
+    timestamp = int(datetime.now().timestamp())
+    unique_part = uuid.uuid4().hex[:8]
+    return f"TP_{timestamp}_{unique_part}"
+
+
+def generate_tour_plan_item_id() -> str:
+    """여행 플랜 카드(아이템) 고유 ID 생성"""
+    timestamp = int(datetime.now().timestamp())
+    unique_part = uuid.uuid4().hex[:8]
+    return f"TPI_{timestamp}_{unique_part}"
+
+
+def generate_fcm_token_id() -> str:
+    """FCM 디바이스 토큰 row 고유 ID 생성"""
+    timestamp = int(datetime.now().timestamp())
+    unique_part = uuid.uuid4().hex[:8]
+    return f"FCM_{timestamp}_{unique_part}"
+
+
+def generate_feed_post_id() -> str:
+    """피드 게시물 고유 ID 생성 — timestamp prefix 라 문자열 정렬 = 시간순."""
+    timestamp = int(datetime.now().timestamp())
+    unique_part = uuid.uuid4().hex[:8]
+    return f"FDP_{timestamp}_{unique_part}"
+
+
+def generate_feed_post_comment_id() -> str:
+    """피드 게시물 댓글 고유 ID 생성 — prefix `FDC_` (Feed Comment)."""
+    timestamp = int(datetime.now().timestamp())
+    unique_part = uuid.uuid4().hex[:8]
+    return f"FDC_{timestamp}_{unique_part}"

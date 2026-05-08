@@ -40,6 +40,7 @@ class FriendshipRepositoryMockFactory:
         mock.save.return_value = None
         mock.find_by_id.return_value = None
         mock.find_between.return_value = None
+        mock.find_friendships_with.return_value = {}
         mock.find_friends.return_value = []
         mock.find_received_requests.return_value = []
         mock.find_sent_requests.return_value = []

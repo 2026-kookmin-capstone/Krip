@@ -11,19 +11,24 @@ from app.middleware.tracking import (
     SecurityHeadersMiddleware,
 )
 from app.middleware.auth import BearerTokenMiddleware, LoginCookieMiddleware, RegisterCheckMiddleware
+from app.domain.chat.worker.reconcile import (
+    start_reconcile_scheduler,
+    stop_reconcile_scheduler,
+)
+from app.domain.auth.worker.withdraw_purge import (
+    start_withdraw_purge_scheduler,
+    stop_withdraw_purge_scheduler,
+)
+from app.database.session import init_mongodb, close_mongodb
 import app.database.model # Relation Lazy Load 문제 해결하기 위한 import!
 from app.core.ai.tour_planner.load import TourPlanner
 from app.core.logger import setup_logging, get_logger
 from app.core.ai.menu_ocr.load import MenuOcr
 from app.core.redis import get_redis_client, get_redis_dedupe_client, close_redis
+from app.core.fcm import init_fcm, close_fcm
+from app.core.chat.lua_script import lua_scripts
 from app.container import Container
 from app.config.setting import settings
-from app.database.session import init_mongodb, close_mongodb
-from app.core.chat.lua_script import lua_scripts
-from app.domain.chat.worker.reconcile import (
-    start_reconcile_scheduler,
-    stop_reconcile_scheduler,
-)
 from app.api.v1.router import api_router
 
 
@@ -47,9 +52,16 @@ def create_app() -> FastAPI:
         await get_redis_dedupe_client()
         lua_scripts.load(hot_redis)
 
+        # FCM Admin SDK 초기화 — 워커가 푸시를 보낼 수 있어야 하므로 워커 시작 전에 호출.
+        init_fcm()
+
         # 채팅 reconcile 워커 — last_message_* 정합성 복구 + unread 복구 entry point 주입
         # (ws.py 의 recover_unread 경로도 같은 session_factory 공유)
         start_reconcile_scheduler(app.container.session_factory())
+
+        # 탈퇴 영구 삭제 워커 — 매일 KST 04:00 발화. RDB / Mongo / S3 / Redis 모두 사용하므로
+        # init_mongodb / Redis pre-warm 이후에 시작.
+        start_withdraw_purge_scheduler(app.container.session_factory())
 
         MenuOcr().load()
         await TourPlanner().load()
@@ -57,8 +69,10 @@ def create_app() -> FastAPI:
 
         yield
 
-        # shutdown — reconcile 이 Mongo/Redis 를 쓰므로 이 둘을 닫기 전에 먼저 멈춘다
+        # shutdown — 워커들이 Mongo/Redis 를 쓰므로 이 둘을 닫기 전에 먼저 멈춘다
+        await stop_withdraw_purge_scheduler()
         await stop_reconcile_scheduler()
+        close_fcm()
         await close_mongodb()
         await close_redis()
         logger.info("Application shutting down")
@@ -75,13 +89,26 @@ def create_app() -> FastAPI:
         "app.domain.tripmate.router.tripmate_image",
         "app.domain.menu_ai.router.menu_ocr",
         "app.domain.tour.router.place",
+        "app.domain.tour.router.recommend",
         "app.domain.tour.router.tour_search_history",
+        "app.domain.tour.router.tour_plan",
         "app.domain.friend.router.friendship",
         "app.domain.friend.router.user_block",
         "app.domain.friend.router.detail",
+        "app.domain.friend.router.search",
+        "app.domain.friend.router.search_history",
         "app.domain.chat.router.room",
         "app.domain.chat.router.message",
         "app.domain.chat.router.ws",
+        "app.domain.public.router.share",
+        "app.domain.notification.router.fcm_token",
+        "app.domain.notification.router.mute",
+        "app.domain.notification.router.inbox",
+        "app.domain.feed.router.feed_post",
+        "app.domain.feed.router.feed_user",
+        "app.domain.feed.router.feed_post_like",
+        "app.domain.feed.router.feed_post_comment",
+        "app.domain.feed.router.feed_popup",
     ])
 
 

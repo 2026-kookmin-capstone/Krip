@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Literal, Optional
 import re
 
 from app.domain.tour.model.place import Place
@@ -6,6 +6,36 @@ from app.domain.tour.model.place import Place
 
 # 장소 조회 개수
 PAGE_SIZE = 30
+
+
+# ──────────────────── 음식 필터 정의 ────────────────────
+# 식당(types에 'restaurant' 포함)에 한해 음식 옵션을 강제한다.
+# 식당이 아닌 장소(공원/박물관 등)는 영향을 받지 않는다.
+# 코드는 ``app.core.ai.tour_planner.v2.data_state.FoodPreference``와 동일.
+FOOD_FILTER_TYPES: dict[str, list[str]] = {
+    "halal": ["halal_restaurant"],
+    "vegetarian": ["vegan_restaurant", "vegetarian_restaurant"],
+}
+
+
+def _build_food_filter_query(food_filter: Optional[str]) -> Optional[dict]:
+    """음식 필터를 MongoDB 쿼리로 변환.
+
+    - halal: 식당이 아니면 통과 OR types에 halal_restaurant
+    - vegetarian: 식당이 아니면 통과 OR types에 vegan_restaurant/vegetarian_restaurant
+    - None / any: 필터 미적용
+    """
+    if not food_filter or food_filter == "any":
+        return None
+    allowed = FOOD_FILTER_TYPES.get(food_filter)
+    if not allowed:
+        return None
+    return {
+        "$or": [
+            {"types": {"$nin": ["restaurant"]}},
+            {"types": {"$in": allowed}},
+        ]
+    }
 
 
 class PlaceRepository:
@@ -23,13 +53,24 @@ class PlaceRepository:
         lng: float,
         cursor: Optional[str] = None,
         max_distance: Optional[float] = None,
+        food_filter: Optional[Literal["halal", "vegetarian", "any"]] = None,
+        limit: int = PAGE_SIZE,
     ) -> list[dict]:
-        """현재 위치 기준 가까운 장소 30개 조회 (거리순)
+        """현재 위치 기준 가까운 장소 조회 (거리순)
 
         Args:
             max_distance: 최대 검색 반경 (미터 단위, 미지정 시 제한 없음)
+            food_filter: 식당에 한해 적용되는 음식 옵션 (halal/vegetarian/any)
+            limit: 반환 개수. default는 PAGE_SIZE(=30, 사용자 화면 페이지네이션용).
+                planner가 카테고리 그룹별 cap을 채우기 위해 후보를 모을 때는 더 큰 값을 넘긴다.
         """
-        return await self._aggregate_nearby(lat, lng, cursor=cursor, max_distance=max_distance)
+        return await self._aggregate_nearby(
+            lat, lng,
+            cursor=cursor,
+            max_distance=max_distance,
+            food_filter=food_filter,
+            limit=limit,
+        )
 
     # ──────────────────── Read (키워드 검색 + 거리순) ────────────────────
 
@@ -79,6 +120,8 @@ class PlaceRepository:
         query: Optional[dict] = None,
         cursor: Optional[str] = None,
         max_distance: Optional[float] = None,
+        food_filter: Optional[Literal["halal", "vegetarian", "any"]] = None,
+        limit: int = PAGE_SIZE,
     ) -> list[dict]:
         """$geoNear 기반 거리순 조회 공통 로직
 
@@ -86,7 +129,7 @@ class PlaceRepository:
             1. $geoNear  — 기준점으로부터 거리 계산 + 거리순 정렬
             2. $sort     — 동일 거리 내 place_id 오름차순 (정렬 안정성 보장)
             3. $match    — 커서 이후 데이터만 필터링
-            4. $limit    — PAGE_SIZE만큼 제한
+            4. $limit    — limit만큼 제한 (default PAGE_SIZE=30)
         """
         collection = Place.get_motor_collection()
 
@@ -105,8 +148,14 @@ class PlaceRepository:
             }
         }
 
-        if query:
+        # 음식 필터 + 기존 query를 $and로 결합
+        food_query = _build_food_filter_query(food_filter)
+        if query and food_query:
+            geo_near["$geoNear"]["query"] = {"$and": [query, food_query]}
+        elif query:
             geo_near["$geoNear"]["query"] = query
+        elif food_query:
+            geo_near["$geoNear"]["query"] = food_query
 
         if max_distance is not None:
             geo_near["$geoNear"]["maxDistance"] = max_distance
@@ -135,9 +184,9 @@ class PlaceRepository:
             })
 
         # ── $limit 스테이지 ──
-        pipeline.append({"$limit": PAGE_SIZE})
+        pipeline.append({"$limit": limit})
 
-        return await collection.aggregate(pipeline).to_list(PAGE_SIZE)
+        return await collection.aggregate(pipeline).to_list(limit)
 
 
     @staticmethod

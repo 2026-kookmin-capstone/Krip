@@ -200,6 +200,7 @@ class TestInviteMembers:
             is_left=True,
             last_read_message_server_seq=10,
             joined_at=None,
+            notification_muted=True,  # 떠나기 전 mute 했었음
         )
         chat_member_repo_mock.find.return_value = existing
         redis_mock.get.return_value = "30"  # current_seq=30
@@ -212,6 +213,8 @@ class TestInviteMembers:
         assert existing.is_left is False
         assert existing.last_read_message_server_seq == 10  # 유지
         assert existing.joined_at is not None
+        # 재가입 시 mute 는 NULL 로 리셋 — last_read 와 다른 정책 (docstring 참조).
+        assert existing.notification_muted is None
         # 재초대 unread = 30 - 10 = 20
         p = redis_mock._pipes[-1]
         p.hset.assert_called()

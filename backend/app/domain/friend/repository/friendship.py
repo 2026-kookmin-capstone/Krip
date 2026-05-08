@@ -1,7 +1,7 @@
 from typing import Iterable, Optional
-from sqlalchemy import select, or_, and_, case
 from sqlalchemy.orm import joinedload
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select, or_, and_, case
 
 from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 from app.domain.auth.model.user import User
@@ -30,6 +30,27 @@ class FriendshipRepository:
     async def find_by_id(self, friendship_id: str) -> Optional[Friendship]:
         """friendship_id로 단건 조회"""
         return await self.session.get(Friendship, friendship_id)
+
+
+    async def find_accepted_friend_ids(self, me_id: str) -> set[str]:
+        """`me_id` 의 모든 ACCEPTED 친구 user_id 집합.
+
+        그룹 방 초대 가능 친구 후보 추출용 — 친구 ID 만 필요할 때 프로필 join 없이
+        빠르게 가져와 차집합 연산에 쓴다.
+        """
+        peer_id = case(
+            (Friendship.requester_id == me_id, Friendship.addressee_id),
+            else_=Friendship.requester_id,
+        )
+        stmt = select(peer_id).where(
+            Friendship.status == FriendshipStatus.ACCEPTED,
+            or_(
+                Friendship.requester_id == me_id,
+                Friendship.addressee_id == me_id,
+            ),
+        )
+        result = await self.session.execute(stmt)
+        return set(result.scalars().all())
 
 
     async def find_accepted_friend_ids_with(
@@ -64,6 +85,40 @@ class FriendshipRepository:
         )
         result = await self.session.execute(stmt)
         return set(result.scalars().all())
+
+
+    async def find_friendships_with(
+        self,
+        me_id: str,
+        target_ids: Iterable[str],
+    ) -> dict[str, "Friendship"]:
+        """`me_id` 와 `target_ids` 사이의 친구 관계 (방향 무관) 일괄 조회.
+
+        검색 결과 viewer 기준 friendship_status / is_requester 표시용 — N 단건 조회를
+        1 쿼리로 묶는다. ``{peer_id: Friendship}`` 맵으로 반환하며, 관계 없는 peer 는
+        dict 에 부재.
+        """
+        targets = list(target_ids)
+        if not targets:
+            return {}
+
+        stmt = select(Friendship).where(
+            or_(
+                and_(
+                    Friendship.requester_id == me_id,
+                    Friendship.addressee_id.in_(targets),
+                ),
+                and_(
+                    Friendship.addressee_id == me_id,
+                    Friendship.requester_id.in_(targets),
+                ),
+            )
+        )
+        result = await self.session.execute(stmt)
+        return {
+            (f.addressee_id if f.requester_id == me_id else f.requester_id): f
+            for f in result.scalars().all()
+        }
 
 
     async def find_between(

@@ -40,6 +40,14 @@ def make_chat_room_repo_mock() -> AsyncMock:
 def make_chat_member_repo_mock() -> AsyncMock:
     mock = AsyncMock()
     mock.is_active_member.return_value = False
+    mock.find_active_member_users.return_value = []
+    mock.find_active_member_ids.return_value = []
+    return mock
+
+
+def make_friendship_repo_mock() -> AsyncMock:
+    mock = AsyncMock()
+    mock.find_accepted_friend_ids.return_value = set()
     return mock
 
 
@@ -61,4 +69,5 @@ def make_user_repo_mock() -> AsyncMock:
 def make_redis_mock() -> MagicMock:
     redis = MagicMock(name="redis")
     redis.hgetall = AsyncMock(return_value={})
+    redis.hget = AsyncMock(return_value=None)
     return redis

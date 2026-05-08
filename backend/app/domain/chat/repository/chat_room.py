@@ -63,11 +63,12 @@ class ChatRoomRepository:
         self,
         user_id: str,
         limit: int = PAGE_SIZE,
-    ) -> list[tuple[ChatRoom, Optional[str]]]:
+    ) -> list[tuple[ChatRoom, Optional[str], Optional[bool]]]:
         """유저가 속한 활성 방 목록을 effective_last_at DESC 로 정렬.
 
-        반환값은 `(ChatRoom, peer_user_id)` 튜플 — 1:1 방은 상대방 user_id 를 함께
-        계산해 반환한다 (그룹방은 None). peer 프로필 배치 조회는 Service 계층에서.
+        반환값은 `(ChatRoom, peer_user_id, notification_muted)` 튜플 — 이미 JOIN 한
+        `chat_room_member.notification_muted` 를 함께 SELECT 해 N+1 없이 mute 상태까지
+        한 번에 가져온다. 1:1 방은 상대방 user_id 를 함께 계산 (그룹방은 None).
 
         LIMIT `PAGE_SIZE` 의 단일 페이지 500개.
         커서 페이지네이션은 정식 출시 시 도입 예정 — 그때 PAGE_SIZE 도 30으로 환원.
@@ -85,7 +86,7 @@ class ChatRoomRepository:
         ).label("peer_user_id")
 
         stmt = (
-            select(ChatRoom, peer_user_id)
+            select(ChatRoom, peer_user_id, ChatRoomMember.notification_muted)
             .join(ChatRoomMember, ChatRoomMember.chat_room_id == ChatRoom.chat_room_id)
             .where(
                 ChatRoomMember.user_id == user_id,
@@ -96,7 +97,7 @@ class ChatRoomRepository:
         )
 
         result = await self.session.execute(stmt)
-        return [(row[0], row[1]) for row in result.all()]
+        return [(row[0], row[1], row[2]) for row in result.all()]
 
 
     # ──────────────────── Update ────────────────────

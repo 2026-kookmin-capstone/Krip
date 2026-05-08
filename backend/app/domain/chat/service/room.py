@@ -234,6 +234,9 @@ class RoomService:
         재초대 (기존 is_left=true): `last_read` 유지 — 탈퇴 전 읽은 시점 보존. unread 는
         `current_seq - last_read` 로 재계산 (naive, Phase 3 의 recover_unread_for_user
         로 정밀화 예정).
+        재초대 시 `notification_muted` 는 NULL 로 리셋 — 새로 들어오는 시점이라 과거의
+        mute 선호를 무의식적으로 끌고 가는 게 더 어색함. 다시 끄고 싶으면 사용자가
+        명시적으로 토글.
 
         Returns:
             (invited, skipped_already_member) — 실제 초대된 / 이미 멤버라 스킵된
@@ -277,6 +280,7 @@ class RoomService:
             if existing is not None and existing.is_left:
                 existing.is_left = False
                 existing.joined_at = datetime.now(timezone.utc)
+                existing.notification_muted = None
                 rejoined.append((uid, existing.last_read_message_server_seq or 0))
                 invited.append(uid)
             else:
@@ -526,7 +530,10 @@ class RoomService:
 
     @staticmethod
     def _to_group_dto(room: ChatRoom) -> ChatRoomData:
-        """그룹 방 생성 직후 DTO — peer 는 항상 None, last_message 도 None."""
+        """그룹 방 생성 직후 DTO — peer 는 항상 None, last_message 도 None.
+
+        notification_muted 는 방금 만든 멤버 row 라 NULL → False 로 노출.
+        """
         return ChatRoomData(
             chat_room_id=room.chat_room_id,
             type=room.type,
@@ -536,6 +543,7 @@ class RoomService:
             unread_count=0,
             last_message_at=room.last_message_at,
             effective_last_at=room.effective_last_at or room.created_at,
+            notification_muted=False,
         )
 
 
@@ -543,11 +551,17 @@ class RoomService:
 
     @staticmethod
     async def _to_dto(room: ChatRoom, me_id: str, peer) -> ChatRoomData:
-        """DTO 변환. 신규 1:1 방은 last_message 가 항상 None."""
-        # peer 가 User ORM 객체 (User + detail) 로 오는 경우 detail 에서 user_name 추출
+        """DTO 변환. 신규 1:1 방은 last_message 가 항상 None.
+
+        idempotent 재활용 케이스에도 mute 는 False 로 응답한다 — 직전에 직접 끄는
+        UX 가 아니므로 방 생성 응답에서 차단 상태를 보일 필요가 없다고 판단.
+        클라이언트는 list/get 으로 정확한 mute 를 다시 받는다.
+        """
+        # peer 가 User ORM 객체 (User + detail) 로 오는 경우 detail 에서 프로필 추출
         peer_dto = ChatRoomPeerData(
             user_id=peer.user_id,
             user_name=peer.detail.user_name if peer.detail else None,
+            profile_image_url=peer.detail.profile_image_url if peer.detail else None,
         )
         return ChatRoomData(
             chat_room_id=room.chat_room_id,
@@ -558,4 +572,5 @@ class RoomService:
             unread_count=0,
             last_message_at=room.last_message_at,
             effective_last_at=room.effective_last_at or room.created_at,
+            notification_muted=False,
         )
