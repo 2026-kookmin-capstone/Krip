@@ -29,8 +29,6 @@ import {
 } from "../api/feed";
 
 const DEFAULT_PROFILE_IMAGE_URL = "/default-profile.svg";
-
-
 export default function MyPage() {
   const navigate = useNavigate();
   const profileImageInputRef = useRef<HTMLInputElement>(null);
@@ -449,7 +447,11 @@ export default function MyPage() {
             disabled={isUploadingProfileImage || isDeletingProfileImage}
             aria-label="Change profile photo"
           >
-            <img src={profileImageUrl} alt="" style={styles.avatarImage} />
+            {profileImageUrl ? (
+              <img src={profileImageUrl} alt="" style={styles.avatarImage} />
+            ) : (
+              <span style={styles.avatarText}>{avatarText}</span>
+            )}
             {isUploadingProfileImage ? (
               <span style={styles.avatarOverlay}>Uploading...</span>
             ) : isDeletingProfileImage ? (

@@ -1,67 +1,85 @@
-export type RecommendationCandidate = {
+export interface RecommendationProfile {
+  user_id?: string | null;
+  user_name?: string | null;
+  nationality?: string | null;
+  travel_styles?: string[] | null;
+  preferred_gender?: string | null;
+  preferred_age_min?: number | null;
+  preferred_age_max?: number | null;
+}
+
+export interface RecommendationCandidate extends RecommendationProfile {
+  profile_image_url?: string | null;
+  age?: number | null;
+  gender?: string | null;
+  status_message?: string | null;
+  friendship_status?: string | null;
+}
+
+export interface RecommendedTraveler extends RecommendationCandidate {
   user_id: string;
   user_name: string;
-  profile_image_url: string | null;
-  travel_styles: string[];
-  nationality: string;
-  [key: string]: unknown;
-};
-
-export type RecommendedTraveler = RecommendationCandidate & {
   similarity_score: number;
-};
-
-const TRAVEL_STYLE_KEYS = [
-  "activity",
-  "relaxation",
-  "tourism",
-  "shopping",
-  "food",
-] as const;
+}
 
 export function recommendTravelers(
-  currentUser: {
-    user_id?: string | null;
-    travel_styles?: string[];
-    nationality?: string;
-  },
+  profile: RecommendationProfile,
   candidates: RecommendationCandidate[],
-  topN = 10
+  limit = 10
 ): RecommendedTraveler[] {
-  const myVector = toTravelStyleVector(currentUser.travel_styles ?? []);
+  const myId = profile.user_id ?? "";
 
   return candidates
-    .filter((candidate) => candidate.user_id !== currentUser.user_id)
-    .filter((candidate) => candidate.travel_styles.length > 0)
-    .map((candidate) => {
-      const styleScore = cosineSimilarity(
-        myVector,
-        toTravelStyleVector(candidate.travel_styles)
-      );
-      const nationalityBonus =
-        currentUser.nationality && candidate.nationality === currentUser.nationality
-          ? 0.05
-          : 0;
-
-      return {
-        ...candidate,
-        similarity_score: Math.min(1, styleScore + nationalityBonus),
-      };
-    })
-    .sort((a, b) => b.similarity_score - a.similarity_score)
-    .slice(0, topN);
+    .filter((candidate): candidate is RecommendationCandidate & { user_id: string } =>
+      Boolean(candidate.user_id && candidate.user_id !== myId)
+    )
+    .map((candidate) => ({
+      ...candidate,
+      user_name: candidate.user_name || "Unknown",
+      similarity_score: scoreCandidate(profile, candidate),
+    }))
+    .sort((left, right) => right.similarity_score - left.similarity_score)
+    .slice(0, limit);
 }
 
-function toTravelStyleVector(travelStyles: string[]): number[] {
-  return TRAVEL_STYLE_KEYS.map((style) => (travelStyles.includes(style) ? 1 : 0));
+function scoreCandidate(
+  profile: RecommendationProfile,
+  candidate: RecommendationCandidate
+): number {
+  let score = 0;
+  let weight = 0;
+
+  const styleScore = overlapScore(profile.travel_styles, candidate.travel_styles);
+  score += styleScore * 0.6;
+  weight += 0.6;
+
+  if (profile.nationality && candidate.nationality) {
+    score += (profile.nationality === candidate.nationality ? 1 : 0.35) * 0.2;
+    weight += 0.2;
+  }
+
+  if (
+    typeof candidate.age === "number" &&
+    typeof profile.preferred_age_min === "number" &&
+    typeof profile.preferred_age_max === "number"
+  ) {
+    const inRange =
+      candidate.age >= profile.preferred_age_min && candidate.age <= profile.preferred_age_max;
+    score += (inRange ? 1 : 0.45) * 0.2;
+    weight += 0.2;
+  }
+
+  if (weight <= 0) return 0;
+  return Math.max(0, Math.min(1, score / weight));
 }
 
-function cosineSimilarity(a: number[], b: number[]): number {
-  const dot = a.reduce((sum, value, index) => sum + value * b[index], 0);
-  const normA = Math.sqrt(a.reduce((sum, value) => sum + value * value, 0));
-  const normB = Math.sqrt(b.reduce((sum, value) => sum + value * value, 0));
+function overlapScore(left?: string[] | null, right?: string[] | null): number {
+  if (!left?.length || !right?.length) return 0;
 
-  if (normA === 0 || normB === 0) return 0;
+  const leftSet = new Set(left.map((item) => item.toLowerCase()));
+  const rightSet = new Set(right.map((item) => item.toLowerCase()));
+  const intersection = [...leftSet].filter((item) => rightSet.has(item)).length;
+  const union = new Set([...leftSet, ...rightSet]).size;
 
-  return dot / (normA * normB);
+  return union > 0 ? intersection / union : 0;
 }

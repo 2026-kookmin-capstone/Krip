@@ -1,4 +1,4 @@
-import { removeToken } from "../../utils/tokens";
+import { readAccessToken, removeToken } from "../../utils/tokens";
 import {
   API_BASE_URL,
   AUTHORIZATION_BEARER,
@@ -189,20 +189,26 @@ function toErrorMessage(value: unknown, fallback: string): string {
 }
 
 function getAuthHeaders(headers: RequestHeaders = {}): RequestHeaders {
-  if (!AUTHORIZATION_BEARER) return headers;
+  const token = readAccessToken();
+  const authorization = token ? `Bearer ${token}` : AUTHORIZATION_BEARER;
+  if (!authorization) return headers;
 
   return {
     ...headers,
-    Authorization: AUTHORIZATION_BEARER,
+    Authorization: authorization,
   };
 }
 
 function getTourPlacesHeaders(headers: RequestHeaders = {}): RequestHeaders {
-  if (!TOUR_PLACES_AUTHORIZATION_BEARER) return headers;
+  const token = readAccessToken();
+  const authorization = token
+    ? `Bearer ${token}`
+    : TOUR_PLACES_AUTHORIZATION_BEARER || AUTHORIZATION_BEARER;
+  if (!authorization) return headers;
 
   return {
     ...headers,
-    Authorization: TOUR_PLACES_AUTHORIZATION_BEARER,
+    Authorization: authorization,
   };
 }
 
@@ -259,7 +265,8 @@ async function authRequest<T>(
   if (response.status === 401) {
     console.warn("Unauthorized request", {
       path,
-      authorization: AUTHORIZATION_BEARER,
+      hasAccessToken: Boolean(readAccessToken()),
+      hasStaticAuthorization: Boolean(AUTHORIZATION_BEARER),
     });
     removeToken();
   }
@@ -310,7 +317,6 @@ export async function withdrawUser(): Promise<Record<string, unknown> | string |
   });
 
   removeToken();
-  localStorage.removeItem("accessToken");
 
   return result;
 }
