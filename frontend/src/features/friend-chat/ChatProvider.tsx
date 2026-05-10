@@ -101,9 +101,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const shouldConnectChatSocket =
     location.pathname !== "/" &&
     location.pathname !== "/login" &&
-    location.pathname !== "/register" &&
-    location.pathname !== "/register/onboarding" &&
-    location.pathname !== "/withdrawal-pending";
+    location.pathname !== "/register";
   const socketRef = useRef<WebSocket | null>(null);
   const reconnectTimerRef = useRef<number | null>(null);
   const reconnectAttemptRef = useRef(0);
@@ -123,6 +121,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const inFlightReadRef = useRef<{ roomId: string; serverSeq: number } | null>(null);
   const lastReadSeqByRoomRef = useRef<Record<string, number>>({});
   const peerImageCacheRef = useRef<Record<string, string | null>>({});
+  const notifiedMessageIdsRef = useRef<Set<string>>(new Set());
   const [rooms, setRooms] = useState<ChatRoom[]>([]);
   const [roomsLoading, setRoomsLoading] = useState(false);
   const [connectionState, setConnectionState] = useState<ConnectionState>("closed");
@@ -691,16 +690,31 @@ export function ChatProvider({ children }: { children: ReactNode }) {
           confirmOptimisticMessage(event);
           return;
         case "message.new":
+          if (hasSeenChatMessage(messagesByRoomRef.current, event.message)) {
+            return;
+          }
+          if (
+            event.message.sender_id !== currentUserIdRef.current &&
+            event.message.chat_room_id !== activeRoomIdRef.current &&
+            notifiedMessageIdsRef.current.has(getChatMessageNotificationKey(event.message))
+          ) {
+            return;
+          }
           mergeServerMessages(event.message.chat_room_id, [event.message]);
           updateRoomLastMessage(event.message);
           if (event.message.sender_id !== currentUserIdRef.current) {
             if (event.message.chat_room_id !== activeRoomIdRef.current) {
-              incrementStoredChatUnreadCount(event.message.chat_room_id);
-              dispatchChatToast(
-                event.message,
-                getRoomTitle(roomsRef.current, event.message.chat_room_id),
-                getRoomProfileImageUrl(roomsRef.current, event.message.chat_room_id)
-              );
+              const notificationKey = getChatMessageNotificationKey(event.message);
+              if (!notifiedMessageIdsRef.current.has(notificationKey)) {
+                notifiedMessageIdsRef.current.add(notificationKey);
+                trimNotifiedMessageIds(notifiedMessageIdsRef.current);
+                incrementStoredChatUnreadCount(event.message.chat_room_id);
+                dispatchChatToast(
+                  event.message,
+                  getRoomTitle(roomsRef.current, event.message.chat_room_id),
+                  getRoomProfileImageUrl(roomsRef.current, event.message.chat_room_id)
+                );
+              }
             }
           }
           if (event.message.chat_room_id === activeRoomIdRef.current) {
@@ -835,6 +849,15 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     let cancelled = false;
     shouldReconnectRef.current = true;
 
+    void getMyProfile()
+      .then((profile) => {
+        if (!cancelled) setCurrentUserId(profile?.user_id ?? null);
+      })
+      .catch(() => {
+        if (!cancelled) setCurrentUserId(null);
+      });
+    void refreshRooms();
+
     function scheduleReconnect(): void {
       const base = Math.min(60000, 1000 * 2 ** reconnectAttemptRef.current);
       const jitter = Math.random() * 500;
@@ -892,26 +915,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
       };
     }
 
-    void getMyProfile()
-      .then((profile) => {
-        if (cancelled) return;
-        if (!profile?.user_id) {
-          setCurrentUserId(null);
-          shouldReconnectRef.current = false;
-          setConnectionState("closed");
-          return;
-        }
-
-        setCurrentUserId(profile.user_id);
-        void refreshRooms();
-        connect();
-      })
-      .catch(() => {
-        if (cancelled) return;
-        setCurrentUserId(null);
-        shouldReconnectRef.current = false;
-        setConnectionState("closed");
-      });
+    connect();
 
     return () => {
       cancelled = true;
@@ -1094,6 +1098,32 @@ function sortByServerSeq(a: ChatMessage, b: ChatMessage): number {
   return a.server_seq - b.server_seq;
 }
 
+function hasSeenChatMessage(
+  messagesByRoom: Record<string, ChatMessage[]>,
+  message: ChatMessage
+): boolean {
+  return (messagesByRoom[message.chat_room_id] ?? []).some((item) => {
+    if (message.message_id && item.message_id === message.message_id) return true;
+    if (message.server_seq !== Number.MAX_SAFE_INTEGER) {
+      return item.server_seq === message.server_seq;
+    }
+    return false;
+  });
+}
+
+function getChatMessageNotificationKey(message: ChatMessage): string {
+  if (message.message_id) return message.message_id;
+  return `${message.chat_room_id}:${message.server_seq}:${message.sender_id || ""}`;
+}
+
+function trimNotifiedMessageIds(ids: Set<string>): void {
+  if (ids.size <= 500) return;
+  const removeCount = ids.size - 500;
+  Array.from(ids)
+    .slice(0, removeCount)
+    .forEach((id) => ids.delete(id));
+}
+
 function dispatchChatToast(
   message: ChatMessage,
   roomTitle: string,
@@ -1114,6 +1144,7 @@ function dispatchChatToast(
 function incrementStoredChatUnreadCount(roomId: string): void {
   const storageKey = "krip-chat-unread-by-room";
   let unreadByRoom: Record<string, number> = {};
+  clearLegacyChatUnreadStorage();
 
   try {
     const raw = window.localStorage.getItem(storageKey);
@@ -1132,6 +1163,7 @@ function incrementStoredChatUnreadCount(roomId: string): void {
 
 function clearStoredChatUnreadCount(roomId: string): void {
   const storageKey = "krip-chat-unread-by-room";
+  clearLegacyChatUnreadStorage();
 
   try {
     const raw = window.localStorage.getItem(storageKey);
@@ -1148,6 +1180,15 @@ function clearStoredChatUnreadCount(roomId: string): void {
     window.localStorage.removeItem(storageKey);
     window.dispatchEvent(new Event("krip:friend-chat-notifications-updated"));
   }
+}
+
+function clearLegacyChatUnreadStorage(): void {
+  [
+    "krip-chat-unread-count",
+    "krip:chat-unread-count",
+    "krip-chat-unread",
+    "krip:chat-unread",
+  ].forEach((key) => window.localStorage.removeItem(key));
 }
 
 function getRoomTitle(rooms: ChatRoom[], roomId: string): string {

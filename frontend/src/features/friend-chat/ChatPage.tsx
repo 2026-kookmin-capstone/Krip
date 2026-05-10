@@ -13,7 +13,10 @@ import {
   getReceivedFriendRequests,
   getSentFriendRequests,
   rejectFriendRequest,
+  searchFriendUsers,
+  sendFriendRequest,
   unblockUser,
+  type FriendSearchUser,
   type FriendPeer,
   type Friendship,
   type UserBlock,
@@ -22,12 +25,13 @@ import { useChat } from "./ChatProvider";
 import { reportChatNetworkError } from "../../utils/chatDiagnostics";
 import FeedPopup from "../../components/FeedPopup";
 
-type ChatTab = "chats" | "requests" | "friends";
+type ChatTab = "chats" | "friends";
 type LoadingKey = "received" | "sent" | "friends" | "blocks";
 
+const DEFAULT_PROFILE_IMAGE_URL = "/default-profile.png";
+
 const TABS: Array<{ key: ChatTab; label: string }> = [
-  { key: "chats", label: "Chats" },
-  { key: "requests", label: "Requests" },
+  { key: "chats", label: "Chat" },
   { key: "friends", label: "Friends" },
 ];
 
@@ -39,6 +43,7 @@ export default function ChatPage() {
     connectionState: chatConnectionStatus,
     currentUserId,
     refreshRooms,
+    openDirectChat,
   } = useChat();
   const [tab, setTab] = useState<ChatTab>("chats");
   const [receivedRequests, setReceivedRequests] = useState<Friendship[]>([]);
@@ -62,11 +67,14 @@ export default function ChatPage() {
   const [error, setError] = useState("");
   const [currentUserName, setCurrentUserName] = useState<string | null>(null);
   const [feedPopupUserId, setFeedPopupUserId] = useState<string | null>(null);
-  const [isGroupModalOpen, setIsGroupModalOpen] = useState(false);
-  const [groupTitle, setGroupTitle] = useState("");
-  const [selectedGroupMemberIds, setSelectedGroupMemberIds] = useState<Set<string>>(new Set());
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isFriendManagerOpen, setIsFriendManagerOpen] = useState(false);
+  const [friendSearchQuery, setFriendSearchQuery] = useState("");
+  const [friendSearchResults, setFriendSearchResults] = useState<FriendSearchUser[]>([]);
+  const [friendSearchLoading, setFriendSearchLoading] = useState(false);
+  const [friendSearchError, setFriendSearchError] = useState("");
 
-  const pendingCount = receivedRequests.length + sentRequests.length;
+  const pendingCount = receivedRequests.length;
   const displayNamesById = useMemo(() => {
     const names = new Map<string, string>();
 
@@ -94,12 +102,29 @@ export default function ChatPage() {
   }, [chatRooms, currentUserId, currentUserName, friends]);
   const resolveDisplayName = useCallback(
     (userId: string | null): string =>
-      userId === null ? "(Unknown)" : displayNamesById.get(userId) || "Deleted User",
+      userId === null ? "(알 수 없음)" : displayNamesById.get(userId) || "탈퇴한 사용자",
     [displayNamesById]
   );
   const chatRows = useMemo(
     () => chatRooms.map((room) => toChatRow(room, resolveDisplayName)),
     [chatRooms, resolveDisplayName]
+  );
+  const normalizedSearchQuery = searchQuery.trim().toLowerCase();
+  const filteredChatRows = useMemo(
+    () =>
+      normalizedSearchQuery
+        ? chatRows.filter((chat) => chat.name.toLowerCase().includes(normalizedSearchQuery))
+        : chatRows,
+    [chatRows, normalizedSearchQuery]
+  );
+  const filteredFriends = useMemo(
+    () =>
+      normalizedSearchQuery
+        ? friends.filter((friend) =>
+            friend.peer.user_name.toLowerCase().includes(normalizedSearchQuery)
+          )
+        : friends,
+    [friends, normalizedSearchQuery]
   );
 
   useEffect(() => {
@@ -210,7 +235,8 @@ export default function ChatPage() {
     setError("");
 
     try {
-      navigate(`/chat/${userId}`);
+      const room = await openDirectChat(userId);
+      navigate(`/chat/${room.chat_room_id}`);
     } catch (chatError) {
       reportChatNetworkError({
         action: "open_direct_chat",
@@ -223,63 +249,46 @@ export default function ChatPage() {
     }
   }
 
-  function toggleGroupMember(userId: string): void {
-    setSelectedGroupMemberIds((current) => {
-      const next = new Set(current);
-      if (next.has(userId)) {
-        next.delete(userId);
-      } else {
-        if (next.size >= 99) {
-          setError("A group chat can invite up to 99 friends.");
-          return next;
-        }
-        next.add(userId);
-      }
-      return next;
-    });
-  }
-
-  function closeGroupModal(): void {
-    setIsGroupModalOpen(false);
-    setGroupTitle("");
-    setSelectedGroupMemberIds(new Set());
-  }
-
-  async function handleCreateGroupRoom(): Promise<void> {
-    const memberIds = Array.from(selectedGroupMemberIds);
-    if (memberIds.length === 0) {
-      setError("Select at least one friend to create a group chat.");
+  async function handleFriendSearch(): Promise<void> {
+    const keyword = friendSearchQuery.trim();
+    if (!keyword) {
+      setFriendSearchResults([]);
+      setFriendSearchError("");
       return;
     }
 
-    setError("");
-    setNotice("");
-
+    setFriendSearchLoading(true);
+    setFriendSearchError("");
     try {
-      const draftId = `GROUP_DRAFT_${Date.now()}`;
-      const selectedMembers = friends
-        .filter((friend) => selectedGroupMemberIds.has(friend.peer.user_id))
-        .map((friend) => friend.peer);
+      const response = await searchFriendUsers(keyword);
+      setFriendSearchResults(response.items);
+    } catch (searchError) {
+      setFriendSearchResults([]);
+      setFriendSearchError(toErrorMessage(searchError, "Failed to search users."));
+    } finally {
+      setFriendSearchLoading(false);
+    }
+  }
 
-      window.sessionStorage.setItem(
-        `krip-chat-group-draft:${draftId}`,
-        JSON.stringify({
-          title: groupTitle.trim() || "Group Chat",
-          memberIds,
-          members: selectedMembers,
-        })
+  async function handleSendFriendRequest(user: FriendSearchUser): Promise<void> {
+    setActionId(`request:${user.user_id}`);
+    setFriendSearchError("");
+    try {
+      await sendFriendRequest(user.user_id);
+      setNotice("Friend request sent.");
+      setFriendSearchResults((current) =>
+        current.map((item) =>
+          item.user_id === user.user_id
+            ? { ...item, friendship_status: "pending", is_requester: true }
+            : item
+        )
       );
-      setIsGroupModalOpen(false);
-      setGroupTitle("");
-      setSelectedGroupMemberIds(new Set());
-      navigate(`/chat/${draftId}`);
-    } catch (createError) {
-      reportChatNetworkError({
-        action: "prepare_group_chat",
-        detail: toErrorMessage(createError, "Failed to prepare group chat."),
-        extra: getErrorStatus(createError),
-      });
-      setError(toErrorMessage(createError, "Failed to prepare group chat."));
+      await Promise.all([loadSent(), loadReceived(), loadFriends()]);
+      window.dispatchEvent(new CustomEvent("krip:friend-chat-notifications-updated"));
+    } catch (requestError) {
+      setFriendSearchError(toErrorMessage(requestError, "Failed to send friend request."));
+    } finally {
+      setActionId("");
     }
   }
 
@@ -287,28 +296,33 @@ export default function ChatPage() {
     <div style={styles.page}>
       <div style={styles.shell}>
         <header style={styles.header}>
-          <div>
-            <p style={styles.eyebrow}>Conversation</p>
-            <h1 style={styles.title}>Friend/Chat</h1>
-            <p style={styles.headerCopy}>
-              Manage chats, friend requests, friends, and blocked users in one place.
-            </p>
-          </div>
-          <div style={styles.headerActions}>
-            <button type="button" style={styles.refreshButton} onClick={() => void refreshAll()}>
-              Refresh
-            </button>
-            <button
-              type="button"
-              style={styles.primaryHeaderButton}
-              onClick={() => setIsGroupModalOpen(true)}
-            >
-              New Group
-            </button>
-          </div>
+          <button type="button" style={styles.backButton} onClick={() => navigate(-1)}>
+            ‹
+          </button>
+          <h1 style={styles.title}>Chat</h1>
+          <button
+            type="button"
+            style={styles.friendManagerButton}
+            onClick={() => setIsFriendManagerOpen(true)}
+            aria-label="Manage friends"
+          >
+            <img src="/user-add-alt.png" alt="" style={styles.friendManagerIcon} />
+            {pendingCount > 0 ? <span style={styles.addButtonDot} /> : null}
+          </button>
         </header>
 
-        <section style={styles.segment}>
+        <label style={styles.searchWrap}>
+          <input
+            type="search"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+            placeholder="Search"
+            style={styles.searchInput}
+          />
+          <span style={styles.searchIcon}>⌕</span>
+        </label>
+
+        <section style={styles.segment} aria-label="Chat tabs">
           {TABS.map((item) => (
             <button
               key={item.key}
@@ -320,9 +334,7 @@ export default function ChatPage() {
               }}
             >
               {item.label}
-              {item.key === "requests" && pendingCount > 0 ? (
-                <span style={styles.countBadge}>{pendingCount}</span>
-              ) : null}
+              {item.key === "chats" ? ` (${chatRows.length})` : ""}
             </button>
           ))}
         </section>
@@ -332,11 +344,10 @@ export default function ChatPage() {
 
         {tab === "chats" ? (
           <section style={styles.list}>
-            <p style={styles.statusText}>WebSocket: {chatConnectionStatus}</p>
-            {chatLoading && chatRows.length === 0 ? (
+            {chatLoading && filteredChatRows.length === 0 ? (
               <p style={styles.mutedText}>Loading chats...</p>
-            ) : chatRows.length > 0 ? (
-              chatRows.map((chat) => (
+            ) : filteredChatRows.length > 0 ? (
+              filteredChatRows.map((chat) => (
                 <button
                   key={chat.id}
                   type="button"
@@ -346,7 +357,6 @@ export default function ChatPage() {
                   <Avatar name={chat.name} imageUrl={chat.imageUrl} />
                   <span style={styles.rowMain}>
                     <strong style={styles.rowTitle}>{chat.name}</strong>
-                    <span style={styles.rowSubtitle}>{chat.subtitle}</span>
                     <span style={styles.rowSubtitle}>{chat.preview}</span>
                   </span>
                   {chat.unreadCount > 0 ? (
@@ -354,87 +364,18 @@ export default function ChatPage() {
                       {chat.unreadCount >= 999 ? "999+" : chat.unreadCount}
                     </span>
                   ) : null}
-                  <span style={styles.chevron}>{">"}</span>
                 </button>
               ))
             ) : (
               <EmptyCard
-                title="No chats yet"
-                copy="Accepted friends will appear here as chat-ready contacts."
+                title={searchQuery.trim() ? "No matching chats" : "No chats yet"}
+                copy={
+                  searchQuery.trim()
+                    ? "Try another friend name."
+                    : "Accepted friends will appear here as chat-ready contacts."
+                }
               />
             )}
-          </section>
-        ) : null}
-
-        {tab === "requests" ? (
-          <section style={styles.stack}>
-            <RequestSection
-              title="Received Requests"
-              emptyTitle="No received requests"
-              emptyCopy="Incoming friend requests will show up here."
-              loading={loading.received}
-              items={receivedRequests}
-              nextCursor={cursors.received}
-              onLoadMore={() => void loadReceived(cursors.received || undefined, true)}
-              renderActions={(item) => (
-                <>
-                  <button
-                    type="button"
-                    style={styles.primaryButton}
-                    disabled={Boolean(actionId)}
-                    onClick={() => {
-                      setActionId(`accept:${item.friendship_id}`);
-                      void runAction(
-                        () => acceptFriendRequest(item.friendship_id),
-                        "Friend request accepted."
-                      );
-                    }}
-                  >
-                    {isBusy(`accept:${item.friendship_id}`) ? "Accepting..." : "Accept"}
-                  </button>
-                  <button
-                    type="button"
-                    style={styles.secondaryButton}
-                    disabled={Boolean(actionId)}
-                    onClick={() => {
-                      setActionId(`reject:${item.friendship_id}`);
-                      void runAction(
-                        () => rejectFriendRequest(item.friendship_id),
-                        "Friend request rejected."
-                      );
-                    }}
-                  >
-                    Reject
-                  </button>
-                </>
-              )}
-            />
-
-            <RequestSection
-              title="Sent Requests"
-              emptyTitle="No sent requests"
-              emptyCopy="Requests you send will stay here until accepted or canceled."
-              loading={loading.sent}
-              items={sentRequests}
-              nextCursor={cursors.sent}
-              onLoadMore={() => void loadSent(cursors.sent || undefined, true)}
-              renderActions={(item) => (
-                <button
-                  type="button"
-                  style={styles.secondaryButton}
-                  disabled={Boolean(actionId)}
-                  onClick={() => {
-                    setActionId(`cancel:${item.friendship_id}`);
-                    void runAction(
-                      () => cancelFriendRequest(item.friendship_id),
-                      "Friend request canceled."
-                    );
-                  }}
-                >
-                  {isBusy(`cancel:${item.friendship_id}`) ? "Canceling..." : "Cancel Request"}
-                </button>
-              )}
-            />
           </section>
         ) : null}
 
@@ -454,11 +395,11 @@ export default function ChatPage() {
                 ) : null}
               </div>
 
-              {loading.friends && friends.length === 0 ? (
+              {loading.friends && filteredFriends.length === 0 ? (
                 <p style={styles.mutedText}>Loading friends...</p>
-              ) : friends.length > 0 ? (
+              ) : filteredFriends.length > 0 ? (
                 <div style={styles.friendList}>
-                  {friends.map((friend) => (
+                  {filteredFriends.map((friend) => (
                     <FriendCard
                       key={friend.friendship_id}
                       item={friend}
@@ -484,8 +425,8 @@ export default function ChatPage() {
                 </div>
               ) : (
                 <EmptyCard
-                  title="No friends yet"
-                  copy="Accepted friends will appear here."
+                  title={searchQuery.trim() ? "No matching friends" : "No friends yet"}
+                  copy={searchQuery.trim() ? "Try another friend name." : "Accepted friends will appear here."}
                 />
               )}
             </div>
@@ -538,82 +479,149 @@ export default function ChatPage() {
           </section>
         ) : null}
 
+        {isFriendManagerOpen ? (
+          <div style={styles.managerBackdrop} onClick={() => setIsFriendManagerOpen(false)}>
+            <section style={styles.managerPanel} onClick={(event) => event.stopPropagation()}>
+              <div style={styles.managerHeader}>
+                <h2 style={styles.managerTitle}>Friends</h2>
+                <button
+                  type="button"
+                  style={styles.managerCloseButton}
+                  onClick={() => setIsFriendManagerOpen(false)}
+                >
+                  ×
+                </button>
+              </div>
+
+              <div style={styles.addFriendPanel}>
+                <label style={styles.managerSearchWrap}>
+                  <input
+                    type="search"
+                    value={friendSearchQuery}
+                    onChange={(event) => setFriendSearchQuery(event.target.value)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") void handleFriendSearch();
+                    }}
+                    placeholder="Search users"
+                    style={styles.managerSearchInput}
+                  />
+                  <button
+                    type="button"
+                    style={styles.managerSearchButton}
+                    onClick={() => void handleFriendSearch()}
+                    disabled={friendSearchLoading}
+                  >
+                    Search
+                  </button>
+                </label>
+                {friendSearchError ? <p style={styles.inlineError}>{friendSearchError}</p> : null}
+                {friendSearchLoading ? (
+                  <p style={styles.mutedText}>Searching users...</p>
+                ) : friendSearchResults.length > 0 ? (
+                  <div style={styles.friendList}>
+                    {friendSearchResults.map((user) => (
+                      <div key={user.user_id} style={styles.friendCard}>
+                        <PeerSummary peer={toFriendPeer(user)} />
+                        <button
+                          type="button"
+                          style={styles.primaryButton}
+                          disabled={
+                            Boolean(actionId) ||
+                            user.i_blocked_peer ||
+                            user.friendship_status === "pending" ||
+                            user.friendship_status === "accepted"
+                          }
+                          onClick={() => void handleSendFriendRequest(user)}
+                        >
+                          {isBusy(`request:${user.user_id}`)
+                            ? "Sending..."
+                            : getFriendSearchActionLabel(user)}
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : friendSearchQuery.trim() ? (
+                  <p style={styles.mutedText}>No users found.</p>
+                ) : null}
+              </div>
+
+              <RequestSection
+                title="Received Requests"
+                emptyTitle="No received requests"
+                emptyCopy="Incoming friend requests will show up here."
+                loading={loading.received}
+                items={receivedRequests}
+                nextCursor={cursors.received}
+                onLoadMore={() => void loadReceived(cursors.received || undefined, true)}
+                renderActions={(item) => (
+                  <>
+                    <button
+                      type="button"
+                      style={styles.primaryButton}
+                      disabled={Boolean(actionId)}
+                      onClick={() => {
+                        setActionId(`accept:${item.friendship_id}`);
+                        void runAction(
+                          () => acceptFriendRequest(item.friendship_id),
+                          "Friend request accepted."
+                        );
+                      }}
+                    >
+                      {isBusy(`accept:${item.friendship_id}`) ? "Accepting..." : "Accept"}
+                    </button>
+                    <button
+                      type="button"
+                      style={styles.secondaryButton}
+                      disabled={Boolean(actionId)}
+                      onClick={() => {
+                        setActionId(`reject:${item.friendship_id}`);
+                        void runAction(
+                          () => rejectFriendRequest(item.friendship_id),
+                          "Friend request rejected."
+                        );
+                      }}
+                    >
+                      Reject
+                    </button>
+                  </>
+                )}
+              />
+
+              <RequestSection
+                title="Sent Requests"
+                emptyTitle="No sent requests"
+                emptyCopy="Requests you send will stay here until accepted or canceled."
+                loading={loading.sent}
+                items={sentRequests}
+                nextCursor={cursors.sent}
+                onLoadMore={() => void loadSent(cursors.sent || undefined, true)}
+                renderActions={(item) => (
+                  <button
+                    type="button"
+                    style={styles.secondaryButton}
+                    disabled={Boolean(actionId)}
+                    onClick={() => {
+                      setActionId(`cancel:${item.friendship_id}`);
+                      void runAction(
+                        () => cancelFriendRequest(item.friendship_id),
+                        "Friend request canceled."
+                      );
+                    }}
+                  >
+                    {isBusy(`cancel:${item.friendship_id}`) ? "Canceling..." : "Cancel Request"}
+                  </button>
+                )}
+              />
+            </section>
+          </div>
+        ) : null}
+
         {feedPopupUserId ? (
           <FeedPopup
             key={feedPopupUserId}
             userId={feedPopupUserId}
             onClose={() => setFeedPopupUserId(null)}
           />
-        ) : null}
-
-        {isGroupModalOpen ? (
-          <div style={styles.groupModalBackdrop} role="dialog" aria-modal="true">
-            <section style={styles.groupModal}>
-              <div style={styles.groupModalHeader}>
-                <div>
-                  <p style={styles.groupModalEyebrow}>Friends only</p>
-                  <h2 style={styles.groupModalTitle}>New Group Chat</h2>
-                </div>
-                <button type="button" style={styles.closeButton} onClick={closeGroupModal}>
-                  Close
-                </button>
-              </div>
-
-              <label style={styles.groupField}>
-                <span style={styles.groupLabel}>Room name</span>
-                <input
-                  value={groupTitle}
-                  onChange={(event) => setGroupTitle(event.target.value)}
-                  placeholder="Group Chat"
-                  style={styles.input}
-                  maxLength={40}
-                />
-              </label>
-
-              <div style={styles.groupMemberList}>
-                {friends.length > 0 ? (
-                  friends.map((friend) => {
-                    const selected = selectedGroupMemberIds.has(friend.peer.user_id);
-                    return (
-                      <button
-                        key={friend.friendship_id}
-                        type="button"
-                        style={{
-                          ...styles.groupMemberRow,
-                          ...(selected ? styles.groupMemberRowSelected : {}),
-                        }}
-                        onClick={() => toggleGroupMember(friend.peer.user_id)}
-                      >
-                        <PeerSummary peer={friend.peer} />
-                        <span style={selected ? styles.checkedCircle : styles.emptyCircle}>
-                          {selected ? "✓" : ""}
-                        </span>
-                      </button>
-                    );
-                  })
-                ) : (
-                  <EmptyCard
-                    title="No friends available"
-                    copy="Group chats can only invite accepted friends."
-                  />
-                )}
-              </div>
-
-              <div style={styles.groupModalActions}>
-                <button type="button" style={styles.secondaryButton} onClick={closeGroupModal}>
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  style={styles.primaryButton}
-                  onClick={() => void handleCreateGroupRoom()}
-                  disabled={selectedGroupMemberIds.size === 0}
-                >
-                  Start Chat
-                </button>
-              </div>
-            </section>
-          </div>
         ) : null}
       </div>
     </div>
@@ -668,6 +676,26 @@ function RequestSection({
   );
 }
 
+function toFriendPeer(user: FriendSearchUser): FriendPeer {
+  return {
+    user_id: user.user_id,
+    user_name: user.user_name,
+    age: 0,
+    gender: "" as FriendPeer["gender"],
+    nationality: user.nationality || "",
+    profile_image_url: user.profile_image_url,
+  };
+}
+
+function getFriendSearchActionLabel(user: FriendSearchUser): string {
+  if (user.i_blocked_peer) return "Blocked";
+  if (user.friendship_status === "accepted") return "Friends";
+  if (user.friendship_status === "pending") {
+    return user.is_requester ? "Requested" : "Respond";
+  }
+  return "Add";
+}
+
 function FriendCard({
   item,
   onChat,
@@ -705,14 +733,16 @@ function FriendCard({
 }
 
 function PeerSummary({ peer }: { peer: FriendPeer }) {
+  const meta = [peer.nationality, peer.age ? String(peer.age) : "", formatGender(peer.gender)]
+    .filter(Boolean)
+    .join(" / ");
+
   return (
     <div style={styles.peerSummary}>
       <Avatar name={peer.user_name} imageUrl={peer.profile_image_url} />
       <span style={styles.rowMain}>
         <strong style={styles.rowTitle}>{peer.user_name}</strong>
-        <span style={styles.rowSubtitle}>
-          {peer.nationality} / {peer.age} / {formatGender(peer.gender)}
-        </span>
+        {meta ? <span style={styles.rowSubtitle}>{meta}</span> : null}
         <span style={styles.userId}>{peer.user_id}</span>
       </span>
     </div>
@@ -723,9 +753,9 @@ function Avatar({ name, imageUrl }: { name: string; imageUrl?: string | null }) 
   return (
     <span style={styles.avatar}>
       {imageUrl ? (
-        <img src={imageUrl} alt="" style={styles.avatarImage} />
+        <img src={imageUrl} alt={name} style={styles.avatarImage} />
       ) : (
-        name.slice(0, 1).toUpperCase() || "U"
+        <img src={DEFAULT_PROFILE_IMAGE_URL} alt={name} style={styles.avatarImage} />
       )}
     </span>
   );
@@ -778,7 +808,7 @@ function renderLastMessage(
   resolveDisplayName: (userId: string | null) => string
 ): string {
   if (!lastMessage) return "No messages yet.";
-  if (lastMessage.content === null) return "Deleted message.";
+  if (lastMessage.content === null) return "삭제된 메시지입니다";
   if (lastMessage.type === "system") {
     return renderSystemLastMessage(lastMessage.content, resolveDisplayName);
   }
@@ -794,20 +824,20 @@ function renderSystemLastMessage(
 
   const actorName = resolveDisplayName(content.actor_id);
   if (content.action === "created") {
-    return `${actorName} created the chat room.`;
+    return `${actorName}님이 채팅방을 만들었습니다`;
   }
   if (content.action === "join") {
     const targetNames = content.target_ids.map(resolveDisplayName);
     if (targetNames.length === 1 && (!content.actor_id || content.actor_id === content.target_ids[0])) {
-      return `${targetNames[0]} joined.`;
+      return `${targetNames[0]}님이 들어왔습니다`;
     }
-    return `${actorName} invited ${formatTargetNames(targetNames)}.`;
+    return `${actorName}님이 ${formatTargetNames(targetNames)}님을 초대했습니다`;
   }
   if (content.action === "leave") {
-    return `${actorName} left.`;
+    return `${actorName}님이 나갔습니다`;
   }
   if (content.action === "kick") {
-    return `${actorName} removed ${formatTargetNames(content.target_ids.map(resolveDisplayName))}.`;
+    return `${actorName}님이 ${formatTargetNames(content.target_ids.map(resolveDisplayName))}님을 내보냈습니다`;
   }
 
   return "System message";
@@ -827,9 +857,9 @@ function isSystemContent(content: unknown): content is SystemContent {
 }
 
 function formatTargetNames(names: string[]): string {
-  if (names.length === 0) return "(Unknown)";
+  if (names.length === 0) return "(알 수 없음)";
   if (names.length === 1) return names[0];
-  return `${names[0]} and ${names.length - 1} others`;
+  return `${names[0]} 외 ${names.length - 1}명`;
 }
 
 function toErrorMessage(error: unknown, fallback: string): string {
@@ -848,51 +878,93 @@ function getErrorStatus(error: unknown): number | undefined {
 const styles: Record<string, CSSProperties> = {
   page: {
     minHeight: "100dvh",
-    padding: "24px 16px 40px",
-    background: "transparent",
+    padding: "20px 0 34px",
+    background: "#ffffff",
     fontFamily: "'Nunito', 'Apple SD Gothic Neo', sans-serif",
   },
   shell: {
     width: "100%",
-    maxWidth: 760,
+    maxWidth: 393,
     margin: "0 auto",
     display: "flex",
     flexDirection: "column",
-    gap: 16,
+    gap: 12,
   },
   header: {
     display: "flex",
-    alignItems: "flex-start",
+    alignItems: "center",
     justifyContent: "space-between",
-    gap: 16,
-    paddingTop: 8,
-  },
-  headerActions: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "flex-end",
-    gap: 10,
-  },
-  eyebrow: {
-    margin: 0,
-    color: "var(--brand-primary-deep)",
-    fontSize: "0.78rem",
-    fontWeight: 800,
-    letterSpacing: "0.14em",
-    textTransform: "uppercase",
+    gap: 12,
+    minHeight: 42,
+    padding: "0 16px",
   },
   title: {
-    margin: "6px 0 8px",
-    color: "var(--text-primary)",
-    fontSize: "clamp(1.9rem, 5vw, 2.4rem)",
-    lineHeight: 1.05,
-  },
-  headerCopy: {
-    maxWidth: 470,
     margin: 0,
-    color: "var(--neutral-700)",
-    fontSize: "0.95rem",
-    lineHeight: 1.5,
+    color: "#171717",
+    fontSize: "1.06rem",
+    fontWeight: 900,
+    lineHeight: 1,
+  },
+  backButton: {
+    width: 36,
+    height: 36,
+    border: "none",
+    background: "transparent",
+    color: "#8d8d8d",
+    fontSize: "2.6rem",
+    lineHeight: 0.8,
+    cursor: "pointer",
+  },
+  friendManagerButton: {
+    position: "relative",
+    width: 36,
+    height: 36,
+    border: "none",
+    background: "transparent",
+    display: "grid",
+    placeItems: "center",
+    cursor: "pointer",
+  },
+  friendManagerIcon: {
+    width: 24,
+    height: 24,
+    objectFit: "contain",
+  },
+  addButtonDot: {
+    position: "absolute",
+    top: 5,
+    right: 2,
+    width: 6,
+    height: 6,
+    borderRadius: "50%",
+    background: "#ffb300",
+  },
+  searchWrap: {
+    margin: "0 17px",
+    minHeight: 44,
+    borderRadius: 999,
+    background: "#f5f5f5",
+    display: "flex",
+    alignItems: "center",
+    gap: 12,
+    padding: "0 18px 0 22px",
+  },
+  searchInput: {
+    flex: 1,
+    minWidth: 0,
+    border: "none",
+    outline: "none",
+    background: "transparent",
+    color: "#171717",
+    fontSize: "0.94rem",
+    fontWeight: 500,
+  },
+  searchIcon: {
+    color: "#8d8d8d",
+    fontSize: "1.8rem",
+    lineHeight: 1,
+    transform: "rotate(-18deg)",
+    flexShrink: 0,
   },
   refreshButton: {
     border: "1px solid rgba(5,181,187,0.18)",
@@ -904,38 +976,28 @@ const styles: Record<string, CSSProperties> = {
     cursor: "pointer",
     boxShadow: "var(--shadow-soft)",
   },
-  primaryHeaderButton: {
-    border: "1px solid rgba(5,181,187,0.22)",
-    borderRadius: 999,
-    padding: "12px 16px",
-    background: "linear-gradient(135deg, var(--brand-primary), #12c0c6)",
-    color: "#ffffff",
-    fontWeight: 900,
-    cursor: "pointer",
-    boxShadow: "0 12px 24px rgba(5,181,187,0.2)",
-  },
   segment: {
-    padding: 8,
-    borderRadius: 22,
-    background: "rgba(255,255,255,0.88)",
+    position: "relative",
     display: "grid",
-    gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-    gap: 8,
-    border: "1px solid var(--border-soft)",
-    boxShadow: "var(--shadow-soft)",
+    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+    gap: 0,
+    borderBottom: "2px solid #ededed",
   },
   segmentButton: {
     border: "none",
-    borderRadius: 16,
-    minHeight: 46,
+    borderBottomWidth: 3,
+    borderBottomStyle: "solid",
+    borderBottomColor: "transparent",
+    minHeight: 32,
     background: "transparent",
-    color: "var(--neutral-700)",
-    fontWeight: 800,
+    color: "#d4d4d4",
+    fontSize: "0.88rem",
+    fontWeight: 900,
     cursor: "pointer",
   },
   segmentButtonActive: {
-    background: "linear-gradient(135deg, rgba(5,181,187,0.18), rgba(248,180,0,0.18))",
-    color: "var(--text-primary)",
+    borderBottomColor: "#01c0c0",
+    color: "#01c0c0",
   },
   countBadge: {
     display: "inline-grid",
@@ -966,7 +1028,7 @@ const styles: Record<string, CSSProperties> = {
   list: {
     display: "flex",
     flexDirection: "column",
-    gap: 12,
+    gap: 0,
   },
   stack: {
     display: "flex",
@@ -974,11 +1036,10 @@ const styles: Record<string, CSSProperties> = {
     gap: 14,
   },
   panel: {
-    padding: 18,
-    borderRadius: 28,
-    background: "rgba(255,255,255,0.92)",
-    border: "1px solid var(--border-soft)",
-    boxShadow: "var(--shadow-soft)",
+    padding: 16,
+    borderRadius: 20,
+    background: "#ffffff",
+    border: "1px solid #eeeeee",
   },
   sectionHeader: {
     display: "flex",
@@ -992,6 +1053,11 @@ const styles: Record<string, CSSProperties> = {
     color: "var(--text-primary)",
     fontSize: "1.05rem",
     fontWeight: 800,
+  },
+  inputRow: {
+    display: "grid",
+    gridTemplateColumns: "1fr auto",
+    gap: 10,
   },
   input: {
     width: "100%",
@@ -1010,37 +1076,37 @@ const styles: Record<string, CSSProperties> = {
   },
   friendCard: {
     display: "flex",
-    alignItems: "center",
+    flexDirection: "column",
+    alignItems: "stretch",
     justifyContent: "space-between",
-    gap: 14,
-    padding: 14,
-    borderRadius: 20,
-    background: "rgba(255,255,255,0.82)",
-    border: "1px solid var(--border-soft)",
+    gap: 12,
+    padding: 12,
+    borderRadius: 14,
+    background: "#ffffff",
+    border: "1px solid #f0f0f0",
   },
   peerSummary: {
     display: "flex",
     alignItems: "center",
     gap: 12,
     minWidth: 0,
-    flex: 1,
+    width: "100%",
   },
   chatRow: {
     display: "flex",
     alignItems: "center",
     gap: 12,
     width: "100%",
-    padding: 16,
-    borderRadius: 24,
-    background: "rgba(255,255,255,0.92)",
-    border: "1px solid var(--border-soft)",
-    boxShadow: "var(--shadow-soft)",
+    padding: "13px 17px",
+    borderRadius: 0,
+    background: "#ffffff",
+    border: "none",
     cursor: "pointer",
     textAlign: "left",
   },
   avatar: {
-    width: 44,
-    height: 44,
+    width: 56,
+    height: 56,
     borderRadius: "50%",
     display: "grid",
     placeItems: "center",
@@ -1063,12 +1129,16 @@ const styles: Record<string, CSSProperties> = {
     flex: 1,
   },
   rowTitle: {
-    color: "var(--text-primary)",
-    fontSize: "0.98rem",
+    color: "#171717",
+    fontSize: "1.06rem",
+    lineHeight: 1.1,
   },
   rowSubtitle: {
-    color: "var(--neutral-700)",
-    fontSize: "0.82rem",
+    color: "#8c8c8c",
+    fontSize: "0.88rem",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
   },
   userId: {
     color: "var(--neutral-500)",
@@ -1082,7 +1152,7 @@ const styles: Record<string, CSSProperties> = {
   actionRow: {
     display: "flex",
     flexWrap: "wrap",
-    justifyContent: "flex-end",
+    justifyContent: "flex-start",
     gap: 8,
   },
   primaryButton: {
@@ -1140,13 +1210,13 @@ const styles: Record<string, CSSProperties> = {
   unreadBadge: {
     display: "inline-grid",
     placeItems: "center",
-    minWidth: 24,
-    height: 24,
-    padding: "0 7px",
+    minWidth: 20,
+    height: 20,
+    padding: "0 6px",
     borderRadius: 999,
-    background: "var(--brand-secondary)",
-    color: "var(--text-primary)",
-    fontSize: "0.76rem",
+    background: "#ffb300",
+    color: "#ffffff",
+    fontSize: "0.9rem",
     fontWeight: 900,
   },
   emptyCard: {
@@ -1165,112 +1235,88 @@ const styles: Record<string, CSSProperties> = {
     color: "var(--neutral-700)",
     lineHeight: 1.55,
   },
-  groupModalBackdrop: {
+  managerBackdrop: {
     position: "fixed",
     inset: 0,
     zIndex: 80,
     display: "flex",
-    alignItems: "center",
     justifyContent: "center",
-    padding: 18,
-    background: "rgba(24,26,32,0.48)",
+    alignItems: "flex-end",
+    padding: "18px 14px 0",
+    background: "rgba(15,23,42,0.36)",
   },
-  groupModal: {
-    width: "100%",
-    maxWidth: 520,
-    maxHeight: "86dvh",
+  managerPanel: {
+    width: "min(760px, 100%)",
+    maxHeight: "88dvh",
     overflowY: "auto",
     display: "flex",
     flexDirection: "column",
-    gap: 16,
-    padding: 20,
-    borderRadius: 28,
-    background: "#ffffff",
-    boxShadow: "0 28px 72px rgba(24,26,32,0.22)",
-  },
-  groupModalHeader: {
-    display: "flex",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
     gap: 14,
+    padding: 18,
+    borderRadius: "26px 26px 0 0",
+    background: "#ffffff",
+    boxShadow: "0 22px 70px rgba(15,23,42,0.22)",
   },
-  groupModalEyebrow: {
-    margin: 0,
-    color: "var(--brand-primary-deep)",
-    fontSize: "0.74rem",
-    fontWeight: 900,
-    textTransform: "uppercase",
-    letterSpacing: "0.12em",
-  },
-  groupModalTitle: {
-    margin: "5px 0 0",
-    color: "var(--text-primary)",
-    fontSize: "1.35rem",
-    lineHeight: 1.15,
-  },
-  closeButton: {
-    border: "1px solid rgba(5,181,187,0.16)",
-    borderRadius: 999,
-    padding: "9px 12px",
-    background: "rgba(255,255,255,0.9)",
-    color: "var(--text-secondary)",
-    fontWeight: 800,
-    cursor: "pointer",
-  },
-  groupField: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 8,
-  },
-  groupLabel: {
-    color: "var(--text-secondary)",
-    fontSize: "0.86rem",
-    fontWeight: 900,
-  },
-  groupMemberList: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 10,
-  },
-  groupMemberRow: {
-    width: "100%",
+  managerHeader: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     gap: 12,
-    padding: 12,
-    border: "1px solid var(--border-soft)",
-    borderRadius: 18,
-    background: "rgba(255,255,255,0.92)",
-    cursor: "pointer",
-    textAlign: "left",
   },
-  groupMemberRowSelected: {
-    borderColor: "rgba(5,181,187,0.34)",
-    background: "rgba(228,247,247,0.7)",
-  },
-  emptyCircle: {
-    width: 24,
-    height: 24,
-    borderRadius: "50%",
-    border: "2px solid rgba(5,181,187,0.2)",
-    flexShrink: 0,
-  },
-  checkedCircle: {
-    width: 24,
-    height: 24,
-    borderRadius: "50%",
-    display: "grid",
-    placeItems: "center",
-    background: "var(--brand-primary)",
-    color: "#ffffff",
-    fontSize: "0.78rem",
+  managerTitle: {
+    margin: 0,
+    color: "#171717",
+    fontSize: "1.2rem",
     fontWeight: 900,
-    flexShrink: 0,
   },
-  groupModalActions: {
+  managerCloseButton: {
+    width: 36,
+    height: 36,
+    border: "none",
+    borderRadius: "50%",
+    background: "#f4f4f4",
+    color: "#555555",
+    fontSize: "1.35rem",
+    lineHeight: 1,
+    cursor: "pointer",
+  },
+  addFriendPanel: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 12,
+    padding: 16,
+    borderRadius: 20,
+    border: "1px solid #eeeeee",
+    background: "#ffffff",
+  },
+  managerSearchWrap: {
     display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: 10,
+    gridTemplateColumns: "minmax(0, 1fr) auto",
+    gap: 8,
+  },
+  managerSearchInput: {
+    minHeight: 44,
+    border: "1px solid #e8e8e8",
+    borderRadius: 14,
+    padding: "0 12px",
+    outline: "none",
+    color: "#171717",
+    fontWeight: 800,
+  },
+  managerSearchButton: {
+    minHeight: 44,
+    border: "none",
+    borderRadius: 14,
+    padding: "0 14px",
+    background: "#04bfbf",
+    color: "#ffffff",
+    fontWeight: 900,
+    cursor: "pointer",
+  },
+  inlineError: {
+    margin: 0,
+    color: "#dc2626",
+    fontSize: "0.84rem",
+    fontWeight: 800,
   },
 };
