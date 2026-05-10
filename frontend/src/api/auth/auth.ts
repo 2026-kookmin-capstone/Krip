@@ -1,4 +1,4 @@
-import { readAccessToken, removeToken } from "../../utils/tokens";
+import { removeToken } from "../../utils/tokens";
 import {
   API_BASE_URL,
   AUTHORIZATION_BEARER,
@@ -16,6 +16,15 @@ export interface UserProfile {
   gender?: string;
   nationality?: string;
   travel_styles?: string[];
+  food_preferences?: string[];
+  density_preference?: string;
+  budget_preference?: string;
+  walking_preference?: string;
+  transport_preferences?: string[];
+  companion_preference?: string;
+  time_preferences?: string[];
+  communication_preference?: string;
+  planning_preference?: string;
   image_url?: string;
   imageUrl?: string;
   profile_image_url?: string | null;
@@ -26,6 +35,20 @@ export interface UserProfile {
 export interface ProfileImageResponse {
   profile_image_url: string | null;
 }
+
+export type ProfilePreferencesPayload = Pick<
+  RegisterPayload,
+  | "travel_styles"
+  | "food_preferences"
+  | "density_preference"
+  | "budget_preference"
+  | "walking_preference"
+  | "transport_preferences"
+  | "companion_preference"
+  | "time_preferences"
+  | "communication_preference"
+  | "planning_preference"
+>;
 
 export interface RegisterPayload {
   email: string;
@@ -198,26 +221,20 @@ function toErrorMessage(value: unknown, fallback: string): string {
 }
 
 function getAuthHeaders(headers: RequestHeaders = {}): RequestHeaders {
-  const token = readAccessToken();
-  const authorization = token ? `Bearer ${token}` : AUTHORIZATION_BEARER;
-  if (!authorization) return headers;
+  if (!AUTHORIZATION_BEARER) return headers;
 
   return {
     ...headers,
-    Authorization: authorization,
+    Authorization: AUTHORIZATION_BEARER,
   };
 }
 
 function getTourPlacesHeaders(headers: RequestHeaders = {}): RequestHeaders {
-  const token = readAccessToken();
-  const authorization = token
-    ? `Bearer ${token}`
-    : TOUR_PLACES_AUTHORIZATION_BEARER || AUTHORIZATION_BEARER;
-  if (!authorization) return headers;
+  if (!TOUR_PLACES_AUTHORIZATION_BEARER) return headers;
 
   return {
     ...headers,
-    Authorization: authorization,
+    Authorization: TOUR_PLACES_AUTHORIZATION_BEARER,
   };
 }
 
@@ -274,8 +291,7 @@ async function authRequest<T>(
   if (response.status === 401) {
     console.warn("Unauthorized request", {
       path,
-      hasAccessToken: Boolean(readAccessToken()),
-      hasStaticAuthorization: Boolean(AUTHORIZATION_BEARER),
+      authorization: AUTHORIZATION_BEARER,
     });
     removeToken();
   }
@@ -326,6 +342,7 @@ export async function withdrawUser(): Promise<Record<string, unknown> | string |
   });
 
   removeToken();
+  localStorage.removeItem("accessToken");
 
   return result;
 }
@@ -338,6 +355,29 @@ export function cancelWithdrawUser(): Promise<Record<string, unknown> | null> {
 
 export function getMyProfile(): Promise<UserProfile | null> {
   return authRequest("/api/auth/profile/me");
+}
+
+export function updateMyProfilePreferences(
+  payload: ProfilePreferencesPayload,
+  profile: UserProfile
+): Promise<UserProfile | null> {
+  const registerPayload: RegisterPayload = {
+    email: profile.email,
+    user_name: profile.user_name,
+    phone_number: profile.phone_number ?? "",
+    age: Number(profile.age ?? 0),
+    gender: profile.gender ?? "",
+    nationality: profile.nationality ?? "",
+    ...payload,
+  };
+
+  return authRequest("/api/auth/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(registerPayload),
+  });
 }
 
 function buildProfileImageFormData(file: File): FormData {

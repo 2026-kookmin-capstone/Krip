@@ -6,8 +6,10 @@ import {
   getMyProfile,
   logoutUser,
   replaceMyProfileImage,
+  updateMyProfilePreferences,
   uploadMyProfileImage,
   withdrawUser,
+  type ProfilePreferencesPayload,
   type UserProfile,
 } from "../api/auth/auth";
 import {
@@ -35,8 +37,98 @@ import {
   type FeedPost,
   type FeedVisibility,
 } from "../api/feed";
+import { showAppToast } from "../utils/appToast";
 
-const DEFAULT_PROFILE_IMAGE_URL = "/default-profile.svg";
+const DEFAULT_PROFILE_IMAGE_URL = "/default-profile.png";
+
+type PreferenceOption = {
+  key: string;
+  label: string;
+};
+
+const TRAVEL_STYLE_OPTIONS: PreferenceOption[] = [
+  { key: "activity", label: "Activity" },
+  { key: "famous_attractions", label: "Famous Attractions" },
+  { key: "healing", label: "Healing" },
+  { key: "culture_history", label: "Culture & History" },
+  { key: "shopping", label: "Shopping" },
+  { key: "food_tour", label: "Food Tour" },
+  { key: "photo_aesthetic", label: "Photo Aesthetic" },
+  { key: "festival_event", label: "Festival & Event" },
+  { key: "nature", label: "Nature" },
+  { key: "traditional", label: "Traditional" },
+  { key: "trekking", label: "Trekking" },
+  { key: "hidden_gems", label: "Hidden Gems" },
+  { key: "art_exhibition", label: "Art Exhibition" },
+  { key: "theme_park", label: "Theme Park" },
+];
+
+const FOOD_OPTIONS: PreferenceOption[] = [
+  { key: "food_halal", label: "Halal" },
+  { key: "food_vegetarian", label: "Vegetarian" },
+  { key: "foodie", label: "Foodie" },
+  { key: "cafe_lover", label: "Cafe Lover" },
+];
+
+const DENSITY_OPTIONS: PreferenceOption[] = [
+  { key: "density_relaxed", label: "Relaxed" },
+  { key: "density_packed", label: "Packed" },
+];
+
+const BUDGET_OPTIONS: PreferenceOption[] = [
+  { key: "budget_saving", label: "Saving" },
+  { key: "budget_moderate", label: "Moderate" },
+  { key: "budget_premium", label: "Premium" },
+];
+
+const WALKING_OPTIONS: PreferenceOption[] = [
+  { key: "walking_low", label: "Low" },
+  { key: "walking_medium", label: "Medium" },
+  { key: "walking_high", label: "High" },
+];
+
+const TRANSPORT_OPTIONS: PreferenceOption[] = [
+  { key: "transport_public", label: "Public Transit" },
+  { key: "transport_car", label: "Car" },
+  { key: "transport_taxi", label: "Taxi" },
+];
+
+const COMPANION_OPTIONS: PreferenceOption[] = [
+  { key: "companion_independent", label: "Independent" },
+  { key: "companion_together", label: "Together" },
+  { key: "companion_flexible", label: "Flexible" },
+];
+
+const TIME_OPTIONS: PreferenceOption[] = [
+  { key: "daytime", label: "Daytime" },
+  { key: "nightlife", label: "Nightlife" },
+  { key: "night_view", label: "Night View" },
+];
+
+const COMMUNICATION_OPTIONS: PreferenceOption[] = [
+  { key: "communication_high", label: "High Communication" },
+  { key: "communication_low", label: "Low Communication" },
+];
+
+const PLANNING_OPTIONS: PreferenceOption[] = [
+  { key: "planner", label: "Planner" },
+  { key: "spontaneous", label: "Spontaneous" },
+  { key: "follower", label: "Follower" },
+];
+
+const EMPTY_PREFERENCES: ProfilePreferencesPayload = {
+  travel_styles: [],
+  food_preferences: [],
+  density_preference: "",
+  budget_preference: "",
+  walking_preference: "",
+  transport_preferences: [],
+  companion_preference: "",
+  time_preferences: [],
+  communication_preference: "",
+  planning_preference: "",
+};
+
 export default function MyPage() {
   const navigate = useNavigate();
   const profileImageInputRef = useRef<HTMLInputElement>(null);
@@ -52,6 +144,10 @@ export default function MyPage() {
   const [statusMessage, setStatusMessage] = useState("");
   const [statusDraft, setStatusDraft] = useState("");
   const [isWithdrawing, setIsWithdrawing] = useState(false);
+  const [preferenceDraft, setPreferenceDraft] =
+    useState<ProfilePreferencesPayload>(EMPTY_PREFERENCES);
+  const [isPreferenceEditing, setIsPreferenceEditing] = useState(false);
+  const [isSavingPreferences, setIsSavingPreferences] = useState(false);
 
   const [feedPosts, setFeedPosts] = useState<FeedPost[]>([]);
   const [feedNextCursor, setFeedNextCursor] = useState<string | null>(null);
@@ -71,14 +167,14 @@ export default function MyPage() {
   const [isFeedPostMenuOpen, setIsFeedPostMenuOpen] = useState(false);
   const [commentInput, setCommentInput] = useState("");
   const [isFeedActionRunning, setIsFeedActionRunning] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-
-  function showToast(message: string): void {
-    setToastMessage(message);
-    window.setTimeout(() => {
-      setToastMessage((current) => (current === message ? "" : current));
-    }, 2800);
-  }
+  const [pendingAccountAction, setPendingAccountAction] = useState<
+    "logout" | "withdraw" | null
+  >(null);
+  const [savedPlans, setSavedPlans] = useState<PlanSummaryResponse[]>([]);
+  const [isLoadingPlans, setIsLoadingPlans] = useState(false);
+  const [planMessage, setPlanMessage] = useState("");
+  const [shareInfo, setShareInfo] = useState<SharePlanResponse | null>(null);
+  const [shareLink, setShareLink] = useState("");
 
   useEffect(() => {
     getMyProfile()
@@ -88,6 +184,7 @@ export default function MyPage() {
           const nextStatus = getInitialStatusMessage(data);
           setStatusMessage(nextStatus);
           setStatusDraft(nextStatus);
+          setPreferenceDraft(toPreferencePayload(data));
         }
       })
       .catch(() => setProfile(null));
@@ -191,18 +288,26 @@ export default function MyPage() {
     }
   }
 
-  function handleFeedFileSelect(event: React.ChangeEvent<HTMLInputElement>): void {
+  async function handleFeedFileSelect(
+    event: React.ChangeEvent<HTMLInputElement>
+  ): Promise<void> {
     const file = event.target.files?.[0];
     if (!file) return;
 
     if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
-      showToast("Please choose a JPG, PNG, or WEBP image.");
+      window.alert("Please choose a JPG, PNG, or WEBP image.");
       event.target.value = "";
       return;
     }
 
     if (file.size > 10 * 1024 * 1024) {
-      showToast("Please choose an image smaller than 10MB.");
+      window.alert("Please choose an image smaller than 10MB.");
+      event.target.value = "";
+      return;
+    }
+
+    if (await isAnimatedFeedImage(file)) {
+      window.alert("Animated WEBP/APNG images are not supported.");
       event.target.value = "";
       return;
     }
@@ -215,7 +320,7 @@ export default function MyPage() {
   async function handleFeedUpload(): Promise<void> {
     if (!feedFile || isFeedUploading) return;
     if (feedPosts.length >= 100) {
-      showToast("The maximum feed photo limit is 100.");
+      window.alert("The maximum feed photo limit is 100.");
       return;
     }
 
@@ -283,7 +388,7 @@ export default function MyPage() {
     try {
       updateFeedPostState(await updateFeedPostVisibility(selectedFeedPost.post_id, visibility));
     } catch (error) {
-      showToast(toErrorMessage(error, "Failed to update visibility."));
+      window.alert(toErrorMessage(error, "Failed to update visibility."));
     } finally {
       setIsFeedActionRunning(false);
     }
@@ -303,7 +408,7 @@ export default function MyPage() {
       setIsFeedPostEditing(false);
       setIsFeedPostMenuOpen(false);
     } catch (error) {
-      showToast(toErrorMessage(error, "Failed to update caption."));
+      window.alert(toErrorMessage(error, "Failed to update caption."));
     } finally {
       setIsFeedActionRunning(false);
     }
@@ -321,7 +426,7 @@ export default function MyPage() {
       );
       setSelectedFeedPost(null);
     } catch (error) {
-      showToast(toErrorMessage(error, "Failed to delete feed photo."));
+      window.alert(toErrorMessage(error, "Failed to delete feed photo."));
     } finally {
       setIsFeedActionRunning(false);
     }
@@ -342,10 +447,10 @@ export default function MyPage() {
           updateFeedPostState({ ...selectedFeedPost, like_count: response.like_count });
           setSelectedFeedLikes((await getFeedPostLikes(selectedFeedPost.post_id)).users);
         } catch (unlikeError) {
-          showToast(toErrorMessage(unlikeError, "Failed to update like."));
+          window.alert(toErrorMessage(unlikeError, "Failed to update like."));
         }
       } else {
-        showToast(toErrorMessage(error, "Failed to update like."));
+        window.alert(toErrorMessage(error, "Failed to update like."));
       }
     } finally {
       setIsFeedActionRunning(false);
@@ -366,7 +471,7 @@ export default function MyPage() {
       });
       setCommentInput("");
     } catch (error) {
-      showToast(toErrorMessage(error, "Failed to add comment."));
+      window.alert(toErrorMessage(error, "Failed to add comment."));
     } finally {
       setIsFeedActionRunning(false);
     }
@@ -387,34 +492,48 @@ export default function MyPage() {
         comment_count: Math.max(0, selectedFeedPost.comment_count - 1),
       });
     } catch (error) {
-      showToast(toErrorMessage(error, "Failed to delete comment."));
+      window.alert(toErrorMessage(error, "Failed to delete comment."));
     } finally {
       setIsFeedActionRunning(false);
     }
   }
 
   async function handleLogout(): Promise<void> {
-    if (!window.confirm("Log out of your account?")) return;
-
     try {
       await logoutUser();
+    } catch {
+      // The session may already be invalid locally; still leave the app shell.
     } finally {
+      showAppToast({ title: "Logged out", variant: "success" });
       navigate("/login");
     }
   }
 
   async function handleWithdraw(): Promise<void> {
-    if (!window.confirm("Delete your account permanently? All user data will be removed.")) {
-      return;
-    }
-
     setIsWithdrawing(true);
     try {
       await withdrawUser();
+      showAppToast({ title: "Account deleted", variant: "success" });
       navigate("/login", { replace: true });
     } catch (error) {
-      showToast(toErrorMessage(error, "Account withdrawal failed. Please try again."));
+      showAppToast({
+        title: "Account withdrawal failed",
+        message: toErrorMessage(error, "Please try again."),
+        variant: "error",
+      });
       setIsWithdrawing(false);
+    }
+  }
+
+  function handleConfirmAccountAction(): void {
+    const action = pendingAccountAction;
+    setPendingAccountAction(null);
+
+    if (action === "logout") {
+      void handleLogout();
+    }
+    if (action === "withdraw") {
+      void handleWithdraw();
     }
   }
 
@@ -427,13 +546,13 @@ export default function MyPage() {
     setIsProfileImageMenuOpen(false);
 
     if (!["image/jpeg", "image/png", "image/webp", "image/gif"].includes(file.type)) {
-      showToast("Please choose a JPG, PNG, WEBP, or GIF image.");
+      window.alert("Please choose a JPG, PNG, WEBP, or GIF image.");
       event.target.value = "";
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      showToast("Please choose an image smaller than 5MB.");
+      window.alert("Please choose an image smaller than 5MB.");
       event.target.value = "";
       return;
     }
@@ -455,7 +574,7 @@ export default function MyPage() {
       }
     } catch (error) {
       setProfileImagePreview("");
-      showToast(toErrorMessage(error, "Profile photo upload failed. Please try again."));
+      window.alert(toErrorMessage(error, "Profile photo upload failed. Please try again."));
     } finally {
       setIsUploadingProfileImage(false);
       event.target.value = "";
@@ -485,7 +604,7 @@ export default function MyPage() {
       setProfileImagePreview("");
       setIsProfileImageMenuOpen(false);
     } catch (error) {
-      showToast(toErrorMessage(error, "Profile photo delete failed. Please try again."));
+      window.alert(toErrorMessage(error, "Profile photo delete failed. Please try again."));
     } finally {
       setIsDeletingProfileImage(false);
     }
@@ -501,6 +620,69 @@ export default function MyPage() {
     }
   }
 
+  function togglePreferenceList(
+    key: "travel_styles" | "food_preferences" | "transport_preferences" | "time_preferences",
+    value: string
+  ): void {
+    setPreferenceDraft((current) => {
+      const selected = current[key] ?? [];
+      return {
+        ...current,
+        [key]: selected.includes(value)
+          ? selected.filter((item) => item !== value)
+          : [...selected, value],
+      };
+    });
+  }
+
+  function setPreferenceValue(
+    key:
+      | "density_preference"
+      | "budget_preference"
+      | "walking_preference"
+      | "companion_preference"
+      | "communication_preference"
+      | "planning_preference",
+    value: string
+  ): void {
+    setPreferenceDraft((current) => ({
+      ...current,
+      [key]: current[key] === value ? "" : value,
+    }));
+  }
+
+  async function handlePreferenceSave(): Promise<void> {
+    if (isSavingPreferences) return;
+    if (!profile) {
+      showAppToast({
+        title: "Profile is still loading",
+        message: "Please try again in a moment.",
+        variant: "info",
+      });
+      return;
+    }
+
+    setIsSavingPreferences(true);
+    try {
+      const updatedProfile = await updateMyProfilePreferences(preferenceDraft, profile);
+      setProfile((current) => ({
+        ...(current ?? {}),
+        ...(updatedProfile ?? {}),
+        ...preferenceDraft,
+      }) as UserProfile);
+      setIsPreferenceEditing(false);
+      showAppToast({ title: "Preferences saved", variant: "success" });
+    } catch (error) {
+      showAppToast({
+        title: "Failed to save preferences",
+        message: toErrorMessage(error, "Please try again."),
+        variant: "error",
+      });
+    } finally {
+      setIsSavingPreferences(false);
+    }
+  }
+
   const profileImageUrl =
     profileImagePreview || getProfileImageUrl(profile) || DEFAULT_PROFILE_IMAGE_URL;
   const canDeleteProfileImage =
@@ -513,6 +695,7 @@ export default function MyPage() {
     { label: "Gender", value: formatGender(profile?.gender) },
     { label: "Nationality", value: profile?.nationality ?? "" },
   ].filter((item) => item.value);
+  const preferenceTags = getPreferenceTags(profile);
 
   return (
     <div style={styles.page}>
@@ -525,11 +708,7 @@ export default function MyPage() {
             disabled={isUploadingProfileImage || isDeletingProfileImage}
             aria-label="Change profile photo"
           >
-            {profileImageUrl ? (
-              <img src={profileImageUrl} alt="" style={styles.avatarImage} />
-            ) : (
-              <span style={styles.avatarText}>{avatarText}</span>
-            )}
+            <img src={profileImageUrl} alt="" style={styles.avatarImage} />
             {isUploadingProfileImage ? (
               <span style={styles.avatarOverlay}>Uploading...</span>
             ) : isDeletingProfileImage ? (
@@ -579,14 +758,14 @@ export default function MyPage() {
               onClick={() => setIsSettingsOpen(true)}
               aria-label="Open settings"
             >
-              &#9881;
+              ⚙
             </button>
             <button
               type="button"
               style={styles.newPostButton}
               onClick={() => {
                 if (feedPosts.length >= 100) {
-                  showToast("The maximum feed photo limit is 100.");
+                  window.alert("The maximum feed photo limit is 100.");
                   return;
                 }
                 feedImageInputRef.current?.click();
@@ -599,6 +778,15 @@ export default function MyPage() {
           <p style={styles.statusMessage}>
             {statusMessage || "No status message yet."}
           </p>
+          {preferenceTags.length > 0 ? (
+            <div style={styles.preferenceTags} aria-label="Travel preferences">
+              {preferenceTags.map((tag) => (
+                <span key={tag} style={styles.preferenceTag}>
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          ) : null}
           <span style={styles.profileStat}>
             <strong>{feedPosts.length}</strong> posts
           </span>
@@ -626,7 +814,7 @@ export default function MyPage() {
               >
                 <img src={getFeedImageUrl(post)} alt="" style={styles.feedTileImage} />
                 <span style={styles.feedTileMeta}>
-                  {post.like_count} likes / {post.comment_count} comments
+                  {post.like_count} likes · {post.comment_count} comments
                 </span>
               </button>
             ))}
@@ -647,97 +835,6 @@ export default function MyPage() {
             {isFeedLoading ? "Loading..." : "Load More"}
           </button>
         ) : null}
-      </section>
-
-      <section style={styles.section}>
-        <div style={styles.planPanel}>
-          <div style={styles.planHeader}>
-            <div>
-              <h2 style={styles.sectionTitle}>Saved Plans</h2>
-              <p style={styles.planCopy}>
-                AI and manual plans saved to the backend appear here.
-              </p>
-            </div>
-            <button
-              type="button"
-              style={styles.planRefreshButton}
-              onClick={refreshPlans}
-              disabled={isLoadingPlans}
-            >
-              {isLoadingPlans ? "Loading" : "Refresh"}
-            </button>
-          </div>
-
-          {planMessage ? <p style={styles.planMessage}>{planMessage}</p> : null}
-          {shareInfo ? (
-            <div style={styles.shareReadyRow}>
-              <span>
-                Public link expires {new Date(shareInfo.expires_at).toLocaleString()}.
-              </span>
-              <button
-                type="button"
-                style={styles.planPrimaryButton}
-                onClick={() => void handleCopyShareLink()}
-              >
-                Copy Link
-              </button>
-            </div>
-          ) : null}
-
-          {isLoadingPlans ? (
-            <div style={styles.emptyPanel}>Loading saved plans...</div>
-          ) : savedPlans.length === 0 ? (
-            <div style={styles.emptyPanel}>No saved plans yet.</div>
-          ) : (
-            <div style={styles.planList}>
-              {savedPlans.map((plan) => (
-                <article key={plan.plan_id} style={styles.planCard}>
-                  <div style={styles.planCardBody}>
-                    <strong style={styles.planTitle}>
-                      {plan.title || "Untitled plan"}
-                    </strong>
-                    <span style={styles.planMeta}>
-                      {plan.travel_days} day max - Updated{" "}
-                      {new Date(plan.updated_at).toLocaleString()}
-                    </span>
-                  </div>
-                  <div style={styles.planActions}>
-                    <button
-                      type="button"
-                      style={styles.planPrimaryButton}
-                      onClick={() =>
-                        navigate(`/plan/manual?planId=${encodeURIComponent(plan.plan_id)}`)
-                      }
-                    >
-                      Edit
-                    </button>
-                    <button
-                      type="button"
-                      style={styles.planGhostButton}
-                      onClick={() => void handleRenamePlan(plan)}
-                    >
-                      Rename
-                    </button>
-                    <button
-                      type="button"
-                      style={styles.planGhostButton}
-                      onClick={() => void handleSharePlan(plan)}
-                    >
-                      Share
-                    </button>
-                    <button
-                      type="button"
-                      style={styles.planDangerButton}
-                      onClick={() => void handleDeletePlan(plan)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </article>
-              ))}
-            </div>
-          )}
-        </div>
       </section>
 
       {isSettingsOpen ? (
@@ -774,6 +871,37 @@ export default function MyPage() {
                 </button>
               </div>
             ) : null}
+            <button
+              type="button"
+              style={styles.settingsActionButton}
+              onClick={() => setIsPreferenceEditing((current) => !current)}
+            >
+              Edit Travel Preferences
+            </button>
+            {isPreferenceEditing ? (
+              <PreferenceEditor
+                value={preferenceDraft}
+                isSaving={isSavingPreferences}
+                onToggleList={togglePreferenceList}
+                onSetValue={setPreferenceValue}
+                onReset={() => setPreferenceDraft(toPreferencePayload(profile))}
+                onSave={() => void handlePreferenceSave()}
+              />
+            ) : null}
+            <SavedPlansPanel
+              plans={savedPlans}
+              isLoading={isLoadingPlans}
+              message={planMessage}
+              shareInfo={shareInfo}
+              onRefresh={refreshPlans}
+              onCopyShareLink={() => void handleCopyShareLink()}
+              onEdit={(plan) =>
+                navigate(`/plan/manual?planId=${encodeURIComponent(plan.plan_id)}`)
+              }
+              onRename={(plan) => void handleRenamePlan(plan)}
+              onShare={(plan) => void handleSharePlan(plan)}
+              onDelete={(plan) => void handleDeletePlan(plan)}
+            />
             <div style={styles.settingsInfoBlock}>
               <strong style={styles.settingsInfoTitle}>My Information</strong>
               <div style={styles.infoList}>
@@ -791,13 +919,17 @@ export default function MyPage() {
                 ))}
               </div>
             </div>
-            <button type="button" style={styles.settingsActionButton} onClick={handleLogout}>
+            <button
+              type="button"
+              style={styles.settingsActionButton}
+              onClick={() => setPendingAccountAction("logout")}
+            >
               Log Out
             </button>
             <button
               type="button"
               style={{ ...styles.settingsActionButton, ...styles.settingsDangerButton }}
-              onClick={handleWithdraw}
+              onClick={() => setPendingAccountAction("withdraw")}
               disabled={isWithdrawing}
             >
               {isWithdrawing ? "Deleting Account..." : "Delete Account"}
@@ -822,11 +954,21 @@ export default function MyPage() {
         />
       ) : null}
 
+      {pendingAccountAction ? (
+        <AccountConfirmDialog
+          action={pendingAccountAction}
+          busy={isWithdrawing}
+          onCancel={() => setPendingAccountAction(null)}
+          onConfirm={handleConfirmAccountAction}
+        />
+      ) : null}
+
       {selectedFeedPost ? (
         <FeedPostModal
           post={selectedFeedPost}
           profileImageUrl={profileImageUrl}
           userName={nameText || "Unknown"}
+          currentUserId={profile?.user_id ?? ""}
           likes={selectedFeedLikes}
           comments={selectedFeedComments}
           captionDraft={selectedCaptionDraft}
@@ -853,7 +995,309 @@ export default function MyPage() {
           onCommentDelete={(comment) => void handleCommentDelete(comment)}
         />
       ) : null}
-      {toastMessage ? <div style={styles.toast}>{toastMessage}</div> : null}
+    </div>
+  );
+}
+
+function PreferenceEditor({
+  value,
+  isSaving,
+  onToggleList,
+  onSetValue,
+  onReset,
+  onSave,
+}: {
+  value: ProfilePreferencesPayload;
+  isSaving: boolean;
+  onToggleList: (
+    key: "travel_styles" | "food_preferences" | "transport_preferences" | "time_preferences",
+    value: string
+  ) => void;
+  onSetValue: (
+    key:
+      | "density_preference"
+      | "budget_preference"
+      | "walking_preference"
+      | "companion_preference"
+      | "communication_preference"
+      | "planning_preference",
+    value: string
+  ) => void;
+  onReset: () => void;
+  onSave: () => void;
+}) {
+  return (
+    <div style={styles.preferenceEditor}>
+      <PreferenceGroup
+        title="Travel Styles"
+        options={TRAVEL_STYLE_OPTIONS}
+        selected={value.travel_styles}
+        onToggle={(key) => onToggleList("travel_styles", key)}
+      />
+      <PreferenceGroup
+        title="Food Preferences"
+        options={FOOD_OPTIONS}
+        selected={value.food_preferences ?? []}
+        onToggle={(key) => onToggleList("food_preferences", key)}
+      />
+      <PreferenceGroup
+        title="Schedule Density"
+        options={DENSITY_OPTIONS}
+        selected={[value.density_preference ?? ""]}
+        single
+        onToggle={(key) => onSetValue("density_preference", key)}
+      />
+      <PreferenceGroup
+        title="Budget"
+        options={BUDGET_OPTIONS}
+        selected={[value.budget_preference ?? ""]}
+        single
+        onToggle={(key) => onSetValue("budget_preference", key)}
+      />
+      <PreferenceGroup
+        title="Walking"
+        options={WALKING_OPTIONS}
+        selected={[value.walking_preference ?? ""]}
+        single
+        onToggle={(key) => onSetValue("walking_preference", key)}
+      />
+      <PreferenceGroup
+        title="Transportation"
+        options={TRANSPORT_OPTIONS}
+        selected={value.transport_preferences ?? []}
+        onToggle={(key) => onToggleList("transport_preferences", key)}
+      />
+      <PreferenceGroup
+        title="Companion"
+        options={COMPANION_OPTIONS}
+        selected={[value.companion_preference ?? ""]}
+        single
+        onToggle={(key) => onSetValue("companion_preference", key)}
+      />
+      <PreferenceGroup
+        title="Active Time"
+        options={TIME_OPTIONS}
+        selected={value.time_preferences ?? []}
+        onToggle={(key) => onToggleList("time_preferences", key)}
+      />
+      <PreferenceGroup
+        title="Communication"
+        options={COMMUNICATION_OPTIONS}
+        selected={[value.communication_preference ?? ""]}
+        single
+        onToggle={(key) => onSetValue("communication_preference", key)}
+      />
+      <PreferenceGroup
+        title="Planning"
+        options={PLANNING_OPTIONS}
+        selected={[value.planning_preference ?? ""]}
+        single
+        onToggle={(key) => onSetValue("planning_preference", key)}
+      />
+      <div style={styles.preferenceEditorActions}>
+        <button type="button" style={styles.secondaryButton} onClick={onReset} disabled={isSaving}>
+          Reset
+        </button>
+        <button
+          type="button"
+          style={{ ...styles.primaryButton, ...(isSaving ? styles.buttonDisabled : {}) }}
+          onClick={onSave}
+          disabled={isSaving}
+        >
+          {isSaving ? "Saving..." : "Save Preferences"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function PreferenceGroup({
+  title,
+  options,
+  selected,
+  onToggle,
+}: {
+  title: string;
+  options: PreferenceOption[];
+  selected: string[];
+  single?: boolean;
+  onToggle: (key: string) => void;
+}) {
+  return (
+    <div style={styles.preferenceGroup}>
+      <strong style={styles.preferenceGroupTitle}>{title}</strong>
+      <div style={styles.preferenceChoiceList}>
+        {options.map((option) => {
+          const active = selected.includes(option.key);
+          return (
+            <button
+              key={option.key}
+              type="button"
+              style={{
+                ...styles.preferenceChoice,
+                ...(active ? styles.preferenceChoiceActive : {}),
+              }}
+              onClick={() => onToggle(option.key)}
+            >
+              {option.label}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function SavedPlansPanel({
+  plans,
+  isLoading,
+  message,
+  shareInfo,
+  onRefresh,
+  onCopyShareLink,
+  onEdit,
+  onRename,
+  onShare,
+  onDelete,
+}: {
+  plans: PlanSummaryResponse[];
+  isLoading: boolean;
+  message: string;
+  shareInfo: SharePlanResponse | null;
+  onRefresh: () => void;
+  onCopyShareLink: () => void;
+  onEdit: (plan: PlanSummaryResponse) => void;
+  onRename: (plan: PlanSummaryResponse) => void;
+  onShare: (plan: PlanSummaryResponse) => void;
+  onDelete: (plan: PlanSummaryResponse) => void;
+}) {
+  return (
+    <div style={styles.planPanel}>
+      <div style={styles.planHeader}>
+        <div>
+          <h2 style={styles.sectionTitle}>Saved Plans</h2>
+          <p style={styles.planCopy}>AI and manual plans saved to the backend.</p>
+        </div>
+        <button
+          type="button"
+          style={styles.planRefreshButton}
+          onClick={onRefresh}
+          disabled={isLoading}
+        >
+          {isLoading ? "Loading" : "Refresh"}
+        </button>
+      </div>
+
+      {message ? <p style={styles.planMessage}>{message}</p> : null}
+      {shareInfo ? (
+        <div style={styles.shareReadyRow}>
+          <span>Public link expires {new Date(shareInfo.expires_at).toLocaleString()}.</span>
+          <button type="button" style={styles.planPrimaryButton} onClick={onCopyShareLink}>
+            Copy Link
+          </button>
+        </div>
+      ) : null}
+
+      {isLoading ? (
+        <div style={styles.emptyPanel}>Loading saved plans...</div>
+      ) : plans.length === 0 ? (
+        <div style={styles.emptyPanel}>No saved plans yet.</div>
+      ) : (
+        <div style={styles.planList}>
+          {plans.map((plan) => (
+            <article key={plan.plan_id} style={styles.planCard}>
+              <div style={styles.planCardBody}>
+                <strong style={styles.planTitle}>{plan.title || "Untitled plan"}</strong>
+                <span style={styles.planMeta}>
+                  {plan.travel_days} day max - Updated{" "}
+                  {new Date(plan.updated_at).toLocaleString()}
+                </span>
+              </div>
+              <div style={styles.planActions}>
+                <button
+                  type="button"
+                  style={styles.planPrimaryButton}
+                  onClick={() => onEdit(plan)}
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  style={styles.planGhostButton}
+                  onClick={() => onRename(plan)}
+                >
+                  Rename
+                </button>
+                <button
+                  type="button"
+                  style={styles.planGhostButton}
+                  onClick={() => onShare(plan)}
+                >
+                  Share
+                </button>
+                <button
+                  type="button"
+                  style={styles.planDangerButton}
+                  onClick={() => onDelete(plan)}
+                >
+                  Delete
+                </button>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function AccountConfirmDialog({
+  action,
+  busy,
+  onCancel,
+  onConfirm,
+}: {
+  action: "logout" | "withdraw";
+  busy: boolean;
+  onCancel: () => void;
+  onConfirm: () => void;
+}) {
+  const isWithdraw = action === "withdraw";
+
+  return (
+    <div style={styles.accountConfirmBackdrop} onClick={onCancel}>
+      <div style={styles.accountConfirmCard} onClick={(event) => event.stopPropagation()}>
+        <h2 style={styles.accountConfirmTitle}>
+          {isWithdraw ? "Delete account?" : "Log out?"}
+        </h2>
+        <p style={styles.accountConfirmCopy}>
+          {isWithdraw
+            ? "Your account deletion request will start immediately."
+            : "You will return to the login screen."}
+        </p>
+        <div style={styles.accountConfirmActions}>
+          <button
+            type="button"
+            style={styles.secondaryButton}
+            onClick={onCancel}
+            disabled={busy}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            style={{
+              ...styles.primaryButton,
+              ...(isWithdraw ? styles.accountConfirmDanger : {}),
+              ...(busy ? styles.buttonDisabled : {}),
+            }}
+            onClick={onConfirm}
+            disabled={busy}
+          >
+            {isWithdraw ? (busy ? "Deleting..." : "Delete") : "Log Out"}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -888,7 +1332,7 @@ function CreatePostModal({
       <div style={styles.createPostModal}>
         <div style={styles.createPostTopBar}>
           <button type="button" style={styles.createPostIconButton} onClick={onBack}>
-            &lt;
+            ←
           </button>
           <strong style={styles.createPostTitle}>Create New Post</strong>
           <button
@@ -948,6 +1392,7 @@ function FeedPostModal({
   post,
   profileImageUrl,
   userName,
+  currentUserId,
   likes,
   comments,
   captionDraft,
@@ -970,6 +1415,7 @@ function FeedPostModal({
   post: FeedPost;
   profileImageUrl: string;
   userName: string;
+  currentUserId: string;
   likes: FeedLikeUser[];
   comments: FeedComment[];
   captionDraft: string;
@@ -1082,14 +1528,16 @@ function FeedPostModal({
                   <strong style={styles.commentAuthor}>{comment.user_name || "Unknown"}</strong>
                   <p style={styles.commentText}>{comment.content}</p>
                 </div>
-                <button
-                  type="button"
-                  style={styles.commentDeleteButton}
-                  disabled={isBusy}
-                  onClick={() => onCommentDelete(comment)}
-                >
-                  Delete
-                </button>
+                {comment.user_id === currentUserId ? (
+                  <button
+                    type="button"
+                    style={styles.commentDeleteButton}
+                    disabled={isBusy}
+                    onClick={() => onCommentDelete(comment)}
+                  >
+                    Delete
+                  </button>
+                ) : null}
               </article>
             ))}
           </div>
@@ -1098,27 +1546,19 @@ function FeedPostModal({
             <div style={styles.feedPostActionButtons}>
               <button
                 type="button"
-                style={styles.feedIconAction}
+                style={styles.feedLikeIconButton}
                 disabled={isBusy}
                 onClick={onLike}
                 aria-label="Like"
               >
-                Like
+                <span style={styles.feedActionCount}>{post.like_count}</span>
+                <HeartIcon />
               </button>
+              <span style={styles.feedCommentSummary}>
+                <span style={styles.feedActionCount}>{post.comment_count}</span>
+                <CommentIcon />
+              </span>
             </div>
-            <strong style={styles.feedLikeSummary}>{post.like_count} likes</strong>
-            {likes.length ? (
-              <div style={styles.likesList}>
-                {likes.slice(0, 4).map((user) => (
-                  <span key={user.user_id} style={styles.likeUser}>
-                    {user.profile_image_url ? (
-                      <img src={user.profile_image_url} alt="" style={styles.likeAvatar} />
-                    ) : null}
-                    {user.user_name || "Unknown"}
-                  </span>
-                ))}
-              </div>
-            ) : null}
             <form
               style={styles.commentForm}
               onSubmit={(event) => {
@@ -1146,6 +1586,31 @@ function FeedPostModal({
         </aside>
       </div>
     </div>
+  );
+}
+
+function HeartIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M12 20.2s-7.4-4.6-9.2-9.4C1.6 7.5 3.6 4.5 6.8 4.5c1.8 0 3.2.9 4.1 2.2.9-1.3 2.3-2.2 4.1-2.2 3.2 0 5.2 3 4 6.3-1.7 4.8-9 9.4-9 9.4Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+function CommentIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M5.2 18.4c-1.7-1.4-2.7-3.4-2.7-5.7 0-4.6 4.1-8.2 9.5-8.2s9.5 3.6 9.5 8.2-4.1 8.2-9.5 8.2c-1.2 0-2.3-.2-3.4-.5L4.5 21.5c-.7.2-1.2-.5-.9-1.1l1.6-2Z"
+        stroke="currentColor"
+        strokeWidth="1.9"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
 
@@ -1210,6 +1675,26 @@ const styles: Record<string, CSSProperties> = {
   profileStat: {
     color: "var(--neutral-700)",
     fontWeight: 800,
+  },
+  preferenceTags: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: 6,
+    marginTop: 10,
+    maxWidth: 520,
+  },
+  preferenceTag: {
+    display: "inline-flex",
+    alignItems: "center",
+    minHeight: 28,
+    borderRadius: 999,
+    padding: "0 10px",
+    background: "rgba(5,181,187,0.12)",
+    border: "1px solid rgba(5,181,187,0.18)",
+    color: "var(--brand-primary-deep)",
+    fontSize: "0.76rem",
+    fontWeight: 900,
+    lineHeight: 1,
   },
   avatarWrap: {
     position: "relative",
@@ -1368,15 +1853,16 @@ const styles: Record<string, CSSProperties> = {
     border: "none",
     borderRadius: 4,
     overflow: "hidden",
-    background: "var(--neutral-100)",
+    background: "#050608",
     aspectRatio: "1 / 1",
     cursor: "pointer",
   },
   feedTileImage: {
     width: "100%",
     height: "100%",
-    objectFit: "cover",
+    objectFit: "contain",
     display: "block",
+    background: "#050608",
   },
   feedTileMeta: {
     position: "absolute",
@@ -1604,6 +2090,51 @@ const styles: Record<string, CSSProperties> = {
     color: "var(--text-primary)",
     fontFamily: "inherit",
   },
+  preferenceEditor: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 14,
+    padding: 14,
+    borderRadius: 16,
+    background: "rgba(5,181,187,0.06)",
+    border: "1px solid rgba(5,181,187,0.14)",
+  },
+  preferenceGroup: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 8,
+  },
+  preferenceGroupTitle: {
+    color: "var(--text-primary)",
+    fontSize: "0.86rem",
+  },
+  preferenceChoiceList: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: 8,
+  },
+  preferenceChoice: {
+    minHeight: 34,
+    border: "1px solid rgba(5,181,187,0.16)",
+    borderRadius: 999,
+    padding: "0 12px",
+    background: "#ffffff",
+    color: "var(--text-secondary)",
+    fontSize: "0.78rem",
+    fontWeight: 900,
+    cursor: "pointer",
+  },
+  preferenceChoiceActive: {
+    background: "var(--brand-primary-soft)",
+    borderColor: "rgba(5,181,187,0.38)",
+    color: "var(--brand-primary-deep)",
+  },
+  preferenceEditorActions: {
+    display: "flex",
+    justifyContent: "flex-end",
+    gap: 10,
+    paddingTop: 2,
+  },
   settingsInfoBlock: {
     display: "flex",
     flexDirection: "column",
@@ -1645,26 +2176,24 @@ const styles: Record<string, CSSProperties> = {
     zIndex: 80,
     display: "grid",
     placeItems: "center",
-    padding: 0,
+    padding: 20,
     background: "rgba(8,12,16,0.74)",
   },
   createPostModal: {
-    width: "100%",
-    height: "100dvh",
-    maxHeight: "100dvh",
+    width: "min(1220px, 100%)",
+    maxHeight: "92dvh",
     display: "flex",
     flexDirection: "column",
     overflow: "hidden",
-    borderRadius: 0,
+    borderRadius: 4,
     background: "#24262d",
     color: "#f5f6f7",
     boxShadow: "0 28px 90px rgba(0,0,0,0.38)",
   },
   createPostTopBar: {
-    height: 54,
-    flexShrink: 0,
+    height: 52,
     display: "grid",
-    gridTemplateColumns: "56px minmax(0, 1fr) 82px",
+    gridTemplateColumns: "72px 1fr 100px",
     alignItems: "center",
     borderBottom: "1px solid rgba(255,255,255,0.1)",
   },
@@ -1686,7 +2215,7 @@ const styles: Record<string, CSSProperties> = {
   },
   shareButton: {
     justifySelf: "end",
-    marginRight: 10,
+    marginRight: 16,
     border: "none",
     background: "transparent",
     color: "#7f9cff",
@@ -1697,33 +2226,30 @@ const styles: Record<string, CSSProperties> = {
   },
   createPostFrame: {
     minHeight: 0,
-    flex: 1,
-    display: "flex",
-    flexDirection: "column",
-    overflowY: "auto",
+    display: "grid",
+    gridTemplateColumns: "minmax(520px, 1fr) 390px",
   },
   createPostImagePane: {
-    width: "100%",
-    aspectRatio: "1 / 1",
-    maxHeight: "52dvh",
-    flexShrink: 0,
+    minHeight: 680,
     display: "grid",
     placeItems: "center",
-    background: "#ffffff",
+    background: "#050608",
     overflow: "hidden",
   },
   createPostImage: {
     width: "100%",
     height: "100%",
+    maxHeight: "calc(92dvh - 52px)",
     objectFit: "contain",
     display: "block",
+    background: "#050608",
   },
   createPostSidePane: {
     minHeight: 0,
-    flex: 1,
+    maxHeight: "calc(92dvh - 52px)",
     display: "flex",
     flexDirection: "column",
-    overflowY: "visible",
+    overflowY: "auto",
     background: "#24262d",
   },
   createPostAuthor: {
@@ -1745,7 +2271,7 @@ const styles: Record<string, CSSProperties> = {
     fontWeight: 900,
   },
   createPostTextarea: {
-    minHeight: 132,
+    minHeight: 300,
     border: "none",
     padding: "10px 18px",
     background: "transparent",
@@ -1808,25 +2334,63 @@ const styles: Record<string, CSSProperties> = {
     zIndex: 60,
     display: "grid",
     placeItems: "center",
-    padding: 0,
+    padding: 10,
     background: "rgba(16,34,35,0.42)",
+  },
+  accountConfirmBackdrop: {
+    position: "fixed",
+    inset: 0,
+    zIndex: 120,
+    display: "grid",
+    placeItems: "center",
+    padding: 18,
+    background: "rgba(16,34,35,0.42)",
+  },
+  accountConfirmCard: {
+    width: "min(360px, 100%)",
+    padding: 22,
+    borderRadius: 18,
+    background: "#ffffff",
+    border: "1px solid var(--border-soft)",
+    boxShadow: "0 24px 70px rgba(15,23,42,0.24)",
+  },
+  accountConfirmTitle: {
+    margin: 0,
+    color: "var(--text-primary)",
+    fontSize: "1.2rem",
+    lineHeight: 1.25,
+  },
+  accountConfirmCopy: {
+    margin: "10px 0 0",
+    color: "var(--neutral-700)",
+    lineHeight: 1.5,
+    fontSize: "0.92rem",
+  },
+  accountConfirmActions: {
+    display: "flex",
+    justifyContent: "flex-end",
+    gap: 10,
+    marginTop: 20,
+  },
+  accountConfirmDanger: {
+    background: "#dc2626",
   },
   feedModal: {
     position: "relative",
-    width: "100%",
-    height: "100dvh",
-    display: "flex",
-    flexDirection: "column",
-    overflow: "hidden",
-    borderRadius: 0,
+    width: "min(430px, calc(100% - 8px))",
+    maxHeight: "94dvh",
+    display: "grid",
+    gridTemplateColumns: "1fr",
+    overflowY: "auto",
+    borderRadius: 18,
     background: "#ffffff",
     boxShadow: "0 24px 70px rgba(15,23,42,0.28)",
   },
   modalCloseButton: {
     position: "absolute",
-    top: 10,
-    right: 10,
-    zIndex: 4,
+    top: 12,
+    right: 12,
+    zIndex: 2,
     width: 36,
     height: 36,
     border: "none",
@@ -1838,10 +2402,7 @@ const styles: Record<string, CSSProperties> = {
     cursor: "pointer",
   },
   feedModalImagePane: {
-    height: "48dvh",
-    minHeight: 260,
-    maxHeight: 520,
-    flexShrink: 0,
+    minHeight: "min(58dvh, 520px)",
     display: "grid",
     placeItems: "center",
     background: "#050608",
@@ -1849,12 +2410,12 @@ const styles: Record<string, CSSProperties> = {
   feedModalImage: {
     width: "100%",
     height: "100%",
+    maxHeight: "58dvh",
     objectFit: "contain",
     background: "#050608",
   },
   feedModalSidePane: {
-    minHeight: 0,
-    flex: 1,
+    minHeight: 260,
     display: "flex",
     flexDirection: "column",
     background: "#ffffff",
@@ -1866,8 +2427,8 @@ const styles: Record<string, CSSProperties> = {
     alignItems: "center",
     justifyContent: "space-between",
     gap: 12,
-    minHeight: 68,
-    padding: "10px 14px",
+    minHeight: 84,
+    padding: "12px 16px",
     borderBottom: "1px solid var(--neutral-200)",
   },
   feedPostAuthor: {
@@ -1877,8 +2438,8 @@ const styles: Record<string, CSSProperties> = {
     minWidth: 0,
   },
   feedPostAvatar: {
-    width: 48,
-    height: 48,
+    width: 60,
+    height: 60,
     borderRadius: "50%",
     objectFit: "cover",
     background: "#3a3d45",
@@ -1990,33 +2551,45 @@ const styles: Record<string, CSSProperties> = {
   feedDiscussion: {
     flex: 1,
     minHeight: 0,
+    maxHeight: "42dvh",
     overflowY: "auto",
-    padding: "8px 14px",
+    padding: "8px 16px",
   },
   feedPostFooter: {
-    flexShrink: 0,
     borderTop: "1px solid var(--neutral-200)",
-    padding: "10px 14px calc(12px + env(safe-area-inset-bottom))",
+    padding: "10px 16px 12px",
     display: "flex",
     flexDirection: "column",
-    gap: 8,
+    gap: 6,
   },
   feedPostActionButtons: {
     display: "flex",
     alignItems: "center",
-    gap: 14,
+    gap: 18,
   },
-  feedIconAction: {
+  feedLikeIconButton: {
     border: "none",
-    background: "transparent",
-    color: "var(--text-primary)",
-    fontWeight: 900,
     padding: 0,
+    background: "transparent",
+    color: "#ef4444",
+    display: "inline-flex",
+    alignItems: "center",
+    gap: 5,
+    fontWeight: 900,
     cursor: "pointer",
   },
-  feedLikeSummary: {
+  feedCommentSummary: {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: 5,
     color: "var(--text-primary)",
-    fontSize: "0.9rem",
+    fontWeight: 900,
+  },
+  feedActionCount: {
+    minWidth: 10,
+    color: "var(--text-primary)",
+    fontSize: "0.94rem",
+    fontWeight: 900,
   },
   likesList: {
     display: "flex",
@@ -2075,8 +2648,8 @@ const styles: Record<string, CSSProperties> = {
     flex: 1,
   },
   feedCommentAvatar: {
-    width: 42,
-    height: 42,
+    width: 51,
+    height: 51,
     borderRadius: "50%",
     objectFit: "cover",
     background: "var(--neutral-100)",
@@ -2103,22 +2676,6 @@ const styles: Record<string, CSSProperties> = {
     fontWeight: 900,
     cursor: "pointer",
   },
-  toast: {
-    position: "fixed",
-    left: "50%",
-    bottom: 96,
-    zIndex: 160,
-    maxWidth: "min(88vw, 420px)",
-    transform: "translateX(-50%)",
-    padding: "12px 16px",
-    borderRadius: 16,
-    background: "rgba(24,26,32,0.92)",
-    color: "#ffffff",
-    fontSize: "0.9rem",
-    fontWeight: 800,
-    lineHeight: 1.35,
-    boxShadow: "0 18px 40px rgba(24,26,32,0.22)",
-  },
 };
 
 function getProfileImageUrl(profile: UserProfile | null): string {
@@ -2135,6 +2692,150 @@ function getProfileImageUrl(profile: UserProfile | null): string {
 
 function getFeedImageUrl(post: FeedPost): string {
   return post.thumbnail_medium_url || post.thumbnail_small_url || post.original_url;
+}
+
+async function isAnimatedFeedImage(file: File): Promise<boolean> {
+  if (file.type === "image/png") {
+    return isAnimatedPng(new Uint8Array(await file.arrayBuffer()));
+  }
+
+  if (file.type === "image/webp") {
+    return isAnimatedWebp(new Uint8Array(await file.arrayBuffer()));
+  }
+
+  return false;
+}
+
+function isAnimatedPng(bytes: Uint8Array): boolean {
+  const pngSignature = [137, 80, 78, 71, 13, 10, 26, 10];
+  if (!pngSignature.every((value, index) => bytes[index] === value)) return false;
+
+  let offset = 8;
+  while (offset + 12 <= bytes.length) {
+    const chunkLength =
+      (bytes[offset] << 24) |
+      (bytes[offset + 1] << 16) |
+      (bytes[offset + 2] << 8) |
+      bytes[offset + 3];
+    const chunkType = bytesToAscii(bytes, offset + 4, offset + 8);
+    if (chunkType === "acTL") return true;
+    if (chunkType === "IDAT" || chunkType === "IEND") return false;
+    offset += 12 + chunkLength;
+  }
+
+  return false;
+}
+
+function isAnimatedWebp(bytes: Uint8Array): boolean {
+  if (
+    bytesToAscii(bytes, 0, 4) !== "RIFF" ||
+    bytesToAscii(bytes, 8, 12) !== "WEBP"
+  ) {
+    return false;
+  }
+
+  const header = bytesToAscii(bytes, 12, 16);
+  if (header === "VP8X" && bytes.length > 20 && (bytes[20] & 0b00000010) !== 0) {
+    return true;
+  }
+
+  return bytesToAscii(bytes, 12, bytes.length).includes("ANIM");
+}
+
+function bytesToAscii(bytes: Uint8Array, start: number, end: number): string {
+  return Array.from(bytes.slice(start, end))
+    .map((byte) => String.fromCharCode(byte))
+    .join("");
+}
+
+function getPreferenceTags(profile: UserProfile | null): string[] {
+  if (!profile) return [];
+
+  const values = [
+    ...(profile.travel_styles ?? []),
+    ...(profile.food_preferences ?? []),
+    profile.density_preference,
+    profile.budget_preference,
+    profile.walking_preference,
+    ...(profile.transport_preferences ?? []),
+    profile.companion_preference,
+    ...(profile.time_preferences ?? []),
+    profile.communication_preference,
+    profile.planning_preference,
+  ];
+
+  return Array.from(
+    new Set(
+      values
+        .filter((value): value is string => typeof value === "string" && value.trim().length > 0)
+        .map(formatPreferenceTag)
+    )
+  );
+}
+
+function toPreferencePayload(profile: UserProfile | null): ProfilePreferencesPayload {
+  if (!profile) return EMPTY_PREFERENCES;
+
+  return {
+    travel_styles: profile.travel_styles ?? [],
+    food_preferences: profile.food_preferences ?? [],
+    density_preference: profile.density_preference ?? "",
+    budget_preference: profile.budget_preference ?? "",
+    walking_preference: profile.walking_preference ?? "",
+    transport_preferences: profile.transport_preferences ?? [],
+    companion_preference: profile.companion_preference ?? "",
+    time_preferences: profile.time_preferences ?? [],
+    communication_preference: profile.communication_preference ?? "",
+    planning_preference: profile.planning_preference ?? "",
+  };
+}
+
+function formatPreferenceTag(value: string): string {
+  const labelMap: Record<string, string> = {
+    activity: "Activity",
+    famous_attractions: "Famous Attractions",
+    healing: "Healing",
+    culture_history: "Culture & History",
+    shopping: "Shopping",
+    food_tour: "Food Tour",
+    photo_aesthetic: "Photo Aesthetic",
+    festival_event: "Festival & Event",
+    nature: "Nature",
+    traditional: "Traditional",
+    trekking: "Trekking",
+    hidden_gems: "Hidden Gems",
+    art_exhibition: "Art Exhibition",
+    theme_park: "Theme Park",
+    food_halal: "Halal",
+    food_vegetarian: "Vegetarian",
+    foodie: "Foodie",
+    cafe_lover: "Cafe Lover",
+    density_relaxed: "Relaxed",
+    density_packed: "Packed",
+    budget_saving: "Saving",
+    budget_moderate: "Moderate",
+    budget_premium: "Premium",
+    walking_low: "Low Walking",
+    walking_medium: "Medium Walking",
+    walking_high: "High Walking",
+    transport_public: "Public Transit",
+    transport_car: "Car",
+    transport_taxi: "Taxi",
+    companion_independent: "Independent",
+    companion_together: "Together",
+    companion_flexible: "Flexible",
+    daytime: "Daytime",
+    nightlife: "Nightlife",
+    night_view: "Night View",
+    communication_high: "High Communication",
+    communication_low: "Low Communication",
+    planner: "Planner",
+    spontaneous: "Spontaneous",
+    follower: "Follower",
+  };
+
+  const key = value.trim().toLowerCase().replace(/[\s-]+/g, "_");
+  return labelMap[key] ?? key.replace(/_/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
 function getVisibilityLabel(visibility: FeedVisibility): string {

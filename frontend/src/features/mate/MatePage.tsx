@@ -22,6 +22,7 @@ import {
 } from "../../api/searchHistory";
 import { uploadImages } from "../../api/image";
 import { getMyProfile } from "../../api/auth";
+import { createDirectChatRoom } from "../../api/chat";
 import {
   deleteFriendSearchHistoryAll,
   deleteFriendSearchHistoryOne,
@@ -35,8 +36,8 @@ import {
 import { getRecommendationCandidates } from "../../api/recommendation";
 import {
   recommendTravelers,
+  type MatePreferenceProfile,
   type RecommendationCandidate,
-  type RecommendationProfile,
   type RecommendedTraveler,
 } from "../../utils/mateRecommendation";
 import NotificationBell from "../../components/NotificationBell";
@@ -59,6 +60,8 @@ const GENDER_LABELS: Record<PreferredGender, string> = {
   male: "Male",
   female: "Female",
 };
+
+const DEFAULT_PROFILE_IMAGE_URL = "/default-profile.png";
 
 const EMPTY_FORM = {
   title: "",
@@ -98,6 +101,11 @@ export default function MatePage() {
   const [userSearchLoading, setUserSearchLoading] = useState(false);
   const [userSearchError, setUserSearchError] = useState("");
   const [filter, setFilter] = useState<CompanionType | "all">("all");
+  const [currentRecommendationProfile, setCurrentRecommendationProfile] =
+    useState<MatePreferenceProfile>({});
+  const [recommendationCandidates, setRecommendationCandidates] = useState<
+    RecommendationCandidate[]
+  >([]);
 
   const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -107,20 +115,19 @@ export default function MatePage() {
   const [showHistory, setShowHistory] = useState(false);
 
   const [selectedPost, setSelectedPost] = useState<TripMatePost | null>(null);
+  const [selectedRecommendedTraveler, setSelectedRecommendedTraveler] =
+    useState<RecommendedTraveler | null>(null);
   const [friendRequested, setFriendRequested] = useState<Set<string>>(new Set());
+  const [recommendedFriendRequested, setRecommendedFriendRequested] = useState<
+    Set<string>
+  >(new Set());
   const [friendStates, setFriendStates] = useState<Record<string, MateFriendState>>({});
   const [friendRequestingUserId, setFriendRequestingUserId] = useState<string | null>(null);
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
   const [feedPopupUserId, setFeedPopupUserId] = useState<string | null>(null);
   const [chatOpeningPostId, setChatOpeningPostId] = useState<string | null>(null);
-  const [toastMessage, setToastMessage] = useState("");
 
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
-  const [currentRecommendationProfile, setCurrentRecommendationProfile] =
-    useState<RecommendationProfile>({});
-  const [recommendationCandidates, setRecommendationCandidates] = useState<
-    RecommendationCandidate[]
-  >([]);
   const [menuOpenPostId, setMenuOpenPostId] = useState<string | null>(null);
   const [editingPostId, setEditingPostId] = useState<string | null>(null);
 
@@ -131,13 +138,6 @@ export default function MatePage() {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [imageUploading, setImageUploading] = useState(false);
-
-  function showToast(message: string): void {
-    setToastMessage(message);
-    window.setTimeout(() => {
-      setToastMessage((current) => (current === message ? "" : current));
-    }, 2800);
-  }
 
   useEffect(() => {
     draftFormRef.current = form;
@@ -291,10 +291,18 @@ export default function MatePage() {
       .then((profile) => {
         setCurrentUserId(profile?.user_id ?? null);
         setCurrentRecommendationProfile({
-          user_id: profile?.user_id,
-          user_name: profile?.user_name,
+          user_id: profile?.user_id ?? null,
+          travel_styles: profile?.travel_styles ?? [],
+          food_preferences: profile?.food_preferences ?? [],
+          density_preference: profile?.density_preference,
+          budget_preference: profile?.budget_preference,
+          walking_preference: profile?.walking_preference,
+          transport_preferences: profile?.transport_preferences ?? [],
+          companion_preference: profile?.companion_preference,
+          time_preferences: profile?.time_preferences ?? [],
+          communication_preference: profile?.communication_preference,
+          planning_preference: profile?.planning_preference,
           nationality: profile?.nationality,
-          travel_styles: profile?.travel_styles,
         });
       })
       .catch((error) => {
@@ -302,10 +310,15 @@ export default function MatePage() {
         setCurrentUserId(null);
         setCurrentRecommendationProfile({});
       });
+  }, []);
 
+  useEffect(() => {
     getRecommendationCandidates()
-      .then(setRecommendationCandidates)
-      .catch(() => setRecommendationCandidates([]));
+      .then((response) => setRecommendationCandidates(response.items ?? []))
+      .catch((error) => {
+        console.warn("Failed to load recommendation candidates", error);
+        setRecommendationCandidates([]);
+      });
   }, []);
 
   useEffect(() => {
@@ -371,6 +384,10 @@ export default function MatePage() {
     () => recommendTravelers(currentRecommendationProfile, recommendationCandidates, 10),
     [currentRecommendationProfile, recommendationCandidates]
   );
+  const recommendationSourceTags = useMemo(
+    () => getMatePreferenceTags(currentRecommendationProfile),
+    [currentRecommendationProfile]
+  );
 
   function resetEditor(): void {
     setEditingPostId(null);
@@ -433,7 +450,7 @@ export default function MatePage() {
         ...response.images.map((image) => image.image_url),
       ]);
     } catch (uploadError) {
-      showToast(toErrorMessage(uploadError, "Image upload failed. Please try again."));
+      window.alert(toErrorMessage(uploadError, "Image upload failed. Please try again."));
       setImagePreviews((current) => current.slice(0, current.length - selectedFiles.length));
     } finally {
       setImageUploading(false);
@@ -462,7 +479,7 @@ export default function MatePage() {
     } catch (draftError) {
       setDraftStatus("");
       if (showError) {
-        showToast(toErrorMessage(draftError, "Failed to save draft. Please try again."));
+        window.alert(toErrorMessage(draftError, "Failed to save draft. Please try again."));
       }
     } finally {
       window.setTimeout(() => {
@@ -487,6 +504,7 @@ export default function MatePage() {
 
     try {
       await toggleLike(post.post_id, post.is_liked);
+      window.dispatchEvent(new Event("krip:notification-inbox-updated"));
     } catch {
       setPosts((current) =>
         current.map((item) => (item.post_id === post.post_id ? post : item))
@@ -510,7 +528,7 @@ export default function MatePage() {
         },
       }));
     } catch (friendError) {
-      showToast(toErrorMessage(friendError, "Failed to send friend request. Please try again."));
+      window.alert(toErrorMessage(friendError, "Failed to send friend request. Please try again."));
     } finally {
       setFriendRequestingUserId(null);
     }
@@ -526,7 +544,7 @@ export default function MatePage() {
       await sendFriendRequest(traveler.user_id);
       setRecommendedFriendRequested((current) => new Set(current).add(traveler.user_id));
     } catch (friendError) {
-      showToast(toErrorMessage(friendError, "Failed to send friend request. Please try again."));
+      window.alert(toErrorMessage(friendError, "Failed to send friend request. Please try again."));
     } finally {
       setFriendRequestingUserId(null);
     }
@@ -550,7 +568,7 @@ export default function MatePage() {
         )
       );
     } catch (friendError) {
-      showToast(toErrorMessage(friendError, "Failed to send friend request. Please try again."));
+      window.alert(toErrorMessage(friendError, "Failed to send friend request. Please try again."));
     } finally {
       setFriendRequestingUserId(null);
     }
@@ -561,9 +579,10 @@ export default function MatePage() {
 
     setChatOpeningPostId(user.user_id);
     try {
-      navigate(`/chat/${user.user_id}`);
+      const room = await createDirectChatRoom(user.user_id);
+      navigate(`/chat/${room.chat_room_id}`);
     } catch (chatError) {
-      showToast(toErrorMessage(chatError, "Failed to open chat. Please try again."));
+      window.alert(toErrorMessage(chatError, "Failed to open chat. Please try again."));
     } finally {
       setChatOpeningPostId(null);
     }
@@ -571,7 +590,7 @@ export default function MatePage() {
 
   async function handleSubmit(): Promise<void> {
     if (imageUploading) {
-      showToast("Please wait until the image upload is complete.");
+      window.alert("Please wait until the image upload is complete.");
       return;
     }
 
@@ -582,12 +601,12 @@ export default function MatePage() {
       !form.travel_start_date ||
       !form.travel_end_date
     ) {
-      showToast("Please fill in all required fields.");
+      window.alert("Please fill in all required fields.");
       return;
     }
 
     if (form.content.trim().length < 10) {
-      showToast("Please enter at least 10 characters in the intro.");
+      window.alert("Please enter at least 10 characters in the intro.");
       return;
     }
 
@@ -619,7 +638,7 @@ export default function MatePage() {
       const status = apiError.response?.status ?? "Network Error";
       const message = toErrorMessage(error, "Please try again.");
 
-      showToast(`${editingPostId ? "Update" : "Create"} failed (${status}). ${message}`);
+      window.alert(`${editingPostId ? "Update" : "Create"} failed (${status})\n${message}`);
     } finally {
       setSubmitting(false);
     }
@@ -652,7 +671,7 @@ export default function MatePage() {
       await deleteTripMatePost(post.post_id);
       setPosts((current) => current.filter((item) => item.post_id !== post.post_id));
     } catch {
-      showToast("Failed to delete the post.");
+      window.alert("Failed to delete the post.");
     }
   }
 
@@ -661,9 +680,10 @@ export default function MatePage() {
 
     setChatOpeningPostId(post.post_id);
     try {
-      navigate(`/chat/${post.user_id}`);
+      const room = await createDirectChatRoom(post.user_id);
+      navigate(`/chat/${room.chat_room_id}`);
     } catch (chatError) {
-      showToast(toErrorMessage(chatError, "Failed to open chat. Please try again."));
+      window.alert(toErrorMessage(chatError, "Failed to open chat. Please try again."));
     } finally {
       setChatOpeningPostId(null);
     }
@@ -674,10 +694,11 @@ export default function MatePage() {
 
     setChatOpeningPostId(traveler.user_id);
     try {
+      const room = await createDirectChatRoom(traveler.user_id);
       setSelectedRecommendedTraveler(null);
-      navigate(`/chat/${traveler.user_id}`);
+      navigate(`/chat/${room.chat_room_id}`);
     } catch (chatError) {
-      showToast(toErrorMessage(chatError, "Failed to open chat. Please try again."));
+      window.alert(toErrorMessage(chatError, "Failed to open chat. Please try again."));
     } finally {
       setChatOpeningPostId(null);
     }
@@ -887,9 +908,9 @@ export default function MatePage() {
                   <h2 style={styles.recommendationTitle}>Travelers for you</h2>
                 </div>
                 <span style={styles.recommendationSource}>
-                  {currentRecommendationProfile.travel_styles?.length
-                    ? currentRecommendationProfile.travel_styles.join(" / ")
-                    : "No styles yet"}
+                  {recommendationSourceTags.length
+                    ? recommendationSourceTags.slice(0, 4).join(" / ")
+                    : "No preferences yet"}
                 </span>
               </div>
 
@@ -1408,7 +1429,6 @@ export default function MatePage() {
         <div style={styles.menuBackdrop} onClick={() => setMenuOpenPostId(null)} />
       ) : null}
 
-      {toastMessage ? <div style={styles.toast}>{toastMessage}</div> : null}
     </div>
   );
 }
@@ -1448,7 +1468,7 @@ function AuthorAvatar({
       {post.profile_image_url ? (
         <img src={post.profile_image_url} alt="" style={styles.avatarImage} />
       ) : (
-        post.author.user_name?.slice(0, 1).toUpperCase() || "T"
+        <img src={DEFAULT_PROFILE_IMAGE_URL} alt="" style={styles.avatarImage} />
       )}
     </div>
   );
@@ -1489,7 +1509,11 @@ function UserSearchCard({
         </div>
       </div>
       <div style={styles.userResultActions}>
-        {!isFriend ? (
+        {isFriend ? (
+          <button type="button" style={styles.secondaryButton} onClick={onChat} disabled={busy}>
+            {busy ? "Opening..." : "Chat"}
+          </button>
+        ) : (
           <button
             type="button"
             style={canSendRequest ? styles.primaryButton : styles.secondaryButton}
@@ -1506,10 +1530,7 @@ function UserSearchCard({
                   ? "Blocked"
                   : "Add Friend"}
           </button>
-        ) : null}
-        <button type="button" style={styles.secondaryButton} onClick={onChat} disabled={busy}>
-          {busy ? "Opening..." : "Chat"}
-        </button>
+        )}
         <button type="button" style={styles.secondaryButton} onClick={onViewFeed}>
           Feed
         </button>
@@ -1715,7 +1736,7 @@ function PostModal({
               </button>
             ) : null}
             <button type="button" style={styles.secondaryButton} onClick={onViewProfile}>
-              Feed
+              View Feed
             </button>
             {!isOwnPost ? (
               <button type="button" style={styles.secondaryButton} onClick={onChat}>
@@ -1727,6 +1748,102 @@ function PostModal({
       </div>
     </div>
   );
+}
+
+function formatProfileKey(key: string): string {
+  return key
+    .split("_")
+    .map((part) => part.slice(0, 1).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function formatProfileValue(value: unknown): string {
+  if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) return value.join(", ");
+  if (typeof value === "object") return JSON.stringify(value);
+  return String(value);
+}
+
+function getMatePreferenceTags(profile: {
+  travel_styles?: string[];
+  food_preferences?: string[];
+  density_preference?: string;
+  budget_preference?: string;
+  walking_preference?: string;
+  transport_preferences?: string[];
+  companion_preference?: string;
+  time_preferences?: string[];
+  communication_preference?: string;
+  planning_preference?: string;
+}): string[] {
+  const values = [
+    ...(profile.travel_styles ?? []),
+    ...(profile.food_preferences ?? []),
+    profile.density_preference,
+    profile.budget_preference,
+    profile.walking_preference,
+    ...(profile.transport_preferences ?? []),
+    profile.companion_preference,
+    ...(profile.time_preferences ?? []),
+    profile.communication_preference,
+    profile.planning_preference,
+  ];
+
+  return Array.from(
+    new Set(
+      values
+        .filter((value): value is string => typeof value === "string" && value.trim().length > 0)
+        .map((value) => formatPreferenceLabel(value))
+    )
+  );
+}
+
+function formatPreferenceLabel(value: string): string {
+  const key = value.trim().toLowerCase().replace(/[\s-]+/g, "_");
+  const labelMap: Record<string, string> = {
+    activity: "Activity",
+    famous_attractions: "Famous Attractions",
+    healing: "Healing",
+    culture_history: "Culture & History",
+    shopping: "Shopping",
+    food_tour: "Food Tour",
+    photo_aesthetic: "Photo Aesthetic",
+    festival_event: "Festival & Event",
+    nature: "Nature",
+    traditional: "Traditional",
+    trekking: "Trekking",
+    hidden_gems: "Hidden Gems",
+    art_exhibition: "Art Exhibition",
+    theme_park: "Theme Park",
+    food_halal: "Halal",
+    food_vegetarian: "Vegetarian",
+    foodie: "Foodie",
+    cafe_lover: "Cafe Lover",
+    density_relaxed: "Relaxed",
+    density_packed: "Packed",
+    budget_saving: "Saving",
+    budget_moderate: "Moderate",
+    budget_premium: "Premium",
+    walking_low: "Low Walking",
+    walking_medium: "Medium Walking",
+    walking_high: "High Walking",
+    transport_public: "Public Transit",
+    transport_car: "Car",
+    transport_taxi: "Taxi",
+    companion_independent: "Independent",
+    companion_together: "Together",
+    companion_flexible: "Flexible",
+    daytime: "Daytime",
+    nightlife: "Nightlife",
+    night_view: "Night View",
+    communication_high: "High Communication",
+    communication_low: "Low Communication",
+    planner: "Planner",
+    spontaneous: "Spontaneous",
+    follower: "Follower",
+  };
+
+  return labelMap[key] ?? key.replace(/_/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
 function ImageLightbox({ src, onClose }: { src: string; onClose: () => void }) {
@@ -2200,6 +2317,123 @@ const styles: Record<string, CSSProperties> = {
     color: "var(--text-primary)",
     boxShadow: "0 12px 24px rgba(248,180,0,0.14)",
   },
+  recommendationPanel: {
+    padding: "14px 16px",
+    borderRadius: 22,
+    background: "rgba(255,255,255,0.72)",
+    border: "1px solid rgba(5,181,187,0.12)",
+  },
+  recommendationHeader: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 14,
+    marginBottom: 12,
+  },
+  recommendationEyebrow: {
+    margin: 0,
+    color: "var(--brand-primary-deep)",
+    fontSize: "0.74rem",
+    fontWeight: 800,
+    letterSpacing: "0.12em",
+    textTransform: "uppercase",
+  },
+  recommendationTitle: {
+    margin: "4px 0 0",
+    color: "var(--text-primary)",
+    fontSize: "1.1rem",
+    lineHeight: 1.2,
+  },
+  recommendationSource: {
+    maxWidth: 170,
+    padding: "7px 10px",
+    borderRadius: 999,
+    background: "rgba(5,181,187,0.1)",
+    color: "var(--brand-primary-deep)",
+    fontSize: "0.76rem",
+    fontWeight: 800,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+  recommendationLabel: {
+    color: "var(--neutral-700)",
+    fontSize: "0.76rem",
+    fontWeight: 800,
+  },
+  recommendationSelect: {
+    minHeight: 38,
+    border: "1px solid rgba(5,181,187,0.18)",
+    borderRadius: 14,
+    padding: "0 10px",
+    background: "#ffffff",
+    color: "var(--text-primary)",
+    fontWeight: 800,
+  },
+  recommendationList: {
+    display: "flex",
+    gap: 10,
+    overflowX: "auto",
+    paddingBottom: 2,
+  },
+  recommendationItem: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 8,
+    minWidth: 82,
+    padding: "8px 6px",
+    border: "none",
+    background: "transparent",
+    cursor: "pointer",
+  },
+  recommendationPhoto: {
+    width: 62,
+    height: 62,
+    borderRadius: "50%",
+    objectFit: "cover",
+    border: "3px solid rgba(255,255,255,0.95)",
+    boxShadow: "0 10px 22px rgba(5,181,187,0.16)",
+  },
+  recommendationPhotoFallback: {
+    width: 62,
+    height: 62,
+    borderRadius: "50%",
+    display: "grid",
+    placeItems: "center",
+    background: "linear-gradient(135deg, var(--brand-primary), #12c0c6)",
+    color: "#ffffff",
+    border: "3px solid rgba(255,255,255,0.95)",
+    boxShadow: "0 10px 22px rgba(5,181,187,0.16)",
+    fontWeight: 900,
+  },
+  recommendationText: {
+    width: "100%",
+    textAlign: "center",
+  },
+  recommendationName: {
+    display: "block",
+    color: "var(--text-primary)",
+    fontSize: "0.84rem",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+  recommendationScore: {
+    margin: "2px 0 0",
+    color: "var(--neutral-700)",
+    fontSize: "0.7rem",
+    fontWeight: 700,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+  recommendationEmpty: {
+    margin: 0,
+    color: "var(--neutral-700)",
+    fontSize: "0.86rem",
+    fontWeight: 700,
+  },
   listSection: {
     display: "flex",
     flexDirection: "column",
@@ -2641,6 +2875,90 @@ const styles: Record<string, CSSProperties> = {
     boxShadow: "0 28px 72px rgba(24,26,32,0.18)",
     animation: "slideUpModal 280ms cubic-bezier(0.22, 1, 0.36, 1)",
   },
+  recommendedModalCard: {
+    width: "100%",
+    maxWidth: 760,
+    maxHeight: "88dvh",
+    overflowY: "auto",
+    borderRadius: "30px 30px 0 0",
+    background: "var(--surface-panel)",
+    boxShadow: "0 28px 72px rgba(24,26,32,0.18)",
+    padding: 20,
+    display: "flex",
+    flexDirection: "column",
+    gap: 18,
+    animation: "slideUpModal 280ms cubic-bezier(0.22, 1, 0.36, 1)",
+  },
+  recommendedModalHeader: {
+    display: "flex",
+    alignItems: "center",
+    gap: 14,
+  },
+  recommendedModalPhoto: {
+    width: 74,
+    height: 74,
+    borderRadius: "50%",
+    objectFit: "cover",
+    border: "3px solid rgba(255,255,255,0.95)",
+    boxShadow: "0 14px 30px rgba(5,181,187,0.18)",
+    flexShrink: 0,
+  },
+  recommendedModalPhotoFallback: {
+    width: 74,
+    height: 74,
+    borderRadius: "50%",
+    display: "grid",
+    placeItems: "center",
+    background: "linear-gradient(135deg, var(--brand-primary), #12c0c6)",
+    color: "#ffffff",
+    border: "3px solid rgba(255,255,255,0.95)",
+    boxShadow: "0 14px 30px rgba(5,181,187,0.18)",
+    fontWeight: 900,
+    fontSize: "1.5rem",
+    flexShrink: 0,
+  },
+  recommendedModalTitleBlock: {
+    flex: 1,
+    minWidth: 0,
+  },
+  recommendedModalTitle: {
+    margin: "4px 0",
+    color: "var(--text-primary)",
+    fontSize: "1.45rem",
+    lineHeight: 1.12,
+  },
+  recommendedModalScore: {
+    margin: 0,
+    color: "var(--neutral-700)",
+    fontWeight: 800,
+  },
+  recommendedInfoGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+    gap: 10,
+  },
+  recommendedInfoItem: {
+    padding: 12,
+    borderRadius: 16,
+    background: "rgba(228,247,247,0.44)",
+    border: "1px solid rgba(5,181,187,0.1)",
+    minWidth: 0,
+  },
+  recommendedInfoLabel: {
+    display: "block",
+    marginBottom: 5,
+    color: "var(--brand-primary-deep)",
+    fontSize: "0.74rem",
+    fontWeight: 900,
+  },
+  recommendedInfoValue: {
+    display: "block",
+    color: "var(--text-primary)",
+    fontSize: "0.9rem",
+    fontWeight: 700,
+    overflowWrap: "anywhere",
+    lineHeight: 1.35,
+  },
   modalHero: {
     minHeight: 210,
     padding: 22,
@@ -2784,21 +3102,5 @@ const styles: Record<string, CSSProperties> = {
     inset: 0,
     zIndex: 10,
     background: "transparent",
-  },
-  toast: {
-    position: "fixed",
-    left: "50%",
-    bottom: 96,
-    zIndex: 120,
-    maxWidth: "min(88vw, 420px)",
-    transform: "translateX(-50%)",
-    padding: "12px 16px",
-    borderRadius: 16,
-    background: "rgba(24,26,32,0.92)",
-    color: "#ffffff",
-    fontSize: "0.9rem",
-    fontWeight: 800,
-    lineHeight: 1.35,
-    boxShadow: "0 18px 40px rgba(24,26,32,0.22)",
   },
 };
