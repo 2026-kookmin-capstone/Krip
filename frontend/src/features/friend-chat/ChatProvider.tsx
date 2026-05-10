@@ -101,7 +101,9 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const shouldConnectChatSocket =
     location.pathname !== "/" &&
     location.pathname !== "/login" &&
-    location.pathname !== "/register";
+    location.pathname !== "/register" &&
+    location.pathname !== "/register/onboarding" &&
+    location.pathname !== "/withdrawal-pending";
   const socketRef = useRef<WebSocket | null>(null);
   const reconnectTimerRef = useRef<number | null>(null);
   const reconnectAttemptRef = useRef(0);
@@ -694,12 +696,12 @@ export function ChatProvider({ children }: { children: ReactNode }) {
           if (event.message.sender_id !== currentUserIdRef.current) {
             if (event.message.chat_room_id !== activeRoomIdRef.current) {
               incrementStoredChatUnreadCount(event.message.chat_room_id);
+              dispatchChatToast(
+                event.message,
+                getRoomTitle(roomsRef.current, event.message.chat_room_id),
+                getRoomProfileImageUrl(roomsRef.current, event.message.chat_room_id)
+              );
             }
-            dispatchChatToast(
-              event.message,
-              getRoomTitle(roomsRef.current, event.message.chat_room_id),
-              getRoomProfileImageUrl(roomsRef.current, event.message.chat_room_id)
-            );
           }
           if (event.message.chat_room_id === activeRoomIdRef.current) {
             sendRead(event.message.chat_room_id, event.message.server_seq);
@@ -833,15 +835,6 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     let cancelled = false;
     shouldReconnectRef.current = true;
 
-    void getMyProfile()
-      .then((profile) => {
-        if (!cancelled) setCurrentUserId(profile?.user_id ?? null);
-      })
-      .catch(() => {
-        if (!cancelled) setCurrentUserId(null);
-      });
-    void refreshRooms();
-
     function scheduleReconnect(): void {
       const base = Math.min(60000, 1000 * 2 ** reconnectAttemptRef.current);
       const jitter = Math.random() * 500;
@@ -899,7 +892,26 @@ export function ChatProvider({ children }: { children: ReactNode }) {
       };
     }
 
-    connect();
+    void getMyProfile()
+      .then((profile) => {
+        if (cancelled) return;
+        if (!profile?.user_id) {
+          setCurrentUserId(null);
+          shouldReconnectRef.current = false;
+          setConnectionState("closed");
+          return;
+        }
+
+        setCurrentUserId(profile.user_id);
+        void refreshRooms();
+        connect();
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setCurrentUserId(null);
+        shouldReconnectRef.current = false;
+        setConnectionState("closed");
+      });
 
     return () => {
       cancelled = true;

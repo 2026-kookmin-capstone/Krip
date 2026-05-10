@@ -1346,7 +1346,7 @@ export default function HomePage() {
                         onClick={() => void removeRecentSearch(keyword)}
                         aria-label={`Delete ${keyword}`}
                       >
-                        횞
+                        x
                       </button>
                     </div>
                   ))}
