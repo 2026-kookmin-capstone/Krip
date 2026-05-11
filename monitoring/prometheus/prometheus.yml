@@ -48,9 +48,8 @@ scrape_configs:
     static_configs:
       - targets: ["node-exporter:9100"]
 
-  - job_name: cadvisor
-    static_configs:
-      - targets: ["cadvisor:8080"]
+  # cadvisor 제거됨 — Azure VM 의 overlayfs storage driver 호환 X.
+  # docker-compose.monitoring.yml 의 docstring 참조.
 
   # ────────────────────────────────────────────────────────────────────
   # 데이터스토어 exporter

@@ -9,11 +9,11 @@ Prometheus + Grafana + Loki 기반의 옵저버빌리티 스택.
 
 ```
 monitoring/
-├── docker-compose.monitoring.yml   # 11개 모니터링 컴포넌트 정의
+├── docker-compose.monitoring.yml   # 10개 모니터링 컴포넌트 정의
 ├── Makefile                        # up / up-prod / reload / health / metrics / logql
 ├── .env(.example)                  # ENV / NODE_ID / Grafana 비번 / DB 자격증명
 ├── prometheus/
-│   └── prometheus.yml              # scrape 잡 8개 정의
+│   └── prometheus.yml              # scrape 잡 11개 정의
 ├── blackbox/
 │   └── blackbox.yml                # http_2xx (strict) / http_alive (관대) 두 모듈
 ├── loki/
@@ -22,7 +22,7 @@ monitoring/
 └── grafana/
     └── provisioning/
         ├── datasources/            # Prometheus / Loki 자동 등록
-        └── dashboards/             # 6개 대시보드 JSON 자동 import
+        └── dashboards/             # 7개 대시보드 JSON 자동 import
 ```
 
 ---
@@ -64,7 +64,6 @@ monitoring/
   mongodb-exporter:9216      ├── Prometheus scrape
   redis-exporter-hot:9121    │   (krip-network + monitoring-network 양쪽 가입)
   redis-exporter-dedupe:9121 ┘
-  cadvisor:8080            ── 컨테이너 메트릭
   node-exporter:9100       ── 운영 Linux 호스트 전용 (linux-host profile)
 ```
 
@@ -88,7 +87,6 @@ monitoring/
 | `loki-self` | loki:3100 | 15s | LokiIngestionStalled 룰 의존 |
 | `promtail-self` | promtail:9080 | 15s | PromtailDropping 룰 의존 |
 | `node` | node-exporter:9100 | 15s | 운영 Linux 만 활성 |
-| `cadvisor` | cadvisor:8080 | 15s | 컨테이너 CPU/메모리/OOM |
 | `postgres` | postgres-exporter:9187 | 15s | pg_stat_*, max_connections |
 | `redis-hot` | redis-exporter-hot:9121 | 15s | `db="hot"` 라벨 부착 |
 | `redis-dedupe` | redis-exporter-dedupe:9121 | 15s | `db="dedupe"` 라벨 부착 |
@@ -117,8 +115,9 @@ backend 의 client-side `redis_command_duration_seconds` 와 의미 중복 + 폭
 | `krip-api` | API 트래픽 (RED) | 7 | api, red |
 | `krip-ai-pipeline` | AI 파이프라인 | 9 | ai |
 | `krip-chat-domain` | 채팅 도메인 (Chat) | 18 | chat |
-| `krip-infra-stores` | 데이터스토어 (Infra Stores) | 16 | infra, db |
+| `krip-infra-stores` | 데이터스토어 (Infra Stores) | 17 | infra, db |
 | `krip-workers` | 워커 (Workers) | 10 | workers |
+| `krip-system-resources` | 시스템 리소스 (Host) | 8 | system, host |
 
 ### 3.3 Blackbox exporter (`prom/blackbox-exporter:v0.25.0`)
 
@@ -164,12 +163,15 @@ backend 의 client-side `redis_command_duration_seconds` 와 의미 중복 + 폭
 회전+압축. Promtail 3.x 의 `decompression` 은 pipeline 이 아닌 scrape_config 레벨
 옵션이라 잡을 두 개로 분리 (현재 / 회전).
 
-### 3.6 호스트 / 컨테이너 메트릭
+### 3.6 호스트 메트릭
 
 - **node-exporter** (`prom/node-exporter:v1.8.2`) — `profiles: [linux-host]`.
   운영 Linux 호스트 전용. macOS Docker Desktop 은 `rslave` propagation 미지원 +
   VM 내부 메트릭만 보여 의미 없음. `make up-prod` 가 `COMPOSE_PROFILES=linux-host` 로 활성화.
-- **cAdvisor** (`gcr.io/cadvisor/cadvisor:v0.49.1`) — `--docker_only=true`, OOM 이벤트 수집.
+
+> **cAdvisor 미사용**: Azure VM 등 docker storage driver 가 `overlayfs` 인 환경에서
+> "failed to identify the read-write layer ID" 에러로 컨테이너 메트릭 전체 누락
+> 향후 storage driver 가 `overlay2` 인 환경 / K8s migration 시 재도입 검토.
 
 ### 3.7 데이터스토어 exporter
 

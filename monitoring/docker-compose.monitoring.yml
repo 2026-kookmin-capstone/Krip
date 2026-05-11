@@ -103,27 +103,10 @@ services:
     pid: host
     restart: unless-stopped
 
-  # ──────────────────────────────────────────────────────────────────────
-  # cAdvisor — 컨테이너별 CPU / 메모리 / 네트워크 + OOM 이벤트
-  # ──────────────────────────────────────────────────────────────────────
-  cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.49.1
-    container_name: krip-cadvisor
-    privileged: true
-    devices:
-      - /dev/kmsg
-    volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:ro
-      - /sys:/sys:ro
-      - /var/lib/docker:/var/lib/docker:ro
-      - /dev/disk:/dev/disk:ro
-    networks:
-      - monitoring-network
-    restart: unless-stopped
-    command:
-      - "--housekeeping_interval=10s"
-      - "--docker_only=true"
+  # cAdvisor 제거됨 — Azure VM (또는 docker storage driver 가 overlayfs 인 환경) 에서
+  # "failed to identify the read-write layer ID" 에러로 컨테이너 메트릭 전체 누락.
+  # v0.49.1 / v0.51.0 모두 같은 증상이라 호환성 근본 문제로 판단.
+  # 향후 storage driver 가 overlay2 인 환경 / K8s migration 시 재도입 검토.
 
   # ──────────────────────────────────────────────────────────────────────
   # Postgres exporter — pg_stat_database / pg_stat_replication / pg_settings (III-9)
