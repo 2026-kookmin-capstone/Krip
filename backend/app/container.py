@@ -1,45 +1,44 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from dependency_injector import containers, providers
 
+from app.domain.tripmate.service.tripmate_search_history import TripmateSearchHistoryService
+from app.domain.tripmate.service.tripmate_post_like import TripmatePostLikeService
+from app.domain.tripmate.service.tripmate_post_draft import TripmatePostDraftService
+from app.domain.tripmate.service.tripmate_post import TripmatePostService
+from app.domain.tripmate.service.tripmate_image import TripmateImageService
+from app.domain.translation.service.translation import TranslationService
+from app.domain.tour.service.tour_search_history import TourSearchHistoryService
+from app.domain.tour.service.tour_plan import TourPlanService
+from app.domain.tour.service.recommend import RecommendService
+from app.domain.tour.service.place import PlaceService
+from app.domain.tour.service.favorite_place import FavoritePlaceService
+from app.domain.public.service.share_plan import SharePlanService
+from app.domain.notification.service.mute import MuteService
+from app.domain.notification.service.inbox import InboxService
+from app.domain.notification.service.fcm import FcmService
+from app.domain.menu_ai.service.menu_ocr import MenuOcrService
+from app.domain.friend.service.user_block import UserBlockService
+from app.domain.friend.service.search_history import FriendSearchHistoryService
+from app.domain.friend.service.search import FriendSearchService
+from app.domain.friend.service.friendship import FriendshipService
+from app.domain.friend.service.friend_detail import FriendDetailService
+from app.domain.feed.service.feed_post_like import FeedPostLikeService
+from app.domain.feed.service.feed_post_comment import FeedPostCommentService
+from app.domain.feed.service.feed_post import FeedPostService
+from app.domain.feed.service.feed_popup import FeedPopupService
+from app.domain.chat.service.user_purge_cache import UserPurgeCacheService
+from app.domain.chat.service.session import SessionService
+from app.domain.chat.service.room import RoomService
+from app.domain.chat.service.message_history import MessageHistoryService
+from app.domain.chat.service.message import MessageService
+from app.domain.chat.service.fanout import FanoutService
+from app.domain.chat.service.block_cache import BlockCacheService
+from app.domain.auth.service.withdraw import WithdrawService
 from app.domain.auth.service.signup import SignupService
 from app.domain.auth.service.register import RegisterService
 from app.domain.auth.service.profile import ProfileService
-from app.domain.auth.service.withdraw import WithdrawService
-from app.domain.tripmate.service.tripmate_post import TripmatePostService
-from app.domain.tripmate.service.tripmate_post_like import TripmatePostLikeService
-from app.domain.tripmate.service.tripmate_post_draft import TripmatePostDraftService
-from app.domain.tripmate.service.tripmate_search_history import TripmateSearchHistoryService
-from app.domain.tripmate.service.tripmate_image import TripmateImageService
-from app.domain.menu_ai.service.menu_ocr import MenuOcrService
-from app.domain.translation.service.translation import TranslationService
-from app.domain.tour.service.place import PlaceService
-from app.domain.tour.service.favorite_place import FavoritePlaceService
-from app.domain.tour.service.tour_search_history import TourSearchHistoryService
-from app.domain.tour.service.recommend import RecommendService
-from app.domain.tour.service.tour_plan import TourPlanService
-from app.domain.public.service.share_plan import SharePlanService
-from app.domain.friend.service.friendship import FriendshipService
-from app.domain.friend.service.user_block import UserBlockService
-from app.domain.friend.service.friend_detail import FriendDetailService
-from app.domain.friend.service.search import FriendSearchService
-from app.domain.friend.service.search_history import FriendSearchHistoryService
-from app.domain.chat.service.block_cache import BlockCacheService
-from app.domain.chat.service.message import MessageService
-from app.domain.chat.service.fanout import FanoutService
-from app.domain.chat.service.message_history import MessageHistoryService
-from app.domain.chat.service.room import RoomService
-from app.domain.chat.service.session import SessionService
-from app.domain.chat.service.user_purge_cache import UserPurgeCacheService
-from app.domain.notification.service.fcm import FcmService
-from app.domain.notification.service.mute import MuteService
-from app.domain.notification.service.inbox import InboxService
-from app.domain.feed.service.feed_post import FeedPostService
-from app.domain.feed.service.feed_post_like import FeedPostLikeService
-from app.domain.feed.service.feed_post_comment import FeedPostCommentService
-from app.domain.feed.service.feed_popup import FeedPopupService
 from app.database.session import UnitOfWork
 from app.config.setting import settings
-
 
 
 class Container(containers.DeclarativeContainer):
@@ -78,6 +77,7 @@ class Container(containers.DeclarativeContainer):
         TripmatePostService,
         uow=uow,
         draft_service=tripmate_post_draft_service,
+        inbox_service=inbox_service,
     )
     tripmate_post_like_service = providers.Factory(
         TripmatePostLikeService, uow=uow, inbox_service=inbox_service,
@@ -145,8 +145,11 @@ class Container(containers.DeclarativeContainer):
     friend_search_service = providers.Factory(FriendSearchService, uow=uow)
     friend_search_history_service = providers.Factory(FriendSearchHistoryService)
 
-    # 피드 — 좋아요/댓글 fan-out 만 인박스 의존 (게시물/댓글 삭제는 cascade 안 함).
-    feed_post_service = providers.Factory(FeedPostService, uow=uow)
+    # 피드 — 좋아요/댓글 fan-out + 게시글 삭제 cascade (soft hide) 모두 인박스 의존.
+    # 댓글 단건 삭제는 cascade 안 함.
+    feed_post_service = providers.Factory(
+        FeedPostService, uow=uow, inbox_service=inbox_service,
+    )
     feed_post_like_service = providers.Factory(
         FeedPostLikeService, uow=uow, inbox_service=inbox_service,
     )
