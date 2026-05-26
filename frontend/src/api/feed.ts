@@ -1,4 +1,8 @@
 import client from "./client";
+import type { AxiosProgressEvent } from "axios";
+
+const FEED_UPLOAD_TIMEOUT_MS = 60000;
+const FEED_DELETE_TIMEOUT_MS = 30000;
 
 export type FeedVisibility = "private" | "friends" | "public";
 
@@ -12,6 +16,7 @@ export interface FeedPost {
   thumbnail_medium_url: string;
   like_count: number;
   comment_count: number;
+  is_liked: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -69,10 +74,12 @@ export async function createFeedPost({
   file,
   visibility = "public",
   caption,
+  onUploadProgress,
 }: {
   file: File;
   visibility?: FeedVisibility;
   caption?: string;
+  onUploadProgress?: (progress: number) => void;
 }): Promise<FeedPost> {
   const formData = new FormData();
   formData.append("file", file);
@@ -81,8 +88,20 @@ export async function createFeedPost({
     formData.append("caption", caption);
   }
 
-  const { data } = await client.post<FeedPost>("/api/feed/posts", formData);
-  return data;
+  const { data } = await client.post<FeedPost>("/api/feed/posts", formData, {
+    timeout: FEED_UPLOAD_TIMEOUT_MS,
+    onUploadProgress: (progressEvent: AxiosProgressEvent) => {
+      const total = progressEvent.total ?? file.size;
+      if (!total) return;
+
+      const progress = Math.min(
+        100,
+        Math.max(0, Math.round((progressEvent.loaded / total) * 100))
+      );
+      onUploadProgress?.(progress);
+    },
+  });
+  return normalizeFeedPost(data);
 }
 
 export async function getMyFeedPosts(cursor?: string): Promise<FeedPostListResponse> {
@@ -90,7 +109,7 @@ export async function getMyFeedPosts(cursor?: string): Promise<FeedPostListRespo
     params: cursorParams(cursor),
   });
   return {
-    posts: Array.isArray(data.posts) ? data.posts : [],
+    posts: Array.isArray(data.posts) ? data.posts.map(normalizeFeedPost) : [],
     next_cursor: data.next_cursor ?? null,
   };
 }
@@ -104,7 +123,7 @@ export async function getUserFeedPosts(
     { params: cursorParams(cursor) }
   );
   return {
-    posts: Array.isArray(data.posts) ? data.posts : [],
+    posts: Array.isArray(data.posts) ? data.posts.map(normalizeFeedPost) : [],
     next_cursor: data.next_cursor ?? null,
   };
 }
@@ -113,7 +132,7 @@ export async function getFeedPost(postId: string): Promise<FeedPost> {
   const { data } = await client.get<FeedPost>(
     `/api/feed/posts/${encodeURIComponent(postId)}`
   );
-  return data;
+  return normalizeFeedPost(data);
 }
 
 export async function updateFeedPostVisibility(
@@ -124,7 +143,7 @@ export async function updateFeedPostVisibility(
 
   try {
     const { data } = await client.patch<FeedPost>(path, { visibility });
-    return data;
+    return normalizeFeedPost(data);
   } catch (error) {
     const status = getApiStatus(error);
     if (status && ![400, 422, 500].includes(status)) {
@@ -134,7 +153,7 @@ export async function updateFeedPostVisibility(
     const { data } = await client.patch<FeedPost>(path, null, {
       params: { visibility },
     });
-    return data;
+    return normalizeFeedPost(data);
   }
 }
 
@@ -146,11 +165,13 @@ export async function updateFeedPostCaption(
     `/api/feed/posts/${encodeURIComponent(postId)}/caption`,
     { caption }
   );
-  return data;
+  return normalizeFeedPost(data);
 }
 
 export async function deleteFeedPost(postId: string): Promise<void> {
-  await client.delete(`/api/feed/posts/${encodeURIComponent(postId)}`);
+  await client.delete(`/api/feed/posts/${encodeURIComponent(postId)}`, {
+    timeout: FEED_DELETE_TIMEOUT_MS,
+  });
 }
 
 export async function likeFeedPost(
@@ -214,8 +235,17 @@ export async function getFeedPopup(userId: string): Promise<FeedPopupResponse> {
     ...data,
     travel_styles: Array.isArray(data.travel_styles) ? data.travel_styles : [],
     feed: {
-      items: Array.isArray(data.feed?.items) ? data.feed.items : [],
+      items: Array.isArray(data.feed?.items)
+        ? data.feed.items.map(normalizeFeedPost)
+        : [],
     },
+  };
+}
+
+function normalizeFeedPost(post: FeedPost): FeedPost {
+  return {
+    ...post,
+    is_liked: Boolean(post.is_liked),
   };
 }
 
@@ -231,4 +261,20 @@ export async function deleteFeedComment(
 function getApiStatus(error: unknown): number | undefined {
   const apiError = error as { status?: number; response?: { status?: number } };
   return apiError.status || apiError.response?.status;
+}
+
+export function isPossiblyCommittedFeedMutationError(error: unknown): boolean {
+  const apiError = error as {
+    code?: string;
+    message?: string;
+    response?: { status?: number };
+  };
+  const message = String(apiError.message || "").toLowerCase();
+
+  return (
+    apiError.code === "ECONNABORTED" ||
+    message.includes("timeout") ||
+    message.includes("network error") ||
+    (!apiError.response && message.includes("network"))
+  );
 }

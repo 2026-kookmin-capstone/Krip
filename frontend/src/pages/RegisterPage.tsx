@@ -17,6 +17,11 @@ export interface RegisterFormState {
   nationality: string;
 }
 
+const MIN_AGE = 0;
+const MAX_AGE = 149;
+const KOREAN_NAME_MAX_LENGTH = 10;
+const ENGLISH_NAME_MAX_LENGTH = 20;
+
 export default function RegisterPage() {
   const navigate = useNavigate();
   const { state } = useLocation() as { state: RegisterLocationState | null };
@@ -25,7 +30,7 @@ export default function RegisterPage() {
 
   const [form, setForm] = useState<RegisterFormState>({
     email: state?.registerForm?.email || state?.email || "",
-    user_name: state?.registerForm?.user_name || state?.name || "",
+    user_name: normalizeSignupName(state?.registerForm?.user_name || state?.name || ""),
     phone_number: state?.registerForm?.phone_number || "",
     age: state?.registerForm?.age || "",
     gender: state?.registerForm?.gender || "",
@@ -43,6 +48,18 @@ export default function RegisterPage() {
     setError("");
     if (!form.email || !form.user_name || !form.phone_number || !form.age || !form.gender || !form.nationality) {
       setError("Please fill in all required fields.");
+      return;
+    }
+
+    const nameError = getSignupNameError(form.user_name);
+    if (nameError) {
+      setError(nameError);
+      return;
+    }
+
+    const age = Number(form.age);
+    if (!Number.isInteger(age) || age < MIN_AGE || age > MAX_AGE) {
+      setError(`Age must be between ${MIN_AGE} and ${MAX_AGE}.`);
       return;
     }
 
@@ -74,7 +91,7 @@ export default function RegisterPage() {
             <input
               style={s.input}
               value={form.user_name}
-              onChange={(e) => setField("user_name", e.target.value)}
+              onChange={(e) => setField("user_name", normalizeSignupName(e.target.value))}
               placeholder="Your name"
             />
           </Field>
@@ -95,9 +112,11 @@ export default function RegisterPage() {
                 style={s.input}
                 type="number"
                 value={form.age}
-                onChange={(e) => setField("age", e.target.value)}
+                onChange={(e) => setField("age", normalizeAgeInput(e.target.value))}
                 placeholder="25"
-                min={1}
+                min={MIN_AGE}
+                max={MAX_AGE}
+                inputMode="numeric"
               />
             </Field>
 
@@ -171,15 +190,43 @@ function Field({
   );
 }
 
+function normalizeAgeInput(value: string): string {
+  const digitsOnly = value.replace(/\D/g, "");
+  if (!digitsOnly) return "";
+
+  const age = Number(digitsOnly);
+  if (!Number.isFinite(age)) return "";
+
+  return String(Math.min(Math.max(age, MIN_AGE), MAX_AGE));
+}
+
+function normalizeSignupName(value: string): string {
+  const maxLength = getSignupNameMaxLength(value);
+  return Array.from(value).slice(0, maxLength).join("");
+}
+
+function getSignupNameMaxLength(value: string): number {
+  return /[가-힣]/.test(value) ? KOREAN_NAME_MAX_LENGTH : ENGLISH_NAME_MAX_LENGTH;
+}
+
+function getSignupNameError(value: string): string {
+  const maxLength = getSignupNameMaxLength(value);
+  if (Array.from(value.trim()).length <= maxLength) return "";
+
+  return /[가-힣]/.test(value)
+    ? `Name must be ${KOREAN_NAME_MAX_LENGTH} Korean characters or fewer.`
+    : `Name must be ${ENGLISH_NAME_MAX_LENGTH} English characters or fewer.`;
+}
+
 const s: Record<string, CSSProperties> = {
   wrapper: {
-    minHeight: "100dvh",
+    minHeight: "var(--app-viewport-height)",
     background:
       "radial-gradient(circle at top left, rgba(5,181,187,0.16), transparent 32%), radial-gradient(circle at top right, rgba(5,181,187,0.1), transparent 34%), linear-gradient(180deg, rgba(228,247,247,0.68), transparent 28%), var(--surface-base)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    padding: "24px 16px",
+    padding: "calc(24px + var(--app-safe-top)) 16px 24px",
     fontFamily: "'Nunito', 'Apple SD Gothic Neo', sans-serif",
   },
   card: {

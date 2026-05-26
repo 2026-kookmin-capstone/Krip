@@ -12,7 +12,6 @@ import {
   getAiPlanDayInputs,
   getTourPlan,
   getTourRecommendationsV2,
-  loadGoogleMapsApi,
   tourPlanToCreateItems,
   tourPlanV2ToRouteStops,
   type AiPreferenceState,
@@ -23,35 +22,6 @@ import {
   type TourDayResponseV2,
   type TourRecommendResponseV2,
 } from "../../api/aiPlanShared";
-
-declare global {
-  interface Window {
-    google?: {
-      maps?: {
-        Map: new (element: HTMLElement, options: Record<string, unknown>) => GoogleMap;
-        Marker: new (options: Record<string, unknown>) => GoogleMarker;
-        Polyline: new (options: Record<string, unknown>) => GooglePolyline;
-        LatLngBounds: new () => GoogleLatLngBounds;
-      };
-    };
-  }
-}
-
-interface GoogleMap {
-  fitBounds: (bounds: GoogleLatLngBounds) => void;
-}
-
-interface GoogleMarker {
-  setMap: (map: GoogleMap | null) => void;
-}
-
-interface GooglePolyline {
-  setMap: (map: GoogleMap | null) => void;
-}
-
-interface GoogleLatLngBounds {
-  extend: (position: { lat: number; lng: number }) => void;
-}
 
 interface AiPlanResultPageProps {
   preferences: AiPreferenceState;
@@ -127,6 +97,7 @@ function savedPlanToRecommendation(plan: PlanDetailResponse): TourRecommendRespo
           reason: "Saved in your trip plan.",
           estimated_cost_krw: 0,
           stay_minutes: 60,
+          photos: item.photos ?? [],
         })),
         movements: [],
         budget_breakdown: [],
@@ -139,6 +110,10 @@ function savedPlanToRecommendation(plan: PlanDetailResponse): TourRecommendRespo
 
 function GoogleMapPreview({ places }: { places: PlaceDetailV2[] }) {
   const mapRef = useRef<HTMLDivElement | null>(null);
+  const naverMapRef = useRef<any>(null);
+  const markersRef = useRef<any[]>([]);
+  const polylineRef = useRef<any>(null);
+
   const [mapReady, setMapReady] = useState(false);
   const [mapError, setMapError] = useState("");
 
@@ -153,98 +128,169 @@ function GoogleMapPreview({ places }: { places: PlaceDetailV2[] }) {
   );
 
   useEffect(() => {
-    const markers: GoogleMarker[] = [];
-    let polyline: GooglePolyline | null = null;
-    let cancelled = false;
-
     if (!mapRef.current || positionedPlaces.length === 0) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setMapReady(false);
       setMapError("");
-      return undefined;
+      return;
     }
 
-    void loadGoogleMapsApi()
-      .then((google) => {
-        if (cancelled || !google?.maps || !mapRef.current) return;
+    const clientId = import.meta.env.VITE_NAVER_MAPS_CLIENT_ID;
 
-        try {
-          const map = new google.maps.Map(mapRef.current, {
-            center: positionedPlaces[0].location,
-            zoom: 12,
-            disableDefaultUI: true,
-            zoomControl: true,
-            mapId: "d67e58693d403acacaa713aa",
-          });
+    if (!clientId) {
+      setMapError("Add VITE_NAVER_MAPS_CLIENT_ID to render the map.");
+      return;
+    }
 
-          const bounds = new google.maps.LatLngBounds();
-          positionedPlaces.forEach((place, index) => {
-            const position = place.location;
-            bounds.extend(position);
-            markers.push(
-              new google.maps.Marker({
-                position,
-                map,
-                label: String(index + 1),
-                title: place.display_name,
-              })
-            );
-          });
+    const scriptId = "naver-maps-sdk-ai";
 
-          if (positionedPlaces.length > 1) {
-            polyline = new google.maps.Polyline({
-              path: positionedPlaces.map((place) => place.location),
-              geodesic: true,
-              strokeColor: BRAND,
-              strokeOpacity: 0.9,
-              strokeWeight: 3,
-              map,
-            });
-          }
+    const load = () => {
+      setTimeout(() => {
+        initMap();
+      }, 100);
+    };
 
-          map.fitBounds(bounds);
-          setMapReady(true);
-          setMapError("");
-        } catch (error) {
-          setMapReady(false);
-          setMapError(error instanceof Error ? error.message : "Google Map could not be rendered.");
-        }
-      })
-      .catch((error) => {
-        if (!cancelled) {
-          setMapReady(false);
-          setMapError(error instanceof Error ? error.message : "Google Maps failed to load.");
-        }
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script");
+
+      script.id = scriptId;
+      script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${clientId}&submodules=gl`;
+
+      script.onload = load;
+      script.onerror = () => {
+        setMapError("Naver Maps SDK failed to load.");
+      };
+
+      document.head.appendChild(script);
+    } else if ((window as any).naver?.maps) {
+      load();
+    } else {
+      document
+        .getElementById(scriptId)
+        ?.addEventListener("load", load, { once: true });
+    }
+
+    function initMap() {
+      const naver = (window as any).naver;
+
+      if (!naver?.maps || !mapRef.current) return;
+
+      let map = naverMapRef.current;
+
+      if (!map) {
+        map = new naver.maps.Map(mapRef.current, {
+          center: new naver.maps.LatLng(
+            positionedPlaces[0].location.lat,
+            positionedPlaces[0].location.lng
+          ),
+          zoom: 11,
+          gl: true,
+          scaleControl: false,
+          mapDataControl: false,
+          customStyleId: import.meta.env.VITE_NAVER_MAPS_STYLE_ID,
+        });
+
+        naverMapRef.current = map;
+      } else {
+        map.refresh();
+      }
+
+      markersRef.current.forEach((marker) => marker.setMap(null));
+      markersRef.current = [];
+
+      if (polylineRef.current) {
+        polylineRef.current.setMap(null);
+        polylineRef.current = null;
+      }
+
+      const bounds = new naver.maps.LatLngBounds();
+
+      positionedPlaces.forEach((place, index) => {
+        const position = new naver.maps.LatLng(
+          place.location.lat,
+          place.location.lng
+        );
+
+        bounds.extend(position);
+
+        const marker = new naver.maps.Marker({
+          position,
+          map,
+          title: place.display_name,
+
+          icon: {
+            content: `
+              <svg width="24" height="32" viewBox="0 0 36 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 0C8.06 0 0 8.06 0 18C0 31.5 18 48 18 48C18 48 36 31.5 36 18C36 8.06 27.94 0 18 0Z" fill="#58C9D4"/>
+                <text x="18" y="22" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="14" font-weight="800" font-family="sans-serif">
+                  ${index + 1}
+                </text>
+              </svg>
+            `,
+            anchor: new naver.maps.Point(12, 32),
+          },
+        });
+
+        markersRef.current.push(marker);
       });
 
-    return () => {
-      cancelled = true;
-      markers.forEach((marker) => marker.setMap(null));
-      polyline?.setMap(null);
-    };
+      if (positionedPlaces.length > 1) {
+        polylineRef.current = new naver.maps.Polyline({
+          path: positionedPlaces.map(
+            (place) =>
+              new naver.maps.LatLng(
+                place.location.lat,
+                place.location.lng
+              )
+          ),
+
+          strokeColor: "#58C9D4",
+          strokeOpacity: 0.9,
+          strokeWeight: 4,
+          map,
+        });
+      }
+
+      map.fitBounds(bounds, {
+        top: 60,
+        right: 60,
+        bottom: 60,
+        left: 60,
+      });
+
+      setMapReady(true);
+      setMapError("");
+    }
   }, [positionedPlaces]);
 
-  const hasApiKey = Boolean(import.meta.env.VITE_GOOGLE_MAPS_API_KEY);
+  const hasApiKey = Boolean(import.meta.env.VITE_NAVER_MAPS_CLIENT_ID);
 
   return (
     <div style={styles.mapCard}>
       <div style={styles.mapViewport}>
         <div style={styles.mapCanvasGoogle} ref={mapRef} />
+
         {positionedPlaces.length === 0 ? (
-          <div style={styles.mapEmpty}>Location coordinates will appear here when the API returns them.</div>
+          <div style={styles.mapEmpty}>
+            Location coordinates will appear here when the API returns them.
+          </div>
         ) : !hasApiKey ? (
-          <div style={styles.mapEmpty}>Add `VITE_GOOGLE_MAPS_API_KEY` to render the live map.</div>
+          <div style={styles.mapEmpty}>
+            Add `VITE_NAVER_MAPS_CLIENT_ID` to render the live map.
+          </div>
         ) : mapError ? (
           <div style={styles.mapEmpty}>{mapError}</div>
         ) : !mapReady ? (
-          <div style={styles.mapEmpty}>Loading Google Map...</div>
+          <div style={styles.mapEmpty}>Loading Naver Map...</div>
         ) : null}
       </div>
+
       <div style={styles.mapLegend}>
         {positionedPlaces.map((place, index) => (
           <div key={place.place_id} style={styles.mapLegendItem}>
             <span style={styles.mapLegendIndex}>{index + 1}</span>
-            <span style={styles.mapLegendText}>{place.display_name}</span>
+            <span style={styles.mapLegendText}>
+              {place.display_name}
+            </span>
           </div>
         ))}
       </div>
@@ -252,38 +298,17 @@ function GoogleMapPreview({ places }: { places: PlaceDetailV2[] }) {
   );
 }
 
-function LoadingPlanScreen({
-  progress,
-  step,
-  seconds,
-}: {
-  progress: number;
-  step: string;
-  seconds: number;
-}) {
+function LoadingPlanScreen() {
   return (
-    <div style={styles.loadingScreen}>
-      <div style={styles.loadingHero}>
-        <span style={styles.loadingBadge}>AI is planning</span>
-        <h2 style={styles.loadingTitle}>Creating your route</h2>
-        <p style={styles.loadingCopy}>
-          Recommendation may take a little while because the itinerary is generated day by day.
-        </p>
-        <div style={styles.progressTrack}>
-          <div style={{ ...styles.progressFill, width: `${progress}%` }} />
-        </div>
-        <div style={styles.progressMeta}>
-          <span>{step}</span>
-          <strong>{Math.round(progress)}%</strong>
-        </div>
+    <section style={styles.loadingSection}>
+      <div style={styles.loadingDots}>
+        <span style={{ ...styles.loadingDot, animationDelay: "0s" }} />
+        <span style={{ ...styles.loadingDot, animationDelay: "0.15s" }} />
+        <span style={{ ...styles.loadingDot, animationDelay: "0.3s" }} />
+        <span style={{ ...styles.loadingDot, animationDelay: "0.45s" }} />
       </div>
-      <div style={styles.loadingSteps}>
-        <div style={styles.loadingStepItem}>Preferences checked</div>
-        <div style={styles.loadingStepItem}>Places and movement requested</div>
-        <div style={styles.loadingStepItem}>Budget and timeline composing</div>
-      </div>
-      <p style={styles.loadingFooter}>{seconds}s elapsed</p>
-    </div>
+      <p style={styles.loadingText}>Creating your itinerary</p>
+    </section>
   );
 }
 export default function AiPlanResultPage({
@@ -294,33 +319,9 @@ export default function AiPlanResultPage({
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [saveMessage, setSaveMessage] = useState("");
-  const [loadingSeconds, setLoadingSeconds] = useState(0);
 
   const planId = useMemo(() => readPlanId(), []);
-  useEffect(() => {
-    if (!isLoading) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setLoadingSeconds(0);
-      return undefined;
-    }
-
-    const interval = window.setInterval(() => {
-      setLoadingSeconds((current) => current + 1);
-    }, 1000);
-
-    return () => window.clearInterval(interval);
-  }, [isLoading]);
-
-  const loadingProgress = Math.min(95, 12 + loadingSeconds * 2.2);
-  const loadingStep =
-    loadingSeconds < 8
-      ? "Reading your travel preferences"
-      : loadingSeconds < 20
-        ? "Finding places that match your route"
-        : loadingSeconds < 40
-          ? "Arranging timeline, movement, and budget"
-          : "Finalizing your Seoul itinerary";
-
+  
   useEffect(() => {
     let cancelled = false;
     setIsLoading(true);
@@ -372,27 +373,23 @@ export default function AiPlanResultPage({
   if (isLoading) {
     return (
       <div style={styles.page}>
+        <style>{`
+          @keyframes menuBounce {
+            0%, 80%, 100% { transform: translateY(0); opacity: 0.35; }
+            40% { transform: translateY(-7px); opacity: 1; }
+          }
+        `}</style>
+
         <div style={styles.phoneFrame}>
           <div style={styles.headerRow}>
             <button type="button" onClick={onBack} style={styles.iconButton}>
-              {"<"}
+            <img src="/icon-back.svg" alt="Back" style={styles.backIcon} />
             </button>
-            <span style={styles.headerBadge}>AI Result</span>
+            <h1 style={styles.headerLogo}>
+              AI Plan
+            </h1>
           </div>
-
-          <div style={styles.titleBlock}>
-            <span style={styles.eyebrow}>Recommendation API V2</span>
-            <h1 style={styles.title}>Creating your itinerary</h1>
-            <p style={styles.copy}>
-              We are waiting for the recommendation server to finish the route.
-            </p>
-          </div>
-
-          <LoadingPlanScreen
-            progress={loadingProgress}
-            step={loadingStep}
-            seconds={loadingSeconds}
-          />
+          <LoadingPlanScreen />
         </div>
       </div>
     );
@@ -424,36 +421,39 @@ export default function AiPlanResultPage({
       <div style={styles.phoneFrame}>
         <div style={styles.headerRow}>
           <button type="button" onClick={onBack} style={styles.iconButton}>
-            {"<"}
-          </button>
-          <span style={styles.headerBadge}>AI Result</span>
-        </div>
+            <img src="/icon-back.svg" alt="Back" style={styles.backIcon} />
+            </button>
+            <h1 style={styles.headerLogo}>
+              AI Plan
+            </h1>
+          </div>
 
         <div style={styles.titleBlock}>
-          <span style={styles.eyebrow}>Recommendation API V2</span>
           <h1 style={styles.title}>{buildRouteTitle(preferences)}</h1>
           <p style={styles.copy}>{summary}</p>
         </div>
 
-        <div style={styles.summaryGrid}>
-          <div style={styles.summaryCard}>
+        <div style={styles.summaryTagGroup}>
+          <div style={styles.summaryGrid}>
+            <div style={styles.summaryCard}>
+              <span style={styles.summaryLabel}>Budget</span>
+              <strong style={styles.summaryValue}>
+                {budgetCategoryLabel(preferences.budgetCategory)}
+              </strong>
+            </div>
+            <div style={styles.summaryCard}>
+              <span style={styles.summaryLabel}>Companion</span>
+              <strong style={styles.summaryValue}>
+                {preferences.companion || "Not selected"}
+              </strong>
+            </div>
+          </div>
+          <div style={{ ...styles.summaryCard, ...styles.styleSummaryCard }}>
             <span style={styles.summaryLabel}>Travel Style</span>
-            <strong style={styles.summaryValue}>
+            <strong style={{ ...styles.summaryValue, ...styles.styleSummaryValue }}>
               {preferences.styles.length > 0
                 ? preferences.styles.join(" + ")
                 : "No style selected"}
-            </strong>
-          </div>
-          <div style={styles.summaryCard}>
-            <span style={styles.summaryLabel}>Budget</span>
-            <strong style={styles.summaryValue}>
-              {budgetCategoryLabel(preferences.budgetCategory)}
-            </strong>
-          </div>
-          <div style={styles.summaryCard}>
-            <span style={styles.summaryLabel}>Companion</span>
-            <strong style={styles.summaryValue}>
-              {preferences.companion || "Not selected"}
             </strong>
           </div>
         </div>
@@ -464,9 +464,6 @@ export default function AiPlanResultPage({
           <div style={styles.timelineHeader}>
             <div>
               <h2 style={styles.timelineTitle}>Timeline</h2>
-              <p style={styles.timelineRoute}>
-                Timeline, movements, and budget are rendered directly from `/api/tour/recommend` V2.
-              </p>
             </div>
             <span style={styles.timelineBadge}>Public Transit</span>
           </div>
@@ -585,13 +582,15 @@ export default function AiPlanResultPage({
 
 const styles: Record<string, CSSProperties> = {
   page: {
-    minHeight: "100dvh",
-    padding: "20px 16px",
-    background: "linear-gradient(180deg, #f7ffff 0%, #fefdf7 100%)",
-    fontFamily: '"Nunito", "Apple SD Gothic Neo", sans-serif',
+    minHeight: "var(--app-viewport-height)",
+    padding: "calc(20px + var(--app-safe-top)) 16px 20px",
+    background: "#fff",
+    fontFamily: '"Pretendard Variable", sans-serif',
   },
   phoneFrame: {
     maxWidth: 430,
+    width: "100%",
+    minHeight: "calc(var(--app-viewport-height) - 40px - var(--app-safe-top))",
     margin: "0 auto",
     display: "flex",
     flexDirection: "column",
@@ -599,87 +598,93 @@ const styles: Record<string, CSSProperties> = {
     paddingBottom: 28,
   },
   headerRow: {
-    display: "flex",
+    display: "grid",
+    gridTemplateColumns: "42px 1fr 42px",
     alignItems: "center",
-    justifyContent: "space-between",
-    gap: 12,
   },
   iconButton: {
     width: 42,
     height: 42,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 14,
-    border: "1px solid #d6eeee",
-    background: "#ffffff",
-    color: "#204444",
-    fontSize: 18,
-    fontWeight: 800,
+    border: "none",
+    background: "transparent",
+    padding: 0,
+    outline: "none",
     cursor: "pointer",
   },
-  headerBadge: {
-    display: "inline-flex",
+  backIcon: {
+    width: 20,
+    height: 20,
+    display: "block",
+  },
+  headerLogo: {
+    fontSize: "1.1rem",
+    height: "auto",
+    display: "flex",
+    color: "#212121",
     alignItems: "center",
-    padding: "8px 12px",
-    borderRadius: 999,
-    background: "rgba(1, 192, 192, 0.12)",
-    color: BRAND,
-    fontSize: 12,
-    fontWeight: 800,
+    justifyContent: "center",
   },
   titleBlock: {
     display: "flex",
     flexDirection: "column",
     gap: 8,
   },
-  eyebrow: {
-    fontSize: 12,
-    fontWeight: 800,
-    letterSpacing: 0.4,
-    color: BRAND,
-  },
   title: {
     margin: 0,
-    fontSize: 28,
-    lineHeight: 1.15,
+    fontSize: "1.15rem",
+    lineHeight: "1.5rem",
     color: "#102223",
+    fontWeight: 800,
   },
   copy: {
     margin: 0,
-    color: "#486566",
-    fontSize: 14,
-    lineHeight: 1.6,
+    color: "#8b8b8b",
+    fontSize: "0.65rem",
+    lineHeight: 1.45,
+  },
+  summaryTagGroup: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: 8,
   },
   summaryGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-    gap: 10,
+    display: "flex",
+    flexWrap: "wrap",
+    gap: 8,
   },
   summaryCard: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 6,
-    padding: 16,
-    borderRadius: 18,
-    background: "#ffffff",
-    border: "1px solid #d9eeee",
+    display: "inline-flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    width: "fit-content",
+    padding: "7px 10px",
+    borderRadius: 999,
+    background: "#ecfbfb",
+    border: "none",
+  },
+  styleSummaryCard: {
+    background: "#FFF5D9",
   },
   summaryLabel: {
-    color: "#577171",
-    fontSize: 12,
-    fontWeight: 700,
+    display: "none",
   },
   summaryValue: {
-    color: "#102223",
-    fontSize: 14,
-    lineHeight: 1.5,
+    color: "#05AEAE",
+    fontSize: "0.6rem",
+    lineHeight: 1,
+    fontWeight: 800,
+  },
+  styleSummaryValue: {
+    color: "#936B00",
   },
   mapCard: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 12,
-    padding: 16,
-    borderRadius: 22,
-    background: "#ffffff",
-    border: "1px solid #dceeee",
+    margin: "0.8rem 0"
   },
   mapViewport: {
     position: "relative",
@@ -687,6 +692,7 @@ const styles: Record<string, CSSProperties> = {
     borderRadius: 18,
     overflow: "hidden",
     background: "#eef7f7",
+    marginBottom: 20,
   },
   mapCanvasGoogle: {
     position: "absolute",
@@ -707,7 +713,7 @@ const styles: Record<string, CSSProperties> = {
   mapLegend: {
     display: "flex",
     flexDirection: "column",
-    gap: 8,
+    gap: 12,
   },
   mapLegendItem: {
     display: "flex",
@@ -718,8 +724,8 @@ const styles: Record<string, CSSProperties> = {
     width: 22,
     height: 22,
     borderRadius: "50%",
-    background: "rgba(255,190,15,0.22)",
-    color: "#7a5400",
+    background: BRAND,
+    color: "#fff",
     display: "grid",
     placeItems: "center",
     fontSize: 12,
@@ -744,20 +750,14 @@ const styles: Record<string, CSSProperties> = {
   timelineTitle: {
     margin: 0,
     color: "#102223",
-    fontSize: 21,
-  },
-  timelineRoute: {
-    margin: "6px 0 0",
-    color: "#5d7576",
-    fontSize: 13,
-    lineHeight: 1.5,
+    fontSize: 16,
   },
   timelineBadge: {
     padding: "8px 10px",
     borderRadius: 999,
     background: "rgba(255,190,15,0.18)",
     color: "#7a5400",
-    fontSize: 12,
+    fontSize: 8,
     fontWeight: 800,
   },
   timelineList: {
@@ -781,8 +781,8 @@ const styles: Record<string, CSSProperties> = {
     width: 24,
     height: 24,
     borderRadius: "50%",
-    background: ACCENT,
-    color: "#533800",
+    background: BRAND,
+    color: "#fff",
     display: "grid",
     placeItems: "center",
     marginTop: 10,
@@ -790,11 +790,10 @@ const styles: Record<string, CSSProperties> = {
     fontWeight: 900,
   },
   timelineCard: {
-    padding: "14px 15px",
+    padding: "14px 16px",
     borderRadius: 18,
     background: "#ffffff",
-    border: "1px solid #dceeee",
-    boxShadow: "0 10px 24px rgba(16, 34, 35, 0.05)",
+    border: "1px solid #eaeaea",
   },
   timelineTitleRow: {
     display: "flex",
@@ -803,8 +802,8 @@ const styles: Record<string, CSSProperties> = {
     gap: 8,
   },
   timelineItemTitle: {
-    color: "#102223",
-    fontSize: 14,
+    color: "#222",
+    fontSize: "0.8rem",
   },
   ratingBadge: {
     padding: "5px 8px",
@@ -816,9 +815,9 @@ const styles: Record<string, CSSProperties> = {
   },
   timelineCopy: {
     margin: "8px 0 0",
-    color: "#557071",
-    lineHeight: 1.6,
-    fontSize: 13,
+    color: "#888",
+    lineHeight: 1.4,
+    fontSize: "0.7rem",
   },
   slotList: {
     display: "flex",
@@ -847,92 +846,48 @@ const styles: Record<string, CSSProperties> = {
   },
   dayRouteCluster: {
     color: BRAND,
-    fontSize: 12,
-    fontWeight: 800,
+    fontSize: "0.75rem",
+    fontWeight: 700,
   },
-  loadingScreen: {
+  loadingSection: {
+    flex: 1,
+    minHeight: 360,
     display: "flex",
     flexDirection: "column",
-    gap: 14,
-  },
-  loadingHero: {
-    padding: 20,
-    borderRadius: 22,
-    background: "#ffffff",
-    border: "1px solid #dceeee",
-    boxShadow: "0 12px 30px rgba(16, 34, 35, 0.06)",
-    display: "flex",
-    flexDirection: "column",
-    gap: 12,
-  },
-  loadingBadge: {
-    width: "fit-content",
-    padding: "7px 10px",
-    borderRadius: 999,
-    background: "rgba(1, 192, 192, 0.12)",
-    color: BRAND,
-    fontSize: 12,
-    fontWeight: 900,
-  },
-  loadingTitle: {
-    margin: 0,
-    color: "#102223",
-    fontSize: 22,
-  },
-  loadingCopy: {
-    margin: 0,
-    color: "#557071",
-    fontSize: 13,
-    lineHeight: 1.6,
-  },
-  progressTrack: {
-    height: 12,
-    borderRadius: 999,
-    background: "#e8f6f6",
-    overflow: "hidden",
-  },
-  progressFill: {
-    height: "100%",
-    borderRadius: 999,
-    background: `linear-gradient(90deg, ${BRAND} 0%, ${ACCENT} 100%)`,
-    transition: "width 500ms ease",
-  },
-  progressMeta: {
-    display: "flex",
     alignItems: "center",
-    justifyContent: "space-between",
-    gap: 10,
-    color: "#486566",
-    fontSize: 12,
-    fontWeight: 800,
+    justifyContent: "center",
+    gap: 18,
   },
-  loadingSteps: {
-    display: "grid",
+
+  loadingDots: {
+    display: "flex",
     gap: 8,
+    alignItems: "center",
+    justifyContent: "center",
   },
-  loadingStepItem: {
-    padding: "12px 14px",
-    borderRadius: 16,
-    background: "#ffffff",
-    border: "1px solid #dceeee",
-    color: "#204444",
+  loadingDot: {
+    width: 10,
+    height: 10,
+    borderRadius: "50%",
+    background: BRAND,
+    display: "block",
+    animation: "menuBounce 1s infinite ease-in-out",
+  },
+  loadingText: {
+    margin: 0,
+    color: "#537070",
     fontSize: 13,
     fontWeight: 800,
   },
-  loadingFooter: {
-    margin: 0,
-    textAlign: "center",
-    color: "#5d7576",
-    fontSize: 12,
-    fontWeight: 800,
-  },  stateCard: {
+  stateCard: {
     padding: 18,
     borderRadius: 18,
     background: "#ffffff",
-    border: "1px solid #dceeee",
-    color: "#516a6b",
+    border: "1px solid #eaeaea",
+    color: "#58C9D4",
     lineHeight: 1.6,
     fontSize: 13,
+    fontWeight: 800,
   },
   warningCard: {
     border: "1px solid rgba(255,190,15,0.65)",
@@ -943,7 +898,7 @@ const styles: Record<string, CSSProperties> = {
   poiAddress: {
     margin: "8px 0 0",
     color: BRAND,
-    fontSize: 12,
+    fontSize: "0.65rem",
     fontWeight: 800,
   },
   poiMetaRow: {
@@ -951,28 +906,28 @@ const styles: Record<string, CSSProperties> = {
     flexWrap: "wrap",
     gap: 8,
     marginTop: 10,
-    color: "#5d7576",
+    color: "#888",
     fontSize: 12,
     fontWeight: 700,
   },
   movementCard: {
-    margin: "8px 0 8px 92px",
+    margin: "8px 0 8px 102px",
     padding: "10px 12px",
     borderRadius: 14,
-    background: "rgba(1,192,192,0.1)",
-    color: "#0b6161",
-    fontSize: 12,
-    fontWeight: 800,
-    lineHeight: 1.5,
+    background: "#f6f6f6",
+    color: "#555",
+    fontSize: 10,
+    fontWeight: 500,
+    lineHeight: 1.4,
   },
   daySummary: {
     margin: 0,
     padding: 14,
     borderRadius: 16,
-    background: "#f6fcfc",
-    color: "#486566",
+    background: "#f5f5f5",
+    color: "#333",
     lineHeight: 1.6,
-    fontSize: 13,
+    fontSize: 12,
   },
   budgetList: {
     display: "flex",
@@ -981,7 +936,7 @@ const styles: Record<string, CSSProperties> = {
     padding: 14,
     borderRadius: 16,
     background: "#ffffff",
-    border: "1px solid #dceeee",
+    border: "1px solid #eaeaea",
   },
   budgetItem: {
     display: "flex",
@@ -994,13 +949,12 @@ const styles: Record<string, CSSProperties> = {
   primaryAction: {
     minHeight: 56,
     border: "none",
-    borderRadius: 18,
-    background: `linear-gradient(135deg, ${BRAND} 0%, #11abab 100%)`,
+    borderRadius: "3rem",
+    background: "#58C9D4",
     color: "#ffffff",
     fontSize: 15,
-    fontWeight: 900,
+    fontWeight: 800,
     cursor: "pointer",
-    boxShadow: "0 16px 30px rgba(1, 192, 192, 0.24)",
   },
   saveMessage: {
     margin: 0,

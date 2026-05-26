@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+﻿import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { getTourPlaces, type TourPlaceApiItem } from "../../api/auth/auth";
 import {
@@ -12,7 +12,7 @@ import {
   createPlanId,
   deleteTourPlanItem,
   getTourPlan,
-  loadGoogleMapsApi,
+  hydratePlanItemCoordinates,
   moveTourPlanItem,
   updateTourPlanItem,
   updateTourPlanTitle,
@@ -23,6 +23,8 @@ type ShareTarget = "kakao" | "link" | "mail" | "message";
 
 interface ManualPlanPageProps {
   onBack?: () => void;
+  onHome?: () => void;
+  onMyPage?: () => void;
 }
 
 interface TourPlace {
@@ -44,6 +46,8 @@ interface PlannedStop extends TourPlace {
   backendDayNumber?: number;
 }
 
+type ManualStep = 1 | 2 | 3 | 4 | 5;
+
 declare global {
   interface Window {
     Kakao?: {
@@ -53,34 +57,10 @@ declare global {
         sendDefault: (options: unknown) => void;
       };
     };
-    google?: {
-      maps?: {
-        Map: new (element: HTMLElement, options: Record<string, unknown>) => GoogleMap;
-        Marker: new (options: Record<string, unknown>) => GoogleMarker;
-        Polyline: new (options: Record<string, unknown>) => GooglePolyline;
-        LatLngBounds: new () => GoogleLatLngBounds;
-      };
-    };
   }
 }
 
-interface GoogleMap {
-  fitBounds: (bounds: GoogleLatLngBounds) => void;
-}
 
-interface GoogleMarker {
-  setMap: (map: GoogleMap | null) => void;
-}
-
-interface GooglePolyline {
-  setMap: (map: GoogleMap | null) => void;
-}
-
-interface GoogleLatLngBounds {
-  extend: (position: { lat: number; lng: number }) => void;
-}
-
-const DEFAULT_START_DATE = formatDateOnly(new Date());
 const MANUAL_PLAN_DATE_METADATA_KEY = "krip-manual-plan-date-metadata";
 
 function formatDateOnly(date: Date): string {
@@ -88,6 +68,10 @@ function formatDateOnly(date: Date): string {
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
+}
+
+function getDefaultStartDate(): string {
+  return formatDateOnly(new Date());
 }
 
 function parseDateOnly(value: string): Date | null {
@@ -176,15 +160,85 @@ function saveManualPlanDateMetadata(
 function getStableFallbackDate(plan: PlanDetailResponse): string {
   const parsed = new Date(plan.created_at);
   return Number.isNaN(parsed.getTime())
-    ? DEFAULT_START_DATE
+    ? getDefaultStartDate()
     : formatDateOnly(parsed);
 }
 
 function addDays(date: string, days: number): string {
   const parsed = parseDateOnly(date);
-  if (!parsed) return DEFAULT_START_DATE;
+  if (!parsed) return getDefaultStartDate();
   parsed.setDate(parsed.getDate() + days);
   return formatDateOnly(parsed);
+}
+
+function ensurePlaceSlots(stops: PlannedStop[]): Array<PlannedStop | null> {
+  if (stops.length >= 2) return stops;
+  return [...stops, ...Array.from({ length: 2 - stops.length }, () => null)];
+}
+
+function stopsToSlotsByDate(
+  stops: PlannedStop[],
+  dates: string[]
+): Record<string, Array<PlannedStop | null>> {
+  const fallbackDates = dates.length > 0 ? dates : [getDefaultStartDate()];
+  return Object.fromEntries(
+    fallbackDates.map((date) => [
+      date,
+      ensurePlaceSlots(stops.filter((stop) => stop.visitDate === date)),
+    ])
+  );
+}
+
+function applySavedStopsToSlots(
+  slots: Array<PlannedStop | null>,
+  saved: PlanDetailResponse,
+  dayNumberByDate: Map<string, number>
+): Array<PlannedStop | null> {
+  const filledStops = slots.filter((stop): stop is PlannedStop => Boolean(stop));
+  const updatedStops = applySavedItemsToCurrentStops(
+    filledStops,
+    saved,
+    dayNumberByDate
+  );
+  let nextIndex = 0;
+
+  return ensurePlaceSlots(
+    slots
+      .map((slot) => (slot ? updatedStops[nextIndex++] || slot : null))
+      .filter((slot): slot is PlannedStop => Boolean(slot))
+  );
+}
+
+function getMonthLabel(month: Date): string {
+  return month.toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric",
+  });
+}
+
+function getMonthDays(month: Date): Array<Date | null> {
+  const firstDay = new Date(month.getFullYear(), month.getMonth(), 1);
+  const daysInMonth = new Date(
+    month.getFullYear(),
+    month.getMonth() + 1,
+    0
+  ).getDate();
+  const leadingDays = firstDay.getDay();
+  const days: Array<Date | null> = Array.from({ length: leadingDays }, () => null);
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    days.push(new Date(month.getFullYear(), month.getMonth(), day));
+  }
+
+  while (days.length % 7 !== 0) {
+    days.push(null);
+  }
+
+  return days;
+}
+
+function isDateInRange(date: string, startDate: string, endDate: string): boolean {
+  return date >= startDate && date <= endDate;
 }
 
 function savedPlanToStops(
@@ -202,18 +256,24 @@ function savedPlanToStops(
     ] as const)
   );
 
-  return plan.items.map((item) => ({
+    return plan.items.map((item) => ({
     plannedId: item.item_id,
     backendItemId: item.item_id,
     backendDayNumber: item.day_number,
     id: item.place_id,
     name: item.display_name,
-    category: "Saved place",
+    category: item.category || "Saved place",
     summary: "",
     address: item.address,
     rating: typeof item.rating === "number" ? item.rating : undefined,
-    visitDate: dateByDay.get(item.day_number) || DEFAULT_START_DATE,
+    visitDate: dateByDay.get(item.day_number) || getDefaultStartDate(),
     visitTime: item.visit_time || "10:00",
+    latitude: Number.isFinite(Number(item.latitude ?? item.location?.lat))
+      ? Number(item.latitude ?? item.location?.lat)
+      : undefined,
+    longitude: Number.isFinite(Number(item.longitude ?? item.location?.lng))
+      ? Number(item.longitude ?? item.location?.lng)
+      : undefined,
   }));
 }
 
@@ -330,19 +390,15 @@ async function updateExistingBackendPlan(
   const extendedDayNumbers = [...activeDayNumbers];
   for (let i = currentActiveDays; i < targetTravelDays; i++) {
     await addTourPlanDay(plan.plan_id);
-    // add_day는 항상 현재 travel_days + 1을 부여 (명세)
-    // 매 호출마다 travel_days가 1씩 증가하므로:
     extendedDayNumbers.push(plan.travel_days + 1 + (i - currentActiveDays));
   }
 
-  // 3. dayNumberByDate를 extendedDayNumbers 기준으로 단일 구성
   const dayNumberByDate = new Map(
     tripDates.map((date, index) => [
       date,
       extendedDayNumbers[index] ?? index + 1,
     ])
   );
-  // 4. 삭제된 stops의 백엔드 item 제거
   const activeBackendIds = new Set(
     stops.map((stop) => stop.backendItemId).filter(Boolean)
   );
@@ -352,7 +408,6 @@ async function updateExistingBackendPlan(
       .map((item) => deleteTourPlanItem(plan.plan_id, item.item_id))
   );
 
-  // 5. day 순서대로 정렬 후 업데이트/생성
   const sortedStops = [...stops].sort((left, right) => {
     const leftDay = dayNumberByDate.get(left.visitDate) || 1;
     const rightDay = dayNumberByDate.get(right.visitDate) || 1;
@@ -379,7 +434,6 @@ async function updateExistingBackendPlan(
     }
   }
 
-  // 6. 순서 및 day 이동
   for (const [index, stop] of sortedStops.entries()) {
     const itemId = backendIdByPlannedId.get(stop.plannedId);
     if (!itemId) continue;
@@ -550,6 +604,9 @@ function ShareSheet({ onClose }: { onClose: () => void }) {
 
 function MapPreview({ stops }: { stops: PlannedStop[] }) {
   const mapRef = useRef<HTMLDivElement | null>(null);
+  const naverMapRef = useRef<any>(null);
+  const markersRef = useRef<any[]>([]); 
+  const polylineRef = useRef<any>(null);  
   const [mapReady, setMapReady] = useState(false);
   const [mapError, setMapError] = useState("");
 
@@ -563,84 +620,110 @@ function MapPreview({ stops }: { stops: PlannedStop[] }) {
   );
 
   useEffect(() => {
-    const markers: GoogleMarker[] = [];
-    let polyline: GooglePolyline | null = null;
-    let cancelled = false;
+    if (!mapRef.current || positionedStops.length === 0) return;
 
-    if (!mapRef.current || positionedStops.length === 0) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setMapReady(false);
-      setMapError("");
-      return undefined;
+    const clientId = import.meta.env.VITE_NAVER_MAPS_CLIENT_ID;
+    if (!clientId) {
+      setMapError("Add VITE_NAVER_MAPS_CLIENT_ID to render the map.");
+      return;
     }
 
-    void loadGoogleMapsApi()
-      .then((google) => {
-        if (cancelled || !google?.maps || !mapRef.current) return;
+    const scriptId = "naver-maps-sdk-gl";
+    
+    const load = () => {
+      setTimeout(() => {
+        initMap();
+      }, 100);
+    };
 
-        try {
-          const map = new google.maps.Map(mapRef.current, {
-            center: {
-              lat: positionedStops[0].latitude,
-              lng: positionedStops[0].longitude,
-            },
-            zoom: 12,
-            disableDefaultUI: true,
-            zoomControl: true,
-            mapId: "d67e58693d403acacaa713aa"
-          });
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${clientId}&submodules=gl`;
+      script.onload = load;
+      script.onerror = () => setMapError("Naver Maps SDK failed to load.");
+      document.head.appendChild(script);
+    } else if ((window as any).naver?.maps) {
+      load();
+    } else {
+      document.getElementById(scriptId)?.addEventListener("load", load, { once: true });
+    }
 
-          const bounds = new google.maps.LatLngBounds();
-          positionedStops.forEach((stop, index) => {
-            const position = { lat: stop.latitude, lng: stop.longitude };
-            bounds.extend(position);
-            markers.push(
-              new google.maps.Marker({
-                position,
-                map,
-                label: String(index + 1),
-                title: stop.name,
-              })
-            );
-          });
+    function initMap() {
+      const naver = (window as any).naver;
+      if (!naver?.maps || !mapRef.current) return;
 
-          if (positionedStops.length > 1) {
-            polyline = new google.maps.Polyline({
-              path: positionedStops.map((stop) => ({
-                lat: stop.latitude,
-                lng: stop.longitude,
-              })),
-              geodesic: true,
-              strokeColor: BRAND,
-              strokeOpacity: 0.9,
-              strokeWeight: 3,
-              map,
-            });
-          }
+      let map = naverMapRef.current;
 
-          map.fitBounds(bounds);
-          setMapReady(true);
-          setMapError("");
-        } catch (error) {
-          setMapReady(false);
-          setMapError(error instanceof Error ? error.message : "Google Map could not be rendered.");
-        }
-      })
-      .catch((error) => {
-        if (!cancelled) {
-          setMapReady(false);
-          setMapError(error instanceof Error ? error.message : "Google Maps failed to load.");
-        }
+      if (!map) {
+        map = new naver.maps.Map(mapRef.current, {
+          center: new naver.maps.LatLng(
+            positionedStops[0].latitude,
+            positionedStops[0].longitude
+          ),
+          gl: true, 
+          zoom: 10,
+          scaleControl: false,
+          mapDataControl: false,
+          customStyleId: import.meta.env.VITE_NAVER_MAPS_STYLE_ID,
+        });
+        naverMapRef.current = map;
+      } else {
+        map.refresh();
+      }
+
+      markersRef.current.forEach((marker) => marker.setMap(null));
+      markersRef.current = [];
+
+      if (polylineRef.current) {
+        polylineRef.current.setMap(null);
+        polylineRef.current = null;
+      }
+
+      const bounds = new naver.maps.LatLngBounds();
+
+      positionedStops.forEach((stop, index) => {
+        const position = new naver.maps.LatLng(stop.latitude, stop.longitude);
+        bounds.extend(position);
+
+        const marker = new naver.maps.Marker({
+          position,
+          map,
+          icon: {
+            content: `
+              <svg width="24" height="32" viewBox="0 0 36 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 0C8.06 0 0 8.06 0 18C0 31.5 18 48 18 48C18 48 36 31.5 36 18C36 8.06 27.94 0 18 0Z" fill="#58C9D4"/>
+                <text x="18" y="22" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="14" font-weight="800" font-family="sans-serif">${index + 1}</text>
+              </svg>
+            `,
+            anchor: new naver.maps.Point(12, 32),
+          },
+        });
+        markersRef.current.push(marker);
       });
 
-    return () => {
-      cancelled = true;
-      markers.forEach((marker) => marker.setMap(null));
-      polyline?.setMap(null);
-    };
+      if (positionedStops.length > 1) {
+        polylineRef.current = new naver.maps.Polyline({
+          path: positionedStops.map(
+            (stop) => new naver.maps.LatLng(stop.latitude, stop.longitude)
+          ),
+          strokeColor: "#58C9D4",
+          strokeOpacity: 0.9,
+          strokeWeight: 3,
+          map,
+        });
+      }
+
+      if (positionedStops.length > 0) {
+        map.fitBounds(bounds, { top: 60, right: 60, bottom: 60, left: 60 });
+      }
+
+      setMapReady(true);
+      setMapError("");
+    }
   }, [mapRef, positionedStops]);
 
-  const hasApiKey = Boolean(import.meta.env.VITE_GOOGLE_MAPS_API_KEY);
+  const hasApiKey = Boolean(import.meta.env.VITE_NAVER_MAPS_CLIENT_ID);
 
   return (
     <div style={styles.mapBox}>
@@ -651,11 +734,13 @@ function MapPreview({ stops }: { stops: PlannedStop[] }) {
             Search and add places with coordinates to display them on the map.
           </div>
         ) : !hasApiKey ? (
-          <div style={styles.mapEmpty}>Add `VITE_GOOGLE_MAPS_API_KEY` to render the live map.</div>
+          <div style={styles.mapEmpty}>
+            Add `VITE_NAVER_MAPS_CLIENT_ID` to render the live map.
+          </div>
         ) : mapError ? (
           <div style={styles.mapEmpty}>{mapError}</div>
         ) : !mapReady ? (
-          <div style={styles.mapEmpty}>Loading Google Map...</div>
+          <div style={styles.mapEmpty}>Loading Naver Map...</div>
         ) : null}
       </div>
       {positionedStops.length > 0 ? (
@@ -672,21 +757,128 @@ function MapPreview({ stops }: { stops: PlannedStop[] }) {
   );
 }
 
-export default function ManualPlanPage({ onBack }: ManualPlanPageProps) {
+function StepProgress({ step }: { step: ManualStep }) {
+  return (
+    <div style={styles.stepProgress} aria-label={`Step ${step} of 5`}>
+      {Array.from({ length: 5 }, (_, index) => {
+        const isActive = index + 1 === step;
+        return (
+          <span
+            key={index}
+            style={{
+              ...styles.stepDot,
+              ...(isActive ? styles.stepDotActive : {}),
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+function DateRangeCalendar({
+  startDate,
+  endDate,
+  onSelectDate,
+}: {
+  startDate: string;
+  endDate: string;
+  onSelectDate: (date: string) => void;
+}) {
+  const baseMonth = parseDateOnly(startDate) || new Date();
+  const months = Array.from(
+    { length: 12 },
+    (_, index) => new Date(baseMonth.getFullYear(), baseMonth.getMonth() + index, 1)
+  );
+  const weekdays = ["S", "M", "T", "W", "T", "F", "S"];
+  const todayValue = formatDateOnly(new Date());
+
+  return (
+    <div style={styles.calendarScroller}>
+      {months.map((month) => (
+        <section key={month.toISOString()} style={styles.monthBlock}>
+          <h3 style={styles.monthTitle}>{getMonthLabel(month)}</h3>
+          <div style={styles.weekdayGrid}>
+            {weekdays.map((day, index) => (
+              <span key={`${day}-${index}`} style={styles.weekdayLabel}>
+                {day}
+              </span>
+            ))}
+          </div>
+          <div style={styles.calendarGrid}>
+            {getMonthDays(month).map((date, index) => {
+              if (!date) {
+                return <span key={`empty-${index}`} style={styles.calendarEmptyDay} />;
+              }
+
+              const dateValue = formatDateOnly(date);
+              const isStart = dateValue === startDate;
+              const isEnd = dateValue === endDate;
+              const isToday = dateValue === todayValue;
+              const isSelectedRange = isDateInRange(dateValue, startDate, endDate);
+
+              const rangeEdgeStyle =
+                isStart && isEnd
+                  ? styles.calendarDaySingleSelected
+                  : isStart
+                    ? styles.calendarDayRangeStart
+                    : isEnd
+                      ? styles.calendarDayRangeEnd
+                      : {};
+
+              return (
+                <button
+                  key={dateValue}
+                  type="button"
+                  className="manual-step2-calendar-day"
+                  onClick={() => onSelectDate(dateValue)}
+                  style={{
+                    ...styles.calendarDay,
+                    ...(isToday ? styles.calendarDayToday : {}),
+                    ...(isSelectedRange ? styles.calendarDayInRange : {}),
+                    ...(isStart || isEnd ? styles.calendarDaySelected : {}),
+                    ...rangeEdgeStyle,
+                  }}
+                >
+                  {date.getDate()}
+                </button>
+              );
+            })}
+          </div>
+        </section>
+      ))}
+    </div>
+  );
+}
+
+export default function ManualPlanPage({
+  onBack,
+  onHome,
+  onMyPage,
+}: ManualPlanPageProps) {
+  const [step, setStep] = useState<ManualStep>(1);
   const [tripTitle, setTripTitle] = useState("Manual Trip Plan");
-  const [startDate, setStartDate] = useState(DEFAULT_START_DATE);
-  const [endDate, setEndDate] = useState(DEFAULT_START_DATE);
-  const [activeDate, setActiveDate] = useState(DEFAULT_START_DATE);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [isSelectingEndDate, setIsSelectingEndDate] = useState(false);
+  const [activeDate, setActiveDate] = useState("");
   const [query, setQuery] = useState("");
   const [submittedQuery, setSubmittedQuery] = useState("");
   const [searchResults, setSearchResults] = useState<TourPlace[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [tripStops, setTripStops] = useState<PlannedStop[]>([]);
+  const [placeSlotsByDate, setPlaceSlotsByDate] = useState<
+    Record<string, Array<PlannedStop | null>>
+  >({});
+  const [selectedPlaceSlotIndex, setSelectedPlaceSlotIndex] = useState(0);
   const [loadedPlan, setLoadedPlan] = useState<PlanDetailResponse | null>(null);
   const [editingStopId, setEditingStopId] = useState<string | null>(null);
+  const [draggedStopId, setDraggedStopId] = useState<string | null>(null);
+  const [hasSeenStepFiveHint, setHasSeenStepFiveHint] = useState(false);
   const [showShare, setShowShare] = useState(false);
+  const [showPlaceSearch, setShowPlaceSearch] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
+  const [isComplete, setIsComplete] = useState(false);
 
   const planId = useMemo(() => readPlanId(), []);
   const tripDates = useMemo(
@@ -701,20 +893,22 @@ export default function ManualPlanPage({ onBack }: ManualPlanPageProps) {
 
     let cancelled = false;
     void getTourPlan(planId)
+      .then((savedPlan) => hydratePlanItemCoordinates(savedPlan))
       .then((savedPlan) => {
         if (cancelled) return;
         const dateMetadata = readManualPlanDateMetadata()[savedPlan.plan_id] || {};
         const stops = savedPlanToStops(savedPlan, dateMetadata);
         const dates = Array.from(new Set(stops.map((stop) => stop.visitDate))).sort();
-        const firstDate = dates[0] || DEFAULT_START_DATE;
+        const firstDate = dates[0] || getDefaultStartDate();
         const lastDate = dates[dates.length - 1] || firstDate;
 
         setLoadedPlan(savedPlan);
         setTripTitle(savedPlan.title || "Manual Trip Plan");
         setStartDate(firstDate);
         setEndDate(lastDate);
+        setIsSelectingEndDate(false);
         setActiveDate(firstDate);
-        setTripStops(stops);
+        setPlaceSlotsByDate(stopsToSlotsByDate(stops, dates));
       })
       .catch((error) => {
         if (!cancelled) {
@@ -731,12 +925,77 @@ export default function ManualPlanPage({ onBack }: ManualPlanPageProps) {
 
   useEffect(() => {
     if (!tripDates.includes(activeDate) && tripDates.length > 0) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setActiveDate(tripDates[0]);
     }
   }, [activeDate, tripDates]);
 
-  const activeStops = tripStops.filter((stop) => stop.visitDate === activeDate);
+  useEffect(() => {
+    setPlaceSlotsByDate((current) => {
+      const next = { ...current };
+      tripDates.forEach((date) => {
+        if (!next[date]) {
+          next[date] = [null, null];
+        }
+      });
+      Object.keys(next).forEach((date) => {
+        if (!tripDates.includes(date)) {
+          delete next[date];
+        }
+      });
+      return next;
+    });
+  }, [tripDates]);
+
+  const activePlaceSlots = useMemo(
+    () => {
+      const slots = placeSlotsByDate[activeDate] || [];
+      return slots.length >= 2
+        ? slots
+        : ensurePlaceSlots(slots.filter((slot): slot is PlannedStop => Boolean(slot)));
+    },
+    [activeDate, placeSlotsByDate]
+  );
+  const tripStops = useMemo(
+    () =>
+      tripDates.flatMap((date) =>
+        (placeSlotsByDate[date] || []).filter(
+          (stop): stop is PlannedStop => Boolean(stop)
+        )
+      ),
+    [placeSlotsByDate, tripDates]
+  );
+  const activeScheduledStops = useMemo(
+    () =>
+      activePlaceSlots
+        .map((stop, slotIndex) => ({ stop, slotIndex }))
+        .filter(
+          (item): item is { stop: PlannedStop; slotIndex: number } =>
+            Boolean(item.stop)
+        ),
+    [activePlaceSlots]
+  );
+  const showStepFiveHint = step === 5 && !hasSeenStepFiveHint;
+  const canGoNext =
+    step === 1
+      ? tripTitle.trim().length > 0
+      : step === 2
+        ? tripDates.length > 0
+        : step === 3
+          ? tripDates.every(
+              (date) =>
+                (placeSlotsByDate[date] || []).filter(Boolean).length >= 2
+            )
+          : true;
+
+  useEffect(() => {
+    if (step !== 5 || hasSeenStepFiveHint) return undefined;
+
+    const timer = window.setTimeout(() => {
+      setHasSeenStepFiveHint(true);
+    }, 3000);
+
+    return () => window.clearTimeout(timer);
+  }, [hasSeenStepFiveHint, step]);
 
   const handleSearch = () => {
     const nextQuery = query.trim();
@@ -765,6 +1024,69 @@ export default function ManualPlanPage({ onBack }: ManualPlanPageProps) {
       });
   };
 
+  const handleDateSelect = (date: string) => {
+    if (!isSelectingEndDate) {
+      setStartDate(date);
+      setEndDate(date);
+      setActiveDate(date);
+      setIsSelectingEndDate(true);
+      return;
+    }
+
+    if (date < startDate) {
+      setStartDate(date);
+      setEndDate(startDate);
+      setActiveDate(date);
+      setIsSelectingEndDate(false);
+      return;
+    }
+
+    setEndDate(date);
+    setIsSelectingEndDate(false);
+  };
+
+  const goBack = () => {
+    if (isComplete) {
+      onBack?.();
+      return;
+    }
+
+    if (step > 1) {
+      if (step === 5) {
+        setHasSeenStepFiveHint(true);
+      }
+      setStep((current) => (current - 1) as ManualStep);
+      return;
+    }
+
+    onBack?.();
+  };
+
+  const goNext = () => {
+    if (!canGoNext || step >= 5) return;
+    setStep((current) => (current + 1) as ManualStep);
+  };
+
+  const addMiddlePlaceSlot = () => {
+    setPlaceSlotsByDate((current) => {
+      const slots = current[activeDate] || activePlaceSlots;
+      const insertIndex = Math.max(1, slots.length - 1);
+      const next = [...slots.slice(0, insertIndex), null, ...slots.slice(insertIndex)];
+      setSelectedPlaceSlotIndex(insertIndex);
+      return { ...current, [activeDate]: next };
+    });
+  };
+
+  const openPlaceSearch = (slotIndex: number) => {
+    const slot = activePlaceSlots[slotIndex];
+    setSelectedPlaceSlotIndex(slotIndex);
+    setQuery(slot?.name || "");
+    setSubmittedQuery("");
+    setSearchResults([]);
+    setErrorMessage("");
+    setShowPlaceSearch(true);
+  };
+
   const getNextVisitTime = (targetDate: string) => {
     const sameDayStops = tripStops
       .filter((stop) => stop.visitDate === targetDate)
@@ -784,36 +1106,110 @@ export default function ManualPlanPage({ onBack }: ManualPlanPageProps) {
 
   const addPlaceToPlan = (place: TourPlace) => {
     const targetDate = activeDate || startDate;
-    setTripStops((current) => [
-      ...current,
-      {
+    setPlaceSlotsByDate((current) => {
+      const slots = [...(current[targetDate] || activePlaceSlots)];
+      const fallbackIndex = slots.findIndex((slot) => !slot);
+      const targetIndex =
+        selectedPlaceSlotIndex >= 0 && selectedPlaceSlotIndex < slots.length
+          ? selectedPlaceSlotIndex
+          : fallbackIndex >= 0
+            ? fallbackIndex
+            : Math.max(1, slots.length - 1);
+
+      if (targetIndex >= slots.length) {
+        slots.push(null);
+      }
+
+      const currentStop = slots[targetIndex];
+      slots[targetIndex] = {
         ...place,
-        plannedId: createPlanId("manual"),
+        plannedId: currentStop?.plannedId || createPlanId("manual"),
         visitDate: targetDate,
-        visitTime: getNextVisitTime(targetDate),
-      },
-    ]);
+        visitTime: currentStop?.visitTime || getNextVisitTime(targetDate),
+        backendItemId: currentStop?.backendItemId,
+        backendDayNumber: currentStop?.backendDayNumber,
+      };
+
+      setShowPlaceSearch(false);
+      return {
+        ...current,
+        [targetDate]: ensurePlaceSlots(
+          slots.filter((slot): slot is PlannedStop => Boolean(slot))
+        ),
+      };
+    });
   };
 
   const updateStop = (plannedId: string, patch: Partial<PlannedStop>) => {
-    setTripStops((current) =>
-      current.map((stop) =>
-        stop.plannedId === plannedId
-          ? {
-              ...stop,
-              ...patch,
-              backendDayNumber:
-                patch.visitDate && patch.visitDate !== stop.visitDate
-                  ? undefined
-                  : stop.backendDayNumber,
-            }
-          : stop
-      )
-    );
+    setPlaceSlotsByDate((current) => {
+      const updatedStops = tripDates.flatMap((date) =>
+        (current[date] || [])
+          .map((stop) =>
+            stop?.plannedId === plannedId
+              ? {
+                  ...stop,
+                  ...patch,
+                  backendDayNumber:
+                    patch.visitDate && patch.visitDate !== stop.visitDate
+                      ? undefined
+                      : stop.backendDayNumber,
+                }
+              : stop
+          )
+          .filter((stop): stop is PlannedStop => Boolean(stop))
+      );
+      return stopsToSlotsByDate(updatedStops, tripDates);
+    });
   };
 
   const removeStop = (plannedId: string) => {
-    setTripStops((current) => current.filter((stop) => stop.plannedId !== plannedId));
+    setPlaceSlotsByDate((current) => {
+      const next = { ...current };
+      Object.entries(current).forEach(([date, slots]) => {
+        const targetIndex = slots.findIndex((stop) => stop?.plannedId === plannedId);
+        if (targetIndex < 0) return;
+        const stopCount = slots.filter(Boolean).length;
+        if (stopCount <= 2) return;
+
+        next[date] = ensurePlaceSlots(
+          slots.filter((stop) => stop?.plannedId !== plannedId).filter(
+            (stop): stop is PlannedStop => Boolean(stop)
+          )
+        );
+      });
+      return next;
+    });
+  };
+
+  const removeMiddlePlaceSlot = (slotIndex: number) => {
+    setPlaceSlotsByDate((current) => {
+      const slots = current[activeDate] || activePlaceSlots;
+      if (slotIndex <= 0 || slotIndex >= slots.length - 1) return current;
+
+      const nextSlots = [
+        ...slots.slice(0, slotIndex),
+        ...slots.slice(slotIndex + 1),
+      ];
+
+      while (nextSlots.length < 2) {
+        nextSlots.push(null);
+      }
+
+      return { ...current, [activeDate]: nextSlots };
+    });
+  };
+
+  const reorderStop = (sourceId: string, targetId: string) => {
+    if (sourceId === targetId) return;
+    const slots = placeSlotsByDate[activeDate] || [];
+    const sourceIndex = slots.findIndex((stop) => stop?.plannedId === sourceId);
+    const targetIndex = slots.findIndex((stop) => stop?.plannedId === targetId);
+    if (sourceIndex < 0 || targetIndex < 0) return;
+
+    const nextSlots = [...slots];
+    const [sourceStop] = nextSlots.splice(sourceIndex, 1);
+    nextSlots.splice(targetIndex, 0, sourceStop);
+    setPlaceSlotsByDate((current) => ({ ...current, [activeDate]: nextSlots }));
   };
 
   const handleSave = () => {
@@ -828,13 +1224,22 @@ export default function ManualPlanPage({ onBack }: ManualPlanPageProps) {
     if (loadedPlan) {
       void updateExistingBackendPlan(loadedPlan, title, tripStops, tripDates)
         .then(({ saved, dayNumberByDate }) => {
-          // ✅ updateExistingBackendPlan이 실제로 사용한 매핑으로 저장
           saveManualPlanDateMetadata(saved.plan_id, dayNumberByDate);
           setLoadedPlan(saved);
-          setTripStops((current) =>
-            applySavedItemsToCurrentStops(current, saved, dayNumberByDate)
+          setPlaceSlotsByDate((current) =>
+            Object.fromEntries(
+              tripDates.map((date) => [
+                date,
+                applySavedStopsToSlots(
+                  current[date] || [null, null],
+                  saved,
+                  dayNumberByDate
+                ),
+              ])
+            )
           );
           setSaveMessage(`Saved to My Page (${saved.title || "Untitled plan"})`);
+          setIsComplete(true);
         })
         .catch((error) => {
           setSaveMessage(
@@ -861,10 +1266,20 @@ export default function ManualPlanPage({ onBack }: ManualPlanPageProps) {
 
           saveManualPlanDateMetadata(saved.plan_id, correctedMap);
           setLoadedPlan(saved);
-          setTripStops((current) =>
-            applySavedItemsToCurrentStops(current, saved, correctedMap)
+          setPlaceSlotsByDate((current) =>
+            Object.fromEntries(
+              tripDates.map((date) => [
+                date,
+                applySavedStopsToSlots(
+                  current[date] || [null, null],
+                  saved,
+                  correctedMap
+                ),
+              ])
+            )
           );
           setSaveMessage(`Saved to My Page (${saved.title || "Untitled plan"})`);
+          setIsComplete(true);
         })
         .catch((error) => {
           setSaveMessage(
@@ -878,212 +1293,484 @@ export default function ManualPlanPage({ onBack }: ManualPlanPageProps) {
     <div style={styles.page}>
       <div style={styles.phoneFrame}>
         <div style={styles.topBar}>
-          <button type="button" onClick={onBack} style={styles.iconButton}>
-            {"<"}
+          <button type="button" onClick={goBack} style={styles.iconButton}>
+            <img src="/icon-back.svg" alt="Back" style={styles.backIcon} />
           </button>
-          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-            <span style={styles.badge}>Manual Planner</span>
-            <strong style={styles.title}>Build the itinerary yourself</strong>
-          </div>
-          <button type="button" onClick={() => setShowShare(true)} style={styles.shareButton}>
-            Invite
-          </button>
+          <h1 style={styles.headerLogo}>
+            Manual Plan
+          </h1>
+          {!isComplete ? (
+            <button type="button" onClick={() => setShowShare(true)} style={styles.shareButton}>
+              <img src="/UserAddIcon.svg" alt="UserAdd" style={styles.userAddButton}></img>
+            </button>
+          ) : (
+            <span style={styles.headerSpacer} />
+          )}
         </div>
 
-        <label style={styles.fieldLabel}>
-          Trip Title
-          <input
-            value={tripTitle}
-            onChange={(event) => setTripTitle(event.target.value)}
-            style={styles.input}
-            placeholder="Manual Trip Plan"
-          />
-        </label>
+        {!isComplete ? <StepProgress step={step} /> : null}
 
-        <section style={styles.card}>
-          <div style={styles.sectionHeaderRow}>
-            <div>
-              <h1 style={styles.sectionTitle}>Trip dates</h1>
-              <p style={styles.sectionCopy}>Select when the trip starts and ends before adding places.</p>
+        {isComplete ? (
+          <section style={{ ...styles.card, ...styles.completeCard }}>
+            <img src="/map_success.svg" alt="" style={styles.completeImage} />
+            <h1 style={styles.sectionTitleEnd}>All set!</h1>
+            <p style={styles.sectionCopy}>
+              {saveMessage || `Saved to My Page (${buildPlanTitle("manual", tripTitle)})`}
+            </p>
+          </section>
+        ) : null}
+
+        {isComplete ? (
+          <div style={styles.actionBar}>
+            <button type="button" onClick={onMyPage} style={styles.primaryAction}>
+              Check My Page
+            </button>
+          </div>
+        ) : null}
+
+        {!isComplete && step === 1 ? (
+          <section style={styles.card}>
+            <div style={styles.sectionHeaderRow}>
+              <div>
+                <h1 style={styles.sectionTitle}>What’s your trip’s name?</h1>
+              </div>
             </div>
-            <span style={styles.dayCount}>
-              {tripDates.length} day{tripDates.length > 1 ? "s" : ""}
-            </span>
-          </div>
-
-          <div style={styles.twoColumn}>
             <label style={styles.fieldLabel}>
-              Start date
-              <input type="date" value={startDate} onChange={(event) => setStartDate(event.target.value)} style={styles.input} />
+              Trip Title
+              <input
+                value={tripTitle}
+                onChange={(event) => setTripTitle(event.target.value)}
+                style={styles.planInput}
+                placeholder="Manual Trip Plan"
+              />
             </label>
-            <label style={styles.fieldLabel}>
-              End date
-              <input type="date" value={endDate} onChange={(event) => setEndDate(event.target.value)} style={styles.input} />
-            </label>
-          </div>
+          </section>
+        ) : null}
 
+        {!isComplete && step === 2 ? (
+          <section style={styles.card}>
+            <div style={styles.sectionHeaderRow}>
+              <div>
+                <h1 style={styles.sectionTitle}>When is your trip?</h1>
+              </div>
+              <span style={styles.dayCount}>
+                {tripDates.length} day{tripDates.length > 1 ? "s" : ""}
+              </span>
+            </div>
+            <DateRangeCalendar
+              startDate={startDate}
+              endDate={endDate}
+              onSelectDate={handleDateSelect}
+            />
+          </section>
+        ) : null}
+
+        {!isComplete && step === 3 ? (
+          <section style={{ ...styles.card, ...styles.placeEntryCard }}>
+            <h2 style={styles.sectionTitle}>Where would you like to go?</h2>
+
+            <div style={styles.dayTabs}>
+              {tripDates.map((date, index) => {
+                const stopCount = (placeSlotsByDate[date] || []).filter(Boolean).length;
+                return (
+                  <button
+                    key={date}
+                    type="button"
+                    onClick={() => setActiveDate(date)}
+                    style={{
+                      ...styles.dayTab,
+                      ...(date === activeDate ? styles.dayTabActive : {}),
+                    }}
+                  >
+                    <span style={styles.dayTabLabel}>Day {index + 1}</span>
+                    <span style={styles.dayTabDate}>
+                      {formatDateLabel(date)} · {stopCount}/2
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div style={styles.placeEntryList}>
+              {activePlaceSlots.map((slot, index) => {
+                const hasMiddleStops = activePlaceSlots.length > 2;
+                const isMiddleStop = index > 0 && index < activePlaceSlots.length - 1;
+                const label =
+                  index === 0
+                    ? "Enter starting point"
+                    : index === activePlaceSlots.length - 1
+                      ? "Enter Destination"
+                      : `Enter stop ${index}`;
+                const dotStyle =
+                  index === 0
+                    ? styles.placeEntryDotStart
+                    : index === activePlaceSlots.length - 1
+                      ? styles.placeEntryDotEnd
+                      : styles.placeEntryDotMiddle;
+
+                return (
+                  <div key={`slot-${index}-${slot?.plannedId || "empty"}`}>
+                    <div style={styles.placeEntryRow}>
+                      <span style={styles.placeEntryDotWrap}>
+                        <span style={{ ...styles.placeEntryDotHalo, ...dotStyle }} />
+                        <span style={{ ...styles.placeEntryDot, ...dotStyle }} />
+                      </span>
+                      <div style={styles.placeEntryInputShell}>
+                        <button
+                          type="button"
+                          onClick={() => openPlaceSearch(index)}
+                          style={styles.placeEntryInput}
+                        >
+                          {slot?.name || label}
+                        </button>
+                        {isMiddleStop ? (
+                          <div style={styles.placeEntryInlineActions}>
+                            <button
+                              type="button"
+                              onClick={addMiddlePlaceSlot}
+                              style={styles.placeEntryCircleButton}
+                              aria-label="Add stop"
+                            >
+                              +
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() =>
+                                slot
+                                  ? removeStop(slot.plannedId)
+                                  : removeMiddlePlaceSlot(index)
+                              }
+                              style={styles.placeEntryCircleButton}
+                              aria-label={slot ? `Delete ${slot.name}` : "Delete stop"}
+                            >
+                              -
+                            </button>
+                          </div>
+                        ) : null}
+                      </div>
+                    </div>
+                    {!hasMiddleStops && index === 0 ? (
+                      <div style={styles.placeEntryConnector}>
+                        <button
+                          type="button"
+                          onClick={addMiddlePlaceSlot}
+                          style={styles.placeEntryAddButton}
+                          aria-label="Add stop"
+                        >
+                          +
+                        </button>
+                      </div>
+                    ) : null}
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        ) : null}
+
+        {!isComplete && step === 4 ? (
+          <section style={styles.card}>
+            <div style={styles.sectionHeaderRow}>
+              <div>
+                <h2 style={styles.sectionTitle}>Route preview</h2>
+              </div>
+              <span style={styles.dayCount}>
+                {tripStops.length} stop{tripStops.length > 1 ? "s" : ""}
+              </span>
+            </div>
+            <MapPreview stops={tripStops} />
+          </section>
+        ) : null}
+
+        {!isComplete && step === 5 ? (
+          <section style={styles.card}>
+            <div style={styles.sectionHeaderRow}>
+              <div>
+                <h2 style={styles.sectionTitle}>Change your schedule</h2>
+              </div>
+              <span style={styles.dayCount}>
+                {tripStops.length} stop{tripStops.length > 1 ? "s" : ""}
+              </span>
+            </div>
+
+            <div style={styles.dayTabs}>
+              {tripDates.map((date, index) => {
+                const stopCount = (placeSlotsByDate[date] || []).filter(Boolean).length;
+                return (
+                  <button
+                    key={date}
+                    type="button"
+                    onClick={() => setActiveDate(date)}
+                    style={{
+                      ...styles.dayTab,
+                      ...(date === activeDate ? styles.dayTabActive : {}),
+                    }}
+                  >
+                    <span style={styles.dayTabLabel}>Day {index + 1}</span>
+                    <span style={styles.dayTabDate}>
+                      {formatDateLabel(date)} · {stopCount}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {activeScheduledStops.length === 0 ? (
+              <div style={styles.emptyState}>No stops added yet.</div>
+            ) : (
+              <div style={styles.timelineList}>
+                {activeScheduledStops.map(({ stop, slotIndex }, index) => {
+                  const stopCountForDate = (
+                    placeSlotsByDate[stop.visitDate] || []
+                  ).filter(Boolean).length;
+                  const canDeleteStop = stopCountForDate > 2;
+
+                  return (
+                    <article
+                      key={stop.plannedId}
+                      draggable
+                      onDragStart={() => setDraggedStopId(stop.plannedId)}
+                      onDragOver={(event) => event.preventDefault()}
+                      onDrop={() => {
+                        if (draggedStopId) reorderStop(draggedStopId, stop.plannedId);
+                        setDraggedStopId(null);
+                      }}
+                      onDragEnd={() => setDraggedStopId(null)}
+                      style={{
+                        ...styles.stopCard,
+                        ...(draggedStopId === stop.plannedId ? styles.stopCardDragging : {}),
+                      }}
+                    >
+                      <div style={styles.stopIndex}>{index + 1}</div>
+                      <div style={styles.stopBody}>
+                        {showStepFiveHint && index === 0 ? (
+                          <div className="manual-step5-edit-hint" style={styles.stepFiveHint}>
+                            Press and hold a card to move it around
+                          </div>
+                        ) : null}
+                        <div style={styles.placeTopRow}>
+                          <button
+                            type="button"
+                            onClick={() => openPlaceSearch(slotIndex)}
+                            style={styles.placeNameButton}
+                          >
+                            {stop.name}
+                          </button>
+                          <div style={styles.stopActionRow}>
+                            {typeof stop.rating === "number" ? (
+                              <span style={styles.ratingBadge}>{stop.rating.toFixed(1)}</span>
+                            ) : null}
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setEditingStopId((current) =>
+                                  current === stop.plannedId ? null : stop.plannedId
+                                )
+                              }
+                              style={styles.editButton}
+                            >
+                              {editingStopId === stop.plannedId ? (
+                                <img width="16" height="16" src="/CheckIcon.svg">
+                                </img>
+                              ) : (
+                                <img width="16" height="16" src="/PostIcon.svg">
+                                </img>
+                              )}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => removeStop(stop.plannedId)}
+                              style={{
+                                ...styles.deleteButton,
+                                ...(!canDeleteStop ? styles.deleteButtonDisabled : {}),
+                              }}
+                              disabled={!canDeleteStop}
+                            >
+                                <img width="16" height="16" src="/icon-close.svg">
+                                </img>
+                            </button>
+                          </div>
+                        </div>
+                        {stop.summary ? <p style={styles.placeSummary}>{stop.summary}</p> : null}
+                        {stop.address ? <span style={styles.placeAddress}>{stop.address}</span> : null}
+                        {editingStopId === stop.plannedId ? (
+                          <div style={styles.stopEditors}>
+                            <label style={styles.fieldLabel}>
+                              Day
+                              <select
+                                value={stop.visitDate}
+                                onChange={(event) =>
+                                  updateStop(stop.plannedId, { visitDate: event.target.value })
+                                }
+                                style={styles.dayinput}
+                              >
+                                {tripDates.map((date) => (
+                                  <option key={date} value={date}>
+                                    {formatDateLabel(date)}
+                                  </option>
+                                ))}
+                              </select>
+                            </label>
+
+                            <label style={styles.fieldLabel}>
+                              Time
+                              <input
+                                type="time"
+                                value={stop.visitTime}
+                                onChange={(event) =>
+                                  updateStop(stop.plannedId, { visitTime: event.target.value })
+                                }
+                                style={styles.dayinput}
+                              />
+                            </label>
+                          </div>
+                        ) : (
+                          <div style={styles.stopMetaRow}>
+                            <span>Day {tripDates.indexOf(stop.visitDate) + 1}</span>
+                            <span>{formatDateLabel(stop.visitDate)}</span>
+                            <span>{stop.visitTime}</span>
+                          </div>
+                        )}
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            )}
+          </section>
+        ) : null}
+
+        {!isComplete && saveMessage ? <p style={styles.saveMessage}>{saveMessage}</p> : null}
+      </div>
+
+      {!isComplete && step === 2 ? (
+        <div style={styles.stepTwoBottomTabs}>
           <div style={styles.dayTabs}>
             {tripDates.map((date, index) => (
-              <button key={date} type="button" onClick={() => setActiveDate(date)} style={{ ...styles.dayTab, ...(date === activeDate ? styles.dayTabActive : {}) }}>
+              <button
+                key={date}
+                type="button"
+                className="manual-step2-day-tab"
+                onClick={() => setActiveDate(date)}
+                style={{
+                  ...styles.dayTab,
+                  ...(date === activeDate ? styles.dayTabActive : {}),
+                }}
+              >
                 <span style={styles.dayTabLabel}>Day {index + 1}</span>
                 <span style={styles.dayTabDate}>{formatDateLabel(date)}</span>
               </button>
             ))}
           </div>
-        </section>
+        </div>
+      ) : null}
 
-        <section style={styles.card}>
-          <div style={styles.sectionHeaderRow}>
-            <div>
-              <h2 style={styles.sectionTitle}>Map search</h2>
-              <p style={styles.sectionCopy}>Nothing is shown until you search. Added places are plotted on a live map and connected in order.</p>
-            </div>
-          </div>
+      {!isComplete && step < 5 ? (
+        <div style={styles.actionBar}>
+          <button
+            type="button"
+            onClick={goNext}
+            style={{
+              ...styles.primaryAction,
+              ...(!canGoNext ? styles.primaryActionDisabled : {}),
+            }}
+            disabled={!canGoNext}
+          >
+            Next
+          </button>
+        </div>
+      ) : null}
 
-          <MapPreview stops={activeStops} />
+      {!isComplete && step === 5 ? (
+        <div style={styles.actionBar}>
+          <button
+            type="button"
+            onClick={handleSave}
+            style={{
+              ...styles.primaryAction,
+              ...(tripStops.length < 2 ? styles.primaryActionDisabled : {}),
+            }}
+            disabled={tripStops.length < 2}
+          >
+            Save
+          </button>
+        </div>
+      ) : null}
 
-          <label style={styles.searchWrap}>
-            <span style={styles.searchLabel}>Place search</span>
-            <div style={styles.searchRow}>
-              <input
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter") {
-                    event.preventDefault();
-                    handleSearch();
-                  }
-                }}
-                style={styles.input}
-                placeholder="Examples: Bukchon, cafe, Myeongdong Gyoja"
-              />
-              <button
-                type="button"
-                onClick={handleSearch}
-                style={styles.searchButton}
-                disabled={isLoading}
-              >
-                Search
-              </button>
-            </div>
-          </label>
+      {showPlaceSearch ? (
+        <div style={styles.overlay}>
+          <button
+            type="button"
+            onClick={() => setShowPlaceSearch(false)}
+            style={styles.overlayBackdrop}
+            aria-label="Close place search"
+          />
+          <div style={styles.searchSheet}>
+            <div style={styles.sheetHandle} />
+            <h2 style={styles.sheetTitle}>Search place</h2>
+            <label style={styles.searchWrap}>
+              <div style={styles.searchRow}>
+                <input
+                  value={query}
+                  autoFocus
+                  onChange={(event) => setQuery(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                      handleSearch();
+                    }
+                  }}
+                  style={styles.input}
+                  placeholder="Examples: Bukchon, cafe, Myeongdong"
+                />
+                <button
+                  type="button"
+                  onClick={handleSearch}
+                  style={styles.searchButton}
+                  disabled={isLoading}
+                >
+                  <img src="/SearchIcon.svg" alt="search" style={styles.searchIcon}></img>
+                </button>
+              </div>
+            </label>
 
-          <div style={styles.resultsList}>
-            {!submittedQuery ? (
-              <div style={styles.emptyState}>Enter a keyword and press Search to load places.</div>
-            ) : isLoading ? (
-              <div style={styles.emptyState}>Loading places...</div>
-            ) : errorMessage ? (
-              <div style={styles.emptyState}>{errorMessage}</div>
-            ) : searchResults.length === 0 ? (
-              <div style={styles.emptyState}>No places found for this keyword.</div>
-            ) : (
-              searchResults.map((place) => (
-                <article key={place.id} style={styles.placeCard}>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                    <div style={styles.placeTopRow}>
-                      <strong style={styles.placeName}>{place.name}</strong>
+            <div style={styles.resultsList}>
+              {!submittedQuery ? (
+                <div style={styles.emptyState}>Enter a keyword and press Search.</div>
+              ) : isLoading ? (
+                <div style={styles.emptyState}>Loading places...</div>
+              ) : errorMessage ? (
+                <div style={styles.emptyState}>{errorMessage}</div>
+              ) : searchResults.length === 0 ? (
+                <div style={styles.emptyState}>No places found for this keyword.</div>
+              ) : (
+                searchResults.map((place) => (
+                  <article key={place.id} style={styles.placeCard}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                       <div style={styles.placeBadgeRow}>
-                        {typeof place.rating === "number" ? (
-                          <span style={styles.ratingBadge}>{place.rating.toFixed(1)}</span>
-                        ) : null}
-                        <span style={styles.placeCategory}>{place.category}</span>
+                          {typeof place.rating === "number" ? (
+                            <span style={styles.ratingBadge}>{place.rating.toFixed(1)}</span>
+                          ) : null}
+                          <span style={styles.placeCategory}>{place.category}</span>
                       </div>
+                      <div style={styles.placeTopRow}>
+                        <strong style={styles.placeName}>{place.name}</strong>
+                      </div>
+                      {place.summary ? <p style={styles.placeSummary}>{place.summary}</p> : null}
+                      {place.address ? <span style={styles.placeAddress}>{place.address}</span> : null}
                     </div>
-                    {place.summary ? (
-                      <p style={styles.placeSummary}>{place.summary}</p>
-                    ) : null}
-                    {place.address ? (
-                      <span style={styles.placeAddress}>{place.address}</span>
-                    ) : null}
-                  </div>
-                  <button type="button" onClick={() => addPlaceToPlan(place)} style={styles.addButton}>
-                    Add
-                  </button>
-                </article>
-              ))
-            )}
-          </div>
-        </section>
-
-        <section style={styles.card}>
-          <div style={styles.sectionHeaderRow}>
-            <div>
-              <h2 style={styles.sectionTitle}>Itinerary editor</h2>
-              <p style={styles.sectionCopy}>Added places are spaced by one hour by default. Use Edit to change the day or time.</p>
-            </div>
-            <span style={styles.dayCount}>
-              {activeStops.length} stop{activeStops.length > 1 ? "s" : ""}
-            </span>
-          </div>
-
-          {activeStops.length === 0 ? (
-            <div style={styles.emptyState}>No stops added for this day yet.</div>
-          ) : (
-            <div style={styles.timelineList}>
-              {activeStops.map((stop, index) => (
-                <article key={stop.plannedId} style={styles.stopCard}>
-                  <div style={styles.stopIndex}>{index + 1}</div>
-                  <div style={styles.stopBody}>
-                    <div style={styles.placeTopRow}>
-                      <strong style={styles.placeName}>{stop.name}</strong>
-                      <div style={styles.stopActionRow}>
-                        {typeof stop.rating === "number" ? (
-                          <span style={styles.ratingBadge}>{stop.rating.toFixed(1)}</span>
-                        ) : null}
-                        <button type="button" onClick={() => setEditingStopId((current) => (current === stop.plannedId ? null : stop.plannedId))} style={styles.editButton}>
-                          Edit
-                        </button>
-                        <button type="button" onClick={() => removeStop(stop.plannedId)} style={styles.deleteButton}>
-                          Delete
-                        </button>
-                      </div>
+                    <div style={styles.addButtonRow}>   
+                      <button type="button" onClick={() => addPlaceToPlan(place)} style={styles.addButton}>
+                        Add
+                      </button>
                     </div>
-                    {stop.summary ? (
-                      <p style={styles.placeSummary}>{stop.summary}</p>
-                    ) : null}
-                    {stop.address ? (
-                      <span style={styles.placeAddress}>{stop.address}</span>
-                    ) : null}
-                    {editingStopId === stop.plannedId ? (
-                      <>
-                        <div style={styles.stopEditors}>
-                          <label style={styles.fieldLabel}>
-                            Day
-                            <select value={stop.visitDate} onChange={(event) => updateStop(stop.plannedId, { visitDate: event.target.value })} style={styles.input}>
-                              {tripDates.map((date) => (
-                                <option key={date} value={date}>
-                                  {formatDateLabel(date)}
-                                </option>
-                              ))}
-                            </select>
-                          </label>
-                          <label style={styles.fieldLabel}>
-                            Time
-                            <input type="time" value={stop.visitTime} onChange={(event) => updateStop(stop.plannedId, { visitTime: event.target.value })} style={styles.input} />
-                          </label>
-                        </div>
-                      </>
-                    ) : (
-                      <div style={styles.stopMetaRow}>
-                        <span>{formatDateLabel(stop.visitDate)}</span>
-                        <span>{stop.visitTime}</span>
-                      </div>
-                    )}
-                  </div>
-                </article>
-              ))}
+                  </article>
+                ))
+              )}
             </div>
-          )}
-        </section>
-
-        <button type="button" onClick={handleSave} style={styles.primaryAction} disabled={tripStops.length === 0}>
-          Save plan to My Page
-        </button>
-
-        {saveMessage ? <p style={styles.saveMessage}>{saveMessage}</p> : null}
-      </div>
-
+          </div>
+        </div>
+      ) : null}
       {showShare ? <ShareSheet onClose={() => setShowShare(false)} /> : null}
     </div>
   );
@@ -1091,70 +1778,109 @@ export default function ManualPlanPage({ onBack }: ManualPlanPageProps) {
 
 const styles: Record<string, CSSProperties> = {
   page: {
-    minHeight: "100dvh",
-    padding: "20px 16px",
-    background: "linear-gradient(180deg, #f7ffff 0%, #fefdf7 100%)",
-    fontFamily: '"Nunito", "Apple SD Gothic Neo", sans-serif',
+    minHeight: "calc(var(--app-viewport-height) - var(--app-bottom-nav-reserved))",
+    padding: "calc(20px + var(--app-safe-top)) 16px 20px",
+    boxSizing: "border-box",
+    background: "#fff",
+    fontFamily: '"Pretendard Variable", sans-serif',
   },
   phoneFrame: {
     maxWidth: 430,
     margin: "0 auto",
     display: "flex",
     flexDirection: "column",
-    gap: 16,
-    paddingBottom: 26,
+    gap: "1.5rem",
+    paddingBottom: 16,
+  },
+  actionBar: {
+    position: "fixed",
+    left: "50%",
+    bottom: "calc(var(--app-bottom-nav-reserved) + 2rem)",
+    width: "calc(100% - 32px)",
+    maxWidth: 430,
+    transform: "translateX(-50%)",
+    zIndex: 14,
   },
   topBar: {
     display: "grid",
-    gridTemplateColumns: "42px 1fr auto",
-    gap: 12,
+    gridTemplateColumns: "42px 1fr 42px",
     alignItems: "center",
   },
   iconButton: {
     width: 42,
     height: 42,
-    borderRadius: 14,
-    border: "1px solid #d7ecec",
-    background: "#ffffff",
-    color: "#204444",
-    fontSize: 18,
-    fontWeight: 800,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    border: "transparent",
+    background: "transparent",
+    padding: 0,
     cursor: "pointer",
+  },
+  backIcon: {
+    width: 20,
+    height: 20,
+    display: "block",
+  },
+  headerLogo: {
+    fontSize: "1.1rem",
+    height: "auto",
+    display: "flex",
+    color: "#212121",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  headerSpacer: {
+    width: 72,
+    height: 42,
+    display: "block",
   },
   shareButton: {
-    minHeight: 42,
-    border: "none",
-    borderRadius: 14,
-    background: ACCENT,
-    color: "#533800",
-    padding: "0 14px",
-    fontSize: 13,
-    fontWeight: 900,
+    width: 42,
+    height: 42,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    border: "transparent",
+    background: "transparent",
+    padding: 0,
     cursor: "pointer",
   },
-  badge: {
-    display: "inline-flex",
-    width: "fit-content",
-    padding: "7px 10px",
-    borderRadius: 999,
-    background: "rgba(1,192,192,0.12)",
-    color: BRAND,
-    fontSize: 12,
-    fontWeight: 800,
+  userAddButton: {
+    width: "24px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
     color: "#102223",
-    fontSize: 22,
+    fontSize: "1rem",
+  },
+  stepProgress: {
+    display: "flex",
+    alignItems: "center",
+    gap: "0.75rem",
+    paddingLeft: 2,
+  },
+  stepDot: {
+    margin: "1rem 0 0",
+    width: "0.5rem",
+    height: "0.5rem",
+    borderRadius: "50%",
+    background: "#eaeaea",
+    transition: "background 180ms ease, transform 180ms ease",
+  },
+  stepDotActive: {
+    background: BRAND,
+    transform: "scale(1.5)",
   },
   card: {
-    padding: 18,
     borderRadius: 24,
-    background: "#ffffff",
-    border: "1px solid #dceeee",
-    boxShadow: "0 12px 30px rgba(16, 34, 35, 0.06)",
+    background: "transparent",
+    border: "transparent",
     display: "flex",
     flexDirection: "column",
-    gap: 14,
+    gap: 8,
   },
   sectionHeaderRow: {
     display: "flex",
@@ -1163,24 +1889,17 @@ const styles: Record<string, CSSProperties> = {
     gap: 12,
   },
   sectionTitle: {
-    margin: 0,
-    color: "#102223",
+    margin: "0 0 2.5rem",
+    color: "#212121",
     fontSize: 20,
   },
-  sectionCopy: {
-    margin: "6px 0 0",
-    color: "#577071",
-    lineHeight: 1.6,
-    fontSize: 13,
-    maxWidth: 260,
-  },
   dayCount: {
-    padding: "8px 10px",
+    padding: "8px 12px",
     borderRadius: 999,
-    background: "rgba(255,190,15,0.18)",
-    color: "#7a5400",
+    background: "var(--brand-secondary-soft)",
+    color: "#64370d",
     fontSize: 12,
-    fontWeight: 800,
+    fontWeight: 600,
   },
   twoColumn: {
     display: "grid",
@@ -1193,36 +1912,55 @@ const styles: Record<string, CSSProperties> = {
     gap: 8,
     fontSize: 12,
     fontWeight: 800,
-    color: "#204444",
+    color: "#6b6b6b",
+  },
+  planInput: {
+    width: "100%",
+    minHeight: 46,
+    borderRadius: "3rem",
+    border: "transparent",
+    color: "#222",
+    padding: "0.5rem 1.2rem",
+    fontSize: "0.8rem",
+    boxSizing: "border-box",
+    fontWeight: 400,
+    outline: "none",
+    background: "#f5f5f5",
   },
   input: {
     width: "100%",
     minHeight: 46,
-    borderRadius: 14,
-    border: "1px solid #d7ecec",
-    background: "#fcffff",
-    color: "#183536",
-    padding: "0 14px",
-    fontSize: 14,
+    borderRadius: "3rem",
+    border: "transparent",
+    background: "transparent",
+    color: "#222",
+    padding: "0.5rem 1.2rem",
+    fontSize: "0.8rem",
     boxSizing: "border-box",
+    fontWeight: 400,
+    outline: "none",
   },
   dayTabs: {
     display: "flex",
     gap: 8,
     overflowX: "auto",
     paddingBottom: 2,
+    scrollbarWidth: "none",
+    msOverflowStyle: "none",
   },
   dayTab: {
-    minWidth: 96,
-    border: "1px solid #d7ecec",
-    borderRadius: 16,
-    background: "#ffffff",
-    padding: "12px 14px",
+    margin: "0.1rem 0",
+    minWidth: 82,
+    border: "none",
+    borderRadius: 999,
+    background: "#f4f4f4",
+    padding: "9px 14px",
     display: "flex",
     flexDirection: "column",
-    alignItems: "flex-start",
-    gap: 4,
+    alignItems: "center",
+    gap: 2,
     cursor: "pointer",
+    flexShrink: 0,
   },
   dayTabActive: {
     border: `1px solid ${BRAND}`,
@@ -1235,17 +1973,106 @@ const styles: Record<string, CSSProperties> = {
   },
   dayTabDate: {
     color: BRAND,
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: 700,
   },
-  mapBox: {
-    padding: 12,
-    borderRadius: 20,
-    background: "linear-gradient(145deg, #eafafa 0%, #fdf8e8 100%)",
-    border: "1px solid #dceeee",
+  stepTwoCard: {
+    gap: 14,
+    paddingBottom: 0,
+  },
+  calendarScroller: {
+    maxHeight: 430,
+    overflowY: "auto",
     display: "flex",
     flexDirection: "column",
-    gap: 10,
+    gap: 18,
+    paddingRight: 4,
+  },
+  monthBlock: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 12,
+  },
+  monthTitle: {
+    margin: "0 0 4px",
+    color: "#202020",
+    fontSize: 17,
+    textAlign: "center",
+  },
+  weekdayGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(7, minmax(0, 1fr))",
+  },
+  weekdayLabel: {
+    textAlign: "center",
+    color: "#8a8a8a",
+    fontSize: 11,
+    fontWeight: 500,
+  },
+  calendarGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(7, minmax(0, 1fr))",
+    columnGap: 0,
+    rowGap: 6,
+  },
+  calendarEmptyDay: {
+    height: 32,
+  },
+  calendarDay: {
+    height: 36,
+    border: "none",
+    background: "transparent",
+    color: "#204444",
+    fontSize: 13,
+    fontWeight: 700,
+    cursor: "pointer",
+  },
+  calendarDayToday: {
+    background: "#ffffff",
+    borderRadius: 999,
+    color: "#204444",
+  },
+  calendarDayInRange: {
+    background: "#58c9d4",
+    color: "#ffffff",
+    border: "none",
+  },
+  calendarDaySelected: {
+    background: "#58c9d4",
+    color: "#ffffff",
+    border: "none",
+  },
+  calendarDayRangeStart: {
+    borderTopLeftRadius: 999,
+    borderBottomLeftRadius: 999,
+  },
+
+  calendarDayRangeEnd: {
+    borderTopRightRadius: 999,
+    borderBottomRightRadius: 999,
+  },
+
+  calendarDaySingleSelected: {
+    borderRadius: 999,
+  },
+  stepTwoBottomTabs: {
+    position: "fixed",
+    left: "50%",
+    bottom: "calc(var(--app-bottom-nav-reserved) + 2rem + 56px + 10px)",
+    width: "calc(100% - 32px)",
+    maxWidth: 430,
+    transform: "translateX(-50%)",
+    zIndex: 14,
+    background: "#ffffff",
+    padding: "8px 0",
+  },
+  mapBox: {
+    marginTop: "-1rem",
+    borderRadius: 20,
+    border: "none",
+    display: "flex",
+    flexDirection: "column",
+    gap: 28,
   },
   mapViewport: {
     position: "relative",
@@ -1279,28 +2106,25 @@ const styles: Record<string, CSSProperties> = {
     display: "inline-flex",
     alignItems: "center",
     gap: 8,
-    minWidth: 0,
-    padding: "8px 10px",
-    borderRadius: 999,
-    background: "#ffffff",
-    border: "1px solid #dceeee",
+    marginBottom: "0.4rem",
   },
   mapLegendIndex: {
-    width: 22,
-    height: 22,
+    width: 24,
+    height: 24,
     borderRadius: "50%",
-    background: "rgba(255,190,15,0.22)",
-    color: "#7a5400",
+    background: "#58c9d4",
+    color: "#fff",
     display: "grid",
     placeItems: "center",
+    justifyContent: "center",
     fontSize: 12,
     fontWeight: 800,
     flexShrink: 0,
   },
   mapLegendLabel: {
-    color: "#204444",
+    color: "#222",
     fontSize: 12,
-    fontWeight: 700,
+    fontWeight: 500,
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
@@ -1310,26 +2134,160 @@ const styles: Record<string, CSSProperties> = {
     flexDirection: "column",
     gap: 8,
   },
-  searchLabel: {
-    color: "#204444",
-    fontSize: 12,
-    fontWeight: 800,
-  },
   searchRow: {
     display: "grid",
     gridTemplateColumns: "1fr auto",
     gap: 10,
     alignItems: "center",
+    background: "var(--surface-muted)",
+    borderRadius: "3rem",
   },
   searchButton: {
-    minWidth: 82,
+    minWidth: 46,
     minHeight: 46,
     border: "none",
+    background: "transparent",
     borderRadius: 14,
-    background: ACCENT,
-    color: "#533800",
     padding: "0 14px",
     fontSize: 13,
+    fontWeight: 900,
+    cursor: "pointer",
+  },
+  searchIcon: {
+    width: 18,
+    alignItems: "center",
+    justifyItems: "center",
+  },
+  placeEntryCard: {
+    minHeight: 360,
+    borderRadius: 0,
+    border: "none",
+    boxShadow: "none",
+    background: "#ffffff",
+  },
+  placeEntryTitle: {
+    margin: "0 0 12px",
+    color: "#171d23",
+    fontSize: 21,
+    lineHeight: 1.25,
+    fontWeight: 900,
+  },
+  placeEntryList: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 0,
+    paddingTop: 8,
+  },
+  placeEntryRow: {
+    width: "100%",
+    display: "grid",
+    gridTemplateColumns: "18px 1fr",
+    alignItems: "center",
+    gap: 10,
+  },
+  placeEntryDotWrap: {
+    margin: "0 0 0 0.5rem",
+    width: 18,
+    height: 18,
+    position: "relative",
+    display: "grid",
+    placeItems: "center",
+    justifySelf: "center",
+  },
+  placeEntryDot: {
+    width: "0.4rem",
+    height: "0.4rem",
+    borderRadius: "50%",
+    position: "relative",
+    zIndex: 1,
+  },
+  placeEntryDotHalo: {
+    width: "1rem",
+    height: "1rem",
+    borderRadius: "50%",
+    opacity: 0.3,
+    position: "absolute",
+    left: "50%",
+    top: "50%",
+    transform: "translate(-50%, -50%)",
+  },
+  placeEntryDotStart: {
+    background: BRAND,
+  },
+  placeEntryDotMiddle: {
+    background: "#aaa",
+  },
+  placeEntryDotEnd: {
+    background: ACCENT,
+  },
+  placeEntryInputShell: {
+    minHeight: 50,
+    border: "none",
+    borderRadius: 999,
+    background: "#f6f6f6",
+    display: "grid",
+    gridTemplateColumns: "minmax(0, 1fr) auto",
+    alignItems: "center",
+    gap: 8,
+    padding: "0 1.2rem",
+    margin: "0.4rem 0",
+  },
+  placeEntryInput: {
+    minWidth: 0,
+    minHeight: 50,
+    border: "none",
+    background: "transparent",
+    color: "#8a9297",
+    padding: 0,
+    textAlign: "left",
+    fontSize: 13,
+    fontWeight: 400,
+    cursor: "pointer",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+  placeEntryInlineActions: {
+    display: "flex",
+    alignItems: "center",
+    gap: 6,
+  },
+  placeEntryCircleButton: {
+    width: 26,
+    height: 26,
+    border: "none",
+    borderRadius: "50%",
+    background: "#ffffff",
+    color: "#7b8588",
+    display: "grid",
+    placeItems: "center",
+    padding: 0,
+    fontSize: 17,
+    lineHeight: 1,
+    fontWeight: 900,
+    cursor: "pointer",
+    boxShadow: "0 1px 5px rgba(16, 34, 35, 0.08)",
+  },
+  placeEntryConnector: {
+    display: "grid",
+    gridTemplateColumns: "18px 1fr",
+    alignItems: "center",
+    gap: 10,
+    minHeight: 34,
+  },
+  placeEntryAddButton: {
+    justifySelf: "left",
+    width: 26,
+    height: 26,
+    borderRadius: "50%",
+    border: "1px solid #eaeaea",
+    background: "#fff",
+    color: "#aaa",
+    display: "grid",
+    placeItems: "center",
+    padding: 0,
+    fontSize: 17,
+    lineHeight: 1,
     fontWeight: 900,
     cursor: "pointer",
   },
@@ -1337,16 +2295,19 @@ const styles: Record<string, CSSProperties> = {
     display: "flex",
     flexDirection: "column",
     gap: 10,
+    overflowY: "auto",
+    flex: 1,
+    paddingBottom: 8,
   },
   placeCard: {
     padding: 14,
     borderRadius: 18,
-    border: "1px solid #dceeee",
-    background: "#fbffff",
-    display: "grid",
-    gridTemplateColumns: "1fr auto",
+    border: "0.8px solid #eaeaea",
+    background: "#fafafa",
+    display: "flex",
+    flexDirection: "column",
     gap: 12,
-    alignItems: "center",
+    alignItems: "stretch",
   },
   placeTopRow: {
     display: "flex",
@@ -1355,66 +2316,85 @@ const styles: Record<string, CSSProperties> = {
     gap: 10,
   },
   placeName: {
-    color: "#102223",
-    fontSize: 15,
+    marginTop: 4,
+    color: "#222",
+    fontSize: "0.85rem",
+    lineHeight: "1.1rem"
+  },
+  placeNameButton: {
+    minWidth: 0,
+    border: "none",
+    background: "transparent",
+    color: "#222",
+    padding: 0,
+    textAlign: "left",
+    fontSize: "0.9rem",
+    lineHeight: "1.2rem",
+    fontWeight: 800,
+    cursor: "pointer",
   },
   placeCategory: {
     padding: "6px 10px",
     borderRadius: 999,
-    background: "rgba(1,192,192,0.1)",
+    background: "#e1eef0",
     color: BRAND,
-    fontSize: 11,
-    fontWeight: 800,
+    fontSize: 10,
+    fontWeight: 700,
   },
   placeBadgeRow: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "flex-end",
+    justifyContent: "flex-start",
     gap: 6,
     flexWrap: "wrap",
   },
   ratingBadge: {
     padding: "6px 9px",
     borderRadius: 999,
-    background: "rgba(255,190,15,0.2)",
-    color: "#7a5400",
-    fontSize: 11,
-    fontWeight: 900,
+    background: "#f8edd0",
+    color: "#7a4900",
+    fontSize: 10,
+    fontWeight: 800,
   },
   placeSummary: {
     margin: 0,
-    color: "#577071",
-    lineHeight: 1.6,
-    fontSize: 13,
+    color: "#444444",
+    lineHeight: "1rem",
+    fontSize: "0.75rem",
   },
   placeAddress: {
-    color: BRAND,
-    fontSize: 12,
-    fontWeight: 700,
+    color: "#848484",
+    fontSize: "0.7rem",
+    fontWeight: 400,
+  },
+  addButtonRow: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "flex-end",
   },
   addButton: {
-    minWidth: 66,
-    minHeight: 40,
+    minWidth: 48,
+    minHeight: 36,
     border: "none",
-    borderRadius: 14,
+    borderRadius: 12,
     background: BRAND,
     color: "#ffffff",
-    fontSize: 13,
-    fontWeight: 900,
+    fontSize: 12,
+    fontWeight: 800,
     cursor: "pointer",
   },
   emptyState: {
     padding: "24px 16px",
     borderRadius: 18,
-    background: "#f6fcfc",
-    color: "#577071",
+    background: "transparent",
+    color: "#888888",
     textAlign: "center",
     fontSize: 14,
   },
   timelineList: {
     display: "flex",
     flexDirection: "column",
-    gap: 12,
+    gap: 20,
   },
   stopCard: {
     display: "grid",
@@ -1422,10 +2402,13 @@ const styles: Record<string, CSSProperties> = {
     gap: 12,
     alignItems: "start",
   },
+  stopCardDragging: {
+    opacity: 0.58,
+  },
   stopIndex: {
-    width: 34,
-    height: 34,
-    borderRadius: 12,
+    width: 28,
+    height: 28,
+    borderRadius: 999,
     background: BRAND,
     color: "#ffffff",
     display: "grid",
@@ -1434,10 +2417,11 @@ const styles: Record<string, CSSProperties> = {
     fontWeight: 900,
   },
   stopBody: {
+    position: "relative",
     padding: 14,
     borderRadius: 18,
-    border: "1px solid #dceeee",
-    background: "#fbffff",
+    border: "1px solid #eaeaea",
+    background: "#fff",
     display: "flex",
     flexDirection: "column",
     gap: 12,
@@ -1454,42 +2438,71 @@ const styles: Record<string, CSSProperties> = {
   },
   editButton: {
     border: "none",
-    borderRadius: 12,
-    background: "rgba(1,192,192,0.14)",
-    color: "#0b6161",
-    padding: "8px 10px",
+    background: "transparent",
+    color: "#848484",
     fontSize: 12,
     fontWeight: 800,
     cursor: "pointer",
   },
   deleteButton: {
     border: "none",
-    borderRadius: 12,
-    background: "rgba(255, 190, 15, 0.18)",
-    color: "#7a5400",
-    padding: "8px 10px",
+    background: "transparent",
+    color: "#848484",
     fontSize: 12,
     fontWeight: 800,
     cursor: "pointer",
+  },
+  deleteButtonDisabled: {
+    opacity: 0.35,
+    cursor: "not-allowed",
+  },
+  stepFiveHint: {
+    position: "absolute",
+    left: 0,
+    top: -38,
+    padding: "8px 16px",
+    borderRadius: "16px 16px 16px 4px",
+    background: BRAND,
+    color: "#ffffff",
+    fontSize: 12,
+    fontWeight: 400,
+    boxShadow: "0 8px 18px rgba(1, 192, 192, 0.2)",
+    pointerEvents: "none",
+    zIndex: 2,
   },
   stopMetaRow: {
     display: "flex",
     flexWrap: "wrap",
     gap: 8,
-    color: "#5d7576",
+    color: "#666",
     fontSize: 12,
     fontWeight: 700,
   },
+  dayinput: {
+    border: "none",
+    background: "#fff",
+    fontWeight: 500,
+    color: "#222",
+  },
   primaryAction: {
+    position: "sticky",
+    bottom: "calc(var(--app-bottom-nav-reserved) + 12px)",
+    zIndex: 12,
+    width: "100%",
     minHeight: 56,
     border: "none",
-    borderRadius: 18,
-    background: `linear-gradient(135deg, ${BRAND} 0%, #11abab 100%)`,
+    borderRadius: "3rem",
+    background: "#58c9d4",
     color: "#ffffff",
-    fontSize: 15,
-    fontWeight: 900,
+    fontSize: "1rem",
+    fontWeight: 800,
     cursor: "pointer",
-    boxShadow: "0 16px 30px rgba(1, 192, 192, 0.24)",
+  },
+  primaryActionDisabled: {
+    background: "#c9dddd",
+    color: "#6a8182",
+    boxShadow: "none",
+    cursor: "not-allowed",
   },
   saveMessage: {
     margin: 0,
@@ -1497,6 +2510,18 @@ const styles: Record<string, CSSProperties> = {
     color: BRAND,
     fontSize: 13,
     fontWeight: 800,
+  },
+  completeCard: {
+    alignItems: "center",
+    textAlign: "center",
+    paddingTop: 180,
+    paddingBottom: 32,
+  },
+  completeImage: {
+    width: 118,
+    height: 118,
+    objectFit: "contain",
+    display: "block",
   },
   overlay: {
     position: "fixed",
@@ -1507,14 +2532,31 @@ const styles: Record<string, CSSProperties> = {
     zIndex: 30,
   },
   overlayBackdrop: {
+    position: "fixed",
+    inset: 0,
     flex: 1,
     border: "none",
     background: "rgba(16, 34, 35, 0.42)",
     cursor: "pointer",
+    zIndex: 0,  
   },
   sheet: {
-    padding: "18px 18px 28px",
-    borderRadius: "28px 28px 0 0",
+    zIndex: 1,
+    padding: "18px 18px calc(28px + var(--app-safe-bottom))",
+    borderRadius: "20px 20px 0 0",
+    background: "#fff",
+    boxShadow: "0 -16px 36px rgba(16, 34, 35, 0.12)",
+    display: "flex",
+    flexDirection: "column",
+    gap: 14,
+    overflow: "hidden",
+  },
+  searchSheet: {
+    position: "relative",
+    zIndex: 1,
+    maxHeight: "82vh",
+    padding: "18px 18px calc(28px + var(--app-safe-bottom))",
+    borderRadius: "20px 20px 0 0",
     background: "#ffffff",
     boxShadow: "0 -16px 36px rgba(16, 34, 35, 0.12)",
     display: "flex",
@@ -1525,13 +2567,13 @@ const styles: Record<string, CSSProperties> = {
     width: 56,
     height: 6,
     borderRadius: 999,
-    background: "#d7ecec",
+    background: "#eaeaea",
     alignSelf: "center",
   },
   sheetTitle: {
     margin: 0,
-    color: "#102223",
-    fontSize: 22,
+    color: "var(--text-primary)",
+    fontSize: 16,
   },
   sheetCopy: {
     margin: 0,
@@ -1561,5 +2603,17 @@ const styles: Record<string, CSSProperties> = {
   shareSubtitle: {
     color: "#577071",
     fontSize: 12,
+  },
+  sectionTitleEnd: {
+    margin: "0 0 4px",
+    color: "#212121",
+    fontSize: 20,
+  },
+  sectionCopy: {
+    margin: "0 0 1rem",
+    color: "#577071",
+    fontSize: 14,
+    lineHeight: 1.6,
+    textAlign: "center",
   },
 };
