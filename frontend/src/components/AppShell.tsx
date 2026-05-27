@@ -1,34 +1,47 @@
 import type { CSSProperties } from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { getMyProfile } from "../api/auth/auth";
-import { getReceivedFriendRequests } from "../api/friend";
-import { registerFcmToken } from "../lib/fcm";
+import { registerFcmToken, requestPermission } from "../lib/fcm";
+import { recordLastTab } from "../utils/navigation";
+
+type NavIconSize = {
+  width: number;
+  height: number;
+};
 
 const TAB_ITEMS = [
-  { to: "/home", label: "Home", icon: "home" },
-  { to: "/menu", label: "Menu", icon: "grid" },
-  { to: "/plan", label: "Plan", icon: "calendar" },
-  { to: "/mate", label: "Mate", icon: "mate" },
-  { to: "/chat", label: "Chat", icon: "chat" },
-  { to: "/my", label: "My", icon: "my" },
+  { to: "/home", label: "Home", icon: "home", iconSize: { width: 29, height: 30 } },
+  { to: "/plan", label: "Plan", icon: "plan", iconSize: { width: 27, height: 31 } },
+  { to: "/menu", label: "Menu", icon: "menu", iconSize: { width: 26, height: 31 } },
+  { to: "/mate", label: "Mate", icon: "mate", iconSize: { width: 27, height: 30 } },
+  { to: "/my", label: "My Page", icon: "my", iconSize: { width: 26, height: 30 } },
 ] as const;
+
+const TAB_ROOT_PATHS = TAB_ITEMS.map((item) => item.to);
 
 export default function AppShell() {
   const location = useLocation();
   const navigate = useNavigate();
-  const isFriendChatRoute =
-    location.pathname === "/chat" || location.pathname.startsWith("/chat/");
-  const [friendChatNotificationCount, setFriendChatNotificationCount] = useState(0);
+  const currentPath = location.pathname;
+
+  // 탭 루트 방문 시마다 마지막 탭을 기록해 뒤로가기에서 활용한다.
+  useEffect(() => {
+    if (TAB_ROOT_PATHS.includes(currentPath as (typeof TAB_ROOT_PATHS)[number])) {
+      recordLastTab(currentPath);
+    }
+  }, [currentPath]);
 
   useEffect(() => {
     getMyProfile()
-      .then(() =>
-        registerFcmToken()
-          .catch((error) => {
-            console.warn("Failed to register FCM token", error);
-          })
-      )
+      .then(async () => {
+        try {
+          await requestPermission();
+          await registerFcmToken();
+        } catch (error) {
+          console.warn("Failed to initialize push notifications", error);
+        }
+      })
       .catch((error) => {
         if (isWithdrawalPendingError(error)) {
           navigate("/withdrawal-pending", { replace: true });
@@ -39,46 +52,6 @@ export default function AppShell() {
       });
   }, [navigate]);
 
-  useEffect(() => {
-    if (isFriendChatRoute) {
-      return undefined;
-    }
-
-    let isMounted = true;
-
-    async function refreshFriendChatNotifications(): Promise<void> {
-      const chatUnreadCount = readStoredChatUnreadCount();
-
-      try {
-        const receivedRequests = await getReceivedFriendRequests();
-        if (!isMounted) return;
-        setFriendChatNotificationCount(receivedRequests.items.length + chatUnreadCount);
-      } catch {
-        if (!isMounted) return;
-        setFriendChatNotificationCount(chatUnreadCount);
-      }
-    }
-
-    void refreshFriendChatNotifications();
-
-    const intervalId = window.setInterval(() => {
-      void refreshFriendChatNotifications();
-    }, 30000);
-
-    const handleRefresh = () => void refreshFriendChatNotifications();
-    window.addEventListener("focus", handleRefresh);
-    window.addEventListener("storage", handleRefresh);
-    window.addEventListener("krip:friend-chat-notifications-updated", handleRefresh);
-
-    return () => {
-      isMounted = false;
-      window.clearInterval(intervalId);
-      window.removeEventListener("focus", handleRefresh);
-      window.removeEventListener("storage", handleRefresh);
-      window.removeEventListener("krip:friend-chat-notifications-updated", handleRefresh);
-    };
-  }, [isFriendChatRoute]);
-
   return (
     <div style={styles.shell}>
       <div style={styles.content}>
@@ -86,51 +59,65 @@ export default function AppShell() {
       </div>
 
       <nav style={styles.nav}>
-        {TAB_ITEMS.map((item) => (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            aria-label={item.label}
-            style={({ isActive }) => ({
-              ...styles.navItem,
-              ...(isActive ? styles.navItemActive : {}),
-            })}
-          >
-            <span style={styles.navIconWrap}>
-              <NavIcon name={item.icon} />
-              {item.to === "/chat" && friendChatNotificationCount > 0 ? (
-                <span style={styles.notificationBadge}>
-                  {friendChatNotificationCount > 99 ? "99+" : friendChatNotificationCount}
-                </span>
-              ) : null}
-            </span>
-          </NavLink>
-        ))}
+        {TAB_ITEMS.map((item) => {
+          const active = isTabActive(item.to, currentPath);
+
+          return (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              aria-label={item.label}
+              style={{
+                ...styles.navItem,
+                ...(active ? styles.navItemActive : {}),
+              }}
+            >
+              <span style={styles.navIconWrap}>
+                <NavIcon name={item.icon} active={active} size={item.iconSize} />
+              </span>
+              {active && (
+                <img
+                  src="/CurrentNavBar.svg"
+                  alt=""
+                  aria-hidden="true"
+                  style={styles.navActiveBar}
+                />
+              )}
+            </NavLink>
+          );
+        })}
       </nav>
     </div>
   );
 }
 
-function NavIcon({ name }: { name: (typeof TAB_ITEMS)[number]["icon"] }) {
+function NavIcon({
+  name,
+  active,
+  size,
+}: {
+  name: (typeof TAB_ITEMS)[number]["icon"];
+  active: boolean;
+  size: NavIconSize;
+}) {
+  const assetIcon = getNavIconAsset(name, active);
+  const iconStyle = getNavIconStyle(size);
+
+  if (assetIcon) {
+    return <img src={assetIcon} alt="" aria-hidden="true" style={iconStyle} />;
+  }
+
   return (
     <svg
       viewBox="0 0 64 64"
       aria-hidden="true"
       focusable="false"
-      style={styles.navIcon}
+      style={iconStyle}
     >
       {name === "home" ? (
         <path d="M10 30.5 32 11l22 19.5V55a4 4 0 0 1-4 4H39V43a4 4 0 0 0-4-4h-6a4 4 0 0 0-4 4v16H14a4 4 0 0 1-4-4V30.5Z" />
       ) : null}
-      {name === "grid" ? (
-        <>
-          <rect x="10" y="10" width="18" height="18" rx="5" />
-          <rect x="36" y="10" width="18" height="18" rx="5" />
-          <rect x="10" y="36" width="18" height="18" rx="5" />
-          <rect x="36" y="36" width="18" height="18" rx="5" />
-        </>
-      ) : null}
-      {name === "calendar" ? (
+      {name === "plan" ? (
         <>
           <rect x="11" y="14" width="42" height="42" rx="8" />
           <rect x="11" y="22" width="42" height="5" />
@@ -149,9 +136,6 @@ function NavIcon({ name }: { name: (typeof TAB_ITEMS)[number]["icon"] }) {
           <path d="M37 39c8 1 15 6 15 13 0 4-8 6-17 5 5-3 7-9 2-18Z" opacity="0.75" />
         </>
       ) : null}
-      {name === "chat" ? (
-        <path d="M32 10c16 0 28 10 28 24S48 58 32 58c-4.2 0-8.1-.7-11.6-2.1L8 60l4-11.2C6.9 44.9 4 39.8 4 34 4 20 16 10 32 10Zm-11 27a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm11 0a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm11 0a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
-      ) : null}
       {name === "my" ? (
         <>
           <circle cx="32" cy="22" r="13" />
@@ -160,6 +144,31 @@ function NavIcon({ name }: { name: (typeof TAB_ITEMS)[number]["icon"] }) {
       ) : null}
     </svg>
   );
+}
+
+function getNavIconStyle(size: NavIconSize): CSSProperties {
+  return {
+    ...styles.navIcon,
+    width: size.width,
+    height: size.height,
+  };
+}
+
+function getNavIconAsset(
+  name: (typeof TAB_ITEMS)[number]["icon"],
+  active: boolean
+): string | null {
+  if (name === "home") return active ? "/HomeIcon_active.svg" : "/HomeIcon.svg";
+  if (name === "plan") return active ? "/PlanIcon_active.svg" : "/PlanIcon.svg";
+  if (name === "menu") return active ? "/MenuIcon_active.svg" : "/MenuIcon.svg";
+  if (name === "mate") return active ? "/MateChatIcon_active.svg" : "/MateChatIcon.svg";
+  if (name === "my") return active ? "/MyPageIcon_active.svg" : "/MyPageIcon.svg";
+  return null;
+}
+
+function isTabActive(to: (typeof TAB_ITEMS)[number]["to"], currentPath: string): boolean {
+  if (to === "/my" && currentPath.startsWith("/profile/")) return true;
+  return currentPath === to || currentPath.startsWith(`${to}/`);
 }
 
 function isWithdrawalPendingError(error: unknown): boolean {
@@ -181,80 +190,47 @@ function isWithdrawalPendingError(error: unknown): boolean {
   );
 }
 
-function readStoredChatUnreadCount(): number {
-  const canonicalMapCount = readUnreadMapCount("krip-chat-unread-by-room");
-  if (canonicalMapCount > 0) {
-    return canonicalMapCount;
-  }
-
-  const legacyMapCount =
-    readUnreadMapCount("krip-chat-unread") + readUnreadMapCount("krip:chat-unread");
-  if (legacyMapCount > 0) {
-    return legacyMapCount;
-  }
-
-  const directKeys = ["krip-chat-unread-count", "krip:chat-unread-count"];
-  const directCount = directKeys.reduce((sum, key) => {
-    const value = Number(window.localStorage.getItem(key) || 0);
-    return sum + (Number.isFinite(value) ? value : 0);
-  }, 0);
-
-  return Math.max(0, directCount);
-}
-
-function readUnreadMapCount(key: string): number {
-  const raw = window.localStorage.getItem(key);
-  if (!raw) return 0;
-
-  try {
-    const value = JSON.parse(raw) as unknown;
-    if (typeof value === "number") return Math.max(0, value);
-    if (!value || typeof value !== "object") return 0;
-
-    return Object.values(value as Record<string, unknown>).reduce<number>((sum, roomValue) => {
-      const count = Number(roomValue || 0);
-      return sum + (Number.isFinite(count) ? count : 0);
-    }, 0);
-  } catch {
-    const value = Number(raw);
-    return Number.isFinite(value) ? Math.max(0, value) : 0;
-  }
-}
-
 const styles: Record<string, CSSProperties> = {
   shell: {
-    minHeight: "100dvh",
+    minHeight: "var(--app-viewport-height)",
+    width: "100%",
     background: "transparent",
+    overflowX: "hidden",
   },
   content: {
-    minHeight: "100dvh",
-    paddingBottom: 106,
+    minHeight: "var(--app-viewport-height)",
+    paddingBottom: "var(--app-bottom-nav-reserved)",
   },
   nav: {
     position: "fixed",
     left: 0,
     right: 0,
     bottom: 0,
+    width: "100%",
+    boxSizing: "border-box",
     display: "grid",
-    gridTemplateColumns: "repeat(6, minmax(0, 1fr))",
-    gap: 0,
-    minHeight: 88,
-    padding: "14px 16px 18px",
-    background: "#ffffff",
-    boxShadow: "0 -8px 24px rgba(15,23,42,0.06)",
-    borderTop: "1px solid rgba(15,23,42,0.06)",
+    gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
+    gap: 8,
+    paddingLeft: "var(--app-safe-left)",
+    paddingRight: "var(--app-safe-right)",
+    paddingBottom: "var(--app-safe-bottom)",
+    background: "rgba(255,255,255,0.94)",
+    borderTop: "1px solid var(--border-soft)",
+    backdropFilter: "blur(16px)",
     zIndex: 15,
   },
   navItem: {
+    position: "relative",
     textDecoration: "none",
     color: "#a9a9a9",
     display: "flex",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    minHeight: 56,
+    minHeight: "var(--app-bottom-nav-height)",
   },
   navItemActive: {
-    color: "#008f8f",
+    color: "#01C0C0",
   },
   navIconWrap: {
     position: "relative",
@@ -266,6 +242,15 @@ const styles: Record<string, CSSProperties> = {
     height: 40,
     display: "block",
     fill: "currentColor",
+  },
+  navActiveBar: {
+    position: "absolute",
+    bottom: 0,
+    left: "50%",
+    transform: "translateX(-50%)",
+    width: 40,
+    height: 8,
+    display: "block",
   },
   notificationBadge: {
     position: "absolute",

@@ -1,59 +1,130 @@
 import type { CSSProperties } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Browser } from "@capacitor/browser";
+import { Capacitor } from "@capacitor/core";
 import { useNavigate } from "react-router-dom";
 import { createLoginUrl, getMyProfile } from "../api/auth/auth";
+import { confirmTokenSaved, readToken, saveToken } from "../utils/tokens";
+import { hasPendingNotificationPath } from "../lib/fcm";
 
 type LoginStatus = "complete" | "new" | "in_progress" | "withdrawal_pending";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [isProcessingOAuth, setIsProcessingOAuth] = useState(
+    () => new URLSearchParams(window.location.search).has("status")
+  );
+  const [isCheckingSession, setIsCheckingSession] = useState(() => Boolean(readToken()));
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const status = params.get("status") as LoginStatus | null;
+    let cancelled = false;
 
-    if (!status) return;
+    async function handleLoginCallback(): Promise<void> {
+      const params = new URLSearchParams(window.location.search);
+      const status = params.get("status") as LoginStatus | null;
 
-    const email = decodeURIComponent(params.get("email") || "");
-    const name = decodeURIComponent(params.get("name") || "");
+      if (!status) {
+        setIsProcessingOAuth(false);
+        return;
+      }
 
-    if (status === "complete") {
-      navigate("/home");
-    } else if (status === "new" || status === "in_progress") {
-      navigate("/register", { state: { email, name } });
-    } else if (status === "withdrawal_pending") {
-      navigate("/withdrawal-pending", { replace: true });
+      const email = decodeURIComponent(params.get("email") || "");
+      const name = decodeURIComponent(params.get("name") || "");
+      const utk = params.get("utk") || "";
+
+      if (utk) {
+        saveToken(utk);
+        const hasSavedToken = await confirmTokenSaved(utk);
+        if (!hasSavedToken || cancelled) {
+          setIsProcessingOAuth(false);
+          return;
+        }
+      }
+
+      if (status === "complete") {
+        if (hasPendingNotificationPath()) {
+          navigate("/home", { replace: true });
+          window.setTimeout(() => {
+            window.dispatchEvent(new Event("krip:auth-ready"));
+          }, 120);
+          return;
+        }
+        navigate("/home", { replace: true });
+      } else if (status === "new" || status === "in_progress") {
+        navigate("/register", { state: { email, name }, replace: true });
+      } else if (status === "withdrawal_pending") {
+        navigate("/withdrawal-pending", { replace: true });
+      } else {
+        setIsProcessingOAuth(false);
+      }
     }
+
+    void handleLoginCallback();
+
+    return () => {
+      cancelled = true;
+    };
   }, [navigate]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.has("status")) return;
+    if (!readToken()) {
+      setIsCheckingSession(false);
+      return;
+    }
 
     getMyProfile()
       .then((profile) => {
+        if (hasPendingNotificationPath()) {
+          navigate("/home", { replace: true });
+          window.setTimeout(() => {
+            window.dispatchEvent(new Event("krip:auth-ready"));
+          }, 120);
+          return;
+        }
         if (profile) {
           navigate("/home", { replace: true });
         }
       })
       .catch(() => {
         // Stay on the login page when there is no valid session.
+      })
+      .finally(() => {
+        setIsCheckingSession(false);
       });
   }, [navigate]);
 
   function handleGoogleLogin(): void {
+    if (isLoggingIn || isProcessingOAuth) return;
+    setIsLoggingIn(true);
+
+    if (Capacitor.isNativePlatform()) {
+      Browser.open({ url: createLoginUrl("android") }).catch(() => {
+        setIsLoggingIn(false);
+      });
+      return;
+    }
+
     window.location.href = createLoginUrl();
   }
+
+  const isBusy = isLoggingIn || isProcessingOAuth || isCheckingSession;
 
   return (
     <div style={styles.wrapper}>
       <div style={styles.center}>
         <div style={styles.heroFrame}>
-          <img src="/loading.png" alt="Krip login" style={styles.heroImage} />
+          <img src="/krip_icon.svg" alt="Krip login" style={styles.heroImage} />
           <div style={styles.bottom}>
-            <button style={styles.googleBtn} onClick={handleGoogleLogin}>
+            <button style={styles.googleBtn} onClick={handleGoogleLogin} disabled={isBusy}>
               <GoogleIcon />
-              Sign in with Google
+              {isProcessingOAuth || isCheckingSession
+                ? "Signing you in..."
+                : isLoggingIn
+                  ? "Opening Google..."
+                  : "Sign in with Google"}
             </button>
           </div>
         </div>
@@ -81,10 +152,10 @@ function GoogleIcon() {
 const styles: Record<string, CSSProperties> = {
   wrapper: {
     position: "relative",
-    width: "100vw",
-    minHeight: "100dvh",
+    width: "100%",
+    minHeight: "var(--app-viewport-height)",
     background:
-      "linear-gradient(180deg, #18bcc1 0%, #18bcc1 68%, #14b4ba 100%)",
+      "#01C0C0",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -99,24 +170,29 @@ const styles: Record<string, CSSProperties> = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    padding: "20px 20px 0",
+    padding: "0 20px",
   },
   heroFrame: {
     position: "relative",
-    width: "min(100%, 430px)",
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
   },
   heroImage: {
-    width: "100%",
-    maxHeight: "74dvh",
+    width: "25vw",
+    height: "auto",
     objectFit: "contain",
     display: "block",
   },
   bottom: {
-    position: "absolute",
+    position: "fixed",
     left: 0,
     right: 0,
-    bottom: "5.5%",
-    width: "100%",
+    bottom: "calc(28px + var(--app-safe-bottom))",
+    width: "min(100%, 430px)",
+    margin: "0 auto 2.5rem",
     padding: "0 34px",
     display: "flex",
     flexDirection: "column",
@@ -130,7 +206,7 @@ const styles: Record<string, CSSProperties> = {
     width: "86%",
     minHeight: 52,
     padding: "0 18px",
-    borderRadius: 16,
+    borderRadius: "2.5rem",
     border: "1px solid rgba(255,255,255,0.78)",
     background: "#ffffff",
     color: "#256f72",
