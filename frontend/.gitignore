@@ -34,3 +34,14 @@ firestore-debug.log*
 ui-debug.log*
 serviceAccountKey.json
 *-service-account.json
+*ServiceAccount*.json
+google-services.json
+GoogleService-Info.plist
+public/firebase-config.json
+
+# Signing keys and local credentials
+*.jks
+*.keystore
+keystore.properties
+*.p12
+*.pem
