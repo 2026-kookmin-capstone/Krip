@@ -1,6 +1,6 @@
-from typing import Optional
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, delete
+from sqlalchemy.dialects.postgresql import insert as pg_insert
+from sqlalchemy import select, delete, func
 
 from app.domain.notification.model.fcm_token import FcmToken
 
@@ -10,24 +10,19 @@ class FcmTokenRepository:
         self.session = session
 
 
-    async def save(self, fcm_token: FcmToken) -> FcmToken:
-        """INSERT. UNIQUE(token) 충돌은 그대로 IntegrityError — service 가 사전 find_by_token 으로 회피."""
-        self.session.add(fcm_token)
-        await self.session.flush()
-        return fcm_token
-
-
-    async def find_by_token(self, token: str) -> Optional[FcmToken]:
-        """UNIQUE 제약상 0/1 row."""
-        stmt = select(FcmToken).where(FcmToken.token == token)
+    async def upsert_by_token(self, *, user_id: str, token: str) -> FcmToken:
+        """UNIQUE(token) 충돌 시 owner 만 교체 — 단일 SQL 로 race 회피 (계정 A→B 재로그인 포함)."""
+        stmt = (
+            pg_insert(FcmToken)
+            .values(user_id=user_id, token=token)
+            .on_conflict_do_update(
+                index_elements=["token"],
+                set_={"user_id": user_id, "updated_at": func.now()},
+            )
+            .returning(FcmToken)
+        )
         result = await self.session.execute(stmt)
-        return result.scalar_one_or_none()
-
-
-    async def find_by_user_id(self, user_id: str) -> list[FcmToken]:
-        stmt = select(FcmToken).where(FcmToken.user_id == user_id)
-        result = await self.session.execute(stmt)
-        return list(result.scalars().all())
+        return result.scalar_one()
 
 
     async def find_by_user_ids(self, user_ids: list[str]) -> list[FcmToken]:
@@ -39,19 +34,12 @@ class FcmTokenRepository:
         return list(result.scalars().all())
 
 
-    async def update(self, fcm_token: FcmToken) -> FcmToken:
-        """변경 flush — service 가 owner 갱신 후 호출."""
-        await self.session.flush()
-        return fcm_token
-
-
-    async def delete(self, fcm_token: FcmToken) -> None:
-        await self.session.delete(fcm_token)
-
-
-    async def delete_by_token(self, token: str) -> None:
-        """fetch 없이 즉시 정리 — 명시적 unregister 또는 UNREGISTERED 응답 시."""
-        stmt = delete(FcmToken).where(FcmToken.token == token)
+    async def delete_by_user_token(self, *, user_id: str, token: str) -> None:
+        """본인 소유만 삭제 — owner 불일치/미존재면 0 row, 멱등."""
+        stmt = delete(FcmToken).where(
+            FcmToken.token == token,
+            FcmToken.user_id == user_id,
+        )
         await self.session.execute(stmt)
 
 

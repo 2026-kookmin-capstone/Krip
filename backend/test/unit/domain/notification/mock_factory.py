@@ -38,13 +38,9 @@ class FcmTokenRepositoryMockFactory:
     @classmethod
     def create(cls) -> AsyncMock:
         mock = AsyncMock()
-        mock.save.return_value = None
-        mock.find_by_token.return_value = None
-        mock.find_by_user_id.return_value = []
+        mock.upsert_by_token.return_value = None
         mock.find_by_user_ids.return_value = []
-        mock.update.return_value = None
-        mock.delete.return_value = None
-        mock.delete_by_token.return_value = None
+        mock.delete_by_user_token.return_value = None
         mock.delete_by_tokens.return_value = None
         return mock
 

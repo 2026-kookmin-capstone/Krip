@@ -18,100 +18,39 @@ def _make_fcm_token(*, user_id: str, token: str, fcm_token_id: str = "FCM_x") ->
 
 
 # ──────────────────────────────────────────────────────────────────
-# register_token — 신규 / 동일 / 타user 분기
+# register_token / unregister_token — thin wrapper 위임 검증
+# (신규/동일/타user 분기, race 안전, owner 보호는 SQL 책임 → integration 에서 검증)
 # ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestRegisterToken:
-    async def test_new_token_saves_and_returns_dto(
+    async def test_delegates_to_upsert_and_returns_dto(
         self, service, fcm_token_repo_mock,
     ):
-        fcm_token_repo_mock.find_by_token.return_value = None
-
-        async def fake_save(t):
-            t.fcm_token_id = "FCM_new"
-            t.created_at = datetime(2026, 1, 1, tzinfo=timezone.utc)
-            return t
-        fcm_token_repo_mock.save.side_effect = fake_save
+        upserted = _make_fcm_token(
+            user_id="USER_a", token="tok-1", fcm_token_id="FCM_new",
+        )
+        fcm_token_repo_mock.upsert_by_token.return_value = upserted
 
         result = await service.register_token(user_id="USER_a", token="tok-1")
 
-        fcm_token_repo_mock.save.assert_awaited_once()
-        saved = fcm_token_repo_mock.save.await_args.args[0]
-        assert saved.user_id == "USER_a"
-        assert saved.token == "tok-1"
-
+        fcm_token_repo_mock.upsert_by_token.assert_awaited_once_with(
+            user_id="USER_a", token="tok-1",
+        )
         assert result.fcm_token_id == "FCM_new"
-        fcm_token_repo_mock.update.assert_not_awaited()
+        assert result.created_at == upserted.created_at
 
-
-    async def test_same_user_same_token_is_noop(
-        self, service, fcm_token_repo_mock,
-    ):
-        existing = _make_fcm_token(user_id="USER_a", token="tok-1")
-        fcm_token_repo_mock.find_by_token.return_value = existing
-
-        result = await service.register_token(user_id="USER_a", token="tok-1")
-
-        assert result.fcm_token_id == existing.fcm_token_id
-        fcm_token_repo_mock.save.assert_not_awaited()
-        fcm_token_repo_mock.update.assert_not_awaited()
-
-
-    async def test_different_user_same_token_updates_owner(
-        self, service, fcm_token_repo_mock,
-    ):
-        """디바이스 계정 전환 — 같은 token 이 다른 user 로 등록될 때 owner 만 교체."""
-        existing = _make_fcm_token(user_id="USER_old", token="tok-1")
-        fcm_token_repo_mock.find_by_token.return_value = existing
-
-        async def fake_update(t):
-            return t
-        fcm_token_repo_mock.update.side_effect = fake_update
-
-        await service.register_token(user_id="USER_new", token="tok-1")
-
-        assert existing.user_id == "USER_new"
-        fcm_token_repo_mock.update.assert_awaited_once()
-        fcm_token_repo_mock.save.assert_not_awaited()
-
-
-# ──────────────────────────────────────────────────────────────────
-# unregister_token — 본인 / 없음 / 타user (idempotent)
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestUnregisterToken:
-    async def test_own_token_is_deleted(self, service, fcm_token_repo_mock):
-        existing = _make_fcm_token(user_id="USER_a", token="tok")
-        fcm_token_repo_mock.find_by_token.return_value = existing
-
-        await service.unregister_token(user_id="USER_a", token="tok")
-
-        fcm_token_repo_mock.delete.assert_awaited_once_with(existing)
-
-
-    async def test_nonexistent_token_is_silent_noop(
+    async def test_delegates_to_owner_scoped_delete(
         self, service, fcm_token_repo_mock,
     ):
-        fcm_token_repo_mock.find_by_token.return_value = None
+        await service.unregister_token(user_id="USER_a", token="tok-1")
 
-        # 예외 없이 정상 종료
-        await service.unregister_token(user_id="USER_a", token="ghost")
-
-        fcm_token_repo_mock.delete.assert_not_awaited()
-
-
-    async def test_other_users_token_is_silent_noop(
-        self, service, fcm_token_repo_mock,
-    ):
-        """타인 토큰 해제 시도 — 정보 누출 막기 위해 에러 던지지 않고 조용히 종료."""
-        existing = _make_fcm_token(user_id="USER_other", token="tok")
-        fcm_token_repo_mock.find_by_token.return_value = existing
-
-        await service.unregister_token(user_id="USER_a", token="tok")
-
-        fcm_token_repo_mock.delete.assert_not_awaited()
+        fcm_token_repo_mock.delete_by_user_token.assert_awaited_once_with(
+            user_id="USER_a", token="tok-1",
+        )
 
 
 # ──────────────────────────────────────────────────────────────────

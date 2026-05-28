@@ -9,7 +9,7 @@ from app.database.session import Base
 class FcmToken(Base):
     """FCM 디바이스 토큰 — 한 유저 1:N 디바이스.
 
-    - `token` UNIQUE — 디바이스 식별자. 동일 토큰 재등록 시 서비스가 owner 만 교체.
+    - `token` UNIQUE — 디바이스 식별자. 동일 토큰 재등록은 upsert 로 owner 만 교체 (race 안전).
     - 탈퇴 시 users FK CASCADE.
     - UNREGISTERED/INVALID 응답이면 서비스가 즉시 DELETE (만료 토큰 누적 방지).
     """

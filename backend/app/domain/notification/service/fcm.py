@@ -38,37 +38,17 @@ class FcmService:
 
     @transactional
     async def register_token(self, *, user_id: str, token: str) -> FcmTokenData:
-        """디바이스 토큰 등록.
-
-        - 신규: 새 row
-        - 동일 token 의 owner 가 다르면 교체 (계정 A→B 재로그인)
-        - 동일 (user, token) 재등록: no-op
-        """
+        """디바이스 토큰 등록 — UNIQUE(token) 충돌 시 owner 교체 (재로그인/계정 전환), 동시 등록 race 안전."""
         repo = FcmTokenRepository(self._session)
-
-        existing = await repo.find_by_token(token)
-        if existing is None:
-            saved = await repo.save(FcmToken(user_id=user_id, token=token))
-            return self._to_dto(saved)
-
-        if existing.user_id != user_id:
-            existing.user_id = user_id
-            updated = await repo.update(existing)
-            return self._to_dto(updated)
-
-        return self._to_dto(existing)
+        saved = await repo.upsert_by_token(user_id=user_id, token=token)
+        return self._to_dto(saved)
 
 
     @transactional
     async def unregister_token(self, *, user_id: str, token: str) -> None:
-        """본인 소유 토큰만 삭제. 없거나 타인 소유여도 idempotent (조용히 종료)."""
+        """본인 소유만 삭제 — 없거나 타인 소유면 0 row, 멱등."""
         repo = FcmTokenRepository(self._session)
-        existing = await repo.find_by_token(token)
-        if existing is None:
-            return
-        if existing.user_id != user_id:
-            return
-        await repo.delete(existing)
+        await repo.delete_by_user_token(user_id=user_id, token=token)
 
 
     @transactional
