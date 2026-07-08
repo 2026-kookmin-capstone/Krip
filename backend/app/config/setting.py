@@ -1,7 +1,7 @@
 from typing import Literal, Optional
 import socket
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import Field
+from pydantic import Field, model_validator
 
 
 class Settings(BaseSettings):
@@ -151,7 +151,20 @@ class Settings(BaseSettings):
     def is_production(self) -> bool:
         """프로덕션 환경 여부"""
         return self.ENVIRONMENT == "PROD"
-    
+
+    @model_validator(mode="after")
+    def _validate_signing_secrets(self):
+        """PROD 기동 시 JWT 서명키 검증 — 기본값/누락/취약키면 즉시 실패."""
+        if self.is_production:
+            placeholders = {"", "your-secret-key-here", "your-share-secret-here"}
+            for name in ("USER_LOGIN_JWT_SECRET_KEY", "SHARE_JWT_SECRET_KEY"):
+                value = getattr(self, name)
+                if value in placeholders or len(value) < 32:
+                    raise ValueError(
+                        f"{name}: PROD 에서는 32자 이상의 고유 서명키가 필요합니다 (기본값/누락 감지)."
+                    )
+        return self
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
