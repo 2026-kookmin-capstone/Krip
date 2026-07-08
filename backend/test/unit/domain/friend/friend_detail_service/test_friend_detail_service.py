@@ -2,7 +2,13 @@ from test.unit.domain.friend.friend_detail_service.model_factory import (
     FriendshipFactory,
     UserFactory,
 )
+from types import SimpleNamespace
 import pytest
+
+
+def _block(blocker_id: str, blocked_id: str) -> SimpleNamespace:
+    """서비스가 읽는 최소 필드(blocker_id)만 가진 경량 차단 row."""
+    return SimpleNamespace(blocker_id=blocker_id, blocked_id=blocked_id)
 
 from app.domain.friend.service.friend_detail import UserNotFoundError
 from app.domain.friend.model.friendship import FriendshipStatus
@@ -45,7 +51,7 @@ class TestGetFriendDetail:
             travel_styles=[TravelStyle.FOOD_TOUR, TravelStyle.ACTIVITY],
         )
         friendship_repo_mock.find_between.return_value = None
-        block_repo_mock.has_blocker_blocked.return_value = False
+        block_repo_mock.find_blocks_between.return_value = []
 
         result = await service.get_friend_detail(viewer_id="USER_a", peer_id="USER_b")
 
@@ -69,7 +75,7 @@ class TestGetFriendDetail:
             addressee_id="USER_b",
             status=FriendshipStatus.PENDING,
         )
-        block_repo_mock.has_blocker_blocked.return_value = False
+        block_repo_mock.find_blocks_between.return_value = []
 
         result = await service.get_friend_detail(viewer_id="USER_a", peer_id="USER_b")
 
@@ -87,7 +93,7 @@ class TestGetFriendDetail:
             addressee_id="USER_a",
             status=FriendshipStatus.PENDING,
         )
-        block_repo_mock.has_blocker_blocked.return_value = False
+        block_repo_mock.find_blocks_between.return_value = []
 
         result = await service.get_friend_detail(viewer_id="USER_a", peer_id="USER_b")
 
@@ -104,7 +110,7 @@ class TestGetFriendDetail:
             addressee_id="USER_b",
             status=FriendshipStatus.ACCEPTED,
         )
-        block_repo_mock.has_blocker_blocked.return_value = False
+        block_repo_mock.find_blocks_between.return_value = []
 
         result = await service.get_friend_detail(viewer_id="USER_a", peer_id="USER_b")
 
@@ -121,7 +127,7 @@ class TestGetFriendDetail:
             addressee_id="USER_b",
             status=FriendshipStatus.REJECTED,
         )
-        block_repo_mock.has_blocker_blocked.return_value = False
+        block_repo_mock.find_blocks_between.return_value = []
 
         result = await service.get_friend_detail(viewer_id="USER_a", peer_id="USER_b")
 
@@ -135,7 +141,7 @@ class TestGetFriendDetail:
         user_repo_mock.find_by_id_with_profile.return_value = UserFactory.create(user_id="USER_b")
         # 실제 플로우상 차단 시 friendship 은 정리되지만, 서비스 입장에선 독립 조회
         friendship_repo_mock.find_between.return_value = None
-        block_repo_mock.has_blocker_blocked.return_value = True
+        block_repo_mock.find_blocks_between.return_value = [_block("USER_a", "USER_b")]
 
         result = await service.get_friend_detail(viewer_id="USER_a", peer_id="USER_b")
 
@@ -143,17 +149,16 @@ class TestGetFriendDetail:
         assert result.friendship_id is None
 
 
-    async def test_block_check_is_directional_viewer_to_peer(
+    async def test_peer_blocking_viewer_hides_profile(
         self, service, user_repo_mock, friendship_repo_mock, block_repo_mock,
     ):
-        """service 는 viewer→peer 방향만 조회 (peer→viewer 방향은 더 이상 노출 안 함)."""
+        """상대(peer)가 나(viewer)를 차단하면 프로필 열람 자체를 404 로 차단 (양방향)."""
         user_repo_mock.find_by_id_with_profile.return_value = UserFactory.create(user_id="USER_b")
         friendship_repo_mock.find_between.return_value = None
-        block_repo_mock.has_blocker_blocked.return_value = False
+        block_repo_mock.find_blocks_between.return_value = [_block("USER_b", "USER_a")]
 
-        await service.get_friend_detail(viewer_id="USER_a", peer_id="USER_b")
-
-        block_repo_mock.has_blocker_blocked.assert_awaited_once_with("USER_a", "USER_b")
+        with pytest.raises(UserNotFoundError, match="존재하지 않는 유저"):
+            await service.get_friend_detail(viewer_id="USER_a", peer_id="USER_b")
 
     # ──────────────────── 자기 자신 조회 (허용) ────────────────────
 
@@ -163,7 +168,7 @@ class TestGetFriendDetail:
         """viewer == peer 케이스는 막지 않음 — 공개 프로필 + 관계 필드 전부 null/false."""
         user_repo_mock.find_by_id_with_profile.return_value = UserFactory.create(user_id="USER_a")
         friendship_repo_mock.find_between.return_value = None
-        block_repo_mock.has_blocker_blocked.return_value = False
+        block_repo_mock.find_blocks_between.return_value = []
 
         result = await service.get_friend_detail(viewer_id="USER_a", peer_id="USER_a")
 

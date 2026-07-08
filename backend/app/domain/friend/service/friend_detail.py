@@ -20,12 +20,12 @@ class FriendDetailService:
     async def get_friend_detail(self, viewer_id: str, peer_id: str) -> FriendDetailData:
         """
         1. 상대 유저 존재 + 2차 회원가입 완료 검증
-        2. friendship (방향 무관) 조회
-        3. viewer → peer 차단 여부 조회
+        2. 차단 관계 (양방향) 조회 — 상대가 나를 차단했으면 검색과 동일하게 404 로 숨김
+        3. friendship (방향 무관) 조회
         4. DTO 조립 — 민감 정보(auth_provider, status, email, phone_number) 제외
 
         예외:
-            UserNotFoundError: 유저가 DB 에 존재하지 않음 → 라우터 404
+            UserNotFoundError: 유저가 DB 에 존재하지 않음 / 상대가 나를 차단 → 라우터 404
             ValueError: 유저는 존재하지만 2차 회원가입 미완료 → 라우터 400
         """
 
@@ -39,8 +39,13 @@ class FriendDetailService:
         if peer.detail is None:
             raise ValueError("2차 회원가입이 완료되지 않은 유저입니다.")
 
+        # 차단은 양방향으로 판단 — 상대가 나를 차단했으면 프로필 열람 자체를 차단(404).
+        blocks = await block_repo.find_blocks_between(viewer_id, peer_id)
+        if any(b.blocker_id == peer_id for b in blocks):
+            raise UserNotFoundError("존재하지 않는 유저입니다.")
+        i_blocked = any(b.blocker_id == viewer_id for b in blocks)
+
         friendship = await friendship_repo.find_between(viewer_id, peer_id)
-        i_blocked = await block_repo.has_blocker_blocked(viewer_id, peer_id)
 
         if friendship is not None:
             friendship_id = friendship.friendship_id
