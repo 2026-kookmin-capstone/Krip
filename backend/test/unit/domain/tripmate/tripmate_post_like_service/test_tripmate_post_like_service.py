@@ -97,6 +97,26 @@ class TestAddLike:
         )
 
 
+    async def test_blocked_actor_like_suppresses_notification(
+        self, service, post_repo_mock, like_repo_mock, block_repo_mock, inbox_service_mock,
+    ):
+        """차단 관계면 좋아요 자체는 성공하되 알림은 억제 (괴롭힘 벡터 차단)."""
+        from types import SimpleNamespace
+
+        post = TripmatePostFactory.create(post_id="TMP_x", user_id="USER_owner")
+        post_repo_mock.find_by_id.return_value = post
+        like_repo_mock.count_by_post.return_value = 4
+        block_repo_mock.find_blocks_between.return_value = [
+            SimpleNamespace(blocker_id="USER_owner", blocked_id="USER_actor"),
+        ]
+
+        result = await service.add_like(user_id="USER_actor", post_id="TMP_x")
+
+        assert result == 4
+        like_repo_mock.save.assert_awaited_once()  # 좋아요는 저장됨
+        inbox_service_mock.notify_tripmate_like.assert_not_awaited()  # 알림만 억제
+
+
     async def test_self_like_skips_fanout_but_inserts_rdb(
         self, service, post_repo_mock, like_repo_mock, inbox_service_mock,
     ):

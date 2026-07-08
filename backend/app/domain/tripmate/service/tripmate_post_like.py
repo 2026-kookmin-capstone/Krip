@@ -5,6 +5,7 @@ from app.domain.tripmate.repository.tripmate_post import TripmatePostRepository
 from app.domain.tripmate.model.tripmate_post_like import TripmatePostLike
 from app.domain.tripmate.dto.tripmate_post_like import AddLikePayload
 from app.domain.notification.service.inbox import InboxService
+from app.domain.friend.repository.user_block import UserBlockRepository
 from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
 from app.database.session import UnitOfWork, transactional
 from app.core.logger import get_logger
@@ -48,7 +49,7 @@ class TripmatePostLikeService:
         Mongo 일시 장애로 인박스 누락되어도 사용자 응답 정상.
         """
         payload = await self._add_like_tx(user_id=user_id, post_id=post_id)
-        if payload.recipient_id != user_id:
+        if payload.notify and payload.recipient_id != user_id:
             await self.inbox_service.notify_tripmate_like(
                 recipient_id=payload.recipient_id,
                 actor_id=user_id,
@@ -89,6 +90,18 @@ class TripmatePostLikeService:
                 actor_name="",
                 actor_profile_image_url=None,
                 post_preview=None,
+            )
+
+        # 차단 관계(양방향)면 좋아요는 허용하되 알림만 억제 — 괴롭힘 벡터 차단.
+        block_repo = UserBlockRepository(self._session)
+        if await block_repo.find_blocks_between(user_id, post.user_id):
+            return AddLikePayload(
+                like_count=like_count,
+                recipient_id=post.user_id,
+                actor_name="",
+                actor_profile_image_url=None,
+                post_preview=None,
+                notify=False,
             )
 
         # 외부 actor — 같은 트랜잭션 안에서 detail fetch (round-trip 1회).

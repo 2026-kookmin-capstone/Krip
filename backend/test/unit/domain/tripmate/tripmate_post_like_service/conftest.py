@@ -46,9 +46,20 @@ def inbox_service_mock():
 
 
 @pytest.fixture
+def block_repo_mock():
+    """UserBlockRepository — 기본 차단 없음. 차단 알림 억제 테스트가 override."""
+    from unittest.mock import AsyncMock
+
+    mock = AsyncMock()
+    mock.find_blocks_between.return_value = []
+    return mock
+
+
+@pytest.fixture
 def service(
     monkeypatch, mock_session,
     post_repo_mock, like_repo_mock, detail_repo_mock, inbox_service_mock,
+    block_repo_mock,
 ):
     """service 가 RDB 트랜잭션 안에서 인스턴스화하는 모든 repo 를 mock 으로 치환.
 
@@ -65,6 +76,10 @@ def service(
     monkeypatch.setattr(
         "app.domain.tripmate.service.tripmate_post_like.UserDetailInformRepository",
         lambda session: detail_repo_mock,
+    )
+    monkeypatch.setattr(
+        "app.domain.tripmate.service.tripmate_post_like.UserBlockRepository",
+        lambda session: block_repo_mock,
     )
     return TripmatePostLikeService(
         uow=FakeUnitOfWork(mock_session),
