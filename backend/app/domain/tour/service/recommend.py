@@ -23,6 +23,7 @@ from app.domain.tour.schema.recommend import (
 from app.core.ai.tour_planner.v2.data_state import (
     TourDayInput as PlannerTourDayInput,
     TourPlanResult,
+    TourPlannerOutputError,
 )
 from app.core.ai.tour_planner.load import TourPlanner
 
@@ -58,6 +59,9 @@ class RecommendService:
         except ResourceExhausted as e:
             raise TourRecommendQuotaExceededError(str(e)) from e
         except GoogleAPICallError as e:
+            raise TourRecommendVendorError(str(e)) from e
+        except TourPlannerOutputError as e:
+            # LLM 출력 파싱 실패/누락 — 입력 오류(400)가 아닌 vendor 출력 문제이므로 502.
             raise TourRecommendVendorError(str(e)) from e
 
         return self._to_response(result)

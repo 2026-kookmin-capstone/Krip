@@ -13,6 +13,14 @@ from typing import List, Literal, Optional, TypedDict
 from pydantic import BaseModel, Field
 
 
+class TourPlannerOutputError(Exception):
+    """LLM 이 유효한 구조화 출력을 내지 못함 (None / 파싱 실패 / 스키마 위반).
+
+    입력 오류(400)가 아닌 vendor 출력 문제라 서비스가 502 로 매핑한다. raw 출력이
+    사용자 응답에 새지 않도록 메시지는 일반화한다.
+    """
+
+
 # ──────────────────── 사용자 입력 (영어 코드) ────────────────────
 # 한국어 주석은 디버깅 시 의미 추적용이며, prompt/응답에는 노출되지 않는다.
 

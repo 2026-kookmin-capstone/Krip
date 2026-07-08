@@ -2,6 +2,8 @@ from typing import Any, Dict, List, Optional, Tuple
 import time
 import math
 from langgraph.graph import StateGraph, START, END
+from langchain_core.exceptions import OutputParserException
+from pydantic import ValidationError as PydanticValidationError
 from functools import lru_cache
 import asyncio
 
@@ -18,6 +20,7 @@ from app.core.ai.tour_planner.v2.data_state import (
     TourPlanLocation,
     TourPlanResult,
     TourPlannerGraphState,
+    TourPlannerOutputError,
     TourTimelineSlot,
 )
 from app.core.ai.tour_planner.v2.chain_builder import get_tour_planner_chain_builder
@@ -172,24 +175,34 @@ class TourPlannerGraphOrchestrator:
             candidates_block = self._format_candidates_block(candidate_places[i])
             additional_block = self._format_additional_block(fixed_places[i])
 
-            day_plan: TourDayPlan = await chain.ainvoke({
-                "day": day_num,
-                "departure_cluster": day_input.departure_cluster,
-                "arrival_cluster": day_input.arrival_cluster,
-                "start_time": day_input.start_time,
-                "end_time": day_input.end_time,
-                "companion": day_input.companion,
-                "budget_per_person_krw": day_input.budget_per_person_krw,
-                "styles": ", ".join(day_input.styles),
-                "schedule_density": day_input.schedule_density,
-                "transport": day_input.transport,
-                "food_preference": food_preference,
-                "additional_place_block": additional_block,
-                "used_place_ids": (
-                    ", ".join(used_place_ids) if used_place_ids else "(none)"
-                ),
-                "candidates_block": candidates_block,
-            })
+            try:
+                day_plan: TourDayPlan = await chain.ainvoke({
+                    "day": day_num,
+                    "departure_cluster": day_input.departure_cluster,
+                    "arrival_cluster": day_input.arrival_cluster,
+                    "start_time": day_input.start_time,
+                    "end_time": day_input.end_time,
+                    "companion": day_input.companion,
+                    "budget_per_person_krw": day_input.budget_per_person_krw,
+                    "styles": ", ".join(day_input.styles),
+                    "schedule_density": day_input.schedule_density,
+                    "transport": day_input.transport,
+                    "food_preference": food_preference,
+                    "additional_place_block": additional_block,
+                    "used_place_ids": (
+                        ", ".join(used_place_ids) if used_place_ids else "(none)"
+                    ),
+                    "candidates_block": candidates_block,
+                })
+            except (OutputParserException, PydanticValidationError) as e:
+                # LLM 이 스키마를 위반/잘린 출력 — raw 출력을 노출하지 않고 도메인 예외로 변환.
+                logger.warning("Day {:d} LLM 구조화 출력 파싱 실패: {}", day_num, type(e).__name__)
+                raise TourPlannerOutputError(f"invalid LLM output (day={day_num})") from e
+
+            # with_structured_output 은 모델이 도구를 호출 안 하면 None 을 반환할 수 있다.
+            if day_plan is None:
+                logger.warning("Day {:d} LLM 구조화 출력 None", day_num)
+                raise TourPlannerOutputError(f"empty LLM output (day={day_num})")
 
             day_plan = self._enforce_constraints(
                 day_plan,

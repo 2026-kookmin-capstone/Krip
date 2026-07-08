@@ -5,6 +5,8 @@ from google.api_core.exceptions import (
     ResourceExhausted,
     Unauthenticated,
 )
+from langchain_core.exceptions import OutputParserException
+from pydantic import ValidationError as PydanticValidationError
 
 from app.domain.menu_ai.service.exception import (
     MenuOcrCredentialExpiredError,
@@ -41,6 +43,12 @@ class MenuOcrService:
             raise MenuOcrQuotaExceededError(str(e)) from e
         except GoogleAPICallError as e:
             raise MenuOcrVendorError(str(e)) from e
+        except (OutputParserException, PydanticValidationError) as e:
+            # LLM 출력 파싱 실패 — raw 출력을 노출하지 않고 502 로 매핑.
+            logger.warning("메뉴 OCR 구조화 출력 파싱 실패: {}", type(e).__name__)
+            raise MenuOcrVendorError("invalid OCR output") from e
+        if result is None:
+            raise MenuOcrVendorError("empty OCR output")
         return self._to_dto(result)
 
     # ──────────────────── 다건 OCR ────────────────────
@@ -62,6 +70,11 @@ class MenuOcrService:
             raise MenuOcrQuotaExceededError(str(e)) from e
         except GoogleAPICallError as e:
             raise MenuOcrVendorError(str(e)) from e
+        except (OutputParserException, PydanticValidationError) as e:
+            logger.warning("메뉴 OCR(batch) 구조화 출력 파싱 실패: {}", type(e).__name__)
+            raise MenuOcrVendorError("invalid OCR output") from e
+        if any(r is None for r in results):
+            raise MenuOcrVendorError("empty OCR output")
         return MenuOcrBatchData(
             results=[self._to_dto(r) for r in results]
         )
