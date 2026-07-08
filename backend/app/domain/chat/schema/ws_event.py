@@ -6,7 +6,7 @@
 discriminator 필드명을 분리해야 union 해상이 가능.
 """
 from typing import Annotated, Any, Literal, Optional, Union
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from datetime import datetime
 
 from app.domain.chat.model.chat_message import MessageType
@@ -21,8 +21,16 @@ class SendOp(BaseModel):
     op: Literal["send"]
     room_id: str = Field(..., description="보낼 방 ID")
     client_msg_id: str = Field(..., description="클라 UUID — 동일 ID 재전송은 dedupe 차단")
-    type: MessageType = Field(MessageType.TEXT, description="메시지 종류")
+    type: MessageType = Field(MessageType.TEXT, description="메시지 종류 (system 불가)")
     content: str = Field(..., max_length=2000, description="본문 (2000자 제한)")
+
+    @field_validator("type")
+    @classmethod
+    def _reject_system(cls, v: MessageType) -> MessageType:
+        # SYSTEM 은 서버만 발행 — 클라가 위조하면 unread/푸시를 우회하는 스텔스 메시지가 되므로 거부.
+        if v == MessageType.SYSTEM:
+            raise ValueError("system 메시지는 클라이언트가 보낼 수 없습니다.")
+        return v
 
 
 class RefreshOp(BaseModel):
