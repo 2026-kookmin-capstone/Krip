@@ -49,6 +49,9 @@ class Container(containers.DeclarativeContainer):
         settings.POSTGRES_URL,
         echo=False,
         future=True,
+        # DB 재시작/failover/idle-kill 후 풀에 남은 죽은 커넥션을 첫 사용 시 감지·교체.
+        pool_pre_ping=True,
+        pool_recycle=1800,
     )
 
     session_factory = providers.Singleton(

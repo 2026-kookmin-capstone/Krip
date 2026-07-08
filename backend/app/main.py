@@ -129,6 +129,8 @@ def create_app() -> FastAPI:
         close_fcm()
         await close_mongodb()
         await close_redis()
+        # SQLAlchemy 엔진 풀 정리 — graceful shutdown 시 커넥션을 명시적으로 반환.
+        await app.container.engine().dispose()
         logger.info("Application shut down")
 
     # DI Container 초기화 및 wiring
