@@ -67,11 +67,28 @@ def inbox_service_mock():
 
 
 @pytest.fixture
+def draft_find_one_mock(monkeypatch):
+    """`TripmatePostDraft.find_one(...)` — 이미지 정리 시 참조 검사에서 호출. 기본값 None (draft 없음)."""
+    from unittest.mock import AsyncMock
+
+    mock = AsyncMock(return_value=None)
+
+    class _FakeDraftCls:
+        find_one = staticmethod(mock)
+
+    monkeypatch.setattr(
+        "app.domain.tripmate.service.tripmate_post.TripmatePostDraft",
+        _FakeDraftCls,
+    )
+    return mock
+
+
+@pytest.fixture
 def service(
     monkeypatch, mock_session,
     post_repo_mock, image_repo_mock, detail_repo_mock,
     draft_service_mock, storage_mock, mongo_image_repo_mock,
-    inbox_service_mock,
+    inbox_service_mock, draft_find_one_mock,
 ):
     """모든 외부 의존성 mock 치환 후 service 인스턴스화.
 

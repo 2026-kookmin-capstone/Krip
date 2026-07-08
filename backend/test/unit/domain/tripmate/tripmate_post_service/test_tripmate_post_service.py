@@ -19,6 +19,23 @@ from app.domain.tripmate.repository.tripmate_post import PAGE_SIZE
 from app.domain.tripmate.model.tripmate_post import CompanionType, PreferredGender
 
 
+# 게시글 생성/수정 공통 필드 — 테스트가 관심 없는 필드는 여기서 채우고 관심 필드만 override.
+def _post_fields(**overrides):
+    fields = dict(
+        title="t",
+        content="c",
+        preferred_age_min=20,
+        preferred_age_max=30,
+        preferred_gender=PreferredGender.ANY,
+        region="제주",
+        travel_start_date=date(2026, 6, 1),
+        travel_end_date=date(2026, 6, 5),
+        companion_type=CompanionType.FRIEND,
+    )
+    fields.update(overrides)
+    return fields
+
+
 # ──────────────────────────────────────────────────────────────────
 # create_post
 # ──────────────────────────────────────────────────────────────────
@@ -451,3 +468,241 @@ class TestToggleDisplay:
 
         with pytest.raises(PermissionError, match="권한"):
             await service.toggle_display(post_id=post.post_id, user_id="USER_other")
+
+
+# ──────────────────────────────────────────────────────────────────
+# 이미지 소유권 가드 (IDOR 방지) — _assert_images_owned
+#   클라이언트가 보낸 URL 을 그대로 신뢰하면 타 유저 이미지를 첨부한 뒤 게시글을
+#   수정/삭제해 남의 Object Storage 파일을 지울 수 있다. 업로드 소유 목록과 대조.
+# ──────────────────────────────────────────────────────────────────
+
+@pytest.mark.unit
+class TestImageOwnershipGuard:
+    """create_post / update_post 첨부 이미지의 업로더 소유권 검증."""
+
+    async def test_create_rejects_unowned_image(
+        self, service, post_repo_mock, mongo_image_repo_mock,
+    ):
+        """본인이 업로드하지 않은 URL 첨부 → ValueError, INSERT 자체가 일어나지 않음."""
+        mongo_image_repo_mock.find_owned_urls.side_effect = lambda uid, urls: set()
+
+        with pytest.raises(ValueError, match="본인이 업로드한 이미지만"):
+            await service.create_post(
+                user_id="USER_a",
+                image_urls=["https://img/stolen"],
+                **_post_fields(),
+            )
+
+        post_repo_mock.save.assert_not_awaited()
+
+
+    async def test_create_rejects_when_partially_unowned(
+        self, service, post_repo_mock, mongo_image_repo_mock,
+    ):
+        """일부만 본인 소유여도 (하나라도 남의 것이면) 전체 거부."""
+        mongo_image_repo_mock.find_owned_urls.side_effect = (
+            lambda uid, urls: {"https://img/mine"}
+        )
+
+        with pytest.raises(ValueError, match="본인이 업로드한 이미지만"):
+            await service.create_post(
+                user_id="USER_a",
+                image_urls=["https://img/mine", "https://img/stolen"],
+                **_post_fields(),
+            )
+
+        post_repo_mock.save.assert_not_awaited()
+
+
+    async def test_create_allows_when_all_owned(
+        self, service, post_repo_mock, image_repo_mock, mongo_image_repo_mock,
+    ):
+        """전부 본인 소유 → 정상 저장 + 소유권 조회가 (user_id, urls) 로 호출됨."""
+        urls = ["https://img/1", "https://img/2"]
+
+        await service.create_post(
+            user_id="USER_a", image_urls=urls, **_post_fields(),
+        )
+
+        post_repo_mock.save.assert_awaited_once()
+        image_repo_mock.save_all.assert_awaited_once()
+        mongo_image_repo_mock.find_owned_urls.assert_awaited_once()
+        assert mongo_image_repo_mock.find_owned_urls.await_args.args == ("USER_a", urls)
+
+
+    async def test_create_skips_check_when_no_images(
+        self, service, mongo_image_repo_mock,
+    ):
+        """이미지 없음 → 소유권 조회 skip (불필요한 Mongo 왕복 방지)."""
+        await service.create_post(
+            user_id="USER_a", image_urls=None, **_post_fields(),
+        )
+
+        mongo_image_repo_mock.find_owned_urls.assert_not_awaited()
+
+
+    async def test_update_rejects_unowned_image(
+        self, service, post_repo_mock, mongo_image_repo_mock,
+    ):
+        """수정 시 남의 이미지 첨부 → ValueError. 필드 UPDATE / 응답 reload 도 일어나지 않음."""
+        post = TripmatePostFactory.create(user_id="USER_a", title="original")
+        post_repo_mock.find_by_id.return_value = post
+        mongo_image_repo_mock.find_owned_urls.side_effect = lambda uid, urls: set()
+
+        with pytest.raises(ValueError, match="본인이 업로드한 이미지만"):
+            await service.update_post(
+                post_id=post.post_id,
+                user_id="USER_a",
+                image_urls=["https://img/stolen"],
+                **_post_fields(title="updated"),
+            )
+
+        post_repo_mock.update.assert_not_awaited()
+        post_repo_mock.find_by_id_with_detail.assert_not_awaited()
+        assert post.title == "original"  # 거부 전 mutation 없음
+
+
+    async def test_update_ownership_checked_after_permission(
+        self, service, post_repo_mock, mongo_image_repo_mock,
+    ):
+        """작성자 아님 → 소유권 조회까지 가기 전에 PermissionError (권한 우선)."""
+        post = TripmatePostFactory.create(user_id="USER_owner")
+        post_repo_mock.find_by_id.return_value = post
+
+        with pytest.raises(PermissionError, match="권한"):
+            await service.update_post(
+                post_id=post.post_id,
+                user_id="USER_other",
+                image_urls=["https://img/whatever"],
+                **_post_fields(),
+            )
+
+        mongo_image_repo_mock.find_owned_urls.assert_not_awaited()
+
+
+# ──────────────────────────────────────────────────────────────────
+# 고아 이미지 보호 — _filter_unreferenced_urls
+#   같은 이미지를 여러 게시글/임시저장이 공유할 때, 한 곳을 지워도 다른 곳이 깨지지
+#   않도록 실제로 아무 데서도 참조되지 않는 URL 만 물리 삭제한다.
+# ──────────────────────────────────────────────────────────────────
+
+@pytest.mark.unit
+class TestOrphanImageProtection:
+    """update_post / delete_post 의 참조 인식(reference-aware) 이미지 정리."""
+
+    async def test_update_keeps_image_referenced_by_other_post(
+        self, service, post_repo_mock, image_repo_mock,
+        storage_mock, mongo_image_repo_mock,
+    ):
+        """제거된 이미지가 유저의 다른 게시글에서 여전히 참조 → 물리 삭제 안 함."""
+        post = TripmatePostFactory.create(user_id="USER_a")
+        post_repo_mock.find_by_id.return_value = post
+        post_repo_mock.find_by_id_with_detail.return_value = post
+        image_repo_mock.find_by_post_id.return_value = [
+            make_post_image("https://img/shared"),
+        ]
+        # 이 게시글에서는 빠졌지만 다른 게시글이 여전히 참조 중
+        image_repo_mock.find_urls_by_user_id.return_value = ["https://img/shared"]
+
+        await service.update_post(
+            post_id=post.post_id, user_id="USER_a",
+            image_urls=["https://img/new"], **_post_fields(),
+        )
+
+        storage_mock.delete_many.assert_not_awaited()
+        mongo_image_repo_mock.delete_by_urls.assert_not_awaited()
+
+
+    async def test_update_keeps_image_referenced_by_draft(
+        self, service, post_repo_mock, image_repo_mock,
+        storage_mock, mongo_image_repo_mock, draft_find_one_mock,
+    ):
+        """제거된 이미지가 임시저장(draft)에서 참조 중 → 물리 삭제 안 함."""
+        from types import SimpleNamespace
+
+        post = TripmatePostFactory.create(user_id="USER_a")
+        post_repo_mock.find_by_id.return_value = post
+        post_repo_mock.find_by_id_with_detail.return_value = post
+        image_repo_mock.find_by_post_id.return_value = [
+            make_post_image("https://img/shared"),
+        ]
+        image_repo_mock.find_urls_by_user_id.return_value = []  # 다른 게시글엔 없음
+        draft_find_one_mock.return_value = SimpleNamespace(
+            image_urls=["https://img/shared"],
+        )
+
+        await service.update_post(
+            post_id=post.post_id, user_id="USER_a",
+            image_urls=["https://img/new"], **_post_fields(),
+        )
+
+        storage_mock.delete_many.assert_not_awaited()
+        mongo_image_repo_mock.delete_by_urls.assert_not_awaited()
+
+
+    async def test_update_deletes_only_truly_orphaned(
+        self, service, post_repo_mock, image_repo_mock,
+        storage_mock, mongo_image_repo_mock,
+    ):
+        """제거 이미지 중 어디에서도 참조 안 되는 것만 물리 삭제 (부분 삭제)."""
+        post = TripmatePostFactory.create(user_id="USER_a")
+        post_repo_mock.find_by_id.return_value = post
+        post_repo_mock.find_by_id_with_detail.return_value = post
+        image_repo_mock.find_by_post_id.return_value = [
+            make_post_image("https://img/shared"),
+            make_post_image("https://img/orphan"),
+        ]
+        image_repo_mock.find_urls_by_user_id.return_value = ["https://img/shared"]
+
+        await service.update_post(
+            post_id=post.post_id, user_id="USER_a",
+            image_urls=[], **_post_fields(),  # 둘 다 제거
+        )
+
+        storage_mock.delete_many.assert_awaited_once_with(["https://img/orphan"])
+        mongo_image_repo_mock.delete_by_urls.assert_awaited_once_with(["https://img/orphan"])
+
+
+    async def test_delete_keeps_image_referenced_by_other_post(
+        self, service, post_repo_mock, image_repo_mock,
+        storage_mock, mongo_image_repo_mock, mock_session,
+    ):
+        """삭제 시에도 다른 게시글이 참조하는 이미지는 물리 삭제 안 함 + CASCADE flush 수행."""
+        post = TripmatePostFactory.create(user_id="USER_a")
+        post_repo_mock.find_by_id.return_value = post
+        image_repo_mock.find_by_post_id.return_value = [
+            make_post_image("https://img/shared"),
+        ]
+        image_repo_mock.find_urls_by_user_id.return_value = ["https://img/shared"]
+
+        await service.delete_post(post_id=post.post_id, user_id="USER_a")
+
+        mock_session.flush.assert_awaited()  # CASCADE 반영
+        storage_mock.delete_many.assert_not_awaited()
+        mongo_image_repo_mock.delete_by_urls.assert_not_awaited()
+
+
+    async def test_delete_flushes_before_reference_check(
+        self, service, post_repo_mock, image_repo_mock,
+        storage_mock, mock_session,
+    ):
+        """flush(post 삭제 CASCADE) 가 참조 검사(find_urls_by_user_id) 보다 먼저 실행돼야
+        이 게시글의 이미지가 '참조됨' 으로 오판되지 않는다 — 호출 순서 검증."""
+        from unittest.mock import Mock
+
+        post = TripmatePostFactory.create(user_id="USER_a")
+        post_repo_mock.find_by_id.return_value = post
+        image_repo_mock.find_by_post_id.return_value = [make_post_image("https://img/1")]
+        image_repo_mock.find_urls_by_user_id.return_value = []  # flush 후엔 고아
+
+        order = Mock()
+        order.attach_mock(mock_session.flush, "flush")
+        order.attach_mock(image_repo_mock.find_urls_by_user_id, "find_urls")
+
+        await service.delete_post(post_id=post.post_id, user_id="USER_a")
+
+        names = [c[0] for c in order.mock_calls]
+        assert "flush" in names and "find_urls" in names
+        assert names.index("flush") < names.index("find_urls")
+        # 고아이므로 실제 물리 삭제까지 진행
+        storage_mock.delete_many.assert_awaited_once_with(["https://img/1"])

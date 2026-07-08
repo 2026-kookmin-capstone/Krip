@@ -94,13 +94,16 @@ class TripmatePostImageRepositoryMockFactory:
         mock.find_by_post_id.return_value = []
         mock.save_all.return_value = None
         mock.delete_by_post_id.return_value = None
+        mock.find_urls_by_user_id.return_value = []
         return mock
 
 
 def make_tripmate_image_mongo_repo_mock() -> AsyncMock:
-    """`TripmateImageRepository` (Mongo beanie). delete_by_urls 만 사용됨."""
+    """`TripmateImageRepository` (Mongo beanie). delete_by_urls / find_owned_urls 사용."""
     mock = AsyncMock()
     mock.delete_by_urls.return_value = None
+    # 기본값: 요청 URL 전부 본인 소유로 간주 (소유권 검증 통과). 거부 케이스는 개별 테스트가 override.
+    mock.find_owned_urls.side_effect = lambda user_id, image_urls: set(image_urls)
     return mock
 
 

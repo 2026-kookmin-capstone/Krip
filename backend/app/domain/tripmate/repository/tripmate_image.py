@@ -29,6 +29,17 @@ class TripmateImageRepository:
         """이미지 ID로 단건 조회"""
         return await TripmateImage.find_one({"image_id": image_id})
 
+
+    @measure_mongo_op("find", "tripmate_image")
+    async def find_owned_urls(self, user_id: str, image_urls: List[str]) -> set[str]:
+        """주어진 URL 중 해당 유저가 업로드한 것만 set 으로 반환 (소유권 검증용)."""
+        if not image_urls:
+            return set()
+        rows = await TripmateImage.find(
+            {"user_id": user_id, "image_url": {"$in": image_urls}}
+        ).to_list()
+        return {row.image_url for row in rows}
+
     # ──────────────────── Delete ────────────────────
 
     @measure_mongo_op("delete", "tripmate_image")
