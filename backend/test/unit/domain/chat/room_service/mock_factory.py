@@ -77,9 +77,10 @@ def make_friendship_repo_mock() -> AsyncMock:
 
 
 def make_chat_message_repo_mock() -> AsyncMock:
-    """Phase 2 invite 시 current_seq fallback 용. 기본 0 (빈 방)."""
+    """Phase 2 invite 시 current_seq fallback + mark_read 시 잔여 unread 계산용. 기본 0 (빈 방)."""
     mock = AsyncMock()
     mock.get_max_server_seq.return_value = 0
+    mock.count_after_seq.return_value = 0
     return mock
 
 

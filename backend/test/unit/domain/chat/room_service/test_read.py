@@ -1,8 +1,8 @@
 """RoomService.mark_read 단위 테스트 (PHASE_2 #3).
 
-read op 는 **GREATEST 로 regress 방지**, **unread=0 리셋**, **read_ack 발신 세션
-직송 + read 이벤트 방 브로드캐스트** 세 가지를 수행. mock 레벨에서 각 단계 호출과
-payload 를 정확히 검증한다.
+read op 는 **GREATEST 로 regress 방지**, **unread 를 DB 잔여 기준 재계산**(부분 읽기·동시
+도착 손실 방지, 999+ 캡), **read_ack 발신 세션 직송 + read 이벤트 방 브로드캐스트** 를
+수행. mock 레벨에서 각 단계 호출과 payload 를 정확히 검증한다.
 """
 from test.unit.domain.chat.room_service.model_factory import ChatRoomFactory
 import pytest
@@ -51,14 +51,15 @@ class TestMarkRead:
             )
 
 
-    async def test_successful_mark_read_resets_unread_and_fans_out(
+    async def test_successful_mark_read_recalculates_unread_and_fans_out(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
-        redis_mock, fanout_mock,
+        message_repo_mock, redis_mock, fanout_mock,
     ):
         chat_room_repo_mock.find_by_id.return_value = ChatRoomFactory.create(
             chat_room_id="CR_G", type_=ChatRoomType.GROUP,
         )
         chat_member_repo_mock.mark_read.return_value = 7  # regress 적용 후 최종 seq
+        message_repo_mock.count_after_seq.return_value = 0  # 최신까지 읽음 → 잔여 0
 
         result = await service.mark_read(
             me_id="U_A", me_session_id="WS_A", room_id="CR_G",
@@ -70,7 +71,7 @@ class TestMarkRead:
         # mark_read 가 repository 에 올바른 인자로 위임됐는지
         chat_member_repo_mock.mark_read.assert_awaited_once_with("CR_G", "U_A", 5)
 
-        # Redis unread=0 리셋 (redis.hset 직접 호출)
+        # Redis unread 을 DB 잔여(final_seq 이후 개수) 기준으로 재계산 — 여기선 0
         redis_mock.hset.assert_awaited_once()
         args = redis_mock.hset.call_args.args
         assert args[0] == "unread:U_A"
@@ -95,6 +96,49 @@ class TestMarkRead:
             "sender_session_id": "WS_A",
             "up_to_server_seq": 7,
         }
+
+
+    async def test_partial_read_sets_unread_to_residual_not_zero(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+        message_repo_mock, redis_mock,
+    ):
+        """부분 읽기(up_to < 최신) → unread 를 0 이 아니라 DB 잔여 개수로 반영."""
+        chat_room_repo_mock.find_by_id.return_value = ChatRoomFactory.create(
+            chat_room_id="CR_G", type_=ChatRoomType.GROUP,
+        )
+        chat_member_repo_mock.mark_read.return_value = 7  # final_seq
+        message_repo_mock.count_after_seq.return_value = 3  # 7 이후 잔여 3건
+
+        await service.mark_read(
+            me_id="U_A", me_session_id="WS_A", room_id="CR_G",
+            up_to_server_seq=5,
+        )
+
+        # 잔여는 final_seq(7) 이후로 DB 재계산 (recover 경로와 동일 인자)
+        message_repo_mock.count_after_seq.assert_awaited_once_with(
+            chat_room_id="CR_G", after_seq=7, limit=1000,
+        )
+        args = redis_mock.hset.call_args.args
+        assert args == ("unread:U_A", "CR_G", 3)  # 0 이 아니라 잔여 3
+
+
+    async def test_unread_capped_at_999(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+        message_repo_mock, redis_mock,
+    ):
+        """잔여가 1000(=limit) 이상이면 999 로 캡 — recover 경로와 동일 규약."""
+        chat_room_repo_mock.find_by_id.return_value = ChatRoomFactory.create(
+            chat_room_id="CR_G", type_=ChatRoomType.GROUP,
+        )
+        chat_member_repo_mock.mark_read.return_value = 2
+        message_repo_mock.count_after_seq.return_value = 1000  # limit 만큼 카운트됨
+
+        await service.mark_read(
+            me_id="U_A", me_session_id="WS_A", room_id="CR_G",
+            up_to_server_seq=1,
+        )
+
+        assert redis_mock.hset.call_args.args[2] == 999
 
 
     async def test_returns_repository_final_seq_even_when_regressed(

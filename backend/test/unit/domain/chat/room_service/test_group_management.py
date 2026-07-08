@@ -444,6 +444,27 @@ class TestSystemMessageEmission:
         assert kwargs["target_ids"] == ["U_B"]
 
 
+    async def test_invite_system_message_failure_does_not_fail_invite(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+        friendship_repo_mock, message_service_mock, redis_mock,
+    ):
+        """시스템 메시지 발행 실패는 best-effort — 초대 자체(반환값)는 성공해야 한다."""
+        chat_room_repo_mock.find_by_id.return_value = ChatRoomFactory.create(
+            chat_room_id="CR_G", type_=ChatRoomType.GROUP,
+        )
+        chat_member_repo_mock.is_active_member.return_value = True
+        friendship_repo_mock.find_accepted_friend_ids_with.return_value = {"U_B"}
+        chat_member_repo_mock.find.return_value = None
+        redis_mock.get.return_value = "5"
+        message_service_mock.send_system_message.side_effect = RuntimeError("mongo down")
+
+        invited, skipped = await service.invite_members(
+            me_id="U_A", room_id="CR_G", user_ids=["U_B"],
+        )
+
+        assert invited == ["U_B"]  # 시스템 메시지 실패해도 초대 성공
+
+
     async def test_invite_with_only_skipped_does_not_emit(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
         friendship_repo_mock, message_service_mock,
