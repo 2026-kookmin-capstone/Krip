@@ -36,6 +36,26 @@ class TestCheckAndRegister:
         detail_repo_mock.find_by_user_id.assert_not_awaited()
 
 
+    async def test_concurrent_first_signup_recovers_via_refind(
+        self, service, user_repo_mock, detail_repo_mock,
+    ):
+        """동시 콜백 1차 가입 경합(IntegrityError) → SAVEPOINT 롤백 + 재조회로 수렴 (500 아님)."""
+        from sqlalchemy.exc import IntegrityError
+
+        recovered = UserFactory.create(user_id="USER_x", status=UserStatus.ACTIVE)
+        # 최초 조회 None → INSERT 경합 → 재조회는 승자 row
+        user_repo_mock.find_by_provider.side_effect = [None, recovered]
+        user_repo_mock.save.side_effect = IntegrityError("mock", {}, Exception())
+        detail_repo_mock.find_by_user_id.return_value = None  # 아직 2차 미완료
+
+        result = await service.check_and_register(
+            auth_provider="google", auth_provider_id="race@example.com",
+        )
+
+        assert result.status == SignupStatus.IN_PROGRESS
+        assert result.user_id == "USER_x"
+
+
     async def test_returns_pending_when_user_inactive(
         self, service, user_repo_mock, detail_repo_mock,
     ):

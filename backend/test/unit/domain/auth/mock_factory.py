@@ -17,9 +17,20 @@ class FakeUnitOfWork:
         return False
 
 
+class FakeAsyncContextManager:
+    """`async with session.begin_nested()` (SAVEPOINT) 자리를 채우는 no-op CM."""
+
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, exc_type, exc, tb):
+        return False
+
+
 def make_mock_session() -> MagicMock:
     session = MagicMock(name="session")
     session.flush = AsyncMock()
+    session.begin_nested = MagicMock(return_value=FakeAsyncContextManager())
     return session
 
 

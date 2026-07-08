@@ -1,5 +1,7 @@
 from typing import List
 
+from sqlalchemy.exc import IntegrityError
+
 from app.domain.tripmate.repository.tripmate_post_like import TripmatePostLikeRepository
 from app.domain.tripmate.repository.tripmate_post import TripmatePostRepository
 from app.domain.tripmate.model.tripmate_post_like import TripmatePostLike
@@ -79,7 +81,11 @@ class TripmatePostLikeService:
             raise ValueError("이미 좋아요를 누른 게시글입니다.")
 
         like = TripmatePostLike(user_id=user_id, post_id=post_id)
-        await like_repo.save(like)
+        # check→insert 사이 동시 요청(더블탭)이 끼면 composite PK 위반 → 500 대신 400 으로.
+        try:
+            await like_repo.save(like)
+        except IntegrityError as e:
+            raise ValueError("이미 좋아요를 누른 게시글입니다.") from e
         like_count = await like_repo.count_by_post(post_id)
 
         # 본인→본인 — outer 가 fan-out skip

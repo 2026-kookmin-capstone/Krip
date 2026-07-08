@@ -1,5 +1,7 @@
 from typing import List
 
+from sqlalchemy.exc import IntegrityError
+
 from app.domain.auth.repository.user_travel_style import UserTravelStyleRepository
 from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
 from app.domain.auth.repository.user import UserRepository
@@ -53,7 +55,12 @@ class RegisterService:
             gender=gender,
             nationality=nationality,
         )
-        await detail_repo.save(detail)
+        # check→insert 사이 동시 요청(더블클릭/두 탭)이 끼면 user_detail PK 위반 → 500 대신
+        # 기존 중복 케이스와 동일 메시지로 매핑.
+        try:
+            await detail_repo.save(detail)
+        except IntegrityError as e:
+            raise ValueError("이미 2차 회원가입이 완료된 유저입니다.") from e
 
         styles = [
             UserTravelStyle(user_id=user_id, style=style)

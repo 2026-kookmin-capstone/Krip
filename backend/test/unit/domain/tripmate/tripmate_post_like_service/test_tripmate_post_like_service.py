@@ -187,6 +187,23 @@ class TestAddLike:
         inbox_service_mock.notify_tripmate_like.assert_not_awaited()
 
 
+    async def test_double_tap_race_maps_to_value_error(
+        self, service, post_repo_mock, like_repo_mock, inbox_service_mock,
+    ):
+        """check→insert 사이 동시 요청(더블탭)으로 PK 위반 시 500 이 아니라 400(ValueError)."""
+        from sqlalchemy.exc import IntegrityError
+
+        post = TripmatePostFactory.create(user_id="USER_owner")
+        post_repo_mock.find_by_id.return_value = post
+        like_repo_mock.find_by_user_and_post.return_value = None  # 가드 통과
+        like_repo_mock.save.side_effect = IntegrityError("mock", {}, Exception())
+
+        with pytest.raises(ValueError, match="이미 좋아요"):
+            await service.add_like(user_id="USER_actor", post_id=post.post_id)
+
+        inbox_service_mock.notify_tripmate_like.assert_not_awaited()
+
+
 # ──────────────────────────────────────────────────────────────────
 # remove_like — 좋아요 취소는 알림 변경 없음
 # ──────────────────────────────────────────────────────────────────

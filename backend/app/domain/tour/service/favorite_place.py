@@ -1,3 +1,5 @@
+from sqlalchemy.exc import IntegrityError
+
 from app.domain.tour.service.place import PlaceService
 from app.domain.tour.repository.place import PlaceRepository
 from app.domain.tour.repository.favorite_place import FavoritePlaceRepository
@@ -34,7 +36,11 @@ class FavoritePlaceService:
             raise ValueError("이미 즐겨찾기한 장소입니다.")
 
         favorite = FavoritePlace(user_id=user_id, place_id=place_id)
-        await fav_repo.save(favorite)
+        # check→insert 사이 동시 요청(더블클릭)이 끼면 unique 제약 위반 → 500 대신 400 으로.
+        try:
+            await fav_repo.save(favorite)
+        except IntegrityError as e:
+            raise ValueError("이미 즐겨찾기한 장소입니다.") from e
 
     # ──────────────────── 즐겨찾기 삭제 ────────────────────
 

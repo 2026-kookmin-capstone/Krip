@@ -57,6 +57,20 @@ class TestAddFavorite:
         fav_repo_mock.save.assert_not_awaited()
 
 
+    async def test_concurrent_insert_race_maps_to_value_error(
+        self, service, place_repo_mock, fav_repo_mock,
+    ):
+        """check→insert 사이 동시 요청으로 unique 위반 시 500 이 아니라 400(ValueError)."""
+        from sqlalchemy.exc import IntegrityError
+
+        place_repo_mock.find_by_place_ids.return_value = [PlaceRawFactory.create()]
+        fav_repo_mock.find_by_user_and_place.return_value = None  # 가드 통과
+        fav_repo_mock.save.side_effect = IntegrityError("mock", {}, Exception())
+
+        with pytest.raises(ValueError, match="이미 즐겨찾기"):
+            await service.add_favorite(user_id="USER_a", place_id="PLACE_x")
+
+
 # ──────────────────────────────────────────────────────────────────
 # remove_favorite
 # ──────────────────────────────────────────────────────────────────
