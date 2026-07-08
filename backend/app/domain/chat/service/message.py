@@ -5,7 +5,6 @@ from datetime import datetime, timedelta, timezone
 import asyncio
 
 from app.util.id_generator import generate_message_id
-from app.domain.notification.service.fcm import FcmService
 from app.domain.friend.repository.user_block import UserBlockRepository
 from app.domain.chat.service.exception import UpstreamError
 from app.domain.chat.repository.chat_room import ChatRoomRepository
@@ -51,10 +50,10 @@ _PUSH_TASKS: set[asyncio.Task] = set()
 class MessageService:
     """메시지 송신 핫패스."""
 
-    def __init__(self, uow: UnitOfWork, fanout_service, fcm_service: FcmService):
+    def __init__(self, uow: UnitOfWork, fanout_service, fcm_service_factory):
         self.uow = uow
         self._fanout = fanout_service
-        self._fcm = fcm_service
+        self._fcm_factory = fcm_service_factory
 
 
     @transactional
@@ -552,10 +551,12 @@ class MessageService:
         self, *, room_id: str, sender_user_id: str, content: str,
     ) -> None:
         """발신자 제외 방 멤버 전체에 FCM 푸시. 어떤 예외도 raise 하지 않는다."""
-        # create_task 가 부모 Context 를 복사하므로 _current_session 에 이미 닫힌 부모 세션이
-        # 박혀있다. 명시적으로 끊어줘야 send_chat_push 의 @transactional 이 좀비 세션에
-        # join 하지 않고 자기 UoW 로 새 트랜잭션을 연다.
+        # 상속된 부모 Context 엔 이미 닫힌 세션이 박혀있다 — 끊어줘야 하위 @transactional 이
+        # 좀비 세션에 join 하지 않고 새 트랜잭션을 연다.
         _current_session.set(None)
+        # fire-and-forget 이라 동시 실행될 수 있어 task 마다 새 FcmService(독립 세션)를 만든다.
+        # 공유하면 인스턴스 상태(self._session)가 task 간 덮어써진다.
+        fcm = self._fcm_factory()
         try:
             redis_hot = await get_redis_client()
             members = await redis_hot.smembers(room_members_key(room_id))
@@ -570,7 +571,7 @@ class MessageService:
             )
 
             # title 은 FcmService 가 sender_id 로 user_name 조회해 채움 (결손 시 "새 메시지" 폴백).
-            await self._fcm.send_chat_push(
+            await fcm.send_chat_push(
                 user_ids=recipients,
                 chat_room_id=room_id,
                 sender_id=sender_user_id,

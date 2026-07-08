@@ -105,4 +105,6 @@ def service(
     monkeypatch.setattr("app.domain.chat.service.message.lua_scripts", lua_mock)
 
     uow = FakeUnitOfWork(mock_session)
-    return MessageService(uow=uow, fanout_service=fanout_mock, fcm_service=fcm_mock)
+    return MessageService(
+        uow=uow, fanout_service=fanout_mock, fcm_service_factory=lambda: fcm_mock,
+    )

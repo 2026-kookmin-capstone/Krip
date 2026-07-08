@@ -34,7 +34,7 @@ class TestConcurrentSendProducesMonotonicSeq:
 
         async def send(i: int):
             uow = UnitOfWork(session=session_factory)
-            svc = MessageService(uow=uow, fanout_service=chat_fanout_stub, fcm_service=chat_fcm_stub)
+            svc = MessageService(uow=uow, fanout_service=chat_fanout_stub, fcm_service_factory=lambda: chat_fcm_stub)
             uid = user_a if i % 2 == 0 else user_b
             return await svc.send_message(
                 sender_user_id=uid,

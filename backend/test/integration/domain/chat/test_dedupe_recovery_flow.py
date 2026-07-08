@@ -39,7 +39,7 @@ class TestDedupeRecoveryAfterMongoFailure:
             new=AsyncMock(side_effect=ConnectionFailure("simulated network down")),
         ):
             uow = UnitOfWork(session=session_factory)
-            svc = MessageService(uow=uow, fanout_service=chat_fanout_stub, fcm_service=chat_fcm_stub)
+            svc = MessageService(uow=uow, fanout_service=chat_fanout_stub, fcm_service_factory=lambda: chat_fcm_stub)
             with pytest.raises(ConnectionFailure):
                 await svc.send_message(
                     sender_user_id=user_a,
@@ -75,7 +75,7 @@ class TestDedupeRecoveryAfterMongoFailure:
             new=AsyncMock(side_effect=ConnectionFailure("transient")),
         ):
             uow1 = UnitOfWork(session=session_factory)
-            svc1 = MessageService(uow=uow1, fanout_service=chat_fanout_stub, fcm_service=chat_fcm_stub)
+            svc1 = MessageService(uow=uow1, fanout_service=chat_fanout_stub, fcm_service_factory=lambda: chat_fcm_stub)
             with pytest.raises(ConnectionFailure):
                 await svc1.send_message(
                     sender_user_id=user_a,
@@ -88,7 +88,7 @@ class TestDedupeRecoveryAfterMongoFailure:
 
         # 2차 — Mongo 정상 복구. 같은 cmid 로 재시도 → 통과해야 함
         uow2 = UnitOfWork(session=session_factory)
-        svc2 = MessageService(uow=uow2, fanout_service=chat_fanout_stub, fcm_service=chat_fcm_stub)
+        svc2 = MessageService(uow=uow2, fanout_service=chat_fanout_stub, fcm_service_factory=lambda: chat_fcm_stub)
         ack = await svc2.send_message(
             sender_user_id=user_a,
             sender_session_id="WS_A",
@@ -123,7 +123,7 @@ class TestDedupeRecoveryAfterMongoFailure:
         cmid = "cm-happy-block"
 
         uow1 = UnitOfWork(session=session_factory)
-        svc1 = MessageService(uow=uow1, fanout_service=chat_fanout_stub, fcm_service=chat_fcm_stub)
+        svc1 = MessageService(uow=uow1, fanout_service=chat_fanout_stub, fcm_service_factory=lambda: chat_fcm_stub)
         ack = await svc1.send_message(
             sender_user_id=user_a,
             sender_session_id="WS_A",
@@ -142,7 +142,7 @@ class TestDedupeRecoveryAfterMongoFailure:
 
         # 같은 cmid 재전송은 ValueError ("이미 처리된 메시지")
         uow2 = UnitOfWork(session=session_factory)
-        svc2 = MessageService(uow=uow2, fanout_service=chat_fanout_stub, fcm_service=chat_fcm_stub)
+        svc2 = MessageService(uow=uow2, fanout_service=chat_fanout_stub, fcm_service_factory=lambda: chat_fcm_stub)
         with pytest.raises(ValueError, match="이미 처리된"):
             await svc2.send_message(
                 sender_user_id=user_a,

@@ -51,7 +51,6 @@ class FcmService:
         await repo.delete_by_user_token(user_id=user_id, token=token)
 
 
-    @transactional
     async def send_chat_push(
         self,
         *,
@@ -61,48 +60,30 @@ class FcmService:
         body: str,
         title: str | None = None,
     ) -> int:
-        """채팅 새 메시지 푸시 — 한 트랜잭션 + 한 multicast 로 N명 fan-out.
+        """채팅 새 메시지 푸시 — N명 fan-out.
 
-        가드: 방별 (`is_left=false AND room mute 안 함`) → 전역 (`global mute 안 함`) → 토큰 일괄.
-        그룹방 100명도 DB 3회 (+ 발신자 PK 1회) + FCM 1회. UnregisteredError 토큰은 bulk DELETE.
-
-        title 미지정 시 sender 의 user_name 으로, 조회 실패 시 "새 메시지" fallback.
+        multicast(네트워크 RTT)는 트랜잭션 밖에서 발송해 커넥션을 점유하지 않는다.
+        대상 조회와 만료 토큰 정리만 각각 짧은 트랜잭션으로 감싼다.
         """
         if not user_ids:
             return 0
 
-        member_repo = ChatRoomMemberRepository(self._session)
-        pushable_in_room = await member_repo.find_pushable_user_ids_in_room(
-            chat_room_id, user_ids,
+        collected = await self._collect_push_targets(
+            user_ids=user_ids, chat_room_id=chat_room_id, sender_id=sender_id, title=title,
         )
-        if not pushable_in_room:
+        if collected is None:
             return 0
+        tokens, final_title = collected
 
-        user_repo = UserRepository(self._session)
-        allowed = await user_repo.find_unmuted_user_ids(list(pushable_in_room))
-        if not allowed:
-            return 0
-
-        token_repo = FcmTokenRepository(self._session)
-        rows = await token_repo.find_by_user_ids(list(allowed))
-        if not rows:
-            return 0
-
-        final_title = title if title is not None else (
-            await self._resolve_sender_display_name(sender_id)
-        )
-
-        tokens = [r.token for r in rows]
-        data = {
-            "type": "chat",
-            "chatRoomId": chat_room_id,
-            "senderId": sender_id,
-            "url": f"/chat/{chat_room_id}",
-        }
         multicast = messaging.MulticastMessage(
             tokens=tokens,
             notification=messaging.Notification(title=final_title, body=body),
-            data=data,
+            data={
+                "type": "chat",
+                "chatRoomId": chat_room_id,
+                "senderId": sender_id,
+                "url": f"/chat/{chat_room_id}",
+            },
         )
 
         try:
@@ -147,14 +128,54 @@ class FcmService:
         )
 
         if invalid_tokens:
-            await token_repo.delete_by_tokens(invalid_tokens)
-            fcm_token_purged_inc(len(invalid_tokens))
-            logger.info(
-                "FCM 만료 토큰 정리 chat_room_id={} count={}",
-                chat_room_id, len(invalid_tokens),
-            )
+            await self._purge_invalid_tokens(chat_room_id, invalid_tokens)
 
         return batch.success_count
+
+
+    @transactional
+    async def _collect_push_targets(
+        self,
+        *,
+        user_ids: list[str],
+        chat_room_id: str,
+        sender_id: str,
+        title: str | None,
+    ) -> tuple[list[str], str] | None:
+        """가드 체인(방별 → 전역 mute → 토큰) 통과 대상의 토큰 + title 반환. 대상 0이면 None."""
+        member_repo = ChatRoomMemberRepository(self._session)
+        pushable_in_room = await member_repo.find_pushable_user_ids_in_room(
+            chat_room_id, user_ids,
+        )
+        if not pushable_in_room:
+            return None
+
+        user_repo = UserRepository(self._session)
+        allowed = await user_repo.find_unmuted_user_ids(list(pushable_in_room))
+        if not allowed:
+            return None
+
+        token_repo = FcmTokenRepository(self._session)
+        rows = await token_repo.find_by_user_ids(list(allowed))
+        if not rows:
+            return None
+
+        final_title = title if title is not None else (
+            await self._resolve_sender_display_name(sender_id)
+        )
+        return [r.token for r in rows], final_title
+
+
+    @transactional
+    async def _purge_invalid_tokens(self, chat_room_id: str, tokens: list[str]) -> None:
+        """UnregisteredError(앱 삭제) 토큰 bulk DELETE."""
+        token_repo = FcmTokenRepository(self._session)
+        await token_repo.delete_by_tokens(tokens)
+        fcm_token_purged_inc(len(tokens))
+        logger.info(
+            "FCM 만료 토큰 정리 chat_room_id={} count={}",
+            chat_room_id, len(tokens),
+        )
 
 
     async def _resolve_sender_display_name(self, sender_id: str) -> str:

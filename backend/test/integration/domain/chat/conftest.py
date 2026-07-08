@@ -163,7 +163,9 @@ def chat_fcm_stub() -> MagicMock:
 def message_service(uow, chat_fanout_stub, chat_fcm_stub, patch_external_clients) -> MessageService:
     """공유 서비스 인스턴스. 동시 호출 테스트에서는 task 별 신규 인스턴스를 만들어야
     한다 (``@transactional`` 이 ``self._session`` 을 변경하므로 인스턴스 공유 시 race)."""
-    return MessageService(uow=uow, fanout_service=chat_fanout_stub, fcm_service=chat_fcm_stub)
+    return MessageService(
+        uow=uow, fanout_service=chat_fanout_stub, fcm_service_factory=lambda: chat_fcm_stub,
+    )
 
 
 @pytest.fixture

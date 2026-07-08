@@ -42,7 +42,11 @@ class UnitOfWork:
 
 
 def transactional(fn):
-    """nested 호출은 기존 트랜잭션에 참여, 최상위 호출만 새 UoW 를 연다."""
+    """nested 호출은 기존 트랜잭션에 참여, 최상위 호출만 새 UoW 를 연다.
+
+    세션을 인스턴스 상태(self._session)에 보관하므로, 한 인스턴스를 여러 task 에서 동시
+    실행하면 세션이 덮어써진다 → 동시 실행 경로는 task 마다 새 인스턴스를 써야 한다.
+    """
     @wraps(fn)
     async def wrapper(self, *args, **kwargs):
         existing = _current_session.get()

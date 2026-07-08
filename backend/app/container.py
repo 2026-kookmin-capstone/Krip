@@ -127,8 +127,12 @@ class Container(containers.DeclarativeContainer):
     # 채팅 — 비즈 (Factory: 호출마다 UoW 새로 바인딩)
     #   - message_service / block_cache_service 는 room_service / user_block_service 보다
     #     먼저 선언 (system 메시지 발행 / 차단 캐시 무효화 훅 의존성)
+    # fcm_service.provider(팩토리) 주입 → push task 마다 새 FcmService(독립 세션).
     message_service = providers.Factory(
-        MessageService, uow=uow, fanout_service=fanout_service, fcm_service=fcm_service,
+        MessageService,
+        uow=uow,
+        fanout_service=fanout_service,
+        fcm_service_factory=fcm_service.provider,
     )
     room_service = providers.Factory(
         RoomService, uow=uow, fanout_service=fanout_service, message_service=message_service,
