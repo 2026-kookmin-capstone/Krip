@@ -11,6 +11,7 @@ from app.core.logger import get_logger
 from app.container import Container
 from app.config.setting import settings
 from app.config.oauth import OAuthProvider, OAUTH_APP_CONFIGS
+from app.util.oauth_state import store_state_nonce, consume_state_nonce
 
 
 router = APIRouter(prefix="/login/app", tags=["앱 로그인"])
@@ -38,7 +39,8 @@ async def app_login(type: OAuthProvider = Query(..., description="OAuth 제공�
     if not client_class:
         raise HTTPException(status_code=400, detail=f"지원하지 않는 OAuth 제공자: {type}")
 
-    state = f"app:{type.value}"
+    nonce = await store_state_nonce()
+    state = f"app:{type.value}:{nonce}"
 
     async with client_class(config) as client:
         authorization_url = client.get_authorization_url(state=state, user_type="callback")
@@ -53,11 +55,12 @@ async def app_login_callback(
     signup_service: SignupService = Depends(Provide[Container.signup_service])
 ):
     """앱 OAuth 콜백 - 인증 코드로 JWT 발급 후 딥링크로 리다이렉트."""
-    parts = state.rsplit(":", 1)
-    if parts[0] != "app":
+    parts = state.split(":")
+    if len(parts) != 3 or parts[0] != "app":
         raise HTTPException(status_code=400, detail="잘못된 state 값")
 
-    _, provider_value = parts
+    _, provider_value, nonce = parts
+    await consume_state_nonce(nonce)
 
     try:
         provider = OAuthProvider(provider_value)

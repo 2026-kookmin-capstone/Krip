@@ -63,6 +63,23 @@ class _FakeGoogleClient(OAuthClient):
         )
 
 
+class _FakeRedis:
+    """oauth_state 가 쓰는 최소 인터페이스(set ex / delete)만 구현한 인메모리 stub.
+
+    앱 흐름은 nonce 를 Redis 에 단발성으로 저장/소비하므로, 실 Redis 없이 store→consume
+    왕복과 1회용 소비를 그대로 재현한다.
+    """
+
+    def __init__(self):
+        self._store: dict[str, str] = {}
+
+    async def set(self, key, value, ex=None):
+        self._store[key] = value
+
+    async def delete(self, *keys) -> int:
+        return sum(1 for k in keys if self._store.pop(k, None) is not None)
+
+
 # ──────────────────────────────────────────────────────────────────
 # 공통 fixture
 # ──────────────────────────────────────────────────────────────────
@@ -75,6 +92,14 @@ def app_http(monkeypatch):
     fake 로 치환하면 라우터가 ``OAUTH_CLIENTS.get(type)`` 으로 받아오는 클래스가 자동 교체.
     """
     monkeypatch.setitem(OAUTH_CLIENTS, OAuthProvider.GOOGLE, _FakeGoogleClient)
+
+    # 앱 흐름의 state nonce 는 Redis 단발성 저장 — 인메모리 fake 로 실 Redis 없이 검증.
+    fake_redis = _FakeRedis()
+
+    async def _fake_get_client():
+        return fake_redis
+
+    monkeypatch.setattr("app.util.oauth_state.get_redis_client", _fake_get_client)
 
     container = Container()
     signup_mock = AsyncMock()
@@ -101,6 +126,16 @@ def _decode_utk(token: str) -> dict:
     )
 
 
+def _start_login(client) -> str:
+    """로그인 시작 호출 → provider redirect 의 state 반환.
+
+    이 호출로 nonce 가 (fake) Redis 에 단발성 저장되고, 이어지는 콜백에서 consume 된다."""
+    resp = client.get(
+        "/api/auth/login/app", params={"type": "google"}, follow_redirects=False,
+    )
+    return parse_qs(urlparse(resp.headers["location"]).query)["state"][0]
+
+
 # ──────────────────────────────────────────────────────────────────
 # GET /api/auth/login/app — 인증 URL redirect
 # ──────────────────────────────────────────────────────────────────
@@ -122,8 +157,10 @@ class TestAppLoginRedirect:
         assert url.netloc == "accounts.google.com"
 
         params = parse_qs(url.query)
-        # state 는 콜백에서 provider 추출 키 — `app:` prefix 가 웹의 `local:` / `server:` 와 분리됨.
-        assert params["state"] == ["app:google"]
+        # state 는 `app:{provider}:{nonce}` — prefix 가 웹의 `local:` / `server:` 와 분리됨.
+        state = params["state"][0]
+        assert state.startswith("app:google:")
+        assert len(state.split(":")[2]) > 0  # CSRF nonce 존재 (Redis 단발성 저장)
         # redirect_uri 는 앱 전용 경로 (`/api/auth/login/app/callback`) — 웹 redirect 와 분리.
         expected = f"{settings.OAUTH_REDIRECT_BASE_URL}/api/auth/login/app/callback"
         assert params["redirect_uri"] == [expected]
@@ -157,9 +194,10 @@ class TestAppLoginCallbackSuccess:
             user_id="USER_app_1", status=SignupStatus.NEW,
         )
 
+        state = _start_login(client)
         resp = client.get(
             "/api/auth/login/app/callback",
-            params={"code": "auth_code_xyz", "state": "app:google"},
+            params={"code": "auth_code_xyz", "state": state},
             follow_redirects=False,
         )
 
@@ -195,9 +233,10 @@ class TestAppLoginCallbackSuccess:
             user_id="USER_pending", status=SignupStatus.WITHDRAWAL_PENDING,
         )
 
+        state = _start_login(client)
         resp = client.get(
             "/api/auth/login/app/callback",
-            params={"code": "c1", "state": "app:google"},
+            params={"code": "c1", "state": state},
             follow_redirects=False,
         )
 
@@ -225,9 +264,10 @@ class TestAppLoginCallbackSuccess:
             user_id="USER_bare", status=SignupStatus.COMPLETE,
         )
 
+        state = _start_login(client)
         resp = client.get(
             "/api/auth/login/app/callback",
-            params={"code": "c", "state": "app:google"},
+            params={"code": "c", "state": state},
             follow_redirects=False,
         )
 
@@ -258,12 +298,50 @@ class TestAppLoginCallbackErrors:
     def test_returns_400_when_state_provider_unknown(self, app_http):
         client, signup_mock = app_http
 
+        # 유효한 nonce 로 CSRF 검증은 통과시키고, provider 부분만 미지원 값으로.
+        nonce = _start_login(client).split(":")[2]
         resp = client.get(
             "/api/auth/login/app/callback",
-            params={"code": "c", "state": "app:facebook"},
+            params={"code": "c", "state": f"app:facebook:{nonce}"},
             follow_redirects=False,
         )
 
         assert resp.status_code == 400
         assert "OAuth" in resp.json()["detail"]
         signup_mock.check_and_register.assert_not_called()
+
+
+    def test_returns_400_when_nonce_not_in_store(self, app_http):
+        """저장된 적 없는(위조) nonce → CSRF 방어로 400 (로그인 CSRF 차단)."""
+        client, signup_mock = app_http
+
+        resp = client.get(
+            "/api/auth/login/app/callback",
+            params={"code": "c", "state": "app:google:forged-nonce-never-stored"},
+            follow_redirects=False,
+        )
+
+        assert resp.status_code == 400
+        signup_mock.check_and_register.assert_not_called()
+
+
+    def test_nonce_is_single_use_replay_rejected(self, app_http):
+        """같은 nonce 재사용(replay) → 두 번째 콜백은 400 (1회용 소비)."""
+        client, signup_mock = app_http
+        signup_mock.check_and_register.return_value = SignupResult(
+            user_id="USER_replay", status=SignupStatus.COMPLETE,
+        )
+
+        state = _start_login(client)
+        first = client.get(
+            "/api/auth/login/app/callback",
+            params={"code": "c", "state": state}, follow_redirects=False,
+        )
+        assert first.status_code == 307  # 최초 사용 OK
+
+        second = client.get(
+            "/api/auth/login/app/callback",
+            params={"code": "c", "state": state}, follow_redirects=False,
+        )
+        assert second.status_code == 400  # 재사용 거부
+        signup_mock.check_and_register.assert_awaited_once()  # 최초 1회만 처리됨

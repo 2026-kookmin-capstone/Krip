@@ -12,6 +12,9 @@ from app.core.logger import get_logger
 from app.container import Container
 from app.config.setting import settings
 from app.config.oauth import OAuthProvider, OAUTH_CONFIGS
+from app.util.oauth_state import (
+    generate_state_nonce, set_state_cookie, verify_state_nonce, clear_state_cookie,
+)
 
 
 router = APIRouter(prefix="/login", tags=["로그인"])
@@ -31,26 +34,31 @@ async def login(type: OAuthProvider = Query(..., description="OAuth 제공자 �
 
     redirect_url = 'local' if is_local else 'server'
 
-    state = f"{redirect_url}:{type.value}"
+    nonce = generate_state_nonce()
+    state = f"{redirect_url}:{type.value}:{nonce}"
 
     async with client_class(config) as client:
         authorization_url = client.get_authorization_url(state=state, user_type="callback")
 
-    return RedirectResponse(url=authorization_url)
+    response = RedirectResponse(url=authorization_url)
+    set_state_cookie(response, nonce)
+    return response
 
 
 @router.get("/callback")
 @inject
 async def login_callback(
+    request: Request,
     code: str = Query(...), state: str = Query(...),
     signup_service: SignupService = Depends(Provide[Container.signup_service])
 ):
     """OAuth 콜백 - 인증 코드로 사용자 정보를 가져와 JWT 쿠키 발급"""
-    parts = state.rsplit(":", 1)
-    if len(parts) != 2:
+    parts = state.split(":")
+    if len(parts) != 3:
         raise HTTPException(status_code=400, detail="잘못된 state 값")
 
-    redirect_url, provider_value = parts
+    redirect_url, provider_value, nonce = parts
+    verify_state_nonce(request, nonce)
 
     try:
         provider = OAuthProvider(provider_value)
@@ -103,5 +111,6 @@ async def login_callback(
         path="/",
         max_age=settings.USER_LOGIN_JWT_EXPIRATION_DAYS * 24 * 60 * 60,
     )
+    clear_state_cookie(response)
 
     return response
