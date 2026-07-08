@@ -9,6 +9,7 @@ from app.domain.tripmate.schema.tripmate_image import (
 )
 from app.core.logger import get_logger
 from app.container import Container
+from app.util.upload import enforce_upload_size
 
 
 router = APIRouter(prefix="/images", tags=["여행 메이트 이미지"])
@@ -40,13 +41,7 @@ async def upload_images(
                 status_code=400,
                 detail=f"허용되지 않는 파일 형식입니다: {f.content_type} (jpeg, png, webp, gif만 가능)",
             )
-        contents = await f.read()
-        if len(contents) > _MAX_FILE_SIZE:
-            raise HTTPException(
-                status_code=400,
-                detail=f"파일 크기가 10MB를 초과합니다: {f.filename}",
-            )
-        await f.seek(0)
+        await enforce_upload_size(f, _MAX_FILE_SIZE)
 
     file_tuples = [
         (f.file, f.filename or "image", f.content_type or "image/jpeg")

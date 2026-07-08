@@ -14,6 +14,7 @@ from app.domain.feed.model.feed_post import FeedVisibility, CAPTION_MAX_LENGTH
 from app.domain.feed.dto.feed_post import FeedPostData, FeedPostListData
 from app.core.logger import get_logger
 from app.container import Container
+from app.util.upload import read_upload_capped
 
 
 router = APIRouter(tags=["내 소유 피드 CRUD"])
@@ -51,12 +52,7 @@ async def upload_post(
             detail=f"허용되지 않는 파일 형식입니다: {file.content_type} (jpeg, png, webp만 가능)",
         )
 
-    contents = await file.read()
-    if len(contents) > _MAX_FILE_SIZE:
-        raise HTTPException(
-            status_code=400,
-            detail=f"파일 크기가 {_MAX_FILE_SIZE // (1024 * 1024)}MB 를 초과합니다.",
-        )
+    contents = await read_upload_capped(file, _MAX_FILE_SIZE)
 
     try:
         post = await feed_service.upload_post(
