@@ -37,6 +37,14 @@ logger = get_logger("chat.fanout")
 
 _SUPPORTED_MODES = ("in_process", "node_channel")
 
+# session_revoked 전달 후 서버가 소켓을 닫을 close code (ws.py 의 CLOSE_AUTH_EXPIRED 와 동일 —
+# 클라는 "재인증 필요" 로 처리).
+_CLOSE_SESSION_REVOKED = 4001
+
+# 개별 WS send 상한 — 정체된 클라이언트(TCP 백프레셔)가 노드 전체 fan-out 을 멈추는
+# head-of-line 블로킹 차단. 초과 소켓은 dead 로 간주해 정리한다.
+_SEND_TIMEOUT_SECONDS = 5
+
 
 class FanoutService:
     """fan-out 인터페이스 — 모드별 분기는 본 클래스 내부에 격리.
@@ -258,6 +266,15 @@ class FanoutService:
             return
         await self._broadcast([ws], payload)
 
+        # session_revoked 는 이벤트만 보내면 클라가 무시할 때 소켓이 살아남아 계속 수신한다
+        # (탈퇴/강제 로그아웃 누수). 서버가 직접 구독 해제 + 소켓 종료해 클라 협조에 의존하지 않는다.
+        if payload.get("type") == "session_revoked":
+            self.unregister_ws(ws)
+            try:
+                await ws.close(code=_CLOSE_SESSION_REVOKED)
+            except Exception:
+                pass
+
 
     # ──────────────────── publish 헬퍼 (node_channel) ────────────────────
 
@@ -307,13 +324,16 @@ class FanoutService:
     async def _broadcast(self, recipients: list[WebSocket], payload: dict) -> None:
         """여러 WS 에 동시 push — `gather(return_exceptions=True)` 로 한 WS 실패 격리.
 
-        dead 세션 (RuntimeError / WebSocketDisconnect) 은 즉시 unregister — 좀비 세션에
-        반복 시도되는 워닝 폭발 차단. 그 외 예외는 일시적일 수 있어 정리하지 않고 로그만.
+        각 send 에 `_SEND_TIMEOUT_SECONDS` 상한. dead 세션(RuntimeError / WebSocketDisconnect
+        / 타임아웃)은 즉시 unregister(좀비 워닝 폭발 차단), 그 외 예외는 일시적일 수 있어 로그만.
         """
         if not recipients:
             return
         results = await asyncio.gather(
-            *(ws.send_json(payload) for ws in recipients),
+            *(
+                asyncio.wait_for(ws.send_json(payload), timeout=_SEND_TIMEOUT_SECONDS)
+                for ws in recipients
+            ),
             return_exceptions=True,
         )
         for ws, result in zip(recipients, results):
@@ -324,5 +344,6 @@ class FanoutService:
                 getattr(ws, "session_id", "?"),
                 result,
             )
-            if isinstance(result, (RuntimeError, WebSocketDisconnect)):
+            # 타임아웃(백프레셔로 stuck)도 dead 로 간주 — 느린 소켓이 노드 전체 전달을 막지 않게.
+            if isinstance(result, (RuntimeError, WebSocketDisconnect, asyncio.TimeoutError)):
                 self.unregister_ws(ws)

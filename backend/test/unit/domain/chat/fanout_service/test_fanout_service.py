@@ -143,6 +143,10 @@ class TestFanOutToSession:
 
         phone.send_json.assert_awaited_once()
         pc.send_json.assert_not_called()
+        # session_revoked → 서버가 직접 소켓 종료 + 구독 해제 (클라 협조에 의존하지 않음).
+        phone.close.assert_awaited_once()
+        assert "WS_phone" not in fanout._local_ws_by_session
+        pc.close.assert_not_called()
 
 
     async def test_missing_session_silent(self, fanout):
@@ -168,6 +172,32 @@ class TestErrorTolerance:
         # 예외 새지 않고 통과
         await fanout.fan_out_to_room("CR_1", {"type": "system"})
         ok.send_json.assert_awaited_once()
+
+
+    async def test_slow_ws_times_out_and_is_unregistered(self, fanout, monkeypatch):
+        """정체된 클라이언트(send 무한 대기)는 타임아웃 후 dead 처리 — 나머지는 정상 수신."""
+        import asyncio
+        from app.domain.chat.service import fanout as fanout_module
+
+        monkeypatch.setattr(fanout_module, "_SEND_TIMEOUT_SECONDS", 0.01)
+
+        slow = make_ws("WS_slow", "U_A")
+        fast = make_ws("WS_fast", "U_B")
+
+        async def _hang(payload):
+            await asyncio.sleep(1)
+
+        slow.send_json = AsyncMock(side_effect=_hang)
+        for ws in (slow, fast):
+            fanout.register_session(ws)
+            fanout.register_ws_to_room(ws, "CR_1")
+
+        await fanout.fan_out_to_room("CR_1", {"type": "message.new"})
+
+        fast.send_json.assert_awaited_once()
+        # 느린 소켓은 타임아웃 → dead 처리 (unregister)
+        assert "WS_slow" not in fanout._local_ws_by_session
+        assert fast in fanout._room_subs["CR_1"]
 
 
 @pytest.mark.unit
@@ -263,6 +293,9 @@ class TestNodeChannelDispatch:
 
         a.send_json.assert_awaited_once()
         b.send_json.assert_not_called()
+        # 수신 노드에서도 session_revoked 는 서버가 소켓을 닫는다.
+        a.close.assert_awaited_once()
+        assert "WS_a" not in node_fanout._local_ws_by_session
 
 
     async def test_dispatch_subscribe_envelope_adds_local_user_to_room(self, node_fanout):

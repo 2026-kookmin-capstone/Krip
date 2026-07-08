@@ -16,6 +16,7 @@ def make_ws(session_id: str, user_id: str) -> MagicMock:
     ws.user_id = user_id
     ws.subscribed_rooms = set()
     ws.send_json = AsyncMock()
+    ws.close = AsyncMock()
     return ws
 
 
