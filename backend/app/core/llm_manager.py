@@ -8,6 +8,12 @@ from app.core.instrumentation import GeminiInstrumentationHandler
 from app.config.setting import settings
 
 
+# Gemini 호출 데드라인/재시도 — 미설정 시 요청이 무한 대기하고 429 가 내장 재시도(기본 6회)
+# 뒤에 늦게 표면화된다. 호출당 timeout + 짧은 재시도로 이벤트 루프 점유와 비용 폭주를 제한.
+_LLM_TIMEOUT_SECONDS = 180
+_LLM_MAX_RETRIES = 2
+
+
 class ModelName(str, Enum):
     """사용 가능한 Gemini 모델 이름"""
     GEMINI_2_0_FLASH = "gemini-2.0-flash"
@@ -42,6 +48,8 @@ class LLMManager:
                     model=model.value,
                     google_api_key=settings.GOOGLE_GEMINI_API_KEY,
                     callbacks=[handler],
+                    timeout=_LLM_TIMEOUT_SECONDS,
+                    max_retries=_LLM_MAX_RETRIES,
                 )
             self._initialized = True
 
