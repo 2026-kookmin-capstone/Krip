@@ -7,6 +7,7 @@ from google.api_core.exceptions import (
     Unauthenticated,
 )
 from langchain_core.exceptions import OutputParserException
+from langchain_google_genai.chat_models import ChatGoogleGenerativeAIError
 from pydantic import ValidationError as PydanticValidationError
 
 from app.core.ai.menu_ocr.load import MenuOcr
@@ -42,7 +43,9 @@ class MenuOcrService:
             raise MenuOcrCredentialExpiredError(str(e)) from e
         except ResourceExhausted as e:
             raise MenuOcrQuotaExceededError(str(e)) from e
-        except GoogleAPICallError as e:
+        # ChatGoogleGenerativeAIError 는 GoogleAPICallError 비상속 → 미매핑 시 500 누출.
+        # 손상 이미지/토큰 한도 초과 등 vendor 입력 거부이므로 502 로 매핑.
+        except (GoogleAPICallError, ChatGoogleGenerativeAIError) as e:
             raise MenuOcrVendorError(str(e)) from e
         except (OutputParserException, PydanticValidationError) as e:
             # LLM 출력 파싱 실패 — raw 출력을 노출하지 않고 502 로 매핑.
@@ -69,7 +72,7 @@ class MenuOcrService:
             raise MenuOcrCredentialExpiredError(str(e)) from e
         except ResourceExhausted as e:
             raise MenuOcrQuotaExceededError(str(e)) from e
-        except GoogleAPICallError as e:
+        except (GoogleAPICallError, ChatGoogleGenerativeAIError) as e:
             raise MenuOcrVendorError(str(e)) from e
         except (OutputParserException, PydanticValidationError) as e:
             logger.warning("메뉴 OCR(batch) 구조화 출력 파싱 실패: {}", type(e).__name__)

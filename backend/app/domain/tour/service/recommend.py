@@ -4,6 +4,7 @@ from google.api_core.exceptions import (
     ResourceExhausted,
     Unauthenticated,
 )
+from langchain_google_genai.chat_models import ChatGoogleGenerativeAIError
 
 from app.core.ai.tour_planner.load import TourPlanner
 from app.core.ai.tour_planner.v2.data_state import (
@@ -58,7 +59,9 @@ class RecommendService:
             raise TourRecommendCredentialExpiredError(str(e)) from e
         except ResourceExhausted as e:
             raise TourRecommendQuotaExceededError(str(e)) from e
-        except GoogleAPICallError as e:
+        # ChatGoogleGenerativeAIError 는 GoogleAPICallError 비상속 → 미매핑 시 500 누출.
+        # 토큰 한도 초과 등 vendor 입력 거부이므로 502 로 매핑.
+        except (GoogleAPICallError, ChatGoogleGenerativeAIError) as e:
             raise TourRecommendVendorError(str(e)) from e
         except TourPlannerOutputError as e:
             # LLM 출력 파싱 실패/누락 — 입력 오류(400)가 아닌 vendor 출력 문제이므로 502.
