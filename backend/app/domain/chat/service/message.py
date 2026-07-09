@@ -151,9 +151,11 @@ class MessageService:
             raise
 
         # last_message_* 갱신 실패는 dirty 큐로 — reconcile 이 수렴시킨다.
+        # if_greater 가드 — 같은 방 동시 송신이 chat_room 행 잠금을 엇갈려 잡으면 낮은 seq 가
+        # 높은 seq 를 덮어써 last_message 가 과거로 regress 할 수 있다. seq 가드로 no-op 처리.
         try:
             async with self._session.begin_nested():
-                await chat_room_repo.update_last_message(
+                await chat_room_repo.update_last_message_if_greater(
                     chat_room_id=room_id,
                     message_id=message_id,
                     server_seq=server_seq,
@@ -230,6 +232,9 @@ class MessageService:
         key = room_members_key(room_id)
         is_member = await redis_hot.sismember(key, user_id)
         if is_member:
+            # 슬라이딩 TTL — 후속 _bump_unread/FCM 이 같은 키를 smembers 하기 전 TTL 이 만료되면
+            # 빈 집합 → unread·푸시 누락. 접근 시마다 연장해 사용 도중 만료를 막는다.
+            await redis_hot.expire(key, ROOM_MEMBERS_TTL)
             return
 
         members = await member_repo.find_active_member_ids(room_id)

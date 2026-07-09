@@ -75,9 +75,9 @@ class TestHappyPath:
         assert doc["chat_room_id"] == "CR_1"
         assert doc["type"] == "text"
 
-        # RDB update_last_message 1회
-        chat_room_repo_mock.update_last_message.assert_awaited_once()
-        kwargs = chat_room_repo_mock.update_last_message.call_args.kwargs
+        # RDB update_last_message_if_greater 1회 (seq 가드로 동시 송신 regress 방지)
+        chat_room_repo_mock.update_last_message_if_greater.assert_awaited_once()
+        kwargs = chat_room_repo_mock.update_last_message_if_greater.call_args.kwargs
         assert kwargs["chat_room_id"] == "CR_1"
         assert kwargs["server_seq"] == 7
 
@@ -97,6 +97,19 @@ class TestMembershipCheck:
         )
 
         chat_member_repo_mock.find_active_member_ids.assert_not_called()
+
+    async def test_cache_hit_refreshes_ttl(self, service, redis_mock):
+        """sismember 히트 시 room:members TTL 을 슬라이딩 — 후속 smembers 만료 race 방지."""
+        redis_mock.sismember = AsyncMock(return_value=True)
+
+        await service.send_message(
+            sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+            client_msg_id="cm-ttl", msg_type=MessageType.TEXT, content="x",
+        )
+
+        redis_mock.expire.assert_awaited()
+        from app.core.chat.redis_key import ROOM_MEMBERS_TTL, room_members_key
+        assert redis_mock.expire.call_args.args == (room_members_key("CR_1"), ROOM_MEMBERS_TTL)
 
     async def test_cache_miss_loads_all_members_and_sadd(
         self, service, redis_mock, chat_member_repo_mock,

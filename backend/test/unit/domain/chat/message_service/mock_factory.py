@@ -110,6 +110,7 @@ def make_redis_mock() -> MagicMock:
     redis.sismember = AsyncMock(return_value=True)
     redis.smembers = AsyncMock(return_value={"U_A", "U_B"})
     redis.sadd = AsyncMock(return_value=1)
+    redis.expire = AsyncMock(return_value=1)
 
     def _new_pipe(*_a, **_kw):
         p = _make_trackable_pipe()
