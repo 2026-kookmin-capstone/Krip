@@ -9,10 +9,11 @@ from app.config.setting import settings
 from app.core.instrumentation import GeminiInstrumentationHandler
 
 
-# Gemini 호출 데드라인/재시도 — 미설정 시 요청이 무한 대기하고 429 가 내장 재시도(기본 6회)
-# 뒤에 늦게 표면화된다. 호출당 timeout + 짧은 재시도로 이벤트 루프 점유와 비용 폭주를 제한.
+# 호출당 데드라인 (미설정 시 무한 대기).
 _LLM_TIMEOUT_SECONDS = 180
-_LLM_MAX_RETRIES = 2
+# 재시도 없음 — langchain-google-genai 3.2.0 이 429 재시도를 동기 time.sleep 으로 처리하는 문제 발견.
+# 이벤트 루프를 블로킹하기 때문. 쿼터 소진은 429 로 표면화해 클라가 백오프 필요.
+_LLM_MAX_RETRIES = 1
 
 
 class ModelName(str, Enum):
