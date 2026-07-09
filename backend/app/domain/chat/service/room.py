@@ -51,7 +51,10 @@ class RoomService:
             me_id=me_id, peer_user_id=peer_user_id,
         )
         if new_room_id is not None:
-            await self._emit_room_joined(new_room_id, list(members), unread_seed=None)
+            await self._run_side_effect_safe(
+                self._emit_room_joined(new_room_id, list(members), unread_seed=None),
+                room_id=new_room_id, label="room_joined:direct",
+            )
             logger.info("1:1 방 생성 완료: room_id={}, members={}", new_room_id, members)
         return dto
 
@@ -155,7 +158,10 @@ class RoomService:
         room_id, all_member_ids, dto = await self._create_group_room_tx(
             me_id=me_id, title=title, member_ids=member_ids,
         )
-        await self._emit_room_joined(room_id, all_member_ids, unread_seed="zero")
+        await self._run_side_effect_safe(
+            self._emit_room_joined(room_id, all_member_ids, unread_seed="zero"),
+            room_id=room_id, label="room_joined:group",
+        )
         await self._send_system_message_safe(
             room_id=room_id, action="created", actor_id=me_id,
         )
@@ -218,6 +224,20 @@ class RoomService:
             )
 
 
+    async def _run_side_effect_safe(self, coro, *, room_id: str, label: str) -> None:
+        """(커밋 후) Redis/fan-out 부수효과 best-effort — 실패해도 커밋된 멤버십은 안 되돌린다.
+
+        500→재시도로 인한 그룹 방 중복 생성을 막는다. 캐시는 read-repair·TTL 로 DB 기준 수렴.
+        """
+        try:
+            await coro
+        except Exception as e:
+            logger.warning(
+                "채팅 부수효과 실패 (무시): label={}, room_id={}, err={}",
+                label, room_id, type(e).__name__,
+            )
+
+
     async def invite_members(
         self,
         me_id: str,
@@ -238,9 +258,12 @@ class RoomService:
         if not invited:
             return [], skipped
 
-        await self._emit_invite_side_effects(
-            room_id, invited=invited, new_members=new_members,
-            rejoined=rejoined, current_seq=current_seq,
+        await self._run_side_effect_safe(
+            self._emit_invite_side_effects(
+                room_id, invited=invited, new_members=new_members,
+                rejoined=rejoined, current_seq=current_seq,
+            ),
+            room_id=room_id, label="invite_side_effects",
         )
         await self._send_system_message_safe(
             room_id=room_id, action="join", actor_id=me_id, target_ids=invited,
@@ -352,7 +375,10 @@ class RoomService:
         캐시를 부활시키지 않는다.
         """
         await self._leave_room_tx(me_id=me_id, room_id=room_id)
-        await self._emit_member_removed(room_id, me_id)
+        await self._run_side_effect_safe(
+            self._emit_member_removed(room_id, me_id),
+            room_id=room_id, label="member_removed:leave",
+        )
         await self._send_system_message_safe(
             room_id=room_id, action="leave", actor_id=me_id,
         )
@@ -403,7 +429,10 @@ class RoomService:
         await self._kick_member_tx(
             me_id=me_id, room_id=room_id, target_user_id=target_user_id,
         )
-        await self._emit_member_removed(room_id, target_user_id)
+        await self._run_side_effect_safe(
+            self._emit_member_removed(room_id, target_user_id),
+            room_id=room_id, label="member_removed:kick",
+        )
         await self._send_system_message_safe(
             room_id=room_id, action="kick", actor_id=me_id, target_ids=[target_user_id],
         )
