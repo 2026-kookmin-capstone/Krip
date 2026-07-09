@@ -29,6 +29,16 @@ class TestBlockUser:
             await service.block_user(user_id="USER_a", target_user_id="USER_b")
 
 
+    async def test_raises_when_target_incomplete_signup(self, service, user_repo_mock):
+        """detail=None(2차 미완료) 대상은 AttributeError(500) 대신 400 으로 거부."""
+        user_repo_mock.find_by_id_with_profile.return_value = UserFactory.create(
+            user_id="USER_b", detail=None,
+        )
+
+        with pytest.raises(ValueError, match="2차 회원가입"):
+            await service.block_user(user_id="USER_a", target_user_id="USER_b")
+
+
     async def test_raises_when_already_blocked(
         self, service, user_repo_mock, block_repo_mock
     ):

@@ -20,13 +20,22 @@ class UserBlockService:
 
     # ──────────────────── 차단 ────────────────────
 
-    @transactional
     async def block_user(self, user_id: str, target_user_id: str) -> UserBlockData:
-        """
-        유저 차단
+        """유저 차단 — DB 커밋 후 chat 차단 캐시 무효화."""
+        result = await self._block_user_tx(user_id, target_user_id)
 
+        # 무효화는 반드시 커밋 이후 — 커밋 전 DEL 하면 동시 send miss 가 미커밋 DB(차단 없음)를
+        # 읽어 __none__ 을 TTL 재적재, 차단이 무시된다. fail-closed: 실패해도 DB 가 진실.
+        await self._block_cache.invalidate_block_cache(user_id, target_user_id)
+
+        return result
+
+
+    @transactional
+    async def _block_user_tx(self, user_id: str, target_user_id: str) -> UserBlockData:
+        """
         1. 자기 자신 차단 불가
-        2. 대상 유저 존재 검증
+        2. 대상 유저 존재 + 2차 회원가입 완료 검증
         3. 이미 차단한 상태면 에러
         4. 두 유저 간의 friendship 관계는 모두 정리
            (PENDING/ACCEPTED는 즉시 끊어야 하고, REJECTED도 삭제해 재요청 경로가 깔끔하게 새로 시작되도록)
@@ -42,6 +51,9 @@ class UserBlockService:
         target = await user_repo.find_by_id_with_profile(target_user_id)
         if target is None:
             raise ValueError("존재하지 않는 유저입니다.")
+        # 2차 미완료(detail=None)는 400 으로 거부(프로필 구성 불가). 정상 UI 로는 노출 안 돼 도달 불가.
+        if target.detail is None:
+            raise ValueError("2차 회원가입이 완료되지 않은 유저입니다.")
 
         if await block_repo.has_blocker_blocked(user_id, target_user_id):
             raise ValueError("이미 차단한 유저입니다.")
@@ -63,29 +75,27 @@ class UserBlockService:
                 raise ValueError("이미 차단한 유저입니다.")
             raise ValueError("차단을 처리하지 못했습니다. 잠시 후 다시 시도해주세요.")
 
-        # DB INSERT 뒤 chat 의 stale 캐시 제거. fail-closed:
-        # 캐시 무효화 실패해도 DB 상태(차단 확정) 가 최종 진실이므로 다음 송신 miss 시 자연히 올바른 상태로 재구성된다.
-        await self._block_cache.invalidate_block_cache(user_id, target_user_id)
-
         return self._to_dto(block, target)
 
 
     # ──────────────────── 차단 해제 ────────────────────
 
-    @transactional
     async def unblock_user(self, user_id: str, target_user_id: str) -> None:
-        """
-        차단 해제 — (blocker=user_id, blocked=target) 레코드 삭제
-        """
+        """차단 해제 — DB 커밋 후 chat 차단 캐시 무효화."""
+        await self._unblock_user_tx(user_id, target_user_id)
+
+        # block_user 와 동일하게 커밋 후 무효화. fail-open: 실패해도 TTL 후 만료돼 해제를 막지 않는다.
+        await self._block_cache.invalidate_block_cache(user_id, target_user_id)
+
+
+    @transactional
+    async def _unblock_user_tx(self, user_id: str, target_user_id: str) -> None:
+        """(blocker=user_id, blocked=target) 레코드 삭제."""
         block_repo = UserBlockRepository(self._session)
 
         block = await block_repo.find_by_pair(blocker_id=user_id, blocked_id=target_user_id)
         if block is None:
             raise ValueError("차단 상태가 아닙니다.")
-
-        # fail-open: 캐시 먼저 지우고 DB DELETE. 캐시 무효화 실패는
-        # 최대 `ROOM_BLOCKS_TTL` 후 자연 만료되므로 사용자 의도(해제) 를 막지 않는다.
-        await self._block_cache.invalidate_block_cache(user_id, target_user_id)
 
         await block_repo.delete(block)
 
