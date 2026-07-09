@@ -41,9 +41,15 @@ _SUPPORTED_MODES = ("in_process", "node_channel")
 # 클라는 "재인증 필요" 로 처리).
 _CLOSE_SESSION_REVOKED = 4001
 
+# 응답 없는(백프레셔로 stuck) 소켓을 서버가 강제 종료할 때의 close code. 클라는 재접속으로 회복.
+_CLOSE_UNRESPONSIVE = 1011
+
 # 개별 WS send 상한 — 정체된 클라이언트(TCP 백프레셔)가 노드 전체 fan-out 을 멈추는
 # head-of-line 블로킹 차단. 초과 소켓은 dead 로 간주해 정리한다.
 _SEND_TIMEOUT_SECONDS = 5
+
+# 강제 close task 핸들 보관 — GC 가 미참조 task 를 회수하지 않도록.
+_CLOSE_TASKS: set[asyncio.Task] = set()
 
 
 class FanoutService:
@@ -104,6 +110,24 @@ class FanoutService:
                 self._room_subs[room_id].discard(ws)
                 if not self._room_subs[room_id]:
                     del self._room_subs[room_id]
+
+
+    @staticmethod
+    def _spawn_close(ws: WebSocket, code: int = _CLOSE_UNRESPONSIVE) -> None:
+        """소켓 close 를 백그라운드 task 로 실행. 이미 닫힌 소켓이면 무해한 no-op.
+
+        수신 loop 가 같은 소켓에서 receive 중이어도, close 프레임이 disconnect 로 이어져
+        loop 가 정상 종료 + 자체 cleanup(멱등) 을 수행한다. session_revoked 종료와 동일 패턴.
+        """
+        async def _close() -> None:
+            try:
+                await ws.close(code=code)
+            except Exception:
+                pass
+
+        task = asyncio.create_task(_close())
+        _CLOSE_TASKS.add(task)
+        task.add_done_callback(_CLOSE_TASKS.discard)
 
 
     # ──────────────────── 동적 방 구독 (cross-node) ────────────────────
@@ -347,3 +371,6 @@ class FanoutService:
             # 타임아웃(백프레셔로 stuck)도 dead 로 간주 — 느린 소켓이 노드 전체 전달을 막지 않게.
             if isinstance(result, (RuntimeError, WebSocketDisconnect, asyncio.TimeoutError)):
                 self.unregister_ws(ws)
+                # unregister 만 하면 "수신만 끊긴 좀비"(소켓은 살아 세션 TTL 계속 갱신)가 된다.
+                # 소켓을 닫아 재접속을 유도 — 닫기는 백그라운드로 fan-out 을 막지 않게.
+                self._spawn_close(ws)
