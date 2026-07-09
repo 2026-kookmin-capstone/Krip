@@ -51,6 +51,11 @@ class FriendshipService:
         if blocks:
             raise ValueError("해당 유저에게 친구 요청을 보낼 수 없습니다.")
 
+        # 2차 미완료(detail=None) addressee 는 400 으로 거부(프로필 구성 불가). 차단 검사 뒤에
+        # 두어 차단 유저의 존재를 노출하지 않는다.
+        if addressee.detail is None:
+            raise ValueError("2차 회원가입이 완료되지 않은 유저입니다.")
+
         existing = await friendship_repo.find_between(requester_id, addressee_id)
         if existing is not None:
             if existing.status == FriendshipStatus.PENDING:

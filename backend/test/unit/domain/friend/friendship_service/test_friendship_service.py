@@ -29,6 +29,16 @@ class TestSendRequest:
             await service.send_request(requester_id="USER_a", addressee_id="USER_b")
 
 
+    async def test_raises_when_addressee_incomplete_signup(self, service, user_repo_mock):
+        """detail=None(2차 미완료) addressee 는 AttributeError(500) 대신 400 으로 거부."""
+        user_repo_mock.find_by_id_with_profile.return_value = UserFactory.create(
+            user_id="USER_b", detail=None,
+        )
+
+        with pytest.raises(ValueError, match="2차 회원가입"):
+            await service.send_request(requester_id="USER_a", addressee_id="USER_b")
+
+
     async def test_raises_when_requester_blocked_addressee(
         self, service, user_repo_mock, block_repo_mock
     ):
