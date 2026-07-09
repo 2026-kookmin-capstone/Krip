@@ -12,6 +12,7 @@ from app.config.setting import settings
 from app.container import Container
 from app.core.logger import get_logger
 from app.core.oauth import OAUTH_CLIENTS
+from app.core.oauth.exception import OAuthInvalidGrantError, OAuthVendorError
 from app.domain.auth.service.signup import SignupService
 from app.util.oauth_state import (
     clear_state_cookie,
@@ -75,9 +76,16 @@ async def login_callback(
     if not client_class:
         raise HTTPException(status_code=400, detail=f"지원하지 않는 OAuth 제공자: {provider}")
 
-    async with client_class(config) as client:
-        access_token = await client.get_access_token(code=code, user_type="callback")
-        user_info = await client.get_user_info(access_token=access_token)
+    # Back/새로고침으로 이미 소비된 code 로 콜백을 재요청하면 vendor 가 4xx 를 반환한다.
+    # httpx 예외가 그대로 새면 500 + 스택트레이스가 노출되므로 도메인 예외로 매핑한다.
+    try:
+        async with client_class(config) as client:
+            access_token = await client.get_access_token(code=code, user_type="callback")
+            user_info = await client.get_user_info(access_token=access_token)
+    except OAuthInvalidGrantError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except OAuthVendorError as e:
+        raise HTTPException(status_code=502, detail=str(e))
 
     # PII(email·실명) 는 로그에 남기지 않는다 — Promtail 수집 파이프라인에 개인정보 축적 방지.
     logger.info("OAuth 로그인 성공: provider={} provider_account_id={}", provider.value, user_info.id)
