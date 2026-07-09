@@ -96,6 +96,35 @@ class TestAddLike:
         assert result == 7
         like_repo_mock.save.assert_awaited_once()
 
+    async def test_hidden_post_like_blocked_for_non_owner(
+        self, service, post_repo_mock, like_repo_mock, inbox_service_mock,
+    ):
+        """숨김 게시글은 타인이 좋아요 불가 — 존재 오라클(좋아요 수) + 알림 발송 차단."""
+        post_repo_mock.find_by_id.return_value = TripmatePostFactory.create(
+            post_id="TMP_x", user_id="USER_owner", is_displayed=False,
+        )
+
+        with pytest.raises(ValueError, match="존재하지 않는"):
+            await service.add_like(user_id="USER_other", post_id="TMP_x")
+
+        like_repo_mock.save.assert_not_awaited()
+        inbox_service_mock.notify_tripmate_like.assert_not_awaited()
+
+    async def test_hidden_post_like_allowed_for_owner(
+        self, service, post_repo_mock, like_repo_mock,
+    ):
+        """작성자 본인은 숨김 게시글에도 좋아요 가능 (self-like — 알림 없음)."""
+        post = TripmatePostFactory.create(
+            post_id="TMP_x", user_id="USER_owner", is_displayed=False,
+        )
+        post_repo_mock.find_by_id.return_value = post
+        like_repo_mock.count_by_post.return_value = 1
+
+        result = await service.add_like(user_id="USER_owner", post_id="TMP_x")
+
+        assert result == 1
+        like_repo_mock.save.assert_awaited_once()
+
     async def test_external_like_calls_fanout_with_actor_snapshot(
         self, service, post_repo_mock, detail_repo_mock, inbox_service_mock,
     ):

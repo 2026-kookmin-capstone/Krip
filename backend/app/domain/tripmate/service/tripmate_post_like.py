@@ -76,6 +76,10 @@ class TripmatePostLikeService:
         post = await post_repo.find_by_id(post_id)
         if post is None:
             raise ValueError("존재하지 않는 게시글입니다.")
+        # 숨김 게시글은 작성자 본인에게만 노출 — 조회 경로와 동일 정책. 타인의 좋아요를 막아
+        # 존재 오라클(좋아요 수 노출)과 작성자에게 가는 알림 발송을 차단한다.
+        if not post.is_displayed and post.user_id != user_id:
+            raise ValueError("존재하지 않는 게시글입니다.")
 
         existing = await like_repo.find_by_user_and_post(user_id, post_id)
         if existing is not None:
