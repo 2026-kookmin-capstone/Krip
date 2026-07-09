@@ -244,8 +244,10 @@ app = create_app()
 
 
 if __name__ == "__main__":
+    # 직접 실행할 경우, reload=True 는 app 객체가 아닌 import 문자열을 요구한다. 
+    # 객체를 넘기면 uvicorn 이 경고 후 sys.exit(1) 로 종료돼 서버가 뜨지 않는다.
     uvicorn.run(
-        app,
+        "app.main:app",
         host=settings.HOST,
         port=settings.PORT,
         reload=not settings.is_production,
