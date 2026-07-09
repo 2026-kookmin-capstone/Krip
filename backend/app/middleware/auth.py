@@ -81,8 +81,9 @@ class BearerTokenMiddleware(BaseHTTPMiddleware):
 
         token = parts[1]
 
-        # 토큰 검증 (타이밍 공격 방지)
-        if not hmac.compare_digest(token, settings.ACCESS_TOKEN):
+        # 토큰 검증 (타이밍 공격 방지). str 끼리 compare_digest 는 non-ASCII 문자가 있으면
+        # TypeError → 미들웨어 밖으로 전파돼 401 대신 500 이 된다.
+        if not hmac.compare_digest(token.encode("utf-8"), settings.ACCESS_TOKEN.encode("utf-8")):
             AUTH_FAILURES.labels(kind="bearer_token_invalid").inc()
             auth_logger.warning("유효하지 않은 Bearer Token 토큰")
             return JSONResponse(
@@ -311,6 +312,19 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
                 content={
                     "detail": "회원 탈퇴가 진행 중입니다. 30일 유예 기간 종료 후 영구 삭제됩니다.",
                     "status": "withdrawal_pending",
+                },
+            )
+
+        # 정지(SUSPENDED) 유저 차단. 주의: SUSPENDED 전환 경로는 invalidate_registered_cache 로
+        # REGISTERED 캐시를 비워야 즉시 반영된다 (안 하면 CACHE_TTL 만료까지 미적용).
+        if user.status == UserStatus.SUSPENDED:
+            AUTH_FAILURES.labels(kind="register_suspended").inc()
+            reg_logger.warning("정지 유저 접근 차단")
+            return JSONResponse(
+                status_code=403,
+                content={
+                    "detail": "계정이 정지되었습니다.",
+                    "status": "suspended",
                 },
             )
 
