@@ -74,7 +74,9 @@ class FeedPostService:
         # S3 + INSERT — 외부 try 가 cleanup 단일 진입점. `_insert_post` 의 commit 은
         # `__aexit__` 에서 일어나므로 commit 실패도 여기서 catch.
         try:
-            original_url, small_url, medium_url = await asyncio.gather(
+            # gather 는 첫 예외 시 형제를 취소 안 해 in-flight 업로드가 cleanup 스캔 후
+            # 완료되면 고아가 된다. return_exceptions 로 전부 완료 후 raise → 완전한 cleanup.
+            uploads = await asyncio.gather(
                 self.storage.upload_to_key(
                     processed.original.data,
                     prefix=prefix,
@@ -93,7 +95,12 @@ class FeedPostService:
                     filename=f"medium.{processed.medium.file_ext}",
                     content_type=processed.medium.content_type,
                 ),
+                return_exceptions=True,
             )
+            upload_errors = [u for u in uploads if isinstance(u, Exception)]
+            if upload_errors:
+                raise upload_errors[0]
+            original_url, small_url, medium_url = uploads
 
             post = await self._insert_post(
                 user_id=user_id,

@@ -82,6 +82,34 @@ class TestUploadImages:
         assert result == []
         storage_mock.upload_perm.assert_not_awaited()
 
+    async def test_partial_failure_cleans_up_succeeded_siblings(
+        self, service, storage_mock, image_repo_mock,
+    ):
+        """1건 실패 시 이미 성공한 형제 업로드를 보상 삭제하고 예외 전파 (고아 방지).
+
+        gather 는 첫 예외에 형제를 취소하지 않아, cleanup 없이는 성공분이 S3+Mongo 에
+        고아로 남는다.
+        """
+        storage_mock.upload_perm.side_effect = [
+            "https://img/1.jpg", RuntimeError("boom"), "https://img/3.jpg",
+        ]
+
+        with pytest.raises(RuntimeError):
+            await service.upload_images(
+                user_id="USER_a",
+                files=[
+                    (b"f1", "1.jpg", "image/jpeg"),
+                    (b"f2", "2.jpg", "image/jpeg"),
+                    (b"f3", "3.jpg", "image/jpeg"),
+                ],
+            )
+
+        # 성공한 형제(1, 3) 만 S3 + Mongo 보상 삭제
+        assert storage_mock.delete.await_count == 2
+        deleted = {c.args[0] for c in storage_mock.delete.await_args_list}
+        assert deleted == {"https://img/1.jpg", "https://img/3.jpg"}
+        assert image_repo_mock.delete_by_image_id.await_count == 2
+
 
 # ──────────────────────────────────────────────────────────────────
 # get_images

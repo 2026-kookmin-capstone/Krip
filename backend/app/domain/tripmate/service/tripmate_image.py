@@ -74,11 +74,29 @@ class TripmateImageService:
         이미지 여러 건 업로드
 
         files: [(file, file_name, content_type), ...]
+
+        all-or-nothing: gather 가 형제를 취소하지 않아 1건 실패 시 나머지가 고아로 남으므로,
+        전부 완료를 기다린 뒤 실패가 있으면 성공분을 보상 삭제하고 원 예외를 올린다.
         """
-        return list(await asyncio.gather(
+        results = await asyncio.gather(
             *(self.upload_image(user_id, file, file_name, content_type)
-              for file, file_name, content_type in files)
-        ))
+              for file, file_name, content_type in files),
+            return_exceptions=True,
+        )
+        errors = [r for r in results if isinstance(r, Exception)]
+        if errors:
+            succeeded = [r for r in results if not isinstance(r, Exception)]
+            for img in succeeded:
+                try:
+                    await self.storage.delete(img.image_url)
+                    await self.image_repo.delete_by_image_id(img.image_id)
+                except Exception as cleanup_err:
+                    logger.warning(
+                        "부분 업로드 성공분 보상 삭제 실패 (image_id={}): {}",
+                        img.image_id, cleanup_err,
+                    )
+            raise errors[0]
+        return list(results)
 
     # ──────────────────── 이미지 조회 ────────────────────
 
