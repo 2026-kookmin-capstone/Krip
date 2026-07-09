@@ -111,6 +111,7 @@ def make_redis_mock() -> MagicMock:
     redis.smembers = AsyncMock(return_value={"U_A", "U_B"})
     redis.sadd = AsyncMock(return_value=1)
     redis.expire = AsyncMock(return_value=1)
+    redis.get = AsyncMock(return_value=None)   # room:members:gen — 부재 시 "0" 취급
 
     def _new_pipe(*_a, **_kw):
         p = _make_trackable_pipe()
@@ -142,4 +143,5 @@ def make_lua_mock(
         recover_and_incr=AsyncMock(return_value=recover_and_incr_return),
         force_jump=AsyncMock(return_value=force_jump_return),
         incr_with_ttl=AsyncMock(return_value=incr_with_ttl_return),
+        populate_members=AsyncMock(return_value=1),   # 1=반영 / 0=gen 불일치 skip
     )

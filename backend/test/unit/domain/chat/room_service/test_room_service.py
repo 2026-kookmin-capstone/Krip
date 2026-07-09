@@ -178,11 +178,12 @@ class TestSideEffects:
 
         await service.create_direct_room(me_id="U_A", peer_user_id="U_B")
 
-        # Redis pipeline 에 SADD + EXPIRE 호출 기록
+        # Redis pipeline: gen INCR + SADD members + EXPIRE(gen, members)
         assert redis_mock._pipes, "pipeline 호출되지 않음"
         p = redis_mock._pipes[-1]
-        p.sadd.assert_called_once()
-        p.expire.assert_called_once()
+        p.incr.assert_called_once()                    # room:members:gen bump
+        p.sadd.assert_called_once()                    # room:members 채우기
+        assert p.expire.call_count == 2                # gen + members 각각 TTL
         p.execute.assert_awaited_once()
 
 

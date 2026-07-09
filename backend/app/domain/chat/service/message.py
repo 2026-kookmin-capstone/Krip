@@ -19,6 +19,7 @@ from app.core.chat.redis_key import (
     dedupe_key,
     rate_msg_key,
     room_blocks_key,
+    room_members_gen_key,
     room_members_key,
     room_seq_key,
     unread_key,
@@ -237,14 +238,20 @@ class MessageService:
             await redis_hot.expire(key, ROOM_MEMBERS_TTL)
             return
 
+        # generation 을 DB 읽기 "직전" 에 캡처한다. 이 사이 leave/kick 이 커밋되면 gen 이 바뀌어
+        # populate_members.lua 가 SADD 를 건너뛰므로, 제거된 멤버가 부활하지 않는다.
+        gen_key = room_members_gen_key(room_id)
+        gen0 = await redis_hot.get(gen_key) or "0"
+
         members = await member_repo.find_active_member_ids(room_id)
         if not members:
             raise ValueError("존재하지 않는 방이거나 멤버가 없습니다.")
 
-        pipe = redis_hot.pipeline(transaction=False)
-        pipe.sadd(key, *members)
-        pipe.expire(key, ROOM_MEMBERS_TTL)
-        await pipe.execute()
+        # gen 이 그대로일 때만 캐시 반영. skip(0) 이어도 다음 send 가 재적재하므로 안전.
+        await lua_scripts.populate_members(
+            keys=[key, gen_key],
+            args=[gen0, ROOM_MEMBERS_TTL, *members],
+        )
 
         if user_id not in members:
             raise PermissionError("이 방의 멤버가 아닙니다.")

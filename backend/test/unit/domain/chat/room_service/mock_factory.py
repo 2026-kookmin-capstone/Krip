@@ -96,7 +96,7 @@ def make_fanout_mock() -> MagicMock:
 def _make_pipeline(parent) -> MagicMock:
     p = MagicMock(name="pipeline")
     # 체이닝 가능한 명령들
-    for cmd in ("sadd", "srem", "expire", "hset", "hdel"):
+    for cmd in ("incr", "sadd", "srem", "expire", "hset", "hdel"):
         setattr(p, cmd, MagicMock(return_value=p))
     p.execute = AsyncMock()
     parent._pipes.append(p)

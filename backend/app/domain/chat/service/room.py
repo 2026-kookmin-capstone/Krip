@@ -6,6 +6,7 @@ from sqlalchemy.exc import IntegrityError
 from app.core.chat.lua_script import lua_scripts
 from app.core.chat.redis_key import (
     ROOM_MEMBERS_TTL,
+    room_members_gen_key,
     room_members_key,
     room_seq_key,
     unread_key,
@@ -121,6 +122,9 @@ class RoomService:
         """
         redis = await get_redis_client()
         pipe = redis.pipeline(transaction=True)
+        # gen INCR — 멤버십 변경 신호. 진행 중인 stale read-repair populate 를 무효화한다.
+        pipe.incr(room_members_gen_key(room_id))
+        pipe.expire(room_members_gen_key(room_id), ROOM_MEMBERS_TTL)
         pipe.sadd(room_members_key(room_id), *member_ids)
         pipe.expire(room_members_key(room_id), ROOM_MEMBERS_TTL)
         if unread_seed == "zero":
@@ -351,6 +355,9 @@ class RoomService:
             rejoin_unread.append((uid, min(raw, _UNREAD_COUNT_CAP)))
 
         pipe = redis.pipeline(transaction=True)
+        # gen INCR — 초대(멤버십 변경)로 진행 중인 stale read-repair populate 를 무효화.
+        pipe.incr(room_members_gen_key(room_id))
+        pipe.expire(room_members_gen_key(room_id), ROOM_MEMBERS_TTL)
         # SADD 부분 갱신 금지 — 키 만료 상태면 초대 멤버만 담긴 부분 집합이 생겨 기존 멤버
         # unread/푸시가 누락된다. 무효화 후 다음 send 의 _ensure_membership 이 DB 로 재적재.
         pipe.delete(room_members_key(room_id))
@@ -369,11 +376,8 @@ class RoomService:
             )
 
     async def leave_room(self, me_id: str, room_id: str) -> None:
-        """그룹 방 본인 퇴장.
-
-        커밋(is_left=True) 이후 Redis SREM/구독 해제 — 커밋된 상태 기준으로 정리하므로
-        시스템 메시지 실패가 퇴장을 되돌리지 않고, read-repair 가 커밋된 is_left 를 봐
-        캐시를 부활시키지 않는다.
+        """그룹 방 본인 퇴장. 커밋(is_left=True) 후 Redis 정리 — 시스템 메시지 실패가 퇴장을
+        되돌리지 않는다. 캐시 부활 방지는 _emit_member_removed 의 gen 가드 참고.
         """
         await self._leave_room_tx(me_id=me_id, room_id=room_id)
         await self._run_side_effect_safe(
@@ -411,6 +415,10 @@ class RoomService:
         """
         redis = await get_redis_client()
         pipe = redis.pipeline(transaction=True)
+        # gen INCR + SREM 을 한 MULTI 로 원자 실행 — stale read-repair populate 가 gen 불일치로
+        # skip 되어 제거된 멤버가 캐시에 부활하지 않는다 (상세 불변식은 populate_members.lua).
+        pipe.incr(room_members_gen_key(room_id))
+        pipe.expire(room_members_gen_key(room_id), ROOM_MEMBERS_TTL)
         pipe.srem(room_members_key(room_id), user_id)
         pipe.hdel(unread_key(user_id), room_id)
         await pipe.execute()

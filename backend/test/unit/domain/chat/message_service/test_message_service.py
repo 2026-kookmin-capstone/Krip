@@ -112,7 +112,7 @@ class TestMembershipCheck:
         assert redis_mock.expire.call_args.args == (room_members_key("CR_1"), ROOM_MEMBERS_TTL)
 
     async def test_cache_miss_loads_all_members_and_sadd(
-        self, service, redis_mock, chat_member_repo_mock,
+        self, service, redis_mock, chat_member_repo_mock, lua_mock,
     ):
         redis_mock.sismember = AsyncMock(return_value=False)
         chat_member_repo_mock.find_active_member_ids.return_value = ["U_A", "U_B"]
@@ -123,9 +123,10 @@ class TestMembershipCheck:
         )
 
         chat_member_repo_mock.find_active_member_ids.assert_awaited_once_with("CR_1")
-        # SADD + EXPIRE pipeline 존재
-        pipes_with_sadd = [p for p in redis_mock._pipes if p.sadd.called]
-        assert pipes_with_sadd, "멤버 캐시 SADD pipeline 이 호출되지 않음"
+        # 멤버 populate 는 gen 가드 Lua(populate_members)로 반영 — gen0 캡처 후 멤버 목록 전달.
+        lua_mock.populate_members.assert_awaited_once()
+        args = lua_mock.populate_members.call_args.kwargs["args"]
+        assert set(args[2:]) == {"U_A", "U_B"}, "멤버 목록이 Lua ARGV 로 전달되지 않음"
 
     async def test_not_a_member_raises_permission(
         self, service, redis_mock, chat_member_repo_mock,

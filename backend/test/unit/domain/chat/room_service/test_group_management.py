@@ -82,11 +82,12 @@ class TestCreateGroupRoom:
             me_id="U_A", title="T", member_ids=["U_B"],
         )
 
-        # pipeline 에 sadd + expire + hset (멤버당 unread) 호출
+        # pipeline: gen INCR + sadd + expire(gen, members) + hset (멤버당 unread)
         p = redis_mock._pipes[-1]
+        p.incr.assert_called_once()       # room:members:gen bump
         p.sadd.assert_called_once()
-        p.expire.assert_called_once()
-        assert p.hset.call_count == 2  # creator + 1 member
+        assert p.expire.call_count == 2   # gen + members 각각 TTL
+        assert p.hset.call_count == 2     # creator + 1 member
 
 
 # ──────────────────────────────────────────────────────────────────

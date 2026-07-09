@@ -52,6 +52,15 @@ def room_members_key(room_id: str) -> str:
     return f"room:members:{room_id}"
 
 
+def room_members_gen_key(room_id: str) -> str:
+    """멤버 캐시 generation 카운터 — 멤버십 변경마다 INCR.
+
+    read-repair 가 DB 스냅샷을 읽는 사이 커밋된 removal/invite 를 감지해, stale populate
+    가 제거된 멤버를 캐시에 부활시키는 것을 차단한다 (populate_members.lua 가드).
+    """
+    return f"room:members:gen:{room_id}"
+
+
 def room_blocks_key(room_id: str) -> str:
     return f"room:blocks:{room_id}"
 
