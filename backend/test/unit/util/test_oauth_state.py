@@ -59,6 +59,13 @@ class TestVerifyStateNonce:
             verify_state_nonce(_request_with_cookies(oauth_state="present"), "")
         assert exc.value.status_code == 400
 
+    def test_rejects_non_ascii_nonce_with_400_not_typeerror(self):
+        """non-ASCII nonce(state 쿼리 파라미터) → 400. bytes 비교 전이면 str compare_digest
+        가 TypeError 를 던져 400 대신 500 이 됐다."""
+        with pytest.raises(HTTPException) as exc:
+            verify_state_nonce(_request_with_cookies(oauth_state="present"), "café")
+        assert exc.value.status_code == 400
+
 
 @pytest.mark.unit
 class TestStateCookie:

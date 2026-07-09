@@ -44,7 +44,10 @@ def set_state_cookie(response: Response, nonce: str) -> None:
 def verify_state_nonce(request: Request, nonce: str) -> None:
     """콜백에서 state 의 nonce 와 쿠키 값을 상수시간 비교. 불일치/부재 시 400."""
     cookie = request.cookies.get(STATE_COOKIE_NAME)
-    if not cookie or not nonce or not hmac.compare_digest(cookie, nonce):
+    # str 끼리 compare_digest 는 non-ASCII 문자가 있으면 TypeError → 400 대신 500.
+    if not cookie or not nonce or not hmac.compare_digest(
+        cookie.encode("utf-8"), nonce.encode("utf-8")
+    ):
         raise HTTPException(status_code=400, detail="유효하지 않은 OAuth state 입니다.")
 
 
