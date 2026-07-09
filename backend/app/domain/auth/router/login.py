@@ -75,7 +75,8 @@ async def login_callback(
         access_token = await client.get_access_token(code=code, user_type="callback")
         user_info = await client.get_user_info(access_token=access_token)
 
-    logger.info("OAuth 로그인 성공: {} / {} / {} / {}", user_info.id, user_info.email, user_info.name, provider.value)
+    # PII(email·실명) 는 로그에 남기지 않는다 — Promtail 수집 파이프라인에 개인정보 축적 방지.
+    logger.info("OAuth 로그인 성공: provider={} provider_account_id={}", provider.value, user_info.id)
     
     result = await signup_service.check_and_register(
         auth_provider=provider.value,
