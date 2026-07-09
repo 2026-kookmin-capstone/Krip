@@ -7,6 +7,7 @@ from app.domain.auth.repository.user_detail_inform import UserDetailInformReposi
 from app.domain.auth.repository.user import UserRepository
 from app.domain.auth.model.user_travel_style import UserTravelStyle, TravelStyle
 from app.domain.auth.model.user_detail_inform import UserDetailInform, Gender
+from app.domain.auth.model.user import UserStatus
 from app.database.session import UnitOfWork, transactional
 
 
@@ -41,6 +42,11 @@ class RegisterService:
         user = await user_repo.find_by_id(user_id)
         if user is None:
             raise ValueError("존재하지 않는 유저입니다.")
+
+        # ACTIVE 아닌 계정(INACTIVE/SUSPENDED)의 2차 가입 차단 — REGISTERED 캐시를 심어
+        # 보호 경로의 419 차단을 우회하는 것을 막는다.
+        if user.status != UserStatus.ACTIVE:
+            raise ValueError("회원가입을 완료할 수 없는 계정 상태입니다.")
 
         existing = await detail_repo.find_by_user_id(user_id)
         if existing is not None:

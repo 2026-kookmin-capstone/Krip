@@ -48,6 +48,23 @@ class TestRegisterDetail:
         style_repo_mock.save_all.assert_awaited_once()
 
 
+    async def test_raises_when_user_not_active(
+        self, service, user_repo_mock, detail_repo_mock, style_repo_mock,
+    ):
+        """INACTIVE(탈퇴 유예) 유저의 2차 가입 완료 차단 → REGISTERED 캐시 우회 방지."""
+        from app.domain.auth.model.user import UserStatus
+
+        user_repo_mock.find_by_id.return_value = UserFactory.create(
+            user_id="USER_a", status=UserStatus.INACTIVE,
+        )
+
+        with pytest.raises(ValueError, match="계정 상태"):
+            await service.register_detail(**_kwargs_baseline())
+
+        detail_repo_mock.save.assert_not_awaited()
+        style_repo_mock.save_all.assert_not_awaited()
+
+
     async def test_concurrent_second_signup_race_maps_to_value_error(
         self, service, user_repo_mock, detail_repo_mock, style_repo_mock,
     ):
