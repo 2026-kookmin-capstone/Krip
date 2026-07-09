@@ -44,7 +44,16 @@ class Settings(BaseSettings):
     POSTGRES_USER: str = Field("cho", description="POSTGRES USER")
     POSTGRES_PASSWORD: str = Field("hyeonsang", description="POSTGRES PASSWORD")
     POSTGRES_NAME: str = Field("chohyeonsang", description="POSTGRES NAME")
-    
+
+    # POSTGRES 커넥션 풀 (SQLAlchemy async engine — asyncpg 드라이버)
+    DB_POOL_SIZE: int = Field(20, description="상시 유지 커넥션 수 (SQLAlchemy pool_size)")
+    DB_MAX_OVERFLOW: int = Field(20, description="풀 초과 시 추가 허용 커넥션 수 (max_overflow)")
+    DB_POOL_TIMEOUT: int = Field(30, description="풀 고갈 시 커넥션 대기 상한 (초, pool_timeout)")
+    DB_POOL_RECYCLE: int = Field(
+        1800,
+        description="커넥션 재생성 주기 (초). DB idle-kill/방화벽 타임아웃보다 짧게 유지.",
+    )
+
     # MongoDB 정보
     MONGODB_HOST: str = Field("hyeonsang-mongodb", description="MONGODB HOST")
     MONGODB_PORT: int = Field(27017, description="MONGODB PORT")
