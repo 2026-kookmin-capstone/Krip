@@ -379,11 +379,10 @@ class TourPlannerGraphOrchestrator:
             logger.warning("추가 장소 누락 → 강제 삽입: {}", fixed_pid)
             kept_places.append(_fixed_place_to_detail(fixed_place))
 
-        # 8) 빈 places 거부
+        # 8) 빈 places 거부 — LLM 이 후보 풀 밖(환각) place_id 만 냈다는 에러.
         if not kept_places:
-            raise ValueError(
-                f"Day {day_plan.day}: no valid places remained after enforcement"
-            )
+            logger.warning("Day {} enforcement 후 유효 장소 0개 — LLM 출력 무효", day_plan.day)
+            raise TourPlannerOutputError(f"no valid places (day={day_plan.day})")
 
         kept_pids = {p.place_id for p in kept_places}
 
