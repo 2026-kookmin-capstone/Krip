@@ -166,26 +166,41 @@ class MessageService:
             )
             await redis_hot.sadd(DIRTY_CHAT_ROOM_KEY, room_id)
 
-        # 시스템 메시지는 unread 증가 / 푸시 모두 skip.
+        # 여기 도달 = Mongo durable 저장 완료 = 송신 성공 확정. 이후 unread/fanout 은 best-effort —
+        # 예외 전파하면 클라가 저장된 메시지에 에러 ACK 를 받고(dedupe 로 재전송도 거절 → 영구 실패),
+        # @transactional rollback 으로 last_message 까지 유실된다.
         if msg_type != MessageType.SYSTEM:
-            await self._bump_unread(redis_hot, room_id=room_id, sender_user_id=sender_user_id)
+            try:
+                await self._bump_unread(redis_hot, room_id=room_id, sender_user_id=sender_user_id)
+            except Exception as e:
+                logger.warning(
+                    "unread 증가 실패 (메시지는 저장됨): room_id={}, err={}",
+                    room_id, type(e).__name__,
+                )
 
-        await self._fanout.fan_out_to_room(
-            room_id,
-            {
-                "type": "message.new",
-                "sender_session_id": sender_session_id,
-                "message": {
-                    "message_id": message_id,
-                    "chat_room_id": room_id,
-                    "server_seq": server_seq,
-                    "sender_id": sender_user_id,
-                    "type": msg_type.value,
-                    "content": content,
-                    "created_at": now.isoformat(),
+        try:
+            await self._fanout.fan_out_to_room(
+                room_id,
+                {
+                    "type": "message.new",
+                    "sender_session_id": sender_session_id,
+                    "message": {
+                        "message_id": message_id,
+                        "chat_room_id": room_id,
+                        "server_seq": server_seq,
+                        "sender_id": sender_user_id,
+                        "type": msg_type.value,
+                        "content": content,
+                        "created_at": now.isoformat(),
+                    },
                 },
-            },
-        )
+            )
+        except Exception as e:
+            logger.warning(
+                "fanout 실패 (메시지는 저장됨 — 수신자는 히스토리/FCM 으로 수신): "
+                "room_id={}, err={}",
+                room_id, type(e).__name__,
+            )
 
         # FCM 푸시는 fire-and-forget — ACK 지연 차단. 트랜잭션 밖이지만 fanout 까지 도달한
         # 시점에 메시지는 사실상 "출시" 상태라 후속 롤백 없음.

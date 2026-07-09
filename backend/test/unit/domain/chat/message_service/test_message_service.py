@@ -338,6 +338,49 @@ class TestDedupeReleaseOnFailure:
 
 
 # ──────────────────────────────────────────────────────────────────
+# Persist 이후 전파(unread/fanout) 는 best-effort — 저장된 메시지는 항상 ACK 반환
+#
+# regression: 이전엔 fanout/unread 예외가 그대로 전파돼 (a) 저장된 메시지에 대해
+# 클라가 ACK 대신 에러 → dedupe 잔존으로 재전송도 거절 → 영구 실패로 보이고,
+# (b) @transactional rollback 으로 last_message 갱신까지 유실됐다.
+# ──────────────────────────────────────────────────────────────────
+
+@pytest.mark.unit
+class TestPostPersistPropagationBestEffort:
+    async def test_fanout_failure_still_returns_ack_and_keeps_dedupe(
+        self, service, fanout_mock, redis_dedupe_mock, lua_mock,
+    ):
+        """fanout 실패 → 예외 미전파, ACK 정상 반환, dedupe 유지."""
+        lua_mock.incr_fast.return_value = 7
+        fanout_mock.fan_out_to_room.side_effect = RuntimeError("redis pub/sub down")
+
+        ack = await service.send_message(
+            sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+            client_msg_id="cm-fanout-fail", msg_type=MessageType.TEXT, content="x",
+        )
+
+        assert ack.server_seq == 7
+        assert ack.client_msg_id == "cm-fanout-fail"
+        # 저장 성공 후 실패라 dedupe 를 풀면 안 됨 (재전송 시 중복 저장 위험)
+        redis_dedupe_mock.delete.assert_not_called()
+
+    async def test_unread_bump_failure_still_returns_ack(
+        self, service, redis_dedupe_mock, lua_mock,
+    ):
+        """unread 증가 실패 → 예외 미전파, ACK 정상 반환."""
+        lua_mock.incr_fast.return_value = 8
+        service._bump_unread = AsyncMock(side_effect=RuntimeError("hincrby failed"))
+
+        ack = await service.send_message(
+            sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+            client_msg_id="cm-unread-fail", msg_type=MessageType.TEXT, content="x",
+        )
+
+        assert ack.server_seq == 8
+        redis_dedupe_mock.delete.assert_not_called()
+
+
+# ──────────────────────────────────────────────────────────────────
 # RDB UPDATE 실패 → dirty 큐
 # ──────────────────────────────────────────────────────────────────
 
