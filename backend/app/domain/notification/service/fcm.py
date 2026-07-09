@@ -30,6 +30,12 @@ logger = get_logger("fcm_service")
 # 발신자 이름 조회 실패 (탈퇴 / detail 결손) 시 fallback.
 _DEFAULT_CHAT_PUSH_TITLE = "새 메시지"
 
+# MulticastMessage 의 토큰 상한 (firebase_admin 이 초과 시 ValueError). 이 크기로 청크 분할.
+_FCM_MULTICAST_MAX = 500
+
+# 유저당 보관할 최대 디바이스 토큰 수 — 초과분은 updated_at 오래된 것부터 정리.
+MAX_TOKENS_PER_USER = 10
+
 
 class FcmService:
     def __init__(self, uow: UnitOfWork):
@@ -41,6 +47,11 @@ class FcmService:
         """디바이스 토큰 등록 — UNIQUE(token) 충돌 시 owner 교체 (재로그인/계정 전환), 동시 등록 race 안전."""
         repo = FcmTokenRepository(self._session)
         saved = await repo.upsert_by_token(user_id=user_id, token=token)
+        # 유저당 토큰 수 상한 — 무제한 등록으로 인한 테이블 성장 + 푸시 팬아웃 폭증 방지.
+        # 방금 upsert 한 토큰은 updated_at 이 최신이라 항상 보존된다.
+        await repo.prune_user_tokens_keeping_latest(
+            user_id=user_id, keep=MAX_TOKENS_PER_USER,
+        )
         return self._to_dto(saved)
 
 
@@ -75,33 +86,57 @@ class FcmService:
             return 0
         tokens, final_title = collected
 
-        multicast = messaging.MulticastMessage(
-            tokens=tokens,
-            notification=messaging.Notification(title=final_title, body=body),
-            data={
-                "type": "chat",
-                "chatRoomId": chat_room_id,
-                "senderId": sender_id,
-                "url": f"/chat/{chat_room_id}",
-            },
-        )
+        notification = messaging.Notification(title=final_title, body=body)
+        data = {
+            "type": "chat",
+            "chatRoomId": chat_room_id,
+            "senderId": sender_id,
+            "url": f"/chat/{chat_room_id}",
+        }
 
-        try:
-            async with fcm_multicast_timer("chat"):
-                batch = await asyncio.to_thread(
-                    messaging.send_each_for_multicast, multicast, app=get_fcm_app(),
-                )
-        except FirebaseError as e:
-            # 글로벌 실패 (인증/네트워크) — 토큰 정리 없이 0. 비즈는 계속.
-            fcm_send_inc("chat", "global_failed")
-            logger.warning(
-                "FCM multicast 실패 chat_room_id={} count={} error={}",
-                chat_room_id, len(tokens), e,
+        # 토큰이 _FCM_MULTICAST_MAX 를 넘으면 MulticastMessage 생성에서 ValueError 가 나
+        # 방 전체 푸시가 조용히 전멸한다 (호출측 catch-all 이 삼킴). 청크로 분할 발송한다.
+        success_total = 0
+        invalid_tokens: list[str] = []
+        for start in range(0, len(tokens), _FCM_MULTICAST_MAX):
+            chunk = tokens[start:start + _FCM_MULTICAST_MAX]
+            multicast = messaging.MulticastMessage(
+                tokens=chunk, notification=notification, data=data,
             )
-            return 0
+            try:
+                async with fcm_multicast_timer("chat"):
+                    batch = await asyncio.to_thread(
+                        messaging.send_each_for_multicast, multicast, app=get_fcm_app(),
+                    )
+            except FirebaseError as e:
+                # 이 청크만 글로벌 실패 (인증/네트워크) — 다음 청크는 계속 시도.
+                fcm_send_inc("chat", "global_failed")
+                logger.warning(
+                    "FCM multicast 실패 chat_room_id={} count={} error={}",
+                    chat_room_id, len(chunk), e,
+                )
+                continue
 
-        fcm_send_inc("chat", "ok")
+            fcm_send_inc("chat", "ok")
+            success_count, chunk_invalid = self._parse_batch(chat_room_id, chunk, batch)
+            success_total += success_count
+            invalid_tokens.extend(chunk_invalid)
 
+        if invalid_tokens:
+            await self._purge_invalid_tokens(chat_room_id, invalid_tokens)
+
+        return success_total
+
+
+    @staticmethod
+    def _parse_batch(
+        chat_room_id: str, tokens: list[str], batch,
+    ) -> tuple[int, list[str]]:
+        """multicast 응답 파싱 — (성공 수, 영구 무효 토큰 목록) 반환 + 디바이스 메트릭 기록.
+
+        영구 무효 = UNREGISTERED(앱 삭제) + SENDER_ID_MISMATCH(타 프로젝트 토큰). 둘 다
+        재시도해도 절대 성공하지 않으므로 DELETE 대상. 그 외 실패는 일시적일 수 있어 보존.
+        """
         success_count = 0
         failed_unregistered = 0
         failed_other = 0
@@ -111,7 +146,10 @@ class FcmService:
                 success_count += 1
                 continue
             err = resp.exception
-            if isinstance(err, messaging.UnregisteredError):
+            if isinstance(
+                err,
+                (messaging.UnregisteredError, messaging.SenderIdMismatchError),
+            ):
                 failed_unregistered += 1
                 invalid_tokens.append(token)
             else:
@@ -126,11 +164,7 @@ class FcmService:
             failed_unregistered=failed_unregistered,
             failed_other=failed_other,
         )
-
-        if invalid_tokens:
-            await self._purge_invalid_tokens(chat_room_id, invalid_tokens)
-
-        return batch.success_count
+        return success_count, invalid_tokens
 
 
     @transactional

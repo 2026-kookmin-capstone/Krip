@@ -49,3 +49,20 @@ class FcmTokenRepository:
             return
         stmt = delete(FcmToken).where(FcmToken.token.in_(tokens))
         await self.session.execute(stmt)
+
+
+    async def prune_user_tokens_keeping_latest(self, *, user_id: str, keep: int) -> int:
+        """유저의 토큰을 updated_at 최신순 `keep` 개만 남기고 삭제. 삭제한 행 수 반환.
+
+        OFFSET 서브쿼리로 상위 keep 개를 건너뛴 나머지를 DELETE — 방금 upsert 한
+        (updated_at=now) 토큰은 항상 상위에 들어 보존된다.
+        """
+        stale = (
+            select(FcmToken.fcm_token_id)
+            .where(FcmToken.user_id == user_id)
+            .order_by(FcmToken.updated_at.desc(), FcmToken.fcm_token_id.desc())
+            .offset(keep)
+        )
+        stmt = delete(FcmToken).where(FcmToken.fcm_token_id.in_(stale))
+        result = await self.session.execute(stmt)
+        return result.rowcount or 0
