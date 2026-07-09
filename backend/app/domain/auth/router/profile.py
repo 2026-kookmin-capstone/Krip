@@ -18,6 +18,7 @@ from app.domain.auth.schema.profile import (
 )
 from app.core.logger import get_logger
 from app.container import Container
+from app.util.upload import enforce_upload_size
 
 
 router = APIRouter(prefix="/profile", tags=["프로필"])
@@ -34,15 +35,6 @@ def _validate_content_type(file: UploadFile) -> None:
         raise HTTPException(
             status_code=400,
             detail=f"허용되지 않는 파일 형식입니다: {file.content_type} (jpeg, png, webp, gif만 가능)",
-        )
-
-
-def _validate_size(contents: bytes, file_name: str | None) -> None:
-    """크기 검증 (read 후)."""
-    if len(contents) > _MAX_FILE_SIZE:
-        raise HTTPException(
-            status_code=400,
-            detail=f"파일 크기가 5MB를 초과합니다: {file_name}",
         )
 
 
@@ -183,9 +175,7 @@ async def add_profile_image(
     user_id: str = request.state.user_id
 
     _validate_content_type(file)
-    contents = await file.read()
-    _validate_size(contents, file.filename)
-    await file.seek(0)
+    await enforce_upload_size(file, _MAX_FILE_SIZE)
 
     try:
         result = await profile_service.add_profile_image(
@@ -218,9 +208,7 @@ async def update_profile_image(
     user_id: str = request.state.user_id
 
     _validate_content_type(file)
-    contents = await file.read()
-    _validate_size(contents, file.filename)
-    await file.seek(0)
+    await enforce_upload_size(file, _MAX_FILE_SIZE)
 
     try:
         result = await profile_service.update_profile_image(
