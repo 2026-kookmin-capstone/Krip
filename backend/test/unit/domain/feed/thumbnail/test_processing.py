@@ -20,6 +20,7 @@ import pytest
 from PIL import Image
 
 from app.domain.feed.service.thumbnail import (
+    MAX_DECODE_PIXELS,
     ORIGINAL_MAX,
     THUMBNAIL_MEDIUM,
     THUMBNAIL_SMALL,
@@ -206,12 +207,31 @@ class TestDecompressionBomb:
         # PNG IHDR: 8-byte signature + 4-byte chunk length + 4-byte type "IHDR" + 13-byte data
         # data: width(4) height(4) ... → byte offset 16 부터 width, 20 부터 height (big-endian)
         import struct
-        side = 10_000  # 10000 × 10000 = 100MP > MAX_DECODE_PIXELS (50MP)
+        side = 10_000  # 10000 × 10000 = 100MP > MAX_DECODE_PIXELS (30MP)
         patched = bytearray(small)
         struct.pack_into(">I", patched, 16, side)
         struct.pack_into(">I", patched, 20, side)
         # IHDR CRC 가 깨지지만 Pillow 는 width/height 만 읽는 시점에서 우리 코드가 거절.
         # 만약 Pillow 가 CRC 검증 강제하면 OSError 가 먼저 발생할 수 있어, 두 ValueError 메시지 모두 허용.
+        with pytest.raises(ValueError, match="해상도가 너무 큽니다|이미지를 처리할 수 없습니다"):
+            process_feed_image(bytes(patched))
+
+    def test_decode_cap_is_memory_safe_bound(self):
+        """단일 디코딩이 수백 MB 를 할당하지 못하도록 cap 은 30MP 이하로 유지."""
+        # 30MP × 4B(RGBA) ≈ 120MB. 이보다 크면 OOM 회귀 위험.
+        assert MAX_DECODE_PIXELS <= 30_000_000
+
+    def test_36mp_header_rejected_by_tightened_cap(self):
+        """36MP(6000×6000) — 과거 50MP cap 이면 통과했을 값이 이제는 거절됨.
+
+        헤더만 6000×6000 으로 패치해 실제 메모리 할당 없이 dimension 체크만 태운다.
+        """
+        import struct
+        small = _png(size=(10, 10))
+        side = 6_000  # 36MP: 30MP < 36MP < 50MP → 새 cap 에서만 거절
+        patched = bytearray(small)
+        struct.pack_into(">I", patched, 16, side)
+        struct.pack_into(">I", patched, 20, side)
         with pytest.raises(ValueError, match="해상도가 너무 큽니다|이미지를 처리할 수 없습니다"):
             process_feed_image(bytes(patched))
 
