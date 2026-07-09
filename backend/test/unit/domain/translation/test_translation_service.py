@@ -64,3 +64,16 @@ class TestTranslationExceptionMapping:
         svc = _service_detect_raising(KeyError("message"))
         with pytest.raises(TranslationVendorError):
             await svc.detect("안녕")
+
+    async def test_malformed_payload_typeerror_maps_to_vendor_error_detect(self):
+        # 200 body 가 dict 가 아니거나 중간 노드가 None/str 이면 nested 접근이 TypeError.
+        # 예: payload=None 이면 payload["langCode"] → TypeError. 500 아닌 502 로 흡수해야 한다.
+        svc = _service_detect_raising(TypeError("'NoneType' object is not subscriptable"))
+        with pytest.raises(TranslationVendorError):
+            await svc.detect("안녕")
+
+    async def test_malformed_payload_typeerror_maps_to_vendor_error_translate(self):
+        # 예: {"message": null} → payload["message"]["result"] 접근이 TypeError.
+        svc = _service_detect_raising(TypeError("'NoneType' object is not subscriptable"))
+        with pytest.raises(TranslationVendorError):
+            await svc.translate("안녕", "ko", "en")

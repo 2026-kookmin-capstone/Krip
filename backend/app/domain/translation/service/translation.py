@@ -32,9 +32,11 @@ class TranslationService:
             raise TranslationVendorError(e.response.status_code, e.response.text) from e
         except RequestError as e:
             raise TranslationUnreachableError(str(e)) from e
-        except (KeyError, ValueError) as e:
+        except (KeyError, ValueError, TypeError) as e:
             # 200 이지만 payload 스키마가 어긋남(JSONDecodeError=ValueError / KeyError) —
             # 벤더 응답 이상이므로 502 로 매핑 (자체 500 오분류 방지).
+            # TypeError: 200 body 가 dict 가 아니거나(JSON null/list/str) 중간 노드가 None/str
+            # 이라 payload["message"]["result"] 접근이 터지는 경우까지 502 로 흡수.
             raise TranslationVendorError(200, f"malformed payload: {type(e).__name__}") from e
         return DetectData(lang_code=result.lang_code)
 
@@ -55,8 +57,10 @@ class TranslationService:
             raise TranslationVendorError(e.response.status_code, e.response.text) from e
         except RequestError as e:
             raise TranslationUnreachableError(str(e)) from e
-        except (KeyError, ValueError) as e:
+        except (KeyError, ValueError, TypeError) as e:
             # 200 이지만 payload 스키마가 어긋남(JSONDecodeError=ValueError / KeyError) —
             # 벤더 응답 이상이므로 502 로 매핑 (자체 500 오분류 방지).
+            # TypeError: 200 body 가 dict 가 아니거나(JSON null/list/str) 중간 노드가 None/str
+            # 이라 payload["message"]["result"] 접근이 터지는 경우까지 502 로 흡수.
             raise TranslationVendorError(200, f"malformed payload: {type(e).__name__}") from e
         return TranslateData(translated_text=result.translated_text)
