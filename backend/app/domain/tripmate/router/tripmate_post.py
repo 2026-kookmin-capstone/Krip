@@ -80,7 +80,10 @@ async def get_posts(
     """게시글 목록 조회 (최신순 30개, 커서 페이지네이션)"""
     user_id: str = request.state.user_id
 
-    result = await post_service.get_posts(cursor=cursor, user_id=user_id)
+    try:
+        result = await post_service.get_posts(cursor=cursor, user_id=user_id)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     return PostListResponse(
         posts=[_to_post_response(p) for p in result.posts],
         next_cursor=result.next_cursor,
@@ -104,7 +107,10 @@ async def search_posts(
     except Exception:
         logger.warning("검색 기록 저장 실패: user_id={}, keyword={}", user_id, keyword)
 
-    result = await post_service.search_posts(keyword=keyword, cursor=cursor, user_id=user_id)
+    try:
+        result = await post_service.search_posts(keyword=keyword, cursor=cursor, user_id=user_id)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     return PostListResponse(
         posts=[_to_post_response(p) for p in result.posts],
         next_cursor=result.next_cursor,

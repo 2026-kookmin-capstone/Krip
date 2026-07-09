@@ -11,6 +11,8 @@ from unittest.mock import MagicMock
 from types import SimpleNamespace
 from test.unit.domain.feed.mock_factory import make_feed_post_with_counts
 import pytest
+
+from app.util.cursor import decode_cursor
 from datetime import datetime, timezone
 
 from app.domain.friend.model.friendship import FriendshipStatus
@@ -142,7 +144,7 @@ class TestPagination:
         ]
 
         result = await service.get_user_feed(viewer_id="USER_a", owner_id="USER_b")
-        assert result.next_cursor == "FDP_1"
+        assert decode_cursor(result.next_cursor)[1] == "FDP_1"
 
 
     async def test_next_cursor_none_when_partial_page(

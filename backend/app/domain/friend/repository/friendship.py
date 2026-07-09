@@ -5,6 +5,7 @@ from sqlalchemy import select, or_, and_, case, func
 
 from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 from app.domain.auth.model.user import User
+from app.util.cursor import decode_cursor, keyset_where
 
 
 # 친구/요청 목록 페이지 크기
@@ -189,13 +190,13 @@ class FriendshipRepository:
         )
 
         if cursor:
-            cursor_sub = select(Friendship.updated_at).where(Friendship.friendship_id == cursor).scalar_subquery()
-            stmt = stmt.where(
-                or_(
-                    Friendship.updated_at < cursor_sub,
-                    (Friendship.updated_at == cursor_sub) & (Friendship.friendship_id < cursor),
-                )
-            )
+            decoded = decode_cursor(cursor)
+            if decoded is None:
+                raise ValueError("유효하지 않은 커서입니다.")
+            cur_ts, cur_id = decoded
+            stmt = stmt.where(keyset_where(
+                Friendship.updated_at, Friendship.friendship_id, cur_ts, cur_id,
+            ))
 
         stmt = stmt.order_by(Friendship.updated_at.desc(), Friendship.friendship_id.desc()).limit(PAGE_SIZE)
         result = await self.session.execute(stmt)
@@ -218,13 +219,13 @@ class FriendshipRepository:
         )
 
         if cursor:
-            cursor_sub = select(Friendship.updated_at).where(Friendship.friendship_id == cursor).scalar_subquery()
-            stmt = stmt.where(
-                or_(
-                    Friendship.updated_at < cursor_sub,
-                    (Friendship.updated_at == cursor_sub) & (Friendship.friendship_id < cursor),
-                )
-            )
+            decoded = decode_cursor(cursor)
+            if decoded is None:
+                raise ValueError("유효하지 않은 커서입니다.")
+            cur_ts, cur_id = decoded
+            stmt = stmt.where(keyset_where(
+                Friendship.updated_at, Friendship.friendship_id, cur_ts, cur_id,
+            ))
 
         stmt = stmt.order_by(Friendship.updated_at.desc(), Friendship.friendship_id.desc()).limit(PAGE_SIZE)
         result = await self.session.execute(stmt)
@@ -247,13 +248,13 @@ class FriendshipRepository:
         )
 
         if cursor:
-            cursor_sub = select(Friendship.updated_at).where(Friendship.friendship_id == cursor).scalar_subquery()
-            stmt = stmt.where(
-                or_(
-                    Friendship.updated_at < cursor_sub,
-                    (Friendship.updated_at == cursor_sub) & (Friendship.friendship_id < cursor),
-                )
-            )
+            decoded = decode_cursor(cursor)
+            if decoded is None:
+                raise ValueError("유효하지 않은 커서입니다.")
+            cur_ts, cur_id = decoded
+            stmt = stmt.where(keyset_where(
+                Friendship.updated_at, Friendship.friendship_id, cur_ts, cur_id,
+            ))
 
         stmt = stmt.order_by(Friendship.updated_at.desc(), Friendship.friendship_id.desc()).limit(PAGE_SIZE)
         result = await self.session.execute(stmt)

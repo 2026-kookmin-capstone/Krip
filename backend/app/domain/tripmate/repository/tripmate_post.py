@@ -7,6 +7,7 @@ from app.domain.tripmate.model.tripmate_post_like import TripmatePostLike
 from app.domain.tripmate.model.tripmate_post import TripmatePost
 from app.domain.auth.model.user_detail_inform import UserDetailInform
 from app.domain.auth.model.user import User
+from app.util.cursor import decode_cursor, keyset_where
 
 
 # 게시글 조회 개수
@@ -86,13 +87,13 @@ class TripmatePostRepository:
 
         if cursor:
             # cursor로 받은 post_id의 created_at 기준으로 다음 페이지
-            cursor_sub = select(TripmatePost.created_at).where(TripmatePost.post_id == cursor).scalar_subquery()
-            stmt = stmt.where(
-                or_(
-                    TripmatePost.created_at < cursor_sub,
-                    (TripmatePost.created_at == cursor_sub) & (TripmatePost.post_id < cursor),
-                )
-            )
+            decoded = decode_cursor(cursor)
+            if decoded is None:
+                raise ValueError("유효하지 않은 커서입니다.")
+            cur_ts, cur_id = decoded
+            stmt = stmt.where(keyset_where(
+                TripmatePost.created_at, TripmatePost.post_id, cur_ts, cur_id,
+            ))
 
         stmt = (
             stmt
@@ -115,7 +116,9 @@ class TripmatePostRepository:
         user_id: Optional[str] = None,
     ) -> list[TripmatePost]:
         """제목, 내용, 작성자 닉네임으로 검색 (최신순, 커서 페이지네이션)"""
-        escaped = keyword.replace("%", "\\%").replace("_", "\\_")
+        # `\` 를 먼저 이스케이프해야 뒤의 `\%`/`\_` 가 깨지지 않는다 (끝의 `\` 하나로 패턴이
+        # escape 문자로 끝나 오검색/DB 에러). 순서 중요.
+        escaped = keyword.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
         like_pattern = f"%{escaped}%"
 
         stmt = (
@@ -135,12 +138,12 @@ class TripmatePostRepository:
             .where(
                 TripmatePost.is_displayed == True,
                 or_(
-                    TripmatePost.title.ilike(like_pattern),
-                    TripmatePost.content.ilike(like_pattern),
+                    TripmatePost.title.ilike(like_pattern, escape="\\"),
+                    TripmatePost.content.ilike(like_pattern, escape="\\"),
                     exists(
                         select(UserDetailInform.user_id).where(
                             UserDetailInform.user_id == TripmatePost.user_id,
-                            UserDetailInform.user_name.ilike(like_pattern),
+                            UserDetailInform.user_name.ilike(like_pattern, escape="\\"),
                         )
                     ),
                 ),
@@ -148,13 +151,13 @@ class TripmatePostRepository:
         )
 
         if cursor:
-            cursor_sub = select(TripmatePost.created_at).where(TripmatePost.post_id == cursor).scalar_subquery()
-            stmt = stmt.where(
-                or_(
-                    TripmatePost.created_at < cursor_sub,
-                    (TripmatePost.created_at == cursor_sub) & (TripmatePost.post_id < cursor),
-                )
-            )
+            decoded = decode_cursor(cursor)
+            if decoded is None:
+                raise ValueError("유효하지 않은 커서입니다.")
+            cur_ts, cur_id = decoded
+            stmt = stmt.where(keyset_where(
+                TripmatePost.created_at, TripmatePost.post_id, cur_ts, cur_id,
+            ))
 
         stmt = (
             stmt

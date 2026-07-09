@@ -15,6 +15,8 @@ from test.unit.domain.tripmate.tripmate_post_service.model_factory import (
 import pytest
 from datetime import date
 
+from app.util.cursor import decode_cursor
+
 from app.domain.tripmate.repository.tripmate_post import PAGE_SIZE
 from app.domain.tripmate.model.tripmate_post import CompanionType, PreferredGender
 
@@ -232,7 +234,7 @@ class TestGetPosts:
 
         result = await service.get_posts()
 
-        assert result.next_cursor == posts[-1].post_id
+        assert decode_cursor(result.next_cursor)[1] == posts[-1].post_id
 
 
 @pytest.mark.unit

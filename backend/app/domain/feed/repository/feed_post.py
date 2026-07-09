@@ -5,12 +5,13 @@ visibility 분기는 service 가 결정 — 본 리포지토리는 visibility �
 """
 from typing import Optional
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, or_, func, literal, exists
+from sqlalchemy import select, func, literal, exists
 
 from app.domain.feed.model.feed_post_like import FeedPostLike
 from app.domain.feed.model.feed_post_comment import FeedPostComment
 from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
 from app.domain.feed.dto.feed_post import FeedPostWithCounts
+from app.util.cursor import decode_cursor, keyset_where
 
 
 # 그리드 3열 × 10행.
@@ -123,7 +124,7 @@ class FeedPostRepository:
         """owner + visibility IN-list 로 커서 페이지네이션 + 카운트 합성.
 
         `(created_at DESC, post_id DESC)` — 컴파운드 인덱스 reverse-scan.
-        cursor 는 마지막 row 의 post_id — scalar_subquery 로 created_at 인라인 lookup 후 튜플 비교.
+        cursor 는 (created_at, post_id) 를 담은 opaque 토큰 — keyset_where 로 튜플 비교.
         `limit` 은 popup 등 고정 N 케이스를 위해 override 가능.
         """
         if not visibilities:
@@ -143,18 +144,13 @@ class FeedPostRepository:
         )
 
         if cursor is not None:
-            # (created_at < cur) OR (created_at == cur AND post_id < cur_id) 튜플 비교 — 안정 페이지네이션.
-            cursor_sub = (
-                select(FeedPost.created_at)
-                .where(FeedPost.post_id == cursor)
-                .scalar_subquery()
-            )
-            stmt = stmt.where(
-                or_(
-                    FeedPost.created_at < cursor_sub,
-                    (FeedPost.created_at == cursor_sub) & (FeedPost.post_id < cursor),
-                )
-            )
+            decoded = decode_cursor(cursor)
+            if decoded is None:
+                raise ValueError("유효하지 않은 커서입니다.")
+            cur_ts, cur_id = decoded
+            stmt = stmt.where(keyset_where(
+                FeedPost.created_at, FeedPost.post_id, cur_ts, cur_id,
+            ))
 
         stmt = (
             stmt.order_by(FeedPost.created_at.desc(), FeedPost.post_id.desc())

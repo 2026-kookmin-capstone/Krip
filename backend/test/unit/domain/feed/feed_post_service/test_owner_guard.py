@@ -13,6 +13,8 @@
 from unittest.mock import MagicMock
 from test.unit.domain.feed.mock_factory import make_feed_post_with_counts
 import pytest
+
+from app.util.cursor import decode_cursor
 from datetime import datetime, timezone
 
 from app.domain.feed.service.exception import FeedNotFoundError
@@ -228,7 +230,7 @@ class TestGetMyFeed:
         repo_mock.find_by_owner.return_value = rows
 
         result = await service.get_my_feed(user_id="USER_a", cursor=None)
-        assert result.next_cursor == "FDP_1"
+        assert decode_cursor(result.next_cursor)[1] == "FDP_1"
 
 
     async def test_next_cursor_is_none_when_partial_page(

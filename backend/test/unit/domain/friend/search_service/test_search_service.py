@@ -4,6 +4,7 @@ from test.unit.domain.friend.search_service.model_factory import (
 )
 import pytest
 
+from app.util.cursor import decode_cursor
 from app.domain.friend.repository.search import PAGE_SIZE
 from app.domain.friend.model.friendship import FriendshipStatus
 from app.domain.auth.model.user_travel_style import TravelStyle
@@ -233,7 +234,7 @@ class TestSearchPagination:
         result = await service.search(viewer_id="USER_viewer", keyword="x")
 
         assert len(result.items) == PAGE_SIZE
-        assert result.next_cursor == users[-1].user_id
+        assert decode_cursor(result.next_cursor)[1] == users[-1].user_id
 
 
     async def test_next_cursor_null_on_partial_page(

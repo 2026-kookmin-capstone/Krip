@@ -59,7 +59,7 @@ async def create_comment(
 async def list_comments(
     request: Request,
     post_id: str,
-    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (comment_id)"),
+    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (이전 응답의 next_cursor)"),
     comment_service: FeedPostCommentService = Depends(
         Provide[Container.feed_post_comment_service]
     ),
@@ -74,6 +74,8 @@ async def list_comments(
         raise HTTPException(status_code=404, detail=str(e))
     except PermissionError as e:
         raise HTTPException(status_code=403, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
     return _to_list_response(result)
 

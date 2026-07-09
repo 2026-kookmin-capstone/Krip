@@ -8,6 +8,7 @@ from app.domain.friend.dto.friendship import FriendshipData, FriendshipListData,
 from app.domain.auth.repository.user import UserRepository
 from app.domain.auth.model.user import User
 from app.database.session import UnitOfWork, transactional
+from app.util.cursor import encode_cursor
 
 
 class FriendshipService:
@@ -134,7 +135,10 @@ class FriendshipService:
         1. 친구 요청 존재 검증
         2. 수신자 본인 검증
         3. PENDING 상태 검증
-        4. REJECTED 로 변경 (유니크 제약 유지 — 동일 방향 재요청 차단)
+        4. REJECTED 로 변경 (row 는 보존해 히스토리 유지)
+
+        주의: REJECTED 는 재요청을 영구 차단하지 않는다 — 거절당한 요청자는 send_request 로
+        다시 PENDING 을 만들 수 있다(정상 동작). 반복 요청(스팸)은 차단(block)으로 막는다.
         """
         friendship_repo = FriendshipRepository(self._session)
 
@@ -263,5 +267,8 @@ class FriendshipService:
             self._to_dto(f, viewer_id=viewer_id, peer=self._peer_of(f, viewer_id))
             for f in items
         ]
-        next_cursor = items[-1].friendship_id if len(items) == PAGE_SIZE else None
+        next_cursor = (
+            encode_cursor(items[-1].updated_at, items[-1].friendship_id)
+            if len(items) == PAGE_SIZE else None
+        )
         return FriendshipListData(items=dtos, next_cursor=next_cursor)

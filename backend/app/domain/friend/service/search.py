@@ -6,13 +6,14 @@ from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 from app.domain.friend.dto.search import FriendSearchData, FriendSearchListData
 from app.domain.auth.model.user import User
 from app.database.session import UnitOfWork, transactional
+from app.util.cursor import encode_cursor
 
 
 class FriendSearchService:
     """친구 추가 화면 — 이름 / user_id 부분일치로 ACTIVE 유저 검색.
 
     - 본인 / 탈퇴·정지·휴면 / 내가 차단 / 나를 차단한 유저는 결과에서 제외
-    - 30개씩 커서 페이지네이션 (cursor = 마지막 항목의 user_id)
+    - 30개씩 커서 페이지네이션 (cursor = 이전 응답의 next_cursor)
     """
 
     def __init__(self, uow: UnitOfWork):
@@ -49,7 +50,10 @@ class FriendSearchService:
         friendships = await friendship_repo.find_friendships_with(viewer_id, peer_ids)
 
         items = [self._to_dto(viewer_id, u, friendships.get(u.user_id)) for u in users]
-        next_cursor = users[-1].user_id if len(users) == PAGE_SIZE else None
+        next_cursor = (
+            encode_cursor(users[-1].created_at, users[-1].user_id)
+            if len(users) == PAGE_SIZE else None
+        )
         return FriendSearchListData(items=items, next_cursor=next_cursor)
 
 

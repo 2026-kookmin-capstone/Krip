@@ -55,13 +55,16 @@ async def unblock_user(
 @inject
 async def get_blocked_users(
     request: Request,
-    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (block_id)"),
+    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (이전 응답의 next_cursor)"),
     service: UserBlockService = Depends(Provide[Container.user_block_service]),
 ) -> UserBlockListResponse:
     """내가 차단한 유저 목록"""
     user_id: str = request.state.user_id
 
-    result = await service.get_blocked_users(user_id=user_id, cursor=cursor)
+    try:
+        result = await service.get_blocked_users(user_id=user_id, cursor=cursor)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     return _to_list_response(result)
 
 

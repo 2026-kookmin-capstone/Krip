@@ -17,6 +17,7 @@ import asyncio
 
 from app.util.storage_prefix import feed_post_prefix
 from app.util.id_generator import generate_feed_post_id
+from app.util.cursor import encode_cursor
 from app.domain.notification.service.inbox import InboxService
 from app.domain.notification.model.inbox import TargetType
 from app.domain.feed.service.thumbnail import process_feed_image
@@ -156,7 +157,10 @@ class FeedPostService:
             cursor=cursor,
             viewer_id=user_id,
         )
-        next_cursor = rows[-1].post.post_id if len(rows) == PAGE_SIZE else None
+        next_cursor = (
+            encode_cursor(rows[-1].post.created_at, rows[-1].post.post_id)
+            if len(rows) == PAGE_SIZE else None
+        )
         return FeedPostListData(
             posts=[self._to_dto(r) for r in rows],
             next_cursor=next_cursor,
@@ -192,7 +196,10 @@ class FeedPostService:
             cursor=cursor,
             viewer_id=viewer_id,
         )
-        next_cursor = rows[-1].post.post_id if len(rows) == PAGE_SIZE else None
+        next_cursor = (
+            encode_cursor(rows[-1].post.created_at, rows[-1].post.post_id)
+            if len(rows) == PAGE_SIZE else None
+        )
         return FeedPostListData(
             posts=[self._to_dto(r) for r in rows],
             next_cursor=next_cursor,

@@ -27,11 +27,13 @@ class UserFactory:
         nationality: str = "KR",
         travel_styles: Optional[List[TravelStyle]] = None,
         detail: object = "default",
+        created_at: Optional[datetime] = None,
     ) -> SimpleNamespace:
         """detail=None 을 전달하면 2차 회원가입 미완료 케이스를 재현할 수 있다."""
         cls._counter += 1
         uid = user_id or f"USER_test_{cls._counter:04d}"
         uname = user_name or f"user{cls._counter}"
+        created = created_at or datetime(2026, 1, 1, tzinfo=timezone.utc)
 
         if detail == "default":
             detail_obj = SimpleNamespace(
@@ -46,7 +48,9 @@ class UserFactory:
             detail_obj = detail  # None 또는 사용자 지정
 
         styles = [SimpleNamespace(style=s) for s in (travel_styles or [])]
-        return SimpleNamespace(user_id=uid, detail=detail_obj, travel_styles=styles)
+        return SimpleNamespace(
+            user_id=uid, detail=detail_obj, travel_styles=styles, created_at=created,
+        )
 
 
     @classmethod

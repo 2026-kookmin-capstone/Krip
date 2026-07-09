@@ -16,6 +16,7 @@ from app.domain.auth.model.user_detail_inform import Gender
 from app.database.session import UnitOfWork, transactional
 from app.core.object_storage import get_object_storage
 from app.core.logger import get_logger
+from app.util.cursor import encode_cursor
 
 
 logger = get_logger("tripmate.post.service")
@@ -453,5 +454,8 @@ class TripmatePostService:
             )
             for post in posts
         ]
-        next_cursor = posts[-1].post_id if len(posts) == PAGE_SIZE else None
+        next_cursor = (
+            encode_cursor(posts[-1].created_at, posts[-1].post_id)
+            if len(posts) == PAGE_SIZE else None
+        )
         return TripmatePostListData(posts=post_dtos, next_cursor=next_cursor)

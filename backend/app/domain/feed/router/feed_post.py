@@ -77,12 +77,15 @@ async def upload_post(
 @inject
 async def get_my_feed(
     request: Request,
-    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (post_id)"),
+    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (이전 응답의 next_cursor)"),
     feed_service: FeedPostService = Depends(Provide[Container.feed_post_service]),
 ) -> FeedPostListResponse:
     """본인 피드 — 모든 visibility, 커서 페이지네이션."""
     user_id: str = request.state.user_id
-    result = await feed_service.get_my_feed(user_id=user_id, cursor=cursor)
+    try:
+        result = await feed_service.get_my_feed(user_id=user_id, cursor=cursor)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     return _to_list_response(result)
 
 

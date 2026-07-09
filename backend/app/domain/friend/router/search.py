@@ -21,7 +21,7 @@ logger = get_logger("friend.search")
 async def search_users(
     request: Request,
     keyword: str = Query(..., min_length=1, description="검색 키워드 (user_name / user_id 부분일치)"),
-    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (user_id)"),
+    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (이전 응답의 next_cursor)"),
     service: FriendSearchService = Depends(Provide[Container.friend_search_service]),
     search_history_service: FriendSearchHistoryService = Depends(Provide[Container.friend_search_history_service]),
 ) -> FriendSearchListResponse:

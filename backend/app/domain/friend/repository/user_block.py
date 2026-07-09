@@ -5,6 +5,7 @@ from sqlalchemy import select, or_, exists
 
 from app.domain.friend.model.user_block import UserBlock
 from app.domain.auth.model.user import User
+from app.util.cursor import decode_cursor, keyset_where
 
 
 # 차단 목록 페이지 크기
@@ -81,13 +82,13 @@ class UserBlockRepository:
         )
 
         if cursor:
-            cursor_sub = select(UserBlock.created_at).where(UserBlock.block_id == cursor).scalar_subquery()
-            stmt = stmt.where(
-                or_(
-                    UserBlock.created_at < cursor_sub,
-                    (UserBlock.created_at == cursor_sub) & (UserBlock.block_id < cursor),
-                )
-            )
+            decoded = decode_cursor(cursor)
+            if decoded is None:
+                raise ValueError("유효하지 않은 커서입니다.")
+            cur_ts, cur_id = decoded
+            stmt = stmt.where(keyset_where(
+                UserBlock.created_at, UserBlock.block_id, cur_ts, cur_id,
+            ))
 
         stmt = stmt.order_by(UserBlock.created_at.desc(), UserBlock.block_id.desc()).limit(PAGE_SIZE)
         result = await self.session.execute(stmt)

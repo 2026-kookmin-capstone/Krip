@@ -7,10 +7,11 @@ async lazy-load (MissingGreenlet) 회피 + N+1 차단.
 from typing import Optional
 from sqlalchemy.orm import joinedload
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func, or_
+from sqlalchemy import select, func
 
 from app.domain.feed.model.feed_post_comment import FeedPostComment
 from app.domain.auth.model.user import User
+from app.util.cursor import decode_cursor, keyset_where
 
 
 # 모바일 한 화면에 fit. 피드 list 와 별개 (댓글은 더 많이 쌓임).
@@ -64,18 +65,13 @@ class FeedPostCommentRepository:
         )
 
         if cursor is not None:
-            cursor_sub = (
-                select(FeedPostComment.created_at)
-                .where(FeedPostComment.comment_id == cursor)
-                .scalar_subquery()
-            )
-            stmt = stmt.where(
-                or_(
-                    FeedPostComment.created_at < cursor_sub,
-                    (FeedPostComment.created_at == cursor_sub)
-                    & (FeedPostComment.comment_id < cursor),
-                )
-            )
+            decoded = decode_cursor(cursor)
+            if decoded is None:
+                raise ValueError("유효하지 않은 커서입니다.")
+            cur_ts, cur_id = decoded
+            stmt = stmt.where(keyset_where(
+                FeedPostComment.created_at, FeedPostComment.comment_id, cur_ts, cur_id,
+            ))
 
         stmt = (
             stmt.order_by(

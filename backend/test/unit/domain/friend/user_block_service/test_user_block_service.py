@@ -6,6 +6,8 @@ from test.unit.domain.friend.user_block_service.model_factory import (
 from sqlalchemy.exc import IntegrityError
 import pytest
 
+from app.util.cursor import decode_cursor
+
 from app.domain.friend.model.friendship import FriendshipStatus
 
 
@@ -185,4 +187,4 @@ class TestGetBlockedUsers:
         result = await service.get_blocked_users(user_id="USER_a")
 
         assert len(result.items) == PAGE_SIZE
-        assert result.next_cursor == items[-1].block_id
+        assert decode_cursor(result.next_cursor)[1] == items[-1].block_id

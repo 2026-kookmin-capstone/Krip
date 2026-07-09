@@ -38,13 +38,16 @@ async def send_friend_request(
 @inject
 async def get_received_requests(
     request: Request,
-    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (friendship_id)"),
+    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (이전 응답의 next_cursor)"),
     service: FriendshipService = Depends(Provide[Container.friendship_service]),
 ) -> FriendshipListResponse:
     """내가 받은 PENDING 친구 요청 목록"""
     user_id: str = request.state.user_id
 
-    result = await service.get_received_requests(user_id=user_id, cursor=cursor)
+    try:
+        result = await service.get_received_requests(user_id=user_id, cursor=cursor)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     return _to_list_response(result)
 
 
@@ -52,13 +55,16 @@ async def get_received_requests(
 @inject
 async def get_sent_requests(
     request: Request,
-    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (friendship_id)"),
+    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (이전 응답의 next_cursor)"),
     service: FriendshipService = Depends(Provide[Container.friendship_service]),
 ) -> FriendshipListResponse:
     """내가 보낸 PENDING 친구 요청 목록"""
     user_id: str = request.state.user_id
 
-    result = await service.get_sent_requests(user_id=user_id, cursor=cursor)
+    try:
+        result = await service.get_sent_requests(user_id=user_id, cursor=cursor)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     return _to_list_response(result)
 
 
@@ -128,13 +134,16 @@ async def cancel_friend_request(
 @inject
 async def get_friends(
     request: Request,
-    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (friendship_id)"),
+    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (이전 응답의 next_cursor)"),
     service: FriendshipService = Depends(Provide[Container.friendship_service]),
 ) -> FriendshipListResponse:
     """친구 목록 조회 (ACCEPTED, 최신 수락순 30개)"""
     user_id: str = request.state.user_id
 
-    result = await service.get_friends(user_id=user_id, cursor=cursor)
+    try:
+        result = await service.get_friends(user_id=user_id, cursor=cursor)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     return _to_list_response(result)
 
 

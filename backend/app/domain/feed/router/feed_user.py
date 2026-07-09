@@ -21,7 +21,7 @@ router = APIRouter(tags=["타 유저 피드 조회"])
 async def get_user_feed(
     request: Request,
     user_id: str,
-    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (post_id)"),
+    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (이전 응답의 next_cursor)"),
     feed_service: FeedPostService = Depends(Provide[Container.feed_post_service]),
 ) -> FeedPostListResponse:
     """다른 유저 피드 — 친구/차단/visibility 결합 커서 페이지네이션.
@@ -36,6 +36,8 @@ async def get_user_feed(
     except PermissionError as e:
         # FeedBlockedError 가 PermissionError 하위 — 단일 catch.
         raise HTTPException(status_code=403, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     return _to_list_response(result)
 
 

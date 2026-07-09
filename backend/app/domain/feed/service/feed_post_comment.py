@@ -18,6 +18,7 @@ delete 는 cascade 안 함 (정책상 보존, deep link 404 + TTL 30일로 자�
 from typing import Optional
 
 from app.util.id_generator import generate_feed_post_comment_id
+from app.util.cursor import encode_cursor
 from app.domain.notification.service.inbox import InboxService
 from app.domain.feed.service.exception import FeedPostCommentNotFoundError
 from app.domain.feed.service.access import load_viewable_post
@@ -131,7 +132,10 @@ class FeedPostCommentService:
         post = await load_viewable_post(self._session, viewer_id=viewer_id, post_id=post_id)
         repo = FeedPostCommentRepository(self._session)
         comments = await repo.find_by_post(post_id=post.post_id, cursor=cursor)
-        next_cursor = comments[-1].comment_id if len(comments) == PAGE_SIZE else None
+        next_cursor = (
+            encode_cursor(comments[-1].created_at, comments[-1].comment_id)
+            if len(comments) == PAGE_SIZE else None
+        )
         return FeedPostCommentListData(
             comments=[self._to_dto(c) for c in comments],
             next_cursor=next_cursor,

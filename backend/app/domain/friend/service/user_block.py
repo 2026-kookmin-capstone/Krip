@@ -9,6 +9,7 @@ from app.domain.friend.dto.friendship import FriendPeerData
 from app.domain.auth.repository.user import UserRepository
 from app.domain.auth.model.user import User
 from app.database.session import UnitOfWork, transactional
+from app.util.cursor import encode_cursor
 
 
 class UserBlockService:
@@ -136,5 +137,8 @@ class UserBlockService:
 
     def _to_list_dto(self, items: list[UserBlock]) -> UserBlockListData:
         dtos = [self._to_dto(b, b.blocked) for b in items]
-        next_cursor = items[-1].block_id if len(items) == PAGE_SIZE else None
+        next_cursor = (
+            encode_cursor(items[-1].created_at, items[-1].block_id)
+            if len(items) == PAGE_SIZE else None
+        )
         return UserBlockListData(items=dtos, next_cursor=next_cursor)

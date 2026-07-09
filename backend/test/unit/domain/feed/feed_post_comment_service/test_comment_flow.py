@@ -12,6 +12,8 @@
 from test.unit.domain.feed.mock_factory import make_feed_post_comment_mock
 import pytest
 
+from app.util.cursor import decode_cursor
+
 from app.domain.feed.service.exception import FeedPostCommentNotFoundError
 
 
@@ -98,7 +100,7 @@ class TestListComments:
             make_feed_post_comment_mock(comment_id="FDC_1"),
         ]
         result = await service.list_comments(viewer_id="USER_v", post_id="FDP_x")
-        assert result.next_cursor == "FDC_1"
+        assert decode_cursor(result.next_cursor)[1] == "FDC_1"
 
 
     async def test_next_cursor_none_when_partial_page(
