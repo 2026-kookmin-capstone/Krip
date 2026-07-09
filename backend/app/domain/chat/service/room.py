@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 
 from sqlalchemy.exc import IntegrityError
 
+from app.core.chat.lua_script import lua_scripts
 from app.core.chat.redis_key import (
     ROOM_MEMBERS_TTL,
     room_members_key,
@@ -502,11 +503,19 @@ class RoomService:
         # unread 를 무조건 0 으로 덮으면 (1) 부분 읽기(up_to < 최신) 시 남은 미읽음이 사라지고
         # (2) read 처리와 동시에 도착한 메시지의 HINCRBY 가 지워진 뒤 재접속에도 복구되지 않는다.
         # DB 기준으로 final_seq 이후 잔여 메시지 수를 재계산해 반영 (recover 경로와 동일 계산).
+        redis = await get_redis_client()
+        # count~HSET 창의 동시 HINCRBY 가 절대 HSET 에 소거돼 뱃지가 유실되지 않도록,
+        # count 직전 baseline 을 스냅샷해 Lua 에서 증가분을 보존한다 (상세는 lua 파일).
+        unread_k = unread_key(me_id)
+        baseline = await redis.hget(unread_k, room_id)
+        baseline = int(baseline) if baseline is not None else 0
         residual = await message_repo.count_after_seq(
             chat_room_id=room_id, after_seq=final_seq, limit=_UNREAD_COUNT_LIMIT,
         )
-        redis = await get_redis_client()
-        await redis.hset(unread_key(me_id), room_id, min(residual, _UNREAD_COUNT_CAP))
+        await lua_scripts.mark_read_unread(
+            keys=[unread_k],
+            args=[room_id, residual, baseline, _UNREAD_COUNT_CAP],
+        )
 
         await self._fanout.fan_out_to_session(
             me_session_id,

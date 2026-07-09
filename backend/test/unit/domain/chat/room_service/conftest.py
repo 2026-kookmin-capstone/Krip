@@ -86,6 +86,15 @@ def redis_mock():
 
 
 @pytest.fixture
+def lua_mock():
+    """lua_scripts 대체 — mark_read 의 unread 재계산 스크립트만 사용."""
+    from types import SimpleNamespace
+    from unittest.mock import AsyncMock
+
+    return SimpleNamespace(mark_read_unread=AsyncMock(return_value=0))
+
+
+@pytest.fixture
 def service(
     monkeypatch,
     mock_session,
@@ -97,6 +106,7 @@ def service(
     message_repo_mock,
     fanout_mock,
     redis_mock,
+    lua_mock,
     message_service_mock,
 ):
     """Mock 레포 + Mock Redis / Fanout 이 주입된 RoomService."""
@@ -132,6 +142,7 @@ def service(
         "app.domain.chat.service.room.get_redis_client",
         _get_client,
     )
+    monkeypatch.setattr("app.domain.chat.service.room.lua_scripts", lua_mock)
 
     uow = FakeUnitOfWork(mock_session)
     return RoomService(

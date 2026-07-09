@@ -116,5 +116,7 @@ def make_redis_mock() -> MagicMock:
     redis.sadd = AsyncMock(return_value=0)
     redis.expire = AsyncMock(return_value=True)
     redis.hset = AsyncMock(return_value=0)
+    redis.hget = AsyncMock(return_value=None)  # mark_read baseline 스냅샷
+    redis.eval = AsyncMock(return_value=0)     # mark_read unread 재계산 Lua
 
     return redis

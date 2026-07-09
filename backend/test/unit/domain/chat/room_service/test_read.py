@@ -50,7 +50,7 @@ class TestMarkRead:
 
     async def test_successful_mark_read_recalculates_unread_and_fans_out(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
-        message_repo_mock, redis_mock, fanout_mock,
+        message_repo_mock, redis_mock, lua_mock, fanout_mock,
     ):
         chat_room_repo_mock.find_by_id.return_value = ChatRoomFactory.create(
             chat_room_id="CR_G", type_=ChatRoomType.GROUP,
@@ -69,12 +69,14 @@ class TestMarkRead:
         # mark_read 가 repository 에 올바른 인자로 위임됐는지 (5 <= 현재 7 이라 그대로)
         chat_member_repo_mock.mark_read.assert_awaited_once_with("CR_G", "U_A", 5)
 
-        # Redis unread 을 DB 잔여(final_seq 이후 개수) 기준으로 재계산 — 여기선 0
-        redis_mock.hset.assert_awaited_once()
-        args = redis_mock.hset.call_args.args
-        assert args[0] == "unread:U_A"
-        assert args[1] == "CR_G"
-        assert args[2] == 0
+        # unread 을 DB 잔여(final_seq 이후 개수) 기준으로 Lua 재계산 — 여기선 residual=0.
+        # mark_read_unread(keys=[unread_key], args=[room_id, residual, baseline, cap])
+        lua_mock.mark_read_unread.assert_awaited_once()
+        call = lua_mock.mark_read_unread.call_args
+        assert call.kwargs["keys"] == ["unread:U_A"]
+        assert call.kwargs["args"][0] == "CR_G"   # room_id (hash field)
+        assert call.kwargs["args"][1] == 0        # residual
+        assert call.kwargs["args"][3] == 999      # cap
 
         # read_ack 발신 세션 직송
         fanout_mock.fan_out_to_session.assert_awaited_once()
@@ -117,7 +119,7 @@ class TestMarkRead:
 
     async def test_partial_read_sets_unread_to_residual_not_zero(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
-        message_repo_mock, redis_mock,
+        message_repo_mock, lua_mock,
     ):
         """부분 읽기(up_to < 최신) → unread 를 0 이 아니라 DB 잔여 개수로 반영."""
         chat_room_repo_mock.find_by_id.return_value = ChatRoomFactory.create(
@@ -135,14 +137,16 @@ class TestMarkRead:
         message_repo_mock.count_after_seq.assert_awaited_once_with(
             chat_room_id="CR_G", after_seq=7, limit=1000,
         )
-        args = redis_mock.hset.call_args.args
-        assert args == ("unread:U_A", "CR_G", 3)  # 0 이 아니라 잔여 3
+        call = lua_mock.mark_read_unread.call_args
+        assert call.kwargs["keys"] == ["unread:U_A"]
+        assert call.kwargs["args"][0] == "CR_G"
+        assert call.kwargs["args"][1] == 3  # residual (0 이 아니라 잔여 3) 를 Lua 로 전달
 
     async def test_unread_capped_at_999(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
-        message_repo_mock, redis_mock,
+        message_repo_mock, lua_mock,
     ):
-        """잔여가 1000(=limit) 이상이면 999 로 캡 — recover 경로와 동일 규약."""
+        """잔여가 1000(=limit) 이상이면 cap(999) 을 Lua 로 전달 — 실제 clamp 는 통합 테스트."""
         chat_room_repo_mock.find_by_id.return_value = ChatRoomFactory.create(
             chat_room_id="CR_G", type_=ChatRoomType.GROUP,
         )
@@ -154,7 +158,9 @@ class TestMarkRead:
             up_to_server_seq=1,
         )
 
-        assert redis_mock.hset.call_args.args[2] == 999
+        call = lua_mock.mark_read_unread.call_args
+        assert call.kwargs["args"][1] == 1000  # residual 원값 전달
+        assert call.kwargs["args"][3] == 999   # cap 전달 (Lua 가 min 적용)
 
     async def test_returns_repository_final_seq_even_when_regressed(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
