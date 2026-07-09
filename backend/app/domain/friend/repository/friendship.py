@@ -1,6 +1,6 @@
 from typing import Iterable, Optional
 
-from sqlalchemy import and_, case, func, or_, select
+from sqlalchemy import and_, case, func, or_, select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 
@@ -25,20 +25,38 @@ class FriendshipRepository:
         await self.session.flush()
         return friendship
 
+    # ──────────────────── Pair advisory lock ────────────────────
+
+    async def acquire_pair_lock(self, user_a_id: str, user_b_id: str) -> None:
+        """두 유저 PAIR 트랜잭션 advisory lock (방향 무관).
+
+        canonical (least:greatest) 키로 A→B/B→A 가 같은 락을 잡아 pair 상태 전이를 직렬화
+        → block-vs-request TOCTOU 와 REJECTED 재요청 lost update 차단. 모든 경로에서 어떤
+        read/row lock 보다 먼저 호출해 순서를 통일(데드락 회피). 트랜잭션 종료 시 자동 해제.
+        """
+        least, greatest = sorted((user_a_id, user_b_id))
+        key = f"{least}:{greatest}"
+        await self.session.execute(
+            text("SELECT pg_advisory_xact_lock(hashtext(:key))"),
+            {"key": key},
+        )
+
     # ──────────────────── Read (단건) ────────────────────
 
     async def find_by_id(
         self, friendship_id: str, *, for_update: bool = False,
     ) -> Optional[Friendship]:
-        """friendship_id 단건 조회. for_update=True 면 FOR UPDATE 행 잠금.
+        """friendship_id 단건 조회. for_update=True 면 FOR UPDATE 행 잠금(상태 전이 원자성용).
 
-        상태 전이(accept/reject/cancel/remove)의 검사~쓰기 원자성 보장(lost update 방지)용.
+        populate_existing=True — 선행 비잠금 peek(_lock_pair_and_fetch)가 적재한 stale
+        identity-map 인스턴스를 잠금 후 최신 커밋 값으로 덮어쓴다.
         """
         if for_update:
             stmt = (
                 select(Friendship)
                 .where(Friendship.friendship_id == friendship_id)
                 .with_for_update()
+                .execution_options(populate_existing=True)
             )
             result = await self.session.execute(stmt)
             return result.scalar_one_or_none()

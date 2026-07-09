@@ -48,6 +48,10 @@ class UserBlockService:
         friendship_repo = FriendshipRepository(self._session)
         user_repo = UserRepository(self._session)
 
+        # pair advisory lock (read 보다 먼저) — friendship 정리~block 삽입을 원자화해
+        # 차단-친구요청 TOCTOU 를 차단.
+        await friendship_repo.acquire_pair_lock(user_id, target_user_id)
+
         target = await user_repo.find_by_id_with_profile(target_user_id)
         if target is None:
             raise ValueError("존재하지 않는 유저입니다.")

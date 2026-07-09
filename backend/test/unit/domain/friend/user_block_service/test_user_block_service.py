@@ -85,6 +85,19 @@ class TestBlockUser:
         block_repo_mock.save.assert_awaited_once()
         assert result.blocked.user_id == "USER_b"
 
+    async def test_acquires_pair_lock_before_reads(
+        self, service, user_repo_mock, block_repo_mock, friendship_repo_mock
+    ):
+        """pair advisory lock 을 잡아 send_request 와 pair 단위로 직렬화한다 (Bug1 TOCTOU 차단)."""
+        target = UserFactory.create(user_id="USER_b")
+        user_repo_mock.find_by_id_with_profile.return_value = target
+        block_repo_mock.has_blocker_blocked.return_value = False
+        friendship_repo_mock.find_between.return_value = None
+
+        await service.block_user(user_id="USER_a", target_user_id="USER_b")
+
+        friendship_repo_mock.acquire_pair_lock.assert_awaited_once_with("USER_a", "USER_b")
+
     async def test_raises_on_integrity_error_when_block_exists(
         self, service, user_repo_mock, block_repo_mock, friendship_repo_mock
     ):

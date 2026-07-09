@@ -1,5 +1,6 @@
 import pytest
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm.exc import StaleDataError
 
 from app.domain.friend.model.friendship import FriendshipStatus
 from app.util.cursor import decode_cursor
@@ -165,6 +166,34 @@ class TestSendRequest:
         assert result.peer.user_name == "철수"
         assert result.is_requester is True
 
+    async def test_acquires_pair_lock_before_reads(
+        self, service, user_repo_mock, friendship_repo_mock
+    ):
+        """pair advisory lock 을 잡아 block/accept 등과 pair 단위로 직렬화한다 (Bug1/Bug2)."""
+        addressee = UserFactory.create(user_id="USER_b")
+        user_repo_mock.find_by_id_with_profile.return_value = addressee
+        friendship_repo_mock.find_between.return_value = None
+
+        await service.send_request(requester_id="USER_a", addressee_id="USER_b")
+
+        friendship_repo_mock.acquire_pair_lock.assert_awaited_once_with("USER_a", "USER_b")
+
+    async def test_maps_stale_data_error_to_value_error_on_rejected_upsert(
+        self, service, user_repo_mock, friendship_repo_mock, mock_session
+    ):
+        """REJECTED upsert 중 대상 row 가 사라져 StaleDataError 가 나도 500 이 아닌 400 으로 매핑."""
+        addressee = UserFactory.create(user_id="USER_b")
+        user_repo_mock.find_by_id_with_profile.return_value = addressee
+        friendship_repo_mock.find_between.return_value = FriendshipFactory.create(
+            requester_id="USER_a",
+            addressee_id="USER_b",
+            status=FriendshipStatus.REJECTED,
+        )
+        friendship_repo_mock.update.side_effect = StaleDataError("row gone")
+
+        with pytest.raises(ValueError, match="변경"):
+            await service.send_request(requester_id="USER_a", addressee_id="USER_b")
+
     async def test_recovers_on_integrity_error_with_existing_pending(
         self, service, user_repo_mock, friendship_repo_mock
     ):
@@ -221,6 +250,24 @@ class TestAcceptRequest:
         with pytest.raises(ValueError, match="대기 중인 요청"):
             await service.accept_request(friendship_id="FS_x", user_id="USER_b")
 
+    async def test_raises_when_pair_blocked(
+        self, service, friendship_repo_mock, block_repo_mock
+    ):
+        """잔여 blocked pair 는 락 하 차단 재검증에 걸려 ACCEPTED 로 승격되지 않는다 (Bug1 방어)."""
+        friendship_repo_mock.find_by_id.return_value = FriendshipFactory.create(
+            requester_id="USER_a",
+            addressee_id="USER_b",
+            status=FriendshipStatus.PENDING,
+        )
+        block_repo_mock.find_blocks_between.return_value = [
+            UserBlockFactory.create(blocker_id="USER_b", blocked_id="USER_a"),
+        ]
+
+        with pytest.raises(ValueError, match="차단 관계"):
+            await service.accept_request(friendship_id="FS_x", user_id="USER_b")
+
+        friendship_repo_mock.update.assert_not_called()
+
     async def test_updates_status_to_accepted(self, service, friendship_repo_mock):
         friendship = FriendshipFactory.create(
             requester_id="USER_a",
@@ -233,6 +280,7 @@ class TestAcceptRequest:
 
         assert friendship.status == FriendshipStatus.ACCEPTED
         friendship_repo_mock.update.assert_awaited_once_with(friendship)
+        friendship_repo_mock.acquire_pair_lock.assert_awaited_once_with("USER_a", "USER_b")
 
 
 # ──────────────────────────────────────────────────────────────────
