@@ -170,7 +170,6 @@ class ProfileService:
 
     # ──────────────────── 프로필 이미지 추가 ────────────────────
 
-    @transactional
     async def add_profile_image(
         self,
         user_id: str,
@@ -181,14 +180,34 @@ class ProfileService:
         """
         프로필 이미지 추가 (유저당 1장 정책)
 
-        1. detail 존재 검증
-        2. 기존 이미지가 있으면 409 (수정은 PUT 사용)
-        3. Object Storage 업로드
-        4. DB 컬럼 갱신
+        1. (트랜잭션 밖) Object Storage 업로드
+        2. (트랜잭션) detail 검증 + 기존 이미지 없음 확인 + DB 컬럼 갱신
+        3. 검증/DB 실패 시 업로드한 S3 파일 보상 삭제 (orphan 방지)
 
-        DB 갱신 실패 시 rollback 되며, 업로드된 S3 파일은 orphan 으로 남는다.
-        탈퇴 시 prefix 단위로 정리되므로 영구 누적은 아니다.
+        S3 업로드를 트랜잭션 안에서 하면 업로드 왕복(수백 ms~초) 동안 pool 커넥션이
+        묶여 부하 시 pool 고갈로 이어진다 → delete/update 경로와 동일하게 S3 작업을
+        트랜잭션 밖으로 분리한다.
         """
+        new_url = await self.storage.upload_perm(
+            file, file_name, content_type, prefix=profile_prefix(user_id),
+        )
+
+        try:
+            await self._attach_profile_image(user_id, new_url)
+        except Exception:
+            # 검증 실패(미등록·409) 또는 DB 실패 시 업로드된 파일이 orphan 으로 남는다 → 보상 삭제.
+            try:
+                await self.storage.delete(new_url)
+            except Exception as del_err:
+                logger.warning("업로드 보상 삭제 실패 — orphan 파일 잔존 (user_id={}): {}", user_id, del_err)
+            raise
+
+        logger.info("프로필 이미지 추가 완료 (user_id={})", user_id)
+        return ProfileImageData(profile_image_url=new_url)
+
+    @transactional
+    async def _attach_profile_image(self, user_id: str, new_url: str) -> None:
+        """추가 흐름의 트랜잭션 부분 — detail 검증 후 새 URL 기록."""
         detail_repo = UserDetailInformRepository(self._session)
 
         detail = await detail_repo.find_by_user_id(user_id)
@@ -197,15 +216,8 @@ class ProfileService:
         if detail.profile_image_url is not None:
             raise ProfileImageAlreadyExistsError("이미 프로필 이미지가 존재합니다. 수정은 PUT 으로 요청해주세요.")
 
-        new_url = await self.storage.upload_perm(
-            file, file_name, content_type, prefix=profile_prefix(user_id),
-        )
-
         detail.profile_image_url = new_url
         await detail_repo.update(detail)
-        logger.info("프로필 이미지 추가 완료 (user_id={})", user_id)
-
-        return ProfileImageData(profile_image_url=new_url)
 
     # ──────────────────── 프로필 이미지 수정 ────────────────────
 
@@ -219,14 +231,28 @@ class ProfileService:
         """
         프로필 이미지 수정 (기존 1장 → 새 1장)
 
-        1. (트랜잭션) detail 검증 + S3 업로드 + DB 갱신 → 이전 URL 반환
-        2. (트랜잭션 밖) 이전 S3 파일 삭제 (best-effort)
+        1. (트랜잭션 밖) S3 새 파일 업로드
+        2. (트랜잭션) detail 검증 + DB 갱신 → 이전 URL 반환
+        3. 검증/DB 실패 시 새로 업로드한 파일 보상 삭제 (orphan 방지)
+        4. (트랜잭션 밖) 이전 S3 파일 삭제 (best-effort)
 
-        S3 삭제를 트랜잭션 안에서 하면 commit 실패 시 broken link 위험 → 분리.
+        S3 업/삭제를 모두 트랜잭션 밖으로 분리한다 — 업로드 왕복이 pool 커넥션을 점유하지
+        않도록(add 경로와 동일), 그리고 삭제를 트랜잭션 안에서 하면 commit 실패 시 broken
+        link 위험이 있으므로.
         """
-        new_url, old_url = await self._replace_profile_image(
-            user_id, file, file_name, content_type,
+        new_url = await self.storage.upload_perm(
+            file, file_name, content_type, prefix=profile_prefix(user_id),
         )
+
+        try:
+            old_url = await self._replace_profile_image(user_id, new_url)
+        except Exception:
+            # 검증 실패(미등록·404) 또는 DB 실패 시 업로드된 파일이 orphan 으로 남는다 → 보상 삭제.
+            try:
+                await self.storage.delete(new_url)
+            except Exception as del_err:
+                logger.warning("업로드 보상 삭제 실패 — orphan 파일 잔존 (user_id={}): {}", user_id, del_err)
+            raise
 
         try:
             await self.storage.delete(old_url)
@@ -237,14 +263,8 @@ class ProfileService:
         return ProfileImageData(profile_image_url=new_url)
 
     @transactional
-    async def _replace_profile_image(
-        self,
-        user_id: str,
-        file: BinaryIO,
-        file_name: str,
-        content_type: str,
-    ) -> tuple[str, str]:
-        """수정 흐름의 트랜잭션 부분 — (new_url, old_url) 반환."""
+    async def _replace_profile_image(self, user_id: str, new_url: str) -> str:
+        """수정 흐름의 트랜잭션 부분 — detail 검증 후 새 URL 기록, 이전 URL 반환."""
         detail_repo = UserDetailInformRepository(self._session)
 
         detail = await detail_repo.find_by_user_id(user_id)
@@ -254,15 +274,10 @@ class ProfileService:
             raise ProfileImageNotFoundError("수정할 프로필 이미지가 없습니다. 먼저 POST 로 추가해주세요.")
 
         old_url = detail.profile_image_url
-
-        new_url = await self.storage.upload_perm(
-            file, file_name, content_type, prefix=profile_prefix(user_id),
-        )
-
         detail.profile_image_url = new_url
         await detail_repo.update(detail)
 
-        return new_url, old_url
+        return old_url
 
     # ──────────────────── 프로필 이미지 삭제 ────────────────────
 
