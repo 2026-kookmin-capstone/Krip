@@ -43,14 +43,28 @@ class TripmateImageService:
         image_url = await self.storage.upload_perm(
             file, file_name, content_type, prefix=prefix,
         )
-        logger.info("이미지 업로드 완료 (user_id={}, image_id={})", user_id, image_id)
 
         image = TripmateImage(
             user_id=user_id,
             image_id=image_id,
             image_url=image_url,
         )
-        return await self.image_repo.save(image)
+        try:
+            saved = await self.image_repo.save(image)
+        except Exception:
+            # S3 업로드는 성공했는데 Mongo 메타 저장이 실패하면 영구 고아 파일이 된다
+            # (cleanup_orphaned_images 는 Mongo 메타 기준이라 스캔 불가). 보상 삭제로 회수.
+            try:
+                await self.storage.delete(image_url)
+            except Exception as del_err:
+                logger.warning(
+                    "업로드 보상 삭제 실패 (user_id={}, image_url={}): {}",
+                    user_id, image_url, del_err,
+                )
+            raise
+
+        logger.info("이미지 업로드 완료 (user_id={}, image_id={})", user_id, image_id)
+        return saved
 
 
     async def upload_images(
