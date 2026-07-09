@@ -58,6 +58,7 @@ class TestMarkRead:
         chat_room_repo_mock.find_by_id.return_value = ChatRoomFactory.create(
             chat_room_id="CR_G", type_=ChatRoomType.GROUP,
         )
+        message_repo_mock.get_max_server_seq.return_value = 7  # 방 현재 seq (clamp 상한)
         chat_member_repo_mock.mark_read.return_value = 7  # regress 적용 후 최종 seq
         message_repo_mock.count_after_seq.return_value = 0  # 최신까지 읽음 → 잔여 0
 
@@ -68,7 +69,7 @@ class TestMarkRead:
 
         assert result == 7
 
-        # mark_read 가 repository 에 올바른 인자로 위임됐는지
+        # mark_read 가 repository 에 올바른 인자로 위임됐는지 (5 <= 현재 7 이라 그대로)
         chat_member_repo_mock.mark_read.assert_awaited_once_with("CR_G", "U_A", 5)
 
         # Redis unread 을 DB 잔여(final_seq 이후 개수) 기준으로 재계산 — 여기선 0
@@ -96,6 +97,27 @@ class TestMarkRead:
             "sender_session_id": "WS_A",
             "up_to_server_seq": 7,
         }
+
+
+    async def test_clamps_up_to_seq_to_current_room_seq(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+        message_repo_mock, redis_mock,
+    ):
+        """클라가 방 현재 seq 를 넘는 값을 보내면 현재 seq 로 clamp — 미래 포인터 오염 방지."""
+        chat_room_repo_mock.find_by_id.return_value = ChatRoomFactory.create(
+            chat_room_id="CR_G", type_=ChatRoomType.GROUP,
+        )
+        redis_mock.get.return_value = None
+        message_repo_mock.get_max_server_seq.return_value = 12  # 방 현재 seq
+        chat_member_repo_mock.mark_read.return_value = 12
+
+        await service.mark_read(
+            me_id="U_A", me_session_id="WS_A", room_id="CR_G",
+            up_to_server_seq=10**15,  # 악의적 미래 값
+        )
+
+        # 10^15 가 아니라 현재 seq(12)로 clamp 되어 위임돼야 한다
+        chat_member_repo_mock.mark_read.assert_awaited_once_with("CR_G", "U_A", 12)
 
 
     async def test_partial_read_sets_unread_to_residual_not_zero(

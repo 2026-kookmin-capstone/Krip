@@ -252,7 +252,7 @@ class RoomService:
         Redis 캐시/구독/fan-out/시스템 메시지는 커밋 이후 실행 — 롤백 시 비멤버가 캐시에
         남아 송수신 가능한 상태(최대 TTL)를 방지.
         """
-        invited, skipped, new_members, rejoined, current_seq = await self._invite_members_tx(
+        invited, skipped, new_members, rejoined, _ = await self._invite_members_tx(
             me_id=me_id, room_id=room_id, user_ids=user_ids,
         )
         if not invited:
@@ -261,7 +261,7 @@ class RoomService:
         await self._run_side_effect_safe(
             self._emit_invite_side_effects(
                 room_id, invited=invited, new_members=new_members,
-                rejoined=rejoined, current_seq=current_seq,
+                rejoined=rejoined,
             ),
             room_id=room_id, label="invite_side_effects",
         )
@@ -345,15 +345,26 @@ class RoomService:
         invited: list[str],
         new_members: list[str],
         rejoined: list[tuple[str, int]],
-        current_seq: int,
     ) -> None:
-        """(커밋 후) 초대 멤버 캐시 SADD + unread 시드 + 구독 + room_joined fan-out."""
+        """(커밋 후) room:members 캐시 무효화 + unread 시드 + 구독 + room_joined fan-out."""
         redis = await get_redis_client()
-        pipe = redis.pipeline(transaction=True)
-        pipe.sadd(room_members_key(room_id), *invited)
-        pipe.expire(room_members_key(room_id), ROOM_MEMBERS_TTL)
+        message_repo = ChatMessageRepository(mongodb.database)
+
+        # 재초대 unread 는 실제 메시지 수로 시드 — seq 차이는 force_jump/recover 갭 때문에
+        # 유령 미읽음을 부풀린다 (recover 경로와 동일 계산).
+        rejoin_unread: list[tuple[str, int]] = []
         for uid, last_read in rejoined:
-            pipe.hset(unread_key(uid), room_id, max(0, current_seq - last_read))
+            raw = await message_repo.count_after_seq(
+                chat_room_id=room_id, after_seq=last_read, limit=_UNREAD_COUNT_LIMIT,
+            )
+            rejoin_unread.append((uid, min(raw, _UNREAD_COUNT_CAP)))
+
+        pipe = redis.pipeline(transaction=True)
+        # SADD 부분 갱신 금지 — 키 만료 상태면 초대 멤버만 담긴 부분 집합이 생겨 기존 멤버
+        # unread/푸시가 누락된다. 무효화 후 다음 send 의 _ensure_membership 이 DB 로 재적재.
+        pipe.delete(room_members_key(room_id))
+        for uid, cnt in rejoin_unread:
+            pipe.hset(unread_key(uid), room_id, cnt)
         for uid in new_members:
             pipe.hset(unread_key(uid), room_id, 0)
         await pipe.execute()
@@ -494,6 +505,12 @@ class RoomService:
         if room is None:
             raise ChatRoomNotFoundError("존재하지 않는 방입니다.")
 
+        # 클라가 최신 seq 초과값을 보내면 last_read 가 미래로 고정돼 이후 메시지가 전부
+        # 자동 읽음 처리된다(뱃지 왜곡, 되돌리기 불가). 현재 seq 로 clamp.
+        message_repo = ChatMessageRepository(mongodb.database)
+        current_seq = await self._get_current_seq(message_repo, room_id)
+        up_to_server_seq = min(up_to_server_seq, current_seq)
+
         final_seq = await member_repo.mark_read(room_id, me_id, up_to_server_seq)
         if final_seq is None:
             raise PermissionError("이 방의 활성 멤버가 아닙니다.")
@@ -501,7 +518,6 @@ class RoomService:
         # unread 를 무조건 0 으로 덮으면 (1) 부분 읽기(up_to < 최신) 시 남은 미읽음이 사라지고
         # (2) read 처리와 동시에 도착한 메시지의 HINCRBY 가 지워진 뒤 재접속에도 복구되지 않는다.
         # DB 기준으로 final_seq 이후 잔여 메시지 수를 재계산해 반영 (recover 경로와 동일 계산).
-        message_repo = ChatMessageRepository(mongodb.database)
         residual = await message_repo.count_after_seq(
             chat_room_id=room_id, after_seq=final_seq, limit=_UNREAD_COUNT_LIMIT,
         )
