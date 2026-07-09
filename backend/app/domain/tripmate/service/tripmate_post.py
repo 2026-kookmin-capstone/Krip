@@ -42,7 +42,6 @@ class TripmatePostService:
 
     # ──────────────────── 게시글 생성 ────────────────────
 
-    @transactional
     async def create_post(
         self,
         user_id: str,
@@ -57,13 +56,51 @@ class TripmatePostService:
         companion_type: CompanionType,
         image_urls: Optional[List[str]] = None,
     ) -> TripmatePostCreateData:
-        """
-        여행 메이트 모집 게시글 생성
+        """여행 메이트 모집 게시글 생성 — DB 저장은 트랜잭션 안, 임시저장 삭제는 커밋 후.
 
-        1. 게시글 저장
-        2. 첨부 이미지가 있으면 일괄 저장
-        3. DTO 변환 후 반환
+        1. `_create_post_tx` — 이미지 소유권 검증 + 게시글/이미지 저장 (트랜잭션)
+        2. (트랜잭션 밖) 임시저장 삭제
         """
+        dto = await self._create_post_tx(
+            user_id=user_id,
+            title=title,
+            content=content,
+            preferred_age_min=preferred_age_min,
+            preferred_age_max=preferred_age_max,
+            preferred_gender=preferred_gender,
+            region=region,
+            travel_start_date=travel_start_date,
+            travel_end_date=travel_end_date,
+            companion_type=companion_type,
+            image_urls=image_urls,
+        )
+
+        # (트랜잭션 밖) 게시글 발행이 커밋된 뒤에만 임시저장 삭제. 커밋 전 삭제하면 RDB
+        # 롤백 시 게시글은 사라지고 사용자가 작성 중이던 draft 만 영구 소실된다.
+        try:
+            await self.draft_service.delete_draft(user_id)
+        except Exception as e:
+            logger.warning("임시저장 삭제 실패 (user_id={}): {}", user_id, e)
+
+        return dto
+
+    @transactional
+    async def _create_post_tx(
+        self,
+        *,
+        user_id: str,
+        title: str,
+        content: str,
+        preferred_age_min: int,
+        preferred_age_max: int,
+        preferred_gender: PreferredGender,
+        region: str,
+        travel_start_date: date,
+        travel_end_date: date,
+        companion_type: CompanionType,
+        image_urls: Optional[List[str]] = None,
+    ) -> TripmatePostCreateData:
+        """게시글 생성 트랜잭션 부분 — 소유권 검증 + 게시글/이미지 저장 + DTO 합성."""
         await self._assert_images_owned(user_id, image_urls)
 
         post_repo = TripmatePostRepository(self._session)
@@ -92,12 +129,6 @@ class TripmatePostService:
             ]
             await image_repo.save_all(images)
             saved_urls = image_urls
-
-        # 게시글 발행 성공 → 임시저장 삭제 (실패해도 게시글 생성은 유지)
-        try:
-            await self.draft_service.delete_draft(user_id)
-        except Exception as e:
-            logger.warning("임시저장 삭제 실패 (user_id={}): {}", user_id, e)
 
         detail = await detail_repo.find_by_user_id(user_id)
         return self._to_create_dto(

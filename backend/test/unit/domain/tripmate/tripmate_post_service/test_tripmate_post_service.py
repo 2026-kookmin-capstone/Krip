@@ -118,6 +118,32 @@ class TestCreatePost:
             companion_type=CompanionType.FRIEND,
         )
 
+    async def test_draft_not_deleted_when_transaction_fails(
+        self, service, post_repo_mock, draft_service_mock,
+    ):
+        """게시글 저장(트랜잭션) 실패 시 임시저장 삭제 안 함 — 커밋 전 삭제 방지 회귀.
+
+        이전엔 draft 삭제가 트랜잭션 안(커밋 전)에 있어, 커밋 실패 시 게시글은 롤백되고
+        작성 중이던 draft 만 영구 소실됐다. 삭제를 커밋 후로 옮겨 tx 실패 시 draft 를 보존.
+        """
+        post_repo_mock.save.side_effect = RuntimeError("db down")
+
+        with pytest.raises(RuntimeError):
+            await service.create_post(
+                user_id="USER_a",
+                title="t",
+                content="c",
+                preferred_age_min=20,
+                preferred_age_max=30,
+                preferred_gender=PreferredGender.ANY,
+                region="r",
+                travel_start_date=date(2026, 6, 1),
+                travel_end_date=date(2026, 6, 5),
+                companion_type=CompanionType.FRIEND,
+            )
+
+        draft_service_mock.delete_draft.assert_not_awaited()
+
     async def test_profile_image_url_none_when_detail_missing(
         self, service, detail_repo_mock,
     ):
