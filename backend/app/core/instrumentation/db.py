@@ -16,10 +16,11 @@ from app.core.metric import (
 )
 
 
-# route 라벨 enum — endpoint 단위 X, 도메인 단위 ~10개로 카디널리티 통제.
+# route 라벨 enum — 도메인 단위 ~10개로 카디널리티 통제. 값은 실제 URL segment 와
+# 일치해야 한다 (menu_ai 경로는 /api/menu-ai 라 "menu-ai").
 _DB_ROUTE_DOMAINS = frozenset({
     "auth", "chat", "tour", "friend", "feed",
-    "notification", "tripmate", "menu_ai", "translation", "public",
+    "notification", "tripmate", "menu-ai", "translation", "public",
 })
 
 DB_TRANSACTION_RESULTS = ("commit", "rollback", "other")
