@@ -8,7 +8,13 @@ from datetime import date
 import pytest
 from pydantic import ValidationError
 
-from app.domain.tripmate.schema.tripmate_post import CreatePostRequest, UpdatePostRequest
+from app.domain.tripmate.schema.tripmate_post import (
+    _MAX_IMAGE_URL_LEN,
+    _MAX_POST_IMAGES,
+    CreatePostRequest,
+    SaveDraftRequest,
+    UpdatePostRequest,
+)
 
 
 def _payload(**overrides):
@@ -51,3 +57,36 @@ class TestPostRangeValidation:
                 travel_start_date=date(2026, 7, 20),
                 travel_end_date=date(2026, 7, 12),
             ))
+
+
+# ──────────────────────────────────────────────────────────────────
+# 이미지 URL 개수/길이 상한 — 무제한이면 Mongo draft 팽창 + 목록 조회 폭증(DoS)
+# ──────────────────────────────────────────────────────────────────
+
+@pytest.mark.unit
+@pytest.mark.parametrize("cls", [CreatePostRequest, UpdatePostRequest])
+class TestPostImageLimits:
+    def test_at_cap_allowed(self, cls):
+        cls(**_payload(image_urls=[f"https://img/{i}" for i in range(_MAX_POST_IMAGES)]))
+
+    def test_over_cap_rejected(self, cls):
+        with pytest.raises(ValidationError):
+            cls(**_payload(image_urls=[f"https://img/{i}" for i in range(_MAX_POST_IMAGES + 1)]))
+
+    def test_too_long_url_rejected(self, cls):
+        with pytest.raises(ValidationError):
+            cls(**_payload(image_urls=["x" * (_MAX_IMAGE_URL_LEN + 1)]))
+
+
+@pytest.mark.unit
+class TestDraftImageLimits:
+    def test_at_cap_allowed(self):
+        SaveDraftRequest(image_urls=[f"https://img/{i}" for i in range(_MAX_POST_IMAGES)])
+
+    def test_over_cap_rejected(self):
+        with pytest.raises(ValidationError):
+            SaveDraftRequest(image_urls=[f"https://img/{i}" for i in range(_MAX_POST_IMAGES + 1)])
+
+    def test_too_long_url_rejected(self):
+        with pytest.raises(ValidationError):
+            SaveDraftRequest(image_urls=["x" * (_MAX_IMAGE_URL_LEN + 1)])
