@@ -144,15 +144,29 @@ class MongoDB:
             self.client.close()
 
 
+_SEARCH_HISTORY_UNIQUE_INDEX = "uq_user_search_name"
+
+
 async def _ensure_search_history_unique_indexes() -> None:
     """검색기록 컬렉션에 `(user_id, search_name)` unique 인덱스 보장.
 
     모델에 인덱스를 선언하지 않고 여기서 만든다 — init_beanie 가 unique 인덱스를 먼저
     만들면 기존 중복 데이터로 startup 이 크래시하기 때문. 인덱스 생성 전에 중복을 먼저
-    정리(dedup: 그룹당 최신 1건 유지)해 안전하게 유니크화한다. 매 startup idempotent.
+    정리(dedup: 그룹당 최신 1건 유지)해 안전하게 유니크화한다.
+
+    dedup 은 unique 인덱스가 아직 없는 컬렉션(=최초 부팅)에 대해서만 실행한다. 인덱스가
+    이미 있으면($sort+$group 전체 스캔은 컬렉션이 커질수록 100MB in-memory 한계 초과나
+    socketTimeoutMS 초과로 connect() 크래시·배포 crash-loop 유발) aggregate 를 통째로
+    건너뛰어 부팅을 저렴하게 유지한다. 정상 상태(steady state)에서 idempotent.
     """
     for model in (FriendSearchHistory, TourSearchHistory, TripmateSearchHistory):
         collection = model.get_motor_collection()
+
+        # 존재 게이트 — 인덱스가 이미 있으면 dedup 전체 스캔을 생략.
+        existing = await collection.index_information()
+        if _SEARCH_HISTORY_UNIQUE_INDEX in existing:
+            continue
+
         pipeline = [
             {"$sort": {"created_at": -1}},
             {"$group": {
@@ -161,12 +175,13 @@ async def _ensure_search_history_unique_indexes() -> None:
             }},
             {"$match": {"ids.1": {"$exists": True}}},  # 2건 이상인 그룹만
         ]
-        async for group in collection.aggregate(pipeline):
+        # allowDiskUse — 최초 부팅 dedup 이 100MB in-memory 한계를 넘겨도 실패하지 않도록 안전망.
+        async for group in collection.aggregate(pipeline, allowDiskUse=True):
             await collection.delete_many({"_id": {"$in": group["ids"][1:]}})
         await collection.create_index(
             [("user_id", 1), ("search_name", 1)],
             unique=True,
-            name="uq_user_search_name",
+            name=_SEARCH_HISTORY_UNIQUE_INDEX,
         )
 
 
