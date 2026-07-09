@@ -27,8 +27,21 @@ class FriendshipRepository:
 
     # ──────────────────── Read (단건) ────────────────────
 
-    async def find_by_id(self, friendship_id: str) -> Optional[Friendship]:
-        """friendship_id로 단건 조회"""
+    async def find_by_id(
+        self, friendship_id: str, *, for_update: bool = False,
+    ) -> Optional[Friendship]:
+        """friendship_id 단건 조회. for_update=True 면 FOR UPDATE 행 잠금.
+
+        상태 전이(accept/reject/cancel/remove)의 검사~쓰기 원자성 보장(lost update 방지)용.
+        """
+        if for_update:
+            stmt = (
+                select(Friendship)
+                .where(Friendship.friendship_id == friendship_id)
+                .with_for_update()
+            )
+            result = await self.session.execute(stmt)
+            return result.scalar_one_or_none()
         return await self.session.get(Friendship, friendship_id)
 
     async def count_accepted_for(self, user_id: str) -> int:

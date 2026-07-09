@@ -112,7 +112,8 @@ class FriendshipService:
         """
         friendship_repo = FriendshipRepository(self._session)
 
-        friendship = await friendship_repo.find_by_id(friendship_id)
+        # for_update: accept/reject/cancel 동시 실행 시 검사~쓰기 원자성 보장 (lost update 방지)
+        friendship = await friendship_repo.find_by_id(friendship_id, for_update=True)
         if friendship is None:
             raise ValueError("존재하지 않는 친구 요청입니다.")
         if friendship.addressee_id != user_id:
@@ -140,7 +141,7 @@ class FriendshipService:
         """
         friendship_repo = FriendshipRepository(self._session)
 
-        friendship = await friendship_repo.find_by_id(friendship_id)
+        friendship = await friendship_repo.find_by_id(friendship_id, for_update=True)
         if friendship is None:
             raise ValueError("존재하지 않는 친구 요청입니다.")
         if friendship.addressee_id != user_id:
@@ -165,7 +166,7 @@ class FriendshipService:
         """
         friendship_repo = FriendshipRepository(self._session)
 
-        friendship = await friendship_repo.find_by_id(friendship_id)
+        friendship = await friendship_repo.find_by_id(friendship_id, for_update=True)
         if friendship is None:
             raise ValueError("존재하지 않는 친구 요청입니다.")
         if friendship.requester_id != user_id:
@@ -186,7 +187,7 @@ class FriendshipService:
         """
         friendship_repo = FriendshipRepository(self._session)
 
-        friendship = await friendship_repo.find_by_id(friendship_id)
+        friendship = await friendship_repo.find_by_id(friendship_id, for_update=True)
         if friendship is None:
             raise ValueError("존재하지 않는 친구 관계입니다.")
         if user_id not in (friendship.requester_id, friendship.addressee_id):
