@@ -509,9 +509,14 @@ class TourPlanService:
         - 매 시도마다 day_items 를 다시 읽음 (자기 자신 제외)
         - SAVEPOINT 롤백 후 재시도하면 SQLAlchemy 가 객체 상태를 expire — 재할당으로 정상 UPDATE
         """
+        # plan_id / item_id 를 루프 전에 고정 — SAVEPOINT 롤백으로 item 이 expire 되면
+        # 다음 시도의 item.plan_id 읽기가 async lazy refresh 로 MissingGreenlet(500) 를 낸다.
+        # (day_number/position 재할당은 set 이라 로드를 유발하지 않아 안전.)
+        plan_id = item.plan_id
+        item_id = item.item_id
         for attempt in range(_MAX_POSITION_RETRY):
-            all_items = await item_repo.find_by_plan_id(item.plan_id)
-            day_items = [i for i in all_items if i.day_number == target_day_number and i.item_id != item.item_id]
+            all_items = await item_repo.find_by_plan_id(plan_id)
+            day_items = [i for i in all_items if i.day_number == target_day_number and i.item_id != item_id]
             new_position = self._compute_position(day_items, after_item_id)
 
             item.day_number = target_day_number
