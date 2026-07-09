@@ -126,6 +126,7 @@ def make_dedupe_redis_mock(first_time: bool = True) -> MagicMock:
     """dedupe Redis — SET NX 반환값에 따라 dedupe 시나리오 제어."""
     redis = MagicMock(name="redis-dedupe")
     redis.set = AsyncMock(return_value=first_time)  # SET NX 결과
+    redis.get = AsyncMock(return_value=None)        # dedupe hit 시 ACK replay 조회 (기본 미기록)
     redis.delete = AsyncMock(return_value=1)
     return redis
 

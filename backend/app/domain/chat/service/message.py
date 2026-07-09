@@ -1,5 +1,6 @@
 """메시지 송신 / 편집 / 삭제 서비스."""
 import asyncio
+import json
 import random
 from datetime import datetime, timedelta, timezone
 
@@ -44,6 +45,9 @@ logger = get_logger("chat.send")
 _MAX_INSERT_ATTEMPTS = 3
 EDIT_TIME_LIMIT = timedelta(minutes=5)
 _PUSH_BODY_PREVIEW_LIMIT = 100
+
+# dedupe 값의 예약(placeholder) 상태 — Mongo durable 후 ACK JSON 으로 교체된다.
+_DEDUPE_PENDING = "1"
 
 # fire-and-forget task 핸들 보관 — GC 가 미참조 task 를 회수하지 않도록.
 _PUSH_TASKS: set[asyncio.Task] = set()
@@ -101,11 +105,18 @@ class MessageService:
                     "차단 관계인 유저에게는 메시지를 보낼 수 없습니다.",
                 )
 
-        # dedupe — NX 선점. 이미 있으면 재전송으로 간주.
+        # dedupe — NX 선점. placeholder 로 예약 후 Mongo durable 되면 값에 ACK 를 기록한다.
+        # 재전송(hit): 값이 ACK 면 원본 ACK 를 replay(전송은 성공했으나 ACK 프레임을 잃은 클라
+        # 구제), 아직 placeholder 면 최초 전송이 in-flight → 재시도 유도.
         dedupe_k = dedupe_key(sender_user_id, client_msg_id)
-        first_time = await redis_dedupe.set(dedupe_k, "1", nx=True, ex=DEDUPE_TTL)
+        first_time = await redis_dedupe.set(dedupe_k, _DEDUPE_PENDING, nx=True, ex=DEDUPE_TTL)
         if not first_time:
-            raise ValueError("이미 처리된 메시지입니다 (dedupe).")
+            replay = await self._replay_ack_if_available(
+                redis_dedupe, dedupe_k, client_msg_id,
+            )
+            if replay is not None:
+                return replay
+            raise ValueError("메시지가 처리 중입니다. 잠시 후 다시 시도해주세요.")
 
         # Mongo 저장 성공이 dedupe 유지의 경계 — 이 블록에서 어떤 예외든 dedupe 를 풀어
         # 클라가 같은 client_msg_id 로 재시도 가능하게 한다.
@@ -151,9 +162,16 @@ class MessageService:
             await redis_dedupe.delete(dedupe_k)
             raise
 
-        # last_message_* 갱신 실패는 dirty 큐로 — reconcile 이 수렴시킨다.
-        # if_greater 가드 — 같은 방 동시 송신이 chat_room 행 잠금을 엇갈려 잡으면 낮은 seq 가
-        # 높은 seq 를 덮어써 last_message 가 과거로 regress 할 수 있다. seq 가드로 no-op 처리.
+        # Mongo durable 확정 — dedupe 값에 ACK 를 기록해 재전송 시 replay 가능하게 한다.
+        # best-effort (실패 시 재전송은 placeholder 를 보고 재시도 유도 — 잘못된 결과는 없다).
+        await self._record_dedupe_ack(
+            redis_dedupe, dedupe_k,
+            room_id=room_id, message_id=message_id, server_seq=server_seq, at=now,
+        )
+
+        # last_message 는 바깥 트랜잭션 SAVEPOINT 로 갱신 — 커넥션 1개 (별도 세션은 송신당
+        # C1+C2 동시 점유로 공유 풀 데드락). if_greater 가드로 동시 송신 seq regress 방지,
+        # 실패는 dirty 큐 → reconcile 이 Mongo 기준 수렴.
         try:
             async with self._session.begin_nested():
                 await chat_room_repo.update_last_message_if_greater(
@@ -277,6 +295,47 @@ class MessageService:
         )
         return int(recovered)
 
+    @staticmethod
+    async def _record_dedupe_ack(
+        redis_dedupe, dedupe_k: str, *,
+        room_id: str, message_id: str, server_seq: int, at: datetime,
+    ) -> None:
+        """dedupe 값을 ACK JSON 으로 교체 (KEEPTTL 로 예약 시 만료 유지). 실패는 무시."""
+        try:
+            await redis_dedupe.set(
+                dedupe_k,
+                json.dumps({
+                    "message_id": message_id,
+                    "server_seq": server_seq,
+                    "created_at": at.isoformat(),
+                }),
+                keepttl=True,
+            )
+        except Exception as e:
+            logger.warning(
+                "dedupe ACK 기록 실패 (무시): room_id={}, err={}",
+                room_id, type(e).__name__,
+            )
+
+    @staticmethod
+    async def _replay_ack_if_available(
+        redis_dedupe, dedupe_k: str, client_msg_id: str,
+    ) -> MessageSentAckData | None:
+        """dedupe 값에 기록된 ACK 를 복원. placeholder/파싱 실패면 None."""
+        raw = await redis_dedupe.get(dedupe_k)
+        if not raw or raw == _DEDUPE_PENDING:
+            return None
+        try:
+            data = json.loads(raw)
+            return MessageSentAckData(
+                client_msg_id=client_msg_id,
+                message_id=data["message_id"],
+                server_seq=int(data["server_seq"]),
+                created_at=datetime.fromisoformat(data["created_at"]),
+            )
+        except (ValueError, TypeError, KeyError):
+            return None
+
     @transactional
     async def send_system_message(
         self,
@@ -337,9 +396,11 @@ class MessageService:
             )
             raise UpstreamError("시스템 메시지 저장에 실패했습니다.")
 
+        # last_message_* 갱신은 SAVEPOINT 로 (커넥션 1개). if_greater 가드로 유저 메시지와
+        # 엇갈려 커밋돼도 낮은 seq 가 높은 seq 를 덮어써 regress 하지 않는다 (일반 송신과 동일).
         try:
             async with self._session.begin_nested():
-                await chat_room_repo.update_last_message(
+                await chat_room_repo.update_last_message_if_greater(
                     chat_room_id=room_id,
                     message_id=message_id,
                     server_seq=server_seq,
@@ -352,22 +413,30 @@ class MessageService:
             )
             await redis_hot.sadd(DIRTY_CHAT_ROOM_KEY, room_id)
 
-        await self._fanout.fan_out_to_room(
-            room_id,
-            {
-                "type": "message.new",
-                "sender_session_id": actor_session_id,
-                "message": {
-                    "message_id": message_id,
-                    "chat_room_id": room_id,
-                    "server_seq": server_seq,
-                    "sender_id": None,
-                    "type": MessageType.SYSTEM.value,
-                    "content": content,
-                    "created_at": now.isoformat(),
+        # fanout 은 best-effort — Redis 장애로 예외가 나도 이미 durable 한 시스템 메시지를
+        # 롤백/실패시키지 않는다 (수신자는 히스토리로 수신, 일반 송신 경로와 동일).
+        try:
+            await self._fanout.fan_out_to_room(
+                room_id,
+                {
+                    "type": "message.new",
+                    "sender_session_id": actor_session_id,
+                    "message": {
+                        "message_id": message_id,
+                        "chat_room_id": room_id,
+                        "server_seq": server_seq,
+                        "sender_id": None,
+                        "type": MessageType.SYSTEM.value,
+                        "content": content,
+                        "created_at": now.isoformat(),
+                    },
                 },
-            },
-        )
+            )
+        except Exception as e:
+            logger.warning(
+                "시스템 메시지 fanout 실패 (메시지는 저장됨): room_id={}, err={}",
+                room_id, type(e).__name__,
+            )
 
         logger.info(
             "시스템 메시지: room_id={}, action={}, actor={}, seq={}, target_ids={}",

@@ -163,16 +163,39 @@ class TestRateLimit:
 
 @pytest.mark.unit
 class TestDedupe:
-    async def test_duplicate_client_msg_id_raises(
+    async def test_duplicate_in_flight_raises_retryable(
         self, service, redis_dedupe_mock,
     ):
+        """dedupe hit + 값이 아직 placeholder → 최초 전송 in-flight → 재시도 유도 에러."""
         redis_dedupe_mock.set = AsyncMock(return_value=False)  # SET NX 실패 = 이미 있음
+        redis_dedupe_mock.get = AsyncMock(return_value="1")    # placeholder (ACK 미기록)
 
-        with pytest.raises(ValueError, match="이미 처리된"):
+        with pytest.raises(ValueError, match="처리 중"):
             await service.send_message(
                 sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
                 client_msg_id="cm-dup", msg_type=MessageType.TEXT, content="x",
             )
+
+    async def test_duplicate_replays_recorded_ack(
+        self, service, redis_dedupe_mock,
+    ):
+        """dedupe hit + 값에 ACK 기록됨 → 원본 ACK 를 replay (ACK 유실 클라 구제, 에러 아님)."""
+        import json
+        redis_dedupe_mock.set = AsyncMock(return_value=False)
+        redis_dedupe_mock.get = AsyncMock(return_value=json.dumps({
+            "message_id": "MSG_original",
+            "server_seq": 42,
+            "created_at": "2026-07-09T00:00:00+00:00",
+        }))
+
+        ack = await service.send_message(
+            sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+            client_msg_id="cm-dup", msg_type=MessageType.TEXT, content="x",
+        )
+
+        assert ack.message_id == "MSG_original"
+        assert ack.server_seq == 42
+        assert ack.client_msg_id == "cm-dup"
 
     async def test_dedupe_key_uses_user_scope(
         self, service, redis_dedupe_mock,
@@ -403,11 +426,9 @@ class TestRdbUpdateFailureDegrade:
     async def test_update_last_message_failure_adds_to_dirty_queue(
         self, service, chat_room_repo_mock, redis_mock, mock_session,
     ):
-        from test.unit.domain.chat.message_service.mock_factory import RaisingAsyncContextManager
-
-        # begin_nested() 가 실패하는 SAVEPOINT 반환 → update_last_message 는 호출 전 롤백 유발
-        mock_session.begin_nested.return_value = RaisingAsyncContextManager(
-            RuntimeError("RDB connection reset"),
+        # SAVEPOINT 내 last_message UPDATE 실패를 재현 → dirty 큐로 위임돼야 함.
+        chat_room_repo_mock.update_last_message_if_greater = AsyncMock(
+            side_effect=RuntimeError("RDB connection reset"),
         )
 
         # 송신은 계속 진행되어 ACK 성공해야 함
@@ -526,16 +547,18 @@ class TestSendSystemMessage:
         assert payload["message"]["sender_id"] is None
         assert payload["message"]["content"]["action"] == "created"
 
-    async def test_updates_last_message(
+    async def test_updates_last_message_with_seq_guard(
         self, service, chat_room_repo_mock,
     ):
         """시스템 메시지도 방 리스트의 last_message 에 반영 — "OO 님이 방을 만들었습니다" 가
-        preview 로 뜨도록."""
+        preview 로 뜨도록. 단, if_greater 가드로 유저 메시지와 엇갈려도 regress 하지 않는다."""
         await service.send_system_message(
             room_id="CR_1", action="created", actor_id="U_A",
         )
-        chat_room_repo_mock.update_last_message.assert_awaited_once()
-        kwargs = chat_room_repo_mock.update_last_message.call_args.kwargs
+        # 가드 없는 update_last_message 가 아니라 if_greater 가드 경로를 쓴다 (regress 차단).
+        chat_room_repo_mock.update_last_message.assert_not_awaited()
+        chat_room_repo_mock.update_last_message_if_greater.assert_awaited_once()
+        kwargs = chat_room_repo_mock.update_last_message_if_greater.call_args.kwargs
         assert kwargs["chat_room_id"] == "CR_1"
 
 

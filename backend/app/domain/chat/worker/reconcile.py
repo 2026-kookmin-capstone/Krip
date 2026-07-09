@@ -13,6 +13,7 @@ from typing import Optional
 
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
+from app.core.chat.lua_script import lua_scripts
 from app.core.chat.redis_key import DIRTY_CHAT_ROOM_KEY, unread_key
 from app.core.instrumentation import (
     chat_reconcile_batch_pop_inc,
@@ -228,39 +229,47 @@ async def recover_unread_for_user(
     sem = asyncio.Semaphore(UNREAD_MONGO_CONCURRENCY)
     message_repo = ChatMessageRepository(mongodb.database)
 
-    async def _count(room_id: str, last_read: int) -> tuple[str, int]:
+    async def _count(room_id: str, last_read: int) -> tuple[str, int, int]:
         async with sem:
+            redis_hot = await get_redis_client()
+            # count 직전 baseline 스냅샷 — count~write 창에 도착한 메시지의 HINCRBY 를 delta 로
+            # 보존하기 위해. 절대 HSET 이면 그 증가분이 소거돼 뱃지가 undercount 되고 자가치유
+            # 되지 않는다 (mark_read 에서 Lua 로 고친 것과 동일한 레이스).
+            baseline = int(await redis_hot.hget(unread_key(user_id), room_id) or 0)
             raw = await message_repo.count_after_seq(
                 chat_room_id=room_id,
                 after_seq=last_read,
                 limit=UNREAD_COUNT_LIMIT,
             )
-            return room_id, min(raw, UNREAD_COUNT_CAP)
+            return room_id, min(raw, UNREAD_COUNT_CAP), baseline
 
     results = await asyncio.gather(
         *(_count(rid, seq) for rid, seq in last_reads.items()),
         return_exceptions=True,
     )
 
-    counts: dict[str, int] = {}
+    recovered: list[tuple[str, int, int]] = []
     for item in results:
         if isinstance(item, BaseException):
             logger.warning("recover_unread: user_id={} 방 count 실패: {}", user_id, item)
             continue
-        room_id, cnt = item
-        counts[room_id] = cnt
+        recovered.append(item)  # (room_id, residual, baseline)
 
-    if counts:
+    counts: dict[str, int] = {}
+    if recovered:
         redis_hot = await get_redis_client()
-        pipe = redis_hot.pipeline(transaction=False)
-        for rid, cnt in counts.items():
-            pipe.hset(unread_key(user_id), rid, cnt)
         try:
-            await pipe.execute()
+            for room_id, residual, baseline in recovered:
+                # 절대 HSET 대신 baseline+delta Lua — residual(DB 잔여) 에 baseline 이후 증가분을
+                # 더해 동시 HINCRBY 를 보존한다 (mark_read_unread.lua 재사용, cap clamp 포함).
+                final = await lua_scripts.mark_read_unread(
+                    keys=[unread_key(user_id)],
+                    args=[room_id, residual, baseline, UNREAD_COUNT_CAP],
+                )
+                counts[room_id] = int(final)
         except Exception as e:
-            # pipeline 중간 실패해도 이전 명령은 이미 반영됨 — partial state 로 남으면 다음
-            # 재연결 시 `get_unread_counts` 가 non-empty 라 복구 재시도가 안 됨. DEL 로
-            # 전체 쓸어 EXISTS=0 을 강제해야 재trigger 된다.
+            # 중간 실패 시 partial state 로 남으면 다음 재연결의 `get_unread_counts` 가 non-empty
+            # 라 복구 재시도가 안 된다. DEL 로 전체 쓸어 EXISTS=0 을 강제해야 재trigger 된다.
             logger.warning(
                 "recover_unread: Redis 반영 실패 — partial state 정리 후 counts 취소: "
                 "user_id={}, err={}",
