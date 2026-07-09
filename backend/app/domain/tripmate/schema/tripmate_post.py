@@ -1,9 +1,18 @@
 from typing import List, Optional
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 from datetime import date, datetime
 
 from app.domain.tripmate.model.tripmate_post import PreferredGender, CompanionType
 from app.domain.auth.model.user_detail_inform import Gender
+
+
+def _validate_post_ranges(model):
+    """나이/여행일 범위 교차 검증 — 위반 시 DB CheckConstraint(500) 대신 422 로 매핑."""
+    if model.preferred_age_min > model.preferred_age_max:
+        raise ValueError("선호 나이 하한이 상한보다 클 수 없습니다.")
+    if model.travel_start_date > model.travel_end_date:
+        raise ValueError("여행 시작일이 종료일보다 늦을 수 없습니다.")
+    return model
 
 
 # ──────────────────── Request ────────────────────
@@ -19,6 +28,8 @@ class CreatePostRequest(BaseModel):
     travel_end_date: date = Field(..., description="여행 종료일")
     companion_type: CompanionType = Field(..., description="동행 타입 (friend / family / couple / sole)")
     image_urls: Optional[List[str]] = Field(None, description="첨부 이미지 URL 목록 (이미지 업로드 API로 받은 URL)")
+
+    _validate_ranges = model_validator(mode="after")(_validate_post_ranges)
 
     class Config:
         json_schema_extra = {
@@ -48,6 +59,8 @@ class UpdatePostRequest(BaseModel):
     travel_end_date: date = Field(..., description="여행 종료일")
     companion_type: CompanionType = Field(..., description="동행 타입 (friend / family / couple / sole)")
     image_urls: Optional[List[str]] = Field(None, description="첨부 이미지 URL 목록 (이미지 업로드 API로 받은 URL)")
+
+    _validate_ranges = model_validator(mode="after")(_validate_post_ranges)
 
 
 # ──────────────────── Response ────────────────────
