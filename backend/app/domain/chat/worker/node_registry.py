@@ -49,11 +49,14 @@ async def register_self() -> None:
 
 
 async def heartbeat_self() -> None:
-    """자기 노드 만료시각 갱신. `XX` 로 deregister 후 racy heartbeat 의 부활 방지."""
+    """자기 노드 만료시각 갱신 — plain ZADD(add-or-update).
+
+    TTL 초과로 list_active_nodes 가 이 노드를 축출해도 다음 tick 에 재등록돼 자가 치유한다
+    (`XX` 면 영구 미복귀 → WS 실시간 수신 불가). deregister 후 부활 우려 없음: shutdown 이
+    heartbeat 루프를 멈춘 뒤에야 deregister 하므로 재발화 경로가 없다.
+    """
     redis = await get_redis_client()
-    await redis.zadd(
-        NODES_ZSET_KEY, {settings.NODE_ID: _expires_ms()}, xx=True,
-    )
+    await redis.zadd(NODES_ZSET_KEY, {settings.NODE_ID: _expires_ms()})
 
 
 async def deregister_self() -> None:
