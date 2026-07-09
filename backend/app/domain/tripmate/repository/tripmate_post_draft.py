@@ -2,6 +2,7 @@ from datetime import date, datetime, timezone
 from typing import Optional
 
 from pymongo import ReturnDocument
+from pymongo.errors import DuplicateKeyError
 
 from app.core.instrumentation import measure_mongo_op
 from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
@@ -22,12 +23,23 @@ class TripmatePostDraftRepository:
             if isinstance(value, date) and not isinstance(value, datetime):
                 doc[key] = datetime(value.year, value.month, value.day)
 
-        result = await TripmatePostDraft.get_motor_collection().find_one_and_update(
-            {"user_id": draft.user_id},
-            {"$set": doc},
-            upsert=True,
-            return_document=ReturnDocument.AFTER,
-        )
+        collection = TripmatePostDraft.get_motor_collection()
+
+        # user_id unique upsert — 동시 자동/수동 저장 경합 시 둘 다 insert 시도 → unique 위반.
+        try:
+            result = await collection.find_one_and_update(
+                {"user_id": draft.user_id},
+                {"$set": doc},
+                upsert=True,
+                return_document=ReturnDocument.AFTER,
+            )
+        except DuplicateKeyError:
+            # 동시 upsert 경합 — 상대가 먼저 insert. upsert 없이 재조회+갱신 (unique 인덱스).
+            result = await collection.find_one_and_update(
+                {"user_id": draft.user_id},
+                {"$set": doc},
+                return_document=ReturnDocument.AFTER,
+            )
 
         return TripmatePostDraft.model_validate(result)
 
