@@ -13,7 +13,7 @@ idle hold 되어 풀 압박. 의미 손해 없이 점유 시간 30~50× 감소.
 지워지면 orphan 만 invisible 하게 남음.
 """
 import asyncio
-from typing import Optional
+from typing import Final, Optional
 
 from app.core.logger import get_logger
 from app.core.object_storage import get_object_storage
@@ -36,6 +36,24 @@ from app.util.storage_prefix import feed_post_prefix
 
 
 logger = get_logger("feed.post.service")
+
+
+# 동시 Pillow 처리 상한 — to_thread 는 캡이 없어 대형 업로드가 겹치면 OOM. 피크 메모리 상한용.
+IMAGE_PROCESSING_CONCURRENCY: Final[int] = 4
+
+# lazy 생성 — 최초 사용 루프에 귀속(테스트마다 새 루프면 재생성해 "different loop" 회피).
+_image_semaphore: Optional[asyncio.Semaphore] = None
+_image_semaphore_loop: Optional[asyncio.AbstractEventLoop] = None
+
+
+def _get_image_semaphore() -> asyncio.Semaphore:
+    """실행 중인 이벤트 루프에 귀속된 이미지 처리 세마포어를 lazy 하게 반환."""
+    global _image_semaphore, _image_semaphore_loop
+    loop = asyncio.get_running_loop()
+    if _image_semaphore is None or _image_semaphore_loop is not loop:
+        _image_semaphore = asyncio.Semaphore(IMAGE_PROCESSING_CONCURRENCY)
+        _image_semaphore_loop = loop
+    return _image_semaphore
 
 
 def _normalize_caption(caption: Optional[str]) -> Optional[str]:
@@ -62,8 +80,9 @@ class FeedPostService:
         caption: Optional[str] = None,
     ) -> FeedPostData:
         """피드 업로드. Pillow → S3 병렬 → PG INSERT. 어떤 단계든 실패 시 prefix cleanup."""
-        # ValueError 면 라우터에서 400 — S3/DB 자원 미접근.
-        processed = await asyncio.to_thread(process_feed_image, file_bytes)
+        # 세마포어로 동시 Pillow 처리를 상한 (OOM 방지). ValueError → 라우터 400.
+        async with _get_image_semaphore():
+            processed = await asyncio.to_thread(process_feed_image, file_bytes)
 
         # post_id / prefix 는 트랜잭션 밖에서 발급 — 어떤 실패 경로에서도 cleanup 호출 가능.
         post_id = generate_feed_post_id()
@@ -97,7 +116,9 @@ class FeedPostService:
                 ),
                 return_exceptions=True,
             )
-            upload_errors = [u for u in uploads if isinstance(u, Exception)]
+            # return_exceptions 는 CancelledError(BaseException) 도 결과에 담으므로
+            # Exception 만 보면 취소된 업로드를 놓쳐 고아가 남는다 → BaseException 전체 검사.
+            upload_errors = [u for u in uploads if isinstance(u, BaseException)]
             if upload_errors:
                 raise upload_errors[0]
             original_url, small_url, medium_url = uploads
@@ -111,8 +132,10 @@ class FeedPostService:
                 small_url=small_url,
                 medium_url=medium_url,
             )
-        except Exception:
-            await self._safe_cleanup(prefix)
+        except BaseException:
+            # BaseException 으로 잡아 CancelledError(취소) 경로에서도 cleanup. shield 로
+            # cleanup 이 취소로 중단되지 않게 하고, 원 예외를 재던져 취소 신호를 삼키지 않는다.
+            await asyncio.shield(self._safe_cleanup(prefix))
             raise
 
         # 신규 업로드 → 카운트 0 명백. reload 없이 row 합성 (round-trip 절약).

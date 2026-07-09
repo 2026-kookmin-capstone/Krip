@@ -8,6 +8,8 @@ happy path 전체 (실 Pillow + 실 S3 + 실 INSERT) 는 통합 테스트 영역
 
 `@transactional` 가 실제 commit 까지 호출하므로 mock_session 의 close/commit 도 정상 동작.
 """
+import asyncio
+
 import pytest
 
 from app.domain.feed.dto.image import ProcessedFeedImage, ProcessedVariant
@@ -143,3 +145,23 @@ class TestUploadCleanupOnFailure:
                 user_id="USER_a", file_bytes=b"x",
                 visibility=FeedVisibility.PUBLIC, caption="hi",
             )
+
+    async def test_cancelled_upload_still_triggers_cleanup_and_repropagates(
+        self, service, repo_mock, storage_mock, stub_thumbnail,
+    ):
+        """클라 끊김/셧다운으로 업로드 태스크가 취소돼도 S3 고아를 남기지 않는다.
+
+        CancelledError 는 BaseException 이라 과거 `except Exception` 을 그대로 통과해
+        cleanup 이 스킵됐다. 이제는 cleanup 을 태우고 CancelledError 를 그대로 재던진다
+        (취소 신호를 삼키지 않음).
+        """
+        storage_mock.upload_to_key.side_effect = asyncio.CancelledError()
+
+        with pytest.raises(asyncio.CancelledError):
+            await service.upload_post(
+                user_id="USER_a", file_bytes=b"x",
+                visibility=FeedVisibility.PUBLIC, caption="hi",
+            )
+        storage_mock.delete_by_prefix.assert_awaited_once()
+        called_prefix = storage_mock.delete_by_prefix.await_args.args[0]
+        assert called_prefix.startswith("USER_a/feed/FDP_")
