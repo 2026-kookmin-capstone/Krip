@@ -1,7 +1,8 @@
 """Translation 도메인 전용 커스텀 예외.
 
 Router 가 HTTPException 으로 매핑 (§에러 처리 컨벤션):
-    TranslationVendorError       → 502 (외부 번역 서비스 응답 실패: 4xx / 5xx)
+    TranslationQuotaExceededError → 429 (외부 번역 서비스 쿼터 소진 — 클라이언트 백오프)
+    TranslationVendorError       → 502 (외부 번역 서비스 응답 실패: 기타 4xx / 5xx)
     TranslationUnreachableError  → 504 (외부 번역 서비스에 도달 불가: 네트워크 / 타임아웃)
 
 Service 가 vendor SDK (httpx 등) 의 예외를 위 도메인 예외로 변환해 던진다.
@@ -20,6 +21,18 @@ class TranslationVendorError(TranslationError):
         self.status_code = status_code
         self.body = body
         super().__init__(f"vendor responded {status_code}: {body}")
+
+
+class TranslationQuotaExceededError(TranslationError):
+    """외부 번역 서비스 쿼터 소진(429) — Router 에서 429 로 매핑.
+
+    502(VendorError)로 뭉개면 클라이언트가 서버 장애로 오인해 즉시 재시도 → 쿼터 소진 지속.
+    429 로 분리해 백오프를 유도한다 (menu_ai / tour 도메인과 동일 컨벤션).
+    """
+
+    def __init__(self, body: str):
+        self.body = body
+        super().__init__(f"vendor quota exceeded (429): {body}")
 
 
 class TranslationUnreachableError(TranslationError):

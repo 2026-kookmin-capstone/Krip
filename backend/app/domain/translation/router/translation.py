@@ -10,6 +10,7 @@ from app.domain.translation.schema.translation import (
     TranslateResponse,
 )
 from app.domain.translation.service.exception import (
+    TranslationQuotaExceededError,
     TranslationUnreachableError,
     TranslationVendorError,
 )
@@ -32,6 +33,9 @@ async def detect_language(
     """입력 문장의 언어를 감지합니다 (ko / en)."""
     try:
         result = await translation_service.detect(body.text)
+    except TranslationQuotaExceededError as e:
+        logger.warning("언어 감지 쿼터 소진(429): {}", e.body)
+        raise HTTPException(status_code=429, detail="요청이 많아 처리하지 못했습니다. 잠시 후 다시 시도해주세요.")
     except TranslationVendorError as e:
         logger.error("언어 감지 실패 (status={}): {}", e.status_code, e.body)
         raise HTTPException(status_code=502, detail="언어 감지에 실패했습니다.")
@@ -60,6 +64,9 @@ async def translate_text(
 
     try:
         result = await translation_service.translate(body.text, body.source, body.target)
+    except TranslationQuotaExceededError as e:
+        logger.warning("번역 쿼터 소진(429): {}", e.body)
+        raise HTTPException(status_code=429, detail="요청이 많아 처리하지 못했습니다. 잠시 후 다시 시도해주세요.")
     except TranslationVendorError as e:
         logger.error("번역 실패 (status={}): {}", e.status_code, e.body)
         raise HTTPException(status_code=502, detail="번역에 실패했습니다.")

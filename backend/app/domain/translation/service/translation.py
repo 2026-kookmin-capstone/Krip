@@ -4,6 +4,7 @@ from app.core.ai.papago_translator.load import PapagoTranslator
 from app.domain.translation.dto.translation import DetectData, TranslateData
 from app.domain.translation.schema.translation import LangCode
 from app.domain.translation.service.exception import (
+    TranslationQuotaExceededError,
     TranslationUnreachableError,
     TranslationVendorError,
 )
@@ -26,6 +27,8 @@ class TranslationService:
         try:
             result = await self._translator.detect(text)
         except HTTPStatusError as e:
+            if e.response.status_code == 429:
+                raise TranslationQuotaExceededError(e.response.text) from e
             raise TranslationVendorError(e.response.status_code, e.response.text) from e
         except RequestError as e:
             raise TranslationUnreachableError(str(e)) from e
@@ -47,6 +50,8 @@ class TranslationService:
         try:
             result = await self._translator.translate(text, source, target)
         except HTTPStatusError as e:
+            if e.response.status_code == 429:
+                raise TranslationQuotaExceededError(e.response.text) from e
             raise TranslationVendorError(e.response.status_code, e.response.text) from e
         except RequestError as e:
             raise TranslationUnreachableError(str(e)) from e
