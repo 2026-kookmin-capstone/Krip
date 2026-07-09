@@ -22,6 +22,9 @@ from datetime import datetime, timezone, timedelta
 import asyncio
 
 from app.domain.notification.service.inbox import InboxService
+from app.domain.chat.service.user_purge_cache import UserPurgeCacheService
+from app.domain.chat.service.session import SessionService
+from app.domain.chat.service.fanout import FanoutService
 from app.domain.auth.service.withdraw import WithdrawService
 from app.domain.auth.repository.withdrawal_request import WithdrawalRequestRepository
 from app.database.session import UnitOfWork
@@ -99,16 +102,22 @@ async def purge_due_withdrawals_once() -> int:
 
     logger.info("withdraw purge: 사이클 시작 — 대상 {} 명", len(due))
 
+    # WithdrawService 필수 의존성. purge 는 Redis 단독 cleanup 만 써 stateless → 사이클당 1회 재사용.
+    chat_purge = UserPurgeCacheService(
+        session_service=SessionService(fanout_service=FanoutService()),
+    )
+
     succeeded = 0
     failed = 0
     for req in due:
-        # 매 유저마다 새 UoW 로 isolated. 한 유저의 RDB 트랜잭션이 다른 유저로 leak 되지 않게.
-        # InboxService 는 stateless (Mongo 단독) 라 매 사이클 새로 만들어도 비용 0.
-        service = WithdrawService(
-            uow=UnitOfWork(session=factory),
-            inbox_service=InboxService(),
-        )
         try:
+            # 유저마다 새 UoW 로 격리(트랜잭션 leak 방지). 생성을 try 안에 둬 구성 오류가
+            # 사이클 전체를 죽이지 않게 한다.
+            service = WithdrawService(
+                uow=UnitOfWork(session=factory),
+                inbox_service=InboxService(),
+                user_purge_cache_service=chat_purge,
+            )
             await asyncio.wait_for(
                 service.purge(req.user_id),
                 timeout=PURGE_PER_USER_TIMEOUT_SEC,
