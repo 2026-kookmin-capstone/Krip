@@ -1,5 +1,6 @@
 from typing import List
 from pymongo import ReturnDocument, ASCENDING
+from pymongo.errors import DuplicateKeyError
 from datetime import datetime, timezone
 
 from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHistory
@@ -24,12 +25,20 @@ class TripmateSearchHistoryRepository:
         now = datetime.now(timezone.utc)
 
         # 동일 검색어가 있으면 시간만 갱신, 없으면 새로 생성
-        result = await collection.find_one_and_update(
-            {"user_id": user_id, "search_name": search_name},
-            {"$set": {"created_at": now}},
-            upsert=True,
-            return_document=ReturnDocument.AFTER,
-        )
+        try:
+            result = await collection.find_one_and_update(
+                {"user_id": user_id, "search_name": search_name},
+                {"$set": {"created_at": now}},
+                upsert=True,
+                return_document=ReturnDocument.AFTER,
+            )
+        except DuplicateKeyError:
+            # 동시 upsert 경합 — 상대가 먼저 insert. 재조회+갱신하면 기존 doc 매칭 (unique 인덱스).
+            result = await collection.find_one_and_update(
+                {"user_id": user_id, "search_name": search_name},
+                {"$set": {"created_at": now}},
+                return_document=ReturnDocument.AFTER,
+            )
 
         # 최대 개수 초과 시 가장 오래된 검색어 삭제
         await self._trim_oldest(user_id)

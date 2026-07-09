@@ -136,10 +136,39 @@ class MongoDB:
         # 채팅 메시지는 motor 네이티브 — beanie document 대신 인덱스만 초기화.
         await create_chat_message_indexes(self.database)
 
+        # 검색기록 (user_id, search_name) unique 인덱스 — dedup 후 생성 (startup-safe).
+        await _ensure_search_history_unique_indexes()
+
 
     async def disconnect(self):
         if self.client:
             self.client.close()
+
+
+async def _ensure_search_history_unique_indexes() -> None:
+    """검색기록 컬렉션에 `(user_id, search_name)` unique 인덱스 보장.
+
+    모델에 인덱스를 선언하지 않고 여기서 만든다 — init_beanie 가 unique 인덱스를 먼저
+    만들면 기존 중복 데이터로 startup 이 크래시하기 때문. 인덱스 생성 전에 중복을 먼저
+    정리(dedup: 그룹당 최신 1건 유지)해 안전하게 유니크화한다. 매 startup idempotent.
+    """
+    for model in (FriendSearchHistory, TourSearchHistory, TripmateSearchHistory):
+        collection = model.get_motor_collection()
+        pipeline = [
+            {"$sort": {"created_at": -1}},
+            {"$group": {
+                "_id": {"user_id": "$user_id", "search_name": "$search_name"},
+                "ids": {"$push": "$_id"},
+            }},
+            {"$match": {"ids.1": {"$exists": True}}},  # 2건 이상인 그룹만
+        ]
+        async for group in collection.aggregate(pipeline):
+            await collection.delete_many({"_id": {"$in": group["ids"][1:]}})
+        await collection.create_index(
+            [("user_id", 1), ("search_name", 1)],
+            unique=True,
+            name="uq_user_search_name",
+        )
 
 mongodb = MongoDB()
 
