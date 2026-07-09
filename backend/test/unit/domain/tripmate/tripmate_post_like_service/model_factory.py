@@ -20,12 +20,14 @@ class TripmatePostFactory:
         post_id: Optional[str] = None,
         user_id: str = "USER_owner",
         title: str = "여행 같이 가실 분",
+        is_displayed: bool = True,
     ) -> SimpleNamespace:
         cls._counter += 1
         return SimpleNamespace(
             post_id=post_id or f"TMP_test_{cls._counter:04d}",
             user_id=user_id,
             title=title,
+            is_displayed=is_displayed,
         )
 
 

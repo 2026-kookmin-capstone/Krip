@@ -25,18 +25,22 @@ class TripmatePostLikeService:
     # ──────────────────── 좋아요 누른 유저 조회 ────────────────────
 
     @transactional
-    async def get_liked_user_ids(self, post_id: str) -> List[str]:
+    async def get_liked_user_ids(self, post_id: str, user_id: str) -> List[str]:
         """
         게시글에 좋아요 누른 유저 ID 목록 조회
 
         1. 게시글 존재 검증
-        2. 좋아요 누른 유저 ID 목록 반환 (최신순)
+        2. 숨김 게시글은 작성자 본인만 조회 가능
+        3. 좋아요 누른 유저 ID 목록 반환 (최신순)
         """
         post_repo = TripmatePostRepository(self._session)
         like_repo = TripmatePostLikeRepository(self._session)
 
         post = await post_repo.find_by_id(post_id)
         if post is None:
+            raise ValueError("존재하지 않는 게시글입니다.")
+        # 숨김 게시글의 좋아요 목록은 작성자 본인에게만 노출 — 타인에겐 존재 자체를 숨긴다.
+        if not post.is_displayed and post.user_id != user_id:
             raise ValueError("존재하지 않는 게시글입니다.")
 
         return await like_repo.find_user_ids_by_post(post_id)

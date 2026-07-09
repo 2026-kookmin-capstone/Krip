@@ -304,12 +304,14 @@ async def remove_like(
 @router.get("/{post_id}/likes")
 @inject
 async def get_liked_users(
+    request: Request,
     post_id: str,
     like_service: TripmatePostLikeService = Depends(Provide[Container.tripmate_post_like_service]),
 ) -> LikedUsersResponse:
     """게시글 좋아요 누른 유저 목록"""
+    user_id: str = request.state.user_id
     try:
-        user_ids = await like_service.get_liked_user_ids(post_id=post_id)
+        user_ids = await like_service.get_liked_user_ids(post_id=post_id, user_id=user_id)
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
 

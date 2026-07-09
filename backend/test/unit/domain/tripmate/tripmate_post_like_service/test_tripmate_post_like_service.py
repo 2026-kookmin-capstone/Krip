@@ -29,7 +29,7 @@ class TestGetLikedUserIds:
         post_repo_mock.find_by_id.return_value = post
         like_repo_mock.find_user_ids_by_post.return_value = ["USER_a", "USER_b"]
 
-        result = await service.get_liked_user_ids(post_id="TMP_x")
+        result = await service.get_liked_user_ids(post_id="TMP_x", user_id="USER_viewer")
 
         assert result == ["USER_a", "USER_b"]
         like_repo_mock.find_user_ids_by_post.assert_awaited_once_with("TMP_x")
@@ -41,9 +41,37 @@ class TestGetLikedUserIds:
         post_repo_mock.find_by_id.return_value = None
 
         with pytest.raises(ValueError, match="존재하지 않는"):
-            await service.get_liked_user_ids(post_id="TMP_x")
+            await service.get_liked_user_ids(post_id="TMP_x", user_id="USER_viewer")
 
         like_repo_mock.find_user_ids_by_post.assert_not_awaited()
+
+
+    async def test_hidden_post_likes_hidden_from_non_owner(
+        self, service, post_repo_mock, like_repo_mock,
+    ):
+        """숨김 게시글의 좋아요 목록은 작성자 본인이 아니면 404(존재하지 않음)."""
+        post_repo_mock.find_by_id.return_value = TripmatePostFactory.create(
+            post_id="TMP_x", user_id="USER_owner", is_displayed=False,
+        )
+
+        with pytest.raises(ValueError, match="존재하지 않는"):
+            await service.get_liked_user_ids(post_id="TMP_x", user_id="USER_other")
+
+        like_repo_mock.find_user_ids_by_post.assert_not_awaited()
+
+
+    async def test_hidden_post_likes_visible_to_owner(
+        self, service, post_repo_mock, like_repo_mock,
+    ):
+        """숨김 게시글이어도 작성자 본인은 좋아요 목록을 조회할 수 있다."""
+        post_repo_mock.find_by_id.return_value = TripmatePostFactory.create(
+            post_id="TMP_x", user_id="USER_owner", is_displayed=False,
+        )
+        like_repo_mock.find_user_ids_by_post.return_value = ["USER_a"]
+
+        result = await service.get_liked_user_ids(post_id="TMP_x", user_id="USER_owner")
+
+        assert result == ["USER_a"]
 
 
 # ──────────────────────────────────────────────────────────────────

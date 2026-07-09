@@ -113,6 +113,9 @@ class TripmatePostService:
         post = await post_repo.find_by_id_with_detail(post_id, user_id=user_id)
         if post is None:
             raise ValueError("존재하지 않는 게시글입니다.")
+        # 숨김(is_displayed=False) 게시글은 작성자 본인에게만 노출 — 타인에겐 존재 자체를 숨긴다.
+        if not post.is_displayed and post.user_id != user_id:
+            raise ValueError("존재하지 않는 게시글입니다.")
 
         return self._to_dto(
             post,
@@ -150,7 +153,6 @@ class TripmatePostService:
 
     # ──────────────────── 게시글 수정 ────────────────────
 
-    @transactional
     async def update_post(
         self,
         post_id: str,
@@ -166,12 +168,43 @@ class TripmatePostService:
         companion_type: CompanionType,
         image_urls: Optional[List[str]] = None,
     ) -> TripmatePostData:
-        """
-        게시글 수정
+        """게시글 수정 — DB 는 트랜잭션 안, 제거 이미지 물리 삭제는 커밋 후 best-effort."""
+        dto, deletable = await self._update_post_tx(
+            post_id=post_id, user_id=user_id, title=title, content=content,
+            preferred_age_min=preferred_age_min, preferred_age_max=preferred_age_max,
+            preferred_gender=preferred_gender, region=region,
+            travel_start_date=travel_start_date, travel_end_date=travel_end_date,
+            companion_type=companion_type, image_urls=image_urls,
+        )
+        # 커밋 후 물리 삭제 — 커밋 전 삭제하면 이후 롤백 시 파일만 사라져 깨진 이미지 URL 이
+        # 영구히 남는다(feed 와 동일하게 커밋 → S3 순서).
+        if deletable:
+            await self._cleanup_image_files(deletable, label=f"update:{post_id}")
+        return dto
+
+
+    @transactional
+    async def _update_post_tx(
+        self,
+        *,
+        post_id: str,
+        user_id: str,
+        title: str,
+        content: str,
+        preferred_age_min: int,
+        preferred_age_max: int,
+        preferred_gender: PreferredGender,
+        region: str,
+        travel_start_date: date,
+        travel_end_date: date,
+        companion_type: CompanionType,
+        image_urls: Optional[List[str]],
+    ) -> tuple[TripmatePostData, list[str]]:
+        """게시글 수정 트랜잭션 부분 — (응답 DTO, 커밋 후 물리 삭제할 고아 URL 목록) 반환.
 
         1. 게시글 존재 및 작성자 검증
         2. 필드 업데이트
-        3. 기존 이미지 삭제 후 새 이미지 저장
+        3. 기존 이미지 삭제 후 새 이미지 저장 + 고아 URL 계산
         """
         post_repo = TripmatePostRepository(self._session)
         image_repo = TripmatePostImageRepository(self._session)
@@ -209,24 +242,20 @@ class TripmatePostService:
             ]
             await image_repo.save_all(images)
 
-        # 제거 이미지 중 다른 게시글/임시저장이 참조하지 않는 것만 물리 삭제 (공유 이미지 보호).
+        # 제거 이미지 중 다른 게시글/임시저장이 참조하지 않는 것만 물리 삭제 대상 (공유 이미지 보호).
+        deletable: list[str] = []
         if removed_urls:
             deletable = await self._filter_unreferenced_urls(user_id, removed_urls)
-            if deletable:
-                try:
-                    await self.storage.delete_many(deletable)
-                    await self.mongo_image_repo.delete_by_urls(deletable)
-                except Exception as e:
-                    logger.warning("수정 시 이미지 정리 실패 (post_id={}): {}", post_id, e)
 
         # 수정 완료 후 좋아요 수 + is_liked + 이미지 포함하여 반환
         updated = await post_repo.find_by_id_with_detail(post_id, user_id=user_id)
-        return self._to_dto(
+        dto = self._to_dto(
             updated,
             like_count=updated.like_count,
             is_liked=updated.is_liked,
             image_urls=[img.image_url for img in sorted(updated.images, key=lambda i: i.image_order)],
         )
+        return dto, deletable
 
 
     # ──────────────────── 게시글 삭제 ────────────────────
@@ -240,7 +269,12 @@ class TripmatePostService:
             2. (트랜잭션 밖) `InboxService.cascade_post_deleted` — 해당 게시글의 좋아요
                알림을 일괄 soft hide. RDB 롤백된 삭제에 대해 알림이 먼저 숨겨지는 race 회피.
         """
-        await self._delete_post_tx(post_id=post_id, user_id=user_id)
+        deletable = await self._delete_post_tx(post_id=post_id, user_id=user_id)
+
+        # (트랜잭션 밖) 커밋 후 이미지 물리 삭제 — 커밋 전 삭제하면 롤백 시 파일만 사라져
+        # 깨진 URL 이 남는다. RDB 삭제가 확정된 뒤에만 스토리지를 정리한다.
+        if deletable:
+            await self._cleanup_image_files(deletable, label=f"delete:{post_id}")
 
         # (트랜잭션 밖) 인박스 cascade — 해당 게시글의 TRIPMATE_LIKE 알림 일괄 soft hide.
         # service 내부에서 예외 swallow + 로그 — 호출측 try 불필요. 실패 시 stale 알림은
@@ -252,8 +286,8 @@ class TripmatePostService:
 
 
     @transactional
-    async def _delete_post_tx(self, *, post_id: str, user_id: str) -> None:
-        """게시글 삭제 트랜잭션 부분 — 권한 검증 + DB delete + 이미지 자원 정리."""
+    async def _delete_post_tx(self, *, post_id: str, user_id: str) -> list[str]:
+        """게시글 삭제 트랜잭션 부분 — 권한 검증 + DB delete. 커밋 후 물리 삭제할 고아 URL 반환."""
         post_repo = TripmatePostRepository(self._session)
         image_repo = TripmatePostImageRepository(self._session)
 
@@ -271,17 +305,10 @@ class TripmatePostService:
         await post_repo.delete(post)
         await self._session.flush()
 
-        # 다른 게시글/임시저장이 참조하지 않는 이미지만 Object Storage + MongoDB 에서 정리
-        if image_urls:
-            deletable = await self._filter_unreferenced_urls(user_id, image_urls)
-            if deletable:
-                try:
-                    storage = get_object_storage()
-                    mongo_image_repo = TripmateImageRepository()
-                    await storage.delete_many(deletable)
-                    await mongo_image_repo.delete_by_urls(deletable)
-                except Exception as e:
-                    logger.warning("삭제 시 이미지 정리 실패 (post_id={}): {}", post_id, e)
+        # 다른 게시글/임시저장이 참조하지 않는 고아 이미지만 커밋 후 정리 대상으로 반환.
+        if not image_urls:
+            return []
+        return await self._filter_unreferenced_urls(user_id, image_urls)
 
 
     # ──────────────────── 게시글 Display 토글 ────────────────────
@@ -322,6 +349,15 @@ class TripmatePostService:
         owned = await self.mongo_image_repo.find_owned_urls(user_id, image_urls)
         if any(url not in owned for url in image_urls):
             raise ValueError("본인이 업로드한 이미지만 첨부할 수 있습니다.")
+
+
+    async def _cleanup_image_files(self, urls: list[str], *, label: str) -> None:
+        """(커밋 후) Object Storage 파일 + Mongo 이미지 메타 물리 삭제. best-effort — 실패는 로그만."""
+        try:
+            await self.storage.delete_many(urls)
+            await self.mongo_image_repo.delete_by_urls(urls)
+        except Exception as e:
+            logger.warning("이미지 정리 실패 ({}): {}", label, e)
 
 
     async def _filter_unreferenced_urls(self, user_id: str, candidate_urls) -> list[str]:
