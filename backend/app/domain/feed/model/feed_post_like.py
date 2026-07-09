@@ -4,9 +4,9 @@
 - 양쪽 FK CASCADE — 유저 탈퇴 / 게시물 삭제 시 자동 정리.
 - `ix_feed_post_like_post_id` — 게시물별 like_count / 누른 유저 목록 조회 최적화.
 """
-from sqlalchemy.sql import func
+from sqlalchemy import Column, DateTime, ForeignKey, Index, String
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, String, DateTime, ForeignKey, Index
+from sqlalchemy.sql import func
 
 from app.database.session import Base
 

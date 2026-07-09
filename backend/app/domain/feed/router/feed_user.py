@@ -4,13 +4,14 @@
 (viewer=owner 면 PRIVATE 도 포함).
 """
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Request, Depends, Query
-from dependency_injector.wiring import Provide, inject
 
-from app.domain.feed.service.feed_post import FeedPostService
-from app.domain.feed.schema.feed_post import FeedPostResponse, FeedPostListResponse
-from app.domain.feed.dto.feed_post import FeedPostData, FeedPostListData
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
+
 from app.container import Container
+from app.domain.feed.dto.feed_post import FeedPostData, FeedPostListData
+from app.domain.feed.schema.feed_post import FeedPostListResponse, FeedPostResponse
+from app.domain.feed.service.feed_post import FeedPostService
 
 
 router = APIRouter(tags=["타 유저 피드 조회"])

@@ -1,14 +1,13 @@
+from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, delete
 
-from app.domain.tripmate.model.tripmate_post_image import TripmatePostImage
 from app.domain.tripmate.model.tripmate_post import TripmatePost
+from app.domain.tripmate.model.tripmate_post_image import TripmatePostImage
 
 
 class TripmatePostImageRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
-
 
     # ──────────────────── Create ────────────────────
 
@@ -18,13 +17,11 @@ class TripmatePostImageRepository:
         await self.session.flush()
         return image
 
-
     async def save_all(self, images: list[TripmatePostImage]) -> list[TripmatePostImage]:
         """이미지 여러 건 일괄 저장"""
         self.session.add_all(images)
         await self.session.flush()
         return images
-
 
     # ──────────────────── Read ────────────────────
 
@@ -38,7 +35,6 @@ class TripmatePostImageRepository:
         result = await self.session.execute(stmt)
         return list(result.scalars().all())
 
-
     async def find_urls_by_user_id(self, user_id: str) -> list[str]:
         """유저의 게시글에 연결된 이미지 URL 전체 조회"""
         stmt = (
@@ -49,13 +45,11 @@ class TripmatePostImageRepository:
         result = await self.session.execute(stmt)
         return list(result.scalars().all())
 
-
     # ──────────────────── Delete ────────────────────
 
     async def delete(self, image: TripmatePostImage) -> None:
         """이미지 단건 삭제"""
         await self.session.delete(image)
-
 
     async def delete_by_post_id(self, post_id: str) -> None:
         """게시글의 이미지 전체 삭제 (게시글 수정 시 교체용)"""

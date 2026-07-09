@@ -1,16 +1,15 @@
 from sqlalchemy.exc import IntegrityError
 
-from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
-from app.domain.auth.repository.user import UserRepository
-from app.domain.auth.model.user import User, UserStatus
-from app.domain.auth.dto.signup import SignupStatus, SignupResult
 from app.database.session import UnitOfWork, transactional
+from app.domain.auth.dto.signup import SignupResult, SignupStatus
+from app.domain.auth.model.user import User, UserStatus
+from app.domain.auth.repository.user import UserRepository
+from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
 
 
 class SignupService:
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
-
 
     @transactional
     async def check_and_register(self, auth_provider: str, auth_provider_id: str) -> SignupResult:

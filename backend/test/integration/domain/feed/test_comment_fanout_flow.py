@@ -43,7 +43,6 @@ class TestCreateCommentFanout:
         assert doc["comment_id"] == comment.comment_id
         assert doc["comment_preview"] == "좋은 글이네요"
 
-
     async def test_self_comment_does_not_create_inbox_item(
         self, mongo_db, feed_post_comment_service, seed_feed_post,
     ):
@@ -129,6 +128,7 @@ class TestCommentPreviewTruncation:
 
 async def _find_other_user(uow, exclude_user_id: str) -> str:
     from sqlalchemy import select
+
     from app.domain.auth.model.user import User, UserStatus
 
     async with uow as session:

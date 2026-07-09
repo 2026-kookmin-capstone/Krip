@@ -1,7 +1,8 @@
 """인박스 Pydantic 스키마."""
-from typing import List, Optional
-from pydantic import BaseModel, Field
 from datetime import datetime
+from typing import List, Optional
+
+from pydantic import BaseModel, Field
 
 from app.domain.notification.model.inbox import InboxItemType, TargetType
 

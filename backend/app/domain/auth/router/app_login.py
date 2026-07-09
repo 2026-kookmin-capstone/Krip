@@ -1,17 +1,18 @@
-from urllib.parse import urlencode
-import jwt
-from fastapi.responses import RedirectResponse
-from fastapi import APIRouter, Query, HTTPException, Depends
-from dependency_injector.wiring import Provide, inject
 from datetime import datetime, timedelta, timezone
+from urllib.parse import urlencode
 
-from app.domain.auth.service.signup import SignupService
-from app.core.oauth import OAUTH_CLIENTS
-from app.core.logger import get_logger
-from app.container import Container
+import jwt
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi.responses import RedirectResponse
+
+from app.config.oauth import OAUTH_APP_CONFIGS, OAuthProvider
 from app.config.setting import settings
-from app.config.oauth import OAuthProvider, OAUTH_APP_CONFIGS
-from app.util.oauth_state import store_state_nonce, consume_state_nonce
+from app.container import Container
+from app.core.logger import get_logger
+from app.core.oauth import OAUTH_CLIENTS
+from app.domain.auth.service.signup import SignupService
+from app.util.oauth_state import consume_state_nonce, store_state_nonce
 
 
 router = APIRouter(prefix="/login/app", tags=["앱 로그인"])

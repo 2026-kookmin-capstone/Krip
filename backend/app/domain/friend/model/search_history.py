@@ -1,6 +1,7 @@
-from pydantic import Field
 from datetime import datetime, timezone
+
 from beanie import Document, Indexed
+from pydantic import Field
 
 
 class FriendSearchHistory(Document):

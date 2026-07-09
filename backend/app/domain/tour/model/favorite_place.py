@@ -1,8 +1,8 @@
+from sqlalchemy import Column, DateTime, ForeignKey, Index, String, UniqueConstraint
 from sqlalchemy.sql import func
-from sqlalchemy import Column, String, DateTime, ForeignKey, UniqueConstraint, Index
 
-from app.util.id_generator import generate_favorite_place_id
 from app.database.session import Base
+from app.util.id_generator import generate_favorite_place_id
 
 
 class FavoritePlace(Base):

@@ -1,6 +1,7 @@
 from typing import Optional
+
+from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, delete
 
 from app.domain.tour.model.tour_plan_item import TourPlanItem
 
@@ -8,7 +9,6 @@ from app.domain.tour.model.tour_plan_item import TourPlanItem
 class TourPlanItemRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
-
 
     # ──────────────────── Create ────────────────────
 
@@ -18,7 +18,6 @@ class TourPlanItemRepository:
         await self.session.flush()
         return item
 
-
     async def save_all(self, items: list[TourPlanItem]) -> list[TourPlanItem]:
         """카드 일괄 저장 (AI 응답 → 플랜 변환 시)"""
         if not items:
@@ -27,13 +26,11 @@ class TourPlanItemRepository:
         await self.session.flush()
         return items
 
-
     # ──────────────────── Read (단건) ────────────────────
 
     async def find_by_id(self, item_id: str) -> Optional[TourPlanItem]:
         """카드 단건 조회 (수정/삭제 검증용)"""
         return await self.session.get(TourPlanItem, item_id)
-
 
     # ──────────────────── Read (목록) ────────────────────
 
@@ -51,7 +48,6 @@ class TourPlanItemRepository:
         result = await self.session.execute(stmt)
         return list(result.scalars().all())
 
-
     # ──────────────────── Update ────────────────────
 
     async def update(self, item: TourPlanItem) -> TourPlanItem:
@@ -59,13 +55,11 @@ class TourPlanItemRepository:
         await self.session.flush()
         return item
 
-
     # ──────────────────── Delete ────────────────────
 
     async def delete(self, item: TourPlanItem) -> None:
         """카드 단건 삭제"""
         await self.session.delete(item)
-
 
     async def delete_by_plan_and_day(self, plan_id: str, day_number: int) -> None:
         """특정 plan/day 의 카드 일괄 삭제.

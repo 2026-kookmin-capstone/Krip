@@ -18,16 +18,16 @@
     5. 인덱스 생성 (2dsphere, rating)
 """
 
-import sys
-import re
-from pathlib import Path
-import json
-import asyncio
 import argparse
+import asyncio
+import json
+import re
+import sys
+from pathlib import Path
 
-from pymongo import GEOSPHERE
-from motor.motor_asyncio import AsyncIOMotorClient
 from beanie import init_beanie
+from motor.motor_asyncio import AsyncIOMotorClient
+from pymongo import GEOSPHERE
 
 
 # ── 프로젝트 루트를 sys.path에 추가 (app 모듈 import를 위해) ──

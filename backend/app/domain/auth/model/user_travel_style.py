@@ -1,9 +1,10 @@
-from sqlalchemy.orm import relationship
-from sqlalchemy import Column, String, Enum, ForeignKey, Index
 import enum
 
-from app.util.id_generator import generate_travel_style_id
+from sqlalchemy import Column, Enum, ForeignKey, Index, String
+from sqlalchemy.orm import relationship
+
 from app.database.session import Base
+from app.util.id_generator import generate_travel_style_id
 
 
 class TravelStyle(str, enum.Enum):

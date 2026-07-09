@@ -1,15 +1,16 @@
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Request, Depends, Query
-from dependency_injector.wiring import Provide, inject
 
-from app.domain.friend.service.search_history import FriendSearchHistoryService
-from app.domain.friend.service.search import FriendSearchService
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
+
+from app.container import Container
+from app.core.logger import get_logger
 from app.domain.friend.schema.search import (
     FriendSearchItemResponse,
     FriendSearchListResponse,
 )
-from app.core.logger import get_logger
-from app.container import Container
+from app.domain.friend.service.search import FriendSearchService
+from app.domain.friend.service.search_history import FriendSearchHistoryService
 
 
 router = APIRouter(prefix="/search", tags=["친구 추가 화면 유저 검색"])

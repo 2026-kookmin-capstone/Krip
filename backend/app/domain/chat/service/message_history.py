@@ -4,12 +4,13 @@
 """
 from typing import Optional
 
-from app.domain.friend.repository.friendship import FriendshipRepository
-from app.domain.chat.service.exception import ChatRoomNotFoundError
-from app.domain.chat.repository.chat_room import ChatRoomRepository
-from app.domain.chat.repository.chat_message import ChatMessageRepository
-from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
-from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
+from app.core.chat.redis_key import unread_key
+from app.core.logger import get_logger
+from app.core.redis import get_redis_client
+from app.database.session import UnitOfWork, mongodb, transactional
+from app.domain.auth.model.user import User
+from app.domain.auth.repository.user import UserRepository
+from app.domain.chat.dto.message import ChatMessageData, MessageListData
 from app.domain.chat.dto.room import (
     ChatRoomData,
     ChatRoomListData,
@@ -18,13 +19,12 @@ from app.domain.chat.dto.room import (
     RoomMemberData,
     RoomMemberListData,
 )
-from app.domain.chat.dto.message import ChatMessageData, MessageListData
-from app.domain.auth.repository.user import UserRepository
-from app.domain.auth.model.user import User
-from app.database.session import UnitOfWork, mongodb, transactional
-from app.core.redis import get_redis_client
-from app.core.logger import get_logger
-from app.core.chat.redis_key import unread_key
+from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
+from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
+from app.domain.chat.repository.chat_message import ChatMessageRepository
+from app.domain.chat.repository.chat_room import ChatRoomRepository
+from app.domain.chat.service.exception import ChatRoomNotFoundError
+from app.domain.friend.repository.friendship import FriendshipRepository
 
 
 logger = get_logger("chat.history")
@@ -35,7 +35,6 @@ class MessageHistoryService:
 
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
-
 
     @transactional
     async def list_rooms(self, me_id: str) -> ChatRoomListData:
@@ -71,7 +70,6 @@ class MessageHistoryService:
         ]
 
         return ChatRoomListData(items=items, next_cursor=None)
-
 
     @transactional
     async def get_room(self, *, me_id: str, room_id: str) -> ChatRoomData:
@@ -119,7 +117,6 @@ class MessageHistoryService:
             notification_muted=member.notification_muted is True,
         )
 
-
     @transactional
     async def list_room_members(
         self, *, me_id: str, room_id: str,
@@ -138,7 +135,6 @@ class MessageHistoryService:
 
         users = await member_repo.find_active_member_users(room_id)
         return RoomMemberListData(items=[self._user_to_member_dto(u) for u in users])
-
 
     @transactional
     async def list_invitable_friends(
@@ -175,7 +171,6 @@ class MessageHistoryService:
         ]
         return RoomMemberListData(items=items)
 
-
     @transactional
     async def find_messages_before(
         self,
@@ -191,7 +186,6 @@ class MessageHistoryService:
         message_repo = ChatMessageRepository(mongodb.database)
         raw = await message_repo.find_before(room_id, before_server_seq, limit)
         return self._to_message_list_dto(raw, limit=limit)
-
 
     @transactional
     async def find_messages_after(
@@ -209,19 +203,16 @@ class MessageHistoryService:
         raw = await message_repo.find_after(room_id, after_server_seq, limit)
         return self._to_message_list_dto(raw, limit=limit)
 
-
     async def get_unread_counts(self, me_id: str) -> dict[str, int]:
         """Redis `unread:{user_id}` HASH 를 dict 로 반환. WS 연결 직후 동기화 송신용."""
         redis_hot = await get_redis_client()
         raw = await redis_hot.hgetall(unread_key(me_id))
         return {k: int(v) for k, v in raw.items()}
 
-
     async def _assert_room_member(self, room_id: str, user_id: str) -> None:
         member_repo = ChatRoomMemberRepository(self._session)
         if not await member_repo.is_active_member(room_id, user_id):
             raise PermissionError("이 방의 멤버가 아닙니다.")
-
 
     @staticmethod
     def _user_to_member_dto(user: User) -> RoomMemberData:
@@ -232,7 +223,6 @@ class MessageHistoryService:
             user_name=detail.user_name if detail else "",
             profile_image_url=detail.profile_image_url if detail else None,
         )
-
 
     @staticmethod
     def _room_to_dto(
@@ -286,7 +276,6 @@ class MessageHistoryService:
             effective_last_at=room.effective_last_at or room.created_at,
             notification_muted=notification_muted,
         )
-
 
     @staticmethod
     def _to_message_list_dto(raw: list[dict], *, limit: int) -> MessageListData:

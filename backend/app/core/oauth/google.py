@@ -1,11 +1,10 @@
-from app.core.oauth.base import OAuthClient, OAuthUser
 from app.config.oauth import OAuthConfig, OAuthProvider
+from app.core.oauth.base import OAuthClient, OAuthUser
 
 
 class GoogleOAuthClient(OAuthClient):
     def __init__(self, config: OAuthConfig):
         super().__init__(config, OAuthProvider.GOOGLE)
-
 
     async def get_user_info(self, access_token: str) -> OAuthUser:
         response = await self.client.get(

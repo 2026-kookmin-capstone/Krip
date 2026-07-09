@@ -3,16 +3,16 @@
 1초 sleep 의 깨어남 지연을 lag 으로 관측. 같은 tick 에서 asyncio.all_tasks 수와 pool gauge 도 갱신
 — 트래픽 0 일 때도 stale 되지 않게 보장.
 """
-import time
 import asyncio
+import time
 
+from app.core.instrumentation.db import _get_pool_engine, _reset_pool_engine
 from app.core.metric import (
     DB_POOL_CHECKED_OUT,
     DB_POOL_SIZE,
     PYTHON_ASYNCIO_TASKS,
     PYTHON_EVENT_LOOP_LAG,
 )
-from app.core.instrumentation.db import _get_pool_engine, _reset_pool_engine
 
 
 _event_loop_monitor_task = None

@@ -1,8 +1,8 @@
-from typing import List
 import time
+from typing import List
 
-from app.core.instrumentation import ai_inference, ai_model_load_duration_set
 from app.core.ai.menu_ocr.v1.model import MenuOcrModel, MenuOcrResult
+from app.core.instrumentation import ai_inference, ai_model_load_duration_set
 
 
 class MenuOcr:
@@ -16,7 +16,6 @@ class MenuOcr:
             cls._instance._initialized = False
         return cls._instance
 
-
     def load(self) -> None:
         """서버 시작 시 한 번 호출된다."""
         if self._initialized:
@@ -26,7 +25,6 @@ class MenuOcr:
         self._model.load_model()
         ai_model_load_duration_set("menu_ocr", time.perf_counter() - started)
         self._initialized = True
-
 
     async def invoke(self, image_bytes: bytes, content_type: str) -> MenuOcrResult:
         """
@@ -50,7 +48,6 @@ class MenuOcr:
         async with ai_inference("menu_ocr"):
             image_data, mime_type = self._model.encode_bytes(image_bytes, content_type)
             return await self._model.predict(image_data, mime_type)
-
 
     async def invoke_batch(
         self, images: List[tuple[bytes, str]]

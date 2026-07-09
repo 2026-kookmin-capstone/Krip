@@ -2,8 +2,8 @@
 import pytest
 from pydantic import ValidationError
 
-from app.domain.chat.schema.ws_event import SendOp
 from app.domain.chat.model.chat_message import MessageType
+from app.domain.chat.schema.ws_event import SendOp
 
 
 @pytest.mark.unit

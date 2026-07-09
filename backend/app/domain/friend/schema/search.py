@@ -1,8 +1,9 @@
 from typing import List, Optional
+
 from pydantic import BaseModel, Field
 
-from app.domain.friend.model.friendship import FriendshipStatus
 from app.domain.auth.model.user_travel_style import TravelStyle
+from app.domain.friend.model.friendship import FriendshipStatus
 
 
 class FriendSearchItemResponse(BaseModel):

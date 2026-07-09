@@ -1,8 +1,6 @@
 from fastapi import APIRouter
 
-from app.domain.chat.router import message
-from app.domain.chat.router import room
-from app.domain.chat.router import ws
+from app.domain.chat.router import message, room, ws
 
 
 # REST (/api/chat/rooms/*, /api/chat/messages/*) 와 WS (/api/ws/chat) 는 경로 뿌리가 달라

@@ -1,7 +1,8 @@
-from urllib.parse import urlencode
-from typing import Optional
-from httpx import AsyncClient
 from abc import ABC, abstractmethod
+from typing import Optional
+from urllib.parse import urlencode
+
+from httpx import AsyncClient
 
 from app.config.oauth import OAuthConfig, OAuthProvider
 
@@ -20,14 +21,11 @@ class OAuthClient(ABC):
         self.provider = provider
         self.client = AsyncClient()
     
-    
     async def __aenter__(self):
         return self
     
-    
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         await self.client.aclose()
-    
     
     def get_authorization_url(self, state: str, user_type: str) -> str:
         params = {
@@ -45,7 +43,6 @@ class OAuthClient(ABC):
         
         query_string = urlencode(params)
         return f"{self.config.authorize_url}?{query_string}"
-    
     
     async def get_access_token(self, code: str, user_type: str) -> str:
         data = {
@@ -65,7 +62,6 @@ class OAuthClient(ABC):
         
         token_data = response.json()
         return token_data.get("access_token")
-    
     
     @abstractmethod
     async def get_user_info(self, access_token: str) -> OAuthUser:

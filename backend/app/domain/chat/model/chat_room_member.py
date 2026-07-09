@@ -1,8 +1,15 @@
-from sqlalchemy.sql import func
-from sqlalchemy.orm import relationship
 from sqlalchemy import (
-    Column, String, DateTime, BigInteger, Boolean, ForeignKey, Index, literal_column,
+    BigInteger,
+    Boolean,
+    Column,
+    DateTime,
+    ForeignKey,
+    Index,
+    String,
+    literal_column,
 )
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 
 from app.database.session import Base
 

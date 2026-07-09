@@ -1,9 +1,10 @@
 from typing import List, Optional
+
 from pydantic import BaseModel, Field
 
-from app.domain.friend.model.friendship import FriendshipStatus
-from app.domain.auth.model.user_travel_style import TravelStyle
 from app.domain.auth.model.user_detail_inform import Gender
+from app.domain.auth.model.user_travel_style import TravelStyle
+from app.domain.friend.model.friendship import FriendshipStatus
 
 
 class FriendDetailResponse(BaseModel):

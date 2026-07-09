@@ -1,20 +1,20 @@
 from typing import Optional
+
 from sqlalchemy.exc import IntegrityError
 
-from app.domain.friend.repository.user_block import UserBlockRepository
-from app.domain.friend.repository.friendship import FriendshipRepository, PAGE_SIZE
-from app.domain.friend.model.friendship import Friendship, FriendshipStatus
-from app.domain.friend.dto.friendship import FriendshipData, FriendshipListData, FriendPeerData
-from app.domain.auth.repository.user import UserRepository
-from app.domain.auth.model.user import User
 from app.database.session import UnitOfWork, transactional
+from app.domain.auth.model.user import User
+from app.domain.auth.repository.user import UserRepository
+from app.domain.friend.dto.friendship import FriendPeerData, FriendshipData, FriendshipListData
+from app.domain.friend.model.friendship import Friendship, FriendshipStatus
+from app.domain.friend.repository.friendship import PAGE_SIZE, FriendshipRepository
+from app.domain.friend.repository.user_block import UserBlockRepository
 from app.util.cursor import encode_cursor
 
 
 class FriendshipService:
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
-
 
     # ──────────────────── 친구 요청 ────────────────────
 
@@ -98,7 +98,6 @@ class FriendshipService:
 
         return self._to_dto(friendship, viewer_id=requester_id, peer=addressee)
 
-
     # ──────────────────── 친구 요청 수락 ────────────────────
 
     @transactional
@@ -123,7 +122,6 @@ class FriendshipService:
 
         friendship.status = FriendshipStatus.ACCEPTED
         await friendship_repo.update(friendship)
-
 
     # ──────────────────── 친구 요청 거절 ────────────────────
 
@@ -153,7 +151,6 @@ class FriendshipService:
         friendship.status = FriendshipStatus.REJECTED
         await friendship_repo.update(friendship)
 
-
     # ──────────────────── 친구 요청 취소 (보낸 쪽) ────────────────────
 
     @transactional
@@ -178,7 +175,6 @@ class FriendshipService:
 
         await friendship_repo.delete(friendship)
 
-
     # ──────────────────── 친구 삭제 ────────────────────
 
     @transactional
@@ -200,7 +196,6 @@ class FriendshipService:
 
         await friendship_repo.delete(friendship)
 
-
     # ──────────────────── 목록 조회 ────────────────────
 
     @transactional
@@ -210,7 +205,6 @@ class FriendshipService:
         items = await friendship_repo.find_friends(user_id, cursor)
         return self._to_list_dto(items, viewer_id=user_id)
 
-
     @transactional
     async def get_received_requests(self, user_id: str, cursor: Optional[str] = None) -> FriendshipListData:
         """내가 받은 PENDING 요청 목록"""
@@ -218,14 +212,12 @@ class FriendshipService:
         items = await friendship_repo.find_received_requests(user_id, cursor)
         return self._to_list_dto(items, viewer_id=user_id)
 
-
     @transactional
     async def get_sent_requests(self, user_id: str, cursor: Optional[str] = None) -> FriendshipListData:
         """내가 보낸 PENDING 요청 목록"""
         friendship_repo = FriendshipRepository(self._session)
         items = await friendship_repo.find_sent_requests(user_id, cursor)
         return self._to_list_dto(items, viewer_id=user_id)
-
 
     # ──────────────────── 내부 변환 유틸 ────────────────────
 
@@ -235,7 +227,6 @@ class FriendshipService:
         if friendship.requester_id == viewer_id:
             return friendship.addressee
         return friendship.requester
-
 
     @staticmethod
     def _to_peer_dto(peer: User) -> FriendPeerData:
@@ -249,7 +240,6 @@ class FriendshipService:
             profile_image_url=detail.profile_image_url,
         )
 
-
     @classmethod
     def _to_dto(cls, friendship: Friendship, viewer_id: str, peer: User) -> FriendshipData:
         return FriendshipData(
@@ -260,7 +250,6 @@ class FriendshipService:
             created_at=friendship.created_at,
             updated_at=friendship.updated_at,
         )
-
 
     def _to_list_dto(self, items: list[Friendship], viewer_id: str) -> FriendshipListData:
         dtos = [

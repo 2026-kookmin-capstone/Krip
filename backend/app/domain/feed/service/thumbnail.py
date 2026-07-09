@@ -13,13 +13,14 @@
 
 디코딩/봄/미지원/해상도 초과는 모두 ValueError → 라우터 400.
 """
+import io
 import warnings
 from typing import Final
-import io
+
 from PIL import Image, ImageOps, UnidentifiedImageError
 
-from app.domain.feed.dto.image import ProcessedFeedImage, ProcessedVariant
 from app.core.logger import get_logger
+from app.domain.feed.dto.image import ProcessedFeedImage, ProcessedVariant
 
 
 logger = get_logger("feed.thumbnail")

@@ -4,13 +4,14 @@
 visibility 분기는 service 가 결정 — 본 리포지토리는 visibility 정책을 모름.
 """
 from typing import Optional
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func, literal, exists
 
-from app.domain.feed.model.feed_post_like import FeedPostLike
-from app.domain.feed.model.feed_post_comment import FeedPostComment
-from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
+from sqlalchemy import exists, func, literal, select
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.domain.feed.dto.feed_post import FeedPostWithCounts
+from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
+from app.domain.feed.model.feed_post_comment import FeedPostComment
+from app.domain.feed.model.feed_post_like import FeedPostLike
 from app.util.cursor import decode_cursor, keyset_where
 
 
@@ -60,7 +61,6 @@ class FeedPostRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-
     # ──────────────────── Create / Update ────────────────────
 
     async def save(self, post: FeedPost) -> FeedPost:
@@ -68,12 +68,10 @@ class FeedPostRepository:
         await self.session.flush()
         return post
 
-
     async def update(self, post: FeedPost) -> FeedPost:
         """변경 필드 flush — 호출측이 attached post 필드를 직접 mutate 후 호출."""
         await self.session.flush()
         return post
-
 
     # ──────────────────── Read (단건) ────────────────────
 
@@ -108,7 +106,6 @@ class FeedPostRepository:
             comment_count=row.comment_count,
             is_liked=bool(row.is_liked),
         )
-
 
     # ──────────────────── Read (목록 — 커서 페이지네이션) ────────────────────
 
@@ -166,7 +163,6 @@ class FeedPostRepository:
             )
             for row in result.all()
         ]
-
 
     # ──────────────────── Delete ────────────────────
 

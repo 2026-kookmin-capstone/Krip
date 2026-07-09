@@ -10,17 +10,17 @@
 `_purge_rdb` outcome 분기는 service 의 internal 상태 결정 — 본 테스트는 SELECT FOR UPDATE +
 status 검사를 user_repo_mock 으로 시뮬레이션.
 """
-from test.unit.domain.auth.withdraw_service.model_factory import UserFactory
-import pytest
 from datetime import datetime, timedelta, timezone
 
-from app.domain.auth.service.withdraw import _PurgeOutcome
+import pytest
+
+from app.domain.auth.model.user import UserStatus
+from app.domain.auth.model.withdrawal_request import WITHDRAWAL_GRACE_PERIOD_DAYS
 from app.domain.auth.service.exception import (
     WithdrawalAlreadyRequestedError,
     WithdrawalNotPendingError,
 )
-from app.domain.auth.model.withdrawal_request import WITHDRAWAL_GRACE_PERIOD_DAYS
-from app.domain.auth.model.user import UserStatus
+from test.unit.domain.auth.withdraw_service.model_factory import UserFactory
 
 
 # ──────────────────────────────────────────────────────────────────
@@ -42,7 +42,6 @@ class TestRequestWithdraw:
         assert user.status == UserStatus.INACTIVE
         user_repo_mock.update.assert_awaited_once_with(user)
 
-
     async def test_upserts_mongo_doc_after_status_change(
         self, service, user_repo_mock, withdrawal_request_repo_mock,
     ):
@@ -57,7 +56,6 @@ class TestRequestWithdraw:
         assert kwargs["user_id"] == "USER_a"
         assert isinstance(kwargs["requested_at"], datetime)
         assert isinstance(kwargs["scheduled_purge_at"], datetime)
-
 
     async def test_returns_purge_at_30_days_ahead(
         self, service, user_repo_mock,
@@ -75,7 +73,6 @@ class TestRequestWithdraw:
         expected_max = after + timedelta(days=WITHDRAWAL_GRACE_PERIOD_DAYS) + timedelta(seconds=1)
         assert expected_min <= purge_at <= expected_max
 
-
     async def test_raises_when_user_not_found(
         self, service, user_repo_mock, withdrawal_request_repo_mock,
     ):
@@ -86,7 +83,6 @@ class TestRequestWithdraw:
 
         user_repo_mock.update.assert_not_awaited()
         withdrawal_request_repo_mock.upsert.assert_not_awaited()
-
 
     async def test_raises_when_already_inactive(
         self, service, user_repo_mock, withdrawal_request_repo_mock,
@@ -122,7 +118,6 @@ class TestCancelWithdraw:
         user_repo_mock.update.assert_awaited_once_with(user)
         withdrawal_request_repo_mock.delete_by_user_id.assert_awaited_once_with("USER_a")
 
-
     async def test_doc_cleanup_failure_swallowed(
         self, service, user_repo_mock, withdrawal_request_repo_mock,
     ):
@@ -137,7 +132,6 @@ class TestCancelWithdraw:
 
         assert user.status == UserStatus.ACTIVE  # RDB 는 이미 commit
 
-
     async def test_raises_when_user_not_found(
         self, service, user_repo_mock, withdrawal_request_repo_mock,
     ):
@@ -147,7 +141,6 @@ class TestCancelWithdraw:
             await service.cancel_withdraw(user_id="USER_x")
 
         withdrawal_request_repo_mock.delete_by_user_id.assert_not_awaited()
-
 
     async def test_raises_when_not_inactive(
         self, service, user_repo_mock, withdrawal_request_repo_mock,
@@ -189,7 +182,6 @@ class TestPurge:
         # withdrawal_request doc 도 마지막에 청소
         withdrawal_request_repo_mock.delete_by_user_id.assert_awaited_once_with("USER_a")
 
-
     async def test_no_user_outcome_still_runs_external_cleanup(
         self, service, user_repo_mock, inbox_service_mock,
     ):
@@ -200,7 +192,6 @@ class TestPurge:
 
         user_repo_mock.hard_delete_by_id.assert_not_awaited()  # 이미 삭제됨
         inbox_service_mock.cascade_user_withdrawn.assert_awaited_once_with("USER_a")
-
 
     async def test_stale_doc_outcome_skips_external(
         self, service, user_repo_mock,
@@ -224,7 +215,6 @@ class TestPurge:
             assert stub.find_call_count == 0
         # doc 만 청소
         withdrawal_request_repo_mock.delete_by_user_id.assert_awaited_once_with("USER_a")
-
 
     async def test_stale_doc_cleanup_failure_swallowed(
         self, service, user_repo_mock, withdrawal_request_repo_mock,
@@ -257,18 +247,15 @@ class TestPurgeExternal:
             assert stub.find_call_count == 1
             assert stub.last_filter == {"user_id": "USER_a"}
 
-
     async def test_calls_storage_delete_by_prefix(self, service, storage_mock):
         await service._purge_external(user_id="USER_a")
 
         storage_mock.delete_by_prefix.assert_awaited_once_with("USER_a")
 
-
     async def test_calls_redis_cache_invalidate(self, service, invalidate_cache_mock):
         await service._purge_external(user_id="USER_a")
 
         invalidate_cache_mock.assert_awaited_once_with("USER_a")
-
 
     async def test_calls_inbox_cascade(
         self, service, inbox_service_mock,
@@ -278,7 +265,6 @@ class TestPurgeExternal:
 
         inbox_service_mock.cascade_user_withdrawn.assert_awaited_once_with("USER_a")
 
-
     async def test_cleans_withdrawal_request_doc_at_end(
         self, service, withdrawal_request_repo_mock,
     ):
@@ -286,7 +272,6 @@ class TestPurgeExternal:
         await service._purge_external(user_id="USER_a")
 
         withdrawal_request_repo_mock.delete_by_user_id.assert_awaited_once_with("USER_a")
-
 
     async def test_mongo_failure_does_not_block_storage_or_inbox(
         self, service, beanie_stubs, storage_mock, inbox_service_mock,
@@ -299,7 +284,6 @@ class TestPurgeExternal:
         storage_mock.delete_by_prefix.assert_awaited_once()
         inbox_service_mock.cascade_user_withdrawn.assert_awaited_once()
 
-
     async def test_storage_failure_does_not_block_inbox(
         self, service, storage_mock, inbox_service_mock,
     ):
@@ -308,7 +292,6 @@ class TestPurgeExternal:
         await service._purge_external(user_id="USER_a")
 
         inbox_service_mock.cascade_user_withdrawn.assert_awaited_once()
-
 
     async def test_doc_cleanup_failure_does_not_propagate(
         self, service, withdrawal_request_repo_mock,
@@ -342,7 +325,6 @@ class TestRevokeUserChatState:
         await service.revoke_user_chat_state(user_id="USER_a")
 
         user_purge_cache_service_mock.revoke_all_sessions.assert_awaited_once_with("USER_a")
-
 
     async def test_does_not_touch_cleanup_user_data(
         self, service, user_purge_cache_service_mock,
@@ -388,7 +370,6 @@ class TestPurgeExternalCallsChatCleanup:
 
         user_purge_cache_service_mock.cleanup_user_data.assert_awaited_once_with("USER_a")
 
-
     async def test_cleanup_called_after_invalidate_registered_cache(
         self, service, user_purge_cache_service_mock, invalidate_cache_mock,
     ):
@@ -396,7 +377,6 @@ class TestPurgeExternalCallsChatCleanup:
 
         chat cleanup 이 REGISTERED 무효화 전에 호출되면 의도와 다르므로 순서 검증.
         """
-        from unittest.mock import call
 
         # 두 mock 호출을 한 통화 시퀀스로 추적하기 위한 manager
         from unittest.mock import MagicMock

@@ -1,7 +1,8 @@
 """피드 게시물 댓글 라우터 Pydantic 스키마."""
-from typing import List, Optional
-from pydantic import BaseModel, Field
 from datetime import datetime
+from typing import List, Optional
+
+from pydantic import BaseModel, Field
 
 from app.domain.feed.model.feed_post_comment import COMMENT_MAX_LENGTH
 

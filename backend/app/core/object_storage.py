@@ -22,15 +22,16 @@ Object Storage (Naver Cloud S3 호환)
   # 삭제
   await object_storage.delete(url)
 """
+import asyncio
 import uuid
 from typing import BinaryIO, List
-from botocore.exceptions import ClientError
-from botocore.config import Config
-import boto3
-import asyncio
 
-from app.core.logger import get_logger
+import boto3
+from botocore.config import Config
+from botocore.exceptions import ClientError
+
 from app.config.setting import settings
+from app.core.logger import get_logger
 
 
 logger = get_logger("object_storage")
@@ -59,7 +60,6 @@ class ObjectStorage:
             ),
         )
 
-
     @classmethod
     def get_instance(cls) -> "ObjectStorage":
         """싱글톤 인스턴스 반환 (최초 호출 시 초기화)"""
@@ -74,12 +74,10 @@ class ObjectStorage:
         key = self._make_key(file_name, _PREFIX_TMP)
         return await asyncio.to_thread(self._upload, file, key, content_type)
 
-
     async def upload_perm(self, file: BinaryIO, file_name: str, content_type: str, *, prefix: str) -> str:
         """영구 경로에 직접 업로드 → URL 반환"""
         key = self._make_key(file_name, f"{_PREFIX_PERM}/{prefix}")
         return await asyncio.to_thread(self._upload, file, key, content_type)
-
 
     async def upload_to_key(
         self,
@@ -115,7 +113,6 @@ class ObjectStorage:
         logger.info("파일 이동 완료: {} → {}", src_key, dst_key)
         return self._key_to_url(dst_key)
 
-
     async def move_many_to_perm(self, temp_urls: List[str], *, prefix: str) -> List[str]:
         """임시 파일 여러 개를 영구 경로로 이동 → 새 URL 목록 반환"""
         return list(await asyncio.gather(
@@ -129,7 +126,6 @@ class ObjectStorage:
         key = self._url_to_key(file_url)
         await asyncio.to_thread(self._delete, key)
         logger.info("파일 삭제 완료: {}", key)
-
 
     async def delete_many(self, file_urls: List[str]) -> None:
         """URL 목록으로 파일 일괄 삭제"""
@@ -145,7 +141,6 @@ class ObjectStorage:
         except ClientError as e:
             logger.error("파일 일괄 삭제 실패: {}", e)
             raise
-
 
     async def delete_by_prefix(self, prefix: str) -> int:
         """특정 경로(prefix) 하위 파일 전체 삭제 → 삭제 건수 반환"""
@@ -167,17 +162,14 @@ class ObjectStorage:
         unique = uuid.uuid4()
         return f"{prefix}/{unique}.{ext}" if ext else f"{prefix}/{unique}"
 
-
     def _key_to_url(self, key: str) -> str:
         return f"{self.endpoint}/{self.bucket}/{key}"
-
 
     def _url_to_key(self, url: str) -> str:
         base = f"{self.endpoint}/{self.bucket}/"
         if not url.startswith(base):
             raise ValueError(f"올바르지 않은 Object Storage URL: {url}")
         return url[len(base):]
-
 
     def _upload(self, file: BinaryIO, key: str, content_type: str) -> str:
         try:
@@ -191,7 +183,6 @@ class ObjectStorage:
         logger.info("업로드 완료: {}", key)
         return self._key_to_url(key)
 
-
     def _copy(self, src_key: str, dst_key: str) -> None:
         try:
             self._client.copy_object(
@@ -204,7 +195,6 @@ class ObjectStorage:
             logger.error("복사 실패 ({} → {}): {}", src_key, dst_key, e)
             raise
 
-
     def _delete_by_prefix_sync(self, full_prefix: str) -> int:
         paginator = self._client.get_paginator("list_objects_v2")
         deleted = 0
@@ -215,7 +205,6 @@ class ObjectStorage:
             self._client.delete_objects(Bucket=self.bucket, Delete={"Objects": objects})
             deleted += len(objects)
         return deleted
-
 
     def _delete(self, key: str) -> None:
         try:

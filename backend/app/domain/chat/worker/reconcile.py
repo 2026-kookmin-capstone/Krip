@@ -7,17 +7,13 @@
 """
 from __future__ import annotations
 
-from typing import Optional
-from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
-import os
 import asyncio
+import os
+from typing import Optional
 
-from app.domain.chat.repository.chat_room import ChatRoomRepository
-from app.domain.chat.repository.chat_message import ChatMessageRepository
-from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
-from app.database.session import mongodb
-from app.core.redis import get_redis_client
-from app.core.logger import get_logger
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
+
+from app.core.chat.redis_key import DIRTY_CHAT_ROOM_KEY, unread_key
 from app.core.instrumentation import (
     chat_reconcile_batch_pop_inc,
     chat_reconcile_dirty_set_size_set,
@@ -26,7 +22,12 @@ from app.core.instrumentation import (
     chat_unread_recover_inc,
     worker_tick,
 )
-from app.core.chat.redis_key import DIRTY_CHAT_ROOM_KEY, unread_key
+from app.core.logger import get_logger
+from app.core.redis import get_redis_client
+from app.database.session import mongodb
+from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
+from app.domain.chat.repository.chat_message import ChatMessageRepository
+from app.domain.chat.repository.chat_room import ChatRoomRepository
 
 
 logger = get_logger("chat.reconcile")

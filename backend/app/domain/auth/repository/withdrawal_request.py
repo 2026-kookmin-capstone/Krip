@@ -1,8 +1,8 @@
-from typing import List
 from datetime import datetime
+from typing import List
 
-from app.domain.auth.model.withdrawal_request import WithdrawalRequest
 from app.core.instrumentation import measure_mongo_op
+from app.domain.auth.model.withdrawal_request import WithdrawalRequest
 
 
 class WithdrawalRequestRepository:
@@ -38,7 +38,6 @@ class WithdrawalRequestRepository:
             upsert=True,
         )
 
-
     # ──────────────────── Read ────────────────────
 
     @measure_mongo_op("find", "withdrawal_request")
@@ -51,7 +50,6 @@ class WithdrawalRequestRepository:
         return await WithdrawalRequest.find(
             WithdrawalRequest.scheduled_purge_at <= now,
         ).to_list()
-
 
     # ──────────────────── Delete ────────────────────
 

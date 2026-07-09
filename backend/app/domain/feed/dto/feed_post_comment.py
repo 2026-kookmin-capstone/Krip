@@ -4,9 +4,9 @@
 `CreateCommentResult` 는 service 내부 transfer — 트랜잭션이 응답 dto + fan-out 정보를
 함께 합성하고 outer 가 분리해 사용.
 """
-from typing import List, Optional
-from datetime import datetime
 from dataclasses import dataclass
+from datetime import datetime
+from typing import List, Optional
 
 
 @dataclass

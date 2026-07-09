@@ -1,6 +1,7 @@
-from typing import List, Optional
-from pydantic import BaseModel, ConfigDict, Field
 from datetime import datetime
+from typing import List, Optional
+
+from pydantic import BaseModel, ConfigDict, Field
 
 from app.domain.friend.schema.friendship import FriendPeerResponse
 

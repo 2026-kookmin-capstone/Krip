@@ -1,10 +1,11 @@
 from typing import Optional
-from sqlalchemy.orm import joinedload
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, or_, exists
 
-from app.domain.friend.model.user_block import UserBlock
+from sqlalchemy import exists, or_, select
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import joinedload
+
 from app.domain.auth.model.user import User
+from app.domain.friend.model.user_block import UserBlock
 from app.util.cursor import decode_cursor, keyset_where
 
 
@@ -16,7 +17,6 @@ class UserBlockRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-
     # ──────────────────── Create ────────────────────
 
     async def save(self, block: UserBlock) -> UserBlock:
@@ -25,13 +25,11 @@ class UserBlockRepository:
         await self.session.flush()
         return block
 
-
     # ──────────────────── Read (단건) ────────────────────
 
     async def find_by_id(self, block_id: str) -> Optional[UserBlock]:
         """block_id로 단건 조회"""
         return await self.session.get(UserBlock, block_id)
-
 
     async def find_by_pair(self, blocker_id: str, blocked_id: str) -> Optional[UserBlock]:
         """(blocker, blocked) 정방향 단건 조회"""
@@ -41,7 +39,6 @@ class UserBlockRepository:
         )
         result = await self.session.execute(stmt)
         return result.scalar_one_or_none()
-
 
     async def find_blocks_between(self, user_a_id: str, user_b_id: str) -> list[UserBlock]:
         """두 유저 간의 차단 관계 (방향 무관) 조회 — 최대 2 row"""
@@ -54,7 +51,6 @@ class UserBlockRepository:
         result = await self.session.execute(stmt)
         return list(result.scalars().all())
 
-
     async def has_blocker_blocked(self, blocker_id: str, blocked_id: str) -> bool:
         """(blocker → blocked) 방향 차단 존재 여부"""
         stmt = select(
@@ -65,7 +61,6 @@ class UserBlockRepository:
         )
         result = await self.session.execute(stmt)
         return bool(result.scalar())
-
 
     # ──────────────────── Read (목록 — 커서 페이지네이션) ────────────────────
 
@@ -93,7 +88,6 @@ class UserBlockRepository:
         stmt = stmt.order_by(UserBlock.created_at.desc(), UserBlock.block_id.desc()).limit(PAGE_SIZE)
         result = await self.session.execute(stmt)
         return list(result.unique().scalars().all())
-
 
     # ──────────────────── Delete ────────────────────
 

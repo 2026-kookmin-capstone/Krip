@@ -4,12 +4,13 @@
 
 권한 검증은 query 안에 `recipient_id` 를 포함해 atomic 처리 (타인 항목은 매칭 실패 → modified=0).
 """
-from typing import Optional
 from datetime import datetime, timezone
+from typing import Optional
+
 from beanie import PydanticObjectId
 
-from app.domain.notification.model.inbox import InboxItem
 from app.core.instrumentation import measure_mongo_op
+from app.domain.notification.model.inbox import InboxItem
 
 
 PAGE_SIZE = 20
@@ -24,7 +25,6 @@ class InboxRepository:
         """`uq_inbox_dedup` 충돌 시 DuplicateKeyError 그대로 propagate — service 가 멱등 처리."""
         await item.insert()
         return item
-
 
     @measure_mongo_op("find", "inbox")
     async def find_by_recipient(
@@ -45,7 +45,6 @@ class InboxRepository:
             query = query.find(InboxItem.created_at < cursor)
         return await query.sort("-created_at", "-_id").limit(limit + 1).to_list()
 
-
     @measure_mongo_op("count", "inbox")
     async def count_unread(self, recipient_id: str, cap: int = UNREAD_COUNT_CAP) -> int:
         """미읽음 (display=true AND read_at=null) 카운트. `limit=cap+1` 로 cap 까지만 셈."""
@@ -54,7 +53,6 @@ class InboxRepository:
             {"recipient_id": recipient_id, "display": True, "read_at": None},
             limit=cap + 1,
         )
-
 
     @measure_mongo_op("update", "inbox")
     async def hide(self, inbox_item_id: PydanticObjectId, recipient_id: str) -> bool:
@@ -66,7 +64,6 @@ class InboxRepository:
         )
         return res.modified_count == 1
 
-
     @measure_mongo_op("update", "inbox")
     async def mark_all_read(self, recipient_id: str) -> int:
         """미읽음 일괄 read 처리. display=true AND read_at=null 만 대상 (멱등)."""
@@ -76,7 +73,6 @@ class InboxRepository:
             {"$set": {"read_at": datetime.now(timezone.utc)}},
         )
         return res.modified_count
-
 
     @measure_mongo_op("update", "inbox")
     async def hide_by_target(self, target_type: str, target_id: str) -> int:
@@ -91,7 +87,6 @@ class InboxRepository:
             {"$set": {"display": False}},
         )
         return res.modified_count
-
 
     @measure_mongo_op("delete", "inbox")
     async def delete_by_user(self, user_id: str) -> int:

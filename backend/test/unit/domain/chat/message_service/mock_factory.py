@@ -1,12 +1,11 @@
 """MessageService 단위 테스트용 Mock 팩토리."""
-from unittest.mock import AsyncMock, MagicMock
 from types import SimpleNamespace
+from unittest.mock import AsyncMock, MagicMock
 
 
 class FakeAsyncContextManager:
     async def __aenter__(self):
         return self
-
 
     async def __aexit__(self, exc_type, exc, tb):
         return False
@@ -18,10 +17,8 @@ class RaisingAsyncContextManager:
     def __init__(self, exc: Exception):
         self._exc = exc
 
-
     async def __aenter__(self):
         return None
-
 
     async def __aexit__(self, exc_type, exc, tb):
         raise self._exc
@@ -31,10 +28,8 @@ class FakeUnitOfWork:
     def __init__(self, session):
         self._session = session
 
-
     async def __aenter__(self):
         return self._session
-
 
     async def __aexit__(self, exc_type, exc, tb):
         return False

@@ -1,7 +1,8 @@
 from typing import Optional
-from sqlalchemy.orm import joinedload
+
+from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, delete
+from sqlalchemy.orm import joinedload
 
 from app.domain.auth.model.user import User, UserStatus
 
@@ -10,10 +11,8 @@ class UserRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-
     async def find_by_id(self, user_id: str) -> Optional[User]:
         return await self.session.get(User, user_id)
-
 
     async def find_by_id_for_update(self, user_id: str) -> Optional[User]:
         """user row 에 X-lock 을 잡으면서 조회.
@@ -26,7 +25,6 @@ class UserRepository:
         result = await self.session.execute(stmt)
         return result.scalar_one_or_none()
 
-
     async def find_by_provider(self, auth_provider: str, auth_provider_id: str) -> Optional[User]:
         stmt = select(User).where(
             User.auth_provider == auth_provider,
@@ -34,7 +32,6 @@ class UserRepository:
         )
         result = await self.session.execute(stmt)
         return result.scalar_one_or_none()
-
 
     async def find_by_id_with_profile(self, user_id: str) -> Optional[User]:
         """유저 + 상세정보 + 여행스타일을 한 번에 조회"""
@@ -44,7 +41,6 @@ class UserRepository:
         ).where(User.user_id == user_id)
         result = await self.session.execute(stmt)
         return result.unique().scalar_one_or_none()
-
 
     async def find_unmuted_user_ids(self, user_ids: list[str]) -> set[str]:
         """입력된 `user_ids` 중 전역 알림 차단이 아닌 id 집합.
@@ -60,7 +56,6 @@ class UserRepository:
         )
         result = await self.session.execute(stmt)
         return set(result.scalars().all())
-
 
     async def find_active_others_with_profile(self, exclude_user_id: str) -> list[User]:
         """`exclude_user_id` 를 제외한 ACTIVE 유저 + 상세정보 + 여행스타일을 일괄 조회.
@@ -78,7 +73,6 @@ class UserRepository:
         result = await self.session.execute(stmt)
         return list(result.unique().scalars().all())
 
-
     async def find_by_ids_with_profile(self, user_ids: list[str]) -> dict[str, User]:
         """여러 유저 + 상세정보 + 여행스타일을 한 번에 조회해 `{user_id: User}` 맵 반환.
 
@@ -94,22 +88,18 @@ class UserRepository:
         result = await self.session.execute(stmt)
         return {u.user_id: u for u in result.unique().scalars().all()}
 
-
     async def save(self, user: User) -> User:
         self.session.add(user)
         await self.session.flush()
         return user
-
 
     async def update(self, user: User) -> User:
         """세션 attached 상태에서 mutate 한 user 를 즉시 flush — autoflush=False 환경 대응."""
         await self.session.flush()
         return user
 
-
     async def delete(self, user: User) -> None:
         await self.session.delete(user)
-
 
     async def hard_delete_by_id(self, user_id: str) -> bool:
         """유저 하드 탈퇴 — DB CASCADE로 연관 데이터 전체 삭제

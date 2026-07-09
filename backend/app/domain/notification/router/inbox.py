@@ -4,22 +4,23 @@
 `is_read` 는 read 전 상태 그대로라 클라가 "방금 본 항목" 강조 가능.
 """
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Request, Depends, Query
-from dependency_injector.wiring import Provide, inject
 
-from app.schema.common import MessageResponse
-from app.domain.notification.service.inbox import InboxService
-from app.domain.notification.service.exception import InboxItemNotFoundError
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
+
+from app.container import Container
+from app.domain.notification.dto.inbox import (
+    InboxItemData,
+    InboxListData,
+)
 from app.domain.notification.schema.inbox import (
     InboxItemResponse,
     InboxListResponse,
     UnreadCountResponse,
 )
-from app.domain.notification.dto.inbox import (
-    InboxItemData,
-    InboxListData,
-)
-from app.container import Container
+from app.domain.notification.service.exception import InboxItemNotFoundError
+from app.domain.notification.service.inbox import InboxService
+from app.schema.common import MessageResponse
 
 
 router = APIRouter(prefix="/inbox", tags=["인박스"])

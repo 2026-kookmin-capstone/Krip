@@ -1,11 +1,12 @@
 from typing import Optional
-from sqlalchemy.orm import contains_eager, selectinload
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, or_
 
-from app.domain.friend.model.user_block import UserBlock
-from app.domain.auth.model.user_detail_inform import UserDetailInform
+from sqlalchemy import or_, select
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import contains_eager, selectinload
+
 from app.domain.auth.model.user import User, UserStatus
+from app.domain.auth.model.user_detail_inform import UserDetailInform
+from app.domain.friend.model.user_block import UserBlock
 from app.util.cursor import decode_cursor, keyset_where
 
 
@@ -16,7 +17,6 @@ PAGE_SIZE = 30
 class FriendSearchRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
-
 
     # ──────────────────── Read (검색 — 커서 페이지네이션) ────────────────────
 

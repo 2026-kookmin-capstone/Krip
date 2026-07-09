@@ -1,13 +1,14 @@
-from fastapi import APIRouter, Request, Depends, Query
 from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, Query, Request
 
-from app.schema.common import MessageResponse
-from app.domain.friend.service.search_history import FriendSearchHistoryService
-from app.domain.friend.schema.search_history import (
-    FriendSearchHistoryResponse, FriendSearchHistoryListResponse,
-)
-from app.core.logger import get_logger
 from app.container import Container
+from app.core.logger import get_logger
+from app.domain.friend.schema.search_history import (
+    FriendSearchHistoryListResponse,
+    FriendSearchHistoryResponse,
+)
+from app.domain.friend.service.search_history import FriendSearchHistoryService
+from app.schema.common import MessageResponse
 
 
 router = APIRouter(prefix="/search/history", tags=["친구 추가 화면 검색 기록"])

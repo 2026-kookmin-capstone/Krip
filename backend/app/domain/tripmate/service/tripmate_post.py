@@ -1,21 +1,26 @@
-from typing import Optional, List
 from datetime import date
+from typing import List, Optional
 
-from app.domain.tripmate.service.tripmate_post_draft import TripmatePostDraftService
-from app.domain.tripmate.repository.tripmate_post_image import TripmatePostImageRepository
-from app.domain.tripmate.repository.tripmate_post import TripmatePostRepository, PAGE_SIZE
-from app.domain.tripmate.repository.tripmate_image import TripmateImageRepository
-from app.domain.tripmate.model.tripmate_post_image import TripmatePostImage
-from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
-from app.domain.tripmate.model.tripmate_post import TripmatePost, PreferredGender, CompanionType
-from app.domain.tripmate.dto.tripmate_post import TripmatePostCreateData, TripmatePostData, TripmatePostListData, PostAuthorData
-from app.domain.notification.service.inbox import InboxService
-from app.domain.notification.model.inbox import TargetType
-from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
-from app.domain.auth.model.user_detail_inform import Gender
-from app.database.session import UnitOfWork, transactional
-from app.core.object_storage import get_object_storage
 from app.core.logger import get_logger
+from app.core.object_storage import get_object_storage
+from app.database.session import UnitOfWork, transactional
+from app.domain.auth.model.user_detail_inform import Gender
+from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
+from app.domain.notification.model.inbox import TargetType
+from app.domain.notification.service.inbox import InboxService
+from app.domain.tripmate.dto.tripmate_post import (
+    PostAuthorData,
+    TripmatePostCreateData,
+    TripmatePostData,
+    TripmatePostListData,
+)
+from app.domain.tripmate.model.tripmate_post import CompanionType, PreferredGender, TripmatePost
+from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
+from app.domain.tripmate.model.tripmate_post_image import TripmatePostImage
+from app.domain.tripmate.repository.tripmate_image import TripmateImageRepository
+from app.domain.tripmate.repository.tripmate_post import PAGE_SIZE, TripmatePostRepository
+from app.domain.tripmate.repository.tripmate_post_image import TripmatePostImageRepository
+from app.domain.tripmate.service.tripmate_post_draft import TripmatePostDraftService
 from app.util.cursor import encode_cursor
 
 
@@ -101,7 +106,6 @@ class TripmatePostService:
             profile_image_url=detail.profile_image_url if detail else None,
         )
 
-
     # ──────────────────── 게시글 단건 조회 ────────────────────
 
     @transactional
@@ -125,7 +129,6 @@ class TripmatePostService:
             image_urls=[img.image_url for img in sorted(post.images, key=lambda i: i.image_order)],
         )
 
-
     # ──────────────────── 게시글 목록 조회 ────────────────────
 
     @transactional
@@ -138,7 +141,6 @@ class TripmatePostService:
         posts = await post_repo.find_all_displayed(cursor, user_id=user_id)
         return self._to_list_dto(posts)
 
-
     # ──────────────────── 게시글 검색 ────────────────────
 
     @transactional
@@ -150,7 +152,6 @@ class TripmatePostService:
 
         posts = await post_repo.search(keyword, cursor, user_id=user_id)
         return self._to_list_dto(posts)
-
 
     # ──────────────────── 게시글 수정 ────────────────────
 
@@ -182,7 +183,6 @@ class TripmatePostService:
         if deletable:
             await self._cleanup_image_files(deletable, label=f"update:{post_id}")
         return dto
-
 
     @transactional
     async def _update_post_tx(
@@ -258,7 +258,6 @@ class TripmatePostService:
         )
         return dto, deletable
 
-
     # ──────────────────── 게시글 삭제 ────────────────────
 
     async def delete_post(self, post_id: str, user_id: str) -> None:
@@ -285,7 +284,6 @@ class TripmatePostService:
             target_id=post_id,
         )
 
-
     @transactional
     async def _delete_post_tx(self, *, post_id: str, user_id: str) -> list[str]:
         """게시글 삭제 트랜잭션 부분 — 권한 검증 + DB delete. 커밋 후 물리 삭제할 고아 URL 반환."""
@@ -311,7 +309,6 @@ class TripmatePostService:
             return []
         return await self._filter_unreferenced_urls(user_id, image_urls)
 
-
     # ──────────────────── 게시글 Display 토글 ────────────────────
 
     @transactional
@@ -336,7 +333,6 @@ class TripmatePostService:
 
         return post.is_displayed
 
-
     # ──────────────────── 내부 이미지 유틸 ────────────────────
 
     async def _assert_images_owned(self, user_id: str, image_urls: Optional[List[str]]) -> None:
@@ -351,7 +347,6 @@ class TripmatePostService:
         if any(url not in owned for url in image_urls):
             raise ValueError("본인이 업로드한 이미지만 첨부할 수 있습니다.")
 
-
     async def _cleanup_image_files(self, urls: list[str], *, label: str) -> None:
         """(커밋 후) Object Storage 파일 + Mongo 이미지 메타 물리 삭제. best-effort — 실패는 로그만."""
         try:
@@ -359,7 +354,6 @@ class TripmatePostService:
             await self.mongo_image_repo.delete_by_urls(urls)
         except Exception as e:
             logger.warning("이미지 정리 실패 ({}): {}", label, e)
-
 
     async def _filter_unreferenced_urls(self, user_id: str, candidate_urls) -> list[str]:
         """candidate 중 유저의 다른 게시글/임시저장 어디서도 참조 안 되는(=고아) URL 만 반환.
@@ -376,7 +370,6 @@ class TripmatePostService:
             referenced |= set(draft.image_urls)
         return [url for url in candidates if url not in referenced]
 
-
     # ──────────────────── 내부 변환 유틸 ────────────────────
 
     @staticmethod
@@ -390,7 +383,6 @@ class TripmatePostService:
             gender=detail.gender,
             nationality=detail.nationality,
         )
-
 
     @staticmethod
     def _to_create_dto(
@@ -417,7 +409,6 @@ class TripmatePostService:
             profile_image_url=profile_image_url,
         )
 
-
     @staticmethod
     def _to_dto(post: TripmatePost, like_count: int, is_liked: bool, image_urls: List[str]) -> TripmatePostData:
         detail = post.user.detail if post.user else None
@@ -442,7 +433,6 @@ class TripmatePostService:
             image_urls=image_urls,
             profile_image_url=detail.profile_image_url if detail else None,
         )
-
 
     def _to_list_dto(self, posts: list[TripmatePost]) -> TripmatePostListData:
         post_dtos = [

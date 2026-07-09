@@ -1,25 +1,25 @@
+from datetime import datetime, timedelta, timezone
 from enum import Enum
-from datetime import datetime, timezone, timedelta
 
-from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHistory
-from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
-from app.domain.tripmate.model.tripmate_image import TripmateImage
-from app.domain.tour.model.tour_search_history import TourSearchHistory
-from app.domain.notification.service.inbox import InboxService
-from app.domain.friend.model.search_history import FriendSearchHistory
+from app.core.cache.key_category import KeyCategory
+from app.core.cache.redis_cache import get_redis_cache_manager
+from app.core.logger import get_logger
+from app.core.object_storage import get_object_storage
+from app.database.session import UnitOfWork, transactional
+from app.domain.auth.model.user import UserStatus
+from app.domain.auth.model.withdrawal_request import WITHDRAWAL_GRACE_PERIOD_DAYS
+from app.domain.auth.repository.user import UserRepository
+from app.domain.auth.repository.withdrawal_request import WithdrawalRequestRepository
 from app.domain.auth.service.exception import (
     WithdrawalAlreadyRequestedError,
     WithdrawalNotPendingError,
 )
-from app.domain.auth.repository.withdrawal_request import WithdrawalRequestRepository
-from app.domain.auth.repository.user import UserRepository
-from app.domain.auth.model.withdrawal_request import WITHDRAWAL_GRACE_PERIOD_DAYS
-from app.domain.auth.model.user import UserStatus
-from app.database.session import UnitOfWork, transactional
-from app.core.object_storage import get_object_storage
-from app.core.logger import get_logger
-from app.core.cache.redis_cache import get_redis_cache_manager
-from app.core.cache.key_category import KeyCategory
+from app.domain.friend.model.search_history import FriendSearchHistory
+from app.domain.notification.service.inbox import InboxService
+from app.domain.tour.model.tour_search_history import TourSearchHistory
+from app.domain.tripmate.model.tripmate_image import TripmateImage
+from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
+from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHistory
 
 
 logger = get_logger("auth.withdraw")
@@ -76,7 +76,6 @@ class WithdrawService:
         self.withdrawal_request_repo = WithdrawalRequestRepository()
         self._chat_purge = user_purge_cache_service
 
-
     # ──────────────────── HTTP: 탈퇴 요청 (soft) ────────────────────
 
     @transactional
@@ -126,7 +125,6 @@ class WithdrawService:
         )
         return purge_at
 
-
     async def revoke_user_chat_state(self, user_id: str) -> None:
         """`request_withdraw` post-commit 훅 — chat 활성 세션 즉시 종료.
 
@@ -137,7 +135,6 @@ class WithdrawService:
         chat 도메인 키 조작은 `UserPurgeCacheService` 가 책임 — 도메인 경계 유지.
         """
         await self._chat_purge.revoke_all_sessions(user_id)
-
 
     # ──────────────────── 스케줄러: 영구 삭제 (hard) ────────────────────
 
@@ -196,7 +193,6 @@ class WithdrawService:
 
         await self._purge_external(user_id)
 
-
     @transactional
     async def _purge_rdb(self, user_id: str) -> "_PurgeOutcome":
         """RDB row lock 획득 → status 검사 → 조건부 hard delete. 단일 트랜잭션.
@@ -222,7 +218,6 @@ class WithdrawService:
         await user_repo.hard_delete_by_id(user_id)
         logger.info("탈퇴 영구 삭제 — RDB 삭제 완료 (user_id={})", user_id)
         return _PurgeOutcome.DELETED
-
 
     # ──────────────────── HTTP: 탈퇴 취소 (soft 복구) ────────────────────
 
@@ -267,7 +262,6 @@ class WithdrawService:
 
         logger.info("탈퇴 요청 취소 (user_id={})", user_id)
 
-
     @transactional
     async def _set_active(self, user_id: str) -> None:
         """RDB 만 ACTIVE 로 복구. Mongo doc 정리는 호출자가 commit 후 별도 단계로 처리.
@@ -286,7 +280,6 @@ class WithdrawService:
             )
         user.status = UserStatus.ACTIVE
         await user_repo.update(user)
-
 
     async def _purge_external(self, user_id: str) -> None:
         """MongoDB / Object Storage / Redis 정리. 단계별 best-effort."""

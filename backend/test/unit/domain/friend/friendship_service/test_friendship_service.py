@@ -1,14 +1,13 @@
+import pytest
+from sqlalchemy.exc import IntegrityError
+
+from app.domain.friend.model.friendship import FriendshipStatus
+from app.util.cursor import decode_cursor
 from test.unit.domain.friend.friendship_service.model_factory import (
     FriendshipFactory,
     UserBlockFactory,
     UserFactory,
 )
-from sqlalchemy.exc import IntegrityError
-import pytest
-
-from app.util.cursor import decode_cursor
-
-from app.domain.friend.model.friendship import FriendshipStatus
 
 
 # ──────────────────────────────────────────────────────────────────
@@ -23,13 +22,11 @@ class TestSendRequest:
         with pytest.raises(ValueError, match="자기 자신"):
             await service.send_request(requester_id="USER_a", addressee_id="USER_a")
 
-
     async def test_raises_when_addressee_not_found(self, service, user_repo_mock):
         user_repo_mock.find_by_id_with_profile.return_value = None
 
         with pytest.raises(ValueError, match="존재하지 않는 유저"):
             await service.send_request(requester_id="USER_a", addressee_id="USER_b")
-
 
     async def test_raises_when_addressee_incomplete_signup(self, service, user_repo_mock):
         """detail=None(2차 미완료) addressee 는 AttributeError(500) 대신 400 으로 거부."""
@@ -39,7 +36,6 @@ class TestSendRequest:
 
         with pytest.raises(ValueError, match="2차 회원가입"):
             await service.send_request(requester_id="USER_a", addressee_id="USER_b")
-
 
     async def test_raises_when_requester_blocked_addressee(
         self, service, user_repo_mock, block_repo_mock
@@ -53,7 +49,6 @@ class TestSendRequest:
         with pytest.raises(ValueError, match="차단한 유저"):
             await service.send_request(requester_id="USER_a", addressee_id="USER_b")
 
-
     async def test_raises_when_addressee_blocked_requester(
         self, service, user_repo_mock, block_repo_mock
     ):
@@ -65,7 +60,6 @@ class TestSendRequest:
 
         with pytest.raises(ValueError, match="요청을 보낼 수 없습니다"):
             await service.send_request(requester_id="USER_a", addressee_id="USER_b")
-
 
     async def test_raises_when_pending_request_already_sent_by_me(
         self, service, user_repo_mock, friendship_repo_mock
@@ -81,7 +75,6 @@ class TestSendRequest:
         with pytest.raises(ValueError, match="이미 친구 요청을 보낸"):
             await service.send_request(requester_id="USER_a", addressee_id="USER_b")
 
-
     async def test_raises_when_pending_request_received_from_target(
         self, service, user_repo_mock, friendship_repo_mock
     ):
@@ -96,7 +89,6 @@ class TestSendRequest:
         with pytest.raises(ValueError, match="수락해주세요"):
             await service.send_request(requester_id="USER_a", addressee_id="USER_b")
 
-
     async def test_raises_when_already_friends(
         self, service, user_repo_mock, friendship_repo_mock
     ):
@@ -110,7 +102,6 @@ class TestSendRequest:
 
         with pytest.raises(ValueError, match="이미 친구 관계"):
             await service.send_request(requester_id="USER_a", addressee_id="USER_b")
-
 
     async def test_upserts_rejected_to_pending_same_direction(
         self, service, user_repo_mock, friendship_repo_mock
@@ -134,7 +125,6 @@ class TestSendRequest:
         friendship_repo_mock.update.assert_awaited_once_with(existing)
         friendship_repo_mock.save.assert_not_called()
 
-
     async def test_upserts_rejected_with_direction_swap(
         self, service, user_repo_mock, friendship_repo_mock
     ):
@@ -156,7 +146,6 @@ class TestSendRequest:
         assert existing.status == FriendshipStatus.PENDING
         assert result.is_requester is True
 
-
     async def test_creates_new_friendship_when_no_existing(
         self, service, user_repo_mock, friendship_repo_mock
     ):
@@ -175,7 +164,6 @@ class TestSendRequest:
         assert result.peer.user_id == "USER_b"
         assert result.peer.user_name == "철수"
         assert result.is_requester is True
-
 
     async def test_recovers_on_integrity_error_with_existing_pending(
         self, service, user_repo_mock, friendship_repo_mock
@@ -213,7 +201,6 @@ class TestAcceptRequest:
         with pytest.raises(ValueError, match="존재하지 않는"):
             await service.accept_request(friendship_id="FS_x", user_id="USER_a")
 
-
     async def test_raises_when_not_addressee(self, service, friendship_repo_mock):
         friendship_repo_mock.find_by_id.return_value = FriendshipFactory.create(
             requester_id="USER_a",
@@ -224,7 +211,6 @@ class TestAcceptRequest:
         with pytest.raises(PermissionError, match="수락 권한"):
             await service.accept_request(friendship_id="FS_x", user_id="USER_c")
 
-
     async def test_raises_when_not_pending(self, service, friendship_repo_mock):
         friendship_repo_mock.find_by_id.return_value = FriendshipFactory.create(
             requester_id="USER_a",
@@ -234,7 +220,6 @@ class TestAcceptRequest:
 
         with pytest.raises(ValueError, match="대기 중인 요청"):
             await service.accept_request(friendship_id="FS_x", user_id="USER_b")
-
 
     async def test_updates_status_to_accepted(self, service, friendship_repo_mock):
         friendship = FriendshipFactory.create(
@@ -263,7 +248,6 @@ class TestRejectRequest:
         with pytest.raises(ValueError, match="존재하지 않는"):
             await service.reject_request(friendship_id="FS_x", user_id="USER_b")
 
-
     async def test_raises_when_not_addressee(self, service, friendship_repo_mock):
         friendship_repo_mock.find_by_id.return_value = FriendshipFactory.create(
             requester_id="USER_a",
@@ -273,7 +257,6 @@ class TestRejectRequest:
         with pytest.raises(PermissionError, match="거절 권한"):
             await service.reject_request(friendship_id="FS_x", user_id="USER_a")
 
-
     async def test_raises_when_not_pending(self, service, friendship_repo_mock):
         friendship_repo_mock.find_by_id.return_value = FriendshipFactory.create(
             requester_id="USER_a",
@@ -282,7 +265,6 @@ class TestRejectRequest:
         )
         with pytest.raises(ValueError, match="대기 중"):
             await service.reject_request(friendship_id="FS_x", user_id="USER_b")
-
 
     async def test_updates_status_to_rejected(self, service, friendship_repo_mock):
         friendship = FriendshipFactory.create(
@@ -311,7 +293,6 @@ class TestCancelRequest:
         with pytest.raises(ValueError, match="존재하지 않는"):
             await service.cancel_request(friendship_id="FS_x", user_id="USER_a")
 
-
     async def test_raises_when_not_requester(self, service, friendship_repo_mock):
         friendship_repo_mock.find_by_id.return_value = FriendshipFactory.create(
             requester_id="USER_a",
@@ -321,7 +302,6 @@ class TestCancelRequest:
         with pytest.raises(PermissionError, match="취소 권한"):
             await service.cancel_request(friendship_id="FS_x", user_id="USER_b")
 
-
     async def test_raises_when_not_pending(self, service, friendship_repo_mock):
         friendship_repo_mock.find_by_id.return_value = FriendshipFactory.create(
             requester_id="USER_a",
@@ -330,7 +310,6 @@ class TestCancelRequest:
         )
         with pytest.raises(ValueError, match="대기 중"):
             await service.cancel_request(friendship_id="FS_x", user_id="USER_a")
-
 
     async def test_deletes_on_success(self, service, friendship_repo_mock):
         friendship = FriendshipFactory.create(
@@ -358,7 +337,6 @@ class TestRemoveFriend:
         with pytest.raises(ValueError, match="존재하지 않는"):
             await service.remove_friend(friendship_id="FS_x", user_id="USER_a")
 
-
     async def test_raises_when_not_party_to_friendship(self, service, friendship_repo_mock):
         friendship_repo_mock.find_by_id.return_value = FriendshipFactory.create(
             requester_id="USER_a",
@@ -368,7 +346,6 @@ class TestRemoveFriend:
         with pytest.raises(PermissionError, match="삭제 권한"):
             await service.remove_friend(friendship_id="FS_x", user_id="USER_c")
 
-
     async def test_raises_when_not_accepted(self, service, friendship_repo_mock):
         friendship_repo_mock.find_by_id.return_value = FriendshipFactory.create(
             requester_id="USER_a",
@@ -377,7 +354,6 @@ class TestRemoveFriend:
         )
         with pytest.raises(ValueError, match="친구 상태"):
             await service.remove_friend(friendship_id="FS_x", user_id="USER_a")
-
 
     async def test_deletes_on_success_as_requester(self, service, friendship_repo_mock):
         friendship = FriendshipFactory.create(
@@ -390,7 +366,6 @@ class TestRemoveFriend:
         await service.remove_friend(friendship_id="FS_x", user_id="USER_a")
 
         friendship_repo_mock.delete.assert_awaited_once_with(friendship)
-
 
     async def test_deletes_on_success_as_addressee(self, service, friendship_repo_mock):
         friendship = FriendshipFactory.create(
@@ -421,7 +396,6 @@ class TestGetFriends:
         assert result.items == []
         assert result.next_cursor is None
 
-
     async def test_maps_peer_from_opposite_side(self, service, friendship_repo_mock):
         viewer = UserFactory.create(user_id="USER_a")
         peer = UserFactory.create(user_id="USER_b", user_name="영희")
@@ -441,7 +415,6 @@ class TestGetFriends:
         assert result.items[0].peer.user_name == "영희"
         assert result.items[0].is_requester is True
         assert result.next_cursor is None
-
 
     async def test_next_cursor_when_page_full(self, service, friendship_repo_mock):
         from app.domain.friend.repository.friendship import PAGE_SIZE

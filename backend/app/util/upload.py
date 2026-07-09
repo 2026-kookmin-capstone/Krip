@@ -3,7 +3,7 @@
 `await file.read()` 로 전체 본문을 한 번에 올리면 거대 업로드가 OOM 을 유발하므로,
 청크로 읽으며 상한 초과 즉시 중단해 메모리를 상한+청크 크기로 제한한다.
 """
-from fastapi import UploadFile, HTTPException
+from fastapi import HTTPException, UploadFile
 
 
 _CHUNK_SIZE = 64 * 1024

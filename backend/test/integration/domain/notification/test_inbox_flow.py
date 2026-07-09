@@ -21,15 +21,14 @@ unit 테스트가 mock 으로 검증할 수 없는 영역을 cover:
 """
 import pytest
 from pymongo.errors import DuplicateKeyError
-from beanie import PydanticObjectId
 
-from app.domain.notification.service.exception import InboxItemNotFoundError
-from app.domain.notification.repository.inbox import InboxRepository
 from app.domain.notification.model.inbox import (
     InboxItem,
     InboxItemType,
     TargetType,
 )
+from app.domain.notification.repository.inbox import InboxRepository
+from app.domain.notification.service.exception import InboxItemNotFoundError
 
 
 pytestmark = pytest.mark.integration
@@ -74,7 +73,6 @@ class TestPartialUniqueIndex:
         with pytest.raises(DuplicateKeyError):
             await repo.insert(_make_inbox_item())
 
-
     async def test_hide_then_reinsert_succeeds(self, mongo_db, inbox_service):
         """X 로 숨긴(display=false) 항목은 partial filter 밖 → 같은 키 새 insert 가능.
 
@@ -97,7 +95,6 @@ class TestPartialUniqueIndex:
         # 둘 다 DB 에 존재 (display=false + display=true)
         coll = InboxItem.get_motor_collection()
         assert await coll.count_documents({"recipient_id": "USER_recipient"}) == 2
-
 
     async def test_different_comment_ids_dont_conflict(self, mongo_db):
         """COMMENT 항목은 comment_id 가 매번 달라 자연 unique."""
@@ -136,7 +133,6 @@ class TestListInboxFlow:
         assert result.items[0].target_id == "FDP_2"
         assert result.items[2].target_id == "FDP_0"
 
-
     async def test_mark_as_read_true_updates_db_atomically(
         self, mongo_db, inbox_service,
     ):
@@ -154,7 +150,6 @@ class TestListInboxFlow:
             {"recipient_id": "USER_recipient", "read_at": None},
         )
         assert unread == 0
-
 
     async def test_response_is_read_reflects_pre_mark_state(
         self, mongo_db, inbox_service,
@@ -178,7 +173,6 @@ class TestListInboxFlow:
             {"recipient_id": "USER_recipient", "read_at": None},
         )
         assert unread == 0
-
 
     async def test_mark_as_read_false_keeps_unread(
         self, mongo_db, inbox_service,
@@ -218,7 +212,6 @@ class TestHideAtomic:
         )
         assert result.items == []
 
-
     async def test_hide_other_user_raises_not_found(
         self, mongo_db, inbox_service,
     ):
@@ -232,7 +225,6 @@ class TestHideAtomic:
                 recipient_id="USER_recipient",
                 inbox_item_id=str(item.id),
             )
-
 
     async def test_hide_invalid_objectid_raises_not_found(
         self, mongo_db, inbox_service,
@@ -258,7 +250,6 @@ class TestCountUnread:
         count = await inbox_service.count_unread(recipient_id="USER_recipient")
 
         assert count == 3
-
 
     async def test_excludes_hidden_items(
         self, mongo_db, inbox_service,

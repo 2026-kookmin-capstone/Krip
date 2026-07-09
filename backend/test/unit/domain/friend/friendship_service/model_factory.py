@@ -1,10 +1,10 @@
-from typing import List, Optional
-from types import SimpleNamespace
 from datetime import datetime, timezone
+from types import SimpleNamespace
+from typing import List, Optional
 
-from app.domain.friend.model.friendship import FriendshipStatus
-from app.domain.auth.model.user_travel_style import TravelStyle
 from app.domain.auth.model.user_detail_inform import Gender
+from app.domain.auth.model.user_travel_style import TravelStyle
+from app.domain.friend.model.friendship import FriendshipStatus
 
 
 class UserFactory:
@@ -52,7 +52,6 @@ class UserFactory:
             user_id=uid, detail=detail_obj, travel_styles=styles, created_at=created,
         )
 
-
     @classmethod
     def reset_counter(cls) -> None:
         cls._counter = 0
@@ -92,7 +91,6 @@ class FriendshipFactory:
             addressee=addressee,
         )
 
-
     @classmethod
     def reset_counter(cls) -> None:
         cls._counter = 0
@@ -121,7 +119,6 @@ class UserBlockFactory:
             created_at=created_at or now,
             blocked=blocked,
         )
-
 
     @classmethod
     def reset_counter(cls) -> None:

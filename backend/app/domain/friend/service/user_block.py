@@ -1,14 +1,15 @@
 from typing import Optional
+
 from sqlalchemy.exc import IntegrityError
 
-from app.domain.friend.repository.user_block import UserBlockRepository, PAGE_SIZE
-from app.domain.friend.repository.friendship import FriendshipRepository
-from app.domain.friend.model.user_block import UserBlock
-from app.domain.friend.dto.user_block import UserBlockData, UserBlockListData
-from app.domain.friend.dto.friendship import FriendPeerData
-from app.domain.auth.repository.user import UserRepository
-from app.domain.auth.model.user import User
 from app.database.session import UnitOfWork, transactional
+from app.domain.auth.model.user import User
+from app.domain.auth.repository.user import UserRepository
+from app.domain.friend.dto.friendship import FriendPeerData
+from app.domain.friend.dto.user_block import UserBlockData, UserBlockListData
+from app.domain.friend.model.user_block import UserBlock
+from app.domain.friend.repository.friendship import FriendshipRepository
+from app.domain.friend.repository.user_block import PAGE_SIZE, UserBlockRepository
 from app.util.cursor import encode_cursor
 
 
@@ -17,7 +18,6 @@ class UserBlockService:
         # block_cache_service 는 chat 도메인 서비스 — type hint 생략으로 순환 import 회피
         self.uow = uow
         self._block_cache = block_cache_service
-
 
     # ──────────────────── 차단 ────────────────────
 
@@ -30,7 +30,6 @@ class UserBlockService:
         await self._block_cache.invalidate_block_cache(user_id, target_user_id)
 
         return result
-
 
     @transactional
     async def _block_user_tx(self, user_id: str, target_user_id: str) -> UserBlockData:
@@ -78,7 +77,6 @@ class UserBlockService:
 
         return self._to_dto(block, target)
 
-
     # ──────────────────── 차단 해제 ────────────────────
 
     async def unblock_user(self, user_id: str, target_user_id: str) -> None:
@@ -87,7 +85,6 @@ class UserBlockService:
 
         # block_user 와 동일하게 커밋 후 무효화. fail-open: 실패해도 TTL 후 만료돼 해제를 막지 않는다.
         await self._block_cache.invalidate_block_cache(user_id, target_user_id)
-
 
     @transactional
     async def _unblock_user_tx(self, user_id: str, target_user_id: str) -> None:
@@ -100,7 +97,6 @@ class UserBlockService:
 
         await block_repo.delete(block)
 
-
     # ──────────────────── 목록 조회 ────────────────────
 
     @transactional
@@ -109,7 +105,6 @@ class UserBlockService:
         block_repo = UserBlockRepository(self._session)
         items = await block_repo.find_blocks_by_user(user_id, cursor)
         return self._to_list_dto(items)
-
 
     # ──────────────────── 내부 변환 유틸 ────────────────────
 
@@ -125,7 +120,6 @@ class UserBlockService:
             profile_image_url=detail.profile_image_url,
         )
 
-
     @classmethod
     def _to_dto(cls, block: UserBlock, blocked_user: User) -> UserBlockData:
         return UserBlockData(
@@ -133,7 +127,6 @@ class UserBlockService:
             blocked=cls._to_peer_dto(blocked_user),
             created_at=block.created_at,
         )
-
 
     def _to_list_dto(self, items: list[UserBlock]) -> UserBlockListData:
         dtos = [self._to_dto(b, b.blocked) for b in items]

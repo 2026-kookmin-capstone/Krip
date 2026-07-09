@@ -1,10 +1,10 @@
-from typing import List, Optional
 from dataclasses import dataclass
+from typing import List, Optional
 
-from app.domain.auth.model.user_travel_style import TravelStyle
-from app.domain.auth.model.user_detail_inform import Gender
-from app.domain.auth.model.user import UserStatus
 from app.config.oauth import OAuthProvider
+from app.domain.auth.model.user import UserStatus
+from app.domain.auth.model.user_detail_inform import Gender
+from app.domain.auth.model.user_travel_style import TravelStyle
 
 
 @dataclass

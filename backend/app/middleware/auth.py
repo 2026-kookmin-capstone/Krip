@@ -1,17 +1,18 @@
-from typing import Callable, Optional, Sequence, Tuple
-from starlette.types import ASGIApp
-from starlette.middleware.base import BaseHTTPMiddleware
-import jwt
 import hmac
-from fastapi.responses import JSONResponse
-from fastapi import Request, Response
+from typing import Callable, Optional, Sequence, Tuple
 
-from app.core.redis import RedisClient
-from app.core.metric import AUTH_FAILURES
-from app.core.logger import get_logger
-from app.core.cache.redis_cache import get_redis_cache_manager
-from app.core.cache.key_category import KeyCategory
+import jwt
+from fastapi import Request, Response
+from fastapi.responses import JSONResponse
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.types import ASGIApp
+
 from app.config.setting import settings
+from app.core.cache.key_category import KeyCategory
+from app.core.cache.redis_cache import get_redis_cache_manager
+from app.core.logger import get_logger
+from app.core.metric import AUTH_FAILURES
+from app.core.redis import RedisClient
 
 
 class BearerTokenMiddleware(BaseHTTPMiddleware):
@@ -37,18 +38,15 @@ class BearerTokenMiddleware(BaseHTTPMiddleware):
         "/api/public",  # 외부 사용자 공개 endpoint (share 토큰 등)
     )
 
-
     def __init__(self, app: ASGIApp) -> None:
         super().__init__(app)
         self.logger = get_logger("middleware.auth")
-
 
     def _is_excluded(self, path: str) -> bool:
         """인증 제외 대상 경로인지 확인"""
         if path in self.EXCLUDE_PATHS:
             return True
         return any(path.startswith(prefix) for prefix in self.EXCLUDE_PREFIXES)
-
 
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
         if self._is_excluded(request.url.path):
@@ -122,18 +120,15 @@ class LoginAuthMiddleware(BaseHTTPMiddleware):
         "/api/public",  # 외부 사용자 공개 endpoint (share 토큰 등)
     )
 
-
     def __init__(self, app: ASGIApp) -> None:
         super().__init__(app)
         self.logger = get_logger("middleware.login_auth")
-
 
     def _is_excluded(self, path: str) -> bool:
         """인증 제외 대상 경로인지 확인"""
         if path in self.EXCLUDE_PATHS:
             return True
         return any(path.startswith(prefix) for prefix in self.EXCLUDE_PREFIXES)
-
 
     def _extract_token(self, request: Request) -> Tuple[Optional[str], Optional[str]]:
         """X-Auth-Token 헤더 → 쿠키 순으로 JWT 를 찾는다.
@@ -152,7 +147,6 @@ class LoginAuthMiddleware(BaseHTTPMiddleware):
             return cookie_token, "cookie"
 
         return None, None
-
 
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
         if self._is_excluded(request.url.path):
@@ -249,18 +243,15 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
         "/api/public",  # 외부 사용자 공개 endpoint (share 토큰 등)
     )
 
-
     def __init__(self, app: ASGIApp) -> None:
         super().__init__(app)
         self.logger = get_logger("middleware.register_check")
-
 
     def _is_excluded(self, path: str) -> bool:
         """검증 제외 대상 경로인지 확인"""
         if path in self.EXCLUDE_PATHS:
             return True
         return any(path.startswith(prefix) for prefix in self.EXCLUDE_PREFIXES)
-
 
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
         if self._is_excluded(request.url.path):

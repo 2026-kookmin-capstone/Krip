@@ -1,10 +1,6 @@
 from fastapi import APIRouter
 
-from app.domain.friend.router import friendship
-from app.domain.friend.router import user_block
-from app.domain.friend.router import detail
-from app.domain.friend.router import search
-from app.domain.friend.router import search_history
+from app.domain.friend.router import detail, friendship, search, search_history, user_block
 
 
 friend_router = APIRouter(prefix="/friend")

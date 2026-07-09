@@ -1,13 +1,13 @@
-from fastapi import APIRouter, HTTPException, Request, Depends
 from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Request
 
-from app.domain.auth.service.register import RegisterService
-from app.domain.auth.schema.register import RegisterRequest, RegisterResponse
-from app.core.redis import RedisClient
-from app.core.logger import get_logger
-from app.core.cache.redis_cache import get_redis_cache_manager
-from app.core.cache.key_category import KeyCategory
 from app.container import Container
+from app.core.cache.key_category import KeyCategory
+from app.core.cache.redis_cache import get_redis_cache_manager
+from app.core.logger import get_logger
+from app.core.redis import RedisClient
+from app.domain.auth.schema.register import RegisterRequest, RegisterResponse
+from app.domain.auth.service.register import RegisterService
 
 
 router = APIRouter(prefix="/register", tags=["회원가입"])

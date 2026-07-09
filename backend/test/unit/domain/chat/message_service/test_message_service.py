@@ -1,16 +1,16 @@
 """MessageService 단위 테스트 — 송신 11단계 핫패스 / 재시도 / dedupe / unread."""
 from unittest.mock import AsyncMock
+
 import pytest
 from pymongo.errors import DuplicateKeyError
 
-from app.domain.chat.service.exception import UpstreamError
-from app.domain.chat.model.chat_message import MessageType
 from app.core.chat.redis_key import (
     DIRTY_CHAT_ROOM_KEY,
     RATE_LIMIT_THRESHOLD,
     dedupe_key,
-    rate_msg_key,
 )
+from app.domain.chat.model.chat_message import MessageType
+from app.domain.chat.service.exception import UpstreamError
 
 
 # ──────────────────────────────────────────────────────────────────
@@ -35,7 +35,6 @@ class TestHappyPath:
         assert ack.server_seq == 42
         assert ack.message_id.startswith("MSG_")
 
-
     async def test_fans_out_to_room_with_sender_session_id(
         self, service, fanout_mock, lua_mock,
     ):
@@ -58,7 +57,6 @@ class TestHappyPath:
         assert payload["sender_session_id"] == "WS_A"
         assert payload["message"]["server_seq"] == 10
         assert payload["message"]["content"] == "hi"
-
 
     async def test_updates_rdb_last_message_and_inserts_mongo(
         self, service, chat_room_repo_mock, message_repo_mock, lua_mock,
@@ -100,7 +98,6 @@ class TestMembershipCheck:
 
         chat_member_repo_mock.find_active_member_ids.assert_not_called()
 
-
     async def test_cache_miss_loads_all_members_and_sadd(
         self, service, redis_mock, chat_member_repo_mock,
     ):
@@ -116,7 +113,6 @@ class TestMembershipCheck:
         # SADD + EXPIRE pipeline 존재
         pipes_with_sadd = [p for p in redis_mock._pipes if p.sadd.called]
         assert pipes_with_sadd, "멤버 캐시 SADD pipeline 이 호출되지 않음"
-
 
     async def test_not_a_member_raises_permission(
         self, service, redis_mock, chat_member_repo_mock,
@@ -164,7 +160,6 @@ class TestDedupe:
                 client_msg_id="cm-dup", msg_type=MessageType.TEXT, content="x",
             )
 
-
     async def test_dedupe_key_uses_user_scope(
         self, service, redis_dedupe_mock,
     ):
@@ -194,7 +189,6 @@ class TestSeqAllocation:
         lua_mock.incr_fast.assert_awaited_once()
         lua_mock.recover_and_incr.assert_not_called()
 
-
     async def test_recover_path_when_incr_fast_returns_minus_one(
         self, service, lua_mock, message_repo_mock,
     ):
@@ -211,7 +205,6 @@ class TestSeqAllocation:
         message_repo_mock.get_max_server_seq.assert_awaited_once_with("CR_1")
         lua_mock.recover_and_incr.assert_awaited_once()
         assert ack.server_seq == 1001
-
 
     async def test_recover_path_first_message_uses_base_zero(
         self, service, lua_mock, message_repo_mock,
@@ -258,7 +251,6 @@ class TestDuplicateKeyRetry:
         assert lua_mock.force_jump.await_count == 1
         assert message_repo_mock.insert.await_count == 2
         assert ack.server_seq == 1050
-
 
     async def test_three_failures_raise_upstream_and_clear_dedupe(
         self, service, message_repo_mock, redis_dedupe_mock, lua_mock,
@@ -314,7 +306,6 @@ class TestDedupeReleaseOnFailure:
         args, _ = redis_dedupe_mock.delete.call_args
         assert args[0] == dedupe_key("U_A", "cm-conn")
 
-
     async def test_seq_allocation_failure_clears_dedupe(
         self, service, lua_mock, redis_dedupe_mock,
     ):
@@ -330,7 +321,6 @@ class TestDedupeReleaseOnFailure:
         redis_dedupe_mock.delete.assert_awaited()
         args, _ = redis_dedupe_mock.delete.call_args
         assert args[0] == dedupe_key("U_A", "cm-seq")
-
 
     async def test_happy_path_keeps_dedupe(
         self, service, redis_dedupe_mock,
@@ -402,7 +392,6 @@ class TestUnread:
         senders_in_pipe = {c.args[0].split(":")[1] for c in p.hincrby.call_args_list}
         assert senders_in_pipe == {"U_B", "U_C"}
 
-
     async def test_system_message_skips_unread(self, service, redis_mock):
         redis_mock.smembers = AsyncMock(return_value={"U_A", "U_B"})
 
@@ -436,7 +425,6 @@ class TestSendSystemMessage:
         assert doc["type"] == "system"
         assert doc["content"] == {"action": "created", "actor_id": "U_A"}
 
-
     async def test_includes_target_ids_when_provided(
         self, service, message_repo_mock,
     ):
@@ -448,7 +436,6 @@ class TestSendSystemMessage:
             "action": "join", "actor_id": "U_A", "target_ids": ["U_B", "U_C"],
         }
 
-
     async def test_skips_dedupe_and_rate_limit(
         self, service, redis_dedupe_mock, lua_mock,
     ):
@@ -458,7 +445,6 @@ class TestSendSystemMessage:
         redis_dedupe_mock.set.assert_not_called()
         lua_mock.incr_with_ttl.assert_not_called()
 
-
     async def test_skips_unread_pipeline(
         self, service, redis_mock,
     ):
@@ -467,7 +453,6 @@ class TestSendSystemMessage:
         )
         unread_pipes = [p for p in redis_mock._pipes if p.hincrby.called]
         assert not unread_pipes, "시스템 메시지인데 unread HINCRBY 가 호출됨"
-
 
     async def test_fans_out_to_room_as_message_new(
         self, service, fanout_mock,
@@ -483,7 +468,6 @@ class TestSendSystemMessage:
         assert payload["message"]["type"] == "system"
         assert payload["message"]["sender_id"] is None
         assert payload["message"]["content"]["action"] == "created"
-
 
     async def test_updates_last_message(
         self, service, chat_room_repo_mock,
@@ -541,7 +525,6 @@ class TestEditMessage:
                 new_content="new",
             )
 
-
     async def test_raises_on_deleted_message(self, service, message_repo_mock):
         message_repo_mock.find_by_id.return_value = _mk_text_doc(
             deleted_at=datetime.now(timezone.utc),
@@ -551,7 +534,6 @@ class TestEditMessage:
                 message_id="MSG_1", editor_user_id="U_A", editor_session_id="WS_A",
                 new_content="new",
             )
-
 
     async def test_raises_on_system_message(self, service, message_repo_mock):
         message_repo_mock.find_by_id.return_value = _mk_text_doc(
@@ -563,7 +545,6 @@ class TestEditMessage:
                 new_content="new",
             )
 
-
     async def test_raises_when_editor_not_owner(self, service, message_repo_mock):
         message_repo_mock.find_by_id.return_value = _mk_text_doc(sender_id="U_A")
         with pytest.raises(PermissionError, match="본인 메시지"):
@@ -571,7 +552,6 @@ class TestEditMessage:
                 message_id="MSG_1", editor_user_id="U_B", editor_session_id="WS_B",
                 new_content="new",
             )
-
 
     async def test_raises_when_editor_not_active_member(
         self, service, message_repo_mock, chat_member_repo_mock,
@@ -583,7 +563,6 @@ class TestEditMessage:
                 message_id="MSG_1", editor_user_id="U_A", editor_session_id="WS_A",
                 new_content="new",
             )
-
 
     async def test_allowed_at_4m59s(self, service, message_repo_mock):
         """4분 59초 경과 — 5분 제한 직전이므로 성공."""
@@ -597,7 +576,6 @@ class TestEditMessage:
         assert result["content"] == "new"
         message_repo_mock.update_content.assert_awaited_once()
 
-
     async def test_rejected_at_5m01s(self, service, message_repo_mock):
         """5분 1초 경과 — 제한 초과."""
         created = datetime.now(timezone.utc) - timedelta(minutes=5, seconds=1)
@@ -608,7 +586,6 @@ class TestEditMessage:
                 new_content="new",
             )
         message_repo_mock.update_content.assert_not_called()
-
 
     async def test_successful_edit_fans_out_updated_event(
         self, service, message_repo_mock, fanout_mock,
@@ -655,7 +632,6 @@ class TestDeleteMessage:
                 message_id="MSG_X", deleter_user_id="U_A", deleter_session_id="WS_A",
             )
 
-
     async def test_raises_on_already_deleted(self, service, message_repo_mock):
         message_repo_mock.find_by_id.return_value = _mk_text_doc(
             deleted_at=datetime.now(timezone.utc),
@@ -664,7 +640,6 @@ class TestDeleteMessage:
             await service.delete_message(
                 message_id="MSG_1", deleter_user_id="U_A", deleter_session_id="WS_A",
             )
-
 
     async def test_raises_on_system_message(self, service, message_repo_mock):
         message_repo_mock.find_by_id.return_value = _mk_text_doc(
@@ -675,7 +650,6 @@ class TestDeleteMessage:
                 message_id="MSG_1", deleter_user_id="U_A", deleter_session_id="WS_A",
             )
 
-
     async def test_raises_when_deleter_not_active_member(
         self, service, message_repo_mock, chat_member_repo_mock,
     ):
@@ -685,7 +659,6 @@ class TestDeleteMessage:
             await service.delete_message(
                 message_id="MSG_1", deleter_user_id="U_A", deleter_session_id="WS_A",
             )
-
 
     async def test_own_message_soft_deleted_and_fanned_out(
         self, service, message_repo_mock, fanout_mock,
@@ -701,7 +674,6 @@ class TestDeleteMessage:
         assert payload["sender_session_id"] == "WS_A"
         assert payload["message_id"] == "MSG_1"
 
-
     async def test_group_creator_can_delete_others(
         self, service, message_repo_mock, chat_room_repo_mock,
     ):
@@ -715,7 +687,6 @@ class TestDeleteMessage:
         )
         message_repo_mock.soft_delete.assert_awaited_once()
 
-
     async def test_non_creator_cannot_delete_others(
         self, service, message_repo_mock, chat_room_repo_mock,
     ):
@@ -728,7 +699,6 @@ class TestDeleteMessage:
                 message_id="MSG_1", deleter_user_id="U_A", deleter_session_id="WS_A",
             )
         message_repo_mock.soft_delete.assert_not_called()
-
 
     async def test_direct_room_creator_cannot_delete_others(
         self, service, message_repo_mock, chat_room_repo_mock,
@@ -760,7 +730,6 @@ class TestDirectBlockCheck:
         )
         return mock
 
-
     @pytest.fixture
     def direct_room_mock(self, chat_room_repo_mock):
         """chat_room_repo.find_by_id 가 DIRECT 방을 반환하도록 override."""
@@ -773,7 +742,6 @@ class TestDirectBlockCheck:
         )
         chat_room_repo_mock.find_by_id.return_value = room
         return room
-
 
     async def test_group_room_skips_block_check(
         self, service, block_repo_mock, redis_mock,
@@ -789,7 +757,6 @@ class TestDirectBlockCheck:
         assert redis_mock.sismember.call_count == 0 or all(
             "room:blocks" not in str(c) for c in redis_mock.sismember.call_args_list
         )
-
 
     async def test_direct_room_miss_through_no_blocks(
         self, service, block_repo_mock, direct_room_mock, redis_mock,
@@ -809,7 +776,6 @@ class TestDirectBlockCheck:
         sadd_calls = [p for p in redis_mock._pipes if p.sadd.called]
         assert sadd_calls, "room:blocks 캐시 채우는 pipeline 호출이 없음"
 
-
     async def test_direct_room_sender_blocked_peer_raises(
         self, service, block_repo_mock, direct_room_mock, redis_mock,
     ):
@@ -826,7 +792,6 @@ class TestDirectBlockCheck:
                 client_msg_id="cm-1", msg_type=MessageType.TEXT, content="hi",
             )
 
-
     async def test_direct_room_peer_blocked_sender_raises(
         self, service, block_repo_mock, direct_room_mock, redis_mock,
     ):
@@ -842,7 +807,6 @@ class TestDirectBlockCheck:
                 sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
                 client_msg_id="cm-1", msg_type=MessageType.TEXT, content="hi",
             )
-
 
     async def test_direct_room_peer_withdrawn_skips_check(
         self, service, block_repo_mock, chat_room_repo_mock,

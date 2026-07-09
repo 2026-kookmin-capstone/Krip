@@ -8,25 +8,19 @@ JWT 전송 채널:
        클라가 `['krip.chat.v1', 'auth.<jwt>']` 형태로 보내면 서버가 `krip.chat.v1` 만 echo
        (`auth.<jwt>` 는 응답 헤더 노출 방지).
 """
-import uuid
-from pydantic import TypeAdapter, ValidationError
-import jwt
-from fastapi import APIRouter, Depends, WebSocket, WebSocketDisconnect
-from dependency_injector.wiring import Provide, inject
 import asyncio
+import uuid
 
-from app.domain.chat.worker.reconcile import recover_unread_for_user
-from app.domain.chat.service.session import SessionService
-from app.domain.chat.service.room import RoomService
-from app.domain.chat.service.message_history import MessageHistoryService
-from app.domain.chat.service.message import MessageService
-from app.domain.chat.service.fanout import FanoutService
-from app.domain.chat.service.exception import ChatRoomNotFoundError, UpstreamError
-from app.domain.chat.schema.ws_event import ClientRequest, ReadOp, RefreshOp, SendOp
-from app.domain.auth.repository.user import UserRepository
-from app.domain.auth.model.user import UserStatus
-from app.core.redis import RedisClient
-from app.core.logger import get_logger
+import jwt
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, WebSocket, WebSocketDisconnect
+from pydantic import TypeAdapter, ValidationError
+
+from app.config.setting import settings
+from app.container import Container
+from app.core.cache.key_category import KeyCategory
+from app.core.cache.redis_cache import get_redis_cache_manager
+from app.core.context import request_id_var
 from app.core.instrumentation import (
     chat_message_send_timer,
     chat_ws_connect_result,
@@ -35,11 +29,18 @@ from app.core.instrumentation import (
     chat_ws_op,
     chat_ws_op_validation_failure,
 )
-from app.core.context import request_id_var
-from app.core.cache.redis_cache import get_redis_cache_manager
-from app.core.cache.key_category import KeyCategory
-from app.container import Container
-from app.config.setting import settings
+from app.core.logger import get_logger
+from app.core.redis import RedisClient
+from app.domain.auth.model.user import UserStatus
+from app.domain.auth.repository.user import UserRepository
+from app.domain.chat.schema.ws_event import ClientRequest, ReadOp, RefreshOp, SendOp
+from app.domain.chat.service.exception import ChatRoomNotFoundError, UpstreamError
+from app.domain.chat.service.fanout import FanoutService
+from app.domain.chat.service.message import MessageService
+from app.domain.chat.service.message_history import MessageHistoryService
+from app.domain.chat.service.room import RoomService
+from app.domain.chat.service.session import SessionService
+from app.domain.chat.worker.reconcile import recover_unread_for_user
 
 
 router = APIRouter()

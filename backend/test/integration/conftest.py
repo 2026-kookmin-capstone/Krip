@@ -10,19 +10,19 @@
     POSTGRES_TEST_URL="postgresql+asyncpg://cho:hyeonsang@localhost:5432/chohyeonsang_test"
 """
 
-from typing import Callable
-from sqlalchemy.pool import NullPool
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-from sqlalchemy import text
-import pytest_asyncio
-import pytest
 import os
+from typing import Callable
 
-from app.domain.auth.model.user_detail_inform import Gender, UserDetailInform
-from app.domain.auth.model.user import User, UserStatus
-from app.database.session import Base, UnitOfWork
+import pytest
+import pytest_asyncio
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.pool import NullPool
+
 import app.database.model  # noqa: F401
 from app.config.oauth import OAuthProvider
+from app.database.session import Base, UnitOfWork
+from app.domain.auth.model.user import User, UserStatus
+from app.domain.auth.model.user_detail_inform import Gender, UserDetailInform
 
 
 def _require_test_db_url() -> str:

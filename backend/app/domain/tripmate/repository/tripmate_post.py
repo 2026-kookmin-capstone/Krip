@@ -1,12 +1,13 @@
 from typing import Optional
-from sqlalchemy.orm import joinedload
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func, or_, case, literal, exists
 
-from app.domain.tripmate.model.tripmate_post_like import TripmatePostLike
-from app.domain.tripmate.model.tripmate_post import TripmatePost
-from app.domain.auth.model.user_detail_inform import UserDetailInform
+from sqlalchemy import case, exists, func, literal, or_, select
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import joinedload
+
 from app.domain.auth.model.user import User
+from app.domain.auth.model.user_detail_inform import UserDetailInform
+from app.domain.tripmate.model.tripmate_post import TripmatePost
+from app.domain.tripmate.model.tripmate_post_like import TripmatePostLike
 from app.util.cursor import decode_cursor, keyset_where
 
 
@@ -18,7 +19,6 @@ class TripmatePostRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-
     # ──────────────────── Create ────────────────────
 
     async def save(self, post: TripmatePost) -> TripmatePost:
@@ -26,13 +26,11 @@ class TripmatePostRepository:
         await self.session.flush()
         return post
 
-
     # ──────────────────── Read (단건) ────────────────────
 
     async def find_by_id(self, post_id: str) -> Optional[TripmatePost]:
         """게시글 단건 조회 (게시글 데이터만, 수정/삭제 시 검증용)"""
         return await self.session.get(TripmatePost, post_id)
-
 
     async def find_by_id_with_detail(self, post_id: str, user_id: Optional[str] = None) -> Optional[TripmatePost]:
         """게시글 단건 조회 (이미지 + 좋아요 수 + is_liked 포함, 상세 조회용임 display 없는 거 주의)"""
@@ -62,7 +60,6 @@ class TripmatePostRepository:
         post.like_count = row[1]
         post.is_liked = bool(row[2])
         return post
-
 
     # ──────────────────── Read (목록 — 커서 기반 페이지네이션) ────────────────────
 
@@ -105,7 +102,6 @@ class TripmatePostRepository:
         result = await self.session.execute(stmt)
         rows = result.unique().all()
         return self._attach_extras(rows)
-
 
     # ──────────────────── Read (검색) ────────────────────
 
@@ -170,19 +166,16 @@ class TripmatePostRepository:
         rows = result.unique().all()
         return self._attach_extras(rows)
 
-
     # ──────────────────── Update ────────────────────
 
     async def update(self, post: TripmatePost) -> TripmatePost:
         await self.session.flush()
         return post
 
-
     # ──────────────────── Delete ────────────────────
 
     async def delete(self, post: TripmatePost) -> None:
         await self.session.delete(post)
-
 
     # ──────────────────── 내부 유틸 ────────────────────
 

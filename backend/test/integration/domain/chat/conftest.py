@@ -13,17 +13,18 @@ SessionService / RoomService 를 조립한다. Redis / Mongo 연결은 다음 �
 기존 ``test_room_flow.py`` / ``test_db_constraints.py`` 는 Redis 를 자체 stub 하므로
 영향이 없다.
 """
-from unittest.mock import AsyncMock, MagicMock
-import redis.asyncio as aioredis
-import pytest_asyncio
-import pytest
 import os
+from unittest.mock import AsyncMock, MagicMock
+
+import pytest
+import pytest_asyncio
+import redis.asyncio as aioredis
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from app.domain.chat.service.session import SessionService
-from app.domain.chat.service.message import MessageService
-from app.domain.chat.model.chat_message import create_indexes as create_chat_message_indexes
 from app.core.chat.lua_script import lua_scripts
+from app.domain.chat.model.chat_message import create_indexes as create_chat_message_indexes
+from app.domain.chat.service.message import MessageService
+from app.domain.chat.service.session import SessionService
 
 
 def _require_env(name: str) -> str:

@@ -12,16 +12,16 @@ startup race 차단: `start_fanout_dispatcher` 는 `pubsub.subscribe` 가 확정
 """
 from __future__ import annotations
 
-from typing import Optional
-import json
 import asyncio
+import json
+from typing import Optional
 
-from app.domain.chat.service.fanout import FanoutService
-from app.core.redis import get_redis_client
-from app.core.logger import get_logger
-from app.core.instrumentation import chat_fanout_dispatch_alive, worker_tick
-from app.core.chat.redis_key import node_channel_key
 from app.config.setting import settings
+from app.core.chat.redis_key import node_channel_key
+from app.core.instrumentation import chat_fanout_dispatch_alive, worker_tick
+from app.core.logger import get_logger
+from app.core.redis import get_redis_client
+from app.domain.chat.service.fanout import FanoutService
 
 
 logger = get_logger("chat.fanout_dispatcher")

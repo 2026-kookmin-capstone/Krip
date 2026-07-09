@@ -16,11 +16,10 @@ run_smoke.sh 가 FastAPI 서버를 띄운 뒤 이 스크립트를 실행한다.
 """
 import asyncio
 import json
+import os
 import sys
 import time
 from datetime import datetime, timedelta, timezone
-
-import os
 
 import httpx
 import jwt
@@ -167,7 +166,7 @@ async def section_direct_ws_send(direct_room_id: str) -> int:
     assert_eq(evt["message"]["server_seq"], server_seq, "server_seq 일치")
     assert_eq(evt["message"]["content"], "smoke 테스트 안녕", "content 일치")
     assert_eq(evt["message"]["sender_id"], USER_A, "sender_id")
-    log("WS", f"    B message.new 수신")
+    log("WS", "    B message.new 수신")
 
     # dedupe
     log("WS", "A → 같은 cmid 재전송 (dedupe)")

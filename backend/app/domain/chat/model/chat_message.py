@@ -13,9 +13,10 @@
         "deleted_at":     datetime | None,
     }
 """
-from pymongo import ASCENDING, DESCENDING
-from motor.motor_asyncio import AsyncIOMotorDatabase
 import enum
+
+from motor.motor_asyncio import AsyncIOMotorDatabase
+from pymongo import ASCENDING, DESCENDING
 
 
 COLLECTION_NAME = "chat_message"

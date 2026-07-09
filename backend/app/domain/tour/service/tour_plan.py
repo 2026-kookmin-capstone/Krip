@@ -1,24 +1,25 @@
-from typing import Optional
-from sqlalchemy.exc import IntegrityError
-from datetime import datetime, timezone
 from collections import defaultdict
+from datetime import datetime, timezone
+from typing import Optional
 
-from app.util.share_token import encode_share_token
-from app.domain.tour.service.exception import TourPlanNotFoundError, TourPlanItemNotFoundError
-from app.domain.tour.repository.tour_plan_item import TourPlanItemRepository
-from app.domain.tour.repository.tour_plan import TourPlanRepository
-from app.domain.tour.repository.place import PlaceRepository
-from app.domain.tour.model.tour_plan_item import TourPlanItem
-from app.domain.tour.model.tour_plan import TourPlan
+from sqlalchemy.exc import IntegrityError
+
+from app.database.session import UnitOfWork, transactional
 from app.domain.tour.dto.tour_plan import (
+    ShareTokenData,
+    TourPlanData,
     TourPlanItemCreateInput,
     TourPlanItemData,
-    TourPlanData,
-    TourPlanSummaryData,
     TourPlanListData,
-    ShareTokenData,
+    TourPlanSummaryData,
 )
-from app.database.session import UnitOfWork, transactional
+from app.domain.tour.model.tour_plan import TourPlan
+from app.domain.tour.model.tour_plan_item import TourPlanItem
+from app.domain.tour.repository.place import PlaceRepository
+from app.domain.tour.repository.tour_plan import TourPlanRepository
+from app.domain.tour.repository.tour_plan_item import TourPlanItemRepository
+from app.domain.tour.service.exception import TourPlanItemNotFoundError, TourPlanNotFoundError
+from app.util.share_token import encode_share_token
 
 
 # 카드 position 의 기본 간격. 큰 값일수록 같은 자리 반복 삽입 시 float 정밀도 여유 ↑
@@ -34,7 +35,6 @@ class TourPlanService:
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
         self.place_repo = PlaceRepository()
-
 
     # ──────────────────── 플랜 생성 ────────────────────
 
@@ -95,7 +95,6 @@ class TourPlanService:
         sorted_items = sorted(plan.items, key=lambda i: (i.day_number, i.position))
         return self._to_plan_dto(plan, sorted_items, place_map)
 
-
     # ──────────────────── 플랜 단건 조회 ────────────────────
 
     @transactional
@@ -116,7 +115,6 @@ class TourPlanService:
 
         return self._to_plan_dto(plan, items, place_map)
 
-
     # ──────────────────── 플랜 목록 조회 ────────────────────
 
     @transactional
@@ -125,7 +123,6 @@ class TourPlanService:
         plan_repo = TourPlanRepository(self._session)
         plans = await plan_repo.find_all_by_user_id(user_id)
         return TourPlanListData(plans=[self._to_summary_dto(p) for p in plans])
-
 
     # ──────────────────── 플랜 메타 수정 ────────────────────
 
@@ -157,7 +154,6 @@ class TourPlanService:
 
         return self._to_summary_dto(plan)
 
-
     # ──────────────────── 플랜 공유 토큰 발급 ────────────────────
 
     @transactional
@@ -179,7 +175,6 @@ class TourPlanService:
 
         token, expires_at = encode_share_token(plan_id)
         return ShareTokenData(share_token=token, expires_at=expires_at)
-
 
     # ──────────────────── 플랜 일차 추가 ────────────────────
 
@@ -206,7 +201,6 @@ class TourPlanService:
         await plan_repo.update(plan)
 
         return self._to_summary_dto(plan)
-
 
     # ──────────────────── 플랜 일차 삭제 ────────────────────
 
@@ -245,7 +239,6 @@ class TourPlanService:
         plan.updated_at = datetime.now(timezone.utc)
         await plan_repo.update(plan)
 
-
     # ──────────────────── 플랜 삭제 ────────────────────
 
     @transactional
@@ -260,7 +253,6 @@ class TourPlanService:
             raise PermissionError("플랜 삭제 권한이 없습니다.")
 
         await plan_repo.delete(plan)
-
 
     # ──────────────────── 카드 추가 ────────────────────
 
@@ -305,7 +297,6 @@ class TourPlanService:
         await plan_repo.update(plan)
 
         return self._to_item_dto(item, raw.get("rating"), raw.get("photos") or [])
-
 
     # ──────────────────── 카드 교체 (PUT) ────────────────────
 
@@ -355,7 +346,6 @@ class TourPlanService:
 
         return self._to_item_dto(item, raw.get("rating"), raw.get("photos") or [])
 
-
     # ──────────────────── 카드 이동 ────────────────────
 
     @transactional
@@ -397,7 +387,6 @@ class TourPlanService:
         plan.updated_at = datetime.now(timezone.utc)
         await plan_repo.update(plan)
 
-
     # ──────────────────── 카드 삭제 ────────────────────
 
     @transactional
@@ -430,7 +419,6 @@ class TourPlanService:
         plan.updated_at = datetime.now(timezone.utc)
         await plan_repo.update(plan)
 
-
     # ──────────────────── position 계산 / 동시성 헬퍼 ────────────────────
 
     @staticmethod
@@ -454,7 +442,6 @@ class TourPlanService:
                 return (it.position + day_items[idx + 1].position) / 2
 
         raise ValueError(f"after_item_id 가 해당 day 에 없습니다: {after_item_id}")
-
 
     async def _insert_item_at_day_end(
         self,
@@ -495,7 +482,6 @@ class TourPlanService:
                     raise ValueError("카드 추가 경합으로 저장에 실패했습니다. 잠시 후 다시 시도해주세요.")
                 # SAVEPOINT 롤백 → 다음 iteration 에서 max position 재조회
 
-
     async def _update_item_position(
         self,
         *,
@@ -530,9 +516,7 @@ class TourPlanService:
                     raise ValueError("카드 이동 경합으로 저장에 실패했습니다. 잠시 후 다시 시도해주세요.")
                 # SAVEPOINT 롤백 → 다음 iteration 에서 day_items 재조회
 
-
     # ──────────────────── 내부 변환 유틸 ────────────────────
-
 
     @staticmethod
     def _to_item_dto(item: TourPlanItem, rating: Optional[float], photos: list[str]) -> TourPlanItemData:
@@ -547,7 +531,6 @@ class TourPlanService:
             rating=rating,
             photos=photos,
         )
-
 
     def _to_plan_dto(
         self,
@@ -571,7 +554,6 @@ class TourPlanService:
             updated_at=plan.updated_at,
             items=item_dtos,
         )
-
 
     @staticmethod
     def _to_summary_dto(plan: TourPlan) -> TourPlanSummaryData:

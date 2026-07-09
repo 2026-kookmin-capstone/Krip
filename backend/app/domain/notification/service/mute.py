@@ -2,15 +2,14 @@
 
 저장 정규화: True 만 row 에 적고, 해제는 NULL 로 되돌린다. 조회·가드도 `is True` 로 일관.
 """
-from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
-from app.domain.auth.repository.user import UserRepository
 from app.database.session import UnitOfWork, transactional
+from app.domain.auth.repository.user import UserRepository
+from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
 
 
 class MuteService:
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
-
 
     @transactional
     async def set_global_mute(self, *, user_id: str, muted: bool) -> None:
@@ -21,7 +20,6 @@ class MuteService:
             raise ValueError("존재하지 않는 유저입니다.")
         user.notification_muted = True if muted else None
         await user_repo.update(user)
-
 
     @transactional
     async def set_room_mute(

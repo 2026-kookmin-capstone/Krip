@@ -9,18 +9,18 @@ ZSET 의 score 가 만료시각이라 `ZREMRANGEBYSCORE -inf <now>` 한 번으�
 """
 import time
 
-from app.util.id_generator import generate_session_id
-from app.domain.chat.service.fanout import FanoutService
-from app.core.redis import get_redis_client
-from app.core.logger import get_logger
+from app.config.setting import settings
 from app.core.chat.redis_key import (
+    MAX_SESSIONS_PER_USER,
+    SESSION_TTL,
     sess_key,
     sessions_key,
     ws_route_key,
-    SESSION_TTL,
-    MAX_SESSIONS_PER_USER,
 )
-from app.config.setting import settings
+from app.core.logger import get_logger
+from app.core.redis import get_redis_client
+from app.domain.chat.service.fanout import FanoutService
+from app.util.id_generator import generate_session_id
 
 
 logger = get_logger("chat.session")
@@ -32,18 +32,15 @@ class SessionService:
     def __init__(self, fanout_service: FanoutService):
         self._fanout = fanout_service
 
-
     @staticmethod
     def _now_ms() -> int:
         return int(time.time() * 1000)
-
 
     @classmethod
     def _expires_ms(cls, now_ms: int | None = None) -> int:
         if now_ms is None:
             now_ms = cls._now_ms()
         return now_ms + SESSION_TTL * 1000
-
 
     async def create_session(self, user_id: str, token_jti: str) -> str:
         """WS 연결 시 호출 — 새 session_id 발급 후 Redis 3키 + 한도 체크."""
@@ -67,7 +64,6 @@ class SessionService:
         await self._enforce_session_limit(user_id)
         return session_id
 
-
     async def heartbeat(self, session_id: str, user_id: str) -> None:
         """ping/pong 시 세 키 TTL 을 pipeline 1번으로 원자 연장.
 
@@ -81,25 +77,21 @@ class SessionService:
         pipe.zadd(sessions_key(user_id), {session_id: new_expires_ms}, xx=True)
         await pipe.execute()
 
-
     async def update_token_jti(self, session_id: str, new_token_jti: str) -> None:
         """JWT refresh 시 token_jti 만 갱신. session_id 는 유지."""
         redis = await get_redis_client()
         await redis.hset(sess_key(session_id), "token_jti", new_token_jti)
-
 
     async def session_exists(self, session_id: str) -> bool:
         """매 op 진입부에서 호출 — False 면 revoke 된 상태 (TTL/DEL/강제 로그아웃 동일)."""
         redis = await get_redis_client()
         return bool(await redis.exists(sess_key(session_id)))
 
-
     async def get_user_id(self, session_id: str) -> str | None:
         """세션의 소유 user_id (없으면 None)."""
         redis = await get_redis_client()
         value = await redis.hget(sess_key(session_id), "user_id")
         return value if value else None
-
 
     async def terminate_session(self, session_id: str, user_id: str) -> None:
         """WS 종료 / 명시 로그아웃 시 Redis 상태 정리.
@@ -112,7 +104,6 @@ class SessionService:
         pipe.delete(ws_route_key(session_id))
         pipe.zrem(sessions_key(user_id), session_id)
         await pipe.execute()
-
 
     async def revoke_all_sessions(self, user_id: str) -> int:
         """유저의 모든 활성 세션 강제 종료 — 회원 탈퇴 등 외부 정책에서 호출.
@@ -141,7 +132,6 @@ class SessionService:
             user_id, len(session_ids),
         )
         return len(session_ids)
-
 
     async def _enforce_session_limit(self, user_id: str) -> None:
         """ZCARD > MAX 면 가장 오래된 세션부터 revoke. 만료분은 ZREMRANGEBYSCORE 로 선청소."""

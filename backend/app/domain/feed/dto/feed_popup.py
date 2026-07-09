@@ -2,11 +2,11 @@
 
 popup 자체는 next_cursor 미제공 — 더보기는 클라가 `GET /feed/users/{user_id}` 로 분기.
 """
-from typing import List, Optional
 from dataclasses import dataclass
+from typing import List, Optional
 
-from app.domain.feed.dto.feed_post import FeedPostData
 from app.domain.auth.model.user_travel_style import TravelStyle
+from app.domain.feed.dto.feed_post import FeedPostData
 
 
 # 인스타 popup 그리드 (3×3).

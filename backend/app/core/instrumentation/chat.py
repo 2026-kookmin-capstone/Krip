@@ -5,6 +5,7 @@
 import time
 from contextlib import asynccontextmanager
 
+from app.config.setting import settings
 from app.core.metric import (
     CHAT_ACTIVE_NODES,
     CHAT_FANOUT_DISPATCH_DURATION,
@@ -22,7 +23,6 @@ from app.core.metric import (
     CHAT_WS_OP_TOTAL,
     WORKER_LAST_TICK_TIMESTAMP,
 )
-from app.config.setting import settings
 
 
 # ────────────────────────────────────────────────────────────────────

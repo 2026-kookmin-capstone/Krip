@@ -17,9 +17,9 @@ unit 으론 잡히지 않는다. friendship OR-조건의 BitmapOr 인덱스 사�
 """
 import pytest
 
-from app.domain.friend.model.friendship import Friendship, FriendshipStatus
-from app.domain.feed.model.feed_post_like import FeedPostLike
 from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
+from app.domain.feed.model.feed_post_like import FeedPostLike
+from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 
 
 pytestmark = pytest.mark.integration
@@ -99,7 +99,6 @@ class TestFeedLikeAggregation:
         result = await profile_service.get_my_stats(me_id)
         assert result.total_feed_likes == 3
 
-
     async def test_does_not_count_likes_on_other_users_posts(
         self, profile_service, seed_users, session_factory,
     ):
@@ -113,7 +112,6 @@ class TestFeedLikeAggregation:
         result = await profile_service.get_my_stats(me_id)
         assert result.total_feed_likes == 0
 
-
     async def test_private_visibility_likes_also_counted(
         self, profile_service, seed_users, session_factory,
     ):
@@ -126,7 +124,6 @@ class TestFeedLikeAggregation:
 
         result = await profile_service.get_my_stats(me_id)
         assert result.total_feed_likes == 1
-
 
     async def test_self_like_on_own_post_counted(
         self, profile_service, seed_users, session_factory,
@@ -158,7 +155,6 @@ class TestFriendshipCount:
         result = await profile_service.get_my_stats(me_id)
         assert result.total_friends == 1
 
-
     async def test_counts_friendship_in_both_directions(
         self, profile_service, seed_users, session_factory,
     ):
@@ -175,7 +171,6 @@ class TestFriendshipCount:
 
         result = await profile_service.get_my_stats(me_id)
         assert result.total_friends == 2
-
 
     async def test_does_not_count_unrelated_friendships(
         self, profile_service, seed_users, session_factory,

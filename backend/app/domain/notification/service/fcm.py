@@ -3,25 +3,26 @@
 채팅 푸시는 fan-out 단위 → 가드/조회/발송/정리를 한 트랜잭션 + 한 multicast 로 묶어 N+1 회피.
 firebase_admin SDK 가 동기라 `asyncio.to_thread` 로 감싸 이벤트 루프 비차단.
 """
-from firebase_admin.exceptions import FirebaseError
-from firebase_admin import messaging
 import asyncio
 
-from app.domain.notification.repository.fcm_token import FcmTokenRepository
-from app.domain.notification.model.fcm_token import FcmToken
-from app.domain.notification.dto.fcm_token import FcmTokenData
-from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
-from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
-from app.domain.auth.repository.user import UserRepository
-from app.database.session import UnitOfWork, transactional
-from app.core.logger import get_logger
+from firebase_admin import messaging
+from firebase_admin.exceptions import FirebaseError
+
+from app.core.fcm import get_fcm_app
 from app.core.instrumentation import (
     fcm_multicast_devices_inc,
     fcm_multicast_timer,
     fcm_send_inc,
     fcm_token_purged_inc,
 )
-from app.core.fcm import get_fcm_app
+from app.core.logger import get_logger
+from app.database.session import UnitOfWork, transactional
+from app.domain.auth.repository.user import UserRepository
+from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
+from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
+from app.domain.notification.dto.fcm_token import FcmTokenData
+from app.domain.notification.model.fcm_token import FcmToken
+from app.domain.notification.repository.fcm_token import FcmTokenRepository
 
 
 logger = get_logger("fcm_service")
@@ -41,7 +42,6 @@ class FcmService:
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
 
-
     @transactional
     async def register_token(self, *, user_id: str, token: str) -> FcmTokenData:
         """디바이스 토큰 등록 — UNIQUE(token) 충돌 시 owner 교체 (재로그인/계정 전환), 동시 등록 race 안전."""
@@ -54,13 +54,11 @@ class FcmService:
         )
         return self._to_dto(saved)
 
-
     @transactional
     async def unregister_token(self, *, user_id: str, token: str) -> None:
         """본인 소유만 삭제 — 없거나 타인 소유면 0 row, 멱등."""
         repo = FcmTokenRepository(self._session)
         await repo.delete_by_user_token(user_id=user_id, token=token)
-
 
     async def send_chat_push(
         self,
@@ -127,7 +125,6 @@ class FcmService:
 
         return success_total
 
-
     @staticmethod
     def _parse_batch(
         chat_room_id: str, tokens: list[str], batch,
@@ -166,7 +163,6 @@ class FcmService:
         )
         return success_count, invalid_tokens
 
-
     @transactional
     async def _collect_push_targets(
         self,
@@ -199,7 +195,6 @@ class FcmService:
         )
         return [r.token for r in rows], final_title
 
-
     @transactional
     async def _purge_invalid_tokens(self, chat_room_id: str, tokens: list[str]) -> None:
         """UnregisteredError(앱 삭제) 토큰 bulk DELETE."""
@@ -210,7 +205,6 @@ class FcmService:
             "FCM 만료 토큰 정리 chat_room_id={} count={}",
             chat_room_id, len(tokens),
         )
-
 
     async def _resolve_sender_display_name(self, sender_id: str) -> str:
         """발신자 user_id → 푸시 title. 실패 시 기본 문구 fallback (이름 조회 실패가 푸시를 막지 않도록)."""
@@ -227,7 +221,6 @@ class FcmService:
         if detail is None or not detail.user_name:
             return _DEFAULT_CHAT_PUSH_TITLE
         return detail.user_name
-
 
     @staticmethod
     def _to_dto(fcm_token: FcmToken) -> FcmTokenData:

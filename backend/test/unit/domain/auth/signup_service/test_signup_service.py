@@ -6,14 +6,14 @@
     - IN_PROGRESS         — user 있고 ACTIVE 인데 detail 없음
     - COMPLETE            — user 있고 ACTIVE 이고 detail 있음
 """
+import pytest
+
+from app.domain.auth.dto.signup import SignupStatus
+from app.domain.auth.model.user import UserStatus
 from test.unit.domain.auth.signup_service.model_factory import (
     UserDetailInformFactory,
     UserFactory,
 )
-import pytest
-
-from app.domain.auth.model.user import UserStatus
-from app.domain.auth.dto.signup import SignupStatus
 
 
 @pytest.mark.unit
@@ -35,7 +35,6 @@ class TestCheckAndRegister:
         user_repo_mock.save.assert_awaited_once()
         detail_repo_mock.find_by_user_id.assert_not_awaited()
 
-
     async def test_concurrent_first_signup_recovers_via_refind(
         self, service, user_repo_mock, detail_repo_mock,
     ):
@@ -55,7 +54,6 @@ class TestCheckAndRegister:
         assert result.status == SignupStatus.IN_PROGRESS
         assert result.user_id == "USER_x"
 
-
     async def test_returns_pending_when_user_inactive(
         self, service, user_repo_mock, detail_repo_mock,
     ):
@@ -73,7 +71,6 @@ class TestCheckAndRegister:
         detail_repo_mock.find_by_user_id.assert_not_awaited()
         user_repo_mock.save.assert_not_awaited()
 
-
     async def test_returns_in_progress_when_detail_missing(
         self, service, user_repo_mock, detail_repo_mock,
     ):
@@ -89,7 +86,6 @@ class TestCheckAndRegister:
         assert result.status == SignupStatus.IN_PROGRESS
         assert result.user_id == "USER_a"
         user_repo_mock.save.assert_not_awaited()
-
 
     async def test_returns_complete_when_detail_exists(
         self, service, user_repo_mock, detail_repo_mock,
@@ -108,7 +104,6 @@ class TestCheckAndRegister:
         assert result.status == SignupStatus.COMPLETE
         assert result.user_id == "USER_a"
         user_repo_mock.save.assert_not_awaited()
-
 
     async def test_existing_active_user_does_not_save(
         self, service, user_repo_mock,

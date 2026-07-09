@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.domain.auth.router import login, app_login, register, logout, profile, withdraw
+from app.domain.auth.router import app_login, login, logout, profile, register, withdraw
 
 
 auth_router = APIRouter(prefix="/auth")

@@ -1,15 +1,17 @@
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Request, Depends, Query
-from dependency_injector.wiring import Provide, inject
 
-from app.schema.common import MessageResponse
-from app.domain.friend.service.user_block import UserBlockService
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
+
+from app.container import Container
+from app.domain.friend.schema.friendship import FriendPeerResponse
 from app.domain.friend.schema.user_block import (
     BlockUserBody,
-    UserBlockResponse, UserBlockListResponse,
+    UserBlockListResponse,
+    UserBlockResponse,
 )
-from app.domain.friend.schema.friendship import FriendPeerResponse
-from app.container import Container
+from app.domain.friend.service.user_block import UserBlockService
+from app.schema.common import MessageResponse
 
 
 router = APIRouter(prefix="/blocks", tags=["유저 차단"])

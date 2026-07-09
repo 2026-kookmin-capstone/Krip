@@ -1,8 +1,8 @@
 from typing import List, TypedDict
 
 from app.core.ai.tour_planner.v1.chain_builder import (
-    TourRecommendationResult,
     TourPlanResult,
+    TourRecommendationResult,
 )
 
 

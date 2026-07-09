@@ -1,9 +1,9 @@
-from typing import Optional
 import json
 from functools import lru_cache
+from typing import Optional
 
-from app.core.redis import get_redis_client, RedisClient
 from app.core.logger import get_logger
+from app.core.redis import RedisClient, get_redis_client
 
 
 logger = get_logger("core.cache.category")
@@ -15,11 +15,9 @@ class RedisCacheManager:
     def __init__(self):
         self._redis_client = None
 
-
     async def _ensure_redis_client(self):
         if not self._redis_client:
             self._redis_client = await get_redis_client()
-
 
     async def get_category(self, REDIS_KEY: str) -> Optional[dict]:
         try:
@@ -33,7 +31,6 @@ class RedisCacheManager:
             logger.error("카테고리 캐시 조회 실패: {}", e)
             return None
 
-
     async def set_category(self, data: dict, REDIS_KEY: str) -> None:
         try:
             await self._ensure_redis_client()
@@ -46,7 +43,6 @@ class RedisCacheManager:
         except Exception as e:
             logger.error("카테고리 캐시 저장 실패: {}", e)
 
-
     async def invalidate(self, REDIS_KEY: str) -> None:
         try:
             await self._ensure_redis_client()
@@ -54,7 +50,6 @@ class RedisCacheManager:
             logger.info("카테고리 캐시 무효화 완료")
         except Exception as e:
             logger.error("카테고리 캐시 무효화 실패: {}", e)
-
 
     async def exists(self, key: str) -> bool:
         """키 존재 여부 확인"""
@@ -64,7 +59,6 @@ class RedisCacheManager:
         except Exception as e:
             logger.error("캐시 존재 여부 확인 실패: {}", e)
             return False
-
 
     async def set_flag(self, key: str, ttl: int) -> None:
         """단순 플래그 값 캐싱"""

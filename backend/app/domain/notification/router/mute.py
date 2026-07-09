@@ -1,10 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException, Request
 from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Request
 
-from app.schema.common import MessageResponse
-from app.domain.notification.service.mute import MuteService
-from app.domain.notification.schema.mute import MuteToggleBody
 from app.container import Container
+from app.domain.notification.schema.mute import MuteToggleBody
+from app.domain.notification.service.mute import MuteService
+from app.schema.common import MessageResponse
 
 
 router = APIRouter(prefix="/mute", tags=["알림 차단"])

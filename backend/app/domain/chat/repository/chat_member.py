@@ -1,16 +1,16 @@
 from typing import Optional
-from sqlalchemy.orm import joinedload
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import func, select, update
 
-from app.domain.chat.model.chat_room_member import ChatRoomMember
+from sqlalchemy import func, select, update
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import joinedload
+
 from app.domain.auth.model.user import User
+from app.domain.chat.model.chat_room_member import ChatRoomMember
 
 
 class ChatRoomMemberRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
-
 
     # ──────────────────── Create ────────────────────
 
@@ -19,13 +19,11 @@ class ChatRoomMemberRepository:
         await self.session.flush()
         return member
 
-
     async def save_all(self, members: list[ChatRoomMember]) -> list[ChatRoomMember]:
         """방 생성 직후 creator + 초대 멤버 일괄 등록."""
         self.session.add_all(members)
         await self.session.flush()
         return members
-
 
     # ──────────────────── Read (단건) ────────────────────
 
@@ -36,7 +34,6 @@ class ChatRoomMemberRepository:
     ) -> Optional[ChatRoomMember]:
         """복합 PK 단건 조회 (is_left 여부 무관)."""
         return await self.session.get(ChatRoomMember, (chat_room_id, user_id))
-
 
     # ──────────────────── Read (목록) ────────────────────
 
@@ -55,7 +52,6 @@ class ChatRoomMemberRepository:
         result = await self.session.execute(stmt)
         return list(result.unique().scalars().all())
 
-
     async def find_active_member_ids(self, chat_room_id: str) -> list[str]:
         """방의 활성 멤버 user_id 목록 — `room:members:{R}` 캐시 miss 시 일괄 로드용."""
         stmt = select(ChatRoomMember.user_id).where(
@@ -64,7 +60,6 @@ class ChatRoomMemberRepository:
         )
         result = await self.session.execute(stmt)
         return list(result.scalars().all())
-
 
     async def is_active_member(self, chat_room_id: str, user_id: str) -> bool:
         """활성 멤버 여부 (is_left=false). 권한 체크용."""
@@ -75,7 +70,6 @@ class ChatRoomMemberRepository:
         )
         result = await self.session.execute(stmt)
         return result.scalar_one_or_none() is not None
-
 
     async def find_pushable_user_ids_in_room(
         self, chat_room_id: str, user_ids: list[str],
@@ -92,7 +86,6 @@ class ChatRoomMemberRepository:
         result = await self.session.execute(stmt)
         return set(result.scalars().all())
 
-
     async def find_user_room_ids(self, user_id: str) -> list[str]:
         """유저가 속한 활성 방 ID. WS 연결 시 초기 구독용."""
         stmt = select(ChatRoomMember.chat_room_id).where(
@@ -101,7 +94,6 @@ class ChatRoomMemberRepository:
         )
         result = await self.session.execute(stmt)
         return list(result.scalars().all())
-
 
     async def find_last_read_seqs(
         self,
@@ -129,13 +121,11 @@ class ChatRoomMemberRepository:
         result = await self.session.execute(stmt)
         return {row[0]: int(row[1] or 0) for row in result.all()}
 
-
     # ──────────────────── Update ────────────────────
 
     async def update(self, member: ChatRoomMember) -> ChatRoomMember:
         await self.session.flush()
         return member
-
 
     async def mark_read(
         self, chat_room_id: str, user_id: str, new_seq: int,
@@ -165,7 +155,6 @@ class ChatRoomMemberRepository:
         )
         result = await self.session.execute(stmt)
         return result.scalar_one_or_none()
-
 
     async def count_readers_up_to(
         self,

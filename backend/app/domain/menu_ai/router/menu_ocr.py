@@ -1,18 +1,21 @@
 from typing import List
-from fastapi import APIRouter, HTTPException, Request, Depends, UploadFile, File
-from dependency_injector.wiring import Provide, inject
 
-from app.domain.menu_ai.service.menu_ocr import MenuOcrService
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, File, HTTPException, Request, UploadFile
+
+from app.container import Container
+from app.core.logger import get_logger
+from app.domain.menu_ai.schema.menu_ocr import (
+    MenuOcrBatchResponse,
+    MenuOcrResponse,
+    MenuResponse,
+)
 from app.domain.menu_ai.service.exception import (
     MenuOcrCredentialExpiredError,
     MenuOcrQuotaExceededError,
     MenuOcrVendorError,
 )
-from app.domain.menu_ai.schema.menu_ocr import (
-    MenuResponse, MenuOcrResponse, MenuOcrBatchResponse,
-)
-from app.core.logger import get_logger
-from app.container import Container
+from app.domain.menu_ai.service.menu_ocr import MenuOcrService
 from app.util.upload import read_upload_capped
 
 

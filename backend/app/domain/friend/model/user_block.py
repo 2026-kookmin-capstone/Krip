@@ -1,9 +1,9 @@
-from sqlalchemy.sql import func
+from sqlalchemy import CheckConstraint, Column, DateTime, ForeignKey, Index, String, UniqueConstraint
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, String, DateTime, ForeignKey, UniqueConstraint, Index, CheckConstraint
+from sqlalchemy.sql import func
 
-from app.util.id_generator import generate_user_block_id
 from app.database.session import Base
+from app.util.id_generator import generate_user_block_id
 
 
 class UserBlock(Base):

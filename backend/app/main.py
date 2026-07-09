@@ -1,53 +1,54 @@
-import uvicorn
-import random
-from prometheus_client import start_http_server
 import os
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI
+import random
 from contextlib import asynccontextmanager
 
-from app.middleware.tracking import (
-    RequestIDMiddleware,
-    ErrorTrackingMiddleware,
-    SecurityHeadersMiddleware,
-)
-from app.middleware.auth import BearerTokenMiddleware, LoginAuthMiddleware, RegisterCheckMiddleware
-from app.domain.chat.worker.reconcile import (
-    start_reconcile_scheduler,
-    stop_reconcile_scheduler,
-)
-from app.domain.chat.worker.node_registry import (
-    start_node_registry,
-    stop_node_registry,
-)
-from app.domain.chat.worker.fanout_dispatcher import (
-    start_fanout_dispatcher,
-    stop_fanout_dispatcher,
-)
-from app.domain.auth.worker.withdraw_purge import (
-    start_withdraw_purge_scheduler,
-    stop_withdraw_purge_scheduler,
-)
-from app.database.session import init_mongodb, close_mongodb
-import app.database.model # Relation Lazy Load 문제 해결하기 위한 import!
-from app.core.redis import get_redis_client, get_redis_dedupe_client, close_redis
-from app.core.metric import build_instrumentator
-from app.core.logger import setup_logging, get_logger
+import uvicorn
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from prometheus_client import start_http_server
+
+import app.database.model  # Relation Lazy Load 문제 해결하기 위한 import!
+from app.api.v1.health import router as health_router
+from app.api.v1.router import api_router
+from app.config.setting import settings
+from app.container import Container
+from app.core.ai.menu_ocr.load import MenuOcr
+from app.core.ai.papago_translator.load import PapagoTranslator
+from app.core.ai.tour_planner.load import TourPlanner
+from app.core.chat.lua_script import lua_scripts
+from app.core.fcm import close_fcm, init_fcm
 from app.core.instrumentation import (
     attach_db_instrumentation,
     prime_worker_gauges,
     start_event_loop_monitor,
     stop_event_loop_monitor,
 )
-from app.core.fcm import init_fcm, close_fcm
-from app.core.chat.lua_script import lua_scripts
-from app.core.ai.tour_planner.load import TourPlanner
-from app.core.ai.papago_translator.load import PapagoTranslator
-from app.core.ai.menu_ocr.load import MenuOcr
-from app.container import Container
-from app.config.setting import settings
-from app.api.v1.router import api_router
-from app.api.v1.health import router as health_router
+from app.core.logger import get_logger, setup_logging
+from app.core.metric import build_instrumentator
+from app.core.redis import close_redis, get_redis_client, get_redis_dedupe_client
+from app.database.session import close_mongodb, init_mongodb
+from app.domain.auth.worker.withdraw_purge import (
+    start_withdraw_purge_scheduler,
+    stop_withdraw_purge_scheduler,
+)
+from app.domain.chat.worker.fanout_dispatcher import (
+    start_fanout_dispatcher,
+    stop_fanout_dispatcher,
+)
+from app.domain.chat.worker.node_registry import (
+    start_node_registry,
+    stop_node_registry,
+)
+from app.domain.chat.worker.reconcile import (
+    start_reconcile_scheduler,
+    stop_reconcile_scheduler,
+)
+from app.middleware.auth import BearerTokenMiddleware, LoginAuthMiddleware, RegisterCheckMiddleware
+from app.middleware.tracking import (
+    ErrorTrackingMiddleware,
+    RequestIDMiddleware,
+    SecurityHeadersMiddleware,
+)
 
 
 logger = get_logger("main")
@@ -168,7 +169,6 @@ def create_app() -> FastAPI:
         "app.domain.feed.router.feed_post_comment",
         "app.domain.feed.router.feed_popup",
     ])
-
 
     # PROD 에서는 Swagger / ReDoc / OpenAPI 스키마를 모두 비활성화하여 API 명세 노출을 차단.
     # docs_url=None 이면 FastAPI 가 해당 라우트를 등록하지 않아 404 반환된다.

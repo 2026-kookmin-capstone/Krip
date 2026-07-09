@@ -1,15 +1,20 @@
-from typing import Any, Dict, List, Optional, Tuple
-import time
-import math
-from langgraph.graph import StateGraph, START, END
-from langchain_core.exceptions import OutputParserException
-from pydantic import ValidationError as PydanticValidationError
-from functools import lru_cache
 import asyncio
+import math
+import time
+from functools import lru_cache
+from typing import Any, Dict, List, Optional, Tuple
 
-from app.domain.tour.repository.place import PlaceRepository
-from app.core.logger import get_logger
-from app.core.ai.tour_planner.v2.prompt_manager import CLUSTER_COORDINATES
+from langchain_core.exceptions import OutputParserException
+from langgraph.graph import END, START, StateGraph
+from pydantic import ValidationError as PydanticValidationError
+
+from app.core.ai.tour_planner.v2.category import (
+    GROUP_OTHER,
+    GROUPS,
+    classify,
+    compute_caps,
+)
+from app.core.ai.tour_planner.v2.chain_builder import get_tour_planner_chain_builder
 from app.core.ai.tour_planner.v2.data_state import (
     FoodPreference,
     TourBudgetItem,
@@ -18,18 +23,14 @@ from app.core.ai.tour_planner.v2.data_state import (
     TourMovementHop,
     TourPlaceDetail,
     TourPlanLocation,
-    TourPlanResult,
     TourPlannerGraphState,
     TourPlannerOutputError,
+    TourPlanResult,
     TourTimelineSlot,
 )
-from app.core.ai.tour_planner.v2.chain_builder import get_tour_planner_chain_builder
-from app.core.ai.tour_planner.v2.category import (
-    GROUP_OTHER,
-    GROUPS,
-    classify,
-    compute_caps,
-)
+from app.core.ai.tour_planner.v2.prompt_manager import CLUSTER_COORDINATES
+from app.core.logger import get_logger
+from app.domain.tour.repository.place import PlaceRepository
 
 
 logger = get_logger("Tour Planner v2 Graph Orchestrator")
@@ -54,20 +55,16 @@ class TourPlannerGraphOrchestrator:
     후보 풀은 6개 카테고리 그룹으로 분류해 균형 분배한다.
     """
 
-
     def __init__(self):
         self._chain_manager = get_tour_planner_chain_builder()
         self._place_repo = PlaceRepository()
         self._graph: Any = None
 
-
     async def initialize(self) -> None:
         self._chain_manager.build_all_chains()
         self._build_graph()
 
-
     # ──────────────────── 노드 ────────────────────
-
 
     async def _load_fixed_places(self, state: TourPlannerGraphState) -> Dict[str, Any]:
         """일자별 추가 장소 place_id를 DB에서 병렬 조회한다.
@@ -99,7 +96,6 @@ class TourPlannerGraphOrchestrator:
         )
 
         return {"fixed_places": fixed_places}
-
 
     async def _search_places(self, state: TourPlannerGraphState) -> Dict[str, Any]:
         """출발/도착/추가 장소 좌표 기반 검색 + 카테고리 그룹 균형 분배.
@@ -151,7 +147,6 @@ class TourPlannerGraphOrchestrator:
             )
 
         return {"candidate_places": candidate_places}
-
 
     async def _build_day_plan(self, state: TourPlannerGraphState) -> Dict[str, Any]:
         """일자별로 LLM을 순차 호출하여 상세 플랜을 만든다.
@@ -225,9 +220,7 @@ class TourPlannerGraphOrchestrator:
 
         return {"tour_plan": TourPlanResult(tour_plan=day_plans)}
 
-
     # ──────────────────── 후보 풀 빌드 헬퍼 ────────────────────
-
 
     @staticmethod
     def _build_search_points(
@@ -258,7 +251,6 @@ class TourPlannerGraphOrchestrator:
                 seen.add(key)
                 unique.append((lat, lng))
         return unique
-
 
     @staticmethod
     def _build_balanced_pool(
@@ -305,9 +297,7 @@ class TourPlannerGraphOrchestrator:
 
         return pool
 
-
     # ──────────────────── 후처리 검증 ────────────────────
-
 
     @staticmethod
     def _enforce_constraints(
@@ -494,9 +484,7 @@ class TourPlannerGraphOrchestrator:
             summary=day_plan.summary,
         )
 
-
     # ──────────────────── 그래프 빌드 ────────────────────
-
 
     def _build_graph(self) -> None:
         graph_builder = StateGraph(TourPlannerGraphState)
@@ -512,13 +500,10 @@ class TourPlannerGraphOrchestrator:
 
         self._graph = graph_builder.compile()
 
-
     def get_graph(self) -> Any:
         return self._graph
 
-
     # ──────────────────── 실행 ────────────────────
-
 
     async def ainvoke(
         self,
@@ -547,9 +532,7 @@ class TourPlannerGraphOrchestrator:
 
         return response["tour_plan"]
 
-
     # ──────────────────── movements fallback 헬퍼 ────────────────────
-
 
     @staticmethod
     def _build_fallback_movements(
@@ -596,7 +579,6 @@ class TourPlannerGraphOrchestrator:
             )
         return movements
 
-
     @staticmethod
     def _describe_movement(distance_m: float) -> str:
         """거리(미터)를 사용자에게 보여줄 영문 method 텍스트로 변환.
@@ -614,7 +596,6 @@ class TourPlannerGraphOrchestrator:
         km = max(1, round(distance_m / 1000))
         return f"Subway / bus (~{km} km)"
 
-
     @staticmethod
     def _haversine_m(lat1: float, lng1: float, lat2: float, lng2: float) -> float:
         """두 좌표 간 구면 거리 (m)."""
@@ -625,9 +606,7 @@ class TourPlannerGraphOrchestrator:
         a = math.sin(dp / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2
         return 2 * R * math.asin(math.sqrt(a))
 
-
     # ──────────────────── 시각 보간 헬퍼 ────────────────────
-
 
     @staticmethod
     def _interpolate_time(
@@ -656,9 +635,7 @@ class TourPlannerGraphOrchestrator:
             return fmt(n - 60)
         return default
 
-
     # ──────────────────── 포맷팅 유틸 ────────────────────
-
 
     @staticmethod
     def _format_additional_block(fixed_place: Optional[dict]) -> str:
@@ -682,7 +659,6 @@ class TourPlannerGraphOrchestrator:
         if summary:
             lines.append(f"- summary: {summary}")
         return "\n".join(lines)
-
 
     @staticmethod
     def _format_candidates_block(places: List[dict]) -> str:

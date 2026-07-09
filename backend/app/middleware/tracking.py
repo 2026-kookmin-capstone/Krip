@@ -1,13 +1,14 @@
+import time
 import uuid
 from typing import Callable, Optional
-import time
-from starlette.types import ASGIApp
-from starlette.middleware.base import BaseHTTPMiddleware
-from fastapi import Request, Response
 
-from app.core.logger import get_logger
-from app.core.instrumentation import db_route_for_path
+from fastapi import Request, Response
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.types import ASGIApp
+
 from app.core.context import db_route_var, request_id_var
+from app.core.instrumentation import db_route_for_path
+from app.core.logger import get_logger
 
 
 class RequestIDMiddleware(BaseHTTPMiddleware):
@@ -24,12 +25,10 @@ class RequestIDMiddleware(BaseHTTPMiddleware):
         self.generator = generator or self._default_generator
         self.logger = get_logger("middleware.request_tracking")
 
-
     @staticmethod
     def _default_generator() -> str:
         """기본 요청 ID 생성기"""
         return str(uuid.uuid4())
-
 
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
         request_id = request.headers.get(self.header_name) or self.generator()
@@ -64,7 +63,6 @@ class ErrorTrackingMiddleware(BaseHTTPMiddleware):
     def __init__(self, app: ASGIApp) -> None:
         super().__init__(app)
         self.logger = get_logger("middleware.error_tracking")
-
 
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
         start_time = time.perf_counter()

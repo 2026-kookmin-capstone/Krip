@@ -3,9 +3,9 @@
 `FavoritePlace` 는 RDB row — service 가 `favorite_id`, `created_at`, `place_id`, `user_id`
 attribute 만 접근. SimpleNamespace 로 minimal stub.
 """
-from typing import Optional
-from types import SimpleNamespace
 from datetime import datetime, timezone
+from types import SimpleNamespace
+from typing import Optional
 
 
 class FavoritePlaceFactory:
@@ -27,7 +27,6 @@ class FavoritePlaceFactory:
             place_id=place_id,
             created_at=created_at or datetime.now(timezone.utc),
         )
-
 
     @classmethod
     def reset_counter(cls) -> None:

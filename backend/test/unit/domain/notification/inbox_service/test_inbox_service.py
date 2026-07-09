@@ -11,20 +11,20 @@
 
 InboxRepository 는 mock 이라 mongo 비접근.
 """
-from unittest.mock import call
-from test.unit.domain.notification.inbox_service.model_factory import (
-    InboxItemFactory,
-)
-import pytest
-from pymongo.errors import DuplicateKeyError
 from datetime import datetime, timedelta, timezone
-from beanie import PydanticObjectId
 
-from app.domain.notification.service.exception import InboxItemNotFoundError
+import pytest
+from beanie import PydanticObjectId
+from pymongo.errors import DuplicateKeyError
+
 from app.domain.notification.model.inbox import (
     InboxItem,
     InboxItemType,
     TargetType,
+)
+from app.domain.notification.service.exception import InboxItemNotFoundError
+from test.unit.domain.notification.inbox_service.model_factory import (
+    InboxItemFactory,
 )
 
 
@@ -48,7 +48,6 @@ class TestNotifyFeedLike:
         )
 
         inbox_repo_mock.insert.assert_not_awaited()
-
 
     async def test_inserts_with_snapshot_when_recipient_differs(
         self, service, inbox_repo_mock,
@@ -75,7 +74,6 @@ class TestNotifyFeedLike:
         assert item.actor_profile_image_url == "https://img/p.jpg"
         assert item.target_preview == "https://img/thumb.jpg"
 
-
     async def test_duplicate_key_error_is_swallowed(
         self, service, inbox_repo_mock,
     ):
@@ -93,7 +91,6 @@ class TestNotifyFeedLike:
         )
 
         inbox_repo_mock.insert.assert_awaited_once()
-
 
     async def test_general_exception_is_swallowed(
         self, service, inbox_repo_mock,
@@ -134,7 +131,6 @@ class TestNotifyFeedComment:
 
         inbox_repo_mock.insert.assert_not_awaited()
 
-
     async def test_inserts_with_comment_id_and_preview(
         self, service, inbox_repo_mock,
     ):
@@ -153,7 +149,6 @@ class TestNotifyFeedComment:
         assert item.type == InboxItemType.FEED_COMMENT
         assert item.comment_id == "CMT_1"
         assert item.comment_preview == "좋은 글이네요"
-
 
     async def test_long_content_truncated_with_ellipsis(
         self, service, inbox_repo_mock,
@@ -175,7 +170,6 @@ class TestNotifyFeedComment:
         item: InboxItem = inbox_repo_mock.insert.await_args.args[0]
         assert len(item.comment_preview) == 101  # 100 + "…"
         assert item.comment_preview.endswith("…")
-
 
     async def test_short_content_kept_as_is(self, service, inbox_repo_mock):
         """100자 이하 본문은 ellipsis 없이 그대로."""
@@ -215,7 +209,6 @@ class TestNotifyTripmateLike:
 
         inbox_repo_mock.insert.assert_not_awaited()
 
-
     async def test_inserts_with_tripmate_target_type(
         self, service, inbox_repo_mock,
     ):
@@ -253,7 +246,6 @@ class TestListItems:
         assert result.items == []
         assert result.next_cursor is None
 
-
     async def test_no_next_cursor_when_under_page_size(
         self, service, inbox_repo_mock,
     ):
@@ -266,7 +258,6 @@ class TestListItems:
 
         assert len(result.items) == 5
         assert result.next_cursor is None
-
 
     async def test_next_cursor_is_last_item_iso_when_has_more(
         self, service, inbox_repo_mock,
@@ -286,14 +277,12 @@ class TestListItems:
         # 잘린 후 마지막 (인덱스 19) 의 created_at
         assert result.next_cursor == items[19].created_at.isoformat()
 
-
     async def test_invalid_cursor_format_raises_value_error(self, service):
         """클라가 ISO 가 아닌 cursor 보내면 router 가 400 매핑하도록 ValueError."""
         with pytest.raises(ValueError, match="cursor"):
             await service.list_items(
                 recipient_id="USER_a", cursor="not-an-iso",
             )
-
 
     async def test_naive_cursor_boosted_to_utc(
         self, service, inbox_repo_mock,
@@ -309,7 +298,6 @@ class TestListItems:
         assert cursor_dt.tzinfo is not None
         assert cursor_dt.utcoffset() == timedelta(0)
 
-
     async def test_aware_cursor_passes_through(
         self, service, inbox_repo_mock,
     ):
@@ -323,7 +311,6 @@ class TestListItems:
         assert cursor_dt.tzinfo is not None
         assert cursor_dt.utcoffset() == timedelta(hours=9)
 
-
     async def test_mark_as_read_true_calls_mark_all_read(
         self, service, inbox_repo_mock,
     ):
@@ -334,7 +321,6 @@ class TestListItems:
 
         inbox_repo_mock.mark_all_read.assert_awaited_once_with("USER_a")
 
-
     async def test_mark_as_read_false_does_not_call_mark_all_read(
         self, service, inbox_repo_mock,
     ):
@@ -344,7 +330,6 @@ class TestListItems:
         await service.list_items(recipient_id="USER_a", mark_as_read=False)
 
         inbox_repo_mock.mark_all_read.assert_not_awaited()
-
 
     async def test_mark_all_read_failure_swallowed(
         self, service, inbox_repo_mock,
@@ -361,7 +346,6 @@ class TestListItems:
         )
 
         assert len(result.items) == 1
-
 
     async def test_response_is_read_reflects_pre_mark_state(
         self, service, inbox_repo_mock,
@@ -398,7 +382,6 @@ class TestCountUnread:
 
         assert result == 42
 
-
     async def test_capped_at_999(self, service, inbox_repo_mock):
         """repo 가 cap+1 = 1000 반환해도 service 는 999 로 클립 (999+ 표시용)."""
         inbox_repo_mock.count_unread.return_value = 1000
@@ -429,14 +412,12 @@ class TestHideItem:
 
         inbox_repo_mock.hide.assert_awaited_once_with(oid, "USER_a")
 
-
     async def test_invalid_objectid_format_raises_not_found(self, service):
         """잘못된 형식의 id → NotFound (정보 누출 회피)."""
         with pytest.raises(InboxItemNotFoundError, match="존재하지 않는"):
             await service.hide_item(
                 recipient_id="USER_a", inbox_item_id="not-an-objectid",
             )
-
 
     async def test_other_user_or_missing_raises_not_found(
         self, service, inbox_repo_mock,
@@ -471,7 +452,6 @@ class TestCascadeUserWithdrawn:
 
         assert deleted == 7
         inbox_repo_mock.delete_by_user.assert_awaited_once_with("USER_x")
-
 
     async def test_failure_swallowed_returns_zero(
         self, service, inbox_repo_mock,

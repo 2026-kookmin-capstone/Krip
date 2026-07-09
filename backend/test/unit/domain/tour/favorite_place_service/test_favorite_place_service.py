@@ -5,9 +5,10 @@
     - `remove_favorite`: 존재 가드 → DELETE
     - `get_favorites`: RDB 즐겨찾기 + Mongo 장소 batch + 순서 유지 + Mongo 결손 row skip
 """
-from test.unit.domain.tour.place_service.model_factory import PlaceRawFactory
-from test.unit.domain.tour.favorite_place_service.model_factory import FavoritePlaceFactory
 import pytest
+
+from test.unit.domain.tour.favorite_place_service.model_factory import FavoritePlaceFactory
+from test.unit.domain.tour.place_service.model_factory import PlaceRawFactory
 
 
 # ──────────────────────────────────────────────────────────────────
@@ -33,7 +34,6 @@ class TestAddFavorite:
         assert saved.user_id == "USER_a"
         assert saved.place_id == "PLACE_x"
 
-
     async def test_raises_when_place_not_found(
         self, service, place_repo_mock, fav_repo_mock,
     ):
@@ -43,7 +43,6 @@ class TestAddFavorite:
             await service.add_favorite(user_id="USER_a", place_id="PLACE_x")
 
         fav_repo_mock.save.assert_not_awaited()
-
 
     async def test_raises_when_already_favorited(
         self, service, place_repo_mock, fav_repo_mock,
@@ -55,7 +54,6 @@ class TestAddFavorite:
             await service.add_favorite(user_id="USER_a", place_id="PLACE_x")
 
         fav_repo_mock.save.assert_not_awaited()
-
 
     async def test_concurrent_insert_race_maps_to_value_error(
         self, service, place_repo_mock, fav_repo_mock,
@@ -88,7 +86,6 @@ class TestRemoveFavorite:
             "USER_a", "PLACE_x",
         )
 
-
     async def test_raises_when_not_favorited(self, service, fav_repo_mock):
         fav_repo_mock.find_by_user_and_place.return_value = None
 
@@ -118,7 +115,6 @@ class TestGetFavorites:
         # 빈 결과 → Mongo 조회 skip
         place_repo_mock.find_by_place_ids.assert_not_awaited()
 
-
     async def test_preserves_favorite_order(
         self, service, fav_repo_mock, place_repo_mock,
     ):
@@ -141,7 +137,6 @@ class TestGetFavorites:
         assert [f.favorite_id for f in result.favorites] == ["FAV_1", "FAV_2", "FAV_3"]
         assert [f.place.place_id for f in result.favorites] == ["P_1", "P_2", "P_3"]
         assert result.total_count == 3
-
 
     async def test_skips_favorite_when_place_missing_in_mongo(
         self, service, fav_repo_mock, place_repo_mock,

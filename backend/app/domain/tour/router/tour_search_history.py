@@ -1,14 +1,14 @@
-from typing import Optional
-from fastapi import APIRouter, Request, Depends, Query
 from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, Query, Request
 
-from app.schema.common import MessageResponse
-from app.domain.tour.service.tour_search_history import TourSearchHistoryService
-from app.domain.tour.schema.tour_search_history import (
-    TourSearchHistoryResponse, TourSearchHistoryListResponse,
-)
-from app.core.logger import get_logger
 from app.container import Container
+from app.core.logger import get_logger
+from app.domain.tour.schema.tour_search_history import (
+    TourSearchHistoryListResponse,
+    TourSearchHistoryResponse,
+)
+from app.domain.tour.service.tour_search_history import TourSearchHistoryService
+from app.schema.common import MessageResponse
 
 
 router = APIRouter(prefix="/search-history", tags=["관광 장소 검색 기록"])

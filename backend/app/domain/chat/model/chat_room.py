@@ -1,13 +1,22 @@
-from sqlalchemy.sql import func
-from sqlalchemy.orm import relationship
-from sqlalchemy import (
-    Column, String, DateTime, BigInteger, Enum, ForeignKey, Index,
-    CheckConstraint, Computed, literal_column,
-)
 import enum
 
-from app.util.id_generator import generate_chat_room_id
+from sqlalchemy import (
+    BigInteger,
+    CheckConstraint,
+    Column,
+    Computed,
+    DateTime,
+    Enum,
+    ForeignKey,
+    Index,
+    String,
+    literal_column,
+)
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
+
 from app.database.session import Base
+from app.util.id_generator import generate_chat_room_id
 
 
 class ChatRoomType(str, enum.Enum):

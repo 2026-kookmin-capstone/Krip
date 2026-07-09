@@ -19,8 +19,8 @@ user_block 테이블과 정확히 결합하는지 검증. fan-out 측면은 Phas
 """
 import pytest
 
-from app.domain.feed.service.exception import FeedBlockedError, FeedNotFoundError
 from app.domain.feed.model.feed_post import FeedVisibility
+from app.domain.feed.service.exception import FeedBlockedError, FeedNotFoundError
 
 
 pytestmark = pytest.mark.integration
@@ -42,7 +42,6 @@ class TestPublicVisibility:
         )
 
         assert like_count == 1
-
 
     async def test_blocked_user_raises_blocked_error(
         self, mongo_db, feed_post_like_service, seed_feed_post, seed_block,
@@ -76,7 +75,6 @@ class TestFriendsVisibility:
 
         assert like_count == 1
 
-
     async def test_non_friend_raises_not_found(
         self, mongo_db, feed_post_like_service, seed_feed_post,
     ):
@@ -104,7 +102,6 @@ class TestPrivateVisibility:
 
         assert like_count == 1
 
-
     async def test_stranger_raises_not_found(
         self, mongo_db, feed_post_like_service, seed_feed_post,
     ):
@@ -119,6 +116,7 @@ class TestPrivateVisibility:
 
 async def _find_other_user(uow, exclude_user_id: str) -> str:
     from sqlalchemy import select
+
     from app.domain.auth.model.user import User, UserStatus
 
     async with uow as session:

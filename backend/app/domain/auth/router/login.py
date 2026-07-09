@@ -1,19 +1,23 @@
-from urllib.parse import urlencode
-from typing import Optional
-import jwt
-from fastapi.responses import RedirectResponse
-from fastapi import APIRouter, Query, HTTPException, Request, Depends
-from dependency_injector.wiring import Provide, inject
 from datetime import datetime, timedelta, timezone
+from typing import Optional
+from urllib.parse import urlencode
 
-from app.domain.auth.service.signup import SignupService
-from app.core.oauth import OAUTH_CLIENTS
-from app.core.logger import get_logger
-from app.container import Container
+import jwt
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
+from fastapi.responses import RedirectResponse
+
+from app.config.oauth import OAUTH_CONFIGS, OAuthProvider
 from app.config.setting import settings
-from app.config.oauth import OAuthProvider, OAUTH_CONFIGS
+from app.container import Container
+from app.core.logger import get_logger
+from app.core.oauth import OAUTH_CLIENTS
+from app.domain.auth.service.signup import SignupService
 from app.util.oauth_state import (
-    generate_state_nonce, set_state_cookie, verify_state_nonce, clear_state_cookie,
+    clear_state_cookie,
+    generate_state_nonce,
+    set_state_cookie,
+    verify_state_nonce,
 )
 
 

@@ -11,29 +11,30 @@ cascade:
 - post_deleted  : `(target_type, target_id)` soft hide. 좋아요 *취소* 는 보존 정책과 비대칭 —
   원본 소멸 시 deep link 404 가 확정이라 stale 알림이 작성자 본인 인박스에 남는 UX 손해를 막는다.
 """
-from typing import Optional
-from pymongo.errors import DuplicateKeyError
 from datetime import datetime, timezone
-from bson.errors import InvalidId
-from beanie import PydanticObjectId
+from typing import Optional
 
-from app.domain.notification.service.exception import InboxItemNotFoundError
-from app.domain.notification.repository.inbox import (
-    InboxRepository,
-    PAGE_SIZE,
-    UNREAD_COUNT_CAP,
-)
-from app.domain.notification.model.inbox import (
-    InboxItem,
-    InboxItemType,
-    TargetType,
-    COMMENT_PREVIEW_MAX_LENGTH,
-)
+from beanie import PydanticObjectId
+from bson.errors import InvalidId
+from pymongo.errors import DuplicateKeyError
+
+from app.core.logger import get_logger
 from app.domain.notification.dto.inbox import (
     InboxItemData,
     InboxListData,
 )
-from app.core.logger import get_logger
+from app.domain.notification.model.inbox import (
+    COMMENT_PREVIEW_MAX_LENGTH,
+    InboxItem,
+    InboxItemType,
+    TargetType,
+)
+from app.domain.notification.repository.inbox import (
+    PAGE_SIZE,
+    UNREAD_COUNT_CAP,
+    InboxRepository,
+)
+from app.domain.notification.service.exception import InboxItemNotFoundError
 
 
 logger = get_logger("inbox.service")
@@ -42,7 +43,6 @@ logger = get_logger("inbox.service")
 class InboxService:
     def __init__(self):
         self.repo = InboxRepository()
-
 
     async def notify_feed_like(
         self,
@@ -68,7 +68,6 @@ class InboxService:
             target_preview=post_preview,
         )
         await self._safe_insert(item)
-
 
     async def notify_feed_comment(
         self,
@@ -99,7 +98,6 @@ class InboxService:
         )
         await self._safe_insert(item)
 
-
     async def notify_tripmate_like(
         self,
         *,
@@ -124,7 +122,6 @@ class InboxService:
             target_preview=post_preview,
         )
         await self._safe_insert(item)
-
 
     async def list_items(
         self,
@@ -176,12 +173,10 @@ class InboxService:
 
         return result
 
-
     async def count_unread(self, recipient_id: str) -> int:
         """미읽음 뱃지 — 999+ 캡."""
         raw = await self.repo.count_unread(recipient_id, cap=UNREAD_COUNT_CAP)
         return min(raw, UNREAD_COUNT_CAP)
-
 
     async def hide_item(
         self, recipient_id: str, inbox_item_id: str,
@@ -196,7 +191,6 @@ class InboxService:
         if not modified:
             raise InboxItemNotFoundError("존재하지 않는 인박스 항목입니다.")
         logger.info("인박스 항목 hide (recipient_id={}, inbox_item_id={})", recipient_id, inbox_item_id)
-
 
     async def cascade_post_deleted(
         self, *, target_type: TargetType, target_id: str,
@@ -221,7 +215,6 @@ class InboxService:
             )
             return 0
 
-
     async def cascade_user_withdrawn(self, user_id: str) -> int:
         """유저 탈퇴 cascade — recipient/actor 매칭 hard delete. best-effort (실패 시 TTL 정리)."""
         try:
@@ -239,7 +232,6 @@ class InboxService:
             )
             return 0
 
-
     async def _safe_insert(self, item: InboxItem) -> None:
         """fan-out 공통 insert — `DuplicateKeyError` 멱등 skip, 그 외는 로그만 + 응답 정상."""
         try:
@@ -251,7 +243,6 @@ class InboxService:
                 "인박스 fan-out 실패 (type={}, recipient_id={}, target_id={}, error={})",
                 item.type.value, item.recipient_id, item.target_id, e,
             )
-
 
     @staticmethod
     def _to_dto(item: InboxItem) -> InboxItemData:

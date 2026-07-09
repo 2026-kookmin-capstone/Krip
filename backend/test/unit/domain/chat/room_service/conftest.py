@@ -1,8 +1,6 @@
-from test.unit.domain.chat.room_service.model_factory import (
-    ChatRoomFactory,
-    UserBlockFactory,
-    UserFactory,
-)
+import pytest
+
+from app.domain.chat.service.room import RoomService
 from test.unit.domain.chat.room_service.mock_factory import (
     FakeUnitOfWork,
     make_chat_member_repo_mock,
@@ -15,9 +13,11 @@ from test.unit.domain.chat.room_service.mock_factory import (
     make_user_block_repo_mock,
     make_user_repo_mock,
 )
-import pytest
-
-from app.domain.chat.service.room import RoomService
+from test.unit.domain.chat.room_service.model_factory import (
+    ChatRoomFactory,
+    UserBlockFactory,
+    UserFactory,
+)
 
 
 @pytest.fixture(autouse=True)

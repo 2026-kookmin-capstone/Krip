@@ -1,13 +1,12 @@
 from typing import List
 
-from app.domain.tripmate.repository.tripmate_search_history import TripmateSearchHistoryRepository
 from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHistory
+from app.domain.tripmate.repository.tripmate_search_history import TripmateSearchHistoryRepository
 
 
 class TripmateSearchHistoryService:
     def __init__(self):
         self.search_repo = TripmateSearchHistoryRepository()
-
 
     # ──────────────────── 검색어 저장 ────────────────────
 
@@ -20,7 +19,6 @@ class TripmateSearchHistoryService:
         """
         return await self.search_repo.save(user_id=user_id, search_name=search_name)
 
-
     # ──────────────────── 검색 기록 조회 ────────────────────
 
     async def get_search_histories(self, user_id: str) -> List[TripmateSearchHistory]:
@@ -29,7 +27,6 @@ class TripmateSearchHistoryService:
         """
         return await self.search_repo.find_by_user_id(user_id)
 
-
     # ──────────────────── 검색어 단건 삭제 ────────────────────
 
     async def delete_search(self, user_id: str, search_name: str) -> None:
@@ -37,7 +34,6 @@ class TripmateSearchHistoryService:
         특정 검색어 1개 삭제
         """
         await self.search_repo.delete_one(user_id=user_id, search_name=search_name)
-
 
     # ──────────────────── 검색 기록 전체 삭제 ────────────────────
 

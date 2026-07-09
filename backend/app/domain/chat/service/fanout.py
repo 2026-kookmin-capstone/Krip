@@ -15,21 +15,22 @@ WS 객체 duck typing 전제 — 핸들러가 `session_id` / `user_id` / `subscr
 `NODE_ID`: uvicorn `--workers N` 운영 시 충돌하면 한 채널을 여러 워커가 동시 구독해
 중복 수신이 발생 — 명시 지정 권장.
 """
-import json
-from fastapi import WebSocket, WebSocketDisconnect
-from collections import defaultdict
 import asyncio
+import json
+from collections import defaultdict
 
-from app.domain.chat.worker.node_registry import list_active_nodes
-from app.core.redis import get_redis_client
-from app.core.logger import get_logger
+from fastapi import WebSocket, WebSocketDisconnect
+
+from app.config.setting import settings
+from app.core.chat.redis_key import node_channel_key, ws_route_key
+from app.core.context import request_id_var, traceparent_var
 from app.core.instrumentation import (
     chat_fanout_dispatch,
     chat_fanout_publish_inc,
 )
-from app.core.context import request_id_var, traceparent_var
-from app.core.chat.redis_key import node_channel_key, ws_route_key
-from app.config.setting import settings
+from app.core.logger import get_logger
+from app.core.redis import get_redis_client
+from app.domain.chat.worker.node_registry import list_active_nodes
 
 
 logger = get_logger("chat.fanout")
@@ -70,7 +71,6 @@ class FanoutService:
         self._user_subs: dict[str, set[WebSocket]] = defaultdict(set)
         self._local_ws_by_session: dict[str, WebSocket] = {}
 
-
     # ──────────────────── 등록 / 해제 (로컬 전용) ────────────────────
     # WS 가 이 노드에 붙어있는 것이라 cross-node 전파 불필요.
 
@@ -82,12 +82,10 @@ class FanoutService:
         self._local_ws_by_session[ws.session_id] = ws
         self._user_subs[ws.user_id].add(ws)
 
-
     def register_ws_to_room(self, ws: WebSocket, room_id: str) -> None:
         """방 구독. 역매핑 `ws.subscribed_rooms` 도 갱신해 종료 시 O(1) 해제."""
         self._room_subs[room_id].add(ws)
         ws.subscribed_rooms.add(room_id)
-
 
     def unregister_ws(self, ws: WebSocket) -> None:
         """WS 종료 시 모든 dict 에서 제거. 반드시 close / Redis 정리보다 먼저 호출 —
@@ -111,7 +109,6 @@ class FanoutService:
                 if not self._room_subs[room_id]:
                     del self._room_subs[room_id]
 
-
     @staticmethod
     def _spawn_close(ws: WebSocket, code: int = _CLOSE_UNRESPONSIVE) -> None:
         """소켓 close 를 백그라운드 task 로 실행. 이미 닫힌 소켓이면 무해한 no-op.
@@ -129,7 +126,6 @@ class FanoutService:
         _CLOSE_TASKS.add(task)
         task.add_done_callback(_CLOSE_TASKS.discard)
 
-
     # ──────────────────── 동적 방 구독 (cross-node) ────────────────────
 
     async def subscribe_user_to_room(self, user_id: str, room_id: str) -> None:
@@ -145,7 +141,6 @@ class FanoutService:
             {"op": "subscribe", "user_id": user_id, "room_id": room_id},
         )
 
-
     async def unsubscribe_user_from_room(self, user_id: str, room_id: str) -> None:
         """유저의 모든 세션 (전 노드) 을 방 구독에서 제거. leave / kick 시 호출.
 
@@ -160,7 +155,6 @@ class FanoutService:
             {"op": "unsubscribe", "user_id": user_id, "room_id": room_id},
         )
 
-
     # ──────────────────── Fan-out (모드 분기) ────────────────────
 
     async def fan_out_to_room(self, room_id: str, payload: dict) -> None:
@@ -172,7 +166,6 @@ class FanoutService:
             {"op": "room", "room_id": room_id, "payload": payload},
         )
 
-
     async def fan_out_to_user(self, user_id: str, payload: dict) -> None:
         """유저의 모든 세션에 브로드캐스트 (`room_joined` / `unread_synced` 등 user-scoped)."""
         if self._mode == "in_process":
@@ -181,7 +174,6 @@ class FanoutService:
         await self._publish_broadcast(
             {"op": "user", "user_id": user_id, "payload": payload},
         )
-
 
     async def fan_out_to_session(self, session_id: str, payload: dict) -> None:
         """특정 세션 직송. `node_channel` 모드는 `ws_route:{sid}` 로 타깃 노드 라우팅.
@@ -192,7 +184,6 @@ class FanoutService:
             await self._local_deliver_to_session(session_id, payload)
             return
         await self._publish_to_session_node(session_id, payload)
-
 
     # ──────────────────── 디스패처 진입점 ────────────────────
 
@@ -240,7 +231,6 @@ class FanoutService:
             request_id_var.reset(rid_token)
             traceparent_var.reset(tp_token)
 
-
     # ──────────────────── 로컬 전달 ────────────────────
 
     def _local_subscribe_user_to_room(self, user_id: str, room_id: str) -> None:
@@ -250,7 +240,6 @@ class FanoutService:
             if sid is None or sid not in self._local_ws_by_session:
                 continue
             self.register_ws_to_room(ws, room_id)
-
 
     def _local_unsubscribe_user_from_room(self, user_id: str, room_id: str) -> None:
         """이 노드의 user_id 세션들을 `_room_subs[room_id]` 에서 제거."""
@@ -269,7 +258,6 @@ class FanoutService:
         if room_set is not None and not room_set:
             del self._room_subs[room_id]
 
-
     async def _local_deliver_to_room(self, room_id: str, payload: dict) -> None:
         sender_sid = payload.get("sender_session_id")
         recipients = [
@@ -278,11 +266,9 @@ class FanoutService:
         ]
         await self._broadcast(recipients, payload)
 
-
     async def _local_deliver_to_user(self, user_id: str, payload: dict) -> None:
         recipients = list(self._user_subs.get(user_id, ()))
         await self._broadcast(recipients, payload)
-
 
     async def _local_deliver_to_session(self, session_id: str, payload: dict) -> None:
         ws = self._local_ws_by_session.get(session_id)
@@ -298,7 +284,6 @@ class FanoutService:
                 await ws.close(code=_CLOSE_SESSION_REVOKED)
             except Exception:
                 pass
-
 
     # ──────────────────── publish 헬퍼 (node_channel) ────────────────────
 
@@ -325,7 +310,6 @@ class FanoutService:
             pipe.publish(node_channel_key(node_id), envelope_json)
         await pipe.execute()
 
-
     @staticmethod
     async def _publish_to_session_node(session_id: str, payload: dict) -> None:
         """특정 세션이 붙은 노드에만 publish. 라우트가 없으면 세션 만료 — silent drop."""
@@ -343,7 +327,6 @@ class FanoutService:
         }
         chat_fanout_publish_inc("session")
         await redis.publish(node_channel_key(target_node), json.dumps(envelope))
-
 
     async def _broadcast(self, recipients: list[WebSocket], payload: dict) -> None:
         """여러 WS 에 동시 push — `gather(return_exceptions=True)` 로 한 WS 실패 격리.

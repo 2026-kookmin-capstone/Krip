@@ -20,7 +20,6 @@ class TestTxFailureSkipsSideEffects:
         fanout_mock.fan_out_to_user.assert_not_awaited()
         message_service_mock.send_system_message.assert_not_awaited()
 
-
     async def test_create_direct_room_failure_skips_emit(
         self, service, redis_mock, fanout_mock, message_service_mock,
     ):
@@ -30,7 +29,6 @@ class TestTxFailureSkipsSideEffects:
 
         self._assert_no_side_effects(redis_mock, fanout_mock, message_service_mock)
 
-
     async def test_create_group_room_failure_skips_emit(
         self, service, redis_mock, fanout_mock, message_service_mock,
     ):
@@ -39,7 +37,6 @@ class TestTxFailureSkipsSideEffects:
             await service.create_group_room(me_id="U_A", title="t", member_ids=["U_A"])
 
         self._assert_no_side_effects(redis_mock, fanout_mock, message_service_mock)
-
 
     async def test_invite_members_failure_skips_emit(
         self, service, redis_mock, fanout_mock, message_service_mock,
@@ -51,7 +48,6 @@ class TestTxFailureSkipsSideEffects:
 
         self._assert_no_side_effects(redis_mock, fanout_mock, message_service_mock)
 
-
     async def test_leave_room_failure_skips_emit(
         self, service, redis_mock, fanout_mock, message_service_mock,
     ):
@@ -60,7 +56,6 @@ class TestTxFailureSkipsSideEffects:
             await service.leave_room(me_id="U_A", room_id="CR_X")
 
         self._assert_no_side_effects(redis_mock, fanout_mock, message_service_mock)
-
 
     async def test_kick_member_failure_skips_emit(
         self, service, redis_mock, fanout_mock, message_service_mock,

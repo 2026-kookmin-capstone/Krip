@@ -4,15 +4,16 @@ contextvar 기반 task-local route 라벨로 query duration 을 도메인 단위
 pool gauge 는 query 직후 + event_loop 의 1초 폴링 양쪽에서 fresh 유지.
 """
 import time
+
 from sqlalchemy import event
 
+from app.core.context import db_route_var
 from app.core.metric import (
     DB_POOL_CHECKED_OUT,
     DB_POOL_SIZE,
     DB_QUERY_DURATION,
     DB_TRANSACTION_TOTAL,
 )
-from app.core.context import db_route_var
 
 
 # route 라벨 enum — endpoint 단위 X, 도메인 단위 ~10개로 카디널리티 통제.

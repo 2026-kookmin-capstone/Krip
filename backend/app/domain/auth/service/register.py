@@ -2,19 +2,18 @@ from typing import List
 
 from sqlalchemy.exc import IntegrityError
 
-from app.domain.auth.repository.user_travel_style import UserTravelStyleRepository
-from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
-from app.domain.auth.repository.user import UserRepository
-from app.domain.auth.model.user_travel_style import UserTravelStyle, TravelStyle
-from app.domain.auth.model.user_detail_inform import UserDetailInform, Gender
-from app.domain.auth.model.user import UserStatus
 from app.database.session import UnitOfWork, transactional
+from app.domain.auth.model.user import UserStatus
+from app.domain.auth.model.user_detail_inform import Gender, UserDetailInform
+from app.domain.auth.model.user_travel_style import TravelStyle, UserTravelStyle
+from app.domain.auth.repository.user import UserRepository
+from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
+from app.domain.auth.repository.user_travel_style import UserTravelStyleRepository
 
 
 class RegisterService:
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
-
 
     @transactional
     async def register_detail(

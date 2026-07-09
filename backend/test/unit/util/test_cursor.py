@@ -4,10 +4,11 @@
 - 구 원시 ID 커서는 None 으로 판별되어 호출측 폴백을 태운다
 - 손상/비정상 토큰도 None (예외 없이)
 """
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta, timezone
+
 import pytest
 
-from app.util.cursor import encode_cursor, decode_cursor
+from app.util.cursor import decode_cursor, encode_cursor
 
 
 @pytest.mark.unit

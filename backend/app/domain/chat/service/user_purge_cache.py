@@ -6,10 +6,10 @@ auth 의 `WithdrawService` 가 두 시점에 호출:
 
 chat 이 자기 Redis 키 규약을 유지하도록 모든 조작은 이 파일에만 존재.
 """
-from app.domain.chat.service.session import SessionService
-from app.core.redis import get_redis_client
-from app.core.logger import get_logger
 from app.core.chat.redis_key import unread_key
+from app.core.logger import get_logger
+from app.core.redis import get_redis_client
+from app.domain.chat.service.session import SessionService
 
 
 logger = get_logger("chat.user_purge_cache")
@@ -20,7 +20,6 @@ class UserPurgeCacheService:
 
     def __init__(self, session_service: SessionService):
         self._session_service = session_service
-
 
     async def revoke_all_sessions(self, user_id: str) -> None:
         """탈퇴 직후 활성 WS 세션 즉시 종료. TTL 만료 윈도우 동안의 송수신 보안 risk 차단.
@@ -40,7 +39,6 @@ class UserPurgeCacheService:
                 "user_id={}, err={}",
                 user_id, e,
             )
-
 
     async def cleanup_user_data(self, user_id: str) -> None:
         """영구 삭제 시점에 TTL 없는 키 정리 — 현재는 `unread:{user_id}` HASH 만 대상.

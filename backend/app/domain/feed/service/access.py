@@ -7,13 +7,13 @@ block 우선 → friendship (ACCEPTED 만) → visibility 미충족은 404 일�
 """
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.domain.friend.repository.user_block import UserBlockRepository
-from app.domain.friend.repository.friendship import FriendshipRepository
-from app.domain.friend.model.friendship import FriendshipStatus
-from app.domain.feed.service.visibility import can_view
-from app.domain.feed.service.exception import FeedBlockedError, FeedNotFoundError
-from app.domain.feed.repository.feed_post import FeedPostRepository
 from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
+from app.domain.feed.repository.feed_post import FeedPostRepository
+from app.domain.feed.service.exception import FeedBlockedError, FeedNotFoundError
+from app.domain.feed.service.visibility import can_view
+from app.domain.friend.model.friendship import FriendshipStatus
+from app.domain.friend.repository.friendship import FriendshipRepository
+from app.domain.friend.repository.user_block import UserBlockRepository
 
 
 async def resolve_viewer_visibilities(

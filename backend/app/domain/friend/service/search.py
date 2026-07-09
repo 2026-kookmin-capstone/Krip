@@ -1,11 +1,11 @@
 from typing import Optional
 
-from app.domain.friend.repository.search import FriendSearchRepository, PAGE_SIZE
-from app.domain.friend.repository.friendship import FriendshipRepository
-from app.domain.friend.model.friendship import Friendship, FriendshipStatus
-from app.domain.friend.dto.search import FriendSearchData, FriendSearchListData
-from app.domain.auth.model.user import User
 from app.database.session import UnitOfWork, transactional
+from app.domain.auth.model.user import User
+from app.domain.friend.dto.search import FriendSearchData, FriendSearchListData
+from app.domain.friend.model.friendship import Friendship, FriendshipStatus
+from app.domain.friend.repository.friendship import FriendshipRepository
+from app.domain.friend.repository.search import PAGE_SIZE, FriendSearchRepository
 from app.util.cursor import encode_cursor
 
 
@@ -18,7 +18,6 @@ class FriendSearchService:
 
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
-
 
     @transactional
     async def search(
@@ -55,7 +54,6 @@ class FriendSearchService:
             if len(users) == PAGE_SIZE else None
         )
         return FriendSearchListData(items=items, next_cursor=next_cursor)
-
 
     # ──────────────────── 내부 변환 유틸 ────────────────────
 

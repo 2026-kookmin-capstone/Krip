@@ -20,12 +20,13 @@ cascade (service 책임 — Mongo 는 auto 삭제 안 됨):
   원본 소멸 시 deep link 404 가 확정이라 stale 알림 누적 방지.
 - 댓글 단건 삭제는 cascade 안 함.
 """
-from typing import Optional
-from pymongo import IndexModel, ASCENDING, DESCENDING
-from pydantic import Field
-from enum import Enum
 from datetime import datetime, timezone
+from enum import Enum
+from typing import Optional
+
 from beanie import Document
+from pydantic import Field
+from pymongo import ASCENDING, DESCENDING, IndexModel
 
 
 INBOX_TTL_SECONDS = 60 * 60 * 24 * 30

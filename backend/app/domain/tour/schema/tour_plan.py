@@ -1,7 +1,8 @@
-from typing import List, Optional
 import re
-from pydantic import BaseModel, Field, field_validator
 from datetime import datetime
+from typing import List, Optional
+
+from pydantic import BaseModel, Field, field_validator
 
 
 # HH:MM (24h) — 00:00 ~ 23:59
@@ -56,7 +57,6 @@ class CreatePlanRequest(BaseModel):
     @classmethod
     def _check_title(cls, v: Optional[str]) -> Optional[str]:
         return _validate_title(v)
-
 
     class Config:
         json_schema_extra = {

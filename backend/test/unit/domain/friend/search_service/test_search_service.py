@@ -1,13 +1,13 @@
+import pytest
+
+from app.domain.auth.model.user_travel_style import TravelStyle
+from app.domain.friend.model.friendship import FriendshipStatus
+from app.domain.friend.repository.search import PAGE_SIZE
+from app.util.cursor import decode_cursor
 from test.unit.domain.friend.search_service.model_factory import (
     FriendshipFactory,
     UserFactory,
 )
-import pytest
-
-from app.util.cursor import decode_cursor
-from app.domain.friend.repository.search import PAGE_SIZE
-from app.domain.friend.model.friendship import FriendshipStatus
-from app.domain.auth.model.user_travel_style import TravelStyle
 
 
 @pytest.mark.unit
@@ -18,16 +18,13 @@ class TestSearchKeywordValidation:
         with pytest.raises(ValueError, match="검색어를 입력해주세요"):
             await service.search(viewer_id="USER_a", keyword="")
 
-
     async def test_raises_value_error_on_whitespace_only(self, service):
         with pytest.raises(ValueError, match="검색어를 입력해주세요"):
             await service.search(viewer_id="USER_a", keyword="   ")
 
-
     async def test_raises_value_error_on_tab_and_newline_only(self, service):
         with pytest.raises(ValueError, match="검색어를 입력해주세요"):
             await service.search(viewer_id="USER_a", keyword="\t\n")
-
 
     async def test_strips_leading_trailing_whitespace_before_search(
         self, service, search_repo_mock,
@@ -52,7 +49,6 @@ class TestSearchEmptyResult:
 
         assert result.items == []
         assert result.next_cursor is None
-
 
     async def test_friendship_lookup_called_with_empty_list(
         self, service, search_repo_mock, friendship_repo_mock,
@@ -95,7 +91,6 @@ class TestSearchDtoMapping:
         assert item.is_requester is None
         assert item.i_blocked_peer is False
 
-
     async def test_pending_as_requester_sets_is_requester_true(
         self, service, search_repo_mock, friendship_repo_mock,
     ):
@@ -114,7 +109,6 @@ class TestSearchDtoMapping:
         assert item.friendship_status == FriendshipStatus.PENDING
         assert item.is_requester is True
 
-
     async def test_pending_as_addressee_sets_is_requester_false(
         self, service, search_repo_mock, friendship_repo_mock,
     ):
@@ -132,7 +126,6 @@ class TestSearchDtoMapping:
         item = result.items[0]
         assert item.friendship_status == FriendshipStatus.PENDING
         assert item.is_requester is False
-
 
     async def test_accepted_yields_null_is_requester(
         self, service, search_repo_mock, friendship_repo_mock,
@@ -153,7 +146,6 @@ class TestSearchDtoMapping:
         assert item.friendship_status == FriendshipStatus.ACCEPTED
         assert item.is_requester is None
 
-
     async def test_rejected_yields_null_is_requester(
         self, service, search_repo_mock, friendship_repo_mock,
     ):
@@ -172,7 +164,6 @@ class TestSearchDtoMapping:
         assert item.friendship_status == FriendshipStatus.REJECTED
         assert item.is_requester is None
 
-
     async def test_i_blocked_peer_always_false(
         self, service, search_repo_mock, friendship_repo_mock,
     ):
@@ -184,7 +175,6 @@ class TestSearchDtoMapping:
         result = await service.search(viewer_id="USER_a", keyword="b")
 
         assert result.items[0].i_blocked_peer is False
-
 
     async def test_mixed_results_with_partial_friendship_mapping(
         self, service, search_repo_mock, friendship_repo_mock,
@@ -236,7 +226,6 @@ class TestSearchPagination:
         assert len(result.items) == PAGE_SIZE
         assert decode_cursor(result.next_cursor)[1] == users[-1].user_id
 
-
     async def test_next_cursor_null_on_partial_page(
         self, service, search_repo_mock, friendship_repo_mock,
     ):
@@ -248,7 +237,6 @@ class TestSearchPagination:
 
         assert len(result.items) == PAGE_SIZE - 1
         assert result.next_cursor is None
-
 
     async def test_cursor_argument_passed_through_to_repo(
         self, service, search_repo_mock,
@@ -282,7 +270,6 @@ class TestSearchFriendshipBatchLookup:
         friendship_repo_mock.find_friendships_with.assert_awaited_once_with(
             "USER_a", ["USER_b", "USER_c", "USER_d"],
         )
-
 
     async def test_peer_ids_preserve_repo_order(
         self, service, search_repo_mock, friendship_repo_mock,

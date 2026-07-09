@@ -5,10 +5,13 @@ from google.api_core.exceptions import (
     Unauthenticated,
 )
 
-from app.domain.tour.service.exception import (
-    TourRecommendCredentialExpiredError,
-    TourRecommendQuotaExceededError,
-    TourRecommendVendorError,
+from app.core.ai.tour_planner.load import TourPlanner
+from app.core.ai.tour_planner.v2.data_state import (
+    TourDayInput as PlannerTourDayInput,
+)
+from app.core.ai.tour_planner.v2.data_state import (
+    TourPlannerOutputError,
+    TourPlanResult,
 )
 from app.domain.tour.schema.recommend import (
     TourBudgetItemResponse,
@@ -20,12 +23,11 @@ from app.domain.tour.schema.recommend import (
     TourRecommendResponse,
     TourTimelineSlotResponse,
 )
-from app.core.ai.tour_planner.v2.data_state import (
-    TourDayInput as PlannerTourDayInput,
-    TourPlanResult,
-    TourPlannerOutputError,
+from app.domain.tour.service.exception import (
+    TourRecommendCredentialExpiredError,
+    TourRecommendQuotaExceededError,
+    TourRecommendVendorError,
 )
-from app.core.ai.tour_planner.load import TourPlanner
 
 
 class RecommendService:
@@ -40,9 +42,7 @@ class RecommendService:
     def __init__(self) -> None:
         self._planner = TourPlanner()
 
-
     # ──────────────────── 진입점 ────────────────────
-
 
     async def recommend(self, body: TourRecommendRequest) -> TourRecommendResponse:
         """여행 코스 추천."""
@@ -66,9 +66,7 @@ class RecommendService:
 
         return self._to_response(result)
 
-
     # ──────────────────── Request → Planner 입력 ────────────────────
-
 
     @staticmethod
     def _to_planner_input(body: TourRecommendRequest) -> list[PlannerTourDayInput]:
@@ -89,9 +87,7 @@ class RecommendService:
             for d in body.days
         ]
 
-
     # ──────────────────── Planner 결과 → Response ────────────────────
-
 
     @staticmethod
     def _to_response(result: TourPlanResult) -> TourRecommendResponse:

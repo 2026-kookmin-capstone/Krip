@@ -1,15 +1,15 @@
-from typing import List, BinaryIO
 import asyncio
+from typing import BinaryIO, List
 
-from app.util.storage_prefix import post_prefix
-from app.util.id_generator import generate_tripmate_image_id
-from app.domain.tripmate.repository.tripmate_post_image import TripmatePostImageRepository
-from app.domain.tripmate.repository.tripmate_image import TripmateImageRepository
-from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
-from app.domain.tripmate.model.tripmate_image import TripmateImage
-from app.database.session import UnitOfWork, transactional
-from app.core.object_storage import get_object_storage
 from app.core.logger import get_logger
+from app.core.object_storage import get_object_storage
+from app.database.session import UnitOfWork, transactional
+from app.domain.tripmate.model.tripmate_image import TripmateImage
+from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
+from app.domain.tripmate.repository.tripmate_image import TripmateImageRepository
+from app.domain.tripmate.repository.tripmate_post_image import TripmatePostImageRepository
+from app.util.id_generator import generate_tripmate_image_id
+from app.util.storage_prefix import post_prefix
 
 
 logger = get_logger("tripmate.image.service")
@@ -20,7 +20,6 @@ class TripmateImageService:
         self.uow = uow
         self.image_repo = TripmateImageRepository()
         self.storage = get_object_storage()
-
 
     # ──────────────────── 이미지 업로드 ────────────────────
 
@@ -66,7 +65,6 @@ class TripmateImageService:
         logger.info("이미지 업로드 완료 (user_id={}, image_id={})", user_id, image_id)
         return saved
 
-
     async def upload_images(
         self,
         user_id: str,
@@ -82,7 +80,6 @@ class TripmateImageService:
               for file, file_name, content_type in files)
         ))
 
-
     # ──────────────────── 이미지 조회 ────────────────────
 
     async def get_images(self, user_id: str) -> List[TripmateImage]:
@@ -90,7 +87,6 @@ class TripmateImageService:
         유저의 전체 이미지 목록 조회 (최신순)
         """
         return await self.image_repo.find_by_user_id(user_id)
-
 
     # ──────────────────── 이미지 삭제 ────────────────────
 
@@ -111,7 +107,6 @@ class TripmateImageService:
         await self.storage.delete(image.image_url)
         await self.image_repo.delete_by_image_id(image_id)
         logger.info("이미지 삭제 완료 (user_id={}, image_id={})", user_id, image_id)
-
 
     # ──────────────────── 고아 이미지 정리 ────────────────────
 

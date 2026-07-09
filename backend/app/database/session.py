@@ -1,10 +1,11 @@
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.ext.asyncio import async_sessionmaker
-from functools import wraps
 from contextvars import ContextVar
+from functools import wraps
 
-from app.core.instrumentation import db_transaction_inc
+from sqlalchemy.ext.asyncio import async_sessionmaker
+from sqlalchemy.orm import declarative_base
+
 from app.core.context import db_route_var
+from app.core.instrumentation import db_transaction_inc
 
 
 # ──────────────────── RDB ────────────────────
@@ -17,11 +18,9 @@ class UnitOfWork:
     def __init__(self, session: async_sessionmaker):
         self.session_factory = session
 
-
     async def __aenter__(self):
         self.session = self.session_factory()
         return self.session
-
 
     async def __aexit__(self, exc_type, exc, tb):
         # commit 자체가 실패할 수 있어 try/except 로 'other' 라벨을 분리.
@@ -64,25 +63,27 @@ def transactional(fn):
                 self._session = None
     return wrapper
 
+
 Base = declarative_base()
 
 
 # ──────────────────── NoSQL ────────────────────
 
 from typing import Optional
-from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
-from beanie import init_beanie
 
-from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
-from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHistory
-from app.domain.tripmate.model.tripmate_image import TripmateImage
+from beanie import init_beanie
+from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
+
+from app.config.setting import settings
+from app.domain.auth.model.withdrawal_request import WithdrawalRequest
+from app.domain.chat.model.chat_message import create_indexes as create_chat_message_indexes
+from app.domain.friend.model.search_history import FriendSearchHistory
+from app.domain.notification.model.inbox import InboxItem
 from app.domain.tour.model.place import Place
 from app.domain.tour.model.tour_search_history import TourSearchHistory
-from app.domain.friend.model.search_history import FriendSearchHistory
-from app.domain.chat.model.chat_message import create_indexes as create_chat_message_indexes
-from app.domain.auth.model.withdrawal_request import WithdrawalRequest
-from app.domain.notification.model.inbox import InboxItem
-from app.config.setting import settings
+from app.domain.tripmate.model.tripmate_image import TripmateImage
+from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
+from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHistory
 
 
 # Mongo socket-level timeout — Mongo hang 시 코루틴 영구 stuck 차단.
@@ -105,7 +106,6 @@ class MongoDB:
     def __init__(self):
         self.client: Optional[AsyncIOMotorClient] = None # type: ignore
         self.database: Optional[AsyncIOMotorDatabase] = None # type: ignore
-
 
     async def connect(self):
         self.client = AsyncIOMotorClient(
@@ -139,7 +139,6 @@ class MongoDB:
         # 검색기록 (user_id, search_name) unique 인덱스 — dedup 후 생성 (startup-safe).
         await _ensure_search_history_unique_indexes()
 
-
     async def disconnect(self):
         if self.client:
             self.client.close()
@@ -169,6 +168,7 @@ async def _ensure_search_history_unique_indexes() -> None:
             unique=True,
             name="uq_user_search_name",
         )
+
 
 mongodb = MongoDB()
 

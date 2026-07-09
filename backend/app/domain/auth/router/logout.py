@@ -1,8 +1,8 @@
-from fastapi.responses import JSONResponse
 from fastapi import APIRouter, Request
+from fastapi.responses import JSONResponse
 
-from app.core.logger import get_logger
 from app.config.setting import settings
+from app.core.logger import get_logger
 
 
 router = APIRouter(prefix="/logout", tags=["로그아웃"])

@@ -1,10 +1,11 @@
 from typing import Iterable, Optional
-from sqlalchemy.orm import joinedload
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, or_, and_, case, func
 
-from app.domain.friend.model.friendship import Friendship, FriendshipStatus
+from sqlalchemy import and_, case, func, or_, select
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import joinedload
+
 from app.domain.auth.model.user import User
+from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 from app.util.cursor import decode_cursor, keyset_where
 
 
@@ -16,7 +17,6 @@ class FriendshipRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-
     # ──────────────────── Create ────────────────────
 
     async def save(self, friendship: Friendship) -> Friendship:
@@ -25,13 +25,11 @@ class FriendshipRepository:
         await self.session.flush()
         return friendship
 
-
     # ──────────────────── Read (단건) ────────────────────
 
     async def find_by_id(self, friendship_id: str) -> Optional[Friendship]:
         """friendship_id로 단건 조회"""
         return await self.session.get(Friendship, friendship_id)
-
 
     async def count_accepted_for(self, user_id: str) -> int:
         """`user_id` 의 ACCEPTED 친구 수 — 마이페이지 stats 용.
@@ -50,7 +48,6 @@ class FriendshipRepository:
         )
         result = await self.session.execute(stmt)
         return result.scalar_one()
-
 
     async def find_accepted_friend_ids(self, me_id: str) -> set[str]:
         """`me_id` 의 모든 ACCEPTED 친구 user_id 집합.
@@ -71,7 +68,6 @@ class FriendshipRepository:
         )
         result = await self.session.execute(stmt)
         return set(result.scalars().all())
-
 
     async def find_accepted_friend_ids_with(
         self, me_id: str, target_ids: Iterable[str],
@@ -106,7 +102,6 @@ class FriendshipRepository:
         result = await self.session.execute(stmt)
         return set(result.scalars().all())
 
-
     async def find_friendships_with(
         self,
         me_id: str,
@@ -140,7 +135,6 @@ class FriendshipRepository:
             for f in result.scalars().all()
         }
 
-
     async def find_between(
         self,
         user_a_id: str,
@@ -161,7 +155,6 @@ class FriendshipRepository:
         )
         result = await self.session.execute(stmt)
         return result.scalar_one_or_none()
-
 
     # ──────────────────── Read (목록 — 커서 페이지네이션) ────────────────────
 
@@ -202,7 +195,6 @@ class FriendshipRepository:
         result = await self.session.execute(stmt)
         return list(result.unique().scalars().all())
 
-
     async def find_received_requests(
         self,
         user_id: str,
@@ -230,7 +222,6 @@ class FriendshipRepository:
         stmt = stmt.order_by(Friendship.updated_at.desc(), Friendship.friendship_id.desc()).limit(PAGE_SIZE)
         result = await self.session.execute(stmt)
         return list(result.unique().scalars().all())
-
 
     async def find_sent_requests(
         self,
@@ -260,14 +251,12 @@ class FriendshipRepository:
         result = await self.session.execute(stmt)
         return list(result.unique().scalars().all())
 
-
     # ──────────────────── Update ────────────────────
 
     async def update(self, friendship: Friendship) -> Friendship:
         """변경사항 flush"""
         await self.session.flush()
         return friendship
-
 
     # ──────────────────── Delete ────────────────────
 

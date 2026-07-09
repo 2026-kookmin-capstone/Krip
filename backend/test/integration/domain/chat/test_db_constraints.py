@@ -3,13 +3,14 @@
 실제 PostgreSQL 을 대상으로 CHECK / UNIQUE / SET NULL / GENERATED 컬럼의 동작을 검증.
 `POSTGRES_TEST_URL` 미설정 환경에선 `conftest.py` 가 모듈 단위 skip.
 """
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy import select, text, update
-import pytest
 from datetime import datetime, timezone
 
-from app.domain.chat.model.chat_room_member import ChatRoomMember
+import pytest
+from sqlalchemy import select, text, update
+from sqlalchemy.exc import IntegrityError
+
 from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
+from app.domain.chat.model.chat_room_member import ChatRoomMember
 
 
 pytestmark = pytest.mark.integration
@@ -49,7 +50,6 @@ class TestUniqueDirectPair:
                     )
                 )
                 await s.commit()
-
 
     async def test_group_rooms_allow_duplicate_null_pairs(
         self, session_factory, seed_users,
@@ -99,7 +99,6 @@ class TestCheckConstraint:
                 )
                 await s.commit()
 
-
     async def test_group_with_direct_users_violates_check(
         self, session_factory, seed_users,
     ):
@@ -118,7 +117,6 @@ class TestCheckConstraint:
                     )
                 )
                 await s.commit()
-
 
     async def test_direct_allows_null_after_withdrawal(
         self, session_factory, seed_users,
@@ -222,7 +220,6 @@ class TestGeneratedColumn:
             # last_message_at 은 NULL 이지만 effective_last_at 은 created_at 과 동일
             assert row.last_message_at is None
             assert row.effective_last_at == row.created_at
-
 
     async def test_effective_last_at_uses_last_message_at_when_present(
         self, session_factory, seed_users,

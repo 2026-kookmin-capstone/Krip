@@ -1,14 +1,16 @@
 from typing import List
-from fastapi import APIRouter, HTTPException, Request, Depends, UploadFile, File
-from dependency_injector.wiring import Provide, inject
 
-from app.schema.common import MessageResponse
-from app.domain.tripmate.service.tripmate_image import TripmateImageService
-from app.domain.tripmate.schema.tripmate_image import (
-    ImageUploadResponse, ImageUploadListResponse, CleanupResponse,
-)
-from app.core.logger import get_logger
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, File, HTTPException, Request, UploadFile
+
 from app.container import Container
+from app.core.logger import get_logger
+from app.domain.tripmate.schema.tripmate_image import (
+    CleanupResponse,
+    ImageUploadListResponse,
+    ImageUploadResponse,
+)
+from app.domain.tripmate.service.tripmate_image import TripmateImageService
 from app.util.upload import enforce_upload_size
 
 

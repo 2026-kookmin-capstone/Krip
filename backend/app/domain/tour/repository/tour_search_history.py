@@ -1,10 +1,11 @@
-from typing import List
-from pymongo import ReturnDocument, ASCENDING
-from pymongo.errors import DuplicateKeyError
 from datetime import datetime, timezone
+from typing import List
 
-from app.domain.tour.model.tour_search_history import TourSearchHistory
+from pymongo import ASCENDING, ReturnDocument
+from pymongo.errors import DuplicateKeyError
+
 from app.core.instrumentation import measure_mongo_op
+from app.domain.tour.model.tour_search_history import TourSearchHistory
 
 
 MAX_SEARCH_HISTORY = 10
@@ -45,7 +46,6 @@ class TourSearchHistoryRepository:
 
         return TourSearchHistory.model_validate(result)
 
-
     async def _trim_oldest(self, user_id: str) -> None:
         """유저의 검색 기록이 MAX_SEARCH_HISTORY를 초과하면 오래된 것부터 삭제"""
         collection = TourSearchHistory.get_motor_collection()
@@ -80,7 +80,6 @@ class TourSearchHistoryRepository:
         )
         if doc:
             await doc.delete()
-
 
     @measure_mongo_op("delete", "tour_search_history")
     async def delete_all_by_user_id(self, user_id: str) -> None:

@@ -1,11 +1,12 @@
-from typing import Dict, List
-from langchain_google_genai import ChatGoogleGenerativeAI
-import httpx
-from functools import lru_cache
 from enum import Enum
+from functools import lru_cache
+from typing import Dict, List
 
-from app.core.instrumentation import GeminiInstrumentationHandler
+import httpx
+from langchain_google_genai import ChatGoogleGenerativeAI
+
 from app.config.setting import settings
+from app.core.instrumentation import GeminiInstrumentationHandler
 
 
 # Gemini 호출 데드라인/재시도 — 미설정 시 요청이 무한 대기하고 429 가 내장 재시도(기본 6회)
@@ -33,7 +34,6 @@ class LLMManager:
         self._models: Dict[str, ChatGoogleGenerativeAI] = {}
         self._initialized = False
 
-
     def initialize(self) -> bool:
         """모든 Gemini 모델을 초기화합니다.
 
@@ -55,7 +55,6 @@ class LLMManager:
 
         return self._initialized
 
-
     def get_model(self, model_name: str) -> ChatGoogleGenerativeAI:
         """모델 이름으로 Gemini 모델을 반환합니다."""
         if not self._initialized:
@@ -69,7 +68,6 @@ class LLMManager:
 
         return self._models[model_name]
 
-
     async def check_connection(self) -> bool:
         """Google Gemini API 연결 상태를 확인합니다."""
         try:
@@ -82,7 +80,6 @@ class LLMManager:
                 return response.status_code == 200
         except Exception:
             return False
-
 
     def is_initialized(self) -> bool:
         """초기화 상태를 반환합니다."""

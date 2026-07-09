@@ -1,11 +1,12 @@
-from sqlalchemy.sql import func
-from sqlalchemy.orm import relationship
-from sqlalchemy import Column, String, DateTime, Boolean, Enum, UniqueConstraint, Index, text
 import enum
 
-from app.util.id_generator import generate_user_id
-from app.database.session import Base
+from sqlalchemy import Boolean, Column, DateTime, Enum, Index, String, UniqueConstraint, text
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
+
 from app.config.oauth import OAuthProvider
+from app.database.session import Base
+from app.util.id_generator import generate_user_id
 
 
 class UserStatus(str, enum.Enum):

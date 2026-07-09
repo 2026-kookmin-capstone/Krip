@@ -5,19 +5,20 @@
 
 feed 도메인의 conftest 와 패턴 일관 — 도메인별 격리 유지.
 """
-import pytest_asyncio
-import pytest
 import os
-from motor.motor_asyncio import AsyncIOMotorClient
 from datetime import date
 
-from app.domain.tripmate.service.tripmate_post_like import TripmatePostLikeService
-from app.domain.tripmate.service.tripmate_post_draft import TripmatePostDraftService
-from app.domain.tripmate.service.tripmate_image import TripmateImageService
-from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
-from app.domain.tripmate.model.tripmate_image import TripmateImage
-from app.domain.notification.service.inbox import InboxService
+import pytest
+import pytest_asyncio
+from motor.motor_asyncio import AsyncIOMotorClient
+
 from app.domain.notification.model.inbox import InboxItem
+from app.domain.notification.service.inbox import InboxService
+from app.domain.tripmate.model.tripmate_image import TripmateImage
+from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
+from app.domain.tripmate.service.tripmate_image import TripmateImageService
+from app.domain.tripmate.service.tripmate_post_draft import TripmatePostDraftService
+from app.domain.tripmate.service.tripmate_post_like import TripmatePostLikeService
 
 
 def _require_mongo_url() -> str:
@@ -149,7 +150,9 @@ def tripmate_post_service(
 async def seed_tripmate_post(session_factory, seed_users):
     """tripmate_post 1건 시드 — owner + 2명 유저. (post_id, owner_id) 반환."""
     from app.domain.tripmate.model.tripmate_post import (
-        CompanionType, PreferredGender, TripmatePost,
+        CompanionType,
+        PreferredGender,
+        TripmatePost,
     )
 
     async def _seed():

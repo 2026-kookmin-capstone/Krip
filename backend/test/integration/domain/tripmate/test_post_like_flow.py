@@ -28,12 +28,12 @@ class TestAddLikeWithCount:
         """N 명이 좋아요 → count == N. RDB SELECT count(*) 정확성."""
         post_id, owner_id = await seed_tripmate_post()
         # 추가로 2명 시드 (총 4명: owner + 1 from seed_tripmate_post + 2 추가)
-        from test.integration.conftest import seed_users  # type: ignore  # noqa: F401
+        from app.config.oauth import OAuthProvider
 
         # seed_users 를 한 번 더 호출해서 user 2명 추가
         from app.domain.auth.model.user import User, UserStatus
-        from app.config.oauth import OAuthProvider
         from app.domain.auth.model.user_detail_inform import Gender, UserDetailInform
+        from test.integration.conftest import seed_users  # type: ignore  # noqa: F401
 
         extra_ids = ["USER_extra_a", "USER_extra_b"]
         async with session_factory() as session:
@@ -59,7 +59,6 @@ class TestAddLikeWithCount:
         assert c1 == 1
         assert c2 == 2
         assert c3 == 3
-
 
     async def test_duplicate_add_raises_value_error(
         self, mongo_db, tripmate_post_like_service, seed_tripmate_post,
@@ -105,7 +104,6 @@ class TestGetLikedUserIds:
         liked = await tripmate_post_like_service.get_liked_user_ids(post_id=post_id)
         assert actor_id in liked
 
-
     async def test_raises_when_post_not_found(
         self, mongo_db, tripmate_post_like_service,
     ):
@@ -117,6 +115,7 @@ class TestGetLikedUserIds:
 
 async def _find_other_user(uow, exclude_user_id: str) -> str:
     from sqlalchemy import select
+
     from app.domain.auth.model.user import User, UserStatus
 
     async with uow as session:

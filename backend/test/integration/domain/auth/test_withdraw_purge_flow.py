@@ -15,16 +15,16 @@
     | 미존재 user (NO_USER)   | -           | drop          | cascade 호출 (idempotent) |
     | STALE_DOC (ACTIVE)      | 보존        | doc 만 청소   | cascade 호출 안 함 |
 """
-from sqlalchemy import select
 import pytest
+from sqlalchemy import select
 
+from app.domain.auth.model.user import User, UserStatus
+from app.domain.auth.model.withdrawal_request import WithdrawalRequest
 from app.domain.notification.model.inbox import (
     InboxItem,
     InboxItemType,
     TargetType,
 )
-from app.domain.auth.model.withdrawal_request import WithdrawalRequest
-from app.domain.auth.model.user import User, UserStatus
 
 
 pytestmark = pytest.mark.integration
@@ -48,7 +48,6 @@ class TestPurgeDeletedOutcome:
                 select(User).where(User.user_id == user_id)
             )
             assert result.scalar_one_or_none() is None
-
 
     async def test_cascade_deletes_recipient_and_actor_inbox_items(
         self, withdraw_service, session_factory, seed_users, mongo_db,
@@ -87,7 +86,6 @@ class TestPurgeDeletedOutcome:
         remaining = await coll.find_one({})
         assert remaining["actor_id"] == "USER_unrelated"
 
-
     async def test_cleans_withdrawal_request_doc(
         self, withdraw_service, session_factory, seed_users,
     ):
@@ -95,7 +93,7 @@ class TestPurgeDeletedOutcome:
         await _set_inactive(session_factory, user_id)
 
         # withdrawal_request doc 시드
-        from datetime import datetime, timezone, timedelta
+        from datetime import datetime, timedelta, timezone
         await WithdrawalRequest(
             user_id=user_id,
             requested_at=datetime.now(timezone.utc),
@@ -135,7 +133,7 @@ class TestPurgeStaleDocOutcome:
         ).insert()
 
         # withdrawal_request doc 시드
-        from datetime import datetime, timezone, timedelta
+        from datetime import datetime, timedelta, timezone
         await WithdrawalRequest(
             user_id=user_id,
             requested_at=datetime.now(timezone.utc),

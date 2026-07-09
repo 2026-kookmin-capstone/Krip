@@ -5,12 +5,13 @@ async lazy-load (MissingGreenlet) 회피 + N+1 차단.
 삭제는 양쪽 FK CASCADE 가 처리.
 """
 from typing import Optional
-from sqlalchemy.orm import joinedload
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func
 
-from app.domain.feed.model.feed_post_comment import FeedPostComment
+from sqlalchemy import func, select
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import joinedload
+
 from app.domain.auth.model.user import User
+from app.domain.feed.model.feed_post_comment import FeedPostComment
 from app.util.cursor import decode_cursor, keyset_where
 
 
@@ -22,13 +23,11 @@ class FeedPostCommentRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-
     async def save(self, comment: FeedPostComment) -> FeedPostComment:
         """INSERT — PK / CHECK 위반은 그대로 propagate."""
         self.session.add(comment)
         await self.session.flush()
         return comment
-
 
     async def find_by_id(self, comment_id: str) -> Optional[FeedPostComment]:
         """PK 단건 + user/detail. delete 권한 검증 / create 직후 reload 양쪽 공용 — 단일 진입점 유지."""
@@ -40,13 +39,11 @@ class FeedPostCommentRepository:
         result = await self.session.execute(stmt)
         return result.unique().scalar_one_or_none()
 
-
     async def count_by_post(self, post_id: str) -> int:
         """게시물 댓글 수."""
         stmt = select(func.count()).where(FeedPostComment.post_id == post_id)
         result = await self.session.execute(stmt)
         return result.scalar_one()
-
 
     async def find_by_post(
         self,
@@ -82,7 +79,6 @@ class FeedPostCommentRepository:
         )
         result = await self.session.execute(stmt)
         return list(result.unique().scalars().all())
-
 
     async def delete(self, comment: FeedPostComment) -> None:
         await self.session.delete(comment)

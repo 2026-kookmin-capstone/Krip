@@ -1,9 +1,9 @@
-from sqlalchemy.sql import func
+from sqlalchemy import CheckConstraint, Column, DateTime, ForeignKey, Index, Integer, String
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, Index, CheckConstraint
+from sqlalchemy.sql import func
 
-from app.util.id_generator import generate_tour_plan_id
 from app.database.session import Base
+from app.util.id_generator import generate_tour_plan_id
 
 
 class TourPlan(Base):

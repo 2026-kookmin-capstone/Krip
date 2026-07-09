@@ -4,11 +4,11 @@ read op 는 **GREATEST 로 regress 방지**, **unread 를 DB 잔여 기준 재�
 도착 손실 방지, 999+ 캡), **read_ack 발신 세션 직송 + read 이벤트 방 브로드캐스트** 를
 수행. mock 레벨에서 각 단계 호출과 payload 를 정확히 검증한다.
 """
-from test.unit.domain.chat.room_service.model_factory import ChatRoomFactory
 import pytest
 
-from app.domain.chat.service.exception import ChatRoomNotFoundError
 from app.domain.chat.model.chat_room import ChatRoomType
+from app.domain.chat.service.exception import ChatRoomNotFoundError
+from test.unit.domain.chat.room_service.model_factory import ChatRoomFactory
 
 
 @pytest.mark.unit
@@ -25,7 +25,6 @@ class TestMarkRead:
                 up_to_server_seq=-1,
             )
 
-
     async def test_raises_room_not_found(
         self, service, chat_room_repo_mock,
     ):
@@ -35,7 +34,6 @@ class TestMarkRead:
                 me_id="U_A", me_session_id="WS_A", room_id="CR_X",
                 up_to_server_seq=5,
             )
-
 
     async def test_non_member_raises_permission_error(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
@@ -49,7 +47,6 @@ class TestMarkRead:
                 me_id="U_A", me_session_id="WS_A", room_id="CR_G",
                 up_to_server_seq=5,
             )
-
 
     async def test_successful_mark_read_recalculates_unread_and_fans_out(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
@@ -98,7 +95,6 @@ class TestMarkRead:
             "up_to_server_seq": 7,
         }
 
-
     async def test_clamps_up_to_seq_to_current_room_seq(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
         message_repo_mock, redis_mock,
@@ -118,7 +114,6 @@ class TestMarkRead:
 
         # 10^15 가 아니라 현재 seq(12)로 clamp 되어 위임돼야 한다
         chat_member_repo_mock.mark_read.assert_awaited_once_with("CR_G", "U_A", 12)
-
 
     async def test_partial_read_sets_unread_to_residual_not_zero(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
@@ -143,7 +138,6 @@ class TestMarkRead:
         args = redis_mock.hset.call_args.args
         assert args == ("unread:U_A", "CR_G", 3)  # 0 이 아니라 잔여 3
 
-
     async def test_unread_capped_at_999(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
         message_repo_mock, redis_mock,
@@ -161,7 +155,6 @@ class TestMarkRead:
         )
 
         assert redis_mock.hset.call_args.args[2] == 999
-
 
     async def test_returns_repository_final_seq_even_when_regressed(
         self, service, chat_room_repo_mock, chat_member_repo_mock,

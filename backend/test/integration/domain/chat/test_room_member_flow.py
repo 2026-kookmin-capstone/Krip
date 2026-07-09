@@ -4,15 +4,14 @@
 order_by 동작과 MessageHistoryService 의 권한/필터 분기를 함께 검증한다. Redis/Mongo
 는 방 생성 부수효과를 위해 stub 사용 (`patch_external_clients` 재사용).
 """
-import pytest_asyncio
 import pytest
+import pytest_asyncio
 
-from app.domain.friend.model.friendship import Friendship, FriendshipStatus
-from app.domain.chat.service.room import RoomService
-from app.domain.chat.service.message_history import MessageHistoryService
-from app.domain.chat.service.exception import ChatRoomNotFoundError
-from app.domain.chat.model.chat_room_member import ChatRoomMember
 from app.domain.auth.model.user_detail_inform import UserDetailInform
+from app.domain.chat.service.exception import ChatRoomNotFoundError
+from app.domain.chat.service.message_history import MessageHistoryService
+from app.domain.chat.service.room import RoomService
+from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 
 
 pytestmark = pytest.mark.integration
@@ -74,7 +73,6 @@ class TestListRoomMembersFlow:
         assert by_id[b].profile_image_url == "https://cdn.example.com/b.jpg"
         assert by_id[a].profile_image_url is None  # set 하지 않음
 
-
     async def test_excludes_left_members(
         self, uow, seed_users, seed_friendship, chat_fanout_stub,
         message_service, patch_external_clients, session_factory,
@@ -98,7 +96,6 @@ class TestListRoomMembersFlow:
 
         assert {m.user_id for m in result.items} == {a, c}
 
-
     async def test_non_member_raises_permission_error(
         self, uow, seed_users, seed_friendship, chat_fanout_stub,
         message_service, patch_external_clients,
@@ -115,7 +112,6 @@ class TestListRoomMembersFlow:
         with pytest.raises(PermissionError):
             await history.list_room_members(me_id=c, room_id=room.chat_room_id)
 
-
     async def test_direct_room_raises_value_error(
         self, uow, seed_users, chat_fanout_stub, message_service,
         patch_external_clients,
@@ -129,7 +125,6 @@ class TestListRoomMembersFlow:
         history = MessageHistoryService(uow=uow)
         with pytest.raises(ValueError, match="그룹 방"):
             await history.list_room_members(me_id=a, room_id=direct.chat_room_id)
-
 
     async def test_unknown_room_raises_not_found(self, uow):
         history = MessageHistoryService(uow=uow)
@@ -168,7 +163,6 @@ class TestListInvitableFriendsFlow:
         by_id = {m.user_id: m for m in result.items}
         assert by_id[c].profile_image_url == "https://cdn.example.com/c.jpg"
 
-
     async def test_left_friend_is_invitable_again(
         self, uow, seed_users, seed_friendship, chat_fanout_stub,
         message_service, patch_external_clients, session_factory,
@@ -189,7 +183,6 @@ class TestListInvitableFriendsFlow:
         )
         assert {m.user_id for m in result.items} == {b}
 
-
     async def test_no_friends_returns_empty(
         self, uow, seed_users, seed_friendship, chat_fanout_stub,
         message_service, patch_external_clients,
@@ -209,7 +202,6 @@ class TestListInvitableFriendsFlow:
         )
         assert result.items == []
 
-
     async def test_non_member_raises_permission_error(
         self, uow, seed_users, seed_friendship, chat_fanout_stub,
         message_service, patch_external_clients,
@@ -225,7 +217,6 @@ class TestListInvitableFriendsFlow:
         history = MessageHistoryService(uow=uow)
         with pytest.raises(PermissionError):
             await history.list_invitable_friends(me_id=c, room_id=room.chat_room_id)
-
 
     async def test_direct_room_raises_value_error(
         self, uow, seed_users, chat_fanout_stub, message_service,

@@ -1,17 +1,17 @@
 """MongoDB `chat_message` 리포지토리 — motor 네이티브 raw dict (이유는 model 모듈 참조)."""
-from typing import Any, Optional
-from pymongo import ASCENDING, DESCENDING
-from motor.motor_asyncio import AsyncIOMotorCollection, AsyncIOMotorDatabase
 from datetime import datetime
+from typing import Any, Optional
 
-from app.domain.chat.model.chat_message import COLLECTION_NAME
+from motor.motor_asyncio import AsyncIOMotorCollection, AsyncIOMotorDatabase
+from pymongo import ASCENDING, DESCENDING
+
 from app.core.instrumentation import measure_mongo_op
+from app.domain.chat.model.chat_message import COLLECTION_NAME
 
 
 class ChatMessageRepository:
     def __init__(self, db: AsyncIOMotorDatabase):
         self.collection: AsyncIOMotorCollection = db[COLLECTION_NAME]
-
 
     # ──────────────────── Create ────────────────────
 
@@ -19,7 +19,6 @@ class ChatMessageRepository:
     async def insert(self, document: dict) -> None:
         """메시지 1건 insert. seq 중복은 UNIQUE 가 DuplicateKeyError 로 터트림."""
         await self.collection.insert_one(document)
-
 
     # ──────────────────── Read (단건) ────────────────────
 
@@ -32,7 +31,6 @@ class ChatMessageRepository:
             projection={"server_seq": 1, "_id": 0},
         )
         return int(doc["server_seq"]) if doc else 0
-
 
     # ──────────────────── Read (목록 — 히스토리 페이징) ────────────────────
 
@@ -53,7 +51,6 @@ class ChatMessageRepository:
         ).limit(limit + 1)
         return [doc async for doc in cursor]
 
-
     @measure_mongo_op("find", "chat_message")
     async def find_after(
         self,
@@ -71,12 +68,10 @@ class ChatMessageRepository:
         ).limit(limit + 1)
         return [doc async for doc in cursor]
 
-
     @measure_mongo_op("find_one", "chat_message")
     async def find_by_id(self, message_id: str) -> Optional[dict]:
         """단일 메시지 조회. 편집/삭제 권한 체크용."""
         return await self.collection.find_one({"_id": message_id})
-
 
     @measure_mongo_op("find", "chat_message")
     async def find_by_ids(self, message_ids: list[str]) -> dict[str, dict]:
@@ -85,7 +80,6 @@ class ChatMessageRepository:
             return {}
         cursor = self.collection.find({"_id": {"$in": message_ids}})
         return {doc["_id"]: doc async for doc in cursor}
-
 
     @measure_mongo_op("aggregate", "chat_message")
     async def find_last_by_rooms(self, room_ids: list[str]) -> dict[str, dict]:
@@ -112,7 +106,6 @@ class ChatMessageRepository:
             async for doc in cursor
         }
 
-
     @measure_mongo_op("count", "chat_message")
     async def count_after_seq(
         self,
@@ -135,7 +128,6 @@ class ChatMessageRepository:
             hint=[("chat_room_id", ASCENDING), ("server_seq", ASCENDING)],
         )
 
-
     # ──────────────────── Update (편집 / 삭제) ────────────────────
 
     @measure_mongo_op("update", "chat_message")
@@ -148,7 +140,6 @@ class ChatMessageRepository:
             {"$set": {"content": new_content, "edited_at": edited_at}},
         )
         return res.modified_count == 1
-
 
     @measure_mongo_op("update", "chat_message")
     async def soft_delete(self, message_id: str, deleted_at: datetime) -> bool:

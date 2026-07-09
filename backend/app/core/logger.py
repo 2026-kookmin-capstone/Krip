@@ -55,11 +55,12 @@ logger.bind(user_id=123, user_type="he").info("서비스 완료")
     logger.info(f"유저: {user_id}")                # (X) 레벨 비활성이어도 f-string 항상 평가됨
     logger.info("유저: {}", user_id)               # (O) 레벨 비활성이면 포맷팅 생략
 """
+import logging
 import sys
 from pathlib import Path
+
+from loguru import logger
 from loguru._logger import Logger
-from loguru import logger  
-import logging
 
 from app.config.setting import settings
 

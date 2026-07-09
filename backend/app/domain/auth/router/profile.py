@@ -1,23 +1,23 @@
-from fastapi import APIRouter, HTTPException, Request, Depends, UploadFile, File
 from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, File, HTTPException, Request, UploadFile
 
-from app.schema.common import MessageResponse
-from app.domain.auth.service.profile import ProfileService
+from app.container import Container
+from app.core.logger import get_logger
+from app.domain.auth.schema.profile import (
+    OtherUserProfileListResponse,
+    OtherUserProfileResponse,
+    ProfileImageResponse,
+    ProfileResponse,
+    ProfileStatsResponse,
+    ProfileUpdateRequest,
+)
 from app.domain.auth.service.exception import (
-    ProfileNotRegisteredError,
     ProfileImageAlreadyExistsError,
     ProfileImageNotFoundError,
+    ProfileNotRegisteredError,
 )
-from app.domain.auth.schema.profile import (
-    ProfileResponse,
-    ProfileUpdateRequest,
-    ProfileImageResponse,
-    OtherUserProfileResponse,
-    OtherUserProfileListResponse,
-    ProfileStatsResponse,
-)
-from app.core.logger import get_logger
-from app.container import Container
+from app.domain.auth.service.profile import ProfileService
+from app.schema.common import MessageResponse
 from app.util.upload import enforce_upload_size
 
 

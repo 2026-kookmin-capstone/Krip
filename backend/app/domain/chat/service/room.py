@@ -1,26 +1,27 @@
 """채팅방 생성 / 멤버십 / 읽음 처리."""
-from sqlalchemy.exc import IntegrityError
 from datetime import datetime, timezone
 
-from app.domain.friend.repository.user_block import UserBlockRepository
-from app.domain.friend.repository.friendship import FriendshipRepository
-from app.domain.chat.service.exception import ChatRoomNotFoundError
-from app.domain.chat.repository.chat_room import ChatRoomRepository
-from app.domain.chat.repository.chat_message import ChatMessageRepository
-from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
-from app.domain.chat.model.chat_room_member import ChatRoomMember
-from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
-from app.domain.chat.dto.room import ChatRoomData, ChatRoomPeerData
-from app.domain.auth.repository.user import UserRepository
-from app.database.session import UnitOfWork, mongodb, transactional
-from app.core.redis import get_redis_client
-from app.core.logger import get_logger
+from sqlalchemy.exc import IntegrityError
+
 from app.core.chat.redis_key import (
+    ROOM_MEMBERS_TTL,
     room_members_key,
     room_seq_key,
     unread_key,
-    ROOM_MEMBERS_TTL,
 )
+from app.core.logger import get_logger
+from app.core.redis import get_redis_client
+from app.database.session import UnitOfWork, mongodb, transactional
+from app.domain.auth.repository.user import UserRepository
+from app.domain.chat.dto.room import ChatRoomData, ChatRoomPeerData
+from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
+from app.domain.chat.model.chat_room_member import ChatRoomMember
+from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
+from app.domain.chat.repository.chat_message import ChatMessageRepository
+from app.domain.chat.repository.chat_room import ChatRoomRepository
+from app.domain.chat.service.exception import ChatRoomNotFoundError
+from app.domain.friend.repository.friendship import FriendshipRepository
+from app.domain.friend.repository.user_block import UserBlockRepository
 
 
 logger = get_logger("chat.room")
@@ -40,7 +41,6 @@ class RoomService:
         self._fanout = fanout_service
         self._message_service = message_service
 
-
     async def create_direct_room(self, me_id: str, peer_user_id: str) -> ChatRoomData:
         """1:1 방 idempotent 생성. canonical 정렬 `(a<b)` 로 같은 쌍은 항상 같은 방.
 
@@ -57,7 +57,6 @@ class RoomService:
             )
             logger.info("1:1 방 생성 완료: room_id={}, members={}", new_room_id, members)
         return dto
-
 
     @transactional
     async def _create_direct_room_tx(
@@ -111,7 +110,6 @@ class RoomService:
         dto = await self._to_dto(new_room, me_id=me_id, peer=peer)
         return new_room.chat_room_id, (user_a, user_b), dto
 
-
     async def _emit_room_joined(
         self, room_id: str, member_ids: list[str], *, unread_seed: str | None,
     ) -> None:
@@ -137,13 +135,11 @@ class RoomService:
                 uid, {"type": "room_joined", "room_id": room_id},
             )
 
-
     @transactional
     async def list_user_room_ids(self, user_id: str) -> list[str]:
         """유저가 속한 활성 방 ID 목록. WS 연결 직후 초기 구독에 사용."""
         member_repo = ChatRoomMemberRepository(self._session)
         return await member_repo.find_user_room_ids(user_id)
-
 
     async def create_group_room(
         self,
@@ -170,7 +166,6 @@ class RoomService:
             room_id, me_id, all_member_ids,
         )
         return dto
-
 
     @transactional
     async def _create_group_room_tx(
@@ -212,7 +207,6 @@ class RoomService:
 
         return new_room.chat_room_id, all_member_ids, self._to_group_dto(new_room)
 
-
     async def _send_system_message_safe(self, **kwargs) -> None:
         """(커밋 후) 시스템 메시지 best-effort 발행 — 실패해도 멤버십 변경은 되돌리지 않는다."""
         try:
@@ -222,7 +216,6 @@ class RoomService:
                 "시스템 메시지 발행 실패 (무시): room_id={}, action={}, err={}",
                 kwargs.get("room_id"), kwargs.get("action"), type(e).__name__,
             )
-
 
     async def _run_side_effect_safe(self, coro, *, room_id: str, label: str) -> None:
         """(커밋 후) Redis/fan-out 부수효과 best-effort — 실패해도 커밋된 멤버십은 안 되돌린다.
@@ -236,7 +229,6 @@ class RoomService:
                 "채팅 부수효과 실패 (무시): label={}, room_id={}, err={}",
                 label, room_id, type(e).__name__,
             )
-
 
     async def invite_members(
         self,
@@ -273,7 +265,6 @@ class RoomService:
             room_id, me_id, invited, skipped,
         )
         return invited, skipped
-
 
     @transactional
     async def _invite_members_tx(
@@ -337,7 +328,6 @@ class RoomService:
 
         return invited, skipped, new_members, rejoined, (current_seq or 0)
 
-
     async def _emit_invite_side_effects(
         self,
         room_id: str,
@@ -377,7 +367,6 @@ class RoomService:
                 uid, {"type": "room_joined", "room_id": room_id},
             )
 
-
     async def leave_room(self, me_id: str, room_id: str) -> None:
         """그룹 방 본인 퇴장.
 
@@ -394,7 +383,6 @@ class RoomService:
             room_id=room_id, action="leave", actor_id=me_id,
         )
         logger.info("그룹 방 퇴장: room_id={}, user_id={}", room_id, me_id)
-
 
     @transactional
     async def _leave_room_tx(self, *, me_id: str, room_id: str) -> None:
@@ -415,7 +403,6 @@ class RoomService:
         member.is_left = True
         await member_repo.update(member)
 
-
     async def _emit_member_removed(self, room_id: str, user_id: str) -> None:
         """(커밋 후) 멤버 제거 부수효과 — SREM + unread HDEL + room_left fan-out + 구독 해제.
 
@@ -431,7 +418,6 @@ class RoomService:
             user_id, {"type": "room_left", "room_id": room_id},
         )
         await self._fanout.unsubscribe_user_from_room(user_id, room_id)
-
 
     async def kick_member(
         self, me_id: str, room_id: str, target_user_id: str,
@@ -451,7 +437,6 @@ class RoomService:
             "멤버 강퇴: room_id={}, kicker={}, target={}",
             room_id, me_id, target_user_id,
         )
-
 
     @transactional
     async def _kick_member_tx(
@@ -480,7 +465,6 @@ class RoomService:
 
         target.is_left = True
         await member_repo.update(target)
-
 
     @transactional
     async def mark_read(
@@ -548,7 +532,6 @@ class RoomService:
         )
         return final_seq
 
-
     @staticmethod
     async def _get_current_seq(
         message_repo: ChatMessageRepository,
@@ -564,7 +547,6 @@ class RoomService:
                 pass
         return await message_repo.get_max_server_seq(room_id)
 
-
     @staticmethod
     def _to_group_dto(room: ChatRoom) -> ChatRoomData:
         """그룹 방 생성 직후 DTO — peer / last_message 모두 None."""
@@ -579,7 +561,6 @@ class RoomService:
             effective_last_at=room.effective_last_at or room.created_at,
             notification_muted=False,
         )
-
 
     @staticmethod
     async def _to_dto(room: ChatRoom, me_id: str, peer) -> ChatRoomData:

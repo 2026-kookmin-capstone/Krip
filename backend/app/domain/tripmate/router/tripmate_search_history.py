@@ -1,14 +1,14 @@
-from typing import Optional
-from fastapi import APIRouter, Request, Depends, Query
 from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, Query, Request
 
-from app.schema.common import MessageResponse
-from app.domain.tripmate.service.tripmate_search_history import TripmateSearchHistoryService
-from app.domain.tripmate.schema.tripmate_search_history import (
-    SearchHistoryResponse, SearchHistoryListResponse,
-)
-from app.core.logger import get_logger
 from app.container import Container
+from app.core.logger import get_logger
+from app.domain.tripmate.schema.tripmate_search_history import (
+    SearchHistoryListResponse,
+    SearchHistoryResponse,
+)
+from app.domain.tripmate.service.tripmate_search_history import TripmateSearchHistoryService
+from app.schema.common import MessageResponse
 
 
 router = APIRouter(prefix="/search-history", tags=["여행 메이트 검색 기록"])

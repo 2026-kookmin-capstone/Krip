@@ -1,11 +1,12 @@
 """FeedPostCommentService 단위 테스트 fixtures."""
-from unittest.mock import AsyncMock, MagicMock
-from test.unit.domain.feed.mock_factory import FakeUnitOfWork, make_mock_session
-import pytest
 from datetime import datetime, timezone
+from unittest.mock import AsyncMock, MagicMock
 
-from app.domain.feed.service.feed_post_comment import FeedPostCommentService
+import pytest
+
 from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
+from app.domain.feed.service.feed_post_comment import FeedPostCommentService
+from test.unit.domain.feed.mock_factory import FakeUnitOfWork, make_mock_session
 
 
 @pytest.fixture

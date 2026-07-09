@@ -1,5 +1,6 @@
 """피드 좋아요 Pydantic 스키마."""
 from typing import List, Optional
+
 from pydantic import BaseModel, Field
 
 

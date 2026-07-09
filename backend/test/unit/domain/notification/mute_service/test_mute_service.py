@@ -4,8 +4,8 @@
 """
 import pytest
 
-from app.domain.chat.model.chat_room_member import ChatRoomMember
 from app.domain.auth.model.user import User
+from app.domain.chat.model.chat_room_member import ChatRoomMember
 
 
 def _make_user(user_id: str, *, notification_muted=None) -> User:
@@ -46,7 +46,6 @@ class TestSetGlobalMute:
         assert user.notification_muted is True
         user_repo_mock.update.assert_awaited_once_with(user)
 
-
     async def test_muted_false_normalizes_to_none(
         self, service, user_repo_mock,
     ):
@@ -58,7 +57,6 @@ class TestSetGlobalMute:
 
         assert user.notification_muted is None
         user_repo_mock.update.assert_awaited_once_with(user)
-
 
     async def test_nonexistent_user_raises(self, service, user_repo_mock):
         user_repo_mock.find_by_id.return_value = None
@@ -88,7 +86,6 @@ class TestSetRoomMute:
         assert member.notification_muted is True
         chat_member_repo_mock.update.assert_awaited_once_with(member)
 
-
     async def test_muted_false_normalizes_to_none(
         self, service, chat_member_repo_mock,
     ):
@@ -101,7 +98,6 @@ class TestSetRoomMute:
 
         assert member.notification_muted is None
 
-
     async def test_nonmember_raises(self, service, chat_member_repo_mock):
         chat_member_repo_mock.find.return_value = None
 
@@ -111,7 +107,6 @@ class TestSetRoomMute:
             )
 
         chat_member_repo_mock.update.assert_not_awaited()
-
 
     async def test_left_member_raises(self, service, chat_member_repo_mock):
         """탈퇴자는 자기 방의 mute 설정 변경 불가 — 활성 멤버만 토글 권한."""

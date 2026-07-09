@@ -1,11 +1,11 @@
 """메시지 편집 / 삭제 REST. 방 id 없이 메시지 id 만으로 접근 가능하도록 별도 경로."""
 
-from fastapi import APIRouter, Depends, HTTPException, Request
 from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Request
 
-from app.domain.chat.service.message import MessageService
-from app.domain.chat.schema.message import EditMessageBody, EditMessageResponse
 from app.container import Container
+from app.domain.chat.schema.message import EditMessageBody, EditMessageResponse
+from app.domain.chat.service.message import MessageService
 
 
 router = APIRouter(prefix="/messages", tags=["채팅 - 메시지 편집/삭제"])

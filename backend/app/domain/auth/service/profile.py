@@ -1,26 +1,26 @@
 from typing import Any, BinaryIO
 
-from app.util.storage_prefix import profile_prefix
-from app.domain.friend.repository.friendship import FriendshipRepository
-from app.domain.feed.repository.feed_post_like import FeedPostLikeRepository
-from app.domain.auth.service.exception import (
-    ProfileNotRegisteredError,
-    ProfileImageAlreadyExistsError,
-    ProfileImageNotFoundError,
-)
-from app.domain.auth.repository.user_travel_style import UserTravelStyleRepository
-from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
-from app.domain.auth.repository.user import UserRepository
-from app.domain.auth.model.user_travel_style import UserTravelStyle
+from app.core.logger import get_logger
+from app.core.object_storage import get_object_storage
+from app.database.session import UnitOfWork, transactional
 from app.domain.auth.dto.profile import (
+    OtherUserProfileData,
     ProfileData,
     ProfileImageData,
-    OtherUserProfileData,
     ProfileStatsData,
 )
-from app.database.session import UnitOfWork, transactional
-from app.core.object_storage import get_object_storage
-from app.core.logger import get_logger
+from app.domain.auth.model.user_travel_style import UserTravelStyle
+from app.domain.auth.repository.user import UserRepository
+from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
+from app.domain.auth.repository.user_travel_style import UserTravelStyleRepository
+from app.domain.auth.service.exception import (
+    ProfileImageAlreadyExistsError,
+    ProfileImageNotFoundError,
+    ProfileNotRegisteredError,
+)
+from app.domain.feed.repository.feed_post_like import FeedPostLikeRepository
+from app.domain.friend.repository.friendship import FriendshipRepository
+from app.util.storage_prefix import profile_prefix
 
 
 logger = get_logger("auth.profile.service")
@@ -30,7 +30,6 @@ class ProfileService:
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
         self.storage = get_object_storage()
-
 
     @transactional
     async def get_all_other_users(self, user_id: str) -> list[OtherUserProfileData]:
@@ -52,7 +51,6 @@ class ProfileService:
             for u in users
             if u.detail is not None
         ]
-
 
     @transactional
     async def get_my_profile(self, user_id: str) -> ProfileData:
@@ -79,7 +77,6 @@ class ProfileService:
             profile_image_url=user.detail.profile_image_url,
             notification_muted=user.notification_muted is True,
         )
-
 
     @transactional
     async def get_my_stats(self, user_id: str) -> ProfileStatsData:
@@ -108,7 +105,6 @@ class ProfileService:
             total_feed_likes=total_feed_likes,
             total_friends=total_friends,
         )
-
 
     # ──────────────────── 프로필 수정 ────────────────────
 
@@ -172,7 +168,6 @@ class ProfileService:
             notification_muted=user.notification_muted is True,
         )
 
-
     # ──────────────────── 프로필 이미지 추가 ────────────────────
 
     @transactional
@@ -212,7 +207,6 @@ class ProfileService:
 
         return ProfileImageData(profile_image_url=new_url)
 
-
     # ──────────────────── 프로필 이미지 수정 ────────────────────
 
     async def update_profile_image(
@@ -242,7 +236,6 @@ class ProfileService:
         logger.info("프로필 이미지 수정 완료 (user_id={})", user_id)
         return ProfileImageData(profile_image_url=new_url)
 
-
     @transactional
     async def _replace_profile_image(
         self,
@@ -271,7 +264,6 @@ class ProfileService:
 
         return new_url, old_url
 
-
     # ──────────────────── 프로필 이미지 삭제 ────────────────────
 
     async def delete_profile_image(self, user_id: str) -> None:
@@ -289,7 +281,6 @@ class ProfileService:
             logger.warning("프로필 이미지 파일 삭제 실패 — orphan 파일 잔존 (user_id={}): {}", user_id, e)
 
         logger.info("프로필 이미지 삭제 완료 (user_id={})", user_id)
-
 
     @transactional
     async def _null_profile_image(self, user_id: str) -> str:

@@ -1,10 +1,11 @@
-from sqlalchemy.sql import func
-from sqlalchemy.orm import relationship
-from sqlalchemy import Column, String, DateTime, Enum, ForeignKey, Index, CheckConstraint, literal_column
 import enum
 
-from app.util.id_generator import generate_friendship_id
+from sqlalchemy import CheckConstraint, Column, DateTime, Enum, ForeignKey, Index, String, literal_column
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
+
 from app.database.session import Base
+from app.util.id_generator import generate_friendship_id
 
 
 class FriendshipStatus(str, enum.Enum):

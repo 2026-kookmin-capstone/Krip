@@ -1,8 +1,11 @@
-from typing import List
-from pydantic import BaseModel, Field
 from datetime import datetime
+from typing import List
+
+from pydantic import BaseModel, Field
+
 
 # ──────────────────── Response ────────────────────
+
 
 class SearchHistoryResponse(BaseModel):
     search_name: str = Field(..., description="검색어")

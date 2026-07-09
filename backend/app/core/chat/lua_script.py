@@ -4,10 +4,11 @@ startup 시 1회 `.lua` 파일을 읽어 redis-py 의 `register_script()` 로 �
 `AsyncScript` 가 EVALSHA 우선 / NOSCRIPT 시 EVAL fallback 까지 자동 처리하므로
 SHA 캐싱은 우리가 손대지 않는다.
 """
-from typing import Optional
-from redis.commands.core import AsyncScript
-from redis.asyncio import Redis
 from pathlib import Path
+from typing import Optional
+
+from redis.asyncio import Redis
+from redis.commands.core import AsyncScript
 
 from app.core.instrumentation import instrument_lua_script
 
@@ -27,7 +28,6 @@ class LuaScripts:
         self.recover_and_incr: Optional[AsyncScript] = None
         self.force_jump: Optional[AsyncScript] = None
         self.incr_with_ttl: Optional[AsyncScript] = None
-
 
     def load(self, hot_client: Redis) -> None:
         """startup 1회. `instrument_lua_script` 로 감싸 호출 카운트 자동 부착."""

@@ -2,15 +2,15 @@ from typing import List
 
 from sqlalchemy.exc import IntegrityError
 
-from app.domain.tripmate.repository.tripmate_post_like import TripmatePostLikeRepository
-from app.domain.tripmate.repository.tripmate_post import TripmatePostRepository
-from app.domain.tripmate.model.tripmate_post_like import TripmatePostLike
-from app.domain.tripmate.dto.tripmate_post_like import AddLikePayload
-from app.domain.notification.service.inbox import InboxService
-from app.domain.friend.repository.user_block import UserBlockRepository
-from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
-from app.database.session import UnitOfWork, transactional
 from app.core.logger import get_logger
+from app.database.session import UnitOfWork, transactional
+from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
+from app.domain.friend.repository.user_block import UserBlockRepository
+from app.domain.notification.service.inbox import InboxService
+from app.domain.tripmate.dto.tripmate_post_like import AddLikePayload
+from app.domain.tripmate.model.tripmate_post_like import TripmatePostLike
+from app.domain.tripmate.repository.tripmate_post import TripmatePostRepository
+from app.domain.tripmate.repository.tripmate_post_like import TripmatePostLikeRepository
 
 
 logger = get_logger("tripmate.post.like.service")
@@ -20,7 +20,6 @@ class TripmatePostLikeService:
     def __init__(self, uow: UnitOfWork, inbox_service: InboxService):
         self.uow = uow
         self.inbox_service = inbox_service
-
 
     # ──────────────────── 좋아요 누른 유저 조회 ────────────────────
 
@@ -45,7 +44,6 @@ class TripmatePostLikeService:
 
         return await like_repo.find_user_ids_by_post(post_id)
 
-
     # ──────────────────── 좋아요 추가 ────────────────────
 
     async def add_like(self, user_id: str, post_id: str) -> int:
@@ -65,7 +63,6 @@ class TripmatePostLikeService:
                 post_preview=payload.post_preview,
             )
         return payload.like_count
-
 
     @transactional
     async def _add_like_tx(self, *, user_id: str, post_id: str) -> AddLikePayload:
@@ -124,7 +121,6 @@ class TripmatePostLikeService:
             actor_profile_image_url=detail.profile_image_url if detail is not None else None,
             post_preview=post.title,
         )
-
 
     # ──────────────────── 좋아요 삭제 ────────────────────
 

@@ -1,8 +1,8 @@
-from typing import Literal, Optional
 import re
+from typing import Literal, Optional
 
-from app.domain.tour.model.place import Place
 from app.core.instrumentation import measure_mongo_op
+from app.domain.tour.model.place import Place
 
 
 # 장소 조회 개수
@@ -107,7 +107,6 @@ class PlaceRepository:
         collection = Place.get_motor_collection()
         return await collection.find_one({"place_id": place_id})
 
-
     @measure_mongo_op("find", "place")
     async def find_by_place_ids(self, place_ids: list[str]) -> list[dict]:
         """place_id 목록으로 장소 배치 조회"""
@@ -194,13 +193,11 @@ class PlaceRepository:
 
         return await collection.aggregate(pipeline).to_list(limit)
 
-
     @staticmethod
     def _parse_cursor(cursor: str) -> tuple[float, str]:
         """커서 문자열 파싱 → (distance, place_id)"""
         distance_str, place_id = cursor.split(":", 1)
         return float(distance_str), place_id
-
 
     @staticmethod
     def build_cursor(distance: float, place_id: str) -> str:

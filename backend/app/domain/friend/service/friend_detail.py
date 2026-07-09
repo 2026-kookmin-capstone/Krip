@@ -1,8 +1,8 @@
-from app.domain.friend.repository.user_block import UserBlockRepository
-from app.domain.friend.repository.friendship import FriendshipRepository
-from app.domain.friend.dto.friend_detail import FriendDetailData
-from app.domain.auth.repository.user import UserRepository
 from app.database.session import UnitOfWork, transactional
+from app.domain.auth.repository.user import UserRepository
+from app.domain.friend.dto.friend_detail import FriendDetailData
+from app.domain.friend.repository.friendship import FriendshipRepository
+from app.domain.friend.repository.user_block import UserBlockRepository
 
 
 class UserNotFoundError(ValueError):
@@ -14,7 +14,6 @@ class FriendDetailService:
 
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
-
 
     @transactional
     async def get_friend_detail(self, viewer_id: str, peer_id: str) -> FriendDetailData:

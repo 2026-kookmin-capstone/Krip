@@ -4,12 +4,13 @@
 server_seq 가 유니크하고 1..N 로 채워지는지 검증한다. 단위 테스트는 Lua 를 mock 하기
 때문에 이 보장은 통합으로만 증명 가능.
 """
-import pytest
 import asyncio
 
-from app.domain.chat.service.message import MessageService
-from app.domain.chat.model.chat_message import MessageType
+import pytest
+
 from app.database.session import UnitOfWork
+from app.domain.chat.model.chat_message import MessageType
+from app.domain.chat.service.message import MessageService
 
 
 pytestmark = pytest.mark.integration

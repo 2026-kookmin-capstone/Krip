@@ -1,5 +1,5 @@
-from typing import Dict
 from functools import lru_cache
+from typing import Dict
 
 
 class TourPlannerPromptManager:
@@ -10,7 +10,6 @@ class TourPlannerPromptManager:
             'recommend_destinations': self._get_recommend_destinations_prompt(),
             'build_tour_plan': self._get_build_tour_plan_prompt(),
         }
-
 
     def _get_recommend_destinations_prompt(self) -> str:
         return """당신은 서울 여행 전문 플래너 AI입니다. 사용자의 여행 일수에 맞춰 최적의 여행 코스를 추천합니다.
@@ -143,7 +142,6 @@ class TourPlannerPromptManager:
 }}
 ```"""
 
-
     def _get_build_tour_plan_prompt(self) -> str:
         return """당신은 서울 여행 전문 플래너 AI입니다. 추천된 권역별 실제 장소 데이터를 바탕으로, 사용자에게 최적화된 하루 여행 코스를 구성합니다.
 
@@ -227,20 +225,17 @@ class TourPlannerPromptManager:
 }}
 ```"""
 
-
     def get_prompt(self, prompt_key: str) -> str:
         """프롬프트 템플릿을 반환합니다."""
         if prompt_key not in self._prompts:
             raise ValueError(f"Unknown prompt key: {prompt_key}")
         return self._prompts[prompt_key]
 
-
     def update_prompt(self, prompt_key: str, new_prompt: str) -> None:
         """프롬프트 템플릿을 업데이트합니다."""
         if prompt_key not in self._prompts:
             raise ValueError(f"Unknown prompt key: {prompt_key}")
         self._prompts[prompt_key] = new_prompt
-
 
     def list_prompt_keys(self) -> list:
         """사용 가능한 프롬프트 키 목록을 반환합니다."""

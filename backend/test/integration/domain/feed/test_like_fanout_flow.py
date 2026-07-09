@@ -39,8 +39,6 @@ class TestAddLikeFanout:
     ):
         post_id, owner_id = await seed_feed_post()
         # owner 가 아닌 다른 user 가 시드됐으니 두 번째를 actor 로 사용
-        from sqlalchemy import select
-        from app.domain.auth.model.user import User
         # seed_feed_post 가 2 명 시드 (owner + 다른 1명) — actor 는 다른 사람
         # owner_id 가 첫 번째라 두 번째 user 가 actor
 
@@ -55,7 +53,6 @@ class TestAddLikeFanout:
         assert doc["type"] == InboxItemType.FEED_LIKE.value
         assert doc["target_type"] == TargetType.FEED_POST.value
         assert doc["target_id"] == post_id
-
 
     async def test_self_like_does_not_create_inbox_item(
         self, mongo_db, feed_post_like_service, seed_feed_post,
@@ -122,6 +119,7 @@ class TestRemoveLikePreservesInboxItem:
 async def _find_other_user(uow, exclude_user_id: str) -> str:
     """seed_users 가 만든 두 번째 user 찾기 — `exclude_user_id` 외 첫 번째 active user."""
     from sqlalchemy import select
+
     from app.domain.auth.model.user import User, UserStatus
 
     async with uow as session:

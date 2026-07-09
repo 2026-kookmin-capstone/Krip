@@ -5,9 +5,10 @@
 
 discriminator 필드명을 분리해야 union 해상이 가능.
 """
-from typing import Annotated, Any, Literal, Optional, Union
-from pydantic import BaseModel, Field, field_validator
 from datetime import datetime
+from typing import Annotated, Any, Literal, Optional, Union
+
+from pydantic import BaseModel, Field, field_validator
 
 from app.domain.chat.model.chat_message import MessageType
 

@@ -7,17 +7,17 @@
     - 본인 fast-path 에서 friend / block 조회 자체를 건너뜀 (DB hit 절약)
     - 페이지네이션 next_cursor 가 페이지 가득 찰 때만 채워짐 (get_my_feed 와 동일 약속)
 """
-from unittest.mock import MagicMock
+from datetime import datetime, timezone
 from types import SimpleNamespace
-from test.unit.domain.feed.mock_factory import make_feed_post_with_counts
+from unittest.mock import MagicMock
+
 import pytest
 
-from app.util.cursor import decode_cursor
-from datetime import datetime, timezone
-
-from app.domain.friend.model.friendship import FriendshipStatus
-from app.domain.feed.service.exception import FeedBlockedError
 from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
+from app.domain.feed.service.exception import FeedBlockedError
+from app.domain.friend.model.friendship import FriendshipStatus
+from app.util.cursor import decode_cursor
+from test.unit.domain.feed.mock_factory import make_feed_post_with_counts
 
 
 def _mk_row(
@@ -69,7 +69,6 @@ class TestVisibilityResolution:
         friendship_repo_mock.find_between.assert_not_called()
         block_repo_mock.find_blocks_between.assert_not_called()
 
-
     async def test_friend_sees_friends_and_public(
         self, service, repo_mock, friendship_repo_mock, block_repo_mock,
     ):
@@ -81,7 +80,6 @@ class TestVisibilityResolution:
 
         passed = set(repo_mock.find_by_owner.await_args.kwargs["visibilities"])
         assert passed == {FeedVisibility.FRIENDS, FeedVisibility.PUBLIC}
-
 
     async def test_pending_friendship_treated_as_non_friend(
         self, service, repo_mock, friendship_repo_mock, block_repo_mock,
@@ -95,7 +93,6 @@ class TestVisibilityResolution:
 
         passed = set(repo_mock.find_by_owner.await_args.kwargs["visibilities"])
         assert passed == {FeedVisibility.PUBLIC}
-
 
     async def test_non_friend_sees_only_public(
         self, service, repo_mock, friendship_repo_mock, block_repo_mock,
@@ -146,7 +143,6 @@ class TestPagination:
         result = await service.get_user_feed(viewer_id="USER_a", owner_id="USER_b")
         assert decode_cursor(result.next_cursor)[1] == "FDP_1"
 
-
     async def test_next_cursor_none_when_partial_page(
         self, service, repo_mock, friendship_repo_mock, block_repo_mock, monkeypatch,
     ):
@@ -157,7 +153,6 @@ class TestPagination:
 
         result = await service.get_user_feed(viewer_id="USER_a", owner_id="USER_b")
         assert result.next_cursor is None
-
 
     async def test_cursor_passes_through_to_repo(
         self, service, repo_mock, friendship_repo_mock, block_repo_mock,
@@ -189,7 +184,6 @@ class TestViewerIdPropagation:
 
         assert repo_mock.find_by_owner.await_args.kwargs["viewer_id"] == "USER_v"
 
-
     async def test_self_view_passes_self_as_viewer_id(
         self, service, repo_mock, friendship_repo_mock, block_repo_mock,
     ):
@@ -220,7 +214,6 @@ class TestIsLikedMappedFromRow:
         result = await service.get_user_feed(viewer_id="USER_v", owner_id="USER_b")
 
         assert result.posts[0].is_liked is True
-
 
     async def test_row_is_liked_false_propagates_to_dto(
         self, service, repo_mock, friendship_repo_mock, block_repo_mock,

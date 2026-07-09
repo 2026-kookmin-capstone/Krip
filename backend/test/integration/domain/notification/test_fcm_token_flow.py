@@ -7,12 +7,11 @@
     - 해제 idempotent (없거나 타인 소유는 조용히 종료)
     - user CASCADE 로 토큰 자동 정리 (회원 탈퇴 영구 삭제 시)
 """
-from test.integration.domain.notification.conftest import fetch_tokens_by_user
-from sqlalchemy import delete
 import pytest
+from sqlalchemy import delete
 
-from app.domain.notification.model.fcm_token import FcmToken
 from app.domain.auth.model.user import User
+from test.integration.domain.notification.conftest import fetch_tokens_by_user
 
 
 pytestmark = pytest.mark.integration
@@ -33,7 +32,6 @@ class TestRegisterTokenFlow:
         assert rows[0].token == "tok-A"
         assert result.fcm_token_id == rows[0].fcm_token_id
 
-
     async def test_same_user_same_token_is_noop(
         self, fcm_service, session_factory, seed_users,
     ):
@@ -45,7 +43,6 @@ class TestRegisterTokenFlow:
         rows = await fetch_tokens_by_user(session_factory, user_id)
         assert len(rows) == 1  # 중복 row 생성 안 됨
         assert first.fcm_token_id == second.fcm_token_id  # 같은 row 그대로
-
 
     async def test_different_user_same_token_swaps_owner(
         self, fcm_service, session_factory, seed_users,
@@ -61,7 +58,6 @@ class TestRegisterTokenFlow:
         assert a_rows == []  # 이전 owner 잃음
         assert len(b_rows) == 1
         assert b_rows[0].token == "tok-shared"
-
 
     async def test_one_user_can_register_multiple_tokens(
         self, fcm_service, session_factory, seed_users,
@@ -91,7 +87,6 @@ class TestUnregisterTokenFlow:
         rows = await fetch_tokens_by_user(session_factory, user_id)
         assert rows == []
 
-
     async def test_non_owner_silent_noop(
         self, fcm_service, session_factory, seed_users,
     ):
@@ -104,7 +99,6 @@ class TestUnregisterTokenFlow:
 
         rows = await fetch_tokens_by_user(session_factory, user_a)
         assert len(rows) == 1  # 보존
-
 
     async def test_nonexistent_token_silent_noop(
         self, fcm_service, seed_users,

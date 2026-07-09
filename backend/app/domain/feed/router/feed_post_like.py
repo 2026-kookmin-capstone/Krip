@@ -1,16 +1,16 @@
 """피드 좋아요 라우터. 본인 글에 본인 좋아요 허용 (인스타와 동일)."""
-from fastapi import APIRouter, HTTPException, Request, Depends
 from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Request
 
-from app.domain.feed.service.feed_post_like import FeedPostLikeService
-from app.domain.feed.service.exception import FeedNotFoundError
+from app.container import Container
+from app.domain.feed.dto.feed_post_like import LikedUserData
 from app.domain.feed.schema.feed_post_like import (
     LikedUserItem,
     LikedUsersResponse,
     LikeResponse,
 )
-from app.domain.feed.dto.feed_post_like import LikedUserData
-from app.container import Container
+from app.domain.feed.service.exception import FeedNotFoundError
+from app.domain.feed.service.feed_post_like import FeedPostLikeService
 
 
 router = APIRouter(tags=["피드 좋아요"])

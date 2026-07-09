@@ -3,14 +3,13 @@
 실 Mongo 에 메시지를 쓴 뒤 편집/삭제가 문서에 반영되고, 히스토리 조회 시 삭제된
 메시지는 content=None 으로 마스킹되는지까지 end-to-end 로 검증.
 """
-import pytest_asyncio
 import pytest
+import pytest_asyncio
 
-from app.domain.friend.model.friendship import Friendship, FriendshipStatus
-from app.domain.chat.service.room import RoomService
-from app.domain.chat.service.message_history import MessageHistoryService
-from app.domain.chat.service.message import MessageService
 from app.domain.chat.model.chat_message import MessageType
+from app.domain.chat.service.message_history import MessageHistoryService
+from app.domain.chat.service.room import RoomService
+from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 
 
 pytestmark = pytest.mark.integration
@@ -82,7 +81,6 @@ class TestEditMessageFlow:
         assert payload["content"] == "edited!"
         assert payload["message_id"] == message_id
 
-
     async def test_non_owner_cannot_edit(
         self, room_with_message, message_service, patch_external_clients,
     ):
@@ -92,7 +90,6 @@ class TestEditMessageFlow:
                 message_id=message_id, editor_user_id=b, editor_session_id="WS_B",
                 new_content="hacked",
             )
-
 
     async def test_edit_after_soft_delete_rejected(
         self, room_with_message, message_service, patch_external_clients,
@@ -138,7 +135,6 @@ class TestDeleteMessageFlow:
         assert hit.content is None
         assert hit.deleted_at is not None
 
-
     async def test_group_creator_can_delete_others_message(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
         patch_external_clients,
@@ -157,7 +153,6 @@ class TestDeleteMessageFlow:
         await message_service.delete_message(
             message_id=ack.message_id, deleter_user_id=a, deleter_session_id="WS_A",
         )
-
 
     async def test_regular_member_cannot_delete_others(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
@@ -180,7 +175,6 @@ class TestDeleteMessageFlow:
                 message_id=ack.message_id, deleter_user_id=c, deleter_session_id="WS_C",
             )
 
-
     async def test_system_message_cannot_be_deleted(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
         mongo_db, patch_external_clients,
@@ -202,7 +196,6 @@ class TestDeleteMessageFlow:
             await message_service.delete_message(
                 message_id=sys_doc["_id"], deleter_user_id=a, deleter_session_id="WS_A",
             )
-
 
     async def test_second_delete_is_rejected(
         self, room_with_message, message_service, patch_external_clients,

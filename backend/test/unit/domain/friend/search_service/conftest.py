@@ -1,17 +1,17 @@
-from test.unit.domain.friend.search_service.model_factory import (
-    FriendshipFactory,
-    UserBlockFactory,
-    UserFactory,
-)
+import pytest
+
+from app.domain.friend.service.search import FriendSearchService
 from test.unit.domain.friend.search_service.mock_factory import (
     FakeUnitOfWork,
     FriendSearchRepositoryMockFactory,
     FriendshipRepositoryMockFactory,
     make_mock_session,
 )
-import pytest
-
-from app.domain.friend.service.search import FriendSearchService
+from test.unit.domain.friend.search_service.model_factory import (
+    FriendshipFactory,
+    UserBlockFactory,
+    UserFactory,
+)
 
 
 @pytest.fixture(autouse=True)

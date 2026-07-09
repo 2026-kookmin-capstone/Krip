@@ -3,12 +3,13 @@
 페이징 경계값 (`has_more` / `next_cursor`), 권한 체크, soft-delete 된 메시지 content
 마스킹까지 검증. Mongo/Redis/RDB 는 전부 mock.
 """
-from types import SimpleNamespace
-import pytest
 from datetime import datetime, timezone
+from types import SimpleNamespace
 
-from app.domain.chat.service.exception import ChatRoomNotFoundError
+import pytest
+
 from app.domain.chat.model.chat_room import ChatRoomType
+from app.domain.chat.service.exception import ChatRoomNotFoundError
 
 
 NOW = datetime(2026, 4, 22, 12, 0, 0, tzinfo=timezone.utc)
@@ -73,7 +74,6 @@ class TestFindMessagesBefore:
                 me_id="U_X", room_id="CR_1", before_server_seq=100, limit=10,
             )
 
-
     async def test_no_results(
         self, service, chat_member_repo_mock, message_repo_mock,
     ):
@@ -86,7 +86,6 @@ class TestFindMessagesBefore:
         assert result.messages == []
         assert result.has_more is False
         assert result.next_cursor is None
-
 
     async def test_limit_exactly_no_more(
         self, service, chat_member_repo_mock, message_repo_mock,
@@ -104,7 +103,6 @@ class TestFindMessagesBefore:
         assert result.has_more is False
         assert result.next_cursor is None
 
-
     async def test_limit_exceeded_has_more_and_cursor(
         self, service, chat_member_repo_mock, message_repo_mock,
     ):
@@ -121,7 +119,6 @@ class TestFindMessagesBefore:
         assert [m.server_seq for m in result.messages] == [6, 5, 4]
         assert result.has_more is True
         assert result.next_cursor == 4  # 마지막(=가장 오래된) seq
-
 
     async def test_deleted_message_content_is_masked(
         self, service, chat_member_repo_mock, message_repo_mock,
@@ -153,7 +150,6 @@ class TestFindMessagesAfter:
                 me_id="U_X", room_id="CR_1", after_server_seq=0, limit=200,
             )
 
-
     async def test_catch_up_ascending_with_has_more(
         self, service, chat_member_repo_mock, message_repo_mock,
     ):
@@ -170,7 +166,6 @@ class TestFindMessagesAfter:
         assert [m.server_seq for m in result.messages] == [1, 2, 3]
         assert result.has_more is True
         assert result.next_cursor == 3  # 마지막(=가장 최신) seq — 클라는 다음 호출에 after=3
-
 
     async def test_no_more_messages_returns_empty(
         self, service, chat_member_repo_mock, message_repo_mock,
@@ -203,7 +198,6 @@ class TestListRooms:
         assert result.items == []
         assert result.next_cursor is None
 
-
     async def test_direct_room_with_peer_profile(
         self, service, chat_room_repo_mock, user_repo_mock, redis_mock,
         message_repo_mock,
@@ -232,7 +226,6 @@ class TestListRooms:
         assert item.unread_count == 3
         assert item.last_message is None
 
-
     async def test_group_room_has_no_peer(
         self, service, chat_room_repo_mock, redis_mock, message_repo_mock,
     ):
@@ -245,7 +238,6 @@ class TestListRooms:
         assert result.items[0].type == ChatRoomType.GROUP
         assert result.items[0].title == "T"
         assert result.items[0].peer is None
-
 
     async def test_direct_peer_withdrawn_returns_null_profile(
         self, service, chat_room_repo_mock, redis_mock, message_repo_mock,
@@ -260,7 +252,6 @@ class TestListRooms:
         assert result.items[0].peer.user_id is None
         assert result.items[0].peer.user_name is None
         assert result.items[0].peer.profile_image_url is None
-
 
     async def test_last_message_preview_masks_deleted(
         self, service, chat_room_repo_mock, redis_mock, message_repo_mock,
@@ -281,7 +272,6 @@ class TestListRooms:
         assert result.items[0].last_message is not None
         assert result.items[0].last_message.content is None  # 삭제 마스킹
         assert result.items[0].last_message.server_seq == 10
-
 
     async def test_last_message_preview_keeps_system_content_dict(
         self, service, chat_room_repo_mock, redis_mock, message_repo_mock,
@@ -316,7 +306,6 @@ class TestListRooms:
         assert item.last_message.sender_id is None
         assert item.last_message.content == payload  # dict 보존 (str 변환 / drop 없음)
 
-
     async def test_last_message_preview_keeps_image_content_dict(
         self, service, chat_room_repo_mock, redis_mock, message_repo_mock,
     ):
@@ -343,7 +332,6 @@ class TestListRooms:
         assert item.last_message.type == "image"
         assert item.last_message.content == payload
 
-
     async def test_notification_muted_true_exposed_as_true(
         self, service, chat_room_repo_mock, redis_mock, message_repo_mock,
     ):
@@ -356,7 +344,6 @@ class TestListRooms:
         result = await service.list_rooms(me_id="U_A")
         assert result.items[0].notification_muted is True
 
-
     async def test_notification_muted_null_normalizes_to_false(
         self, service, chat_room_repo_mock, redis_mock, message_repo_mock,
     ):
@@ -368,7 +355,6 @@ class TestListRooms:
 
         result = await service.list_rooms(me_id="U_A")
         assert result.items[0].notification_muted is False
-
 
     async def test_notification_muted_false_treated_as_unmuted(
         self, service, chat_room_repo_mock, redis_mock, message_repo_mock,
@@ -399,7 +385,6 @@ class TestGetRoom:
         with pytest.raises(ChatRoomNotFoundError):
             await service.get_room(me_id="U_A", room_id="CR_X")
 
-
     async def test_non_member_raises_permission_error(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
     ):
@@ -410,7 +395,6 @@ class TestGetRoom:
 
         with pytest.raises(PermissionError):
             await service.get_room(me_id="U_A", room_id="CR_1")
-
 
     async def test_left_member_raises_permission_error(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
@@ -424,7 +408,6 @@ class TestGetRoom:
 
         with pytest.raises(PermissionError):
             await service.get_room(me_id="U_A", room_id="CR_1")
-
 
     async def test_active_member_with_mute_true_exposes_true(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
@@ -444,7 +427,6 @@ class TestGetRoom:
         assert result.title == "T"
         assert result.peer is None  # group
 
-
     async def test_active_member_with_mute_null_exposes_false(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
         redis_mock, message_repo_mock,
@@ -459,7 +441,6 @@ class TestGetRoom:
 
         result = await service.get_room(me_id="U_A", room_id="CR_g")
         assert result.notification_muted is False
-
 
     async def test_direct_room_loads_peer_profile(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
@@ -525,7 +506,6 @@ class TestListRoomMembers:
         with pytest.raises(ChatRoomNotFoundError):
             await service.list_room_members(me_id="U_A", room_id="CR_X")
 
-
     async def test_non_member_raises(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
     ):
@@ -534,7 +514,6 @@ class TestListRoomMembers:
         with pytest.raises(PermissionError):
             await service.list_room_members(me_id="U_X", room_id="CR_1")
 
-
     async def test_direct_room_raises(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
     ):
@@ -542,7 +521,6 @@ class TestListRoomMembers:
         chat_member_repo_mock.is_active_member.return_value = True
         with pytest.raises(ValueError, match="그룹 방"):
             await service.list_room_members(me_id="U_A", room_id="CR_d")
-
 
     async def test_returns_active_members_with_profile(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
@@ -575,7 +553,6 @@ class TestListInvitableFriends:
         with pytest.raises(ChatRoomNotFoundError):
             await service.list_invitable_friends(me_id="U_A", room_id="CR_X")
 
-
     async def test_non_member_raises(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
     ):
@@ -584,7 +561,6 @@ class TestListInvitableFriends:
         with pytest.raises(PermissionError):
             await service.list_invitable_friends(me_id="U_X", room_id="CR_g")
 
-
     async def test_direct_room_raises(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
     ):
@@ -592,7 +568,6 @@ class TestListInvitableFriends:
         chat_member_repo_mock.is_active_member.return_value = True
         with pytest.raises(ValueError, match="그룹 방"):
             await service.list_invitable_friends(me_id="U_A", room_id="CR_d")
-
 
     async def test_no_friends_returns_empty(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
@@ -605,7 +580,6 @@ class TestListInvitableFriends:
         result = await service.list_invitable_friends(me_id="U_A", room_id="CR_g")
         assert result.items == []
 
-
     async def test_all_friends_already_in_room_returns_empty(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
         friendship_repo_mock,
@@ -617,7 +591,6 @@ class TestListInvitableFriends:
 
         result = await service.list_invitable_friends(me_id="U_A", room_id="CR_g")
         assert result.items == []
-
 
     async def test_returns_friends_not_in_room_with_profile(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
@@ -649,7 +622,6 @@ class TestGetUnreadCounts:
         redis_mock.hgetall.return_value = {"CR_1": "5", "CR_2": "0"}
         result = await service.get_unread_counts(me_id="U_A")
         assert result == {"CR_1": 5, "CR_2": 0}
-
 
     async def test_empty_hash_returns_empty_dict(self, service, redis_mock):
         redis_mock.hgetall.return_value = {}

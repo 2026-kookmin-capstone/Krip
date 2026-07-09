@@ -1,7 +1,8 @@
 from typing import Optional
-from sqlalchemy.orm import selectinload
-from sqlalchemy.ext.asyncio import AsyncSession
+
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from app.domain.tour.model.tour_plan import TourPlan
 
@@ -9,7 +10,6 @@ from app.domain.tour.model.tour_plan import TourPlan
 class TourPlanRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
-
 
     # ──────────────────── Create ────────────────────
 
@@ -19,13 +19,11 @@ class TourPlanRepository:
         await self.session.flush()
         return plan
 
-
     # ──────────────────── Read (단건) ────────────────────
 
     async def find_by_id(self, plan_id: str) -> Optional[TourPlan]:
         """플랜 단건 조회 (메타만, 권한 검증/수정 시)"""
         return await self.session.get(TourPlan, plan_id)
-
 
     async def find_by_id_with_items(self, plan_id: str) -> Optional[TourPlan]:
         """플랜 + 카드 목록 조회 (카드 뷰용, day/position 정렬)
@@ -42,7 +40,6 @@ class TourPlanRepository:
         result = await self.session.execute(stmt)
         return result.scalar_one_or_none()
 
-
     # ──────────────────── Read (목록) ────────────────────
 
     async def find_all_by_user_id(self, user_id: str) -> list[TourPlan]:
@@ -55,14 +52,12 @@ class TourPlanRepository:
         result = await self.session.execute(stmt)
         return list(result.scalars().all())
 
-
     # ──────────────────── Update ────────────────────
 
     async def update(self, plan: TourPlan) -> TourPlan:
         """변경사항 flush"""
         await self.session.flush()
         return plan
-
 
     # ──────────────────── Delete ────────────────────
 

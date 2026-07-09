@@ -14,14 +14,14 @@ Race 처리: 동시 클릭으로 양쪽 `find` None 통과 후 INSERT 가 PK 충
 """
 from sqlalchemy.exc import IntegrityError
 
-from app.domain.notification.service.inbox import InboxService
-from app.domain.feed.service.access import load_viewable_post
-from app.domain.feed.repository.feed_post_like import FeedPostLikeRepository
-from app.domain.feed.model.feed_post_like import FeedPostLike
-from app.domain.feed.dto.feed_post_like import AddLikePayload, LikedUserData
-from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
-from app.database.session import UnitOfWork, transactional
 from app.core.logger import get_logger
+from app.database.session import UnitOfWork, transactional
+from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
+from app.domain.feed.dto.feed_post_like import AddLikePayload, LikedUserData
+from app.domain.feed.model.feed_post_like import FeedPostLike
+from app.domain.feed.repository.feed_post_like import FeedPostLikeRepository
+from app.domain.feed.service.access import load_viewable_post
+from app.domain.notification.service.inbox import InboxService
 
 
 logger = get_logger("feed.post.like.service")
@@ -31,7 +31,6 @@ class FeedPostLikeService:
     def __init__(self, uow: UnitOfWork, inbox_service: InboxService):
         self.uow = uow
         self.inbox_service = inbox_service
-
 
     async def add_like(self, user_id: str, post_id: str) -> int:
         """좋아요 추가. 트랜잭션 내 INSERT, 트랜잭션 밖 인박스 fan-out (best-effort)."""
@@ -46,7 +45,6 @@ class FeedPostLikeService:
                 post_preview=payload.post_preview,
             )
         return payload.like_count
-
 
     @transactional
     async def _add_like_tx(self, *, user_id: str, post_id: str) -> AddLikePayload:
@@ -88,7 +86,6 @@ class FeedPostLikeService:
             post_preview=post.thumbnail_small_url,
         )
 
-
     @transactional
     async def remove_like(self, user_id: str, post_id: str) -> int:
         """좋아요 취소 — 가시성 재검증 후 DELETE. owner 가 PRIVATE 로 바꾸면 취소도 거절."""
@@ -104,7 +101,6 @@ class FeedPostLikeService:
         logger.info("피드 좋아요 취소 (user_id={}, post_id={})", user_id, post.post_id)
         return like_count
 
-
     @transactional
     async def get_liked_users(
         self, viewer_id: str, post_id: str,
@@ -114,7 +110,6 @@ class FeedPostLikeService:
         like_repo = FeedPostLikeRepository(self._session)
         likes = await like_repo.find_with_user_by_post(post.post_id)
         return [self._to_liked_user_dto(like) for like in likes]
-
 
     @staticmethod
     def _to_liked_user_dto(like: FeedPostLike) -> LikedUserData:

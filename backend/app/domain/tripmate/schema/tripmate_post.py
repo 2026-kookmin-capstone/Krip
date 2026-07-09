@@ -1,9 +1,10 @@
-from typing import List, Optional
-from pydantic import BaseModel, Field, model_validator
 from datetime import date, datetime
+from typing import List, Optional
 
-from app.domain.tripmate.model.tripmate_post import PreferredGender, CompanionType
+from pydantic import BaseModel, Field, model_validator
+
 from app.domain.auth.model.user_detail_inform import Gender
+from app.domain.tripmate.model.tripmate_post import CompanionType, PreferredGender
 
 
 def _validate_post_ranges(model):

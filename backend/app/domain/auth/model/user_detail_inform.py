@@ -1,6 +1,7 @@
-from sqlalchemy.orm import relationship
-from sqlalchemy import Column, String, Integer, Enum, ForeignKey
 import enum
+
+from sqlalchemy import Column, Enum, ForeignKey, Integer, String
+from sqlalchemy.orm import relationship
 
 from app.database.session import Base
 
@@ -23,7 +24,6 @@ class UserDetailInform(Base):
     profile_image_url = Column(String(2048), nullable=True)
 
     user = relationship("User", back_populates="detail")
-
 
     def __repr__(self):
         return f"<UserDetailInform(user_id={self.user_id}, email={self.email}, name={self.user_name})>"

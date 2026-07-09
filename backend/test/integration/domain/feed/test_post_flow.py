@@ -15,11 +15,11 @@ visibility/caption 정규화, 권한 가드, S3 prefix cleanup 호출까지 cove
     | delete_post 본인              | RDB row 삭제 + S3 cleanup 호출        |
     | delete_post 미존재            | FeedNotFoundError                     |
 """
-from sqlalchemy import select
 import pytest
+from sqlalchemy import select
 
-from app.domain.feed.service.exception import FeedNotFoundError
 from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
+from app.domain.feed.service.exception import FeedNotFoundError
 
 
 pytestmark = pytest.mark.integration
@@ -54,7 +54,6 @@ class TestUploadPost:
             assert post.visibility == FeedVisibility.PUBLIC
             assert post.original_url.startswith("https://x/")
 
-
     async def test_normalizes_blank_caption_to_null(
         self, feed_post_service, seed_users, session_factory,
     ):
@@ -85,7 +84,6 @@ class TestGetMyPost:
 
         assert result.post_id == post_id
 
-
     async def test_other_user_raises_permission_error(
         self, feed_post_service, seed_feed_post,
     ):
@@ -94,7 +92,6 @@ class TestGetMyPost:
 
         with pytest.raises(PermissionError):
             await feed_post_service.get_my_post(user_id=other_id, post_id=post_id)
-
 
     async def test_missing_post_raises_not_found(
         self, feed_post_service, seed_users,
@@ -121,7 +118,6 @@ class TestUpdateMetadata:
             post = await session.get(FeedPost, post_id)
             assert post.visibility == FeedVisibility.PRIVATE
 
-
     async def test_update_caption_normalizes_blank_to_null(
         self, feed_post_service, seed_feed_post, session_factory,
     ):
@@ -134,7 +130,6 @@ class TestUpdateMetadata:
         async with session_factory() as session:
             post = await session.get(FeedPost, post_id)
             assert post.caption is None
-
 
     async def test_update_other_user_raises_permission_error(
         self, feed_post_service, seed_feed_post,
@@ -165,7 +160,6 @@ class TestDeletePost:
         # S3 prefix cleanup 호출
         feed_storage_mock.delete_by_prefix.assert_awaited_once()
 
-
     async def test_delete_missing_raises_not_found(
         self, feed_post_service, seed_users,
     ):
@@ -173,7 +167,6 @@ class TestDeletePost:
 
         with pytest.raises(FeedNotFoundError):
             await feed_post_service.delete_post(user_id=user_id, post_id="FDP_ghost")
-
 
     async def test_delete_other_user_raises_permission_error(
         self, feed_post_service, seed_feed_post,

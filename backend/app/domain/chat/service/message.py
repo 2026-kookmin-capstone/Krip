@@ -1,21 +1,11 @@
 """메시지 송신 / 편집 / 삭제 서비스."""
-import random
-from pymongo.errors import DuplicateKeyError
-from datetime import datetime, timedelta, timezone
 import asyncio
+import random
+from datetime import datetime, timedelta, timezone
 
-from app.util.id_generator import generate_message_id
-from app.domain.friend.repository.user_block import UserBlockRepository
-from app.domain.chat.service.exception import UpstreamError
-from app.domain.chat.repository.chat_room import ChatRoomRepository
-from app.domain.chat.repository.chat_message import ChatMessageRepository
-from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
-from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
-from app.domain.chat.model.chat_message import MessageType
-from app.domain.chat.dto.message import MessageSentAckData
-from app.database.session import UnitOfWork, _current_session, mongodb, transactional
-from app.core.redis import get_redis_client, get_redis_dedupe_client
-from app.core.logger import get_logger
+from pymongo.errors import DuplicateKeyError
+
+from app.core.chat.lua_script import lua_scripts
 from app.core.chat.redis_key import (
     DEDUPE_TTL,
     DIRTY_CHAT_ROOM_KEY,
@@ -33,7 +23,18 @@ from app.core.chat.redis_key import (
     room_seq_key,
     unread_key,
 )
-from app.core.chat.lua_script import lua_scripts
+from app.core.logger import get_logger
+from app.core.redis import get_redis_client, get_redis_dedupe_client
+from app.database.session import UnitOfWork, _current_session, mongodb, transactional
+from app.domain.chat.dto.message import MessageSentAckData
+from app.domain.chat.model.chat_message import MessageType
+from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
+from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
+from app.domain.chat.repository.chat_message import ChatMessageRepository
+from app.domain.chat.repository.chat_room import ChatRoomRepository
+from app.domain.chat.service.exception import UpstreamError
+from app.domain.friend.repository.user_block import UserBlockRepository
+from app.util.id_generator import generate_message_id
 
 
 logger = get_logger("chat.send")
@@ -54,7 +55,6 @@ class MessageService:
         self.uow = uow
         self._fanout = fanout_service
         self._fcm_factory = fcm_service_factory
-
 
     @transactional
     async def send_message(
@@ -203,7 +203,6 @@ class MessageService:
             created_at=now,
         )
 
-
     @staticmethod
     async def _ensure_membership(
         redis_hot,
@@ -230,7 +229,6 @@ class MessageService:
         if user_id not in members:
             raise PermissionError("이 방의 멤버가 아닙니다.")
 
-
     @staticmethod
     async def _allocate_seq(
         message_repo: ChatMessageRepository,
@@ -251,7 +249,6 @@ class MessageService:
             args=[base],
         )
         return int(recovered)
-
 
     @transactional
     async def send_system_message(
@@ -350,7 +347,6 @@ class MessageService:
             room_id, action, actor_id, server_seq, target_ids,
         )
 
-
     @transactional
     async def edit_message(
         self,
@@ -403,7 +399,6 @@ class MessageService:
             message_id, editor_user_id, room_id,
         )
         return {"message_id": message_id, "content": new_content, "edited_at": now}
-
 
     @transactional
     async def delete_message(
@@ -467,7 +462,6 @@ class MessageService:
             message_id, deleter_user_id, room_id, sender_id == deleter_user_id,
         )
 
-
     @staticmethod
     async def _is_direct_blocked(
         redis_hot,
@@ -506,7 +500,6 @@ class MessageService:
             return True
         return False
 
-
     @staticmethod
     async def _bump_unread(redis_hot, *, room_id: str, sender_user_id: str) -> None:
         """방 멤버 (발신자 제외) unread HINCRBY 를 pipeline 1 RTT 로.
@@ -531,7 +524,6 @@ class MessageService:
                 room_id, type(e).__name__,
             )
 
-
     def _spawn_push_task(
         self, *, room_id: str, sender_user_id: str, content: str,
     ) -> None:
@@ -545,7 +537,6 @@ class MessageService:
         )
         _PUSH_TASKS.add(task)
         task.add_done_callback(_PUSH_TASKS.discard)
-
 
     async def _push_chat_to_recipients(
         self, *, room_id: str, sender_user_id: str, content: str,

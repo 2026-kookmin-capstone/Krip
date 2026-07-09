@@ -1,9 +1,10 @@
 """피드 게시물 Pydantic 스키마. multipart 업로드는 라우터의 `Form/File` 로 직접 처리."""
-from typing import List, Optional
-from pydantic import BaseModel, Field
 from datetime import datetime
+from typing import List, Optional
 
-from app.domain.feed.model.feed_post import FeedVisibility, CAPTION_MAX_LENGTH
+from pydantic import BaseModel, Field
+
+from app.domain.feed.model.feed_post import CAPTION_MAX_LENGTH, FeedVisibility
 
 
 # ──────────────────── Response ────────────────────

@@ -12,27 +12,27 @@ idle hold 되어 풀 압박. 의미 손해 없이 점유 시간 30~50× 감소.
 삭제 순서 — DB 먼저, S3 best-effort: S3 가 먼저 사라지면 broken URL 노출, DB 가 먼저
 지워지면 orphan 만 invisible 하게 남음.
 """
-from typing import Optional
 import asyncio
+from typing import Optional
 
-from app.util.storage_prefix import feed_post_prefix
-from app.util.id_generator import generate_feed_post_id
-from app.util.cursor import encode_cursor
-from app.domain.notification.service.inbox import InboxService
-from app.domain.notification.model.inbox import TargetType
-from app.domain.feed.service.thumbnail import process_feed_image
-from app.domain.feed.service.exception import FeedNotFoundError
-from app.domain.feed.service.access import resolve_viewer_visibilities
-from app.domain.feed.repository.feed_post import FeedPostRepository, PAGE_SIZE
-from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
+from app.core.logger import get_logger
+from app.core.object_storage import get_object_storage
+from app.database.session import UnitOfWork, transactional
 from app.domain.feed.dto.feed_post import (
     FeedPostData,
     FeedPostListData,
     FeedPostWithCounts,
 )
-from app.database.session import UnitOfWork, transactional
-from app.core.object_storage import get_object_storage
-from app.core.logger import get_logger
+from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
+from app.domain.feed.repository.feed_post import PAGE_SIZE, FeedPostRepository
+from app.domain.feed.service.access import resolve_viewer_visibilities
+from app.domain.feed.service.exception import FeedNotFoundError
+from app.domain.feed.service.thumbnail import process_feed_image
+from app.domain.notification.model.inbox import TargetType
+from app.domain.notification.service.inbox import InboxService
+from app.util.cursor import encode_cursor
+from app.util.id_generator import generate_feed_post_id
+from app.util.storage_prefix import feed_post_prefix
 
 
 logger = get_logger("feed.post.service")
@@ -53,7 +53,6 @@ class FeedPostService:
         self.uow = uow
         self.inbox_service = inbox_service
         self.storage = get_object_storage()
-
 
     async def upload_post(
         self,
@@ -114,7 +113,6 @@ class FeedPostService:
             FeedPostWithCounts(post=post, like_count=0, comment_count=0, is_liked=False)
         )
 
-
     @transactional
     async def _insert_post(
         self,
@@ -142,7 +140,6 @@ class FeedPostService:
         logger.info("피드 게시물 업로드 완료 (user_id={}, post_id={})", user_id, post_id)
         return saved
 
-
     @transactional
     async def get_my_feed(
         self,
@@ -166,13 +163,11 @@ class FeedPostService:
             next_cursor=next_cursor,
         )
 
-
     @transactional
     async def get_my_post(self, user_id: str, post_id: str) -> FeedPostData:
         """본인 게시물 단건 — 권한 검증 포함."""
         row = await self._load_owned_post(user_id, post_id)
         return self._to_dto(row)
-
 
     @transactional
     async def get_user_feed(
@@ -205,7 +200,6 @@ class FeedPostService:
             next_cursor=next_cursor,
         )
 
-
     @transactional
     async def update_visibility(
         self,
@@ -220,7 +214,6 @@ class FeedPostService:
         await repo.update(row.post)
         return self._to_dto(row)
 
-
     @transactional
     async def update_caption(
         self,
@@ -234,7 +227,6 @@ class FeedPostService:
         repo = FeedPostRepository(self._session)
         await repo.update(row.post)
         return self._to_dto(row)
-
 
     async def delete_post(self, user_id: str, post_id: str) -> None:
         """본인 게시물 삭제. 순서: DB → S3 best-effort → 인박스 cascade.
@@ -258,7 +250,6 @@ class FeedPostService:
             target_id=post_id,
         )
 
-
     @transactional
     async def _delete_post_row(self, user_id: str, post_id: str) -> str:
         """삭제 트랜잭션 — 권한 검증 + PG row 삭제. 정리할 prefix 반환."""
@@ -270,7 +261,6 @@ class FeedPostService:
         await repo.delete(post)
         logger.info("피드 게시물 삭제 완료 (user_id={}, post_id={})", user_id, post_id)
         return prefix
-
 
     async def _load_owned_post(self, user_id: str, post_id: str) -> FeedPostWithCounts:
         """post 로드 + 본인 소유 검증. 미존재 → 404, 본인 아님 → 403.
@@ -286,7 +276,6 @@ class FeedPostService:
             raise PermissionError("게시물에 대한 권한이 없습니다.")
         return row
 
-
     async def _safe_cleanup(self, prefix: str) -> None:
         """업로드 실패 경로 best-effort cleanup — 실패해도 원 예외 가리지 않도록 swallow."""
         try:
@@ -296,7 +285,6 @@ class FeedPostService:
                 "업로드 실패 경로 cleanup 실패 — orphan 객체 잔존 (prefix={}): {}",
                 prefix, e,
             )
-
 
     @staticmethod
     def _to_dto(row: FeedPostWithCounts) -> FeedPostData:

@@ -12,7 +12,7 @@ smoke 의 그룹 시나리오([4/6] ~ [5/6]) 가 돌아간다.
 """
 import asyncio
 
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 # 모델 매퍼 전 등록
 import app.database.model  # noqa: F401

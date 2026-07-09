@@ -1,10 +1,11 @@
-from typing import Optional
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, update, case, or_
 from datetime import datetime
+from typing import Optional
 
-from app.domain.chat.model.chat_room_member import ChatRoomMember
+from sqlalchemy import case, or_, select, update
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
+from app.domain.chat.model.chat_room_member import ChatRoomMember
 
 
 # 정식 커서 페이지네이션 도입 전 폭주 방어 상한.
@@ -15,7 +16,6 @@ class ChatRoomRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-
     # ──────────────────── Create ────────────────────
 
     async def save(self, chat_room: ChatRoom) -> ChatRoom:
@@ -24,13 +24,11 @@ class ChatRoomRepository:
         await self.session.flush()
         return chat_room
 
-
     # ──────────────────── Read (단건) ────────────────────
 
     async def find_by_id(self, chat_room_id: str) -> Optional[ChatRoom]:
         """chat_room_id 로 단건 조회"""
         return await self.session.get(ChatRoom, chat_room_id)
-
 
     async def find_direct_by_pair(
         self,
@@ -48,7 +46,6 @@ class ChatRoomRepository:
         )
         result = await self.session.execute(stmt)
         return result.scalar_one_or_none()
-
 
     # ──────────────────── Read (목록) ────────────────────
 
@@ -88,7 +85,6 @@ class ChatRoomRepository:
         result = await self.session.execute(stmt)
         return [(row[0], row[1], row[2]) for row in result.all()]
 
-
     # ──────────────────── Update ────────────────────
 
     async def update_last_message(
@@ -112,7 +108,6 @@ class ChatRoomRepository:
             .execution_options(synchronize_session=False)
         )
         await self.session.execute(stmt)
-
 
     async def update_last_message_if_greater(
         self,

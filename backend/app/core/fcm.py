@@ -7,11 +7,12 @@
   감싸 이벤트 루프를 막지 않도록 한다.
 """
 from pathlib import Path
-from firebase_admin import credentials
-import firebase_admin
 
-from app.core.logger import get_logger
+import firebase_admin
+from firebase_admin import credentials
+
 from app.config.setting import settings
+from app.core.logger import get_logger
 
 
 logger = get_logger("fcm")
