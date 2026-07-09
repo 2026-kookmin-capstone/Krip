@@ -1,4 +1,5 @@
 from typing import Literal, Optional
+from urllib.parse import quote_plus
 import socket
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import Field, model_validator
@@ -116,17 +117,24 @@ class Settings(BaseSettings):
     
     @property
     def POSTGRES_URL(self) -> str:
-        return f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_NAME}"
+        # user/password 는 URL-encode — `@ : / # ?` 등 특수문자 포함 시 접속 URL 파싱이 깨진다.
+        user = quote_plus(self.POSTGRES_USER)
+        pw = quote_plus(self.POSTGRES_PASSWORD)
+        return f"postgresql+asyncpg://{user}:{pw}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_NAME}"
 
 
     @property
     def SYNC_POSTGRES_URL(self) -> str:
-        return f"postgresql://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_NAME}"
+        user = quote_plus(self.POSTGRES_USER)
+        pw = quote_plus(self.POSTGRES_PASSWORD)
+        return f"postgresql://{user}:{pw}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_NAME}"
 
 
     @property
     def MONGODB_URL(self) -> str:
-        return f"mongodb://{self.MONGODB_USER}:{self.MONGODB_PASSWORD}@{self.MONGODB_HOST}:{self.MONGODB_PORT}/{self.MONGODB_NAME}?authSource=admin"
+        user = quote_plus(self.MONGODB_USER)
+        pw = quote_plus(self.MONGODB_PASSWORD)
+        return f"mongodb://{user}:{pw}@{self.MONGODB_HOST}:{self.MONGODB_PORT}/{self.MONGODB_NAME}?authSource=admin"
 
 
     @property
