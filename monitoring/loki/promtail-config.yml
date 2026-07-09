@@ -9,10 +9,15 @@
 #   - 고유 ID 라벨화 절대 금지.
 #
 # 회전 추적:
-#   loguru 가 LOG_ROTATION 으로 app.log -> app.log.YYYY-MM-DD_HH-MM-SS_NNNNNN 회전 후
-#   LOG_COMPRESSION=gz 로 .gz 압축. Promtail 3.x 의 decompression 은 pipeline_stage 가
-#   아닌 scrape_config 레벨 옵션이라 잡을 두 개로 분리한다 (현재 파일 / 회전 .gz).
-#   stages 는 YAML anchor 로 동일 재사용.
+#   loguru 는 splitext 기반이라 app.log -> app.<타임스탬프>.log 로 회전 후
+#   LOG_COMPRESSION=gz 로 app.<타임스탬프>.log.gz 가 된다 (app.log.<...>.gz 아님 — glob 주의).
+#   Promtail 3.x 의 decompression 은 pipeline_stage 가 아닌 scrape_config 레벨 옵션이라
+#   잡을 두 개로 분리한다 (현재 파일 / 회전 .gz). stages 는 YAML anchor 로 동일 재사용.
+#
+#   중복 처리: 회전 잡은 라이브 잡이 이미 보낸 라인을 .gz 에서 재수집한다. 아래 timestamp
+#   스테이지가 record.time 으로 이벤트 시각을 고정하므로 (ts+labels+line) 이 완전히 일치 →
+#   Loki 가 쿼리 시 동일 엔트리로 dedup 한다. timestamp 스테이지가 없으면 각 잡의 read-time
+#   으로 찍혀 서로 다른 엔트리가 되어 중복이 남고, 백필 로그도 재생 시점으로 오기록된다.
 #
 # PII 마스킹:
 #   ingestion 단에서 정규식 강제. 코드 리뷰 누락이 14일 보존 + 검색 가능한 로그 남기는 사고 방지.
@@ -50,6 +55,16 @@ scrape_configs:
             request_id: record.extra.request_id
             user_id: record.extra.user_id
             message: record.message
+            timestamp: record.time.repr
+
+      # 이벤트 시각을 로그 레코드 기준으로 고정.
+      # 라이브/회전 잡이 같은 라인을 동일 ts 로 찍어 Loki dedup 이 재수집분을 흡수하고,
+      # reject_old_samples(168h)·시간 범위 쿼리가 실제 발생 시각을 따르게 한다.
+      # loguru repr 예: "2026-07-09 15:50:07.716194+09:00" (항상 tz offset 포함,
+      # 소수 초는 0 일 때 생략되므로 .999999 로 optional 처리). Go layout 파싱.
+      - timestamp:
+          source: timestamp
+          format: '2006-01-02 15:04:05.999999-07:00'
 
       # PII 마스킹 4종.
       - replace:
@@ -80,5 +95,5 @@ scrape_configs:
           app: krip-backend
           env: ${ENV}
           node_id: ${NODE_ID}
-          __path__: /backend/logs/app.log.*.gz
+          __path__: /backend/logs/app.*.log.gz
     pipeline_stages: *pipeline
