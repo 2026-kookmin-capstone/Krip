@@ -75,7 +75,7 @@ class InboxRepositoryMockFactory:
         mock.find_by_recipient.return_value = []
         mock.count_unread.return_value = 0
         mock.hide.return_value = False  # default: 미존재/타인소유
-        mock.mark_all_read.return_value = 0
+        mock.mark_read_by_ids.return_value = 0
         mock.delete_by_user.return_value = 0
         return mock
 

@@ -30,19 +30,22 @@ class InboxRepository:
     async def find_by_recipient(
         self,
         recipient_id: str,
-        cursor: Optional[datetime] = None,
+        cursor: Optional[tuple[datetime, PydanticObjectId]] = None,
         limit: int = PAGE_SIZE,
     ) -> list[InboxItem]:
-        """display=true 최신순. `limit+1` fetch 로 has_more 판정.
-
-        tie-break 은 `_id` desc 보조 정렬 — 같은 ms 항목 누락 위험을 실용적으로 무시.
-        """
+        """display=true 최신순. `limit+1` fetch 로 has_more 판정."""
         query = InboxItem.find(
             InboxItem.recipient_id == recipient_id,
             InboxItem.display == True,
         )
         if cursor is not None:
-            query = query.find(InboxItem.created_at < cursor)
+            c_ts, c_id = cursor
+            query = query.find({
+                "$or": [
+                    {"created_at": {"$lt": c_ts}},
+                    {"created_at": c_ts, "_id": {"$lt": c_id}},
+                ],
+            })
         return await query.sort("-created_at", "-_id").limit(limit + 1).to_list()
 
     @measure_mongo_op("count", "inbox")
@@ -65,11 +68,20 @@ class InboxRepository:
         return res.modified_count == 1
 
     @measure_mongo_op("update", "inbox")
-    async def mark_all_read(self, recipient_id: str) -> int:
-        """미읽음 일괄 read 처리. display=true AND read_at=null 만 대상 (멱등)."""
+    async def mark_read_by_ids(
+        self, recipient_id: str, item_ids: list[PydanticObjectId],
+    ) -> int:
+        """지정한 `_id` 목록만 read 처리. display=true AND read_at=null 만 대상 (멱등)."""
+        if not item_ids:
+            return 0
         coll = InboxItem.get_motor_collection()
         res = await coll.update_many(
-            {"recipient_id": recipient_id, "display": True, "read_at": None},
+            {
+                "_id": {"$in": item_ids},
+                "recipient_id": recipient_id,
+                "display": True,
+                "read_at": None,
+            },
             {"$set": {"read_at": datetime.now(timezone.utc)}},
         )
         return res.modified_count

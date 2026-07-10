@@ -1,8 +1,3 @@
-"""인박스 라우터.
-
-자동 읽음 처리는 첫 페이지(`cursor` 미지정) 진입 시에만 `mark_as_read=True` — 응답의
-`is_read` 는 read 전 상태 그대로라 클라가 "방금 본 항목" 강조 가능.
-"""
 from typing import Optional
 
 from dependency_injector.wiring import Provide, inject
@@ -33,17 +28,17 @@ router = APIRouter(prefix="/inbox", tags=["인박스"])
 async def list_inbox(
     request: Request,
     cursor: Optional[str] = Query(
-        None, description="다음 페이지 커서 (마지막 항목의 created_at ISO string)",
+        None, description="다음 페이지 커서",
     ),
     service: InboxService = Depends(Provide[Container.inbox_service]),
 ) -> InboxListResponse:
-    """display=true 항목 최신순 페이지네이션. 첫 페이지 진입 시 미읽음 자동 read 처리."""
+    """display=true 항목 최신순 페이지네이션. 각 페이지의 표시된 항목을 자동 read 처리."""
     user_id: str = request.state.user_id
     try:
         result = await service.list_items(
             recipient_id=user_id,
             cursor=cursor,
-            mark_as_read=(cursor is None),
+            mark_as_read=True,
         )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))

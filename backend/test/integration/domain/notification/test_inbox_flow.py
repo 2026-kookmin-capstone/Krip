@@ -3,7 +3,8 @@
 unit 테스트가 mock 으로 검증할 수 없는 영역을 cover:
     - `uq_inbox_dedup` partial unique 인덱스가 실 Mongo 에 적용되어 동작
     - `display=true` 조건 partial filter 가 정확히 작동 (X 후 새 항목 가능)
-    - atomic update (`hide` / `mark_all_read`) 가 race-free
+    - atomic update (`hide` / `mark_read_by_ids`) 가 race-free
+    - keyset cursor `(created_at, _id)` tiebreak 이 같은 ms 항목을 페이지 경계에서 누락 안 함
     - cascade `delete_by_user` 의 `$or` 매칭
 
 검증 매트릭스:
@@ -13,12 +14,14 @@ unit 테스트가 mock 으로 검증할 수 없는 영역을 cover:
     | insert + list (display=true)            | 응답에 보임                              |
     | 같은 (recipient, actor, type, target)   | DuplicateKeyError (partial unique 충돌) |
     | 첫 항목 hide → 같은 키 새 insert        | 성공 (display=false 는 인덱스 밖)       |
-    | mark_all_read=True 후 read_at 채워짐    | DB read_at != null                      |
+    | mark_as_read=True 후 read_at 채워짐     | DB read_at != null (노출된 항목만)      |
     | 응답 dto.is_read 는 mark 전 상태        | False (인스타 패턴)                      |
     | hide 후 list 에서 제외                  | response 에 안 나옴                     |
     | count_unread (display=true & null)      | 정확한 카운트 (cap 999)                  |
     | cascade_user_withdrawn (recipient/actor)| 양쪽 매칭 모두 삭제                      |
 """
+from datetime import datetime, timezone
+
 import pytest
 from pymongo.errors import DuplicateKeyError
 
@@ -177,7 +180,7 @@ class TestListInboxFlow:
     async def test_mark_as_read_false_keeps_unread(
         self, mongo_db, inbox_service,
     ):
-        """더 보기(`cursor` 있음) — mark_all_read 호출 안 됨. read_at 유지."""
+        """더 보기(`cursor` 있음) — read 처리 호출 안 됨. read_at 유지."""
         repo = InboxRepository()
         await repo.insert(_make_inbox_item())
 
@@ -190,6 +193,43 @@ class TestListInboxFlow:
             {"recipient_id": "USER_recipient", "read_at": None},
         )
         assert unread == 1
+
+
+# ──────────────────── keyset cursor tiebreak (같은 ms) ────────────────────
+
+class TestKeysetCursorTiebreak:
+    """`(created_at, _id)` 복합 keyset 이 같은 ms 항목을 페이지 경계에서 누락 안 하는지.
+
+    BSON datetime 은 ms 정밀도라, burst fan-out 이 같은 ms 에 몰리고 그 경계가 페이지에
+    걸치면 `created_at < cursor` 단일 조건은 등가 timestamp 항목을 영구히 건너뛴다.
+    repo 의 keyset predicate 로 tiebreak 되는지 실 mongo 로 검증.
+    """
+
+    async def test_same_ms_items_not_dropped_across_page_boundary(self, mongo_db):
+        repo = InboxRepository()
+        ts = datetime(2025, 1, 1, 12, 0, 0, tzinfo=timezone.utc)  # 마이크로초 0 → 동일 ms
+
+        inserted = []
+        for i in range(3):
+            item = _make_inbox_item(actor_id=f"USER_a_{i}", target_id=f"FDP_{i}")
+            item.created_at = ts  # 3건 모두 같은 created_at
+            await repo.insert(item)
+            inserted.append(item)
+
+        # limit=2 → 첫 페이지 (limit+1=3 fetch 후 2건 노출), 나머지 1건은 keyset 으로 이어받음
+        page1_raw = await repo.find_by_recipient("USER_recipient", cursor=None, limit=2)
+        page1 = page1_raw[:2]
+        last = page1[-1]
+
+        page2 = await repo.find_by_recipient(
+            "USER_recipient", cursor=(last.created_at, last.id), limit=2,
+        )
+
+        seen = {str(i.id) for i in page1} | {str(i.id) for i in page2}
+        # 같은 ms 3건이 하나도 누락되지 않고 두 페이지에 온전히 등장
+        assert {str(i.id) for i in inserted} <= seen
+        # 페이지 간 중복도 없음
+        assert not ({str(i.id) for i in page1} & {str(i.id) for i in page2})
 
 
 # ──────────────────── hide — atomic + display=false 토글 ────────────────────
