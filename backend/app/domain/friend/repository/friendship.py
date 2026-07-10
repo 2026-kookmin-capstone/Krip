@@ -1,11 +1,12 @@
 from typing import Iterable, Optional
 
-from sqlalchemy import and_, case, func, or_, select, text
+from sqlalchemy import and_, case, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 
 from app.domain.auth.model.user import User
 from app.domain.friend.model.friendship import Friendship, FriendshipStatus
+from app.domain.friend.repository.pair_lock import acquire_pair_lock
 from app.util.cursor import decode_cursor, keyset_where
 
 
@@ -34,12 +35,7 @@ class FriendshipRepository:
         → block-vs-request TOCTOU 와 REJECTED 재요청 lost update 차단. 모든 경로에서 어떤
         read/row lock 보다 먼저 호출해 순서를 통일(데드락 회피). 트랜잭션 종료 시 자동 해제.
         """
-        least, greatest = sorted((user_a_id, user_b_id))
-        key = f"{least}:{greatest}"
-        await self.session.execute(
-            text("SELECT pg_advisory_xact_lock(hashtext(:key))"),
-            {"key": key},
-        )
+        await acquire_pair_lock(self.session, user_a_id, user_b_id)
 
     # ──────────────────── Read (단건) ────────────────────
 
