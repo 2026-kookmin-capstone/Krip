@@ -3,7 +3,7 @@
 핵심 보장:
     `start_fanout_dispatcher` 가 반환될 때엔 이미 `pubsub.subscribe` 가 await 까지
     완료된 상태여야 한다. 이 보장이 깨지면 main.py 의 다음 라인 (`start_node_registry`)
-    이 ZSET 등록을 끝낸 사이 다른 노드의 publish 가 SUBSCRIBE 전 채널에 도달해 누락.
+    이 ZSET 등록을 끝낸 사이 다른 노드의 publish 가 SUBSCRIBE 전에 도달해 누락.
 
 `_dispatch_loop` 자체는 비결정적 (pubsub 폴링 루프) 이라 통합 테스트 영역에 가깝고,
 여기선 진입 / 종료 / cleanup 까지의 결정적 경로만 다룬다.
@@ -79,6 +79,50 @@ class TestStartFanoutDispatcher:
         pubsub.subscribe.assert_awaited_once_with("node:test-node")
 
         await stop_fanout_dispatcher()
+
+    async def test_subscribe_failure_closes_partially_started_pubsub(
+        self, stub_pubsub_redis,
+    ):
+        from app.domain.chat.worker.fanout_dispatcher import start_fanout_dispatcher
+
+        pubsub, _ = stub_pubsub_redis
+        pubsub.subscribe.side_effect = RuntimeError("subscribe failed")
+        fanout = MagicMock(name="fanout-stub")
+
+        with pytest.raises(RuntimeError, match="subscribe failed"):
+            await start_fanout_dispatcher(fanout)
+
+        pubsub.close.assert_awaited_once()
+
+    async def test_cleanup_cancellation_does_not_replace_subscribe_error(
+        self, stub_pubsub_redis,
+    ):
+        from app.domain.chat.worker.fanout_dispatcher import start_fanout_dispatcher
+
+        pubsub, _ = stub_pubsub_redis
+        pubsub.subscribe.side_effect = RuntimeError("subscribe failed")
+        pubsub.close.side_effect = asyncio.CancelledError("cleanup cancelled")
+
+        with pytest.raises(RuntimeError, match="subscribe failed"):
+            await start_fanout_dispatcher(MagicMock(name="fanout-stub"))
+
+    async def test_task_spawn_failure_closes_subscribed_pubsub(
+        self, stub_pubsub_redis, monkeypatch,
+    ):
+        from app.domain.chat.worker import fanout_dispatcher as fd
+
+        pubsub, _ = stub_pubsub_redis
+
+        def fail_create_task(coro, **_kwargs):
+            coro.close()
+            raise RuntimeError("task spawn failed")
+
+        monkeypatch.setattr(fd.asyncio, "create_task", fail_create_task)
+
+        with pytest.raises(RuntimeError, match="task spawn failed"):
+            await fd.start_fanout_dispatcher(MagicMock(name="fanout-stub"))
+
+        pubsub.close.assert_awaited_once()
 
     async def test_in_process_mode_is_noop(self, monkeypatch):
         """`in_process` 모드에선 pubsub 자체를 만들지 않는다 (Redis 호출 0)."""

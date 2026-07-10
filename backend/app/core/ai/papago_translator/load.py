@@ -32,9 +32,10 @@ class PapagoTranslator:
 
     async def close(self) -> None:
         """서버 종료 시 호출. 외부 HTTP 커넥션을 정리한다."""
-        if not self._initialized:
+        model = getattr(self, "_model", None)
+        if model is None:
             return
-        await self._model.close_client()
+        await model.close_client()
         self._initialized = False
 
     async def detect(self, text: str) -> DetectResult:

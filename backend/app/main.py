@@ -1,6 +1,7 @@
+import asyncio
 import os
 import random
-from contextlib import asynccontextmanager
+from contextlib import AsyncExitStack, asynccontextmanager
 
 import uvicorn
 from fastapi import FastAPI
@@ -54,84 +55,86 @@ from app.middleware.tracking import (
 logger = get_logger("main")
 
 
+async def _stop_metrics_server(server, thread) -> None:
+    """Prometheus WSGI server를 event loop를 막지 않고 종료한다."""
+    def stop() -> None:
+        try:
+            server.shutdown()
+        finally:
+            try:
+                server.server_close()
+            finally:
+                thread.join()
+
+    await asyncio.to_thread(stop)
+
+
 def create_app() -> FastAPI:
     """FastAPI 애플리케이션 팩토리"""
     @asynccontextmanager
     async def lifespan(app: FastAPI):
-        # startup
-        setup_logging()
+        async with AsyncExitStack() as stack:
+            setup_logging()
 
-        # /metrics 를 별도 포트로 노출한다.
-        # 데몬 스레드로 동작하며 같은 프로세스의 default registry 를 그대로 사용한다.
-        # FastAPI 미들웨어를 우회하므로 사용자 트래픽과 scrape 가 서로 영향을 주지 않는다.
-        # 외부 노출은 NetworkPolicy 로 monitoring 영역에서만 도달하도록 막는다.
-        start_http_server(settings.METRICS_PORT)
-        logger.info("Prometheus /metrics on :{}", settings.METRICS_PORT)
+            # /metrics 를 별도 포트로 노출한다. 반환 handle을 보존해 rollback과 정상
+            # shutdown 모두에서 thread와 listening socket을 닫는다.
+            metrics_server, metrics_thread = start_http_server(settings.METRICS_PORT)
+            stack.push_async_callback(
+                _stop_metrics_server, metrics_server, metrics_thread,
+            )
+            logger.info("Prometheus /metrics on :{}", settings.METRICS_PORT)
 
-        # 워커 last_tick_timestamp 를 startup 시각으로 priming.
-        # 첫 tick 전까지 false-negative WorkerStale 알람이 발생하지 않도록 한다.
-        prime_worker_gauges()
+            # 워커 last_tick_timestamp 를 startup 시각으로 priming.
+            # 첫 tick 전까지 false-negative WorkerStale 알람이 발생하지 않도록 한다.
+            prime_worker_gauges()
 
-        # SQLAlchemy 이벤트 리스너 부착 — query duration / pool gauge 자동 관측.
-        # Container singleton engine 인스턴스를 강제 생성한 뒤 sync_engine 에 listen.
-        attach_db_instrumentation(app.container.engine())
+            # Container singleton engine은 instrumentation 전에 이미 생성된다.
+            engine = app.container.engine()
+            stack.push_async_callback(engine.dispose)
+            # instrumentation이 pool 참조 설정 뒤 실패해도 전역 참조를 reset한다.
+            stack.push_async_callback(stop_event_loop_monitor)
+            attach_db_instrumentation(engine)
 
-        # 이벤트 루프 lag 측정 백그라운드 태스크 시작.
-        # 1초 주기로 sleep 깨어남 지연을 관측해 이벤트 루프 포화 신호로 사용.
-        start_event_loop_monitor()
+            start_event_loop_monitor()
 
-        # force_jump Lua 호출 시 사용할 jitter 엔트로피 보강
-        random.seed(int.from_bytes(os.urandom(16), "big"))
+            # force_jump Lua 호출 시 사용할 jitter 엔트로피 보강
+            random.seed(int.from_bytes(os.urandom(16), "big"))
 
-        await init_mongodb()
+            # connect가 client를 먼저 할당한 뒤 index 초기화에서 실패할 수 있다.
+            stack.push_async_callback(close_mongodb)
+            await init_mongodb()
 
-        # Redis 양쪽 DB 커넥션 pre-warm 후 hot 클라이언트에 Lua 스크립트 등록.
-        hot_redis = await get_redis_client()
-        await get_redis_dedupe_client()
-        lua_scripts.load(hot_redis)
+            # hot client 성공 후 dedupe pre-warm가 실패해도 양쪽을 닫는다.
+            stack.push_async_callback(close_redis)
+            hot_redis = await get_redis_client()
+            await get_redis_dedupe_client()
+            lua_scripts.load(hot_redis)
 
-        # FCM Admin SDK 초기화 — 워커가 푸시를 보낼 수 있어야 하므로 워커 시작 전에 호출.
-        init_fcm()
+            stack.callback(close_fcm)
+            init_fcm()
 
-        # 채팅 reconcile 워커 — last_message_* 정합성 복구 + unread 복구 entry point 주입
-        # (ws.py 의 recover_unread 경로도 같은 session_factory 공유)
-        start_reconcile_scheduler(app.container.session_factory())
+            stack.push_async_callback(stop_reconcile_scheduler)
+            start_reconcile_scheduler(app.container.session_factory())
 
-        # 채팅 멀티 노드 fan-out 인프라 — FANOUT_MODE=in_process 면 둘 다 no-op.
-        # 순서 중요 (race window 차단):
-        #   1) dispatcher 가 먼저 `node:{NODE_ID}` 채널 SUBSCRIBE 까지 await
-        #   2) 그 다음 node_registry 가 ZSET 에 자기 노드 등록 → 다른 노드의 publisher 가
-        #      list_active_nodes 로 우리를 인지한 시점엔 이미 채널 활성. 반대 순서면 ZSET
-        #      등록 ~ SUBSCRIBE 사이 publish 가 누락됨.
-        await start_fanout_dispatcher(app.container.fanout_service())
-        await start_node_registry()
+            # dispatcher SUBSCRIBE 후 registry 등록 순서를 유지한다. stack의 LIFO 종료는
+            # registry 제거 후 dispatcher unsubscribe 순서를 자동으로 보장한다.
+            stack.push_async_callback(stop_fanout_dispatcher)
+            await start_fanout_dispatcher(app.container.fanout_service())
+            stack.push_async_callback(stop_node_registry)
+            await start_node_registry()
 
-        # 탈퇴 영구 삭제 워커 — 매일 KST 04:00 발화. RDB / Mongo / S3 / Redis 모두 사용하므로
-        # init_mongodb / Redis pre-warm 이후에 시작.
-        start_withdraw_purge_scheduler(app.container.session_factory())
+            stack.push_async_callback(stop_withdraw_purge_scheduler)
+            start_withdraw_purge_scheduler(app.container.session_factory())
 
-        MenuOcr().load()
-        PapagoTranslator().load()
-        await TourPlanner().load()
-        logger.info("Application started in {} mode", settings.ENVIRONMENT)
+            MenuOcr().load()
+            papago = PapagoTranslator()
+            stack.push_async_callback(papago.close)
+            papago.load()
+            await TourPlanner().load()
+            logger.info("Application started in {} mode", settings.ENVIRONMENT)
 
-        yield
+            yield
 
-        # shutdown — 워커들이 Mongo/Redis 를 쓰므로 이 둘을 닫기 전에 먼저 멈춘다.
-        # 순서 중요 (startup 의 거울): node_registry 를 먼저 정리해 다른 노드의 publisher
-        # 가 다음 list_active_nodes 호출부터 우리를 즉시 제외하게 한 뒤, 디스패처가 안전히
-        # unsubscribe. 반대 순서면 디스패처 정지 ~ ZSET deregister 사이 publish 가 drop.
-        await stop_event_loop_monitor()
-        await stop_withdraw_purge_scheduler()
-        await stop_reconcile_scheduler()
-        await stop_node_registry()
-        await stop_fanout_dispatcher()
-        await PapagoTranslator().close()
-        close_fcm()
-        await close_mongodb()
-        await close_redis()
-        # SQLAlchemy 엔진 풀 정리 — graceful shutdown 시 커넥션을 명시적으로 반환.
-        await app.container.engine().dispose()
         logger.info("Application shut down")
 
     # DI Container 초기화 및 wiring

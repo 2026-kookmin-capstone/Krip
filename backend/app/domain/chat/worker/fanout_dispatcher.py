@@ -135,14 +135,30 @@ async def start_fanout_dispatcher(fanout: FanoutService) -> None:
     redis = await get_redis_client()
     pubsub = redis.pubsub()
     channel = node_channel_key(settings.NODE_ID)
-    await pubsub.subscribe(channel)
-    logger.info("fan-out 디스패처 시작: channel={}", channel)
+    dispatch_coro = None
+    try:
+        await pubsub.subscribe(channel)
+        logger.info("fan-out 디스패처 시작: channel={}", channel)
+        stop_event = asyncio.Event()
+        dispatch_coro = _dispatch_loop(pubsub, fanout, stop_event)
+        task = asyncio.create_task(
+            dispatch_coro,
+            name="chat-fanout-dispatch",
+        )
+    except BaseException:
+        if dispatch_coro is not None:
+            dispatch_coro.close()
+        try:
+            await pubsub.close()
+        except BaseException as close_error:
+            logger.warning(
+                "fan-out 디스패처 startup 실패 후 pubsub close 실패: {}",
+                type(close_error).__name__,
+            )
+        raise
 
-    _stop_event = asyncio.Event()
-    _dispatcher_task = asyncio.create_task(
-        _dispatch_loop(pubsub, fanout, _stop_event),
-        name="chat-fanout-dispatch",
-    )
+    _stop_event = stop_event
+    _dispatcher_task = task
 
 
 async def stop_fanout_dispatcher() -> None:

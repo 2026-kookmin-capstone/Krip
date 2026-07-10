@@ -72,12 +72,22 @@ class RedisClient:
     @classmethod
     async def close(cls):
         """Redis 연결 종료 (양쪽 DB)"""
-        if cls._client:
-            await cls._client.close()
-            cls._client = None
-        if cls._dedupe_client:
-            await cls._dedupe_client.close()
-            cls._dedupe_client = None
+        clients = (cls._client, cls._dedupe_client)
+        cls._client = None
+        cls._dedupe_client = None
+
+        first_error: BaseException | None = None
+        for client in clients:
+            if client is None:
+                continue
+            try:
+                await client.close()
+            except BaseException as error:
+                if first_error is None:
+                    first_error = error
+
+        if first_error is not None:
+            raise first_error
 
 
 async def get_redis_client() -> redis.Redis:
