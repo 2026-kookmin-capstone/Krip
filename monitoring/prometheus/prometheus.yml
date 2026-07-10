@@ -81,9 +81,18 @@ scrape_configs:
         regex: 'redis_(commands_latencies_usec|latency_percentiles_usec|latency_spike).*'
         action: drop
 
+  # mongodb-exporter 의 mongodb_* 시리즈는 현재 어떤 대시보드도 쿼리하지 않는다 — 대시보드는
+  # backend client-side 의 mongo_op_* 만 사용. --collect-all 로 노출되는 full 시리즈셋은
+  # 순수 unused TSDB 카디널리티라, redis-exporter latency-series drop 과 동일한 방침으로 drop.
+  # (job 유지 이유: up{job="mongo"} 는 payload 와 무관하게 Prometheus 가 합성 → liveness 는 보존.)
+  # 되돌리려면 이 metric_relabel_configs 블록만 삭제하면 mongodb_* 가 다시 수집된다.
   - job_name: mongo
     static_configs:
       - targets: ["mongodb-exporter:9216"]
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        regex: 'mongodb_.*'
+        action: drop
 
   # ────────────────────────────────────────────────────────────────────
   # Blackbox — 외부 의존성 probe
