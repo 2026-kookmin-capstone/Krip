@@ -56,21 +56,30 @@ def setup_logging() -> None:
         )
 
     # 파일 출력
+    # LOG_FILE_PATH 기본값이 컨테이너 절대경로라 로컬/CI 에서 mkdir 이 OSError 로 부팅을 막을 수 있음.
     if settings.LOG_FILE_PATH:
-        log_path = Path(settings.LOG_FILE_PATH)
-        log_path.parent.mkdir(parents=True, exist_ok=True)
-        
-        logger.add(
-            settings.LOG_FILE_PATH,
-            rotation=settings.LOG_ROTATION,
-            retention=settings.LOG_RETENTION,
-            compression=settings.LOG_COMPRESSION,
-            format="{message}",
-            serialize=True,
-            level=settings.LOG_LEVEL,
-            encoding="utf-8",
-            enqueue=True
-        )
+        try:
+            log_path = Path(settings.LOG_FILE_PATH)
+            log_path.parent.mkdir(parents=True, exist_ok=True)
+
+            logger.add(
+                settings.LOG_FILE_PATH,
+                rotation=settings.LOG_ROTATION,
+                retention=settings.LOG_RETENTION,
+                compression=settings.LOG_COMPRESSION,
+                format="{message}",
+                serialize=True,
+                level=settings.LOG_LEVEL,
+                encoding="utf-8",
+                enqueue=True
+            )
+        except OSError as e:
+            # 이미 등록된 콘솔 sink 로 경고만 남기고 파일 sink 없이 진행 (부팅 차단 방지).
+            logger.warning(
+                "LOG_FILE_PATH={} 파일 sink 초기화 실패({}) — 콘솔 출력만으로 계속합니다.",
+                settings.LOG_FILE_PATH,
+                e,
+            )
     
     # 표준 logging 을 loguru 로 흘려보내는 핸들러
     class InterceptHandler(logging.Handler):
