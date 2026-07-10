@@ -148,11 +148,11 @@ class SaveDraftRequest(BaseModel):
     content: Optional[str] = Field(None, max_length=500, description="게시글 내용")
     preferred_age_min: Optional[int] = Field(None, ge=1, description="선호 나이 하한")
     preferred_age_max: Optional[int] = Field(None, ge=1, description="선호 나이 상한")
-    preferred_gender: Optional[str] = Field(None, description="선호 성별 (male / female / any)")
+    preferred_gender: Optional[PreferredGender] = Field(None, description="선호 성별 (male / female / any)")
     region: Optional[str] = Field(None, max_length=100, description="여행 지역")
     travel_start_date: Optional[date] = Field(None, description="여행 시작일")
     travel_end_date: Optional[date] = Field(None, description="여행 종료일")
-    companion_type: Optional[str] = Field(None, description="동행 타입 (friend / family / couple / sole)")
+    companion_type: Optional[CompanionType] = Field(None, description="동행 타입 (friend / family / couple / sole)")
     image_urls: Optional[List[_ImageUrl]] = Field(None, max_length=_MAX_POST_IMAGES, description="첨부 이미지 URL 목록")
 
 

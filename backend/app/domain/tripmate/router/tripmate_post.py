@@ -102,7 +102,7 @@ async def get_posts(
 @inject
 async def search_posts(
     request: Request,
-    keyword: str = Query(..., min_length=1, description="검색 키워드 (제목, 내용, 작성자)"),
+    keyword: str = Query(..., min_length=1, max_length=50, description="검색 키워드 (제목, 내용, 작성자)"),
     cursor: Optional[str] = Query(None, description="다음 페이지 커서 (post_id)"),
     post_service: TripmatePostService = Depends(Provide[Container.tripmate_post_service]),
     search_history_service: TripmateSearchHistoryService = Depends(Provide[Container.tripmate_search_history_service]),

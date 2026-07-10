@@ -8,6 +8,7 @@ from datetime import date
 import pytest
 from pydantic import ValidationError
 
+from app.domain.tripmate.model.tripmate_post import CompanionType, PreferredGender
 from app.domain.tripmate.schema.tripmate_post import (
     _MAX_IMAGE_URL_LEN,
     _MAX_POST_IMAGES,
@@ -90,3 +91,30 @@ class TestDraftImageLimits:
     def test_too_long_url_rejected(self):
         with pytest.raises(ValidationError):
             SaveDraftRequest(image_urls=["x" * (_MAX_IMAGE_URL_LEN + 1)])
+
+
+# ──────────────────────────────────────────────────────────────────
+# 임시저장 enum 제약 — free-form str 이면 임의 값이 Mongo 에 저장·복원되고
+# 게시 시점에야 422 로 터진다. 입력 단계에서 enum 으로 걸러지는지 회귀 가드.
+# ──────────────────────────────────────────────────────────────────
+
+@pytest.mark.unit
+class TestDraftEnumValidation:
+    def test_valid_enum_values_allowed(self):
+        req = SaveDraftRequest(preferred_gender="any", companion_type="friend")
+        assert req.preferred_gender == PreferredGender.ANY
+        assert req.companion_type == CompanionType.FRIEND
+
+    def test_none_allowed_partial_draft(self):
+        # 드래프트는 부분 저장이므로 미입력(None) 허용
+        req = SaveDraftRequest()
+        assert req.preferred_gender is None
+        assert req.companion_type is None
+
+    def test_bad_preferred_gender_rejected(self):
+        with pytest.raises(ValidationError):
+            SaveDraftRequest(preferred_gender="attack-helicopter")
+
+    def test_bad_companion_type_rejected(self):
+        with pytest.raises(ValidationError):
+            SaveDraftRequest(companion_type="stranger")
