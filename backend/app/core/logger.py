@@ -5,7 +5,7 @@
   LOG_FORMAT      "json"(수집/분석용) | "console"(로컬 디버깅용). PROD 는 항상 json 강제.
   LOG_FILE_PATH   None 이면 콘솔만, 경로 지정 시 파일에도 기록
   LOG_ROTATION    "100 MB" 등 용량/시간 기준으로 롤테이션 (loguru 규칙)
-  LOG_RETENTION   "30 days" 등 경과 후 자동 삭제
+  LOG_RETENTION   "14 days" 등 경과 후 자동 삭제
   LOG_COMPRESSION "gz" 등 롤테이션 파일 압축
 
 사용:
@@ -17,13 +17,33 @@
   logger.info(f"유저: {user_id}")       # (X) 항상 평가됨
 """
 import logging
+import os
 import sys
+from collections.abc import Callable
 from pathlib import Path
 
 from loguru import logger
+from loguru._file_sink import FileSink
 from loguru._logger import Logger
 
 from app.config.setting import settings
+
+
+def _private_file_opener(path: str, flags: int) -> int:
+    return os.open(path, flags, 0o600)
+
+
+def _private_compression(compression: str) -> Callable[[str], None]:
+    compress = FileSink._make_compression_function(compression)
+    if compress is None:
+        raise ValueError("LOG_COMPRESSION must not be empty")
+    suffix = f".{compression.strip().lstrip('.')}"
+
+    def compress_private(path: str) -> None:
+        compress(path)
+        Path(f"{path}{suffix}").chmod(0o600)
+
+    return compress_private
 
 
 def setup_logging() -> None:
@@ -61,16 +81,23 @@ def setup_logging() -> None:
         try:
             log_path = Path(settings.LOG_FILE_PATH)
             log_path.parent.mkdir(parents=True, exist_ok=True)
+            log_path.touch(mode=0o600, exist_ok=True)
+            log_path.chmod(0o600)
+            archive_pattern = f"{log_path.stem}.*{log_path.suffix}*"
+            for archived_path in log_path.parent.glob(archive_pattern):
+                if archived_path.is_file():
+                    archived_path.chmod(0o600)
 
             logger.add(
                 settings.LOG_FILE_PATH,
                 rotation=settings.LOG_ROTATION,
                 retention=settings.LOG_RETENTION,
-                compression=settings.LOG_COMPRESSION,
+                compression=_private_compression(settings.LOG_COMPRESSION),
                 format="{message}",
                 serialize=True,
                 level=settings.LOG_LEVEL,
                 encoding="utf-8",
+                opener=_private_file_opener,
                 enqueue=True
             )
         except OSError as e:

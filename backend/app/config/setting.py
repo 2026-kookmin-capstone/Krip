@@ -35,7 +35,7 @@ class Settings(BaseSettings):
                     "console 출력만 원하면 .env 에서 LOG_FILE_PATH= 빈 값으로 override.",
     )
     LOG_ROTATION: str = Field("100 MB", description="로그 로테이션")
-    LOG_RETENTION: str = Field("30 days", description="로그 보관 기준")
+    LOG_RETENTION: str = Field("14 days", description="로그 보관 기준")
     LOG_COMPRESSION: str = Field("gz", description="로그 롤테이션 파일 압축")
     
     # POSTGRES 정보
