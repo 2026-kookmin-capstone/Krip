@@ -71,6 +71,20 @@ class ChatRoomMemberRepository:
         result = await self.session.execute(stmt)
         return result.scalar_one_or_none() is not None
 
+    async def is_active_member_for_share(self, chat_room_id: str, user_id: str) -> bool:
+        """퇴장·강퇴 update와 송신 권한 판정을 공유 잠금으로 직렬화."""
+        stmt = (
+            select(ChatRoomMember.user_id)
+            .where(
+                ChatRoomMember.chat_room_id == chat_room_id,
+                ChatRoomMember.user_id == user_id,
+                ChatRoomMember.is_left.is_(False),
+            )
+            .with_for_update(read=True)
+        )
+        result = await self.session.execute(stmt)
+        return result.scalar_one_or_none() is not None
+
     async def find_pushable_user_ids_in_room(
         self, chat_room_id: str, user_ids: list[str],
     ) -> set[str]:

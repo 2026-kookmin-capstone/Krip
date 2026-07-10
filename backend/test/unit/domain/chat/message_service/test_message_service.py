@@ -88,7 +88,9 @@ class TestHappyPath:
 
 @pytest.mark.unit
 class TestMembershipCheck:
-    async def test_cache_hit_skips_rdb_load(self, service, redis_mock, chat_member_repo_mock):
+    async def test_cache_hit_skips_full_member_load(
+        self, service, redis_mock, chat_member_repo_mock,
+    ):
         redis_mock.sismember = AsyncMock(return_value=True)
 
         await service.send_message(
@@ -96,7 +98,22 @@ class TestMembershipCheck:
             client_msg_id="cm-1", msg_type=MessageType.TEXT, content="x",
         )
 
+        chat_member_repo_mock.is_active_member_for_share.assert_awaited_once_with("CR_1", "U_A")
         chat_member_repo_mock.find_active_member_ids.assert_not_called()
+
+    async def test_cache_hit_rejects_member_who_left_rdb(
+        self, service, redis_mock, chat_member_repo_mock, message_repo_mock,
+    ):
+        redis_mock.sismember = AsyncMock(return_value=True)
+        chat_member_repo_mock.is_active_member_for_share.return_value = False
+
+        with pytest.raises(PermissionError, match="멤버가 아닙니다"):
+            await service.send_message(
+                sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+                client_msg_id="cm-stale", msg_type=MessageType.TEXT, content="x",
+            )
+
+        message_repo_mock.insert.assert_not_awaited()
 
     async def test_cache_hit_refreshes_ttl(self, service, redis_mock):
         """sismember 히트 시 room:members TTL 을 슬라이딩 — 후속 smembers 만료 race 방지."""
@@ -197,6 +214,68 @@ class TestDedupe:
         assert ack.message_id == "MSG_original"
         assert ack.server_seq == 42
         assert ack.client_msg_id == "cm-dup"
+
+    async def test_left_member_can_replay_recorded_ack_for_same_room(
+        self, service, redis_dedupe_mock, chat_member_repo_mock,
+        chat_room_repo_mock, message_repo_mock, lua_mock,
+    ):
+        import json
+        chat_member_repo_mock.is_active_member_for_share.return_value = False
+        redis_dedupe_mock.get = AsyncMock(return_value=json.dumps({
+            "room_id": "CR_1",
+            "message_id": "MSG_original",
+            "server_seq": 42,
+            "created_at": "2026-07-09T00:00:00+00:00",
+        }))
+
+        ack = await service.send_message(
+            sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+            client_msg_id="cm-dup", msg_type=MessageType.TEXT, content="x",
+        )
+
+        assert ack.message_id == "MSG_original"
+        chat_member_repo_mock.is_active_member_for_share.assert_not_awaited()
+        chat_room_repo_mock.find_by_id.assert_not_awaited()
+        message_repo_mock.insert.assert_not_awaited()
+        lua_mock.incr_with_ttl.assert_not_awaited()
+        redis_dedupe_mock.set.assert_not_awaited()
+
+    async def test_left_member_cannot_replay_ack_from_another_room(
+        self, service, redis_dedupe_mock, chat_member_repo_mock,
+    ):
+        import json
+        chat_member_repo_mock.is_active_member_for_share.return_value = False
+        redis_dedupe_mock.get = AsyncMock(return_value=json.dumps({
+            "room_id": "CR_OTHER",
+            "message_id": "MSG_other",
+            "server_seq": 7,
+            "created_at": "2026-07-09T00:00:00+00:00",
+        }))
+
+        with pytest.raises(PermissionError, match="멤버가 아닙니다"):
+            await service.send_message(
+                sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+                client_msg_id="cm-dup", msg_type=MessageType.TEXT, content="x",
+            )
+
+        chat_member_repo_mock.is_active_member_for_share.assert_awaited_once_with("CR_1", "U_A")
+
+    async def test_legacy_ack_requires_active_membership(
+        self, service, redis_dedupe_mock, chat_member_repo_mock,
+    ):
+        import json
+        chat_member_repo_mock.is_active_member_for_share.return_value = False
+        redis_dedupe_mock.get = AsyncMock(return_value=json.dumps({
+            "message_id": "MSG_legacy",
+            "server_seq": 3,
+            "created_at": "2026-07-09T00:00:00+00:00",
+        }))
+
+        with pytest.raises(PermissionError, match="멤버가 아닙니다"):
+            await service.send_message(
+                sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+                client_msg_id="cm-legacy", msg_type=MessageType.TEXT, content="x",
+            )
 
     async def test_active_member_can_replay_legacy_ack(
         self, service, redis_dedupe_mock,

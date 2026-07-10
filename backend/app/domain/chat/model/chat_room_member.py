@@ -19,7 +19,6 @@ class ChatRoomMember(Base):
 
     - 퇴장은 `is_left=true` soft delete — 재초대 시 `last_read_*` 유지로 미읽음 표기 보존.
     - `last_read_message_server_seq` 는 읽음 뱃지의 유일한 소스 (GREATEST 로 regress 방지).
-    - 퇴장 플로우 순서: Redis `room:members:{R}` SREM → RDB UPDATE.
     """
 
     __tablename__ = "chat_room_member"

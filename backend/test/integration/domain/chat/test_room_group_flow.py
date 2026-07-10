@@ -10,6 +10,7 @@ import pytest_asyncio
 from sqlalchemy import select
 
 from app.core.chat.redis_key import room_members_key, room_seq_key, unread_key
+from app.domain.chat.model.chat_message import MessageType
 from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
 from app.domain.chat.model.chat_room_member import ChatRoomMember
 from app.domain.chat.service.room import RoomService
@@ -246,6 +247,29 @@ class TestLeaveRoomFlow:
         assert call.args[0] == b
         assert call.args[1] == {"type": "room_left", "room_id": room.chat_room_id}
 
+    async def test_left_member_cannot_send_with_stale_member_cache(
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, redis_hot,
+        patch_external_clients, message_service,
+    ):
+        a, b, _ = await seed_users(3)
+        await seed_friendship(a, b)
+        service = RoomService(
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
+        )
+        room = await service.create_group_room(me_id=a, title="T", member_ids=[b])
+        await service.leave_room(me_id=b, room_id=room.chat_room_id)
+        await redis_hot.sadd(room_members_key(room.chat_room_id), b)
+
+        with pytest.raises(PermissionError, match="멤버가 아닙니다"):
+            await message_service.send_message(
+                sender_user_id=b,
+                sender_session_id="WS_B",
+                room_id=room.chat_room_id,
+                client_msg_id="cm-stale-member",
+                msg_type=MessageType.TEXT,
+                content="blocked",
+            )
+
     async def test_direct_room_rejects_leave(
         self, uow, seed_users, chat_fanout_stub, patch_external_clients, message_service,
     ):
@@ -290,6 +314,31 @@ class TestKickMemberFlow:
         call = chat_fanout_stub.fan_out_to_user.call_args
         assert call.args[0] == b
         assert call.args[1]["type"] == "room_left"
+
+    async def test_kicked_member_cannot_send_with_stale_member_cache(
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, redis_hot,
+        patch_external_clients, message_service,
+    ):
+        a, b, _ = await seed_users(3)
+        await seed_friendship(a, b)
+        service = RoomService(
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
+        )
+        room = await service.create_group_room(me_id=a, title="T", member_ids=[b])
+        await service.kick_member(
+            me_id=a, room_id=room.chat_room_id, target_user_id=b,
+        )
+        await redis_hot.sadd(room_members_key(room.chat_room_id), b)
+
+        with pytest.raises(PermissionError, match="멤버가 아닙니다"):
+            await message_service.send_message(
+                sender_user_id=b,
+                sender_session_id="WS_B",
+                room_id=room.chat_room_id,
+                client_msg_id="cm-stale-kicked",
+                msg_type=MessageType.TEXT,
+                content="blocked",
+            )
 
     async def test_non_creator_cannot_kick(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, patch_external_clients, message_service,

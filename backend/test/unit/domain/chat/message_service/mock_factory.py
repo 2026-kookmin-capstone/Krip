@@ -64,6 +64,7 @@ def make_chat_member_repo_mock() -> AsyncMock:
     mock = AsyncMock()
     mock.find_active_member_ids.return_value = ["U_A", "U_B"]
     mock.is_active_member.return_value = True
+    mock.is_active_member_for_share.return_value = True
     return mock
 
 

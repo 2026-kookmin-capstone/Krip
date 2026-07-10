@@ -82,6 +82,13 @@ class MessageService:
         redis_hot = await get_redis_client()
         redis_dedupe = await get_redis_dedupe_client()
 
+        dedupe_k = dedupe_key(sender_user_id, client_msg_id)
+        replay = await self._replay_ack_if_available(
+            redis_dedupe, dedupe_k, client_msg_id, room_id,
+        )
+        if replay is not None:
+            return replay
+
         await self._ensure_membership(
             redis_hot, member_repo, room_id=room_id, user_id=sender_user_id,
         )
@@ -108,7 +115,6 @@ class MessageService:
         # dedupe — NX 선점. placeholder 로 예약 후 Mongo durable 되면 값에 ACK 를 기록한다.
         # 재전송(hit): 값이 ACK 면 원본 ACK 를 replay(전송은 성공했으나 ACK 프레임을 잃은 클라
         # 구제), 아직 placeholder 면 최초 전송이 in-flight → 재시도 유도.
-        dedupe_k = dedupe_key(sender_user_id, client_msg_id)
         first_time = await redis_dedupe.set(dedupe_k, _DEDUPE_PENDING, nx=True, ex=DEDUPE_TTL)
         if not first_time:
             replay = await self._replay_ack_if_available(
@@ -248,7 +254,10 @@ class MessageService:
         room_id: str,
         user_id: str,
     ) -> None:
-        """`room:members:{R}` 캐시로 멤버십 검증. miss 시 방 멤버 전체를 RDB 로드 후 SADD."""
+        """RDB 멤버십을 검증하고 방 멤버 캐시를 준비."""
+        if not await member_repo.is_active_member_for_share(room_id, user_id):
+            raise PermissionError("이 방의 멤버가 아닙니다.")
+
         key = room_members_key(room_id)
         is_member = await redis_hot.sismember(key, user_id)
         if is_member:
