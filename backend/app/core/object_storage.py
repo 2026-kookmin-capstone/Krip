@@ -158,9 +158,19 @@ class ObjectStorage:
     # ──────────────────── 내부 헬퍼 ────────────────────
 
     def _make_key(self, file_name: str, prefix: str) -> str:
-        ext = file_name.rsplit(".", 1)[-1] if "." in file_name else ""
+        ext = self._sanitize_ext(file_name)
         unique = uuid.uuid4()
         return f"{prefix}/{unique}.{ext}" if ext else f"{prefix}/{unique}"
+
+    @staticmethod
+    def _sanitize_ext(file_name: str) -> str:
+        """클라이언트가 준 파일명의 확장자를 안전하게 정규화한다."""
+        if "." not in file_name:
+            return ""
+        raw = file_name.rsplit(".", 1)[-1]
+        # /, ., 제어문자 등을 모두 제거하고 영숫자만 남긴다.
+        cleaned = "".join(ch for ch in raw if ch.isalnum() and ch.isascii()).lower()
+        return cleaned[:10]
 
     def _key_to_url(self, key: str) -> str:
         return f"{self.endpoint}/{self.bucket}/{key}"
