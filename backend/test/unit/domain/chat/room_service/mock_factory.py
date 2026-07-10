@@ -33,6 +33,7 @@ def make_chat_room_repo_mock() -> AsyncMock:
     mock = AsyncMock()
     mock.save.return_value = None
     mock.find_by_id.return_value = None
+    mock.find_by_id_for_update.side_effect = lambda _room_id: mock.find_by_id.return_value
     mock.find_direct_by_pair.return_value = None
     mock.find_rooms_of_user.return_value = []
     mock.update_last_message.return_value = None
@@ -46,7 +47,11 @@ def make_chat_member_repo_mock() -> AsyncMock:
     mock.find.return_value = None
     mock.update.return_value = None
     mock.find_active_member_ids.return_value = []
+    mock.count_active_members.return_value = 0
     mock.is_active_member.return_value = False
+    mock.is_active_member_for_share.side_effect = (
+        lambda _room_id, _user_id: mock.is_active_member.return_value
+    )
     mock.find_user_room_ids.return_value = []
     mock.mark_read.return_value = None
     mock.count_readers_up_to.return_value = 0

@@ -61,6 +61,14 @@ class ChatRoomMemberRepository:
         result = await self.session.execute(stmt)
         return list(result.scalars().all())
 
+    async def count_active_members(self, chat_room_id: str) -> int:
+        stmt = select(func.count()).select_from(ChatRoomMember).where(
+            ChatRoomMember.chat_room_id == chat_room_id,
+            ChatRoomMember.is_left.is_(False),
+        )
+        result = await self.session.execute(stmt)
+        return int(result.scalar_one())
+
     async def is_active_member(self, chat_room_id: str, user_id: str) -> bool:
         """활성 멤버 여부 (is_left=false). 권한 체크용."""
         stmt = select(ChatRoomMember.user_id).where(

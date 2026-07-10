@@ -3,12 +3,11 @@ from typing import Any, List, Optional
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from app.domain.chat.constants import (
+    MAX_GROUP_CREATE_INVITEES,
+    MAX_INVITE_BATCH,
+)
 from app.domain.chat.model.chat_room import ChatRoomType
-
-
-# 본인 포함 100명. fan-out 지연 + SADD 크기 고려한 협의 값.
-_MAX_GROUP_MEMBERS = 99
-_MAX_INVITE_BATCH = 50
 
 
 # ──────────────────── Request ────────────────────
@@ -42,7 +41,7 @@ class CreateGroupRoomBody(BaseModel):
     member_ids: List[str] = Field(
         ...,
         min_length=1,
-        max_length=_MAX_GROUP_MEMBERS,
+        max_length=MAX_GROUP_CREATE_INVITEES,
         description="초대할 유저 ID 목록 (본인 제외, 친구만 허용)",
     )
 
@@ -59,7 +58,7 @@ class InviteMembersBody(BaseModel):
     user_ids: List[str] = Field(
         ...,
         min_length=1,
-        max_length=_MAX_INVITE_BATCH,
+        max_length=MAX_INVITE_BATCH,
         description="초대할 유저 ID 목록 (친구만 허용)",
     )
 

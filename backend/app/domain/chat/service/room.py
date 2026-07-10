@@ -16,6 +16,7 @@ from app.core.logger import get_logger
 from app.core.redis import get_redis_client
 from app.database.session import UnitOfWork, mongodb, transactional
 from app.domain.auth.repository.user import UserRepository
+from app.domain.chat.constants import MAX_GROUP_MEMBERS
 from app.domain.chat.dto.room import ChatRoomData, ChatRoomPeerData
 from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
 from app.domain.chat.model.chat_room_member import ChatRoomMember
@@ -28,7 +29,6 @@ from app.domain.friend.repository.user_block import UserBlockRepository
 
 
 logger = get_logger("chat.room")
-
 
 # unread 표시 상한 (999+ 캡) — reconcile.recover_unread 와 동일 규약.
 _UNREAD_COUNT_CAP = 999
@@ -180,6 +180,8 @@ class RoomService:
         targets = {uid for uid in member_ids if uid != me_id}
         if not targets:
             raise ValueError("초대할 대상이 없습니다 (본인 외 멤버 없음).")
+        if len(targets) + 1 > MAX_GROUP_MEMBERS:
+            raise ValueError(f"그룹 채팅방은 최대 {MAX_GROUP_MEMBERS}명까지 참여할 수 있습니다.")
 
         friendship_repo = FriendshipRepository(self._session)
         chat_room_repo = ChatRoomRepository(self._session)
@@ -306,16 +308,34 @@ class RoomService:
 
         current_seq = await self._get_current_seq(message_repo, room_id)
 
-        invited: list[str] = []
+        # 총원을 증가시키는 invite끼리 room row로 직렬화한다. inviter row의 공유 잠금은
+        # 대기 중 퇴장·강퇴를 commit 이후로 미뤄 stale 권한 초대를 막는다.
+        room = await chat_room_repo.find_by_id_for_update(room_id)
+        if room is None:
+            raise ChatRoomNotFoundError("존재하지 않는 방입니다.")
+        if room.type != ChatRoomType.GROUP:
+            raise ValueError("그룹 방에만 멤버를 초대할 수 있습니다.")
+        if not await member_repo.is_active_member_for_share(room_id, me_id):
+            raise PermissionError("이 방의 활성 멤버만 초대할 수 있습니다.")
+
         skipped: list[str] = []
-        new_members: list[str] = []
-        rejoined: list[tuple[str, int]] = []  # (uid, last_read)
+        candidates: list[tuple[str, ChatRoomMember | None]] = []
 
         for uid in sorted(targets):
             existing = await member_repo.find(room_id, uid)
             if existing is not None and not existing.is_left:
                 skipped.append(uid)
                 continue
+            candidates.append((uid, existing))
+
+        active_count = await member_repo.count_active_members(room_id)
+        if active_count + len(candidates) > MAX_GROUP_MEMBERS:
+            raise ValueError(f"그룹 채팅방은 최대 {MAX_GROUP_MEMBERS}명까지 참여할 수 있습니다.")
+
+        invited: list[str] = []
+        new_members: list[str] = []
+        rejoined: list[tuple[str, int]] = []  # (uid, last_read)
+        for uid, existing in candidates:
             if existing is not None and existing.is_left:
                 existing.is_left = False
                 existing.joined_at = datetime.now(timezone.utc)

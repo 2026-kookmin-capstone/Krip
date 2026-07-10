@@ -10,8 +10,13 @@
 from datetime import datetime, timezone
 
 import pytest
+from pydantic import ValidationError
 
-from app.domain.chat.schema.room import LastMessagePreviewResponse
+from app.domain.chat.schema.room import (
+    CreateGroupRoomBody,
+    InviteMembersBody,
+    LastMessagePreviewResponse,
+)
 
 
 NOW = datetime(2026, 4, 22, 12, 0, 0, tzinfo=timezone.utc)
@@ -68,3 +73,26 @@ class TestLastMessagePreviewResponseContent:
         dumped = resp.model_dump()
         assert isinstance(dumped["content"], dict)
         assert dumped["content"] == payload
+
+
+@pytest.mark.unit
+class TestGroupMemberRequestLimits:
+    @staticmethod
+    def _user_ids(count: int) -> list[str]:
+        return [f"U_{index}" for index in range(count)]
+
+    def test_create_group_accepts_99_invitees(self):
+        body = CreateGroupRoomBody(title="limit", member_ids=self._user_ids(99))
+        assert len(body.member_ids) == 99
+
+    def test_create_group_rejects_100_invitees(self):
+        with pytest.raises(ValidationError):
+            CreateGroupRoomBody(title="limit", member_ids=self._user_ids(100))
+
+    def test_invite_accepts_batch_of_50(self):
+        body = InviteMembersBody(user_ids=self._user_ids(50))
+        assert len(body.user_ids) == 50
+
+    def test_invite_rejects_batch_of_51(self):
+        with pytest.raises(ValidationError):
+            InviteMembersBody(user_ids=self._user_ids(51))

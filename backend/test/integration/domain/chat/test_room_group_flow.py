@@ -5,14 +5,18 @@
 상위 conftest 의 fixture 재사용 (같은 fanout 인스턴스를 RoomService 와 MessageService 가
 공유해야 호출 카운트 일관).
 """
+import asyncio
+
 import pytest
 import pytest_asyncio
-from sqlalchemy import select
+from sqlalchemy import func, select
 
 from app.core.chat.redis_key import room_members_key, room_seq_key, unread_key
+from app.database.session import UnitOfWork
 from app.domain.chat.model.chat_message import MessageType
 from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
 from app.domain.chat.model.chat_room_member import ChatRoomMember
+from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
 from app.domain.chat.service.room import RoomService
 from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 
@@ -105,6 +109,102 @@ class TestCreateGroupRoomFlow:
 # ──────────────────────────────────────────────────────────────────
 
 class TestInviteMembersFlow:
+    async def test_concurrent_invites_cannot_exceed_100_active_members(
+        self, seed_users, session_factory, patch_external_clients, monkeypatch,
+    ):
+        users = await seed_users(101)
+        creator, *rest = users
+        initial_members = [creator, *rest[:98]]
+        candidates = rest[98:]
+
+        async with session_factory() as session:
+            room = ChatRoom(type=ChatRoomType.GROUP, title="limit", creator_id=creator)
+            session.add(room)
+            await session.flush()
+            room_id = str(room.chat_room_id)
+            session.add_all([
+                ChatRoomMember(chat_room_id=room_id, user_id=user_id)
+                for user_id in initial_members
+            ])
+            session.add_all([
+                Friendship(
+                    requester_id=creator,
+                    addressee_id=user_id,
+                    status=FriendshipStatus.ACCEPTED,
+                )
+                for user_id in candidates
+            ])
+            await session.commit()
+
+        seq_ready = asyncio.Event()
+        seq_calls = 0
+        original_count = ChatRoomMemberRepository.count_active_members
+        second_counted = asyncio.Event()
+        count_calls = 0
+
+        async def coordinated_current_seq(_message_repo, _room_id):
+            nonlocal seq_calls
+            seq_calls += 1
+            if seq_calls == 2:
+                seq_ready.set()
+            await seq_ready.wait()
+            return 0
+
+        async def coordinated_count(repo, target_room_id):
+            nonlocal count_calls
+            count = await original_count(repo, target_room_id)
+            count_calls += 1
+            if count_calls == 1:
+                try:
+                    await asyncio.wait_for(second_counted.wait(), timeout=1)
+                except TimeoutError:
+                    pass
+            else:
+                second_counted.set()
+            return count
+
+        monkeypatch.setattr(
+            RoomService,
+            "_get_current_seq",
+            staticmethod(coordinated_current_seq),
+        )
+        monkeypatch.setattr(
+            ChatRoomMemberRepository,
+            "count_active_members",
+            coordinated_count,
+        )
+
+        async def invite(user_id):
+            service = RoomService(
+                uow=UnitOfWork(session_factory),
+                fanout_service=None,
+                message_service=None,
+            )
+            return await service._invite_members_tx(
+                me_id=creator,
+                room_id=room_id,
+                user_ids=[user_id],
+            )
+
+        results = await asyncio.gather(
+            *(invite(user_id) for user_id in candidates),
+            return_exceptions=True,
+        )
+
+        assert sum(not isinstance(result, BaseException) for result in results) == 1
+        assert sum(
+            isinstance(result, ValueError) and "최대 100명" in str(result)
+            for result in results
+        ) == 1
+        async with session_factory() as session:
+            active_count = await session.scalar(
+                select(func.count()).select_from(ChatRoomMember).where(
+                    ChatRoomMember.chat_room_id == room_id,
+                    ChatRoomMember.is_left.is_(False),
+                )
+            )
+        assert active_count == 100
+
     async def test_invite_new_member_and_rejoin_preserves_last_read(
         self, uow, seed_users, seed_friendship, chat_fanout_stub,
         session_factory, redis_hot, patch_external_clients, message_service,
@@ -151,11 +251,11 @@ class TestInviteMembersFlow:
             assert by_id[c].is_left is False
             assert by_id[c].last_read_message_server_seq == 30
 
-        # Redis — 신규/재초대 모두 캐시 SADD + unread 반영
+        # Redis — 부분 SADD 대신 캐시를 무효화하고, 신규/재초대 unread 만 시드한다.
         cached = await redis_hot.smembers(room_members_key(room_id))
-        assert cached == {a, b, c}
-        # 재초대 b: unread = current_seq - last_read = 30 - 15 = 15
-        assert await redis_hot.hget(unread_key(b), room_id) == "15"
+        assert cached == set()
+        # 재초대 b: seq gap 안에 실제 사용자 메시지가 없으므로 유령 unread를 만들지 않는다.
+        assert await redis_hot.hget(unread_key(b), room_id) == "0"
         # 신규 c: unread = 0
         assert await redis_hot.hget(unread_key(c), room_id) == "0"
 

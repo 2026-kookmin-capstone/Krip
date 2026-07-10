@@ -7,6 +7,7 @@ from types import SimpleNamespace
 
 import pytest
 
+from app.core.chat.redis_key import unread_key
 from app.domain.chat.model.chat_room import ChatRoomType
 from app.domain.chat.service.exception import ChatRoomNotFoundError
 from test.unit.domain.chat.room_service.model_factory import ChatRoomFactory
@@ -18,6 +19,19 @@ from test.unit.domain.chat.room_service.model_factory import ChatRoomFactory
 
 @pytest.mark.unit
 class TestCreateGroupRoom:
+    async def test_service_rejects_more_than_100_members_after_dedup(
+        self, service, friendship_repo_mock, chat_room_repo_mock,
+    ):
+        targets = {f"U_{index}" for index in range(100)}
+        friendship_repo_mock.find_accepted_friend_ids_with.return_value = targets
+
+        with pytest.raises(ValueError, match="최대 100명"):
+            await service.create_group_room(
+                me_id="U_A", title="limit", member_ids=list(targets),
+            )
+
+        chat_room_repo_mock.save.assert_not_awaited()
+
     async def test_raises_when_only_self_after_dedup(self, service):
         with pytest.raises(ValueError, match="초대할 대상이 없습니다"):
             await service.create_group_room(
@@ -96,6 +110,89 @@ class TestCreateGroupRoom:
 
 @pytest.mark.unit
 class TestInviteMembers:
+    async def test_rejects_new_member_when_room_already_has_100_active_members(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+        friendship_repo_mock,
+    ):
+        room = ChatRoomFactory.create(type_=ChatRoomType.GROUP)
+        chat_room_repo_mock.find_by_id.return_value = room
+        chat_member_repo_mock.is_active_member.return_value = True
+        chat_member_repo_mock.count_active_members.return_value = 100
+        chat_member_repo_mock.find.return_value = None
+        friendship_repo_mock.find_accepted_friend_ids_with.return_value = {"U_B"}
+
+        with pytest.raises(ValueError, match="최대 100명"):
+            await service.invite_members(
+                me_id="U_A", room_id="CR_G", user_ids=["U_B"],
+            )
+
+        chat_member_repo_mock.save.assert_not_awaited()
+
+    async def test_capacity_counts_only_targets_that_become_active(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+        friendship_repo_mock,
+    ):
+        room = ChatRoomFactory.create(type_=ChatRoomType.GROUP)
+        chat_room_repo_mock.find_by_id.return_value = room
+        chat_member_repo_mock.is_active_member.return_value = True
+        chat_member_repo_mock.count_active_members.return_value = 99
+        active = SimpleNamespace(is_left=False, last_read_message_server_seq=0)
+        chat_member_repo_mock.find.side_effect = [active, None]
+        friendship_repo_mock.find_accepted_friend_ids_with.return_value = {"U_B", "U_C"}
+
+        invited, skipped = await service.invite_members(
+            me_id="U_A", room_id="CR_G", user_ids=["U_B", "U_C"],
+        )
+
+        assert invited == ["U_C"]
+        assert skipped == ["U_B"]
+
+    async def test_full_room_still_skips_already_active_target(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+        friendship_repo_mock,
+    ):
+        room = ChatRoomFactory.create(type_=ChatRoomType.GROUP)
+        chat_room_repo_mock.find_by_id.return_value = room
+        chat_member_repo_mock.is_active_member.return_value = True
+        chat_member_repo_mock.count_active_members.return_value = 100
+        chat_member_repo_mock.find.return_value = SimpleNamespace(
+            is_left=False, last_read_message_server_seq=0,
+        )
+        friendship_repo_mock.find_accepted_friend_ids_with.return_value = {"U_B"}
+
+        invited, skipped = await service.invite_members(
+            me_id="U_A", room_id="CR_G", user_ids=["U_B"],
+        )
+
+        assert invited == []
+        assert skipped == ["U_B"]
+
+    async def test_full_room_rejects_rejoin_without_mutating_member(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+        friendship_repo_mock,
+    ):
+        room = ChatRoomFactory.create(type_=ChatRoomType.GROUP)
+        chat_room_repo_mock.find_by_id.return_value = room
+        chat_member_repo_mock.is_active_member.return_value = True
+        chat_member_repo_mock.count_active_members.return_value = 100
+        left = SimpleNamespace(
+            is_left=True,
+            last_read_message_server_seq=7,
+            joined_at=None,
+            notification_muted=True,
+        )
+        chat_member_repo_mock.find.return_value = left
+        friendship_repo_mock.find_accepted_friend_ids_with.return_value = {"U_B"}
+
+        with pytest.raises(ValueError, match="최대 100명"):
+            await service.invite_members(
+                me_id="U_A", room_id="CR_G", user_ids=["U_B"],
+            )
+
+        assert left.is_left is True
+        assert left.joined_at is None
+        assert left.notification_muted is True
+
     async def test_room_not_found_raises(
         self, service, chat_room_repo_mock,
     ):
@@ -215,9 +312,9 @@ class TestInviteMembers:
         assert existing.joined_at is not None
         # 재가입 시 mute 는 NULL 로 리셋 — last_read 와 다른 정책 (docstring 참조).
         assert existing.notification_muted is None
-        # 재초대 unread = 30 - 10 = 20
+        # seq gap이 아니라 count_after_seq() 실제 메시지 수(기본 mock=0)로 시드한다.
         p = redis_mock._pipes[-1]
-        p.hset.assert_called()
+        p.hset.assert_any_call(unread_key("U_B"), "CR_G", 0)
 
 
 # ──────────────────────────────────────────────────────────────────

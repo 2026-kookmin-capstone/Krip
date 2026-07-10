@@ -30,6 +30,16 @@ class ChatRoomRepository:
         """chat_room_id 로 단건 조회"""
         return await self.session.get(ChatRoom, chat_room_id)
 
+    async def find_by_id_for_update(self, chat_room_id: str) -> Optional[ChatRoom]:
+        """그룹 membership mutation 직렬화용 room row X-lock 조회."""
+        stmt = (
+            select(ChatRoom)
+            .where(ChatRoom.chat_room_id == chat_room_id)
+            .with_for_update()
+        )
+        result = await self.session.execute(stmt)
+        return result.scalar_one_or_none()
+
     async def find_direct_by_pair(
         self,
         user_a_id: str,
