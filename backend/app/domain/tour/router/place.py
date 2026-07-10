@@ -39,7 +39,7 @@ async def get_places(
     request: Request,
     lat: Optional[float] = Query(None, description="위도 (미입력 시 광화문 기준)"),
     lng: Optional[float] = Query(None, description="경도 (미입력 시 광화문 기준)"),
-    keyword: Optional[str] = Query(None, min_length=1, description="검색 키워드 (장소명, 카테고리)"),
+    keyword: Optional[str] = Query(None, min_length=1, max_length=50, description="검색 키워드 (장소명, 카테고리)"),
     cursor: Optional[str] = Query(None, description="다음 페이지 커서"),
     max_distance: Optional[float] = Query(None, gt=0, description="최대 검색 반경 (미터)"),
     place_service: PlaceService = Depends(Provide[Container.place_service]),

@@ -1,3 +1,4 @@
+import math
 import re
 from typing import Literal, Optional
 
@@ -195,9 +196,28 @@ class PlaceRepository:
 
     @staticmethod
     def _parse_cursor(cursor: str) -> tuple[float, str]:
-        """커서 문자열 파싱 → (distance, place_id)"""
-        distance_str, place_id = cursor.split(":", 1)
-        return float(distance_str), place_id
+        """커서 문자열 파싱 → (distance, place_id)
+
+        형식은 "거리:place_id". 다음 케이스는 모두 도메인 표준 ValueError 로 거부해
+        라우터가 400(일반 메시지)으로 매핑하도록 한다 (raw Python 에러 노출 방지):
+            - 구분자(:) 누락 등 구조 불량
+            - place_id 누락(빈 문자열)
+            - distance 가 숫자가 아니거나 nan/inf (비유한). nan 은 $match 로 조용히
+              빈 페이지를, inf 는 $geoNear minDistance=Infinity 로 정의되지 않은 동작을 유발.
+        """
+        parts = cursor.split(":", 1)
+        if len(parts) != 2:
+            raise ValueError("유효하지 않은 커서입니다.")
+        distance_str, place_id = parts
+        if not place_id:
+            raise ValueError("유효하지 않은 커서입니다.")
+        try:
+            distance = float(distance_str)
+        except ValueError:
+            raise ValueError("유효하지 않은 커서입니다.") from None
+        if not math.isfinite(distance):
+            raise ValueError("유효하지 않은 커서입니다.")
+        return distance, place_id
 
     @staticmethod
     def build_cursor(distance: float, place_id: str) -> str:
