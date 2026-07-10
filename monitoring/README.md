@@ -8,12 +8,12 @@ Krip 백엔드의 옵저버빌리티 스택. **메트릭(Prometheus) + 로그(Lo
 
 | 항목 | 값 |
 | --- | --- |
-| 모니터링 컴포넌트 | **10** — Prometheus · Grafana · Loki · Promtail · Blackbox + exporter 5종 (node · postgres · mongo · redis × 2) |
+| 모니터링 컴포넌트 | **10** — Prometheus · Grafana · Loki · Alloy · Blackbox + exporter 5종 (node · postgres · mongo · redis × 2) |
 | Prometheus 스크레이프 잡 | **11** (self 3 · DB 4 · node · backend · blackbox 2) |
 | Grafana 대시보드 | **7** (provisioning 자동 등록) |
 | 메트릭 보존 | Prometheus tsdb **15일** |
 | 로그 보존 | Loki filesystem **14일** |
-| PII 마스킹 | Promtail ingestion 단에서 **4종 강제** (email · JWT · 휴대폰 · 주민번호) |
+| PII 마스킹 | Alloy ingestion 단에서 **4종 강제** (email · JWT · 휴대폰 · 주민번호) |
 
 ---
 
@@ -29,8 +29,9 @@ monitoring/
 ├── blackbox/
 │   └── blackbox.yml                # http_2xx (strict) / http_alive (관대) 두 모듈
 ├── loki/
-│   ├── loki-config.yml             # monolithic, filesystem, 14일 retention
-│   └── promtail-config.yml         # 현재 로그 + 회전 .gz 양쪽 tail
+│   └── loki-config.yml             # monolithic, filesystem, 14일 retention
+├── alloy/
+│   └── config.alloy                # 현재 로그 + 회전 .gz, parsing 및 PII pipeline
 └── grafana/
     └── provisioning/
         ├── datasources/            # Prometheus / Loki 자동 등록
@@ -55,8 +56,8 @@ monitoring/
          │                       │                       │
          ▼ scrape                ▼ scrape                ▼ tail
 ┌────────────────────┐   ┌────────────────────┐  ┌────────────────┐
-│   Prometheus       │   │ Blackbox exporter  │  │   Promtail     │
-│   :9090            │◄──┤ :9115              │  │   :9080        │
+│   Prometheus       │   │ Blackbox exporter  │  │ Grafana Alloy  │
+│   :9090            │◄──┤ :9115              │  │   :12345       │
 │   tsdb 15d         │   │ (Prometheus 가 호출) │  │  PII 마스킹 4개  │
 └─────────┬──────────┘   └────────────────────┘  └────────┬───────┘
           │                                               │ push
@@ -96,8 +97,8 @@ monitoring/
 | Job | 대상 | 주기 | 비고 |
 |---|---|---|---|
 | `prometheus-self` | prometheus:9090 | 15s | 자기 자신 |
-| `loki-self` | loki:3100 | 15s | LokiIngestionStalled 룰 의존 |
-| `promtail-self` | promtail:9080 | 15s | PromtailDropping 룰 의존 |
+| `loki-self` | loki:3100 | 15s | Loki 자체 상태 |
+| `alloy-self` | alloy:12345 | 15s | Alloy 자체 상태 및 pipeline metrics |
 | `node` | node-exporter:9100 | 15s | 운영 Linux 만 활성 |
 | `postgres` | postgres-exporter:9187 | 15s | pg_stat_*, max_connections |
 | `redis-hot` | redis-exporter-hot:9121 | 15s | `db="hot"` 라벨 부착 |
@@ -154,9 +155,10 @@ backend 의 client-side `redis_command_duration_seconds` 와 의미 중복 + 폭
 - 보존: 14일 (`retention_period: 336h`), 7일보다 오래된 샘플은 ingestion 거절.
 - ingestion: 10MB/s, burst 20MB.
 
-### 3.5 Promtail (`grafana/promtail:3.3.1`)
+### 3.5 Grafana Alloy (`grafana/alloy:v1.17.1`)
 
-`backend/logs/app.log` (현재 파일) 와 `app.log.*.gz` (회전 압축본) 을 동시에 tail.
+`backend/logs/app.log` (현재 파일) 와 `app.*.log.gz` (회전 압축본) 을 동시에 tail.
+tail offset 등 component state는 `krip-alloy-data`에 저장한다.
 
 **라벨 정책** — 인덱스 카디널리티 통제 핵심:
 
@@ -164,16 +166,20 @@ backend 의 client-side `redis_command_duration_seconds` 와 의미 중복 + 폭
 - **본문 필드 (LogQL `| json` 검색)**: `logger_name`, `request_id`, `user_id`.
 - 고유 ID 라벨화 **절대 금지**.
 
-**파이프라인 스테이지** (YAML anchor `&pipeline` 으로 두 잡이 공유):
+**파이프라인 스테이지** (두 file source가 단일 `loki.process.backend`를 공유):
 
 1. `json` — loguru `serialize=True` 의 record 트리 파싱.
 2. `replace` × 4 — PII 마스킹 (email, JWT, 휴대폰, 주민번호). ingestion 단에서 강제해
    코드 리뷰 누락이 14일 보존되는 사고를 방지.
 3. `labels` — `level` 만 인덱스 라벨로 승격.
+4. `label_drop` — 회전마다 증가하는 `filename` 라벨 제거.
 
-**회전 추적** — loguru 가 `app.log → app.log.YYYY-MM-DD_HH-MM-SS_NNNNNN.gz` 로
-회전+압축. Promtail 3.x 의 `decompression` 은 pipeline 이 아닌 scrape_config 레벨
-옵션이라 잡을 두 개로 분리 (현재 / 회전).
+**회전 추적** — loguru 가 `app.log → app.YYYY-MM-DD_HH-MM-SS_NNNNNN.log.gz` 로
+회전+압축. Alloy의 `loki.source.file.rotated`에서 gzip decompression을 활성화한다.
+
+회귀 검증은 `python3 monitoring/tests/verify_alloy_pipeline.py`로 격리된 Loki+Alloy를
+기동해 JSON parsing, timestamp, PII 4종, 현재/회전 파일, rotation dedup, labels,
+Alloy state 재기동 연속성을 end-to-end 확인한다.
 
 ### 3.6 호스트 메트릭
 
@@ -220,7 +226,7 @@ deep-merge 충돌 방지.
 | `make reload` | Prometheus config hot reload (`/-/reload` POST) |
 | `make health` | `/health`, `/health/deep`, `/ready` 3종 curl 검증 |
 | `make metrics` | backend:9090/metrics 의 RED 메트릭 샘플 조회 |
-| `make logql` | Loki/Promtail ready + 라벨 목록 확인 |
+| `make logql` | Loki/Alloy ready + 라벨 목록 확인 |
 | `make net-create` | `monitoring-network` 생성 (`up` 이 자동 호출) |
 
 `COMPOSE_FILES = -f ../docker-compose.yml -f docker-compose.monitoring.yml` —
@@ -233,8 +239,8 @@ deep-merge 충돌 방지.
 
 | 키 | 용도 |
 |---|---|
-| `ENV` | Prometheus `external_labels.env`, Promtail Loki 라벨 |
-| `NODE_ID` | Promtail Loki 라벨 (멀티 노드 식별) |
+| `ENV` | Prometheus `external_labels.env`, Alloy Loki 라벨 |
+| `NODE_ID` | Alloy Loki 라벨 (멀티 노드 식별) |
 | `GRAFANA_ADMIN_PASSWORD` | Grafana admin 강제 비번 (`:?` — 미설정 시 부팅 거부) |
 | `POSTGRES_USER` / `_PASSWORD` / `_NAME` | postgres-exporter DSN |
 | `MONGODB_USER` / `_PASSWORD` | mongodb-exporter URI |
@@ -251,7 +257,7 @@ root `.env` 만 자동 로드하기 때문에 일부 중복.
 | `krip-prometheus-data` | tsdb 15일치 |
 | `krip-grafana-data` | Grafana 내부 DB (대시보드 UI 수정분, 사용자) |
 | `krip-loki-data` | Loki 청크 + 인덱스 14일치 |
-| `krip-promtail-positions` | tail 오프셋 (재기동 시 중복 push 방지) |
+| `krip-alloy-data` | Alloy component state 및 tail offset |
 
 ---
 

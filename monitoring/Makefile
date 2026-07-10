@@ -25,7 +25,7 @@ help:
 	@echo "  make reload      — Prometheus config hot reload (룰 변경 시)"
 	@echo "  make health      — backend health endpoint 3종 검증"
 	@echo "  make metrics     — backend:9090/metrics 샘플 조회"
-	@echo "  make logql       — Loki / Promtail ready 검증 + 최근 라벨 목록"
+	@echo "  make logql       — Loki / Alloy ready 검증 + 최근 라벨 목록"
 	@echo "  make net-create  — monitoring-network 생성 (사전 1회, up 이 자동 호출)"
 
 net-create:
@@ -69,8 +69,8 @@ metrics:
 logql:
 	@echo "=== Loki ready ==="
 	@docker exec krip-prometheus wget -qO- http://loki:3100/ready 2>/dev/null && echo "" || echo "FAIL"
-	@echo "=== Promtail ready ==="
-	@docker exec krip-prometheus wget -qO- http://promtail:9080/ready 2>/dev/null && echo "" || echo "FAIL"
+	@echo "=== Alloy ready ==="
+	@docker exec krip-prometheus wget -qO- http://alloy:12345/-/ready 2>/dev/null && echo "" || echo "FAIL"
 	@echo "=== Loki 라벨 목록 ==="
 	@docker exec krip-prometheus wget -qO- 'http://loki:3100/loki/api/v1/labels' 2>/dev/null | python3 -m json.tool
 	@echo "=== app=krip-backend 라벨 값 (env / node_id / level) ==="

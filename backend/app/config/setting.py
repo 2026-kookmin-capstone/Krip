@@ -31,7 +31,7 @@ class Settings(BaseSettings):
     LOG_FORMAT: str = Field("console", description="로그 포맷 (json/console)")
     LOG_FILE_PATH: Optional[str] = Field(
         "/backend/logs/app.log",
-        description=".env 누락 시에도 Promtail 이 정상 tail 하도록 default 명시. "
+        description=".env 누락 시에도 Alloy가 정상 tail 하도록 default 명시. "
                     "console 출력만 원하면 .env 에서 LOG_FILE_PATH= 빈 값으로 override.",
     )
     LOG_ROTATION: str = Field("100 MB", description="로그 로테이션")

@@ -49,7 +49,7 @@ def _private_compression(compression: str) -> Callable[[str], None]:
 def setup_logging() -> None:
     """로깅 시스템 설정"""
 
-    # PROD + console 포맷은 Promtail JSON parser 를 깨뜨리므로 json 으로 강제한다.
+    # PROD + console 포맷은 Alloy JSON parser를 깨뜨리므로 json으로 강제한다.
     # 발화 알림은 sink 가 준비된 함수 끝에서 emit (remove~add 사이엔 sink 부재).
     requested_format = settings.LOG_FORMAT
     forced_json = settings.is_production and requested_format != "json"
@@ -128,7 +128,7 @@ def setup_logging() -> None:
 
     # uvicorn CLI 는 자기 로거에 plain-text 핸들러를 propagate=False 로 심는다.
     # basicConfig(force=True) 는 root 만 건드리므로 그대로 두면 JSON stdout 에
-    # plain-text 가 섞여 Promtail 이 깨진다. 핸들러를 비우고 propagate 를 살려
+    # plain-text가 섞여 Alloy parsing이 깨진다. 핸들러를 비우고 propagate를 살려
     # loguru 단일 경로로 통합한다.
     for _name in ("uvicorn", "uvicorn.error", "uvicorn.access"):
         _uvicorn_logger = logging.getLogger(_name)
@@ -147,7 +147,7 @@ def setup_logging() -> None:
     if forced_json:
         logger.warning(
             "PROD 환경에서 LOG_FORMAT={} 가 지정되어 있어 json 으로 강제 변환했습니다. "
-            "Promtail JSON parser 호환 보호.",
+            "Alloy JSON parser 호환 보호.",
             requested_format,
         )
 

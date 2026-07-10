@@ -28,14 +28,14 @@ scrape_configs:
     static_configs:
       - targets: ["prometheus:9090"]
 
-  # LokiIngestionStalled / PromtailDropping 룰이 의존.
+  # Loki/Alloy 자체 상태 수집. 실제 alert rule은 추후 활성화.
   - job_name: loki-self
     static_configs:
       - targets: ["loki:3100"]
 
-  - job_name: promtail-self
+  - job_name: alloy-self
     static_configs:
-      - targets: ["promtail:9080"]
+      - targets: ["alloy:12345"]
 
   # ────────────────────────────────────────────────────────────────────
   # 호스트 / 컨테이너 메트릭

@@ -203,24 +203,26 @@ services:
       start_period: 30s
 
   # ──────────────────────────────────────────────────────────────────────
-  # Promtail — backend logs tail → Loki push
+  # Grafana Alloy — backend logs tail → privacy pipeline → Loki push
   #
-  # ../backend/logs 를 read-only 로 마운트해서 회전 + .gz 까지 추적.
-  # PII 마스킹 4종을 ingestion 단에서 강제.
+  # ../backend/logs 를 read-only 로 마운트해서 active + 회전 .gz 를 추적한다.
   # ──────────────────────────────────────────────────────────────────────
-  promtail:
-    image: grafana/promtail:3.3.1
-    container_name: krip-promtail
+  alloy:
+    image: grafana/alloy:v1.17.1
+    container_name: krip-alloy
     command:
-      - "-config.file=/etc/promtail/promtail-config.yml"
-      - "-config.expand-env=true"             # ${ENV}, ${NODE_ID} 치환
+      - "run"
+      - "--server.http.listen-addr=0.0.0.0:12345"
+      - "--storage.path=/var/lib/alloy/data"
+      - "/etc/alloy/config.alloy"
     environment:
       ENV: ${ENV:-DEV}
       NODE_ID: ${NODE_ID:-krip-backend}
+      LOKI_URL: http://loki:3100/loki/api/v1/push
     volumes:
-      - ./monitoring/loki/promtail-config.yml:/etc/promtail/promtail-config.yml:ro
-      - ./backend/logs:/backend/logs:ro                # project root 기준 (다른 monitoring path 들과 동일 규약)
-      - promtail-positions:/var/lib/promtail
+      - ./monitoring/alloy/config.alloy:/etc/alloy/config.alloy:ro
+      - ./backend/logs:/backend/logs:ro
+      - alloy-data:/var/lib/alloy/data
     networks:
       - monitoring-network
     depends_on:
@@ -237,5 +239,5 @@ volumes:
     name: krip-grafana-data
   loki-data:
     name: krip-loki-data
-  promtail-positions:
-    name: krip-promtail-positions
+  alloy-data:
+    name: krip-alloy-data

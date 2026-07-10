@@ -2,7 +2,7 @@
 #
 # 단일 인스턴스 monolithic 모드.
 # 멀티 테넌트는 미도입 — auth_enabled=false.
-# Promtail 의 tenant_id 라인은 그대로 두면 Loki 가 무시한다 (후일 진입 비용 0).
+# Alloy의 tenant_id는 auth 비활성 상태에서 Loki가 무시한다 (후일 진입 비용 0).
 #
 # 보존 정책:
 #   retention_period 14d
