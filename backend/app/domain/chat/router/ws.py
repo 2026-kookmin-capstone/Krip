@@ -9,6 +9,7 @@ JWT 전송 채널:
        (`auth.<jwt>` 는 응답 헤더 노출 방지).
 """
 import asyncio
+import json
 import uuid
 
 import jwt
@@ -330,7 +331,16 @@ async def _receive_loop(
 ) -> None:
     """op 디스패처. 매 op 진입 시 Redis 로 세션 유효성 확인."""
     while True:
-        raw = await websocket.receive_json()
+        try:
+            raw = await websocket.receive_json()
+        except (json.JSONDecodeError, KeyError, UnicodeDecodeError):
+            # malformed 프레임(비 JSON / binary→KeyError / 인코딩 오류) — 연결을 끊지 않고
+            # op 단위 에러로 응답 후 계속. WebSocketDisconnect 는 여기 안 잡혀 정상 전파.
+            chat_ws_op_validation_failure("malformed")
+            await websocket.send_json({
+                "type": "server_error", "reason": "malformed frame",
+            })
+            continue
 
         if not await session_svc.session_exists(session_id):
             await websocket.send_json({"type": "auth_expired"})
@@ -404,6 +414,30 @@ async def _receive_loop(
                 await websocket.send_json({"type": "server_error", "reason": str(e)})
         except UpstreamError as e:
             await websocket.send_json({"type": "server_error", "reason": str(e)})
+        except WebSocketDisconnect:
+            # 정상 종료 경로 — 상위 핸들러가 세션/구독을 정리하도록 전파.
+            raise
+        except Exception as e:
+            # 인프라 예외(PyMongo/Redis/SQLAlchemy 등)는 해당 op 만 실패시키고 연결은 유지 —
+            # server_error 로 응답. CancelledError 는 BaseException 이라 안 잡혀 정상 전파.
+            logger.exception(
+                "WS op 처리 중 예기치 못한 예외 (연결 유지): op={}, err={}",
+                op_label, type(e).__name__,
+            )
+            try:
+                if isinstance(req, ReadOp):
+                    await websocket.send_json({
+                        "type": "read_failed", "room_id": req.room_id,
+                        "reason": "일시적인 서버 오류입니다. 잠시 후 다시 시도해주세요.",
+                    })
+                else:
+                    await websocket.send_json({
+                        "type": "server_error",
+                        "reason": "일시적인 서버 오류입니다. 잠시 후 다시 시도해주세요.",
+                    })
+            except Exception:
+                # 소켓이 이미 죽었으면 다음 receive_json 이 WebSocketDisconnect 로 정리.
+                pass
         finally:
             request_id_var.reset(rid_token)
 
