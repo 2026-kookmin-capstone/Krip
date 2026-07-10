@@ -29,6 +29,13 @@ from app.domain.friend.repository.friendship import FriendshipRepository
 
 logger = get_logger("chat.history")
 
+# unread 표시 상한 (999+ 캡)
+_UNREAD_COUNT_CAP = 999
+
+
+def _clamp_unread(value: int) -> int:
+    return value if value < _UNREAD_COUNT_CAP else _UNREAD_COUNT_CAP
+
 
 class MessageHistoryService:
     """읽기 전용 — 방 리스트 / 메시지 히스토리 페이징."""
@@ -50,7 +57,7 @@ class MessageHistoryService:
         peer_map = await user_repo.find_by_ids_with_profile(peer_ids)
 
         unread_raw = await redis_hot.hgetall(unread_key(me_id))
-        unread_map = {k: int(v) for k, v in unread_raw.items()}
+        unread_map = {k: _clamp_unread(int(v)) for k, v in unread_raw.items()}
 
         message_ids = [r.last_message_id for r, _, _ in rows if r.last_message_id]
         messages_by_id = await message_repo.find_by_ids(message_ids)
@@ -102,7 +109,7 @@ class MessageHistoryService:
         )
 
         unread_raw = await redis_hot.hget(unread_key(me_id), room_id)
-        unread_count = int(unread_raw) if unread_raw is not None else 0
+        unread_count = _clamp_unread(int(unread_raw)) if unread_raw is not None else 0
 
         last_message_doc: Optional[dict] = None
         if room.last_message_id:
@@ -207,7 +214,7 @@ class MessageHistoryService:
         """Redis `unread:{user_id}` HASH 를 dict 로 반환. WS 연결 직후 동기화 송신용."""
         redis_hot = await get_redis_client()
         raw = await redis_hot.hgetall(unread_key(me_id))
-        return {k: int(v) for k, v in raw.items()}
+        return {k: _clamp_unread(int(v)) for k, v in raw.items()}
 
     async def _assert_room_member(self, room_id: str, user_id: str) -> None:
         member_repo = ChatRoomMemberRepository(self._session)

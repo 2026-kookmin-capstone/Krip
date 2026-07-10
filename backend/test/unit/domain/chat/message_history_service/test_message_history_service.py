@@ -627,3 +627,9 @@ class TestGetUnreadCounts:
         redis_mock.hgetall.return_value = {}
         result = await service.get_unread_counts(me_id="U_A")
         assert result == {}
+
+    async def test_clamps_over_999_to_cap(self, service, redis_mock):
+        """hot-path HINCRBY 는 무제한이라 읽기 시점에 999 로 clamp — 0..999 계약 보장."""
+        redis_mock.hgetall.return_value = {"CR_1": "1500", "CR_2": "999", "CR_3": "3"}
+        result = await service.get_unread_counts(me_id="U_A")
+        assert result == {"CR_1": 999, "CR_2": 999, "CR_3": 3}
