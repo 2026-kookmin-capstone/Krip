@@ -183,6 +183,7 @@ class TestDedupe:
         import json
         redis_dedupe_mock.set = AsyncMock(return_value=False)
         redis_dedupe_mock.get = AsyncMock(return_value=json.dumps({
+            "room_id": "CR_1",
             "message_id": "MSG_original",
             "server_seq": 42,
             "created_at": "2026-07-09T00:00:00+00:00",
@@ -197,6 +198,24 @@ class TestDedupe:
         assert ack.server_seq == 42
         assert ack.client_msg_id == "cm-dup"
 
+    async def test_active_member_can_replay_legacy_ack(
+        self, service, redis_dedupe_mock,
+    ):
+        import json
+        redis_dedupe_mock.set = AsyncMock(return_value=False)
+        redis_dedupe_mock.get = AsyncMock(return_value=json.dumps({
+            "message_id": "MSG_legacy",
+            "server_seq": 3,
+            "created_at": "2026-07-09T00:00:00+00:00",
+        }))
+
+        ack = await service.send_message(
+            sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+            client_msg_id="cm-legacy", msg_type=MessageType.TEXT, content="x",
+        )
+
+        assert ack.message_id == "MSG_legacy"
+
     async def test_dedupe_key_uses_user_scope(
         self, service, redis_dedupe_mock,
     ):
@@ -207,6 +226,16 @@ class TestDedupe:
         # dedupe:{user_id}:{client_msg_id} 형태로 SET
         args, _ = redis_dedupe_mock.set.call_args
         assert args[0] == dedupe_key("U_A", "cm-1")
+
+    async def test_recorded_ack_is_scoped_to_room(self, service, redis_dedupe_mock):
+        import json
+        await service.send_message(
+            sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+            client_msg_id="cm-1", msg_type=MessageType.TEXT, content="x",
+        )
+
+        ack_payload = json.loads(redis_dedupe_mock.set.await_args.args[1])
+        assert ack_payload["room_id"] == "CR_1"
 
 
 # ──────────────────────────────────────────────────────────────────

@@ -112,7 +112,8 @@ class MessageService:
         first_time = await redis_dedupe.set(dedupe_k, _DEDUPE_PENDING, nx=True, ex=DEDUPE_TTL)
         if not first_time:
             replay = await self._replay_ack_if_available(
-                redis_dedupe, dedupe_k, client_msg_id,
+                redis_dedupe, dedupe_k, client_msg_id, room_id,
+                allow_legacy_room=True,
             )
             if replay is not None:
                 return replay
@@ -305,6 +306,7 @@ class MessageService:
             await redis_dedupe.set(
                 dedupe_k,
                 json.dumps({
+                    "room_id": room_id,
                     "message_id": message_id,
                     "server_seq": server_seq,
                     "created_at": at.isoformat(),
@@ -319,14 +321,20 @@ class MessageService:
 
     @staticmethod
     async def _replay_ack_if_available(
-        redis_dedupe, dedupe_k: str, client_msg_id: str,
+        redis_dedupe, dedupe_k: str, client_msg_id: str, room_id: str, *,
+        allow_legacy_room: bool = False,
     ) -> MessageSentAckData | None:
-        """dedupe 값에 기록된 ACK 를 복원. placeholder/파싱 실패면 None."""
+        """같은 방의 dedupe ACK를 복원."""
         raw = await redis_dedupe.get(dedupe_k)
         if not raw or raw == _DEDUPE_PENDING:
             return None
         try:
             data = json.loads(raw)
+            stored_room_id = data.get("room_id")
+            if stored_room_id != room_id and not (
+                allow_legacy_room and stored_room_id is None
+            ):
+                return None
             return MessageSentAckData(
                 client_msg_id=client_msg_id,
                 message_id=data["message_id"],
