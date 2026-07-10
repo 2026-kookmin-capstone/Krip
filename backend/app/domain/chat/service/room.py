@@ -16,7 +16,11 @@ from app.core.logger import get_logger
 from app.core.redis import get_redis_client
 from app.database.session import UnitOfWork, mongodb, transactional
 from app.domain.auth.repository.user import UserRepository
-from app.domain.chat.constants import MAX_GROUP_MEMBERS
+from app.domain.chat.constants import (
+    MAX_GROUP_MEMBERS,
+    UNREAD_COUNT_CAP,
+    UNREAD_COUNT_LIMIT,
+)
 from app.domain.chat.dto.room import ChatRoomData, ChatRoomPeerData
 from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
 from app.domain.chat.model.chat_room_member import ChatRoomMember
@@ -29,10 +33,6 @@ from app.domain.friend.repository.user_block import UserBlockRepository
 
 
 logger = get_logger("chat.room")
-
-# unread 표시 상한 (999+ 캡) — reconcile.recover_unread 와 동일 규약.
-_UNREAD_COUNT_CAP = 999
-_UNREAD_COUNT_LIMIT = _UNREAD_COUNT_CAP + 1
 
 
 class RoomService:
@@ -370,9 +370,9 @@ class RoomService:
         rejoin_unread: list[tuple[str, int]] = []
         for uid, last_read in rejoined:
             raw = await message_repo.count_after_seq(
-                chat_room_id=room_id, after_seq=last_read, limit=_UNREAD_COUNT_LIMIT,
+                chat_room_id=room_id, after_seq=last_read, limit=UNREAD_COUNT_LIMIT,
             )
-            rejoin_unread.append((uid, min(raw, _UNREAD_COUNT_CAP)))
+            rejoin_unread.append((uid, min(raw, UNREAD_COUNT_CAP)))
 
         pipe = redis.pipeline(transaction=True)
         # gen INCR — 초대(멤버십 변경)로 진행 중인 stale read-repair populate 를 무효화.
@@ -528,12 +528,12 @@ class RoomService:
         baseline = await redis.hget(unread_k, room_id)
         baseline = int(baseline) if baseline is not None else 0
         residual = await message_repo.count_after_seq(
-            chat_room_id=room_id, after_seq=final_seq, limit=_UNREAD_COUNT_LIMIT,
+            chat_room_id=room_id, after_seq=final_seq, limit=UNREAD_COUNT_LIMIT,
         )
         _, sync_status, effective_seq = await lua_scripts.mark_read_unread(
             keys=[unread_k, read_sync_key(me_id), room_members_gen_key(room_id)],
             args=[
-                room_id, residual, baseline, _UNREAD_COUNT_CAP, final_seq, 0,
+                room_id, residual, baseline, UNREAD_COUNT_CAP, final_seq, 0,
                 expected_generation,
             ],
         )

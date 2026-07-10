@@ -9,7 +9,7 @@ from pathlib import Path
 import pytest
 
 import app.core.chat.lua_script as lua_module
-from app.domain.chat.service.room import _UNREAD_COUNT_CAP
+from app.domain.chat.constants import UNREAD_COUNT_CAP
 
 
 pytestmark = pytest.mark.integration
@@ -29,7 +29,7 @@ async def _eval(
     result = await script(
         keys=[key, cursor_key, generation_key],
         args=[
-            room, residual, baseline, _UNREAD_COUNT_CAP, read_seq, allow_equal,
+            room, residual, baseline, UNREAD_COUNT_CAP, read_seq, allow_equal,
             expected_generation,
         ],
     )
@@ -90,7 +90,7 @@ class TestMarkReadUnreadLua:
             redis_hot, key, cursor_key, room, residual=1000, baseline=0, read_seq=10,
         )
 
-        assert final == _UNREAD_COUNT_CAP  # 999
+        assert final == UNREAD_COUNT_CAP  # 999
         await redis_hot.delete(key, cursor_key)
 
     async def test_ignores_late_lower_read_seq(self, redis_hot):

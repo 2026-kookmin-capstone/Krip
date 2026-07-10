@@ -10,6 +10,7 @@ from app.core.redis import get_redis_client
 from app.database.session import UnitOfWork, mongodb, transactional
 from app.domain.auth.model.user import User
 from app.domain.auth.repository.user import UserRepository
+from app.domain.chat.constants import UNREAD_COUNT_CAP
 from app.domain.chat.dto.message import ChatMessageData, MessageListData
 from app.domain.chat.dto.room import (
     ChatRoomData,
@@ -29,12 +30,9 @@ from app.domain.friend.repository.friendship import FriendshipRepository
 
 logger = get_logger("chat.history")
 
-# unread 표시 상한 (999+ 캡)
-_UNREAD_COUNT_CAP = 999
-
 
 def _clamp_unread(value: int) -> int:
-    return value if value < _UNREAD_COUNT_CAP else _UNREAD_COUNT_CAP
+    return value if value < UNREAD_COUNT_CAP else UNREAD_COUNT_CAP
 
 
 class MessageHistoryService:

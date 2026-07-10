@@ -31,6 +31,7 @@ from app.core.instrumentation import (
 from app.core.logger import get_logger
 from app.core.redis import get_redis_client
 from app.database.session import mongodb
+from app.domain.chat.constants import UNREAD_COUNT_CAP, UNREAD_COUNT_LIMIT
 from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
 from app.domain.chat.repository.chat_message import ChatMessageRepository
 from app.domain.chat.repository.chat_room import ChatRoomRepository
@@ -50,9 +51,6 @@ RECONCILE_SHUTDOWN_GRACE_SEC = 10.0
 # 재접속당 방 수십 개 × 동시 재접속이면 Mongo 부하 폭주 — semaphore 로 제한.
 UNREAD_MONGO_CONCURRENCY = 10
 
-# 카톡 관례 — 999+ 캡.
-UNREAD_COUNT_CAP = 999
-UNREAD_COUNT_LIMIT = UNREAD_COUNT_CAP + 1
 
 
 # main.py lifespan 에서 1회 주입.
