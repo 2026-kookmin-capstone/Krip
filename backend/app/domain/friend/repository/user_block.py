@@ -51,6 +51,25 @@ class UserBlockRepository:
         result = await self.session.execute(stmt)
         return list(result.scalars().all())
 
+    async def find_block_related_ids(
+        self, user_id: str, other_ids: list[str],
+    ) -> set[str]:
+        """user_id 와 (방향 무관) 차단 관계인 상대 id 집합"""
+        if not other_ids:
+            return set()
+        stmt = select(UserBlock.blocker_id, UserBlock.blocked_id).where(
+            or_(
+                (UserBlock.blocker_id == user_id) & (UserBlock.blocked_id.in_(other_ids)),
+                (UserBlock.blocked_id == user_id) & (UserBlock.blocker_id.in_(other_ids)),
+            )
+        )
+        result = await self.session.execute(stmt)
+        # user_id 가 아닌 쪽이 걸러낼 상대 id.
+        return {
+            blocked_id if blocker_id == user_id else blocker_id
+            for blocker_id, blocked_id in result.all()
+        }
+
     async def has_blocker_blocked(self, blocker_id: str, blocked_id: str) -> bool:
         """(blocker → blocked) 방향 차단 존재 여부"""
         stmt = select(

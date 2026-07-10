@@ -21,6 +21,7 @@ from app.domain.feed.dto.feed_post_like import AddLikePayload, LikedUserData
 from app.domain.feed.model.feed_post_like import FeedPostLike
 from app.domain.feed.repository.feed_post_like import FeedPostLikeRepository
 from app.domain.feed.service.access import load_viewable_post
+from app.domain.friend.repository.user_block import UserBlockRepository
 from app.domain.notification.service.inbox import InboxService
 
 
@@ -105,11 +106,20 @@ class FeedPostLikeService:
     async def get_liked_users(
         self, viewer_id: str, post_id: str,
     ) -> list[LikedUserData]:
-        """좋아요 누른 유저 목록 — 가시성 검증 후 단일 JOIN 쿼리로 프로필 포함 일괄 반환 (N+1 회피)."""
+        """좋아요 누른 유저 목록 — 가시성 검증 후 단일 JOIN 쿼리로 프로필 포함 일괄 반환"""
         post = await load_viewable_post(self._session, viewer_id=viewer_id, post_id=post_id)
         like_repo = FeedPostLikeRepository(self._session)
         likes = await like_repo.find_with_user_by_post(post.post_id)
-        return [self._to_liked_user_dto(like) for like in likes]
+
+        block_repo = UserBlockRepository(self._session)
+        blocked_ids = await block_repo.find_block_related_ids(
+            viewer_id, [like.user_id for like in likes],
+        )
+        return [
+            self._to_liked_user_dto(like)
+            for like in likes
+            if like.user_id not in blocked_ids
+        ]
 
     @staticmethod
     def _to_liked_user_dto(like: FeedPostLike) -> LikedUserData:

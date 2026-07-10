@@ -10,7 +10,11 @@ import pytest
 
 from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
 from app.domain.feed.service.feed_post_like import FeedPostLikeService
-from test.unit.domain.feed.mock_factory import FakeUnitOfWork, make_mock_session
+from test.unit.domain.feed.mock_factory import (
+    FakeUnitOfWork,
+    make_mock_session,
+    make_user_block_repo_mock,
+)
 
 
 def _mk_post(post_id="FDP_x", user_id="USER_owner"):
@@ -62,9 +66,16 @@ def viewable_post_stub():
 
 
 @pytest.fixture
+def block_repo_mock():
+    """UserBlockRepository mock — 좋아요 목록 차단 필터용. 기본 "차단 관계 없음"."""
+    return make_user_block_repo_mock()
+
+
+@pytest.fixture
 def service(
     monkeypatch, mock_session,
     like_repo_mock, detail_repo_mock, viewable_post_stub, inbox_service_mock,
+    block_repo_mock,
 ):
     """가시성 통과 default 로 주입된 like service.
 
@@ -78,6 +89,10 @@ def service(
     monkeypatch.setattr(
         "app.domain.feed.service.feed_post_like.UserDetailInformRepository",
         lambda session: detail_repo_mock,
+    )
+    monkeypatch.setattr(
+        "app.domain.feed.service.feed_post_like.UserBlockRepository",
+        lambda session: block_repo_mock,
     )
     # 기본: load_viewable_post 가 stub post 반환 (가시성 통과)
 

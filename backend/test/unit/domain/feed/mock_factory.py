@@ -64,9 +64,14 @@ def make_friendship_repo_mock() -> AsyncMock:
 
 
 def make_user_block_repo_mock() -> AsyncMock:
-    """UserBlockRepository — `_resolve_viewer_visibilities` 가 `find_blocks_between` 만 사용."""
+    """UserBlockRepository mock.
+
+    `access` 는 `find_blocks_between`, 댓글/좋아요 목록 필터는 `find_block_related_ids` 사용.
+    기본은 둘 다 "차단 없음".
+    """
     mock = AsyncMock()
     mock.find_blocks_between.return_value = []  # 기본: 차단 없음
+    mock.find_block_related_ids.return_value = set()  # 기본: 차단 관계 없음
     return mock
 
 

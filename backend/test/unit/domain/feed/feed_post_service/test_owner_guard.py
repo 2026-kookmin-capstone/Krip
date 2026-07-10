@@ -6,7 +6,7 @@
 
 검증:
     - 미존재 post → FeedNotFoundError
-    - 본인 아닌 post → PermissionError
+    - 본인 아닌 post → FeedNotFoundError (404 일원화 — enumeration oracle 차단, 403 아님)
     - 본인 post → 정상 반환 (mutate 메서드는 변경된 필드 + DTO 반환)
     - delete_post 가 DB row 삭제 후 S3 prefix 정리 (순서)
 """
@@ -58,10 +58,25 @@ class TestLoadOwnedPostMissingOrForbidden:
         with pytest.raises(FeedNotFoundError):
             await service.get_my_post(user_id="USER_a", post_id="FDP_missing")
 
-    async def test_get_my_post_other_owner_raises_permission(self, service, repo_mock):
+    async def test_get_my_post_other_owner_raises_not_found(self, service, repo_mock):
+        """타인 소유 게시물 접근은 404 — 존재 여부를 감춰 enumeration oracle 차단 (403 아님)."""
         repo_mock.find_by_post_id.return_value = _mk_row(user_id="USER_owner")
-        with pytest.raises(PermissionError):
+        with pytest.raises(FeedNotFoundError):
             await service.get_my_post(user_id="USER_intruder", post_id="FDP_x")
+
+    async def test_other_owner_and_missing_raise_same_error_type(self, service, repo_mock):
+        """미존재와 타인 소유가 동일한 예외 타입 → 응답만으로 구분 불가 (enumeration 차단 핵심)."""
+        repo_mock.find_by_post_id.return_value = None
+        with pytest.raises(FeedNotFoundError) as missing:
+            await service.get_my_post(user_id="USER_a", post_id="FDP_missing")
+
+        repo_mock.find_by_post_id.return_value = _mk_row(user_id="USER_owner")
+        with pytest.raises(FeedNotFoundError) as not_owned:
+            await service.get_my_post(user_id="USER_intruder", post_id="FDP_x")
+
+        assert type(missing.value) is type(not_owned.value)
+        # 타인 소유가 403(PermissionError) 로 새지 않는지 명시 가드.
+        assert not isinstance(not_owned.value, PermissionError)
 
     async def test_update_visibility_missing_raises_not_found(self, service, repo_mock):
         repo_mock.find_by_post_id.return_value = None
@@ -70,23 +85,23 @@ class TestLoadOwnedPostMissingOrForbidden:
                 user_id="USER_a", post_id="FDP_missing", visibility=FeedVisibility.PRIVATE,
             )
 
-    async def test_update_visibility_other_owner_raises_permission(self, service, repo_mock):
+    async def test_update_visibility_other_owner_raises_not_found(self, service, repo_mock):
         repo_mock.find_by_post_id.return_value = _mk_row(user_id="USER_owner")
-        with pytest.raises(PermissionError):
+        with pytest.raises(FeedNotFoundError):
             await service.update_visibility(
                 user_id="USER_intruder", post_id="FDP_x", visibility=FeedVisibility.PRIVATE,
             )
 
-    async def test_update_caption_other_owner_raises_permission(self, service, repo_mock):
+    async def test_update_caption_other_owner_raises_not_found(self, service, repo_mock):
         repo_mock.find_by_post_id.return_value = _mk_row(user_id="USER_owner")
-        with pytest.raises(PermissionError):
+        with pytest.raises(FeedNotFoundError):
             await service.update_caption(
                 user_id="USER_intruder", post_id="FDP_x", caption="nope",
             )
 
-    async def test_delete_post_other_owner_raises_permission(self, service, repo_mock, storage_mock):
+    async def test_delete_post_other_owner_raises_not_found(self, service, repo_mock, storage_mock):
         repo_mock.find_by_post_id.return_value = _mk_row(user_id="USER_owner")
-        with pytest.raises(PermissionError):
+        with pytest.raises(FeedNotFoundError):
             await service.delete_post(user_id="USER_intruder", post_id="FDP_x")
         # 권한 거부면 storage 호출도 일어나면 안 됨 — 인가 검증 회귀 가드.
         storage_mock.delete_by_prefix.assert_not_called()

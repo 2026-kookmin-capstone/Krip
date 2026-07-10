@@ -293,17 +293,15 @@ class FeedPostService:
         return prefix
 
     async def _load_owned_post(self, user_id: str, post_id: str) -> FeedPostWithCounts:
-        """post 로드 + 본인 소유 검증. 미존재 → 404, 본인 아님 → 403.
+        """post 로드 + 본인 소유 검증. 미존재 / 타인 소유 모두 404 일원화.
 
         반환은 카운트 포함 row — 호출처 (`get_my_post` / `update_*` / `_delete_post_row`) 가
         `_to_dto` 그대로 사용하거나 `.post` 로 unwrap.
         """
         repo = FeedPostRepository(self._session)
         row = await repo.find_by_post_id(post_id, viewer_id=user_id)
-        if row is None:
+        if row is None or row.post.user_id != user_id:
             raise FeedNotFoundError("존재하지 않는 게시물입니다.")
-        if row.post.user_id != user_id:
-            raise PermissionError("게시물에 대한 권한이 없습니다.")
         return row
 
     async def _safe_cleanup(self, prefix: str) -> None:

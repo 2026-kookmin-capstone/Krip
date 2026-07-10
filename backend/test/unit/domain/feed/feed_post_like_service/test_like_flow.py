@@ -117,6 +117,25 @@ class TestGetLikedUsers:
         result = await service.get_liked_users(viewer_id="USER_v", post_id="FDP_x")
         assert result == []
 
+    async def test_blocked_liker_excluded_from_list(
+        self, service, like_repo_mock, block_repo_mock,
+    ):
+        """viewer 와 차단 관계인 liker 의 닉네임/프로필은 목록에서 제외 (양방향)."""
+        like_repo_mock.find_with_user_by_post.return_value = [
+            make_feed_post_like_mock(user_id="USER_a", user_name="Alice"),
+            make_feed_post_like_mock(user_id="USER_blocked", user_name="Blocked"),
+        ]
+        block_repo_mock.find_block_related_ids.return_value = {"USER_blocked"}
+
+        result = await service.get_liked_users(viewer_id="USER_v", post_id="FDP_x")
+
+        assert [u.user_id for u in result] == ["USER_a"]
+        # 배치 1쿼리 — liker id 전체를 viewer 기준으로 한 번에 조회 (N+1 회피).
+        block_repo_mock.find_block_related_ids.assert_awaited_once()
+        called_viewer, called_ids = block_repo_mock.find_block_related_ids.await_args.args
+        assert called_viewer == "USER_v"
+        assert set(called_ids) == {"USER_a", "USER_blocked"}
+
     async def test_repo_call_uses_resolved_post_id(self, service, like_repo_mock):
         """service 가 viewable post 의 post_id 로 repo 호출 (path post_id 그대로 X)."""
         like_repo_mock.find_with_user_by_post.return_value = []
