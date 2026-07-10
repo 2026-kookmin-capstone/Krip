@@ -14,7 +14,12 @@ from typing import Optional
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.core.chat.lua_script import lua_scripts
-from app.core.chat.redis_key import DIRTY_CHAT_ROOM_KEY, unread_key
+from app.core.chat.redis_key import (
+    DIRTY_CHAT_ROOM_KEY,
+    read_sync_key,
+    room_members_gen_key,
+    unread_key,
+)
 from app.core.instrumentation import (
     chat_reconcile_batch_pop_inc,
     chat_reconcile_dirty_set_size_set,
@@ -211,12 +216,46 @@ async def recover_unread_for_user(
     """
     factory = _require_factory()
 
+    generation_error: Optional[Exception] = None
+    generations: dict[str, int] = {}
     async with factory() as session:
         member_repo = ChatRoomMemberRepository(session)
         last_reads = await member_repo.find_last_read_seqs(
             user_id,
             room_ids=[only_room] if only_room else None,
+            for_share=True,
         )
+        if last_reads:
+            try:
+                redis_hot = await get_redis_client()
+                values = await asyncio.gather(*(
+                    redis_hot.get(room_members_gen_key(room_id))
+                    for room_id in last_reads
+                ))
+                generations = {
+                    room_id: int(value or 0)
+                    for room_id, value in zip(last_reads, values)
+                }
+            except Exception as e:
+                generation_error = e
+
+    if generation_error is not None:
+        logger.warning(
+            "recover_unread: generation snapshot 실패 — user_id={}, err={}",
+            user_id, generation_error,
+        )
+        cleanup_ok = True
+        try:
+            redis_hot = await get_redis_client()
+            await redis_hot.delete(unread_key(user_id))
+        except Exception as del_err:
+            cleanup_ok = False
+            logger.warning(
+                "recover_unread: generation 실패 cleanup DEL 실패 — partial state 잔존 위험: {}",
+                type(del_err).__name__,
+            )
+        chat_unread_recover_inc("redis_failed" if cleanup_ok else "cleanup_failed")
+        return {}
 
     if not last_reads:
         chat_unread_recover_inc("ok")
@@ -229,7 +268,7 @@ async def recover_unread_for_user(
     sem = asyncio.Semaphore(UNREAD_MONGO_CONCURRENCY)
     message_repo = ChatMessageRepository(mongodb.database)
 
-    async def _count(room_id: str, last_read: int) -> tuple[str, int, int]:
+    async def _count(room_id: str, last_read: int) -> tuple[str, int, int, int, int]:
         async with sem:
             redis_hot = await get_redis_client()
             # count 직전 baseline 스냅샷 — count~write 창에 도착한 메시지의 HINCRBY 를 delta 로
@@ -241,31 +280,53 @@ async def recover_unread_for_user(
                 after_seq=last_read,
                 limit=UNREAD_COUNT_LIMIT,
             )
-            return room_id, min(raw, UNREAD_COUNT_CAP), baseline
+            return room_id, min(raw, UNREAD_COUNT_CAP), baseline, last_read, generations[room_id]
 
     results = await asyncio.gather(
         *(_count(rid, seq) for rid, seq in last_reads.items()),
         return_exceptions=True,
     )
 
-    recovered: list[tuple[str, int, int]] = []
-    for item in results:
-        if isinstance(item, BaseException):
-            logger.warning("recover_unread: user_id={} 방 count 실패: {}", user_id, item)
-            continue
-        recovered.append(item)  # (room_id, residual, baseline)
+    count_errors = [item for item in results if isinstance(item, BaseException)]
+    if count_errors:
+        for error in count_errors:
+            logger.warning("recover_unread: user_id={} 방 count 실패: {}", user_id, error)
+        redis_hot = await get_redis_client()
+        cleanup_ok = True
+        try:
+            await redis_hot.delete(unread_key(user_id))
+        except Exception as del_err:
+            cleanup_ok = False
+            logger.warning(
+                "recover_unread: count 실패 cleanup DEL 실패 — partial state 잔존 위험: {}",
+                type(del_err).__name__,
+            )
+        chat_unread_recover_inc("mongo_failed" if cleanup_ok else "cleanup_failed")
+        return {}
+
+    recovered = [
+        item for item in results if not isinstance(item, BaseException)
+    ]  # (room_id, residual, baseline, last_read, membership_generation)
 
     counts: dict[str, int] = {}
     if recovered:
         redis_hot = await get_redis_client()
         try:
-            for room_id, residual, baseline in recovered:
+            for room_id, residual, baseline, last_read, generation in recovered:
                 # 절대 HSET 대신 baseline+delta Lua — residual(DB 잔여) 에 baseline 이후 증가분을
                 # 더해 동시 HINCRBY 를 보존한다 (mark_read_unread.lua 재사용, cap clamp 포함).
-                final = await lua_scripts.mark_read_unread(
-                    keys=[unread_key(user_id)],
-                    args=[room_id, residual, baseline, UNREAD_COUNT_CAP],
+                final, sync_status, _ = await lua_scripts.mark_read_unread(
+                    keys=[
+                        unread_key(user_id), read_sync_key(user_id),
+                        room_members_gen_key(room_id),
+                    ],
+                    args=[
+                        room_id, residual, baseline, UNREAD_COUNT_CAP, last_read, 1,
+                        generation,
+                    ],
                 )
+                if int(sync_status) == 3:
+                    raise RuntimeError("membership changed during unread recovery")
                 counts[room_id] = int(final)
         except Exception as e:
             # 중간 실패 시 partial state 로 남으면 다음 재연결의 `get_unread_counts` 가 non-empty

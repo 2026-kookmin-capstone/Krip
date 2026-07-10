@@ -86,7 +86,7 @@ class TestCreateGroupRoom:
         p = redis_mock._pipes[-1]
         p.incr.assert_called_once()       # room:members:gen bump
         p.sadd.assert_called_once()
-        assert p.expire.call_count == 2   # gen + members 각각 TTL
+        assert p.expire.call_count == 1   # members SET만 TTL; generation fence는 영속
         assert p.hset.call_count == 2     # creator + 1 member
 
 

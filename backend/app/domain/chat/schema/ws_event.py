@@ -172,6 +172,7 @@ class ReadFailedEvent(BaseModel):
     """read op 처리 실패 — 발신 세션 직송. 사유는 reason 문자열."""
     type: Literal["read_failed"]
     room_id: str = Field(..., description="실패한 방 ID")
+    up_to_server_seq: int = Field(..., description="실패한 read 요청의 server seq")
     reason: str = Field(..., description="실패 사유")
 
 

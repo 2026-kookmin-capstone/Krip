@@ -6,6 +6,7 @@ from sqlalchemy.exc import IntegrityError
 from app.core.chat.lua_script import lua_scripts
 from app.core.chat.redis_key import (
     ROOM_MEMBERS_TTL,
+    read_sync_key,
     room_members_gen_key,
     room_members_key,
     room_seq_key,
@@ -124,7 +125,6 @@ class RoomService:
         pipe = redis.pipeline(transaction=True)
         # gen INCR — 멤버십 변경 신호. 진행 중인 stale read-repair populate 를 무효화한다.
         pipe.incr(room_members_gen_key(room_id))
-        pipe.expire(room_members_gen_key(room_id), ROOM_MEMBERS_TTL)
         pipe.sadd(room_members_key(room_id), *member_ids)
         pipe.expire(room_members_key(room_id), ROOM_MEMBERS_TTL)
         if unread_seed == "zero":
@@ -357,7 +357,6 @@ class RoomService:
         pipe = redis.pipeline(transaction=True)
         # gen INCR — 초대(멤버십 변경)로 진행 중인 stale read-repair populate 를 무효화.
         pipe.incr(room_members_gen_key(room_id))
-        pipe.expire(room_members_gen_key(room_id), ROOM_MEMBERS_TTL)
         # SADD 부분 갱신 금지 — 키 만료 상태면 초대 멤버만 담긴 부분 집합이 생겨 기존 멤버
         # unread/푸시가 누락된다. 무효화 후 다음 send 의 _ensure_membership 이 DB 로 재적재.
         pipe.delete(room_members_key(room_id))
@@ -418,7 +417,6 @@ class RoomService:
         # gen INCR + SREM 을 한 MULTI 로 원자 실행 — stale read-repair populate 가 gen 불일치로
         # skip 되어 제거된 멤버가 캐시에 부활하지 않는다 (상세 불변식은 populate_members.lua).
         pipe.incr(room_members_gen_key(room_id))
-        pipe.expire(room_members_gen_key(room_id), ROOM_MEMBERS_TTL)
         pipe.srem(room_members_key(room_id), user_id)
         pipe.hdel(unread_key(user_id), room_id)
         await pipe.execute()
@@ -475,7 +473,6 @@ class RoomService:
         target.is_left = True
         await member_repo.update(target)
 
-    @transactional
     async def mark_read(
         self,
         *,
@@ -484,34 +481,27 @@ class RoomService:
         room_id: str,
         up_to_server_seq: int,
     ) -> int:
-        """읽음 포인터 갱신 + unread 리셋 + fan-out. regress 는 DB GREATEST 가 차단.
+        """읽음 포인터 commit 후 unread 재계산 + fan-out. regress 는 DB GREATEST 가 차단.
 
         탈퇴자의 read 요청은 PermissionError. 반환값은 최종 반영된 seq.
         """
         if up_to_server_seq <= 0:
             raise ValueError("up_to_server_seq 는 1 이상이어야 합니다.")
 
-        chat_room_repo = ChatRoomRepository(self._session)
-        member_repo = ChatRoomMemberRepository(self._session)
-
-        room = await chat_room_repo.find_by_id(room_id)
-        if room is None:
-            raise ChatRoomNotFoundError("존재하지 않는 방입니다.")
-
-        # 클라가 최신 seq 초과값을 보내면 last_read 가 미래로 고정돼 이후 메시지가 전부
-        # 자동 읽음 처리된다(뱃지 왜곡, 되돌리기 불가). 현재 seq 로 clamp.
+        redis = await get_redis_client()
+        expected_generation = int(
+            await redis.get(room_members_gen_key(room_id)) or 0
+        )
+        final_seq, clamped_seq = await self._mark_read_tx(
+            me_id=me_id,
+            room_id=room_id,
+            up_to_server_seq=up_to_server_seq,
+        )
         message_repo = ChatMessageRepository(mongodb.database)
-        current_seq = await self._get_current_seq(message_repo, room_id)
-        up_to_server_seq = min(up_to_server_seq, current_seq)
-
-        final_seq = await member_repo.mark_read(room_id, me_id, up_to_server_seq)
-        if final_seq is None:
-            raise PermissionError("이 방의 활성 멤버가 아닙니다.")
 
         # unread 를 무조건 0 으로 덮으면 (1) 부분 읽기(up_to < 최신) 시 남은 미읽음이 사라지고
         # (2) read 처리와 동시에 도착한 메시지의 HINCRBY 가 지워진 뒤 재접속에도 복구되지 않는다.
         # DB 기준으로 final_seq 이후 잔여 메시지 수를 재계산해 반영 (recover 경로와 동일 계산).
-        redis = await get_redis_client()
         # count~HSET 창의 동시 HINCRBY 가 절대 HSET 에 소거돼 뱃지가 유실되지 않도록,
         # count 직전 baseline 을 스냅샷해 Lua 에서 증가분을 보존한다 (상세는 lua 파일).
         unread_k = unread_key(me_id)
@@ -520,19 +510,24 @@ class RoomService:
         residual = await message_repo.count_after_seq(
             chat_room_id=room_id, after_seq=final_seq, limit=_UNREAD_COUNT_LIMIT,
         )
-        await lua_scripts.mark_read_unread(
-            keys=[unread_k],
-            args=[room_id, residual, baseline, _UNREAD_COUNT_CAP],
+        _, sync_status, effective_seq = await lua_scripts.mark_read_unread(
+            keys=[unread_k, read_sync_key(me_id), room_members_gen_key(room_id)],
+            args=[
+                room_id, residual, baseline, _UNREAD_COUNT_CAP, final_seq, 0,
+                expected_generation,
+            ],
         )
 
-        await self._fanout.fan_out_to_session(
-            me_session_id,
-            {
-                "type": "read_ack",
-                "room_id": room_id,
-                "up_to_server_seq": final_seq,
-            },
-        )
+        if int(sync_status) == 3:
+            raise RuntimeError("읽음 처리 중 방 멤버십이 변경되었습니다. 다시 시도해주세요.")
+        if int(sync_status) == 0:
+            logger.info(
+                "늦은 읽음 fanout 승격: room_id={}, user_id={}, seq={}, applied_seq={}",
+                room_id, me_id, final_seq, effective_seq,
+            )
+            # 높은 요청의 publish 실패도 낮은 요청이 보완하도록 단조 seq로 fanout한다.
+            final_seq = int(effective_seq)
+
         await self._fanout.fan_out_to_room(
             room_id,
             {
@@ -545,9 +540,36 @@ class RoomService:
 
         logger.info(
             "읽음 마킹: room_id={}, user_id={}, up_to_seq={}, final_seq={}",
-            room_id, me_id, up_to_server_seq, final_seq,
+            room_id, me_id, clamped_seq, final_seq,
         )
         return final_seq
+
+    @transactional
+    async def _mark_read_tx(
+        self,
+        *,
+        me_id: str,
+        room_id: str,
+        up_to_server_seq: int,
+    ) -> tuple[int, int]:
+        """읽음 포인터 DB 갱신 — 외부 부수효과는 호출자가 commit 이후 수행."""
+        chat_room_repo = ChatRoomRepository(self._session)
+        member_repo = ChatRoomMemberRepository(self._session)
+
+        room = await chat_room_repo.find_by_id(room_id)
+        if room is None:
+            raise ChatRoomNotFoundError("존재하지 않는 방입니다.")
+
+        # 클라가 최신 seq 초과값을 보내면 last_read 가 미래로 고정돼 이후 메시지가 전부
+        # 자동 읽음 처리된다(뱃지 왜곡, 되돌리기 불가). 현재 seq 로 clamp.
+        message_repo = ChatMessageRepository(mongodb.database)
+        current_seq = await self._get_current_seq(message_repo, room_id)
+        clamped_seq = min(up_to_server_seq, current_seq)
+
+        final_seq = await member_repo.mark_read(room_id, me_id, clamped_seq)
+        if final_seq is None:
+            raise PermissionError("이 방의 활성 멤버가 아닙니다.")
+        return final_seq, clamped_seq
 
     @staticmethod
     async def _get_current_seq(

@@ -113,11 +113,14 @@ class ChatRoomMemberRepository:
         self,
         user_id: str,
         room_ids: Optional[list[str]] = None,
+        *,
+        for_share: bool = False,
     ) -> dict[str, int]:
         """유저의 방별 `last_read_message_server_seq` 배치 조회 — unread 복구 전용.
 
         NULL 은 0 으로 정규화 → "전체 메시지" 가 미읽음 카운트 대상이 됨.
         `room_ids=None` 이면 활성 방 전체.
+        `for_share=True`이면 generation 캡처까지 퇴장 update를 막는다.
         """
         conditions = [
             ChatRoomMember.user_id == user_id,
@@ -132,6 +135,8 @@ class ChatRoomMemberRepository:
             ChatRoomMember.chat_room_id,
             ChatRoomMember.last_read_message_server_seq,
         ).where(*conditions)
+        if for_share:
+            stmt = stmt.with_for_update(read=True)
         result = await self.session.execute(stmt)
         return {row[0]: int(row[1] or 0) for row in result.all()}
 

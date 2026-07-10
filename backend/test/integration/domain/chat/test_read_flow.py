@@ -6,7 +6,7 @@ RDB 의 `GREATEST(COALESCE(last_read, 0), :new_seq)` 규약이 실제 Postgres �
 import pytest
 import pytest_asyncio
 
-from app.core.chat.redis_key import unread_key
+from app.core.chat.redis_key import room_seq_key, unread_key
 from app.domain.chat.model.chat_room_member import ChatRoomMember
 from app.domain.chat.service.exception import ChatRoomNotFoundError
 from app.domain.chat.service.room import RoomService
@@ -43,6 +43,7 @@ class TestMarkReadFlow:
         room = await service.create_group_room(me_id=a, title="T", member_ids=[b])
 
         # b 의 unread 를 수동으로 5 로 세팅 (실제론 메시지 수신으로 증가)
+        await redis_hot.set(room_seq_key(room.chat_room_id), 10)
         await redis_hot.hset(unread_key(b), room.chat_room_id, 5)
 
         chat_fanout_stub.reset_mock()
@@ -62,13 +63,8 @@ class TestMarkReadFlow:
         raw = await redis_hot.hget(unread_key(b), room.chat_room_id)
         assert raw == "0"
 
-        # fan-out: read_ack 발신 세션 직송
-        chat_fanout_stub.fan_out_to_session.assert_awaited_once()
-        sess_call = chat_fanout_stub.fan_out_to_session.call_args
-        assert sess_call.args[0] == "WS_B"
-        assert sess_call.args[1] == {
-            "type": "read_ack", "room_id": room.chat_room_id, "up_to_server_seq": 10,
-        }
+        # ACK 는 service 반환 후 WebSocket router 가 직접 전송한다.
+        chat_fanout_stub.fan_out_to_session.assert_not_awaited()
 
         # fan-out: 방 전체에 read 이벤트 (sender_session_id 로 자기 에코 차단)
         chat_fanout_stub.fan_out_to_room.assert_awaited_once()
@@ -83,7 +79,7 @@ class TestMarkReadFlow:
 
     async def test_greatest_prevents_regress(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
-        session_factory, patch_external_clients,
+        session_factory, redis_hot, patch_external_clients,
     ):
         """이미 높은 seq 가 기록된 뒤 과거 seq 로 호출 → 기존 값 유지, 반환도 기존 값."""
         a, b, _ = await seed_users(3)
@@ -94,6 +90,7 @@ class TestMarkReadFlow:
         )
         room = await service.create_group_room(me_id=a, title="T", member_ids=[b])
 
+        await redis_hot.set(room_seq_key(room.chat_room_id), 20)
         first = await service.mark_read(
             me_id=b, me_session_id="WS_B", room_id=room.chat_room_id,
             up_to_server_seq=20,
@@ -144,7 +141,7 @@ class TestMarkReadFlow:
 
     async def test_count_readers_up_to_excludes_sender_and_left(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
-        session_factory, patch_external_clients,
+        session_factory, redis_hot, patch_external_clients,
     ):
         """카톡 숫자 뱃지 계산용 집계 — 탈퇴자/발신자 본인 제외, seq 이상 읽은 멤버만."""
         from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
@@ -159,6 +156,7 @@ class TestMarkReadFlow:
         room = await service.create_group_room(me_id=a, title="T", member_ids=[b, c])
 
         # b 만 seq=10 까지 읽음
+        await redis_hot.set(room_seq_key(room.chat_room_id), 10)
         await service.mark_read(
             me_id=b, me_session_id="WS_B", room_id=room.chat_room_id,
             up_to_server_seq=10,

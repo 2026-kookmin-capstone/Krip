@@ -34,7 +34,13 @@ from app.core.logger import get_logger
 from app.core.redis import RedisClient
 from app.domain.auth.model.user import UserStatus
 from app.domain.auth.repository.user import UserRepository
-from app.domain.chat.schema.ws_event import ClientRequest, ReadOp, RefreshOp, SendOp
+from app.domain.chat.schema.ws_event import (
+    ClientRequest,
+    ReadFailedEvent,
+    ReadOp,
+    RefreshOp,
+    SendOp,
+)
 from app.domain.chat.service.exception import ChatRoomNotFoundError, UpstreamError
 from app.domain.chat.service.fanout import FanoutService
 from app.domain.chat.service.message import MessageService
@@ -62,6 +68,15 @@ SUBPROTOCOL_AUTH_PREFIX = "auth."
 
 # 모듈 레벨에서 1회 생성.
 _ClientRequestAdapter = TypeAdapter(ClientRequest)
+
+
+def _read_failed_event(req: ReadOp, reason: str) -> dict[str, object]:
+    return ReadFailedEvent(
+        type="read_failed",
+        room_id=req.room_id,
+        up_to_server_seq=req.up_to_server_seq,
+        reason=reason,
+    ).model_dump()
 
 
 @router.websocket("/chat")
@@ -393,23 +408,17 @@ async def _receive_loop(
         except PermissionError as e:
             # read op 는 `read_failed` 이벤트로, 다른 op 는 `server_error` 규약.
             if isinstance(req, ReadOp):
-                await websocket.send_json({
-                    "type": "read_failed", "room_id": req.room_id, "reason": str(e),
-                })
+                await websocket.send_json(_read_failed_event(req, str(e)))
             else:
                 await websocket.send_json({"type": "server_error", "reason": str(e)})
         except ValueError as e:
             if isinstance(req, ReadOp):
-                await websocket.send_json({
-                    "type": "read_failed", "room_id": req.room_id, "reason": str(e),
-                })
+                await websocket.send_json(_read_failed_event(req, str(e)))
             else:
                 await websocket.send_json({"type": "server_error", "reason": str(e)})
         except ChatRoomNotFoundError as e:
             if isinstance(req, ReadOp):
-                await websocket.send_json({
-                    "type": "read_failed", "room_id": req.room_id, "reason": str(e),
-                })
+                await websocket.send_json(_read_failed_event(req, str(e)))
             else:
                 await websocket.send_json({"type": "server_error", "reason": str(e)})
         except UpstreamError as e:
@@ -426,10 +435,10 @@ async def _receive_loop(
             )
             try:
                 if isinstance(req, ReadOp):
-                    await websocket.send_json({
-                        "type": "read_failed", "room_id": req.room_id,
-                        "reason": "일시적인 서버 오류입니다. 잠시 후 다시 시도해주세요.",
-                    })
+                    await websocket.send_json(_read_failed_event(
+                        req,
+                        "일시적인 서버 오류입니다. 잠시 후 다시 시도해주세요.",
+                    ))
                 else:
                     await websocket.send_json({
                         "type": "server_error",
@@ -509,13 +518,18 @@ async def _handle_read(
     room_svc: RoomService,
     req: ReadOp,
 ) -> None:
-    """`op=read` — mark_read 내부에서 `read_ack` 직송 + `read` 브로드캐스트까지 처리."""
-    await room_svc.mark_read(
+    """`op=read` — DB commit과 post-commit 동기화 완료 후 `read_ack` 직송."""
+    final_seq = await room_svc.mark_read(
         me_id=user_id,
         me_session_id=session_id,
         room_id=req.room_id,
         up_to_server_seq=req.up_to_server_seq,
     )
+    await websocket.send_json({
+        "type": "read_ack",
+        "room_id": req.room_id,
+        "up_to_server_seq": final_seq,
+    })
 
 
 async def _heartbeat_loop(

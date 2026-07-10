@@ -43,6 +43,11 @@ def unread_key(user_id: str) -> str:
     return f"unread:{user_id}"
 
 
+def read_sync_key(user_id: str) -> str:
+    """post-commit unread 반영의 room별 최종 read seq HASH."""
+    return f"unread:read_seq:{user_id}"
+
+
 def room_seq_key(room_id: str) -> str:
     return f"room:seq:{room_id}"
 
@@ -56,6 +61,7 @@ def room_members_gen_key(room_id: str) -> str:
 
     read-repair 가 DB 스냅샷을 읽는 사이 커밋된 removal/invite 를 감지해, stale populate
     가 제거된 멤버를 캐시에 부활시키는 것을 차단한다 (populate_members.lua 가드).
+    읽음 post-commit fence로도 사용하므로 cache TTL과 함께 만료시키지 않는다.
     """
     return f"room:members:gen:{room_id}"
 

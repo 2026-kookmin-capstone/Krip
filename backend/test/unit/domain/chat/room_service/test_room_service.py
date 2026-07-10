@@ -183,7 +183,7 @@ class TestSideEffects:
         p = redis_mock._pipes[-1]
         p.incr.assert_called_once()                    # room:members:gen bump
         p.sadd.assert_called_once()                    # room:members 채우기
-        assert p.expire.call_count == 2                # gen + members 각각 TTL
+        assert p.expire.call_count == 1                # members SET만 TTL; generation fence는 영속
         p.execute.assert_awaited_once()
 
 

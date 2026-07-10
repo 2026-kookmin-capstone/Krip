@@ -91,7 +91,7 @@ def lua_mock():
     from types import SimpleNamespace
     from unittest.mock import AsyncMock
 
-    return SimpleNamespace(mark_read_unread=AsyncMock(return_value=0))
+    return SimpleNamespace(mark_read_unread=AsyncMock(return_value=[0, 1, 0]))
 
 
 @pytest.fixture

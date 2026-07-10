@@ -7,6 +7,34 @@ fan-out·시스템 메시지가 일어나면 안 된다 — 롤백 시 비멤버
 import pytest
 
 from app.domain.chat.service.exception import ChatRoomNotFoundError
+from test.unit.domain.chat.room_service.model_factory import ChatRoomFactory
+
+
+class CommitFailingUnitOfWork:
+    def __init__(self, session):
+        self._session = session
+
+    async def __aenter__(self):
+        return self._session
+
+    async def __aexit__(self, exc_type, exc, tb):
+        if exc is None:
+            raise RuntimeError("commit failed")
+        return False
+
+
+class RecordingUnitOfWork:
+    def __init__(self, session, events):
+        self._session = session
+        self._events = events
+
+    async def __aenter__(self):
+        return self._session
+
+    async def __aexit__(self, exc_type, exc, tb):
+        if exc is None:
+            self._events.append("commit")
+        return False
 
 
 @pytest.mark.unit
@@ -65,3 +93,73 @@ class TestTxFailureSkipsSideEffects:
             await service.kick_member(me_id="U_A", room_id="CR_G", target_user_id="U_A")
 
         self._assert_no_side_effects(redis_mock, fanout_mock, message_service_mock)
+
+    async def test_mark_read_commit_failure_skips_unread_and_fanout(
+        self,
+        service,
+        mock_session,
+        chat_room_repo_mock,
+        chat_member_repo_mock,
+        message_repo_mock,
+        lua_mock,
+        fanout_mock,
+    ):
+        chat_room_repo_mock.find_by_id.return_value = ChatRoomFactory.create(
+            chat_room_id="CR_G",
+        )
+        message_repo_mock.get_max_server_seq.return_value = 7
+        chat_member_repo_mock.mark_read.return_value = 7
+        service.uow = CommitFailingUnitOfWork(mock_session)
+
+        with pytest.raises(RuntimeError, match="commit failed"):
+            await service.mark_read(
+                me_id="U_A",
+                me_session_id="WS_A",
+                room_id="CR_G",
+                up_to_server_seq=7,
+            )
+
+        lua_mock.mark_read_unread.assert_not_awaited()
+        fanout_mock.fan_out_to_session.assert_not_awaited()
+        fanout_mock.fan_out_to_room.assert_not_awaited()
+
+    async def test_mark_read_side_effects_run_after_commit(
+        self,
+        service,
+        mock_session,
+        chat_room_repo_mock,
+        chat_member_repo_mock,
+        message_repo_mock,
+        lua_mock,
+        fanout_mock,
+    ):
+        events = []
+        chat_room_repo_mock.find_by_id.return_value = ChatRoomFactory.create(
+            chat_room_id="CR_G",
+        )
+        message_repo_mock.get_max_server_seq.return_value = 7
+
+        async def mark_read(*args):
+            events.append("sql_update")
+            return 7
+
+        async def sync_unread(**kwargs):
+            events.append("unread")
+            return [0, 1, 7]
+
+        async def fanout(*args):
+            events.append("room_fanout")
+
+        chat_member_repo_mock.mark_read.side_effect = mark_read
+        lua_mock.mark_read_unread.side_effect = sync_unread
+        fanout_mock.fan_out_to_room.side_effect = fanout
+        service.uow = RecordingUnitOfWork(mock_session, events)
+
+        await service.mark_read(
+            me_id="U_A",
+            me_session_id="WS_A",
+            room_id="CR_G",
+            up_to_server_seq=7,
+        )
+
+        assert events == ["sql_update", "commit", "unread", "room_fanout"]

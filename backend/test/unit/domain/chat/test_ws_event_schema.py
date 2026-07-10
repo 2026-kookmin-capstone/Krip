@@ -3,7 +3,7 @@ import pytest
 from pydantic import ValidationError
 
 from app.domain.chat.model.chat_message import MessageType
-from app.domain.chat.schema.ws_event import SendOp
+from app.domain.chat.schema.ws_event import ReadFailedEvent, SendOp
 
 
 @pytest.mark.unit
@@ -31,3 +31,8 @@ class TestSendOpTypeGuard:
     def test_rejects_system_string(self):
         with pytest.raises(ValidationError):
             SendOp(**self._kwargs(type="system"))
+
+
+def test_read_failed_requires_request_seq():
+    with pytest.raises(ValidationError):
+        ReadFailedEvent(type="read_failed", room_id="CR_1", reason="failed")

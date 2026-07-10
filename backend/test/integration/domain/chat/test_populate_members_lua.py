@@ -37,10 +37,9 @@ async def _populate(redis_hot, gen0, members):
 
 
 async def _remove(redis_hot, user):
-    """_emit_member_removed 의 MULTI 재현: gen INCR + EXPIRE + SREM + HDEL (원자)."""
+    """_emit_member_removed 의 MULTI 재현: 영속 gen INCR + SREM + HDEL (원자)."""
     async with redis_hot.pipeline(transaction=True) as pipe:
         pipe.incr(_G)
-        pipe.expire(_G, ROOM_MEMBERS_TTL)
         pipe.srem(_K, user)
         pipe.hdel(unread_key(user), _ROOM)
         await pipe.execute()
@@ -73,8 +72,9 @@ class TestPopulateMembersGuard:
         await redis_hot.delete(_K, _G)
 
     async def test_normal_populate_applies_and_sets_ttl(self, redis_hot):
-        """경합이 없으면 populate 가 반영되고 members TTL 이 설정된다."""
+        """경합이 없으면 members만 만료되고 generation fence는 영속한다."""
         await redis_hot.delete(_K, _G)
+        await redis_hot.set(_G, 1)
 
         gen0 = await redis_hot.get(_G) or "0"
         applied = await _populate(redis_hot, gen0, ["sender", "bob"])
@@ -82,6 +82,7 @@ class TestPopulateMembersGuard:
         assert applied == 1
         assert await redis_hot.smembers(_K) == {"sender", "bob"}
         assert 0 < await redis_hot.ttl(_K) <= ROOM_MEMBERS_TTL
+        assert await redis_hot.ttl(_G) == -1
         await redis_hot.delete(_K, _G)
 
     async def test_populate_replaces_stale_set_no_merge(self, redis_hot):

@@ -25,5 +25,4 @@ for i = 3, #ARGV do
 end
 local ttl = tonumber(ARGV[2])
 redis.call('EXPIRE', KEYS[1], ttl)
-redis.call('EXPIRE', KEYS[2], ttl)  -- gen 수명도 members 와 함께 연장 (비활성 방 키 누수 방지)
 return 1

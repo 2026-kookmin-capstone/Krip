@@ -8,7 +8,7 @@ auth 도메인에서 호출되는 cross-domain hook facade 이므로 본 테스�
 """
 import pytest
 
-from app.core.chat.redis_key import unread_key
+from app.core.chat.redis_key import read_sync_key, unread_key
 
 
 # ──────────────────────────────────────────────────────────────────
@@ -54,7 +54,9 @@ class TestCleanupUserData:
         """TTL 없는 unread HASH 명시 정리 — purge 시점에만 호출."""
         await service.cleanup_user_data("USER_a")
 
-        redis_mock.delete.assert_awaited_once_with(unread_key("USER_a"))
+        redis_mock.delete.assert_awaited_once_with(
+            unread_key("USER_a"), read_sync_key("USER_a"),
+        )
 
     async def test_does_not_call_session_revoke(
         self, service, redis_mock, session_service_mock,
