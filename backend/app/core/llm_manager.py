@@ -74,8 +74,8 @@ class LLMManager:
         try:
             async with httpx.AsyncClient() as client:
                 response = await client.get(
-                    f"https://generativelanguage.googleapis.com/v1beta/models"
-                    f"?key={settings.GOOGLE_GEMINI_API_KEY}",
+                    "https://generativelanguage.googleapis.com/v1beta/models",
+                    headers={"x-goog-api-key": settings.GOOGLE_GEMINI_API_KEY},
                     timeout=5.0,
                 )
                 return response.status_code == 200
