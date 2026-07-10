@@ -55,6 +55,8 @@ class UserBlockRepositoryMockFactory:
     def create(cls) -> AsyncMock:
         mock = AsyncMock()
         mock.save.return_value = None
+        mock.acquire_pair_lock.return_value = None
+        mock.acquire_pair_lock_shared.return_value = None
         mock.find_by_id.return_value = None
         mock.find_by_pair.return_value = None
         mock.find_blocks_between.return_value = []

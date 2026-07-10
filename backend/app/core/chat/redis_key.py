@@ -8,7 +8,6 @@
 # ─────────────────────────────────────────────────────────────
 SESSION_TTL = 90            # sess / ws_route / sessions ZSET 갱신 주기와 동일
 ROOM_MEMBERS_TTL = 600      # RDB fallback 전제 — 짧아도 안전
-ROOM_BLOCKS_TTL = 600       # friend hook 미호출 시 stale 상한
 RATE_LIMIT_TTL = 1          # 1초 윈도우
 DEDUPE_TTL = 600            # 클라 재전송 최대 갭보다 충분히 길게
 NODE_TTL = 90               # chat:nodes ZSET — SESSION_TTL 과 동일 주기로 갱신
@@ -59,10 +58,6 @@ def room_members_gen_key(room_id: str) -> str:
     가 제거된 멤버를 캐시에 부활시키는 것을 차단한다 (populate_members.lua 가드).
     """
     return f"room:members:gen:{room_id}"
-
-
-def room_blocks_key(room_id: str) -> str:
-    return f"room:blocks:{room_id}"
 
 
 def rate_msg_key(user_id: str) -> str:

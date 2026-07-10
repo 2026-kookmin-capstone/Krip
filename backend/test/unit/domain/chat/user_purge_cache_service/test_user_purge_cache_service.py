@@ -4,8 +4,7 @@
     - `revoke_all_sessions`: SessionService 위임 + 실패 swallow (fail-open, TTL fallback)
     - `cleanup_user_data` : `unread:{uid}` DEL + 실패 swallow (best-effort)
 
-`BlockCacheService` 와 동일한 cross-domain hook 패턴 — auth 도메인에서 호출되는 facade
-이므로 본 테스트는 위임/예외 정책 위주.
+auth 도메인에서 호출되는 cross-domain hook facade 이므로 본 테스트는 위임/예외 정책 위주.
 """
 import pytest
 

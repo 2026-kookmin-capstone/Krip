@@ -6,6 +6,7 @@ from sqlalchemy.orm import joinedload
 
 from app.domain.auth.model.user import User
 from app.domain.friend.model.user_block import UserBlock
+from app.domain.friend.repository.pair_lock import acquire_pair_lock
 from app.util.cursor import decode_cursor, keyset_where
 
 
@@ -16,6 +17,12 @@ PAGE_SIZE = 30
 class UserBlockRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
+
+    async def acquire_pair_lock(self, user_a_id: str, user_b_id: str) -> None:
+        await acquire_pair_lock(self.session, user_a_id, user_b_id)
+
+    async def acquire_pair_lock_shared(self, user_a_id: str, user_b_id: str) -> None:
+        await acquire_pair_lock(self.session, user_a_id, user_b_id, shared=True)
 
     # ──────────────────── Create ────────────────────
 

@@ -157,6 +157,18 @@ class TestMembershipCheck:
                 client_msg_id="cm-1", msg_type=MessageType.TEXT, content="x",
             )
 
+    async def test_missing_room_does_not_bypass_membership_error(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+    ):
+        chat_room_repo_mock.find_by_id.return_value = None
+        chat_member_repo_mock.is_active_member_for_share.return_value = False
+
+        with pytest.raises(PermissionError, match="멤버가 아닙니다"):
+            await service.send_message(
+                sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_UNKNOWN",
+                client_msg_id="cm-unknown", msg_type=MessageType.TEXT, content="x",
+            )
+
 
 # ──────────────────────────────────────────────────────────────────
 # Rate limit
@@ -903,7 +915,7 @@ class TestDeleteMessage:
 
 
 # ──────────────────────────────────────────────────────────────────
-# (4) 차단 체크 — DIRECT 방만 room:blocks SISMEMBER 검사 (PHASE_2 #6)
+# (4) 차단 체크 — DIRECT 방만 pair lock 후 RDB 확인
 # ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
@@ -941,17 +953,43 @@ class TestDirectBlockCheck:
             client_msg_id="cm-1", msg_type=MessageType.TEXT, content="hi",
         )
         block_repo_mock.find_blocks_between.assert_not_called()
+        block_repo_mock.acquire_pair_lock_shared.assert_not_called()
         # room:blocks 관련 Redis 호출도 없음
         assert redis_mock.sismember.call_count == 0 or all(
             "room:blocks" not in str(c) for c in redis_mock.sismember.call_args_list
         )
 
-    async def test_direct_room_miss_through_no_blocks(
-        self, service, block_repo_mock, direct_room_mock, redis_mock,
+    async def test_direct_room_locks_pair_before_membership(
+        self, service, block_repo_mock, direct_room_mock, chat_member_repo_mock,
+        redis_mock,
     ):
-        """DIRECT 방 + 캐시 miss + DB 에 차단 없음 → __none__ sentinel SADD + 통과."""
+        order = []
         redis_mock.exists = AsyncMock(return_value=0)
         redis_mock.sismember = AsyncMock(return_value=False)
+
+        async def _pair_lock(*_args):
+            order.append("pair")
+
+        async def _member_lock(*_args):
+            order.append("member")
+            return True
+
+        block_repo_mock.acquire_pair_lock_shared.side_effect = _pair_lock
+        chat_member_repo_mock.is_active_member_for_share.side_effect = _member_lock
+
+        await service.send_message(
+            sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+            client_msg_id="cm-lock-order", msg_type=MessageType.TEXT, content="hi",
+        )
+
+        assert order[:2] == ["pair", "member"]
+        block_repo_mock.acquire_pair_lock_shared.assert_awaited_once_with("U_A", "U_B")
+
+    async def test_direct_room_without_blocks_ignores_stale_positive_cache(
+        self, service, block_repo_mock, direct_room_mock, redis_mock,
+    ):
+        redis_mock.exists = AsyncMock(return_value=1)
+        redis_mock.sismember = AsyncMock(return_value=True)
         block_repo_mock.find_blocks_between.return_value = []
 
         await service.send_message(
@@ -960,19 +998,37 @@ class TestDirectBlockCheck:
         )
 
         block_repo_mock.find_blocks_between.assert_awaited_once()
-        # __none__ sentinel 이 pipeline 의 sadd 에 들어갔는지
-        sadd_calls = [p for p in redis_mock._pipes if p.sadd.called]
-        assert sadd_calls, "room:blocks 캐시 채우는 pipeline 호출이 없음"
+        redis_mock.exists.assert_not_awaited()
+        assert all(
+            "room:blocks" not in str(call)
+            for call in redis_mock.sismember.await_args_list
+        )
+
+    async def test_stale_none_cache_does_not_allow_blocked_sender(
+        self, service, block_repo_mock, direct_room_mock, redis_mock,
+        message_repo_mock,
+    ):
+        redis_mock.exists = AsyncMock(return_value=1)
+        redis_mock.sismember = AsyncMock(return_value=False)
+        block_repo_mock.find_blocks_between.return_value = [SimpleNamespace(
+            blocker_id="U_A", blocked_id="U_B",
+        )]
+
+        with pytest.raises(PermissionError, match="차단 관계"):
+            await service.send_message(
+                sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+                client_msg_id="cm-stale-none", msg_type=MessageType.TEXT, content="hi",
+            )
+
+        message_repo_mock.insert.assert_not_awaited()
 
     async def test_direct_room_sender_blocked_peer_raises(
         self, service, block_repo_mock, direct_room_mock, redis_mock,
     ):
         """sender→peer 방향 차단이 있으면 PermissionError."""
-        redis_mock.exists = AsyncMock(return_value=1)  # 캐시 hit
-
-        async def _sismember(key, member):
-            return member == "U_A:U_B"
-        redis_mock.sismember = AsyncMock(side_effect=_sismember)
+        block_repo_mock.find_blocks_between.return_value = [SimpleNamespace(
+            blocker_id="U_A", blocked_id="U_B",
+        )]
 
         with pytest.raises(PermissionError, match="차단 관계"):
             await service.send_message(
@@ -984,11 +1040,9 @@ class TestDirectBlockCheck:
         self, service, block_repo_mock, direct_room_mock, redis_mock,
     ):
         """peer→sender 방향 차단도 거절 (상대가 나를 차단한 상태)."""
-        redis_mock.exists = AsyncMock(return_value=1)
-
-        async def _sismember(key, member):
-            return member == "U_B:U_A"
-        redis_mock.sismember = AsyncMock(side_effect=_sismember)
+        block_repo_mock.find_blocks_between.return_value = [SimpleNamespace(
+            blocker_id="U_B", blocked_id="U_A",
+        )]
 
         with pytest.raises(PermissionError, match="차단 관계"):
             await service.send_message(

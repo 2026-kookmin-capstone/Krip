@@ -139,6 +139,24 @@ class TestUnblockUser:
 
         block_repo_mock.delete.assert_awaited_once_with(block)
 
+    async def test_acquires_pair_lock_before_lookup(self, service, block_repo_mock):
+        order = []
+
+        async def _lock(*_args):
+            order.append("lock")
+
+        async def _find(*_args, **_kwargs):
+            order.append("find")
+            return UserBlockFactory.create(blocker_id="USER_a", blocked_id="USER_b")
+
+        block_repo_mock.acquire_pair_lock.side_effect = _lock
+        block_repo_mock.find_by_pair.side_effect = _find
+
+        await service.unblock_user(user_id="USER_a", target_user_id="USER_b")
+
+        assert order[:2] == ["lock", "find"]
+        block_repo_mock.acquire_pair_lock.assert_awaited_once_with("USER_a", "USER_b")
+
 
 # ──────────────────────────────────────────────────────────────────
 # get_blocked_users

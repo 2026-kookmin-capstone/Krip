@@ -7,7 +7,6 @@ from app.domain.auth.service.profile import ProfileService
 from app.domain.auth.service.register import RegisterService
 from app.domain.auth.service.signup import SignupService
 from app.domain.auth.service.withdraw import WithdrawService
-from app.domain.chat.service.block_cache import BlockCacheService
 from app.domain.chat.service.fanout import FanoutService
 from app.domain.chat.service.message import MessageService
 from app.domain.chat.service.message_history import MessageHistoryService
@@ -111,8 +110,8 @@ class Container(containers.DeclarativeContainer):
     fanout_service = providers.Singleton(FanoutService)
     session_service = providers.Singleton(SessionService, fanout_service=fanout_service)
 
-    # 회원 탈퇴 cleanup 훅 — auth 도메인의 WithdrawService 가 의존. block_cache_service 와
-    # 동일 패턴 (cross-domain anti-corruption layer).
+    # 회원 탈퇴 cleanup 훅 — auth 도메인의 WithdrawService 가 의존
+    # (cross-domain anti-corruption layer).
     user_purge_cache_service = providers.Factory(
         UserPurgeCacheService, session_service=session_service,
     )
@@ -131,8 +130,7 @@ class Container(containers.DeclarativeContainer):
     mute_service = providers.Factory(MuteService, uow=uow)
 
     # 채팅 — 비즈 (Factory: 호출마다 UoW 새로 바인딩)
-    #   - message_service / block_cache_service 는 room_service / user_block_service 보다
-    #     먼저 선언 (system 메시지 발행 / 차단 캐시 무효화 훅 의존성)
+    #   - message_service 는 room_service 보다 먼저 선언 (system 메시지 발행 의존성)
     # fcm_service.provider(팩토리) 주입 → push task 마다 새 FcmService(독립 세션).
     message_service = providers.Factory(
         MessageService,
@@ -144,13 +142,10 @@ class Container(containers.DeclarativeContainer):
         RoomService, uow=uow, fanout_service=fanout_service, message_service=message_service,
     )
     message_history_service = providers.Factory(MessageHistoryService, uow=uow)
-    block_cache_service = providers.Factory(BlockCacheService, uow=uow)
 
-    # 친구 — chat 의 block_cache_service 에 의존
+    # 친구
     friendship_service = providers.Factory(FriendshipService, uow=uow)
-    user_block_service = providers.Factory(
-        UserBlockService, uow=uow, block_cache_service=block_cache_service,
-    )
+    user_block_service = providers.Factory(UserBlockService, uow=uow)
     friend_detail_service = providers.Factory(FriendDetailService, uow=uow)
     friend_search_service = providers.Factory(FriendSearchService, uow=uow)
     friend_search_history_service = providers.Factory(FriendSearchHistoryService)

@@ -69,7 +69,7 @@ class WithdrawService:
 
     def __init__(self, uow: UnitOfWork, inbox_service: InboxService, user_purge_cache_service):
         # user_purge_cache_service 는 chat 도메인 서비스 — type hint 생략으로 순환 import 회피
-        # (friend.UserBlockService ← chat.BlockCacheService 와 동일 패턴).
+        # (cross-domain anti-corruption layer).
         self.uow = uow
         self.inbox_service = inbox_service
         self.storage = get_object_storage()

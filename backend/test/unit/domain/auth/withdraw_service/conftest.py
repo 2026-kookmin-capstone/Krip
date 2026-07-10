@@ -75,7 +75,7 @@ def invalidate_cache_mock():
 def user_purge_cache_service_mock():
     """chat 도메인 UserPurgeCacheService mock — withdraw 의 cross-domain 훅.
 
-    실제 클래스 import 없이 duck typing — block_cache_service 와 동일 패턴.
+    실제 클래스 import 없이 duck typing.
     """
     mock = MagicMock(name="user_purge_cache_service")
     mock.revoke_all_sessions = AsyncMock(return_value=None)

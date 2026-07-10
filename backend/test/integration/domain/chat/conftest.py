@@ -123,9 +123,6 @@ def patch_external_clients(monkeypatch, redis_hot, redis_dedupe, mongo_db):
     monkeypatch.setattr(
         "app.domain.chat.service.message_history.get_redis_client", _hot,
     )
-    monkeypatch.setattr(
-        "app.domain.chat.service.block_cache.get_redis_client", _hot,
-    )
     # mongodb 싱글톤의 database 속성 교체 (최초엔 None 이므로 raising=False)
     monkeypatch.setattr(
         "app.database.session.mongodb.database", mongo_db, raising=False,

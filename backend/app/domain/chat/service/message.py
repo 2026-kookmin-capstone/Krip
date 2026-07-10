@@ -3,6 +3,7 @@ import asyncio
 import json
 import random
 from datetime import datetime, timedelta, timezone
+from typing import cast
 
 from pymongo.errors import DuplicateKeyError
 
@@ -12,14 +13,12 @@ from app.core.chat.redis_key import (
     DIRTY_CHAT_ROOM_KEY,
     RATE_LIMIT_THRESHOLD,
     RATE_LIMIT_TTL,
-    ROOM_BLOCKS_TTL,
     ROOM_MEMBERS_TTL,
     SEQ_FORCE_JUMP_GAP,
     SEQ_FORCE_JUMP_JITTER_MAX,
     SEQ_RECOVER_GAP,
     dedupe_key,
     rate_msg_key,
-    room_blocks_key,
     room_members_gen_key,
     room_members_key,
     room_seq_key,
@@ -30,7 +29,7 @@ from app.core.redis import get_redis_client, get_redis_dedupe_client
 from app.database.session import UnitOfWork, _current_session, mongodb, transactional
 from app.domain.chat.dto.message import MessageSentAckData
 from app.domain.chat.model.chat_message import MessageType
-from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
+from app.domain.chat.model.chat_room import ChatRoomType
 from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
 from app.domain.chat.repository.chat_message import ChatMessageRepository
 from app.domain.chat.repository.chat_room import ChatRoomRepository
@@ -89,6 +88,18 @@ class MessageService:
         if replay is not None:
             return replay
 
+        room = await chat_room_repo.find_by_id(room_id)
+        peer_id = None
+        if room is not None and cast(ChatRoomType, room.type) == ChatRoomType.DIRECT:
+            peer = cast(str | None, (
+                room.direct_user_b_id
+                if room.direct_user_a_id == sender_user_id
+                else room.direct_user_a_id
+            ))
+            if peer is not None:
+                peer_id = str(peer)
+                await block_repo.acquire_pair_lock_shared(sender_user_id, peer_id)
+
         await self._ensure_membership(
             redis_hot, member_repo, room_id=room_id, user_id=sender_user_id,
         )
@@ -100,13 +111,12 @@ class MessageService:
         if count > RATE_LIMIT_THRESHOLD:
             raise ValueError("메시지 전송 속도 제한에 걸렸습니다. 잠시 후 다시 시도해주세요.")
 
-        # 차단 체크는 DIRECT 방만 — GROUP 은 차단과 송신이 독립.
-        room = await chat_room_repo.find_by_id(room_id)
         if room is None:
             raise ValueError("존재하지 않는 방입니다.")
-        if room.type == ChatRoomType.DIRECT:
+
+        if peer_id is not None:
             if await self._is_direct_blocked(
-                redis_hot, block_repo, room=room, sender_user_id=sender_user_id,
+                block_repo, sender_user_id=sender_user_id, peer_id=peer_id,
             ):
                 raise PermissionError(
                     "차단 관계인 유저에게는 메시지를 보낼 수 없습니다.",
@@ -577,41 +587,13 @@ class MessageService:
 
     @staticmethod
     async def _is_direct_blocked(
-        redis_hot,
         block_repo: UserBlockRepository,
         *,
-        room: ChatRoom,
         sender_user_id: str,
+        peer_id: str,
     ) -> bool:
-        """1:1 방에서 양방향 차단 체크 — 한쪽이라도 차단이면 True.
-
-        캐시 miss 시 양방향 `user_block` 조회 후 SADD. 차단 0 건이어도 `__none__` sentinel
-        로 key 를 존재시켜 miss vs empty 를 구분한다.
-        """
-        peer_id = (
-            room.direct_user_b_id
-            if room.direct_user_a_id == sender_user_id
-            else room.direct_user_a_id
-        )
-        if peer_id is None:
-            return False
-
-        key = room_blocks_key(room.chat_room_id)
-        if not await redis_hot.exists(key):
-            blocks = await block_repo.find_blocks_between(sender_user_id, peer_id)
-            members = (
-                [f"{b.blocker_id}:{b.blocked_id}" for b in blocks] or ["__none__"]
-            )
-            pipe = redis_hot.pipeline(transaction=True)
-            pipe.sadd(key, *members)
-            pipe.expire(key, ROOM_BLOCKS_TTL)
-            await pipe.execute()
-
-        if await redis_hot.sismember(key, f"{sender_user_id}:{peer_id}"):
-            return True
-        if await redis_hot.sismember(key, f"{peer_id}:{sender_user_id}"):
-            return True
-        return False
+        """1:1 방의 양방향 차단 상태를 RDB에서 확인한다."""
+        return bool(await block_repo.find_blocks_between(sender_user_id, peer_id))
 
     @staticmethod
     async def _bump_unread(redis_hot, *, room_id: str, sender_user_id: str) -> None:

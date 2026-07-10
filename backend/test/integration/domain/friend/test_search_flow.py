@@ -1,7 +1,5 @@
 """FriendSearchService 통합 테스트 — 실 PostgreSQL 로 검색 / 필터 / 페이지네이션 검증."""
 
-from unittest.mock import AsyncMock, MagicMock
-
 import pytest
 from sqlalchemy import delete, update
 
@@ -16,14 +14,6 @@ from app.domain.friend.service.user_block import UserBlockService
 
 
 pytestmark = pytest.mark.integration
-
-
-@pytest.fixture
-def block_cache_stub() -> MagicMock:
-    """UserBlockService 가 의존하는 chat 의 block_cache 훅 — 호출 여부만 확인."""
-    mock = MagicMock(name="block_cache")
-    mock.invalidate_block_cache = AsyncMock()
-    return mock
 
 
 # ──────────────────────────────────────────────────────────────────
@@ -104,11 +94,11 @@ class TestExclusions:
         assert c in item_ids
 
     async def test_excludes_users_blocked_by_me(
-        self, uow, seed_users, block_cache_stub,
+        self, uow, seed_users,
     ):
         a, b, c = await seed_users(3)
 
-        block_service = UserBlockService(uow=uow, block_cache_service=block_cache_stub)
+        block_service = UserBlockService(uow=uow)
         await block_service.block_user(user_id=a, target_user_id=b)
 
         search_service = FriendSearchService(uow=uow)
@@ -119,12 +109,12 @@ class TestExclusions:
         assert c in item_ids
 
     async def test_excludes_users_who_blocked_me(
-        self, uow, seed_users, block_cache_stub,
+        self, uow, seed_users,
     ):
         """역방향 차단 — b 가 a 를 차단하면 a 검색 결과에 b 미노출."""
         a, b, c = await seed_users(3)
 
-        block_service = UserBlockService(uow=uow, block_cache_service=block_cache_stub)
+        block_service = UserBlockService(uow=uow)
         await block_service.block_user(user_id=b, target_user_id=a)
 
         search_service = FriendSearchService(uow=uow)

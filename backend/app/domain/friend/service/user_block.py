@@ -14,22 +14,14 @@ from app.util.cursor import encode_cursor
 
 
 class UserBlockService:
-    def __init__(self, uow: UnitOfWork, block_cache_service):
-        # block_cache_service 는 chat 도메인 서비스 — type hint 생략으로 순환 import 회피
+    def __init__(self, uow: UnitOfWork):
         self.uow = uow
-        self._block_cache = block_cache_service
 
     # ──────────────────── 차단 ────────────────────
 
     async def block_user(self, user_id: str, target_user_id: str) -> UserBlockData:
-        """유저 차단 — DB 커밋 후 chat 차단 캐시 무효화."""
-        result = await self._block_user_tx(user_id, target_user_id)
-
-        # 무효화는 반드시 커밋 이후 — 커밋 전 DEL 하면 동시 send miss 가 미커밋 DB(차단 없음)를
-        # 읽어 __none__ 을 TTL 재적재, 차단이 무시된다. fail-closed: 실패해도 DB 가 진실.
-        await self._block_cache.invalidate_block_cache(user_id, target_user_id)
-
-        return result
+        """유저 차단 — 송신 권한은 RDB pair-lock 으로 판정하므로 캐시 훅 없음."""
+        return await self._block_user_tx(user_id, target_user_id)
 
     @transactional
     async def _block_user_tx(self, user_id: str, target_user_id: str) -> UserBlockData:
@@ -84,16 +76,15 @@ class UserBlockService:
     # ──────────────────── 차단 해제 ────────────────────
 
     async def unblock_user(self, user_id: str, target_user_id: str) -> None:
-        """차단 해제 — DB 커밋 후 chat 차단 캐시 무효화."""
+        """차단 해제 — 송신 권한은 RDB pair-lock 으로 판정하므로 캐시 훅 없음."""
         await self._unblock_user_tx(user_id, target_user_id)
-
-        # block_user 와 동일하게 커밋 후 무효화. fail-open: 실패해도 TTL 후 만료돼 해제를 막지 않는다.
-        await self._block_cache.invalidate_block_cache(user_id, target_user_id)
 
     @transactional
     async def _unblock_user_tx(self, user_id: str, target_user_id: str) -> None:
         """(blocker=user_id, blocked=target) 레코드 삭제."""
         block_repo = UserBlockRepository(self._session)
+
+        await block_repo.acquire_pair_lock(user_id, target_user_id)
 
         block = await block_repo.find_by_pair(blocker_id=user_id, blocked_id=target_user_id)
         if block is None:
