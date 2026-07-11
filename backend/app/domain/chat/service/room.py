@@ -281,7 +281,7 @@ class RoomService:
         room_id: str,
         user_ids: list[str],
     ) -> tuple[list[str], list[str], list[str], list[tuple[str, int]], int]:
-        """초대 DB 파트 — (invited, skipped, new_members, rejoined[(uid,last_read)], current_seq)."""
+        """초대 DB 파트 — (invited, skipped, new_members, rejoined[(uid,last_read)], allocated_seq)."""
         chat_room_repo = ChatRoomRepository(self._session)
         member_repo = ChatRoomMemberRepository(self._session)
         friendship_repo = FriendshipRepository(self._session)
@@ -306,8 +306,6 @@ class RoomService:
                 f"친구가 아닌 유저는 초대할 수 없습니다: {sorted(non_friends)}"
             )
 
-        current_seq = await self._get_current_seq(message_repo, room_id)
-
         # 총원을 증가시키는 invite끼리 room row로 직렬화한다. inviter row의 공유 잠금은
         # 대기 중 퇴장·강퇴를 commit 이후로 미뤄 stale 권한 초대를 막는다.
         room = await chat_room_repo.find_by_id_for_update(room_id)
@@ -317,6 +315,10 @@ class RoomService:
             raise ValueError("그룹 방에만 멤버를 초대할 수 있습니다.")
         if not await member_repo.is_active_member_for_share(room_id, me_id):
             raise PermissionError("이 방의 활성 멤버만 초대할 수 있습니다.")
+
+        # send와 같은 room mutex 안에서 읽어 가입 이전에 예약된 in-flight seq까지 baseline에
+        # 포함한다. lock 밖에서 읽으면 sender commit과 invite commit 사이에 stale해질 수 있다.
+        allocated_seq = await self._get_allocated_current_seq(message_repo, room_id)
 
         skipped: list[str] = []
         candidates: list[tuple[str, ChatRoomMember | None]] = []
@@ -346,12 +348,12 @@ class RoomService:
                 await member_repo.save(ChatRoomMember(
                     chat_room_id=room_id,
                     user_id=uid,
-                    last_read_message_server_seq=current_seq or None,
+                    last_read_message_server_seq=allocated_seq or None,
                 ))
                 new_members.append(uid)
                 invited.append(uid)
 
-        return invited, skipped, new_members, rejoined, (current_seq or 0)
+        return invited, skipped, new_members, rejoined, (allocated_seq or 0)
 
     async def _emit_invite_side_effects(
         self,
@@ -580,11 +582,11 @@ class RoomService:
         if room is None:
             raise ChatRoomNotFoundError("존재하지 않는 방입니다.")
 
-        # 클라가 최신 seq 초과값을 보내면 last_read 가 미래로 고정돼 이후 메시지가 전부
-        # 자동 읽음 처리된다(뱃지 왜곡, 되돌리기 불가). 현재 seq 로 clamp.
+        # Redis seq는 Mongo insert 전에 예약되므로 읽음 상한으로 쓸 수 없다. 클라가 큰 값을
+        # 보내도 내구 저장된 최대 seq까지만 반영해 in-flight 메시지의 선행 읽음을 막는다.
         message_repo = ChatMessageRepository(mongodb.database)
-        current_seq = await self._get_current_seq(message_repo, room_id)
-        clamped_seq = min(up_to_server_seq, current_seq)
+        durable_seq = await self._get_durable_current_seq(message_repo, room_id)
+        clamped_seq = min(up_to_server_seq, durable_seq)
 
         final_seq = await member_repo.mark_read(room_id, me_id, clamped_seq)
         if final_seq is None:
@@ -592,11 +594,19 @@ class RoomService:
         return final_seq, clamped_seq
 
     @staticmethod
-    async def _get_current_seq(
+    async def _get_durable_current_seq(
         message_repo: ChatMessageRepository,
         room_id: str,
     ) -> int:
-        """방의 현재 server_seq — Redis 우선, miss 시 Mongo `max(server_seq)` 폴백. 둘 다 비면 0."""
+        """Mongo에 내구 저장된 방의 최대 server_seq. 메시지가 없으면 0."""
+        return await message_repo.get_max_server_seq(room_id)
+
+    @staticmethod
+    async def _get_allocated_current_seq(
+        message_repo: ChatMessageRepository,
+        room_id: str,
+    ) -> int:
+        """초대 baseline용 Redis 예약 seq. cache miss/손상 시 Mongo max로 복구."""
         redis = await get_redis_client()
         raw = await redis.get(room_seq_key(room_id))
         if raw is not None:

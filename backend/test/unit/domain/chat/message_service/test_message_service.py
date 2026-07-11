@@ -1,5 +1,6 @@
 """MessageService 단위 테스트 — 송신 11단계 핫패스 / 재시도 / dedupe / unread."""
-from unittest.mock import AsyncMock
+import asyncio
+from unittest.mock import AsyncMock, patch
 
 import pytest
 from pymongo.errors import DuplicateKeyError
@@ -8,6 +9,7 @@ from app.core.chat.redis_key import (
     DIRTY_CHAT_ROOM_KEY,
     RATE_LIMIT_THRESHOLD,
     dedupe_key,
+    room_pending_message_key,
 )
 from app.domain.chat.model.chat_message import MessageType
 from app.domain.chat.service.exception import UpstreamError
@@ -160,7 +162,7 @@ class TestMembershipCheck:
     async def test_missing_room_does_not_bypass_membership_error(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
     ):
-        chat_room_repo_mock.find_by_id.return_value = None
+        chat_room_repo_mock.find_by_id_for_update.return_value = None
         chat_member_repo_mock.is_active_member_for_share.return_value = False
 
         with pytest.raises(PermissionError, match="멤버가 아닙니다"):
@@ -168,6 +170,32 @@ class TestMembershipCheck:
                 sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_UNKNOWN",
                 client_msg_id="cm-unknown", msg_type=MessageType.TEXT, content="x",
             )
+
+    async def test_cancellation_before_insert_does_not_send_message(
+        self, service, chat_room_repo_mock, message_repo_mock,
+    ):
+        lock_wait_started = asyncio.Event()
+        never_release = asyncio.Event()
+
+        async def wait_for_room_lock(_room_id):
+            lock_wait_started.set()
+            await never_release.wait()
+
+        chat_room_repo_mock.find_by_id_for_update.side_effect = wait_for_room_lock
+        task = asyncio.create_task(service.send_message(
+            sender_user_id="U_A",
+            sender_session_id="WS_A",
+            room_id="CR_1",
+            client_msg_id="cm-cancel-before-insert",
+            msg_type=MessageType.TEXT,
+            content="x",
+        ))
+        await lock_wait_started.wait()
+        task.cancel()
+
+        with pytest.raises(asyncio.CancelledError):
+            await task
+        message_repo_mock.insert.assert_not_awaited()
 
 
 # ──────────────────────────────────────────────────────────────────
@@ -432,36 +460,411 @@ class TestDuplicateKeyRetry:
 
 
 # ──────────────────────────────────────────────────────────────────
-# Dedupe 해제 경계 — Mongo 저장 성공 전 어떤 실패든 dedupe 풀어 클라 재시도 허용
+# Dedupe 해제 경계 — 확정 실패만 dedupe를 풀어 클라이언트 재시도 허용
 #
-# regression: 이전 구현은 (7) Mongo insert 단계에서 `except DuplicateKeyError` 만
-# 잡아 ConnectionFailure 등 다른 Mongo 예외가 나면 dedupe 가 영구 잔존해
-# 같은 client_msg_id 가 DEDUPE_TTL(10분) 동안 차단되던 버그가 있었음.
-# (6)+(7) 단계를 단일 try/except 로 묶어 모든 비-DuplicateKey 예외도 커버.
+# network/timeout은 write outcome을 resolve한 뒤 성공 처리하고, validation 오류처럼
+# 확정 실패인 예외만 dedupe를 해제해 같은 client_msg_id 재시도를 허용한다.
 # ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestDedupeReleaseOnFailure:
-    async def test_mongo_connection_failure_clears_dedupe(
+    async def test_persistent_mongo_outage_defers_to_sweeper_without_clearing_intent(
+        self, service, redis_mock, redis_dedupe_mock, message_repo_mock,
+    ):
+        from pymongo.errors import ConnectionFailure
+
+        from app.domain.chat.service import message as message_module
+
+        message_repo_mock.insert.side_effect = ConnectionFailure("mongo unavailable")
+        with (
+            patch.object(message_module, "FOREGROUND_MONGO_RETRY_SEC", 0.01),
+            pytest.raises(message_module.PendingRecoveryDeferred),
+        ):
+            await asyncio.wait_for(service.send_message(
+                sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+                client_msg_id="cm-mongo-outage", msg_type=MessageType.TEXT, content="x",
+            ), timeout=0.2)
+
+        assert message_repo_mock.insert.await_count == 1
+        redis_mock.delete.assert_not_awaited()
+        redis_dedupe_mock.delete.assert_not_awaited()
+
+    async def test_insert_and_duplicate_lookup_share_one_mongo_deadline(
+        self, service, redis_mock, redis_dedupe_mock, message_repo_mock,
+    ):
+        from pymongo.errors import ConnectionFailure, DuplicateKeyError
+
+        from app.domain.chat.service import message as message_module
+
+        message_repo_mock.insert.side_effect = DuplicateKeyError("late success")
+        message_repo_mock.find_by_id.side_effect = ConnectionFailure("lookup unavailable")
+        loop = asyncio.get_running_loop()
+        started = loop.time()
+        with (
+            patch.object(message_module, "FOREGROUND_MONGO_RETRY_SEC", 0.01),
+            pytest.raises(message_module.PendingRecoveryDeferred),
+        ):
+            await asyncio.wait_for(service.send_message(
+                sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+                client_msg_id="cm-shared-deadline", msg_type=MessageType.TEXT, content="x",
+            ), timeout=0.2)
+
+        assert loop.time() - started < 0.04
+        redis_mock.delete.assert_not_awaited()
+        redis_dedupe_mock.delete.assert_not_awaited()
+
+    async def test_client_duplicate_lookup_uses_shared_mongo_deadline(
+        self, service, redis_mock, redis_dedupe_mock, message_repo_mock,
+    ):
+        from pymongo.errors import ConnectionFailure, DuplicateKeyError
+
+        from app.domain.chat.service import message as message_module
+
+        message_repo_mock.insert.side_effect = DuplicateKeyError("server seq collision")
+        message_repo_mock.find_by_id.return_value = None
+        message_repo_mock.find_by_client_msg_id.side_effect = ConnectionFailure(
+            "client lookup unavailable",
+        )
+        loop = asyncio.get_running_loop()
+        started = loop.time()
+        with (
+            patch.object(message_module, "FOREGROUND_MONGO_RETRY_SEC", 0.01),
+            pytest.raises(message_module.PendingRecoveryDeferred),
+        ):
+            await asyncio.wait_for(service.send_message(
+                sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+                client_msg_id="cm-client-lookup-deadline",
+                msg_type=MessageType.TEXT, content="x",
+            ), timeout=0.2)
+
+        assert loop.time() - started < 0.04
+        redis_mock.delete.assert_not_awaited()
+        redis_dedupe_mock.delete.assert_not_awaited()
+
+    async def test_foreground_cancellation_stops_before_ambiguous_retry(
+        self, redis_mock, redis_dedupe_mock, message_repo_mock,
+    ):
+        from bson import json_util
+        from pymongo.errors import ConnectionFailure
+
+        from app.domain.chat.service.message import _recover_pending_message
+
+        pending = {
+            "_id": "MSG_CANCEL_FOREGROUND",
+            "chat_room_id": "CR_1",
+            "server_seq": 10,
+            "sender_id": "U_A",
+            "client_msg_id": "cm-cancel-foreground",
+            "type": "text",
+            "content": "pending",
+            "created_at": datetime.now(timezone.utc),
+            "edited_at": None,
+            "deleted_at": None,
+        }
+        redis_mock.get.return_value = json_util.dumps(pending)
+        insert_started = asyncio.Event()
+        release_first_insert = asyncio.Event()
+        insert_count = 0
+
+        async def ambiguous_then_success(_document):
+            nonlocal insert_count
+            insert_count += 1
+            if insert_count == 1:
+                insert_started.set()
+                await release_first_insert.wait()
+                raise ConnectionFailure("outcome unknown")
+
+        message_repo_mock.insert.side_effect = ambiguous_then_success
+        task = asyncio.create_task(_recover_pending_message(
+            redis_mock, redis_dedupe_mock, message_repo_mock, "CR_1",
+        ))
+        await insert_started.wait()
+        task.cancel()
+        release_first_insert.set()
+
+        with pytest.raises(asyncio.CancelledError):
+            await asyncio.wait_for(task, timeout=0.2)
+        assert insert_count == 1
+        redis_mock.delete.assert_not_awaited()
+
+    async def test_sweeper_cancellation_preserves_pending_and_propagates(
+        self, redis_mock, redis_dedupe_mock, message_repo_mock,
+    ):
+        from bson import json_util
+
+        from app.domain.chat.service.message import _recover_pending_message
+
+        pending = {
+            "_id": "MSG_CANCEL_SWEEP",
+            "chat_room_id": "CR_1",
+            "server_seq": 10,
+            "sender_id": "U_A",
+            "client_msg_id": "cm-cancel-sweep",
+            "type": "text",
+            "content": "pending",
+            "created_at": datetime.now(timezone.utc),
+            "edited_at": None,
+            "deleted_at": None,
+        }
+        redis_mock.get.return_value = json_util.dumps(pending)
+        insert_started = asyncio.Event()
+        never = asyncio.Event()
+
+        async def blocked_insert(_document):
+            insert_started.set()
+            await never.wait()
+
+        message_repo_mock.insert.side_effect = blocked_insert
+        task = asyncio.create_task(_recover_pending_message(
+            redis_mock, redis_dedupe_mock, message_repo_mock, "CR_1",
+            defer_cancellation=False,
+        ))
+        await insert_started.wait()
+        task.cancel()
+
+        with pytest.raises(asyncio.CancelledError):
+            await asyncio.wait_for(task, timeout=0.1)
+        redis_mock.delete.assert_not_awaited()
+
+    async def test_cross_room_pending_collision_is_discarded_before_new_send(
+        self, service, redis_mock, message_repo_mock,
+    ):
+        from bson import json_util
+
+        pending = {
+            "_id": "MSG_PENDING_OTHER_ROOM_COLLISION",
+            "chat_room_id": "CR_1",
+            "server_seq": 99,
+            "sender_id": "U_A",
+            "client_msg_id": "cm-reused-across-rooms",
+            "type": "text",
+            "content": "crashed-before-insert",
+            "created_at": datetime.now(timezone.utc),
+            "edited_at": None,
+            "deleted_at": None,
+        }
+        redis_mock.get.return_value = json_util.dumps(pending)
+        message_repo_mock.insert.side_effect = [DuplicateKeyError("duplicate"), None]
+        message_repo_mock.find_by_client_msg_id.return_value = {
+            **pending,
+            "_id": "MSG_IN_CR_2",
+            "chat_room_id": "CR_2",
+            "server_seq": 7,
+        }
+
+        ack = await service.send_message(
+            sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+            client_msg_id="cm-valid-after-poison", msg_type=MessageType.TEXT,
+            content="new valid message",
+        )
+
+        assert ack.client_msg_id == "cm-valid-after-poison"
+        assert message_repo_mock.insert.await_count == 2
+        redis_mock.delete.assert_any_await(room_pending_message_key("CR_1"))
+
+    async def test_recovers_durable_pending_message_before_new_insert(
+        self, service, redis_mock, message_repo_mock,
+    ):
+        from bson import json_util
+
+        pending = {
+            "_id": "MSG_PENDING",
+            "chat_room_id": "CR_1",
+            "server_seq": 99,
+            "sender_id": "U_B",
+            "type": "text",
+            "content": "pending-before-crash",
+            "created_at": datetime.now(timezone.utc),
+            "edited_at": None,
+            "deleted_at": None,
+        }
+        redis_mock.get.return_value = json_util.dumps(pending)
+
+        await service.send_message(
+            sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+            client_msg_id="cm-after-crash", msg_type=MessageType.TEXT, content="new",
+        )
+
+        assert message_repo_mock.insert.await_count == 2
+        recovered = message_repo_mock.insert.await_args_list[0].args[0]
+        new_message = message_repo_mock.insert.await_args_list[1].args[0]
+        assert recovered["_id"] == "MSG_PENDING"
+        assert new_message["_id"] != recovered["_id"]
+        redis_mock.sadd.assert_any_await(
+            DIRTY_CHAT_ROOM_KEY, "CR_1",
+        )
+
+    async def test_definitive_pending_failure_is_discarded_before_new_send(
+        self, service, message_repo_mock, redis_mock, redis_dedupe_mock,
+    ):
+        from bson import json_util
+        from pymongo.errors import OperationFailure
+
+        pending = {
+            "_id": "MSG_POISON",
+            "chat_room_id": "CR_1",
+            "server_seq": 99,
+            "sender_id": "U_B",
+            "client_msg_id": "cm-poison",
+            "type": "text",
+            "content": "invalid",
+            "created_at": datetime.now(timezone.utc),
+            "edited_at": None,
+            "deleted_at": None,
+        }
+        redis_mock.get.return_value = json_util.dumps(pending)
+        message_repo_mock.insert.side_effect = [
+            OperationFailure("validation failed", code=121),
+            None,
+        ]
+
+        ack = await service.send_message(
+            sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+            client_msg_id="cm-after-poison", msg_type=MessageType.TEXT, content="new",
+        )
+
+        assert ack.message_id != pending["_id"]
+        assert message_repo_mock.insert.await_count == 2
+        redis_dedupe_mock.delete.assert_any_await(
+            dedupe_key("U_B", "cm-poison"),
+        )
+
+    async def test_mongo_connection_failure_before_write_retries_same_insert(
         self, service, message_repo_mock, redis_dedupe_mock,
     ):
-        """Mongo ConnectionFailure → 즉시 propagate + dedupe DEL.
-
-        DuplicateKey 가 아닌 Mongo 예외 (네트워크 / 타임아웃) 시 dedupe 가 정리되지
-        않으면 같은 client_msg_id 로 재시도가 영구 차단된다.
-        """
+        """write 전 ConnectionFailure는 room lock 안에서 같은 document로 재시도한다."""
         from pymongo.errors import ConnectionFailure
-        message_repo_mock.insert.side_effect = ConnectionFailure("simulated")
+        message_repo_mock.insert.side_effect = [ConnectionFailure("simulated"), None]
 
-        with pytest.raises(ConnectionFailure):
+        ack = await service.send_message(
+            sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+            client_msg_id="cm-conn", msg_type=MessageType.TEXT, content="x",
+        )
+
+        assert ack.server_seq > 0
+        assert message_repo_mock.insert.await_count == 2
+        redis_dedupe_mock.delete.assert_not_awaited()
+
+    async def test_mongo_connection_failure_after_write_resolves_by_message_id(
+        self, service, message_repo_mock, redis_dedupe_mock,
+    ):
+        """서버 write 후 응답만 유실되면 deterministic _id 조회로 성공을 확정한다."""
+        from pymongo.errors import ConnectionFailure
+
+        insert_calls = 0
+
+        async def insert_then_lose_ack(document):
+            nonlocal insert_calls
+            insert_calls += 1
+            if insert_calls == 1:
+                message_repo_mock.find_by_id.side_effect = [
+                    ConnectionFailure("lookup temporarily unavailable"),
+                    dict(document),
+                ]
+                raise ConnectionFailure("reply lost after write")
+            raise DuplicateKeyError("same _id already stored")
+
+        message_repo_mock.insert.side_effect = insert_then_lose_ack
+
+        ack = await service.send_message(
+            sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+            client_msg_id="cm-ambiguous", msg_type=MessageType.TEXT, content="x",
+        )
+
+        assert ack.server_seq > 0
+        assert message_repo_mock.find_by_id.await_count == 2
+        message_repo_mock.find_by_id.assert_awaited_with(ack.message_id)
+        redis_dedupe_mock.delete.assert_not_awaited()
+
+    async def test_mongo_write_timeout_retries_same_insert(
+        self, service, message_repo_mock, redis_dedupe_mock,
+    ):
+        from pymongo.errors import WTimeoutError
+        message_repo_mock.insert.side_effect = [WTimeoutError("write concern timeout"), None]
+
+        ack = await service.send_message(
+            sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+            client_msg_id="cm-wtimeout", msg_type=MessageType.TEXT, content="x",
+        )
+
+        assert ack.server_seq > 0
+        assert message_repo_mock.insert.await_count == 2
+        redis_dedupe_mock.delete.assert_not_awaited()
+
+    async def test_dedupe_ack_failure_keeps_pending_after_mongo_durable(
+        self, service, message_repo_mock, redis_mock, redis_dedupe_mock,
+    ):
+        redis_dedupe_mock.set.side_effect = [True, ConnectionError("ack unavailable")]
+
+        with pytest.raises(ConnectionError, match="ack unavailable"):
             await service.send_message(
                 sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
-                client_msg_id="cm-conn", msg_type=MessageType.TEXT, content="x",
+                client_msg_id="cm-ack-fail", msg_type=MessageType.TEXT, content="x",
             )
 
-        redis_dedupe_mock.delete.assert_awaited()
-        args, _ = redis_dedupe_mock.delete.call_args
-        assert args[0] == dedupe_key("U_A", "cm-conn")
+        message_repo_mock.insert.assert_awaited_once()
+        redis_mock.delete.assert_not_awaited()
+        redis_dedupe_mock.delete.assert_not_awaited()
+
+    async def test_ack_replay_recovers_pending_after_delete_failure(
+        self, service, message_repo_mock, redis_mock, redis_dedupe_mock,
+    ):
+        from bson import json_util
+
+        redis_mock.delete.side_effect = [ConnectionError("reply lost"), None]
+
+        with pytest.raises(ConnectionError, match="reply lost"):
+            await service.send_message(
+                sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+                client_msg_id="cm-delete-fail", msg_type=MessageType.TEXT, content="x",
+            )
+
+        pending = redis_mock.set.await_args.args[1]
+        document = json_util.loads(pending)
+        ack_payload = redis_dedupe_mock.set.await_args_list[-1].args[1]
+        redis_mock.get.side_effect = [pending, pending]
+        redis_dedupe_mock.get.return_value = ack_payload
+        redis_dedupe_mock.set.side_effect = [True, False]
+        message_repo_mock.find_by_id.return_value = dict(document)
+
+        replay = await service.send_message(
+            sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+            client_msg_id="cm-delete-fail", msg_type=MessageType.TEXT, content="x",
+        )
+
+        assert replay.message_id == document["_id"]
+        assert message_repo_mock.insert.await_count == 2
+        assert redis_mock.delete.await_count == 2
+
+    async def test_cancelled_insert_child_retries_before_propagating_cancellation(
+        self, service, message_repo_mock, redis_dedupe_mock,
+    ):
+        message_repo_mock.insert.side_effect = [asyncio.CancelledError(), None]
+
+        with pytest.raises(asyncio.CancelledError):
+            await service.send_message(
+                sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+                client_msg_id="cm-child-cancel", msg_type=MessageType.TEXT, content="x",
+            )
+
+        assert message_repo_mock.insert.await_count == 2
+        redis_dedupe_mock.delete.assert_not_awaited()
+
+    async def test_definitive_mongo_failure_clears_dedupe(
+        self, service, message_repo_mock, redis_dedupe_mock,
+    ):
+        from pymongo.errors import OperationFailure
+        message_repo_mock.insert.side_effect = OperationFailure(
+            "validation failed", code=121,
+        )
+
+        with pytest.raises(OperationFailure):
+            await service.send_message(
+                sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+                client_msg_id="cm-definite", msg_type=MessageType.TEXT, content="x",
+            )
+
+        redis_dedupe_mock.delete.assert_awaited_once()
 
     async def test_seq_allocation_failure_clears_dedupe(
         self, service, lua_mock, redis_dedupe_mock,
@@ -610,6 +1013,15 @@ class TestUnread:
 
 @pytest.mark.unit
 class TestSendSystemMessage:
+    async def test_locks_room_before_seq_reservation(
+        self, service, chat_room_repo_mock,
+    ):
+        await service.send_system_message(
+            room_id="CR_1", action="created", actor_id="U_A",
+        )
+
+        chat_room_repo_mock.find_by_id_for_update.assert_awaited_once_with("CR_1")
+
     async def test_records_system_doc_with_none_sender_and_dict_content(
         self, service, message_repo_mock,
     ):
@@ -622,6 +1034,34 @@ class TestSendSystemMessage:
         assert doc["sender_id"] is None
         assert doc["type"] == "system"
         assert doc["content"] == {"action": "created", "actor_id": "U_A"}
+
+    async def test_ambiguous_insert_retries_same_system_document(
+        self, service, message_repo_mock,
+    ):
+        from pymongo.errors import ConnectionFailure
+        message_repo_mock.insert.side_effect = [ConnectionFailure("reply lost"), None]
+
+        await service.send_system_message(
+            room_id="CR_1", action="created", actor_id="U_A",
+        )
+
+        assert message_repo_mock.insert.await_count == 2
+        first_doc = message_repo_mock.insert.await_args_list[0].args[0]
+        second_doc = message_repo_mock.insert.await_args_list[1].args[0]
+        assert first_doc is second_doc
+
+    async def test_durable_system_message_delete_failure_keeps_pending(
+        self, service, message_repo_mock, redis_mock,
+    ):
+        redis_mock.delete.side_effect = ConnectionError("delete unavailable")
+
+        with pytest.raises(ConnectionError, match="delete unavailable"):
+            await service.send_system_message(
+                room_id="CR_1", action="created", actor_id="U_A",
+            )
+
+        message_repo_mock.insert.assert_awaited_once()
+        redis_mock.delete.assert_awaited_once()
 
     async def test_includes_target_ids_when_provided(
         self, service, message_repo_mock,
@@ -940,7 +1380,7 @@ class TestDirectBlockCheck:
             direct_user_a_id="U_A",
             direct_user_b_id="U_B",
         )
-        chat_room_repo_mock.find_by_id.return_value = room
+        chat_room_repo_mock.find_by_id_for_update.return_value = room
         return room
 
     async def test_group_room_skips_block_check(
@@ -1054,7 +1494,7 @@ class TestDirectBlockCheck:
         self, service, block_repo_mock, chat_room_repo_mock,
     ):
         """상대가 탈퇴로 NULL 이면 차단 체크 skip (체크 의미 없음)."""
-        chat_room_repo_mock.find_by_id.return_value = SimpleNamespace(
+        chat_room_repo_mock.find_by_id_for_update.return_value = SimpleNamespace(
             chat_room_id="CR_1",
             type=ChatRoomType.DIRECT,
             creator_id="U_A",

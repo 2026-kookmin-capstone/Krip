@@ -50,13 +50,15 @@ def make_chat_room_repo_mock() -> AsyncMock:
     from app.domain.chat.model.chat_room import ChatRoomType as _CRT
     mock = AsyncMock()
     mock.update_last_message.return_value = None
-    mock.find_by_id.return_value = SimpleNamespace(
+    room = SimpleNamespace(
         chat_room_id="CR_1",
         type=_CRT.GROUP,
         creator_id=None,
         direct_user_a_id=None,
         direct_user_b_id=None,
     )
+    mock.find_by_id.return_value = room
+    mock.find_by_id_for_update.return_value = room
     return mock
 
 
@@ -73,6 +75,7 @@ def make_message_repo_mock() -> AsyncMock:
     mock.insert.return_value = None
     mock.get_max_server_seq.return_value = 0
     mock.find_by_id.return_value = None
+    mock.find_by_client_msg_id.return_value = None
     mock.update_content.return_value = True
     mock.soft_delete.return_value = True
     return mock
@@ -113,6 +116,8 @@ def make_redis_mock() -> MagicMock:
     redis.sadd = AsyncMock(return_value=1)
     redis.expire = AsyncMock(return_value=1)
     redis.get = AsyncMock(return_value=None)   # room:members:gen — 부재 시 "0" 취급
+    redis.set = AsyncMock(return_value=True)
+    redis.delete = AsyncMock(return_value=1)
 
     def _new_pipe(*_a, **_kw):
         p = _make_trackable_pipe()

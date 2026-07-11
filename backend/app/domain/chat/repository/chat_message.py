@@ -73,6 +73,16 @@ class ChatMessageRepository:
         """단일 메시지 조회. 편집/삭제 권한 체크용."""
         return await self.collection.find_one({"_id": message_id})
 
+    @measure_mongo_op("find_one", "chat_message")
+    async def find_by_client_msg_id(
+        self, sender_id: str, client_msg_id: str,
+    ) -> Optional[dict]:
+        """Redis dedupe 유실 시 Mongo idempotency key로 원본 user message 조회."""
+        return await self.collection.find_one({
+            "sender_id": sender_id,
+            "client_msg_id": client_msg_id,
+        })
+
     @measure_mongo_op("find", "chat_message")
     async def find_by_ids(self, message_ids: list[str]) -> dict[str, dict]:
         """여러 `_id` 를 `{id: doc}` 으로. 방 리스트 미리보기 배치용. 누락 id 는 key 없음."""

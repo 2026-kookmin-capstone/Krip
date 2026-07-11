@@ -2,10 +2,13 @@
 import asyncio
 import json
 import random
+from contextvars import ContextVar
 from datetime import datetime, timedelta, timezone
+from functools import wraps
 from typing import cast
 
-from pymongo.errors import DuplicateKeyError
+from bson import json_util
+from pymongo.errors import ConnectionFailure, DuplicateKeyError, PyMongoError
 
 from app.core.chat.lua_script import lua_scripts
 from app.core.chat.redis_key import (
@@ -21,6 +24,7 @@ from app.core.chat.redis_key import (
     rate_msg_key,
     room_members_gen_key,
     room_members_key,
+    room_pending_message_key,
     room_seq_key,
     unread_key,
 )
@@ -42,6 +46,7 @@ logger = get_logger("chat.send")
 
 
 _MAX_INSERT_ATTEMPTS = 3
+FOREGROUND_MONGO_RETRY_SEC = 15.0
 EDIT_TIME_LIMIT = timedelta(minutes=5)
 _PUSH_BODY_PREVIEW_LIMIT = 100
 
@@ -50,6 +55,282 @@ _DEDUPE_PENDING = "1"
 
 # fire-and-forget task 핸들 보관 — GC 가 미참조 task 를 회수하지 않도록.
 _PUSH_TASKS: set[asyncio.Task] = set()
+_DEFERRED_INSERT_CANCEL: ContextVar[bool] = ContextVar(
+    "chat_deferred_insert_cancel", default=False,
+)
+_CALLER_INSERT_CANCEL: ContextVar[bool] = ContextVar(
+    "chat_caller_insert_cancel", default=False,
+)
+_MONGO_RECOVERY_DEADLINE: ContextVar[float | None] = ContextVar(
+    "chat_mongo_recovery_deadline", default=None,
+)
+_DEFER_PENDING_RECOVERY_CANCEL: ContextVar[bool] = ContextVar(
+    "chat_defer_pending_recovery_cancel", default=True,
+)
+
+
+class _AwaitableCancelled(Exception):
+    pass
+
+
+class PendingRecoveryDeferred(UpstreamError):
+    """Mongo durable 판정을 sweeper에 넘겼으며 pending intent는 유지된다."""
+
+
+def _with_mongo_recovery_deadline(fn):
+    @wraps(fn)
+    async def wrapper(*args, **kwargs):
+        if _MONGO_RECOVERY_DEADLINE.get() is not None:
+            return await fn(*args, **kwargs)
+        deadline = asyncio.get_running_loop().time() + FOREGROUND_MONGO_RETRY_SEC
+        token = _MONGO_RECOVERY_DEADLINE.set(deadline)
+        try:
+            return await fn(*args, **kwargs)
+        finally:
+            _MONGO_RECOVERY_DEADLINE.reset(token)
+
+    return wrapper
+
+
+def _mongo_recovery_deadline() -> float:
+    deadline = _MONGO_RECOVERY_DEADLINE.get()
+    if deadline is None:
+        return asyncio.get_running_loop().time() + FOREGROUND_MONGO_RETRY_SEC
+    return deadline
+
+
+def _propagate_deferred_insert_cancel(fn):
+    """Mongo insert 중 받은 취소를 transaction commit 뒤 다시 전달한다."""
+    @wraps(fn)
+    async def wrapper(*args, **kwargs):
+        token = _DEFERRED_INSERT_CANCEL.set(False)
+        caller_token = _CALLER_INSERT_CANCEL.set(False)
+        try:
+            result = await fn(*args, **kwargs)
+            if _DEFERRED_INSERT_CANCEL.get():
+                raise asyncio.CancelledError
+            return result
+        finally:
+            _CALLER_INSERT_CANCEL.reset(caller_token)
+            _DEFERRED_INSERT_CANCEL.reset(token)
+
+    return wrapper
+
+
+async def _await_with_deferred_cancel(awaitable):
+    """현재 awaitable만 drain하고 caller cancellation은 다음 외부 작업 전에 전파한다."""
+    if not _DEFER_PENDING_RECOVERY_CANCEL.get():
+        return await awaitable
+    task = asyncio.create_task(awaitable)
+    while True:
+        try:
+            result = await asyncio.shield(task)
+        except asyncio.CancelledError:
+            if task.cancelled():
+                _DEFERRED_INSERT_CANCEL.set(True)
+                raise _AwaitableCancelled from None
+            _DEFERRED_INSERT_CANCEL.set(True)
+            _CALLER_INSERT_CANCEL.set(True)
+            continue
+        except BaseException:
+            if _CALLER_INSERT_CANCEL.get():
+                raise asyncio.CancelledError from None
+            raise
+        if _CALLER_INSERT_CANCEL.get():
+            raise asyncio.CancelledError
+        return result
+
+
+def _is_ambiguous_mongo_error(exc: PyMongoError) -> bool:
+    return isinstance(exc, ConnectionFailure) or exc.timeout
+
+
+async def _retry_after_ambiguous_outcome(deadline: float) -> None:
+    remaining = deadline - asyncio.get_running_loop().time()
+    if remaining <= 0:
+        raise PendingRecoveryDeferred("메시지 저장 확인이 지연되고 있습니다.")
+    try:
+        await _await_with_deferred_cancel(asyncio.sleep(min(0.05, remaining)))
+    except _AwaitableCancelled:
+        pass
+
+
+async def _find_with_definitive_outcome(query):
+    deadline = _mongo_recovery_deadline()
+    while True:
+        if asyncio.get_running_loop().time() >= deadline:
+            raise PendingRecoveryDeferred("메시지 저장 확인이 지연되고 있습니다.")
+        try:
+            return await _await_with_deferred_cancel(query())
+        except _AwaitableCancelled:
+            pass
+        except PyMongoError as exc:
+            if not _is_ambiguous_mongo_error(exc):
+                raise
+        await _retry_after_ambiguous_outcome(deadline)
+
+
+async def _find_inserted_document(message_repo, message_id: str):
+    return await _find_with_definitive_outcome(
+        lambda: message_repo.find_by_id(message_id),
+    )
+
+
+async def _find_by_client_msg_id(
+    message_repo, sender_id: str, client_msg_id: str,
+):
+    return await _find_with_definitive_outcome(
+        lambda: message_repo.find_by_client_msg_id(sender_id, client_msg_id),
+    )
+
+
+async def _insert_with_definitive_outcome(message_repo, document) -> None:
+    """Mongo insert의 성공/실패가 확정될 때까지 같은 document로 재시도한다."""
+    deadline = _mongo_recovery_deadline()
+    while True:
+        if asyncio.get_running_loop().time() >= deadline:
+            raise PendingRecoveryDeferred(
+                "메시지 저장이 지연되어 백그라운드 복구로 전환했습니다.",
+            )
+        try:
+            await _await_with_deferred_cancel(message_repo.insert(document))
+            return
+        except DuplicateKeyError:
+            existing = await _find_inserted_document(
+                message_repo, document["_id"],
+            )
+            if existing is not None and (
+                existing.get("chat_room_id") == document["chat_room_id"]
+                and existing.get("server_seq") == document["server_seq"]
+            ):
+                return
+            raise
+        except _AwaitableCancelled:
+            pass
+        except PyMongoError as exc:
+            if not _is_ambiguous_mongo_error(exc):
+                raise
+        await _retry_after_ambiguous_outcome(deadline)
+
+
+async def _force_jump_seq(room_id: str) -> int:
+    force_jump = lua_scripts.force_jump
+    if force_jump is None:
+        raise RuntimeError("chat Lua scripts are not initialized")
+    jitter = random.randint(1, SEQ_FORCE_JUMP_JITTER_MAX)
+    return int(await force_jump(
+        keys=[room_seq_key(room_id)],
+        args=[SEQ_FORCE_JUMP_GAP, jitter],
+    ))
+
+
+async def _write_dedupe_ack(redis_dedupe, document) -> None:
+    client_msg_id = document.get("client_msg_id")
+    sender_id = document.get("sender_id")
+    if not client_msg_id or not sender_id:
+        return
+    await redis_dedupe.set(
+        dedupe_key(sender_id, client_msg_id),
+        json.dumps({
+            "room_id": document["chat_room_id"],
+            "message_id": document["_id"],
+            "server_seq": document["server_seq"],
+            "created_at": document["created_at"].isoformat(),
+        }),
+        ex=DEDUPE_TTL,
+    )
+
+
+@_with_mongo_recovery_deadline
+async def _recover_pending_message(
+    redis, redis_dedupe, message_repo, room_id: str, *,
+    defer_cancellation: bool = True,
+) -> None:
+    token = _DEFER_PENDING_RECOVERY_CANCEL.set(defer_cancellation)
+    try:
+        await _recover_pending_message_inner(
+            redis, redis_dedupe, message_repo, room_id,
+        )
+    finally:
+        _DEFER_PENDING_RECOVERY_CANCEL.reset(token)
+
+
+async def _recover_pending_message_inner(
+    redis, redis_dedupe, message_repo, room_id: str,
+) -> None:
+    key = room_pending_message_key(room_id)
+    raw = await redis.get(key)
+    if raw is None:
+        return
+    document = json_util.loads(raw)
+    for _attempt in range(_MAX_INSERT_ATTEMPTS):
+        try:
+            await _insert_with_definitive_outcome(message_repo, document)
+            await _write_dedupe_ack(redis_dedupe, document)
+            await _finalize_pending_message(redis, room_id)
+            return
+        except DuplicateKeyError:
+            client_msg_id = document.get("client_msg_id")
+            sender_id = document.get("sender_id")
+            if client_msg_id and sender_id:
+                existing = await _find_by_client_msg_id(
+                    message_repo, sender_id, client_msg_id,
+                )
+                if existing is not None:
+                    if existing["chat_room_id"] != room_id:
+                        try:
+                            await _write_dedupe_ack(redis_dedupe, existing)
+                        except Exception as exc:
+                            logger.warning(
+                                "cross-room pending 충돌 ACK 복원 실패: room_id={}, "
+                                "existing_room_id={}, err={}",
+                                room_id, existing["chat_room_id"], type(exc).__name__,
+                            )
+                        await _clear_pending_message(redis, room_id)
+                        logger.warning(
+                            "cross-room client_msg_id 충돌 pending 폐기: room_id={}, "
+                            "existing_room_id={}",
+                            room_id, existing["chat_room_id"],
+                        )
+                        return
+                    await _write_dedupe_ack(
+                        redis_dedupe, existing,
+                    )
+                    await _finalize_pending_message(redis, room_id)
+                    return
+            document["server_seq"] = await _force_jump_seq(room_id)
+            await _persist_pending_message(redis, document)
+        except PyMongoError as exc:
+            if _is_ambiguous_mongo_error(exc):
+                raise
+            client_msg_id = document.get("client_msg_id")
+            sender_id = document.get("sender_id")
+            if client_msg_id and sender_id:
+                await redis_dedupe.delete(
+                    dedupe_key(sender_id, client_msg_id),
+                )
+            await _clear_pending_message(redis, room_id)
+            return
+    raise UpstreamError("미확정 메시지 복구에 실패했습니다.")
+
+
+async def _persist_pending_message(redis, document) -> None:
+    await _await_with_deferred_cancel(
+        redis.set(
+            room_pending_message_key(document["chat_room_id"]),
+            json_util.dumps(document),
+        ),
+    )
+
+
+async def _clear_pending_message(redis, room_id: str) -> None:
+    await redis.delete(room_pending_message_key(room_id))
+
+
+async def _finalize_pending_message(redis, room_id: str) -> None:
+    """파생 SQL pointer 복구 표식을 남긴 뒤에만 durable pending을 제거한다."""
+    await redis.sadd(DIRTY_CHAT_ROOM_KEY, room_id)
+    await _clear_pending_message(redis, room_id)
 
 
 class MessageService:
@@ -60,6 +341,8 @@ class MessageService:
         self._fanout = fanout_service
         self._fcm_factory = fcm_service_factory
 
+    @_with_mongo_recovery_deadline
+    @_propagate_deferred_insert_cancel
     @transactional
     async def send_message(
         self,
@@ -86,9 +369,12 @@ class MessageService:
             redis_dedupe, dedupe_k, client_msg_id, room_id,
         )
         if replay is not None:
-            return replay
+            if await redis_hot.get(room_pending_message_key(room_id)) is None:
+                return replay
 
-        room = await chat_room_repo.find_by_id(room_id)
+        # room별 seq 예약과 Mongo insert를 같은 순서로 직렬화한다. 그렇지 않으면 N이
+        # in-flight인 동안 N+1이 먼저 저장돼 Mongo max 기반 read가 N까지 선행 처리한다.
+        room = await chat_room_repo.find_by_id_for_update(room_id)
         peer_id = None
         if room is not None and cast(ChatRoomType, room.type) == ChatRoomType.DIRECT:
             peer = cast(str | None, (
@@ -122,6 +408,10 @@ class MessageService:
                     "차단 관계인 유저에게는 메시지를 보낼 수 없습니다.",
                 )
 
+        await _recover_pending_message(
+            redis_hot, redis_dedupe, message_repo, room_id,
+        )
+
         # dedupe — NX 선점. placeholder 로 예약 후 Mongo durable 되면 값에 ACK 를 기록한다.
         # 재전송(hit): 값이 ACK 면 원본 ACK 를 replay(전송은 성공했으나 ACK 프레임을 잃은 클라
         # 구제), 아직 placeholder 면 최초 전송이 in-flight → 재시도 유도.
@@ -135,8 +425,7 @@ class MessageService:
                 return replay
             raise ValueError("메시지가 처리 중입니다. 잠시 후 다시 시도해주세요.")
 
-        # Mongo 저장 성공이 dedupe 유지의 경계 — 이 블록에서 어떤 예외든 dedupe 를 풀어
-        # 클라가 같은 client_msg_id 로 재시도 가능하게 한다.
+        mongo_durable = False
         try:
             server_seq = await self._allocate_seq(
                 message_repo, redis_hot, room_id=room_id,
@@ -149,6 +438,7 @@ class MessageService:
                 "chat_room_id": room_id,
                 "server_seq": server_seq,
                 "sender_id": sender_user_id,
+                "client_msg_id": client_msg_id,
                 "type": msg_type.value,
                 "content": content,
                 "created_at": now,
@@ -158,15 +448,30 @@ class MessageService:
 
             for attempt in range(_MAX_INSERT_ATTEMPTS):
                 try:
-                    await message_repo.insert(doc)
+                    await _persist_pending_message(redis_hot, doc)
+                    await _insert_with_definitive_outcome(message_repo, doc)
+                    mongo_durable = True
                     break
                 except DuplicateKeyError:
-                    jitter = random.randint(1, SEQ_FORCE_JUMP_JITTER_MAX)
-                    new_seq = await lua_scripts.force_jump(
-                        keys=[room_seq_key(room_id)],
-                        args=[SEQ_FORCE_JUMP_GAP, jitter],
+                    existing = await _find_by_client_msg_id(
+                        message_repo, sender_user_id, client_msg_id,
                     )
-                    server_seq = int(new_seq)
+                    if existing is not None:
+                        if existing["chat_room_id"] != room_id:
+                            raise ValueError(
+                                "client_msg_id가 다른 방의 메시지에 이미 사용되었습니다.",
+                            )
+                        await _write_dedupe_ack(
+                            redis_dedupe, existing,
+                        )
+                        await _finalize_pending_message(redis_hot, room_id)
+                        return MessageSentAckData(
+                            client_msg_id=client_msg_id,
+                            message_id=existing["_id"],
+                            server_seq=int(existing["server_seq"]),
+                            created_at=existing["created_at"],
+                        )
+                    server_seq = await _force_jump_seq(room_id)
                     doc["server_seq"] = server_seq
             else:
                 logger.error(
@@ -175,16 +480,16 @@ class MessageService:
                 )
                 raise UpstreamError("메시지 저장에 실패했습니다. 잠시 후 다시 시도해주세요.")
 
-        except Exception:
-            await redis_dedupe.delete(dedupe_k)
-            raise
+            await _write_dedupe_ack(redis_dedupe, doc)
+            await _finalize_pending_message(redis_hot, room_id)
 
-        # Mongo durable 확정 — dedupe 값에 ACK 를 기록해 재전송 시 replay 가능하게 한다.
-        # best-effort (실패 시 재전송은 placeholder 를 보고 재시도 유도 — 잘못된 결과는 없다).
-        await self._record_dedupe_ack(
-            redis_dedupe, dedupe_k,
-            room_id=room_id, message_id=message_id, server_seq=server_seq, at=now,
-        )
+        except PendingRecoveryDeferred:
+            raise
+        except Exception:
+            if not mongo_durable:
+                await _clear_pending_message(redis_hot, room_id)
+                await redis_dedupe.delete(dedupe_k)
+            raise
 
         # last_message 는 바깥 트랜잭션 SAVEPOINT 로 갱신 — 커넥션 1개 (별도 세션은 송신당
         # C1+C2 동시 점유로 공유 풀 데드락). if_greater 가드로 동시 송신 seq regress 방지,
@@ -316,29 +621,6 @@ class MessageService:
         return int(recovered)
 
     @staticmethod
-    async def _record_dedupe_ack(
-        redis_dedupe, dedupe_k: str, *,
-        room_id: str, message_id: str, server_seq: int, at: datetime,
-    ) -> None:
-        """dedupe 값을 ACK JSON 으로 교체 (KEEPTTL 로 예약 시 만료 유지). 실패는 무시."""
-        try:
-            await redis_dedupe.set(
-                dedupe_k,
-                json.dumps({
-                    "room_id": room_id,
-                    "message_id": message_id,
-                    "server_seq": server_seq,
-                    "created_at": at.isoformat(),
-                }),
-                keepttl=True,
-            )
-        except Exception as e:
-            logger.warning(
-                "dedupe ACK 기록 실패 (무시): room_id={}, err={}",
-                room_id, type(e).__name__,
-            )
-
-    @staticmethod
     async def _replay_ack_if_available(
         redis_dedupe, dedupe_k: str, client_msg_id: str, room_id: str, *,
         allow_legacy_room: bool = False,
@@ -363,6 +645,8 @@ class MessageService:
         except (ValueError, TypeError, KeyError):
             return None
 
+    @_with_mongo_recovery_deadline
+    @_propagate_deferred_insert_cancel
     @transactional
     async def send_system_message(
         self,
@@ -381,6 +665,16 @@ class MessageService:
         message_repo = ChatMessageRepository(mongodb.database)
         chat_room_repo = ChatRoomRepository(self._session)
         redis_hot = await get_redis_client()
+        redis_dedupe = await get_redis_dedupe_client()
+
+        # 일반 메시지와 같은 room mutex를 사용해 모든 seq의 Mongo commit 순서를 보장한다.
+        room = await chat_room_repo.find_by_id_for_update(room_id)
+        if room is None:
+            raise ValueError("존재하지 않는 방입니다.")
+
+        await _recover_pending_message(
+            redis_hot, redis_dedupe, message_repo, room_id,
+        )
 
         server_seq = await self._allocate_seq(
             message_repo, redis_hot, room_id=room_id,
@@ -404,24 +698,31 @@ class MessageService:
             "deleted_at": None,
         }
 
-        for attempt in range(_MAX_INSERT_ATTEMPTS):
-            try:
-                await message_repo.insert(doc)
-                break
-            except DuplicateKeyError:
-                jitter = random.randint(1, SEQ_FORCE_JUMP_JITTER_MAX)
-                new_seq = await lua_scripts.force_jump(
-                    keys=[room_seq_key(room_id)],
-                    args=[SEQ_FORCE_JUMP_GAP, jitter],
+        mongo_durable = False
+        try:
+            for attempt in range(_MAX_INSERT_ATTEMPTS):
+                try:
+                    await _persist_pending_message(redis_hot, doc)
+                    await _insert_with_definitive_outcome(message_repo, doc)
+                    mongo_durable = True
+                    break
+                except DuplicateKeyError:
+                    server_seq = await _force_jump_seq(room_id)
+                    doc["server_seq"] = server_seq
+            else:
+                logger.error(
+                    "시스템 메시지 {}회 연속 실패: room_id={}, action={}",
+                    _MAX_INSERT_ATTEMPTS, room_id, action,
                 )
-                server_seq = int(new_seq)
-                doc["server_seq"] = server_seq
-        else:
-            logger.error(
-                "시스템 메시지 {}회 연속 실패: room_id={}, action={}",
-                _MAX_INSERT_ATTEMPTS, room_id, action,
-            )
-            raise UpstreamError("시스템 메시지 저장에 실패했습니다.")
+                raise UpstreamError("시스템 메시지 저장에 실패했습니다.")
+
+            await _finalize_pending_message(redis_hot, room_id)
+        except PendingRecoveryDeferred:
+            raise
+        except Exception:
+            if not mongo_durable:
+                await _clear_pending_message(redis_hot, room_id)
+            raise
 
         # last_message_* 갱신은 SAVEPOINT 로 (커넥션 1개). if_greater 가드로 유저 메시지와
         # 엇갈려 커밋돼도 낮은 seq 가 높은 seq 를 덮어써 regress 하지 않는다 (일반 송신과 동일).

@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 
@@ -6,6 +7,10 @@ COMPOSE = ROOT / "monitoring/docker-compose.monitoring.yml"
 ALLOY_CONFIG = ROOT / "monitoring/alloy/config.alloy"
 PROMETHEUS_CONFIG = ROOT / "monitoring/prometheus/prometheus.yml"
 MAKEFILE = ROOT / "monitoring/Makefile"
+WORKERS_DASHBOARD = ROOT / "monitoring/grafana/provisioning/dashboards/workers.json"
+CHAT_DASHBOARD = ROOT / "monitoring/grafana/provisioning/dashboards/chat-domain.json"
+CHAT_METRIC = ROOT / "backend/app/core/metric/chat.py"
+CHAT_INSTRUMENTATION = ROOT / "backend/app/core/instrumentation/chat.py"
 
 
 def test_compose_uses_supported_alloy_collector():
@@ -60,3 +65,32 @@ def test_operational_consumers_target_alloy_health_and_metrics():
     assert 'targets: ["alloy:12345"]' in prometheus
     assert "Promtail" not in makefile
     assert "http://alloy:12345/-/ready" in makefile
+
+
+def test_worker_liveness_panels_use_worst_node_tick():
+    dashboard = json.loads(WORKERS_DASHBOARD.read_text(encoding="utf-8"))
+    expected = {
+        1: "reconcile",
+        2: "node_heartbeat",
+        3: "fanout_dispatch",
+        4: "withdraw_purge",
+        5: "pending_recovery",
+    }
+
+    for panel_id, worker in expected.items():
+        panel = next(panel for panel in dashboard["panels"] if panel["id"] == panel_id)
+        expr = panel["targets"][0]["expr"]
+        assert f'min(worker_last_tick_timestamp{{worker="{worker}"}})' in expr
+        assert "max(worker_last_tick_timestamp" not in expr
+
+
+def test_reconcile_observability_describes_lease_claim_protocol():
+    dashboard = CHAT_DASHBOARD.read_text(encoding="utf-8")
+    metric = CHAT_METRIC.read_text(encoding="utf-8")
+    instrumentation = CHAT_INSTRUMENTATION.read_text(encoding="utf-8")
+
+    combined = dashboard + metric + instrumentation
+    assert "lease-claim" in combined
+    assert "processing lease" in combined
+    assert "batch pop" not in combined
+    assert "재적재" not in combined

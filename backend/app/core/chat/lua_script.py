@@ -30,6 +30,8 @@ class LuaScripts:
         self.incr_with_ttl: Optional[AsyncScript] = None
         self.mark_read_unread: Optional[AsyncScript] = None
         self.populate_members: Optional[AsyncScript] = None
+        self.claim_dirty_rooms: Optional[AsyncScript] = None
+        self.ack_dirty_rooms: Optional[AsyncScript] = None
 
     def load(self, hot_client: Redis) -> None:
         """startup 1회. `instrument_lua_script` 로 감싸 호출 카운트 자동 부착."""
@@ -50,6 +52,12 @@ class LuaScripts:
         )
         self.populate_members = instrument_lua_script(
             hot_client.register_script(_read("populate_members.lua")), "populate_members",
+        )
+        self.claim_dirty_rooms = instrument_lua_script(
+            hot_client.register_script(_read("claim_dirty_rooms.lua")), "claim_dirty_rooms",
+        )
+        self.ack_dirty_rooms = instrument_lua_script(
+            hot_client.register_script(_read("ack_dirty_rooms.lua")), "ack_dirty_rooms",
         )
 
 

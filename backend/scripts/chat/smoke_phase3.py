@@ -8,7 +8,7 @@ run_smoke.sh 가 Phase 1+2 smoke 를 통과시킨 뒤 이 스크립트를 이어
         - A↔B direct 방에 새 메시지 1건 송신
         - chat_room.last_message_* 를 의도적으로 NULL 로 덮어 씀 (정합성 깨짐 재현)
         - `dirty:chat_room` 에 room_id SADD (워커 큐에 투입)
-        - 워커가 수 초 안에 pop → Mongo aggregate → RDB UPDATE 까지 수행
+        - 워커가 수 초 안에 lease claim → Mongo aggregate → RDB UPDATE → token-safe ACK 수행
         - RDB last_message_server_seq 가 실제 최신 seq 와 일치하는지 확인
 
     [2/2] recover_unread_for_user:
@@ -209,9 +209,9 @@ async def section_reconcile_last_message() -> None:
             await asyncio.sleep(0.2)
         if not drained:
             raise AssertionError(
-                f"dirty:chat_room 에서 {RECONCILE_WAIT_SEC}s 내에 {room_id} 가 pop 되지 않음"
+                f"dirty:chat_room 에서 {RECONCILE_WAIT_SEC}s 내에 {room_id} claim/ACK 되지 않음"
             )
-        log("WORKER", "    dirty 에서 pop 확인")
+        log("WORKER", "    dirty claim/ACK 확인")
     finally:
         await rc.aclose()
 

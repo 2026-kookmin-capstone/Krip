@@ -73,12 +73,12 @@ CHAT_NODE_HEARTBEAT_FAILURES = Counter(
 
 CHAT_RECONCILE_DIRTY_SET_SIZE = Gauge(
     "chat_reconcile_dirty_set_size",
-    "dirty:chat_room SET cardinality measured at start of every tick (SCARD). Backlog signal.",
+    "Total reconcile backlog across ready SET, processing ZSET, and deferred SET at tick start.",
 )
 
 CHAT_RECONCILE_BATCH_POP_TOTAL = Counter(
     "chat_reconcile_batch_pop_total",
-    "Reconcile batch pop attempts grouped by terminal result.",
+    "Reconcile lease-claim batches grouped by terminal result.",
     labelnames=("result",),
 )
 

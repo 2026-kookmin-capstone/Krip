@@ -10,6 +10,7 @@ SESSION_TTL = 90            # sess / ws_route / sessions ZSET 갱신 주기와 �
 ROOM_MEMBERS_TTL = 600      # RDB fallback 전제 — 짧아도 안전
 RATE_LIMIT_TTL = 1          # 1초 윈도우
 DEDUPE_TTL = 600            # 클라 재전송 최대 갭보다 충분히 길게
+ROOM_PENDING_MESSAGE_PREFIX = "room:pending_message:"
 NODE_TTL = 90               # chat:nodes ZSET — SESSION_TTL 과 동일 주기로 갱신
 
 # ─────────────────────────────────────────────────────────────
@@ -52,6 +53,11 @@ def room_seq_key(room_id: str) -> str:
     return f"room:seq:{room_id}"
 
 
+def room_pending_message_key(room_id: str) -> str:
+    """Mongo outcome 미확정 message intent — process crash 후 다음 sender가 복구."""
+    return f"{ROOM_PENDING_MESSAGE_PREFIX}{room_id}"
+
+
 def room_members_key(room_id: str) -> str:
     return f"room:members:{room_id}"
 
@@ -80,6 +86,9 @@ def node_channel_key(node_id: str) -> str:
 
 
 DIRTY_CHAT_ROOM_KEY = "dirty:chat_room"   # reconcile worker 가 소비하는 SET
+DIRTY_CHAT_ROOM_PROCESSING_KEY = "processing:dirty:chat_room"
+DIRTY_CHAT_ROOM_PROCESSING_OWNER_KEY = "processing:dirty:chat_room:owner"
+DIRTY_CHAT_ROOM_DEFERRED_KEY = "deferred:dirty:chat_room"
 NODES_ZSET_KEY = "chat:nodes"             # ZSET: score=만료시각ms, member=node_id
 
 

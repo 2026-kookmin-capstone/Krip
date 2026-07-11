@@ -28,7 +28,7 @@
         }
       },
       "options": {"colorMode": "background", "graphMode": "area", "textMode": "value", "reduceOptions": {"calcs": ["lastNotNull"]}},
-      "targets": [{"expr": "time() - max(worker_last_tick_timestamp{worker=\"reconcile\"})", "legendFormat": "경과", "refId": "A"}]
+      "targets": [{"expr": "time() - min(worker_last_tick_timestamp{worker=\"reconcile\"})", "legendFormat": "최악 노드 경과", "refId": "A"}]
     },
     {
       "id": 2,
@@ -46,7 +46,7 @@
         }
       },
       "options": {"colorMode": "background", "graphMode": "area", "textMode": "value", "reduceOptions": {"calcs": ["lastNotNull"]}},
-      "targets": [{"expr": "time() - max(worker_last_tick_timestamp{worker=\"node_heartbeat\"})", "legendFormat": "경과", "refId": "A"}]
+      "targets": [{"expr": "time() - min(worker_last_tick_timestamp{worker=\"node_heartbeat\"})", "legendFormat": "최악 노드 경과", "refId": "A"}]
     },
     {
       "id": 3,
@@ -64,7 +64,7 @@
         }
       },
       "options": {"colorMode": "background", "graphMode": "area", "textMode": "value", "reduceOptions": {"calcs": ["lastNotNull"]}},
-      "targets": [{"expr": "time() - max(worker_last_tick_timestamp{worker=\"fanout_dispatch\"})", "legendFormat": "경과", "refId": "A"}]
+      "targets": [{"expr": "time() - min(worker_last_tick_timestamp{worker=\"fanout_dispatch\"})", "legendFormat": "최악 노드 경과", "refId": "A"}]
     },
     {
       "id": 4,
@@ -82,7 +82,7 @@
         }
       },
       "options": {"colorMode": "background", "graphMode": "area", "textMode": "value", "reduceOptions": {"calcs": ["lastNotNull"]}},
-      "targets": [{"expr": "time() - max(worker_last_tick_timestamp{worker=\"withdraw_purge\"})", "legendFormat": "경과", "refId": "A"}]
+      "targets": [{"expr": "time() - min(worker_last_tick_timestamp{worker=\"withdraw_purge\"})", "legendFormat": "최악 노드 경과", "refId": "A"}]
     },
     {
       "id": 10,
@@ -166,6 +166,24 @@
         {"expr": "histogram_quantile(0.95, sum by (le) (rate(python_event_loop_lag_seconds_bucket[5m])))", "legendFormat": "p95", "refId": "A"},
         {"expr": "histogram_quantile(0.99, sum by (le) (rate(python_event_loop_lag_seconds_bucket[5m])))", "legendFormat": "p99", "refId": "B"}
       ]
+    },
+    {
+      "id": 5,
+      "title": "pending_recovery — 마지막 tick 경과",
+      "type": "stat",
+      "description": "5초 주기. 현재 노드 중 가장 오래된 tick이 30초를 넘으면 orphan pending 복구 worker 정체 의심.",
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "gridPos": {"h": 5, "w": 24, "x": 0, "y": 28},
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "decimals": 0,
+          "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}, {"color": "yellow", "value": 30}, {"color": "red", "value": 60}]},
+          "color": {"mode": "thresholds"}
+        }
+      },
+      "options": {"colorMode": "background", "graphMode": "area", "textMode": "value", "reduceOptions": {"calcs": ["lastNotNull"]}},
+      "targets": [{"expr": "time() - min(worker_last_tick_timestamp{worker=\"pending_recovery\"})", "legendFormat": "최악 노드 경과", "refId": "A"}]
     }
   ]
 }

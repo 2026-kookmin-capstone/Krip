@@ -10,6 +10,7 @@ import pytest
 from app.core.chat.redis_key import unread_key
 from app.domain.chat.model.chat_room import ChatRoomType
 from app.domain.chat.service.exception import ChatRoomNotFoundError
+from app.domain.chat.service.room import RoomService
 from test.unit.domain.chat.room_service.model_factory import ChatRoomFactory
 
 
@@ -110,6 +111,32 @@ class TestCreateGroupRoom:
 
 @pytest.mark.unit
 class TestInviteMembers:
+    async def test_reads_allocated_seq_after_acquiring_room_lock(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+        friendship_repo_mock, monkeypatch,
+    ):
+        room = ChatRoomFactory.create(type_=ChatRoomType.GROUP)
+        chat_room_repo_mock.find_by_id.return_value = room
+        chat_room_repo_mock.find_by_id_for_update.return_value = room
+        chat_member_repo_mock.is_active_member.return_value = True
+        chat_member_repo_mock.is_active_member_for_share.return_value = True
+        chat_member_repo_mock.find.return_value = None
+        friendship_repo_mock.find_accepted_friend_ids_with.return_value = {"U_B"}
+
+        async def allocated_after_lock(_message_repo, _room_id):
+            assert chat_room_repo_mock.find_by_id_for_update.await_count == 1
+            return 0
+
+        monkeypatch.setattr(
+            RoomService,
+            "_get_allocated_current_seq",
+            staticmethod(allocated_after_lock),
+        )
+
+        await service.invite_members(
+            me_id="U_A", room_id="CR_G", user_ids=["U_B"],
+        )
+
     async def test_rejects_new_member_when_room_already_has_100_active_members(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
         friendship_repo_mock,
@@ -258,11 +285,11 @@ class TestInviteMembers:
         assert skipped == ["U_B"]
         chat_member_repo_mock.save.assert_not_called()
 
-    async def test_new_member_saves_with_current_seq_as_last_read(
+    async def test_new_member_saves_with_allocated_seq_as_last_read(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
         friendship_repo_mock, redis_mock,
     ):
-        """신규 멤버: last_read = current_seq (Redis 값). 과거 메시지는 읽은 것으로 간주."""
+        """신규 멤버는 초대 전에 예약된 in-flight seq까지 과거로 간주한다."""
         chat_room_repo_mock.find_by_id.return_value = ChatRoomFactory.create(
             type_=ChatRoomType.GROUP,
         )

@@ -17,6 +17,8 @@ from app.domain.chat.model.chat_message import MessageType
 from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
 from app.domain.chat.model.chat_room_member import ChatRoomMember
 from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
+from app.domain.chat.repository.chat_message import ChatMessageRepository
+from app.domain.chat.service.message import MessageService
 from app.domain.chat.service.room import RoomService
 from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 
@@ -109,6 +111,78 @@ class TestCreateGroupRoomFlow:
 # ──────────────────────────────────────────────────────────────────
 
 class TestInviteMembersFlow:
+    async def test_send_and_invite_share_room_first_lock_order(
+        self, seed_users, seed_friendship, session_factory, chat_fanout_stub,
+        chat_fcm_stub, message_service, patch_external_clients, monkeypatch,
+    ):
+        a, b, c = await seed_users(3)
+        await seed_friendship(a, b)
+        await seed_friendship(a, c)
+        room_service = RoomService(
+            uow=UnitOfWork(session_factory),
+            fanout_service=chat_fanout_stub,
+            message_service=message_service,
+        )
+        room = await room_service.create_group_room(
+            me_id=a, title="lock-order", member_ids=[b],
+        )
+
+        insert_started = asyncio.Event()
+        allow_insert = asyncio.Event()
+        invite_passed_room_lock = asyncio.Event()
+        original_insert = ChatMessageRepository.insert
+        original_count = ChatRoomMemberRepository.count_active_members
+
+        async def stalled_insert(repo, document):
+            if document["content"] == "hold-room-lock":
+                insert_started.set()
+                await allow_insert.wait()
+            await original_insert(repo, document)
+
+        async def observed_count(repo, room_id):
+            invite_passed_room_lock.set()
+            return await original_count(repo, room_id)
+
+        monkeypatch.setattr(ChatMessageRepository, "insert", stalled_insert)
+        monkeypatch.setattr(
+            ChatRoomMemberRepository, "count_active_members", observed_count,
+        )
+
+        sender = MessageService(
+            uow=UnitOfWork(session_factory),
+            fanout_service=chat_fanout_stub,
+            fcm_service_factory=lambda: chat_fcm_stub,
+        )
+        send_task = asyncio.create_task(sender.send_message(
+            sender_user_id=b,
+            sender_session_id="WS_B",
+            room_id=room.chat_room_id,
+            client_msg_id="cmid-lock-order",
+            msg_type=MessageType.TEXT,
+            content="hold-room-lock",
+        ))
+        await insert_started.wait()
+
+        inviter = RoomService(
+            uow=UnitOfWork(session_factory),
+            fanout_service=chat_fanout_stub,
+            message_service=message_service,
+        )
+        invite_task = asyncio.create_task(inviter.invite_members(
+            me_id=a, room_id=room.chat_room_id, user_ids=[c],
+        ))
+        try:
+            with pytest.raises(TimeoutError):
+                await asyncio.wait_for(invite_passed_room_lock.wait(), timeout=0.1)
+        finally:
+            allow_insert.set()
+
+        send_ack, invite_result = await asyncio.wait_for(
+            asyncio.gather(send_task, invite_task), timeout=2,
+        )
+        assert send_ack.server_seq > 0
+        assert invite_result == ([c], [])
+
     async def test_concurrent_invites_cannot_exceed_100_active_members(
         self, seed_users, session_factory, patch_external_clients, monkeypatch,
     ):
@@ -136,18 +210,11 @@ class TestInviteMembersFlow:
             ])
             await session.commit()
 
-        seq_ready = asyncio.Event()
-        seq_calls = 0
         original_count = ChatRoomMemberRepository.count_active_members
         second_counted = asyncio.Event()
         count_calls = 0
 
         async def coordinated_current_seq(_message_repo, _room_id):
-            nonlocal seq_calls
-            seq_calls += 1
-            if seq_calls == 2:
-                seq_ready.set()
-            await seq_ready.wait()
             return 0
 
         async def coordinated_count(repo, target_room_id):
@@ -165,7 +232,7 @@ class TestInviteMembersFlow:
 
         monkeypatch.setattr(
             RoomService,
-            "_get_current_seq",
+            "_get_allocated_current_seq",
             staticmethod(coordinated_current_seq),
         )
         monkeypatch.setattr(

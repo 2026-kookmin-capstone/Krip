@@ -3,17 +3,35 @@
 RDB 의 `GREATEST(COALESCE(last_read, 0), :new_seq)` 규약이 실제 Postgres 에서
 작동하는지 + Redis unread 리셋 + fan-out 이벤트 구조 end-to-end 검증.
 """
+from datetime import datetime, timezone
+
 import pytest
 import pytest_asyncio
 
 from app.core.chat.redis_key import room_seq_key, unread_key
 from app.domain.chat.model.chat_room_member import ChatRoomMember
+from app.domain.chat.repository.chat_message import ChatMessageRepository
 from app.domain.chat.service.exception import ChatRoomNotFoundError
+from app.domain.chat.service.message import MessageService
 from app.domain.chat.service.room import RoomService
 from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 
 
 pytestmark = pytest.mark.integration
+
+
+async def _insert_message(mongo_db, room_id: str, server_seq: int) -> None:
+    await mongo_db.chat_message.insert_one({
+        "_id": f"MSG_IT_{server_seq}",
+        "chat_room_id": room_id,
+        "server_seq": server_seq,
+        "sender_id": "USER_IT_000",
+        "type": "text",
+        "content": f"message-{server_seq}",
+        "created_at": datetime.now(timezone.utc),
+        "edited_at": None,
+        "deleted_at": None,
+    })
 
 
 @pytest_asyncio.fixture
@@ -32,7 +50,7 @@ async def seed_friendship(session_factory):
 class TestMarkReadFlow:
     async def test_sets_last_read_and_resets_unread(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
-        session_factory, redis_hot, patch_external_clients,
+        session_factory, redis_hot, mongo_db, patch_external_clients,
     ):
         a, b, _ = await seed_users(3)
         await seed_friendship(a, b)
@@ -41,6 +59,7 @@ class TestMarkReadFlow:
             uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await service.create_group_room(me_id=a, title="T", member_ids=[b])
+        await _insert_message(mongo_db, room.chat_room_id, 10)
 
         # b 의 unread 를 수동으로 5 로 세팅 (실제론 메시지 수신으로 증가)
         await redis_hot.set(room_seq_key(room.chat_room_id), 10)
@@ -77,9 +96,39 @@ class TestMarkReadFlow:
             "up_to_server_seq": 10,
         }
 
+    async def test_reserved_seq_is_not_read_before_mongo_insert(
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
+        session_factory, redis_hot, mongo_db, patch_external_clients,
+    ):
+        a, b, _ = await seed_users(3)
+        await seed_friendship(a, b)
+        service = RoomService(
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
+        )
+        room = await service.create_group_room(me_id=a, title="T", member_ids=[b])
+        await _insert_message(mongo_db, room.chat_room_id, 12)
+        await redis_hot.set(room_seq_key(room.chat_room_id), 12)
+
+        reserved = await MessageService._allocate_seq(
+            ChatMessageRepository(mongo_db), redis_hot,
+            room_id=room.chat_room_id,
+        )
+        assert reserved == 13
+
+        final = await service.mark_read(
+            me_id=b, me_session_id="WS_B", room_id=room.chat_room_id,
+            up_to_server_seq=10**15,
+        )
+        assert final == 12
+
+        await _insert_message(mongo_db, room.chat_room_id, reserved)
+        async with session_factory() as session:
+            member = await session.get(ChatRoomMember, (room.chat_room_id, b))
+            assert member.last_read_message_server_seq == 12
+
     async def test_greatest_prevents_regress(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
-        session_factory, redis_hot, patch_external_clients,
+        session_factory, redis_hot, mongo_db, patch_external_clients,
     ):
         """이미 높은 seq 가 기록된 뒤 과거 seq 로 호출 → 기존 값 유지, 반환도 기존 값."""
         a, b, _ = await seed_users(3)
@@ -89,6 +138,7 @@ class TestMarkReadFlow:
             uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await service.create_group_room(me_id=a, title="T", member_ids=[b])
+        await _insert_message(mongo_db, room.chat_room_id, 20)
 
         await redis_hot.set(room_seq_key(room.chat_room_id), 20)
         first = await service.mark_read(
@@ -141,7 +191,7 @@ class TestMarkReadFlow:
 
     async def test_count_readers_up_to_excludes_sender_and_left(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
-        session_factory, redis_hot, patch_external_clients,
+        session_factory, redis_hot, mongo_db, patch_external_clients,
     ):
         """카톡 숫자 뱃지 계산용 집계 — 탈퇴자/발신자 본인 제외, seq 이상 읽은 멤버만."""
         from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
@@ -154,6 +204,7 @@ class TestMarkReadFlow:
             uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await service.create_group_room(me_id=a, title="T", member_ids=[b, c])
+        await _insert_message(mongo_db, room.chat_room_id, 10)
 
         # b 만 seq=10 까지 읽음
         await redis_hot.set(room_seq_key(room.chat_room_id), 10)

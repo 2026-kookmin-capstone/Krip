@@ -31,7 +31,7 @@ class ChatRoomRepository:
         return await self.session.get(ChatRoom, chat_room_id)
 
     async def find_by_id_for_update(self, chat_room_id: str) -> Optional[ChatRoom]:
-        """그룹 membership mutation 직렬화용 room row X-lock 조회."""
+        """membership mutation과 메시지 seq commit 순서 직렬화용 room row X-lock."""
         stmt = (
             select(ChatRoom)
             .where(ChatRoom.chat_room_id == chat_room_id)

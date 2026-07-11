@@ -4,10 +4,15 @@ read op 는 **GREATEST 로 regress 방지**, **unread 를 DB 잔여 기준 재�
 도착 손실 방지, 999+ 캡), **read 이벤트 방 브로드캐스트** 를 수행한다. `read_ack`은 서비스
 완료 후 WebSocket router가 직송한다. mock 레벨에서 각 단계 호출과 payload 를 검증한다.
 """
+import asyncio
+from types import SimpleNamespace
+from unittest.mock import AsyncMock
+
 import pytest
 
 from app.domain.chat.model.chat_room import ChatRoomType
 from app.domain.chat.service.exception import ChatRoomNotFoundError
+from app.domain.chat.service.message import MessageService
 from test.unit.domain.chat.room_service.model_factory import ChatRoomFactory
 
 
@@ -115,6 +120,66 @@ class TestMarkRead:
 
         # 10^15 가 아니라 현재 seq(12)로 clamp 되어 위임돼야 한다
         chat_member_repo_mock.mark_read.assert_awaited_once_with("CR_G", "U_A", 12)
+
+    async def test_clamp_ignores_redis_seq_reserved_before_mongo_insert(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+        message_repo_mock, redis_mock,
+    ):
+        """Redis에 예약됐지만 Mongo에 없는 seq는 읽음 포인터 상한이 아니다."""
+        chat_room_repo_mock.find_by_id.return_value = ChatRoomFactory.create(
+            chat_room_id="CR_G", type_=ChatRoomType.GROUP,
+        )
+        redis_mock.get.return_value = "13"
+        message_repo_mock.get_max_server_seq.return_value = 12
+        chat_member_repo_mock.mark_read.return_value = 12
+
+        await service.mark_read(
+            me_id="U_A", me_session_id="WS_A", room_id="CR_G",
+            up_to_server_seq=10**15,
+        )
+
+        chat_member_repo_mock.mark_read.assert_awaited_once_with("CR_G", "U_A", 12)
+
+    async def test_read_during_seq_reservation_stops_at_durable_message(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+        message_repo_mock, redis_mock, monkeypatch,
+    ):
+        """sender의 seq 예약과 Mongo insert 사이 read 경쟁을 결정적으로 재현한다."""
+        chat_room_repo_mock.find_by_id.return_value = ChatRoomFactory.create(
+            chat_room_id="CR_G", type_=ChatRoomType.GROUP,
+        )
+        message_repo_mock.get_max_server_seq.return_value = 12
+        chat_member_repo_mock.mark_read.return_value = 12
+        redis_mock.get.return_value = "13"
+        monkeypatch.setattr(
+            "app.domain.chat.service.message.lua_scripts",
+            SimpleNamespace(incr_fast=AsyncMock(return_value=13)),
+        )
+
+        seq_reserved = asyncio.Event()
+        allow_insert = asyncio.Event()
+
+        async def sender() -> None:
+            seq = await MessageService._allocate_seq(
+                message_repo_mock, redis_mock, room_id="CR_G",
+            )
+            seq_reserved.set()
+            await allow_insert.wait()
+            message_repo_mock.get_max_server_seq.return_value = seq
+
+        sender_task = asyncio.create_task(sender())
+        await seq_reserved.wait()
+        try:
+            await service.mark_read(
+                me_id="U_A", me_session_id="WS_A", room_id="CR_G",
+                up_to_server_seq=10**15,
+            )
+            chat_member_repo_mock.mark_read.assert_awaited_once_with(
+                "CR_G", "U_A", 12,
+            )
+        finally:
+            allow_insert.set()
+            await sender_task
 
     async def test_partial_read_sets_unread_to_residual_not_zero(
         self, service, chat_room_repo_mock, chat_member_repo_mock,

@@ -111,9 +111,9 @@
     },
     {
       "id": 40,
-      "title": "Reconcile dirty SET 사이즈",
+      "title": "Reconcile 전체 backlog",
       "type": "stat",
-      "description": "dirty:chat_room SET 의 현재 적체. 100 이상 주의, 1000 이상 위험 (ReconcileBacklog 알림 임계).",
+      "description": "ready SET + processing ZSET + deferred SET의 총 적체 방 수. 100 이상 주의, 1000 이상 위험 (ReconcileBacklog 알림 임계).",
       "datasource": {"type": "prometheus", "uid": "prometheus"},
       "gridPos": {"h": 6, "w": 6, "x": 0, "y": 30},
       "fieldConfig": {
@@ -131,7 +131,7 @@
       "id": 41,
       "title": "Reconcile tick 처리 시간 p95",
       "type": "stat",
-      "description": "reconcile_last_message_once 단일 호출 처리 시간 p95. SPOP + Mongo aggregate + RDB UPDATE 합산.",
+      "description": "reconcile_last_message_once 단일 호출 처리 시간 p95. lease claim + Mongo aggregate + RDB UPDATE + claim ACK 합산.",
       "datasource": {"type": "prometheus", "uid": "prometheus"},
       "gridPos": {"h": 6, "w": 6, "x": 6, "y": 30},
       "fieldConfig": {
@@ -147,9 +147,9 @@
     },
     {
       "id": 42,
-      "title": "Reconcile batch 결과 분포",
+      "title": "Reconcile claim batch 결과 분포",
       "type": "timeseries",
-      "description": "분당 batch pop 결과. empty / ok / mongo_failed / rdb_failed / other. mongo_failed 또는 rdb_failed 가 0 이 아니면 재시도 적체 예상.",
+      "description": "분당 lease-claim batch 결과. empty / ok / mongo_failed / rdb_failed / other. 실패 claim은 processing lease에 유지되고 만료 후 reclaim되므로 mongo_failed 또는 rdb_failed가 0이 아니면 재시도 적체 예상.",
       "datasource": {"type": "prometheus", "uid": "prometheus"},
       "gridPos": {"h": 6, "w": 12, "x": 12, "y": 30},
       "fieldConfig": {"defaults": {"unit": "ops", "custom": {"drawStyle": "line", "fillOpacity": 20, "lineWidth": 2, "stacking": {"mode": "normal"}}}},
