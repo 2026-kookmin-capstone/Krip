@@ -3,17 +3,23 @@
 RDB 의 `GREATEST(COALESCE(last_read, 0), :new_seq)` 규약이 실제 Postgres 에서
 작동하는지 + Redis unread 리셋 + fan-out 이벤트 구조 end-to-end 검증.
 """
+import asyncio
 from datetime import datetime, timezone
+from unittest.mock import patch
 
 import pytest
 import pytest_asyncio
 
 from app.core.chat.redis_key import room_seq_key, unread_key
+from app.database.session import UnitOfWork
+from app.domain.chat.model.chat_message import MessageType
 from app.domain.chat.model.chat_room_member import ChatRoomMember
 from app.domain.chat.repository.chat_message import ChatMessageRepository
+from app.domain.chat.service import message as message_module
 from app.domain.chat.service.exception import ChatRoomNotFoundError
 from app.domain.chat.service.message import MessageService
 from app.domain.chat.service.room import RoomService
+from app.domain.chat.worker import reconcile as reconcile_module
 from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 
 
@@ -48,7 +54,48 @@ async def seed_friendship(session_factory):
 
 
 class TestMarkReadFlow:
-    async def test_sets_last_read_and_resets_unread(
+    async def test_unread_recoveries_for_same_user_are_serialized(
+        self, session_factory,
+    ):
+        first_entered = asyncio.Event()
+        release_first = asyncio.Event()
+        second_entered = asyncio.Event()
+        calls = 0
+
+        async def locked_recovery(user_id, only_room=None):
+            nonlocal calls
+            calls += 1
+            if calls == 1:
+                first_entered.set()
+                await release_first.wait()
+            else:
+                second_entered.set()
+            return ({}, {}, {}), "ok"
+
+        with (
+            patch.object(reconcile_module, "_session_factory", session_factory),
+            patch.object(
+                reconcile_module,
+                "_recover_unread_for_user_locked",
+                side_effect=locked_recovery,
+            ),
+        ):
+            first = asyncio.create_task(
+                reconcile_module.recover_unread_for_user("USER_IT_RECOVERY_LOCK"),
+            )
+            await first_entered.wait()
+            second = asyncio.create_task(
+                reconcile_module.recover_unread_for_user("USER_IT_RECOVERY_LOCK"),
+            )
+
+            with pytest.raises(asyncio.TimeoutError):
+                await asyncio.wait_for(second_entered.wait(), timeout=0.5)
+            release_first.set()
+            await asyncio.wait_for(asyncio.gather(first, second), timeout=5)
+
+        assert second_entered.is_set()
+
+    async def test_mark_read_and_get_unread(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
         session_factory, redis_hot, mongo_db, patch_external_clients,
     ):
@@ -125,6 +172,167 @@ class TestMarkReadFlow:
         async with session_factory() as session:
             member = await session.get(ChatRoomMember, (room.chat_room_id, b))
             assert member.last_read_message_server_seq == 12
+
+    async def test_concurrent_send_is_not_counted_in_residual_and_redis_delta(
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, chat_fcm_stub,
+        message_service, session_factory, redis_hot, mongo_db, patch_external_clients,
+    ):
+        a, b, _ = await seed_users(3)
+        await seed_friendship(a, b)
+        room_service = RoomService(
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
+        )
+        room = await room_service.create_group_room(
+            me_id=a, title="T", member_ids=[b],
+        )
+        await _insert_message(mongo_db, room.chat_room_id, 10)
+        await redis_hot.set(room_seq_key(room.chat_room_id), 10)
+        await redis_hot.hset(unread_key(b), room.chat_room_id, 1)
+
+        count_started = asyncio.Event()
+        release_count = asyncio.Event()
+        original_count = ChatMessageRepository.count_after_seq
+
+        async def paused_count(repo, *args, **kwargs):
+            count_started.set()
+            await release_count.wait()
+            return await original_count(repo, *args, **kwargs)
+
+        sender = MessageService(
+            uow=UnitOfWork(session=session_factory),
+            fanout_service=chat_fanout_stub,
+            fcm_service_factory=lambda: chat_fcm_stub,
+        )
+        send_progress = asyncio.Event()
+        mongo_inserted = asyncio.Event()
+        unread_bumped = asyncio.Event()
+        original_insert = message_module._insert_with_definitive_outcome
+        original_bump = sender._bump_unread
+
+        async def observed_insert(*args, **kwargs):
+            send_progress.set()
+            result = await original_insert(*args, **kwargs)
+            mongo_inserted.set()
+            return result
+
+        async def observed_bump(*args, **kwargs):
+            send_progress.set()
+            result = await original_bump(*args, **kwargs)
+            unread_bumped.set()
+            return result
+
+        with (
+            patch.object(ChatMessageRepository, "count_after_seq", paused_count),
+            patch.object(message_module, "_insert_with_definitive_outcome", observed_insert),
+            patch.object(sender, "_bump_unread", observed_bump),
+        ):
+            read_task = asyncio.create_task(room_service.mark_read(
+                me_id=b,
+                me_session_id="WS_B",
+                room_id=room.chat_room_id,
+                up_to_server_seq=10,
+            ))
+            await asyncio.wait_for(count_started.wait(), timeout=1)
+            send_task = asyncio.create_task(sender.send_message(
+                sender_user_id=a,
+                sender_session_id="WS_A",
+                room_id=room.chat_room_id,
+                client_msg_id="cm-unread-residual-delta",
+                msg_type=MessageType.TEXT,
+                content="concurrent",
+            ))
+            with pytest.raises(TimeoutError):
+                await asyncio.wait_for(send_progress.wait(), timeout=1)
+            release_count.set()
+            await asyncio.gather(read_task, send_task)
+
+        assert mongo_inserted.is_set()
+        assert unread_bumped.is_set()
+        assert int(await redis_hot.hget(unread_key(b), room.chat_room_id)) == 1
+
+    async def test_unread_recovery_does_not_double_count_concurrent_send(
+        self, uow, seed_users, seed_friendship, chat_fanout_stub, chat_fcm_stub,
+        message_service, session_factory, redis_hot, mongo_db, patch_external_clients,
+    ):
+        a, b, _ = await seed_users(3)
+        await seed_friendship(a, b)
+        room_service = RoomService(
+            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
+        )
+        room = await room_service.create_group_room(
+            me_id=a, title="T", member_ids=[b],
+        )
+        await _insert_message(mongo_db, room.chat_room_id, 10)
+        await redis_hot.set(room_seq_key(room.chat_room_id), 10)
+        await room_service.mark_read(
+            me_id=b,
+            me_session_id="WS_B",
+            room_id=room.chat_room_id,
+            up_to_server_seq=10,
+        )
+        await redis_hot.hset(unread_key(b), room.chat_room_id, 0)
+
+        count_started = asyncio.Event()
+        release_count = asyncio.Event()
+        original_count = ChatMessageRepository.count_after_seq
+
+        async def paused_count(repo, *args, **kwargs):
+            count_started.set()
+            await release_count.wait()
+            return await original_count(repo, *args, **kwargs)
+
+        sender = MessageService(
+            uow=UnitOfWork(session=session_factory),
+            fanout_service=chat_fanout_stub,
+            fcm_service_factory=lambda: chat_fcm_stub,
+        )
+        send_progress = asyncio.Event()
+        mongo_inserted = asyncio.Event()
+        unread_bumped = asyncio.Event()
+        original_insert = message_module._insert_with_definitive_outcome
+        original_bump = sender._bump_unread
+
+        async def observed_insert(*args, **kwargs):
+            send_progress.set()
+            result = await original_insert(*args, **kwargs)
+            mongo_inserted.set()
+            return result
+
+        async def observed_bump(*args, **kwargs):
+            send_progress.set()
+            result = await original_bump(*args, **kwargs)
+            unread_bumped.set()
+            return result
+
+        with (
+            patch.object(reconcile_module, "_session_factory", session_factory),
+            patch.object(ChatMessageRepository, "count_after_seq", paused_count),
+            patch.object(message_module, "_insert_with_definitive_outcome", observed_insert),
+            patch.object(sender, "_bump_unread", observed_bump),
+        ):
+            recover_task = asyncio.create_task(
+                reconcile_module.recover_unread_for_user(
+                    b, only_room=room.chat_room_id,
+                ),
+            )
+            await asyncio.wait_for(count_started.wait(), timeout=1)
+            send_task = asyncio.create_task(sender.send_message(
+                sender_user_id=a,
+                sender_session_id="WS_A",
+                room_id=room.chat_room_id,
+                client_msg_id="cm-unread-recovery-race",
+                msg_type=MessageType.TEXT,
+                content="concurrent recovery",
+            ))
+            with pytest.raises(TimeoutError):
+                await asyncio.wait_for(send_progress.wait(), timeout=1)
+            release_count.set()
+            counts, _ = await asyncio.gather(recover_task, send_task)
+
+        assert mongo_inserted.is_set()
+        assert unread_bumped.is_set()
+        assert counts[room.chat_room_id] == 0
+        assert int(await redis_hot.hget(unread_key(b), room.chat_room_id)) == 1
 
     async def test_greatest_prevents_regress(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,

@@ -975,7 +975,9 @@ class TestRdbUpdateFailureDegrade:
 
 @pytest.mark.unit
 class TestUnread:
-    async def test_bumps_unread_for_other_members_only(self, service, redis_mock):
+    async def test_bumps_unread_for_other_members_only(
+        self, service, redis_mock, lua_mock,
+    ):
         redis_mock.smembers = AsyncMock(return_value={"U_A", "U_B", "U_C"})
 
         await service.send_message(
@@ -983,15 +985,13 @@ class TestUnread:
             client_msg_id="cm-1", msg_type=MessageType.TEXT, content="x",
         )
 
-        # unread pipeline 에서 hincrby 는 발신자 제외 2회 (U_B, U_C)
-        unread_pipes = [p for p in redis_mock._pipes if p.hincrby.called]
-        assert unread_pipes, "unread pipeline 이 호출되지 않음"
-        p = unread_pipes[-1]
-        incrby_targets = {c.args[0] for c in p.hincrby.call_args_list}
-        # unread:{user_id} 키에 대해
-        assert len(incrby_targets) == 2
-        senders_in_pipe = {c.args[0].split(":")[1] for c in p.hincrby.call_args_list}
-        assert senders_in_pipe == {"U_B", "U_C"}
+        lua_mock.increment_unread.assert_awaited_once()
+        call = lua_mock.increment_unread.await_args
+        assert set(call.kwargs["keys"]) == {
+            "unread:U_B", "unread:watermark:U_B",
+            "unread:U_C", "unread:watermark:U_C",
+        }
+        assert call.kwargs["args"][0] == "CR_1"
 
     async def test_system_message_skips_unread(self, service, redis_mock):
         redis_mock.smembers = AsyncMock(return_value={"U_A", "U_B"})

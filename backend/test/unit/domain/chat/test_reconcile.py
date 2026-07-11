@@ -2,7 +2,7 @@
 
 unread self-heal 경로(재접속·Redis flush 후 복구). 절대 HSET 대신 baseline+delta Lua
 (mark_read_unread)를 room 별로 호출해 count~write 창의 동시 HINCRBY 를 보존하는지, 부분 실패
-시 hash 를 DEL 해 다음 재접속에서 재trigger 되게 하는지를 검증한다. (Lua 산술 자체는
+시 hash를 보존하고 retry marker로 다음 재접속을 재trigger하는지 검증한다. (Lua 산술 자체는
 test/integration/domain/chat/test_mark_read_unread_lua.py 에서 검증 — 여기선 orchestration.)
 """
 import asyncio
@@ -14,7 +14,11 @@ from unittest.mock import ANY, AsyncMock, MagicMock, patch
 import pytest
 
 import app.domain.chat.worker.reconcile as rc
-from app.core.chat.redis_key import read_sync_key, unread_key
+from app.core.chat.redis_key import (
+    read_sync_key,
+    unread_key,
+    unread_recovery_required_key,
+)
 
 
 pytestmark = pytest.mark.unit
@@ -467,21 +471,32 @@ class TestPendingMessageSweep:
 
 
 class _FakeSession:
-    active = False
+    _depth = 0
+
+    def __init__(self):
+        self.execute = AsyncMock()
+
+    @property
+    def active(self):
+        return self._depth > 0
 
     async def __aenter__(self):
-        self.active = True
+        self._depth += 1
         return self
 
     async def __aexit__(self, *a):
-        self.active = False
+        self._depth -= 1
         return False
 
 
-def _patches(*, last_reads, baselines, residuals, lua_side_effect, generation_error=None):
+def _patches(
+    *, last_reads, baselines, residuals, lua_side_effect,
+    generation_error=None, max_seqs=None,
+):
     """recover_unread_for_user 의 외부 의존성 패치 묶음 반환."""
     redis = MagicMock(name="redis")
     redis.hget = AsyncMock(side_effect=lambda key, field: baselines.get(field))
+    redis.set = AsyncMock(return_value=True)
     session = _FakeSession()
 
     async def _get_generation(_key):
@@ -490,13 +505,19 @@ def _patches(*, last_reads, baselines, residuals, lua_side_effect, generation_er
             raise generation_error
         return None
 
-    redis.get = AsyncMock(side_effect=_get_generation)
+    async def _get(key):
+        if key.startswith("room:members:gen:"):
+            return await _get_generation(key)
+        return None
+
+    redis.get = AsyncMock(side_effect=_get)
     redis.delete = AsyncMock(return_value=1)
 
     async def _get_redis():
         return redis
 
     async def _count(*, chat_room_id, after_seq, limit):
+        assert session.active, "room lock must cover residual count"
         result = residuals[chat_room_id]
         if isinstance(result, BaseException):
             raise result
@@ -504,44 +525,176 @@ def _patches(*, last_reads, baselines, residuals, lua_side_effect, generation_er
 
     msg_repo = MagicMock()
     msg_repo.count_after_seq = _count
+    msg_repo.get_max_server_seq = AsyncMock(
+        side_effect=lambda room_id: (max_seqs or {}).get(room_id, 0),
+    )
     member_repo = MagicMock()
     member_repo.find_last_read_seqs = AsyncMock(return_value=last_reads)
     redis.member_repo = member_repo
+    room_repo = MagicMock()
+
+    async def _lock_room(_room_id):
+        assert session.active, "room lock must cover residual count and Lua apply"
+        return object()
+
+    room_repo.find_by_id_for_update = AsyncMock(side_effect=_lock_room)
+    redis.room_repo = room_repo
 
     lua = MagicMock()
-    lua.mark_read_unread = AsyncMock(side_effect=lua_side_effect)
+    applied: dict[str, int] = {}
+
+    async def _apply_lua(keys, args):
+        assert session.active, "room lock must cover Lua apply"
+        result = lua_side_effect(keys, args)
+        if asyncio.iscoroutine(result):
+            result = await result
+        applied[args[0]] = int(result[0])
+        return result
+
+    async def _snapshot(keys, args):
+        result: list[object] = [1]
+        for room_id, count in applied.items():
+            result.extend([room_id, count, 0, last_reads[room_id]])
+        return result
+
+    lua.mark_read_unread = AsyncMock(side_effect=_apply_lua)
+    lua.clear_unread_recovery_required = AsyncMock(return_value=1)
+    lua.get_unread_snapshot = AsyncMock(side_effect=_snapshot)
 
     ctx = [
         patch.object(rc, "get_redis_client", _get_redis),
         patch.object(rc, "ChatMessageRepository", return_value=msg_repo),
         patch.object(rc, "ChatRoomMemberRepository", return_value=member_repo),
+        patch.object(rc, "ChatRoomRepository", return_value=room_repo),
         patch.object(rc, "lua_scripts", lua),
         patch.object(rc, "_session_factory", lambda: session),
     ]
     return redis, lua, ctx
 
 
-async def _run(ctx_managers):
+async def _run(ctx_managers, only_room=None):
     for c in ctx_managers:
         c.start()
     try:
-        return await rc.recover_unread_for_user(_UID)
+        return await rc.recover_unread_for_user(_UID, only_room=only_room)
     finally:
         for c in reversed(ctx_managers):
             c.stop()
 
 
-class TestRecoverUnread:
+class TestRecoverUnreadForUser:
+    async def test_missing_factory_emits_one_sql_result(self):
+        metric = MagicMock()
+        with (
+            patch.object(rc, "_session_factory", None),
+            patch.object(rc, "chat_unread_recover_inc", metric),
+            pytest.raises(RuntimeError, match="초기화"),
+        ):
+            await rc.recover_unread_for_user(_UID)
+
+        metric.assert_called_once_with("sql_failed")
+
+    async def test_advisory_session_enter_failure_emits_one_sql_result(self):
+        class BrokenEnter:
+            async def __aenter__(self):
+                raise RuntimeError("enter failed")
+
+            async def __aexit__(self, *args):
+                return False
+
+        metric = MagicMock()
+        with (
+            patch.object(rc, "_session_factory", lambda: BrokenEnter()),
+            patch.object(rc, "chat_unread_recover_inc", metric),
+            pytest.raises(RuntimeError, match="enter failed"),
+        ):
+            await rc.recover_unread_for_user(_UID)
+
+        metric.assert_called_once_with("sql_failed")
+
+    async def test_advisory_session_exit_failure_replaces_ok_with_sql_result(self):
+        class BrokenExit:
+            execute = AsyncMock()
+
+            async def __aenter__(self):
+                return self
+
+            async def __aexit__(self, *args):
+                raise RuntimeError("exit failed")
+
+        metric = MagicMock()
+        with (
+            patch.object(rc, "_session_factory", lambda: BrokenExit()),
+            patch.object(
+                rc, "_recover_unread_for_user_locked",
+                AsyncMock(return_value=(({}, {}, {}), "ok")),
+            ),
+            patch.object(rc, "chat_unread_recover_inc", metric),
+            pytest.raises(RuntimeError, match="exit failed"),
+        ):
+            await rc.recover_unread_for_user(_UID)
+
+        metric.assert_called_once_with("sql_failed")
+
+    async def test_atomic_unread_snapshot_returns_none_while_recovering(self):
+        lua = MagicMock()
+        lua.get_unread_snapshot = AsyncMock(return_value=[0])
+        with patch.object(rc, "lua_scripts", lua):
+            result = await rc.get_unread_snapshot_if_recovered(_UID)
+
+        assert result is None
+
+    async def test_atomic_unread_snapshot_decodes_counts(self):
+        lua = MagicMock()
+        lua.get_unread_snapshot = AsyncMock(
+            return_value=[1, b"R1", b"2", 10, 8, "R2", 3, 20, 18],
+        )
+        with patch.object(rc, "lua_scripts", lua):
+            result = await rc.get_unread_snapshot_if_recovered(_UID)
+
+        assert result == (
+            {"R1": 2, "R2": 3},
+            {"R1": 10, "R2": 20},
+            {"R1": 8, "R2": 18},
+        )
+
+    async def test_returns_final_atomic_snapshot_not_room_intermediate(self):
+        _redis, lua, ctx = _patches(
+            last_reads={"R1": 0},
+            baselines={"R1": 0},
+            residuals={"R1": 1},
+            lua_side_effect=lambda keys, args: [1, 1, args[4]],
+        )
+        lua.get_unread_snapshot.side_effect = None
+        lua.get_unread_snapshot.return_value = [1, "R1", 2, 1, 0]
+
+        assert await _run(ctx) == {"R1": 2}
+
+    async def test_existing_marker_promotes_scoped_recovery_to_full(self):
+        redis, _lua, ctx = _patches(
+            last_reads={"R1": 0, "R2": 0},
+            baselines={"R1": 0, "R2": 0},
+            residuals={"R1": 1, "R2": 1},
+            lua_side_effect=lambda keys, args: [1, 1, args[4]],
+        )
+        redis.set.side_effect = [False, True]
+
+        assert await _run(ctx, only_room="R1") == {"R1": 1, "R2": 1}
+        redis.member_repo.find_last_read_seqs.assert_awaited_once_with(
+            _UID, room_ids=None, for_share=True,
+        )
+
     async def test_passes_baseline_and_residual_to_lua_per_room(self):
         """room 별로 (room_id, residual, baseline, cap) 인자로 baseline+delta Lua 호출."""
         async def lua_stub(keys, args):
-            _room, residual, _baseline, cap, read_seq, _allow_equal, _generation = args
+            _room, residual, _baseline, cap, read_seq, _allow_equal, _generation, _watermark = args
             return [min(residual, cap), 1, read_seq]  # 스텁: residual 반영
 
         redis, lua, ctx = _patches(
             last_reads={"R1": 10, "R2": 20},
             baselines={"R1": "3", "R2": None},   # R2 는 baseline 부재 → 0 취급
             residuals={"R1": 5, "R2": 2},
+            max_seqs={"R1": 50, "R2": 60},
             lua_side_effect=lua_stub,
         )
         counts = await _run(ctx)
@@ -557,13 +710,14 @@ class TestRecoverUnread:
         redis.hget.assert_any_await(unread_key(_UID), "R2")
         # Lua 인자에 baseline 이 정확히 전달됐는지 (부재는 0)
         calls = {c.kwargs["args"][0]: c.kwargs["args"] for c in lua.mark_read_unread.await_args_list}
-        assert calls["R1"] == ["R1", 5, 3, rc.UNREAD_COUNT_CAP, 10, 1, 0]
-        assert calls["R2"] == ["R2", 2, 0, rc.UNREAD_COUNT_CAP, 20, 1, 0]
+        assert calls["R1"] == ["R1", 5, 3, rc.UNREAD_COUNT_CAP, 10, 1, 0, 50]
+        assert calls["R2"] == ["R2", 2, 0, rc.UNREAD_COUNT_CAP, 20, 1, 0, 60]
         for call in lua.mark_read_unread.await_args_list:
             room_id = call.kwargs["args"][0]
             assert call.kwargs["keys"] == [
                 unread_key(_UID), read_sync_key(_UID),
                 rc.room_members_gen_key(room_id),
+                rc.unread_watermark_key(_UID),
             ]
 
     async def test_caps_residual_snapshot_at_limit(self):
@@ -582,8 +736,8 @@ class TestRecoverUnread:
         assert counts == {"R1": rc.UNREAD_COUNT_CAP}
         assert lua.mark_read_unread.await_args_list[0].kwargs["args"][1] == rc.UNREAD_COUNT_CAP
 
-    async def test_partial_lua_failure_deletes_hash(self):
-        """Lua 반영 중 실패 → partial state 방지 위해 hash DEL 후 빈 dict 반환 (재trigger 유도)."""
+    async def test_partial_lua_failure_marks_retry_without_deleting_hash(self):
+        """Lua partial 실패는 fresh HINCRBY를 지우지 않고 retry marker를 남긴다."""
         async def lua_flaky(keys, args):
             if args[0] == "R2":
                 raise RuntimeError("redis blip")
@@ -598,11 +752,13 @@ class TestRecoverUnread:
         counts = await _run(ctx)
 
         assert counts == {}
-        redis.delete.assert_awaited_once_with(unread_key(_UID))
+        redis.delete.assert_not_awaited()
+        assert redis.set.await_count == 2
+        assert redis.set.await_args_list[-1].kwargs == {"nx": True}
 
-    async def test_partial_count_failure_skips_lua_and_deletes_hashes(self):
-        """방 하나의 Mongo count 실패도 partial HASH를 만들지 않고 전체 재시도한다."""
-        redis, lua, ctx = _patches(
+    async def test_partial_count_failure_marks_retry_without_deleting_hash(self):
+        """방 하나의 count 실패도 unread hash를 보존하고 retry marker를 남긴다."""
+        redis, _lua, ctx = _patches(
             last_reads={"R1": 10, "R2": 20},
             baselines={"R1": None, "R2": None},
             residuals={"R1": 1, "R2": RuntimeError("mongo blip")},
@@ -612,10 +768,11 @@ class TestRecoverUnread:
         counts = await _run(ctx)
 
         assert counts == {}
-        lua.mark_read_unread.assert_not_awaited()
-        redis.delete.assert_awaited_once_with(unread_key(_UID))
+        redis.delete.assert_not_awaited()
+        assert redis.set.await_count == 2
+        assert redis.set.await_args_list[-1].kwargs == {"nx": True}
 
-    async def test_generation_snapshot_failure_deletes_unread_only(self):
+    async def test_generation_snapshot_failure_marks_retry(self):
         redis, lua, ctx = _patches(
             last_reads={"R1": 10},
             baselines={"R1": None},
@@ -629,7 +786,27 @@ class TestRecoverUnread:
         assert counts == {}
         redis.hget.assert_not_awaited()
         lua.mark_read_unread.assert_not_awaited()
-        redis.delete.assert_awaited_once_with(unread_key(_UID))
+        redis.delete.assert_not_awaited()
+        assert redis.set.await_count == 2
+        assert redis.set.await_args_list[-1].kwargs == {"nx": True}
+
+    async def test_success_clears_only_its_own_marker_token(self):
+        redis, lua, ctx = _patches(
+            last_reads={"R1": 0},
+            baselines={"R1": None},
+            residuals={"R1": 1},
+            lua_side_effect=lambda keys, args: [args[1], 1, args[4]],
+        )
+
+        lua.clear_unread_recovery_required = AsyncMock(return_value=1)
+
+        counts = await _run(ctx)
+
+        assert counts == {"R1": 1}
+        lua.clear_unread_recovery_required.assert_awaited_once_with(
+            keys=[unread_recovery_required_key(_UID)],
+            args=[ANY],
+        )
 
     async def test_no_active_rooms_skips(self):
         """활성 방이 없으면 Redis/Lua 를 건드리지 않고 빈 dict."""
@@ -644,3 +821,40 @@ class TestRecoverUnread:
         assert counts == {}
         redis.hget.assert_not_awaited()
         lua.mark_read_unread.assert_not_awaited()
+
+    async def test_cancellation_after_partial_apply_marks_retry(self):
+        applied = asyncio.Event()
+        blocked = asyncio.Event()
+
+        async def lua_block_second(keys, args):
+            if args[0] == "R1":
+                applied.set()
+                return [args[1], 1, args[4]]
+            await blocked.wait()
+            return [args[1], 1, args[4]]
+
+        redis, _lua, ctx = _patches(
+            last_reads={"R1": 0, "R2": 0},
+            baselines={"R1": None, "R2": None},
+            residuals={"R1": 1, "R2": 1},
+            lua_side_effect=lua_block_second,
+        )
+        metric = MagicMock()
+        for manager in ctx:
+            manager.start()
+        try:
+            with patch.object(rc, "chat_unread_recover_inc", metric):
+                task = asyncio.create_task(rc.recover_unread_for_user(_UID))
+                await asyncio.wait_for(applied.wait(), timeout=1)
+                task.cancel()
+                with pytest.raises(asyncio.CancelledError):
+                    await task
+        finally:
+            blocked.set()
+            for manager in reversed(ctx):
+                manager.stop()
+
+        redis.delete.assert_not_awaited()
+        assert redis.set.await_count == 2
+        assert redis.set.await_args_list[-1].kwargs == {"nx": True}
+        metric.assert_called_once_with("cancelled")

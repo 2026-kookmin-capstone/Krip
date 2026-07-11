@@ -13,3 +13,7 @@ class UpstreamError(Exception):
     이 예외가 나는 시점엔 dedupe 키가 이미 풀려 있어 같은 client_msg_id 로 재시도 가능.
     """
     error_kind = "upstream"
+
+
+class PendingRecoveryDeferred(UpstreamError):
+    """Mongo durable 판정을 sweeper 에 넘겼으며 pending intent 는 유지된다."""

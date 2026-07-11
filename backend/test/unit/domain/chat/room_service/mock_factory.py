@@ -13,6 +13,7 @@ class FakeAsyncContextManager:
 class FakeUnitOfWork:
     def __init__(self, session):
         self._session = session
+        self.session_factory = lambda: session
 
     async def __aenter__(self):
         return self._session

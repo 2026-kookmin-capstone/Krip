@@ -27,6 +27,7 @@ class RecordingUnitOfWork:
     def __init__(self, session, events):
         self._session = session
         self._events = events
+        self.session_factory = lambda: session
 
     async def __aenter__(self):
         return self._session
@@ -162,4 +163,7 @@ class TestTxFailureSkipsSideEffects:
             up_to_server_seq=7,
         )
 
-        assert events == ["sql_update", "commit", "unread", "room_fanout"]
+        assert events == [
+            "sql_update", "commit", "unread", "room_fanout",
+        ]
+        chat_room_repo_mock.find_by_id_for_update.assert_awaited_once_with("CR_G")

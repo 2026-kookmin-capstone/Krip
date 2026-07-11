@@ -519,25 +519,11 @@ class RoomService:
             room_id=room_id,
             up_to_server_seq=up_to_server_seq,
         )
-        message_repo = ChatMessageRepository(mongodb.database)
-
-        # unread 를 무조건 0 으로 덮으면 (1) 부분 읽기(up_to < 최신) 시 남은 미읽음이 사라지고
-        # (2) read 처리와 동시에 도착한 메시지의 HINCRBY 가 지워진 뒤 재접속에도 복구되지 않는다.
-        # DB 기준으로 final_seq 이후 잔여 메시지 수를 재계산해 반영 (recover 경로와 동일 계산).
-        # count~HSET 창의 동시 HINCRBY 가 절대 HSET 에 소거돼 뱃지가 유실되지 않도록,
-        # count 직전 baseline 을 스냅샷해 Lua 에서 증가분을 보존한다 (상세는 lua 파일).
-        unread_k = unread_key(me_id)
-        baseline = await redis.hget(unread_k, room_id)
-        baseline = int(baseline) if baseline is not None else 0
-        residual = await message_repo.count_after_seq(
-            chat_room_id=room_id, after_seq=final_seq, limit=UNREAD_COUNT_LIMIT,
-        )
-        _, sync_status, effective_seq = await lua_scripts.mark_read_unread(
-            keys=[unread_k, read_sync_key(me_id), room_members_gen_key(room_id)],
-            args=[
-                room_id, residual, baseline, UNREAD_COUNT_CAP, final_seq, 0,
-                expected_generation,
-            ],
+        sync_status, effective_seq = await self._sync_unread_under_room_lock(
+            me_id=me_id,
+            room_id=room_id,
+            final_seq=final_seq,
+            expected_generation=expected_generation,
         )
 
         if int(sync_status) == 3:
@@ -565,6 +551,37 @@ class RoomService:
             room_id, me_id, clamped_seq, final_seq,
         )
         return final_seq
+
+    async def _sync_unread_under_room_lock(
+        self,
+        *,
+        me_id: str,
+        room_id: str,
+        final_seq: int,
+        expected_generation: int,
+    ) -> tuple[int, int]:
+        """send와 room X-lock으로 직렬화해 residual과 Redis delta의 경계를 고정한다."""
+        async with self.uow.session_factory() as session:
+            room_repo = ChatRoomRepository(session)
+            if await room_repo.find_by_id_for_update(room_id) is None:
+                raise ChatRoomNotFoundError("존재하지 않는 방입니다.")
+
+            redis = await get_redis_client()
+            unread_k = unread_key(me_id)
+            baseline = int(await redis.hget(unread_k, room_id) or 0)
+            residual = await ChatMessageRepository(mongodb.database).count_after_seq(
+                chat_room_id=room_id,
+                after_seq=final_seq,
+                limit=UNREAD_COUNT_LIMIT,
+            )
+            _, sync_status, effective_seq = await lua_scripts.mark_read_unread(
+                keys=[unread_k, read_sync_key(me_id), room_members_gen_key(room_id)],
+                args=[
+                    room_id, residual, baseline, UNREAD_COUNT_CAP, final_seq, 0,
+                    expected_generation,
+                ],
+            )
+            return int(sync_status), int(effective_seq)
 
     @transactional
     async def _mark_read_tx(

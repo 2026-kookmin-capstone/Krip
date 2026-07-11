@@ -180,6 +180,14 @@ class UnreadSyncedEvent(BaseModel):
     """WS 연결 직후 또는 백그라운드 복구 완료 시 unread 카운트 동기화."""
     type: Literal["unread_synced"]
     counts: dict[str, int] = Field(..., description="{room_id: count}. 값은 0..999 (999+ 캡)")
+    watermarks: dict[str, int] = Field(
+        default_factory=dict,
+        description="snapshot의 room별 최신 unread 증가 message server_seq",
+    )
+    read_watermarks: dict[str, int] = Field(
+        default_factory=dict,
+        description="snapshot의 room별 applied read server_seq",
+    )
 
 
 ServerEvent = Annotated[

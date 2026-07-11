@@ -18,6 +18,15 @@ pytestmark = pytest.mark.integration
 _LUA_SRC = (
     Path(lua_module.__file__).parent / "lua" / "mark_read_unread.lua"
 ).read_text(encoding="utf-8")
+_CLEAR_RETRY_SRC = (
+    Path(lua_module.__file__).parent / "lua" / "clear_unread_recovery_required.lua"
+).read_text(encoding="utf-8")
+_UNREAD_SNAPSHOT_SRC = (
+    Path(lua_module.__file__).parent / "lua" / "get_unread_snapshot.lua"
+).read_text(encoding="utf-8")
+_INCREMENT_UNREAD_SRC = (
+    Path(lua_module.__file__).parent / "lua" / "increment_unread.lua"
+).read_text(encoding="utf-8")
 
 
 async def _eval(
@@ -157,3 +166,66 @@ class TestMarkReadUnreadLua:
         assert await redis_hot.hget(key, room) is None
         assert await redis_hot.hget(cursor_key, room) is None
         await redis_hot.delete(key, cursor_key, generation_key)
+
+
+class TestClearUnreadRecoveryRequiredLua:
+    async def test_deletes_only_matching_marker(self, redis_hot):
+        key = "unread:recovery_required:it_lua"
+        script = redis_hot.register_script(_CLEAR_RETRY_SRC)
+        await redis_hot.set(key, "new-token")
+
+        assert int(await script(keys=[key], args=["old-token"])) == 0
+        assert await redis_hot.get(key) == "new-token"
+        assert int(await script(keys=[key], args=["new-token"])) == 1
+        assert await redis_hot.get(key) is None
+
+    async def test_older_failure_restores_marker_after_newer_success(self, redis_hot):
+        key = "unread:recovery_required:it_aba"
+        script = redis_hot.register_script(_CLEAR_RETRY_SRC)
+        await redis_hot.set(key, "token-a")
+        await redis_hot.set(key, "token-b")
+
+        assert int(await script(keys=[key], args=["token-b"])) == 1
+        assert await redis_hot.set(key, "token-a", nx=True)
+        assert await redis_hot.get(key) == "token-a"
+
+
+class TestGetUnreadSnapshotLua:
+    async def test_marker_and_counts_are_read_atomically(self, redis_hot):
+        marker = "unread:recovery_required:it_snapshot"
+        unread = "unread:it_snapshot"
+        watermark = "unread:watermark:it_snapshot"
+        read_watermark = "unread:read_seq:it_snapshot"
+        script = redis_hot.register_script(_UNREAD_SNAPSHOT_SRC)
+        await redis_hot.hset(unread, mapping={"R1": 2, "R2": 3})
+        await redis_hot.hset(watermark, mapping={"R1": 10, "R2": 20})
+        await redis_hot.hset(read_watermark, mapping={"R1": 8, "R2": 18})
+        await redis_hot.set(marker, "in-progress")
+
+        assert list(
+            await script(keys=[marker, unread, watermark, read_watermark], args=[]),
+        ) == [0]
+        await redis_hot.delete(marker)
+        result = list(
+            await script(keys=[marker, unread, watermark, read_watermark], args=[]),
+        )
+        assert result[0] == 1
+        triples = {
+            result[index]: (
+                int(result[index + 1]),
+                int(result[index + 2]),
+                int(result[index + 3]),
+            )
+            for index in range(1, len(result), 4)
+        }
+        assert triples == {"R1": (2, 10, 8), "R2": (3, 20, 18)}
+
+    async def test_increment_updates_count_and_watermark_atomically(self, redis_hot):
+        script = redis_hot.register_script(_INCREMENT_UNREAD_SRC)
+        await script(
+            keys=["unread:U1", "unread:watermark:U1"],
+            args=["R1", 42],
+        )
+
+        assert int(await redis_hot.hget("unread:U1", "R1")) == 1
+        assert int(await redis_hot.hget("unread:watermark:U1", "R1")) == 42

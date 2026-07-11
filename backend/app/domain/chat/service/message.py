@@ -27,6 +27,7 @@ from app.core.chat.redis_key import (
     room_pending_message_key,
     room_seq_key,
     unread_key,
+    unread_watermark_key,
 )
 from app.core.logger import get_logger
 from app.core.redis import get_redis_client, get_redis_dedupe_client
@@ -37,7 +38,10 @@ from app.domain.chat.model.chat_room import ChatRoomType
 from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
 from app.domain.chat.repository.chat_message import ChatMessageRepository
 from app.domain.chat.repository.chat_room import ChatRoomRepository
-from app.domain.chat.service.exception import UpstreamError
+from app.domain.chat.service.exception import (
+    PendingRecoveryDeferred,
+    UpstreamError,
+)
 from app.domain.friend.repository.user_block import UserBlockRepository
 from app.util.id_generator import generate_message_id
 
@@ -71,10 +75,6 @@ _DEFER_PENDING_RECOVERY_CANCEL: ContextVar[bool] = ContextVar(
 
 class _AwaitableCancelled(Exception):
     pass
-
-
-class PendingRecoveryDeferred(UpstreamError):
-    """Mongo durable 판정을 sweeper에 넘겼으며 pending intent는 유지된다."""
 
 
 def _with_mongo_recovery_deadline(fn):
@@ -514,7 +514,12 @@ class MessageService:
         # @transactional rollback 으로 last_message 까지 유실된다.
         if msg_type != MessageType.SYSTEM:
             try:
-                await self._bump_unread(redis_hot, room_id=room_id, sender_user_id=sender_user_id)
+                await self._bump_unread(
+                    redis_hot,
+                    room_id=room_id,
+                    sender_user_id=sender_user_id,
+                    server_seq=server_seq,
+                )
             except Exception as e:
                 logger.warning(
                     "unread 증가 실패 (메시지는 저장됨): room_id={}, err={}",
@@ -897,23 +902,23 @@ class MessageService:
         return bool(await block_repo.find_blocks_between(sender_user_id, peer_id))
 
     @staticmethod
-    async def _bump_unread(redis_hot, *, room_id: str, sender_user_id: str) -> None:
-        """방 멤버 (발신자 제외) unread HINCRBY 를 pipeline 1 RTT 로.
-
-        `transaction=False` — 100명 방에서도 Redis single-thread 가 블로킹되지 않게.
-        실패는 무시 (reconcile 경로로 수렴).
-        """
+    async def _bump_unread(
+        redis_hot, *, room_id: str, sender_user_id: str, server_seq: int,
+    ) -> None:
+        """발신자 제외 멤버의 unread와 message watermark를 한 Lua로 갱신."""
         key = room_members_key(room_id)
         members = await redis_hot.smembers(key)
         recipients = [uid for uid in members if uid != sender_user_id]
         if not recipients:
             return
 
-        pipe = redis_hot.pipeline(transaction=False)
+        keys: list[str] = []
         for uid in recipients:
-            pipe.hincrby(unread_key(uid), room_id, 1)
+            keys.extend([unread_key(uid), unread_watermark_key(uid)])
         try:
-            await pipe.execute()
+            await lua_scripts.increment_unread(
+                keys=keys, args=[room_id, server_seq],
+            )
         except Exception as e:
             logger.warning(
                 "unread pipeline 실패 (무시하고 진행): room_id={}, err={}",

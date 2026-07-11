@@ -47,7 +47,10 @@ from app.domain.chat.service.message import MessageService
 from app.domain.chat.service.message_history import MessageHistoryService
 from app.domain.chat.service.room import RoomService
 from app.domain.chat.service.session import SessionService
-from app.domain.chat.worker.reconcile import recover_unread_for_user
+from app.domain.chat.worker.reconcile import (
+    get_unread_snapshot_if_recovered,
+    recover_unread_snapshot_for_user,
+)
 
 
 router = APIRouter()
@@ -153,9 +156,15 @@ async def ws_chat(
 
         # unread 초기 동기화 — Redis 가 비면 백그라운드 복구 (RDB+Mongo 기반이라 느릴 수 있음).
         try:
-            counts = await history_svc.get_unread_counts(user_id)
-            if counts:
-                await websocket.send_json({"type": "unread_synced", "counts": counts})
+            snapshot = await get_unread_snapshot_if_recovered(user_id)
+            if snapshot is not None and snapshot[0]:
+                counts, watermarks, read_watermarks = snapshot
+                await websocket.send_json({
+                    "type": "unread_synced",
+                    "counts": counts,
+                    "watermarks": watermarks,
+                    "read_watermarks": read_watermarks,
+                })
             else:
                 _spawn_recover_unread(websocket, user_id)
         except WebSocketDisconnect:
@@ -225,7 +234,7 @@ def _spawn_recover_unread(websocket: WebSocket, user_id: str) -> None:
 async def _recover_unread_and_notify(websocket: WebSocket, user_id: str) -> None:
     """recover 후 WS 가 살아있으면 결과 push. 끊겼으면 조용히 drop."""
     try:
-        counts = await recover_unread_for_user(user_id)
+        counts, watermarks, read_watermarks = await recover_unread_snapshot_for_user(user_id)
     except Exception as e:
         logger.warning("unread 백그라운드 복구 실패: user_id={}, err={}", user_id, e)
         return
@@ -235,7 +244,12 @@ async def _recover_unread_and_notify(websocket: WebSocket, user_id: str) -> None
         return
 
     try:
-        await websocket.send_json({"type": "unread_synced", "counts": counts})
+        await websocket.send_json({
+            "type": "unread_synced",
+            "counts": counts,
+            "watermarks": watermarks,
+            "read_watermarks": read_watermarks,
+        })
     except Exception as e:
         logger.debug(
             "unread 복구 결과 push 실패 (WS 이미 종료 가능): user_id={}, err={}",

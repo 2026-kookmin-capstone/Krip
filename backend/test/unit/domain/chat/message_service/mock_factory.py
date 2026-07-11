@@ -150,5 +150,6 @@ def make_lua_mock(
         recover_and_incr=AsyncMock(return_value=recover_and_incr_return),
         force_jump=AsyncMock(return_value=force_jump_return),
         incr_with_ttl=AsyncMock(return_value=incr_with_ttl_return),
+        increment_unread=AsyncMock(return_value=1),
         populate_members=AsyncMock(return_value=1),   # 1=반영 / 0=gen 불일치 skip
     )

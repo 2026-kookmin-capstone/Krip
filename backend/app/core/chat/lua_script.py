@@ -29,6 +29,9 @@ class LuaScripts:
         self.force_jump: Optional[AsyncScript] = None
         self.incr_with_ttl: Optional[AsyncScript] = None
         self.mark_read_unread: Optional[AsyncScript] = None
+        self.increment_unread: Optional[AsyncScript] = None
+        self.clear_unread_recovery_required: Optional[AsyncScript] = None
+        self.get_unread_snapshot: Optional[AsyncScript] = None
         self.populate_members: Optional[AsyncScript] = None
         self.claim_dirty_rooms: Optional[AsyncScript] = None
         self.ack_dirty_rooms: Optional[AsyncScript] = None
@@ -49,6 +52,17 @@ class LuaScripts:
         )
         self.mark_read_unread = instrument_lua_script(
             hot_client.register_script(_read("mark_read_unread.lua")), "mark_read_unread",
+        )
+        self.increment_unread = instrument_lua_script(
+            hot_client.register_script(_read("increment_unread.lua")), "increment_unread",
+        )
+        self.clear_unread_recovery_required = instrument_lua_script(
+            hot_client.register_script(_read("clear_unread_recovery_required.lua")),
+            "clear_unread_recovery_required",
+        )
+        self.get_unread_snapshot = instrument_lua_script(
+            hot_client.register_script(_read("get_unread_snapshot.lua")),
+            "get_unread_snapshot",
         )
         self.populate_members = instrument_lua_script(
             hot_client.register_script(_read("populate_members.lua")), "populate_members",

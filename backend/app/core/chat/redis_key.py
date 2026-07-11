@@ -44,6 +44,15 @@ def unread_key(user_id: str) -> str:
     return f"unread:{user_id}"
 
 
+def unread_watermark_key(user_id: str) -> str:
+    """room별 최신 unread 증가 message seq HASH."""
+    return f"unread:watermark:{user_id}"
+
+
+def unread_recovery_required_key(user_id: str) -> str:
+    return f"unread:recovery_required:{user_id}"
+
+
 def read_sync_key(user_id: str) -> str:
     """post-commit unread 반영의 room별 최종 read seq HASH."""
     return f"unread:read_seq:{user_id}"

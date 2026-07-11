@@ -13,6 +13,7 @@ import uuid
 from collections import deque
 from typing import Optional
 
+from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.core.chat.lua_script import lua_scripts
@@ -25,6 +26,8 @@ from app.core.chat.redis_key import (
     read_sync_key,
     room_members_gen_key,
     unread_key,
+    unread_recovery_required_key,
+    unread_watermark_key,
 )
 from app.core.instrumentation import (
     chat_reconcile_batch_pop_inc,
@@ -86,6 +89,52 @@ _pending_page_offset = 0
 
 class PendingRecoveryBatchError(RuntimeError):
     pass
+
+
+class UnreadRecoveryApplyError(RuntimeError):
+    pass
+
+
+class UnreadRecoverySqlError(RuntimeError):
+    pass
+
+
+class UnreadRecoveryTerminalError(RuntimeError):
+    def __init__(self, result: str, message: str) -> None:
+        super().__init__(message)
+        self.result = result
+
+
+async def get_unread_snapshot_if_recovered(
+    user_id: str,
+) -> Optional[tuple[dict[str, int], dict[str, int], dict[str, int]]]:
+    """marker 확인과 unread snapshot을 원자적으로 읽는다. recovery 중이면 None."""
+    script = lua_scripts.get_unread_snapshot
+    if script is None:
+        raise RuntimeError("get_unread_snapshot Lua not loaded")
+    result = await script(
+        keys=[
+            unread_recovery_required_key(user_id), unread_key(user_id),
+            unread_watermark_key(user_id),
+            read_sync_key(user_id),
+        ],
+        args=[],
+    )
+    if int(result[0]) == 0:
+        return None
+
+    def _decode(value: object) -> str:
+        return value.decode("utf-8") if isinstance(value, bytes) else str(value)
+
+    counts: dict[str, int] = {}
+    watermarks: dict[str, int] = {}
+    read_watermarks: dict[str, int] = {}
+    for index in range(1, len(result), 4):
+        room_id = _decode(result[index])
+        counts[room_id] = int(result[index + 1])
+        watermarks[room_id] = int(result[index + 2])
+        read_watermarks[room_id] = int(result[index + 3])
+    return counts, watermarks, read_watermarks
 
 
 def _require_factory() -> async_sessionmaker[AsyncSession]:
@@ -411,10 +460,60 @@ async def _pending_recovery_loop(stop_event: asyncio.Event) -> None:
     logger.info("pending recovery 루프 종료")
 
 
+async def recover_unread_snapshot_for_user(
+    user_id: str,
+    only_room: Optional[str] = None,
+) -> tuple[dict[str, int], dict[str, int], dict[str, int]]:
+    """동일 사용자의 unread recovery를 DB advisory lock으로 직렬화한다."""
+    try:
+        factory = _require_factory()
+        async with factory() as lock_session:
+            try:
+                await lock_session.execute(
+                    text("SELECT pg_advisory_xact_lock(hashtextextended(:user_id, 0))"),
+                    {"user_id": user_id},
+                )
+            except Exception as exc:
+                raise UnreadRecoveryTerminalError(
+                    "sql_failed", "unread recovery advisory lock failed",
+                ) from exc
+            snapshot, result = await _recover_unread_for_user_locked(user_id, only_room)
+    except asyncio.CancelledError:
+        try:
+            redis_hot = await get_redis_client()
+            await redis_hot.set(
+                unread_recovery_required_key(user_id), uuid.uuid4().hex, nx=True,
+            )
+            chat_unread_recover_inc("cancelled")
+        except Exception:
+            chat_unread_recover_inc("cleanup_failed")
+        raise
+    except UnreadRecoveryTerminalError as exc:
+        chat_unread_recover_inc(exc.result)
+        raise
+    except Exception:
+        chat_unread_recover_inc("sql_failed")
+        raise
+    else:
+        chat_unread_recover_inc(result)
+        return snapshot
+
+
 async def recover_unread_for_user(
     user_id: str,
     only_room: Optional[str] = None,
 ) -> dict[str, int]:
+    """호환용 counts-only recovery API."""
+    counts, _watermarks, _read_watermarks = await recover_unread_snapshot_for_user(
+        user_id, only_room,
+    )
+    return counts
+
+
+async def _recover_unread_for_user_locked(
+    user_id: str,
+    only_room: Optional[str] = None,
+) -> tuple[tuple[dict[str, int], dict[str, int], dict[str, int]], str]:
     """DB 기준으로 `unread:{user_id}` HASH 재계산 후 HSET.
 
     Redis flush/장애 또는 재초대 후 호출. ws.py 가 백그라운드 태스크로 트리거.
@@ -426,75 +525,167 @@ async def recover_unread_for_user(
         Redis 에 반영된 `{room_id: count}` (0 포함). 실패 시 빈 dict.
     """
     factory = _require_factory()
+    retry_key = unread_recovery_required_key(user_id)
+    recovery_token = uuid.uuid4().hex
+    try:
+        redis_hot = await get_redis_client()
+        if only_room is not None:
+            claimed = await redis_hot.set(retry_key, recovery_token, nx=True)
+            if not claimed:
+                only_room = None
+                await redis_hot.set(retry_key, recovery_token)
+        else:
+            await redis_hot.set(retry_key, recovery_token)
+    except Exception as exc:
+        raise UnreadRecoveryTerminalError(
+            "redis_failed", "unread recovery marker creation failed",
+        ) from exc
+
+    async def _clear_owned_retry_marker() -> None:
+        script = lua_scripts.clear_unread_recovery_required
+        if script is None:
+            raise UnreadRecoveryTerminalError(
+                "cleanup_failed", "clear_unread_recovery_required Lua not loaded",
+            )
+        try:
+            await script(keys=[retry_key], args=[recovery_token])
+        except Exception as exc:
+            raise UnreadRecoveryTerminalError(
+                "cleanup_failed", "unread recovery marker cleanup failed",
+            ) from exc
+
+    async def _ensure_retry_marker() -> bool:
+        try:
+            await redis_hot.set(retry_key, recovery_token, nx=True)
+            return True
+        except Exception as marker_error:
+            logger.warning(
+                "recover_unread: retry marker 복원 실패: user_id={}, err={}",
+                user_id, type(marker_error).__name__,
+            )
+            return False
 
     generation_error: Optional[Exception] = None
     generations: dict[str, int] = {}
-    async with factory() as session:
-        member_repo = ChatRoomMemberRepository(session)
-        last_reads = await member_repo.find_last_read_seqs(
-            user_id,
-            room_ids=[only_room] if only_room else None,
-            for_share=True,
-        )
-        if last_reads:
-            try:
-                redis_hot = await get_redis_client()
-                values = await asyncio.gather(*(
-                    redis_hot.get(room_members_gen_key(room_id))
-                    for room_id in last_reads
-                ))
-                generations = {
-                    room_id: int(value or 0)
-                    for room_id, value in zip(last_reads, values)
-                }
-            except Exception as e:
-                generation_error = e
+    try:
+        async with factory() as session:
+            member_repo = ChatRoomMemberRepository(session)
+            last_reads = await member_repo.find_last_read_seqs(
+                user_id,
+                room_ids=[only_room] if only_room else None,
+                for_share=True,
+            )
+            if last_reads:
+                try:
+                    redis_hot = await get_redis_client()
+                    values = await asyncio.gather(*(
+                        redis_hot.get(room_members_gen_key(room_id))
+                        for room_id in last_reads
+                    ))
+                    generations = {
+                        room_id: int(value or 0)
+                        for room_id, value in zip(last_reads, values)
+                    }
+                except Exception as e:
+                    generation_error = e
+    except Exception as exc:
+        raise UnreadRecoveryTerminalError(
+            "sql_failed", "unread recovery membership snapshot failed",
+        ) from exc
 
     if generation_error is not None:
         logger.warning(
             "recover_unread: generation snapshot 실패 — user_id={}, err={}",
             user_id, generation_error,
         )
-        cleanup_ok = True
-        try:
-            redis_hot = await get_redis_client()
-            await redis_hot.delete(unread_key(user_id))
-        except Exception as del_err:
-            cleanup_ok = False
-            logger.warning(
-                "recover_unread: generation 실패 cleanup DEL 실패 — partial state 잔존 위험: {}",
-                type(del_err).__name__,
-            )
-        chat_unread_recover_inc("redis_failed" if cleanup_ok else "cleanup_failed")
-        return {}
+        marker_ok = await _ensure_retry_marker()
+        return ({}, {}, {}), "redis_failed" if marker_ok else "cleanup_failed"
 
     if not last_reads:
-        chat_unread_recover_inc("ok")
+        await _clear_owned_retry_marker()
         logger.info(
             "recover_unread: user_id={}, only_room={} — 활성 방 없음, skip",
             user_id, only_room,
         )
-        return {}
+        return ({}, {}, {}), "ok"
 
     sem = asyncio.Semaphore(UNREAD_MONGO_CONCURRENCY)
     message_repo = ChatMessageRepository(mongodb.database)
 
-    async def _count(room_id: str, last_read: int) -> tuple[str, int, int, int, int]:
-        async with sem:
+    async def _recover_one_in_session(
+        session: AsyncSession,
+        room_id: str,
+        last_read: int,
+    ) -> tuple[str, int]:
+        room_repo = ChatRoomRepository(session)
+        try:
+            room = await room_repo.find_by_id_for_update(room_id)
+        except Exception as exc:
+            raise UnreadRecoverySqlError from exc
+        if room is None:
+            raise UnreadRecoverySqlError(
+                f"recover_unread: room not found: {room_id}",
+            )
+
+        try:
             redis_hot = await get_redis_client()
-            # count 직전 baseline 스냅샷 — count~write 창에 도착한 메시지의 HINCRBY 를 delta 로
-            # 보존하기 위해. 절대 HSET 이면 그 증가분이 소거돼 뱃지가 undercount 되고 자가치유
-            # 되지 않는다 (mark_read 에서 Lua 로 고친 것과 동일한 레이스).
-            baseline = int(await redis_hot.hget(unread_key(user_id), room_id) or 0)
-            raw = await message_repo.count_after_seq(
+            baseline = int(
+                await redis_hot.hget(unread_key(user_id), room_id) or 0
+            )
+        except Exception as exc:
+            raise UnreadRecoveryApplyError from exc
+        raw, latest_message_seq = await asyncio.gather(
+            message_repo.count_after_seq(
                 chat_room_id=room_id,
                 after_seq=last_read,
                 limit=UNREAD_COUNT_LIMIT,
+            ),
+            message_repo.get_max_server_seq(room_id),
+        )
+        try:
+            final, sync_status, _ = await lua_scripts.mark_read_unread(
+                keys=[
+                    unread_key(user_id), read_sync_key(user_id),
+                    room_members_gen_key(room_id),
+                    unread_watermark_key(user_id),
+                ],
+                args=[
+                    room_id, min(raw, UNREAD_COUNT_CAP), baseline,
+                    UNREAD_COUNT_CAP, last_read, 1, generations[room_id],
+                    latest_message_seq,
+                ],
             )
-            return room_id, min(raw, UNREAD_COUNT_CAP), baseline, last_read, generations[room_id]
+            if int(sync_status) == 3:
+                raise RuntimeError("membership changed during unread recovery")
+        except Exception as exc:
+            raise UnreadRecoveryApplyError from exc
+        return room_id, int(final)
+
+    async def _recover_one(room_id: str, last_read: int) -> tuple[str, int]:
+        async with sem:
+            session_context = factory()
+            try:
+                session = await session_context.__aenter__()
+            except Exception as exc:
+                raise UnreadRecoverySqlError from exc
+            try:
+                result = await _recover_one_in_session(session, room_id, last_read)
+            except BaseException as body_error:
+                try:
+                    await session_context.__aexit__(
+                        type(body_error), body_error, body_error.__traceback__,
+                    )
+                except Exception as exc:
+                    raise UnreadRecoverySqlError from exc
+                raise
+            try:
+                await session_context.__aexit__(None, None, None)
+            except Exception as exc:
+                raise UnreadRecoverySqlError from exc
+            return result
 
     results = await asyncio.gather(
-        *(_count(rid, seq) for rid, seq in last_reads.items()),
+        *(_recover_one(rid, seq) for rid, seq in last_reads.items()),
         return_exceptions=True,
     )
 
@@ -502,73 +693,35 @@ async def recover_unread_for_user(
     if count_errors:
         for error in count_errors:
             logger.warning("recover_unread: user_id={} 방 count 실패: {}", user_id, error)
-        redis_hot = await get_redis_client()
-        cleanup_ok = True
-        try:
-            await redis_hot.delete(unread_key(user_id))
-        except Exception as del_err:
-            cleanup_ok = False
-            logger.warning(
-                "recover_unread: count 실패 cleanup DEL 실패 — partial state 잔존 위험: {}",
-                type(del_err).__name__,
-            )
-        chat_unread_recover_inc("mongo_failed" if cleanup_ok else "cleanup_failed")
-        return {}
+        redis_failed = any(
+            isinstance(error, UnreadRecoveryApplyError) for error in count_errors
+        )
+        sql_failed = any(
+            isinstance(error, UnreadRecoverySqlError) for error in count_errors
+        )
+        result = (
+            "redis_failed" if redis_failed
+            else "sql_failed" if sql_failed
+            else "mongo_failed"
+        )
+        marker_ok = await _ensure_retry_marker()
+        return ({}, {}, {}), result if marker_ok else "cleanup_failed"
 
-    recovered = [
-        item for item in results if not isinstance(item, BaseException)
-    ]  # (room_id, residual, baseline, last_read, membership_generation)
-
-    counts: dict[str, int] = {}
-    if recovered:
-        redis_hot = await get_redis_client()
-        try:
-            for room_id, residual, baseline, last_read, generation in recovered:
-                # 절대 HSET 대신 baseline+delta Lua — residual(DB 잔여) 에 baseline 이후 증가분을
-                # 더해 동시 HINCRBY 를 보존한다 (mark_read_unread.lua 재사용, cap clamp 포함).
-                final, sync_status, _ = await lua_scripts.mark_read_unread(
-                    keys=[
-                        unread_key(user_id), read_sync_key(user_id),
-                        room_members_gen_key(room_id),
-                    ],
-                    args=[
-                        room_id, residual, baseline, UNREAD_COUNT_CAP, last_read, 1,
-                        generation,
-                    ],
-                )
-                if int(sync_status) == 3:
-                    raise RuntimeError("membership changed during unread recovery")
-                counts[room_id] = int(final)
-        except Exception as e:
-            # 중간 실패 시 partial state 로 남으면 다음 재연결의 `get_unread_counts` 가 non-empty
-            # 라 복구 재시도가 안 된다. DEL 로 전체 쓸어 EXISTS=0 을 강제해야 재trigger 된다.
-            logger.warning(
-                "recover_unread: Redis 반영 실패 — partial state 정리 후 counts 취소: "
-                "user_id={}, err={}",
-                user_id, e,
-            )
-            cleanup_ok = True
-            try:
-                await redis_hot.delete(unread_key(user_id))
-            except Exception as del_err:
-                cleanup_ok = False
-                logger.warning(
-                    "recover_unread: cleanup DEL 실패 — partial state 잔존 위험: {}",
-                    type(del_err).__name__,
-                )
-            chat_unread_recover_inc("redis_failed" if cleanup_ok else "cleanup_failed")
-            logger.info(
-                "recover_unread: user_id={}, rooms={}, recovered=0 (redis 실패)",
-                user_id, len(last_reads),
-            )
-            return {}
-
-    chat_unread_recover_inc("ok")
+    await _clear_owned_retry_marker()
+    try:
+        snapshot = await get_unread_snapshot_if_recovered(user_id)
+    except Exception:
+        marker_ok = await _ensure_retry_marker()
+        return ({}, {}, {}), "redis_failed" if marker_ok else "cleanup_failed"
+    if snapshot is None:
+        marker_ok = await _ensure_retry_marker()
+        return ({}, {}, {}), "redis_failed" if marker_ok else "cleanup_failed"
+    counts, _watermarks, _read_watermarks = snapshot
     logger.info(
         "recover_unread: user_id={}, rooms={}, recovered={}, only_room={}",
         user_id, len(last_reads), len(counts), only_room,
     )
-    return counts
+    return snapshot, "ok"
 
 
 def start_reconcile_scheduler(

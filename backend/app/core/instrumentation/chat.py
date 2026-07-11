@@ -183,10 +183,16 @@ CHAT_RECONCILE_OUTCOMES = ("updated", "skipped", "failed")
 
 # unread_recover result:
 # - ok             : 정상 종료 (활성 방 없음 또는 counts 반영 완료)
-# - redis_failed   : pipeline 실패 후 DEL 정리 성공
-# - cleanup_failed : DEL 도 실패 — partial state 잔존 (관측 필요)
+# - redis_failed   : marker/generation/Lua 등 Redis 연산 실패
+# - sql_failed     : room lock 또는 membership SQL 조회 실패
+# - mongo_failed   : residual count 실패
+# - cancelled      : cancellation 전 retry marker 보존/복원 성공
+# - cleanup_failed : 실패 후 retry marker 복원 실패
 # - other          : catch-all
-CHAT_UNREAD_RECOVER_RESULTS = ("ok", "redis_failed", "cleanup_failed", "other")
+CHAT_UNREAD_RECOVER_RESULTS = (
+    "ok", "redis_failed", "sql_failed", "mongo_failed", "cancelled",
+    "cleanup_failed", "other",
+)
 
 
 def chat_reconcile_dirty_set_size_set(value: int) -> None:
