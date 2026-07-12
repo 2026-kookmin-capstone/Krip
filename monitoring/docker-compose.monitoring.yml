@@ -205,7 +205,7 @@ services:
   # ──────────────────────────────────────────────────────────────────────
   # Grafana Alloy — backend logs tail → privacy pipeline → Loki push
   #
-  # ../backend/logs 를 read-only 로 마운트해서 active + 회전 .gz 를 추적한다.
+  # backend와 공유하는 named volume을 read-only로 마운트해서 active + 회전 .gz를 추적한다.
   # ──────────────────────────────────────────────────────────────────────
   alloy:
     image: grafana/alloy:v1.17.1
@@ -221,7 +221,7 @@ services:
       LOKI_URL: http://loki:3100/loki/api/v1/push
     volumes:
       - ./monitoring/alloy/config.alloy:/etc/alloy/config.alloy:ro
-      - ./backend/logs:/backend/logs:ro
+      - backend-logs:/backend/logs:ro
       - alloy-data:/var/lib/alloy/data
     networks:
       - monitoring-network
@@ -237,6 +237,8 @@ volumes:
     name: krip-prometheus-data
   grafana-data:
     name: krip-grafana-data
+  backend-logs:
+    name: krip-backend-logs
   loki-data:
     name: krip-loki-data
   alloy-data:

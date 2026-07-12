@@ -7,44 +7,35 @@ requires-python = ">=3.11,<3.12"
 dependencies = [
     # backend
     "aiofiles==24.1.0",
-    "aiosmtplib==5.0.0",
     "alembic==1.16.4",
     "apscheduler==3.11.0",
     "asyncpg==0.30.0",
-    "beanie==1.26.0",
+    "beanie==1.30.0",
+    "cryptography==48.0.1",
     "dependency-injector==4.48.2",
-    "fastapi[standard]==0.118.0",
-    "httpx==0.27.2",
+    "fastapi[standard]==0.139.0",
+    "httpx==0.28.1",
     "loguru==0.7.3",
-    "motor==3.3.2",
+    "motor==3.7.1",
     "passlib[argon2]==1.7.4",
     "psycopg2-binary==2.9.10",
     "pydantic-settings==2.10.1",
-    "pyjwt[crypto]==2.10.1",
-    "pymongo==4.6.3",
-    "pytest==8.4.2",
-    "pytest-asyncio==1.2.0",
-    "python-socketio==5.13.0",
+    "pyjwt[crypto]==2.13.0",
+    "pymongo==4.17.0",
+    "python-socketio==5.16.3",
     "pytz==2024.1",
     "redis==6.4.0",
     "sqlalchemy==2.0.48",
-    "openpyxl==3.1.5",
-    "pytest-cov==6.1.1",
     "boto3==1.35.0",
-    "pillow==12.1.1",
+    "pillow==12.3.0",
     "firebase-admin>=6.5.0",
     # Monitoring
     "prometheus-client>=0.21.0",
     "prometheus-fastapi-instrumentator>=7.0.0",
     # LLM
-    "langchain==1.0.0",
-    "langchain-chroma==1.0.0",
-    "langchain-community==0.4.1",
-    "langchain-google-genai>=3.2.0",
-    # Test
+    "langchain-google-genai==4.2.7",
+    "langgraph==1.2.9",
     "greenlet>=3.3.2",
-    # Lint (format 미사용 — 수동 줄바꿈 보존)
-    "ruff==0.15.19",
 ]
 
 # =============================================================================
@@ -143,5 +134,9 @@ output = "coverage.json"
 
 [dependency-groups]
 dev = [
+    "pytest==9.1.1",
+    "pytest-asyncio==1.4.0",
+    "pytest-cov==6.1.1",
+    "ruff==0.15.19",
     "testcontainers>=4.14.2",
 ]

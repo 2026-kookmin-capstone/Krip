@@ -74,7 +74,7 @@ services:
       - ./backend/app:/backend/app:ro
       - ./backend/migration:/backend/migration
       - ./backend/data:/backend/data
-      - ./backend/logs:/backend/logs
+      - backend-logs:/backend/logs
       - ./backend/scripts:/backend/scripts:ro           # 업로드 스크립트
       - ./backend/seoul_data:/backend/seoul_data:ro     # 장소 JSON 데이터
       - ./backend/secrets:/backend/secrets:ro           # FCM 토큰
@@ -92,3 +92,5 @@ volumes:
     name: krip-mongodb-data
   redis-data:
     name: krip-redis-data
+  backend-logs:
+    name: krip-backend-logs
