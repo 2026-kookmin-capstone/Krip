@@ -6,9 +6,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
 from app.domain.chat.model.chat_room_member import ChatRoomMember
+from app.util.cursor import decode_cursor, keyset_where
 
 
-# 정식 커서 페이지네이션 도입 전 폭주 방어 상한.
 PAGE_SIZE = 500
 
 
@@ -62,9 +62,10 @@ class ChatRoomRepository:
     async def find_rooms_of_user(
         self,
         user_id: str,
+        cursor: Optional[str] = None,
         limit: int = PAGE_SIZE,
     ) -> list[tuple[ChatRoom, Optional[str], Optional[bool]]]:
-        """유저의 활성 방 목록 (effective_last_at DESC).
+        """유저의 활성 방 목록 (`effective_last_at`, `chat_room_id`) DESC.
 
         반환: `(ChatRoom, peer_user_id, notification_muted)` — JOIN 으로 mute 까지 N+1 없이 한 번에.
         1:1 의 peer 는 함께 계산, 그룹은 None.
@@ -88,9 +89,28 @@ class ChatRoomRepository:
                 ChatRoomMember.user_id == user_id,
                 ChatRoomMember.is_left.is_(False),
             )
-            .order_by(ChatRoom.effective_last_at.desc())
-            .limit(limit)
         )
+
+        if cursor:
+            decoded = decode_cursor(cursor)
+            if (
+                decoded is None
+                or decoded[0].tzinfo is None
+                or decoded[0].utcoffset() is None
+            ):
+                raise ValueError("유효하지 않은 커서입니다.")
+            sort_value, room_id = decoded
+            stmt = stmt.where(keyset_where(
+                ChatRoom.effective_last_at,
+                ChatRoom.chat_room_id,
+                sort_value,
+                room_id,
+            ))
+
+        stmt = stmt.order_by(
+            ChatRoom.effective_last_at.desc(),
+            ChatRoom.chat_room_id.desc(),
+        ).limit(limit)
 
         result = await self.session.execute(stmt)
         return [(row[0], row[1], row[2]) for row in result.all()]

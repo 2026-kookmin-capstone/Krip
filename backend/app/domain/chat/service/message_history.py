@@ -23,9 +23,10 @@ from app.domain.chat.dto.room import (
 from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
 from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
 from app.domain.chat.repository.chat_message import ChatMessageRepository
-from app.domain.chat.repository.chat_room import ChatRoomRepository
+from app.domain.chat.repository.chat_room import PAGE_SIZE, ChatRoomRepository
 from app.domain.chat.service.exception import ChatRoomNotFoundError
 from app.domain.friend.repository.friendship import FriendshipRepository
+from app.util.cursor import encode_cursor
 
 
 logger = get_logger("chat.history")
@@ -42,14 +43,20 @@ class MessageHistoryService:
         self.uow = uow
 
     @transactional
-    async def list_rooms(self, me_id: str) -> ChatRoomListData:
-        """내가 속한 활성 방을 effective_last_at DESC 로 PAGE_SIZE 까지."""
+    async def list_rooms(
+        self, me_id: str, cursor: Optional[str] = None,
+    ) -> ChatRoomListData:
+        """내가 속한 활성 방을 `(effective_last_at, chat_room_id)` DESC 로 조회."""
         chat_room_repo = ChatRoomRepository(self._session)
         user_repo = UserRepository(self._session)
         message_repo = ChatMessageRepository(mongodb.database)
         redis_hot = await get_redis_client()
 
-        rows = await chat_room_repo.find_rooms_of_user(me_id)
+        rows = await chat_room_repo.find_rooms_of_user(
+            me_id, cursor=cursor, limit=PAGE_SIZE + 1,
+        )
+        has_more = len(rows) > PAGE_SIZE
+        rows = rows[:PAGE_SIZE]
 
         peer_ids = [pid for _, pid, _ in rows if pid is not None]
         peer_map = await user_repo.find_by_ids_with_profile(peer_ids)
@@ -74,7 +81,14 @@ class MessageHistoryService:
             for room, peer_user_id, mute in rows
         ]
 
-        return ChatRoomListData(items=items, next_cursor=None)
+        next_cursor = None
+        if has_more and rows:
+            last_room = rows[-1][0]
+            next_cursor = encode_cursor(
+                last_room.effective_last_at,
+                last_room.chat_room_id,
+            )
+        return ChatRoomListData(items=items, next_cursor=next_cursor)
 
     @transactional
     async def get_room(self, *, me_id: str, room_id: str) -> ChatRoomData:

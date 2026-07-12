@@ -5,14 +5,20 @@
 next_cursor 를 따라가며 누락 없이 전부 내려오는지도 확인.
 """
 
+from datetime import datetime, timezone
+
 import pytest
 import pytest_asyncio
 
 from app.domain.chat.dto.message import MessageListData
 from app.domain.chat.model.chat_message import MessageType
+from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
+from app.domain.chat.model.chat_room_member import ChatRoomMember
+from app.domain.chat.repository.chat_room import ChatRoomRepository
 from app.domain.chat.service.message_history import MessageHistoryService
 from app.domain.chat.service.room import RoomService
 from app.domain.friend.model.friendship import Friendship, FriendshipStatus
+from app.util.cursor import encode_cursor
 
 
 pytestmark = pytest.mark.integration
@@ -233,6 +239,96 @@ class TestPermissionFlow:
 # ──────────────────────────────────────────────────────────────────
 
 class TestListRoomsFlow:
+    async def test_501st_room_is_reachable_via_service_cursor(
+        self, uow, session_factory, seed_users, redis_hot, patch_external_clients,
+    ):
+        service = MessageHistoryService(uow)
+        user_id, *_ = await seed_users(3)
+        created_at = datetime(2026, 7, 12, tzinfo=timezone.utc)
+        room_ids = [f"CR_page_{index:04d}" for index in range(501)]
+
+        async with session_factory() as session:
+            session.add_all([
+                ChatRoom(
+                    chat_room_id=room_id,
+                    type=ChatRoomType.GROUP,
+                    title=room_id,
+                    creator_id=user_id,
+                    created_at=created_at,
+                )
+                for room_id in room_ids
+            ])
+            session.add_all([
+                ChatRoomMember(
+                    chat_room_id=room_id,
+                    user_id=user_id,
+                    joined_at=created_at,
+                    is_left=False,
+                    notification_muted=False,
+                )
+                for room_id in room_ids
+            ])
+            await session.commit()
+
+        first = await service.list_rooms(user_id)
+        second = await service.list_rooms(user_id, cursor=first.next_cursor)
+
+        assert len(first.items) == 500
+        assert first.next_cursor is not None
+        assert len(second.items) == 1
+        assert second.next_cursor is None
+        assert {
+            room.chat_room_id for room in [*first.items, *second.items]
+        } == set(room_ids)
+
+    async def test_keyset_paginates_identical_effective_timestamp_without_gaps(
+        self, session_factory, seed_users,
+    ):
+        user_id, *_ = await seed_users(3)
+        at = datetime(2026, 7, 12, 12, 0, tzinfo=timezone.utc)
+        room_ids = [f"CR_page_{i}" for i in range(5)]
+
+        async with session_factory() as session:
+            session.add_all([
+                ChatRoom(
+                    chat_room_id=room_id,
+                    type=ChatRoomType.GROUP,
+                    title=room_id,
+                    creator_id=user_id,
+                    created_at=at,
+                )
+                for room_id in room_ids
+            ])
+            session.add_all([
+                ChatRoomMember(
+                    chat_room_id=room_id,
+                    user_id=user_id,
+                    is_left=False,
+                )
+                for room_id in room_ids
+            ])
+            await session.commit()
+
+        seen: list[str] = []
+        cursor = None
+        async with session_factory() as session:
+            repo = ChatRoomRepository(session)
+            while True:
+                rows = await repo.find_rooms_of_user(
+                    user_id, cursor=cursor, limit=2,
+                )
+                if not rows:
+                    break
+                seen.extend(room.chat_room_id for room, _, _ in rows)
+                last_room = rows[-1][0]
+                cursor = encode_cursor(
+                    last_room.effective_last_at,
+                    last_room.chat_room_id,
+                )
+
+        assert seen == sorted(room_ids, reverse=True)
+        assert len(seen) == len(set(seen))
+
     async def test_includes_last_message_preview_and_unread(
         self, uow, room_with_messages, redis_hot, patch_external_clients,
     ):

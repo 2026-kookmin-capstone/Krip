@@ -10,6 +10,7 @@ import pytest
 
 from app.domain.chat.model.chat_room import ChatRoomType
 from app.domain.chat.service.exception import ChatRoomNotFoundError
+from app.util.cursor import decode_cursor
 
 
 NOW = datetime(2026, 4, 22, 12, 0, 0, tzinfo=timezone.utc)
@@ -188,6 +189,33 @@ class TestFindMessagesAfter:
 
 @pytest.mark.unit
 class TestListRooms:
+    async def test_overflow_page_trims_and_returns_cursor(
+        self, service, chat_room_repo_mock, redis_mock, message_repo_mock,
+        monkeypatch,
+    ):
+        monkeypatch.setattr(
+            "app.domain.chat.service.message_history.PAGE_SIZE", 2,
+            raising=False,
+        )
+        rooms = [
+            _mk_room(chat_room_id=f"CR_{i}", type_=ChatRoomType.GROUP, title="T")
+            for i in range(3)
+        ]
+        chat_room_repo_mock.find_rooms_of_user.return_value = [
+            (room, None, None) for room in rooms
+        ]
+        redis_mock.hgetall.return_value = {}
+        message_repo_mock.find_by_ids.return_value = {}
+
+        result = await service.list_rooms(me_id="U_A")
+
+        assert [item.chat_room_id for item in result.items] == ["CR_0", "CR_1"]
+        assert result.next_cursor is not None
+        assert decode_cursor(result.next_cursor) == (NOW, "CR_1")
+        chat_room_repo_mock.find_rooms_of_user.assert_awaited_once_with(
+            "U_A", cursor=None, limit=3,
+        )
+
     async def test_empty_when_no_rooms(
         self, service, chat_room_repo_mock, redis_mock,
     ):
@@ -197,6 +225,32 @@ class TestListRooms:
         result = await service.list_rooms(me_id="U_A")
         assert result.items == []
         assert result.next_cursor is None
+
+    async def test_exact_page_has_no_cursor(
+        self, service, chat_room_repo_mock, redis_mock, message_repo_mock,
+        monkeypatch,
+    ):
+        monkeypatch.setattr(
+            "app.domain.chat.service.message_history.PAGE_SIZE", 2,
+            raising=False,
+        )
+        rooms = [
+            _mk_room(chat_room_id=f"CR_{i}", type_=ChatRoomType.GROUP, title="T")
+            for i in range(2)
+        ]
+        chat_room_repo_mock.find_rooms_of_user.return_value = [
+            (room, None, None) for room in rooms
+        ]
+        redis_mock.hgetall.return_value = {}
+        message_repo_mock.find_by_ids.return_value = {}
+
+        result = await service.list_rooms(me_id="U_A")
+
+        assert len(result.items) == 2
+        assert result.next_cursor is None
+        chat_room_repo_mock.find_rooms_of_user.assert_awaited_once_with(
+            "U_A", cursor=None, limit=3,
+        )
 
     async def test_direct_room_with_peer_profile(
         self, service, chat_room_repo_mock, user_repo_mock, redis_mock,
