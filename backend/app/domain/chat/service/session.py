@@ -7,13 +7,16 @@
 
 ZSET 의 score 가 만료시각이라 `ZREMRANGEBYSCORE -inf <now>` 한 번으로 죽은 세션 청소 — 자가 치유.
 """
+import asyncio
 import time
 
 from app.config.setting import settings
+from app.core.chat.lua_script import lua_scripts
 from app.core.chat.redis_key import (
     MAX_SESSIONS_PER_USER,
     SESSION_TTL,
     sess_key,
+    session_create_result_key,
     sessions_key,
     ws_route_key,
 )
@@ -57,25 +60,117 @@ class SessionService:
             "connected_at": str(now_ms),
         })
         pipe.expire(sess_key(session_id), SESSION_TTL)
-        pipe.zadd(sessions_key(user_id), {session_id: expires_ms})
         pipe.set(ws_route_key(session_id), settings.NODE_ID, ex=SESSION_TTL)
-        await pipe.execute()
+        try:
+            await pipe.execute()
+        except BaseException:
+            try:
+                cleanup = redis.pipeline(transaction=True)
+                cleanup.delete(sess_key(session_id), ws_route_key(session_id))
+                await cleanup.execute()
+            except Exception as cleanup_exc:
+                logger.warning(
+                    "실패한 세션 준비 cleanup 실패: session_id={}, err={}",
+                    session_id, cleanup_exc,
+                )
+            raise
 
-        await self._enforce_session_limit(user_id)
+        script = lua_scripts.create_session
+        if script is None:
+            raise RuntimeError("create_session Lua script가 로드되지 않았습니다.")
+        script_args = {
+            "keys": [
+                sessions_key(user_id),
+                session_create_result_key(session_id),
+            ],
+            "args": [
+                session_id,
+                expires_ms,
+                now_ms,
+                MAX_SESSIONS_PER_USER,
+                SESSION_TTL,
+            ],
+            "client": redis,
+        }
+        cancellation_seen = [False]
+        for attempt in range(3):
+            script_task = asyncio.create_task(script(**script_args))
+            try:
+                revoked_session_ids = list(await self._drain_task(
+                    script_task, cancellation_seen,
+                ))
+                break
+            except Exception:
+                if attempt == 2:
+                    if cancellation_seen[0]:
+                        raise asyncio.CancelledError
+                    raise
+        else:  # pragma: no cover - range above always exits or raises
+            raise RuntimeError("create_session Lua 결과를 확인하지 못했습니다.")
+
+        finalize_task = asyncio.create_task(
+            self._finalize_revoked_sessions(user_id, revoked_session_ids),
+        )
+        await self._drain_task(finalize_task, cancellation_seen)
+        if cancellation_seen[0]:
+            raise asyncio.CancelledError
         return session_id
 
-    async def heartbeat(self, session_id: str, user_id: str) -> None:
-        """ping/pong 시 세 키 TTL 을 pipeline 1번으로 원자 연장.
+    @staticmethod
+    async def _drain_task(task: asyncio.Task, cancellation_seen: list[bool]):
+        while True:
+            try:
+                return await asyncio.shield(task)
+            except asyncio.CancelledError:
+                if task.cancelled():
+                    raise
+                cancellation_seen[0] = True
 
-        `ZADD XX` — 이미 있는 멤버의 score 만 갱신. 죽은 세션 부활 방지.
-        """
+    async def _finalize_revoked_sessions(
+        self, user_id: str, revoked_session_ids: list[str],
+    ) -> None:
+        redis = await get_redis_client()
+        for revoked_session_id in revoked_session_ids:
+            try:
+                await self._fanout.fan_out_to_session(
+                    revoked_session_id,
+                    {"type": "session_revoked", "session_id": revoked_session_id},
+                )
+            except Exception as exc:
+                logger.warning(
+                    "세션 revoke fanout 실패: session_id={}, err={}",
+                    revoked_session_id, exc,
+                )
+            finally:
+                try:
+                    await redis.delete(ws_route_key(revoked_session_id))
+                except Exception as cleanup_exc:
+                    logger.warning(
+                        "revoke route cleanup 실패: session_id={}, err={}",
+                        revoked_session_id, cleanup_exc,
+                    )
+            logger.info(
+                "세션 한도 초과로 revoke: user_id={}, revoked_session_id={}",
+                user_id, revoked_session_id,
+            )
+
+    async def heartbeat(self, session_id: str, user_id: str) -> bool:
+        """live membership이면 TTL을 연장하고, revoke 상태면 route를 정리한다."""
         new_expires_ms = self._expires_ms()
         redis = await get_redis_client()
-        pipe = redis.pipeline(transaction=True)
-        pipe.expire(sess_key(session_id), SESSION_TTL)
-        pipe.expire(ws_route_key(session_id), SESSION_TTL)
-        pipe.zadd(sessions_key(user_id), {session_id: new_expires_ms}, xx=True)
-        await pipe.execute()
+        script = lua_scripts.heartbeat_session
+        if script is None:
+            raise RuntimeError("heartbeat_session Lua script가 로드되지 않았습니다.")
+        result = await script(
+            keys=[
+                sess_key(session_id),
+                ws_route_key(session_id),
+                sessions_key(user_id),
+            ],
+            args=[session_id, new_expires_ms, SESSION_TTL],
+            client=redis,
+        )
+        return bool(result)
 
     async def update_token_jti(self, session_id: str, new_token_jti: str) -> None:
         """JWT refresh 시 token_jti 만 갱신. session_id 는 유지."""
@@ -132,33 +227,3 @@ class SessionService:
             user_id, len(session_ids),
         )
         return len(session_ids)
-
-    async def _enforce_session_limit(self, user_id: str) -> None:
-        """ZCARD > MAX 면 가장 오래된 세션부터 revoke. 만료분은 ZREMRANGEBYSCORE 로 선청소."""
-        redis = await get_redis_client()
-
-        now_ms = self._now_ms()
-        await redis.zremrangebyscore(sessions_key(user_id), "-inf", now_ms)
-
-        count = await redis.zcard(sessions_key(user_id))
-        while count > MAX_SESSIONS_PER_USER:
-            oldest = await redis.zrange(sessions_key(user_id), 0, 0)
-            if not oldest:
-                break
-            old_sid = oldest[0]
-
-            await self._fanout.fan_out_to_session(
-                old_sid,
-                {"type": "session_revoked", "session_id": old_sid},
-            )
-
-            pipe = redis.pipeline(transaction=True)
-            pipe.zrem(sessions_key(user_id), old_sid)
-            pipe.delete(sess_key(old_sid), ws_route_key(old_sid))
-            await pipe.execute()
-
-            logger.info(
-                "세션 한도 초과로 revoke: user_id={}, revoked_session_id={}",
-                user_id, old_sid,
-            )
-            count -= 1

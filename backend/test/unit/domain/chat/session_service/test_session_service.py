@@ -1,11 +1,12 @@
 """SessionService 단위 테스트 — Redis 명령 시퀀스 + 한도 초과 revoke."""
+import asyncio
 from unittest.mock import AsyncMock
 
 import pytest
 
 from app.core.chat.redis_key import (
-    MAX_SESSIONS_PER_USER,
     sess_key,
+    session_create_result_key,
     sessions_key,
     ws_route_key,
 )
@@ -21,33 +22,158 @@ class TestCreateSession:
         sid = await service.create_session(user_id="U_A", token_jti="jti_1")
         assert sid.startswith("WS_")
 
-    async def test_first_pipeline_writes_four_keys(self, service, redis_mock):
-        """create_session 의 첫 pipeline 에서 HSET + EXPIRE + ZADD + SET 4개 write."""
+    async def test_prepares_ttl_keys_then_adds_session_via_lua(
+        self, service, redis_mock, create_session_script,
+    ):
         await service.create_session(user_id="U_A", token_jti="jti_1")
 
         assert len(redis_mock._pipes) >= 1
         p0 = redis_mock._pipes[0]
         assert p0.hset.called
         assert p0.expire.called
-        assert p0.zadd.called
         assert p0.set.called
+        assert not p0.zadd.called
         p0.execute.assert_awaited()
+        create_session_script.assert_awaited_once()
+        created_sid = create_session_script.call_args.kwargs["args"][0]
+        assert create_session_script.call_args.kwargs["keys"] == [
+            sessions_key("U_A"),
+            session_create_result_key(created_sid),
+        ]
 
-    async def test_limit_enforced_revokes_oldest(self, service, redis_mock, fanout_mock):
-        """한도 초과 시 가장 오래된 세션에 session_revoked 직송 + DEL."""
-        redis_mock.zcard = AsyncMock(side_effect=[MAX_SESSIONS_PER_USER + 1, MAX_SESSIONS_PER_USER])
-        redis_mock.zrange = AsyncMock(side_effect=[["WS_old"]])
+    async def test_lua_selected_sessions_are_notified_then_route_is_deleted(
+        self, service, redis_mock, fanout_mock, create_session_script,
+    ):
+        create_session_script.return_value = ["WS_old_1", "WS_old_2"]
 
         await service.create_session(user_id="U_A", token_jti="jti_1")
 
-        fanout_mock.fan_out_to_session.assert_awaited_once()
-        args, _ = fanout_mock.fan_out_to_session.call_args
-        assert args[0] == "WS_old"
-        assert args[1] == {"type": "session_revoked", "session_id": "WS_old"}
+        assert fanout_mock.fan_out_to_session.await_count == 2
+        redis_mock.delete.assert_any_await(ws_route_key("WS_old_1"))
+        redis_mock.delete.assert_any_await(ws_route_key("WS_old_2"))
 
-        # revoke pipeline 에서 sessions ZREM + sess/ws_route DEL
-        revoke_pipes = [p for p in redis_mock._pipes if p.zrem.called and p.delete.called]
-        assert revoke_pipes, "revoke pipeline 을 찾지 못함"
+    async def test_fanout_failure_does_not_fail_created_session(
+        self, service, redis_mock, fanout_mock, create_session_script,
+    ):
+        create_session_script.return_value = ["WS_old"]
+        fanout_mock.fan_out_to_session.side_effect = RuntimeError("publish failed")
+
+        sid = await service.create_session(user_id="U_A", token_jti="jti_1")
+
+        assert sid.startswith("WS_")
+        redis_mock.delete.assert_awaited_once_with(ws_route_key("WS_old"))
+
+    async def test_cancellation_drains_all_revoked_session_cleanup(
+        self, service, redis_mock, fanout_mock, create_session_script,
+    ):
+        create_session_script.return_value = ["WS_old_1", "WS_old_2"]
+        fanout_started = asyncio.Event()
+        release_fanout = asyncio.Event()
+
+        async def delayed_fanout(*_args, **_kwargs):
+            fanout_started.set()
+            await release_fanout.wait()
+
+        fanout_mock.fan_out_to_session.side_effect = delayed_fanout
+        create_task = asyncio.create_task(service.create_session("U_A", "jti_1"))
+        await fanout_started.wait()
+        create_task.cancel()
+        release_fanout.set()
+
+        with pytest.raises(asyncio.CancelledError):
+            await create_task
+
+        assert fanout_mock.fan_out_to_session.await_count == 2
+        redis_mock.delete.assert_any_await(ws_route_key("WS_old_1"))
+        redis_mock.delete.assert_any_await(ws_route_key("WS_old_2"))
+
+    async def test_cancellation_during_lua_drains_result_and_cleanup(
+        self, service, redis_mock, fanout_mock, create_session_script,
+    ):
+        script_started = asyncio.Event()
+        release_script = asyncio.Event()
+
+        async def committed_script(**_kwargs):
+            script_started.set()
+            await release_script.wait()
+            return ["WS_old"]
+
+        create_session_script.side_effect = committed_script
+        create_task = asyncio.create_task(service.create_session("U_A", "jti_1"))
+        await script_started.wait()
+        create_task.cancel()
+        release_script.set()
+
+        with pytest.raises(asyncio.CancelledError):
+            await create_task
+
+        fanout_mock.fan_out_to_session.assert_awaited_once()
+        redis_mock.delete.assert_awaited_once_with(ws_route_key("WS_old"))
+
+    async def test_cancelled_lost_lua_response_retries_then_finalizes(
+        self, service, redis_mock, fanout_mock, create_session_script,
+    ):
+        script_started = asyncio.Event()
+        lose_response = asyncio.Event()
+
+        calls = 0
+
+        async def committed_but_lost(**_kwargs):
+            nonlocal calls
+            calls += 1
+            if calls == 1:
+                script_started.set()
+                await lose_response.wait()
+                raise TimeoutError("committed response lost")
+            return ["WS_old"]
+
+        create_session_script.side_effect = committed_but_lost
+        create_task = asyncio.create_task(service.create_session("U_A", "jti_1"))
+        await script_started.wait()
+        create_task.cancel()
+        lose_response.set()
+
+        with pytest.raises(asyncio.CancelledError):
+            await create_task
+
+        assert create_session_script.await_count == 2
+        fanout_mock.fan_out_to_session.assert_awaited_once()
+        redis_mock.delete.assert_awaited_once_with(ws_route_key("WS_old"))
+
+    async def test_indeterminate_lua_failure_does_not_compensate_session(
+        self, service, redis_mock, create_session_script,
+    ):
+        create_session_script.side_effect = TimeoutError("response lost")
+
+        with pytest.raises(TimeoutError, match="response lost"):
+            await service.create_session(user_id="U_A", token_jti="jti_1")
+
+        assert len(redis_mock._pipes) == 1
+        redis_mock.delete.assert_not_awaited()
+        assert create_session_script.await_count == 3
+
+    async def test_lost_lua_response_recovers_idempotent_result(
+        self, service, fanout_mock, create_session_script,
+    ):
+        create_session_script.side_effect = [
+            TimeoutError("response lost"),
+            ["WS_old"],
+        ]
+
+        sid = await service.create_session("U_A", "jti_1")
+
+        assert sid.startswith("WS_")
+        assert create_session_script.await_count == 2
+        fanout_mock.fan_out_to_session.assert_awaited_once()
+
+    async def test_heartbeat_returns_atomic_membership_result(
+        self, service, heartbeat_script,
+    ):
+        heartbeat_script.return_value = 0
+
+        alive = await service.heartbeat("WS_dead", "U_A")
+
+        assert alive is False
 
 
 # ──────────────────────────────────────────────────────────────────
@@ -56,20 +182,18 @@ class TestCreateSession:
 
 @pytest.mark.unit
 class TestHeartbeat:
-    async def test_extends_three_keys_with_zadd_xx(self, service, redis_mock):
-        await service.heartbeat(session_id="WS_1", user_id="U_A")
+    async def test_extends_three_keys_atomically(
+        self, service, redis_mock, heartbeat_script,
+    ):
+        assert await service.heartbeat(session_id="WS_1", user_id="U_A") is True
 
-        assert len(redis_mock._pipes) == 1
-        p = redis_mock._pipes[0]
-
-        # expire 는 sess + ws_route 두 번
-        expire_keys = [c.args[0] for c in p.expire.call_args_list]
-        assert sess_key("WS_1") in expire_keys
-        assert ws_route_key("WS_1") in expire_keys
-
-        # zadd XX 옵션으로 기존 멤버 score 만 갱신
-        p.zadd.assert_called_once()
-        assert p.zadd.call_args.kwargs.get("xx") is True
+        heartbeat_script.assert_awaited_once()
+        assert heartbeat_script.call_args.kwargs["keys"] == [
+            sess_key("WS_1"),
+            ws_route_key("WS_1"),
+            sessions_key("U_A"),
+        ]
+        assert heartbeat_script.call_args.kwargs["client"] is redis_mock
 
 
 # ──────────────────────────────────────────────────────────────────

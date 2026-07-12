@@ -173,7 +173,7 @@ async def ws_chat(
             logger.warning("unread 동기화 실패 (무시하고 진행): user_id={}, err={!r}", user_id, e)
 
         heartbeat_task = asyncio.create_task(
-            _heartbeat_loop(session_svc, session_id, user_id),
+            _heartbeat_loop(websocket, session_svc, session_id, user_id),
             name=f"chat-hb-{session_id}",
         )
 
@@ -547,6 +547,7 @@ async def _handle_read(
 
 
 async def _heartbeat_loop(
+    websocket: WebSocket,
     session_svc: SessionService,
     session_id: str,
     user_id: str,
@@ -556,7 +557,9 @@ async def _heartbeat_loop(
         while True:
             await asyncio.sleep(HEARTBEAT_INTERVAL)
             try:
-                await session_svc.heartbeat(session_id, user_id)
+                if not await session_svc.heartbeat(session_id, user_id):
+                    await websocket.close(code=CLOSE_AUTH_EXPIRED)
+                    return
             except Exception as e:
                 logger.warning(
                     "heartbeat 실패 (계속 진행): session_id={}, err={}", session_id, e,

@@ -1,15 +1,18 @@
 """PHASE_1 통합 체크리스트 — "동일 유저 11 번째 로그인 → 가장 오래된 세션 revoke".
 
-단위 테스트가 Redis mock 기반으로 이미 존재하지만, ZREMRANGEBYSCORE + ZRANGE + 삭제
-pipeline 이 실 Redis ZSET 에서 정확히 동작하는지는 통합에서 증명해야 한다.
+원자 create-session Lua의 동시 limit, idempotent result, revoke cleanup이 실제 Redis에서
+정확히 동작하는지 검증한다.
 """
 import asyncio
 
 import pytest
 
+from app.core.chat.lua_script import lua_scripts
 from app.core.chat.redis_key import (
     MAX_SESSIONS_PER_USER,
+    SESSION_TTL,
     sess_key,
+    session_create_result_key,
     sessions_key,
     ws_route_key,
 )
@@ -19,6 +22,54 @@ pytestmark = pytest.mark.integration
 
 
 class TestSessionLimitOnRealRedis:
+    async def test_create_session_lua_retry_returns_committed_result(
+        self, session_service, redis_hot, chat_fanout_stub,
+    ):
+        user_id = "USER_IDEMPOTENT_LIMIT"
+        for i in range(MAX_SESSIONS_PER_USER):
+            await session_service.create_session(user_id, f"existing-{i}")
+            await asyncio.sleep(0.003)
+
+        sid = await session_service.create_session(user_id, "new")
+        original_victim = chat_fanout_stub.fan_out_to_session.call_args.args[0]
+        sessions_before_retry = await redis_hot.zrange(sessions_key(user_id), 0, -1)
+        fanout_count_before_retry = chat_fanout_stub.fan_out_to_session.await_count
+        script = lua_scripts.create_session
+        assert script is not None
+        retried_result = await script(
+            keys=[sessions_key(user_id), session_create_result_key(sid)],
+            args=[sid, 0, 0, MAX_SESSIONS_PER_USER, SESSION_TTL],
+            client=redis_hot,
+        )
+
+        assert retried_result == [original_victim]
+        assert await redis_hot.zcard(sessions_key(user_id)) == MAX_SESSIONS_PER_USER
+        assert await redis_hot.zrange(sessions_key(user_id), 0, -1) == sessions_before_retry
+        assert chat_fanout_stub.fan_out_to_session.await_count == fanout_count_before_retry
+
+    async def test_concurrent_creates_do_not_revoke_below_limit(
+        self, session_service, redis_hot, chat_fanout_stub,
+    ):
+        user_id = "USER_CONCURRENT_LIMIT"
+        existing = []
+        for i in range(MAX_SESSIONS_PER_USER):
+            existing.append(await session_service.create_session(user_id, f"existing-{i}"))
+            await asyncio.sleep(0.003)
+
+        first_sid, second_sid = await asyncio.gather(
+            session_service.create_session(user_id, "concurrent-1"),
+            session_service.create_session(user_id, "concurrent-2"),
+        )
+
+        assert await redis_hot.zcard(sessions_key(user_id)) == MAX_SESSIONS_PER_USER
+        assert await redis_hot.exists(sess_key(first_sid)) == 1
+        assert await redis_hot.exists(sess_key(second_sid)) == 1
+        existing_alive = await asyncio.gather(*(
+            redis_hot.exists(sess_key(sid)) for sid in existing
+        ))
+        assert sum(existing_alive) == MAX_SESSIONS_PER_USER - 2
+        assert chat_fanout_stub.fan_out_to_session.await_count == 2
+
     async def test_exceeding_limit_revokes_oldest_session(
         self, session_service, redis_hot, chat_fanout_stub,
     ):

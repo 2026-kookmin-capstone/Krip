@@ -35,6 +35,8 @@ class LuaScripts:
         self.populate_members: Optional[AsyncScript] = None
         self.claim_dirty_rooms: Optional[AsyncScript] = None
         self.ack_dirty_rooms: Optional[AsyncScript] = None
+        self.create_session: Optional[AsyncScript] = None
+        self.heartbeat_session: Optional[AsyncScript] = None
 
     def load(self, hot_client: Redis) -> None:
         """startup 1회. `instrument_lua_script` 로 감싸 호출 카운트 자동 부착."""
@@ -72,6 +74,12 @@ class LuaScripts:
         )
         self.ack_dirty_rooms = instrument_lua_script(
             hot_client.register_script(_read("ack_dirty_rooms.lua")), "ack_dirty_rooms",
+        )
+        self.create_session = instrument_lua_script(
+            hot_client.register_script(_read("create_session.lua")), "create_session",
+        )
+        self.heartbeat_session = instrument_lua_script(
+            hot_client.register_script(_read("heartbeat_session.lua")), "heartbeat_session",
         )
 
 

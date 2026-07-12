@@ -23,6 +23,17 @@ _WAIT = _SHORT_TTL + 1
 
 
 class TestSessionAutoExpiresOnTtl:
+    async def test_heartbeat_cleans_route_when_session_was_revoked(
+        self, session_service, redis_hot,
+    ):
+        user_id = "USER_REVOKED_HEARTBEAT"
+        sid = await session_service.create_session(user_id, "jti-revoked")
+        await redis_hot.delete(sess_key(sid))
+
+        assert await session_service.heartbeat(sid, user_id) is False
+        assert await redis_hot.exists(ws_route_key(sid)) == 0
+        assert await redis_hot.zscore(sessions_key(user_id), sid) is None
+
     async def test_sess_and_ws_route_keys_disappear_after_ttl(
         self, session_service, redis_hot, monkeypatch,
     ):

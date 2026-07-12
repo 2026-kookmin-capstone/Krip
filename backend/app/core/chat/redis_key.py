@@ -36,6 +36,10 @@ def sessions_key(user_id: str) -> str:
     return f"sessions:{user_id}"
 
 
+def session_create_result_key(session_id: str) -> str:
+    return f"session_create_result:{session_id}"
+
+
 def ws_route_key(session_id: str) -> str:
     return f"ws_route:{session_id}"
 

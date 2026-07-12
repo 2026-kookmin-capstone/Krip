@@ -27,6 +27,7 @@ def make_mock_redis() -> MagicMock:
     redis.hset = AsyncMock(return_value=1)
     redis.exists = AsyncMock(return_value=1)
     redis.hget = AsyncMock(return_value=None)
+    redis.delete = AsyncMock(return_value=1)
     redis.zremrangebyscore = AsyncMock(return_value=0)
     redis.zcard = AsyncMock(return_value=0)
     redis.zrange = AsyncMock(return_value=[])

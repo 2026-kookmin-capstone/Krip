@@ -13,16 +13,18 @@ WS 업그레이드는 BaseHTTPMiddleware 를 거치지 않아 인증을 핸들�
 """
 
 from datetime import datetime, timedelta, timezone
-from unittest.mock import MagicMock
+from unittest.mock import AsyncMock, MagicMock
 
 import jwt
 import pytest
 
 from app.config.setting import settings
 from app.domain.chat.router.ws import (
+    CLOSE_AUTH_EXPIRED,
     SUBPROTOCOL_AUTH_PREFIX,
     SUBPROTOCOL_VERSION,
     _extract_jwt,
+    _heartbeat_loop,
     _is_allowed_origin,
     _select_accept_subprotocol,
     _verify_jwt,
@@ -31,6 +33,20 @@ from app.domain.chat.router.ws import (
 
 
 pytestmark = pytest.mark.unit
+
+
+async def test_heartbeat_loop_closes_revoked_idle_socket(monkeypatch):
+    websocket = MagicMock()
+    websocket.close = AsyncMock()
+    session_service = MagicMock()
+    session_service.heartbeat = AsyncMock(return_value=False)
+    monkeypatch.setattr(
+        "app.domain.chat.router.ws.asyncio.sleep", AsyncMock(),
+    )
+
+    await _heartbeat_loop(websocket, session_service, "WS_revoked", "U_A")
+
+    websocket.close.assert_awaited_once_with(code=CLOSE_AUTH_EXPIRED)
 
 
 # ──────────────────────────────────────────────────────────────────
