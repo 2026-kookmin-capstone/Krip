@@ -1,6 +1,6 @@
 """MessageService 단위 테스트 — 송신 11단계 핫패스 / 재시도 / dedupe / unread."""
 import asyncio
-from unittest.mock import AsyncMock, patch
+from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 from pymongo.errors import DuplicateKeyError
@@ -12,7 +12,23 @@ from app.core.chat.redis_key import (
     room_pending_message_key,
 )
 from app.domain.chat.model.chat_message import MessageType
+from app.domain.chat.service import message as message_module
 from app.domain.chat.service.exception import UpstreamError
+
+
+@pytest.mark.unit
+async def test_push_task_is_registered_with_application_supervisor(service, monkeypatch):
+    supervisor = MagicMock()
+    supervisor.spawn.side_effect = lambda coroutine, **_kwargs: coroutine.close()
+    monkeypatch.setattr(message_module, "background_tasks", supervisor, raising=False)
+    monkeypatch.setattr(service, "_push_chat_to_recipients", AsyncMock())
+
+    service._spawn_push_task(
+        room_id="CR_lifecycle", sender_user_id="U_A", content="hello",
+    )
+
+    supervisor.spawn.assert_called_once()
+    assert supervisor.spawn.call_args.kwargs["name"] == "chat-push-CR_lifecycle"
 
 
 # ──────────────────────────────────────────────────────────────────

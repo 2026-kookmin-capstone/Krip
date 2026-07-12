@@ -4,7 +4,20 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
+from app.domain.chat.service import fanout as fanout_module
 from test.unit.domain.chat.fanout_service.conftest import make_ws
+
+
+@pytest.mark.unit
+async def test_forced_close_is_registered_with_application_supervisor(monkeypatch):
+    supervisor = MagicMock()
+    supervisor.spawn.side_effect = lambda coroutine, **_kwargs: coroutine.close()
+    monkeypatch.setattr(fanout_module, "background_tasks", supervisor, raising=False)
+
+    fanout_module.FanoutService._spawn_close(make_ws("WS_close", "U_A"))
+
+    supervisor.spawn.assert_called_once()
+    assert supervisor.spawn.call_args.kwargs["name"] == "chat-ws-close-WS_close"
 
 
 # ──────────────────────────────────────────────────────────────────

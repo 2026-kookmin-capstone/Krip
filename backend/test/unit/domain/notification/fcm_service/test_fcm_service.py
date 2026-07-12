@@ -1,4 +1,5 @@
 """FcmService — 토큰 등록/해제 + bulk 푸시 가드 체인 단위 테스트."""
+import asyncio
 from datetime import datetime, timezone
 
 import pytest
@@ -60,6 +61,73 @@ class TestUnregisterToken:
 
 @pytest.mark.unit
 class TestSendChatPush:
+    async def test_cancellation_drains_accepted_multicast(
+        self, service, chat_member_repo_mock, user_repo_mock,
+        fcm_token_repo_mock, monkeypatch,
+    ):
+        chat_member_repo_mock.find_pushable_user_ids_in_room.return_value = {"U_1"}
+        user_repo_mock.find_unmuted_user_ids.return_value = {"U_1"}
+        fcm_token_repo_mock.find_by_user_ids.return_value = [
+            _make_fcm_token(user_id="U_1", token="tok-1"),
+        ]
+        started = asyncio.Event()
+        release = asyncio.Event()
+        batch = make_fcm_batch_response(success_results=[True])
+
+        async def blocked_to_thread(*_args, **_kwargs):
+            started.set()
+            await release.wait()
+            return batch
+
+        monkeypatch.setattr(
+            "app.domain.notification.service.fcm.asyncio.to_thread",
+            blocked_to_thread,
+        )
+        send_task = asyncio.create_task(service.send_chat_push(
+            user_ids=["U_1"], chat_room_id="CR_1", sender_id="USER_s",
+            title="t", body="b",
+        ))
+        await started.wait()
+        send_task.cancel()
+        await asyncio.sleep(0)
+
+        assert not send_task.done()
+        release.set()
+        with pytest.raises(asyncio.CancelledError):
+            await send_task
+
+    async def test_cancellation_precedes_unexpected_multicast_failure(
+        self, service, chat_member_repo_mock, user_repo_mock,
+        fcm_token_repo_mock, monkeypatch,
+    ):
+        chat_member_repo_mock.find_pushable_user_ids_in_room.return_value = {"U_1"}
+        user_repo_mock.find_unmuted_user_ids.return_value = {"U_1"}
+        fcm_token_repo_mock.find_by_user_ids.return_value = [
+            _make_fcm_token(user_id="U_1", token="tok-1"),
+        ]
+        started = asyncio.Event()
+        release = asyncio.Event()
+
+        async def failed_to_thread(*_args, **_kwargs):
+            started.set()
+            await release.wait()
+            raise RuntimeError("unexpected SDK failure")
+
+        monkeypatch.setattr(
+            "app.domain.notification.service.fcm.asyncio.to_thread",
+            failed_to_thread,
+        )
+        send_task = asyncio.create_task(service.send_chat_push(
+            user_ids=["U_1"], chat_room_id="CR_1", sender_id="USER_s",
+            title="t", body="b",
+        ))
+        await started.wait()
+        send_task.cancel()
+        release.set()
+
+        with pytest.raises(asyncio.CancelledError):
+            await send_task
+
     async def test_empty_user_ids_returns_zero_no_queries(
         self, service, chat_member_repo_mock, user_repo_mock,
         fcm_token_repo_mock, messaging_send_mock,

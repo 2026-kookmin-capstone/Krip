@@ -19,9 +19,10 @@ import asyncio
 import json
 from collections import defaultdict
 
-from fastapi import WebSocket, WebSocketDisconnect
+from starlette.websockets import WebSocket, WebSocketDisconnect
 
 from app.config.setting import settings
+from app.core.background_tasks import background_tasks
 from app.core.chat.redis_key import node_channel_key, ws_route_key
 from app.core.context import request_id_var, traceparent_var
 from app.core.instrumentation import (
@@ -48,9 +49,6 @@ _CLOSE_UNRESPONSIVE = 1011
 # 개별 WS send 상한 — 정체된 클라이언트(TCP 백프레셔)가 노드 전체 fan-out 을 멈추는
 # head-of-line 블로킹 차단. 초과 소켓은 dead 로 간주해 정리한다.
 _SEND_TIMEOUT_SECONDS = 5
-
-# 강제 close task 핸들 보관 — GC 가 미참조 task 를 회수하지 않도록.
-_CLOSE_TASKS: set[asyncio.Task] = set()
 
 
 class FanoutService:
@@ -122,9 +120,10 @@ class FanoutService:
             except Exception:
                 pass
 
-        task = asyncio.create_task(_close())
-        _CLOSE_TASKS.add(task)
-        task.add_done_callback(_CLOSE_TASKS.discard)
+        background_tasks.spawn(
+            _close(),
+            name=f"chat-ws-close-{getattr(ws, 'session_id', 'unknown')}",
+        )
 
     # ──────────────────── 동적 방 구독 (cross-node) ────────────────────
 

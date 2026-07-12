@@ -19,6 +19,7 @@ from pydantic import TypeAdapter, ValidationError
 
 from app.config.setting import settings
 from app.container import Container
+from app.core.background_tasks import background_tasks
 from app.core.cache.key_category import KeyCategory
 from app.core.cache.redis_cache import get_redis_cache_manager
 from app.core.context import request_id_var
@@ -217,18 +218,12 @@ async def ws_chat(
             logger.warning("세션 종료 실패 (무시): session_id={}, err={}", session_id, e)
 
 
-# 활성 복구 task 강한 참조 — `create_task` 반환값을 버리면 GC 가 수거 가능. 완료 시 self-remove.
-_ACTIVE_RECOVER_TASKS: set[asyncio.Task] = set()
-
-
 def _spawn_recover_unread(websocket: WebSocket, user_id: str) -> None:
-    """`_recover_unread_and_notify` 를 백그라운드로 spawn 하고 참조 보관."""
-    task = asyncio.create_task(
+    """unread recovery를 앱 lifecycle supervisor에 등록한다."""
+    background_tasks.spawn(
         _recover_unread_and_notify(websocket, user_id),
         name=f"chat-unread-recover-{user_id}",
     )
-    _ACTIVE_RECOVER_TASKS.add(task)
-    task.add_done_callback(_ACTIVE_RECOVER_TASKS.discard)
 
 
 async def _recover_unread_and_notify(websocket: WebSocket, user_id: str) -> None:

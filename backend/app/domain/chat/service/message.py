@@ -10,6 +10,7 @@ from typing import cast
 from bson import json_util
 from pymongo.errors import ConnectionFailure, DuplicateKeyError, PyMongoError
 
+from app.core.background_tasks import background_tasks
 from app.core.chat.lua_script import lua_scripts
 from app.core.chat.redis_key import (
     DEDUPE_TTL,
@@ -57,8 +58,6 @@ _PUSH_BODY_PREVIEW_LIMIT = 100
 # dedupe 값의 예약(placeholder) 상태 — Mongo durable 후 ACK JSON 으로 교체된다.
 _DEDUPE_PENDING = "1"
 
-# fire-and-forget task 핸들 보관 — GC 가 미참조 task 를 회수하지 않도록.
-_PUSH_TASKS: set[asyncio.Task] = set()
 _DEFERRED_INSERT_CANCEL: ContextVar[bool] = ContextVar(
     "chat_deferred_insert_cancel", default=False,
 )
@@ -928,16 +927,15 @@ class MessageService:
     def _spawn_push_task(
         self, *, room_id: str, sender_user_id: str, content: str,
     ) -> None:
-        """푸시 task 를 백그라운드로 spawn. 모듈 set 에 핸들 보관해 GC 회수 방지."""
-        task = asyncio.create_task(
+        """푸시 task를 앱 lifecycle supervisor에 등록한다."""
+        background_tasks.spawn(
             self._push_chat_to_recipients(
                 room_id=room_id,
                 sender_user_id=sender_user_id,
                 content=content,
-            )
+            ),
+            name=f"chat-push-{room_id}",
         )
-        _PUSH_TASKS.add(task)
-        task.add_done_callback(_PUSH_TASKS.discard)
 
     async def _push_chat_to_recipients(
         self, *, room_id: str, sender_user_id: str, content: str,

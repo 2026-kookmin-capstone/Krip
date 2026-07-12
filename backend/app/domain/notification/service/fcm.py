@@ -101,11 +101,20 @@ class FcmService:
             multicast = messaging.MulticastMessage(
                 tokens=chunk, notification=notification, data=data,
             )
+            send_task = asyncio.create_task(asyncio.to_thread(
+                messaging.send_each_for_multicast, multicast, app=get_fcm_app(),
+            ))
+            cancelled = False
             try:
                 async with fcm_multicast_timer("chat"):
-                    batch = await asyncio.to_thread(
-                        messaging.send_each_for_multicast, multicast, app=get_fcm_app(),
-                    )
+                    while True:
+                        try:
+                            batch = await asyncio.shield(send_task)
+                            break
+                        except asyncio.CancelledError:
+                            if send_task.cancelled():
+                                raise
+                            cancelled = True
             except FirebaseError as e:
                 # 이 청크만 글로벌 실패 (인증/네트워크) — 다음 청크는 계속 시도.
                 fcm_send_inc("chat", "global_failed")
@@ -113,12 +122,24 @@ class FcmService:
                     "FCM multicast 실패 chat_room_id={} count={} error={}",
                     chat_room_id, len(chunk), e,
                 )
+                if cancelled:
+                    raise asyncio.CancelledError
                 continue
+            except Exception as e:
+                if cancelled:
+                    logger.exception(
+                        "FCM multicast drain 중 예상 밖 실패: chat_room_id={}, error={}",
+                        chat_room_id, e,
+                    )
+                    raise asyncio.CancelledError from e
+                raise
 
             fcm_send_inc("chat", "ok")
             success_count, chunk_invalid = self._parse_batch(chat_room_id, chunk, batch)
             success_total += success_count
             invalid_tokens.extend(chunk_invalid)
+            if cancelled:
+                raise asyncio.CancelledError
 
         if invalid_tokens:
             await self._purge_invalid_tokens(chat_room_id, invalid_tokens)

@@ -16,6 +16,7 @@ from app.container import Container
 from app.core.ai.menu_ocr.load import MenuOcr
 from app.core.ai.papago_translator.load import PapagoTranslator
 from app.core.ai.tour_planner.load import TourPlanner
+from app.core.background_tasks import background_tasks
 from app.core.chat.lua_script import lua_scripts
 from app.core.fcm import close_fcm, init_fcm
 from app.core.instrumentation import (
@@ -131,6 +132,11 @@ def create_app() -> FastAPI:
             stack.push_async_callback(papago.close)
             papago.load()
             await TourPlanner().load()
+
+            background_tasks.start()
+            # 마지막에 등록해 shutdown 첫 단계에서 admission을 닫고 drain한다. FCM/Redis/
+            # Mongo/SQL teardown은 background task가 종료된 뒤 LIFO 순서로 진행된다.
+            stack.push_async_callback(background_tasks.stop)
             logger.info("Application started in {} mode", settings.ENVIRONMENT)
 
             yield

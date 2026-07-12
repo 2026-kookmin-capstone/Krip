@@ -19,6 +19,7 @@ import jwt
 import pytest
 
 from app.config.setting import settings
+from app.domain.chat.router import ws as ws_module
 from app.domain.chat.router.ws import (
     CLOSE_AUTH_EXPIRED,
     SUBPROTOCOL_AUTH_PREFIX,
@@ -27,12 +28,25 @@ from app.domain.chat.router.ws import (
     _heartbeat_loop,
     _is_allowed_origin,
     _select_accept_subprotocol,
+    _spawn_recover_unread,
     _verify_jwt,
     _ws_subprotocols,
 )
 
 
 pytestmark = pytest.mark.unit
+
+
+async def test_unread_recovery_is_registered_with_application_supervisor(monkeypatch):
+    supervisor = MagicMock()
+    supervisor.spawn.side_effect = lambda coroutine, **_kwargs: coroutine.close()
+    monkeypatch.setattr(ws_module, "background_tasks", supervisor, raising=False)
+    monkeypatch.setattr(ws_module, "_recover_unread_and_notify", AsyncMock())
+
+    _spawn_recover_unread(MagicMock(), "U_lifecycle")
+
+    supervisor.spawn.assert_called_once()
+    assert supervisor.spawn.call_args.kwargs["name"] == "chat-unread-recover-U_lifecycle"
 
 
 async def test_heartbeat_loop_closes_revoked_idle_socket(monkeypatch):
