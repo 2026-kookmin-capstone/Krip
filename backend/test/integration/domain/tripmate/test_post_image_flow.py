@@ -124,7 +124,6 @@ class TestCleanupOrphanedImages:
     ):
         post_id, owner_id = await seed_tripmate_post()
 
-        # 4 이미지 시드 — post 참조 1, draft 참조 1, 고아 2
         post_ref = await tripmate_image_service.upload_image(
             user_id=owner_id, file=b"p", file_name="post.jpg", content_type="image/jpeg",
         )
@@ -151,11 +150,9 @@ class TestCleanupOrphanedImages:
         deleted = await tripmate_image_service.cleanup_orphaned_images(user_id=owner_id)
 
         assert deleted == 2
-        # Storage 에 고아 2건만
         deleted_urls = tripmate_image_storage_mock.delete_many.await_args.args[0]
         assert set(deleted_urls) == {orphan1.image_url, orphan2.image_url}
 
-        # Mongo 에서 고아 2건 사라짐, 참조된 2건 보존
         coll = TripmateImage.get_motor_collection()
         remaining_ids = {
             doc["image_id"] async for doc in coll.find({"user_id": owner_id})

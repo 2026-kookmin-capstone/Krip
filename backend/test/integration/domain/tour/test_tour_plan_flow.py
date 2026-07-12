@@ -175,7 +175,7 @@ class TestDeletePlanFlow:
 
         async with session_factory() as s:
             assert (await s.execute(select(TourPlan))).scalars().all() == []
-            assert (await s.execute(select(TourPlanItem))).scalars().all() == []  # cascade
+            assert (await s.execute(select(TourPlanItem))).scalars().all() == []
 
 
 class TestAddDayFlow:
@@ -236,7 +236,6 @@ class TestRemoveDayFlow:
 
         async with session_factory() as s:
             row = (await s.execute(select(TourPlan).where(TourPlan.plan_id == created.plan_id))).scalar_one()
-            # travel_days = 4 (3+1, gap 재사용 X)
             assert row.travel_days == 4
 
     async def test_idempotent_for_empty_day(self, plan_service, seed_users):

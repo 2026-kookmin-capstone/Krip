@@ -99,7 +99,6 @@ class TestFeedLikeAggregation:
         me_id, other_id, liker = await seed_users(3)
         other_post = await _insert_post(session_factory, other_id)
         await _insert_like(session_factory, liker, other_post)
-        # 나는 내 글에 받은 좋아요가 없음 + 다른 사람 글의 좋아요는 누락돼야 함
         await _insert_like(session_factory, me_id, other_post)
 
         result = await profile_service.get_my_stats(me_id)

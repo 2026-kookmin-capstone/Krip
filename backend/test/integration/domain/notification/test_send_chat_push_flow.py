@@ -176,10 +176,9 @@ class TestUnregisteredTokenCleanup:
         """`UnregisteredError` (앱 삭제) 응답인 토큰은 같은 트랜잭션에서 bulk DELETE."""
         room_id, [user_a, user_b] = await seed_room_with_members(2)
         await fcm_service.register_token(user_id=user_a, token="tok-A1")
-        await fcm_service.register_token(user_id=user_a, token="tok-A2")  # 이게 만료
+        await fcm_service.register_token(user_id=user_a, token="tok-A2")
         await fcm_service.register_token(user_id=user_b, token="tok-B1")
 
-        # stub 응답은 조회 순서의 두 번째 토큰만 만료 처리한다.
         fcm_messaging_stub.set_responses(
             success=[True, False, True],
             errors=[None, messaging.UnregisteredError("expired"), None],
@@ -230,4 +229,4 @@ class TestUnregisteredTokenCleanup:
 
         assert sent == 0
         rows = await fetch_tokens_by_user(session_factory, user_a)
-        assert len(rows) == 1  # 토큰 보존 — 일시 장애로 정리 안 함
+        assert len(rows) == 1

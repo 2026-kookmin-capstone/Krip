@@ -82,7 +82,6 @@ class TestShareFlow:
             plan_id=created.plan_id, user_id=a,
         )
 
-        # b 가 토큰만 가지고 조회 (소유자가 아니지만 OK)
         result = await share_service.get_plan_by_token(share_token=token_data.share_token)
         assert result.plan_id == created.plan_id
 

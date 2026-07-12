@@ -83,12 +83,10 @@ class TestFindMessagesBeforeFlow:
         )
         assert len(page1.messages) == 5
         assert page1.has_more is True
-        # DESC 정렬 — 첫 페이지 마지막 메시지가 다음 커서
         assert page1.next_cursor == page1.messages[-1].server_seq
         seqs1 = [m.server_seq for m in page1.messages]
         assert seqs1 == sorted(seqs1, reverse=True)
 
-        # 다음 페이지 — next_cursor 로 이어서
         page2 = await history.find_messages_before(
             me_id=a, room_id=room_id, before_server_seq=page1.next_cursor, limit=5,
         )
@@ -138,7 +136,6 @@ class TestFindMessagesAfterFlow:
         assert page1.has_more is True
         assert page1.next_cursor == seqs1[-1]
 
-        # 다음 catch-up — next_cursor 이어서
         collected = list(seqs1)
         cursor = page1.next_cursor
         safety = 0
@@ -150,7 +147,6 @@ class TestFindMessagesAfterFlow:
             cursor = nxt.next_cursor
             safety += 1
 
-        # 누락 없이 전체 seq 포괄 (최소한 text 10건은 전부 포함되어야 함)
         for seq in text_seqs:
             assert seq in collected, f"catch-up 에서 seq={seq} 누락"
         assert len(collected) == len(set(collected))
