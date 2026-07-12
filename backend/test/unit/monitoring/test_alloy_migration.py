@@ -1,4 +1,5 @@
 import json
+import subprocess
 from pathlib import Path
 
 
@@ -65,6 +66,24 @@ def test_operational_consumers_target_alloy_health_and_metrics():
     assert 'targets: ["alloy:12345"]' in prometheus
     assert "Promtail" not in makefile
     assert "http://alloy:12345/-/ready" in makefile
+
+
+def test_up_build_rebuilds_backend_then_starts_full_stack():
+    result = subprocess.run(
+        ["make", "-n", "up-build"],
+        cwd=MAKEFILE.parent,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    compose_commands = [
+        line for line in result.stdout.splitlines()
+        if line.startswith("docker-compose ")
+    ]
+
+    assert len(compose_commands) == 2
+    assert compose_commands[0].endswith(" build backend")
+    assert compose_commands[1].endswith(" up -d")
 
 
 def test_worker_liveness_panels_use_worst_node_tick():

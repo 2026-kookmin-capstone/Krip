@@ -39,7 +39,8 @@ up-prod: net-create
 	COMPOSE_PROFILES=linux-host $(COMPOSE) up -d
 
 up-build: net-create
-	$(COMPOSE) up -d --build backend
+	$(COMPOSE) build backend
+	$(COMPOSE) up -d
 
 down:
 	$(COMPOSE) down
