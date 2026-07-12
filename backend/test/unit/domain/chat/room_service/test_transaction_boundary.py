@@ -43,7 +43,7 @@ class TestTxFailureSkipsSideEffects:
     """DB 파트 실패가 부수효과(Redis/구독/fan-out/시스템 메시지)로 새지 않는지 검증."""
 
     def _assert_no_side_effects(self, redis_mock, fanout_mock, message_service_mock):
-        redis_mock.pipeline.assert_not_called()          # SADD/SREM/HSET(파이프라인) 미실행
+        redis_mock.pipeline.assert_not_called()
         fanout_mock.subscribe_user_to_room.assert_not_awaited()
         fanout_mock.unsubscribe_user_from_room.assert_not_awaited()
         fanout_mock.fan_out_to_user.assert_not_awaited()
@@ -71,7 +71,6 @@ class TestTxFailureSkipsSideEffects:
         self, service, redis_mock, fanout_mock, message_service_mock,
     ):
         """초대 DB 파트 실패(방 없음) → 초대 부수효과/시스템 메시지 미실행."""
-        # chat_room_repo.find_by_id 기본값 None → ChatRoomNotFoundError
         with pytest.raises(ChatRoomNotFoundError):
             await service.invite_members(me_id="U_A", room_id="CR_X", user_ids=["U_B"])
 

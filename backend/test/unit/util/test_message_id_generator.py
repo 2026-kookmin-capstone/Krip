@@ -50,6 +50,6 @@ class TestGenerateMessageId:
 
         더 큰 timestamp 는 랜덤 suffix 와 무관하게 항상 문자열 정렬에서 뒤에 온다.
         """
-        low = "MSG_1783000000_ffffffffffffffff"   # 이른 시각 + 최대 suffix
-        high = "MSG_1783000001_0000000000000000"  # 늦은 시각 + 최소 suffix
+        low = "MSG_1783000000_ffffffffffffffff"
+        high = "MSG_1783000001_0000000000000000"
         assert low < high

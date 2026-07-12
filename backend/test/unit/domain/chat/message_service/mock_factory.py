@@ -115,7 +115,7 @@ def make_redis_mock() -> MagicMock:
     redis.smembers = AsyncMock(return_value={"U_A", "U_B"})
     redis.sadd = AsyncMock(return_value=1)
     redis.expire = AsyncMock(return_value=1)
-    redis.get = AsyncMock(return_value=None)   # room:members:gen — 부재 시 "0" 취급
+    redis.get = AsyncMock(return_value=None)
     redis.set = AsyncMock(return_value=True)
     redis.delete = AsyncMock(return_value=1)
 
@@ -131,7 +131,7 @@ def make_redis_mock() -> MagicMock:
 def make_dedupe_redis_mock(first_time: bool = True) -> MagicMock:
     """dedupe Redis — SET NX 반환값에 따라 dedupe 시나리오 제어."""
     redis = MagicMock(name="redis-dedupe")
-    redis.set = AsyncMock(return_value=first_time)  # SET NX 결과
+    redis.set = AsyncMock(return_value=first_time)
     redis.get = AsyncMock(return_value=None)        # dedupe hit 시 ACK replay 조회 (기본 미기록)
     redis.delete = AsyncMock(return_value=1)
     return redis
@@ -151,5 +151,5 @@ def make_lua_mock(
         force_jump=AsyncMock(return_value=force_jump_return),
         incr_with_ttl=AsyncMock(return_value=incr_with_ttl_return),
         increment_unread=AsyncMock(return_value=1),
-        populate_members=AsyncMock(return_value=1),   # 1=반영 / 0=gen 불일치 skip
+        populate_members=AsyncMock(return_value=1),
     )

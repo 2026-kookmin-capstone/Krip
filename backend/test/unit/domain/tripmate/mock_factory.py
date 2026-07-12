@@ -46,7 +46,7 @@ class TripmatePostLikeRepositoryMockFactory:
     @classmethod
     def create(cls) -> AsyncMock:
         mock = AsyncMock()
-        mock.find_by_user_and_post.return_value = None  # 기본: 안 누른 상태
+        mock.find_by_user_and_post.return_value = None
         mock.find_user_ids_by_post.return_value = []
         mock.count_by_post.return_value = 0
         mock.save.side_effect = lambda like: like

@@ -25,10 +25,7 @@ class TestAddLikeWithCount:
     ):
         """N 명이 좋아요 → count == N. RDB SELECT count(*) 정확성."""
         post_id, owner_id = await seed_tripmate_post()
-        # 추가로 2명 시드 (총 4명: owner + 1 from seed_tripmate_post + 2 추가)
         from app.config.oauth import OAuthProvider
-
-        # seed_users 를 한 번 더 호출해서 user 2명 추가
         from app.domain.auth.model.user import User, UserStatus
         from app.domain.auth.model.user_detail_inform import Gender, UserDetailInform
         from test.integration.conftest import seed_users  # type: ignore  # noqa: F401

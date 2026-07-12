@@ -42,6 +42,5 @@ class TestSearchKeywordMaxLength:
         assert r.status_code == 422
 
     def test_missing_keyword_rejected(self):
-        # keyword 는 필수(...) 이므로 미입력 시 422.
         r = _client().get("/probe")
         assert r.status_code == 422

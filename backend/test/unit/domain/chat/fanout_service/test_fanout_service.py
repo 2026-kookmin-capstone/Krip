@@ -34,7 +34,7 @@ class TestRegister:
         fanout.register_ws_to_room(ws, "CR_1")
 
         assert ws in fanout._room_subs["CR_1"]
-        assert "CR_1" in ws.subscribed_rooms  # 역매핑
+        assert "CR_1" in ws.subscribed_rooms
 
 
 @pytest.mark.unit
@@ -51,22 +51,19 @@ class TestUnregister:
 
         fanout.unregister_ws(ws_a)
 
-        # WS_a 는 완전히 제거, WS_b 는 유지
         assert "WS_a" not in fanout._local_ws_by_session
         assert "WS_b" in fanout._local_ws_by_session
-        assert "U_A" not in fanout._user_subs  # 빈 set → key 제거
+        assert "U_A" not in fanout._user_subs
         assert ws_b in fanout._user_subs["U_B"]
         assert ws_a not in fanout._room_subs["CR_1"]
         assert ws_b in fanout._room_subs["CR_1"]
-        assert "CR_2" not in fanout._room_subs  # 혼자 있던 방은 key 까지 제거
+        assert "CR_2" not in fanout._room_subs
 
     def test_unregister_tolerates_missing_attributes(self, fanout):
         """속성이 없는 WS 라도 예외 없이 지나가야 한다 (방어적)."""
         ws = make_ws("WS_1", "U_A")
-        # subscribed_rooms 를 의도적으로 지워서 방어 확인
         del ws.subscribed_rooms
         fanout.register_session(ws)
-        # 예외 없이 통과
         fanout.unregister_ws(ws)
 
         assert "WS_1" not in fanout._local_ws_by_session
@@ -88,9 +85,9 @@ class TestFanOutToRoom:
             {"type": "message.new", "sender_session_id": "WS_phone"},
         )
 
-        phone.send_json.assert_not_called()       # 발신자 skip
-        pc.send_json.assert_awaited_once()         # 같은 유저 다른 세션
-        bob.send_json.assert_awaited_once()        # 다른 유저
+        phone.send_json.assert_not_called()
+        pc.send_json.assert_awaited_once()
+        bob.send_json.assert_awaited_once()
 
     async def test_no_recipients_noop(self, fanout):
         """빈 방에 발행해도 예외 없이 통과."""
@@ -141,7 +138,6 @@ class TestFanOutToSession:
 
         phone.send_json.assert_awaited_once()
         pc.send_json.assert_not_called()
-        # session_revoked → 서버가 직접 소켓 종료 + 구독 해제 (클라 협조에 의존하지 않음).
         phone.close.assert_awaited_once()
         assert "WS_phone" not in fanout._local_ws_by_session
         pc.close.assert_not_called()
@@ -162,7 +158,6 @@ class TestErrorTolerance:
             fanout.register_session(ws)
             fanout.register_ws_to_room(ws, "CR_1")
 
-        # 예외 새지 않고 통과
         await fanout.fan_out_to_room("CR_1", {"type": "system"})
         ok.send_json.assert_awaited_once()
 
@@ -188,7 +183,6 @@ class TestErrorTolerance:
         await fanout.fan_out_to_room("CR_1", {"type": "message.new"})
 
         fast.send_json.assert_awaited_once()
-        # 느린 소켓은 타임아웃 → dead 처리 (unregister)
         assert "WS_slow" not in fanout._local_ws_by_session
         assert fast in fanout._room_subs["CR_1"]
 
@@ -214,7 +208,6 @@ class TestFanoutModeGuard:
 
         from app.domain.chat.service.fanout import FanoutService
         svc = FanoutService()
-        # 로컬 dict 들은 두 모드에서 동일하게 사용됨 — dispatcher 가 받아 채워주는 진입점.
         assert svc._mode == "node_channel"
         assert svc._room_subs == {}
         assert svc._user_subs == {}
@@ -278,7 +271,6 @@ class TestNodeChannelDispatch:
 
         a.send_json.assert_awaited_once()
         b.send_json.assert_not_called()
-        # 수신 노드에서도 session_revoked 는 서버가 소켓을 닫는다.
         a.close.assert_awaited_once()
         assert "WS_a" not in node_fanout._local_ws_by_session
 
@@ -302,11 +294,10 @@ class TestNodeChannelDispatch:
             "op": "unsubscribe", "user_id": "U_A", "room_id": "CR_1",
         })
 
-        assert "CR_1" not in node_fanout._room_subs   # 마지막 구독자 빠지면 키 정리
+        assert "CR_1" not in node_fanout._room_subs
         assert "CR_1" not in ws.subscribed_rooms
 
     async def test_dispatch_unknown_op_drops_silently(self, node_fanout):
-        # 미래 버전이 새 op 를 추가했고 본 노드가 구버전인 경우 — 다운되지 않고 drop.
         await node_fanout.dispatch_envelope({"op": "future_op", "data": 1})
 
     async def test_dispatch_envelope_missing_field_drops_silently(self, node_fanout):
@@ -333,7 +324,7 @@ def _make_redis_mock_for_publish() -> MagicMock:
     redis.pipeline = MagicMock(return_value=pipe)
     redis.publish = AsyncMock()
     redis.get = AsyncMock(return_value=None)
-    redis._pipe = pipe   # 테스트 접근용
+    redis._pipe = pipe
     return redis
 
 
@@ -453,12 +444,11 @@ class TestNodeChannelPublish:
     ):
         """`ws_route:{sid}` 룩업 → 타깃 노드 1곳만 publish (broadcast 낭비 차단)."""
         fanout, redis_mock, set_active_nodes = node_channel_env
-        set_active_nodes(["node-A", "node-B", "node-C"])  # 활성 다수
+        set_active_nodes(["node-A", "node-B", "node-C"])
         redis_mock.get = AsyncMock(return_value="node-B")
 
         await fanout.fan_out_to_session("SESS_x", {"type": "session_revoked", "session_id": "SESS_x"})
 
-        # broadcast pipe 가 아니라 단일 publish 만 호출
         redis_mock.pipeline.assert_not_called()
         redis_mock.publish.assert_awaited_once()
         channel, payload = redis_mock.publish.await_args.args

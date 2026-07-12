@@ -59,7 +59,7 @@ def make_object_storage_mock() -> MagicMock:
 def make_friendship_repo_mock() -> AsyncMock:
     """FriendshipRepository — `_resolve_viewer_visibilities` 가 `find_between` 만 사용."""
     mock = AsyncMock()
-    mock.find_between.return_value = None  # 기본: 관계 없음
+    mock.find_between.return_value = None
     return mock
 
 
@@ -70,8 +70,8 @@ def make_user_block_repo_mock() -> AsyncMock:
     기본은 둘 다 "차단 없음".
     """
     mock = AsyncMock()
-    mock.find_blocks_between.return_value = []  # 기본: 차단 없음
-    mock.find_block_related_ids.return_value = set()  # 기본: 차단 관계 없음
+    mock.find_blocks_between.return_value = []
+    mock.find_block_related_ids.return_value = set()
     return mock
 
 

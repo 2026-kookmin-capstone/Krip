@@ -166,7 +166,6 @@ class TestPurge:
 
         user_repo_mock.hard_delete_by_id.assert_awaited_once_with("USER_a")
         inbox_service_mock.cascade_user_withdrawn.assert_awaited_once_with("USER_a")
-        # withdrawal_request doc 도 마지막에 청소
         withdrawal_request_repo_mock.delete_by_user_id.assert_awaited_once_with("USER_a")
 
     async def test_no_user_outcome_still_runs_external_cleanup(
@@ -177,7 +176,7 @@ class TestPurge:
 
         await service.purge(user_id="USER_a")
 
-        user_repo_mock.hard_delete_by_id.assert_not_awaited()  # 이미 삭제됨
+        user_repo_mock.hard_delete_by_id.assert_not_awaited()
         inbox_service_mock.cascade_user_withdrawn.assert_awaited_once_with("USER_a")
 
     async def test_stale_doc_outcome_skips_external(
@@ -200,7 +199,6 @@ class TestPurge:
         invalidate_cache_mock.assert_not_awaited()
         for stub in beanie_stubs.values():
             assert stub.find_call_count == 0
-        # doc 만 청소
         withdrawal_request_repo_mock.delete_by_user_id.assert_awaited_once_with("USER_a")
 
     async def test_stale_doc_cleanup_failure_swallowed(
@@ -355,7 +353,6 @@ class TestPurgeExternalCallsChatCleanup:
         chat cleanup 이 REGISTERED 무효화 전에 호출되면 의도와 다르므로 순서 검증.
         """
 
-        # 두 mock 호출을 한 통화 시퀀스로 추적하기 위한 manager
         from unittest.mock import MagicMock
 
         manager = MagicMock()
@@ -364,6 +361,5 @@ class TestPurgeExternalCallsChatCleanup:
 
         await service._purge_external(user_id="USER_a")
 
-        # invalidate 가 chat_cleanup 보다 먼저 호출됐는지
         names = [c[0] for c in manager.mock_calls]
         assert names.index("invalidate") < names.index("chat_cleanup")

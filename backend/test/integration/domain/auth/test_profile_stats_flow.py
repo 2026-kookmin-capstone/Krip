@@ -85,7 +85,6 @@ class TestFeedLikeAggregation:
         me_id, liker1, liker2, liker3 = await seed_users(4)
         post_a = await _insert_post(session_factory, me_id)
         post_b = await _insert_post(session_factory, me_id)
-        # post_a 에 2건, post_b 에 1건 — 총 3건
         await _insert_like(session_factory, liker1, post_a)
         await _insert_like(session_factory, liker2, post_a)
         await _insert_like(session_factory, liker3, post_b)
@@ -152,11 +151,9 @@ class TestFriendshipCount:
     ):
         """내가 requester 인 친구와 addressee 인 친구 모두 합산 (방향 무관)."""
         me_id, friend_a, friend_b = await seed_users(3)
-        # 내가 requester
         await _insert_friendship(
             session_factory, me_id, friend_a, FriendshipStatus.ACCEPTED,
         )
-        # 내가 addressee
         await _insert_friendship(
             session_factory, friend_b, me_id, FriendshipStatus.ACCEPTED,
         )
@@ -169,7 +166,6 @@ class TestFriendshipCount:
     ):
         """다른 두 유저 사이의 친구 관계는 내 카운트와 무관."""
         me_id, u1, u2 = await seed_users(3)
-        # 나와 무관한 친구 관계
         await _insert_friendship(
             session_factory, u1, u2, FriendshipStatus.ACCEPTED,
         )

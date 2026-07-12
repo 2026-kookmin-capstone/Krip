@@ -68,7 +68,7 @@ class TestGetFriendDetail:
         user_repo_mock.find_by_id_with_profile.return_value = UserFactory.create(user_id="USER_b")
         friendship_repo_mock.find_between.return_value = FriendshipFactory.create(
             friendship_id="FS_1",
-            requester_id="USER_a",  # viewer가 보낸 쪽
+            requester_id="USER_a",
             addressee_id="USER_b",
             status=FriendshipStatus.PENDING,
         )
@@ -85,7 +85,7 @@ class TestGetFriendDetail:
     ):
         user_repo_mock.find_by_id_with_profile.return_value = UserFactory.create(user_id="USER_b")
         friendship_repo_mock.find_between.return_value = FriendshipFactory.create(
-            requester_id="USER_b",  # 상대가 보낸 요청
+            requester_id="USER_b",
             addressee_id="USER_a",
             status=FriendshipStatus.PENDING,
         )
@@ -132,7 +132,6 @@ class TestGetFriendDetail:
         self, service, user_repo_mock, friendship_repo_mock, block_repo_mock,
     ):
         user_repo_mock.find_by_id_with_profile.return_value = UserFactory.create(user_id="USER_b")
-        # 실제 플로우상 차단 시 friendship 은 정리되지만, 서비스 입장에선 독립 조회
         friendship_repo_mock.find_between.return_value = None
         block_repo_mock.find_blocks_between.return_value = [_block("USER_a", "USER_b")]
 

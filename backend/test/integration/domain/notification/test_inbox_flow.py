@@ -83,17 +83,14 @@ class TestPartialUniqueIndex:
         first = _make_inbox_item()
         await repo.insert(first)
 
-        # X 버튼 — display=false
         await inbox_service.hide_item(
             recipient_id="USER_recipient",
             inbox_item_id=str(first.id),
         )
 
-        # 같은 키 새 항목 — partial filter 에서 첫 번째 빠짐 → 성공
         second = _make_inbox_item()
         await repo.insert(second)
 
-        # 둘 다 DB 에 존재 (display=false + display=true)
         coll = InboxItem.get_motor_collection()
         assert await coll.count_documents({"recipient_id": "USER_recipient"}) == 2
 
@@ -162,9 +159,7 @@ class TestListInboxFlow:
             recipient_id="USER_recipient", mark_as_read=True,
         )
 
-        # 응답 — mark 전 상태
         assert result.items[0].is_read is False
-        # DB — mark 후 상태
         coll = InboxItem.get_motor_collection()
         unread = await coll.count_documents(
             {"recipient_id": "USER_recipient", "read_at": None},
@@ -208,7 +203,6 @@ class TestKeysetCursorTiebreak:
             await repo.insert(item)
             inserted.append(item)
 
-        # limit=2 → 첫 페이지 (limit+1=3 fetch 후 2건 노출), 나머지 1건은 keyset 으로 이어받음
         page1_raw = await repo.find_by_recipient("USER_recipient", cursor=None, limit=2)
         page1 = page1_raw[:2]
         last = page1[-1]
@@ -220,7 +214,6 @@ class TestKeysetCursorTiebreak:
         seen = {str(i.id) for i in page1} | {str(i.id) for i in page2}
         # 같은 ms 3건이 하나도 누락되지 않고 두 페이지에 온전히 등장
         assert {str(i.id) for i in inserted} <= seen
-        # 페이지 간 중복도 없음
         assert not ({str(i.id) for i in page1} & {str(i.id) for i in page2})
 
 
@@ -269,7 +262,6 @@ class TestHideAtomic:
 class TestCountUnread:
     async def test_counts_only_unread_displayed(self, mongo_db, inbox_service):
         repo = InboxRepository()
-        # 3건 insert — 모두 미읽음 / display=true
         for i in range(3):
             await repo.insert(_make_inbox_item(
                 target_id=f"FDP_{i}", actor_id=f"USER_a_{i}",
@@ -305,15 +297,12 @@ class TestCascadeUserWithdrawn:
         self, mongo_db, inbox_service,
     ):
         repo = InboxRepository()
-        # USER_x 가 받은 항목
         await repo.insert(_make_inbox_item(
             recipient_id="USER_x", actor_id="USER_a",
         ))
-        # USER_x 가 보낸 항목 (다른 사람이 받음)
         await repo.insert(_make_inbox_item(
             recipient_id="USER_b", actor_id="USER_x",
         ))
-        # 무관한 항목 (보존되어야)
         await repo.insert(_make_inbox_item(
             recipient_id="USER_c", actor_id="USER_d",
         ))
@@ -323,6 +312,5 @@ class TestCascadeUserWithdrawn:
         assert deleted == 2
         coll = InboxItem.get_motor_collection()
         assert await coll.count_documents({}) == 1
-        # 무관한 항목은 보존
         remaining = await coll.find_one({})
         assert remaining["recipient_id"] == "USER_c"

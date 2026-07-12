@@ -60,7 +60,7 @@ async def seed_room_with_members(session_factory, seed_users):
                 creator_id=user_ids[0],
             )
             session.add(room)
-            await session.flush()  # chat_room_id 생성
+            await session.flush()
             for uid in user_ids:
                 session.add(ChatRoomMember(
                     chat_room_id=room.chat_room_id,
@@ -85,7 +85,6 @@ async def fcm_messaging_stub(monkeypatch):
         state["errors"] = errors or [None] * len(success)
 
     def _fake_send_each_for_multicast(message, app=None):
-        # SDK 가 동기 함수 — service 가 asyncio.to_thread 로 감싸 호출.
         state["calls"].append(list(message.tokens))
         responses = []
         for ok, err in zip(state["responses"], state["errors"]):

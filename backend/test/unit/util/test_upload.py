@@ -50,7 +50,7 @@ class TestReadUploadCapped:
         with pytest.raises(HTTPException) as exc:
             await read_upload_capped(f, max_bytes=10)
         assert exc.value.status_code == 413
-        assert f.pos < len(data)  # 전량 미소비 = 조기 중단
+        assert f.pos < len(data)
 
     async def test_empty_file_returns_empty_bytes(self):
         assert await read_upload_capped(_FakeUploadFile(b""), max_bytes=100) == b""

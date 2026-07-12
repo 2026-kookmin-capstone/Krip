@@ -99,7 +99,7 @@ class TestUpdatePost:
         await tripmate_post_service.update_post(
             post_id=post_id, user_id=owner_id,
             title="수정된 제목",
-            content="수정된 내용 입니다 부산 7월",  # ck_content_min_length(>=10) 통과
+            content="수정된 내용 입니다 부산 7월",
             preferred_age_min=25, preferred_age_max=35,
             preferred_gender=PreferredGender.MALE,
             region="부산",
@@ -151,7 +151,6 @@ class TestToggleDisplay:
         self, tripmate_post_service, seed_tripmate_post, session_factory,
     ):
         post_id, owner_id = await seed_tripmate_post()
-        # 시드 default: is_displayed=True
 
         result = await tripmate_post_service.toggle_display(
             post_id=post_id, user_id=owner_id,

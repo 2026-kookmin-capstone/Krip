@@ -37,7 +37,7 @@ class TestNotifyFeedLike:
         """본인→본인 좋아요는 fan-out skip — repo.insert 호출 0회."""
         await service.notify_feed_like(
             recipient_id="USER_a",
-            actor_id="USER_a",  # 동일
+            actor_id="USER_a",
             actor_name="me",
             actor_profile_image_url=None,
             post_id="FDP_x",
@@ -145,7 +145,7 @@ class TestNotifyFeedComment:
         self, service, inbox_repo_mock,
     ):
         """100자 초과 본문은 잘리고 ellipsis 추가 — `_truncate_comment` 동작."""
-        long_content = "ㄱ" * 150  # 150자
+        long_content = "ㄱ" * 150
 
         await service.notify_feed_comment(
             recipient_id="USER_owner",
@@ -159,7 +159,7 @@ class TestNotifyFeedComment:
         )
 
         item: InboxItem = inbox_repo_mock.insert.await_args.args[0]
-        assert len(item.comment_preview) == 101  # 100 + "…"
+        assert len(item.comment_preview) == 101
         assert item.comment_preview.endswith("…")
 
     async def test_short_content_kept_as_is(self, service, inbox_repo_mock):
@@ -206,7 +206,7 @@ class TestNotifyTripmateLike:
             actor_name="actorName",
             actor_profile_image_url=None,
             post_id="TMP_x",
-            post_preview="여행 같이 가실 분",  # 게시글 title
+            post_preview="여행 같이 가실 분",
         )
 
         item: InboxItem = inbox_repo_mock.insert.await_args.args[0]
@@ -247,7 +247,6 @@ class TestListItems:
     ):
         """fetch 가 limit+1 = 21 이면 has_more, next_cursor 는 20번째 (잘리기 전 마지막) 의
         `(created_at, _id)` 복합키를 opaque 토큰으로 담는다 (같은 ms tiebreak 용)."""
-        # PAGE_SIZE = 20 가정. 21개 반환 (limit+1)
         base = datetime(2025, 1, 1, tzinfo=timezone.utc)
         items = [
             InboxItemFactory.create(created_at=base + timedelta(seconds=i))
@@ -257,8 +256,7 @@ class TestListItems:
 
         result = await service.list_items(recipient_id="USER_a")
 
-        assert len(result.items) == 20  # cursor 잘림
-        # 잘린 후 마지막 (인덱스 19) 의 created_at + _id 를 모두 담음
+        assert len(result.items) == 20
         decoded = decode_cursor(result.next_cursor)
         assert decoded is not None
         assert decoded[0] == items[19].created_at
@@ -292,7 +290,7 @@ class TestListItems:
     ):
         """tz 누락 토큰도 UTC 로 보강되어 repo 에 전달 — 외부/구버전 클라 방어."""
         inbox_repo_mock.find_by_recipient.return_value = []
-        naive = datetime(2025, 1, 1, 12, 0, 0)  # tz 없음
+        naive = datetime(2025, 1, 1, 12, 0, 0)
 
         await service.list_items(
             recipient_id="USER_a", cursor=encode_cursor(naive, str(PydanticObjectId())),
@@ -394,7 +392,6 @@ class TestListItems:
             recipient_id="USER_a", mark_as_read=True,
         )
 
-        # 응답 dto 의 is_read 는 mark 전 상태 (False) — DB 만 update
         assert result.items[0].is_read is False
 
 

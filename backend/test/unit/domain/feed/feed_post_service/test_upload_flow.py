@@ -49,7 +49,6 @@ class TestUploadCaptionNormalization:
             caption="",
         )
         assert result.caption is None
-        # repo.save 에 넘어간 FeedPost 의 caption 도 None 이어야 함
         saved_post = repo_mock.save.await_args.args[0]
         assert saved_post.caption is None
 
@@ -112,11 +111,9 @@ class TestUploadCleanupOnFailure:
                 user_id="USER_a", file_bytes=b"x",
                 visibility=FeedVisibility.PUBLIC, caption="hi",
             )
-        # cleanup 이 정확히 한 번, prefix `{user_id}/feed/{post_id}` 형태로 호출
         storage_mock.delete_by_prefix.assert_awaited_once()
         called_prefix = storage_mock.delete_by_prefix.await_args.args[0]
         assert called_prefix.startswith("USER_a/feed/FDP_")
-        # INSERT 는 호출되지 않아야 함 (S3 실패가 먼저)
         repo_mock.save.assert_not_called()
 
     async def test_insert_failure_triggers_cleanup(

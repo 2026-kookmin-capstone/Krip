@@ -54,21 +54,18 @@ class TestPurgeDeletedOutcome:
         target_user, other_user = await seed_users(2)
         await _set_inactive(session_factory, target_user)
 
-        # target 이 받은 항목
         await InboxItem(
             recipient_id=target_user, actor_id=other_user,
             type=InboxItemType.FEED_LIKE,
             target_type=TargetType.FEED_POST,
             target_id="FDP_1", actor_name="x",
         ).insert()
-        # target 이 보낸 항목
         await InboxItem(
             recipient_id=other_user, actor_id=target_user,
             type=InboxItemType.FEED_LIKE,
             target_type=TargetType.FEED_POST,
             target_id="FDP_2", actor_name="x",
         ).insert()
-        # 무관한 항목 (보존되어야)
         await InboxItem(
             recipient_id=other_user, actor_id="USER_unrelated",
             type=InboxItemType.FEED_LIKE,
@@ -79,7 +76,6 @@ class TestPurgeDeletedOutcome:
         await withdraw_service.purge(user_id=target_user)
 
         coll = InboxItem.get_motor_collection()
-        # target 관련 2건 삭제, 무관한 1건 보존
         assert await coll.count_documents({}) == 1
         remaining = await coll.find_one({})
         assert remaining["actor_id"] == "USER_unrelated"
@@ -90,7 +86,6 @@ class TestPurgeDeletedOutcome:
         user_id, *_ = await seed_users(1)
         await _set_inactive(session_factory, user_id)
 
-        # withdrawal_request doc 시드
         from datetime import datetime, timedelta, timezone
         await WithdrawalRequest(
             user_id=user_id,
@@ -100,7 +95,6 @@ class TestPurgeDeletedOutcome:
 
         await withdraw_service.purge(user_id=user_id)
 
-        # doc 도 청소됨
         coll = WithdrawalRequest.get_motor_collection()
         assert await coll.count_documents({"user_id": user_id}) == 0
 
@@ -118,9 +112,7 @@ class TestPurgeStaleDocOutcome:
     ):
         """status=ACTIVE → RDB hard delete / Storage cleanup / 인박스 cascade 모두 skip."""
         user_id, other_user = await seed_users(2)
-        # status 는 ACTIVE 그대로 (cancel 한 직후 가정)
 
-        # 인박스 1건 시드 (cascade 안 되어야)
         await InboxItem(
             recipient_id=user_id, actor_id=other_user,
             type=InboxItemType.FEED_LIKE,
@@ -128,7 +120,6 @@ class TestPurgeStaleDocOutcome:
             target_id="FDP_1", actor_name="x",
         ).insert()
 
-        # withdrawal_request doc 시드
         from datetime import datetime, timedelta, timezone
         await WithdrawalRequest(
             user_id=user_id,
@@ -138,7 +129,6 @@ class TestPurgeStaleDocOutcome:
 
         await withdraw_service.purge(user_id=user_id)
 
-        # RDB user 보존
         async with session_factory() as session:
             result = await session.execute(
                 select(User).where(User.user_id == user_id)
@@ -147,14 +137,11 @@ class TestPurgeStaleDocOutcome:
             assert user is not None
             assert user.status == UserStatus.ACTIVE
 
-        # 인박스 보존 (cascade 안 함)
         inbox_coll = InboxItem.get_motor_collection()
         assert await inbox_coll.count_documents({"recipient_id": user_id}) == 1
 
-        # Storage cleanup 호출 안 됨
         storage_mock.delete_by_prefix.assert_not_awaited()
 
-        # withdrawal_request doc 만 청소
         wr_coll = WithdrawalRequest.get_motor_collection()
         assert await wr_coll.count_documents({"user_id": user_id}) == 0
 
@@ -165,14 +152,11 @@ class TestPurgeNoUserOutcome:
     async def test_runs_external_cleanup_idempotently(
         self, withdraw_service, mongo_db, storage_mock, redis_cache_mock,
     ):
-        # RDB 에 user 없는 상태 — 외부 정리만 진행
         await withdraw_service.purge(user_id="USER_ghost")
 
-        # 인박스 cascade 호출 (idempotent — 0건 삭제)
         inbox_coll = InboxItem.get_motor_collection()
         assert await inbox_coll.count_documents({}) == 0
 
-        # 외부 cleanup 도 호출됨
         storage_mock.delete_by_prefix.assert_awaited_once_with("USER_ghost")
         redis_cache_mock.assert_awaited_once_with("USER_ghost")
 

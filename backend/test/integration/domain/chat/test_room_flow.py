@@ -79,7 +79,6 @@ class TestCreateDirectRoomFlow:
             assert len(rooms) == 1
             assert len(members) == 2
 
-        # fan_out_to_user 가 양쪽에 1회씩 호출 (본인 포함)
         assert fanout_stub.fan_out_to_user.await_count == 2
 
     async def test_canonical_order_persisted(
@@ -112,11 +111,10 @@ class TestCreateDirectRoomFlow:
         async with session_factory() as s:
             rooms = (await s.execute(select(ChatRoom))).scalars().all()
             members = (await s.execute(select(ChatRoomMember))).scalars().all()
-            assert len(rooms) == 1        # 중복 생성 없음
+            assert len(rooms) == 1
             assert len(members) == 2
 
-        # 두 번째 호출에선 fan-out 스킵 (기존 방 반환)
-        assert fanout_stub.fan_out_to_user.await_count == 2  # 첫 호출만
+        assert fanout_stub.fan_out_to_user.await_count == 2
 
     async def test_reverse_direction_returns_same_room(
         self, uow, seed_users, fanout_stub, message_service_stub, session_factory,
@@ -168,7 +166,6 @@ class TestListUserRoomIdsFlow:
         a, b, c = await seed_users(3)
         service = RoomService(uow=uow, fanout_service=fanout_stub, message_service=message_service_stub)
 
-        # a-b 방, a-c 방 두 개 생성 후 a 가 두 번째만 나감
         r1 = await service.create_direct_room(me_id=a, peer_user_id=b)
         r2 = await service.create_direct_room(me_id=a, peer_user_id=c)
 

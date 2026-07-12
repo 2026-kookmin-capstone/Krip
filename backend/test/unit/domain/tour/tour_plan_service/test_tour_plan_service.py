@@ -40,7 +40,7 @@ class TestCreatePlan:
             )
 
     async def test_raises_when_place_not_found(self, service, place_repo_mock):
-        place_repo_mock.find_by_place_ids.return_value = []  # MongoDB 에 없음
+        place_repo_mock.find_by_place_ids.return_value = []
         items = [TourPlanItemCreateInput(day_number=1, place_id="GHOST", visit_time=None)]
 
         with pytest.raises(ValueError, match="존재하지 않는 장소"):
@@ -51,7 +51,6 @@ class TestCreatePlan:
     async def test_creates_plan_with_items_and_assigns_positions(
         self, service, place_repo_mock, plan_repo_mock,
     ):
-        # day=1 에 2개, day=2 에 1개 — position 은 1024, 2048 (day=1) / 1024 (day=2)
         place_repo_mock.find_by_place_ids.return_value = [
             PlaceDocFactory.create(place_id="P1"),
             PlaceDocFactory.create(place_id="P2"),
@@ -74,7 +73,6 @@ class TestCreatePlan:
         assert saved_plan.travel_days == 2
         assert len(saved_plan.items) == 3
 
-        # day-별 position 부여 (1024, 2048 / 1024)
         d1_items = [i for i in saved_plan.items if i.day_number == 1]
         d2_items = [i for i in saved_plan.items if i.day_number == 2]
         assert sorted(i.position for i in d1_items) == [_POSITION_SPACING, 2 * _POSITION_SPACING]
@@ -172,7 +170,7 @@ class TestUpdatePlanTitle:
         await service.update_plan_title(plan_id=plan.plan_id, user_id="USER_a", title="New")
 
         assert plan.title == "New"
-        assert plan.updated_at != original_updated_at  # 명시적 touch
+        assert plan.updated_at != original_updated_at
         plan_repo_mock.update.assert_awaited_once_with(plan)
 
     async def test_clears_title_when_null(self, service, plan_repo_mock):
@@ -340,7 +338,7 @@ class TestAddItem:
             user_id="USER_a", travel_days=3,
         )
         place_repo_mock.find_by_place_id.return_value = PlaceDocFactory.create(place_id="P1")
-        item_repo_mock.find_by_plan_id.return_value = []  # 빈 day
+        item_repo_mock.find_by_plan_id.return_value = []
 
         result = await service.add_item(
             plan_id="TP_x", user_id="USER_a",
@@ -359,11 +357,10 @@ class TestAddItem:
     ):
         plan_repo_mock.find_by_id.return_value = TourPlanFactory.create(user_id="USER_a")
         place_repo_mock.find_by_place_id.return_value = PlaceDocFactory.create(place_id="P1")
-        # 기존 카드: day=1 에 1024, 2048
         item_repo_mock.find_by_plan_id.return_value = [
             TourPlanItemFactory.create(day_number=1, position=1024.0),
             TourPlanItemFactory.create(day_number=1, position=2048.0),
-            TourPlanItemFactory.create(day_number=2, position=1024.0),  # 다른 day
+            TourPlanItemFactory.create(day_number=2, position=1024.0),
         ]
 
         await service.add_item(
@@ -372,7 +369,6 @@ class TestAddItem:
         )
 
         saved_item = item_repo_mock.save.await_args.args[0]
-        # 마지막 (2048) + spacing = 3072
         assert saved_item.position == 2048.0 + _POSITION_SPACING
 
 
@@ -493,7 +489,7 @@ class TestMoveItem:
         plan = TourPlanFactory.create(user_id="USER_a", travel_days=3)
         item_repo_mock.find_by_id.return_value = item
         plan_repo_mock.find_by_id.return_value = plan
-        item_repo_mock.find_by_plan_id.return_value = [item]  # 자기 자신만
+        item_repo_mock.find_by_plan_id.return_value = [item]
 
         await service.move_item(
             item_id=item.item_id, user_id="USER_a",
@@ -514,14 +510,13 @@ class TestMoveItem:
         plan_repo_mock.find_by_id.return_value = plan
         item_repo_mock.find_by_plan_id.return_value = [moving, a, b]
 
-        # day 2 의 a 다음 자리 (a, b 사이)
         await service.move_item(
             item_id=moving.item_id, user_id="USER_a",
             target_day_number=2, after_item_id=a.item_id,
         )
 
         assert moving.day_number == 2
-        assert moving.position == (1024.0 + 2048.0) / 2  # midpoint
+        assert moving.position == (1024.0 + 2048.0) / 2
 
 
 @pytest.mark.unit
@@ -619,7 +614,7 @@ class TestGenerateShareToken:
 
         result = await service.generate_share_token(plan_id=plan.plan_id, user_id="USER_a")
 
-        assert result.share_token  # non-empty
+        assert result.share_token
         assert decode_share_token(result.share_token) == plan.plan_id
         from datetime import datetime, timezone
         assert result.expires_at > datetime.now(timezone.utc)

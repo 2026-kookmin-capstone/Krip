@@ -31,7 +31,7 @@ class TestCheckAndRegister:
         )
 
         assert result.status == SignupStatus.NEW
-        assert result.user_id == "USER_new_001"  # save side_effect 부여
+        assert result.user_id == "USER_new_001"
         user_repo_mock.save.assert_awaited_once()
         detail_repo_mock.find_by_user_id.assert_not_awaited()
 
@@ -42,10 +42,9 @@ class TestCheckAndRegister:
         from sqlalchemy.exc import IntegrityError
 
         recovered = UserFactory.create(user_id="USER_x", status=UserStatus.ACTIVE)
-        # 최초 조회 None → INSERT 경합 → 재조회는 승자 row
         user_repo_mock.find_by_provider.side_effect = [None, recovered]
         user_repo_mock.save.side_effect = IntegrityError("mock", {}, Exception())
-        detail_repo_mock.find_by_user_id.return_value = None  # 아직 2차 미완료
+        detail_repo_mock.find_by_user_id.return_value = None
 
         result = await service.check_and_register(
             auth_provider="google", auth_provider_id="race@example.com",
@@ -67,7 +66,6 @@ class TestCheckAndRegister:
 
         assert result.status == SignupStatus.WITHDRAWAL_PENDING
         assert result.user_id == "USER_a"
-        # detail 검사 자체 skip — 탈퇴 유예 상태는 ID 만으로 분기
         detail_repo_mock.find_by_user_id.assert_not_awaited()
         user_repo_mock.save.assert_not_awaited()
 

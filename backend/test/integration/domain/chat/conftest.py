@@ -49,7 +49,6 @@ async def redis_hot():
     base = _require_env("REDIS_TEST_URL")
     client = aioredis.from_url(f"{base}/0", decode_responses=True, encoding="utf-8")
     await client.flushdb()
-    # lua_scripts 는 모듈 싱글톤. 테스트마다 새 client 로 rebind.
     lua_scripts.load(client)
     try:
         yield client
@@ -121,7 +120,6 @@ def patch_external_clients(monkeypatch, redis_hot, redis_dedupe, mongo_db):
     monkeypatch.setattr(
         "app.domain.chat.worker.reconcile.get_redis_dedupe_client", _dedupe,
     )
-    # mongodb 싱글톤의 database 속성 교체 (최초엔 None 이므로 raising=False)
     monkeypatch.setattr(
         "app.database.session.mongodb.database", mongo_db, raising=False,
     )
@@ -187,5 +185,5 @@ async def direct_room(
         uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
     )
     result = await room_svc.create_direct_room(me_id=user_a, peer_user_id=user_b)
-    chat_fanout_stub.reset_mock()  # 방 생성으로 찍힌 호출 제거
+    chat_fanout_stub.reset_mock()
     return result.chat_room_id, user_a, user_b

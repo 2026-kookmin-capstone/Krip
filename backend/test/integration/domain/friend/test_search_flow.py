@@ -129,7 +129,6 @@ class TestExclusions:
             await s.commit()
 
         search_service = FriendSearchService(uow=uow)
-        # b 의 user_id 부분 문자열로 매칭 시도해도 detail 없는 유저는 노출되지 않아야 함
         result = await search_service.search(viewer_id=a, keyword=b)
 
         item_ids = {item.user_id for item in result.items}
@@ -152,7 +151,6 @@ class TestMatching:
         a, b, _ = await seed_users(3)
         service = FriendSearchService(uow=uow)
 
-        # user_name 은 "user1" 인데 대문자로 검색해도 ILIKE 라 매칭
         result = await service.search(viewer_id=a, keyword="USER1")
 
         item_ids = {item.user_id for item in result.items}
@@ -163,7 +161,6 @@ class TestMatching:
         a, b, _ = await seed_users(3)
         service = FriendSearchService(uow=uow)
 
-        # user_id 는 USER_IT_001 — "IT_001" 은 user_name 'user1' 에는 없음
         result = await service.search(viewer_id=a, keyword="IT_001")
 
         item_ids = {item.user_id for item in result.items}
@@ -293,9 +290,6 @@ class TestPagination:
 
         page1_ids = {item.user_id for item in page1.items}
         page2_ids = {item.user_id for item in page2.items}
-        # 두 페이지 사이 중복 없음
         assert page1_ids.isdisjoint(page2_ids)
-        # viewer 본인은 결과에 없음
         assert viewer not in (page1_ids | page2_ids)
-        # 합집합이 viewer 제외 전체
         assert page1_ids | page2_ids == set(user_ids[1:])

@@ -39,8 +39,8 @@ class TestRegisterTokenFlow:
         second = await fcm_service.register_token(user_id=user_id, token="tok-A")
 
         rows = await fetch_tokens_by_user(session_factory, user_id)
-        assert len(rows) == 1  # 중복 row 생성 안 됨
-        assert first.fcm_token_id == second.fcm_token_id  # 같은 row 그대로
+        assert len(rows) == 1
+        assert first.fcm_token_id == second.fcm_token_id
 
     async def test_different_user_same_token_swaps_owner(
         self, fcm_service, session_factory, seed_users,
@@ -53,7 +53,7 @@ class TestRegisterTokenFlow:
 
         a_rows = await fetch_tokens_by_user(session_factory, user_a)
         b_rows = await fetch_tokens_by_user(session_factory, user_b)
-        assert a_rows == []  # 이전 owner 잃음
+        assert a_rows == []
         assert len(b_rows) == 1
         assert b_rows[0].token == "tok-shared"
 
@@ -90,17 +90,15 @@ class TestUnregisterTokenFlow:
         [user_a, user_b] = await seed_users(2)
         await fcm_service.register_token(user_id=user_a, token="tok-A")
 
-        # B 가 A 의 토큰 해제 시도
         await fcm_service.unregister_token(user_id=user_b, token="tok-A")
 
         rows = await fetch_tokens_by_user(session_factory, user_a)
-        assert len(rows) == 1  # 보존
+        assert len(rows) == 1
 
     async def test_nonexistent_token_silent_noop(
         self, fcm_service, seed_users,
     ):
         [user_id] = await seed_users(1)
-        # 등록한 적 없는 토큰 — 예외 없이 종료
         await fcm_service.unregister_token(user_id=user_id, token="never-existed")
 
 

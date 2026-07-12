@@ -32,11 +32,9 @@ class TripmatePostFactory:
         travel_end_date: date = date(2026, 6, 5),
         companion_type: CompanionType = CompanionType.FRIEND,
         is_displayed: bool = True,
-        # `_to_dto` 가 동적으로 접근하는 attribute (find_by_id_with_detail 시뮬레이션)
         like_count: int = 0,
         is_liked: bool = False,
         images: Optional[List[SimpleNamespace]] = None,
-        # author profile (post.user.detail)
         author_name: str = "조현상",
         author_age: int = 25,
         author_gender: Gender = Gender.MALE,

@@ -43,6 +43,5 @@ class TestPlaceKeywordMaxLength:
         assert r.status_code == 422
 
     def test_empty_keyword_rejected(self):
-        # min_length=1 은 유지되어야 한다.
         r = _client().get("/probe", params={"keyword": ""})
         assert r.status_code == 422

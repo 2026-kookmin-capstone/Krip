@@ -82,7 +82,7 @@ class TestListFlow:
         service = UserBlockService(uow=uow)
 
         await service.block_user(user_id=a, target_user_id=b)
-        await service.block_user(user_id=c, target_user_id=a)  # 상대가 나를 차단 — 내 목록엔 안 떠야 함
+        await service.block_user(user_id=c, target_user_id=a)
 
         result = await service.get_blocked_users(user_id=a)
 
@@ -153,4 +153,4 @@ class TestBlockFriendshipInteraction:
 
         async with session_factory() as s:
             friendships = (await s.execute(select(Friendship))).scalars().all()
-        assert friendships == []  # 차단 해제해도 친구관계는 복원되지 않음
+        assert friendships == []

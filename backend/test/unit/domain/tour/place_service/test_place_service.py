@@ -24,7 +24,6 @@ class TestGetNearbyPlaces:
 
         assert result.places == []
         assert result.next_cursor is None
-        # 빈 결과 → favorited 조회 skip
         fav_repo_mock.find_favorited_place_ids.assert_not_awaited()
 
     async def test_returns_places_with_distance_and_favorite(
@@ -45,7 +44,6 @@ class TestGetNearbyPlaces:
         assert result.places[0].place_id == "PLACE_1"
         assert result.places[0].is_favorite is True
         assert result.places[0].distance == 50.0
-        # favorited set 에 없으면 None
         assert result.places[1].is_favorite is None
 
     async def test_no_favorited_when_user_id_empty(

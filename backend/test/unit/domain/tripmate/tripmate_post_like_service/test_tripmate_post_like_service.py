@@ -139,7 +139,7 @@ class TestAddLike:
             actor_name="요한",
             actor_profile_image_url="https://img/p.jpg",
             post_id="TMP_x",
-            post_preview="제주 동행 구함",  # post.title 이 preview
+            post_preview="제주 동행 구함",
         )
 
     async def test_blocked_actor_like_suppresses_notification(
@@ -158,8 +158,8 @@ class TestAddLike:
         result = await service.add_like(user_id="USER_actor", post_id="TMP_x")
 
         assert result == 4
-        like_repo_mock.save.assert_awaited_once()  # 좋아요는 저장됨
-        inbox_service_mock.notify_tripmate_like.assert_not_awaited()  # 알림만 억제
+        like_repo_mock.save.assert_awaited_once()
+        inbox_service_mock.notify_tripmate_like.assert_not_awaited()
 
     async def test_self_like_skips_fanout_but_inserts_rdb(
         self, service, post_repo_mock, like_repo_mock, inbox_service_mock,
@@ -193,7 +193,7 @@ class TestAddLike:
         """
         post = TripmatePostFactory.create(post_id="TMP_x", user_id="USER_owner")
         post_repo_mock.find_by_id.return_value = post
-        detail_repo_mock.find_by_user_id.return_value = None  # 결손
+        detail_repo_mock.find_by_user_id.return_value = None
 
         await service.add_like(user_id="USER_actor", post_id="TMP_x")
 
@@ -218,7 +218,7 @@ class TestAddLike:
         """중복 좋아요 — 400 매핑용 ValueError. RDB INSERT / fan-out 모두 skip."""
         post = TripmatePostFactory.create()
         post_repo_mock.find_by_id.return_value = post
-        like_repo_mock.find_by_user_and_post.return_value = object()  # 이미 누름
+        like_repo_mock.find_by_user_and_post.return_value = object()
 
         with pytest.raises(ValueError, match="이미 좋아요"):
             await service.add_like(user_id="USER_a", post_id=post.post_id)
@@ -234,7 +234,7 @@ class TestAddLike:
 
         post = TripmatePostFactory.create(user_id="USER_owner")
         post_repo_mock.find_by_id.return_value = post
-        like_repo_mock.find_by_user_and_post.return_value = None  # 가드 통과
+        like_repo_mock.find_by_user_and_post.return_value = None
         like_repo_mock.save.side_effect = IntegrityError("mock", {}, Exception())
 
         with pytest.raises(ValueError, match="이미 좋아요"):
@@ -250,7 +250,7 @@ class TestRemoveLike:
     async def test_removes_existing_like_and_returns_count(
         self, service, like_repo_mock,
     ):
-        like_repo_mock.find_by_user_and_post.return_value = object()  # 누름
+        like_repo_mock.find_by_user_and_post.return_value = object()
         like_repo_mock.count_by_post.return_value = 3
 
         result = await service.remove_like(user_id="USER_a", post_id="TMP_x")

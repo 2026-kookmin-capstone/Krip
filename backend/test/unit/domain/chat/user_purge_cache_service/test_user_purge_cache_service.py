@@ -34,7 +34,6 @@ class TestRevokeAllSessions:
         """
         session_service_mock.revoke_all_sessions.side_effect = RuntimeError("redis down")
 
-        # 예외 없이 정상 반환
         await service.revoke_all_sessions("USER_a")
 
 

@@ -51,7 +51,6 @@ async def mongo_db():
     client = AsyncIOMotorClient(url, tz_aware=True)
     db = client.get_default_database()
 
-    # withdraw 가 정리 대상으로 호출하는 컬렉션 + 인박스 컬렉션 모두 drop
     for col in [
         "inbox",
         "withdrawal_request",

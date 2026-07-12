@@ -18,7 +18,6 @@ class TestParseCursor:
         assert place_id == "PLACE_abc"
 
     def test_place_id_with_colon_kept(self):
-        # split(":", 1) 이므로 place_id 내부 콜론은 그대로 유지된다.
         distance, place_id = PlaceRepository._parse_cursor("10:PLACE:x:y")
         assert distance == 10.0
         assert place_id == "PLACE:x:y"

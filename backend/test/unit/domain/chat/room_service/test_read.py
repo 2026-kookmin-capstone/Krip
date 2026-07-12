@@ -46,7 +46,7 @@ class TestMarkRead:
         chat_room_repo_mock.find_by_id.return_value = ChatRoomFactory.create(
             type_=ChatRoomType.GROUP,
         )
-        chat_member_repo_mock.mark_read.return_value = None  # 활성 멤버 아님
+        chat_member_repo_mock.mark_read.return_value = None
         with pytest.raises(PermissionError):
             await service.mark_read(
                 me_id="U_A", me_session_id="WS_A", room_id="CR_G",
@@ -61,8 +61,8 @@ class TestMarkRead:
             chat_room_id="CR_G", type_=ChatRoomType.GROUP,
         )
         message_repo_mock.get_max_server_seq.return_value = 7  # 방 현재 seq (clamp 상한)
-        chat_member_repo_mock.mark_read.return_value = 7  # regress 적용 후 최종 seq
-        message_repo_mock.count_after_seq.return_value = 0  # 최신까지 읽음 → 잔여 0
+        chat_member_repo_mock.mark_read.return_value = 7
+        message_repo_mock.count_after_seq.return_value = 0
 
         result = await service.mark_read(
             me_id="U_A", me_session_id="WS_A", room_id="CR_G",
@@ -71,7 +71,6 @@ class TestMarkRead:
 
         assert result == 7
 
-        # mark_read 가 repository 에 올바른 인자로 위임됐는지 (5 <= 현재 7 이라 그대로)
         chat_member_repo_mock.mark_read.assert_awaited_once_with("CR_G", "U_A", 5)
 
         # unread 을 DB 잔여(final_seq 이후 개수) 기준으로 Lua 재계산 — 여기선 residual=0.
@@ -81,16 +80,15 @@ class TestMarkRead:
         assert call.kwargs["keys"] == [
             "unread:U_A", "unread:read_seq:U_A", "room:members:gen:CR_G",
         ]
-        assert call.kwargs["args"][0] == "CR_G"   # room_id (hash field)
-        assert call.kwargs["args"][1] == 0        # residual
-        assert call.kwargs["args"][3] == 999      # cap
+        assert call.kwargs["args"][0] == "CR_G"
+        assert call.kwargs["args"][1] == 0
+        assert call.kwargs["args"][3] == 999
         assert call.kwargs["args"][4] == 7        # DB commit의 final_seq
         assert call.kwargs["args"][6] == 0        # read 시작 시 membership generation
 
         # ACK 는 commit/post-commit 완료 후 router 가 현재 WebSocket 에 직접 전송한다.
         fanout_mock.fan_out_to_session.assert_not_awaited()
 
-        # 방에 read 이벤트 브로드캐스트 (sender_session_id 로 자기 에코 차단)
         fanout_mock.fan_out_to_room.assert_awaited_once()
         room_args = fanout_mock.fan_out_to_room.call_args.args
         assert room_args[0] == "CR_G"
@@ -110,7 +108,7 @@ class TestMarkRead:
             chat_room_id="CR_G", type_=ChatRoomType.GROUP,
         )
         redis_mock.get.return_value = None
-        message_repo_mock.get_max_server_seq.return_value = 12  # 방 현재 seq
+        message_repo_mock.get_max_server_seq.return_value = 12
         chat_member_repo_mock.mark_read.return_value = 12
 
         await service.mark_read(
@@ -189,15 +187,14 @@ class TestMarkRead:
         chat_room_repo_mock.find_by_id.return_value = ChatRoomFactory.create(
             chat_room_id="CR_G", type_=ChatRoomType.GROUP,
         )
-        chat_member_repo_mock.mark_read.return_value = 7  # final_seq
-        message_repo_mock.count_after_seq.return_value = 3  # 7 이후 잔여 3건
+        chat_member_repo_mock.mark_read.return_value = 7
+        message_repo_mock.count_after_seq.return_value = 3
 
         await service.mark_read(
             me_id="U_A", me_session_id="WS_A", room_id="CR_G",
             up_to_server_seq=5,
         )
 
-        # 잔여는 final_seq(7) 이후로 DB 재계산 (recover 경로와 동일 인자)
         message_repo_mock.count_after_seq.assert_awaited_once_with(
             chat_room_id="CR_G", after_seq=7, limit=1000,
         )
@@ -206,7 +203,7 @@ class TestMarkRead:
             "unread:U_A", "unread:read_seq:U_A", "room:members:gen:CR_G",
         ]
         assert call.kwargs["args"][0] == "CR_G"
-        assert call.kwargs["args"][1] == 3  # residual (0 이 아니라 잔여 3) 를 Lua 로 전달
+        assert call.kwargs["args"][1] == 3
         assert call.kwargs["args"][4] == 7
 
     async def test_unread_capped_at_999(
@@ -218,7 +215,7 @@ class TestMarkRead:
             chat_room_id="CR_G", type_=ChatRoomType.GROUP,
         )
         chat_member_repo_mock.mark_read.return_value = 2
-        message_repo_mock.count_after_seq.return_value = 1000  # limit 만큼 카운트됨
+        message_repo_mock.count_after_seq.return_value = 1000
 
         await service.mark_read(
             me_id="U_A", me_session_id="WS_A", room_id="CR_G",
@@ -226,8 +223,8 @@ class TestMarkRead:
         )
 
         call = lua_mock.mark_read_unread.call_args
-        assert call.kwargs["args"][1] == 1000  # residual 원값 전달
-        assert call.kwargs["args"][3] == 999   # cap 전달 (Lua 가 min 적용)
+        assert call.kwargs["args"][1] == 1000
+        assert call.kwargs["args"][3] == 999
 
     async def test_returns_repository_final_seq_even_when_regressed(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
@@ -236,7 +233,7 @@ class TestMarkRead:
         chat_room_repo_mock.find_by_id.return_value = ChatRoomFactory.create(
             type_=ChatRoomType.GROUP,
         )
-        chat_member_repo_mock.mark_read.return_value = 20  # 이미 20 까지 읽은 상태
+        chat_member_repo_mock.mark_read.return_value = 20
 
         result = await service.mark_read(
             me_id="U_A", me_session_id="WS_A", room_id="CR_G",

@@ -67,9 +67,7 @@ class TestFindByPostIdIsLiked:
         privacy 회귀 가드 — 누가 누른 좋아요든 viewer 자신의 좋아요 여부만 반영해야 함.
         """
         post_id, owner_id = await seed_feed_post()
-        # owner 가 누름. viewer 는 안 누름.
         await _insert_like(session_factory, user_id=owner_id, post_id=post_id)
-        # viewer 는 별개 user
         [viewer_id, *_] = await seed_users(1)
 
         async with session_factory() as session:
@@ -84,7 +82,6 @@ class TestFindByPostIdIsLiked:
     ):
         """viewer_id=None — SQL 측 literal(false) 로 단락 평가. 실 PG 컴파일 검증."""
         post_id, owner_id = await seed_feed_post()
-        # owner 가 좋아요를 눌러도, viewer_id=None 이라면 is_liked 는 False 여야 함.
         await _insert_like(session_factory, user_id=owner_id, post_id=post_id)
 
         async with session_factory() as session:
@@ -214,7 +211,7 @@ class TestServiceLayerIsLiked:
         self, feed_post_service, seed_feed_post, session_factory, seed_users,
     ):
         """다른 유저 글에 viewer 가 좋아요 — get_user_feed 응답 is_liked=True."""
-        post_id, owner_id = await seed_feed_post()  # PUBLIC default
+        post_id, owner_id = await seed_feed_post()
         [viewer_id, *_] = await seed_users(1)
         await _insert_like(session_factory, user_id=viewer_id, post_id=post_id)
 
@@ -230,7 +227,7 @@ class TestServiceLayerIsLiked:
     ):
         """owner 자기 글에 좋아요 누른 상태에서 비친구 viewer 가 조회 →
         viewer 응답의 is_liked 는 False (privacy)."""
-        post_id, owner_id = await seed_feed_post()  # PUBLIC
+        post_id, owner_id = await seed_feed_post()
         await _insert_like(session_factory, user_id=owner_id, post_id=post_id)
         [viewer_id, *_] = await seed_users(1)
 

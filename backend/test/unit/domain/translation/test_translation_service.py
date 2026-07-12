@@ -73,7 +73,6 @@ class TestTranslationExceptionMapping:
             await svc.detect("안녕")
 
     async def test_malformed_payload_typeerror_maps_to_vendor_error_translate(self):
-        # 예: {"message": null} → payload["message"]["result"] 접근이 TypeError.
         svc = _service_detect_raising(TypeError("'NoneType' object is not subscriptable"))
         with pytest.raises(TranslationVendorError):
             await svc.translate("안녕", "ko", "en")

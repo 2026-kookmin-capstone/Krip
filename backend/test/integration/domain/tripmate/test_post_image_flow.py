@@ -97,7 +97,6 @@ class TestCleanupOrphanedImages:
     ):
         post_id, owner_id = await seed_tripmate_post()
 
-        # 이미지 1: post 에서 참조 (RDB tripmate_post_image)
         post_referenced = await tripmate_image_service.upload_image(
             user_id=owner_id, file=b"a", file_name="a.jpg", content_type="image/jpeg",
         )
@@ -107,7 +106,6 @@ class TestCleanupOrphanedImages:
             ))
             await session.commit()
 
-        # 이미지 2: draft 에서 참조 (Mongo tripmate_post_draft)
         draft_referenced = await tripmate_image_service.upload_image(
             user_id=owner_id, file=b"b", file_name="b.jpg", content_type="image/jpeg",
         )
@@ -140,14 +138,12 @@ class TestCleanupOrphanedImages:
             user_id=owner_id, file=b"o2", file_name="o2.jpg", content_type="image/jpeg",
         )
 
-        # post 참조
         async with session_factory() as session:
             session.add(TripmatePostImage(
                 post_id=post_id, image_url=post_ref.image_url, image_order=0,
             ))
             await session.commit()
 
-        # draft 참조
         await TripmatePostDraft(
             user_id=owner_id, image_urls=[draft_ref.image_url],
         ).insert()

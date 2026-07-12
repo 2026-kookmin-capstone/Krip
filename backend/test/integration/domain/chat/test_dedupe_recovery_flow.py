@@ -129,7 +129,6 @@ class TestDedupeRecoveryAfterMongoFailure:
         room_id, user_a, _ = direct_room
         cmid = "cm-recover-flow"
 
-        # 1차 — Mongo 확정 실패
         with patch(
             "app.domain.chat.repository.chat_message.ChatMessageRepository.insert",
             new=AsyncMock(side_effect=OperationFailure("validation failed", code=121)),
@@ -161,7 +160,6 @@ class TestDedupeRecoveryAfterMongoFailure:
         assert ack.client_msg_id == cmid
         assert ack.server_seq > 0
 
-        # Mongo 에 정확히 1건 — 1차 실패는 저장되지 않았고 2차만 저장됨
         cursor = mongo_db.chat_message.find({"chat_room_id": room_id})
         docs = [doc async for doc in cursor]
         assert len(docs) == 1, (

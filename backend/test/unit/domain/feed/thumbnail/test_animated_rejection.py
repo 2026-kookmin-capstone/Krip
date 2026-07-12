@@ -71,6 +71,5 @@ class TestStaticImagesPass:
         assert result.original.content_type == "image/png"
 
     def test_jpeg_passes(self):
-        # JPEG 는 `is_animated` 속성 자체가 없는 경로 — getattr 기본값 False 검증.
         result = process_feed_image(_make_jpeg())
         assert result.original.content_type == "image/jpeg"

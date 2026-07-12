@@ -36,7 +36,7 @@ def mock_session():
 @pytest.fixture
 def like_repo_mock():
     mock = AsyncMock()
-    mock.find_by_user_and_post.return_value = None  # 기본: 안 누른 상태
+    mock.find_by_user_and_post.return_value = None
     mock.count_by_post.return_value = 0
     mock.find_with_user_by_post.return_value = []
     mock.save.side_effect = lambda like: like

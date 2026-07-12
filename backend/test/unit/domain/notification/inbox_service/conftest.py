@@ -19,8 +19,6 @@ from test.unit.domain.notification.inbox_service.model_factory import (
 from test.unit.domain.notification.mock_factory import InboxRepositoryMockFactory
 
 
-# InboxItem Document 의 pydantic field default — stub 도 동일하게 모방하여
-# service 의 fan-out 결과를 진짜 Document 처럼 검증할 수 있게 한다.
 _INBOX_ITEM_FIELD_DEFAULTS = {
     "comment_id": None,
     "actor_profile_image_url": None,

@@ -42,7 +42,7 @@ class TestGenerateStateNonce:
 @pytest.mark.unit
 class TestVerifyStateNonce:
     def test_passes_when_cookie_matches_nonce(self):
-        verify_state_nonce(_request_with_cookies(oauth_state="n1"), "n1")  # no raise
+        verify_state_nonce(_request_with_cookies(oauth_state="n1"), "n1")
 
     def test_rejects_when_cookie_missing(self):
         with pytest.raises(HTTPException) as exc:
@@ -108,10 +108,10 @@ class TestStoreStateNonce:
 class TestConsumeStateNonce:
     async def test_consumes_existing_nonce(self, monkeypatch):
         redis = AsyncMock()
-        redis.delete = AsyncMock(return_value=1)  # 1건 삭제 = 존재
+        redis.delete = AsyncMock(return_value=1)
         monkeypatch.setattr(oauth_state, "get_redis_client", AsyncMock(return_value=redis))
 
-        await consume_state_nonce("n1")  # no raise
+        await consume_state_nonce("n1")
         redis.delete.assert_awaited_once_with("oauth_state:n1")
 
     async def test_rejects_missing_or_replayed_nonce(self, monkeypatch):

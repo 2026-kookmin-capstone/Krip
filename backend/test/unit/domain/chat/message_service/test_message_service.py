@@ -149,7 +149,6 @@ class TestMembershipCheck:
         )
 
         chat_member_repo_mock.find_active_member_ids.assert_awaited_once_with("CR_1")
-        # 멤버 populate 는 gen 가드 Lua(populate_members)로 반영 — gen0 캡처 후 멤버 목록 전달.
         lua_mock.populate_members.assert_awaited_once()
         args = lua_mock.populate_members.call_args.kwargs["args"]
         assert set(args[2:]) == {"U_A", "U_B"}, "멤버 목록이 Lua ARGV 로 전달되지 않음"
@@ -158,7 +157,7 @@ class TestMembershipCheck:
         self, service, redis_mock, chat_member_repo_mock,
     ):
         redis_mock.sismember = AsyncMock(return_value=False)
-        chat_member_repo_mock.find_active_member_ids.return_value = ["U_B", "U_C"]  # U_A 없음
+        chat_member_repo_mock.find_active_member_ids.return_value = ["U_B", "U_C"]
 
         with pytest.raises(PermissionError, match="멤버가 아닙니다"):
             await service.send_message(
@@ -223,8 +222,8 @@ class TestDedupe:
         self, service, redis_dedupe_mock,
     ):
         """dedupe hit + 값이 아직 placeholder → 최초 전송 in-flight → 재시도 유도 에러."""
-        redis_dedupe_mock.set = AsyncMock(return_value=False)  # SET NX 실패 = 이미 있음
-        redis_dedupe_mock.get = AsyncMock(return_value="1")    # placeholder (ACK 미기록)
+        redis_dedupe_mock.set = AsyncMock(return_value=False)
+        redis_dedupe_mock.get = AsyncMock(return_value="1")
 
         with pytest.raises(ValueError, match="처리 중"):
             await service.send_message(
@@ -411,7 +410,7 @@ class TestDuplicateKeyRetry:
     ):
         message_repo_mock.insert.side_effect = [
             DuplicateKeyError("dup"),
-            None,  # 재시도 성공
+            None,
         ]
         lua_mock.incr_fast.return_value = 50
         lua_mock.force_jump.return_value = 1050
@@ -442,7 +441,6 @@ class TestDuplicateKeyRetry:
         args, _ = redis_dedupe_mock.delete.call_args
         assert args[0] == dedupe_key("U_A", "cm-fail")
 
-        # force_jump 는 3회 (1회차 실패 후 + 2회차 실패 후 + 3회차 실패 후)
         assert lua_mock.force_jump.await_count == 3
 
 
@@ -1085,14 +1083,11 @@ class TestSendSystemMessage:
         await service.send_system_message(
             room_id="CR_1", action="created", actor_id="U_A",
         )
-        # 가드 없는 update_last_message 가 아니라 if_greater 가드 경로를 쓴다 (regress 차단).
         chat_room_repo_mock.update_last_message.assert_not_awaited()
         chat_room_repo_mock.update_last_message_if_greater.assert_awaited_once()
         kwargs = chat_room_repo_mock.update_last_message_if_greater.call_args.kwargs
         assert kwargs["chat_room_id"] == "CR_1"
 
-
-# edit_message (PHASE_2 #5) — 본인 메시지 5분 이내 편집
 
 from datetime import datetime, timedelta, timezone
 from types import SimpleNamespace
@@ -1281,7 +1276,6 @@ class TestDeleteMessage:
     async def test_group_creator_can_delete_others(
         self, service, message_repo_mock, chat_room_repo_mock,
     ):
-        # 다른 유저 메시지지만 나는 group creator
         message_repo_mock.find_by_id.return_value = _mk_text_doc(sender_id="U_B")
         chat_room_repo_mock.find_by_id.return_value = _mk_room(
             type_=ChatRoomType.GROUP, creator_id="U_A",
@@ -1457,7 +1451,7 @@ class TestDirectBlockCheck:
             type=ChatRoomType.DIRECT,
             creator_id="U_A",
             direct_user_a_id="U_A",
-            direct_user_b_id=None,  # 상대 탈퇴
+            direct_user_b_id=None,
         )
         await service.send_message(
             sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",

@@ -190,7 +190,7 @@ class TestGetMyStats:
         self, service, user_repo_mock, feed_post_like_repo_mock, friendship_repo_mock,
     ):
         """좋아요/친구 0건 — DTO 의 두 필드 모두 0 노출."""
-        user_repo_mock.find_by_id.return_value = object()  # 존재만 검증
+        user_repo_mock.find_by_id.return_value = object()
         feed_post_like_repo_mock.count_total_for_owner.return_value = 0
         friendship_repo_mock.count_accepted_for.return_value = 0
 
@@ -232,7 +232,6 @@ class TestGetMyStats:
         feed_post_like_repo_mock.count_total_for_owner.return_value = 1
         friendship_repo_mock.count_accepted_for.return_value = 2
 
-        # ProfileNotRegisteredError 가 발생하지 않아야 함.
         result = await service.get_my_stats("USER_no_detail")
         assert result.total_feed_likes == 1
         assert result.total_friends == 2

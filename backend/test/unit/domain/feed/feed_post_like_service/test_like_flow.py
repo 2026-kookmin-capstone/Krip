@@ -27,13 +27,12 @@ class TestAddLike:
         count = await service.add_like(user_id="USER_v", post_id="FDP_x")
         assert count == 5
         like_repo_mock.save.assert_awaited_once()
-        # save 의 첫 인자가 FeedPostLike(user_id, post_id)
         saved = like_repo_mock.save.await_args.args[0]
         assert saved.user_id == "USER_v"
         assert saved.post_id == "FDP_x"
 
     async def test_duplicate_raises_value_error(self, service, like_repo_mock):
-        like_repo_mock.find_by_user_and_post.return_value = object()  # 이미 누름
+        like_repo_mock.find_by_user_and_post.return_value = object()
         with pytest.raises(ValueError, match="이미 좋아요"):
             await service.add_like(user_id="USER_v", post_id="FDP_x")
         like_repo_mock.save.assert_not_called()
@@ -43,7 +42,7 @@ class TestAddLike:
     ):
         """find 통과 직후 INSERT 에서 composite PK 충돌 (동시 두 번 클릭) →
         일반 중복 케이스와 동일한 ValueError 로 일원화 (라우터에서 400)."""
-        like_repo_mock.find_by_user_and_post.return_value = None  # find 분기 통과
+        like_repo_mock.find_by_user_and_post.return_value = None
         like_repo_mock.save.side_effect = IntegrityError(
             statement="INSERT", params=None, orig=Exception("duplicate key"),
         )
@@ -124,7 +123,6 @@ class TestGetLikedUsers:
         result = await service.get_liked_users(viewer_id="USER_v", post_id="FDP_x")
 
         assert [u.user_id for u in result] == ["USER_a"]
-        # 배치 1쿼리 — liker id 전체를 viewer 기준으로 한 번에 조회 (N+1 회피).
         block_repo_mock.find_block_related_ids.assert_awaited_once()
         called_viewer, called_ids = block_repo_mock.find_block_related_ids.await_args.args
         assert called_viewer == "USER_v"
@@ -149,7 +147,6 @@ class TestVisibilityPropagation:
         )
         with pytest.raises(FeedNotFoundError):
             await service.add_like(user_id="USER_v", post_id="FDP_missing")
-        # 가시성 실패 시 좋아요 INSERT 자체 안 일어남
         like_repo_mock.save.assert_not_called()
 
     async def test_remove_propagates_not_found(

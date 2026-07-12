@@ -92,8 +92,6 @@ def make_fanout_mock() -> MagicMock:
     fanout.fan_out_to_session = AsyncMock()
     fanout.fan_out_to_user = AsyncMock()
     fanout.fan_out_to_room = AsyncMock()
-    # Phase 4 (node_channel) 진입 후 subscribe/unsubscribe 도 async — RoomService 가
-    # await 로 호출하므로 AsyncMock 으로 매칭.
     fanout.subscribe_user_to_room = AsyncMock()
     fanout.unsubscribe_user_from_room = AsyncMock()
     return fanout
@@ -101,7 +99,6 @@ def make_fanout_mock() -> MagicMock:
 
 def _make_pipeline(parent) -> MagicMock:
     p = MagicMock(name="pipeline")
-    # 체이닝 가능한 명령들
     for cmd in ("incr", "sadd", "srem", "expire", "hset", "hdel"):
         setattr(p, cmd, MagicMock(return_value=p))
     p.execute = AsyncMock()
@@ -115,14 +112,13 @@ def make_redis_mock() -> MagicMock:
 
     redis.pipeline = MagicMock(side_effect=lambda *_a, **_kw: _make_pipeline(redis))
 
-    # 직접 호출 메서드들 (Phase 2 invite 에서 `redis.get(room_seq_key)` 등)
     redis.get = AsyncMock(return_value=None)
     redis.srem = AsyncMock(return_value=1)
     redis.hdel = AsyncMock(return_value=1)
     redis.sadd = AsyncMock(return_value=0)
     redis.expire = AsyncMock(return_value=True)
     redis.hset = AsyncMock(return_value=0)
-    redis.hget = AsyncMock(return_value=None)  # mark_read baseline 스냅샷
-    redis.eval = AsyncMock(return_value=0)     # mark_read unread 재계산 Lua
+    redis.hget = AsyncMock(return_value=None)
+    redis.eval = AsyncMock(return_value=0)
 
     return redis

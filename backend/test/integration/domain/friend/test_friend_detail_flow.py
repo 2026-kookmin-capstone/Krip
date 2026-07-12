@@ -18,7 +18,6 @@ class TestFriendDetailFlow:
     ):
         a, b, _ = await seed_users(3)
 
-        # b 에 travel_style 2건 추가
         async with session_factory() as s:
             s.add(UserTravelStyle(user_id=b, style=TravelStyle.FOOD_TOUR))
             s.add(UserTravelStyle(user_id=b, style=TravelStyle.ACTIVITY))
@@ -27,7 +26,6 @@ class TestFriendDetailFlow:
         service = FriendDetailService(uow=uow)
         result = await service.get_friend_detail(viewer_id=a, peer_id=b)
 
-        # 공개 프로필만 노출
         assert result.user_id == b
         assert result.user_name == "user1"
         assert set(result.travel_styles) == {TravelStyle.FOOD_TOUR, TravelStyle.ACTIVITY}

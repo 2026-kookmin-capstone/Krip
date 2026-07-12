@@ -70,7 +70,6 @@ class TestSendRequestFlow:
 
         reissued = await service.send_request(requester_id=a, addressee_id=b)
 
-        # upsert: 동일 friendship_id 유지 + 상태 PENDING 복귀
         assert reissued.friendship_id == first.friendship_id
         assert reissued.status == FriendshipStatus.PENDING
 
@@ -87,7 +86,6 @@ class TestSendRequestFlow:
         first = await service.send_request(requester_id=a, addressee_id=b)
         await service.reject_request(friendship_id=first.friendship_id, user_id=b)
 
-        # 방향 반대로 재요청
         reissued = await service.send_request(requester_id=b, addressee_id=a)
         assert reissued.status == FriendshipStatus.PENDING
 
@@ -173,7 +171,6 @@ class TestListFlow:
         a, b, c = await seed_users(3)
         service = FriendshipService(uow=uow)
 
-        # a→b, c→a 두 건 PENDING
         await service.send_request(requester_id=a, addressee_id=b)
         await service.send_request(requester_id=c, addressee_id=a)
 
@@ -195,7 +192,6 @@ class TestListFlow:
         created_ab = await service.send_request(requester_id=a, addressee_id=b)
         await service.accept_request(friendship_id=created_ab.friendship_id, user_id=b)
 
-        # PENDING 하나 더 (친구 목록에는 안 뜸)
         await service.send_request(requester_id=c, addressee_id=a)
 
         friends = await service.get_friends(user_id=a)

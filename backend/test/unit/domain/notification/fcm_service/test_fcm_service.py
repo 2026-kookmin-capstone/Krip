@@ -197,7 +197,6 @@ class TestSendChatPush:
         """가드 통과 user 의 모든 디바이스 토큰을 한 multicast 로 발송 + 페이로드 검증."""
         chat_member_repo_mock.find_pushable_user_ids_in_room.return_value = {"U_1", "U_2"}
         user_repo_mock.find_unmuted_user_ids.return_value = {"U_1", "U_2"}
-        # U_2 는 디바이스 2개 보유
         fcm_token_repo_mock.find_by_user_ids.return_value = [
             _make_fcm_token(user_id="U_1", token="tok-1"),
             _make_fcm_token(user_id="U_2", token="tok-2"),
@@ -222,14 +221,12 @@ class TestSendChatPush:
         assert sorted(msg_arg.tokens) == ["tok-1", "tok-2", "tok-3"]
         assert msg_arg.notification.title == "새 메시지"
         assert msg_arg.notification.body == "hello"
-        # 사용자 사양 데이터 페이로드 정확성
         assert msg_arg.data == {
             "type": "chat",
             "chatRoomId": "CR_1",
             "senderId": "USER_s",
             "url": "/chat/CR_1",
         }
-        # 만료 정리 없음
         fcm_token_repo_mock.delete_by_tokens.assert_not_awaited()
 
     async def test_unregistered_tokens_get_bulk_cleaned_up(
@@ -244,7 +241,6 @@ class TestSendChatPush:
             _make_fcm_token(user_id="U_1", token="alive-tok"),
             _make_fcm_token(user_id="U_1", token="transient-tok"),
         ]
-        # dead 는 UnregisteredError, transient 는 일반 FirebaseError(예: QuotaExceeded)
         messaging_send_mock.return_value = make_fcm_batch_response(
             success_results=[False, True, False],
             error_results=[
@@ -261,7 +257,6 @@ class TestSendChatPush:
         )
 
         assert result == 1
-        # UnregisteredError 토큰만 정리 (transient 는 건너뜀)
         fcm_token_repo_mock.delete_by_tokens.assert_awaited_once()
         deleted = fcm_token_repo_mock.delete_by_tokens.await_args.args[0]
         assert deleted == ["dead-tok"]

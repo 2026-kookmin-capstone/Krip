@@ -531,7 +531,6 @@ class TestConcurrentSendProducesMonotonicSeq:
         )
         assert all(s > 0 for s in seqs), f"비정상 seq: {sorted(seqs)}"
 
-        # Mongo 에도 같은 개수의 unique (chat_room_id, server_seq) 문서가 저장됐는지
         cursor = mongo_db.chat_message.find({"chat_room_id": room_id})
         docs = [doc async for doc in cursor]
         assert len(docs) == _CONCURRENT_COUNT

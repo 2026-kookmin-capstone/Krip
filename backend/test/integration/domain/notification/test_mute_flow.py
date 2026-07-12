@@ -70,7 +70,7 @@ class TestSetRoomMuteFlow:
         my_row = await fetch_member(session_factory, room_id, me)
         other_row = await fetch_member(session_factory, room_id, other)
         assert my_row.notification_muted is True
-        assert other_row.notification_muted is None  # 다른 멤버 미영향
+        assert other_row.notification_muted is None
 
     async def test_false_normalizes_to_null(
         self, mute_service, session_factory, seed_room_with_members,
@@ -91,7 +91,7 @@ class TestSetRoomMuteFlow:
         self, mute_service, seed_room_with_members, seed_users,
     ):
         room_id, _ = await seed_room_with_members(2)
-        [outsider] = await seed_users(1)  # 방 멤버 아님
+        [outsider] = await seed_users(1)
 
         with pytest.raises(ValueError, match="활성 멤버"):
             await mute_service.set_room_mute(
@@ -104,7 +104,6 @@ class TestSetRoomMuteFlow:
         """탈퇴자(`is_left=True`) 는 자기 방 mute 토글 불가."""
         room_id, [me, _] = await seed_room_with_members(2)
 
-        # is_left=True 로 직접 변경
         async with session_factory() as session:
             from app.domain.chat.model.chat_room_member import ChatRoomMember
             member = await session.get(ChatRoomMember, (room_id, me))

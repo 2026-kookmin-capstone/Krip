@@ -14,7 +14,6 @@ from app.domain.chat.constants import UNREAD_COUNT_CAP
 
 pytestmark = pytest.mark.integration
 
-# 프로덕션과 동일한 .lua 파일을 register_script(EVALSHA) 로 로드해 검증.
 _LUA_SRC = (
     Path(lua_module.__file__).parent / "lua" / "mark_read_unread.lua"
 ).read_text(encoding="utf-8")
@@ -51,7 +50,6 @@ class TestMarkReadUnreadLua:
         key, cursor_key, room = "unread:it_lua_1", "unread:read_seq:it_lua_1", "R1"
         await redis_hot.delete(key, cursor_key)
         baseline = 0
-        # count 스냅샷(residual=0) 이후 메시지 2건 도착 → HINCRBY 로 current=2
         await redis_hot.hincrby(key, room, 2)
 
         final, applied, effective_seq = await _eval(
@@ -59,7 +57,6 @@ class TestMarkReadUnreadLua:
             residual=0, baseline=baseline, read_seq=10,
         )
 
-        # 절대 HSET 이면 0 으로 소거됐을 값 — delta(2) 보존으로 2
         assert final == 2
         assert applied == 1
         assert effective_seq == 10
@@ -70,7 +67,7 @@ class TestMarkReadUnreadLua:
         """동시 도착이 없으면 delta=0 → residual 그대로 (읽음이 정상 반영)."""
         key, cursor_key, room = "unread:it_lua_2", "unread:read_seq:it_lua_2", "R1"
         await redis_hot.delete(key, cursor_key)
-        await redis_hot.hset(key, room, 5)  # 기존 미읽음 5
+        await redis_hot.hset(key, room, 5)
 
         final, _, _ = await _eval(
             redis_hot, key, cursor_key, room, residual=1, baseline=5, read_seq=10,
@@ -99,7 +96,7 @@ class TestMarkReadUnreadLua:
             redis_hot, key, cursor_key, room, residual=1000, baseline=0, read_seq=10,
         )
 
-        assert final == UNREAD_COUNT_CAP  # 999
+        assert final == UNREAD_COUNT_CAP
         await redis_hot.delete(key, cursor_key)
 
     async def test_ignores_late_lower_read_seq(self, redis_hot):
@@ -140,7 +137,6 @@ class TestMarkReadUnreadLua:
         )
 
         assert first == (0, 1, 20)
-        # 동일 seq 재시도는 unread는 no-op이지만 room fanout 재시도를 허용하는 status=2.
         assert duplicate == (1, 2, 20)
         assert recovery == (1, 1, 20)
         await redis_hot.delete(key, cursor_key)

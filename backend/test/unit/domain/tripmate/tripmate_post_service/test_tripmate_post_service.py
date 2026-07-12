@@ -65,7 +65,7 @@ class TestCreatePost:
         )
 
         post_repo_mock.save.assert_awaited_once()
-        image_repo_mock.save_all.assert_not_awaited()  # 이미지 없음
+        image_repo_mock.save_all.assert_not_awaited()
         assert result.title == "제주 동행"
         assert result.image_urls == []
         assert result.profile_image_url == "https://img/p.jpg"
@@ -330,7 +330,7 @@ class TestUpdatePost:
         """차집합(old - new) 만 storage / mongo 정리 — 유지되는 이미지는 건드리지 않음."""
         post = TripmatePostFactory.create(user_id="USER_a")
         post_repo_mock.find_by_id.return_value = post
-        post_repo_mock.find_by_id_with_detail.return_value = post  # 응답용 reload
+        post_repo_mock.find_by_id_with_detail.return_value = post
         image_repo_mock.find_by_post_id.return_value = [
             make_post_image("https://img/old1"),
             make_post_image("https://img/keep"),
@@ -341,7 +341,6 @@ class TestUpdatePost:
             image_urls=["https://img/keep", "https://img/new"],
         )
 
-        # 제거된 것만 cleanup (old1)
         storage_mock.delete_many.assert_awaited_once()
         removed = storage_mock.delete_many.await_args.args[0]
         assert removed == ["https://img/old1"]
@@ -564,7 +563,7 @@ class TestImageOwnershipGuard:
 
         post_repo_mock.update.assert_not_awaited()
         post_repo_mock.find_by_id_with_detail.assert_not_awaited()
-        assert post.title == "original"  # 거부 전 mutation 없음
+        assert post.title == "original"
 
     async def test_update_ownership_checked_after_permission(
         self, service, post_repo_mock, mongo_image_repo_mock,
@@ -603,7 +602,6 @@ class TestOrphanImageProtection:
         image_repo_mock.find_by_post_id.return_value = [
             make_post_image("https://img/shared"),
         ]
-        # 이 게시글에서는 빠졌지만 다른 게시글이 여전히 참조 중
         image_repo_mock.find_urls_by_user_id.return_value = ["https://img/shared"]
 
         await service.update_post(
@@ -627,7 +625,7 @@ class TestOrphanImageProtection:
         image_repo_mock.find_by_post_id.return_value = [
             make_post_image("https://img/shared"),
         ]
-        image_repo_mock.find_urls_by_user_id.return_value = []  # 다른 게시글엔 없음
+        image_repo_mock.find_urls_by_user_id.return_value = []
         draft_find_one_mock.return_value = SimpleNamespace(
             image_urls=["https://img/shared"],
         )
@@ -656,7 +654,7 @@ class TestOrphanImageProtection:
 
         await service.update_post(
             post_id=post.post_id, user_id="USER_a",
-            image_urls=[], **_post_fields(),  # 둘 다 제거
+            image_urls=[], **_post_fields(),
         )
 
         storage_mock.delete_many.assert_awaited_once_with(["https://img/orphan"])
@@ -702,5 +700,4 @@ class TestOrphanImageProtection:
         names = [c[0] for c in order.mock_calls]
         assert "flush" in names and "find_urls" in names
         assert names.index("flush") < names.index("find_urls")
-        # 고아이므로 실제 물리 삭제까지 진행
         storage_mock.delete_many.assert_awaited_once_with(["https://img/1"])

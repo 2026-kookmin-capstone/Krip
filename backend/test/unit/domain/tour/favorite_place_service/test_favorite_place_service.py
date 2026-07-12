@@ -58,7 +58,7 @@ class TestAddFavorite:
         from sqlalchemy.exc import IntegrityError
 
         place_repo_mock.find_by_place_ids.return_value = [PlaceRawFactory.create()]
-        fav_repo_mock.find_by_user_and_place.return_value = None  # 가드 통과
+        fav_repo_mock.find_by_user_and_place.return_value = None
         fav_repo_mock.save.side_effect = IntegrityError("mock", {}, Exception())
 
         with pytest.raises(ValueError, match="이미 즐겨찾기"):
@@ -100,7 +100,6 @@ class TestGetFavorites:
 
         assert result.favorites == []
         assert result.total_count == 0
-        # 빈 결과 → Mongo 조회 skip
         place_repo_mock.find_by_place_ids.assert_not_awaited()
 
     async def test_preserves_favorite_order(
@@ -113,7 +112,6 @@ class TestGetFavorites:
             FavoritePlaceFactory.create(favorite_id="FAV_3", place_id="P_3"),
         ]
         fav_repo_mock.find_all_by_user.return_value = favorites
-        # Mongo 가 다른 순서로 반환해도 service 가 fav 순서대로 정렬
         place_repo_mock.find_by_place_ids.return_value = [
             PlaceRawFactory.create(place_id="P_3"),
             PlaceRawFactory.create(place_id="P_1"),

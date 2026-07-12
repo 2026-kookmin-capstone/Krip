@@ -27,7 +27,6 @@ async def stub_pubsub_redis(monkeypatch):
     """
     pubsub = MagicMock(name="pubsub")
     pubsub.subscribe = AsyncMock()
-    # 디스패처 루프가 즉시 None 만 받게 해 cancel/stop 시 정리 빠름.
     pubsub.get_message = AsyncMock(return_value=None)
     pubsub.unsubscribe = AsyncMock()
     pubsub.close = AsyncMock()
@@ -158,7 +157,7 @@ class TestStartFanoutDispatcher:
         fanout.dispatch_envelope = AsyncMock()
 
         await start_fanout_dispatcher(fanout)
-        await start_fanout_dispatcher(fanout)   # 두 번째
+        await start_fanout_dispatcher(fanout)
 
         assert pubsub.subscribe.await_count == 1
 

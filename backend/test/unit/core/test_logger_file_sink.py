@@ -49,9 +49,7 @@ def test_setup_logging_falls_back_to_console_when_path_unwritable(tmp_path, monk
     # 예외 없이 완료되어야 한다 (부팅 차단 방지).
     logger_module.setup_logging()
 
-    # 파일 sink 는 등록되지 않아 파일이 만들어지지 않는다.
     assert not bad_path.exists()
-    # 콘솔 sink 만 남는다.
     assert _handler_count() == 1
 
 
@@ -62,7 +60,6 @@ def test_setup_logging_adds_file_sink_when_path_writable(tmp_path, monkeypatch):
 
     logger_module.setup_logging()
 
-    # 콘솔 + 파일 sink 2개가 등록된다.
     assert _handler_count() == 2
     assert stat.S_IMODE(good_path.parent.stat().st_mode) == 0o751
     assert stat.S_IMODE(good_path.stat().st_mode) == 0o600

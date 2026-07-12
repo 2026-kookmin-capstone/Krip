@@ -35,7 +35,7 @@ class TestCreateComment:
         assert result.user_name == "Alice"
         assert result.profile_image_url == "https://x/a.jpg"
         comment_repo_mock.save.assert_awaited_once()
-        comment_repo_mock.find_by_id.assert_awaited_once()  # reload 호출 검증
+        comment_repo_mock.find_by_id.assert_awaited_once()
 
     async def test_strips_leading_trailing_whitespace(self, service, comment_repo_mock):
         """비-빈 댓글의 양끝 공백은 제거 (캡션과 다른 정책)."""
@@ -45,7 +45,6 @@ class TestCreateComment:
         await service.create_comment(
             user_id="USER_v", post_id="FDP_x", content="  hello  ",
         )
-        # service 가 strip 후 INSERT — repo.save 의 인자 검증
         saved_arg = comment_repo_mock.save.await_args.args[0]
         assert saved_arg.content == "hello"
 
@@ -70,8 +69,6 @@ class TestCreateComment:
     async def test_blank_content_raises_value_error(
         self, service, comment_repo_mock, content,
     ):
-        # schema 의 min_length=1 이 1차로 빈 문자열 차단하지만, service 도 strip 후 검증
-        # (공백만은 schema 통과 → service 에서 잡음).
         with pytest.raises(ValueError, match="댓글 내용이 비어"):
             await service.create_comment(
                 user_id="USER_v", post_id="FDP_x", content=content,

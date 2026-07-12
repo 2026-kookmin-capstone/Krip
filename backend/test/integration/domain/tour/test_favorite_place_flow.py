@@ -54,7 +54,6 @@ class TestAddFavorite:
                 user_id=user_id, place_id="PLACE_ghost",
             )
 
-        # RDB 에 INSERT 안 됨
         async with session_factory() as session:
             result = await session.execute(select(FavoritePlace))
             assert list(result.scalars().all()) == []
@@ -105,7 +104,6 @@ class TestGetFavorites:
         self, favorite_place_service, seed_users, seed_place,
     ):
         [user_id] = await seed_users(1)
-        # 3개 place 시드
         p1 = await seed_place(place_id="P_1", display_name="First")
         p2 = await seed_place(place_id="P_2", display_name="Second")
         p3 = await seed_place(place_id="P_3", display_name="Third")
@@ -131,13 +129,11 @@ class TestGetFavorites:
         await favorite_place_service.add_favorite(user_id=user_id, place_id=p1)
         await favorite_place_service.add_favorite(user_id=user_id, place_id=p2)
 
-        # Mongo 에서 P_will_disappear 만 직접 삭제 (RDB favorite 은 잔존)
         coll = Place.get_motor_collection()
         await coll.delete_one({"place_id": "P_will_disappear"})
 
         result = await favorite_place_service.get_favorites(user_id=user_id)
 
-        # Mongo 결손 row 는 skip — total_count = 매칭된 1건
         assert result.total_count == 1
         assert result.favorites[0].place.place_id == "P_alive"
 

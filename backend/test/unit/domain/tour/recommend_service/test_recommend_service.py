@@ -31,7 +31,6 @@ def _service_raising(exc: Exception) -> RecommendService:
     return svc
 
 
-# days=[] 면 _to_planner_input 이 빈 리스트를 만들고 곧바로 planner.invoke 로 진입한다.
 _BODY = SimpleNamespace(travel_days=1, food_preference=None, days=[])
 
 

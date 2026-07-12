@@ -62,7 +62,6 @@ class TestSystemMessageTimeline:
         assert m["content"] == {"action": "created", "actor_id": a}
         assert m["server_seq"] >= 1
 
-        # chat_room.last_message_* 에 해당 seq 반영
         async with session_factory() as s:
             fresh = await s.get(ChatRoom, room.chat_room_id)
             assert fresh.last_message_server_seq == m["server_seq"]
@@ -82,7 +81,6 @@ class TestSystemMessageTimeline:
         room = await service.create_group_room(
             me_id=a, title="T", member_ids=[b],
         )
-        # 방 생성 시점의 "created" 메시지는 이미 1건 있음
         await service.invite_members(
             me_id=a, room_id=room.chat_room_id, user_ids=[c],
         )
@@ -155,12 +153,10 @@ class TestSystemMessageTimeline:
             me_id=a, title="T", member_ids=[b],
         )
 
-        # 방 생성 시 unread 전원 0
         for uid in (a, b):
             raw = await redis_hot.hget(unread_key(uid), room.chat_room_id)
             assert raw == "0"
 
-        # c 초대 → join 시스템 메시지가 발행되지만 a/b 의 unread 는 그대로 0
         await service.invite_members(
             me_id=a, room_id=room.chat_room_id, user_ids=[c],
         )

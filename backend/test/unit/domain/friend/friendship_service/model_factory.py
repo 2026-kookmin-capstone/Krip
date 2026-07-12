@@ -45,7 +45,7 @@ class UserFactory:
                 profile_image_url=None,
             )
         else:
-            detail_obj = detail  # None 또는 사용자 지정
+            detail_obj = detail
 
         styles = [SimpleNamespace(style=s) for s in (travel_styles or [])]
         return SimpleNamespace(

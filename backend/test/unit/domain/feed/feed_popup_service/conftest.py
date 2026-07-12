@@ -21,7 +21,7 @@ def mock_session():
 @pytest.fixture
 def user_repo_mock():
     mock = AsyncMock()
-    mock.find_by_id_with_profile.return_value = None  # 기본: 미존재
+    mock.find_by_id_with_profile.return_value = None
     return mock
 
 

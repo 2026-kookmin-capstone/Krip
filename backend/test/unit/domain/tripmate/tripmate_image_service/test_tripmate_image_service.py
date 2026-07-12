@@ -173,7 +173,6 @@ class TestCleanupOrphanedImages:
         result = await service.cleanup_orphaned_images(user_id="USER_a")
 
         assert result == 0
-        # post / draft 조회 자체 skip
         post_image_repo_mock.find_urls_by_user_id.assert_not_awaited()
         storage_mock.delete_many.assert_not_awaited()
         image_repo_mock.delete_by_image_ids.assert_not_awaited()
@@ -208,7 +207,7 @@ class TestCleanupOrphanedImages:
             TripmateImageFactory.create(image_id="IMG_b", image_url="https://img/b.jpg"),
         ]
         post_image_repo_mock.find_urls_by_user_id.return_value = ["https://img/a.jpg"]
-        draft_find_one_mock.return_value = None  # draft 없음
+        draft_find_one_mock.return_value = None
 
         result = await service.cleanup_orphaned_images(user_id="USER_a")
 

@@ -101,7 +101,6 @@ class FakeBeanieDocumentClass:
         self._name = name
         self.find_call_count = 0
         self.last_filter = None
-        # service 가 `await TripmateImage.find({...}).delete()` 형태로 호출하므로 매번 새 query
         self._queries: list[FakeBeanieFindQuery] = []
 
     def find(self, filter_dict):

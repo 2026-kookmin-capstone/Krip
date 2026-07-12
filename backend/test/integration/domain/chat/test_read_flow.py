@@ -108,7 +108,6 @@ class TestMarkReadFlow:
         room = await service.create_group_room(me_id=a, title="T", member_ids=[b])
         await _insert_message(mongo_db, room.chat_room_id, 10)
 
-        # b 의 unread 를 수동으로 5 로 세팅 (실제론 메시지 수신으로 증가)
         await redis_hot.set(room_seq_key(room.chat_room_id), 10)
         await redis_hot.hset(unread_key(b), room.chat_room_id, 5)
 
@@ -119,20 +118,16 @@ class TestMarkReadFlow:
         )
         assert final == 10
 
-        # RDB 반영
         async with session_factory() as s:
             b_row = await s.get(ChatRoomMember, (room.chat_room_id, b))
             assert b_row.last_read_message_server_seq == 10
             assert b_row.last_read_at is not None
 
-        # Redis unread 0
         raw = await redis_hot.hget(unread_key(b), room.chat_room_id)
         assert raw == "0"
 
-        # ACK 는 service 반환 후 WebSocket router 가 직접 전송한다.
         chat_fanout_stub.fan_out_to_session.assert_not_awaited()
 
-        # fan-out: 방 전체에 read 이벤트 (sender_session_id 로 자기 에코 차단)
         chat_fanout_stub.fan_out_to_room.assert_awaited_once()
         room_call = chat_fanout_stub.fan_out_to_room.call_args
         assert room_call.args[0] == room.chat_room_id
@@ -355,7 +350,6 @@ class TestMarkReadFlow:
         )
         assert first == 20
 
-        # 과거 seq=5 로 재호출 — regress 되지 않고 20 유지
         second = await service.mark_read(
             me_id=b, me_session_id="WS_B", room_id=room.chat_room_id,
             up_to_server_seq=5,
@@ -414,7 +408,6 @@ class TestMarkReadFlow:
         room = await service.create_group_room(me_id=a, title="T", member_ids=[b, c])
         await _insert_message(mongo_db, room.chat_room_id, 10)
 
-        # b 만 seq=10 까지 읽음
         await redis_hot.set(room_seq_key(room.chat_room_id), 10)
         await service.mark_read(
             me_id=b, me_session_id="WS_B", room_id=room.chat_room_id,
@@ -423,10 +416,8 @@ class TestMarkReadFlow:
 
         async with session_factory() as s:
             repo = ChatRoomMemberRepository(s)
-            # a 가 방금 보낸 seq=10 를 b 가 읽었는지 집계 (c 는 아직, a 는 exclude)
             count = await repo.count_readers_up_to(room.chat_room_id, 10, a)
-            assert count == 1  # b 만
+            assert count == 1
 
-            # 더 높은 seq 는 아무도 못 읽음
             count2 = await repo.count_readers_up_to(room.chat_room_id, 100, a)
             assert count2 == 0

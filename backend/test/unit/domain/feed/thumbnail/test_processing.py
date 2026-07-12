@@ -58,11 +58,9 @@ class TestProcessFeedImageOutput:
     def test_three_variants_with_correct_sizes(self):
         result = process_feed_image(_jpeg(size=(800, 600)))
 
-        # original 은 ORIGINAL_MAX 이하 + EXIF 없음 → raw 보존 (사이즈는 800×600 그대로)
         original_img = Image.open(io.BytesIO(result.original.data))
         assert original_img.size == (800, 600)
 
-        # 썸네일은 항상 정사각형 + 지정 사이즈
         small_img = Image.open(io.BytesIO(result.small.data))
         assert small_img.size == (THUMBNAIL_SMALL, THUMBNAIL_SMALL)
 
@@ -96,7 +94,7 @@ class TestShrinkOriginal:
         result = shrink_original_if_needed(src)
         out_img = Image.open(io.BytesIO(result.data))
         assert max(out_img.size) <= ORIGINAL_MAX
-        assert result.data != src  # re-encoded
+        assert result.data != src
 
     def test_png_preserves_format_when_shrunk(self):
         """PNG spec: 무손실 유지 — shrink 가 일어나도 PNG 로 재인코딩."""
@@ -141,7 +139,7 @@ class TestCropSquareAndResize:
         # 으로 채워졌는지" 만 확인 (LANCZOS 보간으로 정확한 픽셀 매칭 어려움).
         # 중심 픽셀의 R 채널이 가장 높은 값이고 G/B 가 0 이 아님 (=alpha 합성 일어남) 검증.
         r, g, b = out.getpixel((THUMBNAIL_SMALL // 2, THUMBNAIL_SMALL // 2))
-        assert r > g and r > b  # 빨강 우세
+        assert r > g and r > b
         assert g > 0 and b > 0  # 흰 배경 합성으로 G/B 도 0 초과
 
 
@@ -151,7 +149,7 @@ class TestExifRotation:
         """EXIF Orientation 이 1(정상) 외 값이면 transpose 가 픽셀을 바꾸므로 raw 보존 X."""
         src_img = Image.new("RGB", (100, 100), (255, 0, 0))
         exif = src_img.getexif()
-        exif[0x0112] = 6  # Orientation
+        exif[0x0112] = 6
         buf = io.BytesIO()
         src_img.save(buf, format="JPEG", exif=exif, quality=80)
         src_bytes = buf.getvalue()
@@ -210,7 +208,7 @@ class TestDecompressionBomb:
         """
         import struct
         small = _png(size=(10, 10))
-        side = 6_000  # 36MP: 30MP < 36MP < 50MP → 새 cap 에서만 거절
+        side = 6_000
         patched = bytearray(small)
         struct.pack_into(">I", patched, 16, side)
         struct.pack_into(">I", patched, 20, side)

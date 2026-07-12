@@ -85,7 +85,6 @@ def app_http(monkeypatch):
     """
     monkeypatch.setitem(OAUTH_CLIENTS, OAuthProvider.GOOGLE, _FakeGoogleClient)
 
-    # 앱 흐름의 state nonce 는 Redis 단발성 저장 — 인메모리 fake 로 실 Redis 없이 검증.
     fake_redis = _FakeRedis()
 
     async def _fake_get_client():
@@ -145,11 +144,9 @@ class TestAppLoginRedirect:
         assert url.netloc == "accounts.google.com"
 
         params = parse_qs(url.query)
-        # state 는 `app:{provider}:{nonce}` — prefix 가 웹의 `local:` / `server:` 와 분리됨.
         state = params["state"][0]
         assert state.startswith("app:google:")
         assert len(state.split(":")[2]) > 0  # CSRF nonce 존재 (Redis 단발성 저장)
-        # redirect_uri 는 앱 전용 경로 (`/api/auth/login/app/callback`) — 웹 redirect 와 분리.
         expected = f"{settings.OAUTH_REDIRECT_BASE_URL}/api/auth/login/app/callback"
         assert params["redirect_uri"] == [expected]
         # Google 은 `select_account` 강제 (base 클래스 분기) — 캐시된 세션 자동 로그인 방지.
@@ -186,7 +183,6 @@ class TestAppLoginCallbackSuccess:
 
         assert resp.status_code == 307
         url = urlparse(resp.headers["location"])
-        # 딥링크 — 안드/iOS 가 앱으로 복귀시키는 custom scheme
         assert f"{url.scheme}://{url.netloc}{url.path}" == APP_DEEP_LINK
 
         params = parse_qs(url.query)
@@ -194,12 +190,10 @@ class TestAppLoginCallbackSuccess:
         assert params["email"] == [_FakeGoogleClient.USER_EMAIL]
         assert params["name"] == [_FakeGoogleClient.USER_NAME]
 
-        # utk 는 보호 경로 진입 시 앱이 X-Auth-Token 헤더로 다시 보낼 raw JWT
         decoded = _decode_utk(params["utk"][0])
         assert decoded["user_id"] == "USER_app_1"
         assert "exp" in decoded and "iat" in decoded
 
-        # signup_service 호출 인자 검증 — provider value + provider_id 둘 다 전달
         signup_mock.check_and_register.assert_awaited_once_with(
             auth_provider=OAuthProvider.GOOGLE.value,
             auth_provider_id=_FakeGoogleClient.USER_ID,
@@ -225,7 +219,6 @@ class TestAppLoginCallbackSuccess:
         assert resp.status_code == 307
         params = parse_qs(urlparse(resp.headers["location"]).query)
         assert params["status"] == ["withdrawal_pending"]
-        # 토큰은 발급되어야 한다 (프론트가 cancel 흐름에서 사용)
         assert _decode_utk(params["utk"][0])["user_id"] == "USER_pending"
 
     def test_omits_optional_user_fields_when_provider_returns_none(self, app_http, monkeypatch):
@@ -256,7 +249,7 @@ class TestAppLoginCallbackSuccess:
         assert "email" not in params
         assert "name" not in params
         assert params["status"] == ["complete"]
-        assert params["utk"]  # 토큰은 무조건 발급
+        assert params["utk"]
 
 
 class TestAppLoginCallbackErrors:
@@ -278,7 +271,6 @@ class TestAppLoginCallbackErrors:
     def test_returns_400_when_state_provider_unknown(self, app_http):
         client, signup_mock = app_http
 
-        # 유효한 nonce 로 CSRF 검증은 통과시키고, provider 부분만 미지원 값으로.
         nonce = _start_login(client).split(":")[2]
         resp = client.get(
             "/api/auth/login/app/callback",
@@ -315,11 +307,11 @@ class TestAppLoginCallbackErrors:
             "/api/auth/login/app/callback",
             params={"code": "c", "state": state}, follow_redirects=False,
         )
-        assert first.status_code == 307  # 최초 사용 OK
+        assert first.status_code == 307
 
         second = client.get(
             "/api/auth/login/app/callback",
             params={"code": "c", "state": state}, follow_redirects=False,
         )
-        assert second.status_code == 400  # 재사용 거부
-        signup_mock.check_and_register.assert_awaited_once()  # 최초 1회만 처리됨
+        assert second.status_code == 400
+        signup_mock.check_and_register.assert_awaited_once()

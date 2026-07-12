@@ -37,7 +37,6 @@ class TestNewSignup:
         )
 
         assert result.status == SignupStatus.NEW
-        # 실 RDB 에 INSERT 됨 — user_id default callable 자동 부여
         assert result.user_id is not None
         async with session_factory() as session:
             user = await session.get(User, result.user_id)
@@ -55,7 +54,6 @@ class TestWithdrawalPending:
     async def test_returns_pending_when_user_inactive(
         self, signup_service, session_factory, seed_users,
     ):
-        # seed 한 user 의 status 를 INACTIVE 로 전환
         [user_id] = await seed_users(1)
         async with session_factory() as session:
             user = await session.get(User, user_id)
@@ -79,7 +77,6 @@ class TestInProgress:
     async def test_returns_in_progress_when_detail_missing(
         self, signup_service, session_factory,
     ):
-        # detail 없는 user 만 직접 합성
         async with session_factory() as session:
             user = User(
                 auth_provider=OAuthProvider.GOOGLE,
@@ -105,7 +102,6 @@ class TestComplete:
     async def test_returns_complete_when_detail_exists(
         self, signup_service, session_factory, seed_users,
     ):
-        # seed_users 가 user + detail 둘 다 합성
         [user_id] = await seed_users(1)
         async with session_factory() as session:
             user = await session.get(User, user_id)

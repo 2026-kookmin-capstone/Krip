@@ -39,7 +39,7 @@ class TestNonBlankPreserved:
             "안녕하세요",
             "  hello  ",   # leading/trailing 공백 보존 — 의도된 입력일 수 있음
             "line1\nline2",
-            "a",            # 1자 minimum
+            "a",
         ],
     )
     def test_non_blank_returned_as_is(self, value):

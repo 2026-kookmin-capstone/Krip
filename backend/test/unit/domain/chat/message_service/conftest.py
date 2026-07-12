@@ -87,7 +87,6 @@ def service(
         "app.domain.chat.service.message.ChatMessageRepository",
         lambda db: message_repo_mock,
     )
-    # mongodb.database 참조 회피 — Repository 가 mock 이라 db 인자는 무시됨
     monkeypatch.setattr(
         "app.domain.chat.service.message.mongodb",
         type("FakeMongo", (), {"database": None})(),
@@ -102,7 +101,6 @@ def service(
     monkeypatch.setattr("app.domain.chat.service.message.get_redis_client", _hot)
     monkeypatch.setattr("app.domain.chat.service.message.get_redis_dedupe_client", _dedupe)
 
-    # lua_scripts 전체 교체
     monkeypatch.setattr("app.domain.chat.service.message.lua_scripts", lua_mock)
 
     uow = FakeUnitOfWork(mock_session)

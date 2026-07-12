@@ -38,7 +38,6 @@ class TestCreateGroupRoom:
     async def test_raises_when_any_target_not_friend(
         self, service, friendship_repo_mock,
     ):
-        # U_B 만 친구, U_C 는 친구 아님
         friendship_repo_mock.find_accepted_friend_ids_with.return_value = {"U_B"}
         with pytest.raises(ValueError, match="친구가 아닌"):
             await service.create_group_room(
@@ -66,12 +65,10 @@ class TestCreateGroupRoom:
         assert dto.peer is None
         assert dto.unread_count == 0
 
-        # members 3명 한 번에 insert
         chat_member_repo_mock.save_all.assert_awaited_once()
         members = chat_member_repo_mock.save_all.call_args.args[0]
         assert {m.user_id for m in members} == {"U_A", "U_B", "U_C"}
 
-        # fan_out_to_user 전원에게 room_joined 3번
         assert fanout_mock.fan_out_to_user.await_count == 3
         assert {c.args[0] for c in fanout_mock.fan_out_to_user.call_args_list} == {
             "U_A", "U_B", "U_C",
@@ -93,12 +90,11 @@ class TestCreateGroupRoom:
             me_id="U_A", title="T", member_ids=["U_B"],
         )
 
-        # pipeline: gen INCR + sadd + expire(gen, members) + hset (멤버당 unread)
         p = redis_mock._pipes[-1]
-        p.incr.assert_called_once()       # room:members:gen bump
+        p.incr.assert_called_once()
         p.sadd.assert_called_once()
         assert p.expire.call_count == 1   # members SET만 TTL; generation fence는 영속
-        assert p.hset.call_count == 2     # creator + 1 member
+        assert p.hset.call_count == 2
 
 
 @pytest.mark.unit
@@ -287,7 +283,7 @@ class TestInviteMembers:
         )
         chat_member_repo_mock.is_active_member.return_value = True
         friendship_repo_mock.find_accepted_friend_ids_with.return_value = {"U_B"}
-        chat_member_repo_mock.find.return_value = None  # 신규
+        chat_member_repo_mock.find.return_value = None
         redis_mock.get.return_value = "42"
 
         invited, skipped = await service.invite_members(
@@ -316,10 +312,10 @@ class TestInviteMembers:
             is_left=True,
             last_read_message_server_seq=10,
             joined_at=None,
-            notification_muted=True,  # 떠나기 전 mute 했었음
+            notification_muted=True,
         )
         chat_member_repo_mock.find.return_value = existing
-        redis_mock.get.return_value = "30"  # current_seq=30
+        redis_mock.get.return_value = "30"
 
         invited, _ = await service.invite_members(
             me_id="U_A", room_id="CR_G", user_ids=["U_B"],
@@ -327,11 +323,10 @@ class TestInviteMembers:
 
         assert invited == ["U_B"]
         assert existing.is_left is False
-        assert existing.last_read_message_server_seq == 10  # 유지
+        assert existing.last_read_message_server_seq == 10
         assert existing.joined_at is not None
         # 재가입 시 mute 는 NULL 로 리셋 — last_read 와 다른 정책 (docstring 참조).
         assert existing.notification_muted is None
-        # seq gap이 아니라 count_after_seq() 실제 메시지 수(기본 mock=0)로 시드한다.
         p = redis_mock._pipes[-1]
         p.hset.assert_any_call(unread_key("U_B"), "CR_G", 0)
 
@@ -483,9 +478,6 @@ class TestKickMember:
         assert call.args[1] == {"type": "room_left", "room_id": "CR_G"}
 
 
-# 시스템 메시지 발행 (PHASE_2 #2) — RoomService 가 MessageService 에 정확한 payload 로
-# 위임하는지만 검증. 실제 Mongo 저장/fan-out 은 통합에서.
-
 @pytest.mark.unit
 class TestSystemMessageEmission:
     async def test_create_group_emits_created_action(
@@ -549,7 +541,7 @@ class TestSystemMessageEmission:
             me_id="U_A", room_id="CR_G", user_ids=["U_B"],
         )
 
-        assert invited == ["U_B"]  # 시스템 메시지 실패해도 초대 성공
+        assert invited == ["U_B"]
 
     async def test_invite_with_only_skipped_does_not_emit(
         self, service, chat_room_repo_mock, chat_member_repo_mock,

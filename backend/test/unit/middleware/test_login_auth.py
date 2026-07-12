@@ -46,15 +46,14 @@ def client():
 
     @app.get("/protected")
     async def protected(request: Request):
-        # 미들웨어가 통과시키면 user_id 가 request.state 에 심어진다
         return {"user_id": request.state.user_id}
 
     @app.get("/health")
-    async def health():  # EXCLUDE_PATHS 검증용
+    async def health():
         return {"ok": True}
 
     @app.get("/api/auth/login/anything")
-    async def login_like():  # EXCLUDE_PREFIXES (`/api/auth/login`) 검증용
+    async def login_like():
         return {"ok": True}
 
     with TestClient(app) as c:
@@ -91,8 +90,6 @@ class TestTokenSources:
         assert resp.json() == {"user_id": "USER_from_header"}
 
 
-# 실패 분기 — login_missing / login_no_user_id / login_expired / login_invalid
-
 class TestFailureBranches:
     def test_returns_401_when_no_token_anywhere(self, client):
         resp = client.get("/protected")
@@ -101,7 +98,7 @@ class TestFailureBranches:
         assert resp.json()["detail"] == "로그인이 필요합니다."
 
     def test_returns_401_when_token_has_no_user_id(self, client):
-        token = _make_token(user_id=None)  # payload 에 user_id 누락
+        token = _make_token(user_id=None)
 
         resp = client.get("/protected", headers={"X-Auth-Token": token})
 

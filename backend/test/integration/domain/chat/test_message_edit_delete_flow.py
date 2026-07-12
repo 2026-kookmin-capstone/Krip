@@ -113,12 +113,10 @@ class TestDeleteMessageFlow:
             message_id=message_id, deleter_user_id=a, deleter_session_id="WS_A",
         )
 
-        # Mongo 상태
         doc = await mongo_db.chat_message.find_one({"_id": message_id})
         assert doc["deleted_at"] is not None
         assert doc["content"] is None
 
-        # 히스토리 조회 → content 마스킹 (deleted_at 별도 포함)
         history = MessageHistoryService(uow=uow)
         page = await history.find_messages_after(
             me_id=a, room_id=room_id, after_server_seq=server_seq - 1, limit=10,
@@ -137,7 +135,6 @@ class TestDeleteMessageFlow:
             uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await room_svc.create_group_room(me_id=a, title="T", member_ids=[b])
-        # b 가 보낸 메시지를 방장 a 가 삭제
         ack = await message_service.send_message(
             sender_user_id=b, sender_session_id="WS_B", room_id=room.chat_room_id,
             client_msg_id="cm-b-1", msg_type=MessageType.TEXT, content="x",
@@ -178,7 +175,6 @@ class TestDeleteMessageFlow:
         )
         room = await room_svc.create_group_room(me_id=a, title="T", member_ids=[b])
 
-        # 생성 시 자동 발행된 system 메시지 찾기
         sys_doc = await mongo_db.chat_message.find_one(
             {"chat_room_id": room.chat_room_id, "type": "system"},
         )

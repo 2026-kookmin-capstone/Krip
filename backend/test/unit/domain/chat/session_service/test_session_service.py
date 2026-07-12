@@ -222,12 +222,10 @@ class TestTerminate:
         assert len(redis_mock._pipes) == 1
         p = redis_mock._pipes[0]
 
-        # delete 는 sess + ws_route 두 키
         delete_keys = [c.args[0] for c in p.delete.call_args_list]
         assert sess_key("WS_1") in delete_keys
         assert ws_route_key("WS_1") in delete_keys
 
-        # zrem 은 sessions 에서 session_id 제거
         p.zrem.assert_called_once_with(sessions_key("U_A"), "WS_1")
 
 
@@ -245,7 +243,6 @@ class TestRevokeAllSessions:
 
         assert count == 0
         fanout_mock.fan_out_to_session.assert_not_awaited()
-        # pipeline 도 호출 안 됨 (early return)
         for p in redis_mock._pipes:
             assert not p.delete.called
 
@@ -272,11 +269,9 @@ class TestRevokeAllSessions:
 
         await service.revoke_all_sessions(user_id="U_A")
 
-        # 마지막 pipeline 이 revoke 처리 — fanout 호출 뒤
         revoke_pipe = redis_mock._pipes[-1]
         revoke_pipe.execute.assert_awaited()
 
-        # delete 인자 모음 — 단일 DEL 에 (sess, ws_route) 2개 묶이는 케이스 + sessions DEL
         all_delete_args = [
             arg for c in revoke_pipe.delete.call_args_list for arg in c.args
         ]

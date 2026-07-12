@@ -101,7 +101,6 @@ class TestOwnerFastPath:
         )
         result = await load_viewable_post(session, viewer_id="USER_a", post_id="FDP_x")
         assert result.user_id == "USER_a"
-        # 본인은 차단/친구 조회 자체를 안 함
         block_repo_mock.find_blocks_between.assert_not_called()
         friendship_repo_mock.find_between.assert_not_called()
 
@@ -116,7 +115,6 @@ class TestBlocked:
 
         with pytest.raises(FeedBlockedError):
             await load_viewable_post(session, viewer_id="USER_v", post_id="FDP_x")
-        # 차단 후 friend 조회 안 함 (불필요)
         friendship_repo_mock.find_between.assert_not_called()
 
 
@@ -166,6 +164,5 @@ class TestVisibilityDecision:
         friendship_repo_mock.find_between.return_value = SimpleNamespace(
             status=FriendshipStatus.ACCEPTED,
         )
-        # 친구라도 PRIVATE 은 본인 외 못 봄
         with pytest.raises(FeedNotFoundError):
             await load_viewable_post(session, viewer_id="USER_v", post_id="FDP_x")

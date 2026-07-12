@@ -78,7 +78,6 @@ class TestFindMessagesBeforeFlow:
         room_id, a, b, text_seqs = room_with_messages
         history = MessageHistoryService(uow=uow)
 
-        # 첫 페이지 — 가장 최근 5건
         page1: MessageListData = await history.find_messages_before(
             me_id=a, room_id=room_id, before_server_seq=10_000_000, limit=5,
         )
@@ -93,17 +92,13 @@ class TestFindMessagesBeforeFlow:
         page2 = await history.find_messages_before(
             me_id=a, room_id=room_id, before_server_seq=page1.next_cursor, limit=5,
         )
-        # text 10건 + system 1건 (created) = 총 11건. 5 찍고 다음 5 + system 1 = 6 이 남음
         assert len(page2.messages) <= 6
-        # 최종 페이지에 도달
         if page2.has_more:
-            # 6건 보다 적게 받은 경우 — 다음 호출에 반드시 소진
             page3 = await history.find_messages_before(
                 me_id=a, room_id=room_id, before_server_seq=page2.next_cursor, limit=10,
             )
             assert page3.has_more is False
 
-        # 두 페이지 합집합이 중복 없이 원본 seqs(+system) 를 포괄
         combined = [m.server_seq for m in (page1.messages + page2.messages)]
         assert len(combined) == len(set(combined)), "페이지 간 중복 발생"
 
@@ -119,7 +114,6 @@ class TestFindMessagesBeforeFlow:
         room = await room_svc.create_group_room(me_id=a, title="empty", member_ids=[b])
 
         history = MessageHistoryService(uow=uow)
-        # 방 생성 직후라 system message 1 건만 있음 (seq=1). seq<0 이면 빈 배열
         result = await history.find_messages_before(
             me_id=a, room_id=room.chat_room_id, before_server_seq=0, limit=10,
         )
@@ -135,13 +129,12 @@ class TestFindMessagesAfterFlow:
         room_id, a, _, text_seqs = room_with_messages
         history = MessageHistoryService(uow=uow)
 
-        # after=0 → 전체 히스토리 (system + text) 중 limit 만큼 ASC
         page1 = await history.find_messages_after(
             me_id=a, room_id=room_id, after_server_seq=0, limit=5,
         )
         assert len(page1.messages) == 5
         seqs1 = [m.server_seq for m in page1.messages]
-        assert seqs1 == sorted(seqs1)  # ASC
+        assert seqs1 == sorted(seqs1)
         assert page1.has_more is True
         assert page1.next_cursor == seqs1[-1]
 
@@ -160,7 +153,6 @@ class TestFindMessagesAfterFlow:
         # 누락 없이 전체 seq 포괄 (최소한 text 10건은 전부 포함되어야 함)
         for seq in text_seqs:
             assert seq in collected, f"catch-up 에서 seq={seq} 누락"
-        # 중복 없음
         assert len(collected) == len(set(collected))
 
     async def test_after_beyond_max_returns_empty(
@@ -185,7 +177,6 @@ class TestPermissionFlow:
     ):
         a, b, c = await seed_users(3)
         await seed_friendship(a, b)
-        # c 는 방에 들어있지 않음
 
         room_svc = RoomService(
             uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
@@ -323,8 +314,6 @@ class TestListRoomsFlow:
         item = result.items[0]
         assert item.chat_room_id == room_id
         assert item.title == "hist"
-        # 방 생성자 a 는 메시지 보낸 본인이라 unread 0
         assert item.unread_count == 0
-        # last_message 는 마지막 text 메시지
         assert item.last_message is not None
         assert item.last_message.server_seq == max(text_seqs)

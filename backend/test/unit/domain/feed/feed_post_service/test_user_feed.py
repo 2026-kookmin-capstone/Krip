@@ -111,12 +111,11 @@ class TestBlockedRaisesAndDoesNotQueryFeed:
         self, service, repo_mock, block_repo_mock, friendship_repo_mock,
     ):
         """차단 어느 방향이든 (`viewer→owner` or `owner→viewer`) 한 row 만 있어도 거절."""
-        block_repo_mock.find_blocks_between.return_value = [object()]  # 방향 무관 1+ row
+        block_repo_mock.find_blocks_between.return_value = [object()]
 
         with pytest.raises(FeedBlockedError):
             await service.get_user_feed(viewer_id="USER_a", owner_id="USER_b")
 
-        # 차단이면 friend 조회도, feed 조회도 모두 일어나면 안 됨
         friendship_repo_mock.find_between.assert_not_called()
         repo_mock.find_by_owner.assert_not_called()
 

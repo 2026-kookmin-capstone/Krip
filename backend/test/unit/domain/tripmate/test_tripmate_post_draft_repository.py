@@ -34,7 +34,6 @@ class TestUpsertDuplicateKeyRecovery:
         """첫 upsert 가 DuplicateKeyError → 재조회+갱신으로 복구 (예외 미전파)."""
         stored = _stored_doc()
         collection = MagicMock(name="collection")
-        # 1회차: unique 위반, 2회차: 기존 doc 갱신 성공
         collection.find_one_and_update = AsyncMock(
             side_effect=[DuplicateKeyError("dup"), stored],
         )

@@ -78,7 +78,7 @@ class TestSendRequest:
         addressee = UserFactory.create(user_id="USER_b")
         user_repo_mock.find_by_id_with_profile.return_value = addressee
         friendship_repo_mock.find_between.return_value = FriendshipFactory.create(
-            requester_id="USER_b",  # 상대가 먼저 보냈음
+            requester_id="USER_b",
             addressee_id="USER_a",
             status=FriendshipStatus.PENDING,
         )
@@ -129,7 +129,7 @@ class TestSendRequest:
         addressee = UserFactory.create(user_id="USER_b")
         user_repo_mock.find_by_id_with_profile.return_value = addressee
         existing = FriendshipFactory.create(
-            requester_id="USER_b",  # 원래 요청자는 상대
+            requester_id="USER_b",
             addressee_id="USER_a",
             status=FriendshipStatus.REJECTED,
         )
@@ -137,7 +137,6 @@ class TestSendRequest:
 
         result = await service.send_request(requester_id="USER_a", addressee_id="USER_b")
 
-        # 방향이 swap 되어야 함
         assert existing.requester_id == "USER_a"
         assert existing.addressee_id == "USER_b"
         assert existing.status == FriendshipStatus.PENDING

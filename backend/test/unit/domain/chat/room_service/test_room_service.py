@@ -59,7 +59,7 @@ class TestIdempotentCreation:
         user_repo_mock.find_by_id_with_profile.return_value = UserFactory.create("U_B")
         existing = ChatRoomFactory.create(
             chat_room_id="CR_existing",
-            direct_user_a_id="U_A",  # canonical 후 a
+            direct_user_a_id="U_A",
             direct_user_b_id="U_B",
         )
         chat_room_repo_mock.find_direct_by_pair.return_value = existing
@@ -103,7 +103,7 @@ class TestIdempotentCreation:
         # 첫 조회엔 없음 → INSERT 시도 → IntegrityError → 재조회엔 존재
         recovered = ChatRoomFactory.create(chat_room_id="CR_recovered")
         chat_room_repo_mock.find_direct_by_pair = AsyncMock(
-            side_effect=[None, recovered],  # 1st: None, 2nd: 기존 방
+            side_effect=[None, recovered],
         )
         chat_room_repo_mock.save.side_effect = IntegrityError("mock", {}, Exception())
 
@@ -140,7 +140,6 @@ class TestSideEffects:
 
         await service.create_direct_room(me_id="U_A", peer_user_id="U_B")
 
-        # 양쪽에 fan_out_to_user 2회 호출
         assert fanout_mock.fan_out_to_user.await_count == 2
         targets = {call.args[0] for call in fanout_mock.fan_out_to_user.call_args_list}
         assert targets == {"U_A", "U_B"}
@@ -162,11 +161,10 @@ class TestSideEffects:
 
         await service.create_direct_room(me_id="U_A", peer_user_id="U_B")
 
-        # Redis pipeline: gen INCR + SADD members + EXPIRE(gen, members)
         assert redis_mock._pipes, "pipeline 호출되지 않음"
         p = redis_mock._pipes[-1]
-        p.incr.assert_called_once()                    # room:members:gen bump
-        p.sadd.assert_called_once()                    # room:members 채우기
+        p.incr.assert_called_once()
+        p.sadd.assert_called_once()
         assert p.expire.call_count == 1                # members SET만 TTL; generation fence는 영속
         p.execute.assert_awaited_once()
 

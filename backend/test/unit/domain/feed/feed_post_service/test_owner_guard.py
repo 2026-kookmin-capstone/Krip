@@ -173,7 +173,6 @@ class TestDeletePost:
         await service.delete_post(user_id="USER_owner", post_id="FDP_x")
 
         repo_mock.delete.assert_awaited_once_with(row.post)
-        # prefix 는 `{user_id}/feed/{post_id}` 형식
         storage_mock.delete_by_prefix.assert_awaited_once_with("USER_owner/feed/FDP_x")
 
     async def test_storage_failure_is_swallowed(self, service, repo_mock, storage_mock):

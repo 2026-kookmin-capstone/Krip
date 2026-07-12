@@ -101,7 +101,6 @@ class TestDraftEnumValidation:
         assert req.companion_type == CompanionType.FRIEND
 
     def test_none_allowed_partial_draft(self):
-        # 드래프트는 부분 저장이므로 미입력(None) 허용
         req = SaveDraftRequest()
         assert req.preferred_gender is None
         assert req.companion_type is None

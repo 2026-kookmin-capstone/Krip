@@ -45,7 +45,6 @@ class TestGetPlanByToken:
 
         assert result.plan_id == plan.plan_id
         assert result.title == "Public Plan"
-        # PublicPlanData 에 user_id 필드 자체가 없음 (DTO 가 노출 안 함)
         assert not hasattr(result, "user_id")
         assert len(result.items) == 2
         ratings = {i.place_id: i.rating for i in result.items}
@@ -54,7 +53,6 @@ class TestGetPlanByToken:
     async def test_items_sorted_by_day_then_position(
         self, share_service, plan_repo_mock, place_repo_mock,
     ):
-        # 의도적으로 뒤섞인 순서
         items = [
             TourPlanItemFactory.create(day_number=2, position=1024.0, place_id="P_d2"),
             TourPlanItemFactory.create(day_number=1, position=2048.0, place_id="P_d1b"),
@@ -71,6 +69,5 @@ class TestGetPlanByToken:
 
         result = await share_service.get_plan_by_token(share_token=token)
 
-        # day_number ASC, position ASC 정렬
         order = [(i.day_number, i.position) for i in result.items]
         assert order == [(1, 1024.0), (1, 2048.0), (2, 1024.0)]

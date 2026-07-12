@@ -72,7 +72,6 @@ def _make_ws(
     ws = MagicMock(name="websocket")
     ws.headers = {}
     if subprotocols is not None:
-        # 클라가 보내는 헤더는 `, ` 로 join — 헬퍼는 소문자 키로 조회
         ws.headers["sec-websocket-protocol"] = ", ".join(subprotocols)
     ws.cookies = {}
     if cookie_token is not None:
@@ -203,7 +202,7 @@ class TestVerifyJwt:
 
     def test_falls_back_to_token_prefix_when_jti_missing(self):
         """jti claim 이 없으면 raw token 앞 32자를 jti 로 사용 — SessionService 기록과 일관."""
-        token = _make_token("USER_jwt")  # jti 없음
+        token = _make_token("USER_jwt")
         ws = _make_ws(cookie_token=token)
 
         result = _verify_jwt(ws)

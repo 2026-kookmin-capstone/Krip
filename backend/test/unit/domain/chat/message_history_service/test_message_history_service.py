@@ -115,7 +115,7 @@ class TestFindMessagesBefore:
         )
         assert [m.server_seq for m in result.messages] == [6, 5, 4]
         assert result.has_more is True
-        assert result.next_cursor == 4  # 마지막(=가장 오래된) seq
+        assert result.next_cursor == 4
 
     async def test_deleted_message_content_is_masked(
         self, service, chat_member_repo_mock, message_repo_mock,
@@ -128,7 +128,7 @@ class TestFindMessagesBefore:
         result = await service.find_messages_before(
             me_id="U_A", room_id="CR_1", before_server_seq=10, limit=5,
         )
-        assert result.messages[0].content is None  # 삭제된 메시지 마스킹
+        assert result.messages[0].content is None
         assert result.messages[0].deleted_at == NOW
 
 
@@ -158,7 +158,7 @@ class TestFindMessagesAfter:
         )
         assert [m.server_seq for m in result.messages] == [1, 2, 3]
         assert result.has_more is True
-        assert result.next_cursor == 3  # 마지막(=가장 최신) seq — 클라는 다음 호출에 after=3
+        assert result.next_cursor == 3
 
     async def test_no_more_messages_returns_empty(
         self, service, chat_member_repo_mock, message_repo_mock,
@@ -312,7 +312,7 @@ class TestListRooms:
 
         result = await service.list_rooms(me_id="U_A")
         assert result.items[0].last_message is not None
-        assert result.items[0].last_message.content is None  # 삭제 마스킹
+        assert result.items[0].last_message.content is None
         assert result.items[0].last_message.server_seq == 10
 
     async def test_last_message_preview_keeps_system_content_dict(
@@ -346,7 +346,7 @@ class TestListRooms:
         assert item.last_message is not None
         assert item.last_message.type == "system"
         assert item.last_message.sender_id is None
-        assert item.last_message.content == payload  # dict 보존 (str 변환 / drop 없음)
+        assert item.last_message.content == payload
 
     async def test_last_message_preview_keeps_image_content_dict(
         self, service, chat_room_repo_mock, redis_mock, message_repo_mock,
@@ -463,7 +463,7 @@ class TestGetRoom:
         result = await service.get_room(me_id="U_A", room_id="CR_g")
         assert result.notification_muted is True
         assert result.title == "T"
-        assert result.peer is None  # group
+        assert result.peer is None
 
     async def test_active_member_with_mute_null_exposes_false(
         self, service, chat_room_repo_mock, chat_member_repo_mock,
@@ -625,7 +625,6 @@ class TestListInvitableFriends:
         chat_room_repo_mock.find_by_id.return_value = _mk_room(type_=ChatRoomType.GROUP)
         chat_member_repo_mock.is_active_member.return_value = True
         friendship_repo_mock.find_accepted_friend_ids.return_value = {"U_B", "U_C", "U_D"}
-        # U_C 만 이미 방 멤버 → U_B, U_D 가 초대 가능
         chat_member_repo_mock.find_active_member_ids.return_value = ["U_A", "U_C"]
         user_repo_mock.find_by_ids_with_profile.return_value = {
             "U_B": _mk_user("U_B", "bob", "https://cdn.example.com/b.jpg"),
@@ -634,7 +633,6 @@ class TestListInvitableFriends:
 
         result = await service.list_invitable_friends(me_id="U_A", room_id="CR_g")
 
-        # 정렬은 user_id ASC (서비스가 sorted 사용)
         assert [m.user_id for m in result.items] == ["U_B", "U_D"]
         assert result.items[0].profile_image_url == "https://cdn.example.com/b.jpg"
         assert result.items[1].profile_image_url is None

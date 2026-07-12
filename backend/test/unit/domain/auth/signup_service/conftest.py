@@ -44,7 +44,6 @@ def user_repo_mock():
     mock = make_user_repo_mock()
     mock.find_by_provider = mock.find_by_id  # 동일 AsyncMock 재사용은 안 됨 — 별도
 
-    # find_by_provider 는 별도 AsyncMock 로 명시적 부여
     from unittest.mock import AsyncMock
     mock.find_by_provider = AsyncMock(return_value=None)
 

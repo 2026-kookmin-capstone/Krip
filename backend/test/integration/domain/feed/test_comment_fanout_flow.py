@@ -91,7 +91,6 @@ class TestDeleteCommentPreservesInboxItem:
             user_id=actor_id, post_id=post_id, comment_id=comment.comment_id,
         )
 
-        # 인박스 항목 보존 — 이벤트 발생 사실의 기록
         coll = InboxItem.get_motor_collection()
         assert await coll.count_documents({"recipient_id": owner_id}) == 1
 
@@ -112,7 +111,7 @@ class TestCommentPreviewTruncation:
 
         coll = InboxItem.get_motor_collection()
         doc = await coll.find_one({"recipient_id": owner_id})
-        assert len(doc["comment_preview"]) == 101  # 100 + "…"
+        assert len(doc["comment_preview"]) == 101
         assert doc["comment_preview"].endswith("…")
 
 

@@ -17,7 +17,7 @@ class TestEncodeShareToken:
     def test_returns_token_and_future_expiry(self):
         token, expires_at = encode_share_token("TP_x")
 
-        assert isinstance(token, str) and token  # non-empty
+        assert isinstance(token, str) and token
         assert expires_at > datetime.now(timezone.utc)
 
     def test_decode_roundtrip_returns_same_plan_id(self):
@@ -32,7 +32,6 @@ class TestDecodeShareToken:
             decode_share_token("not-a-jwt")
 
     def test_raises_on_wrong_secret(self):
-        # 다른 비밀키로 서명한 토큰
         bad_token = jwt.encode(
             {"plan_id": "TP_x"},
             "different-secret",
@@ -55,7 +54,6 @@ class TestDecodeShareToken:
             decode_share_token(expired_token)
 
     def test_raises_when_payload_missing_plan_id(self):
-        # plan_id 가 없는 토큰
         token = jwt.encode(
             {"foo": "bar"},
             settings.SHARE_JWT_SECRET_KEY,

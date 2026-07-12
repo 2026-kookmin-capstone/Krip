@@ -88,12 +88,12 @@ class TestPopulateMembersGuard:
     async def test_populate_replaces_stale_set_no_merge(self, redis_hot):
         """가드 통과 시 기존 잔재를 DEL 후 채워 유령 멤버가 merge 로 남지 않는다."""
         await redis_hot.delete(_K, _G)
-        await redis_hot.sadd(_K, "ghost")               # 이전 잔재
+        await redis_hot.sadd(_K, "ghost")
 
         gen0 = await redis_hot.get(_G) or "0"
         await _populate(redis_hot, gen0, ["sender", "bob"])
 
-        assert await redis_hot.smembers(_K) == {"sender", "bob"}  # ghost 제거됨
+        assert await redis_hot.smembers(_K) == {"sender", "bob"}
         await redis_hot.delete(_K, _G)
 
     async def test_any_membership_change_skips_populate(self, redis_hot):

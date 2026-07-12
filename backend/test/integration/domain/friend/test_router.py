@@ -130,7 +130,7 @@ class TestSendFriendRequestEndpoint:
 
         resp = client.post(
             "/api/friend/friendships/requests",
-            json={},  # addressee_id 누락
+            json={},
             headers={"X-User-Id": "USER_a"},
         )
 
@@ -440,7 +440,6 @@ class TestSearchEndpoint:
             headers={"X-User-Id": "USER_a"},
         )
 
-        # service 에는 normalized 키워드가 전달
         _, kwargs = search_mock.search.call_args
         assert kwargs["keyword"] == "영희"
 
@@ -484,7 +483,6 @@ class TestSearchEndpoint:
         )
 
         assert resp.status_code == 200
-        # 검색은 정상 수행
         search_mock.search.assert_awaited_once()
 
     def test_history_save_uses_stripped_keyword(self, http_search):
@@ -502,8 +500,6 @@ class TestSearchEndpoint:
             user_id="USER_a", search_name="영희",
         )
 
-
-# /search/history — 검색 기록 CRUD
 
 from types import SimpleNamespace  # noqa: E402 — fixture/test 분리 후 사용
 
@@ -582,6 +578,5 @@ class TestSearchHistoryEndpoints:
 
         assert resp.status_code == 200
         body = resp.json()
-        # 전체 / 모두 둘 중 하나는 포함
         assert "전체" in body["message"] or "모두" in body["message"]
         search_history_mock.delete_all_searches.assert_awaited_once_with("USER_a")

@@ -58,7 +58,6 @@ class TestCreateGroupRoomFlow:
         assert dto.title == "캡스톤 7팀"
         assert dto.peer is None
 
-        # RDB — chat_room + members 3건
         async with session_factory() as s:
             rooms = (await s.execute(select(ChatRoom))).scalars().all()
             members = (await s.execute(select(ChatRoomMember))).scalars().all()
@@ -71,14 +70,12 @@ class TestCreateGroupRoomFlow:
             assert all(not m.is_left for m in members)
             assert all(m.last_read_message_server_seq is None for m in members)
 
-        # Redis — room:members 캐시에 3명 + unread 초기화
         cached = await redis_hot.smembers(room_members_key(dto.chat_room_id))
         assert cached == {a, b, c}
         for uid in (a, b, c):
             raw = await redis_hot.hget(unread_key(uid), dto.chat_room_id)
             assert raw == "0"
 
-        # fan-out — 전원에게 room_joined
         assert chat_fanout_stub.fan_out_to_user.await_count == 3
         targets = {call.args[0] for call in chat_fanout_stub.fan_out_to_user.call_args_list}
         assert targets == {a, b, c}
@@ -90,7 +87,6 @@ class TestCreateGroupRoomFlow:
         self, uow, seed_users, chat_fanout_stub, patch_external_clients, message_service,
     ):
         a, b, _ = await seed_users(3)
-        # friendship 맺지 않음
         service = RoomService(uow=uow, fanout_service=chat_fanout_stub, message_service=message_service)
         with pytest.raises(ValueError, match="친구가 아닌"):
             await service.create_group_room(
@@ -269,24 +265,20 @@ class TestInviteMembersFlow:
         await seed_friendship(a, c)
 
         service = RoomService(uow=uow, fanout_service=chat_fanout_stub, message_service=message_service)
-        # 1) a + b 2명 방 생성
         room_dto = await service.create_group_room(
             me_id=a, title="T", member_ids=[b],
         )
         room_id = room_dto.chat_room_id
         chat_fanout_stub.reset_mock()
 
-        # 2) b 의 last_read 를 15 로 세팅 후 퇴장 시뮬레이션
         async with session_factory() as s:
             b_member = await s.get(ChatRoomMember, (room_id, b))
             b_member.last_read_message_server_seq = 15
             b_member.is_left = True
             await s.commit()
 
-        # current_seq 가 30 인 상태로 세팅
         await redis_hot.set(room_seq_key(room_id), "30")
 
-        # 3) c (신규) + b (재초대) 두 명 동시 초대
         invited, skipped = await service.invite_members(
             me_id=a, room_id=room_id, user_ids=[b, c],
         )
@@ -299,22 +291,17 @@ class TestInviteMembersFlow:
                 select(ChatRoomMember).where(ChatRoomMember.chat_room_id == room_id)
             )).scalars().all()
             by_id = {m.user_id: m for m in members}
-            # b: 재초대 — is_left 가 false 로 전환, last_read 는 유지
             assert by_id[b].is_left is False
             assert by_id[b].last_read_message_server_seq == 15
-            # c: 신규 — last_read = current_seq (30)
             assert by_id[c].is_left is False
             assert by_id[c].last_read_message_server_seq == 30
 
         # Redis — 부분 SADD 대신 캐시를 무효화하고, 신규/재초대 unread 만 시드한다.
         cached = await redis_hot.smembers(room_members_key(room_id))
         assert cached == set()
-        # 재초대 b: seq gap 안에 실제 사용자 메시지가 없으므로 유령 unread를 만들지 않는다.
         assert await redis_hot.hget(unread_key(b), room_id) == "0"
-        # 신규 c: unread = 0
         assert await redis_hot.hget(unread_key(c), room_id) == "0"
 
-        # fan_out_to_user 대상자에게만 room_joined (초대자 자신 제외)
         invited_targets = {call.args[0] for call in chat_fanout_stub.fan_out_to_user.call_args_list}
         assert invited_targets == {b, c}
 
@@ -329,7 +316,6 @@ class TestInviteMembersFlow:
             me_id=a, title="T", member_ids=[b],
         )
 
-        # b 를 다시 초대 → 이미 멤버라 skip
         invited, skipped = await service.invite_members(
             me_id=a, room_id=room_dto.chat_room_id, user_ids=[b],
         )
@@ -347,7 +333,6 @@ class TestInviteMembersFlow:
             me_id=a, title="T", member_ids=[b],
         )
 
-        # c 는 방 멤버 아님
         with pytest.raises(PermissionError):
             await service.invite_members(
                 me_id=c, room_id=room.chat_room_id, user_ids=[b],
@@ -382,17 +367,14 @@ class TestLeaveRoomFlow:
 
         await service.leave_room(me_id=b, room_id=room.chat_room_id)
 
-        # Redis SREM + HDEL
         cached = await redis_hot.smembers(room_members_key(room.chat_room_id))
         assert cached == {a}
         assert await redis_hot.hget(unread_key(b), room.chat_room_id) is None
 
-        # RDB — b 의 row 는 is_left=true
         async with session_factory() as s:
             b_row = await s.get(ChatRoomMember, (room.chat_room_id, b))
             assert b_row.is_left is True
 
-        # fan_out — 본인에게 room_left
         chat_fanout_stub.fan_out_to_user.assert_awaited_once()
         call = chat_fanout_stub.fan_out_to_user.call_args
         assert call.args[0] == b
@@ -499,7 +481,6 @@ class TestKickMemberFlow:
             me_id=a, title="T", member_ids=[b, c],
         )
 
-        # b 는 creator 아님
         with pytest.raises(PermissionError, match="방장"):
             await service.kick_member(
                 me_id=b, room_id=room.chat_room_id, target_user_id=c,

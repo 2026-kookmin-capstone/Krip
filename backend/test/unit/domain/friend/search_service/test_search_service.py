@@ -96,7 +96,7 @@ class TestSearchDtoMapping:
     ):
         peer = UserFactory.create(user_id="USER_b")
         friendship = FriendshipFactory.create(
-            requester_id="USER_a",   # viewer 가 보낸 쪽
+            requester_id="USER_a",
             addressee_id="USER_b",
             status=FriendshipStatus.PENDING,
         )
@@ -114,7 +114,7 @@ class TestSearchDtoMapping:
     ):
         peer = UserFactory.create(user_id="USER_b")
         friendship = FriendshipFactory.create(
-            requester_id="USER_b",   # 상대가 보낸 요청
+            requester_id="USER_b",
             addressee_id="USER_a",
             status=FriendshipStatus.PENDING,
         )
@@ -207,7 +207,7 @@ class TestSearchDtoMapping:
         assert by_id["USER_c"].friendship_status is None
         assert by_id["USER_c"].is_requester is None
         assert by_id["USER_d"].friendship_status == FriendshipStatus.PENDING
-        assert by_id["USER_d"].is_requester is False  # peer 가 요청자
+        assert by_id["USER_d"].is_requester is False
 
 
 @pytest.mark.unit

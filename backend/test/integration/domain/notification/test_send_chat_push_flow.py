@@ -39,7 +39,6 @@ class TestHappyPath:
 
         assert sent == 3
         assert len(fcm_messaging_stub.calls) == 1
-        # 호출된 토큰 = 등록한 토큰 전체
         assert set(fcm_messaging_stub.calls[0]) == {"tok-A1", "tok-A2", "tok-B1"}
 
     async def test_empty_user_ids_skips_multicast(
@@ -68,7 +67,7 @@ class TestRoomMuteGuard:
         await mute_service.set_room_mute(
             user_id=user_a, chat_room_id=room_id, muted=True,
         )
-        fcm_messaging_stub.set_responses([True])  # B 만 통과
+        fcm_messaging_stub.set_responses([True])
 
         sent = await fcm_service.send_chat_push(
             user_ids=[user_a, user_b],
@@ -155,7 +154,6 @@ class TestTokenGuard:
     ):
         """가드 (1)(2) 통과해도 토큰 0건이면 multicast skip."""
         room_id, [user_a, user_b] = await seed_room_with_members(2)
-        # 토큰 등록 안 함
 
         sent = await fcm_service.send_chat_push(
             user_ids=[user_a, user_b],

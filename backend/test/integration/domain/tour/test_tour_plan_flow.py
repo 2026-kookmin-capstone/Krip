@@ -87,7 +87,7 @@ class TestGetPlanFlow:
 
         assert result.plan_id == created.plan_id
         assert len(result.items) == 1
-        assert result.items[0].rating == 4.5  # MongoDB 라이브 매핑
+        assert result.items[0].rating == 4.5
 
     async def test_raises_not_found(self, plan_service, seed_users):
         (a,) = await seed_users(1)
@@ -144,7 +144,7 @@ class TestUpdatePlanTitleFlow:
         async with session_factory() as s:
             row = (await s.execute(select(TourPlan).where(TourPlan.plan_id == created.plan_id))).scalar_one()
             assert row.title == "New"
-            assert row.updated_at >= original_updated_at  # 갱신됨
+            assert row.updated_at >= original_updated_at
 
     async def test_clears_title(self, plan_service, seed_users, session_factory):
         (a,) = await seed_users(1)
@@ -211,12 +211,11 @@ class TestRemoveDayFlow:
 
         async with session_factory() as s:
             plan_row = (await s.execute(select(TourPlan).where(TourPlan.plan_id == created.plan_id))).scalar_one()
-            # travel_days 유지 (gap 보존)
             assert plan_row.travel_days == 3
 
             items = (await s.execute(select(TourPlanItem).where(TourPlanItem.plan_id == created.plan_id))).scalars().all()
             day_numbers = sorted(i.day_number for i in items)
-            assert day_numbers == [1, 3]  # day=2 만 사라짐 (gap)
+            assert day_numbers == [1, 3]
 
     async def test_then_add_day_assigns_max_plus_one(
         self, plan_service, seed_users, session_factory,
@@ -272,7 +271,6 @@ class TestAddItemFlow:
                 )
             ).scalars().all()
             assert len(items) == 2
-            # 새로 추가된 카드의 position 이 더 큼
             assert items[-1].item_id == added.item_id
             assert items[-1].position > items[0].position
 

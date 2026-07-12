@@ -34,5 +34,4 @@ class TestDbRouteForPath:
         assert db_route_for_path("/metrics") == "other"
 
     def test_underscore_variant_no_longer_matches(self):
-        # 언더스코어 경로는 실제로 존재하지 않지만, 매핑이 segment 정확 대조임을 고정.
         assert db_route_for_path("/api/menu_ai/ocr") == "other"

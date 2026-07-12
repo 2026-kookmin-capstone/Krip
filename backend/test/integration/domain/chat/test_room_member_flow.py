@@ -67,7 +67,7 @@ class TestListRoomMembersFlow:
         assert ids == {a, b, c}
         by_id = {m.user_id: m for m in result.items}
         assert by_id[b].profile_image_url == "https://cdn.example.com/b.jpg"
-        assert by_id[a].profile_image_url is None  # set 하지 않음
+        assert by_id[a].profile_image_url is None
 
     async def test_excludes_left_members(
         self, uow, seed_users, seed_friendship, chat_fanout_stub,
@@ -84,7 +84,6 @@ class TestListRoomMembersFlow:
             me_id=a, title="T", member_ids=[b, c],
         )
 
-        # b 를 탈퇴 처리
         await room_svc.leave_room(me_id=b, room_id=room.chat_room_id)
 
         history = MessageHistoryService(uow=uow)
@@ -142,7 +141,6 @@ class TestListInvitableFriendsFlow:
         room_svc = RoomService(
             uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
-        # b 만 방에 초대 → c, d 가 invitable
         room = await room_svc.create_group_room(me_id=a, title="T", member_ids=[b])
 
         history = MessageHistoryService(uow=uow)
@@ -187,7 +185,6 @@ class TestListInvitableFriendsFlow:
         )
         room = await room_svc.create_group_room(me_id=a, title="T", member_ids=[b])
 
-        # b 외에 친구가 없고 b 는 이미 멤버 → invitable 없음
         history = MessageHistoryService(uow=uow)
         result = await history.list_invitable_friends(
             me_id=a, room_id=room.chat_room_id,

@@ -109,7 +109,6 @@ class TestDeleteAuthorOnly:
             user_id=actor_id, post_id=post_id, content="hello",
         )
 
-        # owner 가 actor 의 댓글 삭제 시도 → 거절
         with pytest.raises(PermissionError):
             await feed_post_comment_service.delete_comment(
                 user_id=owner_id, post_id=post_id, comment_id=comment.comment_id,
@@ -166,8 +165,6 @@ class TestListComments:
     ):
         post_id, owner_id = await seed_feed_post()
         actor_id = await _find_other_user(feed_post_comment_service.uow, owner_id)
-        # visible 댓글을 먼저 만들고, 최신 PAGE_SIZE+1 슬롯을 차단 댓글로 채운다.
-        # LIMIT 후 service-side filter라면 visible 댓글은 전혀 반환되지 않는다.
         for i in range(PAGE_SIZE):
             await feed_post_comment_service.create_comment(
                 user_id=owner_id, post_id=post_id, content=f"visible-{i}",

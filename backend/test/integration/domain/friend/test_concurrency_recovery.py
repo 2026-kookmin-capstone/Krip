@@ -59,7 +59,6 @@ class TestSendRequestSavepointRecovery:
         # 복구 쿼리가 성공했다는 것 = SAVEPOINT rollback 이 외부 TX 를 깨뜨리지 않았다는 증거
         assert call_count["n"] == 2
 
-        # 최종 상태는 원래 row 1건만
         async with session_factory() as s:
             rows = (await s.execute(select(Friendship))).scalars().all()
         assert len(rows) == 1
@@ -78,7 +77,6 @@ class TestBlockUserTransactionIntegrity:
     ):
         a, b, _ = await seed_users(3)
 
-        # 사전 세팅: 친구관계(ACCEPTED) + 차단 row 둘 다 이미 존재
         async with session_factory() as s:
             s.add(Friendship(requester_id=a, addressee_id=b, status=FriendshipStatus.ACCEPTED))
             s.add(UserBlock(blocker_id=a, blocked_id=b))

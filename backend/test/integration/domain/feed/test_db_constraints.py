@@ -119,7 +119,6 @@ class TestUserDeleteCascadesActionsOnOthersPost:
             s.add(_mk_post(user_id=owner, post_id="FDP_it_a"))
             await s.commit()
         async with session_factory() as s:
-            # 두 명이 같은 post 에 좋아요
             s.add(FeedPostLike(user_id=liker, post_id="FDP_it_a"))
             s.add(FeedPostLike(user_id=bystander, post_id="FDP_it_a"))
             await s.commit()
@@ -129,7 +128,6 @@ class TestUserDeleteCascadesActionsOnOthersPost:
             await s.commit()
 
         async with session_factory() as s:
-            # liker 의 like 만 사라지고 bystander 의 like + post 자체는 보존
             likes = (await s.execute(select(FeedPostLike))).scalars().all()
             posts = (await s.execute(select(FeedPost))).scalars().all()
         assert {l.user_id for l in likes} == {bystander}

@@ -43,7 +43,6 @@ class TestAddLikeFanout:
         assert doc["type"] == InboxItemType.TRIPMATE_LIKE.value
         assert doc["target_type"] == TargetType.TRIPMATE_POST.value
         assert doc["target_id"] == post_id
-        # tripmate 의 target_preview 는 post.title
         assert doc["target_preview"] == "여행 같이 가실 분"
 
     async def test_self_like_does_not_create_inbox_item(

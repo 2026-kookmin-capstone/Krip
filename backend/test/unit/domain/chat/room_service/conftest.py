@@ -130,7 +130,6 @@ def service(
         "app.domain.chat.service.room.FriendshipRepository",
         lambda session: friendship_repo_mock,
     )
-    # invite 시 ChatMessageRepository(mongodb.database) 를 만들지만 mongo 연결은 불필요.
     monkeypatch.setattr(
         "app.domain.chat.service.room.ChatMessageRepository",
         lambda db: message_repo_mock,

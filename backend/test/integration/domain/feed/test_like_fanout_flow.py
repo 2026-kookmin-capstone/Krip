@@ -36,9 +36,6 @@ class TestAddLikeFanout:
         self, mongo_db, feed_post_like_service, seed_feed_post,
     ):
         post_id, owner_id = await seed_feed_post()
-        # owner 가 아닌 다른 user 가 시드됐으니 두 번째를 actor 로 사용
-        # seed_feed_post 가 2 명 시드 (owner + 다른 1명) — actor 는 다른 사람
-        # owner_id 가 첫 번째라 두 번째 user 가 actor
 
         actor_id = await _find_other_user(feed_post_like_service.uow, owner_id)
 
@@ -62,8 +59,7 @@ class TestAddLikeFanout:
             user_id=owner_id, post_id=post_id,
         )
 
-        assert like_count == 1  # RDB 좋아요는 들어감
-        # Mongo 에는 항목 없음
+        assert like_count == 1
         coll = InboxItem.get_motor_collection()
         assert await coll.count_documents({}) == 0
 
@@ -103,7 +99,6 @@ class TestRemoveLikePreservesInboxItem:
         await feed_post_like_service.add_like(user_id=actor_id, post_id=post_id)
         await feed_post_like_service.remove_like(user_id=actor_id, post_id=post_id)
 
-        # 인박스 항목 그대로 — 이벤트 발생 사실의 기록
         coll = InboxItem.get_motor_collection()
         assert await coll.count_documents({"recipient_id": owner_id}) == 1
 

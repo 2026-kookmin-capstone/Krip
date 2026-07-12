@@ -48,7 +48,6 @@ class TestUserMissing:
         user_repo_mock.find_by_id_with_profile.return_value = None
         with pytest.raises(PopupTargetNotFoundError):
             await service.get_popup(viewer_id="USER_v", owner_id="USER_ghost")
-        # 미존재면 feed 조회도 안 일어남 — 단순 404, 추가 비용 없음.
         feed_repo_mock.find_by_owner.assert_not_called()
 
     async def test_detail_missing_raises_same_error(
@@ -79,7 +78,6 @@ class TestBlockedPropagation:
 
         with pytest.raises(FeedBlockedError):
             await service.get_popup(viewer_id="USER_v", owner_id="USER_owner")
-        # 차단 시 feed 조회 안 일어남 — user 정보 노출도 차단됨.
         feed_repo_mock.find_by_owner.assert_not_called()
 
 
@@ -168,7 +166,7 @@ class TestFeedRepoContract:
         """row.is_liked 가 popup 응답 DTO 까지 정확히 흘러가는지 — _to_feed_dto 누락 가드."""
         user_repo_mock.find_by_id_with_profile.return_value = make_user_with_profile_mock()
         feed_repo_mock.find_by_owner.return_value = [
-            _mk_feed_row(post_id="FDP_a"),  # default is_liked=False
+            _mk_feed_row(post_id="FDP_a"),
             FeedPostWithCounts(
                 post=_mk_feed_row(post_id="FDP_b").post,
                 like_count=0, comment_count=0, is_liked=True,
@@ -191,7 +189,7 @@ class TestSelfPopup:
         )
 
         async def _resolve_self(session, *, viewer_id, owner_id):
-            assert viewer_id == owner_id  # 본인 fast-path
+            assert viewer_id == owner_id
             return list(FeedVisibility)
         monkeypatch.setattr(
             "app.domain.feed.service.feed_popup.resolve_viewer_visibilities", _resolve_self,

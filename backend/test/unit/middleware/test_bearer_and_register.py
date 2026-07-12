@@ -93,7 +93,7 @@ class TestBearerTokenMiddleware:
 
 class _FakeUow:
     async def __aenter__(self):
-        return object()  # session (UserRepository 가 mock 이라 미사용)
+        return object()
 
     async def __aexit__(self, *a):
         return False

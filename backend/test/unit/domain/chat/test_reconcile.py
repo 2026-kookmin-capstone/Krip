@@ -688,11 +688,11 @@ class TestRecoverUnreadForUser:
         """room 별로 (room_id, residual, baseline, cap) 인자로 baseline+delta Lua 호출."""
         async def lua_stub(keys, args):
             _room, residual, _baseline, cap, read_seq, _allow_equal, _generation, _watermark = args
-            return [min(residual, cap), 1, read_seq]  # 스텁: residual 반영
+            return [min(residual, cap), 1, read_seq]
 
         redis, lua, ctx = _patches(
             last_reads={"R1": 10, "R2": 20},
-            baselines={"R1": "3", "R2": None},   # R2 는 baseline 부재 → 0 취급
+            baselines={"R1": "3", "R2": None},
             residuals={"R1": 5, "R2": 2},
             max_seqs={"R1": 50, "R2": 60},
             lua_side_effect=lua_stub,
@@ -705,10 +705,8 @@ class TestRecoverUnreadForUser:
             room_ids=None,
             for_share=True,
         )
-        # baseline 스냅샷(HGET)이 방마다 호출됐는지
         redis.hget.assert_any_await(unread_key(_UID), "R1")
         redis.hget.assert_any_await(unread_key(_UID), "R2")
-        # Lua 인자에 baseline 이 정확히 전달됐는지 (부재는 0)
         calls = {c.kwargs["args"][0]: c.kwargs["args"] for c in lua.mark_read_unread.await_args_list}
         assert calls["R1"] == ["R1", 5, 3, rc.UNREAD_COUNT_CAP, 10, 1, 0, 50]
         assert calls["R2"] == ["R2", 2, 0, rc.UNREAD_COUNT_CAP, 20, 1, 0, 60]

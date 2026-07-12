@@ -106,8 +106,6 @@ class TestDirectBlockSendFlow:
         )
         room = await room_svc.create_group_room(me_id=a, title="T", member_ids=[b])
 
-        # 이미 그룹 방에 있는 상태에서 a 가 b 를 차단해도 그룹 송신은 유지
-        # (차단은 friendship 을 삭제하지만 그룹 방 멤버십은 그대로)
         block_service = UserBlockService(uow=uow)
         await block_service.block_user(user_id=a, target_user_id=b)
 

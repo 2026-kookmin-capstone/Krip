@@ -40,7 +40,7 @@ class TestRegisterDetail:
         self, service, user_repo_mock, detail_repo_mock, style_repo_mock,
     ):
         user_repo_mock.find_by_id.return_value = UserFactory.create(user_id="USER_a")
-        detail_repo_mock.find_by_user_id.return_value = None  # 미가입
+        detail_repo_mock.find_by_user_id.return_value = None
 
         await service.register_detail(**_kwargs_baseline())
 
@@ -70,7 +70,7 @@ class TestRegisterDetail:
         from sqlalchemy.exc import IntegrityError
 
         user_repo_mock.find_by_id.return_value = UserFactory.create(user_id="USER_a")
-        detail_repo_mock.find_by_user_id.return_value = None  # 가드 통과
+        detail_repo_mock.find_by_user_id.return_value = None
         detail_repo_mock.save.side_effect = IntegrityError("mock", {}, Exception())
 
         with pytest.raises(ValueError, match="이미 2차 회원가입"):
