@@ -38,8 +38,18 @@ def heartbeat_script(monkeypatch):
 
 
 @pytest.fixture
+def revoke_all_sessions_script(monkeypatch):
+    script = AsyncMock(return_value=[])
+    monkeypatch.setattr(
+        "app.domain.chat.service.session.lua_scripts.revoke_all_sessions", script,
+    )
+    return script
+
+
+@pytest.fixture
 def service(
     monkeypatch, redis_mock, fanout_mock, create_session_script, heartbeat_script,
+    revoke_all_sessions_script,
 ):
     """Mock Redis / Fanout 이 주입된 SessionService."""
     async def _get_client():

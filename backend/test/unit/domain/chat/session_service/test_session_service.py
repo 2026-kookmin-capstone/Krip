@@ -7,6 +7,7 @@ import pytest
 from app.core.chat.redis_key import (
     sess_key,
     session_create_result_key,
+    session_revoke_generation_key,
     sessions_key,
     ws_route_key,
 )
@@ -14,6 +15,24 @@ from app.core.chat.redis_key import (
 
 @pytest.mark.unit
 class TestCreateSession:
+    async def test_rejects_create_when_revoke_generation_changed(
+        self, service, redis_mock, create_session_script,
+    ):
+        create_session_script.return_value = ["__revoke_generation_mismatch__"]
+
+        with pytest.raises(RuntimeError, match="revoke generation"):
+            await service.create_session(
+                "U_A",
+                "jti_1",
+                expected_revoke_generation=3,
+            )
+
+        prepared_sid = create_session_script.call_args.kwargs["args"][0]
+        redis_mock.delete.assert_awaited_once_with(
+            sess_key(prepared_sid),
+            ws_route_key(prepared_sid),
+        )
+
     async def test_issues_ws_prefixed_session_id(self, service):
         sid = await service.create_session(user_id="U_A", token_jti="jti_1")
         assert sid.startswith("WS_")
@@ -35,6 +54,7 @@ class TestCreateSession:
         assert create_session_script.call_args.kwargs["keys"] == [
             sessions_key("U_A"),
             session_create_result_key(created_sid),
+            session_revoke_generation_key("U_A"),
         ]
 
     async def test_lua_selected_sessions_are_notified_then_route_is_deleted(
@@ -234,10 +254,10 @@ class TestRevokeAllSessions:
     """Tests for SessionService.revoke_all_sessions."""
 
     async def test_returns_zero_when_user_has_no_active_sessions(
-        self, service, redis_mock, fanout_mock,
+        self, service, redis_mock, fanout_mock, revoke_all_sessions_script,
     ):
         """오프라인 유저 — 빈 ZSET → 0 반환, 부수효과 없음."""
-        redis_mock.zrange = AsyncMock(return_value=[])
+        revoke_all_sessions_script.return_value = []
 
         count = await service.revoke_all_sessions(user_id="U_A")
 
@@ -247,10 +267,10 @@ class TestRevokeAllSessions:
             assert not p.delete.called
 
     async def test_emits_session_revoked_event_for_each_session(
-        self, service, redis_mock, fanout_mock,
+        self, service, redis_mock, fanout_mock, revoke_all_sessions_script,
     ):
         """각 세션마다 session_revoked 이벤트 직송. node_channel 모드에선 ws_route 라우팅."""
-        redis_mock.zrange = AsyncMock(return_value=["WS_1", "WS_2", "WS_3"])
+        revoke_all_sessions_script.return_value = ["WS_1", "WS_2", "WS_3"]
 
         count = await service.revoke_all_sessions(user_id="U_A")
 
@@ -261,22 +281,68 @@ class TestRevokeAllSessions:
             assert c.args[0] == sid
             assert c.args[1] == {"type": "session_revoked", "session_id": sid}
 
-    async def test_pipeline_deletes_sess_ws_route_and_sessions_zset(
-        self, service, redis_mock,
+    async def test_lua_atomically_removes_all_authoritative_session_state(
+        self, service, redis_mock, revoke_all_sessions_script,
     ):
-        """한 pipeline 안에서 모든 sess: / ws_route: + sessions:{uid} 통째로 DEL."""
-        redis_mock.zrange = AsyncMock(return_value=["WS_1", "WS_2"])
+        revoke_all_sessions_script.return_value = ["WS_1", "WS_2"]
 
         await service.revoke_all_sessions(user_id="U_A")
 
-        revoke_pipe = redis_mock._pipes[-1]
-        revoke_pipe.execute.assert_awaited()
-
-        all_delete_args = [
-            arg for c in revoke_pipe.delete.call_args_list for arg in c.args
+        call = revoke_all_sessions_script.await_args
+        assert call.kwargs["keys"][0:2] == [
+            sessions_key("U_A"),
+            session_revoke_generation_key("U_A"),
         ]
-        assert sess_key("WS_1") in all_delete_args
-        assert sess_key("WS_2") in all_delete_args
-        assert ws_route_key("WS_1") in all_delete_args
-        assert ws_route_key("WS_2") in all_delete_args
-        assert sessions_key("U_A") in all_delete_args
+        assert call.kwargs["args"] == [90]
+        assert call.kwargs["client"] is redis_mock
+
+    async def test_fanout_failure_does_not_preserve_authoritative_sessions(
+        self, service, redis_mock, fanout_mock, revoke_all_sessions_script,
+    ):
+        revoke_all_sessions_script.return_value = ["WS_1", "WS_2"]
+        fanout_mock.fan_out_to_session.side_effect = RuntimeError("publish failed")
+
+        count = await service.revoke_all_sessions(user_id="U_A")
+
+        assert count == 2
+        revoke_all_sessions_script.assert_awaited_once()
+        assert fanout_mock.fan_out_to_session.await_count == 2
+
+    async def test_cancellation_drains_route_cleanup_for_every_revoked_session(
+        self, service, redis_mock, fanout_mock, revoke_all_sessions_script,
+    ):
+        revoke_all_sessions_script.return_value = ["WS_1", "WS_2"]
+        fanout_started = asyncio.Event()
+        release_fanout = asyncio.Event()
+
+        async def delayed_fanout(*_args, **_kwargs):
+            fanout_started.set()
+            await release_fanout.wait()
+
+        fanout_mock.fan_out_to_session.side_effect = delayed_fanout
+        revoke_task = asyncio.create_task(service.revoke_all_sessions("U_A"))
+        await fanout_started.wait()
+        revoke_task.cancel()
+        release_fanout.set()
+
+        with pytest.raises(asyncio.CancelledError):
+            await revoke_task
+
+        assert fanout_mock.fan_out_to_session.await_count == 2
+        redis_mock.delete.assert_any_await(ws_route_key("WS_1"))
+        redis_mock.delete.assert_any_await(ws_route_key("WS_2"))
+
+    async def test_lost_lua_response_retries_with_same_operation(
+        self, service, revoke_all_sessions_script,
+    ):
+        revoke_all_sessions_script.side_effect = [
+            TimeoutError("response lost"),
+            ["WS_1"],
+        ]
+
+        count = await service.revoke_all_sessions("U_A")
+
+        assert count == 1
+        first, second = revoke_all_sessions_script.await_args_list
+        assert first.kwargs["keys"] == second.kwargs["keys"]
+        assert first.kwargs["args"] == second.kwargs["args"]

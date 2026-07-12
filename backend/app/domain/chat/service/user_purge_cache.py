@@ -22,10 +22,7 @@ class UserPurgeCacheService:
         self._session_service = session_service
 
     async def revoke_all_sessions(self, user_id: str) -> None:
-        """탈퇴 직후 활성 WS 세션 즉시 종료. TTL 만료 윈도우 동안의 송수신 보안 risk 차단.
-
-        실패해도 TTL 로 자연 회복 — 호출측 핫패스를 막지 않는 fail-open.
-        """
+        """탈퇴 직후 활성 WS 세션의 authoritative Redis 상태를 즉시 제거한다."""
         try:
             count = await self._session_service.revoke_all_sessions(user_id)
             if count > 0:
@@ -35,8 +32,7 @@ class UserPurgeCacheService:
                 )
         except Exception as e:
             logger.warning(
-                "탈퇴 요청 — chat 세션 revoke 실패 (TTL 만료 대기로 fallback): "
-                "user_id={}, err={}",
+                "탈퇴 요청 — chat authoritative 세션 revoke 실패: user_id={}, err={}",
                 user_id, e,
             )
 

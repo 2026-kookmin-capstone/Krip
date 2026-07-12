@@ -13,6 +13,7 @@ from app.core.chat.redis_key import (
     SESSION_TTL,
     sess_key,
     session_create_result_key,
+    session_revoke_generation_key,
     sessions_key,
     ws_route_key,
 )
@@ -22,6 +23,96 @@ pytestmark = pytest.mark.integration
 
 
 class TestSessionLimitOnRealRedis:
+    async def test_create_retry_rechecks_generation_after_revoke(
+        self, session_service, redis_hot, monkeypatch,
+    ):
+        user_id = "USER_CREATE_RESPONSE_LOSS_REVOKE"
+        generation = await session_service.get_revoke_generation(user_id)
+        real_script = lua_scripts.create_session
+        assert real_script is not None
+        calls = 0
+
+        async def committed_then_revoked(**kwargs):
+            nonlocal calls
+            calls += 1
+            result = await real_script(**kwargs)
+            if calls == 1:
+                await session_service.revoke_all_sessions(user_id)
+                raise TimeoutError("create response lost after commit")
+            return result
+
+        monkeypatch.setattr(lua_scripts, "create_session", committed_then_revoked)
+
+        with pytest.raises(RuntimeError, match="revoke generation"):
+            await session_service.create_session(
+                user_id,
+                "jti",
+                expected_revoke_generation=generation,
+            )
+        assert calls == 2
+        assert await redis_hot.zcard(sessions_key(user_id)) == 0
+
+    async def test_revoke_retry_recovers_committed_result_after_response_loss(
+        self, session_service, redis_hot, chat_fanout_stub, monkeypatch,
+    ):
+        user_id = "USER_REVOKE_RESPONSE_LOSS"
+        session_id = await session_service.create_session(user_id, "jti")
+        real_script = lua_scripts.revoke_all_sessions
+        assert real_script is not None
+        calls = 0
+
+        async def committed_but_lost(**kwargs):
+            nonlocal calls
+            calls += 1
+            result = await real_script(**kwargs)
+            if calls == 1:
+                raise TimeoutError("response lost after commit")
+            return result
+
+        monkeypatch.setattr(lua_scripts, "revoke_all_sessions", committed_but_lost)
+
+        assert await session_service.revoke_all_sessions(user_id) == 1
+        assert calls == 2
+        assert await redis_hot.exists(sess_key(session_id)) == 0
+        assert await redis_hot.exists(ws_route_key(session_id)) == 0
+        chat_fanout_stub.fan_out_to_session.assert_awaited_once()
+
+    async def test_revoke_generation_rejects_a_create_started_before_revoke(
+        self, session_service, redis_hot,
+    ):
+        user_id = "USER_CREATE_REVOKE_RACE"
+        generation = await session_service.get_revoke_generation(user_id)
+
+        await session_service.revoke_all_sessions(user_id)
+
+        with pytest.raises(RuntimeError, match="revoke generation"):
+            await session_service.create_session(
+                user_id,
+                "stale-create",
+                expected_revoke_generation=generation,
+            )
+        assert await redis_hot.zcard(sessions_key(user_id)) == 0
+        assert await redis_hot.get(session_revoke_generation_key(user_id)) == "1"
+
+    async def test_revoke_all_removes_authoritative_state_when_fanout_fails(
+        self, session_service, redis_hot, chat_fanout_stub,
+    ):
+        user_id = "USER_REVOKE_FANOUT_FAILURE"
+        session_ids = [
+            await session_service.create_session(user_id, f"jti-{index}")
+            for index in range(2)
+        ]
+        chat_fanout_stub.fan_out_to_session.side_effect = RuntimeError("publish failed")
+
+        count = await session_service.revoke_all_sessions(user_id)
+
+        assert count == 2
+        assert await redis_hot.exists(sessions_key(user_id)) == 0
+        for session_id in session_ids:
+            assert await redis_hot.exists(sess_key(session_id)) == 0
+            assert await redis_hot.exists(ws_route_key(session_id)) == 0
+            assert await session_service.heartbeat(session_id, user_id) is False
+
     async def test_create_session_lua_retry_returns_committed_result(
         self, session_service, redis_hot, chat_fanout_stub,
     ):
@@ -37,8 +128,12 @@ class TestSessionLimitOnRealRedis:
         script = lua_scripts.create_session
         assert script is not None
         retried_result = await script(
-            keys=[sessions_key(user_id), session_create_result_key(sid)],
-            args=[sid, 0, 0, MAX_SESSIONS_PER_USER, SESSION_TTL],
+            keys=[
+                sessions_key(user_id),
+                session_create_result_key(sid),
+                session_revoke_generation_key(user_id),
+            ],
+            args=[sid, 0, 0, MAX_SESSIONS_PER_USER, SESSION_TTL, 0],
             client=redis_hot,
         )
 

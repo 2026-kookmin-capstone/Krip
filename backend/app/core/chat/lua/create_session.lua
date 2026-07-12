@@ -1,21 +1,19 @@
 -- Atomically add a session and revoke exactly the excess oldest sessions.
---
--- KEYS[1] = sessions:{user_id} ZSET (score = expiry ms)
--- KEYS[2] = session_create_result:{new_session_id} STRING
--- ARGV[1] = new session id
--- ARGV[2] = new expiry ms
--- ARGV[3] = current time ms
--- ARGV[4] = max sessions
--- ARGV[5] = result TTL seconds
---
--- Revoked sess HASH keys are deleted here so authorization stops atomically with
--- ZSET removal. ws_route keys remain until the caller publishes revoke events.
-
+-- KEYS: sessions ZSET, per-session result, user revoke generation.
+-- ARGV: session id, expiry ms, now ms, max sessions, result TTL, expected generation.
 local sessions_key = KEYS[1]
 local new_session_id = ARGV[1]
 local expires_ms = tonumber(ARGV[2])
 local now_ms = tonumber(ARGV[3])
 local max_sessions = tonumber(ARGV[4])
+
+local current_generation = tonumber(redis.call('GET', KEYS[3]) or '0')
+if current_generation ~= tonumber(ARGV[6]) then
+  local rejected = {'__revoke_generation_mismatch__'}
+  redis.call('DEL', 'sess:' .. new_session_id, 'ws_route:' .. new_session_id)
+  redis.call('SET', KEYS[2], cjson.encode(rejected), 'EX', ARGV[5])
+  return rejected
+end
 
 local prior_result = redis.call('GET', KEYS[2])
 if prior_result then

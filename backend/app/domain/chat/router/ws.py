@@ -107,6 +107,8 @@ async def ws_chat(
         return
     user_id, token_jti = auth
 
+    revoke_generation = await session_svc.get_revoke_generation(user_id)
+
     # status 가드 — RegisterCheckMiddleware 가 WS 우회되므로 동등 검증을 직접 수행.
     if not await _check_user_active(websocket, user_id):
         logger.warning("WS 연결 거부 — INACTIVE / 미가입 유저: user_id={}", user_id)
@@ -118,7 +120,11 @@ async def ws_chat(
     await websocket.accept(subprotocol=_select_accept_subprotocol(websocket))
 
     try:
-        session_id = await session_svc.create_session(user_id, token_jti)
+        session_id = await session_svc.create_session(
+            user_id,
+            token_jti,
+            expected_revoke_generation=revoke_generation,
+        )
     except Exception as e:
         logger.exception("세션 생성 실패: user_id={}, err={}", user_id, e)
         chat_ws_connect_result("session_failed")

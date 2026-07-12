@@ -34,6 +34,14 @@ def session_create_result_key(session_id: str) -> str:
     return f"session_create_result:{session_id}"
 
 
+def session_revoke_generation_key(user_id: str) -> str:
+    return f"session_revoke_generation:{user_id}"
+
+
+def session_revoke_result_key(user_id: str, operation_id: str) -> str:
+    return f"session_revoke_result:{user_id}:{operation_id}"
+
+
 def ws_route_key(session_id: str) -> str:
     return f"ws_route:{session_id}"
 

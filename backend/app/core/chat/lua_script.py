@@ -37,6 +37,7 @@ class LuaScripts:
         self.ack_dirty_rooms: Optional[AsyncScript] = None
         self.create_session: Optional[AsyncScript] = None
         self.heartbeat_session: Optional[AsyncScript] = None
+        self.revoke_all_sessions: Optional[AsyncScript] = None
 
     def load(self, hot_client: Redis) -> None:
         """startup 1회. `instrument_lua_script` 로 감싸 호출 카운트 자동 부착."""
@@ -80,6 +81,10 @@ class LuaScripts:
         )
         self.heartbeat_session = instrument_lua_script(
             hot_client.register_script(_read("heartbeat_session.lua")), "heartbeat_session",
+        )
+        self.revoke_all_sessions = instrument_lua_script(
+            hot_client.register_script(_read("revoke_all_sessions.lua")),
+            "revoke_all_sessions",
         )
 
 

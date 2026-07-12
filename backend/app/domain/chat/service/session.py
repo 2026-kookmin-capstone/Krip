@@ -17,6 +17,8 @@ from app.core.chat.redis_key import (
     SESSION_TTL,
     sess_key,
     session_create_result_key,
+    session_revoke_generation_key,
+    session_revoke_result_key,
     sessions_key,
     ws_route_key,
 )
@@ -45,8 +47,21 @@ class SessionService:
             now_ms = cls._now_ms()
         return now_ms + SESSION_TTL * 1000
 
-    async def create_session(self, user_id: str, token_jti: str) -> str:
+    async def get_revoke_generation(self, user_id: str) -> int:
+        redis = await get_redis_client()
+        value = await redis.get(session_revoke_generation_key(user_id))
+        return int(value or 0)
+
+    async def create_session(
+        self,
+        user_id: str,
+        token_jti: str,
+        *,
+        expected_revoke_generation: int | None = None,
+    ) -> str:
         """WS 연결 시 호출 — 새 session_id 발급 후 Redis 3키 + 한도 체크."""
+        if expected_revoke_generation is None:
+            expected_revoke_generation = await self.get_revoke_generation(user_id)
         session_id = generate_session_id()
         now_ms = self._now_ms()
         expires_ms = now_ms + SESSION_TTL * 1000
@@ -82,6 +97,7 @@ class SessionService:
             "keys": [
                 sessions_key(user_id),
                 session_create_result_key(session_id),
+                session_revoke_generation_key(user_id),
             ],
             "args": [
                 session_id,
@@ -89,6 +105,7 @@ class SessionService:
                 now_ms,
                 MAX_SESSIONS_PER_USER,
                 SESSION_TTL,
+                expected_revoke_generation,
             ],
             "client": redis,
         }
@@ -107,6 +124,10 @@ class SessionService:
                     raise
         else:  # pragma: no cover - range above always exits or raises
             raise RuntimeError("create_session Lua 결과를 확인하지 못했습니다.")
+
+        if revoked_session_ids == ["__revoke_generation_mismatch__"]:
+            await redis.delete(sess_key(session_id), ws_route_key(session_id))
+            raise RuntimeError("session revoke generation changed")
 
         finalize_task = asyncio.create_task(
             self._finalize_revoked_sessions(user_id, revoked_session_ids),
@@ -150,7 +171,7 @@ class SessionService:
                         revoked_session_id, cleanup_exc,
                     )
             logger.info(
-                "세션 한도 초과로 revoke: user_id={}, revoked_session_id={}",
+                "세션 revoke 후처리 완료: user_id={}, revoked_session_id={}",
                 user_id, revoked_session_id,
             )
 
@@ -203,24 +224,50 @@ class SessionService:
     async def revoke_all_sessions(self, user_id: str) -> int:
         """유저의 모든 활성 세션 강제 종료 — 회원 탈퇴 등 외부 정책에서 호출.
 
-        TTL 만료를 기다리지 않고 즉시 정리해 송수신 윈도우를 닫는다.
+        Redis authoritative state를 원자적으로 먼저 제거해 송수신 윈도우를 닫고,
+        session_revoked fanout은 best-effort로 후처리한다.
         오프라인 유저는 0 반환.
         """
         redis = await get_redis_client()
-        session_ids = await redis.zrange(sessions_key(user_id), 0, -1)
+        script = lua_scripts.revoke_all_sessions
+        if script is None:
+            raise RuntimeError("revoke_all_sessions Lua script가 로드되지 않았습니다.")
+        operation_id = generate_session_id()
+        script_args = {
+            "keys": [
+                sessions_key(user_id),
+                session_revoke_generation_key(user_id),
+                session_revoke_result_key(user_id, operation_id),
+            ],
+            "args": [SESSION_TTL],
+            "client": redis,
+        }
+        cancellation_seen = [False]
+        for attempt in range(3):
+            script_task = asyncio.create_task(script(**script_args))
+            try:
+                session_ids = list(await self._drain_task(
+                    script_task, cancellation_seen,
+                ))
+                break
+            except Exception:
+                if attempt == 2:
+                    if cancellation_seen[0]:
+                        raise asyncio.CancelledError
+                    raise
+        else:  # pragma: no cover
+            raise RuntimeError("revoke_all_sessions Lua 결과를 확인하지 못했습니다.")
         if not session_ids:
+            if cancellation_seen[0]:
+                raise asyncio.CancelledError
             return 0
 
-        for sid in session_ids:
-            await self._fanout.fan_out_to_session(
-                sid, {"type": "session_revoked", "session_id": sid},
-            )
-
-        pipe = redis.pipeline(transaction=True)
-        for sid in session_ids:
-            pipe.delete(sess_key(sid), ws_route_key(sid))
-        pipe.delete(sessions_key(user_id))
-        await pipe.execute()
+        finalize_task = asyncio.create_task(
+            self._finalize_revoked_sessions(user_id, session_ids),
+        )
+        await self._drain_task(finalize_task, cancellation_seen)
+        if cancellation_seen[0]:
+            raise asyncio.CancelledError
 
         logger.info(
             "전체 세션 revoke (회원 탈퇴 등): user_id={}, revoked_count={}",
