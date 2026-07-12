@@ -9,8 +9,6 @@ class TripmatePostDraftService:
     def __init__(self):
         self.draft_repo = TripmatePostDraftRepository()
 
-    # ──────────────────── 임시저장 저장/갱신 ────────────────────
-
     async def save_draft(
         self,
         user_id: str,
@@ -46,8 +44,6 @@ class TripmatePostDraftService:
         )
         return await self.draft_repo.upsert(draft)
 
-    # ──────────────────── 임시저장 조회 ────────────────────
-
     async def get_draft(self, user_id: str) -> Optional[TripmatePostDraft]:
         """
         유저의 임시저장 조회
@@ -56,8 +52,6 @@ class TripmatePostDraftService:
         - 없으면 None 반환
         """
         return await self.draft_repo.find_by_user_id(user_id)
-
-    # ──────────────────── 임시저장 삭제 ────────────────────
 
     async def delete_draft(self, user_id: str) -> None:
         """

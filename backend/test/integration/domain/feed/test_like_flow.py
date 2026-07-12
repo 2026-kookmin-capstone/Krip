@@ -26,8 +26,6 @@ from app.domain.feed.service.exception import FeedBlockedError, FeedNotFoundErro
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── PUBLIC ────────────────────
-
 class TestPublicVisibility:
     """PUBLIC 게시물 — 차단 외 누구나 좋아요."""
 
@@ -55,8 +53,6 @@ class TestPublicVisibility:
         with pytest.raises(FeedBlockedError):
             await feed_post_like_service.add_like(user_id=actor_id, post_id=post_id)
 
-
-# ──────────────────── FRIENDS ────────────────────
 
 class TestFriendsVisibility:
     """FRIENDS 게시물 — ACCEPTED 친구만 좋아요. 비친구 → 404 (정보 누출 회피)."""
@@ -86,8 +82,6 @@ class TestFriendsVisibility:
             await feed_post_like_service.add_like(user_id=actor_id, post_id=post_id)
 
 
-# ──────────────────── PRIVATE ────────────────────
-
 class TestPrivateVisibility:
     """PRIVATE 게시물 — 본인만 좋아요. 타인 → 404."""
 
@@ -111,8 +105,6 @@ class TestPrivateVisibility:
         with pytest.raises(FeedNotFoundError):
             await feed_post_like_service.add_like(user_id=actor_id, post_id=post_id)
 
-
-# ──────────────────── helpers ────────────────────
 
 async def _find_other_user(uow, exclude_user_id: str) -> str:
     from sqlalchemy import select

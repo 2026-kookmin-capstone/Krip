@@ -19,10 +19,8 @@ def _make_fcm_token(*, user_id: str, token: str, fcm_token_id: str = "FCM_x") ->
     return t
 
 
-# ──────────────────────────────────────────────────────────────────
 # register_token / unregister_token — thin wrapper 위임 검증
 # (신규/동일/타user 분기, race 안전, owner 보호는 SQL 책임 → integration 에서 검증)
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestRegisterToken:
@@ -54,10 +52,6 @@ class TestUnregisterToken:
             user_id="USER_a", token="tok-1",
         )
 
-
-# ──────────────────────────────────────────────────────────────────
-# send_chat_push — bulk 가드 체인
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestSendChatPush:

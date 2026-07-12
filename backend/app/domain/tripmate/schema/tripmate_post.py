@@ -23,8 +23,6 @@ def _validate_post_ranges(model):
     return model
 
 
-# ──────────────────── Request ────────────────────
-
 class CreatePostRequest(BaseModel):
     title: str = Field(..., min_length=1, max_length=100, description="게시글 제목")
     content: str = Field(..., min_length=10, max_length=500, description="게시글 내용 (10자 ~ 500자)")
@@ -70,8 +68,6 @@ class UpdatePostRequest(BaseModel):
 
     _validate_ranges = model_validator(mode="after")(_validate_post_ranges)
 
-
-# ──────────────────── Response ────────────────────
 
 class AuthorResponse(BaseModel):
     user_name: str = Field(..., description="작성자 닉네임")
@@ -140,8 +136,6 @@ class LikedUsersResponse(BaseModel):
     post_id: str = Field(..., description="게시글 고유 ID")
     user_ids: List[str] = Field(..., description="좋아요 누른 유저 ID 목록")
 
-
-# ──────────────────── Draft (임시저장) ────────────────────
 
 class SaveDraftRequest(BaseModel):
     title: Optional[str] = Field(None, max_length=100, description="게시글 제목")

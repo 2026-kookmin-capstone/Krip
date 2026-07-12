@@ -63,9 +63,7 @@ def _mk_travel_style(style: TravelStyle) -> SimpleNamespace:
     return SimpleNamespace(style=style)
 
 
-# ──────────────────────────────────────────────────────────────────
 # notification_muted 노출 — 핵심 회귀 검증
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestNotificationMutedExposure:
@@ -96,10 +94,6 @@ class TestNotificationMutedExposure:
         assert result.notification_muted is False
 
 
-# ──────────────────────────────────────────────────────────────────
-# 권한 / 분기
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestGetMyProfileBranches:
     async def test_nonexistent_user_raises_value_error(
@@ -121,10 +115,6 @@ class TestGetMyProfileBranches:
         with pytest.raises(ProfileNotRegisteredError):
             await service.get_my_profile("USER_a")
 
-
-# ──────────────────────────────────────────────────────────────────
-# 필드 매핑 스모크
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestProfileFieldMapping:
@@ -181,8 +171,6 @@ class TestProfileFieldMapping:
         result = await service.get_my_profile("USER_a")
         assert result.profile_image_url is None
 
-
-# ──────────────────── get_my_stats ────────────────────
 
 @pytest.mark.unit
 class TestGetMyStats:

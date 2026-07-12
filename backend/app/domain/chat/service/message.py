@@ -490,9 +490,7 @@ class MessageService:
                 await redis_dedupe.delete(dedupe_k)
             raise
 
-        # last_message 는 바깥 트랜잭션 SAVEPOINT 로 갱신 — 커넥션 1개 (별도 세션은 송신당
-        # C1+C2 동시 점유로 공유 풀 데드락). if_greater 가드로 동시 송신 seq regress 방지,
-        # 실패는 dirty 큐 → reconcile 이 Mongo 기준 수렴.
+        # 같은 커넥션의 SAVEPOINT와 if_greater로 pool deadlock 및 seq regress를 피한다.
         try:
             async with self._session.begin_nested():
                 await chat_room_repo.update_last_message_if_greater(
@@ -508,9 +506,7 @@ class MessageService:
             )
             await redis_hot.sadd(DIRTY_CHAT_ROOM_KEY, room_id)
 
-        # 여기 도달 = Mongo durable 저장 완료 = 송신 성공 확정. 이후 unread/fanout 은 best-effort —
-        # 예외 전파하면 클라가 저장된 메시지에 에러 ACK 를 받고(dedupe 로 재전송도 거절 → 영구 실패),
-        # @transactional rollback 으로 last_message 까지 유실된다.
+        # durable 저장 뒤 unread/fanout 실패를 전파하면 ACK와 last_message만 유실된다.
         if msg_type != MessageType.SYSTEM:
             try:
                 await self._bump_unread(
@@ -549,8 +545,7 @@ class MessageService:
                 room_id, type(e).__name__,
             )
 
-        # FCM 푸시는 fire-and-forget — ACK 지연 차단. 트랜잭션 밖이지만 fanout 까지 도달한
-        # 시점에 메시지는 사실상 "출시" 상태라 후속 롤백 없음.
+        # FCM은 durable 저장 후 fire-and-forget으로 ACK를 지연시키지 않는다.
         if msg_type != MessageType.SYSTEM:
             self._spawn_push_task(
                 room_id=room_id,
@@ -580,13 +575,11 @@ class MessageService:
         key = room_members_key(room_id)
         is_member = await redis_hot.sismember(key, user_id)
         if is_member:
-            # 슬라이딩 TTL — 후속 _bump_unread/FCM 이 같은 키를 smembers 하기 전 TTL 이 만료되면
-            # 빈 집합 → unread·푸시 누락. 접근 시마다 연장해 사용 도중 만료를 막는다.
+            # unread/FCM이 읽기 전 만료되지 않도록 sliding TTL을 갱신한다.
             await redis_hot.expire(key, ROOM_MEMBERS_TTL)
             return
 
-        # generation 을 DB 읽기 "직전" 에 캡처한다. 이 사이 leave/kick 이 커밋되면 gen 이 바뀌어
-        # populate_members.lua 가 SADD 를 건너뛰므로, 제거된 멤버가 부활하지 않는다.
+        # DB 읽기 직전 generation을 캡처해 leave/kick 뒤 stale cache 부활을 막는다.
         gen_key = room_members_gen_key(room_id)
         gen0 = await redis_hot.get(gen_key) or "0"
 
@@ -594,7 +587,6 @@ class MessageService:
         if not members:
             raise ValueError("존재하지 않는 방이거나 멤버가 없습니다.")
 
-        # gen 이 그대로일 때만 캐시 반영. skip(0) 이어도 다음 send 가 재적재하므로 안전.
         await lua_scripts.populate_members(
             keys=[key, gen_key],
             args=[gen0, ROOM_MEMBERS_TTL, *members],

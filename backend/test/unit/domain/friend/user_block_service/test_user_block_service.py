@@ -10,10 +10,6 @@ from test.unit.domain.friend.user_block_service.model_factory import (
 )
 
 
-# ──────────────────────────────────────────────────────────────────
-# block_user
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestBlockUser:
     """Tests for UserBlockService.block_user."""
@@ -117,10 +113,6 @@ class TestBlockUser:
             await service.block_user(user_id="USER_a", target_user_id="USER_b")
 
 
-# ──────────────────────────────────────────────────────────────────
-# unblock_user
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestUnblockUser:
     """Tests for UserBlockService.unblock_user."""
@@ -157,10 +149,6 @@ class TestUnblockUser:
         assert order[:2] == ["lock", "find"]
         block_repo_mock.acquire_pair_lock.assert_awaited_once_with("USER_a", "USER_b")
 
-
-# ──────────────────────────────────────────────────────────────────
-# get_blocked_users
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestGetBlockedUsers:

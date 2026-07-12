@@ -17,8 +17,6 @@ from test.integration.domain.notification.conftest import fetch_tokens_by_user
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── register_token ────────────────────
-
 class TestRegisterTokenFlow:
     async def test_new_token_is_inserted(
         self, fcm_service, session_factory, seed_users,
@@ -73,8 +71,6 @@ class TestRegisterTokenFlow:
         assert {r.token for r in rows} == {"tok-1", "tok-2"}
 
 
-# ──────────────────── unregister_token ────────────────────
-
 class TestUnregisterTokenFlow:
     async def test_owner_can_delete(
         self, fcm_service, session_factory, seed_users,
@@ -107,8 +103,6 @@ class TestUnregisterTokenFlow:
         # 등록한 적 없는 토큰 — 예외 없이 종료
         await fcm_service.unregister_token(user_id=user_id, token="never-existed")
 
-
-# ──────────────────── CASCADE on user delete ────────────────────
 
 class TestFcmTokenCascade:
     async def test_user_delete_cascades_tokens(

@@ -42,10 +42,6 @@ async def set_profile_image(session_factory):
     return _set
 
 
-# ──────────────────────────────────────────────────────────────────
-# list_room_members
-# ──────────────────────────────────────────────────────────────────
-
 class TestListRoomMembersFlow:
     async def test_returns_active_members_with_profile_in_join_order(
         self, uow, seed_users, seed_friendship, set_profile_image,
@@ -131,10 +127,6 @@ class TestListRoomMembersFlow:
         with pytest.raises(ChatRoomNotFoundError):
             await history.list_room_members(me_id="U_X", room_id="CR_unknown")
 
-
-# ──────────────────────────────────────────────────────────────────
-# list_invitable_friends
-# ──────────────────────────────────────────────────────────────────
 
 class TestListInvitableFriendsFlow:
     async def test_returns_friends_not_yet_in_room(

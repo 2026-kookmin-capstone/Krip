@@ -9,7 +9,6 @@ from functools import lru_cache
 from typing import Dict, Tuple
 
 
-# ──────────────────── 권역 좌표 데이터 (영문 표준명) ────────────────────
 # 라우터 검증과 검색점 계산에서 동일 키를 공유한다.
 
 CLUSTER_COORDINATES: Dict[str, Tuple[float, float]] = {
@@ -61,8 +60,6 @@ class TourPlannerPromptManager:
         self._prompts: Dict[str, str] = {
             'build_day_plan': self._get_build_day_plan_prompt(),
         }
-
-    # ──────────────────── 일자별 상세 플랜 ────────────────────
 
     def _get_build_day_plan_prompt(self) -> str:
         return """You are a Seoul travel planner AI for international visitors. From the candidate place pool and the per-day input, build a single day's itinerary with timeline, place details, movements, budget breakdown, and a closing summary.
@@ -180,8 +177,6 @@ Output strictly the JSON below — no commentary.
   "summary": "Closing summary (2-3 sentences)"
 }}
 ```"""
-
-    # ──────────────────── 외부 인터페이스 ────────────────────
 
     def get_prompt(self, prompt_key: str) -> str:
         if prompt_key not in self._prompts:

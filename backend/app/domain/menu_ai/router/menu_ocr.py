@@ -27,8 +27,6 @@ _MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
 _MAX_FILE_COUNT = 5
 
 
-# ──────────────────── 단건 OCR ────────────────────
-
 @router.post("", status_code=200)
 @inject
 async def ocr_menu(
@@ -56,8 +54,6 @@ async def ocr_menu(
 
     return _to_ocr_response(result)
 
-
-# ──────────────────── 다건 OCR ────────────────────
 
 @router.post("/batch", status_code=200)
 @inject
@@ -97,8 +93,6 @@ async def ocr_menu_batch(
         results=[_to_ocr_response(r) for r in result.results]
     )
 
-
-# ──────────────────── 내부 유틸 ────────────────────
 
 def _validate_file(file: UploadFile) -> None:
     if file.content_type not in _ALLOWED_CONTENT_TYPES:

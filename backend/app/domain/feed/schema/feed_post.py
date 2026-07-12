@@ -7,8 +7,6 @@ from pydantic import BaseModel, Field
 from app.domain.feed.model.feed_post import CAPTION_MAX_LENGTH, FeedVisibility
 
 
-# ──────────────────── Response ────────────────────
-
 class FeedPostResponse(BaseModel):
     """피드 게시물 단건. 좋아요/댓글 카운트는 응답 시점 스냅샷."""
     post_id: str = Field(..., description="피드 게시물 고유 ID")
@@ -33,8 +31,6 @@ class FeedPostListResponse(BaseModel):
         description="다음 페이지 커서 (마지막 게시물의 post_id). 더 없으면 null.",
     )
 
-
-# ──────────────────── Request ────────────────────
 
 class UpdateVisibilityRequest(BaseModel):
     """공개 범위 변경 요청."""

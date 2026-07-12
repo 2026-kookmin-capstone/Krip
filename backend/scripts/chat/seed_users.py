@@ -54,7 +54,6 @@ async def main() -> None:
     factory = async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
 
     async with factory() as session:
-        # 유저 seed
         for u in USERS:
             existing = await session.get(User, u["user_id"])
             if existing is not None:
@@ -83,7 +82,6 @@ async def main() -> None:
 
         await session.flush()  # 유저 insert 확정 후 friendship FK 참조 가능
 
-        # 친구관계 seed (idempotent)
         friendship_repo = FriendshipRepository(session)
         for a, b in FRIENDSHIPS:
             existing = await friendship_repo.find_between(a, b)

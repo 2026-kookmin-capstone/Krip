@@ -32,8 +32,6 @@ class TourPlanItemNotFoundError(ValueError):
     """
 
 
-# ──────────────────── 여행 추천 (Gemini LLM 기반) ────────────────────
-#
 # Service 가 vendor SDK (langchain_google_genai → google.api_core) 의 예외를 아래
 # 도메인 예외로 변환해 던진다. Router 는 도메인 예외만 알면 되므로 vendor 교체 시
 # router 변경 불필요. menu_ai 와 동일 컨벤션.

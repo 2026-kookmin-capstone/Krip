@@ -42,7 +42,6 @@ def service(
     monkeypatch, redis_mock, fanout_mock, create_session_script, heartbeat_script,
 ):
     """Mock Redis / Fanout 이 주입된 SessionService."""
-    # SessionService 는 메서드마다 `await get_redis_client()` 호출 → 이걸 교체
     async def _get_client():
         return redis_mock
 

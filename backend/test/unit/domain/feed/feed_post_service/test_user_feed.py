@@ -53,8 +53,6 @@ def _pending_friendship() -> SimpleNamespace:
     return SimpleNamespace(status=FriendshipStatus.PENDING)
 
 
-# ──────────────────── visibilities 부분집합 결정 ────────────────────
-
 @pytest.mark.unit
 class TestVisibilityResolution:
     async def test_self_passes_all_visibilities_without_db_hit(
@@ -107,8 +105,6 @@ class TestVisibilityResolution:
         assert passed == {FeedVisibility.PUBLIC}
 
 
-# ──────────────────── 차단 거부 ────────────────────
-
 @pytest.mark.unit
 class TestBlockedRaisesAndDoesNotQueryFeed:
     async def test_either_direction_block_raises(
@@ -124,8 +120,6 @@ class TestBlockedRaisesAndDoesNotQueryFeed:
         friendship_repo_mock.find_between.assert_not_called()
         repo_mock.find_by_owner.assert_not_called()
 
-
-# ──────────────────── 페이지네이션 ────────────────────
 
 @pytest.mark.unit
 class TestPagination:
@@ -182,8 +176,6 @@ class TestPagination:
         await service.get_user_feed(viewer_id="USER_a", owner_id="USER_b", cursor="FDP_seed")
         assert repo_mock.find_by_owner.await_args.kwargs["cursor"] == "FDP_seed"
 
-
-# ──────────────────── viewer_id 전파 + is_liked 매핑 ────────────────────
 
 @pytest.mark.unit
 class TestViewerIdPropagation:

@@ -1,14 +1,4 @@
-# Loki 설정
-#
-# 단일 인스턴스 monolithic 모드.
-# 멀티 테넌트는 미도입 — auth_enabled=false.
-# Alloy의 tenant_id는 auth 비활성 상태에서 Loki가 무시한다 (후일 진입 비용 0).
-#
-# 보존 정책:
-#   retention_period 14d
-#
-# 스키마: Loki 3.x 권장 v13/tsdb.
-# Storage: filesystem (단일 인스턴스 dev 적합).
+# 단일 인스턴스 filesystem 저장소로 14일 보존한다.
 
 auth_enabled: false
 
@@ -52,7 +42,3 @@ compactor:
   retention_enabled: true
   retention_delete_delay: 2h
   delete_request_store: filesystem
-
-# 추후 alertmanager 추가 시 활성화.
-# ruler:
-#   alertmanager_url: http://alertmanager:9093

@@ -3,9 +3,7 @@
 키 문자열을 코드 전체에 흩뿌리지 않기 위한 모듈 — 네이밍 실수로 키 공간이 어긋나는 사고 방지.
 """
 
-# ─────────────────────────────────────────────────────────────
 # TTL (seconds)
-# ─────────────────────────────────────────────────────────────
 SESSION_TTL = 90            # sess / ws_route / sessions ZSET 갱신 주기와 동일
 ROOM_MEMBERS_TTL = 600      # RDB fallback 전제 — 짧아도 안전
 RATE_LIMIT_TTL = 1          # 1초 윈도우
@@ -13,9 +11,7 @@ DEDUPE_TTL = 600            # 클라 재전송 최대 갭보다 충분히 길게
 ROOM_PENDING_MESSAGE_PREFIX = "room:pending_message:"
 NODE_TTL = 90               # chat:nodes ZSET — SESSION_TTL 과 동일 주기로 갱신
 
-# ─────────────────────────────────────────────────────────────
 # 임계값
-# ─────────────────────────────────────────────────────────────
 RATE_LIMIT_THRESHOLD = 10   # 초당 메시지 상한
 MAX_SESSIONS_PER_USER = 10  # 유저당 동시 세션 상한
 
@@ -25,9 +21,7 @@ SEQ_FORCE_JUMP_JITTER_MAX = 10000
 SEQ_RECOVER_GAP = 1000
 
 
-# ─────────────────────────────────────────────────────────────
 # 키 빌더 — DB 0 (hot)
-# ─────────────────────────────────────────────────────────────
 def sess_key(session_id: str) -> str:
     return f"sess:{session_id}"
 
@@ -105,8 +99,6 @@ DIRTY_CHAT_ROOM_DEFERRED_KEY = "deferred:dirty:chat_room"
 NODES_ZSET_KEY = "chat:nodes"             # ZSET: score=만료시각ms, member=node_id
 
 
-# ─────────────────────────────────────────────────────────────
 # 키 빌더 — DB 1 (dedupe 격리)
-# ─────────────────────────────────────────────────────────────
 def dedupe_key(user_id: str, client_msg_id: str) -> str:
     return f"dedupe:{user_id}:{client_msg_id}"

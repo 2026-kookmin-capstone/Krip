@@ -10,7 +10,6 @@ from app.domain.tour.model.place import Place
 PAGE_SIZE = 30
 
 
-# ──────────────────── 음식 필터 정의 ────────────────────
 # 식당(types에 'restaurant' 포함)에 한해 음식 옵션을 강제한다.
 # 식당이 아닌 장소(공원/박물관 등)는 영향을 받지 않는다.
 # 코드는 ``app.core.ai.tour_planner.v2.data_state.FoodPreference``와 동일.
@@ -47,8 +46,6 @@ class PlaceRepository:
     - 커서 기반 페이지네이션 (cursor 형식: "거리:place_id")
     """
 
-    # ──────────────────── Read (거리순 조회) ────────────────────
-
     @measure_mongo_op("aggregate", "place")
     async def find_nearby(
         self,
@@ -74,8 +71,6 @@ class PlaceRepository:
             food_filter=food_filter,
             limit=limit,
         )
-
-    # ──────────────────── Read (키워드 검색 + 거리순) ────────────────────
 
     @measure_mongo_op("aggregate", "place")
     async def search_nearby(
@@ -103,8 +98,6 @@ class PlaceRepository:
             lat, lng, query=query, cursor=cursor, max_distance=max_distance, limit=limit,
         )
 
-    # ──────────────────── Read (place_id 배치 조회) ────────────────────
-
     @measure_mongo_op("find_one", "place")
     async def find_by_place_id(self, place_id: str) -> Optional[dict]:
         """place_id로 장소 단건 조회"""
@@ -120,8 +113,6 @@ class PlaceRepository:
         cursor = collection.find({"place_id": {"$in": place_ids}})
         return await cursor.to_list(length=len(place_ids))
 
-    # ──────────────────── 내부 유틸 ────────────────────
-
     async def _aggregate_nearby(
         self,
         lat: float,
@@ -132,23 +123,14 @@ class PlaceRepository:
         food_filter: Optional[Literal["halal", "vegetarian", "any"]] = None,
         limit: int = PAGE_SIZE,
     ) -> list[dict]:
-        """$geoNear 기반 거리순 조회 공통 로직
-
-        파이프라인 구조:
-            1. $geoNear  — 기준점으로부터 거리 계산 + 거리순 정렬
-            2. $sort     — 동일 거리 내 place_id 오름차순 (정렬 안정성 보장)
-            3. $match    — 커서 이후 데이터만 필터링
-            4. $limit    — limit만큼 제한 (default PAGE_SIZE=30)
-        """
+        """$geoNear 거리와 place_id의 total order로 cursor page를 조회한다."""
         collection = Place.get_motor_collection()
 
-        # 커서 파싱 (있을 경우)
         cursor_distance = None
         cursor_place_id = None
         if cursor:
             cursor_distance, cursor_place_id = self._parse_cursor(cursor)
 
-        # ── $geoNear 스테이지 ──
         geo_near: dict = {
             "$geoNear": {
                 "near": {"type": "Point", "coordinates": [lng, lat]},
@@ -157,7 +139,6 @@ class PlaceRepository:
             }
         }
 
-        # 음식 필터 + 기존 query를 $and로 결합
         food_query = _build_food_filter_query(food_filter)
         if query and food_query:
             geo_near["$geoNear"]["query"] = {"$and": [query, food_query]}
@@ -169,16 +150,14 @@ class PlaceRepository:
         if max_distance is not None:
             geo_near["$geoNear"]["maxDistance"] = max_distance
 
-        # minDistance: 동일 거리 문서가 잘리지 않도록 epsilon 보정
+        # 동일 거리 문서를 cursor의 place_id로 거르기 위해 작은 거리 여유를 둔다.
         if cursor_distance is not None:
             geo_near["$geoNear"]["minDistance"] = max(0, cursor_distance - 1e-2)
 
         pipeline: list[dict] = [geo_near]
 
-        # ── $sort 스테이지 (동일 거리 내 정렬 안정성 보장) ──
         pipeline.append({"$sort": {"distance": 1, "place_id": 1}})
 
-        # ── $match 스테이지 (커서 이후 필터링) ──
         if cursor_distance is not None and cursor_place_id is not None:
             pipeline.append({
                 "$match": {
@@ -192,7 +171,6 @@ class PlaceRepository:
                 }
             })
 
-        # ── $limit 스테이지 ──
         pipeline.append({"$limit": limit})
 
         return await collection.aggregate(pipeline).to_list(limit)

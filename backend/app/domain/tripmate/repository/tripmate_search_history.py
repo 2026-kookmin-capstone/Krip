@@ -13,8 +13,6 @@ MAX_SEARCH_HISTORY = 10
 
 class TripmateSearchHistoryRepository:
 
-    # ──────────────────── Create ────────────────────
-
     @measure_mongo_op("update", "tripmate_search_history")
     async def save(self, user_id: str, search_name: str) -> TripmateSearchHistory:
         """검색어 저장
@@ -61,16 +59,12 @@ class TripmateSearchHistoryRepository:
             if old_ids:
                 await collection.delete_many({"_id": {"$in": old_ids}})
 
-    # ──────────────────── Read ────────────────────
-
     @measure_mongo_op("find", "tripmate_search_history")
     async def find_by_user_id(self, user_id: str) -> List[TripmateSearchHistory]:
         """유저의 검색 기록 조회 (최신순, 최대 10개)"""
         return await TripmateSearchHistory.find(
             {"user_id": user_id}
         ).sort("-created_at").limit(MAX_SEARCH_HISTORY).to_list()
-
-    # ──────────────────── Delete ────────────────────
 
     @measure_mongo_op("delete", "tripmate_search_history")
     async def delete_one(self, user_id: str, search_name: str) -> None:

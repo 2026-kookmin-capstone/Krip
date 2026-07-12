@@ -24,15 +24,11 @@ class UserBlockRepository:
     async def acquire_pair_lock_shared(self, user_a_id: str, user_b_id: str) -> None:
         await acquire_pair_lock(self.session, user_a_id, user_b_id, shared=True)
 
-    # ──────────────────── Create ────────────────────
-
     async def save(self, block: UserBlock) -> UserBlock:
         """차단 관계 저장"""
         self.session.add(block)
         await self.session.flush()
         return block
-
-    # ──────────────────── Read (단건) ────────────────────
 
     async def find_by_id(self, block_id: str) -> Optional[UserBlock]:
         """block_id로 단건 조회"""
@@ -88,8 +84,6 @@ class UserBlockRepository:
         result = await self.session.execute(stmt)
         return bool(result.scalar())
 
-    # ──────────────────── Read (목록 — 커서 페이지네이션) ────────────────────
-
     async def find_blocks_by_user(
         self,
         blocker_id: str,
@@ -114,8 +108,6 @@ class UserBlockRepository:
         stmt = stmt.order_by(UserBlock.created_at.desc(), UserBlock.block_id.desc()).limit(PAGE_SIZE + 1)
         result = await self.session.execute(stmt)
         return list(result.unique().scalars().all())
-
-    # ──────────────────── Delete ────────────────────
 
     async def delete(self, block: UserBlock) -> None:
         """차단 해제"""

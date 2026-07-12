@@ -1,7 +1,3 @@
-# Grafana datasource provisioning
-#
-# Loki datasource 는 (loki.yml) 추가.
-
 apiVersion: 1
 
 datasources:

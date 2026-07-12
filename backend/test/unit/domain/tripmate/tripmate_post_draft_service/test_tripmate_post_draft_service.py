@@ -11,10 +11,6 @@ from datetime import date
 import pytest
 
 
-# ──────────────────────────────────────────────────────────────────
-# save_draft
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestSaveDraft:
     """Tests for TripmatePostDraftService.save_draft."""
@@ -49,10 +45,6 @@ class TestSaveDraft:
         saved = draft_repo_mock.upsert.await_args.args[0]
         assert saved.image_urls == []
 
-
-# ──────────────────────────────────────────────────────────────────
-# get_draft / delete_draft
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestGetDraft:

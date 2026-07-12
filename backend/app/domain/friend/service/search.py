@@ -57,8 +57,6 @@ class FriendSearchService:
         )
         return FriendSearchListData(items=items, next_cursor=next_cursor)
 
-    # ──────────────────── 내부 변환 유틸 ────────────────────
-
     @staticmethod
     def _to_dto(
         viewer_id: str,

@@ -75,8 +75,6 @@ def make_user_block_repo_mock() -> AsyncMock:
     return mock
 
 
-# ──────────────────── 모델 인스턴스 helper ────────────────────
-
 def make_feed_post_with_counts(
     post,
     *,

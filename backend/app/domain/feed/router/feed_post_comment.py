@@ -25,8 +25,6 @@ from app.schema.common import MessageResponse
 router = APIRouter(tags=["피드 댓글"])
 
 
-# ──────────────────── 작성 ────────────────────
-
 @router.post("/posts/{post_id}/comments", status_code=201)
 @inject
 async def create_comment(
@@ -52,8 +50,6 @@ async def create_comment(
 
     return _to_response(comment)
 
-
-# ──────────────────── 목록 ────────────────────
 
 @router.get("/posts/{post_id}/comments")
 @inject
@@ -81,8 +77,6 @@ async def list_comments(
     return _to_list_response(result)
 
 
-# ──────────────────── 삭제 ────────────────────
-
 @router.delete("/posts/{post_id}/comments/{comment_id}")
 @inject
 async def delete_comment(
@@ -106,8 +100,6 @@ async def delete_comment(
 
     return MessageResponse(message="댓글이 삭제되었습니다.")
 
-
-# ──────────────────── 내부 유틸 ────────────────────
 
 def _to_response(c: FeedPostCommentData) -> CommentResponse:
     return CommentResponse(

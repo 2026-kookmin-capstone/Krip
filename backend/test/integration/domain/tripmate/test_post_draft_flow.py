@@ -23,8 +23,6 @@ from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── save_draft (upsert) ────────────────────
-
 class TestSaveDraft:
     async def test_first_save_inserts_new_row(
         self, tripmate_post_draft_service,
@@ -73,8 +71,6 @@ class TestSaveDraft:
         assert doc["image_urls"] == []
 
 
-# ──────────────────── get_draft ────────────────────
-
 class TestGetDraft:
     async def test_returns_draft_when_exists(
         self, tripmate_post_draft_service,
@@ -100,8 +96,6 @@ class TestGetDraft:
 
         assert result is None
 
-
-# ──────────────────── delete_draft ────────────────────
 
 class TestDeleteDraft:
     async def test_deletes_existing(self, tripmate_post_draft_service):

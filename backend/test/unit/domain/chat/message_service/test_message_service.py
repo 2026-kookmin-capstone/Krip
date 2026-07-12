@@ -31,10 +31,6 @@ async def test_push_task_is_registered_with_application_supervisor(service, monk
     assert supervisor.spawn.call_args.kwargs["name"] == "chat-push-CR_lifecycle"
 
 
-# ──────────────────────────────────────────────────────────────────
-# 핫패스 성공 경로
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestHappyPath:
     async def test_returns_ack_with_server_seq(self, service, lua_mock):
@@ -86,7 +82,6 @@ class TestHappyPath:
             client_msg_id="cm-1", msg_type=MessageType.TEXT, content="x",
         )
 
-        # Mongo insert 1회
         message_repo_mock.insert.assert_awaited_once()
         doc = message_repo_mock.insert.call_args.args[0]
         assert doc["server_seq"] == 7
@@ -99,10 +94,6 @@ class TestHappyPath:
         assert kwargs["chat_room_id"] == "CR_1"
         assert kwargs["server_seq"] == 7
 
-
-# ──────────────────────────────────────────────────────────────────
-# 멤버십 검증 (§5.1-2)
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestMembershipCheck:
@@ -214,10 +205,6 @@ class TestMembershipCheck:
         message_repo_mock.insert.assert_not_awaited()
 
 
-# ──────────────────────────────────────────────────────────────────
-# Rate limit
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestRateLimit:
     async def test_exceeding_threshold_raises(self, service, lua_mock):
@@ -229,10 +216,6 @@ class TestRateLimit:
                 client_msg_id="cm-1", msg_type=MessageType.TEXT, content="x",
             )
 
-
-# ──────────────────────────────────────────────────────────────────
-# Dedupe
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestDedupe:
@@ -358,7 +341,6 @@ class TestDedupe:
             sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
             client_msg_id="cm-1", msg_type=MessageType.TEXT, content="x",
         )
-        # dedupe:{user_id}:{client_msg_id} 형태로 SET
         args, _ = redis_dedupe_mock.set.call_args
         assert args[0] == dedupe_key("U_A", "cm-1")
 
@@ -372,10 +354,6 @@ class TestDedupe:
         ack_payload = json.loads(redis_dedupe_mock.set.await_args.args[1])
         assert ack_payload["room_id"] == "CR_1"
 
-
-# ──────────────────────────────────────────────────────────────────
-# seq 채번
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestSeqAllocation:
@@ -422,21 +400,15 @@ class TestSeqAllocation:
 
         args = lua_mock.recover_and_incr.call_args.kwargs.get("args") \
             or lua_mock.recover_and_incr.call_args.args[1:]
-        # base 가 0 (mongo_max == 0 분기)
         assert 0 in list(args)
         assert ack.server_seq == 1
 
-
-# ──────────────────────────────────────────────────────────────────
-# DuplicateKey 재시도
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestDuplicateKeyRetry:
     async def test_first_retry_uses_force_jump(
         self, service, message_repo_mock, lua_mock,
     ):
-        # 첫 insert 실패 → 두 번째 성공
         message_repo_mock.insert.side_effect = [
             DuplicateKeyError("dup"),
             None,  # 재시도 성공
@@ -466,7 +438,6 @@ class TestDuplicateKeyRetry:
                 client_msg_id="cm-fail", msg_type=MessageType.TEXT, content="x",
             )
 
-        # dedupe 해제되어 클라 재시도 허용
         redis_dedupe_mock.delete.assert_awaited()
         args, _ = redis_dedupe_mock.delete.call_args
         assert args[0] == dedupe_key("U_A", "cm-fail")
@@ -475,12 +446,10 @@ class TestDuplicateKeyRetry:
         assert lua_mock.force_jump.await_count == 3
 
 
-# ──────────────────────────────────────────────────────────────────
 # Dedupe 해제 경계 — 확정 실패만 dedupe를 풀어 클라이언트 재시도 허용
 #
 # network/timeout은 write outcome을 resolve한 뒤 성공 처리하고, validation 오류처럼
 # 확정 실패인 예외만 dedupe를 해제해 같은 client_msg_id 재시도를 허용한다.
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestDedupeReleaseOnFailure:
@@ -913,13 +882,11 @@ class TestDedupeReleaseOnFailure:
         redis_dedupe_mock.delete.assert_not_called()
 
 
-# ──────────────────────────────────────────────────────────────────
 # Persist 이후 전파(unread/fanout) 는 best-effort — 저장된 메시지는 항상 ACK 반환
 #
 # regression: 이전엔 fanout/unread 예외가 그대로 전파돼 (a) 저장된 메시지에 대해
 # 클라가 ACK 대신 에러 → dedupe 잔존으로 재전송도 거절 → 영구 실패로 보이고,
 # (b) @transactional rollback 으로 last_message 갱신까지 유실됐다.
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestPostPersistPropagationBestEffort:
@@ -956,10 +923,6 @@ class TestPostPersistPropagationBestEffort:
         redis_dedupe_mock.delete.assert_not_called()
 
 
-# ──────────────────────────────────────────────────────────────────
-# RDB UPDATE 실패 → dirty 큐
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestRdbUpdateFailureDegrade:
     async def test_update_last_message_failure_adds_to_dirty_queue(
@@ -970,24 +933,18 @@ class TestRdbUpdateFailureDegrade:
             side_effect=RuntimeError("RDB connection reset"),
         )
 
-        # 송신은 계속 진행되어 ACK 성공해야 함
         ack = await service.send_message(
             sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
             client_msg_id="cm-1", msg_type=MessageType.TEXT, content="x",
         )
 
-        # dirty:chat_room 에 방 ID 적재 확인
         redis_mock.sadd.assert_awaited()
         calls = redis_mock.sadd.await_args_list
         dirty_calls = [c for c in calls if c.args[0] == DIRTY_CHAT_ROOM_KEY]
         assert dirty_calls
         assert dirty_calls[0].args[1] == "CR_1"
-        assert ack.server_seq  # 정상 발급
+        assert ack.server_seq
 
-
-# ──────────────────────────────────────────────────────────────────
-# Unread pipeline
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestUnread:
@@ -1017,15 +974,12 @@ class TestUnread:
             client_msg_id="cm-1", msg_type=MessageType.SYSTEM, content="joined",
         )
 
-        # 시스템 메시지 → unread 증가 안 함
         unread_pipes = [p for p in redis_mock._pipes if p.hincrby.called]
         assert not unread_pipes, "시스템 메시지인데 unread HINCRBY 가 호출됨"
 
 
-# ──────────────────────────────────────────────────────────────────
 # send_system_message (PHASE_2 #2) — dedupe/rate_limit/unread skip,
 # content 는 dict, sender_id 는 None, fan-out 은 message.new 재사용
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestSendSystemMessage:
@@ -1138,9 +1092,7 @@ class TestSendSystemMessage:
         assert kwargs["chat_room_id"] == "CR_1"
 
 
-# ──────────────────────────────────────────────────────────────────
 # edit_message (PHASE_2 #5) — 본인 메시지 5분 이내 편집
-# ──────────────────────────────────────────────────────────────────
 
 from datetime import datetime, timedelta, timezone
 from types import SimpleNamespace
@@ -1262,10 +1214,6 @@ class TestEditMessage:
         assert "edited_at" in payload
 
 
-# ──────────────────────────────────────────────────────────────────
-# delete_message (PHASE_2 #5) — 본인 OR 그룹방 creator soft delete
-# ──────────────────────────────────────────────────────────────────
-
 def _mk_room(
     chat_room_id: str = "CR_1",
     *,
@@ -1370,10 +1318,6 @@ class TestDeleteMessage:
             )
 
 
-# ──────────────────────────────────────────────────────────────────
-# (4) 차단 체크 — DIRECT 방만 pair lock 후 RDB 확인
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestDirectBlockCheck:
     @pytest.fixture
@@ -1403,14 +1347,12 @@ class TestDirectBlockCheck:
         self, service, block_repo_mock, redis_mock,
     ):
         """방 type 이 GROUP 이면 차단 체크 자체 skip — block_repo 호출 없음."""
-        # 기본 mock 은 GROUP 방
         await service.send_message(
             sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
             client_msg_id="cm-1", msg_type=MessageType.TEXT, content="hi",
         )
         block_repo_mock.find_blocks_between.assert_not_called()
         block_repo_mock.acquire_pair_lock_shared.assert_not_called()
-        # room:blocks 관련 Redis 호출도 없음
         assert redis_mock.sismember.call_count == 0 or all(
             "room:blocks" not in str(c) for c in redis_mock.sismember.call_args_list
         )

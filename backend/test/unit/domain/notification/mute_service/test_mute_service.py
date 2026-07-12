@@ -29,10 +29,6 @@ def _make_member(
     return m
 
 
-# ──────────────────────────────────────────────────────────────────
-# set_global_mute — 전역 차단 토글
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestSetGlobalMute:
     async def test_muted_true_writes_true_and_calls_update(
@@ -66,10 +62,6 @@ class TestSetGlobalMute:
 
         user_repo_mock.update.assert_not_awaited()
 
-
-# ──────────────────────────────────────────────────────────────────
-# set_room_mute — 방별 차단 토글 (활성 멤버 검증 포함)
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestSetRoomMute:

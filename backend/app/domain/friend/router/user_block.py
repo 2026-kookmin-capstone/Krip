@@ -70,8 +70,6 @@ async def get_blocked_users(
     return _to_list_response(result)
 
 
-# ──────────────────── 내부 유틸 ────────────────────
-
 def _to_block_response(dto) -> UserBlockResponse:
     return UserBlockResponse(
         block_id=dto.block_id,

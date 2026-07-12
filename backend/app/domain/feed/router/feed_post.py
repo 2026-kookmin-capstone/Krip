@@ -30,8 +30,6 @@ _ALLOWED_CONTENT_TYPES = {"image/jpeg", "image/png", "image/webp"}
 _MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
 
 
-# ──────────────────── 업로드 ────────────────────
-
 @router.post("/posts", status_code=201)
 @inject
 async def upload_post(
@@ -74,8 +72,6 @@ async def upload_post(
     return _to_response(post)
 
 
-# ──────────────────── 조회 ────────────────────
-
 @router.get("/me")
 @inject
 async def get_my_feed(
@@ -110,8 +106,6 @@ async def get_post(
 
     return _to_response(post)
 
-
-# ──────────────────── 변경 ────────────────────
 
 @router.patch("/posts/{post_id}/visibility")
 @inject
@@ -157,8 +151,6 @@ async def update_caption(
     return _to_response(post)
 
 
-# ──────────────────── 삭제 ────────────────────
-
 @router.delete("/posts/{post_id}")
 @inject
 async def delete_post(
@@ -177,8 +169,6 @@ async def delete_post(
 
     return MessageResponse(message="피드 게시물이 삭제되었습니다.")
 
-
-# ──────────────────── 내부 유틸 ────────────────────
 
 def _to_response(post: FeedPostData) -> FeedPostResponse:
     """DTO → Response 1:1."""

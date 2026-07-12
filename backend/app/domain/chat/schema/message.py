@@ -4,8 +4,6 @@ from typing import Any, List, Optional
 from pydantic import BaseModel, ConfigDict, Field
 
 
-# ──────────────────── Response ────────────────────
-
 class ChatMessageResponse(BaseModel):
     message_id: str = Field(..., description="메시지 ID (MongoDB _id)")
     chat_room_id: str = Field(..., description="방 ID")
@@ -35,8 +33,6 @@ class MessageHistoryResponse(BaseModel):
         ),
     )
 
-
-# ──────────────────── 편집 ────────────────────
 
 class EditMessageBody(BaseModel):
     model_config = ConfigDict(

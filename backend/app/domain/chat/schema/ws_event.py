@@ -13,9 +13,7 @@ from pydantic import BaseModel, Field, field_validator
 from app.domain.chat.model.chat_message import MessageType
 
 
-# ════════════════════════════════════════════════════════════════════
 # 클라 → 서버 요청 (`op` discriminator)
-# ════════════════════════════════════════════════════════════════════
 
 class SendOp(BaseModel):
     """메시지 송신 요청."""
@@ -56,9 +54,7 @@ ClientRequest = Annotated[
 ]
 
 
-# ════════════════════════════════════════════════════════════════════
 # 서버 → 클라 이벤트 (`type` discriminator)
-# ════════════════════════════════════════════════════════════════════
 
 class ConnectedEvent(BaseModel):
     """WS 연결 직후 서버가 첫 번째로 내려주는 세션 정보."""
@@ -212,9 +208,7 @@ ServerEvent = Annotated[
 ]
 
 
-# ════════════════════════════════════════════════════════════════════
 # 시스템 메시지 content payload (`action` discriminator)
-# ════════════════════════════════════════════════════════════════════
 # `message.type == "system"` 일 때의 `content` 모양. actor 가 탈퇴하면 null (SET NULL 정책).
 # `target_ids` 는 join/kick 에만 — created/leave 는 actor 본인이 곧 대상이라 생략.
 

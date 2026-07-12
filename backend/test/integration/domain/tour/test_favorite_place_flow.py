@@ -26,8 +26,6 @@ from app.domain.tour.model.place import Place
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── add_favorite ────────────────────
-
 class TestAddFavorite:
     async def test_persists_when_place_exists(
         self, favorite_place_service, seed_users, seed_place, session_factory,
@@ -75,8 +73,6 @@ class TestAddFavorite:
             )
 
 
-# ──────────────────── remove_favorite ────────────────────
-
 class TestRemoveFavorite:
     async def test_deletes_existing(
         self, favorite_place_service, seed_users, seed_place, session_factory,
@@ -104,8 +100,6 @@ class TestRemoveFavorite:
             )
 
 
-# ──────────────────── get_favorites — RDB↔Mongo 합성 ────────────────────
-
 class TestGetFavorites:
     async def test_preserves_recent_first_order(
         self, favorite_place_service, seed_users, seed_place,
@@ -116,14 +110,12 @@ class TestGetFavorites:
         p2 = await seed_place(place_id="P_2", display_name="Second")
         p3 = await seed_place(place_id="P_3", display_name="Third")
 
-        # 즐겨찾기 순서대로 추가 (P_1 → P_2 → P_3)
         await favorite_place_service.add_favorite(user_id=user_id, place_id=p1)
         await favorite_place_service.add_favorite(user_id=user_id, place_id=p2)
         await favorite_place_service.add_favorite(user_id=user_id, place_id=p3)
 
         result = await favorite_place_service.get_favorites(user_id=user_id)
 
-        # 최신순 — P_3 가 첫 번째
         place_ids = [f.place.place_id for f in result.favorites]
         assert place_ids == ["P_3", "P_2", "P_1"]
         assert result.total_count == 3

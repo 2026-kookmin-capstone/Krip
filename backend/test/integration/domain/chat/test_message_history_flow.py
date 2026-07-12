@@ -71,10 +71,6 @@ async def room_with_messages(
     return room_id, a, b, text_seqs
 
 
-# ──────────────────────────────────────────────────────────────────
-# find_messages_before (위로 스크롤)
-# ──────────────────────────────────────────────────────────────────
-
 class TestFindMessagesBeforeFlow:
     async def test_paginates_desc_with_has_more(
         self, uow, room_with_messages, patch_external_clients,
@@ -90,7 +86,6 @@ class TestFindMessagesBeforeFlow:
         assert page1.has_more is True
         # DESC 정렬 — 첫 페이지 마지막 메시지가 다음 커서
         assert page1.next_cursor == page1.messages[-1].server_seq
-        # 최신순 확인 (내림차순)
         seqs1 = [m.server_seq for m in page1.messages]
         assert seqs1 == sorted(seqs1, reverse=True)
 
@@ -132,10 +127,6 @@ class TestFindMessagesBeforeFlow:
         assert result.has_more is False
         assert result.next_cursor is None
 
-
-# ──────────────────────────────────────────────────────────────────
-# find_messages_after (catch-up)
-# ──────────────────────────────────────────────────────────────────
 
 class TestFindMessagesAfterFlow:
     async def test_catch_up_returns_ascending_up_to_limit(
@@ -187,10 +178,6 @@ class TestFindMessagesAfterFlow:
         assert result.next_cursor is None
 
 
-# ──────────────────────────────────────────────────────────────────
-# 권한 체크
-# ──────────────────────────────────────────────────────────────────
-
 class TestPermissionFlow:
     async def test_non_member_cannot_read(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
@@ -233,10 +220,6 @@ class TestPermissionFlow:
                 me_id=b, room_id=room.chat_room_id, before_server_seq=999, limit=10,
             )
 
-
-# ──────────────────────────────────────────────────────────────────
-# list_rooms (catch-up 기반 재진입 시 방별 last_message_server_seq 필요)
-# ──────────────────────────────────────────────────────────────────
 
 class TestListRoomsFlow:
     async def test_501st_room_is_reachable_via_service_cursor(

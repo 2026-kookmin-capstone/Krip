@@ -53,18 +53,8 @@ async def invalidate_registered_cache(user_id: str) -> None:
 class WithdrawService:
     """회원 탈퇴 — 30일 유예 정책.
 
-    진입점:
-      - `request_withdraw` (HTTP DELETE /api/auth/withdraw): status 를 INACTIVE 로 전환
-        + MongoDB `withdrawal_request` 컬렉션에 영구 삭제 예정 시각 적재.
-      - `cancel_withdraw` (HTTP POST /api/auth/withdraw/cancel): 유예 기간 내 변심 시
-        INACTIVE → ACTIVE 복구 + Mongo doc 정리.
-      - `purge` (worker `app.domain.auth.worker.withdraw_purge`): 매일 KST 04:00 에
-        `scheduled_purge_at` 도달분에 대해 RDB CASCADE + 외부 리소스 hard delete.
-
-    유예 기간 동안:
-      - `RegisterCheckMiddleware` 가 INACTIVE 유저의 보호 경로 접근을 419 로 차단.
-      - OAuth 재로그인은 정상 진행 — 쿠키 발급 + status=WITHDRAWAL_PENDING 으로 FE 가
-        cancel UI 로 라우팅. `/api/auth/withdraw/cancel` 은 prefix 제외 대상이라 419 우회.
+    INACTIVE 사용자는 middleware가 보호 경로를 차단한다. 재로그인 후 cancel endpoint만
+    허용하며, 만료 요청은 worker가 RDB와 외부 리소스를 정리한다.
     """
 
     def __init__(self, uow: UnitOfWork, inbox_service: InboxService, user_purge_cache_service):
@@ -76,27 +66,11 @@ class WithdrawService:
         self.withdrawal_request_repo = WithdrawalRequestRepository()
         self._chat_purge = user_purge_cache_service
 
-    # ──────────────────── HTTP: 탈퇴 요청 (soft) ────────────────────
-
     @transactional
     async def request_withdraw(self, user_id: str) -> datetime:
-        """탈퇴 요청 — INACTIVE 전환 + MongoDB 적재.
+        """INACTIVE 전환과 Mongo purge 요청을 함께 수행한다.
 
-        Returns:
-            scheduled_purge_at: 영구 삭제 예정 시각 (UTC).
-
-        Raises:
-            ValueError: 유저 미존재.
-            WithdrawalAlreadyRequestedError: 이미 INACTIVE — 중복 요청.
-
-        실패 시:
-            - RDB UPDATE 실패: @transactional 이 rollback → MongoDB 도 적재 안 됨.
-            - MongoDB 적재 실패 (RDB 이후): 예외가 @transactional 까지 propagate →
-              RDB rollback → 유저는 ACTIVE 로 복구. 호출자가 재시도하면 됨.
-
-        호출 후처리: router 가 commit 이후 `invalidate_registered_cache(user_id)` 호출.
-        같은 무효화를 트랜잭션 내부에서 하면 미커밋 상태의 ACTIVE 행을 다른 동시 요청이
-        읽어 캐시를 재기록 → 419 우회 race 발생.
+        캐시 무효화는 미커밋 ACTIVE 재캐시 race를 막기 위해 router가 commit 후 수행한다.
         """
         user_repo = UserRepository(self._session)
 
@@ -126,52 +100,14 @@ class WithdrawService:
         return purge_at
 
     async def revoke_user_chat_state(self, user_id: str) -> None:
-        """`request_withdraw` post-commit 훅 — chat 활성 세션 즉시 종료.
-
-        `invalidate_registered_cache` 와 동일 이유 (트랜잭션 내부 호출 시 미커밋 상태 race)
-        로 별도 메서드로 분리되어 router 가 commit 이후 호출. INACTIVE 전환 후 TTL(90s)
-        만료를 기다리지 않고 활성 WS 세션을 즉시 revoke 해 탈퇴 유저의 송수신 윈도우 차단.
-
-        chat 도메인 키 조작은 `UserPurgeCacheService` 가 책임 — 도메인 경계 유지.
-        """
+        """commit 후 활성 chat session을 즉시 revoke한다."""
         await self._chat_purge.revoke_all_sessions(user_id)
 
-    # ──────────────────── 스케줄러: 영구 삭제 (hard) ────────────────────
-
     async def purge(self, user_id: str) -> None:
-        """유저 영구 삭제 — RDB(CASCADE) + MongoDB + Object Storage + Redis.
+        """RDB 삭제 후 Mongo, Object Storage, Redis를 best-effort로 정리한다.
 
-        삭제 순서 (RDB 먼저 → 외부 리소스 best-effort):
-            1. RDB (CASCADE): user →
-                - user_detail_inform, user_travel_style
-                - tripmate_post (→ tripmate_post_image, tripmate_post_like)
-                - tripmate_post_like (좋아요 누른 입장)
-                - favorite_place
-                - friendship (requester/addressee 양측)
-                - user_block (blocker/blocked 양측)
-            2. MongoDB: tripmate_image, tripmate_post_draft,
-                        tripmate_search_history, tour_search_history,
-                        withdrawal_request (자기 자신)
-            3. Object Storage: uploads/perm/{user_id}/* 전체 삭제
-            4. Redis: REGISTERED 캐시 무효화 + chat 도메인 cleanup (unread:{uid} 등)
-
-        외부 리소스(2~4)는 개별 try/except 로 격리한다. 한 단계가 실패해도 다음 단계는
-        계속 진행하며, 실패는 로그로만 남겨 orphan 데이터가 남을 수 있으나 유저 참조 경로
-        (RDB) 는 이미 끊겨 있어 사용자 경험에는 영향이 없다.
-
-        **race-free 안전장치 (dual-write 잔존 + cancel 동시성)**:
-            `_purge_rdb` 가 SELECT FOR UPDATE 로 row lock 을 잡고 한 트랜잭션 안에서
-            status 검사 → DELETE 까지 수행. 동시에 진입한 `cancel_withdraw` 도 같은
-            lock 을 경쟁하므로:
-              - cancel 이 먼저 commit → worker 가 lock 획득 후 ACTIVE 확인 → STALE_DOC
-                outcome → doc 만 청소, 외부 리소스 보존
-              - worker 가 먼저 commit → cancel 의 SELECT 가 빈 결과 → 404
-            결과적으로 ACTIVE 유저의 외부 데이터를 잘못 날리는 경로가 닫힘.
-
-        `withdrawal_request` doc 청소:
-            - DELETED / NO_USER outcome → `_purge_external` 마지막 단계에서 제거
-              (외부 리소스 정리 실패 시 다음 사이클에서 재시도 가능하도록 보존되다 청소)
-            - STALE_DOC outcome → 외부 리소스는 손대지 않고 doc 만 즉시 제거
+        `_purge_rdb`와 cancel은 같은 row lock을 경쟁한다. cancel이 이기면 STALE_DOC만
+        제거하고 외부 데이터는 보존한다. 외부 정리 실패 시 purge doc을 남겨 재시도한다.
         """
         outcome = await self._purge_rdb(user_id)
 
@@ -195,13 +131,7 @@ class WithdrawService:
 
     @transactional
     async def _purge_rdb(self, user_id: str) -> "_PurgeOutcome":
-        """RDB row lock 획득 → status 검사 → 조건부 hard delete. 단일 트랜잭션.
-
-        Returns:
-            DELETED   — status==INACTIVE 였고 hard delete 완료.
-            NO_USER   — RDB 에 user 없음 (이전 사이클 외부 정리 잔존).
-            STALE_DOC — status!=INACTIVE (cancel 로 복구되었거나 dual-write 잔존).
-        """
+        """row lock 안에서 status를 검사하고 조건부 hard delete한다."""
         user_repo = UserRepository(self._session)
         user = await user_repo.find_by_id_for_update(user_id)
 
@@ -219,38 +149,14 @@ class WithdrawService:
         logger.info("탈퇴 영구 삭제 — RDB 삭제 완료 (user_id={})", user_id)
         return _PurgeOutcome.DELETED
 
-    # ──────────────────── HTTP: 탈퇴 취소 (soft 복구) ────────────────────
-
     async def cancel_withdraw(self, user_id: str) -> None:
-        """탈퇴 요청 취소 — INACTIVE → ACTIVE 복구 + Mongo doc 정리.
+        """row lock으로 INACTIVE를 ACTIVE로 복구한 뒤 Mongo purge doc을 제거한다.
 
-        호출 흐름: 유예 기간 내 변심 → OAuth 재로그인 → FE 가 status=withdrawal_pending
-        또는 보호 경로의 419 를 받고 cancel 화면으로 라우팅 → 이 엔드포인트 호출.
-
-        Raises:
-            ValueError: 유저 미존재 (이미 worker 가 hard delete 했거나 race loss).
-            WithdrawalNotPendingError: status 가 INACTIVE 가 아님 (이미 ACTIVE 등).
-
-        race-free (cancel ↔ worker):
-            `_set_active` 가 `find_by_id_for_update` 로 row lock 을 잡으므로 worker 의
-            `_purge_rdb` 와 상호배타.
-              - cancel 이 먼저 commit → worker 가 lock 획득 후 ACTIVE 봄 → STALE_DOC →
-                외부 정리 skip + doc 만 청소
-              - worker 가 먼저 commit → cancel 의 SELECT 가 빈 결과 → 404
-
-        dual-write 안전:
-            Mongo doc 삭제는 RDB commit **이후** 별도 단계에서 best-effort 로 수행.
-            commit 후 Mongo 삭제가 실패하면 RDB 는 ACTIVE 인데 doc 만 잔존 → 다음
-            worker 사이클에서 STALE_DOC 가드가 doc 청소. 어느 쪽으로 깨져도 영구 stuck
-            상태가 만들어지지 않음.
-
-            (Mongo 삭제를 같은 트랜잭션에 두면, 삭제는 즉시 반영되는데 직후 RDB commit
-             이 실패하면 RDB 롤백 → INACTIVE + Mongo doc 없음 → worker 가 영원히 못
-             보는 stuck 상태가 됨. 그래서 분리.)
+        Mongo 삭제는 RDB commit 후 수행한다. 실패해도 worker의 STALE_DOC 가드가 다음
+        사이클에 정리하므로 INACTIVE 상태에서 purge doc만 사라지는 stuck 상태를 피한다.
         """
         await self._set_active(user_id)
 
-        # post-commit Mongo doc 청소. 실패해도 worker STALE_DOC 가드가 다음 사이클에서 정리.
         try:
             await self.withdrawal_request_repo.delete_by_user_id(user_id)
         except Exception as e:
@@ -264,12 +170,7 @@ class WithdrawService:
 
     @transactional
     async def _set_active(self, user_id: str) -> None:
-        """RDB 만 ACTIVE 로 복구. Mongo doc 정리는 호출자가 commit 후 별도 단계로 처리.
-
-        Raises:
-            ValueError: 유저 미존재.
-            WithdrawalNotPendingError: status 가 INACTIVE 가 아님.
-        """
+        """row lock 안에서 RDB status만 ACTIVE로 복구한다."""
         user_repo = UserRepository(self._session)
         user = await user_repo.find_by_id_for_update(user_id)
         if user is None:

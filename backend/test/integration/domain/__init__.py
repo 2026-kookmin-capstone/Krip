@@ -1,1 +1,0 @@
-# Integration domain tests package

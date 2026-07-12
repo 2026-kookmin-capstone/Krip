@@ -15,10 +15,6 @@ from test.unit.domain.tripmate.tripmate_post_like_service.model_factory import (
 )
 
 
-# ──────────────────────────────────────────────────────────────────
-# get_liked_user_ids
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestGetLikedUserIds:
     """Tests for TripmatePostLikeService.get_liked_user_ids."""
@@ -71,10 +67,6 @@ class TestGetLikedUserIds:
 
         assert result == ["USER_a"]
 
-
-# ──────────────────────────────────────────────────────────────────
-# add_like — 트랜잭션 + 알림 fan-out 통합
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestAddLike:
@@ -250,10 +242,6 @@ class TestAddLike:
 
         inbox_service_mock.notify_tripmate_like.assert_not_awaited()
 
-
-# ──────────────────────────────────────────────────────────────────
-# remove_like — 좋아요 취소는 알림 변경 없음
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestRemoveLike:

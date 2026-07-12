@@ -25,8 +25,6 @@ from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── helpers ────────────────────
-
 async def _insert_post(
     session_factory,
     owner_id: str,
@@ -67,8 +65,6 @@ async def _insert_friendship(
         await session.commit()
 
 
-# ──────────────────── happy path / 빈 케이스 ────────────────────
-
 class TestEmptyActivity:
     async def test_no_posts_no_friends_returns_zero(
         self, profile_service, seed_users,
@@ -80,8 +76,6 @@ class TestEmptyActivity:
         assert result.total_feed_likes == 0
         assert result.total_friends == 0
 
-
-# ──────────────────── total_feed_likes 정합성 ────────────────────
 
 class TestFeedLikeAggregation:
     async def test_counts_likes_on_my_posts(
@@ -137,8 +131,6 @@ class TestFeedLikeAggregation:
         assert result.total_feed_likes == 1
 
 
-# ──────────────────── total_friends 정합성 ────────────────────
-
 class TestFriendshipCount:
     async def test_counts_only_accepted_status(
         self, profile_service, seed_users, session_factory,
@@ -186,16 +178,12 @@ class TestFriendshipCount:
         assert result.total_friends == 0
 
 
-# ──────────────────── 권한 / 에러 ────────────────────
-
 class TestErrors:
     async def test_unknown_user_id_raises_value_error(self, profile_service):
         """존재하지 않는 user_id → ValueError (라우터에서 404 매핑)."""
         with pytest.raises(ValueError):
             await profile_service.get_my_stats("USER_does_not_exist")
 
-
-# ──────────────────── 통합 — 좋아요/친구 같이 ────────────────────
 
 class TestCombined:
     async def test_likes_and_friends_aggregated_independently(

@@ -13,8 +13,6 @@ class FavoritePlaceService:
         self.uow = uow
         self.place_repo = PlaceRepository()
 
-    # ──────────────────── 즐겨찾기 추가 ────────────────────
-
     @transactional
     async def add_favorite(self, user_id: str, place_id: str) -> None:
         """
@@ -42,8 +40,6 @@ class FavoritePlaceService:
         except IntegrityError as e:
             raise ValueError("이미 즐겨찾기한 장소입니다.") from e
 
-    # ──────────────────── 즐겨찾기 삭제 ────────────────────
-
     @transactional
     async def remove_favorite(self, user_id: str, place_id: str) -> None:
         """
@@ -59,8 +55,6 @@ class FavoritePlaceService:
             raise ValueError("즐겨찾기하지 않은 장소입니다.")
 
         await fav_repo.delete_by_user_and_place(user_id, place_id)
-
-    # ──────────────────── 즐겨찾기 목록 조회 ────────────────────
 
     @transactional
     async def get_favorites(self, user_id: str) -> FavoritePlaceListData:

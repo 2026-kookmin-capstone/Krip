@@ -21,8 +21,6 @@ from app.schema.common import MessageResponse
 router = APIRouter(prefix="/inbox", tags=["인박스"])
 
 
-# ──────────────────── 목록 ────────────────────
-
 @router.get("")
 @inject
 async def list_inbox(
@@ -46,8 +44,6 @@ async def list_inbox(
     return _to_list_response(result)
 
 
-# ──────────────────── 미읽음 카운트 ────────────────────
-
 @router.get("/unread-count")
 @inject
 async def get_unread_count(
@@ -59,8 +55,6 @@ async def get_unread_count(
     count = await service.count_unread(recipient_id=user_id)
     return UnreadCountResponse(unread_count=count)
 
-
-# ──────────────────── X 버튼 (숨기기) ────────────────────
 
 @router.patch("/{inbox_item_id}/hide")
 @inject
@@ -80,8 +74,6 @@ async def hide_inbox_item(
 
     return MessageResponse(message="인박스 항목이 숨겨졌습니다.")
 
-
-# ──────────────────── 내부 유틸 ────────────────────
 
 def _to_response(item: InboxItemData) -> InboxItemResponse:
     return InboxItemResponse(

@@ -13,7 +13,6 @@ from app.core.ai.tour_planner.v2.data_state import (
 from app.core.ai.tour_planner.v2.prompt_manager import CLUSTER_COORDINATES
 
 
-# HH:MM (24h) 정규식 — 00:00 ~ 23:59
 _TIME_PATTERN = re.compile(r"^([01]\d|2[0-3]):[0-5]\d$")
 
 
@@ -23,22 +22,19 @@ def _to_minutes(hhmm: str) -> int:
     return int(h) * 60 + int(m)
 
 
-# ──────────────────── Request ────────────────────
-
-
 class TourDayRequest(BaseModel):
-    """Per-day tour recommendation request."""  # 일자별 추천 요청
+    """Per-day tour recommendation request."""
 
-    departure_cluster: str = Field(..., description="Departure cluster name (must be a key of CLUSTER_COORDINATES).")  # 출발 권역
-    arrival_cluster: str = Field(..., description="Arrival cluster name.")  # 도착 권역
-    additional_place_id: Optional[str] = Field(None, description="place_id of a required must-visit place. Up to 1.")  # 필수 포함 장소 place_id
-    transport: Transport = Field(..., description="Transportation mode.")  # 이동 수단
-    start_time: str = Field(..., description="Start time in HH:MM (24h).")  # 시작 시각
-    end_time: str = Field(..., description="End time in HH:MM (24h).")  # 종료 시각
-    companion: Companion = Field(..., description="Companion type.")  # 동행 유형
-    budget_per_person_krw: int = Field(..., ge=0, description="Per-person budget in KRW.")  # 1인 예산 (원)
-    styles: List[TravelStyle] = Field(..., min_length=1, description="Travel styles (multi-select, at least one).")  # 여행 스타일
-    schedule_density: ScheduleDensity = Field(..., description="Schedule density.")  # 일정 밀도
+    departure_cluster: str = Field(..., description="Departure cluster name (must be a key of CLUSTER_COORDINATES).")
+    arrival_cluster: str = Field(..., description="Arrival cluster name.")
+    additional_place_id: Optional[str] = Field(None, description="place_id of a required must-visit place. Up to 1.")
+    transport: Transport = Field(..., description="Transportation mode.")
+    start_time: str = Field(..., description="Start time in HH:MM (24h).")
+    end_time: str = Field(..., description="End time in HH:MM (24h).")
+    companion: Companion = Field(..., description="Companion type.")
+    budget_per_person_krw: int = Field(..., ge=0, description="Per-person budget in KRW.")
+    styles: List[TravelStyle] = Field(..., min_length=1, description="Travel styles (multi-select, at least one).")
+    schedule_density: ScheduleDensity = Field(..., description="Schedule density.")
 
     @field_validator("departure_cluster", "arrival_cluster")
     @classmethod
@@ -64,11 +60,11 @@ class TourDayRequest(BaseModel):
 
 
 class TourRecommendRequest(BaseModel):
-    """Tour recommendation request (full)."""  # 전체 추천 요청
+    """Tour recommendation request (full)."""
 
-    travel_days: int = Field(..., ge=1, le=3, description="Number of travel days (1-3).")  # 여행 일수
-    food_preference: FoodPreference = Field(..., description="Food preference (halal / vegetarian / any).")  # 음식 옵션
-    days: List[TourDayRequest] = Field(..., description="Per-day inputs. len(days) MUST equal travel_days.")  # 일자별 입력
+    travel_days: int = Field(..., ge=1, le=3, description="Number of travel days (1-3).")
+    food_preference: FoodPreference = Field(..., description="Food preference (halal / vegetarian / any).")
+    days: List[TourDayRequest] = Field(..., description="Per-day inputs. len(days) MUST equal travel_days.")
 
     @model_validator(mode="after")
     def _validate_days_length(self) -> "TourRecommendRequest":
@@ -79,70 +75,67 @@ class TourRecommendRequest(BaseModel):
         return self
 
 
-# ──────────────────── Response ────────────────────
-
-
 class TourPlaceLocationResponse(BaseModel):
-    """Coordinate."""  # 좌표
+    """Coordinate."""
 
-    lat: float = Field(..., description="Latitude.")  # 위도
-    lng: float = Field(..., description="Longitude.")  # 경도
+    lat: float = Field(..., description="Latitude.")
+    lng: float = Field(..., description="Longitude.")
 
 
 class TourTimelineSlotResponse(BaseModel):
-    """Timeline slot in the day plan."""  # 타임라인 슬롯
+    """Timeline slot in the day plan."""
 
-    time: str = Field(..., description="Time in HH:MM (24h).")  # 시각
-    place_id: str = Field(..., description="place_id at this slot (always present — every slot is a real venue from `places`).")  # 슬롯의 place_id (필수)
-    title: str = Field(..., description="Slot description (English).")  # 슬롯 설명
+    time: str = Field(..., description="Time in HH:MM (24h).")
+    place_id: str = Field(..., description="place_id at this slot (always present — every slot is a real venue from `places`).")
+    title: str = Field(..., description="Slot description (English).")
 
 
 class TourPlaceDetailResponse(BaseModel):
-    """Place detail in the day plan."""  # 장소 상세
+    """Place detail in the day plan."""
 
-    place_id: str = Field(..., description="Google Places unique ID.")  # Google Places 고유 ID
-    display_name: str = Field(..., description="Place name.")  # 장소 이름
-    category: str = Field(..., description="Place category.")  # 카테고리
-    address: str = Field(..., description="Address.")  # 주소
-    location: TourPlaceLocationResponse = Field(..., description="Coordinate.")  # 좌표
-    rating: Optional[float] = Field(None, description="Average rating.")  # 평균 별점
-    reason: str = Field(..., description="Reason and highlights (English).")  # 추천 이유
-    estimated_cost_krw: int = Field(..., ge=0, description="Estimated per-person spend in KRW. 0 does NOT necessarily mean free — it may also indicate a missing/unknown estimate. Do not render as 'Free' without independent verification.")  # 예상 1인 지출 (0이라도 반드시 무료를 의미하지 않음)
-    stay_minutes: int = Field(..., gt=0, description="Recommended stay in minutes (positive).")  # 권장 체류 시간 (양수)
-    photos: List[str] = Field(default_factory=list, description="Photo URL list (empty if no image available).")  # 사진 URL 목록 (없으면 빈 배열)
+    place_id: str = Field(..., description="Google Places unique ID.")
+    display_name: str = Field(..., description="Place name.")
+    category: str = Field(..., description="Place category.")
+    address: str = Field(..., description="Address.")
+    location: TourPlaceLocationResponse = Field(..., description="Coordinate.")
+    rating: Optional[float] = Field(None, description="Average rating.")
+    reason: str = Field(..., description="Reason and highlights (English).")
+    estimated_cost_krw: int = Field(..., ge=0, description="Estimated per-person spend in KRW. 0 does NOT necessarily mean free — it may also indicate a missing/unknown estimate. Do not render as 'Free' without independent verification.")
+    stay_minutes: int = Field(..., gt=0, description="Recommended stay in minutes (positive).")
+    photos: List[str] = Field(default_factory=list, description="Photo URL list (empty if no image available).")
 
 
 class TourMovementHopResponse(BaseModel):
-    """Movement hop between two places."""  # 이동 흐름
+    """Movement hop between two places."""
 
-    from_place: str = Field(..., description="Origin place name.")  # 출발 장소 이름
-    to_place: str = Field(..., description="Destination place name.")  # 도착 장소 이름
-    method: str = Field(..., description="Movement description (English).")  # 이동 방법
+    from_place: str = Field(..., description="Origin place name.")
+    to_place: str = Field(..., description="Destination place name.")
+    method: str = Field(..., description="Movement description (English).")
 
 
 class TourBudgetItemResponse(BaseModel):
-    """Budget breakdown item."""  # 예산 항목
+    """Budget breakdown item."""
 
-    label: str = Field(..., description="Item label (English).")  # 항목명
-    amount_krw: int = Field(..., description="Amount in KRW.")  # 금액
+    label: str = Field(..., description="Item label (English).")
+    amount_krw: int = Field(..., description="Amount in KRW.")
 
 
 class TourDayResponse(BaseModel):
-    """Per-day final plan."""  # 일자별 최종 플랜
+    """Per-day final plan."""
 
-    day: int = Field(..., description="Day number (1-indexed).")  # 여행 일차
-    timeline: List[TourTimelineSlotResponse] = Field(..., description="Time-based itinerary, ordered by time.")  # 시간 기반 동선
-    places: List[TourPlaceDetailResponse] = Field(..., description="Detailed list of selected places.")  # 장소 상세 목록
-    movements: List[TourMovementHopResponse] = Field(..., description="Movement hops between adjacent places.")  # 이동 흐름
-    budget_breakdown: List[TourBudgetItemResponse] = Field(..., description="Budget items.")  # 예산 분배
-    budget_total_krw: int = Field(..., description="Total budget in KRW.")  # 예산 합계
-    summary: str = Field(..., description="Closing summary (English).")  # 결론 요약
+    day: int = Field(..., description="Day number (1-indexed).")
+    timeline: List[TourTimelineSlotResponse] = Field(..., description="Time-based itinerary, ordered by time.")
+    places: List[TourPlaceDetailResponse] = Field(..., description="Detailed list of selected places.")
+    movements: List[TourMovementHopResponse] = Field(..., description="Movement hops between adjacent places.")
+    budget_breakdown: List[TourBudgetItemResponse] = Field(..., description="Budget items.")
+    budget_total_krw: int = Field(..., description="Total budget in KRW.")
+    summary: str = Field(..., description="Closing summary (English).")
 
 
 class TourRecommendResponse(BaseModel):
-    """Tour recommendation response (full)."""  # 추천 응답
+    """Tour recommendation response (full)."""
 
-    tour_plan: List[TourDayResponse] = Field(..., description="One plan per day.")  # 일자별 플랜 목록
+    tour_plan: List[TourDayResponse] = Field(..., description="One plan per day.")
 
     model_config = {
         "json_schema_extra": {

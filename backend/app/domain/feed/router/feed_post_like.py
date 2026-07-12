@@ -16,8 +16,6 @@ from app.domain.feed.service.feed_post_like import FeedPostLikeService
 router = APIRouter(tags=["피드 좋아요"])
 
 
-# ──────────────────── 추가 ────────────────────
-
 @router.post("/posts/{post_id}/like", status_code=201)
 @inject
 async def add_like(
@@ -39,8 +37,6 @@ async def add_like(
     return LikeResponse(post_id=post_id, like_count=like_count)
 
 
-# ──────────────────── 취소 ────────────────────
-
 @router.delete("/posts/{post_id}/like")
 @inject
 async def remove_like(
@@ -61,8 +57,6 @@ async def remove_like(
 
     return LikeResponse(post_id=post_id, like_count=like_count)
 
-
-# ──────────────────── 좋아요 누른 유저 목록 ────────────────────
 
 @router.get("/posts/{post_id}/likes")
 @inject
@@ -87,8 +81,6 @@ async def get_liked_users(
         users=[_to_liked_user_item(u) for u in users],
     )
 
-
-# ──────────────────── 내부 유틸 ────────────────────
 
 def _to_liked_user_item(user: LikedUserData) -> LikedUserItem:
     return LikedUserItem(

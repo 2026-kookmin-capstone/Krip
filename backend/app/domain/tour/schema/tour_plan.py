@@ -38,9 +38,6 @@ def _validate_title(v: Optional[str]) -> Optional[str]:
     return stripped
 
 
-# ──────────────────── Request ────────────────────
-
-
 class CreatePlanItemInput(BaseModel):
     """플랜 생성 시 카드 1건 입력"""
     day_number: int = Field(..., ge=1, le=_MAX_TRAVEL_DAYS, description="여행 일차 (1-indexed)")
@@ -136,9 +133,6 @@ class UpdateItemRequest(BaseModel):
     @classmethod
     def _check_visit_time(cls, v: Optional[str]) -> Optional[str]:
         return _validate_visit_time(v)
-
-
-# ──────────────────── Response ────────────────────
 
 
 class PlanItemResponse(BaseModel):

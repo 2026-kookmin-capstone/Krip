@@ -11,8 +11,6 @@ from app.domain.chat.service.message import MessageService
 router = APIRouter(prefix="/messages", tags=["채팅 - 메시지 편집/삭제"])
 
 
-# ──────────────────── 편집 ────────────────────
-
 @router.patch("/{message_id}")
 @inject
 async def edit_message(
@@ -40,8 +38,6 @@ async def edit_message(
 
     return EditMessageResponse(**result)
 
-
-# ──────────────────── 삭제 (soft) ────────────────────
 
 @router.delete("/{message_id}", status_code=204)
 @inject

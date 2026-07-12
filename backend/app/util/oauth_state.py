@@ -56,8 +56,6 @@ def clear_state_cookie(response: Response) -> None:
     response.delete_cookie(STATE_COOKIE_NAME, path=_STATE_COOKIE_PATH)
 
 
-# ──────────────────── 앱 흐름 — Redis 단발성 nonce (쿠키 비의존) ────────────────────
-
 async def store_state_nonce() -> str:
     """앱 로그인 시작 — 단발성 nonce 를 생성해 Redis 에 TTL 로 저장하고 반환."""
     nonce = generate_state_nonce()

@@ -9,8 +9,6 @@ class TripmatePostImageRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    # ──────────────────── Create ────────────────────
-
     async def save(self, image: TripmatePostImage) -> TripmatePostImage:
         """이미지 단건 저장"""
         self.session.add(image)
@@ -22,8 +20,6 @@ class TripmatePostImageRepository:
         self.session.add_all(images)
         await self.session.flush()
         return images
-
-    # ──────────────────── Read ────────────────────
 
     async def find_by_post_id(self, post_id: str) -> list[TripmatePostImage]:
         """게시글의 이미지 목록 조회 (정렬 순서대로)"""
@@ -44,8 +40,6 @@ class TripmatePostImageRepository:
         )
         result = await self.session.execute(stmt)
         return list(result.scalars().all())
-
-    # ──────────────────── Delete ────────────────────
 
     async def delete(self, image: TripmatePostImage) -> None:
         """이미지 단건 삭제"""

@@ -36,8 +36,6 @@ class TourPlannerGraphOrchestrator:
         self._chain_manager.build_all_chains()
         self._build_graph()
 
-    # ──────────────────── 노드 ────────────────────
-
     async def _recommend_destinations(self, state: TourPlannerGraphState) -> Dict[str, Any]:
         """1차: 사용자 입력 기반 권역/좌표 추천"""
         chain = self._chain_manager.get_chain('recommend_destinations')
@@ -59,12 +57,10 @@ class TourPlannerGraphOrchestrator:
         return {"recommendations": result}
 
     async def _search_places(self, state: TourPlannerGraphState) -> Dict[str, Any]:
-        """2차: 1차 추천 좌표 기반 MongoDB 장소 검색"""
         recommendations = state["recommendations"]
         places_data: List[dict] = []
 
         for day_rec in recommendations.recommendations:
-            # 일자별 추천 좌표마다 병렬 검색
             search_tasks = [
                 self._place_repo.find_nearby(
                     lat=place.latitude,
@@ -75,7 +71,6 @@ class TourPlannerGraphOrchestrator:
             ]
             search_results = await asyncio.gather(*search_tasks)
 
-            # place_id 기준 중복 제거
             seen_ids: set[str] = set()
             merged: List[dict] = []
             for places in search_results:
@@ -85,7 +80,6 @@ class TourPlannerGraphOrchestrator:
                         seen_ids.add(pid)
                         merged.append(place)
 
-            # rating 기준 상위 N개만 유지
             merged.sort(key=lambda p: (p.get("rating") or 0, p.get("rating_count") or 0), reverse=True)
             merged = merged[:MAX_PLACES_PER_DAY]
 
@@ -103,7 +97,6 @@ class TourPlannerGraphOrchestrator:
         return {"places_data": places_data}
 
     async def _build_tour_plan(self, state: TourPlannerGraphState) -> Dict[str, Any]:
-        """3차: 실제 장소 데이터 기반 최종 여행 플랜 생성"""
         chain = self._chain_manager.get_chain('build_tour_plan')
 
         result = await chain.ainvoke({
@@ -124,18 +117,13 @@ class TourPlannerGraphOrchestrator:
 
         return {"tour_plan": result}
 
-    # ──────────────────── 그래프 빌드 ────────────────────
-
     def _build_graph(self) -> None:
-        """LangGraph를 구성합니다."""
         graph_builder = StateGraph(TourPlannerGraphState)
 
-        # 노드 추가
         graph_builder.add_node("RecommendDestinations", self._recommend_destinations)
         graph_builder.add_node("SearchPlaces", self._search_places)
         graph_builder.add_node("BuildTourPlan", self._build_tour_plan)
 
-        # 엣지 추가 (순차 실행)
         graph_builder.add_edge(START, "RecommendDestinations")
         graph_builder.add_edge("RecommendDestinations", "SearchPlaces")
         graph_builder.add_edge("SearchPlaces", "BuildTourPlan")
@@ -144,10 +132,7 @@ class TourPlannerGraphOrchestrator:
         self._graph = graph_builder.compile()
 
     def get_graph(self) -> Any:
-        """컴파일된 그래프를 반환합니다."""
         return self._graph
-
-    # ──────────────────── 실행 ────────────────────
 
     async def ainvoke(
         self,
@@ -157,11 +142,6 @@ class TourPlannerGraphOrchestrator:
         companion_type: str,
         schedule_density: str,
     ) -> TourPlanResult:
-        """Tour Planner 그래프를 실행합니다.
-
-        Returns:
-            TourPlanResult: 최종 여행 플랜 (Pydantic 모델)
-        """
         input_data: TourPlannerGraphState = {
             "travel_days": travel_days,
             "travel_style": travel_style,
@@ -182,11 +162,8 @@ class TourPlannerGraphOrchestrator:
 
         return response["tour_plan"]
 
-    # ──────────────────── 포맷팅 유틸 ────────────────────
-
     @staticmethod
     def _format_recommendations(recommendations) -> str:
-        """1차 추천 결과를 프롬프트용 문자열로 포맷팅합니다."""
         lines: List[str] = []
 
         for day_rec in recommendations.recommendations:
@@ -199,7 +176,6 @@ class TourPlannerGraphOrchestrator:
 
     @staticmethod
     def _format_places_data(places_data: List[dict]) -> str:
-        """MongoDB 검색 결과를 프롬프트용 문자열로 포맷팅합니다."""
         lines: List[str] = []
 
         for day_data in places_data:

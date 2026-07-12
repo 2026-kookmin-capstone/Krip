@@ -81,8 +81,6 @@ def _patch_repos(monkeypatch, feed_repo_mock, block_repo_mock, friendship_repo_m
     )
 
 
-# ──────────────────── 미존재 ────────────────────
-
 @pytest.mark.unit
 class TestMissingPost:
     async def test_raises_not_found(self, session, feed_repo_mock):
@@ -90,8 +88,6 @@ class TestMissingPost:
         with pytest.raises(FeedNotFoundError):
             await load_viewable_post(session, viewer_id="USER_a", post_id="FDP_missing")
 
-
-# ──────────────────── 본인 fast-path ────────────────────
 
 @pytest.mark.unit
 class TestOwnerFastPath:
@@ -110,8 +106,6 @@ class TestOwnerFastPath:
         friendship_repo_mock.find_between.assert_not_called()
 
 
-# ──────────────────── 차단 ────────────────────
-
 @pytest.mark.unit
 class TestBlocked:
     async def test_either_direction_block_raises(
@@ -125,8 +119,6 @@ class TestBlocked:
         # 차단 후 friend 조회 안 함 (불필요)
         friendship_repo_mock.find_between.assert_not_called()
 
-
-# ──────────────────── visibility 분기 (비owner) ────────────────────
 
 @pytest.mark.unit
 class TestVisibilityDecision:

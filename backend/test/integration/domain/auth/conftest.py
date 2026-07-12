@@ -148,8 +148,6 @@ def withdraw_service(
     )
 
 
-# ──────────────────── RDB 전용 service (mongo 의존 X) ────────────────────
-
 @pytest.fixture
 def signup_service(uow) -> SignupService:
     """OAuth 콜백 흐름 — RDB 만 터치. mongo 의존 없으므로 MONGODB_TEST_URL 미설정 환경에서도 동작."""

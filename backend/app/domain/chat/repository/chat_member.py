@@ -12,8 +12,6 @@ class ChatRoomMemberRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    # ──────────────────── Create ────────────────────
-
     async def save(self, member: ChatRoomMember) -> ChatRoomMember:
         self.session.add(member)
         await self.session.flush()
@@ -25,8 +23,6 @@ class ChatRoomMemberRepository:
         await self.session.flush()
         return members
 
-    # ──────────────────── Read (단건) ────────────────────
-
     async def find(
         self,
         chat_room_id: str,
@@ -34,8 +30,6 @@ class ChatRoomMemberRepository:
     ) -> Optional[ChatRoomMember]:
         """복합 PK 단건 조회 (is_left 여부 무관)."""
         return await self.session.get(ChatRoomMember, (chat_room_id, user_id))
-
-    # ──────────────────── Read (목록) ────────────────────
 
     async def find_active_member_users(self, chat_room_id: str) -> list[User]:
         """방의 활성 멤버 User + detail 을 joined_at ASC 로 (참여자 목록 노출용)."""
@@ -147,8 +141,6 @@ class ChatRoomMemberRepository:
             stmt = stmt.with_for_update(read=True)
         result = await self.session.execute(stmt)
         return {row[0]: int(row[1] or 0) for row in result.all()}
-
-    # ──────────────────── Update ────────────────────
 
     async def update(self, member: ChatRoomMember) -> ChatRoomMember:
         await self.session.flush()

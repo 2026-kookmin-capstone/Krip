@@ -60,10 +60,7 @@ class TestPostRangeValidation:
             ))
 
 
-# ──────────────────────────────────────────────────────────────────
-# 이미지 URL 개수/길이 상한 — 무제한이면 Mongo draft 팽창 + 목록 조회 폭증(DoS)
-# ──────────────────────────────────────────────────────────────────
-
+# 이미지 URL 상한은 Mongo draft 팽창과 목록 조회 폭증을 제한한다.
 @pytest.mark.unit
 @pytest.mark.parametrize("cls", [CreatePostRequest, UpdatePostRequest])
 class TestPostImageLimits:
@@ -93,10 +90,8 @@ class TestDraftImageLimits:
             SaveDraftRequest(image_urls=["x" * (_MAX_IMAGE_URL_LEN + 1)])
 
 
-# ──────────────────────────────────────────────────────────────────
 # 임시저장 enum 제약 — free-form str 이면 임의 값이 Mongo 에 저장·복원되고
 # 게시 시점에야 422 로 터진다. 입력 단계에서 enum 으로 걸러지는지 회귀 가드.
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestDraftEnumValidation:

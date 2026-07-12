@@ -16,8 +16,6 @@ class PlaceService:
         self.uow = uow
         self.place_repo = PlaceRepository()
 
-    # ──────────────────── 거리순 장소 조회 ────────────────────
-
     @transactional
     async def get_nearby_places(
         self,
@@ -36,8 +34,6 @@ class PlaceService:
         favorited = await self._get_favorited_set(places, user_id)
         return self._to_list_dto(places, favorited, has_more=has_more)
 
-    # ──────────────────── place_id 단건 조회 ────────────────────
-
     @transactional
     async def get_place_by_id(
         self,
@@ -50,8 +46,6 @@ class PlaceService:
             return None
         favorited = await self._get_favorited_set([raw], user_id)
         return self._to_dto(raw, favorited)
-
-    # ──────────────────── 키워드 검색 + 거리순 ────────────────────
 
     @transactional
     async def search_nearby_places(
@@ -73,8 +67,6 @@ class PlaceService:
         favorited = await self._get_favorited_set(places, user_id)
         return self._to_list_dto(places, favorited, has_more=has_more)
 
-    # ──────────────────── 즐겨찾기 배치 조회 ────────────────────
-
     async def _get_favorited_set(self, places: list[dict], user_id: str) -> set[str]:
         """유저의 즐겨찾기 place_id set 반환"""
         if not user_id or not places:
@@ -82,8 +74,6 @@ class PlaceService:
         fav_repo = FavoritePlaceRepository(self._session)
         place_ids = [p["place_id"] for p in places]
         return await fav_repo.find_favorited_place_ids(user_id, place_ids)
-
-    # ──────────────────── 내부 변환 유틸 ────────────────────
 
     def _to_list_dto(
         self, places: list[dict], favorited: set[str], *, has_more: bool,

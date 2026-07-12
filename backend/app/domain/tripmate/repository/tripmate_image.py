@@ -6,15 +6,11 @@ from app.domain.tripmate.model.tripmate_image import TripmateImage
 
 class TripmateImageRepository:
 
-    # ──────────────────── Create ────────────────────
-
     @measure_mongo_op("insert", "tripmate_image")
     async def save(self, image: TripmateImage) -> TripmateImage:
         """이미지 단건 저장"""
         await image.insert()
         return image
-
-    # ──────────────────── Read ────────────────────
 
     @measure_mongo_op("find", "tripmate_image")
     async def find_by_user_id(self, user_id: str) -> list[TripmateImage]:
@@ -37,8 +33,6 @@ class TripmateImageRepository:
             {"user_id": user_id, "image_url": {"$in": image_urls}}
         ).to_list()
         return {row.image_url for row in rows}
-
-    # ──────────────────── Delete ────────────────────
 
     @measure_mongo_op("delete", "tripmate_image")
     async def delete_by_image_id(self, image_id: str) -> None:

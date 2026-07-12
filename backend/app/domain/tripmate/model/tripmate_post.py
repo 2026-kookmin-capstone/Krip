@@ -28,20 +28,20 @@ class TripmatePost(Base):
     # async 환경에서 lazy-load (MissingGreenlet) 회피 표준 패턴.
     __mapper_args__ = {"eager_defaults": True}
 
-    post_id = Column(String(50), primary_key=True, default=generate_tripmate_post_id)  # 게시글 고유 ID
-    user_id = Column(String(50), ForeignKey("users.user_id", ondelete="CASCADE"), nullable=False)  # 작성자 ID
-    title = Column(String(100), nullable=False)  # 게시글 제목
-    content = Column(String(500), nullable=False)  # 게시글 내용 (10자 ~ 500자)
-    preferred_age_min = Column(Integer, nullable=False)  # 선호 나이 하한
-    preferred_age_max = Column(Integer, nullable=False)  # 선호 나이 상한
-    preferred_gender = Column(Enum(PreferredGender), nullable=False)  # 선호 성별 (male, female, any)
-    region = Column(String(100), nullable=False)  # 여행 지역
-    travel_start_date = Column(Date, nullable=False)  # 여행 시작일
-    travel_end_date = Column(Date, nullable=False)  # 여행 종료일
-    companion_type = Column(Enum(CompanionType), nullable=False)  # 선호 동행 타입 (friend, family, couple, sole)
-    is_displayed = Column(Boolean, nullable=False, default=True)  # 게시글 표시 여부
-    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())  # 게시글 작성일
-    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())  # 게시글 수정일
+    post_id = Column(String(50), primary_key=True, default=generate_tripmate_post_id)
+    user_id = Column(String(50), ForeignKey("users.user_id", ondelete="CASCADE"), nullable=False)
+    title = Column(String(100), nullable=False)
+    content = Column(String(500), nullable=False)
+    preferred_age_min = Column(Integer, nullable=False)
+    preferred_age_max = Column(Integer, nullable=False)
+    preferred_gender = Column(Enum(PreferredGender), nullable=False)
+    region = Column(String(100), nullable=False)
+    travel_start_date = Column(Date, nullable=False)
+    travel_end_date = Column(Date, nullable=False)
+    companion_type = Column(Enum(CompanionType), nullable=False)
+    is_displayed = Column(Boolean, nullable=False, default=True)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())
 
     user = relationship("User", backref="tripmate_posts")
     images = relationship("TripmatePostImage", back_populates="post", cascade="all, delete-orphan")

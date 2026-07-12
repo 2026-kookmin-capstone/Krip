@@ -38,16 +38,10 @@ router = APIRouter(tags=["health"])
 _PING_TIMEOUT_SECONDS = 2.0
 
 
-# ──────────────────── liveness ────────────────────
-
-
 @router.get("/health")
 async def liveness() -> JSONResponse:
     """프로세스 기동 여부만 확인한다. 모델 로드가 끝나지 않아도 200 을 반환한다."""
     return JSONResponse(status_code=200, content={"status": "ok"})
-
-
-# ──────────────────── deep canary (4-ping 병렬) ────────────────────
 
 
 async def _pg_ping(request: Request) -> bool:
@@ -154,9 +148,6 @@ async def deep_health(request: Request) -> JSONResponse:
 
     DEEP_CANARY_DURATION.labels(result="ok").observe(elapsed)
     return JSONResponse(status_code=200, content={"status": "ok", **body})
-
-
-# ──────────────────── readiness ────────────────────
 
 
 def _ai_models_ready() -> tuple[bool, dict[str, bool]]:

@@ -30,9 +30,6 @@ DEFAULT_LAT = 37.57594
 DEFAULT_LNG = 126.97688
 
 
-# ──────────────────── 장소 조회 ────────────────────
-
-
 @router.get("")
 @inject
 async def get_places(
@@ -92,9 +89,6 @@ async def get_places(
     )
 
 
-# ──────────────────── 내부 변환 유틸 ────────────────────
-
-
 def _to_place_response(place) -> PlaceResponse:
     """PlaceData DTO → PlaceResponse 스키마 변환"""
     return PlaceResponse(
@@ -137,9 +131,6 @@ def _to_place_response(place) -> PlaceResponse:
         distance=place.distance,
         is_favorite=place.is_favorite,
     )
-
-
-# ──────────────────── 즐겨찾기 ────────────────────
 
 
 @router.get("/favorites")
@@ -199,9 +190,6 @@ async def remove_favorite(
     return MessageResponse(message="즐겨찾기가 해제되었습니다.")
 
 
-# ──────────────────── 장소 단건 조회 ────────────────────
-
-
 @router.get("/{place_id}")
 @inject
 async def get_place(
@@ -222,9 +210,6 @@ async def get_place(
         raise HTTPException(status_code=404, detail="장소를 찾을 수 없습니다.")
 
     return _to_place_response(result)
-
-
-# ──────────────────── 내부 변환 유틸 (즐겨찾기) ────────────────────
 
 
 def _to_favorite_response(fav) -> FavoritePlaceResponse:

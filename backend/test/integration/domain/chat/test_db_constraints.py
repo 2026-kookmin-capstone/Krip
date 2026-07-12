@@ -16,10 +16,6 @@ from app.domain.chat.model.chat_room_member import ChatRoomMember
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────────────────────────────────────────────────────
-# UNIQUE: 1:1 방 쌍
-# ──────────────────────────────────────────────────────────────────
-
 class TestUniqueDirectPair:
     async def test_duplicate_pair_raises_integrity_error(
         self, session_factory, seed_users,
@@ -72,10 +68,6 @@ class TestUniqueDirectPair:
             assert len(rows) == 2
 
 
-# ──────────────────────────────────────────────────────────────────
-# CHECK: direct_user_* 형상 제약
-# ──────────────────────────────────────────────────────────────────
-
 class TestCheckConstraint:
     async def test_direct_requires_canonical_order(
         self, session_factory, seed_users,
@@ -125,7 +117,6 @@ class TestCheckConstraint:
         a, b, _ = await seed_users(3)
         low, high = sorted([a, b])
 
-        # 정상 생성
         async with session_factory() as s:
             s.add(
                 ChatRoom(
@@ -152,10 +143,6 @@ class TestCheckConstraint:
             assert row.direct_user_a_id is None
             assert row.direct_user_b_id == high
 
-
-# ──────────────────────────────────────────────────────────────────
-# ON DELETE SET NULL: 유저 탈퇴 시 방 유지
-# ──────────────────────────────────────────────────────────────────
 
 class TestOnDeleteSetNull:
     async def test_user_deletion_preserves_room(
@@ -189,10 +176,6 @@ class TestOnDeleteSetNull:
             assert row.direct_user_b_id == high
             assert row.creator_id is None  # creator 도 SET NULL
 
-
-# ──────────────────────────────────────────────────────────────────
-# GENERATED STORED: effective_last_at
-# ──────────────────────────────────────────────────────────────────
 
 class TestGeneratedColumn:
     async def test_effective_last_at_uses_created_at_when_no_message(
@@ -249,10 +232,6 @@ class TestGeneratedColumn:
             )).scalar_one()
             assert row.effective_last_at == ref_time
 
-
-# ──────────────────────────────────────────────────────────────────
-# chat_room_member 파셜 인덱스
-# ──────────────────────────────────────────────────────────────────
 
 class TestMemberActiveIndex:
     async def test_find_user_room_ids_excludes_is_left(

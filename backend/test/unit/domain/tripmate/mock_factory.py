@@ -28,8 +28,6 @@ def make_mock_session() -> MagicMock:
     return session
 
 
-# ──────────────────── Repository mocks ────────────────────
-
 class TripmatePostRepositoryMockFactory:
     @classmethod
     def create(cls) -> AsyncMock:
@@ -70,8 +68,6 @@ class UserDetailInformRepositoryMockFactory:
         return mock
 
 
-# ──────────────────── External service mocks ────────────────────
-
 def make_inbox_service_mock() -> AsyncMock:
     """인박스 fan-out 진입점 mock — 호출 검증용. 본인→본인 skip 가드는 service 가 처리."""
     mock = AsyncMock()
@@ -82,8 +78,6 @@ def make_inbox_service_mock() -> AsyncMock:
     mock.cascade_post_deleted.return_value = 0
     return mock
 
-
-# ──────────────────── 추가 Repository / 보조 mocks ────────────────────
 
 class TripmatePostImageRepositoryMockFactory:
     @classmethod

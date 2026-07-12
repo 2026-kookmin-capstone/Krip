@@ -19,14 +19,10 @@ class TripmatePostRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    # ──────────────────── Create ────────────────────
-
     async def save(self, post: TripmatePost) -> TripmatePost:
         self.session.add(post)
         await self.session.flush()
         return post
-
-    # ──────────────────── Read (단건) ────────────────────
 
     async def find_by_id(self, post_id: str) -> Optional[TripmatePost]:
         """게시글 단건 조회 (게시글 데이터만, 수정/삭제 시 검증용)"""
@@ -60,8 +56,6 @@ class TripmatePostRepository:
         post.like_count = row[1]
         post.is_liked = bool(row[2])
         return post
-
-    # ──────────────────── Read (목록 — 커서 기반 페이지네이션) ────────────────────
 
     async def find_all_displayed(self, cursor: Optional[str] = None, user_id: Optional[str] = None) -> list[TripmatePost]:
         """최신순 30개 조회, cursor(post_id) 이후부터 다음 페이지"""
@@ -102,8 +96,6 @@ class TripmatePostRepository:
         result = await self.session.execute(stmt)
         rows = result.unique().all()
         return self._attach_extras(rows)
-
-    # ──────────────────── Read (검색) ────────────────────
 
     async def search(
         self,
@@ -166,18 +158,12 @@ class TripmatePostRepository:
         rows = result.unique().all()
         return self._attach_extras(rows)
 
-    # ──────────────────── Update ────────────────────
-
     async def update(self, post: TripmatePost) -> TripmatePost:
         await self.session.flush()
         return post
 
-    # ──────────────────── Delete ────────────────────
-
     async def delete(self, post: TripmatePost) -> None:
         await self.session.delete(post)
-
-    # ──────────────────── 내부 유틸 ────────────────────
 
     @staticmethod
     def _attach_extras(rows) -> list[TripmatePost]:

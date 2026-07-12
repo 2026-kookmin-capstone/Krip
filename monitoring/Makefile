@@ -1,13 +1,4 @@
-# Krip 모니터링 스택 — Makefile
-#
-# 위치: monitoring/Makefile (자체 self-contained)
-# 호출 패턴:
-#   make -C monitoring up        # 어디서든 (-C 는 make 의 chdir 플래그)
-#   cd monitoring && make up     # 디렉토리 진입 후
-#
-# Path 처리: -f 첫 번째 파일이 ../docker-compose.yml 이라 docker-compose 의
-# project_directory = 프로젝트 루트로 결정. 양쪽 compose 의 모든 volume path 가
-# 프로젝트 루트 기준으로 정상 해결됨.
+# 첫 Compose 파일을 루트 파일로 두어 양쪽 상대 경로를 프로젝트 루트 기준으로 해석한다.
 
 COMPOSE_FILES = -f ../docker-compose.yml -f docker-compose.monitoring.yml
 COMPOSE = docker-compose --env-file .env $(COMPOSE_FILES)

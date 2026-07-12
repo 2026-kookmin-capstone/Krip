@@ -69,7 +69,6 @@ class FanoutService:
         self._user_subs: dict[str, set[WebSocket]] = defaultdict(set)
         self._local_ws_by_session: dict[str, WebSocket] = {}
 
-    # ──────────────────── 등록 / 해제 (로컬 전용) ────────────────────
     # WS 가 이 노드에 붙어있는 것이라 cross-node 전파 불필요.
 
     def register_session(self, ws: WebSocket) -> None:
@@ -125,8 +124,6 @@ class FanoutService:
             name=f"chat-ws-close-{getattr(ws, 'session_id', 'unknown')}",
         )
 
-    # ──────────────────── 동적 방 구독 (cross-node) ────────────────────
-
     async def subscribe_user_to_room(self, user_id: str, room_id: str) -> None:
         """유저의 모든 세션 (전 노드) 을 방 구독에 추가. invite / 방 생성 시 호출.
 
@@ -153,8 +150,6 @@ class FanoutService:
         await self._publish_broadcast(
             {"op": "unsubscribe", "user_id": user_id, "room_id": room_id},
         )
-
-    # ──────────────────── Fan-out (모드 분기) ────────────────────
 
     async def fan_out_to_room(self, room_id: str, payload: dict) -> None:
         """방의 활성 WS 전체에 브로드캐스트. `payload.sender_session_id` 가 있으면 발신자 skip."""
@@ -183,8 +178,6 @@ class FanoutService:
             await self._local_deliver_to_session(session_id, payload)
             return
         await self._publish_to_session_node(session_id, payload)
-
-    # ──────────────────── 디스패처 진입점 ────────────────────
 
     async def dispatch_envelope(self, envelope: dict) -> None:
         """`FanoutDispatcher` 가 Pub/Sub 메시지를 받아 호출.
@@ -229,8 +222,6 @@ class FanoutService:
         finally:
             request_id_var.reset(rid_token)
             traceparent_var.reset(tp_token)
-
-    # ──────────────────── 로컬 전달 ────────────────────
 
     def _local_subscribe_user_to_room(self, user_id: str, room_id: str) -> None:
         """이 노드의 user_id 세션들을 `_room_subs[room_id]` 에 추가. dead WS 는 가드로 skip."""
@@ -283,8 +274,6 @@ class FanoutService:
                 await ws.close(code=_CLOSE_SESSION_REVOKED)
             except Exception:
                 pass
-
-    # ──────────────────── publish 헬퍼 (node_channel) ────────────────────
 
     @staticmethod
     async def _publish_broadcast(envelope: dict) -> None:

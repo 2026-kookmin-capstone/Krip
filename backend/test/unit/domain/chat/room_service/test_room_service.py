@@ -11,10 +11,6 @@ from test.unit.domain.chat.room_service.model_factory import (
 )
 
 
-# ──────────────────────────────────────────────────────────────────
-# 입력 검증
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestInputValidation:
     async def test_raises_on_self(self, service):
@@ -27,10 +23,6 @@ class TestInputValidation:
         with pytest.raises(ValueError, match="존재하지 않는 유저"):
             await service.create_direct_room(me_id="U_A", peer_user_id="U_ghost")
 
-
-# ──────────────────────────────────────────────────────────────────
-# 차단 관계
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestBlockRelation:
@@ -56,10 +48,6 @@ class TestBlockRelation:
         with pytest.raises(ValueError, match="방을 만들 수 없습니다"):
             await service.create_direct_room(me_id="U_A", peer_user_id="U_B")
 
-
-# ──────────────────────────────────────────────────────────────────
-# idempotent 조회 / 생성
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestIdempotentCreation:
@@ -136,10 +124,6 @@ class TestIdempotentCreation:
             await service.create_direct_room(me_id="U_A", peer_user_id="U_B")
 
 
-# ──────────────────────────────────────────────────────────────────
-# 부수 효과 — fan-out / Redis
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestSideEffects:
     async def test_new_room_emits_room_joined_for_both_users(
@@ -186,10 +170,6 @@ class TestSideEffects:
         assert p.expire.call_count == 1                # members SET만 TTL; generation fence는 영속
         p.execute.assert_awaited_once()
 
-
-# ──────────────────────────────────────────────────────────────────
-# list_user_room_ids
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestListUserRoomIds:

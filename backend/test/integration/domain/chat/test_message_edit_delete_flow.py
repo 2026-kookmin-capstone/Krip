@@ -51,10 +51,6 @@ async def room_with_message(
     return room.chat_room_id, a, b, ack.message_id, ack.server_seq
 
 
-# ──────────────────────────────────────────────────────────────────
-# 편집
-# ──────────────────────────────────────────────────────────────────
-
 class TestEditMessageFlow:
     async def test_edit_updates_mongo_and_fans_out(
         self, room_with_message, message_service, mongo_db, chat_fanout_stub,
@@ -105,10 +101,6 @@ class TestEditMessageFlow:
                 new_content="zombie",
             )
 
-
-# ──────────────────────────────────────────────────────────────────
-# 삭제 (soft)
-# ──────────────────────────────────────────────────────────────────
 
 class TestDeleteMessageFlow:
     async def test_own_delete_masks_content_in_history(

@@ -113,8 +113,6 @@ async def fcm_messaging_stub(monkeypatch):
     })()
 
 
-# ──────────────────── 검증 helper ────────────────────
-
 async def fetch_user(session_factory, user_id: str) -> User | None:
     async with session_factory() as session:
         result = await session.execute(
@@ -135,8 +133,6 @@ async def fetch_tokens_by_user(session_factory, user_id: str) -> list[FcmToken]:
         )
         return list(result.scalars().all())
 
-
-# ──────────────────── 인박스 (Mongo) — opt-in fixtures ────────────────────
 
 @pytest_asyncio.fixture
 async def mongo_db():

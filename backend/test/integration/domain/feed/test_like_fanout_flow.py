@@ -29,8 +29,6 @@ from app.domain.notification.model.inbox import (
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── 정상 fan-out ────────────────────
-
 class TestAddLikeFanout:
     """`add_like` 가 RDB INSERT 후 Mongo 에 인박스 항목 적재."""
 
@@ -70,8 +68,6 @@ class TestAddLikeFanout:
         assert await coll.count_documents({}) == 0
 
 
-# ──────────────────── 멱등성 (partial unique 실 동작) ────────────────────
-
 class TestLikeIdempotency:
     """좋아요-취소-좋아요 race 시 인박스 무한 폭증 방지 — partial unique 실 동작."""
 
@@ -95,8 +91,6 @@ class TestLikeIdempotency:
         assert await coll.count_documents({"recipient_id": owner_id}) == 1
 
 
-# ──────────────────── remove_like — 인박스 보존 정책 ────────────────────
-
 class TestRemoveLikePreservesInboxItem:
     """좋아요 취소 정책 (Q1): 인박스 변경 없음 — 이벤트 사실의 기록."""
 
@@ -113,8 +107,6 @@ class TestRemoveLikePreservesInboxItem:
         coll = InboxItem.get_motor_collection()
         assert await coll.count_documents({"recipient_id": owner_id}) == 1
 
-
-# ──────────────────── helpers ────────────────────
 
 async def _find_other_user(uow, exclude_user_id: str) -> str:
     """seed_users 가 만든 두 번째 user 찾기 — `exclude_user_id` 외 첫 번째 active user."""

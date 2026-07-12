@@ -10,14 +10,10 @@ class FavoritePlaceRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    # ──────────────────── Create ────────────────────
-
     async def save(self, favorite: FavoritePlace) -> FavoritePlace:
         self.session.add(favorite)
         await self.session.flush()
         return favorite
-
-    # ──────────────────── Read ────────────────────
 
     async def find_by_user_and_place(self, user_id: str, place_id: str) -> Optional[FavoritePlace]:
         """특정 유저의 특정 장소 즐겨찾기 조회"""
@@ -71,8 +67,6 @@ class FavoritePlaceRepository:
         )
         result = await self.session.execute(stmt)
         return set(result.scalars().all())
-
-    # ──────────────────── Delete ────────────────────
 
     async def delete_by_user_and_place(self, user_id: str, place_id: str) -> None:
         """특정 즐겨찾기 삭제"""

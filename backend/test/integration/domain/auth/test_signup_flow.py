@@ -25,8 +25,6 @@ from app.domain.auth.model.user import User, UserStatus
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── NEW — 신규 가입 ────────────────────
-
 class TestNewSignup:
     """provider 매칭 user 없음 → 1 차 가입 (User row 생성). detail 검사 skip."""
 
@@ -47,8 +45,6 @@ class TestNewSignup:
             assert user.auth_provider_id == "brand_new@example.com"
             assert user.status == UserStatus.ACTIVE
 
-
-# ──────────────────── WITHDRAWAL_PENDING — INACTIVE 우회 ────────────────────
 
 class TestWithdrawalPending:
     """user.status==INACTIVE 면 detail 검사 skip 후 즉시 PENDING 반환.
@@ -76,8 +72,6 @@ class TestWithdrawalPending:
         assert result.user_id == user_id
 
 
-# ──────────────────── IN_PROGRESS — detail 미합성 ────────────────────
-
 class TestInProgress:
     """ACTIVE user 인데 detail 미합성 → 2 차 가입 필요. seed_users 가 detail 까지 만들므로
     inline 으로 detail 없는 user 만 합성."""
@@ -104,8 +98,6 @@ class TestInProgress:
         assert result.status == SignupStatus.IN_PROGRESS
         assert result.user_id == user_id
 
-
-# ──────────────────── COMPLETE — 정상 가입 완료 ────────────────────
 
 class TestComplete:
     """ACTIVE user + detail 모두 합성 → 정상 가입 완료."""

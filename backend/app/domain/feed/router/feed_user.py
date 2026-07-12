@@ -42,8 +42,6 @@ async def get_user_feed(
     return _to_list_response(result)
 
 
-# ──────────────────── 내부 유틸 ────────────────────
-
 def _to_response(post: FeedPostData) -> FeedPostResponse:
     return FeedPostResponse(
         post_id=post.post_id,

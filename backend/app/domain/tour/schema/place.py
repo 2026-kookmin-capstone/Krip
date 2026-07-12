@@ -3,9 +3,6 @@ from typing import List, Optional
 from pydantic import BaseModel, Field
 
 
-# ──────────────────── Response ────────────────────
-
-
 class PlaceLocationResponse(BaseModel):
     lat: float = Field(..., description="위도")
     lng: float = Field(..., description="경도")
@@ -62,9 +59,6 @@ class PlaceResponse(PlaceDetailResponse):
 class PlaceListResponse(BaseModel):
     places: List[PlaceResponse] = Field(..., description="장소 목록")
     next_cursor: Optional[str] = Field(None, description="다음 페이지 커서 (마지막 페이지면 null)")
-
-
-# ──────────────────── 즐겨찾기 ────────────────────
 
 
 class FavoritePlaceRequest(BaseModel):

@@ -16,10 +16,6 @@ from app.domain.friend.service.user_block import UserBlockService
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────────────────────────────────────────────────────
-# 입력 검증
-# ──────────────────────────────────────────────────────────────────
-
 class TestKeywordValidation:
     async def test_raises_value_error_on_empty_keyword(self, uow, seed_users):
         (a,) = await seed_users(1)
@@ -44,10 +40,6 @@ class TestKeywordValidation:
         item_ids = {item.user_id for item in result.items}
         assert b in item_ids
 
-
-# ──────────────────────────────────────────────────────────────────
-# 제외 조건
-# ──────────────────────────────────────────────────────────────────
 
 class TestExclusions:
     async def test_excludes_self(self, uow, seed_users):
@@ -144,10 +136,6 @@ class TestExclusions:
         assert b not in item_ids
 
 
-# ──────────────────────────────────────────────────────────────────
-# 매칭 (ILIKE 부분일치)
-# ──────────────────────────────────────────────────────────────────
-
 class TestMatching:
     async def test_matches_user_name_partial(self, uow, seed_users):
         """seed_users 는 user_name = user0/user1/user2 — "user1" 으로 b 만 매칭."""
@@ -190,10 +178,6 @@ class TestMatching:
         assert result.items == []
         assert result.next_cursor is None
 
-
-# ──────────────────────────────────────────────────────────────────
-# friendship 상태 매핑
-# ──────────────────────────────────────────────────────────────────
 
 class TestFriendshipMapping:
     async def test_pending_as_requester(self, uow, seed_users):
@@ -251,10 +235,6 @@ class TestFriendshipMapping:
         assert item.is_requester is None
 
 
-# ──────────────────────────────────────────────────────────────────
-# 프로필 / travel_styles
-# ──────────────────────────────────────────────────────────────────
-
 class TestProfileFields:
     async def test_includes_travel_styles(self, uow, seed_users, session_factory):
         a, b, _ = await seed_users(3)
@@ -289,10 +269,6 @@ class TestProfileFields:
         assert not hasattr(item, "age")
         assert not hasattr(item, "gender")
 
-
-# ──────────────────────────────────────────────────────────────────
-# 페이지네이션
-# ──────────────────────────────────────────────────────────────────
 
 class TestPagination:
     async def test_first_page_returns_30_with_cursor_then_partial_no_cursor(

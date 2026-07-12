@@ -21,8 +21,6 @@ class TripmatePostLikeService:
         self.uow = uow
         self.inbox_service = inbox_service
 
-    # ──────────────────── 좋아요 누른 유저 조회 ────────────────────
-
     @transactional
     async def get_liked_user_ids(self, post_id: str, user_id: str) -> List[str]:
         """
@@ -43,8 +41,6 @@ class TripmatePostLikeService:
             raise ValueError("존재하지 않는 게시글입니다.")
 
         return await like_repo.find_user_ids_by_post(post_id)
-
-    # ──────────────────── 좋아요 추가 ────────────────────
 
     async def add_like(self, user_id: str, post_id: str) -> int:
         """좋아요 추가 — 트랜잭션 내 INSERT 후, 트랜잭션 밖에서 인박스 fan-out (best-effort).
@@ -125,8 +121,6 @@ class TripmatePostLikeService:
             actor_profile_image_url=detail.profile_image_url if detail is not None else None,
             post_preview=post.title,
         )
-
-    # ──────────────────── 좋아요 삭제 ────────────────────
 
     @transactional
     async def remove_like(self, user_id: str, post_id: str) -> int:

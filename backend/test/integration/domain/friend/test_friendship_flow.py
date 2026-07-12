@@ -13,10 +13,6 @@ from app.domain.friend.service.friendship import FriendshipService
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────────────────────────────────────────────────────
-# send_request
-# ──────────────────────────────────────────────────────────────────
-
 class TestSendRequestFlow:
     async def test_creates_pending_row(self, uow, seed_users, session_factory):
         a, b, _ = await seed_users(3)
@@ -101,10 +97,6 @@ class TestSendRequestFlow:
             assert row.addressee_id == a
 
 
-# ──────────────────────────────────────────────────────────────────
-# accept / reject / cancel / remove
-# ──────────────────────────────────────────────────────────────────
-
 class TestAcceptFlow:
     async def test_status_becomes_accepted(self, uow, seed_users, session_factory):
         a, b, _ = await seed_users(3)
@@ -175,10 +167,6 @@ class TestRemoveFriendFlow:
         with pytest.raises(PermissionError, match="삭제 권한"):
             await service.remove_friend(friendship_id=created.friendship_id, user_id=c)
 
-
-# ──────────────────────────────────────────────────────────────────
-# 목록 조회
-# ──────────────────────────────────────────────────────────────────
 
 class TestListFlow:
     async def test_received_and_sent_partition(self, uow, seed_users):

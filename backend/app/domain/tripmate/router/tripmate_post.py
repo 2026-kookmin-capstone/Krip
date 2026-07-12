@@ -29,8 +29,6 @@ router = APIRouter(prefix="/posts", tags=["여행 메이트 게시글"])
 logger = get_logger("tripmate.post")
 
 
-# ──────────────────── 게시글 CRUD ────────────────────
-
 @router.post("", status_code=201)
 @inject
 async def create_post(
@@ -125,8 +123,6 @@ async def search_posts(
     )
 
 
-# ──────────────────── 임시저장 ────────────────────
-
 @router.put("/draft")
 @inject
 async def save_draft(
@@ -180,8 +176,6 @@ async def delete_draft(
     await draft_service.delete_draft(user_id)
     return MessageResponse(message="임시저장이 삭제되었습니다.")
 
-
-# ──────────────────── 게시글 단건/수정/삭제 ────────────────────
 
 @router.get("/{post_id}")
 @inject
@@ -255,8 +249,6 @@ async def delete_post(
     return MessageResponse(message="게시글이 삭제되었습니다.")
 
 
-# ──────────────────── Display 토글 ────────────────────
-
 @router.patch("/{post_id}/display")
 @inject
 async def toggle_display(
@@ -276,8 +268,6 @@ async def toggle_display(
 
     return ToggleDisplayResponse(post_id=post_id, is_displayed=is_displayed)
 
-
-# ──────────────────── 좋아요 ─────────────────────
 
 @router.post("/{post_id}/like", status_code=201)
 @inject
@@ -331,8 +321,6 @@ async def get_liked_users(
 
     return LikedUsersResponse(post_id=post_id, user_ids=user_ids)
 
-
-# ──────────────────── 내부 유틸 ────────────────────
 
 def _to_post_response(dto) -> PostDetailResponse:
     return PostDetailResponse(

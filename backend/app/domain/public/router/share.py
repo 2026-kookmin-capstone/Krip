@@ -11,9 +11,6 @@ from app.util.share_token import ShareTokenError
 router = APIRouter(prefix="/share", tags=["공개 공유"])
 
 
-# ──────────────────── 공유 토큰으로 플랜 조회 (인증 없음) ────────────────────
-
-
 @router.get("/plan/{share_token}")
 @inject
 async def get_shared_plan(
@@ -34,9 +31,6 @@ async def get_shared_plan(
         raise HTTPException(status_code=404, detail=str(e))
 
     return _to_public_plan_response(result)
-
-
-# ──────────────────── 내부 변환 유틸 ────────────────────
 
 
 def _to_public_plan_response(plan) -> PublicPlanResponse:

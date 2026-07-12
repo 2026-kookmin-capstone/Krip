@@ -36,8 +36,6 @@ from app.domain.notification.service.inbox import InboxService
 logger = get_logger("auth.withdraw_purge")
 
 
-# ──────────────────── 튜닝 상수 ────────────────────
-
 KST = timezone(timedelta(hours=9))
 
 # 발화 시각 — KST 새벽 4시.
@@ -54,8 +52,6 @@ PURGE_PER_USER_TIMEOUT_SEC = 30 * 60
 PURGE_SHUTDOWN_GRACE_SEC = 30.0
 
 
-# ──────────────────── 모듈 상태 ────────────────────
-
 _session_factory: Optional[async_sessionmaker[AsyncSession]] = None
 _purge_task: Optional[asyncio.Task] = None
 _stop_event: Optional[asyncio.Event] = None
@@ -70,8 +66,6 @@ def _require_factory() -> async_sessionmaker[AsyncSession]:
     return _session_factory
 
 
-# ──────────────────── 스케줄 계산 ────────────────────
-
 def _seconds_until_next_fire(now_utc: datetime) -> float:
     """현재 시각에서 다음 KST 04:00 까지의 초. 이미 지났다면 다음날 04:00."""
     now_kst = now_utc.astimezone(KST)
@@ -82,8 +76,6 @@ def _seconds_until_next_fire(now_utc: datetime) -> float:
         next_fire_kst += timedelta(days=1)
     return (next_fire_kst - now_kst).total_seconds()
 
-
-# ──────────────────── 핵심 로직 ────────────────────
 
 async def purge_due_withdrawals_once() -> int:
     """`scheduled_purge_at <= now` 인 모든 탈퇴 요청을 1 명씩 영구 삭제.
@@ -143,8 +135,6 @@ async def purge_due_withdrawals_once() -> int:
     return len(due)
 
 
-# ──────────────────── 주기 루프 ────────────────────
-
 async def _purge_loop(stop_event: asyncio.Event) -> None:
     """주기 루프 — stop_event 가 set 될 때까지 무한 반복.
 
@@ -183,8 +173,6 @@ async def _purge_loop(stop_event: asyncio.Event) -> None:
 
     logger.info("withdraw purge 루프 종료")
 
-
-# ──────────────────── 스케줄러 훅 ────────────────────
 
 def start_withdraw_purge_scheduler(
     session_factory: async_sessionmaker[AsyncSession],

@@ -20,10 +20,6 @@ from test.unit.domain.tripmate.tripmate_image_service.model_factory import (
 )
 
 
-# ──────────────────────────────────────────────────────────────────
-# upload_image
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestUploadImage:
     """Tests for TripmateImageService.upload_image."""
@@ -48,10 +44,6 @@ class TestUploadImage:
         assert saved.image_url == "https://img/uploaded.jpg"
         assert result.image_url == "https://img/uploaded.jpg"
 
-
-# ──────────────────────────────────────────────────────────────────
-# upload_images — bulk
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestUploadImages:
@@ -111,10 +103,6 @@ class TestUploadImages:
         assert image_repo_mock.delete_by_image_id.await_count == 2
 
 
-# ──────────────────────────────────────────────────────────────────
-# get_images
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestGetImages:
     """Tests for TripmateImageService.get_images."""
@@ -128,10 +116,6 @@ class TestGetImages:
         assert result == images
         image_repo_mock.find_by_user_id.assert_awaited_once_with("USER_a")
 
-
-# ──────────────────────────────────────────────────────────────────
-# delete_image — 권한 + Storage + Mongo
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestDeleteImage:
@@ -175,10 +159,6 @@ class TestDeleteImage:
         storage_mock.delete.assert_awaited_once_with("https://img/x.jpg")
         image_repo_mock.delete_by_image_id.assert_awaited_once_with("IMG_x")
 
-
-# ──────────────────────────────────────────────────────────────────
-# cleanup_orphaned_images — post / draft 참조 합집합으로 고아 식별
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestCleanupOrphanedImages:

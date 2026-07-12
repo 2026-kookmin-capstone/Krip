@@ -8,8 +8,6 @@ class FriendSearchHistoryService:
     def __init__(self):
         self.search_repo = FriendSearchHistoryRepository()
 
-    # ──────────────────── 검색어 저장 ────────────────────
-
     async def save_search(self, user_id: str, search_name: str) -> FriendSearchHistory:
         """
         검색어 저장
@@ -19,23 +17,17 @@ class FriendSearchHistoryService:
         """
         return await self.search_repo.save(user_id=user_id, search_name=search_name)
 
-    # ──────────────────── 검색 기록 조회 ────────────────────
-
     async def get_search_histories(self, user_id: str) -> List[FriendSearchHistory]:
         """
         유저의 검색 기록 조회 (최신순, 최대 10개)
         """
         return await self.search_repo.find_by_user_id(user_id)
 
-    # ──────────────────── 검색어 단건 삭제 ────────────────────
-
     async def delete_search(self, user_id: str, search_name: str) -> None:
         """
         특정 검색어 1개 삭제
         """
         await self.search_repo.delete_one(user_id=user_id, search_name=search_name)
-
-    # ──────────────────── 검색 기록 전체 삭제 ────────────────────
 
     async def delete_all_searches(self, user_id: str) -> None:
         """

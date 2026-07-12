@@ -38,7 +38,6 @@ dependencies = [
     "greenlet>=3.3.2",
 ]
 
-# =============================================================================
 # Ruff — lint 전용 (ruff format 은 쓰지 않는다: 수동 줄바꿈/코드 형태를 보존하기 위해)
 #   - I  : import 오름차순 정렬
 #   - F  : 미사용 import/심볼 검출
@@ -47,7 +46,6 @@ dependencies = [
 #   - line-length 는 import 줄바꿈 판단에만 영향(포매터 미사용).
 #   - target-version 은 런타임(.python-version=3.11.11)에 맞춘 py311.
 #     팀 표준은 py312 이나, 이 프로젝트는 3.11 고정이라 일치시킴(3.12 전환은 별도 마이그레이션).
-# =============================================================================
 [tool.ruff]
 target-version = "py311"
 line-length = 120
@@ -82,9 +80,7 @@ filterwarnings = [
     "ignore::PendingDeprecationWarning",
 ]
 
-# =============================================================================
 # Coverage Configuration
-# =============================================================================
 [tool.coverage.run]
 source = ["app"]
 branch = true

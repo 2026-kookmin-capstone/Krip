@@ -20,10 +20,6 @@ from app.middleware.auth import LoginAuthMiddleware
 pytestmark = pytest.mark.unit
 
 
-# ──────────────────────────────────────────────────────────────────
-# 토큰 헬퍼
-# ──────────────────────────────────────────────────────────────────
-
 def _make_token(
     user_id: str | None = "USER_a",
     expires_in: timedelta = timedelta(hours=1),
@@ -42,10 +38,6 @@ def _make_token(
         algorithm=algorithm or settings.USER_LOGIN_JWT_ALGORITHM,
     )
 
-
-# ──────────────────────────────────────────────────────────────────
-# 최소 ASGI 앱 — 미들웨어만 부착하고 보호 라우트 하나만 둔다
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.fixture
 def client():
@@ -68,10 +60,6 @@ def client():
     with TestClient(app) as c:
         yield c
 
-
-# ──────────────────────────────────────────────────────────────────
-# 성공 경로
-# ──────────────────────────────────────────────────────────────────
 
 class TestTokenSources:
     def test_accepts_x_auth_token_header(self, client):
@@ -103,9 +91,7 @@ class TestTokenSources:
         assert resp.json() == {"user_id": "USER_from_header"}
 
 
-# ──────────────────────────────────────────────────────────────────
 # 실패 분기 — login_missing / login_no_user_id / login_expired / login_invalid
-# ──────────────────────────────────────────────────────────────────
 
 class TestFailureBranches:
     def test_returns_401_when_no_token_anywhere(self, client):
@@ -144,10 +130,6 @@ class TestFailureBranches:
         assert resp.status_code == 401
         assert "유효하지 않은" in resp.json()["detail"]
 
-
-# ──────────────────────────────────────────────────────────────────
-# 인증 우회 경로 — EXCLUDE_PATHS / EXCLUDE_PREFIXES
-# ──────────────────────────────────────────────────────────────────
 
 class TestExcludedPaths:
     def test_health_bypasses_auth(self, client):

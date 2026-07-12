@@ -12,10 +12,6 @@ from app.core.chat.redis_key import (
 )
 
 
-# ──────────────────────────────────────────────────────────────────
-# create_session
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestCreateSession:
     async def test_issues_ws_prefixed_session_id(self, service):
@@ -176,10 +172,6 @@ class TestCreateSession:
         assert alive is False
 
 
-# ──────────────────────────────────────────────────────────────────
-# heartbeat
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestHeartbeat:
     async def test_extends_three_keys_atomically(
@@ -195,10 +187,6 @@ class TestHeartbeat:
         ]
         assert heartbeat_script.call_args.kwargs["client"] is redis_mock
 
-
-# ──────────────────────────────────────────────────────────────────
-# session_exists / get_user_id / update_token_jti
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestSimpleAccessors:
@@ -226,10 +214,6 @@ class TestSimpleAccessors:
         assert args == (sess_key("WS_1"), "token_jti", "new_jti")
 
 
-# ──────────────────────────────────────────────────────────────────
-# terminate_session
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestTerminate:
     async def test_deletes_sess_ws_route_and_zrem_sessions(self, service, redis_mock):
@@ -246,10 +230,6 @@ class TestTerminate:
         # zrem 은 sessions 에서 session_id 제거
         p.zrem.assert_called_once_with(sessions_key("U_A"), "WS_1")
 
-
-# ──────────────────────────────────────────────────────────────────
-# revoke_all_sessions — 회원 탈퇴 등 전수 강제 종료
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestRevokeAllSessions:

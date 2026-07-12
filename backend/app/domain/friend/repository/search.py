@@ -18,8 +18,6 @@ class FriendSearchRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    # ──────────────────── Read (검색 — 커서 페이지네이션) ────────────────────
-
     async def search_active_users(
         self,
         viewer_id: str,

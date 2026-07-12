@@ -22,8 +22,6 @@ from app.domain.friend.service.friend_detail import UserNotFoundError
 class TestGetFriendDetail:
     """Tests for FriendDetailService.get_friend_detail."""
 
-    # ──────────────────── 에러 경로 ────────────────────
-
     async def test_raises_user_not_found_when_peer_missing(self, service, user_repo_mock):
         user_repo_mock.find_by_id_with_profile.return_value = None
 
@@ -40,8 +38,6 @@ class TestGetFriendDetail:
 
         # UserNotFoundError 와 구분되어야 함 (404 가 아닌 400 으로 매핑)
         assert not isinstance(exc_info.value, UserNotFoundError)
-
-    # ──────────────────── 관계 조합 ────────────────────
 
     async def test_returns_profile_with_no_relationship_no_block(
         self, service, user_repo_mock, friendship_repo_mock, block_repo_mock,
@@ -155,8 +151,6 @@ class TestGetFriendDetail:
 
         with pytest.raises(UserNotFoundError, match="존재하지 않는 유저"):
             await service.get_friend_detail(viewer_id="USER_a", peer_id="USER_b")
-
-    # ──────────────────── 자기 자신 조회 (허용) ────────────────────
 
     async def test_allows_self_query_with_null_relationship(
         self, service, user_repo_mock, friendship_repo_mock, block_repo_mock,

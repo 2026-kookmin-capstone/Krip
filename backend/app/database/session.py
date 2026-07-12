@@ -8,8 +8,6 @@ from app.core.context import db_route_var
 from app.core.instrumentation import db_transaction_inc
 
 
-# ──────────────────── RDB ────────────────────
-
 # 트랜잭션 전파용 — `@transactional` 이 nested 호출 시 같은 session 재사용 여부 판정.
 _current_session: ContextVar = ContextVar('_current_session', default=None)
 
@@ -67,8 +65,6 @@ def transactional(fn):
 Base = declarative_base()
 
 
-# ──────────────────── NoSQL ────────────────────
-
 from typing import Optional
 
 from beanie import init_beanie
@@ -86,17 +82,8 @@ from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
 from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHistory
 
 
-# Mongo socket-level timeout — Mongo hang 시 코루틴 영구 stuck 차단.
-#
-# Motor 기본값 (socketTimeoutMS=None) 은 무한 대기 → primary step-down / disk sync /
-# 네트워크 partition 시 await 영원히 정지. measure_mongo_op 의 try/finally 도 도달 못 해
-# 메트릭 침묵 (장애인데 안 보이는 무관측 상태) → 명시 cap 필수.
-#
-# socketTimeoutMS 10s — aggregate / 복잡한 find 까지 여유. 그보다 긴 query 는 호출처에서
-# maxTimeMS 로 별도 제어.
-# serverSelectionTimeoutMS 5s — 기본 30s 는 failover 중 사용자 30초 hang. 정상 failover 는
-# ms 단위라 5s 면 빠른 fail + retry.
-# health.py 의 _mongo_ping (asyncio.wait_for 2s) 가 항상 먼저 발화 — 두 timeout 이 layer 별로 동작.
+# Motor 기본값의 무한 socket 대기와 30초 server selection 대기를 제한한다.
+# 장기 query는 호출처의 maxTimeMS로 별도 제어한다.
 _MONGO_SERVER_SELECTION_TIMEOUT_MS = 5000
 _MONGO_CONNECT_TIMEOUT_MS = 5000
 _MONGO_SOCKET_TIMEOUT_MS = 10000
@@ -133,10 +120,9 @@ class MongoDB:
             ]
         )
 
-        # 채팅 메시지는 motor 네이티브 — beanie document 대신 인덱스만 초기화.
+        # 채팅 메시지는 Motor native라 인덱스만 초기화한다.
         await create_chat_message_indexes(self.database)
 
-        # 검색기록 (user_id, search_name) unique 인덱스 — dedup 후 생성 (startup-safe).
         await _ensure_search_history_unique_indexes()
 
     async def disconnect(self):
@@ -162,7 +148,6 @@ async def _ensure_search_history_unique_indexes() -> None:
     for model in (FriendSearchHistory, TourSearchHistory, TripmateSearchHistory):
         collection = model.get_motor_collection()
 
-        # 존재 게이트 — 인덱스가 이미 있으면 dedup 전체 스캔을 생략.
         existing = await collection.index_information()
         if _SEARCH_HISTORY_UNIQUE_INDEX in existing:
             continue
@@ -173,9 +158,9 @@ async def _ensure_search_history_unique_indexes() -> None:
                 "_id": {"user_id": "$user_id", "search_name": "$search_name"},
                 "ids": {"$push": "$_id"},
             }},
-            {"$match": {"ids.1": {"$exists": True}}},  # 2건 이상인 그룹만
+            {"$match": {"ids.1": {"$exists": True}}},
         ]
-        # allowDiskUse — 최초 부팅 dedup 이 100MB in-memory 한계를 넘겨도 실패하지 않도록 안전망.
+        # 최초 dedup이 Mongo의 in-memory 한계를 넘을 수 있다.
         async for group in collection.aggregate(pipeline, allowDiskUse=True):
             await collection.delete_many({"_id": {"$in": group["ids"][1:]}})
         await collection.create_index(

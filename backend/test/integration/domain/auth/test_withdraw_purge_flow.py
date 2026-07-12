@@ -30,8 +30,6 @@ from app.domain.notification.model.inbox import (
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── 정상 purge — INACTIVE → DELETED ────────────────────
-
 class TestPurgeDeletedOutcome:
     """status=INACTIVE 인 user 의 영구 삭제 — RDB hard delete + Mongo 정리 + 인박스 cascade."""
 
@@ -107,8 +105,6 @@ class TestPurgeDeletedOutcome:
         assert await coll.count_documents({"user_id": user_id}) == 0
 
 
-# ──────────────────── STALE_DOC outcome — cancel 복구 ────────────────────
-
 class TestPurgeStaleDocOutcome:
     """status != INACTIVE (cancel 복구 또는 dual-write 잔존) → 외부 리소스 보존, doc 만 청소.
 
@@ -163,8 +159,6 @@ class TestPurgeStaleDocOutcome:
         assert await wr_coll.count_documents({"user_id": user_id}) == 0
 
 
-# ──────────────────── NO_USER outcome — idempotent 재시도 ────────────────────
-
 class TestPurgeNoUserOutcome:
     """RDB 에 user 없음 (이전 사이클 외부 정리 잔존) → 외부 정리만 idempotent 진행."""
 
@@ -182,8 +176,6 @@ class TestPurgeNoUserOutcome:
         storage_mock.delete_by_prefix.assert_awaited_once_with("USER_ghost")
         redis_cache_mock.assert_awaited_once_with("USER_ghost")
 
-
-# ──────────────────── helpers ────────────────────
 
 async def _set_inactive(session_factory, user_id: str) -> None:
     """seed_users 가 만든 ACTIVE user 를 INACTIVE 로 전환."""

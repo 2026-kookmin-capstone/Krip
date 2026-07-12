@@ -47,10 +47,6 @@ class _CallNextSpy:
         return Response(status_code=200)
 
 
-# ──────────────────────────────────────────────────────────────────
-# BearerTokenMiddleware — non-ASCII 토큰이 500 이 아닌 401
-# ──────────────────────────────────────────────────────────────────
-
 class TestBearerTokenMiddleware:
     def _mw(self) -> BearerTokenMiddleware:
         return BearerTokenMiddleware(app=lambda *a, **k: None)
@@ -94,10 +90,6 @@ class TestBearerTokenMiddleware:
         assert resp.status_code == 200
         assert spy.called is True
 
-
-# ──────────────────────────────────────────────────────────────────
-# RegisterCheckMiddleware — SUSPENDED 유저 차단
-# ──────────────────────────────────────────────────────────────────
 
 class _FakeUow:
     async def __aenter__(self):

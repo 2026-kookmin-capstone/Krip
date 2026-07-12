@@ -1,26 +1,6 @@
-"""
-Object Storage (Naver Cloud S3 호환)
+"""NCloud S3-compatible storage.
 
-경로 구조:
-  uploads/tmp/{uuid}.{ext}            - 임시 (24시간 후 자동 삭제)
-  uploads/perm/{prefix}/{uuid}.{ext}  - 영구 (prefix는 호출 측에서 결정)
-
-사용법:
-  from app.core.object_storage import get_object_storage 
-
-  object_storage = get_object_storage()
-
-  # 임시 업로드
-  url = await object_storage.upload_temp(file, "photo.jpg", "image/jpeg")
-
-  # 영구 저장소로 이동 (prefix는 호출 측에서 생성)
-  perm_url = await object_storage.move_to_perm(temp_url=url, prefix="user123/posts/post456")
-
-  # 직접 영구 업로드
-  url = await object_storage.upload_perm(file, "photo.jpg", "image/jpeg", prefix="user123/posts/post456")
-
-  # 삭제
-  await object_storage.delete(url)
+Temporary keys expire after 24 hours; permanent key prefixes are owned by callers.
 """
 import asyncio
 import uuid
@@ -67,8 +47,6 @@ class ObjectStorage:
             cls._instance = cls()
         return cls._instance
 
-    # ──────────────────── 업로드 ────────────────────
-
     async def upload_temp(self, file: BinaryIO, file_name: str, content_type: str) -> str:
         """임시 경로에 업로드 → URL 반환"""
         key = self._make_key(file_name, _PREFIX_TMP)
@@ -99,8 +77,6 @@ class ObjectStorage:
             file = io.BytesIO(file)
         return await asyncio.to_thread(self._upload, file, key, content_type)
 
-    # ──────────────────── 이동 (tmp → perm) ────────────────────
-
     async def move_to_perm(self, temp_url: str, *, prefix: str) -> str:
         """임시 파일 1개를 영구 경로로 이동 → 새 URL 반환"""
         src_key = self._url_to_key(temp_url)
@@ -118,8 +94,6 @@ class ObjectStorage:
         return list(await asyncio.gather(
             *(self.move_to_perm(url, prefix=prefix) for url in temp_urls)
         ))
-
-    # ──────────────────── 삭제 ────────────────────
 
     async def delete(self, file_url: str) -> None:
         """URL로 파일 삭제"""
@@ -149,13 +123,9 @@ class ObjectStorage:
         logger.info("prefix 삭제 완료: {} ({:d}건)", full_prefix, deleted)
         return deleted
 
-    # ──────────────────── 조회 ────────────────────
-
     def get_url(self, file_key: str) -> str:
         """파일 키 → URL"""
         return self._key_to_url(file_key)
-
-    # ──────────────────── 내부 헬퍼 ────────────────────
 
     def _make_key(self, file_name: str, prefix: str) -> str:
         ext = self._sanitize_ext(file_name)

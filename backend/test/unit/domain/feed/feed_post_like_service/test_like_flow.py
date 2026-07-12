@@ -18,8 +18,6 @@ from app.domain.feed.service.exception import FeedNotFoundError
 from test.unit.domain.feed.mock_factory import make_feed_post_like_mock
 
 
-# ──────────────────── add ────────────────────
-
 @pytest.mark.unit
 class TestAddLike:
     async def test_success_returns_new_count(self, service, like_repo_mock):
@@ -55,8 +53,6 @@ class TestAddLike:
         like_repo_mock.count_by_post.assert_not_called()
 
 
-# ──────────────────── remove ────────────────────
-
 @pytest.mark.unit
 class TestRemoveLike:
     async def test_success_returns_new_count(self, service, like_repo_mock):
@@ -73,8 +69,6 @@ class TestRemoveLike:
             await service.remove_like(user_id="USER_v", post_id="FDP_x")
         like_repo_mock.delete_by_user_and_post.assert_not_called()
 
-
-# ──────────────────── list ────────────────────
 
 @pytest.mark.unit
 class TestGetLikedUsers:
@@ -142,8 +136,6 @@ class TestGetLikedUsers:
         await service.get_liked_users(viewer_id="USER_v", post_id="FDP_x")
         like_repo_mock.find_with_user_by_post.assert_awaited_once_with("FDP_x")
 
-
-# ──────────────────── 가시성 propagate ────────────────────
 
 @pytest.mark.unit
 class TestVisibilityPropagation:

@@ -17,8 +17,6 @@ class FriendshipService:
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
 
-    # ──────────────────── 친구 요청 ────────────────────
-
     @transactional
     async def send_request(self, requester_id: str, addressee_id: str) -> FriendshipData:
         """
@@ -130,8 +128,6 @@ class FriendshipService:
             raise ValueError(not_found_msg)
         return friendship
 
-    # ──────────────────── 친구 요청 수락 ────────────────────
-
     @transactional
     async def accept_request(self, friendship_id: str, user_id: str) -> None:
         """
@@ -165,8 +161,6 @@ class FriendshipService:
         friendship.status = FriendshipStatus.ACCEPTED
         await friendship_repo.update(friendship)
 
-    # ──────────────────── 친구 요청 거절 ────────────────────
-
     @transactional
     async def reject_request(self, friendship_id: str, user_id: str) -> None:
         """
@@ -194,8 +188,6 @@ class FriendshipService:
         friendship.status = FriendshipStatus.REJECTED
         await friendship_repo.update(friendship)
 
-    # ──────────────────── 친구 요청 취소 (보낸 쪽) ────────────────────
-
     @transactional
     async def cancel_request(self, friendship_id: str, user_id: str) -> None:
         """
@@ -219,8 +211,6 @@ class FriendshipService:
 
         await friendship_repo.delete(friendship)
 
-    # ──────────────────── 친구 삭제 ────────────────────
-
     @transactional
     async def remove_friend(self, friendship_id: str, user_id: str) -> None:
         """
@@ -240,8 +230,6 @@ class FriendshipService:
             raise ValueError("친구 상태에서만 삭제할 수 있습니다.")
 
         await friendship_repo.delete(friendship)
-
-    # ──────────────────── 목록 조회 ────────────────────
 
     @transactional
     async def get_friends(self, user_id: str, cursor: Optional[str] = None) -> FriendshipListData:
@@ -263,8 +251,6 @@ class FriendshipService:
         friendship_repo = FriendshipRepository(self._session)
         items = await friendship_repo.find_sent_requests(user_id, cursor)
         return self._to_list_dto(items, viewer_id=user_id)
-
-    # ──────────────────── 내부 변환 유틸 ────────────────────
 
     @staticmethod
     def _peer_of(friendship: Friendship, viewer_id: str) -> User:

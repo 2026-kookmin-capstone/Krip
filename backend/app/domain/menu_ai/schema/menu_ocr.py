@@ -3,8 +3,6 @@ from typing import List
 from pydantic import BaseModel, Field
 
 
-# ──────────────────── Response ────────────────────
-
 class MenuResponse(BaseModel):
     original_name: str = Field(..., description="원본 한국어 메뉴명 (오타 포함 그대로)")
     english_name: str = Field(..., description="영어 번역 메뉴명")

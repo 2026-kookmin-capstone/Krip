@@ -61,8 +61,6 @@ def feed_post_like_service(uow, inbox_service) -> FeedPostLikeService:
     return FeedPostLikeService(uow=uow, inbox_service=inbox_service)
 
 
-# ──────────────────── feed_post_service (S3 + Pillow mock) ────────────────────
-
 @pytest.fixture
 def feed_storage_mock(monkeypatch):
     """S3 stub — `upload_to_key` 가 prefix/filename 합성한 URL 반환. delete_by_prefix 추적."""

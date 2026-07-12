@@ -11,10 +11,6 @@ import pytest
 from app.core.chat.redis_key import read_sync_key, unread_key
 
 
-# ──────────────────────────────────────────────────────────────────
-# revoke_all_sessions — 탈퇴 요청 commit 후 호출
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestRevokeAllSessions:
     """Tests for UserPurgeCacheService.revoke_all_sessions."""
@@ -41,10 +37,6 @@ class TestRevokeAllSessions:
         # 예외 없이 정상 반환
         await service.revoke_all_sessions("USER_a")
 
-
-# ──────────────────────────────────────────────────────────────────
-# cleanup_user_data — 영구 삭제 시점 (purge worker) 호출
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestCleanupUserData:

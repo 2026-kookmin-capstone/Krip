@@ -42,8 +42,6 @@ async def get_popup(
     return _to_response(popup)
 
 
-# ──────────────────── 내부 유틸 ────────────────────
-
 def _to_response(popup: FeedPopupData) -> FeedPopupResponse:
     return FeedPopupResponse(
         user_id=popup.user_id,

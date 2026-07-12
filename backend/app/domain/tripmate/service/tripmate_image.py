@@ -21,8 +21,6 @@ class TripmateImageService:
         self.image_repo = TripmateImageRepository()
         self.storage = get_object_storage()
 
-    # ──────────────────── 이미지 업로드 ────────────────────
-
     async def upload_image(
         self,
         user_id: str,
@@ -98,15 +96,11 @@ class TripmateImageService:
             raise errors[0]
         return list(results)
 
-    # ──────────────────── 이미지 조회 ────────────────────
-
     async def get_images(self, user_id: str) -> List[TripmateImage]:
         """
         유저의 전체 이미지 목록 조회 (최신순)
         """
         return await self.image_repo.find_by_user_id(user_id)
-
-    # ──────────────────── 이미지 삭제 ────────────────────
 
     async def delete_image(self, user_id: str, image_id: str) -> None:
         """
@@ -126,8 +120,6 @@ class TripmateImageService:
         await self.image_repo.delete_by_image_id(image_id)
         logger.info("이미지 삭제 완료 (user_id={}, image_id={})", user_id, image_id)
 
-    # ──────────────────── 고아 이미지 정리 ────────────────────
-
     @transactional
     async def cleanup_orphaned_images(self, user_id: str) -> int:
         """
@@ -140,30 +132,24 @@ class TripmateImageService:
           - tripmate_post_image (PostgreSQL) : 발행된 게시글 첨부 이미지
           - tripmate_post_draft (MongoDB)    : 임시저장 첨부 이미지 URL
         """
-        # 1) 유저의 전체 업로드 이미지 (MongoDB)
         all_images = await self.image_repo.find_by_user_id(user_id)
         if not all_images:
             return 0
 
-        # 2) 게시글에서 참조 중인 이미지 URL (PostgreSQL)
         post_image_repo = TripmatePostImageRepository(self._session)
         referenced_in_posts = await post_image_repo.find_urls_by_user_id(user_id)
 
-        # 3) 임시저장에서 참조 중인 이미지 URL (MongoDB)
         draft = await TripmatePostDraft.find_one({"user_id": user_id})
         referenced_in_draft = set(draft.image_urls) if draft else set()
 
-        # 4) 참조되지 않는 고아 이미지 필터링
         referenced_urls = set(referenced_in_posts) | referenced_in_draft
         orphaned = [img for img in all_images if img.image_url not in referenced_urls]
         if not orphaned:
             return 0
 
-        # 5) Object Storage 파일 일괄 삭제
         orphaned_urls = [img.image_url for img in orphaned]
         await self.storage.delete_many(orphaned_urls)
 
-        # 6) MongoDB 메타데이터 일괄 삭제
         orphaned_ids = [img.image_id for img in orphaned]
         await self.image_repo.delete_by_image_ids(orphaned_ids)
 

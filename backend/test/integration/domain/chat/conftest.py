@@ -43,10 +43,6 @@ def _require_env(name: str) -> str:
     return url
 
 
-# ──────────────────────────────────────────────────────────────────
-# 실 연결 fixture (function scope — 매 테스트 fresh)
-# ──────────────────────────────────────────────────────────────────
-
 @pytest_asyncio.fixture
 async def redis_hot():
     """hot Redis (DB 0). Lua 스크립트 로드 후 반환. 매 테스트 전/후 FLUSHDB."""
@@ -89,10 +85,6 @@ async def mongo_db():
         await db.chat_message.drop()
         client.close()
 
-
-# ──────────────────────────────────────────────────────────────────
-# 서비스 조립 (opt-in — 이 fixture 를 주입하는 테스트만 실 연결 요구)
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.fixture
 def patch_external_clients(monkeypatch, redis_hot, redis_dedupe, mongo_db):

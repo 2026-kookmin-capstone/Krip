@@ -11,10 +11,6 @@ from test.unit.domain.friend.friendship_service.model_factory import (
 )
 
 
-# ──────────────────────────────────────────────────────────────────
-# send_request
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestSendRequest:
     """Tests for FriendshipService.send_request."""
@@ -216,10 +212,6 @@ class TestSendRequest:
             await service.send_request(requester_id="USER_a", addressee_id="USER_b")
 
 
-# ──────────────────────────────────────────────────────────────────
-# accept_request
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestAcceptRequest:
     """Tests for FriendshipService.accept_request."""
@@ -283,10 +275,6 @@ class TestAcceptRequest:
         friendship_repo_mock.acquire_pair_lock.assert_awaited_once_with("USER_a", "USER_b")
 
 
-# ──────────────────────────────────────────────────────────────────
-# reject_request
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestRejectRequest:
     """Tests for FriendshipService.reject_request."""
@@ -328,10 +316,6 @@ class TestRejectRequest:
         friendship_repo_mock.update.assert_awaited_once_with(friendship)
 
 
-# ──────────────────────────────────────────────────────────────────
-# cancel_request
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestCancelRequest:
     """Tests for FriendshipService.cancel_request."""
@@ -371,10 +355,6 @@ class TestCancelRequest:
 
         friendship_repo_mock.delete.assert_awaited_once_with(friendship)
 
-
-# ──────────────────────────────────────────────────────────────────
-# remove_friend
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestRemoveFriend:
@@ -427,10 +407,6 @@ class TestRemoveFriend:
 
         friendship_repo_mock.delete.assert_awaited_once_with(friendship)
 
-
-# ──────────────────────────────────────────────────────────────────
-# 목록 조회
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestGetFriends:

@@ -21,8 +21,6 @@ router = APIRouter(tags=["번역"])
 logger = get_logger("translation")
 
 
-# ──────────────────── 언어 감지 ────────────────────
-
 @router.post("/detect", status_code=200)
 @inject
 async def detect_language(
@@ -45,8 +43,6 @@ async def detect_language(
 
     return DetectResponse(lang_code=result.lang_code)
 
-
-# ──────────────────── 번역 ────────────────────
 
 @router.post("/translate", status_code=200)
 @inject

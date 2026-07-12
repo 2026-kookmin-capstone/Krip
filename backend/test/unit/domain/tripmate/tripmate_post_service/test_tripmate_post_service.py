@@ -21,7 +21,6 @@ from test.unit.domain.tripmate.tripmate_post_service.model_factory import (
 )
 
 
-# 게시글 생성/수정 공통 필드 — 테스트가 관심 없는 필드는 여기서 채우고 관심 필드만 override.
 def _post_fields(**overrides):
     fields = dict(
         title="t",
@@ -37,10 +36,6 @@ def _post_fields(**overrides):
     fields.update(overrides)
     return fields
 
-
-# ──────────────────────────────────────────────────────────────────
-# create_post
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestCreatePost:
@@ -104,7 +99,6 @@ class TestCreatePost:
         """draft 삭제 실패해도 게시글 생성은 성공 — best-effort."""
         draft_service_mock.delete_draft.side_effect = RuntimeError("draft missing")
 
-        # raise 없이 정상 종료
         await service.create_post(
             user_id="USER_a",
             title="t",
@@ -166,10 +160,6 @@ class TestCreatePost:
         assert result.profile_image_url is None
 
 
-# ──────────────────────────────────────────────────────────────────
-# get_post — 단건 조회
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestGetPost:
     """Tests for TripmatePostService.get_post."""
@@ -215,10 +205,6 @@ class TestGetPost:
         with pytest.raises(ValueError, match="존재하지 않는"):
             await service.get_post(post_id="TMP_x")
 
-
-# ──────────────────────────────────────────────────────────────────
-# get_posts / search_posts — 페이지네이션
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestGetPosts:
@@ -304,10 +290,6 @@ class TestSearchPosts:
         assert decode_cursor(result.next_cursor)[1] == exact[-1].post_id
 
 
-# ──────────────────────────────────────────────────────────────────
-# update_post — 권한 + 이미지 차집합 cleanup
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestUpdatePost:
     """Tests for TripmatePostService.update_post."""
@@ -375,13 +357,8 @@ class TestUpdatePost:
         image_repo_mock.find_by_post_id.return_value = [make_post_image("https://img/old")]
         storage_mock.delete_many.side_effect = RuntimeError("s3 down")
 
-        # raise 없이 정상 종료
         await self._do_update(service, post.post_id, "USER_a", image_urls=None)
 
-
-# ──────────────────────────────────────────────────────────────────
-# delete_post — 권한 + 이미지 cleanup
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestDeletePost:
@@ -464,14 +441,9 @@ class TestDeletePost:
         image_repo_mock.find_by_post_id.return_value = [make_post_image("https://img/1")]
         storage_mock.delete_many.side_effect = RuntimeError("s3 down")
 
-        # raise 없이 정상 종료
         await service.delete_post(post_id=post.post_id, user_id="USER_a")
         post_repo_mock.delete.assert_awaited_once()
 
-
-# ──────────────────────────────────────────────────────────────────
-# toggle_display
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestToggleDisplay:
@@ -509,11 +481,9 @@ class TestToggleDisplay:
             await service.toggle_display(post_id=post.post_id, user_id="USER_other")
 
 
-# ──────────────────────────────────────────────────────────────────
 # 이미지 소유권 가드 (IDOR 방지) — _assert_images_owned
 #   클라이언트가 보낸 URL 을 그대로 신뢰하면 타 유저 이미지를 첨부한 뒤 게시글을
 #   수정/삭제해 남의 Object Storage 파일을 지울 수 있다. 업로드 소유 목록과 대조.
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestImageOwnershipGuard:
@@ -614,11 +584,9 @@ class TestImageOwnershipGuard:
         mongo_image_repo_mock.find_owned_urls.assert_not_awaited()
 
 
-# ──────────────────────────────────────────────────────────────────
 # 고아 이미지 보호 — _filter_unreferenced_urls
 #   같은 이미지를 여러 게시글/임시저장이 공유할 때, 한 곳을 지워도 다른 곳이 깨지지
 #   않도록 실제로 아무 데서도 참조되지 않는 URL 만 물리 삭제한다.
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestOrphanImageProtection:

@@ -23,10 +23,6 @@ from app.domain.auth.service.exception import (
 from test.unit.domain.auth.withdraw_service.model_factory import UserFactory
 
 
-# ──────────────────────────────────────────────────────────────────
-# request_withdraw — soft 탈퇴 (ACTIVE → INACTIVE + Mongo upsert)
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestRequestWithdraw:
     """Tests for WithdrawService.request_withdraw."""
@@ -98,10 +94,6 @@ class TestRequestWithdraw:
         withdrawal_request_repo_mock.upsert.assert_not_awaited()
 
 
-# ──────────────────────────────────────────────────────────────────
-# cancel_withdraw — INACTIVE → ACTIVE + Mongo doc 청소
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestCancelWithdraw:
     """Tests for WithdrawService.cancel_withdraw."""
@@ -127,7 +119,6 @@ class TestCancelWithdraw:
         user_repo_mock.find_by_id_for_update.return_value = user
         withdrawal_request_repo_mock.delete_by_user_id.side_effect = RuntimeError("mongo down")
 
-        # raise 없이 정상 종료
         await service.cancel_withdraw(user_id=user.user_id)
 
         assert user.status == UserStatus.ACTIVE  # RDB 는 이미 commit
@@ -155,10 +146,6 @@ class TestCancelWithdraw:
         user_repo_mock.update.assert_not_awaited()
         withdrawal_request_repo_mock.delete_by_user_id.assert_not_awaited()
 
-
-# ──────────────────────────────────────────────────────────────────
-# purge — entry point + outcome 분기 (DELETED / NO_USER / STALE_DOC)
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestPurge:
@@ -224,13 +211,8 @@ class TestPurge:
         user_repo_mock.find_by_id_for_update.return_value = user
         withdrawal_request_repo_mock.delete_by_user_id.side_effect = RuntimeError("mongo down")
 
-        # raise 없이 정상 종료
         await service.purge(user_id=user.user_id)
 
-
-# ──────────────────────────────────────────────────────────────────
-# _purge_external — 단계별 best-effort + 알림 cascade
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestPurgeExternal:
@@ -299,7 +281,6 @@ class TestPurgeExternal:
         """마지막 단계 (doc 청소) 실패도 raise 없음 — 다음 worker tick 에서 재시도."""
         withdrawal_request_repo_mock.delete_by_user_id.side_effect = RuntimeError("mongo down")
 
-        # raise 없이 정상 종료
         await service._purge_external(user_id="USER_a")
 
 
@@ -309,10 +290,6 @@ class _RaisingQuery:
     async def delete(self):
         raise RuntimeError("mongo down")
 
-
-# ──────────────────────────────────────────────────────────────────
-# chat 도메인 cleanup 훅 통합 — request_withdraw / purge 두 시점 분리 검증
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestRevokeUserChatState:

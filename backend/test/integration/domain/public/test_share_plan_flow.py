@@ -18,11 +18,6 @@ from app.util.share_token import ShareTokenError, encode_share_token
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────────────────────────────────────────────────────
-# Fixtures
-# ──────────────────────────────────────────────────────────────────
-
-
 @pytest.fixture
 def fake_place_doc():
     return {
@@ -49,11 +44,6 @@ def services(uow, monkeypatch, fake_place_doc):
         lambda: fake_place_repo,
     )
     return TourPlanService(uow=uow), SharePlanService(uow=uow)
-
-
-# ──────────────────────────────────────────────────────────────────
-# Share token 발급 → 공개 조회 플로우
-# ──────────────────────────────────────────────────────────────────
 
 
 class TestShareFlow:

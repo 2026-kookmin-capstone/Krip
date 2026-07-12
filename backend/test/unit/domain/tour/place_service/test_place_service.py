@@ -11,10 +11,6 @@ from app.domain.tour.repository.place import PAGE_SIZE, PlaceRepository
 from test.unit.domain.tour.place_service.model_factory import PlaceRawFactory
 
 
-# ──────────────────────────────────────────────────────────────────
-# get_nearby_places
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestGetNearbyPlaces:
     """Tests for PlaceService.get_nearby_places."""
@@ -106,10 +102,6 @@ class TestGetNearbyPlaces:
         assert place_repo_mock.find_nearby.await_args.kwargs["limit"] == PAGE_SIZE + 1
 
 
-# ──────────────────────────────────────────────────────────────────
-# get_place_by_id
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestGetPlaceById:
     """Tests for PlaceService.get_place_by_id."""
@@ -135,10 +127,6 @@ class TestGetPlaceById:
 
         assert result is None
 
-
-# ──────────────────────────────────────────────────────────────────
-# search_nearby_places
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestSearchNearbyPlaces:

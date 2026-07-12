@@ -61,8 +61,6 @@ class FeedPostRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    # ──────────────────── Create / Update ────────────────────
-
     async def save(self, post: FeedPost) -> FeedPost:
         self.session.add(post)
         await self.session.flush()
@@ -72,8 +70,6 @@ class FeedPostRepository:
         """변경 필드 flush — 호출측이 attached post 필드를 직접 mutate 후 호출."""
         await self.session.flush()
         return post
-
-    # ──────────────────── Read (단건) ────────────────────
 
     async def find_by_post_id(
         self,
@@ -106,8 +102,6 @@ class FeedPostRepository:
             comment_count=row.comment_count,
             is_liked=bool(row.is_liked),
         )
-
-    # ──────────────────── Read (목록 — 커서 페이지네이션) ────────────────────
 
     async def find_by_owner(
         self,
@@ -163,8 +157,6 @@ class FeedPostRepository:
             )
             for row in result.all()
         ]
-
-    # ──────────────────── Delete ────────────────────
 
     async def delete(self, post: FeedPost) -> None:
         """단건 삭제. like/comment 는 ORM cascade + FK CASCADE 로 자동 정리."""

@@ -52,8 +52,6 @@ async def search_users(
     return _to_list_response(result)
 
 
-# ──────────────────── 내부 유틸 ────────────────────
-
 def _to_item_response(dto) -> FriendSearchItemResponse:
     return FriendSearchItemResponse(
         user_id=dto.user_id,

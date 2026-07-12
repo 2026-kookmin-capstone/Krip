@@ -16,8 +16,6 @@ from app.util.cursor import decode_cursor
 from test.unit.domain.feed.mock_factory import make_feed_post_comment_mock
 
 
-# ──────────────────── create ────────────────────
-
 @pytest.mark.unit
 class TestCreateComment:
     async def test_success_returns_dto_with_author_profile(
@@ -80,8 +78,6 @@ class TestCreateComment:
             )
         comment_repo_mock.save.assert_not_called()
 
-
-# ──────────────────── list ────────────────────
 
 @pytest.mark.unit
 class TestListComments:
@@ -165,8 +161,6 @@ class TestListComments:
         assert result.comments[1].user_name == ""
         assert result.comments[1].profile_image_url is None
 
-
-# ──────────────────── delete ────────────────────
 
 @pytest.mark.unit
 class TestDeleteComment:

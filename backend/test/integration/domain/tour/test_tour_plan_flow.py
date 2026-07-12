@@ -22,11 +22,6 @@ from app.domain.tour.service.tour_plan import TourPlanService
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────────────────────────────────────────────────────
-# Fixtures
-# ──────────────────────────────────────────────────────────────────
-
-
 @pytest.fixture
 def fake_place_doc():
     return {
@@ -51,11 +46,6 @@ def plan_service(uow, monkeypatch, fake_place_doc):
     return TourPlanService(uow=uow)
 
 
-# ──────────────────────────────────────────────────────────────────
-# create_plan
-# ──────────────────────────────────────────────────────────────────
-
-
 class TestCreatePlanFlow:
     async def test_creates_plan_and_items(self, plan_service, seed_users, session_factory):
         (a,) = await seed_users(1)
@@ -74,7 +64,6 @@ class TestCreatePlanFlow:
         assert result.travel_days == 2
         assert len(result.items) == 2
 
-        # DB 검증
         async with session_factory() as s:
             plan_rows = (await s.execute(select(TourPlan))).scalars().all()
             assert len(plan_rows) == 1
@@ -84,11 +73,6 @@ class TestCreatePlanFlow:
             assert len(item_rows) == 2
             day_numbers = sorted(i.day_number for i in item_rows)
             assert day_numbers == [1, 2]
-
-
-# ──────────────────────────────────────────────────────────────────
-# get_plan / get_plans
-# ──────────────────────────────────────────────────────────────────
 
 
 class TestGetPlanFlow:
@@ -146,11 +130,6 @@ class TestGetPlansFlow:
         assert result.plans[0].title == "A1"
 
 
-# ──────────────────────────────────────────────────────────────────
-# update_plan_title / delete_plan
-# ──────────────────────────────────────────────────────────────────
-
-
 class TestUpdatePlanTitleFlow:
     async def test_changes_title_and_updated_at(self, plan_service, seed_users, session_factory):
         (a,) = await seed_users(1)
@@ -197,11 +176,6 @@ class TestDeletePlanFlow:
         async with session_factory() as s:
             assert (await s.execute(select(TourPlan))).scalars().all() == []
             assert (await s.execute(select(TourPlanItem))).scalars().all() == []  # cascade
-
-
-# ──────────────────────────────────────────────────────────────────
-# add_day / remove_day
-# ──────────────────────────────────────────────────────────────────
 
 
 class TestAddDayFlow:
@@ -273,13 +247,7 @@ class TestRemoveDayFlow:
             items=[TourPlanItemCreateInput(day_number=1, place_id="PLACE_INT_001", visit_time=None)],
         )
 
-        # day=2 는 비어있음 — 에러 없이 정상
         await plan_service.remove_day(plan_id=created.plan_id, user_id=a, day_number=2)
-
-
-# ──────────────────────────────────────────────────────────────────
-# add_item / remove_item / move_item / update_item
-# ──────────────────────────────────────────────────────────────────
 
 
 class TestAddItemFlow:

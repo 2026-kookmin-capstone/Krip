@@ -32,8 +32,6 @@ def make_mock_session() -> MagicMock:
     return session
 
 
-# ──────────────────── Repository mocks ────────────────────
-
 def make_user_repo_mock() -> AsyncMock:
     mock = AsyncMock()
     mock.find_by_id.return_value = None
@@ -83,8 +81,6 @@ def make_inbox_service_mock() -> AsyncMock:
     mock.cascade_user_withdrawn.return_value = 0
     return mock
 
-
-# ──────────────────── Beanie Document stub ────────────────────
 
 class FakeBeanieFindQuery:
     """`Document.find({...}).delete()` chain 호출 흉내 — `init_beanie` 미호출 환경 우회."""

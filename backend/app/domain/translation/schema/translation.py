@@ -6,8 +6,6 @@ from pydantic import BaseModel, Field
 LangCode = Literal["ko", "en"]
 
 
-# ──────────────────── Request ────────────────────
-
 class DetectRequest(BaseModel):
     text: str = Field(..., min_length=1, max_length=5000, description="언어를 감지할 원문")
 
@@ -17,8 +15,6 @@ class TranslateRequest(BaseModel):
     source: LangCode = Field(..., description="원문 언어 코드 (ko | en)")
     target: LangCode = Field(..., description="대상 언어 코드 (ko | en)")
 
-
-# ──────────────────── Response ────────────────────
 
 class DetectResponse(BaseModel):
     lang_code: str = Field(..., description="감지된 언어 코드 (예: ko, en)")

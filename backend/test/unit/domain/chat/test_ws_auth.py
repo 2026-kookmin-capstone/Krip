@@ -63,10 +63,6 @@ async def test_heartbeat_loop_closes_revoked_idle_socket(monkeypatch):
     websocket.close.assert_awaited_once_with(code=CLOSE_AUTH_EXPIRED)
 
 
-# ──────────────────────────────────────────────────────────────────
-# WS mock 헬퍼 — headers / cookies 두 매핑만 노출하면 충분
-# ──────────────────────────────────────────────────────────────────
-
 def _make_ws(
     *,
     cookie_token: str | None = None,
@@ -102,10 +98,6 @@ def _make_token(user_id: str | None = "USER_a", jti: str | None = None,
     )
 
 
-# ──────────────────────────────────────────────────────────────────
-# _is_allowed_origin
-# ──────────────────────────────────────────────────────────────────
-
 class TestIsAllowedOrigin:
     def test_allows_configured_frontend_origin(self):
         assert _is_allowed_origin(settings.FRONTEND_URL) is True
@@ -130,10 +122,6 @@ class TestIsAllowedOrigin:
         assert _is_allowed_origin(None) is False
 
 
-# ──────────────────────────────────────────────────────────────────
-# _ws_subprotocols
-# ──────────────────────────────────────────────────────────────────
-
 class TestWsSubprotocolsParsing:
     def test_parses_comma_separated_protocols_with_whitespace(self):
         ws = _make_ws(subprotocols=["krip.chat.v1", "auth.abc.def"])
@@ -151,10 +139,6 @@ class TestWsSubprotocolsParsing:
         ws.cookies = {}
         assert _ws_subprotocols(ws) == ["krip.chat.v1", "auth.x"]
 
-
-# ──────────────────────────────────────────────────────────────────
-# _extract_jwt — 쿠키 → subprotocol 우선순위
-# ──────────────────────────────────────────────────────────────────
 
 class TestExtractJwt:
     def test_returns_cookie_token_when_present(self):
@@ -188,10 +172,6 @@ class TestExtractJwt:
         assert _extract_jwt(ws) is None
 
 
-# ──────────────────────────────────────────────────────────────────
-# _select_accept_subprotocol — 응답 echo 정책
-# ──────────────────────────────────────────────────────────────────
-
 class TestSelectAcceptSubprotocol:
     def test_echoes_krip_chat_v1_when_requested(self):
         ws = _make_ws(subprotocols=[SUBPROTOCOL_VERSION, f"{SUBPROTOCOL_AUTH_PREFIX}t"])
@@ -211,10 +191,6 @@ class TestSelectAcceptSubprotocol:
         ws = _make_ws()
         assert _select_accept_subprotocol(ws) is None
 
-
-# ──────────────────────────────────────────────────────────────────
-# _verify_jwt
-# ──────────────────────────────────────────────────────────────────
 
 class TestVerifyJwt:
     def test_returns_user_id_and_jti_from_payload(self):

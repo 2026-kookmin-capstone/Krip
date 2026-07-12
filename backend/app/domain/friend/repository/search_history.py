@@ -13,8 +13,6 @@ MAX_SEARCH_HISTORY = 10
 
 class FriendSearchHistoryRepository:
 
-    # ──────────────────── Create ────────────────────
-
     @measure_mongo_op("update", "friend_search_history")
     async def save(self, user_id: str, search_name: str) -> FriendSearchHistory:
         """검색어 저장
@@ -61,16 +59,12 @@ class FriendSearchHistoryRepository:
             if old_ids:
                 await collection.delete_many({"_id": {"$in": old_ids}})
 
-    # ──────────────────── Read ────────────────────
-
     @measure_mongo_op("find", "friend_search_history")
     async def find_by_user_id(self, user_id: str) -> List[FriendSearchHistory]:
         """유저의 검색 기록 조회 (최신순, 최대 10개)"""
         return await FriendSearchHistory.find(
             {"user_id": user_id}
         ).sort("-created_at").limit(MAX_SEARCH_HISTORY).to_list()
-
-    # ──────────────────── Delete ────────────────────
 
     @measure_mongo_op("delete", "friend_search_history")
     async def delete_one(self, user_id: str, search_name: str) -> None:

@@ -30,8 +30,6 @@ from app.domain.feed.service.thumbnail import (
 )
 
 
-# ──────────────────── helper ────────────────────
-
 def _save(img: Image.Image, fmt: str, **save_kwargs) -> bytes:
     buf = io.BytesIO()
     img.save(buf, format=fmt, **save_kwargs)
@@ -54,8 +52,6 @@ def _webp(size=(100, 100), color=(0, 0, 255), alpha=False) -> bytes:
         img = Image.new("RGB", size, color)
     return _save(img, "WEBP")
 
-
-# ──────────────────── 정상 출력 ────────────────────
 
 @pytest.mark.unit
 class TestProcessFeedImageOutput:
@@ -83,8 +79,6 @@ class TestProcessFeedImageOutput:
         assert result.medium.content_type == "image/jpeg"
         assert result.medium.file_ext == "jpg"
 
-
-# ──────────────────── original fast-path / shrink ────────────────────
 
 @pytest.mark.unit
 class TestShrinkOriginal:
@@ -124,8 +118,6 @@ class TestShrinkOriginal:
         assert result.content_type == "image/jpeg"
 
 
-# ──────────────────── crop + resize ────────────────────
-
 @pytest.mark.unit
 class TestCropSquareAndResize:
     def test_landscape_input_becomes_square(self):
@@ -141,7 +133,6 @@ class TestCropSquareAndResize:
 
     def test_rgba_input_flattened_to_rgb_white_bg(self):
         """RGBA → JPEG 인코딩 시 alpha 자리에 흰 배경 합성."""
-        # 반투명 빨강. alpha=128 인 RGBA 를 PNG 로 저장.
         src = _png(size=(100, 100), color=(255, 0, 0), mode="RGBA")
         result = crop_square_and_resize(src, THUMBNAIL_SMALL)
         out = Image.open(io.BytesIO(result.data))
@@ -154,13 +145,10 @@ class TestCropSquareAndResize:
         assert g > 0 and b > 0  # 흰 배경 합성으로 G/B 도 0 초과
 
 
-# ──────────────────── EXIF 회전 ────────────────────
-
 @pytest.mark.unit
 class TestExifRotation:
     def test_image_with_orientation_tag_is_re_encoded(self):
         """EXIF Orientation 이 1(정상) 외 값이면 transpose 가 픽셀을 바꾸므로 raw 보존 X."""
-        # Orientation=6 (시계 90도) 를 EXIF 에 박아 저장.
         src_img = Image.new("RGB", (100, 100), (255, 0, 0))
         exif = src_img.getexif()
         exif[0x0112] = 6  # Orientation
@@ -169,11 +157,8 @@ class TestExifRotation:
         src_bytes = buf.getvalue()
 
         result = shrink_original_if_needed(src_bytes)
-        # transpose 가 픽셀을 바꿨으므로 raw 보존 fast-path 가 아닌 재인코딩 path.
         assert result.data != src_bytes
 
-
-# ──────────────────── 포맷 화이트리스트 (#7) ────────────────────
 
 @pytest.mark.unit
 class TestFormatWhitelist:
@@ -191,8 +176,6 @@ class TestFormatWhitelist:
             process_feed_image(src)
 
 
-# ──────────────────── 디컴프레션 봄 (#1) ────────────────────
-
 @pytest.mark.unit
 class TestDecompressionBomb:
     def test_oversized_dimensions_rejected(self):
@@ -202,7 +185,6 @@ class TestDecompressionBomb:
         Pillow 가 읽는 IHDR chunk 의 width / height 만 큰 값으로 박아 두면, `Image.open`
         직후 `img.width × img.height` 체크에서 걸린다.
         """
-        # 작은 PNG 만들고 IHDR width/height 를 큰 값으로 패치.
         small = _png(size=(10, 10))
         # PNG IHDR: 8-byte signature + 4-byte chunk length + 4-byte type "IHDR" + 13-byte data
         # data: width(4) height(4) ... → byte offset 16 부터 width, 20 부터 height (big-endian)
@@ -235,8 +217,6 @@ class TestDecompressionBomb:
         with pytest.raises(ValueError, match="해상도가 너무 큽니다|이미지를 처리할 수 없습니다"):
             process_feed_image(bytes(patched))
 
-
-# ──────────────────── 디코딩 실패 ────────────────────
 
 @pytest.mark.unit
 class TestDecodingFailure:

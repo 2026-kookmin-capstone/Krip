@@ -12,10 +12,6 @@ from app.domain.friend.service.user_block import UserBlockService
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────────────────────────────────────────────────────
-# block / unblock / list
-# ──────────────────────────────────────────────────────────────────
-
 class TestBlockFlow:
     async def test_creates_block_row(self, uow, seed_users, session_factory):
         a, b, _ = await seed_users(3)
@@ -93,10 +89,6 @@ class TestListFlow:
         assert len(result.items) == 1
         assert result.items[0].blocked.user_id == b
 
-
-# ──────────────────────────────────────────────────────────────────
-# 크로스도메인: 차단 시 friendship 정리 / 차단 중 요청 거부
-# ──────────────────────────────────────────────────────────────────
 
 class TestBlockFriendshipInteraction:
     async def test_blocking_removes_existing_friendship(self, uow, seed_users, session_factory):

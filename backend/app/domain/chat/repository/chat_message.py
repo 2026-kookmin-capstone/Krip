@@ -13,14 +13,10 @@ class ChatMessageRepository:
     def __init__(self, db: AsyncIOMotorDatabase):
         self.collection: AsyncIOMotorCollection = db[COLLECTION_NAME]
 
-    # ──────────────────── Create ────────────────────
-
     @measure_mongo_op("insert", "chat_message")
     async def insert(self, document: dict) -> None:
         """메시지 1건 insert. seq 중복은 UNIQUE 가 DuplicateKeyError 로 터트림."""
         await self.collection.insert_one(document)
-
-    # ──────────────────── Read (단건) ────────────────────
 
     @measure_mongo_op("find_one", "chat_message")
     async def get_max_server_seq(self, chat_room_id: str) -> int:
@@ -31,8 +27,6 @@ class ChatMessageRepository:
             projection={"server_seq": 1, "_id": 0},
         )
         return int(doc["server_seq"]) if doc else 0
-
-    # ──────────────────── Read (목록 — 히스토리 페이징) ────────────────────
 
     @measure_mongo_op("find", "chat_message")
     async def find_before(
@@ -137,8 +131,6 @@ class ChatMessageRepository:
             limit=limit,
             hint=[("chat_room_id", ASCENDING), ("server_seq", ASCENDING)],
         )
-
-    # ──────────────────── Update (편집 / 삭제) ────────────────────
 
     @measure_mongo_op("update", "chat_message")
     async def update_content(

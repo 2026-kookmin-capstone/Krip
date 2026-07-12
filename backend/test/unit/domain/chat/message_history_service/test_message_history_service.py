@@ -60,10 +60,6 @@ def _mk_room(
     )
 
 
-# ──────────────────────────────────────────────────────────────────
-# find_messages_before (위로 스크롤)
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestFindMessagesBefore:
     async def test_permission_error_when_not_active_member(
@@ -136,10 +132,6 @@ class TestFindMessagesBefore:
         assert result.messages[0].deleted_at == NOW
 
 
-# ──────────────────────────────────────────────────────────────────
-# find_messages_after (catch-up)
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestFindMessagesAfter:
     async def test_permission_error_when_not_active_member(
@@ -182,10 +174,6 @@ class TestFindMessagesAfter:
         assert result.has_more is False
         assert result.next_cursor is None
 
-
-# ──────────────────────────────────────────────────────────────────
-# list_rooms
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestListRooms:
@@ -423,10 +411,6 @@ class TestListRooms:
         assert result.items[0].notification_muted is False
 
 
-# ──────────────────────────────────────────────────────────────────
-# get_room — 단건 방 조회 (권한 체크 + mute 노출 통합)
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestGetRoom:
     """`get_room` 은 `member_repo.find()` 한 번으로 권한 체크 + mute 획득을 통합한다.
@@ -531,10 +515,6 @@ class TestGetRoom:
         assert result.notification_muted is False
 
 
-# ──────────────────────────────────────────────────────────────────
-# get_unread_counts
-# ──────────────────────────────────────────────────────────────────
-
 def _mk_user(
     user_id: str,
     user_name: str = "u",
@@ -548,10 +528,6 @@ def _mk_user(
         ),
     )
 
-
-# ──────────────────────────────────────────────────────────────────
-# list_room_members (그룹 방 참여자 목록)
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestListRoomMembers:
@@ -595,10 +571,6 @@ class TestListRoomMembers:
         assert result.items[1].user_id == "U_B"
         assert result.items[1].profile_image_url is None
 
-
-# ──────────────────────────────────────────────────────────────────
-# list_invitable_friends (그룹 방 초대 가능 친구 목록)
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestListInvitableFriends:
@@ -666,7 +638,6 @@ class TestListInvitableFriends:
         assert [m.user_id for m in result.items] == ["U_B", "U_D"]
         assert result.items[0].profile_image_url == "https://cdn.example.com/b.jpg"
         assert result.items[1].profile_image_url is None
-        # 호출 인자도 sorted invitable_ids
         user_repo_mock.find_by_ids_with_profile.assert_awaited_once_with(["U_B", "U_D"])
 
 

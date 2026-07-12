@@ -103,7 +103,7 @@ monitoring/
 | `postgres` | postgres-exporter:9187 | 15s | pg_stat_*, max_connections |
 | `redis-hot` | redis-exporter-hot:9121 | 15s | `db="hot"` 라벨 부착 |
 | `redis-dedupe` | redis-exporter-dedupe:9121 | 15s | `db="dedupe"` 라벨 부착 |
-| `mongo` | mongodb-exporter:9216 | 15s | op_latencies / connections |
+| `mongo` | mongodb-exporter:9216 | 15s | `up` liveness만 보존 (`mongodb_.*` drop) |
 | `blackbox-external` | 5개 외부 API | 60s | `http_alive` 모듈, rate limit 회피 |
 | `backend` | backend:9090/metrics | 15s | 애플리케이션 메트릭 |
 | `blackbox-internal` | /health, /health/deep, /ready | 30s | `http_2xx` strict |
@@ -111,14 +111,16 @@ monitoring/
 **카디널리티 통제** — Redis exporter 의 server-side latency 시리즈 (~400 시리즈) 는
 backend 의 client-side `redis_command_duration_seconds` 와 의미 중복 + 폭증 hotspot
 이라 `metric_relabel_configs` 에서 `redis_(commands_latencies_usec|latency_percentiles_usec|latency_spike).*` drop.
+MongoDB payload도 대시보드가 client-side `mongo_op_*`만 사용하므로 `mongodb_.*`를 drop하고
+Prometheus가 생성하는 `up{job="mongo"}`만 liveness로 보존한다.
 
 ### 3.2 Grafana (`grafana/grafana:11.3.1`)
 
 - 호스트 포트: **3001 → 컨테이너 3000**.
 - admin 비번은 `.env` 의 `GRAFANA_ADMIN_PASSWORD` 강제 (`:?` 미설정 시 부팅 거부).
 - 익명 접속 / 사용자 가입 모두 비활성.
-- 데이터소스 / 대시보드 모두 provisioning 으로 자동 등록 — UI 수정은 가능하지만
-  `editable: false` 라 변경 사항은 휘발성.
+- 데이터소스 / 대시보드 모두 provisioning 으로 자동 등록되고 UI 편집도 허용한다.
+  source JSON에 반영하지 않은 UI 변경은 재provisioning 시 덮일 수 있다.
 
 **프로비저닝 대시보드 7종** (`grafana/provisioning/dashboards/`):
 
@@ -136,7 +138,7 @@ backend 의 client-side `redis_command_duration_seconds` 와 의미 중복 + 폭
 
 두 모듈로 분리:
 
-- **`http_2xx`** — strict. 200 만 success. `/health`, `/health/deep`, `/ready` 용.
+- **`http_2xx`** — strict. 모든 2xx만 success. `/health`, `/health/deep`, `/ready` 용.
   503 이면 fail 처리.
 - **`http_alive`** — 관대. 200/201/204/301/302/304/400/401/403/404 모두 alive 인정.
   외부 API 의 root GET 이 4xx 인 케이스가 정상이라 "DNS + TLS + 응답 수신" 만 검증.
@@ -199,7 +201,8 @@ Alloy state 재기동 연속성을 end-to-end 확인한다.
 - **postgres-exporter** (`v0.16.0`) — `PG_EXPORTER_AUTO_DISCOVER_DATABASES=true`,
   `pg_settings_max_connections` 기본 노출.
 - **mongodb-exporter** (`percona/mongodb_exporter:0.43.1`) — `--collect-all`,
-  `--compatible-mode`. 운영에서는 `clusterMonitor` read-only role 권장.
+  `--compatible-mode`로 수집하지만 Prometheus에서 payload를 drop해 liveness만 보존.
+  운영에서는 `clusterMonitor` read-only role 권장.
 - **redis-exporter** × 2 — Redis DB0 (hot) 와 DB1 (dedupe) 분리 인스턴스.
 
 ---
@@ -245,8 +248,8 @@ deep-merge 충돌 방지.
 | `POSTGRES_USER` / `_PASSWORD` / `_NAME` | postgres-exporter DSN |
 | `MONGODB_USER` / `_PASSWORD` | mongodb-exporter URI |
 
-backend 환경변수는 `backend/.env` 와 분리 — docker-compose substitution 은 project
-root `.env` 만 자동 로드하기 때문에 일부 중복.
+`make -C monitoring ...`은 `monitoring/.env`를 명시적으로 로드한다. backend 환경변수는
+`backend/.env`와 분리되므로 exporter 자격증명은 일부 중복된다.
 
 ---
 

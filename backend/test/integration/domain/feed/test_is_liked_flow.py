@@ -24,15 +24,11 @@ from app.domain.feed.repository.feed_post import FeedPostRepository
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── helpers ────────────────────
-
 async def _insert_like(session_factory, user_id: str, post_id: str) -> None:
     async with session_factory() as session:
         session.add(FeedPostLike(user_id=user_id, post_id=post_id))
         await session.commit()
 
-
-# ──────────────────── find_by_post_id ────────────────────
 
 class TestFindByPostIdIsLiked:
     """단건 조회 경로 — get_my_post / update_* / load_viewable_post 가 공통 사용."""
@@ -112,8 +108,6 @@ class TestFindByPostIdIsLiked:
         assert row.is_liked is True
 
 
-# ──────────────────── find_by_owner ────────────────────
-
 class TestFindByOwnerIsLiked:
     """목록 조회 경로 — get_my_feed / get_user_feed / popup 이 공통 사용.
 
@@ -190,8 +184,6 @@ class TestFindByOwnerIsLiked:
 
         assert all(r.is_liked is False for r in rows)
 
-
-# ──────────────────── service 레이어 e2e ────────────────────
 
 class TestServiceLayerIsLiked:
     """service → repo → SQL → response DTO 전체 경로의 is_liked 합성."""

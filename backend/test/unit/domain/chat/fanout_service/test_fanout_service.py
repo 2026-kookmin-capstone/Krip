@@ -20,10 +20,6 @@ async def test_forced_close_is_registered_with_application_supervisor(monkeypatc
     assert supervisor.spawn.call_args.kwargs["name"] == "chat-ws-close-WS_close"
 
 
-# ──────────────────────────────────────────────────────────────────
-# 등록 / 해제
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestRegister:
     def test_register_session_adds_to_user_subs(self, fanout):
@@ -76,10 +72,6 @@ class TestUnregister:
         assert "WS_1" not in fanout._local_ws_by_session
 
 
-# ──────────────────────────────────────────────────────────────────
-# fan_out_to_room
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestFanOutToRoom:
     async def test_skips_sender_session(self, fanout):
@@ -117,10 +109,6 @@ class TestFanOutToRoom:
         a.send_json.assert_awaited_once()
         b.send_json.assert_awaited_once()
 
-
-# ──────────────────────────────────────────────────────────────────
-# fan_out_to_user / fan_out_to_session
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestFanOutToUser:
@@ -162,10 +150,6 @@ class TestFanOutToSession:
         """이미 close 된 세션은 dict 에서 pop 된 상태 — 조용히 무시."""
         await fanout.fan_out_to_session("WS_ghost", {"type": "session_revoked", "session_id": "?"})
 
-
-# ──────────────────────────────────────────────────────────────────
-# 에러 허용 / FANOUT_MODE 가드
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestErrorTolerance:
@@ -236,10 +220,6 @@ class TestFanoutModeGuard:
         assert svc._user_subs == {}
         assert svc._local_ws_by_session == {}
 
-
-# ──────────────────────────────────────────────────────────────────
-# node_channel 모드 — publish 위임 (dispatch_envelope 진입 시 _local_* 호출 검증)
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestNodeChannelDispatch:
@@ -332,11 +312,6 @@ class TestNodeChannelDispatch:
     async def test_dispatch_envelope_missing_field_drops_silently(self, node_fanout):
         # payload 누락 등 손상된 envelope 도 drop.
         await node_fanout.dispatch_envelope({"op": "room", "room_id": "CR_1"})
-
-
-# ──────────────────────────────────────────────────────────────────
-# node_channel 모드 — publish 경로 (Redis publish + envelope 정확성)
-# ──────────────────────────────────────────────────────────────────
 
 
 def _make_redis_mock_for_publish() -> MagicMock:

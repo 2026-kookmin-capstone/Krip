@@ -42,8 +42,6 @@ def _mk_feed_row(post_id="FDP_x", user_id="USER_owner", like_count=0, comment_co
     )
 
 
-# ──────────────────── user 미존재 / 결손 ────────────────────
-
 @pytest.mark.unit
 class TestUserMissing:
     async def test_user_not_found_raises(self, service, user_repo_mock, feed_repo_mock):
@@ -65,8 +63,6 @@ class TestUserMissing:
         feed_repo_mock.find_by_owner.assert_not_called()
 
 
-# ──────────────────── 차단 propagate ────────────────────
-
 @pytest.mark.unit
 class TestBlockedPropagation:
     async def test_blocked_raises_without_feed_query(
@@ -86,8 +82,6 @@ class TestBlockedPropagation:
         # 차단 시 feed 조회 안 일어남 — user 정보 노출도 차단됨.
         feed_repo_mock.find_by_owner.assert_not_called()
 
-
-# ──────────────────── 정상 합성 ────────────────────
 
 @pytest.mark.unit
 class TestPopupAssembly:
@@ -126,8 +120,6 @@ class TestPopupAssembly:
         assert result.feed_items[1].like_count == 0
         assert result.feed_items[1].comment_count == 3
 
-
-# ──────────────────── feed repo 호출 contract ────────────────────
 
 @pytest.mark.unit
 class TestFeedRepoContract:
@@ -187,8 +179,6 @@ class TestFeedRepoContract:
         assert result.feed_items[0].is_liked is False
         assert result.feed_items[1].is_liked is True
 
-
-# ──────────────────── 본인 popup ────────────────────
 
 @pytest.mark.unit
 class TestSelfPopup:

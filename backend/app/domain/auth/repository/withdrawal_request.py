@@ -12,8 +12,6 @@ class WithdrawalRequestRepository:
     유예 기간 내 재요청 가드는 RDB `users.status` 에서 수행하므로 여기서는 무조건 갱신.
     """
 
-    # ──────────────────── Upsert ────────────────────
-
     @measure_mongo_op("update", "withdrawal_request")
     async def upsert(
         self,
@@ -38,8 +36,6 @@ class WithdrawalRequestRepository:
             upsert=True,
         )
 
-    # ──────────────────── Read ────────────────────
-
     @measure_mongo_op("find", "withdrawal_request")
     async def find_due(self, now: datetime) -> List[WithdrawalRequest]:
         """`scheduled_purge_at <= now` 인 모든 요청 조회.
@@ -50,8 +46,6 @@ class WithdrawalRequestRepository:
         return await WithdrawalRequest.find(
             WithdrawalRequest.scheduled_purge_at <= now,
         ).to_list()
-
-    # ──────────────────── Delete ────────────────────
 
     @measure_mongo_op("delete", "withdrawal_request")
     async def delete_by_user_id(self, user_id: str) -> None:

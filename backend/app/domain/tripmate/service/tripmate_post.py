@@ -40,8 +40,6 @@ class TripmatePostService:
         self.storage = get_object_storage()
         self.mongo_image_repo = TripmateImageRepository()
 
-    # ──────────────────── 게시글 생성 ────────────────────
-
     async def create_post(
         self,
         user_id: str,
@@ -137,8 +135,6 @@ class TripmatePostService:
             profile_image_url=detail.profile_image_url if detail else None,
         )
 
-    # ──────────────────── 게시글 단건 조회 ────────────────────
-
     @transactional
     async def get_post(self, post_id: str, user_id: Optional[str] = None) -> TripmatePostData:
         """
@@ -160,8 +156,6 @@ class TripmatePostService:
             image_urls=[img.image_url for img in sorted(post.images, key=lambda i: i.image_order)],
         )
 
-    # ──────────────────── 게시글 목록 조회 ────────────────────
-
     @transactional
     async def get_posts(self, cursor: Optional[str] = None, user_id: Optional[str] = None) -> TripmatePostListData:
         """
@@ -172,8 +166,6 @@ class TripmatePostService:
         posts = await post_repo.find_all_displayed(cursor, user_id=user_id)
         return self._to_list_dto(posts)
 
-    # ──────────────────── 게시글 검색 ────────────────────
-
     @transactional
     async def search_posts(self, keyword: str, cursor: Optional[str] = None, user_id: Optional[str] = None) -> TripmatePostListData:
         """
@@ -183,8 +175,6 @@ class TripmatePostService:
 
         posts = await post_repo.search(keyword, cursor, user_id=user_id)
         return self._to_list_dto(posts)
-
-    # ──────────────────── 게시글 수정 ────────────────────
 
     async def update_post(
         self,
@@ -289,8 +279,6 @@ class TripmatePostService:
         )
         return dto, deletable
 
-    # ──────────────────── 게시글 삭제 ────────────────────
-
     async def delete_post(self, post_id: str, user_id: str) -> None:
         """게시글 삭제 — DB / 이미지 정리는 트랜잭션 안, 인박스 cascade 는 트랜잭션 밖.
 
@@ -327,7 +315,6 @@ class TripmatePostService:
         if post.user_id != user_id:
             raise PermissionError("게시글 삭제 권한이 없습니다.")
 
-        # 삭제 전 이미지 URL 수집
         post_images = await image_repo.find_by_post_id(post_id)
         image_urls = [img.image_url for img in post_images]
 
@@ -339,8 +326,6 @@ class TripmatePostService:
         if not image_urls:
             return []
         return await self._filter_unreferenced_urls(user_id, image_urls)
-
-    # ──────────────────── 게시글 Display 토글 ────────────────────
 
     @transactional
     async def toggle_display(self, post_id: str, user_id: str) -> bool:
@@ -363,8 +348,6 @@ class TripmatePostService:
         await post_repo.update(post)
 
         return post.is_displayed
-
-    # ──────────────────── 내부 이미지 유틸 ────────────────────
 
     async def _assert_images_owned(self, user_id: str, image_urls: Optional[List[str]]) -> None:
         """첨부 이미지가 본인이 업로드한 것인지 검증 (IDOR 방지).
@@ -400,8 +383,6 @@ class TripmatePostService:
         if draft:
             referenced |= set(draft.image_urls)
         return [url for url in candidates if url not in referenced]
-
-    # ──────────────────── 내부 변환 유틸 ────────────────────
 
     @staticmethod
     def _to_author_dto(post: TripmatePost) -> PostAuthorData:

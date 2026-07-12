@@ -49,8 +49,6 @@ def _mk_row(
     )
 
 
-# ──────────────────── 미존재 / 권한 거부 ────────────────────
-
 @pytest.mark.unit
 class TestLoadOwnedPostMissingOrForbidden:
     async def test_get_my_post_missing_raises_not_found(self, service, repo_mock):
@@ -106,8 +104,6 @@ class TestLoadOwnedPostMissingOrForbidden:
         # 권한 거부면 storage 호출도 일어나면 안 됨 — 인가 검증 회귀 가드.
         storage_mock.delete_by_prefix.assert_not_called()
 
-
-# ──────────────────── 정상 mutate 경로 ────────────────────
 
 @pytest.mark.unit
 class TestUpdateVisibilitySuccess:
@@ -167,8 +163,6 @@ class TestUpdateCaptionSuccess:
         assert result.caption is None
 
 
-# ──────────────────── delete_post 흐름 ────────────────────
-
 @pytest.mark.unit
 class TestDeletePost:
     async def test_owner_delete_calls_db_then_storage(self, service, repo_mock, storage_mock):
@@ -188,7 +182,6 @@ class TestDeletePost:
         repo_mock.find_by_post_id.return_value = row
         storage_mock.delete_by_prefix.side_effect = RuntimeError("S3 down")
 
-        # raise 되지 않아야 함
         await service.delete_post(user_id="USER_owner", post_id="FDP_x")
         repo_mock.delete.assert_awaited_once()
 
@@ -200,8 +193,6 @@ class TestDeletePost:
             await service.delete_post(user_id="USER_owner", post_id="FDP_missing")
         storage_mock.delete_by_prefix.assert_not_called()
 
-
-# ──────────────────── get_my_feed pagination ────────────────────
 
 @pytest.mark.unit
 class TestGetMyFeed:
@@ -283,8 +274,6 @@ class TestGetMyFeed:
         assert result.posts[0].is_liked is True
         assert result.posts[1].is_liked is False
 
-
-# ──────────────────── _load_owned_post 가 viewer_id=user_id 전달 ────────────────────
 
 @pytest.mark.unit
 class TestLoadOwnedPostViewerForwarding:

@@ -7,8 +7,6 @@ from pydantic import BaseModel, Field
 from app.domain.feed.model.feed_post_comment import COMMENT_MAX_LENGTH
 
 
-# ──────────────────── Request ────────────────────
-
 class CreateCommentRequest(BaseModel):
     """댓글 작성. min_length 1차, 서비스 strip 2차, DB CHECK 가 마지막 방어선."""
     content: str = Field(
@@ -18,8 +16,6 @@ class CreateCommentRequest(BaseModel):
         description=f"댓글 본문 (1~{COMMENT_MAX_LENGTH}자, 공백만 입력 거절)",
     )
 
-
-# ──────────────────── Response ────────────────────
 
 class CommentResponse(BaseModel):
     """댓글 단건 — 작성자 프로필 포함 (단일 JOIN 쿼리 결과)."""

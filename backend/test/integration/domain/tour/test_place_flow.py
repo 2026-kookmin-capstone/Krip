@@ -22,8 +22,6 @@ from app.domain.tour.model.favorite_place import FavoritePlace
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── get_nearby_places (geo 쿼리) ────────────────────
-
 class TestGetNearbyPlaces:
     """`$geoNear` aggregation 이 실 mongo 의 `2dsphere` 인덱스를 사용하는지 e2e."""
 
@@ -90,8 +88,6 @@ class TestGetNearbyPlaces:
         assert result.places[0].is_favorite is None
 
 
-# ──────────────────── get_place_by_id ────────────────────
-
 class TestGetPlaceById:
     async def test_returns_dto_when_place_exists(self, place_service, seed_place):
         await seed_place(place_id="P_x", display_name="Custom Name")
@@ -109,8 +105,6 @@ class TestGetPlaceById:
 
         assert result is None
 
-
-# ──────────────────── search_nearby_places ────────────────────
 
 class TestSearchNearbyPlaces:
     """키워드 + 거리순 합성. display_name / category 매칭."""

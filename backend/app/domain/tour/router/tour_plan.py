@@ -23,9 +23,6 @@ from app.schema.common import MessageResponse
 router = APIRouter(prefix="/plans", tags=["여행 플랜"])
 
 
-# ──────────────────── 플랜 CRUD ────────────────────
-
-
 @router.post("", status_code=201)
 @inject
 async def create_plan(
@@ -227,9 +224,6 @@ async def delete_plan(
     return MessageResponse(message="플랜이 삭제되었습니다.")
 
 
-# ──────────────────── 카드 편집 ────────────────────
-
-
 @router.post("/{plan_id}/items", status_code=201)
 @inject
 async def add_item(
@@ -348,9 +342,6 @@ async def remove_item(
         raise HTTPException(status_code=403, detail=str(e))
 
     return MessageResponse(message="카드가 삭제되었습니다.")
-
-
-# ──────────────────── 내부 변환 유틸 ────────────────────
 
 
 def _to_plan_item_response(item) -> PlanItemResponse:

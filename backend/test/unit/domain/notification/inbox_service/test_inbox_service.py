@@ -29,10 +29,6 @@ from test.unit.domain.notification.inbox_service.model_factory import (
 )
 
 
-# ──────────────────────────────────────────────────────────────────
-# notify_feed_like — 피드 좋아요 fan-out
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestNotifyFeedLike:
     """Tests for InboxService.notify_feed_like."""
@@ -81,7 +77,6 @@ class TestNotifyFeedLike:
         """좋아요 취소→재좋아요 race 시 dedup unique 충돌 → 멱등 skip, raise 안 됨."""
         inbox_repo_mock.insert.side_effect = DuplicateKeyError("dup")
 
-        # raise 없이 정상 종료해야 함
         await service.notify_feed_like(
             recipient_id="USER_owner",
             actor_id="USER_actor",
@@ -99,7 +94,6 @@ class TestNotifyFeedLike:
         """Mongo 일시 장애 — best-effort 정책상 swallow + 로그, 응답 정상."""
         inbox_repo_mock.insert.side_effect = RuntimeError("mongo down")
 
-        # raise 없이 정상 종료
         await service.notify_feed_like(
             recipient_id="USER_owner",
             actor_id="USER_actor",
@@ -109,10 +103,6 @@ class TestNotifyFeedLike:
             post_preview=None,
         )
 
-
-# ──────────────────────────────────────────────────────────────────
-# notify_feed_comment — 피드 댓글 fan-out
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestNotifyFeedComment:
@@ -190,10 +180,6 @@ class TestNotifyFeedComment:
         assert "…" not in item.comment_preview
 
 
-# ──────────────────────────────────────────────────────────────────
-# notify_tripmate_like — 트립메이트 좋아요 fan-out
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestNotifyTripmateLike:
     """Tests for InboxService.notify_tripmate_like."""
@@ -228,10 +214,6 @@ class TestNotifyTripmateLike:
         assert item.target_type == TargetType.TRIPMATE_POST
         assert item.target_preview == "여행 같이 가실 분"
 
-
-# ──────────────────────────────────────────────────────────────────
-# list_items — 인박스 페이지네이션 + 자동 읽음 처리
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestListItems:
@@ -392,7 +374,6 @@ class TestListItems:
         ]
         inbox_repo_mock.mark_read_by_ids.side_effect = RuntimeError("mongo down")
 
-        # raise 없이 정상 종료
         result = await service.list_items(
             recipient_id="USER_a", mark_as_read=True,
         )
@@ -417,10 +398,6 @@ class TestListItems:
         assert result.items[0].is_read is False
 
 
-# ──────────────────────────────────────────────────────────────────
-# count_unread — 미읽음 뱃지
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestCountUnread:
     """Tests for InboxService.count_unread."""
@@ -443,10 +420,6 @@ class TestCountUnread:
         assert result == 999
 
 
-# ──────────────────────────────────────────────────────────────────
-# hide_item — X 버튼
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestHideItem:
     """Tests for InboxService.hide_item."""
@@ -457,7 +430,6 @@ class TestHideItem:
         inbox_repo_mock.hide.return_value = True
         oid = PydanticObjectId()
 
-        # raise 없이 정상 종료
         await service.hide_item(
             recipient_id="USER_a", inbox_item_id=str(oid),
         )
@@ -484,10 +456,6 @@ class TestHideItem:
             )
 
 
-# ──────────────────────────────────────────────────────────────────
-# cascade_user_withdrawn — 탈퇴 cascade
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestCascadeUserWithdrawn:
     """Tests for InboxService.cascade_user_withdrawn.
@@ -511,7 +479,6 @@ class TestCascadeUserWithdrawn:
         """Mongo 장애 → swallow + 로그, 0 반환 → caller (withdraw worker) 안전."""
         inbox_repo_mock.delete_by_user.side_effect = RuntimeError("mongo down")
 
-        # raise 없이 0 반환
         deleted = await service.cascade_user_withdrawn(user_id="USER_x")
 
         assert deleted == 0

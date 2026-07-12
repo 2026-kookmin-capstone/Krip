@@ -29,8 +29,6 @@ def _upload_args():
     return dict(file=object(), file_name="p.jpg", content_type="image/jpeg")
 
 
-# ──────────────────── add_profile_image ────────────────────
-
 @pytest.mark.unit
 class TestAddProfileImage:
     async def test_happy_path_uploads_then_writes_no_compensation(
@@ -83,8 +81,6 @@ class TestAddProfileImage:
 
         storage_mock.delete.assert_awaited_once_with(_NEW_URL)
 
-
-# ──────────────────── update_profile_image ────────────────────
 
 @pytest.mark.unit
 class TestUpdateProfileImage:

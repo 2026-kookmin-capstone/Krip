@@ -17,8 +17,6 @@ from app.schema.common import MessageResponse
 router = APIRouter(prefix="/friendships", tags=["친구 추가,삭제,조회 기본 관리 - 차단 X"])
 
 
-# ──────────────────── 친구 요청 ────────────────────
-
 @router.post("/requests", status_code=201)
 @inject
 async def send_friend_request(
@@ -131,8 +129,6 @@ async def cancel_friend_request(
     return MessageResponse(message="친구 요청을 취소했습니다.")
 
 
-# ──────────────────── 친구 목록/삭제 ────────────────────
-
 @router.get("")
 @inject
 async def get_friends(
@@ -169,8 +165,6 @@ async def remove_friend(
 
     return MessageResponse(message="친구를 삭제했습니다.")
 
-
-# ──────────────────── 내부 유틸 ────────────────────
 
 def _to_friendship_response(dto) -> FriendshipResponse:
     return FriendshipResponse(

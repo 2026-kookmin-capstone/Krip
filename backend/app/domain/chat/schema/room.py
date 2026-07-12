@@ -10,8 +10,6 @@ from app.domain.chat.constants import (
 from app.domain.chat.model.chat_room import ChatRoomType
 
 
-# ──────────────────── Request ────────────────────
-
 class CreateDirectRoomBody(BaseModel):
     model_config = ConfigDict(
         json_schema_extra={
@@ -75,8 +73,6 @@ class KickMemberBody(BaseModel):
     user_id: str = Field(..., description="강퇴할 유저 ID (요청자는 creator 여야 함)")
 
 
-# ──────────────────── Response — 그룹 관리 액션 ────────────────────
-
 class InviteMembersResponse(BaseModel):
     """invite 엔드포인트 응답 — 실제로 초대된 user_id 만 반환 (이미 멤버/비친구 제외)."""
     invited_user_ids: List[str] = Field(..., description="이번 호출로 초대된 user_id 목록")
@@ -85,8 +81,6 @@ class InviteMembersResponse(BaseModel):
         description="이미 활성 멤버라 skip 된 user_id 목록",
     )
 
-
-# ──────────────────── Response — 내부 구성요소 ────────────────────
 
 class ChatRoomPeerResponse(BaseModel):
     """1:1 방 상대방 프로필. 탈퇴한 경우 필드가 모두 null — 클라는 '탈퇴한 사용자' 로 표시."""
@@ -110,8 +104,6 @@ class LastMessagePreviewResponse(BaseModel):
     )
     created_at: datetime = Field(..., description="보낸 시각")
 
-
-# ──────────────────── Response — 방 본체 ────────────────────
 
 class ChatRoomResponse(BaseModel):
     chat_room_id: str = Field(..., description="방 고유 ID")
@@ -139,8 +131,6 @@ class ChatRoomListResponse(BaseModel):
         None, description="다음 페이지 커서 (마지막 페이지면 null)"
     )
 
-
-# ──────────────────── Response — 참여자 / 초대 가능 친구 ────────────────────
 
 class RoomMemberResponse(BaseModel):
     """그룹 방 참여자 / 초대 가능 친구 목록의 공통 미리보기 응답."""

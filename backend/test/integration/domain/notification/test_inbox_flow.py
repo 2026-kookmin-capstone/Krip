@@ -58,8 +58,6 @@ def _make_inbox_item(
     )
 
 
-# ──────────────────── partial unique 인덱스 ────────────────────
-
 class TestPartialUniqueIndex:
     """`uq_inbox_dedup` 인덱스가 실 mongo 에 적용되어 의도대로 동작하는지.
 
@@ -106,13 +104,10 @@ class TestPartialUniqueIndex:
         await repo.insert(_make_inbox_item(
             type=InboxItemType.FEED_COMMENT, comment_id="CMT_1",
         ))
-        # raise 없이 정상 — 다른 comment_id
         await repo.insert(_make_inbox_item(
             type=InboxItemType.FEED_COMMENT, comment_id="CMT_2",
         ))
 
-
-# ──────────────────── list_items + 자동 읽음 처리 ────────────────────
 
 class TestListInboxFlow:
     """인박스 e2e — 페이지네이션 + 자동 mark_as_read 의 atomic update."""
@@ -132,7 +127,6 @@ class TestListInboxFlow:
         )
 
         assert len(result.items) == 3
-        # 최신순 — 마지막에 insert 한 게 첫 번째
         assert result.items[0].target_id == "FDP_2"
         assert result.items[2].target_id == "FDP_0"
 
@@ -195,8 +189,6 @@ class TestListInboxFlow:
         assert unread == 1
 
 
-# ──────────────────── keyset cursor tiebreak (같은 ms) ────────────────────
-
 class TestKeysetCursorTiebreak:
     """`(created_at, _id)` 복합 keyset 이 같은 ms 항목을 페이지 경계에서 누락 안 하는지.
 
@@ -231,8 +223,6 @@ class TestKeysetCursorTiebreak:
         # 페이지 간 중복도 없음
         assert not ({str(i.id) for i in page1} & {str(i.id) for i in page2})
 
-
-# ──────────────────── hide — atomic + display=false 토글 ────────────────────
 
 class TestHideAtomic:
     """`hide` 가 atomic update 로 권한 검증 + 토글."""
@@ -276,8 +266,6 @@ class TestHideAtomic:
             )
 
 
-# ──────────────────── count_unread + cap ────────────────────
-
 class TestCountUnread:
     async def test_counts_only_unread_displayed(self, mongo_db, inbox_service):
         repo = InboxRepository()
@@ -309,8 +297,6 @@ class TestCountUnread:
 
         assert count == 1
 
-
-# ──────────────────── cascade_user_withdrawn ────────────────────
 
 class TestCascadeUserWithdrawn:
     """탈퇴 cascade — recipient 또는 actor 매칭 항목 모두 삭제."""

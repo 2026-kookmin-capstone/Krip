@@ -10,8 +10,6 @@ from app.schema.common import MessageResponse
 router = APIRouter(prefix="/mute", tags=["알림 차단"])
 
 
-# ──────────────────── 전역 ────────────────────
-
 @router.put("/global")
 @inject
 async def set_global_mute(
@@ -31,8 +29,6 @@ async def set_global_mute(
         message="모든 알림을 차단했습니다." if body.muted else "알림 차단을 해제했습니다."
     )
 
-
-# ──────────────────── 방별 ────────────────────
 
 @router.put("/rooms/{chat_room_id}")
 @inject

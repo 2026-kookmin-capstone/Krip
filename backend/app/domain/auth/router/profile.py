@@ -162,8 +162,6 @@ async def get_all_other_users(
     )
 
 
-# ──────────────────── 프로필 이미지 CRUD (유저당 1장 정책) ────────────────────
-
 @router.post("/image", status_code=201)
 @inject
 async def add_profile_image(

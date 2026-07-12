@@ -106,8 +106,6 @@ class ProfileService:
             total_friends=total_friends,
         )
 
-    # ──────────────────── 프로필 수정 ────────────────────
-
     @transactional
     async def update_profile(self, user_id: str, updates: dict[str, Any]) -> ProfileData:
         """프로필 부분 수정.
@@ -168,8 +166,6 @@ class ProfileService:
             notification_muted=user.notification_muted is True,
         )
 
-    # ──────────────────── 프로필 이미지 추가 ────────────────────
-
     async def add_profile_image(
         self,
         user_id: str,
@@ -218,8 +214,6 @@ class ProfileService:
 
         detail.profile_image_url = new_url
         await detail_repo.update(detail)
-
-    # ──────────────────── 프로필 이미지 수정 ────────────────────
 
     async def update_profile_image(
         self,
@@ -278,8 +272,6 @@ class ProfileService:
         await detail_repo.update(detail)
 
         return old_url
-
-    # ──────────────────── 프로필 이미지 삭제 ────────────────────
 
     async def delete_profile_image(self, user_id: str) -> None:
         """

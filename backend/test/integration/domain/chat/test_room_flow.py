@@ -16,10 +16,6 @@ from app.domain.friend.model.user_block import UserBlock
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────────────────────────────────────────────────────
-# 공통 fixture
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.fixture
 def fanout_stub() -> MagicMock:
     """Redis / fan-out 경로는 통합 테스트 범위 밖 — Mock 으로 격리.
@@ -64,10 +60,6 @@ def stub_redis(monkeypatch):
         _get_client,
     )
 
-
-# ──────────────────────────────────────────────────────────────────
-# 1:1 방 생성
-# ──────────────────────────────────────────────────────────────────
 
 class TestCreateDirectRoomFlow:
     async def test_creates_room_and_two_members(
@@ -168,10 +160,6 @@ class TestCreateDirectRoomFlow:
         with pytest.raises(ValueError, match="차단한"):
             await service.create_direct_room(me_id=a, peer_user_id=b)
 
-
-# ──────────────────────────────────────────────────────────────────
-# list_user_room_ids
-# ──────────────────────────────────────────────────────────────────
 
 class TestListUserRoomIdsFlow:
     async def test_returns_only_active_rooms(

@@ -270,7 +270,6 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
             user_id=user_id,
         )
 
-        # 1. Redis 캐시 조회
         cache = get_redis_cache_manager()
         cache_key = f"{self.REDIS_KEY_PREFIX}:{user_id}"
 
@@ -278,7 +277,6 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
             reg_logger.debug("2차 회원가입 캐시 히트")
             return await call_next(request)
 
-        # 2. DB 조회 (캐시 미스) — 유저 존재 + 2차 회원가입 완료 여부를 한 번에 확인
         try:
             container = request.app.container
             async with container.uow() as session:
@@ -336,7 +334,7 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
                 content={"detail": "2차 회원가입이 필요합니다."},
             )
 
-        # 3. Redis 캐시 저장 — ACTIVE & 2차 가입 완료된 양성 결과만 캐싱
+        # 실패 상태를 TTL 동안 허용하지 않도록 ACTIVE·가입 완료 결과만 캐싱한다.
         await cache.set_flag(cache_key, self.CACHE_TTL)
 
         return await call_next(request)

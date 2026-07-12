@@ -33,8 +33,6 @@ from app.domain.feed.service.exception import (
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── visibility / 차단 가드 ────────────────────
-
 class TestVisibilityGuards:
     async def test_friends_post_non_friend_cannot_comment(
         self, mongo_db, feed_post_comment_service, seed_feed_post,
@@ -72,8 +70,6 @@ class TestVisibilityGuards:
             )
 
 
-# ──────────────────── content 정규화 — 다단계 방어선 ────────────────────
-
 class TestContentNormalization:
     """schema(min_length=1) → service(strip 후 빈 거절) → DB CHECK 의 다단계 방어선."""
 
@@ -100,8 +96,6 @@ class TestContentNormalization:
 
         assert comment.content == "hello"
 
-
-# ──────────────────── delete — 작성자 본인만 ────────────────────
 
 class TestDeleteAuthorOnly:
     async def test_other_author_raises_permission_error(
@@ -145,13 +139,10 @@ class TestDeleteAuthorOnly:
             user_id=owner_id, post_id=post_id, content="my comment",
         )
 
-        # raise 없이 정상 종료
         await feed_post_comment_service.delete_comment(
             user_id=owner_id, post_id=post_id, comment_id=comment.comment_id,
         )
 
-
-# ──────────────────── list_comments — 최신순 ────────────────────
 
 class TestListComments:
     async def test_exact_page_has_no_next_cursor(
@@ -215,12 +206,9 @@ class TestListComments:
         )
 
         assert len(result.comments) == 3
-        # 최신순 — 마지막에 작성한 게 먼저
         assert result.comments[0].content == "third"
         assert result.comments[2].content == "first"
 
-
-# ──────────────────── helpers ────────────────────
 
 async def _find_other_user(uow, exclude_user_id: str) -> str:
     from sqlalchemy import select

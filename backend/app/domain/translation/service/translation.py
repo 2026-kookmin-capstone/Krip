@@ -20,8 +20,6 @@ class TranslationService:
     def __init__(self):
         self._translator = PapagoTranslator()
 
-    # ──────────────────── 언어 감지 ────────────────────
-
     async def detect(self, text: str) -> DetectData:
         """입력 문장의 언어를 감지합니다."""
         try:
@@ -39,8 +37,6 @@ class TranslationService:
             # 이라 payload["message"]["result"] 접근이 터지는 경우까지 502 로 흡수.
             raise TranslationVendorError(200, f"malformed payload: {type(e).__name__}") from e
         return DetectData(lang_code=result.lang_code)
-
-    # ──────────────────── 번역 ────────────────────
 
     async def translate(
         self,

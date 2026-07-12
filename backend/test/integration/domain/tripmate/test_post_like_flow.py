@@ -19,8 +19,6 @@ import pytest
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── add_like + count ────────────────────
-
 class TestAddLikeWithCount:
     async def test_multiple_users_increment_count(
         self, mongo_db, tripmate_post_like_service, seed_tripmate_post, session_factory,
@@ -73,8 +71,6 @@ class TestAddLikeWithCount:
             await tripmate_post_like_service.add_like(user_id=actor_id, post_id=post_id)
 
 
-# ──────────────────── remove_like + count 감소 ────────────────────
-
 class TestRemoveLikeWithCount:
     async def test_remove_decrements_count(
         self, mongo_db, tripmate_post_like_service, seed_tripmate_post,
@@ -89,8 +85,6 @@ class TestRemoveLikeWithCount:
 
         assert new_count == 0
 
-
-# ──────────────────── get_liked_user_ids ────────────────────
 
 class TestGetLikedUserIds:
     async def test_returns_all_likers_in_recent_first_order(
@@ -115,8 +109,6 @@ class TestGetLikedUserIds:
                 post_id="TMP_ghost", user_id=viewer_id,
             )
 
-
-# ──────────────────── helpers ────────────────────
 
 async def _find_other_user(uow, exclude_user_id: str) -> str:
     from sqlalchemy import select

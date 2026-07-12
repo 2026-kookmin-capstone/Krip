@@ -84,7 +84,7 @@ class TestBlockUserTransactionIntegrity:
             s.add(UserBlock(blocker_id=a, blocked_id=b))
             await s.commit()
 
-        # race: pre-check 를 우회 (has_blocker_blocked → False 로 고정)
+        # 기존 block을 숨겨 pre-check와 INSERT 사이의 race를 재현한다.
         async def fake_check(self, blocker_id, blocked_id):
             return False
 

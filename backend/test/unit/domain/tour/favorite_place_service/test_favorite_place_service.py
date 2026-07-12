@@ -11,10 +11,6 @@ from test.unit.domain.tour.favorite_place_service.model_factory import FavoriteP
 from test.unit.domain.tour.place_service.model_factory import PlaceRawFactory
 
 
-# ──────────────────────────────────────────────────────────────────
-# add_favorite
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestAddFavorite:
     """Tests for FavoritePlaceService.add_favorite."""
@@ -69,10 +65,6 @@ class TestAddFavorite:
             await service.add_favorite(user_id="USER_a", place_id="PLACE_x")
 
 
-# ──────────────────────────────────────────────────────────────────
-# remove_favorite
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestRemoveFavorite:
     """Tests for FavoritePlaceService.remove_favorite."""
@@ -94,10 +86,6 @@ class TestRemoveFavorite:
 
         fav_repo_mock.delete_by_user_and_place.assert_not_awaited()
 
-
-# ──────────────────────────────────────────────────────────────────
-# get_favorites — RDB 즐겨찾기 + Mongo 장소 batch
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestGetFavorites:

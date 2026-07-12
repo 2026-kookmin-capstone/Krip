@@ -22,8 +22,6 @@ _MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
 _MAX_FILE_COUNT = 10
 
 
-# ──────────────────── 이미지 업로드 ────────────────────
-
 @router.post("", status_code=201)
 @inject
 async def upload_images(
@@ -63,30 +61,6 @@ async def upload_images(
         ]
     )
 
-
-# # ──────────────────── 이미지 단건 삭제 ────────────────────
-# # 현재 미사용
-# @router.delete("/{image_id}")
-# @inject
-# async def delete_image(
-#     request: Request,
-#     image_id: str,
-#     image_service: TripmateImageService = Depends(Provide[Container.tripmate_image_service]),
-# ) -> MessageResponse:
-#     """이미지 단건 삭제 (Object Storage + MongoDB 메타데이터 동시 삭제)"""
-#     user_id: str = request.state.user_id
-
-#     try:
-#         await image_service.delete_image(user_id=user_id, image_id=image_id)
-#     except ValueError as e:
-#         raise HTTPException(status_code=404, detail=str(e))
-#     except PermissionError as e:
-#         raise HTTPException(status_code=403, detail=str(e))
-
-#     return MessageResponse(message="이미지가 삭제되었습니다.")
-
-
-# ──────────────────── 고아 이미지 정리 ────────────────────
 
 @router.post("/cleanup", status_code=200)
 @inject

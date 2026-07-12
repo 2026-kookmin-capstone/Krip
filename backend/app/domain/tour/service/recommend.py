@@ -43,8 +43,6 @@ class RecommendService:
     def __init__(self) -> None:
         self._planner = TourPlanner()
 
-    # ──────────────────── 진입점 ────────────────────
-
     async def recommend(self, body: TourRecommendRequest) -> TourRecommendResponse:
         """여행 코스 추천."""
         planner_days = self._to_planner_input(body)
@@ -69,8 +67,6 @@ class RecommendService:
 
         return self._to_response(result)
 
-    # ──────────────────── Request → Planner 입력 ────────────────────
-
     @staticmethod
     def _to_planner_input(body: TourRecommendRequest) -> list[PlannerTourDayInput]:
         """Request 일자별 입력을 Tour Planner의 TourDayInput으로 변환."""
@@ -89,8 +85,6 @@ class RecommendService:
             )
             for d in body.days
         ]
-
-    # ──────────────────── Planner 결과 → Response ────────────────────
 
     @staticmethod
     def _to_response(result: TourPlanResult) -> TourRecommendResponse:

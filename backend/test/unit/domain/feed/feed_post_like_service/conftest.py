@@ -94,7 +94,6 @@ def service(
         "app.domain.feed.service.feed_post_like.UserBlockRepository",
         lambda session: block_repo_mock,
     )
-    # 기본: load_viewable_post 가 stub post 반환 (가시성 통과)
 
     async def _stub_load(session, *, viewer_id, post_id):
         return viewable_post_stub

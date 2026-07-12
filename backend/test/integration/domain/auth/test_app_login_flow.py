@@ -33,10 +33,6 @@ from app.domain.auth.router.app_login import router as app_login_router
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────────────────────────────────────────────────────
-# Fake OAuth client — 외부 HTTP 호출 차단
-# ──────────────────────────────────────────────────────────────────
-
 class _FakeGoogleClient(OAuthClient):
     """OAuth provider 호출을 격리하는 fake client.
 
@@ -79,10 +75,6 @@ class _FakeRedis:
     async def delete(self, *keys) -> int:
         return sum(1 for k in keys if self._store.pop(k, None) is not None)
 
-
-# ──────────────────────────────────────────────────────────────────
-# 공통 fixture
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.fixture
 def app_http(monkeypatch):
@@ -136,10 +128,6 @@ def _start_login(client) -> str:
     return parse_qs(urlparse(resp.headers["location"]).query)["state"][0]
 
 
-# ──────────────────────────────────────────────────────────────────
-# GET /api/auth/login/app — 인증 URL redirect
-# ──────────────────────────────────────────────────────────────────
-
 class TestAppLoginRedirect:
     """provider 인증 페이지로의 redirect 가 웹 흐름과 동등하게 구성되는지 검증."""
 
@@ -179,10 +167,6 @@ class TestAppLoginRedirect:
 
         assert resp.status_code == 422
 
-
-# ──────────────────────────────────────────────────────────────────
-# GET /api/auth/login/app/callback — JWT 발급 + 딥링크
-# ──────────────────────────────────────────────────────────────────
 
 class TestAppLoginCallbackSuccess:
     """정상 콜백 — signup status 에 따라 딥링크 query 가 분기되는지 검증."""

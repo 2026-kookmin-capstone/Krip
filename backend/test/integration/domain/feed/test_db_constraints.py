@@ -35,8 +35,6 @@ from app.domain.feed.model.feed_post_like import FeedPostLike
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── helpers ────────────────────
-
 def _mk_post(*, user_id: str, post_id: str = "FDP_it_x") -> FeedPost:
     """test 용 FeedPost — 모든 NOT NULL URL 필드를 dummy 로 채움."""
     return FeedPost(
@@ -49,8 +47,6 @@ def _mk_post(*, user_id: str, post_id: str = "FDP_it_x") -> FeedPost:
         thumbnail_medium_url="https://x/m.jpg",
     )
 
-
-# ──────────────────── user 삭제 → cascade ────────────────────
 
 class TestUserDeleteCascadesOwnedFeed:
     """post owner 가 삭제되면 본인 feed_post + 그 post 에 매달린 like/comment 까지 정리."""
@@ -168,8 +164,6 @@ class TestUserDeleteCascadesActionsOnOthersPost:
         assert len(posts) == 1
 
 
-# ──────────────────── feed_post 삭제 → cascade ────────────────────
-
 class TestFeedPostDeleteCascade:
     """게시물 삭제 → 그 post 의 like + comment 정리. (좋아요/댓글 작성자 user 는 보존.)"""
 
@@ -214,8 +208,6 @@ class TestFeedPostDeleteCascade:
             comments = (await s.execute(select(FeedPostComment))).scalars().all()
         assert comments == []
 
-
-# ──────────────────── PK / CHECK constraint ────────────────────
 
 class TestLikeCompositePrimaryKey:
     """`feed_post_like(user_id, post_id)` composite PK — 같은 쌍 두 번 INSERT 거절."""

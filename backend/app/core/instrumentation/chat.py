@@ -25,9 +25,7 @@ from app.core.metric import (
 )
 
 
-# ────────────────────────────────────────────────────────────────────
 # WS 연결 / op
-# ────────────────────────────────────────────────────────────────────
 
 CHAT_WS_CONNECT_RESULTS = ("ok", "origin_denied", "auth_expired", "auth_inactive", "session_failed", "other")
 
@@ -111,9 +109,7 @@ async def chat_message_send_timer(fanout_path: str):
         CHAT_MESSAGE_SEND_DURATION.labels(fanout_path=fanout_path).observe(elapsed)
 
 
-# ────────────────────────────────────────────────────────────────────
 # Fan-out publish / dispatch
-# ────────────────────────────────────────────────────────────────────
 
 # 다른 노드 envelope 도 받아 unknown op 가능 → 'other' 통합.
 _KNOWN_FANOUT_OPS = frozenset({"room", "user", "session", "subscribe", "unsubscribe"})
@@ -163,9 +159,7 @@ def chat_node_heartbeat_failure() -> None:
     CHAT_NODE_HEARTBEAT_FAILURES.labels(node_id=settings.NODE_ID).inc()
 
 
-# ────────────────────────────────────────────────────────────────────
 # Reconcile / Unread recover
-# ────────────────────────────────────────────────────────────────────
 
 # lease-claim batch result (metric name의 `pop`은 호환성을 위해 유지):
 # - empty        : ready/deferred에서 claim한 room 없음

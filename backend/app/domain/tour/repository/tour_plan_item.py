@@ -10,8 +10,6 @@ class TourPlanItemRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    # ──────────────────── Create ────────────────────
-
     async def save(self, item: TourPlanItem) -> TourPlanItem:
         """카드 단건 저장 (개별 추가 시)"""
         self.session.add(item)
@@ -26,13 +24,9 @@ class TourPlanItemRepository:
         await self.session.flush()
         return items
 
-    # ──────────────────── Read (단건) ────────────────────
-
     async def find_by_id(self, item_id: str) -> Optional[TourPlanItem]:
         """카드 단건 조회 (수정/삭제 검증용)"""
         return await self.session.get(TourPlanItem, item_id)
-
-    # ──────────────────── Read (목록) ────────────────────
 
     async def find_by_plan_id(self, plan_id: str) -> list[TourPlanItem]:
         """플랜의 모든 카드 조회 (day_number ASC, position ASC 정렬)
@@ -48,14 +42,10 @@ class TourPlanItemRepository:
         result = await self.session.execute(stmt)
         return list(result.scalars().all())
 
-    # ──────────────────── Update ────────────────────
-
     async def update(self, item: TourPlanItem) -> TourPlanItem:
         """변경사항 flush (visit_time / position / day_number 변경 모두 동일)"""
         await self.session.flush()
         return item
-
-    # ──────────────────── Delete ────────────────────
 
     async def delete(self, item: TourPlanItem) -> None:
         """카드 단건 삭제"""

@@ -25,8 +25,6 @@ from app.domain.feed.service.exception import FeedNotFoundError
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── upload_post ────────────────────
-
 class TestUploadPost:
     """업로드 흐름 — Pillow / S3 mock + 실 RDB INSERT."""
 
@@ -42,10 +40,8 @@ class TestUploadPost:
             caption="my first post",
         )
 
-        # S3 3회 (original / small / medium)
         assert feed_storage_mock.upload_to_key.await_count == 3
 
-        # RDB row 검증
         async with session_factory() as session:
             post = await session.get(FeedPost, result.post_id)
             assert post is not None
@@ -69,8 +65,6 @@ class TestUploadPost:
             post = await session.get(FeedPost, result.post_id)
             assert post.caption is None
 
-
-# ──────────────────── get_my_post ────────────────────
 
 class TestGetMyPost:
     async def test_owner_can_get_own_post(
@@ -101,8 +95,6 @@ class TestGetMyPost:
         with pytest.raises(FeedNotFoundError):
             await feed_post_service.get_my_post(user_id=user_id, post_id="FDP_ghost")
 
-
-# ──────────────────── update_visibility / update_caption ────────────────────
 
 class TestUpdateMetadata:
     async def test_update_visibility_persists(
@@ -143,8 +135,6 @@ class TestUpdateMetadata:
             )
 
 
-# ──────────────────── delete_post ────────────────────
-
 class TestDeletePost:
     async def test_deletes_rdb_and_calls_s3_cleanup(
         self, feed_post_service, seed_feed_post, session_factory, feed_storage_mock,
@@ -157,7 +147,6 @@ class TestDeletePost:
             post = await session.get(FeedPost, post_id)
             assert post is None
 
-        # S3 prefix cleanup 호출
         feed_storage_mock.delete_by_prefix.assert_awaited_once()
 
     async def test_delete_missing_raises_not_found(
@@ -177,8 +166,6 @@ class TestDeletePost:
         with pytest.raises(FeedNotFoundError):
             await feed_post_service.delete_post(user_id=other_id, post_id=post_id)
 
-
-# ──────────────────── helpers ────────────────────
 
 async def _find_other_user(uow, exclude_user_id: str) -> str:
     from app.domain.auth.model.user import User, UserStatus

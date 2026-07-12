@@ -24,8 +24,6 @@ from app.domain.tripmate.model.tripmate_post_image import TripmatePostImage
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── upload_image ────────────────────
-
 class TestUploadImage:
     async def test_uploads_to_storage_and_persists_metadata(
         self, tripmate_image_service, tripmate_image_storage_mock, seed_users,
@@ -37,18 +35,14 @@ class TestUploadImage:
             file_name="test.jpg", content_type="image/jpeg",
         )
 
-        # Storage 호출
         tripmate_image_storage_mock.upload_perm.assert_awaited_once()
 
-        # Mongo metadata 적재
         coll = TripmateImage.get_motor_collection()
         doc = await coll.find_one({"image_id": result.image_id})
         assert doc is not None
         assert doc["user_id"] == user_id
         assert doc["image_url"] == result.image_url
 
-
-# ──────────────────── delete_image ────────────────────
 
 class TestDeleteImage:
     async def test_owner_can_delete_storage_and_metadata(
@@ -64,10 +58,8 @@ class TestDeleteImage:
             user_id=user_id, image_id=uploaded.image_id,
         )
 
-        # Storage delete 호출 (URL 인자)
         tripmate_image_storage_mock.delete.assert_awaited_once_with(uploaded.image_url)
 
-        # Mongo metadata 사라짐
         coll = TripmateImage.get_motor_collection()
         assert await coll.count_documents({"image_id": uploaded.image_id}) == 0
 
@@ -95,8 +87,6 @@ class TestDeleteImage:
                 user_id=user_id, image_id="IMG_ghost",
             )
 
-
-# ──────────────────── cleanup_orphaned_images ────────────────────
 
 class TestCleanupOrphanedImages:
     """고아 = (post 참조 ∪ draft 참조) 의 보집합. 실 RDB + 실 Mongo 합성 검증."""

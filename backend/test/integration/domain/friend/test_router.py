@@ -35,10 +35,6 @@ from app.domain.friend.service.friend_detail import UserNotFoundError
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────────────────────────────────────────────────────
-# 공통 fixture
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.fixture
 def http():
     """Service 를 mock 으로 주입한 최소 FastAPI 앱 + TestClient."""
@@ -98,10 +94,6 @@ def _friendship_dto(
     )
 
 
-# ──────────────────────────────────────────────────────────────────
-# POST /api/friend/requests — 친구 요청
-# ──────────────────────────────────────────────────────────────────
-
 class TestSendFriendRequestEndpoint:
     def test_returns_201_with_payload_on_success(self, http):
         client, friendship_mock, _, _ = http
@@ -145,10 +137,6 @@ class TestSendFriendRequestEndpoint:
         assert resp.status_code == 422
 
 
-# ──────────────────────────────────────────────────────────────────
-# PATCH /api/friend/requests/{id}/accept — 수락
-# ──────────────────────────────────────────────────────────────────
-
 class TestAcceptEndpoint:
     def test_returns_200_with_message(self, http):
         client, friendship_mock, _, _ = http
@@ -186,10 +174,6 @@ class TestAcceptEndpoint:
         assert resp.status_code == 403
 
 
-# ──────────────────────────────────────────────────────────────────
-# GET /api/friend — 친구 목록
-# ──────────────────────────────────────────────────────────────────
-
 class TestGetFriendsEndpoint:
     def test_returns_list_with_cursor(self, http):
         client, friendship_mock, _, _ = http
@@ -205,10 +189,6 @@ class TestGetFriendsEndpoint:
         assert len(body["items"]) == 1
         assert body["next_cursor"] == "FS_cursor"
 
-
-# ──────────────────────────────────────────────────────────────────
-# POST /api/friend/blocks — 차단
-# ──────────────────────────────────────────────────────────────────
 
 class TestBlockEndpoint:
     def test_returns_201_on_success(self, http):
@@ -247,10 +227,6 @@ class TestBlockEndpoint:
 
         assert resp.status_code == 400
 
-
-# ──────────────────────────────────────────────────────────────────
-# GET /api/friend/detail/{user_id} — 친구 상세 조회
-# ──────────────────────────────────────────────────────────────────
 
 def _friend_detail_dto(user_id: str = "USER_b") -> FriendDetailData:
     return FriendDetailData(
@@ -312,10 +288,6 @@ class TestDetailEndpoint:
         assert "2차 회원가입" in resp.json()["detail"]
 
 
-# ──────────────────────────────────────────────────────────────────
-# /search + /search/history fixture
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.fixture
 def http_search():
     """search / search_history service mock 만 override.
@@ -371,10 +343,6 @@ def _search_item_dto(
         profile_image_url=None,
     )
 
-
-# ──────────────────────────────────────────────────────────────────
-# GET /api/friend/search — 친구 추가 후보 검색
-# ──────────────────────────────────────────────────────────────────
 
 class TestSearchEndpoint:
     def test_returns_200_with_items_and_cursor(self, http_search):
@@ -476,8 +444,6 @@ class TestSearchEndpoint:
         _, kwargs = search_mock.search.call_args
         assert kwargs["keyword"] == "영희"
 
-    # ──────────────────── save_search 통합 ────────────────────
-
     def test_history_saved_on_first_page(self, http_search):
         client, search_mock, search_history_mock = http_search
         search_mock.search.return_value = FriendSearchListData(items=[], next_cursor=None)
@@ -537,9 +503,7 @@ class TestSearchEndpoint:
         )
 
 
-# ──────────────────────────────────────────────────────────────────
 # /search/history — 검색 기록 CRUD
-# ──────────────────────────────────────────────────────────────────
 
 from types import SimpleNamespace  # noqa: E402 — fixture/test 분리 후 사용
 

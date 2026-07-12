@@ -7,44 +7,22 @@ from sqlalchemy import pool
 
 from alembic import context
 
-# sys.path.append(str(Path(__file__).parent.parent))
-sys.path.append(str(Path(__file__).parent.parent / "app")) # 데이터베이스 마이그레이션 할 때
+sys.path.append(str(Path(__file__).parent.parent / "app"))
 
-# this is the Alembic Config object, which provides
-# access to the values within the .ini file in use.
 config = context.config
 
-# Interpret the config file for Python logging.
-# This line sets up loggers basically.
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# add your model's MetaData object here
-# for 'autogenerate' support
 from app.database.session import Base
 from app.database.model import *
 from app.config.setting import settings
 
 target_metadata = Base.metadata
 
-# other values from the config, defined by the needs of env.py,
-# can be acquired:
-# my_important_option = config.get_main_option("my_important_option")
-# ... etc.
-
 
 def run_migrations_offline() -> None:
-    """Run migrations in 'offline' mode.
-
-    This configures the context with just a URL
-    and not an Engine, though an Engine is acceptable
-    here as well.  By skipping the Engine creation
-    we don't even need a DBAPI to be available.
-
-    Calls to context.execute() here emit the given string to the
-    script output.
-
-    """
+    """DB 연결 없이 SQL migration script를 생성한다."""
     url = settings.SYNC_POSTGRES_URL
     context.configure(
         url=url,
@@ -58,12 +36,7 @@ def run_migrations_offline() -> None:
 
 
 def run_migrations_online() -> None:
-    """Run migrations in 'online' mode.
-
-    In this scenario we need to create an Engine
-    and associate a connection with the context.
-
-    """
+    """DB에 연결해 migration을 실행한다."""
     configuration = config.get_section(config.config_ini_section)
     configuration['sqlalchemy.url'] = settings.SYNC_POSTGRES_URL
     

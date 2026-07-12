@@ -10,15 +10,11 @@ class TripmatePostLikeRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    # ──────────────────── Create ────────────────────
-
     async def save(self, like: TripmatePostLike) -> TripmatePostLike:
         """좋아요 추가"""
         self.session.add(like)
         await self.session.flush()
         return like
-
-    # ──────────────────── Read ────────────────────
 
     async def find_by_user_and_post(self, user_id: str, post_id: str) -> Optional[TripmatePostLike]:
         """특정 유저가 특정 게시글에 좋아요를 눌렀는지 조회"""
@@ -39,8 +35,6 @@ class TripmatePostLikeRepository:
         stmt = select(func.count()).where(TripmatePostLike.post_id == post_id)
         result = await self.session.execute(stmt)
         return result.scalar_one()
-
-    # ──────────────────── Delete ────────────────────
 
     async def delete_by_user_and_post(self, user_id: str, post_id: str) -> None:
         """유저 ID + 게시글 ID로 좋아요 취소"""

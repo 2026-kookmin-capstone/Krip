@@ -42,8 +42,6 @@ USER_B = "USER_SMOKE_B"
 USER_C = "USER_SMOKE_C"
 
 
-# ──────────────────── 유틸 ────────────────────
-
 def make_jwt(user_id: str) -> str:
     payload = {
         "user_id": user_id,
@@ -74,8 +72,6 @@ def make_client(user_id: str) -> httpx.AsyncClient:
         timeout=10.0,
     )
 
-
-# ──────────────────── WS 헬퍼 ────────────────────
 
 async def connect_ws(user_id: str) -> websockets.WebSocketClientProtocol:
     token = make_jwt(user_id)
@@ -110,8 +106,6 @@ async def send_json(ws, payload: dict) -> None:
     await ws.send(json.dumps(payload))
 
 
-# ──────────────────── [1/6] direct 방 생성 ────────────────────
-
 async def section_direct_room(client_a: httpx.AsyncClient) -> str:
     log("REST", "POST /chat/rooms/direct (A → B)")
     r = await client_a.post("/api/chat/rooms/direct", json={"peer_user_id": USER_B})
@@ -135,8 +129,6 @@ async def section_direct_room(client_a: httpx.AsyncClient) -> str:
     assert_eq(r2.json()["chat_room_id"], room_id, "idempotent")
     return room_id
 
-
-# ──────────────────── [2/6] direct WS 송수신 + dedupe ────────────────────
 
 async def section_direct_ws_send(direct_room_id: str) -> int:
     log("WS", "B 연결")
@@ -168,7 +160,6 @@ async def section_direct_ws_send(direct_room_id: str) -> int:
     assert_eq(evt["message"]["sender_id"], USER_A, "sender_id")
     log("WS", "    B message.new 수신")
 
-    # dedupe
     log("WS", "A → 같은 cmid 재전송 (dedupe)")
     await send_json(ws_a, {
         "op": "send",
@@ -186,8 +177,6 @@ async def section_direct_ws_send(direct_room_id: str) -> int:
     return server_seq
 
 
-# ──────────────────── [3/6] direct 히스토리 ────────────────────
-
 async def section_direct_history(
     client_a: httpx.AsyncClient, direct_room_id: str, last_seq: int,
 ) -> None:
@@ -204,8 +193,6 @@ async def section_direct_history(
     log("REST", f"    히스토리 OK — server_seq={last_seq}")
 
 
-# ──────────────────── [4/6] 그룹 생성 + 시스템 메시지 + catch-up ────────────────────
-
 async def section_group_create_and_catchup(client_a: httpx.AsyncClient) -> str:
     log("REST", "POST /chat/rooms/group (A creator, members=[B, C])")
     r = await client_a.post(
@@ -220,7 +207,6 @@ async def section_group_create_and_catchup(client_a: httpx.AsyncClient) -> str:
     room_id = body["chat_room_id"]
     log("REST", f"    → group room_id={room_id}")
 
-    # catch-up — after_server_seq=0 으로 전체 히스토리 (system "created" 1건)
     log("REST", f"GET /rooms/{room_id}/messages?after_server_seq=0 (catch-up)")
     r = await client_a.get(
         f"/api/chat/rooms/{room_id}/messages",
@@ -238,10 +224,7 @@ async def section_group_create_and_catchup(client_a: httpx.AsyncClient) -> str:
     return room_id
 
 
-# ──────────────────── [5/6] 그룹 WS 송수신 + 읽음 ────────────────────
-
 async def section_group_ws_and_read(group_room_id: str) -> None:
-    # A, B, C 세 명 모두 WS 연결 + 방 자동 구독
     log("WS", "A/B/C 세 명 연결")
     ws_a = await connect_ws(USER_A)
     await recv_until(ws_a, "connected")
@@ -270,7 +253,6 @@ async def section_group_ws_and_read(group_room_id: str) -> None:
     assert_eq(evt_c["message"]["content"], "그룹 메시지 OK", "C content")
     log("WS", "    B/C message.new 수신")
 
-    # B 가 read op 발행
     log("WS", f"B → op=read up_to={server_seq}")
     await send_json(ws_b, {
         "op": "read",
@@ -283,7 +265,6 @@ async def section_group_ws_and_read(group_room_id: str) -> None:
     assert_eq(ack_b["up_to_server_seq"], server_seq, "read_ack seq")
     log("WS", "    B read_ack OK")
 
-    # 나머지 세션(A, C) 에 read 이벤트 전파 — 발신 세션(B) 은 제외
     read_a = await recv_until(ws_a, "read")
     assert_eq(read_a["user_id"], USER_B, "A→read user_id")
     assert_eq(read_a["up_to_server_seq"], server_seq, "A→read seq")
@@ -296,12 +277,9 @@ async def section_group_ws_and_read(group_room_id: str) -> None:
     await ws_c.close()
 
 
-# ──────────────────── [6/6] 편집 + 삭제 + 마스킹 ────────────────────
-
 async def section_edit_and_delete(
     client_a: httpx.AsyncClient, direct_room_id: str,
 ) -> None:
-    # direct 방의 A 가 보낸 텍스트 메시지 (섹션 2에서 송신된 1건)
     r = await client_a.get(
         f"/api/chat/rooms/{direct_room_id}/messages",
         params={"before_server_seq": 999999, "limit": 10},
@@ -310,7 +288,6 @@ async def section_edit_and_delete(
     target = next(m for m in messages if m["sender_id"] == USER_A and m["type"] == "text")
     msg_id = target["message_id"]
 
-    # 편집
     log("REST", f"PATCH /messages/{msg_id} (편집)")
     r = await client_a.patch(
         f"/api/chat/messages/{msg_id}",
@@ -319,7 +296,6 @@ async def section_edit_and_delete(
     assert_eq(r.status_code, 200, "편집 상태코드")
     assert_eq(r.json()["content"], "편집된 본문", "편집 응답 content")
 
-    # 히스토리 재조회 → 편집 반영
     r = await client_a.get(
         f"/api/chat/rooms/{direct_room_id}/messages",
         params={"before_server_seq": 999999, "limit": 10},
@@ -329,12 +305,10 @@ async def section_edit_and_delete(
     assert updated["edited_at"] is not None, "edited_at 없음"
     log("REST", "    편집 OK + 히스토리 반영 OK")
 
-    # 삭제
     log("REST", f"DELETE /messages/{msg_id} (soft delete)")
     r = await client_a.delete(f"/api/chat/messages/{msg_id}")
     assert_eq(r.status_code, 204, "삭제 상태코드")
 
-    # 히스토리 재조회 → content=null 마스킹 + deleted_at 세팅
     r = await client_a.get(
         f"/api/chat/rooms/{direct_room_id}/messages",
         params={"before_server_seq": 999999, "limit": 10},
@@ -344,8 +318,6 @@ async def section_edit_and_delete(
     assert deleted["deleted_at"] is not None, "deleted_at 없음"
     log("REST", "    삭제 마스킹 OK")
 
-
-# ──────────────────── 메인 ────────────────────
 
 async def main() -> int:
     print("=" * 70)

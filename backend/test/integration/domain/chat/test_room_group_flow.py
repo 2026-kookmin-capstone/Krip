@@ -26,10 +26,6 @@ from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────────────────────────────────────────────────────
-# 공통 fixture
-# ──────────────────────────────────────────────────────────────────
-
 @pytest_asyncio.fixture
 async def seed_friendship(session_factory):
     """두 유저를 ACCEPTED 상태 친구로 맺어주는 팩토리."""
@@ -43,10 +39,6 @@ async def seed_friendship(session_factory):
             await s.commit()
     return _seed
 
-
-# ──────────────────────────────────────────────────────────────────
-# create_group_room
-# ──────────────────────────────────────────────────────────────────
 
 class TestCreateGroupRoomFlow:
     async def test_creates_room_with_members_and_caches(
@@ -105,10 +97,6 @@ class TestCreateGroupRoomFlow:
                 me_id=a, title="T", member_ids=[b],
             )
 
-
-# ──────────────────────────────────────────────────────────────────
-# invite_members
-# ──────────────────────────────────────────────────────────────────
 
 class TestInviteMembersFlow:
     async def test_send_and_invite_share_room_first_lock_order(
@@ -378,10 +366,6 @@ class TestInviteMembersFlow:
             )
 
 
-# ──────────────────────────────────────────────────────────────────
-# leave_room
-# ──────────────────────────────────────────────────────────────────
-
 class TestLeaveRoomFlow:
     async def test_leave_removes_from_redis_and_marks_is_left(
         self, uow, seed_users, seed_friendship, chat_fanout_stub,
@@ -447,10 +431,6 @@ class TestLeaveRoomFlow:
         with pytest.raises(ValueError, match="그룹 방만"):
             await service.leave_room(me_id=a, room_id=direct.chat_room_id)
 
-
-# ──────────────────────────────────────────────────────────────────
-# kick_member
-# ──────────────────────────────────────────────────────────────────
 
 class TestKickMemberFlow:
     async def test_creator_kicks_target(

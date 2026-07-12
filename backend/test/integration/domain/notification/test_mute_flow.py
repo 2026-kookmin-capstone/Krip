@@ -16,8 +16,6 @@ from test.integration.domain.notification.conftest import (
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── 전역 mute ────────────────────
-
 class TestSetGlobalMuteFlow:
     async def test_true_persists_as_true(
         self, mute_service, session_factory, seed_users,
@@ -57,8 +55,6 @@ class TestSetGlobalMuteFlow:
         with pytest.raises(ValueError, match="존재하지 않는"):
             await mute_service.set_global_mute(user_id="USER_NONE", muted=True)
 
-
-# ──────────────────── 방별 mute ────────────────────
 
 class TestSetRoomMuteFlow:
     async def test_true_persists_only_for_caller(

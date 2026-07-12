@@ -10,8 +10,6 @@ from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
 
 class TripmatePostDraftRepository:
 
-    # ──────────────────── Upsert (저장/갱신) ────────────────────
-
     @measure_mongo_op("update", "tripmate_post_draft")
     async def upsert(self, draft: TripmatePostDraft) -> TripmatePostDraft:
         """임시저장 upsert — single atomic operation"""
@@ -43,14 +41,10 @@ class TripmatePostDraftRepository:
 
         return TripmatePostDraft.model_validate(result)
 
-    # ──────────────────── Read ────────────────────
-
     @measure_mongo_op("find_one", "tripmate_post_draft")
     async def find_by_user_id(self, user_id: str) -> Optional[TripmatePostDraft]:
         """유저의 임시저장 조회"""
         return await TripmatePostDraft.find_one({"user_id": user_id})
-
-    # ──────────────────── Delete ────────────────────
 
     @measure_mongo_op("delete", "tripmate_post_draft")
     async def delete_by_user_id(self, user_id: str) -> None:

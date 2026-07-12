@@ -28,8 +28,6 @@ class MenuOcrService:
     def __init__(self):
         self._ocr = MenuOcr()
 
-    # ──────────────────── 단건 OCR ────────────────────
-
     async def ocr_single(self, image_bytes: bytes, content_type: str) -> MenuOcrData:
         """
         이미지 한 장에서 메뉴 정보를 추출합니다.
@@ -54,8 +52,6 @@ class MenuOcrService:
         if result is None:
             raise MenuOcrVendorError("empty OCR output")
         return self._to_dto(result)
-
-    # ──────────────────── 다건 OCR ────────────────────
 
     async def ocr_batch(
         self, images: List[tuple[bytes, str]]
@@ -82,8 +78,6 @@ class MenuOcrService:
         return MenuOcrBatchData(
             results=[self._to_dto(r) for r in results]
         )
-
-    # ──────────────────── 내부 변환 유틸 ────────────────────
 
     @staticmethod
     def _to_dto(result: MenuOcrResult) -> MenuOcrData:

@@ -16,10 +16,6 @@ from test.unit.domain.tour.tour_plan_service.model_factory import (
 )
 
 
-# ──────────────────────────────────────────────────────────────────
-# create_plan
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestCreatePlan:
     """Tests for TourPlanService.create_plan."""
@@ -71,7 +67,6 @@ class TestCreatePlan:
             user_id="USER_a", title="My Trip", travel_days=2, items=items,
         )
 
-        # plan_repo.save 가 호출됐는지
         plan_repo_mock.save.assert_awaited_once()
         saved_plan = plan_repo_mock.save.await_args.args[0]
         assert saved_plan.user_id == "USER_a"
@@ -85,14 +80,9 @@ class TestCreatePlan:
         assert sorted(i.position for i in d1_items) == [_POSITION_SPACING, 2 * _POSITION_SPACING]
         assert [i.position for i in d2_items] == [_POSITION_SPACING]
 
-        # 응답 DTO
         assert result.travel_days == 2
         assert len(result.items) == 3
 
-
-# ──────────────────────────────────────────────────────────────────
-# get_plan
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestGetPlan:
@@ -129,15 +119,10 @@ class TestGetPlan:
         result = await service.get_plan(plan_id=plan.plan_id, user_id="USER_a")
 
         assert len(result.items) == 2
-        # rating 라이브 매핑 확인
         ratings = {i.place_id: i.rating for i in result.items}
         assert ratings["P1"] == 4.0
         assert ratings["P2"] == 3.5
 
-
-# ──────────────────────────────────────────────────────────────────
-# get_plans
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestGetPlans:
@@ -162,10 +147,6 @@ class TestGetPlans:
         assert len(result.plans) == 2
         assert {p.plan_id for p in result.plans} == {"TP_1", "TP_2"}
 
-
-# ──────────────────────────────────────────────────────────────────
-# update_plan_title
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestUpdatePlanTitle:
@@ -203,10 +184,6 @@ class TestUpdatePlanTitle:
         assert plan.title is None
 
 
-# ──────────────────────────────────────────────────────────────────
-# add_day
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestAddDay:
     """Tests for TourPlanService.add_day."""
@@ -233,10 +210,6 @@ class TestAddDay:
         assert plan.travel_days == 4
         assert plan.updated_at != original_updated_at  # 명시적 touch (lazy refresh 회피)
 
-
-# ──────────────────────────────────────────────────────────────────
-# remove_day
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestRemoveDay:
@@ -276,11 +249,8 @@ class TestRemoveDay:
 
         await service.remove_day(plan_id=plan.plan_id, user_id="USER_a", day_number=2)
 
-        # bulk DELETE 호출
         item_repo_mock.delete_by_plan_and_day.assert_awaited_once_with(plan.plan_id, 2)
-        # travel_days 변화 없음 (gap 보존)
         assert plan.travel_days == 3
-        # plan touch
         plan_repo_mock.update.assert_awaited_once_with(plan)
 
     async def test_idempotent_for_empty_day(
@@ -290,15 +260,10 @@ class TestRemoveDay:
         plan = TourPlanFactory.create(user_id="USER_a", travel_days=5)
         plan_repo_mock.find_by_id.return_value = plan
 
-        # bulk delete returns None, no exception
         await service.remove_day(plan_id=plan.plan_id, user_id="USER_a", day_number=3)
 
         item_repo_mock.delete_by_plan_and_day.assert_awaited_once()
 
-
-# ──────────────────────────────────────────────────────────────────
-# delete_plan
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestDeletePlan:
@@ -324,10 +289,6 @@ class TestDeletePlan:
 
         plan_repo_mock.delete.assert_awaited_once_with(plan)
 
-
-# ──────────────────────────────────────────────────────────────────
-# add_item
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestAddItem:
@@ -386,7 +347,6 @@ class TestAddItem:
             day_number=1, place_id="P1", visit_time="10:00",
         )
 
-        # 빈 day → position = _POSITION_SPACING
         item_repo_mock.save.assert_awaited_once()
         saved_item = item_repo_mock.save.await_args.args[0]
         assert saved_item.position == _POSITION_SPACING
@@ -415,10 +375,6 @@ class TestAddItem:
         # 마지막 (2048) + spacing = 3072
         assert saved_item.position == 2048.0 + _POSITION_SPACING
 
-
-# ──────────────────────────────────────────────────────────────────
-# update_item (PUT — 카드 교체)
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestUpdateItem:
@@ -485,20 +441,13 @@ class TestUpdateItem:
             place_id="P_new", visit_time="14:00",
         )
 
-        # 스냅샷 갱신
         assert item.place_id == "P_new"
         assert item.display_name == "New Name"
         assert item.address == "New Addr"
         assert item.visit_time == "14:00"
-        # plan touch
         plan_repo_mock.update.assert_awaited_once_with(plan)
-        # rating 라이브
         assert result.rating == 4.2
 
-
-# ──────────────────────────────────────────────────────────────────
-# move_item
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestMoveItem:
@@ -544,7 +493,6 @@ class TestMoveItem:
         plan = TourPlanFactory.create(user_id="USER_a", travel_days=3)
         item_repo_mock.find_by_id.return_value = item
         plan_repo_mock.find_by_id.return_value = plan
-        # day 2 는 비어있음
         item_repo_mock.find_by_plan_id.return_value = [item]  # 자기 자신만
 
         await service.move_item(
@@ -575,10 +523,6 @@ class TestMoveItem:
         assert moving.day_number == 2
         assert moving.position == (1024.0 + 2048.0) / 2  # midpoint
 
-
-# ──────────────────────────────────────────────────────────────────
-# remove_item
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestRemoveItem:
@@ -619,10 +563,6 @@ class TestRemoveItem:
         plan_repo_mock.update.assert_awaited_once_with(plan)
 
 
-# ──────────────────────────────────────────────────────────────────
-# _compute_position (static method)
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestComputePosition:
     """Tests for TourPlanService._compute_position."""
@@ -655,10 +595,6 @@ class TestComputePosition:
             TourPlanService._compute_position(items, "GHOST")
 
 
-# ──────────────────────────────────────────────────────────────────
-# generate_share_token
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestGenerateShareToken:
     """Tests for TourPlanService.generate_share_token."""
@@ -684,8 +620,6 @@ class TestGenerateShareToken:
         result = await service.generate_share_token(plan_id=plan.plan_id, user_id="USER_a")
 
         assert result.share_token  # non-empty
-        # 라운드트립 — 토큰 디코드 시 plan_id 복원
         assert decode_share_token(result.share_token) == plan.plan_id
-        # 만료는 미래
         from datetime import datetime, timezone
         assert result.expires_at > datetime.now(timezone.utc)

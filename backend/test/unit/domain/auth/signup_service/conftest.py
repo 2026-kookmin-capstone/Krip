@@ -48,7 +48,6 @@ def user_repo_mock():
     from unittest.mock import AsyncMock
     mock.find_by_provider = AsyncMock(return_value=None)
 
-    # save side_effect: user_id 가 None 이면 새 ID 부여 → 신규 가입 흐름 시뮬레이션
     def _save_with_id(user):
         if getattr(user, "user_id", None) is None:
             user.user_id = "USER_new_001"

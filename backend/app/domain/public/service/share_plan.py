@@ -21,8 +21,6 @@ class SharePlanService:
         self.uow = uow
         self.place_repo = PlaceRepository()
 
-    # ──────────────────── 공유 토큰으로 plan 조회 ────────────────────
-
     @transactional
     async def get_plan_by_token(self, share_token: str) -> PublicPlanData:
         """공유 토큰 디코드 → plan 조회 → 공개 응답 빌드.
@@ -42,8 +40,6 @@ class SharePlanService:
         place_map = {p["place_id"]: p for p in raw_places}
 
         return self._to_public_plan_dto(plan, items, place_map)
-
-    # ──────────────────── 내부 변환 유틸 ────────────────────
 
     @staticmethod
     def _to_public_plan_item_dto(item: TourPlanItem, rating, photos: list[str]) -> PublicPlanItemData:

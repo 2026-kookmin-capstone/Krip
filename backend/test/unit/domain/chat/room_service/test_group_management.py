@@ -14,10 +14,6 @@ from app.domain.chat.service.room import RoomService
 from test.unit.domain.chat.room_service.model_factory import ChatRoomFactory
 
 
-# ──────────────────────────────────────────────────────────────────
-# create_group_room
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestCreateGroupRoom:
     async def test_service_rejects_more_than_100_members_after_dedup(
@@ -104,10 +100,6 @@ class TestCreateGroupRoom:
         assert p.expire.call_count == 1   # members SET만 TTL; generation fence는 영속
         assert p.hset.call_count == 2     # creator + 1 member
 
-
-# ──────────────────────────────────────────────────────────────────
-# invite_members
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestInviteMembers:
@@ -344,10 +336,6 @@ class TestInviteMembers:
         p.hset.assert_any_call(unread_key("U_B"), "CR_G", 0)
 
 
-# ──────────────────────────────────────────────────────────────────
-# leave_room
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestLeaveRoom:
     async def test_room_not_found_raises(self, service, chat_room_repo_mock):
@@ -411,10 +399,6 @@ class TestLeaveRoom:
         assert call.args[0] == "U_A"
         assert call.args[1] == {"type": "room_left", "room_id": "CR_G"}
 
-
-# ──────────────────────────────────────────────────────────────────
-# kick_member
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestKickMember:
@@ -499,10 +483,8 @@ class TestKickMember:
         assert call.args[1] == {"type": "room_left", "room_id": "CR_G"}
 
 
-# ──────────────────────────────────────────────────────────────────
 # 시스템 메시지 발행 (PHASE_2 #2) — RoomService 가 MessageService 에 정확한 payload 로
 # 위임하는지만 검증. 실제 Mongo 저장/fan-out 은 통합에서.
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestSystemMessageEmission:

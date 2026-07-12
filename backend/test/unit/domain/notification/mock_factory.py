@@ -29,8 +29,6 @@ def make_mock_session() -> MagicMock:
     return session
 
 
-# ──────────────────── Repository mocks ────────────────────
-
 class FcmTokenRepositoryMockFactory:
     @classmethod
     def create(cls) -> AsyncMock:
@@ -79,8 +77,6 @@ class InboxRepositoryMockFactory:
         mock.delete_by_user.return_value = 0
         return mock
 
-
-# ──────────────────── FCM batch response helper ────────────────────
 
 def make_fcm_batch_response(
     success_results: list[bool],

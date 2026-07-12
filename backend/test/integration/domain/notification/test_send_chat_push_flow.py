@@ -15,8 +15,6 @@ from test.integration.domain.notification.conftest import fetch_tokens_by_user
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── 정상 발송 ────────────────────
-
 class TestHappyPath:
     async def test_all_pushable_users_get_multicast(
         self,
@@ -56,8 +54,6 @@ class TestHappyPath:
         assert sent == 0
         assert fcm_messaging_stub.calls == []
 
-
-# ──────────────────── 가드 체인 — 방별 mute ────────────────────
 
 class TestRoomMuteGuard:
     async def test_room_muted_user_excluded(
@@ -110,8 +106,6 @@ class TestRoomMuteGuard:
         assert fcm_messaging_stub.calls[0] == ["tok-B"]
 
 
-# ──────────────────── 가드 체인 — 전역 mute ────────────────────
-
 class TestGlobalMuteGuard:
     async def test_globally_muted_user_excluded(
         self, fcm_service, mute_service,
@@ -155,8 +149,6 @@ class TestGlobalMuteGuard:
         assert fcm_messaging_stub.calls == []
 
 
-# ──────────────────── 가드 체인 — 토큰 보유 ────────────────────
-
 class TestTokenGuard:
     async def test_no_tokens_skips_multicast(
         self, fcm_service, seed_room_with_members, fcm_messaging_stub,
@@ -175,8 +167,6 @@ class TestTokenGuard:
         assert fcm_messaging_stub.calls == []
 
 
-# ──────────────────── 만료 토큰 자동 정리 ────────────────────
-
 class TestUnregisteredTokenCleanup:
     async def test_unregistered_tokens_are_deleted(
         self,
@@ -191,19 +181,11 @@ class TestUnregisteredTokenCleanup:
         await fcm_service.register_token(user_id=user_a, token="tok-A2")  # 이게 만료
         await fcm_service.register_token(user_id=user_b, token="tok-B1")
 
-        # tokens 순서는 service 내부 SELECT 순서 — 다음 set_responses 가 멀티캐스트
-        # 호출 시점의 토큰 순서와 1:1 대응되도록 set_responses 를 호출한 뒤
-        # send_chat_push 에서 실제 순서로 검증.
+        # stub 응답은 조회 순서의 두 번째 토큰만 만료 처리한다.
         fcm_messaging_stub.set_responses(
             success=[True, False, True],
             errors=[None, messaging.UnregisteredError("expired"), None],
         )
-
-        # service 내부 SELECT 순서를 모르므로, 한 번 send 후 호출된 토큰 순서를 확인하고
-        # 응답을 그 순서에 맞춰 재구성 — 단순화 위해 호출 토큰 순서 기준으로 다시 set.
-        # send_chat_push 한 번 호출에서 토큰 셋과 응답을 맞추기 위해,
-        # 위 set_responses 가 [True, False, True] 으로 가정하고 manually 매핑한 시나리오:
-        # FCM stub 은 토큰 순서대로 응답 매칭 → 가운데가 항상 만료됨.
 
         sent = await fcm_service.send_chat_push(
             user_ids=[user_a, user_b],
@@ -211,17 +193,13 @@ class TestUnregisteredTokenCleanup:
             title="t", body="b",
         )
 
-        # 최소한 만료된 1건이 정리됐는지 확인 — 토큰 순서와 무관하게
-        # `tok-A2` 가 만료라 가정한 위치에 따라 다를 수 있어, 실제 호출 시 토큰별 매핑은
-        # stub 의 호출 토큰 리스트로 사후 검증.
         called_tokens = fcm_messaging_stub.calls[0]
-        # 응답 [True, False, True] 매핑 — 가운데 토큰이 invalid 로 정리됨
         invalid_token = called_tokens[1]
         a_rows = await fetch_tokens_by_user(session_factory, user_a)
         b_rows = await fetch_tokens_by_user(session_factory, user_b)
         all_remaining = {r.token for r in a_rows + b_rows}
         assert invalid_token not in all_remaining
-        assert sent == 2  # 성공 2건
+        assert sent == 2
 
     async def test_firebase_error_does_not_delete_tokens(
         self,

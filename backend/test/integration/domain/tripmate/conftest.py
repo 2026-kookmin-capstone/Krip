@@ -69,8 +69,6 @@ def tripmate_post_like_service(uow, inbox_service) -> TripmatePostLikeService:
     return TripmatePostLikeService(uow=uow, inbox_service=inbox_service)
 
 
-# ──────────────────── tripmate_post_service (S3 + Mongo image mock) ────────────────────
-
 @pytest.fixture
 def tripmate_storage_mock(monkeypatch):
     """S3 stub — post 삭제/수정 시 `delete_many` 만 사용."""

@@ -55,8 +55,6 @@ RECONCILE_WAIT_SEC = 5.0
 UNREAD_RECOVER_WAIT_SEC = 5.0
 
 
-# ──────────────────── 유틸 ────────────────────
-
 def make_jwt(user_id: str) -> str:
     payload = {
         "user_id": user_id,
@@ -138,11 +136,8 @@ async def pg_connection() -> asyncpg.Connection:
     )
 
 
-# ──────────────────── [1/2] reconcile_last_message ────────────────────
-
 async def section_reconcile_last_message() -> None:
     """A↔B 방에 메시지 송신 후 RDB 정합성 일부러 깨뜨리고 워커가 복구하는지 확인."""
-    # 1) direct 방 확보 (Phase 1+2 smoke 가 이미 만들어뒀지만 멱등 보장)
     async with make_client(USER_A) as client_a:
         log("REST", "POST /chat/rooms/direct (A → B)")
         r = await client_a.post("/api/chat/rooms/direct", json={"peer_user_id": USER_B})
@@ -150,7 +145,6 @@ async def section_reconcile_last_message() -> None:
         room_id = r.json()["chat_room_id"]
         log("REST", f"    room_id={room_id}")
 
-    # 2) WS 로 A → B 메시지 1건 발행
     ws_a = await connect_ws(USER_A)
     await recv_until(ws_a, "connected")
     cmid = f"cmid-reconcile-{int(time.time() * 1000)}"
@@ -167,7 +161,6 @@ async def section_reconcile_last_message() -> None:
     await ws_a.close()
     log("WS", f"    메시지 전송 OK: seq={real_seq}")
 
-    # 3) RDB chat_room.last_message_* 를 의도적으로 NULL 로 내림 — 정합성 깨뜨림
     conn = await pg_connection()
     try:
         await conn.execute(
@@ -189,7 +182,6 @@ async def section_reconcile_last_message() -> None:
     finally:
         await conn.close()
 
-    # 4) Redis dirty:chat_room 에 room_id 투입 (워커 큐에 엔트리)
     rc = await redis_client()
     try:
         await rc.sadd(DIRTY_CHAT_ROOM_KEY, room_id)
@@ -197,7 +189,6 @@ async def section_reconcile_last_message() -> None:
         assert size_before >= 1, "SADD 실패"
         log("REDIS", f"    SADD dirty:chat_room — scard={size_before}")
 
-        # 5) 워커 tick(1초) 대기 + polling
         log("WORKER", f"    reconcile 대기 (최대 {RECONCILE_WAIT_SEC}s)…")
         drained = False
         deadline = time.time() + RECONCILE_WAIT_SEC
@@ -215,7 +206,6 @@ async def section_reconcile_last_message() -> None:
     finally:
         await rc.aclose()
 
-    # 6) RDB last_message_server_seq 가 복구됐는지 확인 — Mongo 진실값과 일치해야 함
     conn = await pg_connection()
     try:
         row = await conn.fetchrow(
@@ -234,18 +224,14 @@ async def section_reconcile_last_message() -> None:
         await conn.close()
 
 
-# ──────────────────── [2/2] recover_unread_for_user ────────────────────
-
 async def section_recover_unread() -> None:
     """A↔C 방에 메시지 누적 후 Redis unread:{C} DEL → C 재연결 시 복구 trigger."""
-    # 1) A↔C direct 방 확보
     async with make_client(USER_A) as client_a:
         r = await client_a.post("/api/chat/rooms/direct", json={"peer_user_id": USER_C})
         assert r.status_code == 201, f"A↔C 방 생성 실패: {r.status_code} {r.text}"
         room_id = r.json()["chat_room_id"]
         log("REST", f"    A↔C room_id={room_id}")
 
-    # 2) A → C 로 2건 송신 (C 의 unread 누적)
     ws_a = await connect_ws(USER_A)
     await recv_until(ws_a, "connected")
     for i in range(2):
@@ -261,10 +247,8 @@ async def section_recover_unread() -> None:
     await ws_a.close()
     log("WS", "    A → C 메시지 2건 발행")
 
-    # 서버 내부 파이프라인이 unread HINCRBY 끝낼 수 있도록 아주 짧게 양보
     await asyncio.sleep(0.3)
 
-    # 3) Redis `unread:{USER_C}` 를 DEL — flush 시나리오 재현
     rc = await redis_client()
     try:
         unread_key = f"unread:{USER_C}"
@@ -280,7 +264,6 @@ async def section_recover_unread() -> None:
     finally:
         await rc.aclose()
 
-    # 4) C 가 WS 재연결 → 백그라운드 `recover_unread_for_user` trigger → `unread_synced` push
     ws_c = await connect_ws(USER_C)
     try:
         await recv_until(ws_c, "connected")
@@ -298,7 +281,6 @@ async def section_recover_unread() -> None:
     finally:
         await ws_c.close()
 
-    # 5) Redis 에 실제 HSET 반영 확인 (백그라운드 경로 완결성)
     rc = await redis_client()
     try:
         after = await rc.hgetall(f"unread:{USER_C}")
@@ -307,8 +289,6 @@ async def section_recover_unread() -> None:
     finally:
         await rc.aclose()
 
-
-# ──────────────────── 메인 ────────────────────
 
 async def main() -> int:
     print("=" * 70)

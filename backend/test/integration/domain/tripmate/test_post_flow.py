@@ -30,8 +30,6 @@ from app.domain.tripmate.model.tripmate_post import (
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── create_post ────────────────────
-
 class TestCreatePost:
     async def test_creates_in_rdb_and_returns_dto(
         self, tripmate_post_service, seed_users, session_factory,
@@ -59,8 +57,6 @@ class TestCreatePost:
             assert post.user_id == user_id
 
 
-# ──────────────────── get_post ────────────────────
-
 class TestGetPost:
     async def test_returns_dto_when_post_exists(
         self, tripmate_post_service, seed_tripmate_post,
@@ -75,8 +71,6 @@ class TestGetPost:
         with pytest.raises(ValueError, match="존재하지 않는"):
             await tripmate_post_service.get_post(post_id="TMP_ghost")
 
-
-# ──────────────────── update_post ────────────────────
 
 class TestUpdatePost:
     async def test_other_user_raises_permission_error(
@@ -120,8 +114,6 @@ class TestUpdatePost:
             assert post.region == "부산"
 
 
-# ──────────────────── delete_post ────────────────────
-
 class TestDeletePost:
     async def test_other_user_raises_permission_error(
         self, tripmate_post_service, seed_tripmate_post,
@@ -154,8 +146,6 @@ class TestDeletePost:
             )
 
 
-# ──────────────────── toggle_display ────────────────────
-
 class TestToggleDisplay:
     async def test_toggles_is_displayed(
         self, tripmate_post_service, seed_tripmate_post, session_factory,
@@ -183,8 +173,6 @@ class TestToggleDisplay:
                 post_id=post_id, user_id=other_id,
             )
 
-
-# ──────────────────── helpers ────────────────────
 
 async def _find_other_user(uow, exclude_user_id: str) -> str:
     from app.domain.auth.model.user import User, UserStatus

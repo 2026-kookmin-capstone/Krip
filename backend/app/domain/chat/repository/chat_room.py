@@ -16,15 +16,11 @@ class ChatRoomRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    # ──────────────────── Create ────────────────────
-
     async def save(self, chat_room: ChatRoom) -> ChatRoom:
         """채팅방 insert. DIRECT 동시 생성 race 는 UNIQUE 위반 → 호출측 SAVEPOINT + 재조회."""
         self.session.add(chat_room)
         await self.session.flush()
         return chat_room
-
-    # ──────────────────── Read (단건) ────────────────────
 
     async def find_by_id(self, chat_room_id: str) -> Optional[ChatRoom]:
         """chat_room_id 로 단건 조회"""
@@ -56,8 +52,6 @@ class ChatRoomRepository:
         )
         result = await self.session.execute(stmt)
         return result.scalar_one_or_none()
-
-    # ──────────────────── Read (목록) ────────────────────
 
     async def find_rooms_of_user(
         self,
@@ -114,8 +108,6 @@ class ChatRoomRepository:
 
         result = await self.session.execute(stmt)
         return [(row[0], row[1], row[2]) for row in result.all()]
-
-    # ──────────────────── Update ────────────────────
 
     async def update_last_message(
         self,

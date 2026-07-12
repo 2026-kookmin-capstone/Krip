@@ -17,8 +17,6 @@ class UserBlockService:
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
 
-    # ──────────────────── 차단 ────────────────────
-
     async def block_user(self, user_id: str, target_user_id: str) -> UserBlockData:
         """유저 차단 — 송신 권한은 RDB pair-lock 으로 판정하므로 캐시 훅 없음."""
         return await self._block_user_tx(user_id, target_user_id)
@@ -73,8 +71,6 @@ class UserBlockService:
 
         return self._to_dto(block, target)
 
-    # ──────────────────── 차단 해제 ────────────────────
-
     async def unblock_user(self, user_id: str, target_user_id: str) -> None:
         """차단 해제 — 송신 권한은 RDB pair-lock 으로 판정하므로 캐시 훅 없음."""
         await self._unblock_user_tx(user_id, target_user_id)
@@ -92,16 +88,12 @@ class UserBlockService:
 
         await block_repo.delete(block)
 
-    # ──────────────────── 목록 조회 ────────────────────
-
     @transactional
     async def get_blocked_users(self, user_id: str, cursor: Optional[str] = None) -> UserBlockListData:
         """내가 차단한 유저 목록"""
         block_repo = UserBlockRepository(self._session)
         items = await block_repo.find_blocks_by_user(user_id, cursor)
         return self._to_list_dto(items)
-
-    # ──────────────────── 내부 변환 유틸 ────────────────────
 
     @staticmethod
     def _to_peer_dto(user: User) -> FriendPeerData:

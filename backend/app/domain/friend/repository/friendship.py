@@ -18,15 +18,11 @@ class FriendshipRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    # ──────────────────── Create ────────────────────
-
     async def save(self, friendship: Friendship) -> Friendship:
         """친구 관계 저장"""
         self.session.add(friendship)
         await self.session.flush()
         return friendship
-
-    # ──────────────────── Pair advisory lock ────────────────────
 
     async def acquire_pair_lock(self, user_a_id: str, user_b_id: str) -> None:
         """두 유저 PAIR 트랜잭션 advisory lock (방향 무관).
@@ -36,8 +32,6 @@ class FriendshipRepository:
         read/row lock 보다 먼저 호출해 순서를 통일(데드락 회피). 트랜잭션 종료 시 자동 해제.
         """
         await acquire_pair_lock(self.session, user_a_id, user_b_id)
-
-    # ──────────────────── Read (단건) ────────────────────
 
     async def find_by_id(
         self, friendship_id: str, *, for_update: bool = False,
@@ -183,8 +177,6 @@ class FriendshipRepository:
         result = await self.session.execute(stmt)
         return result.scalar_one_or_none()
 
-    # ──────────────────── Read (목록 — 커서 페이지네이션) ────────────────────
-
     async def find_friends(
         self,
         user_id: str,
@@ -278,14 +270,10 @@ class FriendshipRepository:
         result = await self.session.execute(stmt)
         return list(result.unique().scalars().all())
 
-    # ──────────────────── Update ────────────────────
-
     async def update(self, friendship: Friendship) -> Friendship:
         """변경사항 flush"""
         await self.session.flush()
         return friendship
-
-    # ──────────────────── Delete ────────────────────
 
     async def delete(self, friendship: Friendship) -> None:
         """친구 관계 삭제"""
