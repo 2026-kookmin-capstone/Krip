@@ -189,7 +189,7 @@ class TestGetBlockedUsers:
         assert result.items[0].blocked.user_id == "USER_b"
         assert result.items[0].blocked.user_name == "영희"
 
-    async def test_next_cursor_when_page_full(self, service, block_repo_mock):
+    async def test_no_next_cursor_when_exact_page(self, service, block_repo_mock):
         from app.domain.friend.repository.user_block import PAGE_SIZE
 
         items = []
@@ -208,4 +208,21 @@ class TestGetBlockedUsers:
         result = await service.get_blocked_users(user_id="USER_a")
 
         assert len(result.items) == PAGE_SIZE
-        assert decode_cursor(result.next_cursor)[1] == items[-1].block_id
+        assert result.next_cursor is None
+
+    async def test_next_cursor_when_page_overflows(self, service, block_repo_mock):
+        from app.domain.friend.repository.user_block import PAGE_SIZE
+
+        items = []
+        for i in range(PAGE_SIZE + 1):
+            peer = UserFactory.create(user_id=f"USER_p{i}")
+            items.append(UserBlockFactory.create(
+                block_id=f"BLK_{i:03d}", blocker_id="USER_a",
+                blocked_id=f"USER_p{i}", blocked=peer,
+            ))
+        block_repo_mock.find_blocks_by_user.return_value = items
+
+        result = await service.get_blocked_users(user_id="USER_a")
+
+        assert len(result.items) == PAGE_SIZE
+        assert decode_cursor(result.next_cursor)[1] == items[PAGE_SIZE - 1].block_id

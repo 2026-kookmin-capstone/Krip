@@ -96,7 +96,7 @@ class TripmatePostRepository:
             stmt
             .group_by(TripmatePost.post_id)
             .order_by(TripmatePost.created_at.desc(), TripmatePost.post_id.desc())
-            .limit(PAGE_SIZE)
+            .limit(PAGE_SIZE + 1)
         )
 
         result = await self.session.execute(stmt)
@@ -159,7 +159,7 @@ class TripmatePostRepository:
             stmt
             .group_by(TripmatePost.post_id)
             .order_by(TripmatePost.created_at.desc(), TripmatePost.post_id.desc())
-            .limit(PAGE_SIZE)
+            .limit(PAGE_SIZE + 1)
         )
 
         result = await self.session.execute(stmt)

@@ -85,7 +85,7 @@ class TestCreateComment:
 
 @pytest.mark.unit
 class TestListComments:
-    async def test_next_cursor_when_full_page(
+    async def test_next_cursor_none_when_exact_page(
         self, service, comment_repo_mock, monkeypatch,
     ):
         monkeypatch.setattr(
@@ -96,6 +96,22 @@ class TestListComments:
             make_feed_post_comment_mock(comment_id="FDC_1"),
         ]
         result = await service.list_comments(viewer_id="USER_v", post_id="FDP_x")
+        assert len(result.comments) == 2
+        assert result.next_cursor is None
+
+    async def test_next_cursor_when_page_overflows(
+        self, service, comment_repo_mock, monkeypatch,
+    ):
+        monkeypatch.setattr(
+            "app.domain.feed.service.feed_post_comment.PAGE_SIZE", 2,
+        )
+        comment_repo_mock.find_by_post.return_value = [
+            make_feed_post_comment_mock(comment_id=f"FDC_{i}") for i in range(3)
+        ]
+
+        result = await service.list_comments(viewer_id="USER_v", post_id="FDP_x")
+
+        assert [c.comment_id for c in result.comments] == ["FDC_0", "FDC_1"]
         assert decode_cursor(result.next_cursor)[1] == "FDC_1"
 
     async def test_next_cursor_none_when_partial_page(
@@ -119,45 +135,17 @@ class TestListComments:
         )
         assert comment_repo_mock.find_by_post.await_args.kwargs["cursor"] == "FDC_seed"
 
-    async def test_blocked_commenter_excluded_from_list(
-        self, service, comment_repo_mock, block_repo_mock,
+    async def test_passes_viewer_to_query_side_block_filter(
+        self, service, comment_repo_mock,
     ):
-        """viewer 와 차단 관계인 작성자의 댓글(닉네임/프로필/본문)은 목록에서 제외."""
         comment_repo_mock.find_by_post.return_value = [
             make_feed_post_comment_mock(comment_id="FDC_a", user_id="USER_a", user_name="Alice"),
-            make_feed_post_comment_mock(
-                comment_id="FDC_b", user_id="USER_blocked", user_name="Blocked",
-            ),
         ]
-        block_repo_mock.find_block_related_ids.return_value = {"USER_blocked"}
 
         result = await service.list_comments(viewer_id="USER_v", post_id="FDP_x")
 
         assert [c.user_id for c in result.comments] == ["USER_a"]
-        # 배치 1쿼리 — 작성자 id 전체를 viewer 기준으로 한 번에 조회 (N+1 회피).
-        block_repo_mock.find_block_related_ids.assert_awaited_once()
-        called_viewer, called_ids = block_repo_mock.find_block_related_ids.await_args.args
-        assert called_viewer == "USER_v"
-        assert set(called_ids) == {"USER_a", "USER_blocked"}
-
-    async def test_next_cursor_uses_pre_filter_fetched_page(
-        self, service, comment_repo_mock, block_repo_mock, monkeypatch,
-    ):
-        """차단 필터로 응답 개수가 줄어도 next_cursor 는 fetch 한 페이지의 마지막 기준 — keyset 전진 보장."""
-        monkeypatch.setattr(
-            "app.domain.feed.service.feed_post_comment.PAGE_SIZE", 2,
-        )
-        comment_repo_mock.find_by_post.return_value = [
-            make_feed_post_comment_mock(comment_id="FDC_0", user_id="USER_a"),
-            make_feed_post_comment_mock(comment_id="FDC_1", user_id="USER_blocked"),
-        ]
-        block_repo_mock.find_block_related_ids.return_value = {"USER_blocked"}
-
-        result = await service.list_comments(viewer_id="USER_v", post_id="FDP_x")
-
-        assert len(result.comments) == 1  # 필터로 1건
-        # next_cursor 는 필터 전 마지막(FDC_1) 기준 — 페이지 전진 시 누락 없음
-        assert decode_cursor(result.next_cursor)[1] == "FDC_1"
+        assert comment_repo_mock.find_by_post.await_args.kwargs["viewer_id"] == "USER_v"
 
     async def test_maps_author_profile_per_comment(self, service, comment_repo_mock):
         """find_by_post 의 단일 JOIN 결과가 작성자 프로필까지 정확 매핑 + 결손 fallback."""

@@ -78,6 +78,6 @@ class FriendSearchRepository:
                 User.created_at, User.user_id, cur_ts, cur_id,
             ))
 
-        stmt = stmt.order_by(User.created_at.desc(), User.user_id.desc()).limit(PAGE_SIZE)
+        stmt = stmt.order_by(User.created_at.desc(), User.user_id.desc()).limit(PAGE_SIZE + 1)
         result = await self.session.execute(stmt)
         return list(result.unique().scalars().all())

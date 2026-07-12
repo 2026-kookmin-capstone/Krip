@@ -244,16 +244,28 @@ class TestGetPosts:
         assert len(result.posts) == PAGE_SIZE - 1
         assert result.next_cursor is None
 
-    async def test_next_cursor_is_last_post_id_when_exact_page_size(
+    async def test_no_next_cursor_when_exact_page_size(
         self, service, post_repo_mock,
     ):
-        """딱 PAGE_SIZE 만큼 fetch → 마지막 post_id 가 next_cursor."""
         posts = [TripmatePostFactory.create(post_id=f"TMP_{i:03d}") for i in range(PAGE_SIZE)]
         post_repo_mock.find_all_displayed.return_value = posts
 
         result = await service.get_posts()
 
-        assert decode_cursor(result.next_cursor)[1] == posts[-1].post_id
+        assert len(result.posts) == PAGE_SIZE
+        assert result.next_cursor is None
+
+    async def test_next_cursor_when_page_overflows(self, service, post_repo_mock):
+        posts = [
+            TripmatePostFactory.create(post_id=f"TMP_{i:03d}")
+            for i in range(PAGE_SIZE + 1)
+        ]
+        post_repo_mock.find_all_displayed.return_value = posts
+
+        result = await service.get_posts()
+
+        assert len(result.posts) == PAGE_SIZE
+        assert decode_cursor(result.next_cursor)[1] == posts[PAGE_SIZE - 1].post_id
 
 
 @pytest.mark.unit
@@ -272,6 +284,24 @@ class TestSearchPosts:
         post_repo_mock.search.assert_awaited_once_with(
             "제주", "TMP_xxx", user_id="USER_viewer",
         )
+
+    async def test_exact_and_overflow_cursor_boundaries(self, service, post_repo_mock):
+        exact = [
+            TripmatePostFactory.create(post_id=f"TMP_{i:03d}")
+            for i in range(PAGE_SIZE)
+        ]
+        post_repo_mock.search.return_value = exact
+        result = await service.search_posts(keyword="제주", user_id="USER_viewer")
+        assert len(result.posts) == PAGE_SIZE
+        assert result.next_cursor is None
+
+        post_repo_mock.search.return_value = exact + [
+            TripmatePostFactory.create(post_id="TMP_extra"),
+        ]
+        result = await service.search_posts(keyword="제주", user_id="USER_viewer")
+        assert len(result.posts) == PAGE_SIZE
+        assert result.next_cursor is not None
+        assert decode_cursor(result.next_cursor)[1] == exact[-1].post_id
 
 
 # ──────────────────────────────────────────────────────────────────

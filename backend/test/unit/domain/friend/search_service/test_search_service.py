@@ -214,7 +214,7 @@ class TestSearchDtoMapping:
 class TestSearchPagination:
     """커서 페이지네이션 / next_cursor 계산."""
 
-    async def test_next_cursor_is_last_user_id_when_page_full(
+    async def test_next_cursor_null_on_exact_page(
         self, service, search_repo_mock, friendship_repo_mock,
     ):
         users = [UserFactory.create(user_id=f"USER_{i:03d}") for i in range(PAGE_SIZE)]
@@ -224,7 +224,19 @@ class TestSearchPagination:
         result = await service.search(viewer_id="USER_viewer", keyword="x")
 
         assert len(result.items) == PAGE_SIZE
-        assert decode_cursor(result.next_cursor)[1] == users[-1].user_id
+        assert result.next_cursor is None
+
+    async def test_next_cursor_is_last_returned_user_when_page_overflows(
+        self, service, search_repo_mock, friendship_repo_mock,
+    ):
+        users = [UserFactory.create(user_id=f"USER_{i:03d}") for i in range(PAGE_SIZE + 1)]
+        search_repo_mock.search_active_users.return_value = users
+        friendship_repo_mock.find_friendships_with.return_value = {}
+
+        result = await service.search(viewer_id="USER_viewer", keyword="x")
+
+        assert len(result.items) == PAGE_SIZE
+        assert decode_cursor(result.next_cursor)[1] == users[PAGE_SIZE - 1].user_id
 
     async def test_next_cursor_null_on_partial_page(
         self, service, search_repo_mock, friendship_repo_mock,

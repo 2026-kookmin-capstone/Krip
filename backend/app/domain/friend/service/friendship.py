@@ -297,12 +297,14 @@ class FriendshipService:
         )
 
     def _to_list_dto(self, items: list[Friendship], viewer_id: str) -> FriendshipListData:
+        has_more = len(items) > PAGE_SIZE
+        items = items[:PAGE_SIZE]
         dtos = [
             self._to_dto(f, viewer_id=viewer_id, peer=self._peer_of(f, viewer_id))
             for f in items
         ]
         next_cursor = (
             encode_cursor(items[-1].updated_at, items[-1].friendship_id)
-            if len(items) == PAGE_SIZE else None
+            if has_more else None
         )
         return FriendshipListData(items=dtos, next_cursor=next_cursor)

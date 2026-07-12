@@ -223,17 +223,29 @@ class TestGetMyFeed:
 
         assert repo_mock.find_by_owner.await_args.kwargs["viewer_id"] == "USER_a"
 
-    async def test_next_cursor_is_last_post_id_when_full_page(
+    async def test_next_cursor_is_none_when_exact_page(
         self, service, repo_mock, monkeypatch,
     ):
-        """PAGE_SIZE 만큼 차면 next_cursor = 마지막 row.post.post_id."""
-        # PAGE_SIZE 를 작게 패치해 fixture 로 가짜 row N개로 충족.
         monkeypatch.setattr("app.domain.feed.service.feed_post.PAGE_SIZE", 2)
         rows = [_mk_row(post_id=f"FDP_{i}", user_id="USER_a") for i in range(2)]
         repo_mock.find_by_owner.return_value = rows
 
         result = await service.get_my_feed(user_id="USER_a", cursor=None)
+        assert result.next_cursor is None
+
+    async def test_next_cursor_is_last_returned_post_when_page_overflows(
+        self, service, repo_mock, monkeypatch,
+    ):
+        monkeypatch.setattr("app.domain.feed.service.feed_post.PAGE_SIZE", 2)
+        repo_mock.find_by_owner.return_value = [
+            _mk_row(post_id=f"FDP_{i}", user_id="USER_a") for i in range(3)
+        ]
+
+        result = await service.get_my_feed(user_id="USER_a", cursor=None)
+
+        assert [post.post_id for post in result.posts] == ["FDP_0", "FDP_1"]
         assert decode_cursor(result.next_cursor)[1] == "FDP_1"
+        assert repo_mock.find_by_owner.await_args.kwargs["limit"] == 3
 
     async def test_next_cursor_is_none_when_partial_page(
         self, service, repo_mock, monkeypatch,

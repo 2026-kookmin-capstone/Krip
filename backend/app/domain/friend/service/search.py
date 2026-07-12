@@ -43,6 +43,8 @@ class FriendSearchService:
             keyword=keyword,
             cursor=cursor,
         )
+        has_more = len(users) > PAGE_SIZE
+        users = users[:PAGE_SIZE]
 
         # peer 별 friendship 을 1 쿼리로 일괄 조회 — N+1 방지
         peer_ids = [u.user_id for u in users]
@@ -51,7 +53,7 @@ class FriendSearchService:
         items = [self._to_dto(viewer_id, u, friendships.get(u.user_id)) for u in users]
         next_cursor = (
             encode_cursor(users[-1].created_at, users[-1].user_id)
-            if len(users) == PAGE_SIZE else None
+            if has_more else None
         )
         return FriendSearchListData(items=items, next_cursor=next_cursor)
 

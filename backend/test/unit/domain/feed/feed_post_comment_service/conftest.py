@@ -9,7 +9,6 @@ from app.domain.feed.service.feed_post_comment import FeedPostCommentService
 from test.unit.domain.feed.mock_factory import (
     FakeUnitOfWork,
     make_mock_session,
-    make_user_block_repo_mock,
 )
 
 
@@ -51,23 +50,13 @@ def inbox_service_mock():
 
 
 @pytest.fixture
-def block_repo_mock():
-    """UserBlockRepository mock — 목록 차단 필터용. 기본 "차단 관계 없음"."""
-    return make_user_block_repo_mock()
-
-
-@pytest.fixture
 def service(
     monkeypatch, mock_session, comment_repo_mock, viewable_post_stub,
-    inbox_service_mock, block_repo_mock,
+    inbox_service_mock,
 ):
     monkeypatch.setattr(
         "app.domain.feed.service.feed_post_comment.FeedPostCommentRepository",
         lambda session: comment_repo_mock,
-    )
-    monkeypatch.setattr(
-        "app.domain.feed.service.feed_post_comment.UserBlockRepository",
-        lambda session: block_repo_mock,
     )
 
     async def _stub_load(session, *, viewer_id, post_id):

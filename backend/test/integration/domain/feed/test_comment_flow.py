@@ -22,6 +22,7 @@
 import pytest
 
 from app.domain.feed.model.feed_post import FeedVisibility
+from app.domain.feed.repository.feed_post_comment import PAGE_SIZE
 from app.domain.feed.service.exception import (
     FeedBlockedError,
     FeedNotFoundError,
@@ -153,6 +154,47 @@ class TestDeleteAuthorOnly:
 # ──────────────────── list_comments — 최신순 ────────────────────
 
 class TestListComments:
+    async def test_exact_page_has_no_next_cursor(
+        self, mongo_db, feed_post_comment_service, seed_feed_post,
+    ):
+        post_id, owner_id = await seed_feed_post()
+        for i in range(PAGE_SIZE):
+            await feed_post_comment_service.create_comment(
+                user_id=owner_id, post_id=post_id, content=f"comment-{i}",
+            )
+
+        result = await feed_post_comment_service.list_comments(
+            viewer_id=owner_id, post_id=post_id,
+        )
+
+        assert len(result.comments) == PAGE_SIZE
+        assert result.next_cursor is None
+
+    async def test_blocked_commenter_is_excluded_before_page_limit(
+        self, mongo_db, feed_post_comment_service, seed_feed_post, seed_block,
+    ):
+        post_id, owner_id = await seed_feed_post()
+        actor_id = await _find_other_user(feed_post_comment_service.uow, owner_id)
+        # visible 댓글을 먼저 만들고, 최신 PAGE_SIZE+1 슬롯을 차단 댓글로 채운다.
+        # LIMIT 후 service-side filter라면 visible 댓글은 전혀 반환되지 않는다.
+        for i in range(PAGE_SIZE):
+            await feed_post_comment_service.create_comment(
+                user_id=owner_id, post_id=post_id, content=f"visible-{i}",
+            )
+        for i in range(PAGE_SIZE + 1):
+            await feed_post_comment_service.create_comment(
+                user_id=actor_id, post_id=post_id, content=f"blocked-{i}",
+            )
+        await seed_block(blocker=owner_id, blocked=actor_id)
+
+        result = await feed_post_comment_service.list_comments(
+            viewer_id=owner_id, post_id=post_id,
+        )
+
+        assert len(result.comments) == PAGE_SIZE
+        assert {comment.user_id for comment in result.comments} == {owner_id}
+        assert result.next_cursor is None
+
     async def test_lists_in_recent_first_order(
         self, mongo_db, feed_post_comment_service, seed_feed_post,
     ):

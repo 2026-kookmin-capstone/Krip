@@ -28,7 +28,6 @@ from app.domain.feed.model.feed_post_comment import FeedPostComment
 from app.domain.feed.repository.feed_post_comment import PAGE_SIZE, FeedPostCommentRepository
 from app.domain.feed.service.access import load_viewable_post
 from app.domain.feed.service.exception import FeedPostCommentNotFoundError
-from app.domain.friend.repository.user_block import UserBlockRepository
 from app.domain.notification.service.inbox import InboxService
 from app.util.cursor import encode_cursor
 from app.util.id_generator import generate_feed_post_comment_id
@@ -129,20 +128,17 @@ class FeedPostCommentService:
         """댓글 목록 (최신순 PAGE_SIZE). 가시성 검증 후 cursor 페이지네이션."""
         post = await load_viewable_post(self._session, viewer_id=viewer_id, post_id=post_id)
         repo = FeedPostCommentRepository(self._session)
-        comments = await repo.find_by_post(post_id=post.post_id, cursor=cursor)
+        comments = await repo.find_by_post(
+            post_id=post.post_id, viewer_id=viewer_id, cursor=cursor,
+        )
+        has_more = len(comments) > PAGE_SIZE
+        comments = comments[:PAGE_SIZE]
         next_cursor = (
             encode_cursor(comments[-1].created_at, comments[-1].comment_id)
-            if len(comments) == PAGE_SIZE else None
-        )
-
-        block_repo = UserBlockRepository(self._session)
-        blocked_ids = await block_repo.find_block_related_ids(
-            viewer_id, [c.user_id for c in comments],
+            if has_more else None
         )
         return FeedPostCommentListData(
-            comments=[
-                self._to_dto(c) for c in comments if c.user_id not in blocked_ids
-            ],
+            comments=[self._to_dto(c) for c in comments],
             next_cursor=next_cursor,
         )
 

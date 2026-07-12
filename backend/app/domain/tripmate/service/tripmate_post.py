@@ -466,6 +466,8 @@ class TripmatePostService:
         )
 
     def _to_list_dto(self, posts: list[TripmatePost]) -> TripmatePostListData:
+        has_more = len(posts) > PAGE_SIZE
+        posts = posts[:PAGE_SIZE]
         post_dtos = [
             self._to_dto(
                 post,
@@ -477,6 +479,6 @@ class TripmatePostService:
         ]
         next_cursor = (
             encode_cursor(posts[-1].created_at, posts[-1].post_id)
-            if len(posts) == PAGE_SIZE else None
+            if has_more else None
         )
         return TripmatePostListData(posts=post_dtos, next_cursor=next_cursor)

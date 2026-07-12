@@ -101,14 +101,19 @@ class TestGetLikedUserIds:
 
         await tripmate_post_like_service.add_like(user_id=actor_id, post_id=post_id)
 
-        liked = await tripmate_post_like_service.get_liked_user_ids(post_id=post_id)
+        liked = await tripmate_post_like_service.get_liked_user_ids(
+            post_id=post_id, user_id=owner_id,
+        )
         assert actor_id in liked
 
     async def test_raises_when_post_not_found(
-        self, mongo_db, tripmate_post_like_service,
+        self, mongo_db, tripmate_post_like_service, seed_users,
     ):
+        [viewer_id] = await seed_users(1)
         with pytest.raises(ValueError, match="존재하지 않는"):
-            await tripmate_post_like_service.get_liked_user_ids(post_id="TMP_ghost")
+            await tripmate_post_like_service.get_liked_user_ids(
+                post_id="TMP_ghost", user_id=viewer_id,
+            )
 
 
 # ──────────────────── helpers ────────────────────

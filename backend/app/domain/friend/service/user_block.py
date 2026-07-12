@@ -124,9 +124,11 @@ class UserBlockService:
         )
 
     def _to_list_dto(self, items: list[UserBlock]) -> UserBlockListData:
+        has_more = len(items) > PAGE_SIZE
+        items = items[:PAGE_SIZE]
         dtos = [self._to_dto(b, b.blocked) for b in items]
         next_cursor = (
             encode_cursor(items[-1].created_at, items[-1].block_id)
-            if len(items) == PAGE_SIZE else None
+            if has_more else None
         )
         return UserBlockListData(items=dtos, next_cursor=next_cursor)

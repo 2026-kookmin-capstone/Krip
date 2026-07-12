@@ -28,9 +28,13 @@ class PlaceService:
         user_id: str = "",
     ) -> PlaceListData:
         """현재 위치 기준 가까운 장소 목록 조회 (거리순, 30개 페이지네이션)"""
-        places = await self.place_repo.find_nearby(lat, lng, cursor=cursor, max_distance=max_distance)
+        places = await self.place_repo.find_nearby(
+            lat, lng, cursor=cursor, max_distance=max_distance, limit=PAGE_SIZE + 1,
+        )
+        has_more = len(places) > PAGE_SIZE
+        places = places[:PAGE_SIZE]
         favorited = await self._get_favorited_set(places, user_id)
-        return self._to_list_dto(places, favorited)
+        return self._to_list_dto(places, favorited, has_more=has_more)
 
     # ──────────────────── place_id 단건 조회 ────────────────────
 
@@ -60,9 +64,14 @@ class PlaceService:
         user_id: str = "",
     ) -> PlaceListData:
         """키워드 검색 + 거리순 정렬 (display_name, category 매칭)"""
-        places = await self.place_repo.search_nearby(lat, lng, keyword, cursor=cursor, max_distance=max_distance)
+        places = await self.place_repo.search_nearby(
+            lat, lng, keyword, cursor=cursor, max_distance=max_distance,
+            limit=PAGE_SIZE + 1,
+        )
+        has_more = len(places) > PAGE_SIZE
+        places = places[:PAGE_SIZE]
         favorited = await self._get_favorited_set(places, user_id)
-        return self._to_list_dto(places, favorited)
+        return self._to_list_dto(places, favorited, has_more=has_more)
 
     # ──────────────────── 즐겨찾기 배치 조회 ────────────────────
 
@@ -76,12 +85,14 @@ class PlaceService:
 
     # ──────────────────── 내부 변환 유틸 ────────────────────
 
-    def _to_list_dto(self, places: list[dict], favorited: set[str]) -> PlaceListData:
+    def _to_list_dto(
+        self, places: list[dict], favorited: set[str], *, has_more: bool,
+    ) -> PlaceListData:
         """raw dict 목록 → PlaceListData 변환 + 다음 커서 생성"""
         place_dtos = [self._to_dto(p, favorited) for p in places]
 
         next_cursor = None
-        if len(places) == PAGE_SIZE:
+        if has_more:
             last = places[-1]
             next_cursor = PlaceRepository.build_cursor(last["distance"], last["place_id"])
 

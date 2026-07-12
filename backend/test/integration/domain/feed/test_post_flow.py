@@ -84,13 +84,13 @@ class TestGetMyPost:
 
         assert result.post_id == post_id
 
-    async def test_other_user_raises_permission_error(
+    async def test_other_user_raises_not_found(
         self, feed_post_service, seed_feed_post,
     ):
         post_id, owner_id = await seed_feed_post()
         other_id = await _find_other_user(feed_post_service.uow, owner_id)
 
-        with pytest.raises(PermissionError):
+        with pytest.raises(FeedNotFoundError):
             await feed_post_service.get_my_post(user_id=other_id, post_id=post_id)
 
     async def test_missing_post_raises_not_found(
@@ -131,13 +131,13 @@ class TestUpdateMetadata:
             post = await session.get(FeedPost, post_id)
             assert post.caption is None
 
-    async def test_update_other_user_raises_permission_error(
+    async def test_update_other_user_raises_not_found(
         self, feed_post_service, seed_feed_post,
     ):
         post_id, owner_id = await seed_feed_post()
         other_id = await _find_other_user(feed_post_service.uow, owner_id)
 
-        with pytest.raises(PermissionError):
+        with pytest.raises(FeedNotFoundError):
             await feed_post_service.update_visibility(
                 user_id=other_id, post_id=post_id, visibility=FeedVisibility.PRIVATE,
             )
@@ -168,13 +168,13 @@ class TestDeletePost:
         with pytest.raises(FeedNotFoundError):
             await feed_post_service.delete_post(user_id=user_id, post_id="FDP_ghost")
 
-    async def test_delete_other_user_raises_permission_error(
+    async def test_delete_other_user_raises_not_found(
         self, feed_post_service, seed_feed_post,
     ):
         post_id, owner_id = await seed_feed_post()
         other_id = await _find_other_user(feed_post_service.uow, owner_id)
 
-        with pytest.raises(PermissionError):
+        with pytest.raises(FeedNotFoundError):
             await feed_post_service.delete_post(user_id=other_id, post_id=post_id)
 
 

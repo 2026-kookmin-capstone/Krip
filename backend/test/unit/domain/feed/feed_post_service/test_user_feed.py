@@ -5,7 +5,7 @@
       올바른 visibility IN-list 를 만들어 repo 에 전달하는지
     - 차단 관계에서 `FeedBlockedError` raise + repo 호출 자체 안 일어남
     - 본인 fast-path 에서 friend / block 조회 자체를 건너뜀 (DB hit 절약)
-    - 페이지네이션 next_cursor 가 페이지 가득 찰 때만 채워짐 (get_my_feed 와 동일 약속)
+    - 실제 초과 row가 있을 때만 next_cursor가 채워짐 (get_my_feed와 동일 계약)
 """
 from datetime import datetime, timezone
 from types import SimpleNamespace
@@ -129,7 +129,7 @@ class TestBlockedRaisesAndDoesNotQueryFeed:
 
 @pytest.mark.unit
 class TestPagination:
-    async def test_next_cursor_when_full_page(
+    async def test_next_cursor_none_when_exact_page(
         self, service, repo_mock, friendship_repo_mock, block_repo_mock, monkeypatch,
     ):
         monkeypatch.setattr("app.domain.feed.service.feed_post.PAGE_SIZE", 2)
@@ -141,7 +141,25 @@ class TestPagination:
         ]
 
         result = await service.get_user_feed(viewer_id="USER_a", owner_id="USER_b")
+        assert result.next_cursor is None
+
+    async def test_next_cursor_when_page_overflows(
+        self, service, repo_mock, friendship_repo_mock, block_repo_mock, monkeypatch,
+    ):
+        monkeypatch.setattr("app.domain.feed.service.feed_post.PAGE_SIZE", 2)
+        block_repo_mock.find_blocks_between.return_value = []
+        friendship_repo_mock.find_between.return_value = None
+        repo_mock.find_by_owner.return_value = [
+            _mk_row(post_id="FDP_0"),
+            _mk_row(post_id="FDP_1"),
+            _mk_row(post_id="FDP_2"),
+        ]
+
+        result = await service.get_user_feed(viewer_id="USER_a", owner_id="USER_b")
+
+        assert [post.post_id for post in result.posts] == ["FDP_0", "FDP_1"]
         assert decode_cursor(result.next_cursor)[1] == "FDP_1"
+        assert repo_mock.find_by_owner.await_args.kwargs["limit"] == 3
 
     async def test_next_cursor_none_when_partial_page(
         self, service, repo_mock, friendship_repo_mock, block_repo_mock, monkeypatch,

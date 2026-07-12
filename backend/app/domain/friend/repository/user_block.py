@@ -111,7 +111,7 @@ class UserBlockRepository:
                 UserBlock.created_at, UserBlock.block_id, cur_ts, cur_id,
             ))
 
-        stmt = stmt.order_by(UserBlock.created_at.desc(), UserBlock.block_id.desc()).limit(PAGE_SIZE)
+        stmt = stmt.order_by(UserBlock.created_at.desc(), UserBlock.block_id.desc()).limit(PAGE_SIZE + 1)
         result = await self.session.execute(stmt)
         return list(result.unique().scalars().all())
 

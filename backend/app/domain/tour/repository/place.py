@@ -85,6 +85,7 @@ class PlaceRepository:
         keyword: str,
         cursor: Optional[str] = None,
         max_distance: Optional[float] = None,
+        limit: int = PAGE_SIZE,
     ) -> list[dict]:
         """키워드 검색 + 거리순 정렬 (display_name, category 매칭)
 
@@ -98,7 +99,9 @@ class PlaceRepository:
                 {"category": {"$regex": escaped, "$options": "i"}},
             ]
         }
-        return await self._aggregate_nearby(lat, lng, query=query, cursor=cursor, max_distance=max_distance)
+        return await self._aggregate_nearby(
+            lat, lng, query=query, cursor=cursor, max_distance=max_distance, limit=limit,
+        )
 
     # ──────────────────── Read (place_id 배치 조회) ────────────────────
 

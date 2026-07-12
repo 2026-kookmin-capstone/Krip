@@ -6,12 +6,13 @@ async lazy-load (MissingGreenlet) 회피 + N+1 차단.
 """
 from typing import Optional
 
-from sqlalchemy import func, select
+from sqlalchemy import and_, exists, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 
 from app.domain.auth.model.user import User
 from app.domain.feed.model.feed_post_comment import FeedPostComment
+from app.domain.friend.model.user_block import UserBlock
 from app.util.cursor import decode_cursor, keyset_where
 
 
@@ -49,6 +50,7 @@ class FeedPostCommentRepository:
         self,
         *,
         post_id: str,
+        viewer_id: str,
         cursor: Optional[str] = None,
     ) -> list[FeedPostComment]:
         """댓글 목록 — `(created_at DESC, comment_id DESC)` 튜플 비교 커서 페이지네이션.
@@ -58,7 +60,19 @@ class FeedPostCommentRepository:
         stmt = (
             select(FeedPostComment)
             .options(joinedload(FeedPostComment.user).joinedload(User.detail))
-            .where(FeedPostComment.post_id == post_id)
+            .where(
+                FeedPostComment.post_id == post_id,
+                ~exists(select(UserBlock.block_id).where(or_(
+                    and_(
+                        UserBlock.blocker_id == viewer_id,
+                        UserBlock.blocked_id == FeedPostComment.user_id,
+                    ),
+                    and_(
+                        UserBlock.blocked_id == viewer_id,
+                        UserBlock.blocker_id == FeedPostComment.user_id,
+                    ),
+                ))),
+            )
         )
 
         if cursor is not None:
@@ -75,7 +89,7 @@ class FeedPostCommentRepository:
                 FeedPostComment.created_at.desc(),
                 FeedPostComment.comment_id.desc(),
             )
-            .limit(PAGE_SIZE)
+            .limit(PAGE_SIZE + 1)
         )
         result = await self.session.execute(stmt)
         return list(result.unique().scalars().all())

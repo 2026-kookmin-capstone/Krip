@@ -218,7 +218,7 @@ class FriendshipRepository:
                 Friendship.updated_at, Friendship.friendship_id, cur_ts, cur_id,
             ))
 
-        stmt = stmt.order_by(Friendship.updated_at.desc(), Friendship.friendship_id.desc()).limit(PAGE_SIZE)
+        stmt = stmt.order_by(Friendship.updated_at.desc(), Friendship.friendship_id.desc()).limit(PAGE_SIZE + 1)
         result = await self.session.execute(stmt)
         return list(result.unique().scalars().all())
 
@@ -246,7 +246,7 @@ class FriendshipRepository:
                 Friendship.updated_at, Friendship.friendship_id, cur_ts, cur_id,
             ))
 
-        stmt = stmt.order_by(Friendship.updated_at.desc(), Friendship.friendship_id.desc()).limit(PAGE_SIZE)
+        stmt = stmt.order_by(Friendship.updated_at.desc(), Friendship.friendship_id.desc()).limit(PAGE_SIZE + 1)
         result = await self.session.execute(stmt)
         return list(result.unique().scalars().all())
 
@@ -274,7 +274,7 @@ class FriendshipRepository:
                 Friendship.updated_at, Friendship.friendship_id, cur_ts, cur_id,
             ))
 
-        stmt = stmt.order_by(Friendship.updated_at.desc(), Friendship.friendship_id.desc()).limit(PAGE_SIZE)
+        stmt = stmt.order_by(Friendship.updated_at.desc(), Friendship.friendship_id.desc()).limit(PAGE_SIZE + 1)
         result = await self.session.execute(stmt)
         return list(result.unique().scalars().all())
 

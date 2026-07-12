@@ -464,7 +464,7 @@ class TestGetFriends:
         assert result.items[0].is_requester is True
         assert result.next_cursor is None
 
-    async def test_next_cursor_when_page_full(self, service, friendship_repo_mock):
+    async def test_no_next_cursor_when_exact_page(self, service, friendship_repo_mock):
         from app.domain.friend.repository.friendship import PAGE_SIZE
 
         items = []
@@ -486,7 +486,26 @@ class TestGetFriends:
         result = await service.get_friends(user_id="USER_a")
 
         assert len(result.items) == PAGE_SIZE
-        assert decode_cursor(result.next_cursor)[1] == items[-1].friendship_id
+        assert result.next_cursor is None
+
+    async def test_next_cursor_when_page_overflows(self, service, friendship_repo_mock):
+        from app.domain.friend.repository.friendship import PAGE_SIZE
+
+        items = []
+        for i in range(PAGE_SIZE + 1):
+            viewer = UserFactory.create(user_id="USER_a")
+            peer = UserFactory.create(user_id=f"USER_p{i}")
+            items.append(FriendshipFactory.create(
+                friendship_id=f"FS_{i:03d}", requester_id="USER_a",
+                addressee_id=f"USER_p{i}", status=FriendshipStatus.ACCEPTED,
+                requester=viewer, addressee=peer,
+            ))
+        friendship_repo_mock.find_friends.return_value = items
+
+        result = await service.get_friends(user_id="USER_a")
+
+        assert len(result.items) == PAGE_SIZE
+        assert decode_cursor(result.next_cursor)[1] == items[PAGE_SIZE - 1].friendship_id
 
 
 @pytest.mark.unit
@@ -509,6 +528,31 @@ class TestGetReceivedRequests:
         assert result.items[0].peer.user_id == "USER_b"
         assert result.items[0].is_requester is False
 
+    async def test_exact_and_overflow_cursor_boundaries(
+        self, service, friendship_repo_mock,
+    ):
+        from app.domain.friend.repository.friendship import PAGE_SIZE
+
+        exact = []
+        for i in range(PAGE_SIZE):
+            requester = UserFactory.create(user_id=f"USER_r{i}")
+            exact.append(FriendshipFactory.create(
+                friendship_id=f"FS_R_{i:03d}", requester_id=requester.user_id,
+                addressee_id="USER_a", status=FriendshipStatus.PENDING,
+                requester=requester,
+            ))
+        friendship_repo_mock.find_received_requests.return_value = exact
+        result = await service.get_received_requests(user_id="USER_a")
+        assert result.next_cursor is None
+
+        friendship_repo_mock.find_received_requests.return_value = exact + [
+            FriendshipFactory.create(friendship_id="FS_R_extra"),
+        ]
+        result = await service.get_received_requests(user_id="USER_a")
+        assert len(result.items) == PAGE_SIZE
+        assert result.next_cursor is not None
+        assert decode_cursor(result.next_cursor)[1] == exact[-1].friendship_id
+
 
 @pytest.mark.unit
 class TestGetSentRequests:
@@ -529,3 +573,28 @@ class TestGetSentRequests:
         assert len(result.items) == 1
         assert result.items[0].peer.user_id == "USER_b"
         assert result.items[0].is_requester is True
+
+    async def test_exact_and_overflow_cursor_boundaries(
+        self, service, friendship_repo_mock,
+    ):
+        from app.domain.friend.repository.friendship import PAGE_SIZE
+
+        exact = []
+        for i in range(PAGE_SIZE):
+            addressee = UserFactory.create(user_id=f"USER_s{i}")
+            exact.append(FriendshipFactory.create(
+                friendship_id=f"FS_S_{i:03d}", requester_id="USER_a",
+                addressee_id=addressee.user_id, status=FriendshipStatus.PENDING,
+                addressee=addressee,
+            ))
+        friendship_repo_mock.find_sent_requests.return_value = exact
+        result = await service.get_sent_requests(user_id="USER_a")
+        assert result.next_cursor is None
+
+        friendship_repo_mock.find_sent_requests.return_value = exact + [
+            FriendshipFactory.create(friendship_id="FS_S_extra"),
+        ]
+        result = await service.get_sent_requests(user_id="USER_a")
+        assert len(result.items) == PAGE_SIZE
+        assert result.next_cursor is not None
+        assert decode_cursor(result.next_cursor)[1] == exact[-1].friendship_id

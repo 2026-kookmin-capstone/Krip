@@ -182,11 +182,14 @@ class FeedPostService:
             owner_id=user_id,
             visibilities=list(FeedVisibility),
             cursor=cursor,
+            limit=PAGE_SIZE + 1,
             viewer_id=user_id,
         )
+        has_more = len(rows) > PAGE_SIZE
+        rows = rows[:PAGE_SIZE]
         next_cursor = (
             encode_cursor(rows[-1].post.created_at, rows[-1].post.post_id)
-            if len(rows) == PAGE_SIZE else None
+            if has_more else None
         )
         return FeedPostListData(
             posts=[self._to_dto(r) for r in rows],
@@ -219,11 +222,14 @@ class FeedPostService:
             owner_id=owner_id,
             visibilities=visibilities,
             cursor=cursor,
+            limit=PAGE_SIZE + 1,
             viewer_id=viewer_id,
         )
+        has_more = len(rows) > PAGE_SIZE
+        rows = rows[:PAGE_SIZE]
         next_cursor = (
             encode_cursor(rows[-1].post.created_at, rows[-1].post.post_id)
-            if len(rows) == PAGE_SIZE else None
+            if has_more else None
         )
         return FeedPostListData(
             posts=[self._to_dto(r) for r in rows],
