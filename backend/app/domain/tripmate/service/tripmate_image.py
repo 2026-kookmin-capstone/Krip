@@ -11,6 +11,7 @@ from app.domain.tripmate.repository.tripmate_post_image import TripmatePostImage
 from app.domain.tripmate.service.image_reference_mutex import (
     image_reference_locked,
 )
+from app.util.cancellation import drain_on_cancellation
 from app.util.id_generator import generate_tripmate_image_id
 from app.util.storage_prefix import post_prefix
 
@@ -51,7 +52,7 @@ class TripmateImageService:
         image_id = generate_tripmate_image_id()
         prefix = post_prefix(user_id)
 
-        image_url, cancelled = await self._drain_on_cancellation(
+        image_url, cancelled = await drain_on_cancellation(
             self.storage.upload_perm(file, file_name, content_type, prefix=prefix),
         )
         if cancelled:
@@ -64,7 +65,7 @@ class TripmateImageService:
             image_url=image_url,
         )
         try:
-            saved, cancelled = await self._drain_on_cancellation(
+            saved, cancelled = await drain_on_cancellation(
                 self.image_repo.save(image),
             )
         except BaseException:
@@ -79,27 +80,15 @@ class TripmateImageService:
 
     async def _compensate_upload(self, image_id: str, image_url: str) -> None:
         try:
-            await self._drain_on_cancellation(
+            await drain_on_cancellation(
                 self.image_repo.delete_by_image_id(image_id),
             )
-            await self._drain_on_cancellation(self.storage.delete(image_url))
+            await drain_on_cancellation(self.storage.delete(image_url))
         except Exception as error:
             logger.warning(
                 "업로드 보상 삭제 실패 (image_id={}, image_url={}): {}",
                 image_id, image_url, error,
             )
-
-    @staticmethod
-    async def _drain_on_cancellation(awaitable):
-        task = asyncio.create_task(awaitable)
-        cancelled = False
-        while True:
-            try:
-                return await asyncio.shield(task), cancelled
-            except asyncio.CancelledError:
-                if task.cancelled():
-                    raise
-                cancelled = True
 
     @image_reference_locked
     async def upload_images(

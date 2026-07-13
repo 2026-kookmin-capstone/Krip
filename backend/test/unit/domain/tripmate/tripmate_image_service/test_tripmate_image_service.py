@@ -12,10 +12,16 @@
         - 일부 고아 → storage / mongo bulk delete
 """
 import asyncio
+import io
 from types import SimpleNamespace
+from unittest.mock import MagicMock
 
 import pytest
+from fastapi import HTTPException, Request, UploadFile
+from starlette.datastructures import Headers
 
+from app.core.object_storage import ObjectStorage
+from app.domain.tripmate.router.tripmate_image import upload_images
 from test.unit.domain.tripmate.tripmate_image_service.model_factory import (
     TripmateImageFactory,
 )
@@ -44,6 +50,26 @@ class TestUploadImage:
         assert saved.user_id == "USER_a"
         assert saved.image_url == "https://img/uploaded.jpg"
         assert result.image_url == "https://img/uploaded.jpg"
+
+    async def test_router_rejects_non_image_before_public_upload(self, service):
+        storage = object.__new__(ObjectStorage)
+        storage.bucket = "bucket"
+        storage.endpoint = "https://storage.example.com"
+        storage._client = MagicMock()
+        service.storage = storage
+        request = Request({"type": "http"})
+        request.state.user_id = "USER_a"
+        upload = UploadFile(
+            file=io.BytesIO(b"not-an-image"),
+            filename="payload.jpg",
+            headers=Headers({"content-type": "image/jpeg"}),
+        )
+
+        with pytest.raises(HTTPException) as error:
+            await upload_images(request=request, files=[upload], image_service=service)
+
+        assert error.value.status_code == 400
+        storage._client.upload_fileobj.assert_not_called()
 
     async def test_cancellation_drains_upload_and_compensates_object(
         self, service, storage_mock, image_repo_mock,

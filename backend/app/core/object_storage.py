@@ -3,6 +3,7 @@
 Temporary keys expire after 24 hours; permanent key prefixes are owned by callers.
 """
 import asyncio
+import io
 import uuid
 from typing import BinaryIO, List
 
@@ -12,6 +13,7 @@ from botocore.exceptions import ClientError
 
 from app.config.setting import settings
 from app.core.logger import get_logger
+from app.util.public_image import process_public_image
 
 
 logger = get_logger("object_storage")
@@ -53,9 +55,8 @@ class ObjectStorage:
         return await asyncio.to_thread(self._upload, file, key, content_type)
 
     async def upload_perm(self, file: BinaryIO, file_name: str, content_type: str, *, prefix: str) -> str:
-        """영구 경로에 직접 업로드 → URL 반환"""
-        key = self._make_key(file_name, f"{_PREFIX_PERM}/{prefix}")
-        return await asyncio.to_thread(self._upload, file, key, content_type)
+        """검증·재인코딩한 정적 이미지를 영구 경로에 업로드 → URL 반환."""
+        return await asyncio.to_thread(self._upload_public_image, file, prefix)
 
     async def upload_to_key(
         self,
@@ -153,15 +154,33 @@ class ObjectStorage:
 
     def _upload(self, file: BinaryIO, key: str, content_type: str) -> str:
         try:
+            ext = self._sanitize_ext(key)
+            disposition = f'inline; filename="image.{ext}"' if ext else "inline"
             self._client.upload_fileobj(
                 file, self.bucket, key,
-                ExtraArgs={"ContentType": content_type, "ACL": "public-read"},
+                ExtraArgs={
+                    "ContentType": content_type,
+                    "ContentDisposition": disposition,
+                    "ACL": "public-read",
+                },
             )
         except ClientError as e:
             logger.error("업로드 실패 ({}): {}", key, e)
             raise
         logger.info("업로드 완료: {}", key)
         return self._key_to_url(key)
+
+    def _upload_public_image(self, file: BinaryIO, prefix: str) -> str:
+        processed = process_public_image(file)
+        key = self._make_key(
+            f"image.{processed.file_ext}",
+            f"{_PREFIX_PERM}/{prefix}",
+        )
+        return self._upload(
+            io.BytesIO(processed.data),
+            key,
+            processed.content_type,
+        )
 
     def _copy(self, src_key: str, dst_key: str) -> None:
         try:

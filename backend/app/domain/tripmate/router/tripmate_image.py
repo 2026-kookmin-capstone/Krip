@@ -50,6 +50,8 @@ async def upload_images(
 
     try:
         results = await image_service.upload_images(user_id=user_id, files=file_tuples)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         logger.error("이미지 업로드 실패 (user_id={}): {}", user_id, e)
         raise HTTPException(status_code=500, detail="이미지 업로드에 실패했습니다.")

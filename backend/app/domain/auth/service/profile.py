@@ -1,3 +1,4 @@
+import asyncio
 from typing import Any, BinaryIO
 
 from app.core.logger import get_logger
@@ -20,6 +21,7 @@ from app.domain.auth.service.exception import (
 )
 from app.domain.feed.repository.feed_post_like import FeedPostLikeRepository
 from app.domain.friend.repository.friendship import FriendshipRepository
+from app.util.cancellation import drain_on_cancellation
 from app.util.storage_prefix import profile_prefix
 
 
@@ -184,18 +186,16 @@ class ProfileService:
         묶여 부하 시 pool 고갈로 이어진다 → delete/update 경로와 동일하게 S3 작업을
         트랜잭션 밖으로 분리한다.
         """
-        new_url = await self.storage.upload_perm(
-            file, file_name, content_type, prefix=profile_prefix(user_id),
-        )
+        new_url = await self._upload_profile_image(user_id, file, file_name, content_type)
 
         try:
             await self._attach_profile_image(user_id, new_url)
-        except Exception:
-            # 검증 실패(미등록·409) 또는 DB 실패 시 업로드된 파일이 orphan 으로 남는다 → 보상 삭제.
-            try:
-                await self.storage.delete(new_url)
-            except Exception as del_err:
-                logger.warning("업로드 보상 삭제 실패 — orphan 파일 잔존 (user_id={}): {}", user_id, del_err)
+        except BaseException:
+            if await self._new_profile_image_is_unreferenced(user_id, new_url):
+                try:
+                    await drain_on_cancellation(self.storage.delete(new_url))
+                except BaseException as del_err:
+                    logger.warning("업로드 보상 삭제 실패 — orphan 파일 잔존 (user_id={}): {}", user_id, del_err)
             raise
 
         logger.info("프로필 이미지 추가 완료 (user_id={})", user_id)
@@ -234,18 +234,16 @@ class ProfileService:
         않도록(add 경로와 동일), 그리고 삭제를 트랜잭션 안에서 하면 commit 실패 시 broken
         link 위험이 있으므로.
         """
-        new_url = await self.storage.upload_perm(
-            file, file_name, content_type, prefix=profile_prefix(user_id),
-        )
+        new_url = await self._upload_profile_image(user_id, file, file_name, content_type)
 
         try:
             old_url = await self._replace_profile_image(user_id, new_url)
-        except Exception:
-            # 검증 실패(미등록·404) 또는 DB 실패 시 업로드된 파일이 orphan 으로 남는다 → 보상 삭제.
-            try:
-                await self.storage.delete(new_url)
-            except Exception as del_err:
-                logger.warning("업로드 보상 삭제 실패 — orphan 파일 잔존 (user_id={}): {}", user_id, del_err)
+        except BaseException:
+            if await self._new_profile_image_is_unreferenced(user_id, new_url):
+                try:
+                    await drain_on_cancellation(self.storage.delete(new_url))
+                except BaseException as del_err:
+                    logger.warning("업로드 보상 삭제 실패 — orphan 파일 잔존 (user_id={}): {}", user_id, del_err)
             raise
 
         try:
@@ -255,6 +253,40 @@ class ProfileService:
 
         logger.info("프로필 이미지 수정 완료 (user_id={})", user_id)
         return ProfileImageData(profile_image_url=new_url)
+
+    async def _upload_profile_image(
+        self,
+        user_id: str,
+        file: BinaryIO,
+        file_name: str,
+        content_type: str,
+    ) -> str:
+        new_url, cancelled = await drain_on_cancellation(
+            self.storage.upload_perm(
+                file, file_name, content_type, prefix=profile_prefix(user_id),
+            ),
+        )
+        if cancelled:
+            await drain_on_cancellation(self.storage.delete(new_url))
+            raise asyncio.CancelledError
+        return new_url
+
+    async def _new_profile_image_is_unreferenced(self, user_id: str, new_url: str) -> bool:
+        try:
+            current_url, _ = await drain_on_cancellation(self._get_profile_image_url(user_id))
+        except BaseException as error:
+            logger.warning(
+                "프로필 이미지 DB 결과 확인 실패 — 참조 객체 보존 (user_id={}): {}",
+                user_id,
+                error,
+            )
+            return False
+        return current_url != new_url
+
+    @transactional
+    async def _get_profile_image_url(self, user_id: str) -> str | None:
+        detail = await UserDetailInformRepository(self._session).find_by_user_id(user_id)
+        return detail.profile_image_url if detail is not None else None
 
     @transactional
     async def _replace_profile_image(self, user_id: str, new_url: str) -> str:
