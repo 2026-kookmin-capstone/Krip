@@ -20,6 +20,7 @@ from app.domain.tripmate.model.tripmate_post_image import TripmatePostImage
 from app.domain.tripmate.repository.tripmate_image import TripmateImageRepository
 from app.domain.tripmate.repository.tripmate_post import PAGE_SIZE, TripmatePostRepository
 from app.domain.tripmate.repository.tripmate_post_image import TripmatePostImageRepository
+from app.domain.tripmate.service.image_reference_mutex import image_reference_locked
 from app.domain.tripmate.service.tripmate_post_draft import TripmatePostDraftService
 from app.util.cursor import encode_cursor
 
@@ -33,13 +34,16 @@ class TripmatePostService:
         uow: UnitOfWork,
         draft_service: TripmatePostDraftService,
         inbox_service: InboxService,
+        image_mutex,
     ):
         self.uow = uow
         self.draft_service = draft_service
         self.inbox_service = inbox_service
+        self.image_mutex = image_mutex
         self.storage = get_object_storage()
         self.mongo_image_repo = TripmateImageRepository()
 
+    @image_reference_locked
     async def create_post(
         self,
         user_id: str,
@@ -176,6 +180,7 @@ class TripmatePostService:
         posts = await post_repo.search(keyword, cursor, user_id=user_id)
         return self._to_list_dto(posts)
 
+    @image_reference_locked
     async def update_post(
         self,
         post_id: str,
@@ -279,6 +284,7 @@ class TripmatePostService:
         )
         return dto, deletable
 
+    @image_reference_locked
     async def delete_post(self, post_id: str, user_id: str) -> None:
         """게시글 삭제 — DB / 이미지 정리는 트랜잭션 안, 인박스 cascade 는 트랜잭션 밖.
 
@@ -364,8 +370,8 @@ class TripmatePostService:
     async def _cleanup_image_files(self, urls: list[str], *, label: str) -> None:
         """(커밋 후) Object Storage 파일 + Mongo 이미지 메타 물리 삭제. best-effort — 실패는 로그만."""
         try:
-            await self.storage.delete_many(urls)
             await self.mongo_image_repo.delete_by_urls(urls)
+            await self.storage.delete_many(urls)
         except Exception as e:
             logger.warning("이미지 정리 실패 ({}): {}", label, e)
 

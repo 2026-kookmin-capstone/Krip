@@ -90,6 +90,8 @@ def create_app() -> FastAPI:
             # Container singleton engine은 instrumentation 전에 이미 생성된다.
             engine = app.container.engine()
             stack.push_async_callback(engine.dispose)
+            lock_engine = app.container.image_reference_lock_engine()
+            stack.push_async_callback(lock_engine.dispose)
             # instrumentation이 전역 pool state를 일부 설정한 뒤 실패해도 초기화한다.
             stack.push_async_callback(stop_event_loop_monitor)
             attach_db_instrumentation(engine)

@@ -16,6 +16,7 @@ from unittest.mock import AsyncMock
 
 import pytest
 
+from app.domain.tripmate.service.image_reference_mutex import NoopTripmateImageReferenceMutex
 from app.domain.tripmate.service.tripmate_image import TripmateImageService
 from test.unit.domain.tripmate.mock_factory import (
     FakeUnitOfWork,
@@ -96,7 +97,10 @@ def service(
         "app.domain.tripmate.service.tripmate_image.TripmatePostImageRepository",
         lambda session: post_image_repo_mock,
     )
-    service = TripmateImageService(uow=FakeUnitOfWork(mock_session))
+    service = TripmateImageService(
+        uow=FakeUnitOfWork(mock_session),
+        image_mutex=NoopTripmateImageReferenceMutex(),
+    )
     service.image_repo = image_repo_mock
     service.storage = storage_mock
     return service

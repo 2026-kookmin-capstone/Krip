@@ -11,6 +11,7 @@
         - draft 미존재 → draft set 빈
         - 일부 고아 → storage / mongo bulk delete
 """
+import asyncio
 from types import SimpleNamespace
 
 import pytest
@@ -43,6 +44,37 @@ class TestUploadImage:
         assert saved.user_id == "USER_a"
         assert saved.image_url == "https://img/uploaded.jpg"
         assert result.image_url == "https://img/uploaded.jpg"
+
+    async def test_cancellation_drains_upload_and_compensates_object(
+        self, service, storage_mock, image_repo_mock,
+    ):
+        started = asyncio.Event()
+        release = asyncio.Event()
+
+        async def delayed_upload(*_args, **_kwargs):
+            started.set()
+            await release.wait()
+            return "https://img/cancelled.jpg"
+
+        storage_mock.upload_perm.side_effect = delayed_upload
+        task = asyncio.create_task(service.upload_image(
+            user_id="USER_a",
+            file=b"binary",
+            file_name="cancelled.jpg",
+            content_type="image/jpeg",
+        ))
+        await started.wait()
+        task.cancel()
+        await asyncio.sleep(0)
+        assert not task.done()
+        release.set()
+
+        with pytest.raises(asyncio.CancelledError):
+            await task
+
+        image_repo_mock.save.assert_not_awaited()
+        image_repo_mock.delete_by_image_id.assert_awaited_once()
+        storage_mock.delete.assert_awaited_once_with("https://img/cancelled.jpg")
 
 
 @pytest.mark.unit

@@ -17,6 +17,7 @@ from datetime import date
 
 import pytest
 
+from app.domain.tripmate.model.tripmate_image import TripmateImage
 from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
 
 
@@ -27,6 +28,11 @@ class TestSaveDraft:
     async def test_first_save_inserts_new_row(
         self, tripmate_post_draft_service,
     ):
+        await TripmateImage(
+            user_id="USER_a",
+            image_id="IMG_draft_1",
+            image_url="https://img/1",
+        ).insert()
         await tripmate_post_draft_service.save_draft(
             user_id="USER_a",
             title="여행",

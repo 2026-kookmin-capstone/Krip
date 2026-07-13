@@ -9,6 +9,7 @@ from unittest.mock import AsyncMock
 
 import pytest
 
+from app.domain.tripmate.service.image_reference_mutex import NoopTripmateImageReferenceMutex
 from app.domain.tripmate.service.tripmate_post_draft import TripmatePostDraftService
 
 
@@ -35,6 +36,8 @@ def service(monkeypatch, draft_repo_mock):
         "app.domain.tripmate.service.tripmate_post_draft.TripmatePostDraft",
         _DraftStub,
     )
-    service = TripmatePostDraftService()
+    service = TripmatePostDraftService(image_mutex=NoopTripmateImageReferenceMutex())
     service.draft_repo = draft_repo_mock
+    service.image_repo = AsyncMock()
+    service.image_repo.find_owned_urls.side_effect = lambda _user_id, urls: set(urls)
     return service

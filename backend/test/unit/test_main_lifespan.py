@@ -35,9 +35,14 @@ async def test_instrumentation_failure_resets_monitor_and_disposes_engine(monkey
 
     engine = MagicMock()
     engine.dispose = AsyncMock()
+    lock_engine = MagicMock()
+    lock_engine.dispose = AsyncMock()
     stop_monitor = AsyncMock()
     app = SimpleNamespace(
-        container=SimpleNamespace(engine=lambda: engine),
+        container=SimpleNamespace(
+            engine=lambda: engine,
+            image_reference_lock_engine=lambda: lock_engine,
+        ),
     )
 
     monkeypatch.setattr(main_module, "setup_logging", lambda: None)
@@ -61,6 +66,7 @@ async def test_instrumentation_failure_resets_monitor_and_disposes_engine(monkey
 
     stop_monitor.assert_awaited_once()
     engine.dispose.assert_awaited_once()
+    lock_engine.dispose.assert_awaited_once()
 
 
 async def test_papago_close_releases_partially_loaded_model():
@@ -79,31 +85,32 @@ async def test_papago_close_releases_partially_loaded_model():
     [
         (
             "mongodb",
-            ["stop_mongodb", "stop_event_monitor", "dispose_engine",
+            ["stop_mongodb", "stop_event_monitor", "dispose_lock_engine", "dispose_engine",
              "stop_metrics_server", "close_metrics_server", "join_metrics_thread"],
         ),
         (
             "dedupe",
-            ["stop_redis", "stop_mongodb", "stop_event_monitor", "dispose_engine",
+            ["stop_redis", "stop_mongodb", "stop_event_monitor", "dispose_lock_engine",
+             "dispose_engine",
              "stop_metrics_server", "close_metrics_server", "join_metrics_thread"],
         ),
         (
             "fcm",
             ["stop_fcm", "stop_redis", "stop_mongodb", "stop_event_monitor",
-             "dispose_engine", "stop_metrics_server", "close_metrics_server",
+             "dispose_lock_engine", "dispose_engine", "stop_metrics_server", "close_metrics_server",
              "join_metrics_thread"],
         ),
         (
             "node",
             ["stop_registry", "stop_dispatcher", "stop_reconcile", "stop_fcm",
-             "stop_redis", "stop_mongodb", "stop_event_monitor", "dispose_engine",
+             "stop_redis", "stop_mongodb", "stop_event_monitor", "dispose_lock_engine", "dispose_engine",
              "stop_metrics_server", "close_metrics_server", "join_metrics_thread"],
         ),
         (
             "papago",
             ["close_papago", "stop_purge", "stop_registry", "stop_dispatcher",
              "stop_reconcile", "stop_fcm", "stop_redis", "stop_mongodb",
-             "stop_event_monitor", "dispose_engine", "stop_metrics_server",
+             "stop_event_monitor", "dispose_lock_engine", "dispose_engine", "stop_metrics_server",
              "close_metrics_server", "join_metrics_thread"],
         ),
     ],
@@ -143,10 +150,16 @@ async def test_startup_failure_cleans_started_resources_in_reverse_order(
     async def dispose_engine():
         await record_async("dispose_engine")
 
+    async def dispose_lock_engine():
+        await record_async("dispose_lock_engine")
+
     engine = MagicMock()
     engine.dispose = AsyncMock(side_effect=dispose_engine)
+    lock_engine = MagicMock()
+    lock_engine.dispose = AsyncMock(side_effect=dispose_lock_engine)
     container = SimpleNamespace(
         engine=lambda: engine,
+        image_reference_lock_engine=lambda: lock_engine,
         session_factory=lambda: object(),
         fanout_service=lambda: object(),
     )
@@ -259,8 +272,11 @@ async def test_lifespan_stops_background_tasks_before_shared_resources(monkeypat
 
     engine = MagicMock()
     engine.dispose = AsyncMock(side_effect=lambda: events.append("dispose_engine"))
+    lock_engine = MagicMock()
+    lock_engine.dispose = AsyncMock(side_effect=lambda: events.append("dispose_lock_engine"))
     app = SimpleNamespace(container=SimpleNamespace(
         engine=lambda: engine,
+        image_reference_lock_engine=lambda: lock_engine,
         session_factory=lambda: object(),
         fanout_service=lambda: object(),
     ))

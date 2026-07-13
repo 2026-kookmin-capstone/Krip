@@ -45,6 +45,20 @@ class TestSaveDraft:
         saved = draft_repo_mock.upsert.await_args.args[0]
         assert saved.image_urls == []
 
+    async def test_rejects_image_without_owned_metadata(
+        self, service, draft_repo_mock,
+    ):
+        service.image_repo.find_owned_urls.side_effect = None
+        service.image_repo.find_owned_urls.return_value = set()
+
+        with pytest.raises(ValueError, match="본인이 업로드한 이미지"):
+            await service.save_draft(
+                user_id="USER_a",
+                image_urls=["https://img/deleted"],
+            )
+
+        draft_repo_mock.upsert.assert_not_awaited()
+
 
 @pytest.mark.unit
 class TestGetDraft:

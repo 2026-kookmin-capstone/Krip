@@ -8,6 +8,7 @@
 """
 import pytest
 
+from app.domain.tripmate.service.image_reference_mutex import NoopTripmateImageReferenceMutex
 from app.domain.tripmate.service.tripmate_post import TripmatePostService
 from test.unit.domain.tripmate.mock_factory import (
     FakeUnitOfWork,
@@ -121,6 +122,7 @@ def service(
         uow=FakeUnitOfWork(mock_session),
         draft_service=draft_service_mock,
         inbox_service=inbox_service_mock,
+        image_mutex=NoopTripmateImageReferenceMutex(),
     )
 
 

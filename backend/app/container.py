@@ -33,6 +33,7 @@ from app.domain.tour.service.recommend import RecommendService
 from app.domain.tour.service.tour_plan import TourPlanService
 from app.domain.tour.service.tour_search_history import TourSearchHistoryService
 from app.domain.translation.service.translation import TranslationService
+from app.domain.tripmate.service.image_reference_mutex import TripmateImageReferenceMutex
 from app.domain.tripmate.service.tripmate_image import TripmateImageService
 from app.domain.tripmate.service.tripmate_post import TripmatePostService
 from app.domain.tripmate.service.tripmate_post_draft import TripmatePostDraftService
@@ -67,6 +68,18 @@ class Container(containers.DeclarativeContainer):
 
     uow = providers.Factory(UnitOfWork, session=session_factory)
 
+    image_reference_lock_engine = providers.Singleton(
+        create_async_engine,
+        settings.POSTGRES_URL,
+        echo=False,
+        future=True,
+        pool_size=min(settings.DB_POOL_SIZE, 4),
+        max_overflow=0,
+        pool_timeout=settings.DB_POOL_TIMEOUT,
+        pool_pre_ping=True,
+        pool_recycle=settings.DB_POOL_RECYCLE,
+    )
+
     # 인박스 (Mongo, stateless) — fan-out / cascade 진입점. RDB 의존성이 없어 가장 먼저
     # 선언 → 모든 도메인 service 가 자기 자리에서 자유롭게 의존할 수 있도록.
     inbox_service = providers.Factory(InboxService)
@@ -77,18 +90,30 @@ class Container(containers.DeclarativeContainer):
     profile_service = providers.Factory(ProfileService, uow=uow)
     # withdraw_service 는 chat 의 user_purge_cache_service 에 의존하므로
     # chat 인프라 선언 뒤로 이동 (아래 user_block_service 패턴과 동일).
-    tripmate_post_draft_service = providers.Factory(TripmatePostDraftService)
+    tripmate_image_reference_mutex = providers.Singleton(
+        TripmateImageReferenceMutex,
+        engine=image_reference_lock_engine,
+    )
+    tripmate_post_draft_service = providers.Factory(
+        TripmatePostDraftService,
+        image_mutex=tripmate_image_reference_mutex,
+    )
     tripmate_post_service = providers.Factory(
         TripmatePostService,
         uow=uow,
         draft_service=tripmate_post_draft_service,
         inbox_service=inbox_service,
+        image_mutex=tripmate_image_reference_mutex,
     )
     tripmate_post_like_service = providers.Factory(
         TripmatePostLikeService, uow=uow, inbox_service=inbox_service,
     )
     tripmate_search_history_service = providers.Factory(TripmateSearchHistoryService)
-    tripmate_image_service = providers.Factory(TripmateImageService, uow=uow)
+    tripmate_image_service = providers.Factory(
+        TripmateImageService,
+        uow=uow,
+        image_mutex=tripmate_image_reference_mutex,
+    )
 
     # 메뉴 AI
     menu_ocr_service = providers.Factory(MenuOcrService)
