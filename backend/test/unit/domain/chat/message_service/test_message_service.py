@@ -1245,14 +1245,23 @@ class TestDeleteMessage:
                 message_id="MSG_X", deleter_user_id="U_A", deleter_session_id="WS_A",
             )
 
-    async def test_raises_on_already_deleted(self, service, message_repo_mock):
+    async def test_already_deleted_retry_republishes_tombstone(
+        self, service, message_repo_mock, fanout_mock,
+    ):
+        deleted_at = datetime.now(timezone.utc)
         message_repo_mock.find_by_id.return_value = _mk_text_doc(
-            deleted_at=datetime.now(timezone.utc),
+            deleted_at=deleted_at,
         )
-        with pytest.raises(ValueError, match="이미 삭제"):
-            await service.delete_message(
-                message_id="MSG_1", deleter_user_id="U_A", deleter_session_id="WS_A",
-            )
+
+        await service.delete_message(
+            message_id="MSG_1", deleter_user_id="U_A", deleter_session_id="WS_A",
+        )
+
+        message_repo_mock.soft_delete.assert_not_awaited()
+        fanout_mock.fan_out_to_room.assert_awaited_once()
+        payload = fanout_mock.fan_out_to_room.call_args.args[1]
+        assert payload["message_id"] == "MSG_1"
+        assert payload["deleted_at"] == deleted_at.isoformat()
 
     async def test_raises_on_system_message(self, service, message_repo_mock):
         message_repo_mock.find_by_id.return_value = _mk_text_doc(
@@ -1299,6 +1308,45 @@ class TestDeleteMessage:
             )
 
         fanout_mock.fan_out_to_room.assert_not_awaited()
+
+    async def test_fanout_failure_is_recovered_by_delete_retry(
+        self, service, message_repo_mock, fanout_mock,
+    ):
+        deleted_at = datetime.now(timezone.utc)
+        message_repo_mock.find_by_id.side_effect = [
+            _mk_text_doc(sender_id="U_A"),
+            _mk_text_doc(sender_id="U_A", deleted_at=deleted_at),
+        ]
+        fanout_mock.fan_out_to_room.side_effect = [
+            RuntimeError("redis pub/sub down"),
+            None,
+        ]
+
+        with pytest.raises(RuntimeError, match="redis pub/sub down"):
+            await service.delete_message(
+                message_id="MSG_1", deleter_user_id="U_A", deleter_session_id="WS_A",
+            )
+        await service.delete_message(
+            message_id="MSG_1", deleter_user_id="U_A", deleter_session_id="WS_A",
+        )
+
+        message_repo_mock.soft_delete.assert_awaited_once()
+        assert fanout_mock.fan_out_to_room.await_count == 2
+        retry_payload = fanout_mock.fan_out_to_room.await_args_list[1].args[1]
+        assert retry_payload["deleted_at"] == deleted_at.isoformat()
+
+    async def test_fanout_cancellation_propagates(
+        self, service, message_repo_mock, fanout_mock,
+    ):
+        message_repo_mock.find_by_id.return_value = _mk_text_doc(sender_id="U_A")
+        fanout_mock.fan_out_to_room.side_effect = asyncio.CancelledError
+
+        with pytest.raises(asyncio.CancelledError):
+            await service.delete_message(
+                message_id="MSG_1", deleter_user_id="U_A", deleter_session_id="WS_A",
+            )
+
+        message_repo_mock.soft_delete.assert_awaited_once()
 
     async def test_group_creator_can_delete_others(
         self, service, message_repo_mock, chat_room_repo_mock,

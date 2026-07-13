@@ -196,6 +196,52 @@ class TestDeleteMessageFlow:
         assert hit.content is None
         assert hit.deleted_at is not None
 
+    async def test_fanout_failure_is_recovered_by_retry(
+        self, room_with_message, message_service, mongo_db, chat_fanout_stub,
+    ):
+        _, a, _, message_id, _ = room_with_message
+        chat_fanout_stub.reset_mock()
+        chat_fanout_stub.fan_out_to_room.side_effect = RuntimeError("redis unavailable")
+
+        with pytest.raises(RuntimeError, match="redis unavailable"):
+            await message_service.delete_message(
+                message_id=message_id,
+                deleter_user_id=a,
+                deleter_session_id="WS_A",
+            )
+
+        doc = await mongo_db.chat_message.find_one({"_id": message_id})
+        assert doc["deleted_at"] is not None
+        assert doc["content"] is None
+
+        chat_fanout_stub.fan_out_to_room.side_effect = None
+        await message_service.delete_message(
+            message_id=message_id,
+            deleter_user_id=a,
+            deleter_session_id="WS_A",
+        )
+        assert chat_fanout_stub.fan_out_to_room.await_count == 2
+        retry_payload = chat_fanout_stub.fan_out_to_room.await_args_list[1].args[1]
+        assert retry_payload["deleted_at"] == doc["deleted_at"].isoformat()
+
+    async def test_fanout_cancellation_exposes_durable_delete(
+        self, room_with_message, message_service, mongo_db, chat_fanout_stub,
+    ):
+        _, a, _, message_id, _ = room_with_message
+        chat_fanout_stub.reset_mock()
+        chat_fanout_stub.fan_out_to_room.side_effect = asyncio.CancelledError
+
+        with pytest.raises(asyncio.CancelledError):
+            await message_service.delete_message(
+                message_id=message_id,
+                deleter_user_id=a,
+                deleter_session_id="WS_A",
+            )
+
+        doc = await mongo_db.chat_message.find_one({"_id": message_id})
+        assert doc["deleted_at"] is not None
+        assert doc["content"] is None
+
     async def test_group_creator_can_delete_others_message(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
         patch_external_clients,
@@ -256,17 +302,16 @@ class TestDeleteMessageFlow:
                 message_id=sys_doc["_id"], deleter_user_id=a, deleter_session_id="WS_A",
             )
 
-    async def test_second_delete_is_rejected(
+    async def test_second_delete_is_idempotent_success(
         self, room_with_message, message_service, patch_external_clients,
     ):
         _, a, _, message_id, _ = room_with_message
         await message_service.delete_message(
             message_id=message_id, deleter_user_id=a, deleter_session_id="WS_A",
         )
-        with pytest.raises(ValueError, match="이미 삭제"):
-            await message_service.delete_message(
-                message_id=message_id, deleter_user_id=a, deleter_session_id="WS_A",
-            )
+        await message_service.delete_message(
+            message_id=message_id, deleter_user_id=a, deleter_session_id="WS_A",
+        )
 
 
 class TestMessageMutationPredicates:

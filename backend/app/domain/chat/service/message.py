@@ -837,8 +837,9 @@ class MessageService:
     ) -> None:
         """본인 메시지 또는 그룹방 creator 의 soft delete.
 
-        탈퇴한 creator 는 권한 소멸 — 현재 활성 멤버여야만 유효.
-        시스템 메시지는 삭제 불가.
+        탈퇴한 creator 는 권한 소멸 — 현재 활성 멤버여야만 유효하다. 삭제와 응답 사이
+        불확실성을 위해 권한 확인 후 이미 삭제된 요청은 동일 tombstone을 재발행한다.
+        durable delete 뒤 delivery 실패는 호출자에게 노출해 같은 요청의 재시도로 복구한다.
         """
         await self._lock_message_mutation(message_id)
         member_repo = ChatRoomMemberRepository(self._session)
@@ -848,8 +849,6 @@ class MessageService:
         doc = await message_repo.find_by_id(message_id)
         if doc is None:
             raise ValueError("존재하지 않는 메시지입니다.")
-        if doc.get("deleted_at") is not None:
-            raise ValueError("이미 삭제된 메시지입니다.")
         if doc.get("type") == MessageType.SYSTEM.value:
             raise PermissionError("시스템 메시지는 삭제할 수 없습니다.")
 
@@ -872,14 +871,18 @@ class MessageService:
                     "본인 메시지 또는 그룹 방장만 삭제할 수 있습니다.",
                 )
 
-        now = datetime.now(timezone.utc)
-        deleted = await message_repo.soft_delete(
-            message_id,
-            deleted_at=now,
-            expected_edited_at=doc.get("edited_at"),
-        )
-        if deleted is not True:
-            raise ValueError("메시지가 동시에 변경되었습니다. 다시 시도해주세요.")
+        deleted_at = doc.get("deleted_at")
+        if deleted_at is None:
+            deleted_at = datetime.now(timezone.utc)
+            deleted = await message_repo.soft_delete(
+                message_id,
+                deleted_at=deleted_at,
+                expected_edited_at=doc.get("edited_at"),
+            )
+            if deleted is not True:
+                raise ValueError("메시지가 동시에 변경되었습니다. 다시 시도해주세요.")
+        else:
+            logger.info("메시지 삭제 delivery 재시도: message_id={}", message_id)
 
         await self._fanout.fan_out_to_room(
             room_id,
@@ -887,7 +890,7 @@ class MessageService:
                 "type": "message.deleted",
                 "sender_session_id": deleter_session_id,
                 "message_id": message_id,
-                "deleted_at": now.isoformat(),
+                "deleted_at": deleted_at.isoformat(),
             },
         )
 

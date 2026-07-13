@@ -46,7 +46,10 @@ async def delete_message(
     message_id: str,
     service: MessageService = Depends(Provide[Container.message_service]),
 ) -> None:
-    """본인 메시지 OR 그룹방 creator 의 soft delete. 방 전체에 `message.deleted` 발행."""
+    """본인 메시지 OR 그룹방 creator 의 멱등 soft delete 및 tombstone 발행.
+
+    durable delete 뒤 delivery가 실패하면 요청도 실패하며, 재시도는 tombstone을 재발행한다.
+    """
     user_id: str = request.state.user_id
     deleter_session_id = ""
 
