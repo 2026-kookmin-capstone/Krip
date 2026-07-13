@@ -47,12 +47,20 @@ reload:
 		&& echo "Prometheus reloaded"
 
 health:
-	@echo "=== /health (liveness) ==="
-	@curl -sw "  HTTP %{http_code}\n" http://localhost:8000/health
-	@echo "=== /health/deep (4-ping) ==="
-	@curl -sw "  HTTP %{http_code}\n" http://localhost:8000/health/deep
-	@echo "=== /ready (deep + AI models) ==="
-	@curl -sw "  HTTP %{http_code}\n" http://localhost:8000/ready
+	@check() { \
+		echo "=== $$1 ==="; \
+		body=$$(mktemp) || return; \
+		status=$$(curl --silent --show-error --output "$$body" --write-out "%{http_code}" "$$2"); \
+		curl_status=$$?; \
+		cat "$$body"; \
+		rm -f "$$body"; \
+		printf "  HTTP %s\n" "$$status"; \
+		[ "$$curl_status" -eq 0 ] || return "$$curl_status"; \
+		case "$$status" in 2??) return 0 ;; *) return 22 ;; esac; \
+	}; \
+	check '/health (liveness)' http://localhost:8000/health \
+		&& check '/health/deep (4-ping)' http://localhost:8000/health/deep \
+		&& check '/ready (deep + AI models)' http://localhost:8000/ready
 
 metrics:
 	@docker exec krip-prometheus wget -qO- http://backend:9090/metrics 2>/dev/null \

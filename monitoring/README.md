@@ -227,7 +227,7 @@ deep-merge 충돌 방지.
 | `make down` | 전체 종료 (볼륨 유지) |
 | `make logs` / `make ps` | 로그 tail / 상태 확인 |
 | `make reload` | Prometheus config hot reload (`/-/reload` POST) |
-| `make health` | `/health`, `/health/deep`, `/ready` 3종 curl 검증 |
+| `make health` | `/health`, `/health/deep`, `/ready` 3종 curl 검증 (하나라도 비-2xx면 실패) |
 | `make metrics` | backend:9090/metrics 의 RED 메트릭 샘플 조회 |
 | `make logql` | Loki/Alloy ready + 라벨 목록 확인 |
 | `make net-create` | `monitoring-network` 생성 (`up` 이 자동 호출) |
