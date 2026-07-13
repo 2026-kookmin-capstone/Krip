@@ -9,6 +9,7 @@ from typing import cast
 
 from bson import json_util
 from pymongo.errors import ConnectionFailure, DuplicateKeyError, PyMongoError
+from sqlalchemy import text
 
 from app.core.background_tasks import background_tasks
 from app.core.chat.lua_script import lua_scripts
@@ -777,6 +778,7 @@ class MessageService:
         new_content: str,
     ) -> dict:
         """본인 메시지를 5분 이내 편집. 시스템 메시지 / 삭제된 메시지 / 비활성 멤버는 거절."""
+        await self._lock_message_mutation(message_id)
         member_repo = ChatRoomMemberRepository(self._session)
         message_repo = ChatMessageRepository(mongodb.database)
 
@@ -799,9 +801,14 @@ class MessageService:
         if (now - created_at) > EDIT_TIME_LIMIT:
             raise ValueError("메시지 편집 제한 시간(5분)이 지났습니다.")
 
-        await message_repo.update_content(
-            message_id, new_content, edited_at=now,
+        updated = await message_repo.update_content(
+            message_id,
+            new_content,
+            edited_at=now,
+            expected_edited_at=doc.get("edited_at"),
         )
+        if updated is not True:
+            raise ValueError("메시지가 동시에 변경되었습니다. 다시 시도해주세요.")
 
         await self._fanout.fan_out_to_room(
             room_id,
@@ -833,6 +840,7 @@ class MessageService:
         탈퇴한 creator 는 권한 소멸 — 현재 활성 멤버여야만 유효.
         시스템 메시지는 삭제 불가.
         """
+        await self._lock_message_mutation(message_id)
         member_repo = ChatRoomMemberRepository(self._session)
         chat_room_repo = ChatRoomRepository(self._session)
         message_repo = ChatMessageRepository(mongodb.database)
@@ -865,7 +873,13 @@ class MessageService:
                 )
 
         now = datetime.now(timezone.utc)
-        await message_repo.soft_delete(message_id, deleted_at=now)
+        deleted = await message_repo.soft_delete(
+            message_id,
+            deleted_at=now,
+            expected_edited_at=doc.get("edited_at"),
+        )
+        if deleted is not True:
+            raise ValueError("메시지가 동시에 변경되었습니다. 다시 시도해주세요.")
 
         await self._fanout.fan_out_to_room(
             room_id,
@@ -880,6 +894,12 @@ class MessageService:
         logger.info(
             "메시지 삭제: message_id={}, deleter={}, room_id={}, was_own={}",
             message_id, deleter_user_id, room_id, sender_id == deleter_user_id,
+        )
+
+    async def _lock_message_mutation(self, message_id: str) -> None:
+        await self._session.execute(
+            text("SELECT pg_advisory_xact_lock(hashtextextended(:lock_name, 0))"),
+            {"lock_name": f"chat-message-mutation:{message_id}"},
         )
 
     @staticmethod

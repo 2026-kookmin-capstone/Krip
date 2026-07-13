@@ -3,10 +3,16 @@
 실 Mongo 에 메시지를 쓴 뒤 편집/삭제가 문서에 반영되고, 히스토리 조회 시 삭제된
 메시지는 content=None 으로 마스킹되는지까지 end-to-end 로 검증.
 """
+import asyncio
+from datetime import datetime, timezone
+
 import pytest
 import pytest_asyncio
 
+from app.database.session import UnitOfWork
 from app.domain.chat.model.chat_message import MessageType
+from app.domain.chat.repository.chat_message import ChatMessageRepository
+from app.domain.chat.service.message import MessageService
 from app.domain.chat.service.message_history import MessageHistoryService
 from app.domain.chat.service.room import RoomService
 from app.domain.friend.model.friendship import Friendship, FriendshipStatus
@@ -100,6 +106,71 @@ class TestEditMessageFlow:
                 message_id=message_id, editor_user_id=a, editor_session_id="WS_A",
                 new_content="zombie",
             )
+
+    async def test_edit_and_delete_are_serialized_through_fanout(
+        self, room_with_message, session_factory, chat_fanout_stub, monkeypatch,
+    ):
+        _, a, _, message_id, _ = room_with_message
+        chat_fanout_stub.reset_mock()
+        edit_snapshot_read = asyncio.Event()
+        release_edit = asyncio.Event()
+        original_find = ChatMessageRepository.find_by_id
+
+        async def pause_edit_after_snapshot(repo, target_message_id):
+            doc = await original_find(repo, target_message_id)
+            task = asyncio.current_task()
+            if task is not None and task.get_name() == "stale-edit":
+                edit_snapshot_read.set()
+                await release_edit.wait()
+            return doc
+
+        monkeypatch.setattr(ChatMessageRepository, "find_by_id", pause_edit_after_snapshot)
+        edit_service = MessageService(
+            uow=UnitOfWork(session_factory),
+            fanout_service=chat_fanout_stub,
+            fcm_service_factory=lambda: None,
+        )
+        delete_service = MessageService(
+            uow=UnitOfWork(session_factory),
+            fanout_service=chat_fanout_stub,
+            fcm_service_factory=lambda: None,
+        )
+
+        edit_task = asyncio.create_task(
+            edit_service.edit_message(
+                message_id=message_id,
+                editor_user_id=a,
+                editor_session_id="WS_EDIT",
+                new_content="edited-before-delete",
+            ),
+            name="stale-edit",
+        )
+        await asyncio.wait_for(edit_snapshot_read.wait(), timeout=1)
+        delete_task = asyncio.create_task(
+            delete_service.delete_message(
+                message_id=message_id,
+                deleter_user_id=a,
+                deleter_session_id="WS_DELETE",
+            ),
+        )
+
+        delete_crossed_edit = False
+        try:
+            await asyncio.wait_for(asyncio.shield(delete_task), timeout=0.1)
+            delete_crossed_edit = True
+        except TimeoutError:
+            pass
+        finally:
+            release_edit.set()
+            results = await asyncio.gather(edit_task, delete_task, return_exceptions=True)
+
+        assert not delete_crossed_edit
+        assert not [result for result in results if isinstance(result, BaseException)]
+        event_types = [
+            call.args[1]["type"]
+            for call in chat_fanout_stub.fan_out_to_room.await_args_list
+        ]
+        assert event_types == ["message.updated", "message.deleted"]
 
 
 class TestDeleteMessageFlow:
@@ -196,3 +267,50 @@ class TestDeleteMessageFlow:
             await message_service.delete_message(
                 message_id=message_id, deleter_user_id=a, deleter_session_id="WS_A",
             )
+
+
+class TestMessageMutationPredicates:
+    async def test_edit_cas_cannot_resurrect_deleted_content(
+        self, room_with_message, mongo_db,
+    ):
+        _, _, _, message_id, _ = room_with_message
+        repo = ChatMessageRepository(mongo_db)
+        await mongo_db.chat_message.update_one(
+            {"_id": message_id},
+            {"$set": {"deleted_at": datetime.now(timezone.utc), "content": None}},
+        )
+
+        updated = await repo.update_content(
+            message_id,
+            "zombie",
+            edited_at=datetime.now(timezone.utc),
+            expected_edited_at=None,
+        )
+
+        doc = await mongo_db.chat_message.find_one({"_id": message_id})
+        assert updated is False
+        assert doc["content"] is None
+        assert doc["deleted_at"] is not None
+
+    async def test_delete_cas_rejects_stale_edit_generation(
+        self, room_with_message, mongo_db,
+    ):
+        _, _, _, message_id, _ = room_with_message
+        repo = ChatMessageRepository(mongo_db)
+        assert await repo.update_content(
+            message_id,
+            "new generation",
+            edited_at=datetime.now(timezone.utc),
+            expected_edited_at=None,
+        )
+
+        deleted = await repo.soft_delete(
+            message_id,
+            deleted_at=datetime.now(timezone.utc),
+            expected_edited_at=None,
+        )
+
+        doc = await mongo_db.chat_message.find_one({"_id": message_id})
+        assert deleted is False
+        assert doc["content"] == "new generation"
+        assert doc["deleted_at"] is None

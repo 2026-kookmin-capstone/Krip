@@ -134,20 +134,37 @@ class ChatMessageRepository:
 
     @measure_mongo_op("update", "chat_message")
     async def update_content(
-        self, message_id: str, new_content: Any, edited_at: datetime,
+        self,
+        message_id: str,
+        new_content: Any,
+        edited_at: datetime,
+        expected_edited_at: datetime | None,
     ) -> bool:
-        """본문 교체 + `edited_at` 세팅. False 면 동시성 race (service 는 find_by_id 로 pre-check)."""
+        """미삭제 상태와 직전 편집 세대가 유지될 때만 본문을 교체한다."""
         res = await self.collection.update_one(
-            {"_id": message_id},
+            {
+                "_id": message_id,
+                "deleted_at": None,
+                "edited_at": expected_edited_at,
+            },
             {"$set": {"content": new_content, "edited_at": edited_at}},
         )
         return res.modified_count == 1
 
     @measure_mongo_op("update", "chat_message")
-    async def soft_delete(self, message_id: str, deleted_at: datetime) -> bool:
-        """soft delete — `deleted_at` 세팅 + `content=null`. row 자체는 보존."""
+    async def soft_delete(
+        self,
+        message_id: str,
+        deleted_at: datetime,
+        expected_edited_at: datetime | None,
+    ) -> bool:
+        """미삭제 상태와 직전 편집 세대가 유지될 때만 terminal delete한다."""
         res = await self.collection.update_one(
-            {"_id": message_id},
+            {
+                "_id": message_id,
+                "deleted_at": None,
+                "edited_at": expected_edited_at,
+            },
             {"$set": {"deleted_at": deleted_at, "content": None}},
         )
         return res.modified_count == 1

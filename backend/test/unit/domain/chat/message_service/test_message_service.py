@@ -1208,6 +1208,20 @@ class TestEditMessage:
         assert payload["content"] == "updated body"
         assert "edited_at" in payload
 
+    async def test_edit_cas_loss_does_not_fan_out(
+        self, service, message_repo_mock, fanout_mock,
+    ):
+        message_repo_mock.find_by_id.return_value = _mk_text_doc()
+        message_repo_mock.update_content.return_value = False
+
+        with pytest.raises(ValueError, match="동시에 변경"):
+            await service.edit_message(
+                message_id="MSG_1", editor_user_id="U_A", editor_session_id="WS_A",
+                new_content="stale edit",
+            )
+
+        fanout_mock.fan_out_to_room.assert_not_awaited()
+
 
 def _mk_room(
     chat_room_id: str = "CR_1",
@@ -1272,6 +1286,19 @@ class TestDeleteMessage:
         assert payload["type"] == "message.deleted"
         assert payload["sender_session_id"] == "WS_A"
         assert payload["message_id"] == "MSG_1"
+
+    async def test_delete_cas_loss_does_not_fan_out(
+        self, service, message_repo_mock, fanout_mock,
+    ):
+        message_repo_mock.find_by_id.return_value = _mk_text_doc(sender_id="U_A")
+        message_repo_mock.soft_delete.return_value = False
+
+        with pytest.raises(ValueError, match="동시에 변경"):
+            await service.delete_message(
+                message_id="MSG_1", deleter_user_id="U_A", deleter_session_id="WS_A",
+            )
+
+        fanout_mock.fan_out_to_room.assert_not_awaited()
 
     async def test_group_creator_can_delete_others(
         self, service, message_repo_mock, chat_room_repo_mock,

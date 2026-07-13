@@ -37,6 +37,11 @@ class FakeUnitOfWork:
 
 def make_mock_session() -> MagicMock:
     session = MagicMock(name="session")
+
+    async def execute(*_args, **_kwargs):
+        return None
+
+    session.execute = execute
     session.flush = AsyncMock()
     session.refresh = AsyncMock()
     session.begin_nested = MagicMock(return_value=FakeAsyncContextManager())
