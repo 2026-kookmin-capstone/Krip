@@ -1,5 +1,8 @@
 from datetime import datetime, timedelta, timezone
 from enum import Enum
+from uuid import uuid4
+
+from sqlalchemy import text
 
 from app.core.cache.key_category import KeyCategory
 from app.core.cache.redis_cache import get_redis_cache_manager
@@ -34,6 +37,7 @@ class _PurgeOutcome(Enum):
     DELETED = "deleted"        # status==INACTIVE → hard delete 완료 → 외부 정리 진행
     NO_USER = "no_user"        # RDB 에 user 없음 (이전 사이클 외부 정리 잔존) → 외부 정리 진행
     STALE_DOC = "stale_doc"    # status!=INACTIVE → cancel 복구 또는 dual-write 불일치 → doc 만 청소
+    STALE_GENERATION = "stale_generation"  # worker snapshot 뒤 cancel/re-withdraw → 전부 보존
 
 
 async def invalidate_registered_cache(user_id: str) -> None:
@@ -72,6 +76,7 @@ class WithdrawService:
 
         캐시 무효화는 미커밋 ACTIVE 재캐시 race를 막기 위해 router가 commit 후 수행한다.
         """
+        await self._lock_withdrawal(user_id)
         user_repo = UserRepository(self._session)
 
         user = await user_repo.find_by_id(user_id)
@@ -90,6 +95,7 @@ class WithdrawService:
         # 시점부터는 사실상 단일 호출자 → upsert 로 충분.
         await self.withdrawal_request_repo.upsert(
             user_id=user_id,
+            generation_id=uuid4().hex,
             requested_at=now,
             scheduled_purge_at=purge_at,
         )
@@ -103,13 +109,29 @@ class WithdrawService:
         """commit 후 활성 chat session을 즉시 revoke한다."""
         await self._chat_purge.revoke_all_sessions(user_id)
 
-    async def purge(self, user_id: str) -> None:
+    async def purge(
+        self,
+        user_id: str,
+        expected_generation_id: str | None = None,
+        expected_requested_at: datetime | None = None,
+    ) -> None:
         """RDB 삭제 후 Mongo, Object Storage, Redis를 best-effort로 정리한다.
 
         `_purge_rdb`와 cancel은 같은 row lock을 경쟁한다. cancel이 이기면 STALE_DOC만
         제거하고 외부 데이터는 보존한다. 외부 정리 실패 시 purge doc을 남겨 재시도한다.
         """
-        outcome = await self._purge_rdb(user_id)
+        outcome = await self._purge_rdb(
+            user_id,
+            expected_generation_id,
+            expected_requested_at,
+        )
+
+        if outcome == _PurgeOutcome.STALE_GENERATION:
+            logger.info(
+                "탈퇴 영구 삭제 — worker 세대가 현재 요청과 달라 전체 보존 (user_id={})",
+                user_id,
+            )
+            return
 
         if outcome == _PurgeOutcome.STALE_DOC:
             logger.warning(
@@ -117,21 +139,37 @@ class WithdrawService:
                 "dual-write 잔존), 외부 리소스 보존 + stale doc 만 정리 (user_id={})",
                 user_id,
             )
-            try:
-                await self.withdrawal_request_repo.delete_by_user_id(user_id)
-            except Exception as e:
-                # 다음 사이클에서 같은 가드에 다시 걸려 재시도.
-                logger.error(
-                    "탈퇴 영구 삭제 — stale doc 정리 실패, 다음 tick 재시도 (user_id={}): {}",
-                    user_id, e,
-                )
+            await self._delete_retry_marker(
+                user_id,
+                expected_generation_id,
+                expected_requested_at,
+            )
             return
 
-        await self._purge_external(user_id)
+        await self._purge_external(
+            user_id,
+            expected_generation_id,
+            expected_requested_at,
+        )
 
     @transactional
-    async def _purge_rdb(self, user_id: str) -> "_PurgeOutcome":
-        """row lock 안에서 status를 검사하고 조건부 hard delete한다."""
+    async def _purge_rdb(
+        self,
+        user_id: str,
+        expected_generation_id: str | None = None,
+        expected_requested_at: datetime | None = None,
+    ) -> "_PurgeOutcome":
+        """generation fence와 row lock 안에서 조건부 hard delete한다."""
+        await self._lock_withdrawal(user_id)
+        if expected_requested_at is not None:
+            marker = await self.withdrawal_request_repo.find_by_user_id(user_id)
+            if marker is None or not self._is_expected_generation(
+                marker,
+                expected_generation_id,
+                expected_requested_at,
+            ):
+                return _PurgeOutcome.STALE_GENERATION
+
         user_repo = UserRepository(self._session)
         user = await user_repo.find_by_id_for_update(user_id)
 
@@ -155,10 +193,16 @@ class WithdrawService:
         Mongo 삭제는 RDB commit 후 수행한다. 실패해도 worker의 STALE_DOC 가드가 다음
         사이클에 정리하므로 INACTIVE 상태에서 purge doc만 사라지는 stuck 상태를 피한다.
         """
+        marker = await self.withdrawal_request_repo.find_by_user_id(user_id)
         await self._set_active(user_id)
 
         try:
-            await self.withdrawal_request_repo.delete_by_user_id(user_id)
+            if marker is not None:
+                await self.withdrawal_request_repo.delete_if_generation(
+                    user_id,
+                    marker.generation_id,
+                    marker.requested_at,
+                )
         except Exception as e:
             logger.warning(
                 "탈퇴 취소 — Mongo doc 정리 실패 (status 는 이미 ACTIVE), "
@@ -170,7 +214,8 @@ class WithdrawService:
 
     @transactional
     async def _set_active(self, user_id: str) -> None:
-        """row lock 안에서 RDB status만 ACTIVE로 복구한다."""
+        """withdrawal fence와 row lock 안에서 RDB status를 ACTIVE로 복구한다."""
+        await self._lock_withdrawal(user_id)
         user_repo = UserRepository(self._session)
         user = await user_repo.find_by_id_for_update(user_id)
         if user is None:
@@ -182,21 +227,43 @@ class WithdrawService:
         user.status = UserStatus.ACTIVE
         await user_repo.update(user)
 
-    async def _purge_external(self, user_id: str) -> None:
-        """MongoDB / Object Storage / Redis 정리. 단계별 best-effort."""
+    async def _lock_withdrawal(self, user_id: str) -> None:
+        await self._session.execute(
+            text("SELECT pg_advisory_xact_lock(hashtextextended(:lock_name, 0))"),
+            {"lock_name": f"withdrawal:{user_id}"},
+        )
+
+    async def _purge_external(
+        self,
+        user_id: str,
+        expected_generation_id: str | None = None,
+        expected_requested_at: datetime | None = None,
+    ) -> None:
+        """외부 저장소를 끝까지 정리하고 필수 단계가 모두 성공한 경우에만 retry doc을 제거한다."""
+        failed_stages: list[str] = []
+
         # MongoDB (유저 데이터)
-        try:
-            await TripmateImage.find({"user_id": user_id}).delete()
-            await TripmatePostDraft.find({"user_id": user_id}).delete()
-            await TripmateSearchHistory.find({"user_id": user_id}).delete()
-            await TourSearchHistory.find({"user_id": user_id}).delete()
-            await FriendSearchHistory.find({"user_id": user_id}).delete()
+        mongo_documents = (
+            ("tripmate_image", TripmateImage),
+            ("tripmate_post_draft", TripmatePostDraft),
+            ("tripmate_search_history", TripmateSearchHistory),
+            ("tour_search_history", TourSearchHistory),
+            ("friend_search_history", FriendSearchHistory),
+        )
+        for stage, document in mongo_documents:
+            try:
+                await document.find({"user_id": user_id}).delete()
+            except Exception as e:
+                failed_stages.append(stage)
+                logger.error(
+                    "탈퇴 영구 삭제 — MongoDB {} 삭제 실패, 다음 tick 재시도 "
+                    "(user_id={}): {}",
+                    stage,
+                    user_id,
+                    e,
+                )
+        if not any(stage in failed_stages for stage, _ in mongo_documents):
             logger.info("탈퇴 영구 삭제 — MongoDB 유저 데이터 삭제 완료 (user_id={})", user_id)
-        except Exception as e:
-            logger.error(
-                "탈퇴 영구 삭제 — MongoDB 삭제 실패, orphan 정리 필요 (user_id={}): {}",
-                user_id, e,
-            )
 
         # 인박스 cascade (recipient/actor 양쪽 매칭) — InboxService 가 self-swallow.
         # 다음 worker 사이클에서 STALE_DOC 가드가 이미 RDB 상으론 사라진 user 의 doc 만 청소
@@ -208,8 +275,9 @@ class WithdrawService:
             await self.storage.delete_by_prefix(user_id)
             logger.info("탈퇴 영구 삭제 — Object Storage 삭제 완료 (user_id={})", user_id)
         except Exception as e:
+            failed_stages.append("object_storage")
             logger.error(
-                "탈퇴 영구 삭제 — Object Storage 삭제 실패, orphan 파일 정리 필요 (user_id={}): {}",
+                "탈퇴 영구 삭제 — Object Storage 삭제 실패, 다음 tick 재시도 (user_id={}): {}",
                 user_id, e,
             )
 
@@ -220,15 +288,44 @@ class WithdrawService:
 
         # chat 도메인 데이터성 키 (unread:{user_id} 등) — TTL 없어 명시 정리 필요.
         # 도메인 경계 유지를 위해 chat 의 cleanup 훅 통해 호출.
-        await self._chat_purge.cleanup_user_data(user_id)
-
-        # withdrawal_request 자체 — 모든 정리 끝난 뒤 마지막에 제거
         try:
-            await self.withdrawal_request_repo.delete_by_user_id(user_id)
+            chat_cleanup_ok = await self._chat_purge.cleanup_user_data(user_id)
+            if chat_cleanup_ok is False:
+                failed_stages.append("chat_redis")
         except Exception as e:
-            # 이게 실패하면 다음 스케줄러 tick 에서 같은 doc 가 다시 잡혀 purge 가 재실행됨.
-            # _purge_rdb 는 idempotent (user 없으면 통과), _purge_external 도 멱등 → 재실행 안전.
+            failed_stages.append("chat_redis")
             logger.error(
-                "탈퇴 영구 삭제 — withdrawal_request doc 삭제 실패, 다음 tick 에서 재시도 (user_id={}): {}",
-                user_id, e,
+                "탈퇴 영구 삭제 — chat Redis 정리 실패, 다음 tick 재시도 (user_id={}): {}",
+                user_id,
+                e,
             )
+
+        if failed_stages:
+            raise RuntimeError(f"외부 정리 미완료: {', '.join(failed_stages)}")
+
+        await self._delete_retry_marker(
+            user_id,
+            expected_generation_id,
+            expected_requested_at,
+        )
+
+    async def _delete_retry_marker(
+        self,
+        user_id: str,
+        expected_generation_id: str | None,
+        expected_requested_at: datetime | None,
+    ) -> None:
+        if expected_requested_at is None:
+            await self.withdrawal_request_repo.delete_by_user_id(user_id)
+            return
+        await self.withdrawal_request_repo.delete_if_generation(
+            user_id,
+            expected_generation_id,
+            expected_requested_at,
+        )
+
+    @staticmethod
+    def _is_expected_generation(marker, generation_id, requested_at: datetime) -> bool:
+        if generation_id is not None:
+            return marker.generation_id == generation_id
+        return marker.generation_id is None and marker.requested_at == requested_at

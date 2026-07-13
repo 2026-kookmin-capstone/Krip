@@ -16,6 +16,7 @@ class WithdrawalRequestRepository:
     async def upsert(
         self,
         user_id: str,
+        generation_id: str,
         requested_at: datetime,
         scheduled_purge_at: datetime,
     ) -> None:
@@ -29,6 +30,7 @@ class WithdrawalRequestRepository:
             {
                 "$set": {
                     "user_id": user_id,
+                    "generation_id": generation_id,
                     "requested_at": requested_at,
                     "scheduled_purge_at": scheduled_purge_at,
                 },
@@ -46,6 +48,32 @@ class WithdrawalRequestRepository:
         return await WithdrawalRequest.find(
             WithdrawalRequest.scheduled_purge_at <= now,
         ).to_list()
+
+    @measure_mongo_op("find", "withdrawal_request")
+    async def find_by_user_id(self, user_id: str) -> WithdrawalRequest | None:
+        return await WithdrawalRequest.find_one(WithdrawalRequest.user_id == user_id)
+
+    @measure_mongo_op("delete", "withdrawal_request")
+    async def delete_if_generation(
+        self,
+        user_id: str,
+        generation_id: str | None,
+        requested_at: datetime,
+    ) -> bool:
+        generation_filter: dict = {"generation_id": generation_id}
+        if generation_id is None:
+            generation_filter = {
+                "$or": [
+                    {"generation_id": {"$exists": False}},
+                    {"generation_id": None},
+                ],
+            }
+        result = await WithdrawalRequest.get_motor_collection().delete_one({
+            "user_id": user_id,
+            "requested_at": requested_at,
+            **generation_filter,
+        })
+        return result.deleted_count == 1
 
     @measure_mongo_op("delete", "withdrawal_request")
     async def delete_by_user_id(self, user_id: str) -> None:

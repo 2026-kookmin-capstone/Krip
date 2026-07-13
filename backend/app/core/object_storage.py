@@ -201,8 +201,14 @@ class ObjectStorage:
             objects = [{"Key": obj["Key"]} for obj in page.get("Contents", [])]
             if not objects:
                 continue
-            self._client.delete_objects(Bucket=self.bucket, Delete={"Objects": objects})
-            deleted += len(objects)
+            response = self._client.delete_objects(
+                Bucket=self.bucket,
+                Delete={"Objects": objects},
+            )
+            errors = response.get("Errors", [])
+            if errors:
+                raise RuntimeError(f"Object Storage 일괄 삭제 부분 실패: {len(errors)}건")
+            deleted += len(response.get("Deleted", []))
         return deleted
 
     def _delete(self, key: str) -> None:

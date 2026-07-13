@@ -6,7 +6,12 @@ auth 의 `WithdrawService` 가 두 시점에 호출:
 
 chat 이 자기 Redis 키 규약을 유지하도록 모든 조작은 이 파일에만 존재.
 """
-from app.core.chat.redis_key import read_sync_key, unread_key
+from app.core.chat.redis_key import (
+    read_sync_key,
+    unread_key,
+    unread_recovery_required_key,
+    unread_watermark_key,
+)
 from app.core.logger import get_logger
 from app.core.redis import get_redis_client
 from app.domain.chat.service.session import SessionService
@@ -36,18 +41,25 @@ class UserPurgeCacheService:
                 user_id, e,
             )
 
-    async def cleanup_user_data(self, user_id: str) -> None:
+    async def cleanup_user_data(self, user_id: str) -> bool:
         """영구 삭제 시점에 TTL 없는 unread와 read cursor HASH 정리.
 
         나머지 chat 키는 TTL 또는 CASCADE 후 캐시 워밍으로 자연 정리되므로 다루지 않음.
-        best-effort.
+        예외는 도메인 경계에서 흡수하되 결과를 반환해 auth purge가 durable 재시도 여부를 결정한다.
         """
         try:
             redis = await get_redis_client()
-            await redis.delete(unread_key(user_id), read_sync_key(user_id))
+            await redis.delete(
+                unread_key(user_id),
+                read_sync_key(user_id),
+                unread_watermark_key(user_id),
+                unread_recovery_required_key(user_id),
+            )
             logger.info("탈퇴 영구 삭제 — chat Redis 정리 완료 (user_id={})", user_id)
+            return True
         except Exception as e:
             logger.warning(
                 "탈퇴 영구 삭제 — chat Redis 정리 실패 (best-effort): user_id={}, err={}",
                 user_id, e,
             )
+            return False

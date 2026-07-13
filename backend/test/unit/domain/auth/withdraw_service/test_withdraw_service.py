@@ -4,13 +4,14 @@
     - `request_withdraw`: ACTIVE → INACTIVE + Mongo upsert + scheduled_purge_at 30일 후
     - `cancel_withdraw`: INACTIVE → ACTIVE + Mongo doc 청소. doc 청소 실패 swallow
     - `purge`: 3개 outcome 분기 (DELETED / NO_USER / STALE_DOC)
-    - `_purge_external`: Mongo 5종 / Storage / Redis / 알림 cascade / withdrawal_request doc
-      각 단계 best-effort + 알림 cascade 호출 검증
+    - `_purge_external`: Mongo 5종 / Storage / Redis / 알림 cascade 단계 격리와
+      필수 정리 실패 시 withdrawal_request durable retry 표식 보존
 
 `_purge_rdb` outcome 분기는 service 의 internal 상태 결정 — 본 테스트는 SELECT FOR UPDATE +
 status 검사를 user_repo_mock 으로 시뮬레이션.
 """
 from datetime import datetime, timedelta, timezone
+from types import SimpleNamespace
 
 import pytest
 
@@ -50,6 +51,8 @@ class TestRequestWithdraw:
         withdrawal_request_repo_mock.upsert.assert_awaited_once()
         kwargs = withdrawal_request_repo_mock.upsert.await_args.kwargs
         assert kwargs["user_id"] == "USER_a"
+        assert isinstance(kwargs["generation_id"], str)
+        assert len(kwargs["generation_id"]) == 32
         assert isinstance(kwargs["requested_at"], datetime)
         assert isinstance(kwargs["scheduled_purge_at"], datetime)
 
@@ -103,12 +106,21 @@ class TestCancelWithdraw:
     ):
         user = UserFactory.create(user_id="USER_a", status=UserStatus.INACTIVE)
         user_repo_mock.find_by_id_for_update.return_value = user
+        requested_at = datetime(2026, 1, 1, tzinfo=timezone.utc)
+        withdrawal_request_repo_mock.find_by_user_id.return_value = SimpleNamespace(
+            generation_id="G1",
+            requested_at=requested_at,
+        )
 
         await service.cancel_withdraw(user_id="USER_a")
 
         assert user.status == UserStatus.ACTIVE
         user_repo_mock.update.assert_awaited_once_with(user)
-        withdrawal_request_repo_mock.delete_by_user_id.assert_awaited_once_with("USER_a")
+        withdrawal_request_repo_mock.delete_if_generation.assert_awaited_once_with(
+            "USER_a",
+            "G1",
+            requested_at,
+        )
 
     async def test_doc_cleanup_failure_swallowed(
         self, service, user_repo_mock, withdrawal_request_repo_mock,
@@ -117,7 +129,11 @@ class TestCancelWithdraw:
         STALE_DOC 가드가 정리. raise 없이 정상 종료."""
         user = UserFactory.create(status=UserStatus.INACTIVE)
         user_repo_mock.find_by_id_for_update.return_value = user
-        withdrawal_request_repo_mock.delete_by_user_id.side_effect = RuntimeError("mongo down")
+        withdrawal_request_repo_mock.find_by_user_id.return_value = SimpleNamespace(
+            generation_id="G1",
+            requested_at=datetime(2026, 1, 1, tzinfo=timezone.utc),
+        )
+        withdrawal_request_repo_mock.delete_if_generation.side_effect = RuntimeError("mongo down")
 
         await service.cancel_withdraw(user_id=user.user_id)
 
@@ -201,20 +217,43 @@ class TestPurge:
             assert stub.find_call_count == 0
         withdrawal_request_repo_mock.delete_by_user_id.assert_awaited_once_with("USER_a")
 
-    async def test_stale_doc_cleanup_failure_swallowed(
+    async def test_stale_doc_cleanup_failure_is_reported_to_worker(
         self, service, user_repo_mock, withdrawal_request_repo_mock,
     ):
-        """STALE_DOC doc 청소 실패해도 raise 없음 — 다음 사이클에서 재시도."""
+        """STALE_DOC doc 청소 실패는 다음 사이클 재시도와 worker 실패 집계로 전달."""
         user = UserFactory.create(status=UserStatus.ACTIVE)
         user_repo_mock.find_by_id_for_update.return_value = user
         withdrawal_request_repo_mock.delete_by_user_id.side_effect = RuntimeError("mongo down")
 
-        await service.purge(user_id=user.user_id)
+        with pytest.raises(RuntimeError, match="mongo down"):
+            await service.purge(user_id=user.user_id)
+
+    async def test_stale_worker_cannot_delete_newer_withdrawal_generation(
+        self, service, user_repo_mock, withdrawal_request_repo_mock,
+    ):
+        user = UserFactory.create(status=UserStatus.INACTIVE)
+        user_repo_mock.find_by_id_for_update.return_value = user
+        expected_requested_at = datetime(2026, 1, 1, tzinfo=timezone.utc)
+        withdrawal_request_repo_mock.find_by_user_id.return_value = SimpleNamespace(
+            generation_id="G2",
+            requested_at=datetime(2026, 1, 2, tzinfo=timezone.utc),
+        )
+
+        await service.purge(
+            user_id=user.user_id,
+            expected_generation_id="G1",
+            expected_requested_at=expected_requested_at,
+        )
+
+        user_repo_mock.find_by_id_for_update.assert_not_awaited()
+        user_repo_mock.hard_delete_by_id.assert_not_awaited()
+        withdrawal_request_repo_mock.delete_if_generation.assert_not_awaited()
+        withdrawal_request_repo_mock.delete_by_user_id.assert_not_awaited()
 
 
 @pytest.mark.unit
 class TestPurgeExternal:
-    """Tests for WithdrawService._purge_external — 다단계 best-effort + 인박스 cascade.
+    """Tests for WithdrawService._purge_external — 단계 격리 + 필수 단계 durable 재시도.
 
     internal 메서드 직접 호출 — 단계 격리 검증. 한 단계 실패가 다음 단계로 전파되지 않음.
     """
@@ -255,31 +294,47 @@ class TestPurgeExternal:
 
     async def test_mongo_failure_does_not_block_storage_or_inbox(
         self, service, beanie_stubs, storage_mock, inbox_service_mock,
+        withdrawal_request_repo_mock,
     ):
         """Mongo 단계 실패해도 Storage / Inbox 단계 진행 — 단계 격리."""
         beanie_stubs["TripmateImage"].find = lambda _: _RaisingQuery()
 
-        await service._purge_external(user_id="USER_a")
+        with pytest.raises(RuntimeError, match="외부 정리 미완료"):
+            await service._purge_external(user_id="USER_a")
 
         storage_mock.delete_by_prefix.assert_awaited_once()
         inbox_service_mock.cascade_user_withdrawn.assert_awaited_once()
+        withdrawal_request_repo_mock.delete_by_user_id.assert_not_awaited()
 
     async def test_storage_failure_does_not_block_inbox(
-        self, service, storage_mock, inbox_service_mock,
+        self, service, storage_mock, inbox_service_mock, withdrawal_request_repo_mock,
     ):
         storage_mock.delete_by_prefix.side_effect = RuntimeError("s3 down")
 
-        await service._purge_external(user_id="USER_a")
+        with pytest.raises(RuntimeError, match="외부 정리 미완료"):
+            await service._purge_external(user_id="USER_a")
 
         inbox_service_mock.cascade_user_withdrawn.assert_awaited_once()
+        withdrawal_request_repo_mock.delete_by_user_id.assert_not_awaited()
 
-    async def test_doc_cleanup_failure_does_not_propagate(
+    async def test_chat_redis_failure_keeps_retry_marker(
+        self, service, user_purge_cache_service_mock, withdrawal_request_repo_mock,
+    ):
+        user_purge_cache_service_mock.cleanup_user_data.return_value = False
+
+        with pytest.raises(RuntimeError, match="외부 정리 미완료"):
+            await service._purge_external(user_id="USER_a")
+
+        withdrawal_request_repo_mock.delete_by_user_id.assert_not_awaited()
+
+    async def test_doc_cleanup_failure_is_reported_to_worker(
         self, service, withdrawal_request_repo_mock,
     ):
-        """마지막 단계 (doc 청소) 실패도 raise 없음 — 다음 worker tick 에서 재시도."""
+        """마지막 marker 청소 실패를 worker 실패 집계로 전달하고 다음 tick에서 재시도."""
         withdrawal_request_repo_mock.delete_by_user_id.side_effect = RuntimeError("mongo down")
 
-        await service._purge_external(user_id="USER_a")
+        with pytest.raises(RuntimeError, match="mongo down"):
+            await service._purge_external(user_id="USER_a")
 
 
 class _RaisingQuery:

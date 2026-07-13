@@ -79,7 +79,7 @@ def user_purge_cache_service_mock():
     """
     mock = MagicMock(name="user_purge_cache_service")
     mock.revoke_all_sessions = AsyncMock(return_value=None)
-    mock.cleanup_user_data = AsyncMock(return_value=None)
+    mock.cleanup_user_data = AsyncMock(return_value=True)
     return mock
 
 

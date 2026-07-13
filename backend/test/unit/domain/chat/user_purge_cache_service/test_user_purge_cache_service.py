@@ -8,7 +8,12 @@ auth 도메인에서 호출되는 cross-domain hook facade 이므로 본 테스�
 """
 import pytest
 
-from app.core.chat.redis_key import read_sync_key, unread_key
+from app.core.chat.redis_key import (
+    read_sync_key,
+    unread_key,
+    unread_recovery_required_key,
+    unread_watermark_key,
+)
 
 
 @pytest.mark.unit
@@ -43,10 +48,14 @@ class TestCleanupUserData:
 
     async def test_deletes_unread_key(self, service, redis_mock):
         """TTL 없는 unread HASH 명시 정리 — purge 시점에만 호출."""
-        await service.cleanup_user_data("USER_a")
+        result = await service.cleanup_user_data("USER_a")
 
+        assert result is True
         redis_mock.delete.assert_awaited_once_with(
-            unread_key("USER_a"), read_sync_key("USER_a"),
+            unread_key("USER_a"),
+            read_sync_key("USER_a"),
+            unread_watermark_key("USER_a"),
+            unread_recovery_required_key("USER_a"),
         )
 
     async def test_does_not_call_session_revoke(
@@ -57,9 +66,8 @@ class TestCleanupUserData:
 
         session_service_mock.revoke_all_sessions.assert_not_awaited()
 
-    async def test_swallows_exception_best_effort(self, service, redis_mock):
-        """Redis 장애 시에도 swallow — 전체 purge 흐름은 영향받지 않음."""
+    async def test_returns_false_when_redis_cleanup_fails(self, service, redis_mock):
+        """Redis 장애를 호출자에 결과로 전달해 durable purge 표식을 유지하게 한다."""
         redis_mock.delete.side_effect = RuntimeError("redis down")
 
-        # 예외 없이 정상 반환 (best-effort)
-        await service.cleanup_user_data("USER_a")
+        assert await service.cleanup_user_data("USER_a") is False

@@ -69,6 +69,22 @@ def _image_bytes(fmt: str = "PNG") -> bytes:
     return output.getvalue()
 
 
+def test_delete_by_prefix_raises_when_object_storage_reports_partial_errors():
+    storage = _storage()
+    paginator = MagicMock()
+    paginator.paginate.return_value = [{
+        "Contents": [{"Key": "users/USER_a/ok"}, {"Key": "users/USER_a/failed"}],
+    }]
+    storage._client.get_paginator.return_value = paginator
+    storage._client.delete_objects.return_value = {
+        "Deleted": [{"Key": "users/USER_a/ok"}],
+        "Errors": [{"Key": "users/USER_a/failed", "Code": "InternalError"}],
+    }
+
+    with pytest.raises(RuntimeError, match="부분 실패"):
+        storage._delete_by_prefix_sync("users/USER_a/")
+
+
 @pytest.mark.unit
 async def test_upload_perm_rejects_non_image_bytes_before_public_upload():
     storage = _storage()

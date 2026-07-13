@@ -112,7 +112,11 @@ async def purge_due_withdrawals_once() -> int:
                 user_purge_cache_service=chat_purge,
             )
             await asyncio.wait_for(
-                service.purge(req.user_id),
+                service.purge(
+                    req.user_id,
+                    expected_generation_id=req.generation_id,
+                    expected_requested_at=req.requested_at,
+                ),
                 timeout=PURGE_PER_USER_TIMEOUT_SEC,
             )
             succeeded += 1

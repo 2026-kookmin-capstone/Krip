@@ -28,6 +28,7 @@ class FakeAsyncContextManager:
 def make_mock_session() -> MagicMock:
     session = MagicMock(name="session")
     session.flush = AsyncMock()
+    session.execute = AsyncMock()
     session.begin_nested = MagicMock(return_value=FakeAsyncContextManager())
     return session
 
@@ -71,6 +72,8 @@ def make_withdrawal_request_repo_mock() -> AsyncMock:
     mock = AsyncMock()
     mock.upsert.return_value = None
     mock.find_due.return_value = []
+    mock.find_by_user_id.return_value = None
+    mock.delete_if_generation.return_value = True
     mock.delete_by_user_id.return_value = None
     return mock
 

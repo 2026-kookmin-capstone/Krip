@@ -20,6 +20,7 @@ from sqlalchemy import select
 
 from app.domain.auth.model.user import User, UserStatus
 from app.domain.auth.model.withdrawal_request import WithdrawalRequest
+from app.domain.auth.service import withdraw as withdraw_module
 from app.domain.notification.model.inbox import (
     InboxItem,
     InboxItemType,
@@ -159,6 +160,175 @@ class TestPurgeNoUserOutcome:
 
         storage_mock.delete_by_prefix.assert_awaited_once_with("USER_ghost")
         redis_cache_mock.assert_awaited_once_with("USER_ghost")
+
+
+class TestPurgeRetryMarker:
+    async def test_real_redis_failure_retains_marker_then_retry_removes_all_chat_keys(
+        self, withdraw_service, session_factory, seed_users, monkeypatch,
+    ):
+        import os
+        from datetime import datetime, timedelta, timezone
+        from unittest.mock import AsyncMock
+
+        from redis import asyncio as aioredis
+
+        from app.core.chat.redis_key import (
+            read_sync_key,
+            unread_key,
+            unread_recovery_required_key,
+            unread_watermark_key,
+        )
+        from app.domain.chat.service import user_purge_cache as chat_purge_module
+        from app.domain.chat.service.user_purge_cache import UserPurgeCacheService
+
+        [user_id] = await seed_users(1)
+        await _set_inactive(session_factory, user_id)
+        await WithdrawalRequest(
+            user_id=user_id,
+            requested_at=datetime.now(timezone.utc),
+            scheduled_purge_at=datetime.now(timezone.utc) - timedelta(days=1),
+        ).insert()
+        redis = aioredis.from_url(os.environ["REDIS_TEST_URL"], decode_responses=True)
+        keys = (
+            unread_key(user_id),
+            read_sync_key(user_id),
+            unread_watermark_key(user_id),
+            unread_recovery_required_key(user_id),
+        )
+        for key in keys:
+            await redis.hset(key, mapping={"room": "1"})
+        withdraw_service._chat_purge = UserPurgeCacheService(AsyncMock())
+
+        async def unavailable_redis():
+            raise RuntimeError("injected redis outage")
+
+        async def actual_redis():
+            return redis
+
+        monkeypatch.setattr(chat_purge_module, "get_redis_client", unavailable_redis)
+        with pytest.raises(RuntimeError, match="외부 정리 미완료"):
+            await withdraw_service.purge(user_id=user_id)
+
+        assert await WithdrawalRequest.get_motor_collection().count_documents({"user_id": user_id}) == 1
+        assert all([await redis.exists(key) for key in keys])
+
+        monkeypatch.setattr(chat_purge_module, "get_redis_client", actual_redis)
+        await withdraw_service.purge(user_id=user_id)
+
+        assert await WithdrawalRequest.get_motor_collection().count_documents({"user_id": user_id}) == 0
+        assert not any([await redis.exists(key) for key in keys])
+        await redis.aclose()
+
+    async def test_stale_worker_preserves_new_withdrawal_generation_and_rdb_user(
+        self, withdraw_service, session_factory, seed_users, storage_mock,
+    ):
+        from datetime import datetime, timedelta, timezone
+
+        [user_id] = await seed_users(1)
+        await _set_inactive(session_factory, user_id)
+        old_requested_at = datetime.now(timezone.utc).replace(microsecond=0)
+        await WithdrawalRequest(
+            user_id=user_id,
+            generation_id="G1",
+            requested_at=old_requested_at,
+            scheduled_purge_at=old_requested_at - timedelta(days=1),
+        ).insert()
+
+        await withdraw_service.cancel_withdraw(user_id=user_id)
+        await withdraw_service.request_withdraw(user_id=user_id)
+        new_marker = await WithdrawalRequest.find_one(WithdrawalRequest.user_id == user_id)
+        assert new_marker is not None
+        assert new_marker.generation_id not in (None, "G1")
+        await WithdrawalRequest.get_motor_collection().update_one(
+            {"user_id": user_id},
+            {"$set": {"requested_at": old_requested_at}},
+        )
+
+        await withdraw_service.purge(
+            user_id=user_id,
+            expected_generation_id="G1",
+            expected_requested_at=old_requested_at,
+        )
+
+        async with session_factory() as session:
+            user = await session.scalar(select(User).where(User.user_id == user_id))
+        current_marker = await WithdrawalRequest.find_one(WithdrawalRequest.user_id == user_id)
+        assert user is not None
+        assert user.status == UserStatus.INACTIVE
+        assert current_marker is not None
+        assert current_marker.generation_id == new_marker.generation_id
+        assert current_marker.requested_at == old_requested_at
+        storage_mock.delete_by_prefix.assert_not_awaited()
+
+    async def test_mongo_failure_retains_marker_and_next_attempt_finishes_cleanup(
+        self, withdraw_service, session_factory, seed_users, mongo_db, monkeypatch,
+    ):
+        from datetime import datetime, timedelta, timezone
+
+        [user_id] = await seed_users(1)
+        await _set_inactive(session_factory, user_id)
+        await WithdrawalRequest(
+            user_id=user_id,
+            requested_at=datetime.now(timezone.utc),
+            scheduled_purge_at=datetime.now(timezone.utc) - timedelta(days=1),
+        ).insert()
+        await mongo_db["tripmate_image"].insert_one({
+            "user_id": user_id,
+            "image_id": "TMI_retry",
+            "image_url": "https://storage.example.com/retry.jpg",
+            "timestamp": datetime.now(timezone.utc),
+        })
+
+        original_document = withdraw_module.TripmateImage
+
+        class FailingTripmateImage:
+            @staticmethod
+            def find(_query):
+                return _RaisingDeleteQuery()
+
+        monkeypatch.setattr(withdraw_module, "TripmateImage", FailingTripmateImage)
+
+        with pytest.raises(RuntimeError, match="외부 정리 미완료"):
+            await withdraw_service.purge(user_id=user_id)
+
+        assert await WithdrawalRequest.get_motor_collection().count_documents({"user_id": user_id}) == 1
+        assert await mongo_db["tripmate_image"].count_documents({"user_id": user_id}) == 1
+
+        monkeypatch.setattr(withdraw_module, "TripmateImage", original_document)
+        await withdraw_service.purge(user_id=user_id)
+
+        assert await WithdrawalRequest.get_motor_collection().count_documents({"user_id": user_id}) == 0
+        assert await mongo_db["tripmate_image"].count_documents({"user_id": user_id}) == 0
+
+    async def test_storage_failure_retains_marker_until_idempotent_retry_succeeds(
+        self, withdraw_service, session_factory, seed_users, storage_mock,
+    ):
+        from datetime import datetime, timedelta, timezone
+
+        [user_id] = await seed_users(1)
+        await _set_inactive(session_factory, user_id)
+        await WithdrawalRequest(
+            user_id=user_id,
+            requested_at=datetime.now(timezone.utc),
+            scheduled_purge_at=datetime.now(timezone.utc) - timedelta(days=1),
+        ).insert()
+        storage_mock.delete_by_prefix.side_effect = RuntimeError("injected storage outage")
+
+        with pytest.raises(RuntimeError, match="외부 정리 미완료"):
+            await withdraw_service.purge(user_id=user_id)
+
+        assert await WithdrawalRequest.get_motor_collection().count_documents({"user_id": user_id}) == 1
+
+        storage_mock.delete_by_prefix.side_effect = None
+        await withdraw_service.purge(user_id=user_id)
+
+        assert await WithdrawalRequest.get_motor_collection().count_documents({"user_id": user_id}) == 0
+        assert storage_mock.delete_by_prefix.await_count == 2
+
+
+class _RaisingDeleteQuery:
+    async def delete(self):
+        raise RuntimeError("injected mongo outage")
 
 
 async def _set_inactive(session_factory, user_id: str) -> None:
