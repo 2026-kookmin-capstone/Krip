@@ -5,12 +5,22 @@ loki.process "backend" {
 
   stage.json {
     expressions = {
-      level       = "record.level.name",
-      logger_name = "record.extra.logger_name",
-      message     = "record.message",
-      request_id  = "record.extra.request_id",
-      timestamp   = "record.time.repr",
-      user_id     = "record.extra.user_id",
+      event        = "record.extra.event",
+      error_line   = "record.extra.error_line",
+      error_location = "record.extra.error_location",
+      error_type   = "record.extra.error_type",
+      level        = "record.level.name",
+      logger_name  = "record.extra.logger_name",
+      message      = "record.message",
+      method       = "record.extra.method",
+      path         = "record.extra.path",
+      process_time = "record.extra.process_time",
+      request_id   = "record.extra.request_id",
+      route        = "record.extra.route",
+      status_code  = "record.extra.status_code",
+      timestamp    = "record.time.repr",
+      user_id      = "record.extra.user_id",
+      validation_errors = "record.extra.validation_errors",
     }
   }
 

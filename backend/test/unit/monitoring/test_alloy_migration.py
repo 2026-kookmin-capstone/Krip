@@ -1,6 +1,9 @@
 import json
 import subprocess
+from io import StringIO
 from pathlib import Path
+
+from loguru import logger
 
 
 ROOT = Path(__file__).parents[4]
@@ -9,6 +12,11 @@ ALLOY_CONFIG = ROOT / "monitoring/alloy/config.alloy"
 PROMETHEUS_CONFIG = ROOT / "monitoring/prometheus/prometheus.yml"
 MAKEFILE = ROOT / "monitoring/Makefile"
 WORKERS_DASHBOARD = ROOT / "monitoring/grafana/provisioning/dashboards/workers.json"
+BACKEND_LOGS_DASHBOARD = (
+    ROOT / "monitoring/grafana/provisioning/dashboards/backend-logs.json"
+)
+DASHBOARD_DIR = ROOT / "monitoring/grafana/provisioning/dashboards"
+MONITORING_README = ROOT / "monitoring/README.md"
 CHAT_DASHBOARD = ROOT / "monitoring/grafana/provisioning/dashboards/chat-domain.json"
 CHAT_METRIC = ROOT / "backend/app/core/metric/chat.py"
 CHAT_INSTRUMENTATION = ROOT / "backend/app/core/instrumentation/chat.py"
@@ -55,6 +63,153 @@ def test_alloy_pipeline_preserves_collection_and_privacy_contract():
     assert 'env         = sys.env("ENV")' in config
     assert 'node_id     = sys.env("NODE_ID")' in config
     assert 'url       = sys.env("LOKI_URL")' in config
+
+
+def test_loguru_schema_matches_alloy_and_dashboard_contract():
+    output = StringIO()
+    sink_id = logger.add(output, serialize=True)
+    try:
+        logger.bind(
+            event="http_client_error",
+            logger_name="schema.fixture",
+            method="GET",
+            path="/api/items/{item_id}",
+            request_id="RID_SCHEMA",
+            route="/api/items/{item_id}",
+            status_code=404,
+            user_id=None,
+            validation_errors="body.age: int_parsing",
+        ).warning("HTTP client error response")
+    finally:
+        logger.remove(sink_id)
+
+    record = json.loads(output.getvalue())
+    extra = record["record"]["extra"]
+    assert record["record"]["level"]["name"] == "WARNING"
+    assert record["record"]["message"] == "HTTP client error response"
+    assert set(extra) >= {
+        "event", "logger_name", "method", "path", "request_id", "route",
+        "status_code", "user_id",
+    }
+
+    config = ALLOY_CONFIG.read_text(encoding="utf-8")
+    for field in extra:
+        assert f"record.extra.{field}" in config
+
+    dashboard = json.loads(BACKEND_LOGS_DASHBOARD.read_text(encoding="utf-8"))
+    panel = next(panel for panel in dashboard["panels"] if panel["id"] == 3)
+    expression = panel["targets"][0]["expr"]
+    assert 'level="WARNING"' in expression
+    assert 'event="record.extra.event"' in expression
+    assert 'event="http_client_error"' in expression
+
+
+def test_success_schema_matches_alloy_contract():
+    output = StringIO()
+    sink_id = logger.add(output, serialize=True)
+    try:
+        logger.bind(
+            event="http_success",
+            logger_name="schema.fixture",
+            method="GET",
+            path="/api/items/{item_id}",
+            process_time=0.012,
+            request_id="RID_SCHEMA",
+            route="/api/items/{item_id}",
+            status_code=200,
+            user_id=None,
+        ).info("HTTP request completed")
+    finally:
+        logger.remove(sink_id)
+
+    record = json.loads(output.getvalue())["record"]
+    extra = record["extra"]
+    assert record["level"]["name"] == "INFO"
+    assert record["message"] == "HTTP request completed"
+
+    config = ALLOY_CONFIG.read_text(encoding="utf-8")
+    for field in extra:
+        assert f"record.extra.{field}" in config
+
+
+def test_server_error_schema_matches_alloy_and_dashboard_contract():
+    output = StringIO()
+    sink_id = logger.add(output, serialize=True)
+    try:
+        logger.bind(
+            event="http_server_error",
+            logger_name="schema.fixture",
+            method="POST",
+            path="/api/items/{item_id}",
+            request_id="RID_SCHEMA",
+            route="/api/items/{item_id}",
+            status_code=500,
+            user_id=None,
+            error_type="RuntimeError",
+            error_location="app.domain.items:create",
+            error_line=42,
+        ).error("HTTP server error response")
+    finally:
+        logger.remove(sink_id)
+
+    record = json.loads(output.getvalue())["record"]
+    extra = record["extra"]
+    assert record["level"]["name"] == "ERROR"
+    assert record["message"] == "HTTP server error response"
+
+    config = ALLOY_CONFIG.read_text(encoding="utf-8")
+    for field in extra:
+        assert f"record.extra.{field}" in config
+
+    dashboard_text = BACKEND_LOGS_DASHBOARD.read_text(encoding="utf-8")
+    dashboard = json.loads(dashboard_text)
+    panel = next(panel for panel in dashboard["panels"] if panel["id"] == 4)
+    expression = panel["targets"][0]["expr"]
+    assert panel["title"] == "HTTP 5xx"
+    assert 'level="ERROR"' in expression
+    assert 'event="record.extra.event"' in expression
+    assert 'event="http_server_error"' in expression
+    assert "traceback" not in dashboard_text.lower()
+
+
+def test_readme_dashboard_inventory_matches_provisioned_json():
+    readme = MONITORING_README.read_text(encoding="utf-8")
+    rows = {
+        cells[0].strip(" `"): int(cells[2].strip())
+        for line in readme.splitlines()
+        if line.startswith("| `krip-")
+        for cells in [line.strip("|").split("|")]
+        if len(cells) == 4 and cells[2].strip().isdigit()
+    }
+    expected = {
+        dashboard["uid"]: len(dashboard.get("panels", []))
+        for path in DASHBOARD_DIR.glob("*.json")
+        for dashboard in [json.loads(path.read_text(encoding="utf-8"))]
+    }
+    assert rows == expected
+
+
+def test_five_xx_ratio_preserves_low_traffic_error_rate():
+    for name in ("api-overview.json", "krip-overview.json"):
+        dashboard = json.loads((DASHBOARD_DIR / name).read_text(encoding="utf-8"))
+        panel = next(panel for panel in dashboard["panels"] if "5xx" in panel["title"])
+        expression = panel["targets"][0]["expr"]
+
+        assert "clamp_min" not in expression
+        assert "unless" in expression
+        assert "or vector(0)" in expression
+
+
+def test_rollback_ratio_preserves_low_traffic_error_rate():
+    dashboard = json.loads(
+        (DASHBOARD_DIR / "infra-stores.json").read_text(encoding="utf-8")
+    )
+    panel = next(panel for panel in dashboard["panels"] if panel["id"] == 4)
+    expression = panel["targets"][0]["expr"]
+
+    assert "clamp_min" not in expression
+    assert "unless" in expression
+    assert "or vector(0)" in expression
 
 
 def test_operational_consumers_target_alloy_health_and_metrics():

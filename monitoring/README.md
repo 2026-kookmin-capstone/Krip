@@ -10,7 +10,7 @@ Krip 백엔드의 옵저버빌리티 스택. **메트릭(Prometheus) + 로그(Lo
 | --- | --- |
 | 모니터링 컴포넌트 | **10** — Prometheus · Grafana · Loki · Alloy · Blackbox + exporter 5종 (node · postgres · mongo · redis × 2) |
 | Prometheus 스크레이프 잡 | **11** (self 3 · DB 4 · node · backend · blackbox 2) |
-| Grafana 대시보드 | **7** (provisioning 자동 등록) |
+| Grafana 대시보드 | **8** (provisioning 자동 등록) |
 | 메트릭 보존 | Prometheus tsdb **15일** |
 | 로그 보존 | Loki filesystem **14일** |
 | PII 마스킹 | Alloy ingestion 단에서 **4종 강제** (email · JWT · 휴대폰 · 주민번호) |
@@ -35,7 +35,7 @@ monitoring/
 └── grafana/
     └── provisioning/
         ├── datasources/            # Prometheus / Loki 자동 등록
-        └── dashboards/             # 7개 대시보드 JSON 자동 import
+        └── dashboards/             # 8개 대시보드 JSON 자동 import
 ```
 
 ---
@@ -122,7 +122,7 @@ Prometheus가 생성하는 `up{job="mongo"}`만 liveness로 보존한다.
 - 데이터소스 / 대시보드 모두 provisioning 으로 자동 등록되고 UI 편집도 허용한다.
   source JSON에 반영하지 않은 UI 변경은 재provisioning 시 덮일 수 있다.
 
-**프로비저닝 대시보드 7종** (`grafana/provisioning/dashboards/`):
+**프로비저닝 대시보드 8종** (`grafana/provisioning/dashboards/`):
 
 | UID | 제목 | 패널 수 | 태그 |
 |---|---|---|---|
@@ -130,9 +130,15 @@ Prometheus가 생성하는 `up{job="mongo"}`만 liveness로 보존한다.
 | `krip-api` | API 트래픽 (RED) | 7 | api, red |
 | `krip-ai-pipeline` | AI 파이프라인 | 9 | ai |
 | `krip-chat-domain` | 채팅 도메인 (Chat) | 18 | chat |
-| `krip-infra-stores` | 데이터스토어 (Infra Stores) | 17 | infra, db |
-| `krip-workers` | 워커 (Workers) | 10 | workers |
+| `krip-infra-stores` | 데이터스토어 (Infra Stores) | 16 | infra, db |
+| `krip-workers` | 워커 (Workers) | 11 | workers |
 | `krip-system-resources` | 시스템 리소스 (Host) | 8 | system, host |
+| `krip-logs` | 백엔드 로그 | 7 | logs, loki |
+
+`krip-logs` 는 SSH 없이 `docker logs` 를 대체하는 로그 열람용 — 레벨/검색어/`request_id`
+변수로 필터링하며, `request_id` 는 API 응답의 `X-Request-ID` 헤더 값을 붙여넣는다. 허용된
+cross-origin 브라우저 클라이언트에서도 `X-Request-ID`와 `X-Process-Time`을 읽을 수 있다.
+실시간 tail 은 Explore → Loki → Live 를 사용한다.
 
 ### 3.3 Blackbox exporter (`prom/blackbox-exporter:v0.25.0`)
 
@@ -165,7 +171,8 @@ tail offset 등 component state는 `krip-alloy-data`에 저장한다.
 **라벨 정책** — 인덱스 카디널리티 통제 핵심:
 
 - **라벨 (인덱스)**: `app`, `env`, `node_id`, `level` — 저카디널리티만.
-- **본문 필드 (LogQL `| json` 검색)**: `logger_name`, `request_id`, `user_id`.
+- **본문 필드 (LogQL `| json` 검색)**: `logger_name`, `request_id`, `user_id`,
+  `event`, `method`, `path`, `route`, `status_code`.
 - 고유 ID 라벨화 **절대 금지**.
 
 **파이프라인 스테이지** (두 file source가 단일 `loki.process.backend`를 공유):
@@ -175,6 +182,22 @@ tail offset 등 component state는 `krip-alloy-data`에 저장한다.
    코드 리뷰 누락이 14일 보존되는 사고를 방지.
 3. `labels` — `level` 만 인덱스 라벨로 승격.
 4. `label_drop` — 회전마다 증가하는 `filename` 라벨 제거.
+
+HTTP 4xx는 `event=http_client_error`로 한 번만 기록하며 `method`, `path`, `route`,
+`status_code`, `request_id`, `user_id`를 동일한 구조로 남긴다. `route`와 ID는 본문 필드로만
+유지해 Loki 인덱스 카디널리티를 늘리지 않는다.
+
+HTTP 5xx는 `event=http_server_error`로 한 번만 기록한다. 미처리 예외도 원문·traceback·
+frame 값 대신 `error_type`, `error_location`, `error_line`만 남기며, 반환형 5xx와 같은 패널에서
+집계한다. 이 진단 필드들은 검색 가능한 본문 필드일 뿐 Loki label로 승격하지 않는다.
+클라이언트가 보낸 `X-Request-ID`는 canonical UUID일 때만 이어받고 나머지는 서버가 재발급한다.
+
+이 canonical 계약은 ASGI 애플리케이션이 최종 status를 만든 HTTP response에 적용된다. Uvicorn이
+앱 호출 전에 거부한 malformed request, reverse proxy/load balancer 응답, WebSocket close,
+network failure는 각 인프라 계층의 별도 관측 대상이다. body 전송이 시작된 뒤 발생한 streaming
+오류도 이미 전송한 status를 500으로 바꿀 수 없으므로 response count 계약에 포함하지 않는다.
+일반 route 예외는 CORS 내부의 exception boundary가 safe 500으로 변환하고, 그 바깥의 response
+observer가 canonical event와 처리시간을 한 번만 기록한다.
 
 **회전 추적** — loguru 가 `app.log → app.YYYY-MM-DD_HH-MM-SS_NNNNNN.log.gz` 로
 회전+압축. Alloy의 `loki.source.file.rotated`에서 gzip decompression을 활성화한다.

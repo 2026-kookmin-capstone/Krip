@@ -55,16 +55,38 @@ def wait_for(url: str, predicate, timeout: float = 30.0):
     raise TimeoutError(f"timed out waiting for {url}: {last_error}")
 
 
-def loguru_record(message: str, timestamp: str) -> bytes:
+def loguru_record(
+    message: str,
+    timestamp: str,
+    *,
+    event: str = "http_client_error",
+    level: str = "WARNING",
+    status_code: int = 404,
+    error_type: str | None = None,
+    error_location: str | None = None,
+    error_line: int | None = None,
+) -> bytes:
+    extra = {
+        "event": event,
+        "logger_name": "alloy.fixture",
+        "method": "GET",
+        "path": "/api/items/{item_id}",
+        "request_id": "request-high-cardinality",
+        "route": "/api/items/{item_id}",
+        "status_code": status_code,
+        "user_id": "user-high-cardinality",
+    }
+    if error_type is not None:
+        extra.update(
+            error_type=error_type,
+            error_location=error_location,
+            error_line=error_line,
+        )
     record = {
         "text": f"{message}\n",
         "record": {
-            "extra": {
-                "logger_name": "alloy.fixture",
-                "request_id": "request-high-cardinality",
-                "user_id": "user-high-cardinality",
-            },
-            "level": {"name": "INFO"},
+            "extra": extra,
+            "level": {"name": level},
             "message": message,
             "time": {"repr": timestamp},
         },
@@ -72,9 +94,15 @@ def loguru_record(message: str, timestamp: str) -> bytes:
     return (json.dumps(record, ensure_ascii=False) + "\n").encode()
 
 
-def query_loki(port: int) -> dict:
-    query = urllib.parse.urlencode({"query": '{app="krip-backend"}', "limit": "100"})
-    url = f"http://127.0.0.1:{port}/loki/api/v1/query_range?{query}"
+def query_loki(
+    port: int,
+    expression: str = '{app="krip-backend"}',
+    *,
+    instant: bool = False,
+) -> dict:
+    params = urllib.parse.urlencode({"query": expression, "limit": "100"})
+    endpoint = "query" if instant else "query_range"
+    url = f"http://127.0.0.1:{port}/loki/api/v1/{endpoint}?{params}"
     with urllib.request.urlopen(url, timeout=2) as response:
         return json.load(response)
 
@@ -123,12 +151,16 @@ def main() -> None:
             "alloy-rotated": now + timedelta(microseconds=1),
             "alloy-rotation-duplicate": now + timedelta(microseconds=2),
             "alloy-after-restart": now + timedelta(microseconds=3),
+            "alloy-non-client-event": now + timedelta(microseconds=4),
+            "alloy-server-error": now + timedelta(microseconds=5),
         }
         pii = " | ".join(PII)
         current_marker = f"alloy-current {pii}"
         rotated_marker = f"alloy-rotated {pii}"
         duplicate_marker = "alloy-rotation-duplicate"
         restart_marker = "alloy-after-restart"
+        non_client_marker = "alloy-non-client-event"
+        server_error_marker = "alloy-server-error"
         current_log = logs / "app.log"
         rotated_log = logs / "app.2026-07-10_00-00-00.log.gz"
         current_log.write_bytes(
@@ -143,6 +175,26 @@ def main() -> None:
                 event_times[duplicate_marker].isoformat(
                     sep=" ", timespec="microseconds"
                 ),
+            )
+            + loguru_record(
+                non_client_marker,
+                event_times[non_client_marker].isoformat(
+                    sep=" ", timespec="microseconds"
+                ),
+                event="background_task_completed",
+                level="INFO",
+            )
+            + loguru_record(
+                server_error_marker,
+                event_times[server_error_marker].isoformat(
+                    sep=" ", timespec="microseconds"
+                ),
+                event="http_server_error",
+                level="ERROR",
+                status_code=500,
+                error_type="RuntimeError",
+                error_location="app.domain.items:create",
+                error_line=42,
             )
         )
         with gzip.open(rotated_log, "wb") as archive:
@@ -254,10 +306,75 @@ def main() -> None:
                 assert stream["app"] == "krip-backend"
                 assert stream["env"] == "TEST"
                 assert stream["node_id"] == "test-node"
-                assert stream["level"] == "INFO"
+                assert stream["level"] in {"INFO", "WARNING", "ERROR"}
                 assert stream.get("service_name", "krip-backend") == "krip-backend"
-                assert stream.get("detected_level", "INFO") == "INFO"
-                assert not labels & {"filename", "request_id", "user_id", "logger_name"}
+                assert stream.get("detected_level", stream["level"]) == stream["level"]
+                assert not labels & {
+                    "error_location", "error_type", "event", "filename", "logger_name", "method", "path",
+                    "request_id", "route", "status_code", "user_id",
+                }
+
+            dashboard = json.loads(
+                (
+                    ROOT
+                    / "monitoring/grafana/provisioning/dashboards/backend-logs.json"
+                ).read_text(encoding="utf-8")
+            )
+            client_error_panel = next(
+                panel for panel in dashboard["panels"] if panel["id"] == 3
+            )
+            panel_expression = client_error_panel["targets"][0]["expr"]
+            assert 'level="WARNING"' in panel_expression
+            assert 'event="record.extra.event"' in panel_expression
+            assert 'event="http_client_error"' in panel_expression
+
+            client_error_payload = query_loki(
+                port,
+                '{app="krip-backend", level="WARNING"} '
+                '| json event="record.extra.event" '
+                '| event="http_client_error"',
+            )
+            client_error_lines = [
+                value[1]
+                for result in client_error_payload["data"]["result"]
+                for value in result["values"]
+            ]
+            assert len(client_error_lines) == len(lines) - 2
+            assert all(non_client_marker not in line for line in client_error_lines)
+            assert all(server_error_marker not in line for line in client_error_lines)
+
+            server_error_panel = next(
+                panel for panel in dashboard["panels"] if panel["id"] == 4
+            )
+            server_expression = server_error_panel["targets"][0]["expr"]
+            assert 'level="ERROR"' in server_expression
+            assert 'event="http_server_error"' in server_expression
+            server_error_payload = query_loki(
+                port,
+                '{app="krip-backend", level="ERROR"} '
+                '| json event="record.extra.event" '
+                '| event="http_server_error"',
+            )
+            server_error_lines = [
+                value[1]
+                for result in server_error_payload["data"]["result"]
+                for value in result["values"]
+            ]
+            assert len(server_error_lines) == 1
+            assert server_error_marker in server_error_lines[0]
+
+            metric_expression = (
+                panel_expression
+                .replace("$search", "")
+                .replace("$request_id", "")
+                .replace("$__range", "1h")
+            )
+            metric_payload = query_loki(port, metric_expression, instant=True)
+            metric_count = sum(
+                float(result["value"][1])
+                for result in metric_payload["data"]["result"]
+            )
+            assert metric_count == len(client_error_lines)
 
             print("ALLOY_PIPELINE_E2E_PASS")
         except Exception:
