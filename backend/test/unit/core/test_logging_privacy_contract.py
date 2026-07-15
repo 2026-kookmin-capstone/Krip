@@ -9,11 +9,13 @@ _LOG_METHODS = {
     "log",
 }
 _SENSITIVE_NAMES = {
-    "additional_pid", "body", "budget_per_person_krw", "budget_total", "content",
-    "display_name", "dst_key", "file_url", "fixed_pid", "food_preference",
-    "full_prefix", "image_url", "keyword", "origin", "path", "place_id", "prefix",
-    "project_id", "provider_account_id", "query", "src_key", "text", "token",
-    "tokens", "url",
+    "access_token", "additional_pid", "birth", "body", "budget_per_person_krw",
+    "budget_total", "content", "display_name", "dst_key", "email", "file_url",
+    "fixed_pid", "food_preference", "full_prefix", "image_url", "keyword",
+    "nickname", "origin", "password", "path", "phone", "phone_number",
+    "place_id", "prefix", "project_id", "provider_account_id", "query",
+    "real_name", "refresh_token", "search_name", "src_key", "text", "token",
+    "tokens", "url", "user_name",
 }
 
 
@@ -186,7 +188,7 @@ def _safe_exception_value(value: ast.expr, aliases: set[str]) -> bool:
         return value.id in aliases
     if (
         isinstance(value, ast.Attribute)
-        and value.attr == "status_code"
+        and value.attr in {"status_code", "vendor_code"}
         and isinstance(value.value, ast.Name)
     ):
         return value.value.id in aliases

@@ -14,12 +14,10 @@ from app.config.setting import settings
 from app.core.context import db_route_var, request_id_var
 from app.core.instrumentation import db_route_for_path
 from app.core.logger import exception_context, get_logger
+from app.core.probe import PROBE_ROUTES
 
 
 _UNRESOLVED_ROUTE = "<unresolved>"
-
-# k8s/LB probe 는 수 초 간격으로 항상 2xx — 성공 INFO 로그에서 제외해 Loki 볼륨을 지킨다.
-_HEALTH_PROBE_ROUTES = frozenset({"/health", "/health/deep", "/ready"})
 
 
 def _find_route_template(routes, selected_route, prefix: str = "") -> str | None:
@@ -67,15 +65,25 @@ def _trusted_request_id(value: str | None) -> str | None:
 _MAX_VALIDATION_ERRORS = 5
 
 
+def _safe_loc_part(part: object) -> str:
+    if isinstance(part, int):
+        return str(part)
+    text = str(part)
+    if text.isidentifier() and len(text) <= 64:
+        return text
+    return "<key>"
+
+
 def _validation_error_summary(exc: RequestValidationError) -> str:
     errors = exc.errors()
-    parts = [
-        "{}: {}".format(
-            ".".join(str(part) for part in error.get("loc", ())) or "<unknown>",
-            error.get("type", "<unknown>"),
+    parts = []
+    for error in errors[:_MAX_VALIDATION_ERRORS]:
+        loc = [_safe_loc_part(part) for part in error.get("loc", ())]
+        if error.get("type") == "extra_forbidden" and loc:
+            loc[-1] = "<extra>"  # 마지막 파트는 정의상 클라이언트가 보낸 필드명
+        parts.append(
+            "{}: {}".format(".".join(loc) or "<unknown>", error.get("type", "<unknown>"))
         )
-        for error in errors[:_MAX_VALIDATION_ERRORS]
-    ]
     overflow = len(errors) - _MAX_VALIDATION_ERRORS
     if overflow > 0:
         parts.append(f"+{overflow} more")
@@ -171,6 +179,19 @@ class ErrorTrackingMiddleware(BaseHTTPMiddleware):
     def __init__(self, app: ASGIApp) -> None:
         super().__init__(app)
         self.logger = get_logger("middleware.error_tracking")
+        # route 객체는 앱 수명 동안 불변 — 요청마다 전체 라우트 테이블을 순회하지 않는다.
+        self._route_templates: dict[int, str] = {}
+
+    def _resolve_route(self, request: Request, routes) -> str:
+        selected_route = request.scope.get("route")
+        if selected_route is None:
+            return _UNRESOLVED_ROUTE
+        key = id(selected_route)
+        template = self._route_templates.get(key)
+        if template is None:
+            template = _route_template(request, routes)
+            self._route_templates[key] = template
+        return template
 
     @staticmethod
     def _request_context(
@@ -224,11 +245,10 @@ class ErrorTrackingMiddleware(BaseHTTPMiddleware):
             )
             return
 
-        error_fields = error_fields or {
-            "error_type": None,
-            "error_location": None,
-            "error_line": None,
-        }
+        error_fields = error_fields or dict.fromkeys((
+            "error_type", "error_location", "error_line",
+            "error_app_location", "error_app_line", "error_cause",
+        ))
         self.logger.bind(
             event="http_server_error",
             **context,
@@ -245,7 +265,7 @@ class ErrorTrackingMiddleware(BaseHTTPMiddleware):
 
             process_time = time.perf_counter() - start_time
             response.headers["X-Process-Time"] = str(process_time)
-            route = _route_template(request, routes)
+            route = self._resolve_route(request, routes)
 
             if 400 <= response.status_code < 600:
                 self._log_http_error(
@@ -258,7 +278,7 @@ class ErrorTrackingMiddleware(BaseHTTPMiddleware):
             elif (
                 response.status_code < 400
                 and route != _UNRESOLVED_ROUTE
-                and route not in _HEALTH_PROBE_ROUTES
+                and route not in PROBE_ROUTES
             ):
                 self._log_http_success(
                     request,
@@ -289,7 +309,7 @@ class ErrorTrackingMiddleware(BaseHTTPMiddleware):
             self._log_http_error(
                 request,
                 request_id=request_id,
-                route=_route_template(request, routes),
+                route=self._resolve_route(request, routes),
                 status_code=500,
                 error_fields=exception_context(error),
             )

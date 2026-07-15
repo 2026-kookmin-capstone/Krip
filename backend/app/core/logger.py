@@ -30,28 +30,42 @@ from app.config.setting import settings
 from app.core.context import request_id_var
 
 
+_APP_MODULE_PREFIX = "app."
+
+
 def exception_context(error: BaseException) -> dict[str, str | int | None]:
+    location = line = app_location = app_line = None
     traceback = error.__traceback__
-    if traceback is None:
-        location = None
-        line = None
-    else:
-        while traceback.tb_next is not None:
-            traceback = traceback.tb_next
+    while traceback is not None:
         module = traceback.tb_frame.f_globals.get("__name__", "<unknown>")
         location = f"{module}:{traceback.tb_frame.f_code.co_name}"
         line = traceback.tb_lineno
+        if module == "app" or module.startswith(_APP_MODULE_PREFIX):
+            app_location = location
+            app_line = line
+        traceback = traceback.tb_next
+
+    cause = error.__cause__
+    if isinstance(cause, BaseExceptionGroup):
+        cause = None
     return {
         "error_type": type(error).__name__,
         "error_location": location,
         "error_line": line,
+        "error_app_location": app_location,
+        "error_app_line": app_line,
+        "error_cause": type(cause).__name__ if cause is not None else None,
     }
+
+
+_MAX_SANITIZE_DEPTH = 8
 
 
 def _sanitize_log_value(
     value: Any,
     errors: list[BaseException],
     active: set[int] | None = None,
+    depth: int = 0,
 ) -> Any:
     if isinstance(value, BaseException):
         errors.append(value)
@@ -60,6 +74,8 @@ def _sanitize_log_value(
         return value
     if not isinstance(value, (dict, list, tuple, set, frozenset)):
         return type(value).__name__
+    if depth >= _MAX_SANITIZE_DEPTH:
+        return "<max-depth>"
 
     active = active or set()
     identity = id(value)
@@ -70,16 +86,16 @@ def _sanitize_log_value(
         if isinstance(value, dict):
             sanitized = {}
             for key, item in value.items():
-                safe_key = _sanitize_log_value(key, errors, active)
+                safe_key = _sanitize_log_value(key, errors, active, depth + 1)
                 try:
                     hash(safe_key)
                 except TypeError:
                     safe_key = f"<{type(key).__name__}>"
-                sanitized[safe_key] = _sanitize_log_value(item, errors, active)
+                sanitized[safe_key] = _sanitize_log_value(item, errors, active, depth + 1)
             return sanitized
-        items = [_sanitize_log_value(item, errors, active) for item in value]
-        if isinstance(value, list):
-            return items
+        items = [
+            _sanitize_log_value(item, errors, active, depth + 1) for item in value
+        ]
         if isinstance(value, tuple):
             return tuple(items)
         return items
@@ -339,13 +355,23 @@ def setup_logging() -> None:
         _uvicorn_logger.propagate = True
 
     logging.getLogger("uvicorn").setLevel(logging.INFO)
-    access_logger = logging.getLogger("uvicorn.access")
-    access_logger.propagate = False
-    access_logger.disabled = True
-    for logger_name in ("httpx", "httpcore"):
+    logging.getLogger("uvicorn.access").disabled = True
+    # 기존 logging config 가 만든 child level/handler 도 초기화해 INFO 우회와
+    # WARNING 유실 없이 root SafeLogger 단일 경로로 통합한다.
+    client_roots = ("httpx", "httpcore")
+    client_prefixes = tuple(f"{root}." for root in client_roots)
+    for logger_name in client_roots:
         client_logger = logging.getLogger(logger_name)
+        client_logger.handlers.clear()
+        client_logger.propagate = True
+        client_logger.disabled = False
         client_logger.setLevel(logging.WARNING)
-        client_logger.disabled = True
+    for logger_name, candidate in logging.Logger.manager.loggerDict.items():
+        if isinstance(candidate, logging.Logger) and logger_name.startswith(client_prefixes):
+            candidate.handlers.clear()
+            candidate.propagate = True
+            candidate.disabled = False
+            candidate.setLevel(logging.NOTSET)
     logging.getLogger("sqlalchemy.engine").setLevel(logging.WARNING)
 
     # json 강제 알림 — 운영자가 .env 에 박은 원래 값(requested_format)을 보여준다.

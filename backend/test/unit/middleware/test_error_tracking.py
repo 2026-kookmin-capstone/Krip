@@ -1,3 +1,4 @@
+import json
 from types import SimpleNamespace
 
 import pytest
@@ -8,6 +9,7 @@ from fastapi.testclient import TestClient
 from loguru import logger
 from pydantic import BaseModel
 
+from app.api.v1 import health
 from app.config.setting import settings
 from app.main import create_app
 from app.middleware.auth import BearerTokenMiddleware
@@ -69,6 +71,9 @@ def _assert_server_error(record, expected_extra):
     assert record["extra"] == {
         "logger_name": "middleware.error_tracking",
         "event": "http_server_error",
+        "error_app_location": None,
+        "error_app_line": None,
+        "error_cause": None,
         **expected_extra,
     }
 
@@ -240,6 +245,9 @@ def test_converts_unhandled_exception_to_safe_tracked_500(log_records):
     assert extra["error_type"] == "RuntimeError"
     assert extra["error_location"].endswith(":explode")
     assert isinstance(extra["error_line"], int)
+    # 라우트 함수가 테스트 모듈에 있어 가장 깊은 app.* 프레임은 미들웨어 자신이다.
+    # 실제 앱에서는 도메인 코드가 더 깊어 그쪽이 잡힌다.
+    assert extra["error_app_location"].startswith("app.middleware.")
     _assert_server_error(server_errors[0], {
         "request_id": "RID_RAISED",
         "method": "GET",
@@ -250,6 +258,8 @@ def test_converts_unhandled_exception_to_safe_tracked_500(log_records):
         "error_type": "RuntimeError",
         "error_location": extra["error_location"],
         "error_line": extra["error_line"],
+        "error_app_location": extra["error_app_location"],
+        "error_app_line": extra["error_app_line"],
     })
 
 
@@ -386,6 +396,110 @@ def test_validation_422_logs_bounded_reason_without_user_input(log_records):
         "user_id": None,
         "validation_errors": "body.age: int_parsing",
     })
+
+
+def test_validation_summary_masks_client_supplied_loc_parts():
+    # extra_forbidden 의 필드명과 dict body 의 키는 클라이언트 원문 — 마스킹돼야 한다.
+    exc = SimpleNamespace(errors=lambda: [
+        {"loc": ("body", "kim.secret@example.com"), "type": "extra_forbidden"},
+        {"loc": ("body", "counts", "주민번호-950101-1234567"), "type": "int_parsing"},
+        {"loc": ("body", "items", 0, "age"), "type": "int_parsing"},
+    ])
+
+    summary = _validation_error_summary(exc)
+
+    assert summary == (
+        "body.<extra>: extra_forbidden; "
+        "body.counts.<key>: int_parsing; "
+        "body.items.0.age: int_parsing"
+    )
+    assert "kim.secret" not in summary
+    assert "주민번호" not in summary
+
+
+def test_validation_summary_masks_identifier_like_extra_field():
+    # 식별자 형태여도 extra_forbidden 필드명은 정의상 클라이언트가 보낸 값이다.
+    exc = SimpleNamespace(errors=lambda: [
+        {"loc": ("body", "password123"), "type": "extra_forbidden"},
+    ])
+
+    assert _validation_error_summary(exc) == "body.<extra>: extra_forbidden"
+
+
+def test_resolve_route_caches_by_route_identity(log_records):
+    middleware = ErrorTrackingMiddleware(_unused_app)
+    route = SimpleNamespace(path="/api/items/{item_id}")
+    request = Request({
+        "type": "http",
+        "method": "GET",
+        "path": "/api/items/1",
+        "query_string": b"",
+        "headers": [],
+        "client": None,
+        "scheme": "http",
+        "server": ("testserver", 80),
+        "state": {},
+        "route": route,
+    })
+
+    first = middleware._resolve_route(request, ())
+    # 캐시 적중을 강제 확인 — 두 번째 호출은 라우트 테이블을 다시 걷지 않는다.
+    middleware._route_templates[id(route)] = "/cached/marker"
+    second = middleware._resolve_route(request, ())
+
+    assert first == "/api/items/{item_id}"
+    assert second == "/cached/marker"
+
+
+def test_probe_routes_single_source_matches_health_router():
+    from app.api.v1.health import router as health_router
+    from app.core.probe import PROBE_ROUTES
+
+    assert {route.path for route in health_router.routes} == set(PROBE_ROUTES)
+
+
+async def test_deep_health_failure_logs_bounded_store_status(monkeypatch, tmp_path):
+    secret = "PRIVATE_STORE_CONNECTION_DETAIL_7X9"
+    log_path = tmp_path / "deep-health.jsonl"
+
+    async def failed_pings(_request):
+        return {
+            "postgres": TimeoutError(secret),
+            "mongodb": object(),
+            "redis_hot": ConnectionError(secret),
+            "redis_dedupe": object(),
+        }
+
+    monkeypatch.setattr(health, "_run_deep_pings", failed_pings)
+
+    sink_id = logger.add(log_path, serialize=True)
+    try:
+        response = await health.deep_health(Request({"type": "http"}))
+    finally:
+        logger.remove(sink_id)
+
+    raw_log = log_path.read_text(encoding="utf-8")
+    records = [
+        json.loads(line)["record"] for line in raw_log.splitlines()
+    ]
+    records = [
+        record for record in records
+        if record["extra"].get("logger_name") == "health"
+        and record["message"] == "health/deep 실패"
+    ]
+    assert response.status_code == 503
+    assert len(records) == 1
+    assert records[0]["extra"] == {
+        "logger_name": "health",
+        "failed_store_count": 2,
+        "store_status": {
+            "postgres": "TimeoutError",
+            "mongodb": "ok",
+            "redis_hot": "ConnectionError",
+            "redis_dedupe": "ok",
+        },
+    }
+    assert secret not in raw_log
 
 
 def test_validation_error_summary_is_bounded():

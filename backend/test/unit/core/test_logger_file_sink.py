@@ -11,6 +11,7 @@ import json
 import logging
 import stat
 from collections import defaultdict, namedtuple
+from contextlib import contextmanager
 from types import SimpleNamespace
 from unittest.mock import AsyncMock
 
@@ -62,7 +63,71 @@ def test_exception_context_preserves_safe_source_line_without_payload():
         "error_type": "RuntimeError",
         "error_location": f"{__name__}:_raise_private_frame",
         "error_line": _raise_private_frame.__code__.co_firstlineno + 1,
+        "error_app_location": None,
+        "error_app_line": None,
+        "error_cause": None,
     }
+
+
+def test_exception_context_records_deepest_app_frame_and_explicit_cause():
+    # app.* 모듈 프레임을 exec 로 합성 — 실제 워커에서 라이브러리 예외가 통과하는 경로 재현.
+    app_ns = {"__name__": "app.fake.worker"}
+    exec(
+        "def call_lib(lib_fn):\n"
+        "    lib_fn()\n",
+        app_ns,
+    )
+    lib_ns = {"__name__": "sqlalchemy.fake.engine"}
+    exec(
+        "def lib_boom():\n"
+        "    raise ConnectionError('lib detail')\n",
+        lib_ns,
+    )
+
+    with pytest.raises(RuntimeError) as exc_info:
+        try:
+            app_ns["call_lib"](lib_ns["lib_boom"])
+        except ConnectionError as error:
+            raise RuntimeError("wrapped") from error
+
+    context = logger_module.exception_context(exc_info.value)
+
+    assert context["error_type"] == "RuntimeError"
+    assert context["error_cause"] == "ConnectionError"
+    # cause 가 아닌 본 예외의 traceback 기준 — 본 예외는 test 모듈에서 raise 됐다.
+    assert context["error_app_location"] is None
+
+    inner_context = logger_module.exception_context(exc_info.value.__cause__)
+    assert inner_context["error_location"] == "sqlalchemy.fake.engine:lib_boom"
+    assert inner_context["error_app_location"] == "app.fake.worker:call_lib"
+    assert inner_context["error_app_line"] == 2
+
+
+def test_exception_context_ignores_exception_group_cause():
+    with pytest.raises(RuntimeError) as exc_info:
+        try:
+            raise ExceptionGroup("plumbing", [ValueError("x")])
+        except ExceptionGroup as group:
+            raise RuntimeError("wrapped") from group
+
+    assert logger_module.exception_context(exc_info.value)["error_cause"] is None
+
+
+def test_sanitize_bounds_recursion_depth_instead_of_raising():
+    deep = current = []
+    for _ in range(2000):
+        nested = []
+        current.append(nested)
+        current = nested
+
+    records = []
+    sink_id = logger.add(lambda message: records.append(message.record), level="DEBUG")
+    try:
+        logger_module.get_logger("depth.test").bind(payload=deep).info("deep payload")
+    finally:
+        logger.remove(sink_id)
+
+    assert "<max-depth>" in repr(records[-1]["extra"]["payload"])
 
 
 def test_safe_logger_recursively_sanitizes_nested_exceptions():
@@ -206,11 +271,67 @@ def test_request_context_patcher_adds_request_id_without_overwriting_explicit_va
     assert explicit_record["extra"]["request_id"] == "RID_EXPLICIT"
 
 
+def _stdlib_logger_state(target):
+    return (list(target.handlers), target.level, target.disabled, target.propagate)
+
+
+def _restore_stdlib_logger(target, state):
+    handlers, level, disabled, propagate = state
+    target.handlers[:] = handlers
+    target.setLevel(level)
+    target.disabled = disabled
+    target.propagate = propagate
+
+
+@contextmanager
+def _preserve_stdlib_logging():
+    root = logging.getLogger()
+    root_state = _stdlib_logger_state(root)
+    logger_states = {
+        name: _stdlib_logger_state(candidate)
+        for name, candidate in logging.Logger.manager.loggerDict.items()
+        if isinstance(candidate, logging.Logger)
+    }
+    try:
+        yield
+    finally:
+        _restore_stdlib_logger(root, root_state)
+        for name, candidate in logging.Logger.manager.loggerDict.items():
+            if not isinstance(candidate, logging.Logger):
+                continue
+            if state := logger_states.get(name):
+                _restore_stdlib_logger(candidate, state)
+            else:
+                candidate.handlers.clear()
+                candidate.setLevel(logging.NOTSET)
+                candidate.disabled = False
+                candidate.propagate = True
+
+
 @pytest.fixture(autouse=True)
 def _restore_logger():
-    # 전역 loguru 상태를 다른 테스트로 흘리지 않도록 종료 후 sink 를 정리한다.
-    yield
+    # 전역 logging 상태를 다른 테스트로 흘리지 않도록 종료 후 복원한다.
+    with _preserve_stdlib_logging():
+        yield
     logger.remove()
+
+
+def test_stdlib_logging_state_guard_restores_mutations():
+    root = logging.getLogger()
+    probe = logging.getLogger("test.fixture.logging_state")
+    root_state = _stdlib_logger_state(root)
+    probe_state = _stdlib_logger_state(probe)
+
+    with _preserve_stdlib_logging():
+        root.handlers.clear()
+        root.setLevel(logging.ERROR)
+        probe.addHandler(logging.NullHandler())
+        probe.setLevel(logging.DEBUG)
+        probe.disabled = True
+        probe.propagate = False
+
+    assert _stdlib_logger_state(root) == root_state
+    assert _stdlib_logger_state(probe) == probe_state
 
 
 def test_setup_logging_falls_back_to_console_when_path_unwritable(tmp_path, monkeypatch):
@@ -243,14 +364,66 @@ def test_setup_logging_adds_file_sink_when_path_writable(tmp_path, monkeypatch):
 def test_setup_logging_suppresses_raw_access_logs(tmp_path, monkeypatch):
     monkeypatch.setattr(settings, "ENVIRONMENT", "DEV")
     monkeypatch.setattr(settings, "LOG_FILE_PATH", str(tmp_path / "app.log"))
+    logging.getLogger("httpx").disabled = True
+    logging.getLogger("httpcore").disabled = True
+    child_logger = logging.getLogger("httpcore.connection")
+    child_logger.addHandler(logging.NullHandler())
+    child_logger.propagate = False
+    child_logger.disabled = True
+    child_logger.setLevel(logging.INFO)
 
     logger_module.setup_logging()
 
     assert logging.getLogger("uvicorn.access").disabled is True
+    # httpx/httpcore 는 자식 logger 상속 때문에 disabled 가 아니라 level 로 억제한다.
+    # WARNING 이상(장애 신호)은 통과해야 하므로 disabled 여서는 안 된다.
     assert logging.getLogger("httpx").getEffectiveLevel() >= logging.WARNING
     assert logging.getLogger("httpcore").getEffectiveLevel() >= logging.WARNING
-    assert logging.getLogger("httpx").disabled is True
-    assert logging.getLogger("httpcore").disabled is True
+    assert logging.getLogger("httpcore.connection").getEffectiveLevel() >= logging.WARNING
+    assert logging.getLogger("httpx").disabled is False
+    assert logging.getLogger("httpcore").disabled is False
+    assert child_logger.handlers == []
+    assert child_logger.propagate is True
+    assert child_logger.disabled is False
+    assert child_logger.level == logging.NOTSET
+
+
+async def test_httpcore_info_is_suppressed_but_warning_reaches_safe_sink(
+    tmp_path, monkeypatch,
+):
+    log_path = tmp_path / "httpcore.log"
+    secret = "https://user:password@example.com/private-token"
+    monkeypatch.setattr(settings, "ENVIRONMENT", "DEV")
+    monkeypatch.setattr(settings, "LOG_FILE_PATH", str(log_path))
+    logging.getLogger("httpcore").disabled = True
+    child_logger = logging.getLogger("httpcore.connection")
+    child_logger.addHandler(logging.NullHandler())
+    child_logger.propagate = False
+    child_logger.setLevel(logging.INFO)
+
+    logger_module.setup_logging()
+
+    child_logger.info("request %s", secret)
+    child_logger.warning("transport failure %s", secret)
+    await logger.complete()
+
+    records = [
+        json.loads(line)["record"]
+        for line in log_path.read_text(encoding="utf-8").splitlines()
+    ]
+    client_records = [
+        record for record in records
+        if record["extra"].get("source_logger") == "httpcore.connection"
+    ]
+    assert len(client_records) == 1
+    assert client_records[0]["level"]["name"] == "WARNING"
+    assert client_records[0]["message"] == "Standard library log event"
+    assert client_records[0]["extra"] == {
+        "event": "stdlib_log",
+        "source_logger": "httpcore.connection",
+        "source_level": "WARNING",
+    }
+    assert secret not in repr(client_records[0])
 
 
 def test_safe_logger_preserves_original_callsite():
