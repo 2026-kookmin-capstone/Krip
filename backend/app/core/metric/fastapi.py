@@ -6,6 +6,8 @@ prometheus_fastapi_instrumentator 가 모든 HTTP 핸들러를 자동으로 라�
 
 DEEP_CANARY_DURATION 은 /health/deep 의 4-store ping latency 를 따로 추적한다.
 """
+from functools import lru_cache
+
 from prometheus_client import Histogram
 from prometheus_fastapi_instrumentator import Instrumentator
 from prometheus_fastapi_instrumentator.metrics import (
@@ -25,6 +27,25 @@ DEEP_CANARY_DURATION = Histogram(
     labelnames=("result",),
     buckets=(0.05, 0.1, 0.25, 0.5, 1.0, 2.5, 5.0, 10.0),
 )
+
+
+@lru_cache(maxsize=1)
+def _instrumentations():
+    """전역 Prometheus collector에 한 번만 등록하고 app factory 간 재사용한다."""
+    return (
+        requests(
+            should_include_handler=True,
+            should_include_method=True,
+            should_include_status=True,
+        ),
+        latency(
+            should_include_handler=True,
+            should_include_method=True,
+            should_include_status=True,
+        ),
+        request_size(should_include_handler=True, should_include_method=True),
+        response_size(should_include_handler=True, should_include_method=True),
+    )
 
 
 def build_instrumentator() -> Instrumentator:
@@ -50,27 +71,8 @@ def build_instrumentator() -> Instrumentator:
         ],
     )
 
-    # add-on 4종은 명시 등록이 필요하다.
-    # 누락하면 API Overview 의 in-progress, size 패널이 침묵한다.
-    instrumentator.add(
-        requests(
-            should_include_handler=True,
-            should_include_method=True,
-            should_include_status=True,
-        )
-    )
-    instrumentator.add(
-        latency(
-            should_include_handler=True,
-            should_include_method=True,
-            should_include_status=True,
-        )
-    )
-    instrumentator.add(
-        request_size(should_include_handler=True, should_include_method=True)
-    )
-    instrumentator.add(
-        response_size(should_include_handler=True, should_include_method=True)
-    )
+    # collector는 process-global이므로 create_app() 재호출 시 같은 4종을 재사용한다.
+    for instrumentation in _instrumentations():
+        instrumentator.add(instrumentation)
 
     return instrumentator
