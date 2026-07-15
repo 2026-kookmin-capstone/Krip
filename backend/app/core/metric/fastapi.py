@@ -6,6 +6,7 @@ prometheus_fastapi_instrumentator 가 모든 HTTP 핸들러를 자동으로 라�
 
 DEEP_CANARY_DURATION 은 /health/deep 의 4-store ping latency 를 따로 추적한다.
 """
+import re
 from functools import lru_cache
 
 from prometheus_client import Histogram
@@ -16,6 +17,8 @@ from prometheus_fastapi_instrumentator.metrics import (
     requests,
     response_size,
 )
+
+from app.core.probe import PROBE_ROUTES
 
 
 # /health/deep 4-ping 응답 시간 히스토그램.
@@ -65,9 +68,7 @@ def build_instrumentator() -> Instrumentator:
         should_group_status_codes=False,
         excluded_handlers=[
             r"^/metrics$",
-            r"^/health$",
-            r"^/health/deep$",
-            r"^/ready$",
+            *(f"^{re.escape(path)}$" for path in sorted(PROBE_ROUTES)),
         ],
     )
 

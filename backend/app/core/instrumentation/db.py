@@ -14,6 +14,7 @@ from app.core.metric import (
     DB_QUERY_DURATION,
     DB_TRANSACTION_TOTAL,
 )
+from app.core.probe import PROBE_ROUTES
 
 
 # route 라벨 enum — 도메인 단위 ~10개로 카디널리티 통제. 값은 실제 URL segment 와
@@ -43,7 +44,7 @@ def _reset_pool_engine() -> None:
 
 def db_route_for_path(path: str) -> str:
     """HTTP path → 도메인 라벨. /health 류는 'health', 화이트리스트 외는 'other'."""
-    if path == "/health" or path == "/health/deep" or path == "/ready":
+    if path in PROBE_ROUTES:
         return "health"
     if path.startswith("/api/"):
         # /api/{domain}/... → 세 번째 segment 가 domain.

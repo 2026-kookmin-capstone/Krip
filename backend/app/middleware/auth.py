@@ -12,6 +12,7 @@ from app.core.cache.key_category import KeyCategory
 from app.core.cache.redis_cache import get_redis_cache_manager
 from app.core.logger import get_logger
 from app.core.metric import AUTH_FAILURES
+from app.core.probe import PROBE_ROUTES
 from app.core.redis import RedisClient
 
 
@@ -24,9 +25,7 @@ class BearerTokenMiddleware(BaseHTTPMiddleware):
 
     # 인증을 건너뛸 경로
     EXCLUDE_PATHS: Sequence[str] = (
-        "/health",
-        "/health/deep",      # EXCLUDE_PATHS 는 정확 매칭이라 deep 도 별도 명시한다.
-        "/ready",            # k8s readinessProbe 와 blackbox 내부 probe 가 호출한다.
+        *PROBE_ROUTES,
         "/docs",
         "/redoc",
         "/openapi.json",
@@ -106,9 +105,7 @@ class LoginAuthMiddleware(BaseHTTPMiddleware):
 
     # 인증을 건너뛸 경로
     EXCLUDE_PATHS: Sequence[str] = (
-        "/health",
-        "/health/deep",      # EXCLUDE_PATHS 는 정확 매칭이라 deep 도 별도 명시한다.
-        "/ready",            # k8s readinessProbe 와 blackbox 내부 probe 가 호출한다.
+        *PROBE_ROUTES,
         "/docs",
         "/redoc",
         "/openapi.json",
@@ -225,9 +222,7 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
 
     # 검증을 건너뛸 경로
     EXCLUDE_PATHS: Sequence[str] = (
-        "/health",
-        "/health/deep",      # EXCLUDE_PATHS 는 정확 매칭이라 deep 도 별도 명시한다.
-        "/ready",            # k8s readinessProbe 와 blackbox 내부 probe 가 호출한다.
+        *PROBE_ROUTES,
         "/docs",
         "/redoc",
         "/openapi.json",
