@@ -65,6 +65,9 @@ def loguru_record(
     error_type: str | None = None,
     error_location: str | None = None,
     error_line: int | None = None,
+    error_app_location: str | None = None,
+    error_app_line: int | None = None,
+    error_cause: str | None = None,
 ) -> bytes:
     extra = {
         "event": event,
@@ -81,6 +84,9 @@ def loguru_record(
             error_type=error_type,
             error_location=error_location,
             error_line=error_line,
+            error_app_location=error_app_location,
+            error_app_line=error_app_line,
+            error_cause=error_cause,
         )
     record = {
         "text": f"{message}\n",
@@ -193,8 +199,11 @@ def main() -> None:
                 level="ERROR",
                 status_code=500,
                 error_type="RuntimeError",
-                error_location="app.domain.items:create",
+                error_location="sqlalchemy.engine.default:do_execute",
                 error_line=42,
+                error_app_location="app.domain.items:create",
+                error_app_line=17,
+                error_cause="OperationalError",
             )
         )
         with gzip.open(rotated_log, "wb") as archive:
@@ -310,8 +319,10 @@ def main() -> None:
                 assert stream.get("service_name", "krip-backend") == "krip-backend"
                 assert stream.get("detected_level", stream["level"]) == stream["level"]
                 assert not labels & {
-                    "error_location", "error_type", "event", "filename", "logger_name", "method", "path",
-                    "request_id", "route", "status_code", "user_id",
+                    "error_app_line", "error_app_location", "error_cause",
+                    "error_location", "error_type", "event", "filename",
+                    "logger_name", "method", "path", "request_id", "route",
+                    "status_code", "user_id",
                 }
 
             dashboard = json.loads(
@@ -362,6 +373,28 @@ def main() -> None:
             ]
             assert len(server_error_lines) == 1
             assert server_error_marker in server_error_lines[0]
+
+            for panel_id in (20, 21):
+                detail_panel = next(
+                    panel for panel in dashboard["panels"] if panel["id"] == panel_id
+                )
+                detail_expression = (
+                    detail_panel["targets"][0]["expr"]
+                    .replace("$level", "ERROR")
+                    .replace("$search", "")
+                    .replace("$request_id", "")
+                )
+                detail_payload = query_loki(port, detail_expression)
+                rendered_lines = [
+                    value[1]
+                    for result in detail_payload["data"]["result"]
+                    for value in result["values"]
+                ]
+                assert any(
+                    "[RuntimeError(OperationalError) "
+                    "@ app.domain.items:create:17]" in line
+                    for line in rendered_lines
+                ), (panel_id, rendered_lines)
 
             metric_expression = (
                 panel_expression

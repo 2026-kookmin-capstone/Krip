@@ -6,6 +6,9 @@ loki.process "backend" {
   stage.json {
     expressions = {
       event        = "record.extra.event",
+      error_app_line = "record.extra.error_app_line",
+      error_app_location = "record.extra.error_app_location",
+      error_cause  = "record.extra.error_cause",
       error_line   = "record.extra.error_line",
       error_location = "record.extra.error_location",
       error_type   = "record.extra.error_type",

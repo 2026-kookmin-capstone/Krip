@@ -146,8 +146,11 @@ def test_server_error_schema_matches_alloy_and_dashboard_contract():
             status_code=500,
             user_id=None,
             error_type="RuntimeError",
-            error_location="app.domain.items:create",
+            error_location="sqlalchemy.engine.default:do_execute",
             error_line=42,
+            error_app_location="app.domain.items:create",
+            error_app_line=17,
+            error_cause="OperationalError",
         ).error("HTTP server error response")
     finally:
         logger.remove(sink_id)
