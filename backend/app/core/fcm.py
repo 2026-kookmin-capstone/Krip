@@ -43,7 +43,7 @@ def init_fcm() -> firebase_admin.App:
         )
 
     _app = firebase_admin.initialize_app(credentials.Certificate(str(cred_path)))
-    logger.info("FCM 초기화 완료 (project_id={})", _app.project_id)
+    logger.info("FCM 초기화 완료")
     return _app
 
 

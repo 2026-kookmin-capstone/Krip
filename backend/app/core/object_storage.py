@@ -87,7 +87,7 @@ class ObjectStorage:
         await asyncio.to_thread(self._copy, src_key, dst_key)
         await asyncio.to_thread(self._delete, src_key)
 
-        logger.info("파일 이동 완료: {} → {}", src_key, dst_key)
+        logger.bind(operation="move").info("Object storage operation completed")
         return self._key_to_url(dst_key)
 
     async def move_many_to_perm(self, temp_urls: List[str], *, prefix: str) -> List[str]:
@@ -100,7 +100,7 @@ class ObjectStorage:
         """URL로 파일 삭제"""
         key = self._url_to_key(file_url)
         await asyncio.to_thread(self._delete, key)
-        logger.info("파일 삭제 완료: {}", key)
+        logger.bind(operation="delete").info("Object storage operation completed")
 
     async def delete_many(self, file_urls: List[str]) -> None:
         """URL 목록으로 파일 일괄 삭제"""
@@ -112,16 +112,22 @@ class ObjectStorage:
             await asyncio.to_thread(
                 self._client.delete_objects, Bucket=self.bucket, Delete={"Objects": objects},
             )
-            logger.info("파일 일괄 삭제 완료: {:d}건", len(objects))
+            logger.bind(operation="delete_many", object_count=len(objects)).info(
+                "Object storage operation completed"
+            )
         except ClientError as e:
-            logger.error("파일 일괄 삭제 실패: {}", e)
+            logger.bind(operation="delete_many", error=e).error(
+                "Object storage operation failed"
+            )
             raise
 
     async def delete_by_prefix(self, prefix: str) -> int:
         """특정 경로(prefix) 하위 파일 전체 삭제 → 삭제 건수 반환"""
         full_prefix = f"{_PREFIX_PERM}/{prefix}"
         deleted = await asyncio.to_thread(self._delete_by_prefix_sync, full_prefix)
-        logger.info("prefix 삭제 완료: {} ({:d}건)", full_prefix, deleted)
+        logger.bind(operation="delete_prefix", object_count=deleted).info(
+            "Object storage operation completed"
+        )
         return deleted
 
     def get_url(self, file_key: str) -> str:
@@ -165,9 +171,11 @@ class ObjectStorage:
                 },
             )
         except ClientError as e:
-            logger.error("업로드 실패 ({}): {}", key, e)
+            logger.bind(operation="upload", error=e).error(
+                "Object storage operation failed"
+            )
             raise
-        logger.info("업로드 완료: {}", key)
+        logger.bind(operation="upload").info("Object storage operation completed")
         return self._key_to_url(key)
 
     def _upload_public_image(self, file: BinaryIO, prefix: str) -> str:
@@ -191,7 +199,9 @@ class ObjectStorage:
                 ACL="public-read",
             )
         except ClientError as e:
-            logger.error("복사 실패 ({} → {}): {}", src_key, dst_key, e)
+            logger.bind(operation="copy", error=e).error(
+                "Object storage operation failed"
+            )
             raise
 
     def _delete_by_prefix_sync(self, full_prefix: str) -> int:
@@ -215,7 +225,9 @@ class ObjectStorage:
         try:
             self._client.delete_object(Bucket=self.bucket, Key=key)
         except ClientError as e:
-            logger.error("삭제 실패 ({}): {}", key, e)
+            logger.bind(operation="delete", error=e).error(
+                "Object storage operation failed"
+            )
             raise
 
 

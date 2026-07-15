@@ -38,13 +38,13 @@ class MenuOcrService:
         try:
             result = await self._ocr.invoke(image_bytes, content_type)
         except (Unauthenticated, PermissionDenied) as e:
-            raise MenuOcrCredentialExpiredError(str(e)) from e
+            raise MenuOcrCredentialExpiredError("vendor credentials rejected") from e
         except ResourceExhausted as e:
-            raise MenuOcrQuotaExceededError(str(e)) from e
+            raise MenuOcrQuotaExceededError("vendor quota exceeded") from e
         # ChatGoogleGenerativeAIError 는 GoogleAPICallError 비상속 → 미매핑 시 500 누출.
         # 손상 이미지/토큰 한도 초과 등 vendor 입력 거부이므로 502 로 매핑.
         except (GoogleAPICallError, ChatGoogleGenerativeAIError) as e:
-            raise MenuOcrVendorError(str(e)) from e
+            raise MenuOcrVendorError("vendor request failed") from e
         except (OutputParserException, PydanticValidationError) as e:
             # LLM 출력 파싱 실패 — raw 출력을 노출하지 않고 502 로 매핑.
             logger.warning("메뉴 OCR 구조화 출력 파싱 실패: {}", type(e).__name__)
@@ -65,11 +65,11 @@ class MenuOcrService:
         try:
             results = await self._ocr.invoke_batch(images)
         except (Unauthenticated, PermissionDenied) as e:
-            raise MenuOcrCredentialExpiredError(str(e)) from e
+            raise MenuOcrCredentialExpiredError("vendor credentials rejected") from e
         except ResourceExhausted as e:
-            raise MenuOcrQuotaExceededError(str(e)) from e
+            raise MenuOcrQuotaExceededError("vendor quota exceeded") from e
         except (GoogleAPICallError, ChatGoogleGenerativeAIError) as e:
-            raise MenuOcrVendorError(str(e)) from e
+            raise MenuOcrVendorError("vendor request failed") from e
         except (OutputParserException, PydanticValidationError) as e:
             logger.warning("메뉴 OCR(batch) 구조화 출력 파싱 실패: {}", type(e).__name__)
             raise MenuOcrVendorError("invalid OCR output") from e

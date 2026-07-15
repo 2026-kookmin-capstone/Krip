@@ -36,8 +36,10 @@ def _service_detect_raising(exc: Exception) -> TranslationService:
 class TestTranslationExceptionMapping:
     async def test_429_maps_to_quota_exceeded_detect(self):
         svc = _service_detect_raising(_http_status_error(429))
-        with pytest.raises(TranslationQuotaExceededError):
+        with pytest.raises(TranslationQuotaExceededError) as caught:
             await svc.detect("안녕")
+        assert "body-429" not in str(caught.value)
+        assert not hasattr(caught.value, "body")
 
     async def test_429_maps_to_quota_exceeded_translate(self):
         svc = _service_detect_raising(_http_status_error(429))
@@ -46,8 +48,11 @@ class TestTranslationExceptionMapping:
 
     async def test_500_maps_to_vendor_error(self):
         svc = _service_detect_raising(_http_status_error(500))
-        with pytest.raises(TranslationVendorError):
+        with pytest.raises(TranslationVendorError) as caught:
             await svc.detect("안녕")
+        assert caught.value.status_code == 500
+        assert "body-500" not in str(caught.value)
+        assert not hasattr(caught.value, "body")
 
     async def test_400_maps_to_vendor_error(self):
         svc = _service_detect_raising(_http_status_error(400))
@@ -57,8 +62,9 @@ class TestTranslationExceptionMapping:
     async def test_request_error_maps_to_unreachable(self):
         req = httpx.Request("POST", "https://papago.example/api")
         svc = _service_detect_raising(httpx.ConnectError("no route", request=req))
-        with pytest.raises(TranslationUnreachableError):
+        with pytest.raises(TranslationUnreachableError) as caught:
             await svc.detect("안녕")
+        assert "no route" not in str(caught.value)
 
     async def test_malformed_payload_maps_to_vendor_error(self):
         svc = _service_detect_raising(KeyError("message"))

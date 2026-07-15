@@ -41,8 +41,8 @@ async def search_users(
     if cursor is None:
         try:
             await search_history_service.save_search(user_id=viewer_id, search_name=keyword)
-        except Exception:
-            logger.warning("검색 기록 저장 실패: user_id={}, keyword={}", viewer_id, keyword)
+        except Exception as error:
+            logger.bind(user_id=viewer_id, error=error).warning("검색 기록 저장 실패")
 
     try:
         result = await service.search(viewer_id=viewer_id, keyword=keyword, cursor=cursor)

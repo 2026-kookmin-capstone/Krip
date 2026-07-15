@@ -49,9 +49,9 @@ class TourPlannerGraphOrchestrator:
         })
 
         logger.info(
-            "1차 권역 추천 완료: {:d}일 / {}",
+            "1차 권역 추천 완료: {:d}일 / {:d}개 권역",
             state["travel_days"],
-            [r.cluster_name for r in result.recommendations],
+            len(result.recommendations),
         )
 
         return {"recommendations": result}
@@ -90,8 +90,8 @@ class TourPlannerGraphOrchestrator:
             })
 
             logger.info(
-                "MongoDB 검색 완료: Day {:d} ({}) → {:d}개 장소",
-                day_rec.day, day_rec.cluster_name, len(merged),
+                "MongoDB 검색 완료: Day {:d} → {:d}개 장소",
+                day_rec.day, len(merged),
             )
 
         return {"places_data": places_data}

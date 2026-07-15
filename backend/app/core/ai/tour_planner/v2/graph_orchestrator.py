@@ -210,8 +210,8 @@ class TourPlannerGraphOrchestrator:
 
             day_plans.append(day_plan)
             logger.info(
-                "Day {:d} 플랜 생성 완료: 장소 {:d}, 슬롯 {:d}, 예산 {:d}원",
-                day_num, len(day_plan.places), len(day_plan.timeline), day_plan.budget_total_krw,
+                "Day {:d} 플랜 생성 완료: 장소 {:d}, 슬롯 {:d}",
+                day_num, len(day_plan.places), len(day_plan.timeline),
             )
 
         return {"tour_plan": TourPlanResult(tour_plan=day_plans)}
@@ -317,18 +317,16 @@ class TourPlannerGraphOrchestrator:
 
             source = candidate_index.get(place.place_id)
             if source is None:
-                logger.warning(
-                    "후보 풀 외 장소 제거: {} ({})",
-                    place.place_id, place.display_name,
+                logger.bind(reason="outside_candidate_pool").warning(
+                    "후보 풀 외 장소 제거"
                 )
                 continue
 
             if allowed_food_types is not None:
                 types = source.get("types") or []
                 if "restaurant" in types and not (set(types) & allowed_food_types):
-                    logger.warning(
-                        "음식 필터({}) 위반 식당 제거: {}",
-                        food_preference, place.display_name,
+                    logger.bind(food_filter_applied=True).warning(
+                        "음식 필터 위반 식당 제거"
                     )
                     continue
 
@@ -340,7 +338,7 @@ class TourPlannerGraphOrchestrator:
             kept_places.append(place)
 
         if fixed_place and not any(p.place_id == fixed_pid for p in kept_places):
-            logger.warning("추가 장소 누락 → 강제 삽입: {}", fixed_pid)
+            logger.bind(fixed_place_inserted=True).warning("추가 장소 누락 → 강제 삽입")
             kept_places.append(_fixed_place_to_detail(fixed_place))
 
         if not kept_places:
@@ -407,10 +405,7 @@ class TourPlannerGraphOrchestrator:
             kept_breakdown = day_plan.budget_breakdown
             budget_total = sum(item.amount_krw for item in kept_breakdown)
             if budget_total != day_plan.budget_total_krw:
-                logger.warning(
-                    "budget_total 불일치 보정: LLM={} → 합산={}",
-                    day_plan.budget_total_krw, budget_total,
-                )
+                logger.warning("budget_total 불일치 보정")
         else:
             place_cost_sum = sum(p.estimated_cost_krw for p in kept_places)
             if place_cost_sum > 0:
@@ -421,24 +416,15 @@ class TourPlannerGraphOrchestrator:
                     )
                 ]
                 budget_total = place_cost_sum
-                logger.warning(
-                    "budget_breakdown 비어있음 → places 비용 합({}원)으로 단일 항목 합성",
-                    place_cost_sum,
-                )
+                logger.warning("budget_breakdown 비어있음 → places 비용 합으로 단일 항목 합성")
             else:
                 kept_breakdown = []
                 budget_total = 0
                 if day_plan.budget_total_krw > 0:
-                    logger.warning(
-                        "budget_breakdown·places 비용 모두 비어있음 → budget_total {} 무시하고 0으로 강제",
-                        day_plan.budget_total_krw,
-                    )
+                    logger.warning("budget_breakdown·places 비용 모두 비어있음 → 0으로 강제")
 
         if budget_total > day_input.budget_per_person_krw:
-            logger.warning(
-                "예산 초과 감지: 합계 {} > 입력 {} (응답 유지, 경고만)",
-                budget_total, day_input.budget_per_person_krw,
-            )
+            logger.warning("예산 초과 감지 (응답 유지, 경고만)")
 
         return TourDayPlan(
             day=day_plan.day,

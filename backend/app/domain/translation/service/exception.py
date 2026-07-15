@@ -17,10 +17,9 @@ class TranslationError(Exception):
 class TranslationVendorError(TranslationError):
     """외부 번역 서비스가 4xx / 5xx 응답 — Router 에서 502 로 매핑."""
 
-    def __init__(self, status_code: int, body: str):
+    def __init__(self, status_code: int):
         self.status_code = status_code
-        self.body = body
-        super().__init__(f"vendor responded {status_code}: {body}")
+        super().__init__(f"vendor responded with status {status_code}")
 
 
 class TranslationQuotaExceededError(TranslationError):
@@ -30,10 +29,12 @@ class TranslationQuotaExceededError(TranslationError):
     429 로 분리해 백오프를 유도한다 (menu_ai / tour 도메인과 동일 컨벤션).
     """
 
-    def __init__(self, body: str):
-        self.body = body
-        super().__init__(f"vendor quota exceeded (429): {body}")
+    def __init__(self):
+        super().__init__("vendor quota exceeded")
 
 
 class TranslationUnreachableError(TranslationError):
     """외부 번역 서비스에 네트워크 도달 불가 / 타임아웃 — Router 에서 504 로 매핑."""
+
+    def __init__(self):
+        super().__init__("vendor unreachable")

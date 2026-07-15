@@ -128,7 +128,7 @@ async def purge_due_withdrawals_once() -> int:
             )
         except Exception as e:
             failed += 1
-            logger.exception(
+            logger.error(
                 "withdraw purge: 유저 처리 실패 (user_id={}): {}", req.user_id, e,
             )
 
@@ -173,7 +173,7 @@ async def _purge_loop(stop_event: asyncio.Event) -> None:
                 await purge_due_withdrawals_once()
         except Exception as e:
             # 사이클 전역 실패는 다음 사이클로 흘려보냄. 단일 유저 실패는 위에서 이미 격리.
-            logger.exception("withdraw purge 사이클 전역 실패 (계속 진행): {}", e)
+            logger.error("withdraw purge 사이클 전역 실패 (계속 진행): {}", e)
 
     logger.info("withdraw purge 루프 종료")
 

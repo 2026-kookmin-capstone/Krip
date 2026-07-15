@@ -87,7 +87,7 @@ async def app_login_callback(
         raise HTTPException(status_code=502, detail=str(e))
 
     # PII(email·실명)는 로그에 남기지 않는다 — Alloy 수집 파이프라인에 개인정보 축적 방지.
-    logger.info("앱 OAuth 로그인 성공: provider={} provider_account_id={}", provider.value, user_info.id)
+    logger.bind(provider=provider.value).info("앱 OAuth 로그인 성공")
 
     result = await signup_service.check_and_register(
         auth_provider=provider.value,

@@ -59,7 +59,9 @@ async def get_places(
                 try:
                     await search_history_service.save_search(user_id=user_id, search_name=keyword)
                 except Exception as e:
-                    logger.warning("검색어 저장 키워드({}) 실패 (무시) - 에러: {}", keyword, e)
+                    logger.bind(user_id=user_id, error=e).warning(
+                        "검색 기록 저장 실패 (무시)"
+                    )
 
             result = await place_service.search_nearby_places(
                 lat=actual_lat,

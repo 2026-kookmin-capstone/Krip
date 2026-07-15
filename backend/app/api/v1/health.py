@@ -143,7 +143,7 @@ async def deep_health(request: Request) -> JSONResponse:
     body = _summarize(results)
     if body["failed"]:
         DEEP_CANARY_DURATION.labels(result="fail").observe(elapsed)
-        logger.warning("health/deep 실패: {}", body)
+        logger.bind(failed_store_count=len(body["failed"])).warning("health/deep 실패")
         return JSONResponse(status_code=503, content={"status": "fail", **body})
 
     DEEP_CANARY_DURATION.labels(result="ok").observe(elapsed)

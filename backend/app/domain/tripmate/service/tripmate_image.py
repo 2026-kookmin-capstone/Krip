@@ -85,10 +85,7 @@ class TripmateImageService:
             )
             await drain_on_cancellation(self.storage.delete(image_url))
         except Exception as error:
-            logger.warning(
-                "업로드 보상 삭제 실패 (image_id={}, image_url={}): {}",
-                image_id, image_url, error,
-            )
+            logger.bind(image_id=image_id, error=error).warning("업로드 보상 삭제 실패")
 
     @image_reference_locked
     async def upload_images(

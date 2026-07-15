@@ -429,7 +429,7 @@ async def _reconcile_loop(stop_event: asyncio.Event) -> None:
                         RECONCILE_MAX_BATCHES_PER_TICK,
                     )
         except Exception as e:
-            logger.exception("reconcile tick 전역 실패 (계속 진행): {}", e)
+            logger.error("reconcile tick 전역 실패 (계속 진행): {}", e)
 
         try:
             await asyncio.wait_for(stop_event.wait(), timeout=RECONCILE_INTERVAL_SEC)
@@ -448,7 +448,7 @@ async def _pending_recovery_loop(stop_event: asyncio.Event) -> None:
             async with worker_tick("pending_recovery"):
                 await recover_pending_messages_once()
         except Exception as exc:
-            logger.exception("pending recovery tick 전역 실패 (계속 진행): {}", exc)
+            logger.error("pending recovery tick 전역 실패 (계속 진행): {}", exc)
 
         try:
             await asyncio.wait_for(

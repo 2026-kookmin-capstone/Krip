@@ -54,16 +54,16 @@ class RecommendService:
                 days=planner_days,
             )
         except (Unauthenticated, PermissionDenied) as e:
-            raise TourRecommendCredentialExpiredError(str(e)) from e
+            raise TourRecommendCredentialExpiredError("vendor credentials rejected") from e
         except ResourceExhausted as e:
-            raise TourRecommendQuotaExceededError(str(e)) from e
+            raise TourRecommendQuotaExceededError("vendor quota exceeded") from e
         # ChatGoogleGenerativeAIError 는 GoogleAPICallError 비상속 → 미매핑 시 500 누출.
         # 토큰 한도 초과 등 vendor 입력 거부이므로 502 로 매핑.
         except (GoogleAPICallError, ChatGoogleGenerativeAIError) as e:
-            raise TourRecommendVendorError(str(e)) from e
+            raise TourRecommendVendorError("vendor request failed") from e
         except TourPlannerOutputError as e:
             # LLM 출력 파싱 실패/누락 — 입력 오류(400)가 아닌 vendor 출력 문제이므로 502.
-            raise TourRecommendVendorError(str(e)) from e
+            raise TourRecommendVendorError("invalid planner output") from e
 
         return self._to_response(result)
 

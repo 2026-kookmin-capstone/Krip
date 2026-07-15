@@ -275,9 +275,8 @@ class FeedPostService:
         try:
             await self.storage.delete_by_prefix(prefix)
         except Exception as e:
-            logger.warning(
-                "S3 prefix 삭제 실패 — orphan 객체 잔존 (prefix={}): {}",
-                prefix, e,
+            logger.bind(operation="delete_prefix", error=e).warning(
+                "S3 orphan cleanup failed"
             )
 
         # 해당 게시글의 LIKE/COMMENT 알림 일괄 soft hide. 내부에서 예외 swallow.
@@ -315,9 +314,8 @@ class FeedPostService:
         try:
             await self.storage.delete_by_prefix(prefix)
         except Exception as e:
-            logger.warning(
-                "업로드 실패 경로 cleanup 실패 — orphan 객체 잔존 (prefix={}): {}",
-                prefix, e,
+            logger.bind(operation="delete_prefix", error=e).warning(
+                "S3 failed-upload cleanup failed"
             )
 
     @staticmethod

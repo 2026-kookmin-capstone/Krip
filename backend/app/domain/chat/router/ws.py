@@ -95,7 +95,9 @@ async def ws_chat(
 ) -> None:
     origin = websocket.headers.get("origin")
     if not _is_allowed_origin(origin):
-        logger.warning("WS 연결 거부 — 허용되지 않은 Origin: {}", origin)
+        logger.bind(origin_present=origin is not None).warning(
+            "WS 연결 거부 — 허용되지 않은 Origin"
+        )
         chat_ws_connect_result("origin_denied")
         await websocket.close(code=CLOSE_FORBIDDEN_ORIGIN)
         return
@@ -126,7 +128,7 @@ async def ws_chat(
             expected_revoke_generation=revoke_generation,
         )
     except Exception as e:
-        logger.exception("세션 생성 실패: user_id={}, err={}", user_id, e)
+        logger.error("세션 생성 실패: user_id={}, err={}", user_id, e)
         chat_ws_connect_result("session_failed")
         # 클라가 이미 끊겼다면 send/close 자체가 disconnect 예외를 던질 수 있음 — 조용히 흡수.
         try:
@@ -154,7 +156,7 @@ async def ws_chat(
         try:
             room_ids = await room_svc.list_user_room_ids(user_id)
         except Exception as e:
-            logger.exception("방 목록 로드 실패: user_id={}, err={}", user_id, e)
+            logger.error("방 목록 로드 실패: user_id={}, err={}", user_id, e)
             room_ids = []
         for rid in room_ids:
             fanout.register_ws_to_room(websocket, rid)
@@ -195,7 +197,7 @@ async def ws_chat(
     except WebSocketDisconnect:
         logger.debug("WS 정상 종료: session_id={}", session_id)
     except Exception as e:
-        logger.exception("WS 핸들러 예외: session_id={}, err={}", session_id, e)
+        logger.error("WS 핸들러 예외: session_id={}, err={}", session_id, e)
     finally:
         # 종료 순서: metric → 로컬 dict → heartbeat → Redis. 각 단계 독립 try 로 격리.
         chat_ws_connection_dec()
@@ -444,9 +446,9 @@ async def _receive_loop(
         except Exception as e:
             # 인프라 예외(PyMongo/Redis/SQLAlchemy 등)는 해당 op 만 실패시키고 연결은 유지 —
             # server_error 로 응답. CancelledError 는 BaseException 이라 안 잡혀 정상 전파.
-            logger.exception(
+            logger.error(
                 "WS op 처리 중 예기치 못한 예외 (연결 유지): op={}, err={}",
-                op_label, type(e).__name__,
+                op_label, e,
             )
             try:
                 if isinstance(req, ReadOp):

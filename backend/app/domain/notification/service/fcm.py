@@ -127,7 +127,7 @@ class FcmService:
                 continue
             except Exception as e:
                 if cancelled:
-                    logger.exception(
+                    logger.error(
                         "FCM multicast drain 중 예상 밖 실패: chat_room_id={}, error={}",
                         chat_room_id, e,
                     )
@@ -172,10 +172,7 @@ class FcmService:
                 invalid_tokens.append(token)
             else:
                 failed_other += 1
-                logger.warning(
-                    "FCM 발송 실패 chat_room_id={} token_prefix={} error={}",
-                    chat_room_id, token[:16], err,
-                )
+                logger.bind(chat_room_id=chat_room_id, error=err).warning("FCM 발송 실패")
 
         fcm_multicast_devices_inc(
             success=success_count,

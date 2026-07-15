@@ -110,8 +110,8 @@ async def search_posts(
 
     try:
         await search_history_service.save_search(user_id=user_id, search_name=keyword)
-    except Exception:
-        logger.warning("검색 기록 저장 실패: user_id={}, keyword={}", user_id, keyword)
+    except Exception as error:
+        logger.bind(user_id=user_id, error=error).warning("검색 기록 저장 실패")
 
     try:
         result = await post_service.search_posts(keyword=keyword, cursor=cursor, user_id=user_id)
