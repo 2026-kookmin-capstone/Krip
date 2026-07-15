@@ -71,7 +71,7 @@
         }
       },
       "options": {"colorMode": "background", "graphMode": "area", "textMode": "value", "reduceOptions": {"calcs": ["lastNotNull"]}},
-      "targets": [{"expr": "sum(rate(db_transaction_total{result=\"rollback\"}[5m])) / clamp_min(sum(rate(db_transaction_total[5m])), 1)", "legendFormat": "rollback %", "refId": "A"}]
+      "targets": [{"expr": "((sum(rate(db_transaction_total{result=\"rollback\"}[5m])) / sum(rate(db_transaction_total[5m]))) unless (sum(rate(db_transaction_total[5m])) == 0)) or vector(0)", "legendFormat": "rollback %", "refId": "A"}]
     },
     {
       "id": 10,

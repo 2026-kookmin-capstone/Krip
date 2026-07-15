@@ -106,7 +106,7 @@
         }
       },
       "options": {"legend": {"displayMode": "list", "placement": "bottom"}, "tooltip": {"mode": "multi"}},
-      "targets": [{"expr": "sum(rate(http_requests_total{status=~\"5..\"}[5m])) / clamp_min(sum(rate(http_requests_total[5m])), 1)", "legendFormat": "5xx 비율", "refId": "A"}]
+      "targets": [{"expr": "((sum(rate(http_requests_total{status=~\"5..\"}[5m])) / sum(rate(http_requests_total[5m]))) unless (sum(rate(http_requests_total[5m])) == 0)) or vector(0)", "legendFormat": "5xx 비율", "refId": "A"}]
     },
     {
       "id": 20,

@@ -39,7 +39,7 @@
         }
       },
       "options": {"colorMode": "background", "graphMode": "area", "textMode": "value", "reduceOptions": {"calcs": ["lastNotNull"]}},
-      "targets": [{"expr": "sum(rate(http_requests_total{status=~\"5..\"}[5m])) / clamp_min(sum(rate(http_requests_total[5m])), 1)", "legendFormat": "5xx", "refId": "A"}]
+      "targets": [{"expr": "((sum(rate(http_requests_total{status=~\"5..\"}[5m])) / sum(rate(http_requests_total[5m]))) unless (sum(rate(http_requests_total[5m])) == 0)) or vector(0)", "legendFormat": "5xx", "refId": "A"}]
     },
     {
       "id": 3,
