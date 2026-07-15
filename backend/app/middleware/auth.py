@@ -56,7 +56,6 @@ class BearerTokenMiddleware(BaseHTTPMiddleware):
         auth_logger = self.logger.bind(
             request_id=request_id,
             method=request.method,
-            path=request.url.path,
         )
 
         # Authorization 헤더 확인
@@ -157,7 +156,6 @@ class LoginAuthMiddleware(BaseHTTPMiddleware):
         auth_logger = self.logger.bind(
             request_id=request_id,
             method=request.method,
-            path=request.url.path,
         )
 
         token, source = self._extract_token(request)
@@ -266,7 +264,6 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
         reg_logger = self.logger.bind(
             request_id=request_id,
             method=request.method,
-            path=request.url.path,
             user_id=user_id,
         )
 

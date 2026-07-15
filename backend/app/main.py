@@ -5,6 +5,7 @@ from contextlib import AsyncExitStack, asynccontextmanager
 
 import uvicorn
 from fastapi import FastAPI
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from prometheus_client import start_http_server
 
@@ -50,6 +51,8 @@ from app.middleware.tracking import (
     ErrorTrackingMiddleware,
     RequestIDMiddleware,
     SecurityHeadersMiddleware,
+    UnhandledExceptionMiddleware,
+    handle_validation_error,
 )
 
 
@@ -185,13 +188,14 @@ def create_app() -> FastAPI:
         lifespan=lifespan,
     )
 
+    # 422 사유(loc/type)를 4xx 추적 로그에 싣는다 — msg/input 은 PII 로 금지.
+    app.add_exception_handler(RequestValidationError, handle_validation_error)
+
     # Starlette middleware는 등록 역순으로 실행된다.
-    app.add_middleware(SecurityHeadersMiddleware)
     app.add_middleware(RegisterCheckMiddleware)
     app.add_middleware(LoginAuthMiddleware)
     app.add_middleware(BearerTokenMiddleware)
-    app.add_middleware(ErrorTrackingMiddleware)
-    app.add_middleware(RequestIDMiddleware)
+    app.add_middleware(UnhandledExceptionMiddleware)
 
     app.add_middleware(
         CORSMiddleware,
@@ -202,7 +206,11 @@ def create_app() -> FastAPI:
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
+        expose_headers=["X-Request-ID", "X-Process-Time"],
     )
+    app.add_middleware(ErrorTrackingMiddleware)
+    app.add_middleware(RequestIDMiddleware)
+    app.add_middleware(SecurityHeadersMiddleware)
 
     # 가장 바깥쪽에서 인증 실패까지 계측한다. /metrics는 별도 포트에서 노출한다.
     build_instrumentator().instrument(app)

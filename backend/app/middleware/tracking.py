@@ -1,14 +1,97 @@
 import time
+import traceback
 import uuid
 from typing import Callable, Optional
 
 from fastapi import Request, Response
+from fastapi.exception_handlers import request_validation_exception_handler
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.types import ASGIApp
 
+from app.config.setting import settings
 from app.core.context import db_route_var, request_id_var
 from app.core.instrumentation import db_route_for_path
-from app.core.logger import get_logger
+from app.core.logger import exception_context, get_logger
+
+
+_UNRESOLVED_ROUTE = "<unresolved>"
+
+# k8s/LB probe 는 수 초 간격으로 항상 2xx — 성공 INFO 로그에서 제외해 Loki 볼륨을 지킨다.
+_HEALTH_PROBE_ROUTES = frozenset({"/health", "/health/deep", "/ready"})
+
+
+def _find_route_template(routes, selected_route, prefix: str = "") -> str | None:
+    for route in routes:
+        contexts = getattr(route, "effective_route_contexts", None)
+        if contexts is not None:
+            for context in contexts():
+                if context.original_route is selected_route:
+                    return f"{prefix}{context.path}"
+
+        path = getattr(route, "path", "") or ""
+        template = f"{prefix}{path}"
+        if route is selected_route:
+            return template
+
+        nested_routes = getattr(route, "routes", None)
+        if nested_routes:
+            nested = _find_route_template(nested_routes, selected_route, template)
+            if nested is not None:
+                return nested
+    return None
+
+
+def _route_template(request: Request, routes=()) -> str:
+    selected_route = request.scope.get("route")
+    if selected_route is None:
+        return _UNRESOLVED_ROUTE
+
+    template = _find_route_template(routes, selected_route)
+    if template is not None:
+        return template
+    return getattr(selected_route, "path", _UNRESOLVED_ROUTE)
+
+
+def _trusted_request_id(value: str | None) -> str | None:
+    if value is None:
+        return None
+    try:
+        canonical = str(uuid.UUID(value))
+    except (ValueError, AttributeError):
+        return None
+    return canonical if value.lower() == canonical else None
+
+
+_MAX_VALIDATION_ERRORS = 5
+
+
+def _validation_error_summary(exc: RequestValidationError) -> str:
+    errors = exc.errors()
+    parts = [
+        "{}: {}".format(
+            ".".join(str(part) for part in error.get("loc", ())) or "<unknown>",
+            error.get("type", "<unknown>"),
+        )
+        for error in errors[:_MAX_VALIDATION_ERRORS]
+    ]
+    overflow = len(errors) - _MAX_VALIDATION_ERRORS
+    if overflow > 0:
+        parts.append(f"+{overflow} more")
+    return "; ".join(parts)
+
+
+async def handle_validation_error(
+    request: Request, exc: RequestValidationError,
+) -> Response:
+    """422 사유를 스키마 위치(loc)·오류 종류(type)로만 로그 컨텍스트에 남긴다.
+
+    msg 는 커스텀 validator 가 입력값을 문장에 섞을 수 있고 input 은 사용자
+    원문 그 자체라 금지 — 둘 다 응답 body 로만 내려간다.
+    """
+    request.state.validation_errors = _validation_error_summary(exc)
+    return await request_validation_exception_handler(request, exc)
 
 
 class RequestIDMiddleware(BaseHTTPMiddleware):
@@ -31,7 +114,7 @@ class RequestIDMiddleware(BaseHTTPMiddleware):
         return str(uuid.uuid4())
 
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
-        request_id = request.headers.get(self.header_name) or self.generator()
+        request_id = _trusted_request_id(request.headers.get(self.header_name)) or self.generator()
 
         request.state.request_id = request_id
 
@@ -43,7 +126,6 @@ class RequestIDMiddleware(BaseHTTPMiddleware):
         self.logger.bind(
             request_id=request_id,
             method=request.method,
-            path=request.url.path
         ).debug("요청 ID 할당됨")
 
         try:
@@ -57,6 +139,32 @@ class RequestIDMiddleware(BaseHTTPMiddleware):
         return response
 
 
+def _emit_dev_traceback(error: BaseException) -> None:
+    """DEV 콘솔 전용 전체 traceback.
+
+    stderr 는 loguru sink 를 거치지 않으므로 파일 sink → Alloy → Loki 경로에
+    진입할 수 없다. PROD 는 bounded metadata(error_type/location/line)만 남긴다.
+    """
+    if settings.is_production:
+        return
+    traceback.print_exception(error)
+
+
+class UnhandledExceptionMiddleware(BaseHTTPMiddleware):
+    """라우터 예외를 CORS 내부에서 안전한 500 응답과 bounded metadata로 변환한다."""
+
+    async def dispatch(self, request: Request, call_next: Callable) -> Response:
+        try:
+            return await call_next(request)
+        except Exception as error:
+            _emit_dev_traceback(error)
+            request.state.http_error_context = exception_context(error)
+            return JSONResponse(
+                status_code=500,
+                content={"detail": "Internal Server Error"},
+            )
+
+
 class ErrorTrackingMiddleware(BaseHTTPMiddleware):
     """에러 추적 및 모니터링 미들웨어."""
 
@@ -64,38 +172,128 @@ class ErrorTrackingMiddleware(BaseHTTPMiddleware):
         super().__init__(app)
         self.logger = get_logger("middleware.error_tracking")
 
+    @staticmethod
+    def _request_context(
+        request: Request, *, request_id: str, route: str, status_code: int,
+    ) -> dict[str, str | int | None]:
+        return {
+            "request_id": request_id,
+            "method": request.method,
+            "path": route,
+            "route": route,
+            "status_code": status_code,
+            "user_id": getattr(request.state, "user_id", None),
+        }
+
+    def _log_http_success(
+        self,
+        request: Request,
+        *,
+        request_id: str,
+        route: str,
+        status_code: int,
+        process_time: float,
+    ) -> None:
+        context = self._request_context(
+            request, request_id=request_id, route=route, status_code=status_code,
+        )
+        self.logger.bind(
+            event="http_success",
+            **context,
+            process_time=process_time,
+        ).info("HTTP request completed")
+
+    def _log_http_error(
+        self,
+        request: Request,
+        *,
+        request_id: str,
+        route: str,
+        status_code: int,
+        error_fields: dict[str, str | int | None] | None = None,
+    ) -> None:
+        context = self._request_context(
+            request, request_id=request_id, route=route, status_code=status_code,
+        )
+        if status_code < 500:
+            validation_errors = getattr(request.state, "validation_errors", None)
+            if validation_errors:
+                context["validation_errors"] = validation_errors
+            self.logger.bind(event="http_client_error", **context).warning(
+                "HTTP client error response"
+            )
+            return
+
+        error_fields = error_fields or {
+            "error_type": None,
+            "error_location": None,
+            "error_line": None,
+        }
+        self.logger.bind(
+            event="http_server_error",
+            **context,
+            **error_fields,
+        ).error("HTTP server error response")
+
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
         start_time = time.perf_counter()
         request_id = getattr(request.state, "request_id", "unknown")
-
-        req_logger = self.logger.bind(
-            request_id=request_id,
-            method=request.method,
-            path=request.url.path,
-            client_host=request.client.host if request.client else None,
-        )
+        routes = getattr(request.scope.get("app"), "routes", ())
 
         try:
             response = await call_next(request)
 
             process_time = time.perf_counter() - start_time
             response.headers["X-Process-Time"] = str(process_time)
+            route = _route_template(request, routes)
 
-            req_logger.bind(
+            if 400 <= response.status_code < 600:
+                self._log_http_error(
+                    request,
+                    request_id=request_id,
+                    route=route,
+                    status_code=response.status_code,
+                    error_fields=getattr(request.state, "http_error_context", None),
+                )
+            elif (
+                response.status_code < 400
+                and route != _UNRESOLVED_ROUTE
+                and route not in _HEALTH_PROBE_ROUTES
+            ):
+                self._log_http_success(
+                    request,
+                    request_id=request_id,
+                    route=route,
+                    status_code=response.status_code,
+                    process_time=process_time,
+                )
+
+            self.logger.bind(
+                request_id=request_id,
+                method=request.method,
+                route=route,
                 status_code=response.status_code,
                 process_time=process_time,
             ).debug("요청 처리 완료")
 
             return response
 
-        except Exception as e:
+        except Exception as error:
+            _emit_dev_traceback(error)
             process_time = time.perf_counter() - start_time
-            req_logger.bind(
-                error=str(e),
-                error_type=type(e).__name__,
-                process_time=process_time,
-            ).error("요청 처리 중 에러 발생")
-            raise
+            response = JSONResponse(
+                status_code=500,
+                content={"detail": "Internal Server Error"},
+            )
+            response.headers["X-Process-Time"] = str(process_time)
+            self._log_http_error(
+                request,
+                request_id=request_id,
+                route=_route_template(request, routes),
+                status_code=500,
+                error_fields=exception_context(error),
+            )
+            return response
 
 
 class SecurityHeadersMiddleware(BaseHTTPMiddleware):
