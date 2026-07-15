@@ -3,11 +3,16 @@
 핵심 regression: Papago 429(쿼터 소진)를 502(VendorError)로 뭉개면 클라이언트가 서버 장애로
 오인해 즉시 재시도 → 쿼터 소진 지속. 429 를 QuotaExceededError 로 분리해 백오프를 유도한다.
 """
+import json
 from unittest.mock import AsyncMock
 
 import httpx
 import pytest
+from fastapi import HTTPException, Request
+from loguru import logger
 
+from app.domain.translation.router.translation import detect_language
+from app.domain.translation.schema.translation import DetectRequest
 from app.domain.translation.service.exception import (
     TranslationQuotaExceededError,
     TranslationUnreachableError,
@@ -34,6 +39,52 @@ def _service_detect_raising(exc: Exception) -> TranslationService:
 
 
 class TestTranslationExceptionMapping:
+    async def test_vendor_error_router_log_preserves_only_bounded_code(self, tmp_path):
+        secret = "PRIVATE_VENDOR_ERROR_MESSAGE_7X9@example.com"
+        log_path = tmp_path / "translation.jsonl"
+        vendor_request = httpx.Request("POST", "https://papago.example/api")
+        response = httpx.Response(
+            400,
+            request=vendor_request,
+            text=(
+                '{"errorCode":"N2MT05","errorMessage":"'
+                f'{secret}"}}'
+            ),
+        )
+        service = _service_detect_raising(
+            httpx.HTTPStatusError("400", request=vendor_request, response=response)
+        )
+        sink_id = logger.add(log_path, serialize=True)
+        try:
+            with pytest.raises(HTTPException) as caught:
+                await detect_language(
+                    request=Request({"type": "http"}),
+                    body=DetectRequest(text="안녕"),
+                    translation_service=service,
+                )
+        finally:
+            logger.remove(sink_id)
+
+        raw_log = log_path.read_text(encoding="utf-8")
+        records = [
+            json.loads(line)["record"] for line in raw_log.splitlines()
+        ]
+        vendor_records = [
+            record for record in records
+            if record["extra"].get("logger_name") == "translation"
+            and record["message"] == "Translation vendor request failed"
+        ]
+        assert caught.value.status_code == 502
+        assert len(vendor_records) == 1
+        assert vendor_records[0]["extra"] == {
+            "logger_name": "translation",
+            "provider": "papago",
+            "operation": "detect",
+            "vendor_status": 400,
+            "vendor_code": "N2MT05",
+        }
+        assert secret not in raw_log
+
     async def test_429_maps_to_quota_exceeded_detect(self):
         svc = _service_detect_raising(_http_status_error(429))
         with pytest.raises(TranslationQuotaExceededError) as caught:
@@ -45,6 +96,31 @@ class TestTranslationExceptionMapping:
         svc = _service_detect_raising(_http_status_error(429))
         with pytest.raises(TranslationQuotaExceededError):
             await svc.translate("안녕", "ko", "en")
+
+    async def test_vendor_error_code_is_extracted_without_body(self):
+        req = httpx.Request("POST", "https://papago.example/api")
+        resp = httpx.Response(
+            400, request=req,
+            text='{"errorCode":"N2MT05","errorMessage":"secret detail with PII"}',
+        )
+        svc = _service_detect_raising(
+            httpx.HTTPStatusError("400", request=req, response=resp)
+        )
+
+        with pytest.raises(TranslationVendorError) as caught:
+            await svc.detect("안녕")
+
+        assert caught.value.vendor_code == "N2MT05"
+        assert "secret detail" not in str(caught.value)
+        assert not hasattr(caught.value, "body")
+
+    async def test_vendor_error_code_is_none_for_unparseable_body(self):
+        svc = _service_detect_raising(_http_status_error(500))
+
+        with pytest.raises(TranslationVendorError) as caught:
+            await svc.detect("안녕")
+
+        assert caught.value.vendor_code is None
 
     async def test_500_maps_to_vendor_error(self):
         svc = _service_detect_raising(_http_status_error(500))

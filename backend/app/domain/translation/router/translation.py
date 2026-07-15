@@ -38,7 +38,7 @@ async def detect_language(
         raise HTTPException(status_code=429, detail="요청이 많아 처리하지 못했습니다. 잠시 후 다시 시도해주세요.")
     except TranslationVendorError as e:
         logger.bind(
-            provider="papago", operation="detect", vendor_status=e.status_code,
+            provider="papago", operation="detect", vendor_status=e.status_code, vendor_code=e.vendor_code,
         ).error("Translation vendor request failed")
         raise HTTPException(status_code=502, detail="언어 감지에 실패했습니다.")
     except TranslationUnreachableError as e:
@@ -73,7 +73,7 @@ async def translate_text(
         raise HTTPException(status_code=429, detail="요청이 많아 처리하지 못했습니다. 잠시 후 다시 시도해주세요.")
     except TranslationVendorError as e:
         logger.bind(
-            provider="papago", operation="translate", vendor_status=e.status_code,
+            provider="papago", operation="translate", vendor_status=e.status_code, vendor_code=e.vendor_code,
         ).error("Translation vendor request failed")
         raise HTTPException(status_code=502, detail="번역에 실패했습니다.")
     except TranslationUnreachableError as e:

@@ -15,10 +15,15 @@ class TranslationError(Exception):
 
 
 class TranslationVendorError(TranslationError):
-    """외부 번역 서비스가 4xx / 5xx 응답 — Router 에서 502 로 매핑."""
+    """외부 번역 서비스가 4xx / 5xx 응답 — Router 에서 502 로 매핑.
 
-    def __init__(self, status_code: int):
+    vendor_code 는 응답 body 에서 정규식으로 추출한 벤더 오류 코드(N2MT05 등)만
+    담는다 — body 원문은 도메인 공개 필드나 retained log 에 복사하지 않는다.
+    """
+
+    def __init__(self, status_code: int, vendor_code: str | None = None):
         self.status_code = status_code
+        self.vendor_code = vendor_code
         super().__init__(f"vendor responded with status {status_code}")
 
 

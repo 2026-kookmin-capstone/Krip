@@ -1,3 +1,5 @@
+import re
+
 from httpx import HTTPStatusError, RequestError
 
 from app.core.ai.papago_translator.load import PapagoTranslator
@@ -8,6 +10,15 @@ from app.domain.translation.service.exception import (
     TranslationUnreachableError,
     TranslationVendorError,
 )
+
+
+# Papago 오류 응답의 errorCode 필드만 추출 — body 원문은 로그·예외에 싣지 않는다.
+_VENDOR_CODE_PATTERN = re.compile(r'"errorCode"\s*:\s*"([0-9A-Za-z_]{1,16})"')
+
+
+def _vendor_code(response) -> str | None:
+    match = _VENDOR_CODE_PATTERN.search(response.text or "")
+    return match.group(1) if match else None
 
 
 class TranslationService:
@@ -27,7 +38,7 @@ class TranslationService:
         except HTTPStatusError as e:
             if e.response.status_code == 429:
                 raise TranslationQuotaExceededError from e
-            raise TranslationVendorError(e.response.status_code) from e
+            raise TranslationVendorError(e.response.status_code, _vendor_code(e.response)) from e
         except RequestError as e:
             raise TranslationUnreachableError from e
         except (KeyError, ValueError, TypeError) as e:
@@ -50,7 +61,7 @@ class TranslationService:
         except HTTPStatusError as e:
             if e.response.status_code == 429:
                 raise TranslationQuotaExceededError from e
-            raise TranslationVendorError(e.response.status_code) from e
+            raise TranslationVendorError(e.response.status_code, _vendor_code(e.response)) from e
         except RequestError as e:
             raise TranslationUnreachableError from e
         except (KeyError, ValueError, TypeError) as e:
