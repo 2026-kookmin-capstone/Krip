@@ -11,6 +11,8 @@ JWT 전송 채널:
 import asyncio
 import json
 import uuid
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 
 import jwt
 from dependency_injector.wiring import Provide, inject
@@ -20,8 +22,6 @@ from pydantic import TypeAdapter, ValidationError
 from app.config.setting import settings
 from app.container import Container
 from app.core.background_tasks import background_tasks
-from app.core.cache.key_category import KeyCategory
-from app.core.cache.redis_cache import get_redis_cache_manager
 from app.core.context import request_id_var
 from app.core.instrumentation import (
     chat_message_send_timer,
@@ -32,9 +32,9 @@ from app.core.instrumentation import (
     chat_ws_op_validation_failure,
 )
 from app.core.logger import get_logger
-from app.core.redis import RedisClient
 from app.domain.auth.model.user import UserStatus
 from app.domain.auth.repository.user import UserRepository
+from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
 from app.domain.chat.schema.ws_event import (
     ClientRequest,
     ReadFailedEvent,
@@ -68,6 +68,7 @@ CLOSE_SERVICE_RESTART = 1012
 
 SUBPROTOCOL_VERSION = "krip.chat.v1"
 SUBPROTOCOL_AUTH_PREFIX = "auth."
+SUBPROTOCOL_PRINCIPAL_PREFIX = "principal."
 
 
 # 모듈 레벨에서 1회 생성.
@@ -81,6 +82,20 @@ def _read_failed_event(req: ReadOp, reason: str) -> dict[str, object]:
         up_to_server_seq=req.up_to_server_seq,
         reason=reason,
     ).model_dump()
+
+
+def _server_error_event(
+    req: ClientRequest,
+    reason: str,
+    *,
+    retryable: bool = False,
+) -> dict[str, object]:
+    return {
+        "type": "server_error",
+        "client_msg_id": req.client_msg_id if isinstance(req, SendOp) else None,
+        "retryable": retryable,
+        "reason": reason,
+    }
 
 
 @router.websocket("/chat")
@@ -108,6 +123,11 @@ async def ws_chat(
         await websocket.close(code=CLOSE_AUTH_EXPIRED)
         return
     user_id, token_jti = auth
+    expected_user_id = _extract_expected_principal(websocket)
+    if expected_user_id and expected_user_id != user_id:
+        chat_ws_connect_result("principal_mismatch")
+        await websocket.close(code=CLOSE_AUTH_EXPIRED)
+        return
 
     revoke_generation = await session_svc.get_revoke_generation(user_id)
 
@@ -141,6 +161,11 @@ async def ws_chat(
             pass
         return
 
+    if not await _retain_session_if_account_active(
+        websocket, session_svc, session_id, user_id,
+    ):
+        return
+
     chat_ws_connect_result("ok")
     chat_ws_connection_inc()
 
@@ -168,12 +193,27 @@ async def ws_chat(
             snapshot = await get_unread_snapshot_if_recovered(user_id)
             if snapshot is not None and snapshot[0]:
                 counts, watermarks, read_watermarks = snapshot
-                await websocket.send_json({
-                    "type": "unread_synced",
-                    "counts": counts,
-                    "watermarks": watermarks,
-                    "read_watermarks": read_watermarks,
-                })
+                candidate_room_ids = set(counts) | set(watermarks) | set(read_watermarks)
+                async with _lock_active_unread_rooms(
+                    websocket, user_id, candidate_room_ids,
+                ) as active_room_ids:
+                    if active_room_ids is None:
+                        try:
+                            await session_svc.terminate_session(session_id, user_id)
+                        except Exception:
+                            pass
+                        await websocket.close(code=CLOSE_WITHDRAWAL_PENDING)
+                        return
+                    filtered_counts = _filter_room_map(counts, active_room_ids)
+                    if filtered_counts:
+                        await websocket.send_json({
+                            "type": "unread_synced",
+                            "counts": filtered_counts,
+                            "watermarks": _filter_room_map(watermarks, active_room_ids),
+                            "read_watermarks": _filter_room_map(
+                                read_watermarks, active_room_ids,
+                            ),
+                        })
             else:
                 _spawn_recover_unread(websocket, user_id)
         except WebSocketDisconnect:
@@ -246,16 +286,38 @@ async def _recover_unread_and_notify(websocket: WebSocket, user_id: str) -> None
         # Redis 반영 실패로 빈 dict 가 올 수 있음 — 다음 재연결에서 재시도됨.
         return
 
+    candidate_room_ids = set(counts) | set(watermarks) | set(read_watermarks)
     try:
-        await websocket.send_json({
-            "type": "unread_synced",
-            "counts": counts,
-            "watermarks": watermarks,
-            "read_watermarks": read_watermarks,
-        })
+        async with _lock_active_unread_rooms(
+            websocket, user_id, candidate_room_ids,
+        ) as active_room_ids:
+            if active_room_ids is None:
+                try:
+                    await websocket.close(code=CLOSE_AUTH_EXPIRED)
+                except Exception:
+                    pass
+                return
+
+            filtered_counts = _filter_room_map(counts, active_room_ids)
+            if not filtered_counts:
+                return
+            try:
+                await websocket.send_json({
+                    "type": "unread_synced",
+                    "counts": filtered_counts,
+                    "watermarks": _filter_room_map(watermarks, active_room_ids),
+                    "read_watermarks": _filter_room_map(
+                        read_watermarks, active_room_ids,
+                    ),
+                })
+            except Exception as e:
+                logger.debug(
+                    "unread 복구 결과 push 실패 (WS 이미 종료 가능): user_id={}, err={}",
+                    user_id, type(e).__name__,
+                )
     except Exception as e:
-        logger.debug(
-            "unread 복구 결과 push 실패 (WS 이미 종료 가능): user_id={}, err={}",
+        logger.warning(
+            "unread 복구 authorization 실패 (전송 skip, 연결 유지): user_id={}, err={}",
             user_id, type(e).__name__,
         )
 
@@ -285,6 +347,15 @@ def _extract_jwt(websocket: WebSocket) -> str | None:
             if token:
                 return token
 
+    return None
+
+
+def _extract_expected_principal(websocket: WebSocket) -> str | None:
+    for proto in _ws_subprotocols(websocket):
+        if proto.startswith(SUBPROTOCOL_PRINCIPAL_PREFIX):
+            user_id = proto[len(SUBPROTOCOL_PRINCIPAL_PREFIX):]
+            if user_id:
+                return user_id
     return None
 
 
@@ -318,22 +389,16 @@ def _verify_jwt(websocket: WebSocket) -> tuple[str, str] | None:
 
 
 async def _check_user_active(websocket: WebSocket, user_id: str) -> bool:
-    """INACTIVE / 미가입 차단. `REGISTERED:{uid}` 캐시를 HTTP 와 공유해 중복 DB 조회 회피.
+    """새 연결의 INACTIVE / 미가입 상태를 authoritative SQL에서 확인한다.
 
     검증: 유저 존재 / status=ACTIVE / detail 존재 (2차 가입 완료).
     DB 장애 시 fail-closed — 의심스러우면 차단.
     """
-    cache = get_redis_cache_manager()
-    cache_key = f"{KeyCategory.REGISTERED}:{user_id}"
-
-    if await cache.exists(cache_key):
-        return True
-
     try:
         container = websocket.app.container
         async with container.uow() as session:
             user_repo = UserRepository(session)
-            user = await user_repo.find_by_id_with_profile(user_id)
+            access_state = await user_repo.find_access_state(user_id)
     except Exception as e:
         logger.warning(
             "WS status 가드 — DB 조회 실패 (fail-closed): user_id={}, err={}",
@@ -341,15 +406,79 @@ async def _check_user_active(websocket: WebSocket, user_id: str) -> bool:
         )
         return False
 
-    if user is None:
+    if access_state is None:
         return False
-    if user.status != UserStatus.ACTIVE:
+    user_status, is_registered = access_state
+    if user_status != UserStatus.ACTIVE:
         return False
-    if user.detail is None:
+    if not is_registered:
         return False
 
-    await cache.set_flag(cache_key, RedisClient.DEFAULT_CACHE_TTL)
     return True
+
+
+async def _check_user_active_authoritative(websocket: WebSocket, user_id: str) -> bool:
+    """기존 WS 권한 fence — 캐시를 사용하지 않고 현재 계정 상태를 확인한다."""
+    try:
+        container = websocket.app.container
+        async with container.uow() as session:
+            is_active = await UserRepository(session).is_active(user_id)
+    except Exception as e:
+        logger.warning(
+            "WS account fence — DB 조회 실패 (fail-closed): user_id={}, err={}",
+            user_id, type(e).__name__,
+        )
+        return False
+    return is_active
+
+
+def _filter_room_map(values: dict[str, int], active_room_ids: set[str]) -> dict[str, int]:
+    return {room_id: value for room_id, value in values.items() if room_id in active_room_ids}
+
+
+@asynccontextmanager
+async def _lock_active_unread_rooms(
+    websocket: WebSocket,
+    user_id: str,
+    candidate_room_ids: set[str],
+) -> AsyncIterator[set[str] | None]:
+    """account와 active memberships를 unread socket 전송 종료까지 공유 잠금한다.
+
+    yield None 은 authoritative '계정 비활성' 판정이다. DB 조회 실패는 그대로
+    전파한다 — 호출측이 best-effort unread 동기화만 건너뛰고 연결은 유지하도록.
+    일시 장애를 비활성으로 오판해 건강한 세션을 4019/4001 로 끊지 않는다.
+    """
+    container = websocket.app.container
+    async with container.uow() as session:
+        if not await UserRepository(session).lock_if_active(user_id):
+            yield None
+            return
+        yield await ChatRoomMemberRepository(
+            session,
+        ).lock_active_room_ids_for_user(user_id, candidate_room_ids)
+
+
+async def _retain_session_if_account_active(
+    websocket: WebSocket,
+    session_svc: SessionService,
+    session_id: str,
+    user_id: str,
+) -> bool:
+    """handshake 중 탈퇴 race를 닫고 방금 만든 Redis 세션을 즉시 회수한다."""
+    if await _check_user_active_authoritative(websocket, user_id):
+        return True
+    try:
+        await session_svc.terminate_session(session_id, user_id)
+    except Exception as e:
+        logger.warning(
+            "WS raced session 정리 실패: session_id={}, err={}",
+            session_id, type(e).__name__,
+        )
+    try:
+        await websocket.close(code=CLOSE_WITHDRAWAL_PENDING)
+    except Exception:
+        pass
+    return False
 
 
 async def _receive_loop(
@@ -373,6 +502,11 @@ async def _receive_loop(
                 "type": "server_error", "reason": "malformed frame",
             })
             continue
+
+        if not await _check_user_active_authoritative(websocket, user_id):
+            await websocket.send_json({"type": "auth_expired"})
+            await websocket.close(code=CLOSE_AUTH_EXPIRED)
+            return
 
         if not await session_svc.session_exists(session_id):
             await websocket.send_json({"type": "auth_expired"})
@@ -427,19 +561,22 @@ async def _receive_loop(
             if isinstance(req, ReadOp):
                 await websocket.send_json(_read_failed_event(req, str(e)))
             else:
-                await websocket.send_json({"type": "server_error", "reason": str(e)})
+                await websocket.send_json(_server_error_event(req, str(e)))
         except ValueError as e:
             if isinstance(req, ReadOp):
                 await websocket.send_json(_read_failed_event(req, str(e)))
             else:
-                await websocket.send_json({"type": "server_error", "reason": str(e)})
+                await websocket.send_json(_server_error_event(req, str(e)))
         except ChatRoomNotFoundError as e:
             if isinstance(req, ReadOp):
                 await websocket.send_json(_read_failed_event(req, str(e)))
             else:
-                await websocket.send_json({"type": "server_error", "reason": str(e)})
+                await websocket.send_json(_server_error_event(req, str(e)))
         except UpstreamError as e:
-            await websocket.send_json({"type": "server_error", "reason": str(e)})
+            if isinstance(req, ReadOp):
+                await websocket.send_json(_read_failed_event(req, str(e)))
+            else:
+                await websocket.send_json(_server_error_event(req, str(e), retryable=True))
         except WebSocketDisconnect:
             # 정상 종료 경로 — 상위 핸들러가 세션/구독을 정리하도록 전파.
             raise
@@ -457,10 +594,11 @@ async def _receive_loop(
                         "일시적인 서버 오류입니다. 잠시 후 다시 시도해주세요.",
                     ))
                 else:
-                    await websocket.send_json({
-                        "type": "server_error",
-                        "reason": "일시적인 서버 오류입니다. 잠시 후 다시 시도해주세요.",
-                    })
+                    await websocket.send_json(_server_error_event(
+                        req,
+                        "일시적인 서버 오류입니다. 잠시 후 다시 시도해주세요.",
+                        retryable=True,
+                    ))
             except Exception:
                 # 소켓이 이미 죽었으면 다음 receive_json 이 WebSocketDisconnect 로 정리.
                 pass
@@ -545,6 +683,7 @@ async def _handle_read(
     await websocket.send_json({
         "type": "read_ack",
         "room_id": req.room_id,
+        "requested_up_to_server_seq": req.up_to_server_seq,
         "up_to_server_seq": final_seq,
     })
 
@@ -560,6 +699,9 @@ async def _heartbeat_loop(
         while True:
             await asyncio.sleep(HEARTBEAT_INTERVAL)
             try:
+                if not await _check_user_active_authoritative(websocket, user_id):
+                    await websocket.close(code=CLOSE_AUTH_EXPIRED)
+                    return
                 if not await session_svc.heartbeat(session_id, user_id):
                     await websocket.close(code=CLOSE_AUTH_EXPIRED)
                     return

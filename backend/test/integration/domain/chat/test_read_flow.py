@@ -40,6 +40,41 @@ async def _insert_message(mongo_db, room_id: str, server_seq: int) -> None:
     })
 
 
+async def test_unread_count_excludes_system_and_recovering_users_own_messages(mongo_db):
+    room_id = "CR_IT_UNREAD_SEMANTICS"
+    await mongo_db.chat_message.insert_many([
+        {
+            "_id": "MSG_IT_UNREAD_1",
+            "chat_room_id": room_id,
+            "server_seq": 1,
+            "sender_id": "USER_IT_SELF",
+            "type": "text",
+        },
+        {
+            "_id": "MSG_IT_UNREAD_2",
+            "chat_room_id": room_id,
+            "server_seq": 2,
+            "sender_id": "USER_IT_OTHER",
+            "type": "text",
+        },
+        {
+            "_id": "MSG_IT_UNREAD_3",
+            "chat_room_id": room_id,
+            "server_seq": 3,
+            "sender_id": "USER_IT_OTHER",
+            "type": "system",
+        },
+    ])
+
+    count = await ChatMessageRepository(mongo_db).count_after_seq(
+        chat_room_id=room_id,
+        after_seq=0,
+        exclude_sender_user_id="USER_IT_SELF",
+    )
+
+    assert count == 1
+
+
 @pytest_asyncio.fixture
 async def seed_friendship(session_factory):
     async def _seed(user_a: str, user_b: str) -> None:

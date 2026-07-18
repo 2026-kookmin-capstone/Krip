@@ -92,6 +92,11 @@ async def _dispatch_loop(
                     "envelope 파싱 실패 (drop): err={}", type(e).__name__,
                 )
                 continue
+            if not isinstance(envelope, dict):
+                logger.warning(
+                    "envelope 형식 오류 (drop): type={}", type(envelope).__name__,
+                )
+                continue
 
             try:
                 async with worker_tick("fanout_dispatch"):

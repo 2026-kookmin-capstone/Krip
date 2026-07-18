@@ -17,24 +17,192 @@ from unittest.mock import AsyncMock, MagicMock
 
 import jwt
 import pytest
+from starlette.websockets import WebSocketDisconnect
 
 from app.config.setting import settings
+from app.domain.chat.model.chat_message import MessageType
 from app.domain.chat.router import ws as ws_module
 from app.domain.chat.router.ws import (
     CLOSE_AUTH_EXPIRED,
     SUBPROTOCOL_AUTH_PREFIX,
+    SUBPROTOCOL_PRINCIPAL_PREFIX,
     SUBPROTOCOL_VERSION,
+    _extract_expected_principal,
     _extract_jwt,
     _heartbeat_loop,
     _is_allowed_origin,
     _select_accept_subprotocol,
+    _server_error_event,
     _spawn_recover_unread,
     _verify_jwt,
     _ws_subprotocols,
 )
+from app.domain.chat.schema.ws_event import SendOp
+from app.domain.chat.service.exception import UpstreamError
 
 
 pytestmark = pytest.mark.unit
+
+
+def test_server_error_correlates_send_and_declares_retryability():
+    request = SendOp(
+        op="send",
+        room_id="CR_1",
+        client_msg_id="CLIENT_1",
+        type=MessageType.TEXT,
+        content="hello",
+    )
+    assert _server_error_event(request, "temporary", retryable=True) == {
+        "type": "server_error",
+        "client_msg_id": "CLIENT_1",
+        "retryable": True,
+        "reason": "temporary",
+    }
+
+
+async def test_receive_loop_correlates_retryable_send_error(monkeypatch):
+    websocket = MagicMock()
+    websocket.receive_json = AsyncMock(side_effect=[{
+        "op": "send",
+        "room_id": "CR_1",
+        "client_msg_id": "CLIENT_1",
+        "type": "text",
+        "content": "hello",
+    }, WebSocketDisconnect(code=1000)])
+    websocket.send_json = AsyncMock()
+    session_service = MagicMock()
+    session_service.session_exists = AsyncMock(return_value=True)
+    monkeypatch.setattr(
+        ws_module,
+        "_check_user_active_authoritative",
+        AsyncMock(return_value=True),
+    )
+    monkeypatch.setattr(
+        ws_module,
+        "_handle_send",
+        AsyncMock(side_effect=UpstreamError("temporary")),
+    )
+
+    with pytest.raises(WebSocketDisconnect):
+        await ws_module._receive_loop(
+            websocket=websocket,
+            session_id="WS_1",
+            user_id="USER_1",
+            session_svc=session_service,
+            chat_svc=MagicMock(),
+            room_svc=MagicMock(),
+        )
+
+    websocket.send_json.assert_awaited_once_with({
+        "type": "server_error",
+        "client_msg_id": "CLIENT_1",
+        "retryable": True,
+        "reason": "temporary",
+    })
+
+
+async def test_receive_loop_correlates_upstream_read_failure(monkeypatch):
+    websocket = MagicMock()
+    websocket.receive_json = AsyncMock(side_effect=[{
+        "op": "read",
+        "room_id": "CR_1",
+        "up_to_server_seq": 7,
+    }, WebSocketDisconnect(code=1000)])
+    websocket.send_json = AsyncMock()
+    session_service = MagicMock()
+    session_service.session_exists = AsyncMock(return_value=True)
+    monkeypatch.setattr(
+        ws_module,
+        "_check_user_active_authoritative",
+        AsyncMock(return_value=True),
+    )
+    monkeypatch.setattr(
+        ws_module,
+        "_handle_read",
+        AsyncMock(side_effect=UpstreamError("temporary")),
+    )
+
+    with pytest.raises(WebSocketDisconnect):
+        await ws_module._receive_loop(
+            websocket=websocket,
+            session_id="WS_1",
+            user_id="USER_1",
+            session_svc=session_service,
+            chat_svc=MagicMock(),
+            room_svc=MagicMock(),
+        )
+
+    websocket.send_json.assert_awaited_once_with({
+        "type": "read_failed",
+        "room_id": "CR_1",
+        "up_to_server_seq": 7,
+        "reason": "temporary",
+    })
+
+
+async def test_ws_rejects_cross_tab_principal_replacement_before_session_creation():
+    websocket = _make_ws(
+        cookie_token=_make_token("USER_B"),
+        subprotocols=[
+            SUBPROTOCOL_VERSION,
+            f"{SUBPROTOCOL_PRINCIPAL_PREFIX}USER_A",
+        ],
+    )
+    websocket.headers["origin"] = settings.FRONTEND_URL
+    websocket.close = AsyncMock()
+    session_service = MagicMock()
+    session_service.get_revoke_generation = AsyncMock()
+
+    await ws_module.ws_chat(
+        websocket,
+        fanout=MagicMock(),
+        session_svc=session_service,
+        room_svc=MagicMock(),
+        chat_svc=MagicMock(),
+        history_svc=MagicMock(),
+    )
+
+    websocket.close.assert_awaited_once_with(code=CLOSE_AUTH_EXPIRED)
+    session_service.get_revoke_generation.assert_not_awaited()
+
+
+async def test_authoritative_account_fence_uses_active_projection(monkeypatch):
+    repository = MagicMock()
+    repository.is_active = AsyncMock(return_value=True)
+    repository.find_by_id = AsyncMock(side_effect=AssertionError("full row must not load"))
+
+    class FakeUnitOfWork:
+        async def __aenter__(self):
+            return object()
+
+        async def __aexit__(self, exc_type, exc, tb):
+            return False
+
+    websocket = MagicMock()
+    websocket.app.container.uow.return_value = FakeUnitOfWork()
+    monkeypatch.setattr(ws_module, "UserRepository", lambda _session: repository)
+
+    assert await ws_module._check_user_active_authoritative(websocket, "USER_a") is True
+    repository.is_active.assert_awaited_once_with("USER_a")
+    repository.find_by_id.assert_not_awaited()
+
+
+async def test_authoritative_account_fence_fails_closed_on_db_error(monkeypatch):
+    repository = MagicMock()
+    repository.is_active = AsyncMock(side_effect=RuntimeError("db unavailable"))
+
+    class FakeUnitOfWork:
+        async def __aenter__(self):
+            return object()
+
+        async def __aexit__(self, exc_type, exc, tb):
+            return False
+
+    websocket = MagicMock()
+    websocket.app.container.uow.return_value = FakeUnitOfWork()
+    monkeypatch.setattr(ws_module, "UserRepository", lambda _session: repository)
+
+    assert await ws_module._check_user_active_authoritative(websocket, "USER_a") is False
 
 
 async def test_unread_recovery_is_registered_with_application_supervisor(monkeypatch):
@@ -49,6 +217,103 @@ async def test_unread_recovery_is_registered_with_application_supervisor(monkeyp
     assert supervisor.spawn.call_args.kwargs["name"] == "chat-unread-recover-U_lifecycle"
 
 
+async def test_unread_recovery_drops_result_for_account_made_inactive(monkeypatch):
+    websocket = MagicMock()
+    websocket.send_json = AsyncMock()
+    websocket.close = AsyncMock()
+    session = MagicMock()
+    websocket.app.container.uow.return_value.__aenter__ = AsyncMock(return_value=session)
+    websocket.app.container.uow.return_value.__aexit__ = AsyncMock(return_value=None)
+    monkeypatch.setattr(
+        ws_module,
+        "recover_unread_snapshot_for_user",
+        AsyncMock(return_value=({"CR_1": 1}, {"CR_1": 1}, {"CR_1": 0})),
+    )
+    lock_if_active = AsyncMock(return_value=False)
+    monkeypatch.setattr(ws_module.UserRepository, "lock_if_active", lock_if_active)
+
+    await ws_module._recover_unread_and_notify(websocket, "U_INACTIVE")
+
+    websocket.send_json.assert_not_awaited()
+    lock_if_active.assert_awaited_once_with("U_INACTIVE")
+
+
+async def test_unread_recovery_filters_rooms_without_active_membership(monkeypatch):
+    websocket = MagicMock()
+    websocket.send_json = AsyncMock()
+    websocket.close = AsyncMock()
+    uow = MagicMock()
+    uow.return_value.__aenter__ = AsyncMock(return_value=MagicMock())
+    uow.return_value.__aexit__ = AsyncMock(return_value=False)
+    websocket.app.container.uow = uow
+    monkeypatch.setattr(
+        ws_module,
+        "recover_unread_snapshot_for_user",
+        AsyncMock(return_value=({"CR_STALE": 3}, {"CR_STALE": 9}, {"CR_STALE": 4})),
+    )
+    monkeypatch.setattr(
+        ws_module.UserRepository, "lock_if_active", AsyncMock(return_value=True),
+    )
+    lock_rooms = AsyncMock(return_value=set())
+    monkeypatch.setattr(
+        ws_module.ChatRoomMemberRepository,
+        "lock_active_room_ids_for_user",
+        lock_rooms,
+    )
+
+    await ws_module._recover_unread_and_notify(websocket, "U_ACTIVE")
+
+    websocket.send_json.assert_not_awaited()
+    websocket.close.assert_not_awaited()
+    lock_rooms.assert_awaited_once_with("U_ACTIVE", {"CR_STALE"})
+
+
+async def test_initial_unread_snapshot_is_dropped_when_account_turns_inactive(monkeypatch):
+    websocket = MagicMock()
+    websocket.headers = {}
+    websocket.accept = AsyncMock()
+    websocket.send_json = AsyncMock()
+    websocket.close = AsyncMock()
+
+    session_service = MagicMock()
+    session_service.get_revoke_generation = AsyncMock(return_value=0)
+    session_service.create_session = AsyncMock(return_value="WS_1")
+    session_service.terminate_session = AsyncMock()
+    room_service = MagicMock()
+    room_service.list_user_room_ids = AsyncMock(return_value=[])
+    fanout = MagicMock()
+
+    monkeypatch.setattr(ws_module, "_is_allowed_origin", lambda _origin: True)
+    monkeypatch.setattr(ws_module, "_verify_jwt", lambda _websocket: ("U_A", "jti"))
+    monkeypatch.setattr(ws_module, "_check_user_active", AsyncMock(return_value=True))
+    retain = AsyncMock(return_value=True)
+    monkeypatch.setattr(ws_module, "_retain_session_if_account_active", retain)
+    lock_if_active = AsyncMock(return_value=False)
+    monkeypatch.setattr(ws_module.UserRepository, "lock_if_active", lock_if_active)
+    monkeypatch.setattr(
+        ws_module,
+        "get_unread_snapshot_if_recovered",
+        AsyncMock(return_value=({"CR_1": 1}, {"CR_1": 1}, {"CR_1": 0})),
+    )
+    monkeypatch.setattr(
+        ws_module, "_receive_loop", AsyncMock(side_effect=WebSocketDisconnect(code=1000)),
+    )
+
+    await ws_module.ws_chat(
+        websocket,
+        fanout=fanout,
+        session_svc=session_service,
+        room_svc=room_service,
+        chat_svc=MagicMock(),
+        history_svc=MagicMock(),
+    )
+
+    payloads = [call.args[0] for call in websocket.send_json.await_args_list]
+    assert all(payload.get("type") != "unread_synced" for payload in payloads)
+    assert retain.await_count == 1
+    lock_if_active.assert_awaited_once_with("U_A")
+
+
 async def test_heartbeat_loop_closes_revoked_idle_socket(monkeypatch):
     websocket = MagicMock()
     websocket.close = AsyncMock()
@@ -57,10 +322,108 @@ async def test_heartbeat_loop_closes_revoked_idle_socket(monkeypatch):
     monkeypatch.setattr(
         "app.domain.chat.router.ws.asyncio.sleep", AsyncMock(),
     )
+    monkeypatch.setattr(
+        "app.domain.chat.router.ws._check_user_active_authoritative",
+        AsyncMock(return_value=True),
+    )
 
     await _heartbeat_loop(websocket, session_service, "WS_revoked", "U_A")
 
     websocket.close.assert_awaited_once_with(code=CLOSE_AUTH_EXPIRED)
+
+
+async def test_heartbeat_loop_closes_inactive_account_before_redis_refresh(monkeypatch):
+    websocket = MagicMock()
+    websocket.close = AsyncMock()
+    session_service = MagicMock()
+    session_service.heartbeat = AsyncMock(return_value=False)
+    monkeypatch.setattr("app.domain.chat.router.ws.asyncio.sleep", AsyncMock())
+    monkeypatch.setattr(
+        "app.domain.chat.router.ws._check_user_active_authoritative",
+        AsyncMock(return_value=False),
+    )
+
+    await _heartbeat_loop(websocket, session_service, "WS_stale", "U_INACTIVE")
+
+    websocket.close.assert_awaited_once_with(code=CLOSE_AUTH_EXPIRED)
+    session_service.heartbeat.assert_not_awaited()
+
+
+async def test_receive_loop_closes_inactive_account_before_dispatch(monkeypatch):
+    websocket = MagicMock()
+    websocket.receive_json = AsyncMock(
+        side_effect=[{}, WebSocketDisconnect(code=1000)],
+    )
+    websocket.send_json = AsyncMock()
+    websocket.close = AsyncMock()
+    session_service = MagicMock()
+    session_service.session_exists = AsyncMock(return_value=True)
+    monkeypatch.setattr(
+        "app.domain.chat.router.ws._check_user_active_authoritative",
+        AsyncMock(return_value=False),
+    )
+
+    await ws_module._receive_loop(
+        websocket=websocket,
+        session_id="WS_stale",
+        user_id="U_INACTIVE",
+        session_svc=session_service,
+        chat_svc=MagicMock(),
+        room_svc=MagicMock(),
+    )
+
+    websocket.close.assert_awaited_once_with(code=CLOSE_AUTH_EXPIRED)
+    session_service.session_exists.assert_not_awaited()
+
+
+async def test_new_session_is_terminated_when_account_changes_before_setup(monkeypatch):
+    websocket = MagicMock()
+    websocket.close = AsyncMock()
+    session_service = MagicMock()
+    session_service.terminate_session = AsyncMock()
+    monkeypatch.setattr(
+        ws_module,
+        "_check_user_active_authoritative",
+        AsyncMock(return_value=False),
+    )
+
+    retained = await ws_module._retain_session_if_account_active(
+        websocket, session_service, "WS_raced", "U_INACTIVE",
+    )
+
+    assert retained is False
+    session_service.terminate_session.assert_awaited_once_with(
+        "WS_raced", "U_INACTIVE",
+    )
+    websocket.close.assert_awaited_once_with(code=ws_module.CLOSE_WITHDRAWAL_PENDING)
+
+
+async def test_ws_positive_cache_cannot_bypass_inactive_status(monkeypatch):
+    class FakeUow:
+        async def __aenter__(self):
+            return object()
+
+        async def __aexit__(self, *_args):
+            return False
+
+    websocket = MagicMock()
+    websocket.app.container.uow = lambda: FakeUow()
+    cache = MagicMock()
+    cache.exists = AsyncMock(return_value=True)
+    cache.set_flag = AsyncMock()
+    repo = MagicMock()
+    repo.find_access_state = AsyncMock(
+        return_value=(ws_module.UserStatus.INACTIVE, True),
+    )
+    monkeypatch.setattr(
+        ws_module, "get_redis_cache_manager", lambda: cache, raising=False,
+    )
+    monkeypatch.setattr(ws_module, "UserRepository", lambda _session: repo)
+
+    assert await ws_module._check_user_active(websocket, "U_INACTIVE") is False
+    repo.find_access_state.assert_awaited_once_with("U_INACTIVE")
+    cache.exists.assert_not_awaited()
+    cache.set_flag.assert_not_awaited()
 
 
 def _make_ws(
@@ -171,6 +534,20 @@ class TestExtractJwt:
         assert _extract_jwt(ws) is None
 
 
+class TestExpectedPrincipal:
+    def test_extracts_expected_principal_without_echoing_it(self):
+        ws = _make_ws(subprotocols=[
+            SUBPROTOCOL_VERSION,
+            f"{SUBPROTOCOL_PRINCIPAL_PREFIX}USER_A",
+        ])
+
+        assert _extract_expected_principal(ws) == "USER_A"
+        assert _select_accept_subprotocol(ws) == SUBPROTOCOL_VERSION
+
+    def test_returns_none_when_principal_is_absent(self):
+        assert _extract_expected_principal(_make_ws()) is None
+
+
 class TestSelectAcceptSubprotocol:
     def test_echoes_krip_chat_v1_when_requested(self):
         ws = _make_ws(subprotocols=[SUBPROTOCOL_VERSION, f"{SUBPROTOCOL_AUTH_PREFIX}t"])
@@ -241,3 +618,29 @@ class TestVerifyJwt:
         result = _verify_jwt(ws)
 
         assert result == ("USER_app", "jti-app")
+
+
+async def test_unread_recovery_keeps_socket_on_transient_db_error(monkeypatch):
+    """DB 일시 장애는 '비활성' 판정이 아니다 — 전송만 skip하고 연결은 유지한다."""
+    websocket = MagicMock()
+    websocket.send_json = AsyncMock()
+    websocket.close = AsyncMock()
+    uow = MagicMock()
+    uow.return_value.__aenter__ = AsyncMock(return_value=MagicMock())
+    uow.return_value.__aexit__ = AsyncMock(return_value=False)
+    websocket.app.container.uow = uow
+    monkeypatch.setattr(
+        ws_module,
+        "recover_unread_snapshot_for_user",
+        AsyncMock(return_value=({"CR_1": 1}, {"CR_1": 1}, {"CR_1": 0})),
+    )
+    monkeypatch.setattr(
+        ws_module.UserRepository,
+        "lock_if_active",
+        AsyncMock(side_effect=RuntimeError("db down")),
+    )
+
+    await ws_module._recover_unread_and_notify(websocket, "U_ACTIVE")
+
+    websocket.close.assert_not_awaited()
+    websocket.send_json.assert_not_awaited()

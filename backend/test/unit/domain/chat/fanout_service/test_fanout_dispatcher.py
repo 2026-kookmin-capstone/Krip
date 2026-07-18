@@ -165,6 +165,38 @@ class TestStartFanoutDispatcher:
 
 
 @pytest.mark.unit
+async def test_non_object_envelope_is_dropped_without_stopping_dispatch_loop(
+    stub_pubsub_redis,
+):
+    from app.domain.chat.worker.fanout_dispatcher import _dispatch_loop
+
+    pubsub, _ = stub_pubsub_redis
+    messages = [
+        {"type": "message", "data": "[]"},
+        {"type": "message", "data": '{"op":"room"}'},
+    ]
+    stop_event = asyncio.Event()
+
+    async def get_message(**_kwargs):
+        return messages.pop(0) if messages else None
+
+    fanout = MagicMock(name="fanout-stub")
+    fanout.dispatch_envelope = AsyncMock()
+
+    async def dispatch(envelope):
+        if not isinstance(envelope, dict):
+            raise AttributeError("non-object envelope")
+        stop_event.set()
+
+    pubsub.get_message.side_effect = get_message
+    fanout.dispatch_envelope.side_effect = dispatch
+
+    await asyncio.wait_for(_dispatch_loop(pubsub, fanout, stop_event), timeout=1)
+
+    fanout.dispatch_envelope.assert_awaited_once_with({"op": "room"})
+
+
+@pytest.mark.unit
 class TestStopFanoutDispatcher:
     async def test_stop_unsubscribes_and_closes(self, stub_pubsub_redis):
         from app.domain.chat.worker.fanout_dispatcher import (

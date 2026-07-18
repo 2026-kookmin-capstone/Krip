@@ -83,6 +83,8 @@ class MessageBody(BaseModel):
         description="type 별 다형. text=str / image·file=dict / system=SystemContent / 삭제=null",
     )
     created_at: datetime
+    edited_at: Optional[datetime] = Field(...)
+    deleted_at: Optional[datetime] = Field(...)
 
 
 class MessageNewEvent(BaseModel):
@@ -104,8 +106,10 @@ class AuthExpiredEvent(BaseModel):
 
 
 class ServerErrorEvent(BaseModel):
-    """일시적 서버 에러 — 클라는 backoff 후 재접속(1012)."""
+    """요청 처리 실패 — send는 client_msg_id/retryable로 재시도 정책을 상관시킨다."""
     type: Literal["server_error"]
+    client_msg_id: Optional[str] = Field(None, description="실패한 send 요청 ID")
+    retryable: bool = Field(False, description="동일 client_msg_id 재시도 가능 여부")
     reason: Optional[str] = Field(None, description="디버깅용 사유 (내부 로그와 매칭)")
 
 
@@ -161,6 +165,7 @@ class ReadAckEvent(BaseModel):
     """read op 처리 성공 — 발신 세션 직송."""
     type: Literal["read_ack"]
     room_id: str = Field(..., description="읽음 처리된 방 ID")
+    requested_up_to_server_seq: int = Field(..., description="ACK 대상 read 요청의 server seq")
     up_to_server_seq: int = Field(..., description="최종 반영된 last_read_message_server_seq")
 
 

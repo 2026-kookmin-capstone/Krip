@@ -31,6 +31,7 @@ async def test_handle_read_sends_ack_from_committed_service_result():
     websocket.send_json.assert_awaited_once_with({
         "type": "read_ack",
         "room_id": "CR_1",
+        "requested_up_to_server_seq": 7,
         "up_to_server_seq": 9,
     })
 

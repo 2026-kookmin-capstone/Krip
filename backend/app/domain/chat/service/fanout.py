@@ -18,7 +18,12 @@ WS 객체 duck typing 전제 — 핸들러가 `session_id` / `user_id` / `subscr
 import asyncio
 import json
 from collections import defaultdict
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
+from datetime import datetime, timezone
 
+from sqlalchemy import text
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 from starlette.websockets import WebSocket, WebSocketDisconnect
 
 from app.config.setting import settings
@@ -31,6 +36,10 @@ from app.core.instrumentation import (
 )
 from app.core.logger import get_logger
 from app.core.redis import get_redis_client
+from app.database.session import mongodb
+from app.domain.auth.repository.user import UserRepository
+from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
+from app.domain.chat.repository.chat_message import ChatMessageRepository
 from app.domain.chat.worker.node_registry import list_active_nodes
 
 
@@ -50,6 +59,164 @@ _CLOSE_UNRESPONSIVE = 1011
 # head-of-line 블로킹 차단. 초과 소켓은 dead 로 간주해 정리한다.
 _SEND_TIMEOUT_SECONDS = 5
 
+# 같은 방의 local acceptance와 bounded socket write를 직렬화하는 fixed-size stripe.
+_ROOM_DELIVERY_LOCK_STRIPES = 256
+
+# subscription reconcile 실패(fail-closed unsubscribe) 후 재시도 지연. 소진되면
+# 다음 membership 이벤트 또는 WS 재연결이 최종 복구 경로다.
+_RECONCILE_RETRY_DELAYS = (1.0, 5.0, 15.0)
+
+
+def _normalize_instant(value: object) -> datetime | None:
+    if isinstance(value, str):
+        try:
+            value = datetime.fromisoformat(value)
+        except ValueError:
+            return None
+    if not isinstance(value, datetime):
+        return None
+    if value.tzinfo is None:
+        value = value.replace(tzinfo=timezone.utc)
+    value = value.astimezone(timezone.utc)
+    return value.replace(microsecond=(value.microsecond // 1000) * 1000)
+
+
+def _same_instant(left: object, right: object) -> bool:
+    left_at = _normalize_instant(left)
+    right_at = _normalize_instant(right)
+    return left_at is not None and left_at == right_at
+
+
+def _iso_or_none(value: object) -> str | None:
+    instant = _normalize_instant(value)
+    return instant.isoformat() if instant is not None else None
+
+
+def _message_id_for_delivery(payload: dict) -> str | None:
+    event_type = payload.get("type")
+    if event_type not in {"message.new", "message.updated", "message.deleted"}:
+        return None
+    message = payload.get("message") if event_type == "message.new" else payload
+    if not isinstance(message, dict):
+        return None
+    message_id = message.get("message_id")
+    return message_id if isinstance(message_id, str) else None
+
+
+class FanoutAuthorizationService:
+    """로컬 전달 직전에 authoritative SQL 수신 권한을 배치 확인한다."""
+
+    def __init__(self, session_factory: async_sessionmaker[AsyncSession]):
+        self._session_factory = session_factory
+
+    @asynccontextmanager
+    async def lock_room_delivery(
+        self, room_id: str, user_ids: set[str], *, message_id: str | None = None,
+    ) -> AsyncIterator[set[str]]:
+        """메시지 mutation 및 수신 권한 lock을 socket 전송 종료까지 유지한다."""
+        async with self._session_factory() as session:
+            if message_id is not None:
+                await session.execute(
+                    text("SELECT pg_advisory_xact_lock(hashtextextended(:lock_name, 0))"),
+                    {"lock_name": f"chat-message-mutation:{message_id}"},
+                )
+            yield await ChatRoomMemberRepository(
+                session,
+            ).lock_active_receiving_user_ids(room_id, user_ids)
+
+    @asynccontextmanager
+    async def lock_user_delivery(self, user_id: str) -> AsyncIterator[bool]:
+        """계정 status SHARE lock을 실제 socket 전송 종료까지 유지한다."""
+        async with self._session_factory() as session:
+            yield await UserRepository(session).lock_if_active(user_id)
+
+    @asynccontextmanager
+    async def lock_room_subscription(
+        self, room_id: str, user_id: str,
+    ) -> AsyncIterator[bool]:
+        """inactive membership도 잠가 delayed envelope과 reinvite를 직렬화한다."""
+        async with self._session_factory() as session:
+            yield await ChatRoomMemberRepository(session).lock_receiving_state(
+                room_id, user_id,
+            )
+
+    async def prepare_current_message_event(
+        self, payload: dict, *, room_id: str | None = None,
+    ) -> bool:
+        """Mongo durable revision과 일치하는 message event만 허용한다."""
+        event_type = payload.get("type")
+        if event_type not in {"message.new", "message.updated", "message.deleted"}:
+            return True
+
+        message = payload.get("message") if event_type == "message.new" else payload
+        if not isinstance(message, dict):
+            return False
+        message_id = message.get("message_id")
+        if not isinstance(message_id, str):
+            return False
+
+        database = mongodb.database
+        if database is None:
+            return False
+        doc = await ChatMessageRepository(database).find_by_id(message_id)
+        if doc is None:
+            return False
+        if room_id is not None and str(doc.get("chat_room_id")) != room_id:
+            return False
+
+        if event_type == "message.new":
+            if not _same_instant(doc.get("created_at"), message.get("created_at")):
+                return False
+            canonical_message = {
+                "message_id": message_id,
+                "chat_room_id": str(doc.get("chat_room_id")),
+                "server_seq": doc.get("server_seq", message.get("server_seq")),
+                "sender_id": doc.get("sender_id"),
+                "type": getattr(doc.get("type"), "value", doc.get("type")),
+                "content": None if doc.get("deleted_at") is not None else doc.get("content"),
+                "created_at": _iso_or_none(doc.get("created_at")),
+                "edited_at": _iso_or_none(doc.get("edited_at")),
+                "deleted_at": _iso_or_none(doc.get("deleted_at")),
+            }
+            sender_session_id = payload.get("sender_session_id")
+            payload.clear()
+            payload.update(
+                type="message.new",
+                sender_session_id=(sender_session_id if isinstance(sender_session_id, str) else ""),
+                message=canonical_message,
+            )
+            return True
+        if event_type == "message.updated":
+            is_current = (
+                doc.get("deleted_at") is None
+                and doc.get("content") == payload.get("content")
+                and _same_instant(doc.get("edited_at"), payload.get("edited_at"))
+            )
+            if not is_current:
+                return False
+            sender_session_id = payload.get("sender_session_id")
+            payload.clear()
+            payload.update(
+                type="message.updated",
+                sender_session_id=(sender_session_id if isinstance(sender_session_id, str) else ""),
+                message_id=message_id,
+                content=doc.get("content"),
+                edited_at=_iso_or_none(doc.get("edited_at")),
+            )
+            return True
+
+        if not _same_instant(doc.get("deleted_at"), payload.get("deleted_at")):
+            return False
+        sender_session_id = payload.get("sender_session_id")
+        payload.clear()
+        payload.update(
+            type="message.deleted",
+            sender_session_id=(sender_session_id if isinstance(sender_session_id, str) else ""),
+            message_id=message_id,
+            deleted_at=_iso_or_none(doc.get("deleted_at")),
+        )
+        return True
+
 
 class FanoutService:
     """fan-out 인터페이스 — 모드별 분기는 본 클래스 내부에 격리.
@@ -58,16 +225,22 @@ class FanoutService:
     envelope 을 받아 `_local_*` 로 재진입할 때 사용.
     """
 
-    def __init__(self):
+    def __init__(self, authorization_service: FanoutAuthorizationService):
         if settings.FANOUT_MODE not in _SUPPORTED_MODES:
             raise NotImplementedError(
                 f"FANOUT_MODE={settings.FANOUT_MODE!r} 미지원. "
                 f"지원 모드: {_SUPPORTED_MODES}",
             )
         self._mode = settings.FANOUT_MODE
+        self._authorization = authorization_service
         self._room_subs: dict[str, set[WebSocket]] = defaultdict(set)
         self._user_subs: dict[str, set[WebSocket]] = defaultdict(set)
         self._local_ws_by_session: dict[str, WebSocket] = {}
+        self._latest_room_message_seq: dict[str, int] = {}
+        self._room_delivery_locks = tuple(
+            asyncio.Lock() for _ in range(_ROOM_DELIVERY_LOCK_STRIPES)
+        )
+        self._pending_reconcile_retries: set[tuple[str, str]] = set()
 
     # WS 가 이 노드에 붙어있는 것이라 cross-node 전파 불필요.
 
@@ -105,6 +278,7 @@ class FanoutService:
                 self._room_subs[room_id].discard(ws)
                 if not self._room_subs[room_id]:
                     del self._room_subs[room_id]
+                    self._cleanup_room_state_if_empty(room_id)
 
     @staticmethod
     def _spawn_close(ws: WebSocket, code: int = _CLOSE_UNRESPONSIVE) -> None:
@@ -124,14 +298,23 @@ class FanoutService:
             name=f"chat-ws-close-{getattr(ws, 'session_id', 'unknown')}",
         )
 
-    async def subscribe_user_to_room(self, user_id: str, room_id: str) -> None:
+    async def subscribe_user_to_room(
+        self, user_id: str, room_id: str, *, authorization_locked: bool = False,
+    ) -> None:
         """유저의 모든 세션 (전 노드) 을 방 구독에 추가. invite / 방 생성 시 호출.
 
         호출 전에 RDB `chat_room_member` 와 Redis `room_members` 캐시가 먼저 갱신되어야 한다.
         오프라인 유저는 no-op. Idempotent.
+
+        `authorization_locked=True`는 caller가 ACTIVE account/membership generation
+        locks를 유지하는 동안만 사용한다. in-process에서 별도 SQL transaction을 열지 않아
+        connection-pool circular wait를 피한다.
         """
         if self._mode == "in_process":
-            self._local_subscribe_user_to_room(user_id, room_id)
+            if authorization_locked:
+                self._local_subscribe_user_to_room(user_id, room_id)
+            else:
+                await self._reconcile_room_subscription(user_id, room_id)
             return
         await self._publish_broadcast(
             {"op": "subscribe", "user_id": user_id, "room_id": room_id},
@@ -144,8 +327,8 @@ class FanoutService:
         1) leak 차단 — send_system_message 가 실패해도 이미 구독 해제됨
         2) UX — 퇴장 당사자가 자기 퇴장 시스템 메시지를 받지 않음
         """
+        await self._reconcile_room_subscription(user_id, room_id)
         if self._mode == "in_process":
-            self._local_unsubscribe_user_from_room(user_id, room_id)
             return
         await self._publish_broadcast(
             {"op": "unsubscribe", "user_id": user_id, "room_id": room_id},
@@ -167,6 +350,28 @@ class FanoutService:
             return
         await self._publish_broadcast(
             {"op": "user", "user_id": user_id, "payload": payload},
+        )
+
+    async def fan_out_member_removed(self, user_id: str, room_id: str) -> None:
+        """membership-revocation control delivery. 커밋 후 room lock 없이 호출한다 —
+        전달 직전 membership 재확인(checked)으로 stale 이벤트를 걸러낸다.
+        """
+        if self._mode == "in_process":
+            await self._local_deliver_member_removed(user_id, room_id)
+            return
+        await self._publish_broadcast(
+            {"op": "member_removed", "user_id": user_id, "room_id": room_id},
+        )
+
+    async def fan_out_member_joined(self, user_id: str, room_id: str) -> None:
+        """membership-grant control delivery. 커밋 후 room lock 없이 호출한다 —
+        전달 직전 membership 재확인(checked)으로 stale 이벤트를 걸러낸다.
+        """
+        if self._mode == "in_process":
+            await self._local_deliver_member_joined(user_id, room_id)
+            return
+        await self._publish_broadcast(
+            {"op": "member_joined", "user_id": user_id, "room_id": room_id},
         )
 
     async def fan_out_to_session(self, session_id: str, payload: dict) -> None:
@@ -201,16 +406,24 @@ class FanoutService:
                         await self._local_deliver_to_user(
                             envelope["user_id"], envelope["payload"],
                         )
+                    elif op == "member_removed":
+                        await self._local_deliver_member_removed(
+                            envelope["user_id"], envelope["room_id"],
+                        )
+                    elif op == "member_joined":
+                        await self._local_deliver_member_joined(
+                            envelope["user_id"], envelope["room_id"],
+                        )
                     elif op == "session":
                         await self._local_deliver_to_session(
                             envelope["session_id"], envelope["payload"],
                         )
                     elif op == "subscribe":
-                        self._local_subscribe_user_to_room(
+                        await self._reconcile_room_subscription(
                             envelope["user_id"], envelope["room_id"],
                         )
                     elif op == "unsubscribe":
-                        self._local_unsubscribe_user_from_room(
+                        await self._reconcile_room_subscription(
                             envelope["user_id"], envelope["room_id"],
                         )
                     else:
@@ -222,6 +435,69 @@ class FanoutService:
         finally:
             request_id_var.reset(rid_token)
             traceparent_var.reset(tp_token)
+
+    async def _reconcile_room_subscription(
+        self, user_id: str, room_id: str, *, attempt: int = 0,
+    ) -> None:
+        """현재 DB membership만 반영해 delayed subscribe/unsubscribe를 무해화한다.
+
+        조회 실패 시 fail-closed unsubscribe 후 bounded retry를 예약한다 — 일시적 DB
+        장애가 온라인 멤버의 live 수신을 재접속 전까지 끊어놓지 않도록.
+        """
+        try:
+            async with self._authorization.lock_room_subscription(
+                room_id, user_id,
+            ) as should_subscribe:
+                if should_subscribe:
+                    self._local_subscribe_user_to_room(user_id, room_id)
+                else:
+                    self._local_unsubscribe_user_from_room(user_id, room_id)
+        except Exception as e:
+            logger.warning(
+                "room subscription 상태 조회 실패 (fail-closed unsubscribe): "
+                "room_id={}, user_id={}, attempt={}, err={}",
+                room_id, user_id, attempt, type(e).__name__,
+            )
+            # fail-closed는 최초 이벤트에서만 적용한다. retry 실패는 새 authorization
+            # 이벤트가 아니므로, 그 사이 정당하게(authorization_locked/성공 reconcile)
+            # 재구독된 상태를 철회하지 않는다.
+            if attempt == 0:
+                self._local_unsubscribe_user_from_room(user_id, room_id)
+            self._schedule_reconcile_retry(user_id, room_id, failed_attempt=attempt)
+
+    def _schedule_reconcile_retry(
+        self, user_id: str, room_id: str, *, failed_attempt: int,
+    ) -> None:
+        """(user, room) 당 1개의 pending retry만 허용해 재시도 폭주를 막는다."""
+        if failed_attempt >= len(_RECONCILE_RETRY_DELAYS):
+            logger.error(
+                "room subscription reconcile 재시도 소진 — WS 재연결 전까지 "
+                "live 수신 누락 가능: room_id={}, user_id={}",
+                room_id, user_id,
+            )
+            return
+        key = (user_id, room_id)
+        if key in self._pending_reconcile_retries:
+            return
+        self._pending_reconcile_retries.add(key)
+
+        async def _retry() -> None:
+            try:
+                await asyncio.sleep(_RECONCILE_RETRY_DELAYS[failed_attempt])
+            finally:
+                self._pending_reconcile_retries.discard(key)
+            if not self._user_subs.get(user_id):
+                return  # 이 노드에 세션이 없으면 복구할 구독도 없다.
+            await self._reconcile_room_subscription(
+                user_id, room_id, attempt=failed_attempt + 1,
+            )
+
+        task = background_tasks.spawn(
+            _retry(),
+            name=f"chat-subscription-reconcile-{room_id}-{user_id}",
+        )
+        if task is None:  # shutdown 중 등록 거부 — pending 표시 원복
+            self._pending_reconcile_retries.discard(key)
 
     def _local_subscribe_user_to_room(self, user_id: str, room_id: str) -> None:
         """이 노드의 user_id 세션들을 `_room_subs[room_id]` 에 추가. dead WS 는 가드로 skip."""
@@ -247,18 +523,107 @@ class FanoutService:
 
         if room_set is not None and not room_set:
             del self._room_subs[room_id]
+            self._cleanup_room_state_if_empty(room_id)
+
+    def _cleanup_room_state_if_empty(self, room_id: str) -> None:
+        if room_id in self._room_subs:
+            return
+        self._latest_room_message_seq.pop(room_id, None)
 
     async def _local_deliver_to_room(self, room_id: str, payload: dict) -> None:
+        lock = self._room_delivery_locks[hash(room_id) % _ROOM_DELIVERY_LOCK_STRIPES]
+        async with lock:
+            await self._local_deliver_to_room_locked(room_id, payload)
+
+    async def _local_deliver_to_room_locked(self, room_id: str, payload: dict) -> None:
         sender_sid = payload.get("sender_session_id")
-        recipients = [
+        candidates = [
             ws for ws in self._room_subs.get(room_id, ())
             if ws.session_id != sender_sid
         ]
-        await self._broadcast(recipients, payload)
+        if not candidates:
+            return
+        async with self._authorization.lock_room_delivery(
+            room_id,
+            {ws.user_id for ws in candidates},
+            message_id=_message_id_for_delivery(payload),
+        ) as active_user_ids:
+            if not await self._accept_room_payload(room_id, payload):
+                return
+            recipients = [ws for ws in candidates if ws.user_id in active_user_ids]
+            await self._broadcast(recipients, payload)
+
+    async def _accept_room_payload(self, room_id: str, payload: dict) -> bool:
+        """durable current event만 허용하고 new-message high watermark를 관찰한다."""
+        try:
+            if not await self._authorization.prepare_current_message_event(
+                payload, room_id=room_id,
+            ):
+                return False
+        except Exception as e:
+            logger.warning(
+                "message fanout revision 조회 실패 (fail-closed): room_id={}, err={}",
+                room_id, type(e).__name__,
+            )
+            return False
+
+        event_type = payload.get("type")
+        if event_type == "message.new":
+            message = payload.get("message")
+            if isinstance(message, dict):
+                server_seq = message.get("server_seq")
+                if isinstance(server_seq, int):
+                    latest_seq = self._latest_room_message_seq.get(room_id, 0)
+                    if server_seq > latest_seq:
+                        self._latest_room_message_seq[room_id] = server_seq
+        return True
 
     async def _local_deliver_to_user(self, user_id: str, payload: dict) -> None:
         recipients = list(self._user_subs.get(user_id, ()))
-        await self._broadcast(recipients, payload)
+        if not recipients:
+            return
+        async with self._authorization.lock_user_delivery(user_id) as is_active:
+            if not is_active:
+                for ws in recipients:
+                    self.unregister_ws(ws)
+                    try:
+                        await ws.close(code=_CLOSE_SESSION_REVOKED)
+                    except Exception:
+                        pass
+                return
+            await self._broadcast(recipients, payload)
+
+    async def _local_deliver_member_removed(self, user_id: str, room_id: str) -> None:
+        async with self._authorization.lock_room_subscription(
+            room_id, user_id,
+        ) as is_active_member:
+            if is_active_member:
+                return
+            await self._local_deliver_member_removed_unchecked(user_id, room_id)
+
+    async def _local_deliver_member_removed_unchecked(
+        self, user_id: str, room_id: str,
+    ) -> None:
+        await self._broadcast(
+            list(self._user_subs.get(user_id, ())),
+            {"type": "room_left", "room_id": room_id},
+        )
+
+    async def _local_deliver_member_joined(self, user_id: str, room_id: str) -> None:
+        async with self._authorization.lock_room_subscription(
+            room_id, user_id,
+        ) as is_active_member:
+            if not is_active_member:
+                return
+            await self._local_deliver_member_joined_unchecked(user_id, room_id)
+
+    async def _local_deliver_member_joined_unchecked(
+        self, user_id: str, room_id: str,
+    ) -> None:
+        await self._broadcast(
+            list(self._user_subs.get(user_id, ())),
+            {"type": "room_joined", "room_id": room_id},
+        )
 
     async def _local_deliver_to_session(self, session_id: str, payload: dict) -> None:
         ws = self._local_ws_by_session.get(session_id)
@@ -332,7 +697,7 @@ class FanoutService:
             return_exceptions=True,
         )
         for ws, result in zip(recipients, results):
-            if not isinstance(result, Exception):
+            if not isinstance(result, BaseException):
                 continue
             logger.warning(
                 "fan-out send 실패: session_id={}, err={!r}",
@@ -340,7 +705,12 @@ class FanoutService:
                 result,
             )
             # 타임아웃(백프레셔로 stuck)도 dead 로 간주 — 느린 소켓이 노드 전체 전달을 막지 않게.
-            if isinstance(result, (RuntimeError, WebSocketDisconnect, asyncio.TimeoutError)):
+            if isinstance(result, (
+                RuntimeError,
+                WebSocketDisconnect,
+                asyncio.TimeoutError,
+                asyncio.CancelledError,
+            )):
                 self.unregister_ws(ws)
                 # unregister 만 하면 "수신만 끊긴 좀비"(소켓은 살아 세션 TTL 계속 갱신)가 된다.
                 # 소켓을 닫아 재접속을 유도 — 닫기는 백그라운드로 fan-out 을 막지 않게.
