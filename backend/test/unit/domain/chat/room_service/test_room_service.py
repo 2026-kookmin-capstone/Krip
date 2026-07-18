@@ -135,17 +135,19 @@ class TestSideEffects:
 
         async def _save(room):
             room.chat_room_id = "CR_new"
+            chat_room_repo_mock.find_by_id.return_value = room
             return room
         chat_room_repo_mock.save.side_effect = _save
 
         await service.create_direct_room(me_id="U_A", peer_user_id="U_B")
 
-        assert fanout_mock.fan_out_to_user.await_count == 2
-        targets = {call.args[0] for call in fanout_mock.fan_out_to_user.call_args_list}
+        assert fanout_mock.fan_out_member_joined.await_count == 2
+        targets = {
+            call.args[0] for call in fanout_mock.fan_out_member_joined.call_args_list
+        }
         assert targets == {"U_A", "U_B"}
-        for call in fanout_mock.fan_out_to_user.call_args_list:
-            assert call.args[1]["type"] == "room_joined"
-            assert call.args[1]["room_id"] == "CR_new"
+        for call in fanout_mock.fan_out_member_joined.call_args_list:
+            assert call.args[1] == "CR_new"
 
     async def test_new_room_sadd_members_to_redis(
         self, service, user_repo_mock, chat_room_repo_mock, chat_member_repo_mock,
@@ -156,6 +158,7 @@ class TestSideEffects:
 
         async def _save(room):
             room.chat_room_id = "CR_new"
+            chat_room_repo_mock.find_by_id.return_value = room
             return room
         chat_room_repo_mock.save.side_effect = _save
 

@@ -30,6 +30,8 @@ def _build(content):
         type="system",
         content=content,
         created_at=NOW,
+        edited_at=None,
+        deleted_at=None,
     )
 
 
@@ -73,6 +75,12 @@ class TestLastMessagePreviewResponseContent:
         dumped = resp.model_dump()
         assert isinstance(dumped["content"], dict)
         assert dumped["content"] == payload
+
+    def test_revision_fields_are_required_but_nullable_in_openapi(self):
+        schema = LastMessagePreviewResponse.model_json_schema()
+        assert {"edited_at", "deleted_at"} <= set(schema["required"])
+        assert _build(None).edited_at is None
+        assert _build(None).deleted_at is None
 
 
 @pytest.mark.unit

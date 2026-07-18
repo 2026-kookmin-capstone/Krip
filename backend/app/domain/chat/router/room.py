@@ -284,6 +284,8 @@ def _to_room_response(dto) -> ChatRoomResponse:
             type=dto.last_message.type,
             content=dto.last_message.content,
             created_at=dto.last_message.created_at,
+            edited_at=dto.last_message.edited_at,
+            deleted_at=dto.last_message.deleted_at,
         )
         if dto.last_message is not None else None
     )

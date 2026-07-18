@@ -22,6 +22,8 @@ class LastMessagePreviewData:
     type: str
     content: Any
     created_at: datetime
+    edited_at: Optional[datetime] = None
+    deleted_at: Optional[datetime] = None
 
 
 @dataclass

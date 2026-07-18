@@ -3,6 +3,7 @@
 공통 컨벤션은 `test_room_service.py` / `conftest.py` 참고 — 같은 fixture 재사용.
 여기서는 Phase 2 에서 추가된 4 메서드의 성공/실패 분기만 다룬다.
 """
+from datetime import datetime, timezone
 from types import SimpleNamespace
 
 import pytest
@@ -12,6 +13,9 @@ from app.domain.chat.model.chat_room import ChatRoomType
 from app.domain.chat.service.exception import ChatRoomNotFoundError
 from app.domain.chat.service.room import RoomService
 from test.unit.domain.chat.room_service.model_factory import ChatRoomFactory
+
+
+GENERATION = datetime(2026, 1, 1, tzinfo=timezone.utc)
 
 
 @pytest.mark.unit
@@ -52,6 +56,7 @@ class TestCreateGroupRoom:
 
         async def _save(room):
             room.chat_room_id = "CR_group"
+            chat_room_repo_mock.find_by_id.return_value = room
             return room
         chat_room_repo_mock.save.side_effect = _save
 
@@ -69,12 +74,13 @@ class TestCreateGroupRoom:
         members = chat_member_repo_mock.save_all.call_args.args[0]
         assert {m.user_id for m in members} == {"U_A", "U_B", "U_C"}
 
-        assert fanout_mock.fan_out_to_user.await_count == 3
-        assert {c.args[0] for c in fanout_mock.fan_out_to_user.call_args_list} == {
+        assert fanout_mock.fan_out_member_joined.await_count == 3
+        assert {c.args[0] for c in fanout_mock.fan_out_member_joined.call_args_list} == {
             "U_A", "U_B", "U_C",
         }
-        for c in fanout_mock.fan_out_to_user.call_args_list:
-            assert c.args[1] == {"type": "room_joined", "room_id": "CR_group"}
+        assert {c.args[1] for c in fanout_mock.fan_out_member_joined.call_args_list} == {
+            "CR_group",
+        }
 
     async def test_redis_caches_members_and_unread(
         self, service, friendship_repo_mock, chat_room_repo_mock, redis_mock,
@@ -83,6 +89,7 @@ class TestCreateGroupRoom:
 
         async def _save(room):
             room.chat_room_id = "CR_new"
+            chat_room_repo_mock.find_by_id.return_value = room
             return room
         chat_room_repo_mock.save.side_effect = _save
 
@@ -171,7 +178,7 @@ class TestInviteMembers:
         chat_member_repo_mock.is_active_member.return_value = True
         chat_member_repo_mock.count_active_members.return_value = 100
         chat_member_repo_mock.find.return_value = SimpleNamespace(
-            is_left=False, last_read_message_server_seq=0,
+            is_left=False, last_read_message_server_seq=0, joined_at=GENERATION,
         )
         friendship_repo_mock.find_accepted_friend_ids_with.return_value = {"U_B"}
 
@@ -193,7 +200,7 @@ class TestInviteMembers:
         left = SimpleNamespace(
             is_left=True,
             last_read_message_server_seq=7,
-            joined_at=None,
+            joined_at=GENERATION,
             notification_muted=True,
         )
         chat_member_repo_mock.find.return_value = left
@@ -205,7 +212,7 @@ class TestInviteMembers:
             )
 
         assert left.is_left is True
-        assert left.joined_at is None
+        assert left.joined_at == GENERATION
         assert left.notification_muted is True
 
     async def test_room_not_found_raises(
@@ -311,7 +318,7 @@ class TestInviteMembers:
             user_id="U_B",
             is_left=True,
             last_read_message_server_seq=10,
-            joined_at=None,
+            joined_at=GENERATION,
             notification_muted=True,
         )
         chat_member_repo_mock.find.return_value = existing
@@ -324,11 +331,29 @@ class TestInviteMembers:
         assert invited == ["U_B"]
         assert existing.is_left is False
         assert existing.last_read_message_server_seq == 10
-        assert existing.joined_at is not None
+        assert existing.joined_at > GENERATION
         # 재가입 시 mute 는 NULL 로 리셋 — last_read 와 다른 정책 (docstring 참조).
         assert existing.notification_muted is None
         p = redis_mock._pipes[-1]
         p.hset.assert_any_call(unread_key("U_B"), "CR_G", 0)
+
+    async def test_delayed_invite_side_effect_is_ignored_after_leave(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+        redis_mock, fanout_mock,
+    ):
+        chat_room_repo_mock.find_by_id_for_update.return_value = ChatRoomFactory.create(
+            chat_room_id="CR_G", type_=ChatRoomType.GROUP,
+        )
+        chat_member_repo_mock.lock_active_receiving_user_ids.return_value = set()
+        chat_member_repo_mock.lock_active_receiving_user_ids.side_effect = None
+
+        await service._emit_invite_side_effects(
+            "CR_G", invited=["U_B"], new_members=["U_B"], rejoined=[],
+        )
+
+        fanout_mock.fan_out_member_joined.assert_not_awaited()
+        fanout_mock.subscribe_user_to_room.assert_not_awaited()
+        assert not redis_mock._pipes
 
 
 @pytest.mark.unit
@@ -376,7 +401,9 @@ class TestLeaveRoom:
             chat_room_id="CR_G", type_=ChatRoomType.GROUP,
         )
         chat_room_repo_mock.find_by_id.return_value = room
-        member = SimpleNamespace(is_left=False, last_read_message_server_seq=5)
+        member = SimpleNamespace(
+            is_left=False, last_read_message_server_seq=5, joined_at=GENERATION,
+        )
         chat_member_repo_mock.find.return_value = member
 
         await service.leave_room(me_id="U_A", room_id="CR_G")
@@ -389,10 +416,22 @@ class TestLeaveRoom:
         p.hdel.assert_called_once()
         p.execute.assert_awaited_once()
 
-        fanout_mock.fan_out_to_user.assert_awaited_once()
-        call = fanout_mock.fan_out_to_user.call_args
-        assert call.args[0] == "U_A"
-        assert call.args[1] == {"type": "room_left", "room_id": "CR_G"}
+        fanout_mock.fan_out_member_removed.assert_awaited_once_with("U_A", "CR_G")
+
+    async def test_delayed_leave_side_effect_is_ignored_after_reinvite(
+        self, service, chat_room_repo_mock, chat_member_repo_mock,
+        redis_mock, fanout_mock,
+    ):
+        chat_room_repo_mock.find_by_id_for_update.return_value = ChatRoomFactory.create(
+            chat_room_id="CR_G", type_=ChatRoomType.GROUP, creator_id="U_owner",
+        )
+        chat_member_repo_mock.find.return_value = SimpleNamespace(is_left=False)
+
+        await service._emit_member_removed("CR_G", "U_A")
+
+        fanout_mock.unsubscribe_user_from_room.assert_awaited_once_with("U_A", "CR_G")
+        fanout_mock.fan_out_member_removed.assert_not_awaited()
+        assert not redis_mock._pipes
 
 
 @pytest.mark.unit
@@ -461,7 +500,9 @@ class TestKickMember:
             chat_room_id="CR_G", type_=ChatRoomType.GROUP, creator_id="U_A",
         )
         chat_member_repo_mock.is_active_member.return_value = True
-        target = SimpleNamespace(is_left=False, last_read_message_server_seq=0)
+        target = SimpleNamespace(
+            is_left=False, last_read_message_server_seq=0, joined_at=GENERATION,
+        )
         chat_member_repo_mock.find.return_value = target
 
         await service.kick_member(
@@ -472,10 +513,7 @@ class TestKickMember:
         p = redis_mock._pipes[-1]
         p.srem.assert_called_once()
         p.hdel.assert_called_once()
-        fanout_mock.fan_out_to_user.assert_awaited_once()
-        call = fanout_mock.fan_out_to_user.call_args
-        assert call.args[0] == "U_B"
-        assert call.args[1] == {"type": "room_left", "room_id": "CR_G"}
+        fanout_mock.fan_out_member_removed.assert_awaited_once_with("U_B", "CR_G")
 
 
 @pytest.mark.unit
@@ -554,7 +592,7 @@ class TestSystemMessageEmission:
         chat_member_repo_mock.is_active_member.return_value = True
         friendship_repo_mock.find_accepted_friend_ids_with.return_value = {"U_B"}
         chat_member_repo_mock.find.return_value = SimpleNamespace(
-            is_left=False, last_read_message_server_seq=0,
+            is_left=False, last_read_message_server_seq=0, joined_at=GENERATION,
         )
 
         await service.invite_members(
@@ -570,7 +608,7 @@ class TestSystemMessageEmission:
             chat_room_id="CR_G", type_=ChatRoomType.GROUP,
         )
         chat_member_repo_mock.find.return_value = SimpleNamespace(
-            is_left=False, last_read_message_server_seq=0,
+            is_left=False, last_read_message_server_seq=0, joined_at=GENERATION,
         )
 
         await service.leave_room(me_id="U_A", room_id="CR_G")
@@ -589,7 +627,7 @@ class TestSystemMessageEmission:
         )
         chat_member_repo_mock.is_active_member.return_value = True
         chat_member_repo_mock.find.return_value = SimpleNamespace(
-            is_left=False, last_read_message_server_seq=0,
+            is_left=False, last_read_message_server_seq=0, joined_at=GENERATION,
         )
 
         await service.kick_member(

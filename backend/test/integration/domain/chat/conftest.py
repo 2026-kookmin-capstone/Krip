@@ -136,6 +136,8 @@ def chat_fanout_stub() -> MagicMock:
     """
     mock = MagicMock(name="chat-fanout")
     mock.fan_out_to_user = AsyncMock()
+    mock.fan_out_member_joined = AsyncMock()
+    mock.fan_out_member_removed = AsyncMock()
     mock.fan_out_to_session = AsyncMock()
     mock.fan_out_to_room = AsyncMock()
     mock.subscribe_user_to_room = AsyncMock()

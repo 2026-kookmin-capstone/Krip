@@ -46,12 +46,19 @@ def make_chat_member_repo_mock() -> AsyncMock:
     mock.save.return_value = None
     mock.save_all.return_value = None
     mock.find.return_value = None
+    mock.find_for_update.side_effect = lambda _room_id, _user_id: mock.find.return_value
     mock.update.return_value = None
     mock.find_active_member_ids.return_value = []
     mock.count_active_members.return_value = 0
     mock.is_active_member.return_value = False
     mock.is_active_member_for_share.side_effect = (
         lambda _room_id, _user_id: mock.is_active_member.return_value
+    )
+    mock.lock_active_receiving_user_ids.side_effect = (
+        lambda _room_id, user_ids: set(user_ids)
+    )
+    mock.lock_matching_membership_generations.side_effect = (
+        lambda _room_id, expected, **_kwargs: set(expected)
     )
     mock.find_user_room_ids.return_value = []
     mock.mark_read.return_value = None
@@ -67,6 +74,8 @@ def make_user_block_repo_mock() -> AsyncMock:
 
 def make_user_repo_mock() -> AsyncMock:
     mock = AsyncMock()
+    mock.lock_if_active.return_value = True
+    mock.lock_active_user_ids.side_effect = lambda user_ids: set(user_ids)
     mock.find_by_id_with_profile.return_value = None
     return mock
 
@@ -91,6 +100,8 @@ def make_fanout_mock() -> MagicMock:
     fanout = MagicMock(name="fanout")
     fanout.fan_out_to_session = AsyncMock()
     fanout.fan_out_to_user = AsyncMock()
+    fanout.fan_out_member_removed = AsyncMock()
+    fanout.fan_out_member_joined = AsyncMock()
     fanout.fan_out_to_room = AsyncMock()
     fanout.subscribe_user_to_room = AsyncMock()
     fanout.unsubscribe_user_from_room = AsyncMock()

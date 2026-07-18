@@ -166,3 +166,21 @@ class TestTxFailureSkipsSideEffects:
             "sql_update", "commit", "unread", "room_fanout",
         ]
         chat_room_repo_mock.find_by_id_for_update.assert_awaited_once_with("CR_G")
+
+
+@pytest.mark.unit
+async def test_member_removal_unsubscribes_before_redis_cleanup(
+    service, redis_mock, fanout_mock,
+):
+    failed_pipeline = redis_mock.pipeline()
+    failed_pipeline.execute.side_effect = RuntimeError("redis down")
+    redis_mock.pipeline.side_effect = lambda *_args, **_kwargs: failed_pipeline
+
+    await service._run_side_effect_safe(
+        service._emit_member_removed("CR_G", "U_B"),
+        room_id="CR_G",
+        label="member_removed:test",
+    )
+
+    fanout_mock.unsubscribe_user_from_room.assert_awaited_once_with("U_B", "CR_G")
+    fanout_mock.fan_out_to_user.assert_not_awaited()

@@ -13,6 +13,8 @@ from sqlalchemy import func, select
 
 from app.core.chat.redis_key import room_members_key, room_seq_key, unread_key
 from app.database.session import UnitOfWork
+from app.domain.auth.model.user import User, UserStatus
+from app.domain.auth.repository.user import UserRepository
 from app.domain.chat.model.chat_message import MessageType
 from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
 from app.domain.chat.model.chat_room_member import ChatRoomMember
@@ -41,6 +43,74 @@ async def seed_friendship(session_factory):
 
 
 class TestCreateGroupRoomFlow:
+    async def test_rejects_inactive_target_with_real_account_lock(
+        self, uow, seed_users, seed_friendship, chat_fanout_stub,
+        session_factory, patch_external_clients, message_service,
+    ):
+        a, b = await seed_users(2)
+        await seed_friendship(a, b)
+        async with session_factory() as session:
+            target = await session.get(User, b)
+            target.status = UserStatus.INACTIVE
+            await session.commit()
+
+        service = RoomService(
+            uow=uow,
+            fanout_service=chat_fanout_stub,
+            message_service=message_service,
+        )
+        with pytest.raises(ValueError, match="비활성 계정"):
+            await service.create_group_room(me_id=a, title="blocked", member_ids=[b])
+
+        async with session_factory() as session:
+            assert (await session.execute(select(ChatRoom))).scalars().all() == []
+
+    async def test_target_deactivation_waits_for_room_membership_commit(
+        self, seed_users, seed_friendship, chat_fanout_stub, session_factory,
+        patch_external_clients, message_service, monkeypatch,
+    ):
+        a, b = await seed_users(2)
+        await seed_friendship(a, b)
+        locked = asyncio.Event()
+        release = asyncio.Event()
+        original = UserRepository.lock_active_user_ids
+
+        async def pause_after_account_locks(repo, user_ids):
+            active = await original(repo, user_ids)
+            locked.set()
+            await release.wait()
+            return active
+
+        monkeypatch.setattr(
+            UserRepository, "lock_active_user_ids", pause_after_account_locks,
+        )
+        service = RoomService(
+            uow=UnitOfWork(session_factory), fanout_service=chat_fanout_stub,
+            message_service=message_service,
+        )
+        create_task = asyncio.create_task(service.create_group_room(
+            me_id=a, title="account-lock", member_ids=[b],
+        ))
+        await asyncio.wait_for(locked.wait(), timeout=5)
+
+        async def deactivate_target():
+            async with session_factory() as session:
+                target = await session.get(User, b, with_for_update=True)
+                target.status = UserStatus.INACTIVE
+                await session.commit()
+
+        deactivate_task = asyncio.create_task(deactivate_target())
+        await asyncio.sleep(0.1)
+        assert not deactivate_task.done()
+
+        release.set()
+        room = await asyncio.wait_for(create_task, timeout=5)
+        await asyncio.wait_for(deactivate_task, timeout=5)
+        async with session_factory() as session:
+            member = await session.get(ChatRoomMember, (room.chat_room_id, b))
+            assert member.is_left is False
+            assert (await session.get(User, b)).status == UserStatus.INACTIVE
+
     async def test_creates_room_with_members_and_caches(
         self, uow, seed_users, seed_friendship, chat_fanout_stub,
         session_factory, redis_hot, patch_external_clients, message_service,
@@ -76,12 +146,104 @@ class TestCreateGroupRoomFlow:
             raw = await redis_hot.hget(unread_key(uid), dto.chat_room_id)
             assert raw == "0"
 
-        assert chat_fanout_stub.fan_out_to_user.await_count == 3
-        targets = {call.args[0] for call in chat_fanout_stub.fan_out_to_user.call_args_list}
-        assert targets == {a, b, c}
-        for call in chat_fanout_stub.fan_out_to_user.call_args_list:
-            assert call.args[1]["type"] == "room_joined"
-            assert call.args[1]["room_id"] == dto.chat_room_id
+        assert chat_fanout_stub.fan_out_member_joined.await_count == 3
+        calls = chat_fanout_stub.fan_out_member_joined.call_args_list
+        assert {call.args[0] for call in calls} == {a, b, c}
+        assert {call.args[1] for call in calls} == {dto.chat_room_id}
+
+    async def test_delayed_initial_join_does_not_resurrect_member_after_leave(
+        self, seed_users, seed_friendship, chat_fanout_stub, session_factory,
+        redis_hot, patch_external_clients, message_service, monkeypatch,
+    ):
+        a, b = await seed_users(2)
+        await seed_friendship(a, b)
+        create_service = RoomService(
+            uow=UnitOfWork(session_factory),
+            fanout_service=chat_fanout_stub,
+            message_service=message_service,
+        )
+        entered = asyncio.Event()
+        resume = asyncio.Event()
+        original_emit = create_service._emit_room_joined
+
+        async def delayed_emit(*args, **kwargs):
+            entered.set()
+            await resume.wait()
+            await original_emit(*args, **kwargs)
+
+        monkeypatch.setattr(create_service, "_emit_room_joined", delayed_emit)
+        create_task = asyncio.create_task(
+            create_service.create_group_room(me_id=a, title="race", member_ids=[b])
+        )
+        await asyncio.wait_for(entered.wait(), timeout=5)
+
+        async with session_factory() as session:
+            room_id = str((await session.execute(select(ChatRoom.chat_room_id))).scalar_one())
+        leave_service = RoomService(
+            uow=UnitOfWork(session_factory),
+            fanout_service=chat_fanout_stub,
+            message_service=message_service,
+        )
+        await leave_service.leave_room(me_id=b, room_id=room_id)
+        resume.set()
+        await asyncio.wait_for(create_task, timeout=5)
+
+        assert b not in await redis_hot.smembers(room_members_key(room_id))
+        assert await redis_hot.hget(unread_key(b), room_id) is None
+        joined_targets = {
+            call.args[0] for call in chat_fanout_stub.fan_out_member_joined.call_args_list
+        }
+        assert b not in joined_targets
+
+    async def test_inflight_join_control_delivery_does_not_block_leave(
+        self, seed_users, seed_friendship, chat_fanout_stub, session_factory,
+        patch_external_clients, message_service,
+    ):
+        """소켓 delivery는 room lock 커밋 이후라 느린 클라이언트가 방 mutation을 막지 않는다.
+
+        stale room_joined 억제는 fanout checked delivery가 전달 직전 membership
+        재확인으로 담당한다 (unit: test_delayed_member_joined_is_dropped_after_revocation).
+        """
+        a, b = await seed_users(2)
+        await seed_friendship(a, b)
+        delivery_started = asyncio.Event()
+        release_delivery = asyncio.Event()
+
+        async def block_target_delivery(user_id: str, _room_id: str):
+            if user_id == b:
+                delivery_started.set()
+                await release_delivery.wait()
+
+        chat_fanout_stub.fan_out_member_joined.side_effect = block_target_delivery
+        create_service = RoomService(
+            uow=UnitOfWork(session_factory),
+            fanout_service=chat_fanout_stub,
+            message_service=message_service,
+        )
+        create_task = asyncio.create_task(create_service.create_group_room(
+            me_id=a, title="locked-control", member_ids=[b],
+        ))
+        await asyncio.wait_for(delivery_started.wait(), timeout=5)
+        async with session_factory() as session:
+            room_id = str((await session.execute(
+                select(ChatRoom.chat_room_id)
+            )).scalar_one())
+
+        leave_service = RoomService(
+            uow=UnitOfWork(session_factory),
+            fanout_service=chat_fanout_stub,
+            message_service=message_service,
+        )
+        await asyncio.wait_for(
+            leave_service.leave_room(me_id=b, room_id=room_id), timeout=5,
+        )
+
+        release_delivery.set()
+        await asyncio.wait_for(create_task, timeout=5)
+
+        async with session_factory() as session:
+            member = await session.get(ChatRoomMember, (room_id, b))
+            assert member.is_left is True
 
     async def test_non_friend_target_raises(
         self, uow, seed_users, chat_fanout_stub, patch_external_clients, message_service,
@@ -137,6 +299,12 @@ class TestInviteMembersFlow:
             fanout_service=chat_fanout_stub,
             fcm_service_factory=lambda: chat_fcm_stub,
         )
+        captured_push: dict = {}
+
+        def capture_push(**kwargs):
+            captured_push.update(kwargs)
+
+        monkeypatch.setattr(sender, "_spawn_push_task", capture_push)
         send_task = asyncio.create_task(sender.send_message(
             sender_user_id=b,
             sender_session_id="WS_B",
@@ -166,6 +334,7 @@ class TestInviteMembersFlow:
         )
         assert send_ack.server_seq > 0
         assert invite_result == ([c], [])
+        assert sorted(captured_push["recipient_generations"]) == [a]
 
     async def test_concurrent_invites_cannot_exceed_100_active_members(
         self, seed_users, session_factory, patch_external_clients, monkeypatch,
@@ -270,6 +439,17 @@ class TestInviteMembersFlow:
         )
         room_id = room_dto.chat_room_id
         chat_fanout_stub.reset_mock()
+        delivery_order: list[tuple[str, str]] = []
+
+        async def record_subscribe(user_id, _room_id, *, authorization_locked=False):
+            assert authorization_locked is True
+            delivery_order.append(("subscribe", user_id))
+
+        async def record_joined(user_id, _room_id):
+            delivery_order.append(("joined", user_id))
+
+        chat_fanout_stub.subscribe_user_to_room.side_effect = record_subscribe
+        chat_fanout_stub.fan_out_member_joined.side_effect = record_joined
 
         async with session_factory() as s:
             b_member = await s.get(ChatRoomMember, (room_id, b))
@@ -302,8 +482,15 @@ class TestInviteMembersFlow:
         assert await redis_hot.hget(unread_key(b), room_id) == "0"
         assert await redis_hot.hget(unread_key(c), room_id) == "0"
 
-        invited_targets = {call.args[0] for call in chat_fanout_stub.fan_out_to_user.call_args_list}
+        invited_targets = {
+            call.args[0]
+            for call in chat_fanout_stub.fan_out_member_joined.call_args_list
+        }
         assert invited_targets == {b, c}
+        for user_id in (b, c):
+            assert delivery_order.index(("subscribe", user_id)) < delivery_order.index(
+                ("joined", user_id)
+            )
 
     async def test_already_active_member_is_skipped(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, patch_external_clients, message_service,
@@ -375,10 +562,9 @@ class TestLeaveRoomFlow:
             b_row = await s.get(ChatRoomMember, (room.chat_room_id, b))
             assert b_row.is_left is True
 
-        chat_fanout_stub.fan_out_to_user.assert_awaited_once()
-        call = chat_fanout_stub.fan_out_to_user.call_args
-        assert call.args[0] == b
-        assert call.args[1] == {"type": "room_left", "room_id": room.chat_room_id}
+        chat_fanout_stub.fan_out_member_removed.assert_awaited_once_with(
+            b, room.chat_room_id,
+        )
 
     async def test_left_member_cannot_send_with_stale_member_cache(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, redis_hot,
@@ -439,10 +625,59 @@ class TestKickMemberFlow:
             b_row = await s.get(ChatRoomMember, (room.chat_room_id, b))
             assert b_row.is_left is True
 
-        chat_fanout_stub.fan_out_to_user.assert_awaited_once()
-        call = chat_fanout_stub.fan_out_to_user.call_args
-        assert call.args[0] == b
-        assert call.args[1]["type"] == "room_left"
+        chat_fanout_stub.fan_out_member_removed.assert_awaited_once_with(
+            b, room.chat_room_id,
+        )
+
+    async def test_concurrent_kick_then_leave_observes_removed_state(
+        self, seed_users, seed_friendship, chat_fanout_stub, session_factory,
+        patch_external_clients, message_service, monkeypatch,
+    ):
+        a, b = await seed_users(2)
+        await seed_friendship(a, b)
+        creator_service = RoomService(
+            uow=UnitOfWork(session_factory), fanout_service=chat_fanout_stub,
+            message_service=message_service,
+        )
+        room = await creator_service.create_group_room(
+            me_id=a, title="serialized-removal", member_ids=[b],
+        )
+        locked = asyncio.Event()
+        release = asyncio.Event()
+        original = ChatRoomMemberRepository.find_for_update
+
+        async def pause_first_target_lock(repo, room_id, user_id):
+            member = await original(repo, room_id, user_id)
+            if user_id == b and not locked.is_set():
+                locked.set()
+                await release.wait()
+            return member
+
+        monkeypatch.setattr(
+            ChatRoomMemberRepository, "find_for_update", pause_first_target_lock,
+        )
+        kick_service = RoomService(
+            uow=UnitOfWork(session_factory), fanout_service=chat_fanout_stub,
+            message_service=message_service,
+        )
+        leave_service = RoomService(
+            uow=UnitOfWork(session_factory), fanout_service=chat_fanout_stub,
+            message_service=message_service,
+        )
+        kick_task = asyncio.create_task(kick_service.kick_member(
+            me_id=a, room_id=room.chat_room_id, target_user_id=b,
+        ))
+        await asyncio.wait_for(locked.wait(), timeout=5)
+        leave_task = asyncio.create_task(leave_service.leave_room(
+            me_id=b, room_id=room.chat_room_id,
+        ))
+        await asyncio.sleep(0.1)
+        assert not leave_task.done()
+
+        release.set()
+        await asyncio.wait_for(kick_task, timeout=5)
+        with pytest.raises(PermissionError, match="활성 멤버"):
+            await asyncio.wait_for(leave_task, timeout=5)
 
     async def test_kicked_member_cannot_send_with_stale_member_cache(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, redis_hot,

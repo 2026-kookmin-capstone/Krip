@@ -196,7 +196,8 @@ class TestMarkRead:
         )
 
         message_repo_mock.count_after_seq.assert_awaited_once_with(
-            chat_room_id="CR_G", after_seq=7, limit=1000,
+            chat_room_id="CR_G", after_seq=7,
+            exclude_sender_user_id="U_A", limit=1000,
         )
         call = lua_mock.mark_read_unread.call_args
         assert call.kwargs["keys"] == [

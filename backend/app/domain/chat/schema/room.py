@@ -103,6 +103,8 @@ class LastMessagePreviewResponse(BaseModel):
         ),
     )
     created_at: datetime = Field(..., description="보낸 시각")
+    edited_at: Optional[datetime] = Field(..., description="마지막 수정 시각")
+    deleted_at: Optional[datetime] = Field(..., description="삭제 시각")
 
 
 class ChatRoomResponse(BaseModel):

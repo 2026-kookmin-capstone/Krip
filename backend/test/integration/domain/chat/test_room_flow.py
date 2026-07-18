@@ -28,6 +28,7 @@ def fanout_stub() -> MagicMock:
     mock.fan_out_to_user = AsyncMock()
     mock.fan_out_to_session = AsyncMock()
     mock.fan_out_to_room = AsyncMock()
+    mock.fan_out_member_joined = AsyncMock()
     mock.subscribe_user_to_room = AsyncMock()
     mock.unsubscribe_user_from_room = AsyncMock()
     return mock
@@ -79,7 +80,7 @@ class TestCreateDirectRoomFlow:
             assert len(rooms) == 1
             assert len(members) == 2
 
-        assert fanout_stub.fan_out_to_user.await_count == 2
+        assert fanout_stub.fan_out_member_joined.await_count == 2
 
     async def test_canonical_order_persisted(
         self, uow, seed_users, session_factory, fanout_stub, message_service_stub,
@@ -114,7 +115,7 @@ class TestCreateDirectRoomFlow:
             assert len(rooms) == 1
             assert len(members) == 2
 
-        assert fanout_stub.fan_out_to_user.await_count == 2
+        assert fanout_stub.fan_out_member_joined.await_count == 2
 
     async def test_reverse_direction_returns_same_room(
         self, uow, seed_users, fanout_stub, message_service_stub, session_factory,
