@@ -104,17 +104,6 @@ def storage_mock(monkeypatch) -> MagicMock:
 
 
 @pytest.fixture
-def redis_cache_mock(monkeypatch) -> AsyncMock:
-    """Redis 캐시 무효화 mock — `invalidate_registered_cache` 모듈 함수 직접 치환."""
-    mock = AsyncMock(return_value=None)
-    monkeypatch.setattr(
-        "app.domain.auth.service.withdraw.invalidate_registered_cache",
-        mock,
-    )
-    return mock
-
-
-@pytest.fixture
 def inbox_service(mongo_db) -> InboxService:
     return InboxService()
 
@@ -138,7 +127,7 @@ def chat_purge_service_mock() -> AsyncMock:
 
 @pytest.fixture
 def withdraw_service(
-    uow, inbox_service, storage_mock, redis_cache_mock, chat_purge_service_mock,
+    uow, inbox_service, storage_mock, chat_purge_service_mock,
 ) -> WithdrawService:
     return WithdrawService(
         uow=uow,

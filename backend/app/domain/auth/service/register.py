@@ -3,7 +3,6 @@ from typing import List
 from sqlalchemy.exc import IntegrityError
 
 from app.database.session import UnitOfWork, transactional
-from app.domain.auth.model.user import UserStatus
 from app.domain.auth.model.user_detail_inform import Gender, UserDetailInform
 from app.domain.auth.model.user_travel_style import TravelStyle, UserTravelStyle
 from app.domain.auth.repository.user import UserRepository
@@ -42,9 +41,8 @@ class RegisterService:
         if user is None:
             raise ValueError("존재하지 않는 유저입니다.")
 
-        # ACTIVE 아닌 계정(INACTIVE/SUSPENDED)의 2차 가입 차단 — REGISTERED 캐시를 심어
-        # 보호 경로의 419 차단을 우회하는 것을 막는다.
-        if user.status != UserStatus.ACTIVE:
+        # withdrawal status update와 상세정보 commit을 user row share lock으로 직렬화.
+        if not await user_repo.lock_if_active(user_id):
             raise ValueError("회원가입을 완료할 수 없는 계정 상태입니다.")
 
         existing = await detail_repo.find_by_user_id(user_id)

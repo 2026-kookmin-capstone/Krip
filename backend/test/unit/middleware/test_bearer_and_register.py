@@ -113,12 +113,30 @@ class TestRegisterCheckSuspended:
         )
         monkeypatch.setattr(
             "app.middleware.auth.get_redis_cache_manager", lambda: cache,
+            raising=False,
         )
-        repo = SimpleNamespace(find_by_id_with_profile=AsyncMock(return_value=user))
+        access_state = None if user is None else (
+            user.status, user.detail is not None,
+        )
+        repo = SimpleNamespace(find_access_state=AsyncMock(return_value=access_state))
+        cache.repo = repo
         monkeypatch.setattr(
             "app.domain.auth.repository.user.UserRepository", lambda session: repo,
         )
         return cache
+
+    async def test_positive_cache_cannot_bypass_inactive_status(self, monkeypatch):
+        user = SimpleNamespace(status=UserStatus.INACTIVE, detail=object())
+        cache = self._patch(monkeypatch, user=user, cache_exists=True)
+        spy = _CallNextSpy()
+
+        resp = await RegisterCheckMiddleware(app=lambda *a, **k: None).dispatch(
+            self._request(), spy,
+        )
+
+        assert resp.status_code == 419
+        assert spy.called is False
+        cache.repo.find_access_state.assert_awaited_once_with("USER_x")
 
     async def test_suspended_user_blocked_with_403_and_not_cached(self, monkeypatch):
         user = SimpleNamespace(status=UserStatus.SUSPENDED, detail=object())
@@ -135,7 +153,7 @@ class TestRegisterCheckSuspended:
         # 정지 유저를 양성으로 캐싱하면 24h 동안 밴이 마스킹됨 → set_flag 호출 금지
         cache.set_flag.assert_not_awaited()
 
-    async def test_active_user_passes_and_is_cached(self, monkeypatch):
+    async def test_active_user_passes_without_authorization_cache(self, monkeypatch):
         user = SimpleNamespace(status=UserStatus.ACTIVE, detail=object())
         cache = self._patch(monkeypatch, user=user)
         spy = _CallNextSpy()
@@ -146,4 +164,5 @@ class TestRegisterCheckSuspended:
 
         assert resp.status_code == 200
         assert spy.called is True
-        cache.set_flag.assert_awaited_once()
+        cache.exists.assert_not_awaited()
+        cache.set_flag.assert_not_awaited()

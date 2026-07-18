@@ -8,12 +8,9 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.types import ASGIApp
 
 from app.config.setting import settings
-from app.core.cache.key_category import KeyCategory
-from app.core.cache.redis_cache import get_redis_cache_manager
 from app.core.logger import get_logger
 from app.core.metric import AUTH_FAILURES
 from app.core.probe import PROBE_ROUTES
-from app.core.redis import RedisClient
 
 
 class BearerTokenMiddleware(BaseHTTPMiddleware):
@@ -195,6 +192,18 @@ class LoginAuthMiddleware(BaseHTTPMiddleware):
                 content={"detail": "유효하지 않은 토큰입니다."},
             )
 
+        expected_user_id = request.headers.get("X-Krip-Expected-User-ID")
+        if expected_user_id and not hmac.compare_digest(
+            expected_user_id.encode("utf-8"),
+            str(user_id).encode("utf-8"),
+        ):
+            AUTH_FAILURES.labels(kind="login_principal_mismatch").inc()
+            auth_logger.warning("요청 principal lifecycle 불일치")
+            return JSONResponse(
+                status_code=401,
+                content={"detail": "로그인 계정이 변경되었습니다."},
+            )
+
         request.state.user_id = user_id
         auth_logger.debug("로그인 인증 성공: {}", user_id)
         return await call_next(request)
@@ -210,15 +219,10 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
         - 유저 존재 → 401
         - status == INACTIVE (탈퇴 유예 중) → 419 (커스텀)
         - 2차 회원가입 미완료 → 403
-        - 그 외 정상 → REGISTERED 플래그 캐싱 후 통과
+        - 그 외 정상 → 통과
 
-    Redis 캐시(`REGISTERED:{uid}`) 는 "ACTIVE & 2차 회원가입 완료" 의 양성 결과만 저장한다.
-    탈퇴 요청 시 `WithdrawService` 가 같은 키를 invalidate 하므로, INACTIVE 전환 직후
-    다음 보호 경로 요청에서 DB 재조회 → 419 응답으로 자연스럽게 전환된다.
+    계정 상태는 권한 회수 경계이므로 양성 캐시를 신뢰하지 않고 매 요청 SQL에서 확인한다.
     """
-
-    REDIS_KEY_PREFIX = KeyCategory.REGISTERED
-    CACHE_TTL = RedisClient.DEFAULT_CACHE_TTL  # 24시간
 
     # 검증을 건너뛸 경로
     EXCLUDE_PATHS: Sequence[str] = (
@@ -262,19 +266,12 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
             user_id=user_id,
         )
 
-        cache = get_redis_cache_manager()
-        cache_key = f"{self.REDIS_KEY_PREFIX}:{user_id}"
-
-        if await cache.exists(cache_key):
-            reg_logger.debug("2차 회원가입 캐시 히트")
-            return await call_next(request)
-
         try:
             container = request.app.container
             async with container.uow() as session:
                 from app.domain.auth.repository.user import UserRepository
                 user_repo = UserRepository(session)
-                user = await user_repo.find_by_id_with_profile(user_id)
+                access_state = await user_repo.find_access_state(user_id)
         except Exception as e:
             AUTH_FAILURES.labels(kind="register_db_error").inc()
             reg_logger.error("DB 조회 실패: {}", e)
@@ -283,7 +280,7 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
                 content={"detail": "회원가입 상태 확인 중 오류가 발생했습니다."},
             )
 
-        if user is None:
+        if access_state is None:
             AUTH_FAILURES.labels(kind="register_user_not_found").inc()
             reg_logger.warning("존재하지 않는 유저")
             return JSONResponse(
@@ -294,7 +291,8 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
         # 탈퇴 유예 중인 유저 — detail 존재 여부와 무관하게 즉시 차단.
         # 419 는 비표준이지만 "회원이 탈퇴 처리 중" 시그널로 프론트가 분기.
         from app.domain.auth.model.user import UserStatus
-        if user.status == UserStatus.INACTIVE:
+        user_status, is_registered = access_state
+        if user_status == UserStatus.INACTIVE:
             AUTH_FAILURES.labels(kind="register_withdrawal_pending").inc()
             reg_logger.warning("탈퇴 유예 중 유저 접근 차단")
             return JSONResponse(
@@ -305,9 +303,8 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
                 },
             )
 
-        # 정지(SUSPENDED) 유저 차단. 주의: SUSPENDED 전환 경로는 invalidate_registered_cache 로
-        # REGISTERED 캐시를 비워야 즉시 반영된다 (안 하면 CACHE_TTL 만료까지 미적용).
-        if user.status == UserStatus.SUSPENDED:
+        # 정지(SUSPENDED) 유저 차단.
+        if user_status == UserStatus.SUSPENDED:
             AUTH_FAILURES.labels(kind="register_suspended").inc()
             reg_logger.warning("정지 유저 접근 차단")
             return JSONResponse(
@@ -318,15 +315,12 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
                 },
             )
 
-        if user.detail is None:
+        if not is_registered:
             AUTH_FAILURES.labels(kind="register_incomplete").inc()
             reg_logger.warning("2차 회원가입 미완료")
             return JSONResponse(
                 status_code=403,
                 content={"detail": "2차 회원가입이 필요합니다."},
             )
-
-        # 실패 상태를 TTL 동안 허용하지 않도록 ACTIVE·가입 완료 결과만 캐싱한다.
-        await cache.set_flag(cache_key, self.CACHE_TTL)
 
         return await call_next(request)

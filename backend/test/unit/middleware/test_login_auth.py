@@ -78,6 +78,33 @@ class TestTokenSources:
         assert resp.status_code == 200
         assert resp.json() == {"user_id": "USER_web"}
 
+    def test_accepts_matching_expected_principal(self, client):
+        token = _make_token("USER_web")
+
+        resp = client.get(
+            "/protected",
+            headers={
+                "X-Auth-Token": token,
+                "X-Krip-Expected-User-ID": "USER_web",
+            },
+        )
+
+        assert resp.status_code == 200
+
+    def test_rejects_cross_tab_principal_replacement(self, client):
+        token = _make_token("USER_B")
+
+        resp = client.get(
+            "/protected",
+            headers={
+                "X-Auth-Token": token,
+                "X-Krip-Expected-User-ID": "USER_A",
+            },
+        )
+
+        assert resp.status_code == 401
+        assert resp.json()["detail"] == "로그인 계정이 변경되었습니다."
+
     def test_header_wins_when_both_present(self, client):
         """헤더 → 쿠키 우선순위 — stale 쿠키가 살아 있어도 앱은 헤더로 정확한 user 를 본다."""
         header_token = _make_token("USER_from_header")

@@ -15,11 +15,18 @@ unit 테스트가 mock 으로 검증 못 하는 영역:
     - User.user_id 의 `default=generate_user_id` 가 INSERT 시점 자동 부여
     - INACTIVE 분기 시 detail SELECT 자체 skip (RDB round-trip 절약)
 """
+import asyncio
+
 import pytest
 
 from app.config.oauth import OAuthProvider
+from app.database.session import UnitOfWork
 from app.domain.auth.dto.signup import SignupStatus
 from app.domain.auth.model.user import User, UserStatus
+from app.domain.auth.model.user_detail_inform import Gender, UserDetailInform
+from app.domain.auth.model.user_travel_style import TravelStyle
+from app.domain.auth.repository.user import UserRepository
+from app.domain.auth.service.register import RegisterService
 
 
 pytestmark = pytest.mark.integration
@@ -85,7 +92,7 @@ class TestInProgress:
             )
             session.add(user)
             await session.commit()
-            user_id = user.user_id
+            user_id = str(user.user_id)
 
         result = await signup_service.check_and_register(
             auth_provider=OAuthProvider.GOOGLE.value,
@@ -114,3 +121,59 @@ class TestComplete:
 
         assert result.status == SignupStatus.COMPLETE
         assert result.user_id == user_id
+
+
+class TestSecondaryRegistrationWithdrawalFence:
+    async def test_withdrawal_waits_for_locked_secondary_registration(
+        self, session_factory, monkeypatch,
+    ):
+        async with session_factory() as session:
+            user = User(
+                auth_provider=OAuthProvider.GOOGLE,
+                auth_provider_id="register-race@example.com",
+                status=UserStatus.ACTIVE,
+            )
+            session.add(user)
+            await session.commit()
+            user_id = str(user.user_id)
+
+        locked = asyncio.Event()
+        release = asyncio.Event()
+        original = UserRepository.lock_if_active
+
+        async def pause_after_lock(repo, target_user_id):
+            active = await original(repo, target_user_id)
+            locked.set()
+            await release.wait()
+            return active
+
+        monkeypatch.setattr(UserRepository, "lock_if_active", pause_after_lock)
+        register = RegisterService(uow=UnitOfWork(session_factory))
+        register_task = asyncio.create_task(register.register_detail(
+            user_id=user_id,
+            email="register-race@example.com",
+            user_name="race",
+            phone_number="01000000000",
+            age=20,
+            gender=Gender.MALE,
+            nationality="KR",
+            travel_styles=[TravelStyle.ACTIVITY],
+        ))
+        await asyncio.wait_for(locked.wait(), timeout=5)
+
+        async def deactivate():
+            async with session_factory() as session:
+                target = await session.get(User, user_id, with_for_update=True)
+                target.status = UserStatus.INACTIVE
+                await session.commit()
+
+        deactivate_task = asyncio.create_task(deactivate())
+        await asyncio.sleep(0.1)
+        assert not deactivate_task.done()
+
+        release.set()
+        await asyncio.wait_for(register_task, timeout=5)
+        await asyncio.wait_for(deactivate_task, timeout=5)
+        async with session_factory() as session:
+            assert await session.get(UserDetailInform, user_id) is not None
+            assert (await session.get(User, user_id)).status == UserStatus.INACTIVE

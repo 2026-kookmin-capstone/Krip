@@ -38,6 +38,7 @@ def make_user_repo_mock() -> AsyncMock:
     mock.find_by_id.return_value = None
     mock.find_by_id_with_profile.return_value = None
     mock.find_by_ids_with_profile.return_value = {}
+    mock.lock_if_active.return_value = True
     mock.update.return_value = None
     return mock
 

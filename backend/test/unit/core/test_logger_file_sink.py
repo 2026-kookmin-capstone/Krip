@@ -12,7 +12,6 @@ import logging
 import stat
 from collections import defaultdict, namedtuple
 from contextlib import contextmanager
-from types import SimpleNamespace
 from unittest.mock import AsyncMock
 
 import pytest
@@ -599,7 +598,6 @@ async def test_registration_success_file_log_does_not_contain_account_pii(
     email = "private.person@example.com"
     user_id = "USER_private_123"
     service = AsyncMock(spec=RegisterService)
-    cache = SimpleNamespace(set_flag=AsyncMock())
     request = Request({"type": "http", "state": {"user_id": user_id}})
     payload = RegisterRequest(
         email=email,
@@ -613,7 +611,6 @@ async def test_registration_success_file_log_does_not_contain_account_pii(
 
     monkeypatch.setattr(settings, "LOG_FILE_PATH", str(log_path))
     monkeypatch.setattr(settings, "LOG_FORMAT", "json")
-    monkeypatch.setattr(register_router, "get_redis_cache_manager", lambda: cache)
     logger_module.setup_logging()
 
     response = await register_router.register(

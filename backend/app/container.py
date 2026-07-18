@@ -7,7 +7,7 @@ from app.domain.auth.service.profile import ProfileService
 from app.domain.auth.service.register import RegisterService
 from app.domain.auth.service.signup import SignupService
 from app.domain.auth.service.withdraw import WithdrawService
-from app.domain.chat.service.fanout import FanoutService
+from app.domain.chat.service.fanout import FanoutAuthorizationService, FanoutService
 from app.domain.chat.service.message import MessageService
 from app.domain.chat.service.message_history import MessageHistoryService
 from app.domain.chat.service.room import RoomService
@@ -132,7 +132,12 @@ class Container(containers.DeclarativeContainer):
     share_plan_service = providers.Factory(SharePlanService, uow=uow)
 
     # 채팅 — 인프라 (Singleton: 프로세스 내 전역 상태 유지)
-    fanout_service = providers.Singleton(FanoutService)
+    fanout_authorization_service = providers.Singleton(
+        FanoutAuthorizationService, session_factory=session_factory,
+    )
+    fanout_service = providers.Singleton(
+        FanoutService, authorization_service=fanout_authorization_service,
+    )
     session_service = providers.Singleton(SessionService, fanout_service=fanout_service)
 
     # 회원 탈퇴 cleanup 훅 — auth 도메인의 WithdrawService 가 의존
