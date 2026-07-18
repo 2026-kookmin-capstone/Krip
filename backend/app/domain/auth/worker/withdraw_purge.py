@@ -27,7 +27,7 @@ from app.core.logger import get_logger
 from app.database.session import UnitOfWork
 from app.domain.auth.repository.withdrawal_request import WithdrawalRequestRepository
 from app.domain.auth.service.withdraw import WithdrawService
-from app.domain.chat.service.fanout import FanoutService
+from app.domain.chat.service.fanout import FanoutAuthorizationService, FanoutService
 from app.domain.chat.service.session import SessionService
 from app.domain.chat.service.user_purge_cache import UserPurgeCacheService
 from app.domain.notification.service.inbox import InboxService
@@ -97,7 +97,9 @@ async def purge_due_withdrawals_once() -> int:
 
     # WithdrawService 필수 의존성. purge 는 Redis 단독 cleanup 만 써 stateless → 사이클당 1회 재사용.
     chat_purge = UserPurgeCacheService(
-        session_service=SessionService(fanout_service=FanoutService()),
+        session_service=SessionService(fanout_service=FanoutService(
+            authorization_service=FanoutAuthorizationService(factory),
+        )),
     )
 
     succeeded = 0

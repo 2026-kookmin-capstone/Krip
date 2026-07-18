@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 
 from app.domain.auth.model.user import User, UserStatus
+from app.domain.auth.model.user_detail_inform import UserDetailInform
 
 
 class UserRepository:
@@ -13,6 +14,52 @@ class UserRepository:
 
     async def find_by_id(self, user_id: str) -> Optional[User]:
         return await self.session.get(User, user_id)
+
+    async def is_active(self, user_id: str) -> bool:
+        stmt = select(User.user_id).where(
+            User.user_id == user_id,
+            User.status == UserStatus.ACTIVE,
+        )
+        result = await self.session.execute(stmt)
+        return result.scalar_one_or_none() is not None
+
+    async def lock_if_active(self, user_id: str) -> bool:
+        """호출 transaction 종료까지 status 변경을 막는 active projection."""
+        stmt = (
+            select(User.user_id)
+            .where(
+                User.user_id == user_id,
+                User.status == UserStatus.ACTIVE,
+            )
+            .with_for_update(read=True)
+        )
+        result = await self.session.execute(stmt)
+        return result.scalar_one_or_none() is not None
+
+    async def lock_active_user_ids(self, user_ids: set[str]) -> set[str]:
+        """활성 계정을 고정 순서로 share-lock해 교차 초대의 lock inversion을 막는다."""
+        if not user_ids:
+            return set()
+        stmt = (
+            select(User.user_id)
+            .where(User.user_id.in_(user_ids), User.status == UserStatus.ACTIVE)
+            .order_by(User.user_id)
+            .with_for_update(read=True)
+        )
+        result = await self.session.execute(stmt)
+        return set(result.scalars().all())
+
+    async def find_access_state(self, user_id: str) -> Optional[tuple[UserStatus, bool]]:
+        """권한 가드용 최소 projection: 계정 상태와 2차 가입 완료 여부."""
+        stmt = (
+            select(User.status, UserDetailInform.user_id)
+            .outerjoin(UserDetailInform, UserDetailInform.user_id == User.user_id)
+            .where(User.user_id == user_id)
+        )
+        row = (await self.session.execute(stmt)).one_or_none()
+        if row is None:
+            return None
+        return row[0], row[1] is not None
 
     async def find_by_id_for_update(self, user_id: str) -> Optional[User]:
         """user row 에 X-lock 을 잡으면서 조회.

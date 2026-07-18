@@ -15,12 +15,16 @@
     | 미존재 user (NO_USER)   | -           | drop          | cascade 호출 (idempotent) |
     | STALE_DOC (ACTIVE)      | 보존        | doc 만 청소   | cascade 호출 안 함 |
 """
+import asyncio
+
 import pytest
 from sqlalchemy import select
 
+from app.database.session import UnitOfWork
 from app.domain.auth.model.user import User, UserStatus
 from app.domain.auth.model.withdrawal_request import WithdrawalRequest
 from app.domain.auth.service import withdraw as withdraw_module
+from app.domain.auth.service.withdraw import WithdrawService
 from app.domain.notification.model.inbox import (
     InboxItem,
     InboxItemType,
@@ -29,6 +33,45 @@ from app.domain.notification.model.inbox import (
 
 
 pytestmark = pytest.mark.integration
+
+
+class TestWithdrawalRevocationFence:
+    async def test_cancel_waits_until_inactive_session_revocation_finishes(
+        self, withdraw_service, session_factory, seed_users,
+    ):
+        user_id, *_ = await seed_users(1)
+        await _set_inactive(session_factory, user_id)
+        revoke_started = asyncio.Event()
+        release_revoke = asyncio.Event()
+
+        async def blocking_revoke(_user_id: str) -> None:
+            revoke_started.set()
+            await release_revoke.wait()
+
+        withdraw_service._chat_purge.revoke_all_sessions = blocking_revoke
+        cancel_service = WithdrawService(
+            uow=UnitOfWork(session=session_factory),
+            inbox_service=withdraw_service.inbox_service,
+            user_purge_cache_service=withdraw_service._chat_purge,
+        )
+        revoke_task = asyncio.create_task(
+            withdraw_service.revoke_user_chat_state(user_id),
+        )
+        await revoke_started.wait()
+        cancel_task = asyncio.create_task(cancel_service.cancel_withdraw(user_id=user_id))
+        try:
+            await asyncio.sleep(0.05)
+            cancel_was_blocked = not cancel_task.done()
+        finally:
+            release_revoke.set()
+            await revoke_task
+            await cancel_task
+        assert cancel_was_blocked
+
+        async with session_factory() as session:
+            user = await session.get(User, user_id)
+            assert user is not None
+            assert user.status == UserStatus.ACTIVE
 
 
 class TestPurgeDeletedOutcome:
@@ -151,7 +194,7 @@ class TestPurgeNoUserOutcome:
     """RDB 에 user 없음 (이전 사이클 외부 정리 잔존) → 외부 정리만 idempotent 진행."""
 
     async def test_runs_external_cleanup_idempotently(
-        self, withdraw_service, mongo_db, storage_mock, redis_cache_mock,
+        self, withdraw_service, mongo_db, storage_mock,
     ):
         await withdraw_service.purge(user_id="USER_ghost")
 
@@ -159,7 +202,6 @@ class TestPurgeNoUserOutcome:
         assert await inbox_coll.count_documents({}) == 0
 
         storage_mock.delete_by_prefix.assert_awaited_once_with("USER_ghost")
-        redis_cache_mock.assert_awaited_once_with("USER_ghost")
 
 
 class TestPurgeRetryMarker:

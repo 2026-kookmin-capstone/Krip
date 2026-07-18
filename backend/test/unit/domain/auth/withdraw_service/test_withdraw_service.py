@@ -198,7 +198,7 @@ class TestPurge:
     async def test_stale_doc_outcome_skips_external(
         self, service, user_repo_mock,
         inbox_service_mock, withdrawal_request_repo_mock,
-        beanie_stubs, storage_mock, invalidate_cache_mock,
+        beanie_stubs, storage_mock,
     ):
         """status != INACTIVE (cancel 복구 등) → 외부 리소스 보존, doc 만 즉시 청소.
 
@@ -212,7 +212,6 @@ class TestPurge:
         user_repo_mock.hard_delete_by_id.assert_not_awaited()
         inbox_service_mock.cascade_user_withdrawn.assert_not_awaited()
         storage_mock.delete_by_prefix.assert_not_awaited()
-        invalidate_cache_mock.assert_not_awaited()
         for stub in beanie_stubs.values():
             assert stub.find_call_count == 0
         withdrawal_request_repo_mock.delete_by_user_id.assert_awaited_once_with("USER_a")
@@ -270,11 +269,6 @@ class TestPurgeExternal:
         await service._purge_external(user_id="USER_a")
 
         storage_mock.delete_by_prefix.assert_awaited_once_with("USER_a")
-
-    async def test_calls_redis_cache_invalidate(self, service, invalidate_cache_mock):
-        await service._purge_external(user_id="USER_a")
-
-        invalidate_cache_mock.assert_awaited_once_with("USER_a")
 
     async def test_calls_inbox_cascade(
         self, service, inbox_service_mock,
@@ -349,9 +343,14 @@ class TestRevokeUserChatState:
     """post-commit 훅 — chat 활성 세션 즉시 종료 위임 (UserPurgeCacheService 호출)."""
 
     async def test_delegates_to_chat_purge_revoke(
-        self, service, user_purge_cache_service_mock,
+        self, service, user_repo_mock, user_purge_cache_service_mock,
     ):
         """단순 위임 — `chat_purge.revoke_all_sessions(user_id)` 호출."""
+        from app.domain.auth.model.user import UserStatus
+
+        user_repo_mock.find_by_id_for_update.return_value = UserFactory.create(
+            status=UserStatus.INACTIVE,
+        )
         await service.revoke_user_chat_state(user_id="USER_a")
 
         user_purge_cache_service_mock.revoke_all_sessions.assert_awaited_once_with("USER_a")
@@ -363,6 +362,19 @@ class TestRevokeUserChatState:
         await service.revoke_user_chat_state(user_id="USER_a")
 
         user_purge_cache_service_mock.cleanup_user_data.assert_not_awaited()
+
+    async def test_skips_stale_revoke_after_cancel_reactivated_account(
+        self, service, user_repo_mock, user_purge_cache_service_mock,
+    ):
+        from app.domain.auth.model.user import UserStatus
+
+        user_repo_mock.find_by_id_for_update.return_value = UserFactory.create(
+            status=UserStatus.ACTIVE,
+        )
+
+        await service.revoke_user_chat_state(user_id="USER_a")
+
+        user_purge_cache_service_mock.revoke_all_sessions.assert_not_awaited()
 
 
 @pytest.mark.unit
@@ -385,12 +397,10 @@ class TestRequestWithdrawDoesNotCallChatHookInTransaction:
 
 
 @pytest.mark.unit
-class TestPurgeExternalCallsChatCleanup:
+class TestPurgeExternalChatCleanup:
     """`_purge_external` 의 Redis 단계에 chat 도메인 cleanup 추가됨 — TTL 없는 unread DEL.
 
-    `invalidate_registered_cache` 패턴과 동일 — `_purge_external` 은 chat 훅을
-    try/except 없이 호출하며, 실패 swallow 는 `UserPurgeCacheService` 자체의
-    책임 (별도 단독 테스트가 fail-open 동작 검증).
+    `_purge_external` 은 chat 훅을 호출하고 실패를 durable retry 대상으로 기록한다.
     """
 
     async def test_cleanup_user_data_called(
@@ -399,22 +409,3 @@ class TestPurgeExternalCallsChatCleanup:
         await service._purge_external(user_id="USER_a")
 
         user_purge_cache_service_mock.cleanup_user_data.assert_awaited_once_with("USER_a")
-
-    async def test_cleanup_called_after_invalidate_registered_cache(
-        self, service, user_purge_cache_service_mock, invalidate_cache_mock,
-    ):
-        """호출 순서: REGISTERED 캐시 무효화 → chat cleanup → 마지막 doc 청소.
-
-        chat cleanup 이 REGISTERED 무효화 전에 호출되면 의도와 다르므로 순서 검증.
-        """
-
-        from unittest.mock import MagicMock
-
-        manager = MagicMock()
-        manager.attach_mock(invalidate_cache_mock, "invalidate")
-        manager.attach_mock(user_purge_cache_service_mock.cleanup_user_data, "chat_cleanup")
-
-        await service._purge_external(user_id="USER_a")
-
-        names = [c[0] for c in manager.mock_calls]
-        assert names.index("invalidate") < names.index("chat_cleanup")

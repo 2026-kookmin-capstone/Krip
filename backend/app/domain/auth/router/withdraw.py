@@ -9,7 +9,7 @@ from app.domain.auth.service.exception import (
     WithdrawalAlreadyRequestedError,
     WithdrawalNotPendingError,
 )
-from app.domain.auth.service.withdraw import WithdrawService, invalidate_registered_cache
+from app.domain.auth.service.withdraw import WithdrawService
 
 
 router = APIRouter(prefix="/withdraw", tags=["회원 탈퇴"])
@@ -37,9 +37,6 @@ async def withdraw(
         raise HTTPException(status_code=409, detail=str(e))
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
-
-    # 트랜잭션 commit 이후 캐시 무효화 — 중간 race(미커밋 ACTIVE 행 재캐싱) 차단.
-    await invalidate_registered_cache(user_id)
 
     # commit 이후 chat 활성 세션 강제 종료 — INACTIVE 전환 후 TTL(90s) 윈도우 동안의
     # 송수신 risk 차단. 같은 race 이유로 트랜잭션 외부에서 호출.
@@ -88,10 +85,6 @@ async def cancel_withdraw(
         raise HTTPException(status_code=409, detail=str(e))
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
-
-    # 캐시는 별도 invalidate 불필요 — withdraw 시점에 이미 비워졌고 INACTIVE 동안 채워질
-    # 일이 없으므로 (419 응답은 캐시 write 안 함). 다음 보호 경로 요청에서 미들웨어가
-    # cache miss → DB → ACTIVE 확인 → REGISTERED 자연 재생성.
 
     logger.info("회원 탈퇴 취소 처리 완료 (user_id={})", user_id)
     return JSONResponse(

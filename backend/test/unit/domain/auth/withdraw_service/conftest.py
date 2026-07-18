@@ -6,7 +6,7 @@ WithdrawService 의 의존성:
     - get_object_storage()                — 모듈 함수 → monkeypatch
     - InboxService                        — DI 주입 (cascade_user_withdrawn)
     - Beanie Document 5종 (purge 전용)    — `Document.find().delete()` chain stub
-    - invalidate_registered_cache         — 모듈 함수 → monkeypatch (Redis 비접근)
+
 
 `@transactional` 메서드들 (`request_withdraw`, `_purge_rdb`, `_set_active`) 은 FakeUnitOfWork
 + mock_session 으로 트랜잭션 인터페이스만 충족. 실제 DB 비접근.
@@ -66,12 +66,6 @@ def beanie_stubs():
 
 
 @pytest.fixture
-def invalidate_cache_mock():
-    """Redis 캐시 무효화 모듈 함수 mock — 실 Redis 비접근."""
-    return AsyncMock(return_value=None)
-
-
-@pytest.fixture
 def user_purge_cache_service_mock():
     """chat 도메인 UserPurgeCacheService mock — withdraw 의 cross-domain 훅.
 
@@ -91,7 +85,6 @@ def service(
     storage_mock,
     inbox_service_mock,
     beanie_stubs,
-    invalidate_cache_mock,
     user_purge_cache_service_mock,
 ):
     """모든 외부 의존성을 mock 으로 치환한 WithdrawService.
@@ -101,7 +94,6 @@ def service(
       monkeypatch 우선 적용 후 service 인스턴스화
     - `get_object_storage`: 모듈 함수 → mock 반환 lambda
     - Beanie Document 5종: 모듈 import 경로에서 stub 으로 치환
-    - `invalidate_registered_cache`: 모듈 함수 → AsyncMock
     """
     monkeypatch.setattr(
         "app.domain.auth.service.withdraw.UserRepository",
@@ -114,10 +106,6 @@ def service(
     monkeypatch.setattr(
         "app.domain.auth.service.withdraw.get_object_storage",
         lambda: storage_mock,
-    )
-    monkeypatch.setattr(
-        "app.domain.auth.service.withdraw.invalidate_registered_cache",
-        invalidate_cache_mock,
     )
     for doc_name, stub in beanie_stubs.items():
         monkeypatch.setattr(

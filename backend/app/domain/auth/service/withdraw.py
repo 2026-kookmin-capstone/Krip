@@ -4,8 +4,6 @@ from uuid import uuid4
 
 from sqlalchemy import text
 
-from app.core.cache.key_category import KeyCategory
-from app.core.cache.redis_cache import get_redis_cache_manager
 from app.core.logger import get_logger
 from app.core.object_storage import get_object_storage
 from app.database.session import UnitOfWork, transactional
@@ -28,30 +26,12 @@ from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHist
 logger = get_logger("auth.withdraw")
 
 
-def _registered_cache_key(user_id: str) -> str:
-    return f"{KeyCategory.REGISTERED}:{user_id}"
-
-
 class _PurgeOutcome(Enum):
     """worker 의 `_purge_rdb` 결과 — `purge` 가 후속 분기 결정에 사용."""
     DELETED = "deleted"        # status==INACTIVE → hard delete 완료 → 외부 정리 진행
     NO_USER = "no_user"        # RDB 에 user 없음 (이전 사이클 외부 정리 잔존) → 외부 정리 진행
     STALE_DOC = "stale_doc"    # status!=INACTIVE → cancel 복구 또는 dual-write 불일치 → doc 만 청소
     STALE_GENERATION = "stale_generation"  # worker snapshot 뒤 cancel/re-withdraw → 전부 보존
-
-
-async def invalidate_registered_cache(user_id: str) -> None:
-    """`REGISTERED:{uid}` 캐시 무효화. 트랜잭션 commit **이후** 호출용 헬퍼.
-
-    트랜잭션 내부에서 호출하면 commit 전에 캐시가 비워져 race 가 생긴다 — 동시 요청이
-    아직 commit 되지 않은 ACTIVE 행을 읽고 캐시를 재기록 → 419 우회. 반드시 commit 후.
-    """
-    try:
-        cache = get_redis_cache_manager()
-        await cache.invalidate(_registered_cache_key(user_id))
-    except Exception as e:
-        # 실패해도 다음 캐시 TTL(24h) 만료 후 자연 정리 → 419 응답으로 자연 전환.
-        logger.warning("REGISTERED 캐시 무효화 실패 (user_id={}): {}", user_id, e)
 
 
 class WithdrawService:
@@ -74,7 +54,7 @@ class WithdrawService:
     async def request_withdraw(self, user_id: str) -> datetime:
         """INACTIVE 전환과 Mongo purge 요청을 함께 수행한다.
 
-        캐시 무효화는 미커밋 ACTIVE 재캐시 race를 막기 위해 router가 commit 후 수행한다.
+        chat session revoke는 router가 commit 후 수행한다.
         """
         await self._lock_withdrawal(user_id)
         user_repo = UserRepository(self._session)
@@ -105,8 +85,13 @@ class WithdrawService:
         )
         return purge_at
 
+    @transactional
     async def revoke_user_chat_state(self, user_id: str) -> None:
-        """commit 후 활성 chat session을 즉시 revoke한다."""
+        """현재 탈퇴 세대가 유효한 동안만 chat session을 revoke한다."""
+        await self._lock_withdrawal(user_id)
+        user = await UserRepository(self._session).find_by_id_for_update(user_id)
+        if user is None or user.status != UserStatus.INACTIVE:
+            return
         await self._chat_purge.revoke_all_sessions(user_id)
 
     async def purge(
@@ -280,11 +265,6 @@ class WithdrawService:
                 "탈퇴 영구 삭제 — Object Storage 삭제 실패, 다음 tick 재시도 (user_id={}): {}",
                 user_id, e,
             )
-
-        # Redis (REGISTERED 플래그 — 요청 시점에 이미 무효화되었지만 30일 사이 재로그인
-        # 등으로 다시 채워졌을 가능성에 대한 방어. TTL(24h) 보다 길게 살아있을 일은 없으나
-        # 보수적으로 한 번 더 정리.)
-        await invalidate_registered_cache(user_id)
 
         # chat 도메인 데이터성 키 (unread:{user_id} 등) — TTL 없어 명시 정리 필요.
         # 도메인 경계 유지를 위해 chat 의 cleanup 훅 통해 호출.
