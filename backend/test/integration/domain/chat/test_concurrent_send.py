@@ -9,6 +9,7 @@ import asyncio
 import pytest
 from pymongo.errors import ConnectionFailure
 from sqlalchemy import text
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 import app.domain.chat.worker.reconcile as reconcile
 from app.core.chat.redis_key import DIRTY_CHAT_ROOM_KEY, room_pending_message_key
@@ -49,7 +50,83 @@ async def test_sync_session_invalidate_force_releases_transaction_lock(session_f
 
 
 class TestConcurrentSendProducesMonotonicSeq:
-    async def test_room_lock_serializes_fanout_before_next_send(
+    async def test_fanout_authorization_cannot_exhaust_a_two_connection_pool(
+        self,
+        engine,
+        session_factory,
+        direct_room,
+        seed_users,
+        chat_fanout_stub,
+        message_service,
+        chat_fcm_stub,
+    ):
+        from app.domain.chat.service.room import RoomService
+
+        room_a, user_a, _ = direct_room
+        user_c, user_d = await seed_users(2)
+        room_b = (
+            await RoomService(
+                uow=UnitOfWork(session=session_factory),
+                fanout_service=chat_fanout_stub,
+                message_service=message_service,
+            ).create_direct_room(me_id=user_c, peer_user_id=user_d)
+        ).chat_room_id
+
+        pooled_engine = create_async_engine(
+            engine.url,
+            pool_size=2,
+            max_overflow=0,
+            pool_timeout=0.5,
+        )
+        pooled_factory = async_sessionmaker(
+            pooled_engine,
+            class_=AsyncSession,
+            expire_on_commit=False,
+        )
+        both_fanouts_started = asyncio.Event()
+        fanout_count = 0
+        fanout_count_lock = asyncio.Lock()
+
+        class AuthorizationFanout:
+            async def fan_out_to_room(self, _room_id, _payload):
+                nonlocal fanout_count
+                async with fanout_count_lock:
+                    fanout_count += 1
+                    if fanout_count == 2:
+                        both_fanouts_started.set()
+                await asyncio.wait_for(both_fanouts_started.wait(), timeout=1)
+                async with pooled_factory() as authorization_session:
+                    await authorization_session.execute(text("SELECT 1"))
+
+        async def send(user_id: str, room_id: str, client_msg_id: str):
+            return await MessageService(
+                uow=UnitOfWork(session=pooled_factory),
+                fanout_service=AuthorizationFanout(),
+                fcm_service_factory=lambda: chat_fcm_stub,
+            ).send_message(
+                sender_user_id=user_id,
+                sender_session_id=f"WS_{user_id}",
+                room_id=room_id,
+                client_msg_id=client_msg_id,
+                msg_type=MessageType.TEXT,
+                content=client_msg_id,
+            )
+
+        try:
+            first, second = await asyncio.wait_for(
+                asyncio.gather(
+                    send(user_a, room_a, "pool-a"),
+                    send(user_c, room_b, "pool-b"),
+                ),
+                timeout=2,
+            )
+        finally:
+            await pooled_engine.dispose()
+
+        assert first.server_seq > 0
+        assert second.server_seq > 0
+
+    async def test_room_lock_is_released_before_fanout_waits(
         self, session_factory, direct_room, chat_fcm_stub, monkeypatch,
     ):
         room_id, user_a, user_b = direct_room
@@ -65,7 +142,7 @@ class TestConcurrentSendProducesMonotonicSeq:
                     await allow_first_fanout.wait()
 
         async def observed_insert(repo, document):
-            if document["content"] == "second-waits-for-fanout":
+            if document["content"] == "second-runs-during-fanout":
                 second_insert_started.set()
             await original_insert(repo, document)
 
@@ -91,10 +168,10 @@ class TestConcurrentSendProducesMonotonicSeq:
         ))
         await asyncio.wait_for(first_fanout_started.wait(), timeout=2)
         second_task = asyncio.create_task(send(
-            user_b, "cmid-fanout-second", "second-waits-for-fanout",
+            user_b, "cmid-fanout-second", "second-runs-during-fanout",
         ))
         try:
-            await asyncio.wait_for(second_insert_started.wait(), timeout=0.1)
+            await asyncio.wait_for(second_insert_started.wait(), timeout=2)
             second_entered_early = True
         except asyncio.TimeoutError:
             second_entered_early = False
@@ -102,7 +179,7 @@ class TestConcurrentSendProducesMonotonicSeq:
             allow_first_fanout.set()
 
         first_ack, second_ack = await asyncio.gather(first_task, second_task)
-        assert not second_entered_early
+        assert second_entered_early
         assert first_ack.server_seq < second_ack.server_seq
 
     async def test_sends_insert_in_seq_reservation_order(

@@ -34,6 +34,7 @@ from app.core.chat.redis_key import (
 from app.core.logger import get_logger
 from app.core.redis import get_redis_client, get_redis_dedupe_client
 from app.database.session import UnitOfWork, _current_session, mongodb, transactional
+from app.domain.auth.repository.user import UserRepository
 from app.domain.chat.dto.message import MessageSentAckData
 from app.domain.chat.model.chat_message import MessageType
 from app.domain.chat.model.chat_room import ChatRoomType
@@ -54,7 +55,7 @@ logger = get_logger("chat.send")
 _MAX_INSERT_ATTEMPTS = 3
 FOREGROUND_MONGO_RETRY_SEC = 15.0
 EDIT_TIME_LIMIT = timedelta(minutes=5)
-_PUSH_BODY_PREVIEW_LIMIT = 100
+
 
 # dedupe 값의 예약(placeholder) 상태 — Mongo durable 후 ACK JSON 으로 교체된다.
 _DEDUPE_PENDING = "1"
@@ -343,7 +344,6 @@ class MessageService:
 
     @_with_mongo_recovery_deadline
     @_propagate_deferred_insert_cancel
-    @transactional
     async def send_message(
         self,
         *,
@@ -354,7 +354,49 @@ class MessageService:
         msg_type: MessageType,
         content: str,
     ) -> MessageSentAckData:
-        """WS `op=send` 처리 — ACK DTO 반환, 실패는 예외로 전파."""
+        """메시지를 durable 저장한 뒤 DB connection을 반납하고 fanout한다."""
+        ack, fanout_payload, push_recipient_generations = await self._send_message_tx(
+            sender_user_id=sender_user_id,
+            sender_session_id=sender_session_id,
+            room_id=room_id,
+            client_msg_id=client_msg_id,
+            msg_type=msg_type,
+            content=content,
+        )
+        if fanout_payload is None:
+            return ack
+
+        try:
+            await self._fanout.fan_out_to_room(room_id, fanout_payload)
+        except Exception as e:
+            logger.warning(
+                "fanout 실패 (메시지는 저장됨 — 수신자는 히스토리/FCM 으로 수신): "
+                "room_id={}, err={}",
+                room_id, type(e).__name__,
+            )
+
+        if msg_type != MessageType.SYSTEM:
+            self._spawn_push_task(
+                message_id=ack.message_id,
+                room_id=room_id,
+                sender_user_id=sender_user_id,
+                content=content,
+                recipient_generations=push_recipient_generations,
+            )
+        return ack
+
+    @transactional
+    async def _send_message_tx(
+        self,
+        *,
+        sender_user_id: str,
+        sender_session_id: str,
+        room_id: str,
+        client_msg_id: str,
+        msg_type: MessageType,
+        content: str,
+    ) -> tuple[MessageSentAckData, dict | None, dict[str, datetime]]:
+        """WS `op=send`의 durable 저장 파트 — fanout payload와 ACK를 반환."""
 
         member_repo = ChatRoomMemberRepository(self._session)
         chat_room_repo = ChatRoomRepository(self._session)
@@ -369,8 +411,18 @@ class MessageService:
             redis_dedupe, dedupe_k, client_msg_id, room_id,
         )
         if replay is not None:
-            if await redis_hot.get(room_pending_message_key(room_id)) is None:
-                return replay
+            # replay는 이미 durable한 과거 전송의 ACK 재전달 — 현재 membership/rate
+            # 재검증 대상이 아니다 (전송 후 퇴장한 멤버도 ACK는 받아야 한다).
+            # 방에 무관한 orphan pending이 있으면 room mutex 아래 복구만 수행한다.
+            if await redis_hot.get(room_pending_message_key(room_id)) is not None:
+                if await chat_room_repo.find_by_id_for_update(room_id) is not None:
+                    await _recover_pending_message(
+                        redis_hot, redis_dedupe, message_repo, room_id,
+                    )
+            return replay, None, {}
+
+        if not await UserRepository(self._session).lock_if_active(sender_user_id):
+            raise PermissionError("비활성 계정은 메시지를 보낼 수 없습니다.")
 
         # room별 seq 예약과 Mongo insert를 같은 순서로 직렬화한다. 그렇지 않으면 N이
         # in-flight인 동안 N+1이 먼저 저장돼 Mongo max 기반 read가 N까지 선행 처리한다.
@@ -422,7 +474,7 @@ class MessageService:
                 allow_legacy_room=True,
             )
             if replay is not None:
-                return replay
+                return replay, None, {}
             raise ValueError("메시지가 처리 중입니다. 잠시 후 다시 시도해주세요.")
 
         mongo_durable = False
@@ -470,7 +522,7 @@ class MessageService:
                             message_id=existing["_id"],
                             server_seq=int(existing["server_seq"]),
                             created_at=existing["created_at"],
-                        )
+                        ), None, {}
                     server_seq = await _force_jump_seq(room_id)
                     doc["server_seq"] = server_seq
             else:
@@ -522,44 +574,34 @@ class MessageService:
                     room_id, type(e).__name__,
                 )
 
-        try:
-            await self._fanout.fan_out_to_room(
-                room_id,
-                {
-                    "type": "message.new",
-                    "sender_session_id": sender_session_id,
-                    "message": {
-                        "message_id": message_id,
-                        "chat_room_id": room_id,
-                        "server_seq": server_seq,
-                        "sender_id": sender_user_id,
-                        "type": msg_type.value,
-                        "content": content,
-                        "created_at": now.isoformat(),
-                    },
-                },
-            )
-        except Exception as e:
-            logger.warning(
-                "fanout 실패 (메시지는 저장됨 — 수신자는 히스토리/FCM 으로 수신): "
-                "room_id={}, err={}",
-                room_id, type(e).__name__,
-            )
-
-        # FCM은 durable 저장 후 fire-and-forget으로 ACK를 지연시키지 않는다.
-        if msg_type != MessageType.SYSTEM:
-            self._spawn_push_task(
-                room_id=room_id,
-                sender_user_id=sender_user_id,
-                content=content,
-            )
-
-        return MessageSentAckData(
+        ack = MessageSentAckData(
             client_msg_id=client_msg_id,
             message_id=message_id,
             server_seq=server_seq,
             created_at=now,
         )
+        push_recipient_generations: dict[str, datetime] = {}
+        if msg_type != MessageType.SYSTEM:
+            push_recipient_generations = {
+                uid: generation
+                for uid, generation in (
+                    await member_repo.find_active_membership_generations(room_id)
+                ).items()
+                if uid != sender_user_id
+            }
+        return ack, {
+            "type": "message.new",
+            "sender_session_id": sender_session_id,
+            "message": {
+                "message_id": message_id,
+                "chat_room_id": room_id,
+                "server_seq": server_seq,
+                "sender_id": sender_user_id,
+                "type": msg_type.value,
+                "content": content,
+                "created_at": now.isoformat(),
+            },
+        }, push_recipient_generations
 
     @staticmethod
     async def _ensure_membership(
@@ -644,7 +686,6 @@ class MessageService:
 
     @_with_mongo_recovery_deadline
     @_propagate_deferred_insert_cancel
-    @transactional
     async def send_system_message(
         self,
         *,
@@ -653,12 +694,56 @@ class MessageService:
         actor_id: str | None,
         target_ids: list[str] | None = None,
         actor_session_id: str | None = None,
+        required_removed_user_id: str | None = None,
+        required_joined_user_ids: list[str] | None = None,
+        required_removed_generation: datetime | None = None,
+        required_joined_generations: dict[str, datetime] | None = None,
     ) -> None:
         """방 관리 액션 (`created`/`join`/`leave`/`kick`) 의 타임라인 시스템 메시지 기록.
 
         멤버십 / rate limit / dedupe / unread 증가 모두 skip.
         `actor_session_id` 가 있으면 해당 세션 자기 에코를 차단.
         """
+        payload = await self._send_system_message_tx(
+            room_id=room_id,
+            action=action,
+            actor_id=actor_id,
+            target_ids=target_ids,
+            actor_session_id=actor_session_id,
+            required_removed_user_id=required_removed_user_id,
+            required_joined_user_ids=required_joined_user_ids,
+            required_removed_generation=required_removed_generation,
+            required_joined_generations=required_joined_generations,
+        )
+        if payload is None:
+            return
+        try:
+            await self._fanout.fan_out_to_room(room_id, payload)
+        except Exception as e:
+            logger.warning(
+                "시스템 메시지 fanout 실패 (메시지는 저장됨): room_id={}, err={}",
+                room_id, type(e).__name__,
+            )
+        logger.info(
+            "시스템 메시지: room_id={}, action={}, actor={}, seq={}, target_ids={}",
+            room_id, action, actor_id, payload["message"]["server_seq"], target_ids,
+        )
+
+    @transactional
+    async def _send_system_message_tx(
+        self,
+        *,
+        room_id: str,
+        action: str,
+        actor_id: str | None,
+        target_ids: list[str] | None = None,
+        actor_session_id: str | None = None,
+        required_removed_user_id: str | None = None,
+        required_joined_user_ids: list[str] | None = None,
+        required_removed_generation: datetime | None = None,
+        required_joined_generations: dict[str, datetime] | None = None,
+    ) -> dict | None:
+        """시스템 메시지 durable 저장 파트 — commit 후 보낼 payload를 반환."""
         message_repo = ChatMessageRepository(mongodb.database)
         chat_room_repo = ChatRoomRepository(self._session)
         redis_hot = await get_redis_client()
@@ -668,6 +753,32 @@ class MessageService:
         room = await chat_room_repo.find_by_id_for_update(room_id)
         if room is None:
             raise ValueError("존재하지 않는 방입니다.")
+        member_repo = ChatRoomMemberRepository(self._session)
+        if required_removed_user_id is not None:
+            if required_removed_generation is not None:
+                matching = await member_repo.lock_matching_membership_generations(
+                    room_id,
+                    {required_removed_user_id: required_removed_generation},
+                    is_left=True,
+                )
+                if required_removed_user_id not in matching:
+                    return None
+            else:
+                member = await member_repo.find(room_id, required_removed_user_id)
+                if member is None or not member.is_left:
+                    return None
+        if required_joined_user_ids is not None:
+            if required_joined_generations is not None:
+                active_ids = await member_repo.lock_matching_membership_generations(
+                    room_id, required_joined_generations, is_left=False,
+                )
+            else:
+                active_ids = await member_repo.lock_active_member_user_ids(
+                    room_id, set(required_joined_user_ids),
+                )
+            target_ids = [uid for uid in required_joined_user_ids if uid in active_ids]
+            if not target_ids:
+                return None
 
         await _recover_pending_message(
             redis_hot, redis_dedupe, message_repo, room_id,
@@ -738,37 +849,20 @@ class MessageService:
             )
             await redis_hot.sadd(DIRTY_CHAT_ROOM_KEY, room_id)
 
-        # fanout 은 best-effort — Redis 장애로 예외가 나도 이미 durable 한 시스템 메시지를
-        # 롤백/실패시키지 않는다 (수신자는 히스토리로 수신, 일반 송신 경로와 동일).
-        try:
-            await self._fanout.fan_out_to_room(
-                room_id,
-                {
-                    "type": "message.new",
-                    "sender_session_id": actor_session_id,
-                    "message": {
-                        "message_id": message_id,
-                        "chat_room_id": room_id,
-                        "server_seq": server_seq,
-                        "sender_id": None,
-                        "type": MessageType.SYSTEM.value,
-                        "content": content,
-                        "created_at": now.isoformat(),
-                    },
-                },
-            )
-        except Exception as e:
-            logger.warning(
-                "시스템 메시지 fanout 실패 (메시지는 저장됨): room_id={}, err={}",
-                room_id, type(e).__name__,
-            )
+        return {
+            "type": "message.new",
+            "sender_session_id": actor_session_id,
+            "message": {
+                "message_id": message_id,
+                "chat_room_id": room_id,
+                "server_seq": server_seq,
+                "sender_id": None,
+                "type": MessageType.SYSTEM.value,
+                "content": content,
+                "created_at": now.isoformat(),
+            },
+        }
 
-        logger.info(
-            "시스템 메시지: room_id={}, action={}, actor={}, seq={}, target_ids={}",
-            room_id, action, actor_id, server_seq, target_ids,
-        )
-
-    @transactional
     async def edit_message(
         self,
         *,
@@ -778,6 +872,29 @@ class MessageService:
         new_content: str,
     ) -> dict:
         """본인 메시지를 5분 이내 편집. 시스템 메시지 / 삭제된 메시지 / 비활성 멤버는 거절."""
+        result, room_id, payload = await self._edit_message_tx(
+            message_id=message_id,
+            editor_user_id=editor_user_id,
+            editor_session_id=editor_session_id,
+            new_content=new_content,
+        )
+        await self._fanout.fan_out_to_room(room_id, payload)
+        logger.info(
+            "메시지 편집: message_id={}, editor={}, room_id={}",
+            message_id, editor_user_id, room_id,
+        )
+        return result
+
+    @transactional
+    async def _edit_message_tx(
+        self,
+        *,
+        message_id: str,
+        editor_user_id: str,
+        editor_session_id: str,
+        new_content: str,
+    ) -> tuple[dict, str, dict]:
+        """메시지 편집 durable mutation 파트 — commit 후 delivery payload를 반환."""
         await self._lock_message_mutation(message_id)
         member_repo = ChatRoomMemberRepository(self._session)
         message_repo = ChatMessageRepository(mongodb.database)
@@ -793,7 +910,9 @@ class MessageService:
             raise PermissionError("본인 메시지만 편집할 수 있습니다.")
 
         room_id = doc["chat_room_id"]
-        if not await member_repo.is_active_member(room_id, editor_user_id):
+        if not await UserRepository(self._session).lock_if_active(editor_user_id):
+            raise PermissionError("비활성 계정은 메시지를 편집할 수 없습니다.")
+        if not await member_repo.is_active_member_for_share(room_id, editor_user_id):
             raise PermissionError("이 방의 활성 멤버가 아닙니다.")
 
         now = datetime.now(timezone.utc)
@@ -810,24 +929,16 @@ class MessageService:
         if updated is not True:
             raise ValueError("메시지가 동시에 변경되었습니다. 다시 시도해주세요.")
 
-        await self._fanout.fan_out_to_room(
-            room_id,
-            {
-                "type": "message.updated",
-                "sender_session_id": editor_session_id,
-                "message_id": message_id,
-                "content": new_content,
-                "edited_at": now.isoformat(),
-            },
-        )
+        result = {"message_id": message_id, "content": new_content, "edited_at": now}
+        payload = {
+            "type": "message.updated",
+            "sender_session_id": editor_session_id,
+            "message_id": message_id,
+            "content": new_content,
+            "edited_at": now.isoformat(),
+        }
+        return result, room_id, payload
 
-        logger.info(
-            "메시지 편집: message_id={}, editor={}, room_id={}",
-            message_id, editor_user_id, room_id,
-        )
-        return {"message_id": message_id, "content": new_content, "edited_at": now}
-
-    @transactional
     async def delete_message(
         self,
         *,
@@ -841,6 +952,26 @@ class MessageService:
         불확실성을 위해 권한 확인 후 이미 삭제된 요청은 동일 tombstone을 재발행한다.
         durable delete 뒤 delivery 실패는 호출자에게 노출해 같은 요청의 재시도로 복구한다.
         """
+        room_id, payload, was_own = await self._delete_message_tx(
+            message_id=message_id,
+            deleter_user_id=deleter_user_id,
+            deleter_session_id=deleter_session_id,
+        )
+        await self._fanout.fan_out_to_room(room_id, payload)
+        logger.info(
+            "메시지 삭제: message_id={}, deleter={}, room_id={}, was_own={}",
+            message_id, deleter_user_id, room_id, was_own,
+        )
+
+    @transactional
+    async def _delete_message_tx(
+        self,
+        *,
+        message_id: str,
+        deleter_user_id: str,
+        deleter_session_id: str,
+    ) -> tuple[str, dict, bool]:
+        """메시지 삭제 durable mutation 파트 — commit 후 tombstone payload를 반환."""
         await self._lock_message_mutation(message_id)
         member_repo = ChatRoomMemberRepository(self._session)
         chat_room_repo = ChatRoomRepository(self._session)
@@ -855,7 +986,9 @@ class MessageService:
         room_id = doc["chat_room_id"]
         sender_id = doc.get("sender_id")
 
-        if not await member_repo.is_active_member(room_id, deleter_user_id):
+        if not await UserRepository(self._session).lock_if_active(deleter_user_id):
+            raise PermissionError("비활성 계정은 메시지를 삭제할 수 없습니다.")
+        if not await member_repo.is_active_member_for_share(room_id, deleter_user_id):
             raise PermissionError("이 방의 활성 멤버가 아닙니다.")
 
         if sender_id != deleter_user_id:
@@ -884,20 +1017,12 @@ class MessageService:
         else:
             logger.info("메시지 삭제 delivery 재시도: message_id={}", message_id)
 
-        await self._fanout.fan_out_to_room(
-            room_id,
-            {
-                "type": "message.deleted",
-                "sender_session_id": deleter_session_id,
-                "message_id": message_id,
-                "deleted_at": deleted_at.isoformat(),
-            },
-        )
-
-        logger.info(
-            "메시지 삭제: message_id={}, deleter={}, room_id={}, was_own={}",
-            message_id, deleter_user_id, room_id, sender_id == deleter_user_id,
-        )
+        return room_id, {
+            "type": "message.deleted",
+            "sender_session_id": deleter_session_id,
+            "message_id": message_id,
+            "deleted_at": deleted_at.isoformat(),
+        }, sender_id == deleter_user_id
 
     async def _lock_message_mutation(self, message_id: str) -> None:
         await self._session.execute(
@@ -940,22 +1065,26 @@ class MessageService:
             )
 
     def _spawn_push_task(
-        self, *, room_id: str, sender_user_id: str, content: str,
+        self, *, message_id: str, room_id: str, sender_user_id: str, content: str,
+        recipient_generations: dict[str, datetime],
     ) -> None:
         """푸시 task를 앱 lifecycle supervisor에 등록한다."""
         background_tasks.spawn(
             self._push_chat_to_recipients(
+                message_id=message_id,
                 room_id=room_id,
                 sender_user_id=sender_user_id,
                 content=content,
+                recipient_generations=recipient_generations,
             ),
             name=f"chat-push-{room_id}",
         )
 
     async def _push_chat_to_recipients(
-        self, *, room_id: str, sender_user_id: str, content: str,
+        self, *, message_id: str, room_id: str, sender_user_id: str, content: str,
+        recipient_generations: dict[str, datetime],
     ) -> None:
-        """발신자 제외 방 멤버 전체에 FCM 푸시. 어떤 예외도 raise 하지 않는다."""
+        """message commit 시 캡처한 수신 후보에만 FCM 푸시. 어떤 예외도 raise 하지 않는다."""
         # 상속된 부모 Context 엔 이미 닫힌 세션이 박혀있다 — 끊어줘야 하위 @transactional 이
         # 좀비 세션에 join 하지 않고 새 트랜잭션을 연다.
         _current_session.set(None)
@@ -963,24 +1092,17 @@ class MessageService:
         # 공유하면 인스턴스 상태(self._session)가 task 간 덮어써진다.
         fcm = self._fcm_factory()
         try:
-            redis_hot = await get_redis_client()
-            members = await redis_hot.smembers(room_members_key(room_id))
-            recipients = [uid for uid in members if uid != sender_user_id]
-            if not recipients:
+            if not recipient_generations:
                 return
-
-            body = (
-                content[:_PUSH_BODY_PREVIEW_LIMIT] + "..."
-                if len(content) > _PUSH_BODY_PREVIEW_LIMIT
-                else content
-            )
 
             # title 은 FcmService 가 sender_id 로 user_name 조회해 채움 (결손 시 "새 메시지" 폴백).
             await fcm.send_chat_push(
-                user_ids=recipients,
+                user_ids=sorted(recipient_generations),
+                expected_membership_generations=recipient_generations,
                 chat_room_id=room_id,
                 sender_id=sender_user_id,
-                body=body,
+                body=content,
+                message_id=message_id,
             )
         except Exception as e:
             logger.warning(

@@ -314,6 +314,8 @@ class TestListRooms:
         assert result.items[0].last_message is not None
         assert result.items[0].last_message.content is None
         assert result.items[0].last_message.server_seq == 10
+        assert result.items[0].last_message.deleted_at == NOW
+        assert result.items[0].last_message.edited_at is None
 
     async def test_last_message_preview_keeps_system_content_dict(
         self, service, chat_room_repo_mock, redis_mock, message_repo_mock,

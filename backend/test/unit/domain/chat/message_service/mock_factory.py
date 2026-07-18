@@ -1,4 +1,5 @@
 """MessageService 단위 테스트용 Mock 팩토리."""
+from datetime import datetime, timezone
 from types import SimpleNamespace
 from unittest.mock import AsyncMock, MagicMock
 
@@ -70,8 +71,16 @@ def make_chat_room_repo_mock() -> AsyncMock:
 def make_chat_member_repo_mock() -> AsyncMock:
     mock = AsyncMock()
     mock.find_active_member_ids.return_value = ["U_A", "U_B"]
+    generation = datetime(2026, 1, 1, tzinfo=timezone.utc)
+    mock.find_active_membership_generations.return_value = {
+        "U_A": generation,
+        "U_B": generation,
+    }
     mock.is_active_member.return_value = True
     mock.is_active_member_for_share.return_value = True
+    mock.lock_matching_membership_generations.side_effect = (
+        lambda _room_id, expected, **_kwargs: set(expected)
+    )
     return mock
 
 

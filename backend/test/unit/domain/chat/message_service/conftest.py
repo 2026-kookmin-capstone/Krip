@@ -1,3 +1,5 @@
+from unittest.mock import AsyncMock, MagicMock
+
 import pytest
 
 from app.domain.chat.service.message import MessageService
@@ -18,6 +20,13 @@ from test.unit.domain.chat.message_service.mock_factory import (
 @pytest.fixture
 def mock_session():
     return make_mock_session()
+
+
+@pytest.fixture
+def user_repo_mock():
+    mock = MagicMock()
+    mock.lock_if_active = AsyncMock(return_value=True)
+    return mock
 
 
 @pytest.fixture
@@ -65,6 +74,7 @@ def lua_mock():
 def service(
     monkeypatch,
     mock_session,
+    user_repo_mock,
     chat_room_repo_mock,
     chat_member_repo_mock,
     message_repo_mock,
@@ -86,6 +96,10 @@ def service(
     monkeypatch.setattr(
         "app.domain.chat.service.message.ChatMessageRepository",
         lambda db: message_repo_mock,
+    )
+    monkeypatch.setattr(
+        "app.domain.chat.service.message.UserRepository",
+        lambda session: user_repo_mock,
     )
     monkeypatch.setattr(
         "app.domain.chat.service.message.mongodb",

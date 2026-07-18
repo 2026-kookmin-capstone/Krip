@@ -18,8 +18,8 @@ class ChatMessageResponse(BaseModel):
         ),
     )
     created_at: datetime = Field(..., description="보낸 시각")
-    edited_at: Optional[datetime] = Field(None, description="마지막 편집 시각 (없으면 null)")
-    deleted_at: Optional[datetime] = Field(None, description="삭제 시각 (없으면 null)")
+    edited_at: Optional[datetime] = Field(..., description="마지막 편집 시각 (없으면 null)")
+    deleted_at: Optional[datetime] = Field(..., description="삭제 시각 (없으면 null)")
 
 
 class MessageHistoryResponse(BaseModel):

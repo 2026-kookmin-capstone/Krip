@@ -516,7 +516,8 @@ def _patches(
     async def _get_redis():
         return redis
 
-    async def _count(*, chat_room_id, after_seq, limit):
+    async def _count(*, chat_room_id, after_seq, exclude_sender_user_id, limit):
+        assert exclude_sender_user_id == _UID
         assert session.active, "room lock must cover residual count"
         result = residuals[chat_room_id]
         if isinstance(result, BaseException):

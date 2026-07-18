@@ -1,15 +1,16 @@
 import asyncio
-from datetime import datetime, timezone
 
 import pytest
 from sqlalchemy import select
 from sqlalchemy.exc import DBAPIError
 
 from app.database.session import UnitOfWork
+from app.domain.chat.model.chat_message import MessageType
 from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
 from app.domain.chat.model.chat_room_member import ChatRoomMember
 from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
 from app.domain.chat.repository.chat_room import ChatRoomRepository
+from app.domain.chat.service.message import MessageService
 from app.domain.chat.service.room import RoomService
 
 
@@ -79,7 +80,12 @@ async def test_recovery_membership_lock_blocks_concurrent_leave_update(
 
 
 async def test_send_and_leave_lock_order_does_not_deadlock(
-    seed_users, session_factory, monkeypatch,
+    seed_users,
+    session_factory,
+    monkeypatch,
+    chat_fanout_stub,
+    chat_fcm_stub,
+    patch_external_clients,
 ):
     user_id, _, _ = await seed_users(3)
     async with session_factory() as session:
@@ -90,53 +96,48 @@ async def test_send_and_leave_lock_order_does_not_deadlock(
         session.add(ChatRoomMember(chat_room_id=room_id, user_id=user_id))
         await session.commit()
 
+    room_locked = asyncio.Event()
     member_locked = asyncio.Event()
-    room_lookup_done = asyncio.Event()
-    original_share = ChatRoomMemberRepository.is_active_member_for_share
-    original_find = ChatRoomRepository.find_by_id
-    original_find_for_update = ChatRoomRepository.find_by_id_for_update
+    original_room_lock = ChatRoomRepository.find_by_id_for_update
+    original_member_lock = ChatRoomMemberRepository.find_for_update
 
-    async def coordinated_share(repo, target_room_id, target_user_id):
-        result = await original_share(repo, target_room_id, target_user_id)
+    async def coordinated_room_lock(repo, target_room_id):
+        result = await original_room_lock(repo, target_room_id)
+        room_locked.set()
+        await member_locked.wait()
+        return result
+
+    async def coordinated_member_lock(repo, target_room_id, target_user_id):
+        await room_locked.wait()
+        result = await original_member_lock(repo, target_room_id, target_user_id)
         member_locked.set()
-        await room_lookup_done.wait()
         return result
 
-    async def coordinated_find(repo, target_room_id):
-        await member_locked.wait()
-        result = await original_find(repo, target_room_id)
-        room_lookup_done.set()
-        return result
-
-    async def coordinated_find_for_update(repo, target_room_id):
-        await member_locked.wait()
-        result = await original_find_for_update(repo, target_room_id)
-        room_lookup_done.set()
-        return result
-
-    monkeypatch.setattr(
-        ChatRoomMemberRepository,
-        "is_active_member_for_share",
-        coordinated_share,
-    )
-    monkeypatch.setattr(ChatRoomRepository, "find_by_id", coordinated_find)
     monkeypatch.setattr(
         ChatRoomRepository,
         "find_by_id_for_update",
-        coordinated_find_for_update,
+        coordinated_room_lock,
+    )
+    monkeypatch.setattr(
+        ChatRoomMemberRepository,
+        "find_for_update",
+        coordinated_member_lock,
     )
 
-    async def send_db_part():
-        async with session_factory() as session:
-            async with session.begin():
-                member_repo = ChatRoomMemberRepository(session)
-                assert await member_repo.is_active_member_for_share(room_id, user_id)
-                await ChatRoomRepository(session).update_last_message_if_greater(
-                    chat_room_id=room_id,
-                    message_id="MSG_lock_order",
-                    server_seq=1,
-                    at=datetime.now(timezone.utc),
-                )
+    async def send():
+        service = MessageService(
+            uow=UnitOfWork(session_factory),
+            fanout_service=chat_fanout_stub,
+            fcm_service_factory=lambda: chat_fcm_stub,
+        )
+        return await service.send_message(
+            sender_user_id=user_id,
+            sender_session_id="WS_lock_order",
+            room_id=room_id,
+            client_msg_id="CLIENT_lock_order",
+            msg_type=MessageType.TEXT,
+            content="race",
+        )
 
     async def leave_db_part():
         service = RoomService(
@@ -146,7 +147,12 @@ async def test_send_and_leave_lock_order_does_not_deadlock(
         )
         await service._leave_room_tx(me_id=user_id, room_id=room_id)
 
-    await asyncio.wait_for(
-        asyncio.gather(send_db_part(), leave_db_part()),
+    send_task = asyncio.create_task(send())
+    await asyncio.wait_for(room_locked.wait(), timeout=2)
+    leave_task = asyncio.create_task(leave_db_part())
+    results = await asyncio.wait_for(
+        asyncio.gather(send_task, leave_task, return_exceptions=True),
         timeout=5,
     )
+    assert isinstance(results[0], PermissionError)
+    assert not isinstance(results[1], BaseException)

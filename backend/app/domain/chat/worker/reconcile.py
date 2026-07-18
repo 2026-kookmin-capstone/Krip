@@ -638,6 +638,7 @@ async def _recover_unread_for_user_locked(
             message_repo.count_after_seq(
                 chat_room_id=room_id,
                 after_seq=last_read,
+                exclude_sender_user_id=user_id,
                 limit=UNREAD_COUNT_LIMIT,
             ),
             message_repo.get_max_server_seq(room_id),

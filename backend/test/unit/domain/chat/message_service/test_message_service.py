@@ -24,7 +24,8 @@ async def test_push_task_is_registered_with_application_supervisor(service, monk
     monkeypatch.setattr(service, "_push_chat_to_recipients", AsyncMock())
 
     service._spawn_push_task(
-        room_id="CR_lifecycle", sender_user_id="U_A", content="hello",
+        message_id="M_lifecycle", room_id="CR_lifecycle", sender_user_id="U_A", content="hello",
+        recipient_generations={"U_B": datetime(2026, 1, 1, tzinfo=timezone.utc)},
     )
 
     supervisor.spawn.assert_called_once()
@@ -97,7 +98,7 @@ class TestHappyPath:
 
 @pytest.mark.unit
 class TestMembershipCheck:
-    async def test_cache_hit_skips_full_member_load(
+    async def test_cache_hit_skips_cache_member_reload_but_captures_push_generations(
         self, service, redis_mock, chat_member_repo_mock,
     ):
         redis_mock.sismember = AsyncMock(return_value=True)
@@ -108,7 +109,8 @@ class TestMembershipCheck:
         )
 
         chat_member_repo_mock.is_active_member_for_share.assert_awaited_once_with("CR_1", "U_A")
-        chat_member_repo_mock.find_active_member_ids.assert_not_called()
+        chat_member_repo_mock.find_active_member_ids.assert_not_awaited()
+        chat_member_repo_mock.find_active_membership_generations.assert_awaited_once_with("CR_1")
 
     async def test_cache_hit_rejects_member_who_left_rdb(
         self, service, redis_mock, chat_member_repo_mock, message_repo_mock,
@@ -120,6 +122,19 @@ class TestMembershipCheck:
             await service.send_message(
                 sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
                 client_msg_id="cm-stale", msg_type=MessageType.TEXT, content="x",
+            )
+
+        message_repo_mock.insert.assert_not_awaited()
+
+    async def test_inactive_sender_is_rejected_inside_mutation_transaction(
+        self, service, user_repo_mock, message_repo_mock,
+    ):
+        user_repo_mock.lock_if_active.return_value = False
+
+        with pytest.raises(PermissionError, match="비활성 계정"):
+            await service.send_message(
+                sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+                client_msg_id="cm-inactive", msg_type=MessageType.TEXT, content="x",
             )
 
         message_repo_mock.insert.assert_not_awaited()
@@ -149,6 +164,7 @@ class TestMembershipCheck:
         )
 
         chat_member_repo_mock.find_active_member_ids.assert_awaited_once_with("CR_1")
+        chat_member_repo_mock.find_active_membership_generations.assert_awaited_once_with("CR_1")
         lua_mock.populate_members.assert_awaited_once()
         args = lua_mock.populate_members.call_args.kwargs["args"]
         assert set(args[2:]) == {"U_A", "U_B"}, "멤버 목록이 Lua ARGV 로 전달되지 않음"
@@ -275,6 +291,37 @@ class TestDedupe:
         chat_member_repo_mock.is_active_member_for_share.assert_not_awaited()
         chat_room_repo_mock.find_by_id.assert_not_awaited()
         message_repo_mock.insert.assert_not_awaited()
+        lua_mock.incr_with_ttl.assert_not_awaited()
+        redis_dedupe_mock.set.assert_not_awaited()
+
+    async def test_replay_with_orphan_pending_recovers_without_revalidation(
+        self, service, redis_dedupe_mock, redis_mock, chat_room_repo_mock,
+        chat_member_repo_mock, lua_mock, monkeypatch,
+    ):
+        """replay ACK + 무관한 orphan pending → 복구만 수행하고 재검증 없이 ACK replay."""
+        import json
+        redis_dedupe_mock.get = AsyncMock(return_value=json.dumps({
+            "room_id": "CR_1",
+            "message_id": "MSG_original",
+            "server_seq": 42,
+            "created_at": "2026-07-09T00:00:00+00:00",
+        }))
+        redis_mock.get = AsyncMock(return_value='{"_id": "MSG_orphan"}')
+        recover = AsyncMock()
+        monkeypatch.setattr(
+            "app.domain.chat.service.message._recover_pending_message", recover,
+        )
+        chat_member_repo_mock.is_active_member_for_share.return_value = False
+
+        ack = await service.send_message(
+            sender_user_id="U_A", sender_session_id="WS_A", room_id="CR_1",
+            client_msg_id="cm-dup", msg_type=MessageType.TEXT, content="x",
+        )
+
+        assert ack.message_id == "MSG_original"
+        recover.assert_awaited_once()
+        chat_room_repo_mock.find_by_id_for_update.assert_awaited_once_with("CR_1")
+        chat_member_repo_mock.is_active_member_for_share.assert_not_awaited()
         lua_mock.incr_with_ttl.assert_not_awaited()
         redis_dedupe_mock.set.assert_not_awaited()
 
@@ -888,6 +935,37 @@ class TestDedupeReleaseOnFailure:
 
 @pytest.mark.unit
 class TestPostPersistPropagationBestEffort:
+    async def test_send_fanout_runs_after_transaction_releases_connection(
+        self, service, mock_session, fanout_mock, lua_mock,
+    ):
+        events: list[str] = []
+
+        class TrackingUnitOfWork:
+            async def __aenter__(self):
+                events.append("transaction_enter")
+                return mock_session
+
+            async def __aexit__(self, exc_type, exc, tb):
+                events.append("connection_released")
+                return False
+
+        service.uow = TrackingUnitOfWork()
+        lua_mock.incr_fast.return_value = 7
+        fanout_mock.fan_out_to_room.side_effect = (
+            lambda *_args, **_kwargs: events.append("fanout")
+        )
+
+        await service.send_message(
+            sender_user_id="U_A",
+            sender_session_id="WS_A",
+            room_id="CR_1",
+            client_msg_id="cid-post-commit",
+            msg_type=MessageType.TEXT,
+            content="hello",
+        )
+
+        assert events == ["transaction_enter", "connection_released", "fanout"]
+
     async def test_fanout_failure_still_returns_ack_and_keeps_dedupe(
         self, service, fanout_mock, redis_dedupe_mock, lua_mock,
     ):
@@ -981,6 +1059,31 @@ class TestUnread:
 
 @pytest.mark.unit
 class TestSendSystemMessage:
+    async def test_fanout_runs_after_transaction_releases_connection(
+        self, service, mock_session, fanout_mock,
+    ):
+        events: list[str] = []
+
+        class TrackingUnitOfWork:
+            async def __aenter__(self):
+                events.append("transaction_enter")
+                return mock_session
+
+            async def __aexit__(self, exc_type, exc, tb):
+                events.append("connection_released")
+                return False
+
+        service.uow = TrackingUnitOfWork()
+        fanout_mock.fan_out_to_room.side_effect = (
+            lambda *_args, **_kwargs: events.append("fanout")
+        )
+
+        await service.send_system_message(
+            room_id="CR_1", action="created", actor_id="U_A",
+        )
+
+        assert events == ["transaction_enter", "connection_released", "fanout"]
+
     async def test_locks_room_before_seq_reservation(
         self, service, chat_room_repo_mock,
     ):
@@ -989,6 +1092,53 @@ class TestSendSystemMessage:
         )
 
         chat_room_repo_mock.find_by_id_for_update.assert_awaited_once_with("CR_1")
+
+    async def test_stale_leave_message_is_skipped_after_reinvite(
+        self, service, chat_member_repo_mock, message_repo_mock, fanout_mock,
+    ):
+        chat_member_repo_mock.find.return_value = SimpleNamespace(is_left=False)
+
+        await service.send_system_message(
+            room_id="CR_1",
+            action="leave",
+            actor_id="U_A",
+            required_removed_user_id="U_A",
+        )
+
+        message_repo_mock.insert.assert_not_awaited()
+        fanout_mock.fan_out_to_room.assert_not_awaited()
+
+    async def test_stale_join_message_is_skipped_after_member_leaves(
+        self, service, chat_member_repo_mock, message_repo_mock, fanout_mock,
+    ):
+        chat_member_repo_mock.lock_active_member_user_ids.return_value = set()
+
+        await service.send_system_message(
+            room_id="CR_1",
+            action="join",
+            actor_id="U_A",
+            target_ids=["U_B"],
+            required_joined_user_ids=["U_B"],
+        )
+
+        message_repo_mock.insert.assert_not_awaited()
+        fanout_mock.fan_out_to_room.assert_not_awaited()
+
+    async def test_join_message_filters_targets_that_left_before_persistence(
+        self, service, chat_member_repo_mock, message_repo_mock,
+    ):
+        chat_member_repo_mock.lock_active_member_user_ids.return_value = {"U_C"}
+
+        await service.send_system_message(
+            room_id="CR_1",
+            action="join",
+            actor_id="U_A",
+            target_ids=["U_B", "U_C"],
+            required_joined_user_ids=["U_B", "U_C"],
+        )
+
+        doc = message_repo_mock.insert.call_args.args[0]
+        assert doc["content"]["target_ids"] == ["U_C"]
 
     async def test_records_system_doc_with_none_sender_and_dict_content(
         self, service, message_repo_mock,
@@ -1120,6 +1270,35 @@ def _mk_text_doc(
 
 @pytest.mark.unit
 class TestEditMessage:
+    async def test_fanout_runs_after_transaction_releases_connection(
+        self, service, mock_session, message_repo_mock, fanout_mock,
+    ):
+        events: list[str] = []
+
+        class TrackingUnitOfWork:
+            async def __aenter__(self):
+                events.append("transaction_enter")
+                return mock_session
+
+            async def __aexit__(self, exc_type, exc, tb):
+                events.append("connection_released")
+                return False
+
+        service.uow = TrackingUnitOfWork()
+        message_repo_mock.find_by_id.return_value = _mk_text_doc()
+        fanout_mock.fan_out_to_room.side_effect = (
+            lambda *_args, **_kwargs: events.append("fanout")
+        )
+
+        await service.edit_message(
+            message_id="MSG_1",
+            editor_user_id="U_A",
+            editor_session_id="WS_A",
+            new_content="updated",
+        )
+
+        assert events == ["transaction_enter", "connection_released", "fanout"]
+
     async def test_raises_when_message_missing(self, service, message_repo_mock):
         message_repo_mock.find_by_id.return_value = None
         with pytest.raises(ValueError, match="존재하지 않는"):
@@ -1160,12 +1339,26 @@ class TestEditMessage:
         self, service, message_repo_mock, chat_member_repo_mock,
     ):
         message_repo_mock.find_by_id.return_value = _mk_text_doc(sender_id="U_A")
-        chat_member_repo_mock.is_active_member.return_value = False
+        chat_member_repo_mock.is_active_member_for_share.return_value = False
         with pytest.raises(PermissionError, match="활성 멤버"):
             await service.edit_message(
                 message_id="MSG_1", editor_user_id="U_A", editor_session_id="WS_A",
                 new_content="new",
             )
+
+    async def test_raises_when_editor_becomes_inactive_before_mutation(
+        self, service, message_repo_mock, user_repo_mock,
+    ):
+        message_repo_mock.find_by_id.return_value = _mk_text_doc(sender_id="U_A")
+        user_repo_mock.lock_if_active.return_value = False
+
+        with pytest.raises(PermissionError, match="비활성 계정"):
+            await service.edit_message(
+                message_id="MSG_1", editor_user_id="U_A", editor_session_id="WS_A",
+                new_content="new",
+            )
+
+        message_repo_mock.update_content.assert_not_awaited()
 
     async def test_allowed_at_4m59s(self, service, message_repo_mock):
         """4분 59초 경과 — 5분 제한 직전이므로 성공."""
@@ -1238,6 +1431,34 @@ def _mk_room(
 
 @pytest.mark.unit
 class TestDeleteMessage:
+    async def test_fanout_runs_after_transaction_releases_connection(
+        self, service, mock_session, message_repo_mock, fanout_mock,
+    ):
+        events: list[str] = []
+
+        class TrackingUnitOfWork:
+            async def __aenter__(self):
+                events.append("transaction_enter")
+                return mock_session
+
+            async def __aexit__(self, exc_type, exc, tb):
+                events.append("connection_released")
+                return False
+
+        service.uow = TrackingUnitOfWork()
+        message_repo_mock.find_by_id.return_value = _mk_text_doc(sender_id="U_A")
+        fanout_mock.fan_out_to_room.side_effect = (
+            lambda *_args, **_kwargs: events.append("fanout")
+        )
+
+        await service.delete_message(
+            message_id="MSG_1",
+            deleter_user_id="U_A",
+            deleter_session_id="WS_A",
+        )
+
+        assert events == ["transaction_enter", "connection_released", "fanout"]
+
     async def test_raises_when_message_missing(self, service, message_repo_mock):
         message_repo_mock.find_by_id.return_value = None
         with pytest.raises(ValueError, match="존재하지 않는"):
@@ -1276,11 +1497,24 @@ class TestDeleteMessage:
         self, service, message_repo_mock, chat_member_repo_mock,
     ):
         message_repo_mock.find_by_id.return_value = _mk_text_doc(sender_id="U_A")
-        chat_member_repo_mock.is_active_member.return_value = False
+        chat_member_repo_mock.is_active_member_for_share.return_value = False
         with pytest.raises(PermissionError, match="활성 멤버"):
             await service.delete_message(
                 message_id="MSG_1", deleter_user_id="U_A", deleter_session_id="WS_A",
             )
+
+    async def test_raises_when_deleter_becomes_inactive_before_mutation(
+        self, service, message_repo_mock, user_repo_mock,
+    ):
+        message_repo_mock.find_by_id.return_value = _mk_text_doc(sender_id="U_A")
+        user_repo_mock.lock_if_active.return_value = False
+
+        with pytest.raises(PermissionError, match="비활성 계정"):
+            await service.delete_message(
+                message_id="MSG_1", deleter_user_id="U_A", deleter_session_id="WS_A",
+            )
+
+        message_repo_mock.soft_delete.assert_not_awaited()
 
     async def test_own_message_soft_deleted_and_fanned_out(
         self, service, message_repo_mock, fanout_mock,

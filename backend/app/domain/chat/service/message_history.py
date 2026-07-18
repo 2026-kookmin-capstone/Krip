@@ -282,6 +282,8 @@ class MessageHistoryService:
                 type=last_message_doc.get("type", "text"),
                 content=last_message_doc.get("content") if last_message_doc.get("deleted_at") is None else None,
                 created_at=last_message_doc["created_at"],
+                edited_at=last_message_doc.get("edited_at"),
+                deleted_at=last_message_doc.get("deleted_at"),
             )
 
         return ChatRoomData(

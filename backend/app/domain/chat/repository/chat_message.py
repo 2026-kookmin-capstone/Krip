@@ -115,11 +115,12 @@ class ChatMessageRepository:
         self,
         chat_room_id: str,
         after_seq: int,
+        exclude_sender_user_id: str,
         limit: int = 1000,
     ) -> int:
         """`seq > after_seq` 메시지 개수 — unread 복구 전용.
 
-        `type != "system"` 필수 — 송신 경로가 시스템 메시지 unread 를 skip 하므로 일관성.
+        system 및 복구 대상 사용자의 own message를 제외해 live unread 의미와 일치시킨다.
         `limit` 으로 N 건까지만 카운트해 999+ 캡 지원 (호출측이 `min(count, 999)` 적용).
         """
         return await self.collection.count_documents(
@@ -127,6 +128,7 @@ class ChatMessageRepository:
                 "chat_room_id": chat_room_id,
                 "server_seq": {"$gt": after_seq},
                 "type": {"$ne": "system"},
+                "sender_id": {"$ne": exclude_sender_user_id},
             },
             limit=limit,
             hint=[("chat_room_id", ASCENDING), ("server_seq", ASCENDING)],
