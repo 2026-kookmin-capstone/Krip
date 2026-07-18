@@ -24,10 +24,15 @@ class FcmTokenRepository:
         return result.scalar_one()
 
     async def find_by_user_ids(self, user_ids: list[str]) -> list[FcmToken]:
-        """그룹방 fan-out bulk."""
+        """푸시 완료 전 token owner 변경·해제를 막는 고정 순서 share-lock 조회."""
         if not user_ids:
             return []
-        stmt = select(FcmToken).where(FcmToken.user_id.in_(user_ids))
+        stmt = (
+            select(FcmToken)
+            .where(FcmToken.user_id.in_(user_ids))
+            .order_by(FcmToken.token)
+            .with_for_update(read=True)
+        )
         result = await self.session.execute(stmt)
         return list(result.scalars().all())
 

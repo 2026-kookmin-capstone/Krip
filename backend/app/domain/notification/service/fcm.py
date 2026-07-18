@@ -4,9 +4,11 @@
 firebase_admin SDK 가 동기라 `asyncio.to_thread` 로 감싸 이벤트 루프 비차단.
 """
 import asyncio
+from datetime import datetime
 
 from firebase_admin import messaging
 from firebase_admin.exceptions import FirebaseError
+from sqlalchemy import text
 
 from app.core.fcm import get_fcm_app
 from app.core.instrumentation import (
@@ -16,10 +18,11 @@ from app.core.instrumentation import (
     fcm_token_purged_inc,
 )
 from app.core.logger import get_logger
-from app.database.session import UnitOfWork, transactional
+from app.database.session import UnitOfWork, mongodb, transactional
 from app.domain.auth.repository.user import UserRepository
 from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
 from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
+from app.domain.chat.repository.chat_message import ChatMessageRepository
 from app.domain.notification.dto.fcm_token import FcmTokenData
 from app.domain.notification.model.fcm_token import FcmToken
 from app.domain.notification.repository.fcm_token import FcmTokenRepository
@@ -33,9 +36,11 @@ _DEFAULT_CHAT_PUSH_TITLE = "새 메시지"
 
 # MulticastMessage 의 토큰 상한 (firebase_admin 이 초과 시 ValueError). 이 크기로 청크 분할.
 _FCM_MULTICAST_MAX = 500
+_PUSH_BODY_PREVIEW_LIMIT = 100
 
 # 유저당 보관할 최대 디바이스 토큰 수 — 초과분은 updated_at 오래된 것부터 정리.
 MAX_TOKENS_PER_USER = 10
+_FCM_TOKEN_REGISTRATION_LOCK = "fcm-token-registration"
 
 
 class FcmService:
@@ -45,6 +50,13 @@ class FcmService:
     @transactional
     async def register_token(self, *, user_id: str, token: str) -> FcmTokenData:
         """디바이스 토큰 등록 — UNIQUE(token) 충돌 시 owner 교체 (재로그인/계정 전환), 동시 등록 race 안전."""
+        await self._session.execute(
+            text("SELECT pg_advisory_xact_lock(hashtextextended(:lock_name, 0))"),
+            {"lock_name": _FCM_TOKEN_REGISTRATION_LOCK},
+        )
+        user_repo = UserRepository(self._session)
+        if not await user_repo.lock_if_active(user_id):
+            raise PermissionError("비활성 계정은 FCM 토큰을 등록할 수 없습니다.")
         repo = FcmTokenRepository(self._session)
         saved = await repo.upsert_by_token(user_id=user_id, token=token)
         # 유저당 토큰 수 상한 — 무제한 등록으로 인한 테이블 성장 + 푸시 팬아웃 폭증 방지.
@@ -68,20 +80,62 @@ class FcmService:
         sender_id: str,
         body: str,
         title: str | None = None,
+        expected_membership_generations: dict[str, datetime] | None = None,
+        message_id: str | None = None,
     ) -> int:
         """채팅 새 메시지 푸시 — N명 fan-out.
 
-        multicast(네트워크 RTT)는 트랜잭션 밖에서 발송해 커넥션을 점유하지 않는다.
-        대상 조회와 만료 토큰 정리만 각각 짧은 트랜잭션으로 감싼다.
+        활성 계정·멤버십 share lock을 bounded multicast 완료까지 유지해
+        withdrawal/leave/kick과 push 전달을 직렬화한다.
         """
         if not user_ids:
             return 0
 
+        success_total, invalid_tokens = await self._send_chat_push_tx(
+            user_ids=user_ids,
+            chat_room_id=chat_room_id,
+            sender_id=sender_id,
+            body=body,
+            title=title,
+            expected_membership_generations=expected_membership_generations,
+            message_id=message_id,
+        )
+        if invalid_tokens:
+            try:
+                await self._purge_invalid_tokens(chat_room_id, invalid_tokens)
+            except Exception as e:
+                logger.warning(
+                    "FCM 만료 토큰 정리 실패 (무시): chat_room_id={}, error={}",
+                    chat_room_id, type(e).__name__,
+                )
+        return success_total
+
+    @transactional
+    async def _send_chat_push_tx(
+        self,
+        *,
+        user_ids: list[str],
+        chat_room_id: str,
+        sender_id: str,
+        body: str,
+        title: str | None,
+        expected_membership_generations: dict[str, datetime] | None,
+        message_id: str | None,
+    ) -> tuple[int, list[str]]:
+        if message_id is not None:
+            current_body = await self._lock_and_resolve_chat_body(
+                message_id=message_id, chat_room_id=chat_room_id,
+            )
+            if current_body is None:
+                return 0, []
+            body = current_body
+
         collected = await self._collect_push_targets(
             user_ids=user_ids, chat_room_id=chat_room_id, sender_id=sender_id, title=title,
+            expected_membership_generations=expected_membership_generations,
         )
         if collected is None:
-            return 0
+            return 0, []
         tokens, final_title = collected
 
         notification = messaging.Notification(title=final_title, body=body)
@@ -141,10 +195,32 @@ class FcmService:
             if cancelled:
                 raise asyncio.CancelledError
 
-        if invalid_tokens:
-            await self._purge_invalid_tokens(chat_room_id, invalid_tokens)
+        return success_total, invalid_tokens
 
-        return success_total
+    @transactional
+    async def _lock_and_resolve_chat_body(
+        self, *, message_id: str, chat_room_id: str,
+    ) -> str | None:
+        await self._session.execute(
+            text("SELECT pg_advisory_xact_lock(hashtextextended(:lock_name, 0))"),
+            {"lock_name": f"chat-message-mutation:{message_id}"},
+        )
+        if mongodb.database is None:
+            raise RuntimeError("MongoDB is not initialized")
+        doc = await ChatMessageRepository(mongodb.database).find_by_id(message_id)
+        if (
+            doc is None
+            or doc.get("chat_room_id") != chat_room_id
+            or doc.get("deleted_at") is not None
+            or not isinstance(doc.get("content"), str)
+        ):
+            return None
+        content = doc["content"]
+        return (
+            content[:_PUSH_BODY_PREVIEW_LIMIT] + "..."
+            if len(content) > _PUSH_BODY_PREVIEW_LIMIT
+            else content
+        )
 
     @staticmethod
     def _parse_batch(
@@ -189,11 +265,12 @@ class FcmService:
         chat_room_id: str,
         sender_id: str,
         title: str | None,
+        expected_membership_generations: dict[str, datetime] | None,
     ) -> tuple[list[str], str] | None:
         """가드 체인(방별 → 전역 mute → 토큰) 통과 대상의 토큰 + title 반환. 대상 0이면 None."""
         member_repo = ChatRoomMemberRepository(self._session)
         pushable_in_room = await member_repo.find_pushable_user_ids_in_room(
-            chat_room_id, user_ids,
+            chat_room_id, user_ids, expected_membership_generations,
         )
         if not pushable_in_room:
             return None

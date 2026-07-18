@@ -7,17 +7,89 @@
     - 해제 idempotent (없거나 타인 소유는 조용히 종료)
     - user CASCADE 로 토큰 자동 정리 (회원 탈퇴 영구 삭제 시)
 """
-import pytest
-from sqlalchemy import delete
+import asyncio
 
-from app.domain.auth.model.user import User
+import pytest
+from sqlalchemy import delete, text
+
+from app.database.session import UnitOfWork
+from app.domain.auth.model.user import User, UserStatus
+from app.domain.notification.repository.fcm_token import FcmTokenRepository
+from app.domain.notification.service.fcm import MAX_TOKENS_PER_USER, FcmService
 from test.integration.domain.notification.conftest import fetch_tokens_by_user
 
 
 pytestmark = pytest.mark.integration
 
 
+async def wait_until_advisory_blocked(session_factory) -> None:
+    async with session_factory() as session:
+        while True:
+            result = await session.execute(text(
+                "SELECT EXISTS (SELECT 1 FROM pg_stat_activity "
+                "WHERE datname = current_database() "
+                "AND wait_event = 'advisory')"
+            ))
+            if result.scalar_one():
+                return
+            await asyncio.sleep(0)
+
+
 class TestRegisterTokenFlow:
+    async def test_inactive_user_cannot_take_active_users_token(
+        self, fcm_service, session_factory, seed_users,
+    ):
+        [user_a, user_b] = await seed_users(2)
+        await fcm_service.register_token(user_id=user_a, token="tok-shared")
+        async with session_factory() as session:
+            user = await session.get(User, user_b, with_for_update=True)
+            user.status = UserStatus.INACTIVE
+            await session.commit()
+
+        with pytest.raises(PermissionError):
+            await fcm_service.register_token(user_id=user_b, token="tok-shared")
+
+        assert {row.token for row in await fetch_tokens_by_user(
+            session_factory, user_a,
+        )} == {"tok-shared"}
+        assert await fetch_tokens_by_user(session_factory, user_b) == []
+
+    async def test_registration_account_lock_serializes_with_deactivation(
+        self, fcm_service, session_factory, seed_users, monkeypatch,
+    ):
+        [user_id] = await seed_users(1)
+        registration_reached = asyncio.Event()
+        release_registration = asyncio.Event()
+        deactivation_reached = asyncio.Event()
+        original_upsert = FcmTokenRepository.upsert_by_token
+
+        async def blocked_upsert(repo, *, user_id, token):
+            registration_reached.set()
+            await release_registration.wait()
+            return await original_upsert(repo, user_id=user_id, token=token)
+
+        monkeypatch.setattr(FcmTokenRepository, "upsert_by_token", blocked_upsert)
+        registration = asyncio.create_task(fcm_service.register_token(
+            user_id=user_id, token="tok-A",
+        ))
+        await asyncio.wait_for(registration_reached.wait(), timeout=5)
+
+        async def deactivate():
+            async with session_factory() as session:
+                deactivation_reached.set()
+                user = await session.get(User, user_id, with_for_update=True)
+                user.status = UserStatus.INACTIVE
+                await session.commit()
+
+        deactivation = asyncio.create_task(deactivate())
+        await asyncio.wait_for(deactivation_reached.wait(), timeout=5)
+        await asyncio.sleep(0)
+        assert not deactivation.done()
+
+        release_registration.set()
+        await asyncio.wait_for(registration, timeout=5)
+        await asyncio.wait_for(deactivation, timeout=5)
+
     async def test_new_token_is_inserted(
         self, fcm_service, session_factory, seed_users,
     ):
@@ -56,6 +128,112 @@ class TestRegisterTokenFlow:
         assert a_rows == []
         assert len(b_rows) == 1
         assert b_rows[0].token == "tok-shared"
+
+    async def test_concurrent_registration_is_serialized_and_keeps_exact_cap(
+        self, fcm_service, session_factory, seed_users, monkeypatch,
+    ):
+        [user_id] = await seed_users(1)
+        for index in range(MAX_TOKENS_PER_USER):
+            await fcm_service.register_token(
+                user_id=user_id, token=f"tok-seed-{index}",
+            )
+
+        first_reached = asyncio.Event()
+        release_first = asyncio.Event()
+        second_reached = asyncio.Event()
+        original_upsert = FcmTokenRepository.upsert_by_token
+        calls = 0
+
+        async def observed_upsert(repo, *, user_id, token):
+            nonlocal calls
+            calls += 1
+            if calls == 1:
+                first_reached.set()
+                await release_first.wait()
+            else:
+                second_reached.set()
+            return await original_upsert(repo, user_id=user_id, token=token)
+
+        monkeypatch.setattr(FcmTokenRepository, "upsert_by_token", observed_upsert)
+        first_service = FcmService(UnitOfWork(session_factory))
+        second_service = FcmService(UnitOfWork(session_factory))
+        first = asyncio.create_task(first_service.register_token(
+            user_id=user_id, token="tok-concurrent-A",
+        ))
+        await asyncio.wait_for(first_reached.wait(), timeout=5)
+        second = asyncio.create_task(second_service.register_token(
+            user_id=user_id, token="tok-concurrent-B",
+        ))
+
+        try:
+            await asyncio.wait_for(
+                wait_until_advisory_blocked(session_factory), timeout=5,
+            )
+            assert not second_reached.is_set()
+        finally:
+            release_first.set()
+            await asyncio.wait_for(asyncio.gather(first, second), timeout=5)
+
+        rows = await fetch_tokens_by_user(session_factory, user_id)
+        assert len(rows) == MAX_TOKENS_PER_USER
+        assert {"tok-concurrent-A", "tok-concurrent-B"} <= {
+            row.token for row in rows
+        }
+
+    async def test_reciprocal_cross_user_transfers_are_globally_serialized(
+        self, fcm_service, session_factory, seed_users, monkeypatch,
+    ):
+        user_a, user_b = await seed_users(2)
+        for index in range(MAX_TOKENS_PER_USER):
+            await fcm_service.register_token(
+                user_id=user_a, token=f"tok-a-{index}",
+            )
+            await fcm_service.register_token(
+                user_id=user_b, token=f"tok-b-{index}",
+            )
+
+        first_reached = asyncio.Event()
+        release_first = asyncio.Event()
+        second_reached = asyncio.Event()
+        original_upsert = FcmTokenRepository.upsert_by_token
+        calls = 0
+
+        async def observed_upsert(repo, *, user_id, token):
+            nonlocal calls
+            calls += 1
+            if calls == 1:
+                first_reached.set()
+                await release_first.wait()
+            else:
+                second_reached.set()
+            return await original_upsert(repo, user_id=user_id, token=token)
+
+        monkeypatch.setattr(FcmTokenRepository, "upsert_by_token", observed_upsert)
+        first_service = FcmService(UnitOfWork(session_factory))
+        second_service = FcmService(UnitOfWork(session_factory))
+        first = asyncio.create_task(first_service.register_token(
+            user_id=user_a, token="tok-b-0",
+        ))
+        await asyncio.wait_for(first_reached.wait(), timeout=5)
+        second = asyncio.create_task(second_service.register_token(
+            user_id=user_b, token="tok-a-0",
+        ))
+
+        try:
+            await asyncio.wait_for(
+                wait_until_advisory_blocked(session_factory), timeout=5,
+            )
+            assert not second_reached.is_set()
+        finally:
+            release_first.set()
+            await asyncio.wait_for(asyncio.gather(first, second), timeout=5)
+
+        a_rows = await fetch_tokens_by_user(session_factory, user_a)
+        b_rows = await fetch_tokens_by_user(session_factory, user_b)
+        assert len(a_rows) == MAX_TOKENS_PER_USER
+        assert len(b_rows) == MAX_TOKENS_PER_USER
+        assert "tok-b-0" in {row.token for row in a_rows}
+        assert "tok-a-0" in {row.token for row in b_rows}
 
     async def test_one_user_can_register_multiple_tokens(
         self, fcm_service, session_factory, seed_users,

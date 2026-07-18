@@ -25,6 +25,7 @@ class FakeUnitOfWork:
 
 def make_mock_session() -> MagicMock:
     session = MagicMock(name="session")
+    session.execute = AsyncMock()
     session.flush = AsyncMock()
     return session
 

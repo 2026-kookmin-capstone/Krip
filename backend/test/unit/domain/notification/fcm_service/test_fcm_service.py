@@ -1,6 +1,7 @@
 """FcmService — 토큰 등록/해제 + bulk 푸시 가드 체인 단위 테스트."""
 import asyncio
 from datetime import datetime, timezone
+from unittest.mock import AsyncMock
 
 import pytest
 from firebase_admin import messaging
@@ -24,6 +25,16 @@ def _make_fcm_token(*, user_id: str, token: str, fcm_token_id: str = "FCM_x") ->
 
 @pytest.mark.unit
 class TestRegisterToken:
+    async def test_inactive_account_cannot_take_token_ownership(
+        self, service, user_repo_mock, fcm_token_repo_mock,
+    ):
+        user_repo_mock.lock_if_active.return_value = False
+
+        with pytest.raises(PermissionError):
+            await service.register_token(user_id="USER_inactive", token="tok-shared")
+
+        fcm_token_repo_mock.upsert_by_token.assert_not_awaited()
+
     async def test_delegates_to_upsert_and_returns_dto(
         self, service, fcm_token_repo_mock,
     ):
@@ -55,6 +66,43 @@ class TestUnregisterToken:
 
 @pytest.mark.unit
 class TestSendChatPush:
+    async def test_message_push_uses_current_durable_body(
+        self, service, chat_member_repo_mock, user_repo_mock,
+        fcm_token_repo_mock, messaging_send_mock, monkeypatch,
+    ):
+        chat_member_repo_mock.find_pushable_user_ids_in_room.return_value = {"U_1"}
+        user_repo_mock.find_unmuted_user_ids.return_value = {"U_1"}
+        fcm_token_repo_mock.find_by_user_ids.return_value = [
+            _make_fcm_token(user_id="U_1", token="tok-1"),
+        ]
+        messaging_send_mock.return_value = make_fcm_batch_response(success_results=[True])
+        resolver = AsyncMock(return_value="edited body")
+        monkeypatch.setattr(service, "_lock_and_resolve_chat_body", resolver)
+
+        sent = await service.send_chat_push(
+            user_ids=["U_1"], chat_room_id="CR_1", sender_id="USER_s",
+            body="original body", message_id="M_1",
+        )
+
+        assert sent == 1
+        resolver.assert_awaited_once_with(message_id="M_1", chat_room_id="CR_1")
+        assert messaging_send_mock.call_args.args[0].notification.body == "edited body"
+
+    async def test_deleted_message_push_is_suppressed(
+        self, service, chat_member_repo_mock, messaging_send_mock, monkeypatch,
+    ):
+        resolver = AsyncMock(return_value=None)
+        monkeypatch.setattr(service, "_lock_and_resolve_chat_body", resolver)
+
+        sent = await service.send_chat_push(
+            user_ids=["U_1"], chat_room_id="CR_1", sender_id="USER_s",
+            body="deleted body", message_id="M_1",
+        )
+
+        assert sent == 0
+        chat_member_repo_mock.find_pushable_user_ids_in_room.assert_not_awaited()
+        messaging_send_mock.assert_not_called()
+
     async def test_cancellation_drains_accepted_multicast(
         self, service, chat_member_repo_mock, user_repo_mock,
         fcm_token_repo_mock, monkeypatch,

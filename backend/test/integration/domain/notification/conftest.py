@@ -78,13 +78,14 @@ async def fcm_messaging_stub(monkeypatch):
 
     테스트마다 `set_responses(success=[...], errors=[...])` 로 응답 시나리오 주입.
     """
-    state = {"calls": [], "responses": [], "errors": []}
+    state = {"calls": [], "messages": [], "responses": [], "errors": []}
 
     def _set_responses(success: list[bool], errors: list | None = None):
         state["responses"] = success
         state["errors"] = errors or [None] * len(success)
 
     def _fake_send_each_for_multicast(message, app=None):
+        state["messages"].append(message)
         state["calls"].append(list(message.tokens))
         responses = []
         for ok, err in zip(state["responses"], state["errors"]):
@@ -109,6 +110,7 @@ async def fcm_messaging_stub(monkeypatch):
     return type("FcmStub", (), {
         "set_responses": staticmethod(_set_responses),
         "calls": state["calls"],
+        "messages": state["messages"],
     })()
 
 

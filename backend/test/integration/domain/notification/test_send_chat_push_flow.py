@@ -6,9 +6,18 @@ Firebase SDK 만 stub — DB(가드/조회/정리) 는 실 PostgreSQL 로 검증
     (2) 전역 — `users.notification_muted IS NOT TRUE`
     (3) 토큰 보유 — 0건이면 multicast skip
 """
+import asyncio
+from datetime import datetime, timedelta, timezone
+from types import SimpleNamespace
+
 import pytest
 from firebase_admin import messaging
 
+from app.database.session import UnitOfWork, mongodb
+from app.domain.auth.model.user import User, UserStatus
+from app.domain.chat.model.chat_room_member import ChatRoomMember
+from app.domain.notification.repository.fcm_token import FcmTokenRepository
+from app.domain.notification.service.fcm import FcmService
 from test.integration.domain.notification.conftest import fetch_tokens_by_user
 
 
@@ -16,6 +25,68 @@ pytestmark = pytest.mark.integration
 
 
 class TestHappyPath:
+    async def test_message_push_revalidates_current_body_and_tombstone(
+        self, fcm_service, seed_room_with_members, fcm_messaging_stub,
+        mongo_db, monkeypatch,
+    ):
+        room_id, [user_a] = await seed_room_with_members(1)
+        await fcm_service.register_token(user_id=user_a, token="tok-A")
+        monkeypatch.setattr(mongodb, "database", mongo_db)
+        collection = mongo_db["chat_message"]
+        await collection.drop()
+        await collection.insert_one({
+            "_id": "M_push_revision",
+            "chat_room_id": room_id,
+            "content": "edited body",
+            "deleted_at": None,
+        })
+        fcm_messaging_stub.set_responses([True])
+
+        sent = await fcm_service.send_chat_push(
+            user_ids=[user_a], chat_room_id=room_id, sender_id="SYS",
+            title="t", body="original body", message_id="M_push_revision",
+        )
+        assert sent == 1
+        assert fcm_messaging_stub.messages[-1].notification.body == "edited body"
+
+        await collection.update_one(
+            {"_id": "M_push_revision"}, {"$set": {"deleted_at": datetime.now(timezone.utc)}},
+        )
+        sent = await fcm_service.send_chat_push(
+            user_ids=[user_a], chat_room_id=room_id, sender_id="SYS",
+            title="t", body="original body", message_id="M_push_revision",
+        )
+        assert sent == 0
+        assert len(fcm_messaging_stub.messages) == 1
+
+    async def test_old_message_generation_does_not_push_after_leave_and_rejoin(
+        self, fcm_service, session_factory, seed_room_with_members, fcm_messaging_stub,
+    ):
+        room_id, [user_id] = await seed_room_with_members(1)
+        await fcm_service.register_token(user_id=user_id, token="tok-ABA")
+        async with session_factory() as session:
+            member = await session.get(ChatRoomMember, (room_id, user_id))
+            old_generation = member.joined_at
+            member.is_left = True
+            await session.commit()
+        async with session_factory() as session:
+            member = await session.get(ChatRoomMember, (room_id, user_id))
+            member.is_left = False
+            member.joined_at = old_generation + timedelta(milliseconds=1)
+            await session.commit()
+
+        sent = await fcm_service.send_chat_push(
+            user_ids=[user_id],
+            expected_membership_generations={user_id: old_generation},
+            chat_room_id=room_id,
+            sender_id="SYS",
+            title="old",
+            body="pre-rejoin private body",
+        )
+
+        assert sent == 0
+        assert fcm_messaging_stub.calls == []
+
     async def test_all_pushable_users_get_multicast(
         self,
         fcm_service,
@@ -55,6 +126,141 @@ class TestHappyPath:
 
 
 class TestRoomMuteGuard:
+    async def test_concurrent_invalid_token_cleanup_does_not_upgrade_share_locks(
+        self, fcm_service, session_factory, seed_room_with_members, monkeypatch,
+        fcm_messaging_stub,
+    ):
+        room_id, [user_a] = await seed_room_with_members(1)
+        await fcm_service.register_token(user_id=user_a, token="dead-tok")
+        both_started = asyncio.Event()
+        release = asyncio.Event()
+        started_count = 0
+
+        async def blocked_invalid_batch(*_args, **_kwargs):
+            nonlocal started_count
+            started_count += 1
+            if started_count == 2:
+                both_started.set()
+            await release.wait()
+            return SimpleNamespace(responses=[SimpleNamespace(
+                success=False,
+                exception=messaging.UnregisteredError("unregistered"),
+            )])
+
+        monkeypatch.setattr(
+            "app.domain.notification.service.fcm.asyncio.to_thread",
+            blocked_invalid_batch,
+        )
+        other_service = FcmService(uow=UnitOfWork(session_factory))
+        sends = [asyncio.create_task(service.send_chat_push(
+            user_ids=[user_a], chat_room_id=room_id,
+            sender_id="SYS", title="t", body="private",
+        )) for service in (fcm_service, other_service)]
+        await asyncio.wait_for(both_started.wait(), timeout=5)
+        release.set()
+
+        assert await asyncio.wait_for(asyncio.gather(*sends), timeout=5) == [0, 0]
+        assert await fetch_tokens_by_user(session_factory, user_a) == []
+
+    async def test_inactive_member_is_excluded(
+        self, fcm_service, session_factory,
+        seed_room_with_members, fcm_messaging_stub,
+    ):
+        room_id, [user_a, user_b] = await seed_room_with_members(2)
+        await fcm_service.register_token(user_id=user_a, token="tok-A")
+        await fcm_service.register_token(user_id=user_b, token="tok-B")
+        async with session_factory() as session:
+            target = await session.get(User, user_a)
+            target.status = UserStatus.INACTIVE
+            await session.commit()
+        fcm_messaging_stub.set_responses([True])
+
+        sent = await fcm_service.send_chat_push(
+            user_ids=[user_a, user_b], chat_room_id=room_id,
+            sender_id="SYS", title="t", body="private",
+        )
+
+        assert sent == 1
+        assert fcm_messaging_stub.calls[0] == ["tok-B"]
+
+    async def test_account_and_membership_revocation_wait_for_accepted_multicast(
+        self, fcm_service, session_factory, seed_room_with_members,
+        fcm_messaging_stub, monkeypatch,
+    ):
+        room_id, [user_a, user_c] = await seed_room_with_members(2)
+        await fcm_service.register_token(user_id=user_a, token="tok-A")
+        fcm_messaging_stub.set_responses([True])
+        started = asyncio.Event()
+        release = asyncio.Event()
+        deactivate_reached = asyncio.Event()
+        leave_reached = asyncio.Event()
+        transfer_reached = asyncio.Event()
+
+        async def blocked_to_thread(fn, *args, **kwargs):
+            started.set()
+            await release.wait()
+            return fn(*args, **kwargs)
+
+        monkeypatch.setattr(
+            "app.domain.notification.service.fcm.asyncio.to_thread",
+            blocked_to_thread,
+        )
+        send_task = asyncio.create_task(fcm_service.send_chat_push(
+            user_ids=[user_a], chat_room_id=room_id,
+            sender_id="SYS", title="t", body="private",
+        ))
+        await asyncio.wait_for(started.wait(), timeout=5)
+
+        async def deactivate():
+            async with session_factory() as session:
+                deactivate_reached.set()
+                target = await session.get(User, user_a, with_for_update=True)
+                target.status = UserStatus.INACTIVE
+                await session.commit()
+
+        deactivate_task = asyncio.create_task(deactivate())
+
+        original_upsert = FcmTokenRepository.upsert_by_token
+
+        async def observed_upsert(repo, *, user_id, token):
+            transfer_reached.set()
+            return await original_upsert(repo, user_id=user_id, token=token)
+
+        monkeypatch.setattr(FcmTokenRepository, "upsert_by_token", observed_upsert)
+        transfer_service = FcmService(uow=UnitOfWork(session_factory))
+        transfer_task = asyncio.create_task(transfer_service.register_token(
+            user_id=user_c, token="tok-A",
+        ))
+
+        async def leave():
+            async with session_factory() as session:
+                leave_reached.set()
+                member = await session.get(
+                    ChatRoomMember, (room_id, user_a), with_for_update=True,
+                )
+                member.is_left = True
+                await session.commit()
+
+        leave_task = asyncio.create_task(leave())
+        await asyncio.wait_for(asyncio.gather(
+            deactivate_reached.wait(),
+            leave_reached.wait(),
+            transfer_reached.wait(),
+        ), timeout=5)
+        await asyncio.sleep(0)
+        assert not deactivate_task.done()
+        assert not leave_task.done()
+        assert not transfer_task.done()
+
+        release.set()
+        assert await asyncio.wait_for(send_task, timeout=5) == 1
+        await asyncio.wait_for(deactivate_task, timeout=5)
+        await asyncio.wait_for(leave_task, timeout=5)
+        await asyncio.wait_for(transfer_task, timeout=5)
+        assert {row.token for row in await fetch_tokens_by_user(
+            session_factory, user_c,
+        )} == {"tok-A"}
+
     async def test_room_muted_user_excluded(
         self, fcm_service, mute_service,
         seed_room_with_members, fcm_messaging_stub,
