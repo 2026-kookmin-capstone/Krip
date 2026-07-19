@@ -1,16 +1,14 @@
-from fastapi import APIRouter, Depends, HTTPException, Request
 from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Request
 
-from app.schema.common import MessageResponse
-from app.domain.notification.service.mute import MuteService
-from app.domain.notification.schema.mute import MuteToggleBody
 from app.container import Container
+from app.domain.notification.schema.mute import MuteToggleBody
+from app.domain.notification.service.mute import MuteService
+from app.schema.common import MessageResponse
 
 
 router = APIRouter(prefix="/mute", tags=["알림 차단"])
 
-
-# ──────────────────── 전역 ────────────────────
 
 @router.put("/global")
 @inject
@@ -31,8 +29,6 @@ async def set_global_mute(
         message="모든 알림을 차단했습니다." if body.muted else "알림 차단을 해제했습니다."
     )
 
-
-# ──────────────────── 방별 ────────────────────
 
 @router.put("/rooms/{chat_room_id}")
 @inject

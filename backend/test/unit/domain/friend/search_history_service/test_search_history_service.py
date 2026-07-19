@@ -4,9 +4,10 @@
 실제 MongoDB / Beanie 동작은 통합 테스트 / 운영 환경에서만 의미가 있다.
 """
 
-from types import SimpleNamespace
-import pytest
 from datetime import datetime, timezone
+from types import SimpleNamespace
+
+import pytest
 
 
 @pytest.mark.unit
@@ -15,7 +16,6 @@ class TestSaveSearch:
         await service.save_search(user_id="USER_a", search_name="조현상")
 
         repo_mock.save.assert_awaited_once_with(user_id="USER_a", search_name="조현상")
-
 
     async def test_returns_repo_result(self, service, repo_mock):
         saved = SimpleNamespace(
@@ -38,7 +38,6 @@ class TestGetSearchHistories:
         await service.get_search_histories("USER_a")
 
         repo_mock.find_by_user_id.assert_awaited_once_with("USER_a")
-
 
     async def test_returns_repo_result_unchanged(self, service, repo_mock):
         items = [

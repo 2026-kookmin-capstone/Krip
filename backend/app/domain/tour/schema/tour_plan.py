@@ -1,11 +1,18 @@
-from typing import List, Optional
 import re
-from pydantic import BaseModel, Field, field_validator
 from datetime import datetime
+from typing import List, Optional
+
+from pydantic import BaseModel, Field, field_validator
 
 
 # HH:MM (24h) — 00:00 ~ 23:59
 _TIME_PATTERN = re.compile(r"^([01]\d|2[0-3]):[0-5]\d$")
+
+# 여행 일수 상한(1년) — 없으면 int4 overflow → 500. day_number 도 동일 상한 공유.
+_MAX_TRAVEL_DAYS = 365
+
+# 플랜당 카드 상한 — 없으면 대량 POST 로 RDB/Mongo 팽창·미인증 증폭(공개 공유 엔드포인트).
+_MAX_PLAN_ITEMS = 200
 
 
 def _validate_visit_time(v: Optional[str]) -> Optional[str]:
@@ -31,12 +38,9 @@ def _validate_title(v: Optional[str]) -> Optional[str]:
     return stripped
 
 
-# ──────────────────── Request ────────────────────
-
-
 class CreatePlanItemInput(BaseModel):
     """플랜 생성 시 카드 1건 입력"""
-    day_number: int = Field(..., ge=1, description="여행 일차 (1-indexed)")
+    day_number: int = Field(..., ge=1, le=_MAX_TRAVEL_DAYS, description="여행 일차 (1-indexed)")
     place_id: str = Field(..., min_length=1, max_length=255, description="MongoDB Place ID")
     visit_time: Optional[str] = Field(None, description="방문 시각 'HH:MM' (24h, 미지정 가능)")
 
@@ -49,14 +53,15 @@ class CreatePlanItemInput(BaseModel):
 class CreatePlanRequest(BaseModel):
     """플랜 생성 요청"""
     title: Optional[str] = Field(None, max_length=100, description="플랜 이름 (선택)")
-    travel_days: int = Field(..., ge=1, description="여행 일수 (1 이상)")
-    items: List[CreatePlanItemInput] = Field(..., min_length=1, description="카드 목록 (1개 이상)")
+    travel_days: int = Field(..., ge=1, le=_MAX_TRAVEL_DAYS, description="여행 일수 (1 ~ 365)")
+    items: List[CreatePlanItemInput] = Field(
+        ..., min_length=1, max_length=_MAX_PLAN_ITEMS, description="카드 목록 (1 ~ 200개)",
+    )
 
     @field_validator("title")
     @classmethod
     def _check_title(cls, v: Optional[str]) -> Optional[str]:
         return _validate_title(v)
-
 
     class Config:
         json_schema_extra = {
@@ -74,7 +79,7 @@ class CreatePlanRequest(BaseModel):
 
 class AddItemRequest(BaseModel):
     """카드 추가 요청 (해당 day 의 맨 끝에 삽입됨)"""
-    day_number: int = Field(..., ge=1, description="여행 일차 (1-indexed)")
+    day_number: int = Field(..., ge=1, le=_MAX_TRAVEL_DAYS, description="여행 일차 (1-indexed)")
     place_id: str = Field(..., min_length=1, max_length=255, description="MongoDB Place ID")
     visit_time: Optional[str] = Field(None, description="방문 시각 'HH:MM' (24h, 미지정 가능)")
 
@@ -86,7 +91,7 @@ class AddItemRequest(BaseModel):
 
 class MoveItemRequest(BaseModel):
     """카드 이동 요청"""
-    target_day_number: int = Field(..., ge=1, description="이동 대상 여행 일차")
+    target_day_number: int = Field(..., ge=1, le=_MAX_TRAVEL_DAYS, description="이동 대상 여행 일차")
     after_item_id: Optional[str] = Field(
         None,
         description="이 카드 다음 자리로 이동. null 이면 target day 의 맨 앞.",
@@ -128,9 +133,6 @@ class UpdateItemRequest(BaseModel):
     @classmethod
     def _check_visit_time(cls, v: Optional[str]) -> Optional[str]:
         return _validate_visit_time(v)
-
-
-# ──────────────────── Response ────────────────────
 
 
 class PlanItemResponse(BaseModel):

@@ -1,7 +1,8 @@
-from typing import List, Optional
-from pydantic import Field
 from datetime import date, datetime, timezone
+from typing import List, Optional
+
 from beanie import Document, Indexed
+from pydantic import Field
 
 
 class TripmatePostDraft(Document):

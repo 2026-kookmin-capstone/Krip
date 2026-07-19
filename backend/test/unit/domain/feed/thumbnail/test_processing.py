@@ -14,8 +14,9 @@
 
 이미지는 Pillow 로 즉석 합성 — fixture 파일 없이 self-contained.
 """
-import pytest
 import io
+
+import pytest
 from PIL import Image
 
 from app.domain.feed.service.thumbnail import (
@@ -23,13 +24,25 @@ from app.domain.feed.service.thumbnail import (
     ORIGINAL_MAX,
     THUMBNAIL_MEDIUM,
     THUMBNAIL_SMALL,
-    crop_square_and_resize,
+    ProcessedVariant,
+    _crop_square_and_resize,
+    _decode,
+    _shrink_original,
     process_feed_image,
-    shrink_original_if_needed,
 )
 
 
-# ──────────────────── helper ────────────────────
+def crop_square_and_resize(src_bytes: bytes, target_size: int) -> ProcessedVariant:
+    src_image, _, _ = _decode(src_bytes)
+    return _crop_square_and_resize(src_image, target_size)
+
+
+def shrink_original_if_needed(src_bytes: bytes) -> ProcessedVariant:
+    src_image, src_format, was_rotated = _decode(src_bytes)
+    return _shrink_original(
+        src_image, src_bytes, src_format=src_format, was_rotated=was_rotated,
+    )
+
 
 def _save(img: Image.Image, fmt: str, **save_kwargs) -> bytes:
     buf = io.BytesIO()
@@ -54,24 +67,19 @@ def _webp(size=(100, 100), color=(0, 0, 255), alpha=False) -> bytes:
     return _save(img, "WEBP")
 
 
-# ──────────────────── 정상 출력 ────────────────────
-
 @pytest.mark.unit
 class TestProcessFeedImageOutput:
     def test_three_variants_with_correct_sizes(self):
         result = process_feed_image(_jpeg(size=(800, 600)))
 
-        # original 은 ORIGINAL_MAX 이하 + EXIF 없음 → raw 보존 (사이즈는 800×600 그대로)
         original_img = Image.open(io.BytesIO(result.original.data))
         assert original_img.size == (800, 600)
 
-        # 썸네일은 항상 정사각형 + 지정 사이즈
         small_img = Image.open(io.BytesIO(result.small.data))
         assert small_img.size == (THUMBNAIL_SMALL, THUMBNAIL_SMALL)
 
         medium_img = Image.open(io.BytesIO(result.medium.data))
         assert medium_img.size == (THUMBNAIL_MEDIUM, THUMBNAIL_MEDIUM)
-
 
     def test_thumbnails_are_jpeg_rgb(self):
         result = process_feed_image(_jpeg())
@@ -84,8 +92,6 @@ class TestProcessFeedImageOutput:
         assert result.medium.file_ext == "jpg"
 
 
-# ──────────────────── original fast-path / shrink ────────────────────
-
 @pytest.mark.unit
 class TestShrinkOriginal:
     def test_small_image_returns_raw_bytes(self):
@@ -96,15 +102,13 @@ class TestShrinkOriginal:
         assert result.content_type == "image/jpeg"
         assert result.file_ext == "jpg"
 
-
     def test_oversized_image_is_shrunk(self):
         """ORIGINAL_MAX 초과 → thumbnail 로 다운스케일 + 비율 보존."""
         src = _jpeg(size=(ORIGINAL_MAX + 500, ORIGINAL_MAX + 500))
         result = shrink_original_if_needed(src)
         out_img = Image.open(io.BytesIO(result.data))
         assert max(out_img.size) <= ORIGINAL_MAX
-        assert result.data != src  # re-encoded
-
+        assert result.data != src
 
     def test_png_preserves_format_when_shrunk(self):
         """PNG spec: 무손실 유지 — shrink 가 일어나도 PNG 로 재인코딩."""
@@ -113,13 +117,11 @@ class TestShrinkOriginal:
         assert result.content_type == "image/png"
         assert result.file_ext == "png"
 
-
     def test_webp_with_alpha_shrunk_becomes_png(self):
         """alpha 보존이 필요한 WEBP → PNG (lossy→lossless bloat 회피 위해 분기)."""
         src = _webp(size=(ORIGINAL_MAX + 100, ORIGINAL_MAX + 100), alpha=True)
         result = shrink_original_if_needed(src)
         assert result.content_type == "image/png"
-
 
     def test_webp_without_alpha_shrunk_becomes_jpeg(self):
         """alpha 없는 WEBP → JPEG (PNG 통일 시 용량 폭증)."""
@@ -127,8 +129,6 @@ class TestShrinkOriginal:
         result = shrink_original_if_needed(src)
         assert result.content_type == "image/jpeg"
 
-
-# ──────────────────── crop + resize ────────────────────
 
 @pytest.mark.unit
 class TestCropSquareAndResize:
@@ -138,16 +138,13 @@ class TestCropSquareAndResize:
         out = Image.open(io.BytesIO(result.data))
         assert out.size == (THUMBNAIL_SMALL, THUMBNAIL_SMALL)
 
-
     def test_portrait_input_becomes_square(self):
         result = crop_square_and_resize(_jpeg(size=(600, 800)), THUMBNAIL_MEDIUM)
         out = Image.open(io.BytesIO(result.data))
         assert out.size == (THUMBNAIL_MEDIUM, THUMBNAIL_MEDIUM)
 
-
     def test_rgba_input_flattened_to_rgb_white_bg(self):
         """RGBA → JPEG 인코딩 시 alpha 자리에 흰 배경 합성."""
-        # 반투명 빨강. alpha=128 인 RGBA 를 PNG 로 저장.
         src = _png(size=(100, 100), color=(255, 0, 0), mode="RGBA")
         result = crop_square_and_resize(src, THUMBNAIL_SMALL)
         out = Image.open(io.BytesIO(result.data))
@@ -156,31 +153,24 @@ class TestCropSquareAndResize:
         # 으로 채워졌는지" 만 확인 (LANCZOS 보간으로 정확한 픽셀 매칭 어려움).
         # 중심 픽셀의 R 채널이 가장 높은 값이고 G/B 가 0 이 아님 (=alpha 합성 일어남) 검증.
         r, g, b = out.getpixel((THUMBNAIL_SMALL // 2, THUMBNAIL_SMALL // 2))
-        assert r > g and r > b  # 빨강 우세
+        assert r > g and r > b
         assert g > 0 and b > 0  # 흰 배경 합성으로 G/B 도 0 초과
 
-
-# ──────────────────── EXIF 회전 ────────────────────
 
 @pytest.mark.unit
 class TestExifRotation:
     def test_image_with_orientation_tag_is_re_encoded(self):
         """EXIF Orientation 이 1(정상) 외 값이면 transpose 가 픽셀을 바꾸므로 raw 보존 X."""
-        # Orientation=6 (시계 90도) 를 EXIF 에 박아 저장.
-        from PIL.ExifTags import TAGS
         src_img = Image.new("RGB", (100, 100), (255, 0, 0))
         exif = src_img.getexif()
-        exif[0x0112] = 6  # Orientation
+        exif[0x0112] = 6
         buf = io.BytesIO()
         src_img.save(buf, format="JPEG", exif=exif, quality=80)
         src_bytes = buf.getvalue()
 
         result = shrink_original_if_needed(src_bytes)
-        # transpose 가 픽셀을 바꿨으므로 raw 보존 fast-path 가 아닌 재인코딩 path.
         assert result.data != src_bytes
 
-
-# ──────────────────── 포맷 화이트리스트 (#7) ────────────────────
 
 @pytest.mark.unit
 class TestFormatWhitelist:
@@ -198,8 +188,6 @@ class TestFormatWhitelist:
             process_feed_image(src)
 
 
-# ──────────────────── 디컴프레션 봄 (#1) ────────────────────
-
 @pytest.mark.unit
 class TestDecompressionBomb:
     def test_oversized_dimensions_rejected(self):
@@ -209,12 +197,11 @@ class TestDecompressionBomb:
         Pillow 가 읽는 IHDR chunk 의 width / height 만 큰 값으로 박아 두면, `Image.open`
         직후 `img.width × img.height` 체크에서 걸린다.
         """
-        # 작은 PNG 만들고 IHDR width/height 를 큰 값으로 패치.
         small = _png(size=(10, 10))
         # PNG IHDR: 8-byte signature + 4-byte chunk length + 4-byte type "IHDR" + 13-byte data
         # data: width(4) height(4) ... → byte offset 16 부터 width, 20 부터 height (big-endian)
         import struct
-        side = 10_000  # 10000 × 10000 = 100MP > MAX_DECODE_PIXELS (50MP)
+        side = 10_000  # 10000 × 10000 = 100MP > MAX_DECODE_PIXELS (30MP)
         patched = bytearray(small)
         struct.pack_into(">I", patched, 16, side)
         struct.pack_into(">I", patched, 20, side)
@@ -223,15 +210,31 @@ class TestDecompressionBomb:
         with pytest.raises(ValueError, match="해상도가 너무 큽니다|이미지를 처리할 수 없습니다"):
             process_feed_image(bytes(patched))
 
+    def test_decode_cap_is_memory_safe_bound(self):
+        """단일 디코딩이 수백 MB 를 할당하지 못하도록 cap 은 30MP 이하로 유지."""
+        # 30MP × 4B(RGBA) ≈ 120MB. 이보다 크면 OOM 회귀 위험.
+        assert MAX_DECODE_PIXELS <= 30_000_000
 
-# ──────────────────── 디코딩 실패 ────────────────────
+    def test_36mp_header_rejected_by_tightened_cap(self):
+        """36MP(6000×6000) — 과거 50MP cap 이면 통과했을 값이 이제는 거절됨.
+
+        헤더만 6000×6000 으로 패치해 실제 메모리 할당 없이 dimension 체크만 태운다.
+        """
+        import struct
+        small = _png(size=(10, 10))
+        side = 6_000
+        patched = bytearray(small)
+        struct.pack_into(">I", patched, 16, side)
+        struct.pack_into(">I", patched, 20, side)
+        with pytest.raises(ValueError, match="해상도가 너무 큽니다|이미지를 처리할 수 없습니다"):
+            process_feed_image(bytes(patched))
+
 
 @pytest.mark.unit
 class TestDecodingFailure:
     def test_garbage_bytes_raise_value_error(self):
         with pytest.raises(ValueError, match="이미지를 처리할 수 없습니다"):
             process_feed_image(b"this is not an image at all")
-
 
     def test_empty_bytes_raise_value_error(self):
         with pytest.raises(ValueError, match="이미지를 처리할 수 없습니다"):

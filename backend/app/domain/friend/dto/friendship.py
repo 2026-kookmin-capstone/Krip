@@ -1,9 +1,9 @@
-from typing import List, Optional
-from datetime import datetime
 from dataclasses import dataclass
+from datetime import datetime
+from typing import List, Optional
 
-from app.domain.friend.model.friendship import FriendshipStatus
 from app.domain.auth.model.user_detail_inform import Gender
+from app.domain.friend.model.friendship import FriendshipStatus
 
 
 @dataclass

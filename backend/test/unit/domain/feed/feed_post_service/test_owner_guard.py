@@ -6,17 +6,19 @@
 
 검증:
     - 미존재 post → FeedNotFoundError
-    - 본인 아닌 post → PermissionError
+    - 본인 아닌 post → FeedNotFoundError (404 일원화 — enumeration oracle 차단, 403 아님)
     - 본인 post → 정상 반환 (mutate 메서드는 변경된 필드 + DTO 반환)
     - delete_post 가 DB row 삭제 후 S3 prefix 정리 (순서)
 """
-from unittest.mock import MagicMock
-from test.unit.domain.feed.mock_factory import make_feed_post_with_counts
-import pytest
 from datetime import datetime, timezone
+from unittest.mock import MagicMock
 
-from app.domain.feed.service.exception import FeedNotFoundError
+import pytest
+
 from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
+from app.domain.feed.service.exception import FeedNotFoundError
+from app.util.cursor import decode_cursor
+from test.unit.domain.feed.mock_factory import make_feed_post_with_counts
 
 
 def _mk_row(
@@ -47,8 +49,6 @@ def _mk_row(
     )
 
 
-# ──────────────────── 미존재 / 권한 거부 ────────────────────
-
 @pytest.mark.unit
 class TestLoadOwnedPostMissingOrForbidden:
     async def test_get_my_post_missing_raises_not_found(self, service, repo_mock):
@@ -56,12 +56,25 @@ class TestLoadOwnedPostMissingOrForbidden:
         with pytest.raises(FeedNotFoundError):
             await service.get_my_post(user_id="USER_a", post_id="FDP_missing")
 
-
-    async def test_get_my_post_other_owner_raises_permission(self, service, repo_mock):
+    async def test_get_my_post_other_owner_raises_not_found(self, service, repo_mock):
+        """타인 소유 게시물 접근은 404 — 존재 여부를 감춰 enumeration oracle 차단 (403 아님)."""
         repo_mock.find_by_post_id.return_value = _mk_row(user_id="USER_owner")
-        with pytest.raises(PermissionError):
+        with pytest.raises(FeedNotFoundError):
             await service.get_my_post(user_id="USER_intruder", post_id="FDP_x")
 
+    async def test_other_owner_and_missing_raise_same_error_type(self, service, repo_mock):
+        """미존재와 타인 소유가 동일한 예외 타입 → 응답만으로 구분 불가 (enumeration 차단 핵심)."""
+        repo_mock.find_by_post_id.return_value = None
+        with pytest.raises(FeedNotFoundError) as missing:
+            await service.get_my_post(user_id="USER_a", post_id="FDP_missing")
+
+        repo_mock.find_by_post_id.return_value = _mk_row(user_id="USER_owner")
+        with pytest.raises(FeedNotFoundError) as not_owned:
+            await service.get_my_post(user_id="USER_intruder", post_id="FDP_x")
+
+        assert type(missing.value) is type(not_owned.value)
+        # 타인 소유가 403(PermissionError) 로 새지 않는지 명시 가드.
+        assert not isinstance(not_owned.value, PermissionError)
 
     async def test_update_visibility_missing_raises_not_found(self, service, repo_mock):
         repo_mock.find_by_post_id.return_value = None
@@ -70,32 +83,27 @@ class TestLoadOwnedPostMissingOrForbidden:
                 user_id="USER_a", post_id="FDP_missing", visibility=FeedVisibility.PRIVATE,
             )
 
-
-    async def test_update_visibility_other_owner_raises_permission(self, service, repo_mock):
+    async def test_update_visibility_other_owner_raises_not_found(self, service, repo_mock):
         repo_mock.find_by_post_id.return_value = _mk_row(user_id="USER_owner")
-        with pytest.raises(PermissionError):
+        with pytest.raises(FeedNotFoundError):
             await service.update_visibility(
                 user_id="USER_intruder", post_id="FDP_x", visibility=FeedVisibility.PRIVATE,
             )
 
-
-    async def test_update_caption_other_owner_raises_permission(self, service, repo_mock):
+    async def test_update_caption_other_owner_raises_not_found(self, service, repo_mock):
         repo_mock.find_by_post_id.return_value = _mk_row(user_id="USER_owner")
-        with pytest.raises(PermissionError):
+        with pytest.raises(FeedNotFoundError):
             await service.update_caption(
                 user_id="USER_intruder", post_id="FDP_x", caption="nope",
             )
 
-
-    async def test_delete_post_other_owner_raises_permission(self, service, repo_mock, storage_mock):
+    async def test_delete_post_other_owner_raises_not_found(self, service, repo_mock, storage_mock):
         repo_mock.find_by_post_id.return_value = _mk_row(user_id="USER_owner")
-        with pytest.raises(PermissionError):
+        with pytest.raises(FeedNotFoundError):
             await service.delete_post(user_id="USER_intruder", post_id="FDP_x")
         # 권한 거부면 storage 호출도 일어나면 안 됨 — 인가 검증 회귀 가드.
         storage_mock.delete_by_prefix.assert_not_called()
 
-
-# ──────────────────── 정상 mutate 경로 ────────────────────
 
 @pytest.mark.unit
 class TestUpdateVisibilitySuccess:
@@ -109,7 +117,6 @@ class TestUpdateVisibilitySuccess:
         assert result.visibility == FeedVisibility.FRIENDS
         # row.post 객체에도 mutate 적용 (다음 조회/캐시 일관성)
         assert row.post.visibility == FeedVisibility.FRIENDS
-
 
     async def test_visibility_change_preserves_counts(self, service, repo_mock):
         """visibility 수정은 좋아요/댓글 수에 무관 — row 의 카운트 그대로 응답."""
@@ -135,7 +142,6 @@ class TestUpdateCaptionSuccess:
         assert result.caption == "새 캡션"
         assert row.post.caption == "새 캡션"
 
-
     async def test_owner_can_clear_with_empty_string(self, service, repo_mock):
         """빈 문자열 → 정규화 → None 으로 저장 (PATCH 와 POST 동일 규칙)."""
         row = _mk_row(user_id="USER_owner", caption="이전 캡션")
@@ -147,7 +153,6 @@ class TestUpdateCaptionSuccess:
         assert result.caption is None
         assert row.post.caption is None
 
-
     async def test_owner_can_clear_with_whitespace(self, service, repo_mock):
         row = _mk_row(user_id="USER_owner", caption="이전")
         repo_mock.find_by_post_id.return_value = row
@@ -157,8 +162,6 @@ class TestUpdateCaptionSuccess:
         )
         assert result.caption is None
 
-
-# ──────────────────── delete_post 흐름 ────────────────────
 
 @pytest.mark.unit
 class TestDeletePost:
@@ -170,9 +173,7 @@ class TestDeletePost:
         await service.delete_post(user_id="USER_owner", post_id="FDP_x")
 
         repo_mock.delete.assert_awaited_once_with(row.post)
-        # prefix 는 `{user_id}/feed/{post_id}` 형식
         storage_mock.delete_by_prefix.assert_awaited_once_with("USER_owner/feed/FDP_x")
-
 
     async def test_storage_failure_is_swallowed(self, service, repo_mock, storage_mock):
         """S3 삭제 실패해도 사용자 작업은 성공 (orphan 만 남음). best-effort 보장 회귀."""
@@ -180,10 +181,8 @@ class TestDeletePost:
         repo_mock.find_by_post_id.return_value = row
         storage_mock.delete_by_prefix.side_effect = RuntimeError("S3 down")
 
-        # raise 되지 않아야 함
         await service.delete_post(user_id="USER_owner", post_id="FDP_x")
         repo_mock.delete.assert_awaited_once()
-
 
     async def test_missing_post_raises_not_found_without_storage_call(
         self, service, repo_mock, storage_mock,
@@ -193,8 +192,6 @@ class TestDeletePost:
             await service.delete_post(user_id="USER_owner", post_id="FDP_missing")
         storage_mock.delete_by_prefix.assert_not_called()
 
-
-# ──────────────────── get_my_feed pagination ────────────────────
 
 @pytest.mark.unit
 class TestGetMyFeed:
@@ -207,7 +204,6 @@ class TestGetMyFeed:
         assert set(call_kwargs["visibilities"]) == set(FeedVisibility)
         assert call_kwargs["cursor"] is None
 
-
     async def test_passes_self_as_viewer_id(self, service, repo_mock):
         """get_my_feed 는 본인이 viewer 라 viewer_id=user_id 전달 — 본인이 자기 글에
         누른 좋아요(인스타 동치)가 is_liked=True 로 합성되도록 보장.
@@ -217,19 +213,29 @@ class TestGetMyFeed:
 
         assert repo_mock.find_by_owner.await_args.kwargs["viewer_id"] == "USER_a"
 
-
-    async def test_next_cursor_is_last_post_id_when_full_page(
+    async def test_next_cursor_is_none_when_exact_page(
         self, service, repo_mock, monkeypatch,
     ):
-        """PAGE_SIZE 만큼 차면 next_cursor = 마지막 row.post.post_id."""
-        # PAGE_SIZE 를 작게 패치해 fixture 로 가짜 row N개로 충족.
         monkeypatch.setattr("app.domain.feed.service.feed_post.PAGE_SIZE", 2)
         rows = [_mk_row(post_id=f"FDP_{i}", user_id="USER_a") for i in range(2)]
         repo_mock.find_by_owner.return_value = rows
 
         result = await service.get_my_feed(user_id="USER_a", cursor=None)
-        assert result.next_cursor == "FDP_1"
+        assert result.next_cursor is None
 
+    async def test_next_cursor_is_last_returned_post_when_page_overflows(
+        self, service, repo_mock, monkeypatch,
+    ):
+        monkeypatch.setattr("app.domain.feed.service.feed_post.PAGE_SIZE", 2)
+        repo_mock.find_by_owner.return_value = [
+            _mk_row(post_id=f"FDP_{i}", user_id="USER_a") for i in range(3)
+        ]
+
+        result = await service.get_my_feed(user_id="USER_a", cursor=None)
+
+        assert [post.post_id for post in result.posts] == ["FDP_0", "FDP_1"]
+        assert decode_cursor(result.next_cursor)[1] == "FDP_1"
+        assert repo_mock.find_by_owner.await_args.kwargs["limit"] == 3
 
     async def test_next_cursor_is_none_when_partial_page(
         self, service, repo_mock, monkeypatch,
@@ -240,7 +246,6 @@ class TestGetMyFeed:
 
         result = await service.get_my_feed(user_id="USER_a", cursor=None)
         assert result.next_cursor is None
-
 
     async def test_response_includes_like_and_comment_counts(self, service, repo_mock):
         """list 응답의 각 DTO 가 row 의 카운트를 정확 매핑."""
@@ -253,7 +258,6 @@ class TestGetMyFeed:
         assert result.posts[0].comment_count == 2
         assert result.posts[1].like_count == 0
         assert result.posts[1].comment_count == 5
-
 
     async def test_response_propagates_is_liked_from_row(self, service, repo_mock):
         """row.is_liked 가 응답 DTO 까지 정확히 흘러가는지 — _to_dto 누락 회귀 가드."""
@@ -270,8 +274,6 @@ class TestGetMyFeed:
         assert result.posts[1].is_liked is False
 
 
-# ──────────────────── _load_owned_post 가 viewer_id=user_id 전달 ────────────────────
-
 @pytest.mark.unit
 class TestLoadOwnedPostViewerForwarding:
     """`_load_owned_post` 가 `find_by_post_id` 호출 시 viewer_id 를 본인으로 박아 보내야
@@ -283,7 +285,6 @@ class TestLoadOwnedPostViewerForwarding:
         await service.get_my_post(user_id="USER_owner", post_id="FDP_x")
         assert repo_mock.find_by_post_id.await_args.kwargs["viewer_id"] == "USER_owner"
 
-
     async def test_update_visibility_forwards_viewer_id(self, service, repo_mock):
         repo_mock.find_by_post_id.return_value = _mk_row(user_id="USER_owner")
         await service.update_visibility(
@@ -291,14 +292,12 @@ class TestLoadOwnedPostViewerForwarding:
         )
         assert repo_mock.find_by_post_id.await_args.kwargs["viewer_id"] == "USER_owner"
 
-
     async def test_update_caption_forwards_viewer_id(self, service, repo_mock):
         repo_mock.find_by_post_id.return_value = _mk_row(user_id="USER_owner")
         await service.update_caption(
             user_id="USER_owner", post_id="FDP_x", caption="새 캡션",
         )
         assert repo_mock.find_by_post_id.await_args.kwargs["viewer_id"] == "USER_owner"
-
 
     async def test_response_includes_is_liked_for_mutation_endpoints(
         self, service, repo_mock,

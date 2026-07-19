@@ -1,17 +1,15 @@
 """메시지 편집 / 삭제 REST. 방 id 없이 메시지 id 만으로 접근 가능하도록 별도 경로."""
 
-from fastapi import APIRouter, Depends, HTTPException, Request
 from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Request
 
-from app.domain.chat.service.message import MessageService
-from app.domain.chat.schema.message import EditMessageBody, EditMessageResponse
 from app.container import Container
+from app.domain.chat.schema.message import EditMessageBody, EditMessageResponse
+from app.domain.chat.service.message import MessageService
 
 
 router = APIRouter(prefix="/messages", tags=["채팅 - 메시지 편집/삭제"])
 
-
-# ──────────────────── 편집 ────────────────────
 
 @router.patch("/{message_id}")
 @inject
@@ -41,8 +39,6 @@ async def edit_message(
     return EditMessageResponse(**result)
 
 
-# ──────────────────── 삭제 (soft) ────────────────────
-
 @router.delete("/{message_id}", status_code=204)
 @inject
 async def delete_message(
@@ -50,7 +46,10 @@ async def delete_message(
     message_id: str,
     service: MessageService = Depends(Provide[Container.message_service]),
 ) -> None:
-    """본인 메시지 OR 그룹방 creator 의 soft delete. 방 전체에 `message.deleted` 발행."""
+    """본인 메시지 OR 그룹방 creator 의 멱등 soft delete 및 tombstone 발행.
+
+    durable delete 뒤 delivery가 실패하면 요청도 실패하며, 재시도는 tombstone을 재발행한다.
+    """
     user_id: str = request.state.user_id
     deleter_session_id = ""
 

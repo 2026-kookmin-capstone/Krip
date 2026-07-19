@@ -1,15 +1,17 @@
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Request, Depends, Query
-from dependency_injector.wiring import Provide, inject
 
-from app.schema.common import MessageResponse
-from app.domain.friend.service.user_block import UserBlockService
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
+
+from app.container import Container
+from app.domain.friend.schema.friendship import FriendPeerResponse
 from app.domain.friend.schema.user_block import (
     BlockUserBody,
-    UserBlockResponse, UserBlockListResponse,
+    UserBlockListResponse,
+    UserBlockResponse,
 )
-from app.domain.friend.schema.friendship import FriendPeerResponse
-from app.container import Container
+from app.domain.friend.service.user_block import UserBlockService
+from app.schema.common import MessageResponse
 
 
 router = APIRouter(prefix="/blocks", tags=["유저 차단"])
@@ -55,17 +57,18 @@ async def unblock_user(
 @inject
 async def get_blocked_users(
     request: Request,
-    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (block_id)"),
+    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (이전 응답의 next_cursor)"),
     service: UserBlockService = Depends(Provide[Container.user_block_service]),
 ) -> UserBlockListResponse:
     """내가 차단한 유저 목록"""
     user_id: str = request.state.user_id
 
-    result = await service.get_blocked_users(user_id=user_id, cursor=cursor)
+    try:
+        result = await service.get_blocked_users(user_id=user_id, cursor=cursor)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     return _to_list_response(result)
 
-
-# ──────────────────── 내부 유틸 ────────────────────
 
 def _to_block_response(dto) -> UserBlockResponse:
     return UserBlockResponse(

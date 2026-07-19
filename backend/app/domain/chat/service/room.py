@@ -1,26 +1,36 @@
 """채팅방 생성 / 멤버십 / 읽음 처리."""
-from sqlalchemy.exc import IntegrityError
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
+from typing import cast
 
-from app.domain.friend.repository.user_block import UserBlockRepository
-from app.domain.friend.repository.friendship import FriendshipRepository
-from app.domain.chat.service.exception import ChatRoomNotFoundError
-from app.domain.chat.repository.chat_room import ChatRoomRepository
-from app.domain.chat.repository.chat_message import ChatMessageRepository
-from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
-from app.domain.chat.model.chat_room_member import ChatRoomMember
-from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
-from app.domain.chat.dto.room import ChatRoomData, ChatRoomPeerData
-from app.domain.auth.repository.user import UserRepository
-from app.database.session import UnitOfWork, mongodb, transactional
-from app.core.redis import get_redis_client
-from app.core.logger import get_logger
+from sqlalchemy.exc import IntegrityError
+
+from app.core.chat.lua_script import lua_scripts
 from app.core.chat.redis_key import (
+    ROOM_MEMBERS_TTL,
+    read_sync_key,
+    room_members_gen_key,
     room_members_key,
     room_seq_key,
     unread_key,
-    ROOM_MEMBERS_TTL,
 )
+from app.core.logger import get_logger
+from app.core.redis import get_redis_client
+from app.database.session import UnitOfWork, mongodb, transactional
+from app.domain.auth.repository.user import UserRepository
+from app.domain.chat.constants import (
+    MAX_GROUP_MEMBERS,
+    UNREAD_COUNT_CAP,
+    UNREAD_COUNT_LIMIT,
+)
+from app.domain.chat.dto.room import ChatRoomData, ChatRoomPeerData
+from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
+from app.domain.chat.model.chat_room_member import ChatRoomMember
+from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
+from app.domain.chat.repository.chat_message import ChatMessageRepository
+from app.domain.chat.repository.chat_room import ChatRoomRepository
+from app.domain.chat.service.exception import ChatRoomNotFoundError
+from app.domain.friend.repository.friendship import FriendshipRepository
+from app.domain.friend.repository.user_block import UserBlockRepository
 
 
 logger = get_logger("chat.room")
@@ -35,10 +45,28 @@ class RoomService:
         self._fanout = fanout_service
         self._message_service = message_service
 
+    async def create_direct_room(self, me_id: str, peer_user_id: str) -> ChatRoomData:
+        """1:1 방 idempotent 생성. canonical 정렬 `(a<b)` 로 같은 쌍은 항상 같은 방.
+
+        Redis 캐시/구독/fan-out 은 트랜잭션 커밋 이후 실행 — 커밋 롤백 시 비멤버가 Redis
+        캐시에 남아 송수신 가능한 상태(최대 TTL)를 방지.
+        """
+        new_room_id, members, dto = await self._create_direct_room_tx(
+            me_id=me_id, peer_user_id=peer_user_id,
+        )
+        if new_room_id is not None:
+            await self._run_side_effect_safe(
+                self._emit_room_joined(new_room_id, list(members), unread_seed=None),
+                room_id=new_room_id, label="room_joined:direct",
+            )
+            logger.info("1:1 방 생성 완료: room_id={}, members={}", new_room_id, members)
+        return dto
 
     @transactional
-    async def create_direct_room(self, me_id: str, peer_user_id: str) -> ChatRoomData:
-        """1:1 방 idempotent 생성. canonical 정렬 `(a<b)` 로 같은 쌍은 항상 같은 방."""
+    async def _create_direct_room_tx(
+        self, *, me_id: str, peer_user_id: str,
+    ) -> tuple[str | None, tuple[str, str] | None, ChatRoomData]:
+        """1:1 방 생성 DB 파트. 신규면 (room_id, (a,b), dto), 기존/경합이면 (None, None, dto)."""
         if me_id == peer_user_id:
             raise ValueError("자기 자신과의 방은 만들 수 없습니다.")
 
@@ -50,6 +78,11 @@ class RoomService:
         peer = await user_repo.find_by_id_with_profile(peer_user_id)
         if peer is None:
             raise ValueError("존재하지 않는 유저입니다.")
+        active_ids = await user_repo.lock_active_user_ids({me_id, peer_user_id})
+        if me_id not in active_ids:
+            raise PermissionError("비활성 계정은 채팅방을 만들 수 없습니다.")
+        if peer_user_id not in active_ids:
+            raise ValueError("비활성 계정과는 채팅방을 만들 수 없습니다.")
 
         blocks = await block_repo.find_blocks_between(me_id, peer_user_id)
         if any(b.blocker_id == me_id for b in blocks):
@@ -61,7 +94,7 @@ class RoomService:
 
         existing = await chat_room_repo.find_direct_by_pair(user_a, user_b)
         if existing is not None:
-            return await self._to_dto(existing, me_id=me_id, peer=peer)
+            return None, None, await self._to_dto(existing, me_id=me_id, peer=peer)
 
         # UNIQUE race 는 SAVEPOINT rollback + 재조회로 idempotent 처리.
         new_room = ChatRoom(
@@ -81,28 +114,71 @@ class RoomService:
             existing = await chat_room_repo.find_direct_by_pair(user_a, user_b)
             if existing is None:
                 raise ValueError("방 생성 경합 실패. 잠시 후 다시 시도해주세요.")
-            return await self._to_dto(existing, me_id=me_id, peer=peer)
+            return None, None, await self._to_dto(existing, me_id=me_id, peer=peer)
 
-        room_id = new_room.chat_room_id
+        dto = await self._to_dto(new_room, me_id=me_id, peer=peer)
+        return new_room.chat_room_id, (user_a, user_b), dto
+
+    async def _emit_room_joined(
+        self,
+        room_id: str,
+        member_ids: list[str],
+        *,
+        unread_seed: str | None,
+        expected_generations: dict[str, datetime] | None = None,
+    ) -> None:
+        """(커밋 후) 현재 membership generation의 초기 가입 효과만 반영한다.
+
+        소켓 write 는 room lock 커밋 이후 — 느린 클라이언트가 방 mutation 을 막지 않게.
+        stale 이벤트는 fanout 의 checked delivery 가 전달 직전 membership 재확인으로 거른다.
+        """
+        joined_ids = await self._emit_room_joined_locked(
+            room_id,
+            member_ids,
+            unread_seed=unread_seed,
+            expected_generations=expected_generations,
+        )
+        for uid in joined_ids:
+            await self._fanout.fan_out_member_joined(uid, room_id)
+
+    @transactional
+    async def _emit_room_joined_locked(
+        self,
+        room_id: str,
+        member_ids: list[str],
+        *,
+        unread_seed: str | None,
+        expected_generations: dict[str, datetime] | None = None,
+    ) -> list[str]:
+        room = await ChatRoomRepository(self._session).find_by_id_for_update(room_id)
+        if room is None:
+            return []
+        member_repo = ChatRoomMemberRepository(self._session)
+        current = await member_repo.lock_active_receiving_user_ids(
+            room_id, set(member_ids),
+        )
+        if expected_generations is not None:
+            current &= await member_repo.lock_matching_membership_generations(
+                room_id, expected_generations, is_left=False,
+            )
+        current_ids = [uid for uid in member_ids if uid in current]
+        if not current_ids:
+            return []
+
         redis = await get_redis_client()
         pipe = redis.pipeline(transaction=True)
-        pipe.sadd(room_members_key(room_id), user_a, user_b)
+        pipe.incr(room_members_gen_key(room_id))
+        pipe.sadd(room_members_key(room_id), *current_ids)
         pipe.expire(room_members_key(room_id), ROOM_MEMBERS_TTL)
+        if unread_seed == "zero":
+            for uid in current_ids:
+                pipe.hset(unread_key(uid), room_id, 0)
         await pipe.execute()
-
-        # 구독을 fan-out 보다 먼저 — await 사이 누군가 송신해도 미구독 멤버 누락 방지.
-        for uid in (user_a, user_b):
-            await self._fanout.subscribe_user_to_room(uid, room_id)
-
-        for uid in (user_a, user_b):
-            await self._fanout.fan_out_to_user(
-                uid,
-                {"type": "room_joined", "room_id": room_id},
+        for uid in current_ids:
+            await self._fanout.subscribe_user_to_room(
+                uid, room_id, authorization_locked=True,
             )
-
-        logger.info("1:1 방 생성 완료: room_id={}, a={}, b={}", room_id, user_a, user_b)
-        return await self._to_dto(new_room, me_id=me_id, peer=peer)
-
+        return current_ids
 
     @transactional
     async def list_user_room_ids(self, user_id: str) -> list[str]:
@@ -110,23 +186,60 @@ class RoomService:
         member_repo = ChatRoomMemberRepository(self._session)
         return await member_repo.find_user_room_ids(user_id)
 
-
-    @transactional
     async def create_group_room(
         self,
         me_id: str,
         title: str,
         member_ids: list[str],
     ) -> ChatRoomData:
-        """그룹 방 생성. creator 포함 초기 멤버. 친구가 아닌 user_id 가 하나라도 있으면 전체 실패."""
+        """그룹 방 생성. creator 포함 초기 멤버. 친구가 아닌 user_id 가 하나라도 있으면 전체 실패.
+
+        Redis 캐시/구독/fan-out/시스템 메시지는 커밋 이후 실행 — 롤백 시 비멤버 잔존 방지.
+        """
+        room_id, all_member_ids, generations, dto = await self._create_group_room_tx(
+            me_id=me_id, title=title, member_ids=member_ids,
+        )
+        await self._run_side_effect_safe(
+            self._emit_room_joined(
+                room_id,
+                all_member_ids,
+                unread_seed="zero",
+                expected_generations=generations,
+            ),
+            room_id=room_id, label="room_joined:group",
+        )
+        await self._send_system_message_safe(
+            room_id=room_id, action="created", actor_id=me_id,
+        )
+        logger.info(
+            "그룹 방 생성: room_id={}, creator={}, members={}",
+            room_id, me_id, all_member_ids,
+        )
+        return dto
+
+    @transactional
+    async def _create_group_room_tx(
+        self, *, me_id: str, title: str, member_ids: list[str],
+    ) -> tuple[str, list[str], dict[str, datetime], ChatRoomData]:
+        """그룹 방 생성 DB 파트와 초기 membership generations."""
         targets = {uid for uid in member_ids if uid != me_id}
         if not targets:
             raise ValueError("초대할 대상이 없습니다 (본인 외 멤버 없음).")
+        if len(targets) + 1 > MAX_GROUP_MEMBERS:
+            raise ValueError(f"그룹 채팅방은 최대 {MAX_GROUP_MEMBERS}명까지 참여할 수 있습니다.")
 
         friendship_repo = FriendshipRepository(self._session)
         chat_room_repo = ChatRoomRepository(self._session)
         member_repo = ChatRoomMemberRepository(self._session)
 
+        active_ids = await UserRepository(self._session).lock_active_user_ids(
+            {me_id, *targets},
+        )
+        if me_id not in active_ids:
+            raise PermissionError("비활성 계정은 채팅방을 만들 수 없습니다.")
+        inactive_targets = targets - active_ids
+        if inactive_targets:
+            raise ValueError(f"비활성 계정은 초대할 수 없습니다: {sorted(inactive_targets)}")
         friend_ids = await friendship_repo.find_accepted_friend_ids_with(me_id, targets)
         non_friends = targets - friend_ids
         if non_friends:
@@ -143,47 +256,48 @@ class RoomService:
             direct_user_b_id=None,
         )
         await chat_room_repo.save(new_room)
+        joined_at = datetime.now(timezone.utc)
         await member_repo.save_all([
             ChatRoomMember(
                 chat_room_id=new_room.chat_room_id,
                 user_id=uid,
+                joined_at=joined_at,
                 last_read_message_server_seq=None,
             )
             for uid in all_member_ids
         ])
 
-        room_id = new_room.chat_room_id
-        redis = await get_redis_client()
-        pipe = redis.pipeline(transaction=True)
-        pipe.sadd(room_members_key(room_id), *all_member_ids)
-        pipe.expire(room_members_key(room_id), ROOM_MEMBERS_TTL)
-        for uid in all_member_ids:
-            pipe.hset(unread_key(uid), room_id, 0)
-        await pipe.execute()
+        generations = {uid: joined_at for uid in all_member_ids}
+        return (
+            new_room.chat_room_id,
+            all_member_ids,
+            generations,
+            self._to_group_dto(new_room),
+        )
 
-        # 구독을 fan-out 보다 먼저 — race 차단.
-        for uid in all_member_ids:
-            await self._fanout.subscribe_user_to_room(uid, room_id)
-
-        for uid in all_member_ids:
-            await self._fanout.fan_out_to_user(
-                uid, {"type": "room_joined", "room_id": room_id},
+    async def _send_system_message_safe(self, **kwargs) -> None:
+        """(커밋 후) 시스템 메시지 best-effort 발행 — 실패해도 멤버십 변경은 되돌리지 않는다."""
+        try:
+            await self._message_service.send_system_message(**kwargs)
+        except Exception as e:
+            logger.warning(
+                "시스템 메시지 발행 실패 (무시): room_id={}, action={}, err={}",
+                kwargs.get("room_id"), kwargs.get("action"), type(e).__name__,
             )
 
-        await self._message_service.send_system_message(
-            room_id=room_id,
-            action="created",
-            actor_id=me_id,
-        )
+    async def _run_side_effect_safe(self, coro, *, room_id: str, label: str) -> None:
+        """(커밋 후) Redis/fan-out 부수효과 best-effort — 실패해도 커밋된 멤버십은 안 되돌린다.
 
-        logger.info(
-            "그룹 방 생성: room_id={}, creator={}, members={}",
-            room_id, me_id, all_member_ids,
-        )
-        return self._to_group_dto(new_room)
+        500→재시도로 인한 그룹 방 중복 생성을 막는다. 캐시는 read-repair·TTL 로 DB 기준 수렴.
+        """
+        try:
+            await coro
+        except Exception as e:
+            logger.warning(
+                "채팅 부수효과 실패 (무시): label={}, room_id={}, err={}",
+                label, room_id, type(e).__name__,
+            )
 
-
-    @transactional
     async def invite_members(
         self,
         me_id: str,
@@ -194,12 +308,65 @@ class RoomService:
 
         신규 멤버 `last_read = current_seq` (과거 메시지는 읽음 처리).
         재초대 (`is_left=true`) 는 `last_read` 유지 + `notification_muted` 만 리셋.
+
+        Redis 캐시/구독/fan-out/시스템 메시지는 커밋 이후 실행 — 롤백 시 비멤버가 캐시에
+        남아 송수신 가능한 상태(최대 TTL)를 방지.
         """
+        invited, skipped, new_members, rejoined, _, generations = (
+            await self._invite_members_tx(
+                me_id=me_id, room_id=room_id, user_ids=user_ids,
+            )
+        )
+        if not invited:
+            return [], skipped
+
+        await self._run_side_effect_safe(
+            self._emit_invite_side_effects(
+                room_id, invited=invited, new_members=new_members,
+                rejoined=rejoined, expected_generations=generations,
+            ),
+            room_id=room_id, label="invite_side_effects",
+        )
+        await self._send_system_message_safe(
+            room_id=room_id, action="join", actor_id=me_id, target_ids=invited,
+            required_joined_user_ids=invited,
+            required_joined_generations=generations,
+        )
+        logger.info(
+            "멤버 초대: room_id={}, inviter={}, invited={}, skipped={}",
+            room_id, me_id, invited, skipped,
+        )
+        return invited, skipped
+
+    @transactional
+    async def _invite_members_tx(
+        self,
+        *,
+        me_id: str,
+        room_id: str,
+        user_ids: list[str],
+    ) -> tuple[
+        list[str], list[str], list[str], list[tuple[str, int]], int,
+        dict[str, datetime],
+    ]:
+        """초대 DB 파트 — durable 결과와 membership generation을 반환한다."""
+        targets = {uid for uid in user_ids if uid != me_id}
+        if not targets:
+            raise ValueError("초대할 대상이 없습니다.")
+
         chat_room_repo = ChatRoomRepository(self._session)
         member_repo = ChatRoomMemberRepository(self._session)
         friendship_repo = FriendshipRepository(self._session)
         message_repo = ChatMessageRepository(mongodb.database)
 
+        active_ids = await UserRepository(self._session).lock_active_user_ids(
+            {me_id, *targets},
+        )
+        if me_id not in active_ids:
+            raise PermissionError("비활성 계정은 멤버를 초대할 수 없습니다.")
+        inactive_targets = targets - active_ids
+        if inactive_targets:
+            raise ValueError(f"비활성 계정은 초대할 수 없습니다: {sorted(inactive_targets)}")
         room = await chat_room_repo.find_by_id(room_id)
         if room is None:
             raise ChatRoomNotFoundError("존재하지 않는 방입니다.")
@@ -208,10 +375,6 @@ class RoomService:
         if not await member_repo.is_active_member(room_id, me_id):
             raise PermissionError("이 방의 활성 멤버만 초대할 수 있습니다.")
 
-        targets = {uid for uid in user_ids if uid != me_id}
-        if not targets:
-            raise ValueError("초대할 대상이 없습니다.")
-
         friend_ids = await friendship_repo.find_accepted_friend_ids_with(me_id, targets)
         non_friends = targets - friend_ids
         if non_friends:
@@ -219,123 +382,264 @@ class RoomService:
                 f"친구가 아닌 유저는 초대할 수 없습니다: {sorted(non_friends)}"
             )
 
-        current_seq = await self._get_current_seq(message_repo, room_id)
+        # 총원을 증가시키는 invite끼리 room row로 직렬화한다. inviter row의 공유 잠금은
+        # 대기 중 퇴장·강퇴를 commit 이후로 미뤄 stale 권한 초대를 막는다.
+        room = await chat_room_repo.find_by_id_for_update(room_id)
+        if room is None:
+            raise ChatRoomNotFoundError("존재하지 않는 방입니다.")
+        if room.type != ChatRoomType.GROUP:
+            raise ValueError("그룹 방에만 멤버를 초대할 수 있습니다.")
+        if not await member_repo.is_active_member_for_share(room_id, me_id):
+            raise PermissionError("이 방의 활성 멤버만 초대할 수 있습니다.")
 
-        invited: list[str] = []
+        # send와 같은 room mutex 안에서 읽어 가입 이전에 예약된 in-flight seq까지 baseline에
+        # 포함한다. lock 밖에서 읽으면 sender commit과 invite commit 사이에 stale해질 수 있다.
+        allocated_seq = await self._get_allocated_current_seq(message_repo, room_id)
+
         skipped: list[str] = []
-        new_members: list[str] = []
-        rejoined: list[tuple[str, int]] = []  # (uid, last_read)
+        candidates: list[tuple[str, ChatRoomMember | None]] = []
 
         for uid in sorted(targets):
             existing = await member_repo.find(room_id, uid)
             if existing is not None and not existing.is_left:
                 skipped.append(uid)
                 continue
+            candidates.append((uid, existing))
+
+        active_count = await member_repo.count_active_members(room_id)
+        if active_count + len(candidates) > MAX_GROUP_MEMBERS:
+            raise ValueError(f"그룹 채팅방은 최대 {MAX_GROUP_MEMBERS}명까지 참여할 수 있습니다.")
+
+        invited: list[str] = []
+        new_members: list[str] = []
+        rejoined: list[tuple[str, int]] = []  # (uid, last_read)
+        generations: dict[str, datetime] = {}
+        for uid, existing in candidates:
             if existing is not None and existing.is_left:
                 existing.is_left = False
-                existing.joined_at = datetime.now(timezone.utc)
+                previous_joined_at = cast(datetime, existing.joined_at)
+                if previous_joined_at.tzinfo is None:
+                    previous_joined_at = previous_joined_at.replace(tzinfo=timezone.utc)
+                existing.joined_at = max(
+                    datetime.now(timezone.utc),
+                    previous_joined_at + timedelta(microseconds=1),
+                )
                 existing.notification_muted = None
                 rejoined.append((uid, existing.last_read_message_server_seq or 0))
                 invited.append(uid)
+                generations[uid] = existing.joined_at
             else:
-                await member_repo.save(ChatRoomMember(
+                joined_at = datetime.now(timezone.utc)
+                member = ChatRoomMember(
                     chat_room_id=room_id,
                     user_id=uid,
-                    last_read_message_server_seq=current_seq or None,
-                ))
+                    joined_at=joined_at,
+                    last_read_message_server_seq=allocated_seq or None,
+                )
+                await member_repo.save(member)
                 new_members.append(uid)
                 invited.append(uid)
+                generations[uid] = joined_at
 
-        if not invited:
-            return [], skipped
-
-        redis = await get_redis_client()
-        pipe = redis.pipeline(transaction=True)
-        pipe.sadd(room_members_key(room_id), *invited)
-        pipe.expire(room_members_key(room_id), ROOM_MEMBERS_TTL)
-        for uid, last_read in rejoined:
-            pipe.hset(unread_key(uid), room_id, max(0, current_seq - last_read))
-        for uid in new_members:
-            pipe.hset(unread_key(uid), room_id, 0)
-        await pipe.execute()
-
-        for uid in invited:
-            await self._fanout.subscribe_user_to_room(uid, room_id)
-
-        for uid in invited:
-            await self._fanout.fan_out_to_user(
-                uid, {"type": "room_joined", "room_id": room_id},
-            )
-
-        await self._message_service.send_system_message(
-            room_id=room_id,
-            action="join",
-            actor_id=me_id,
-            target_ids=invited,
+        return (
+            invited, skipped, new_members, rejoined, allocated_seq or 0, generations,
         )
 
-        logger.info(
-            "멤버 초대: room_id={}, inviter={}, invited={}, skipped={}",
-            room_id, me_id, invited, skipped,
-        )
-        return invited, skipped
+    async def _emit_invite_side_effects(
+        self,
+        room_id: str,
+        *,
+        invited: list[str],
+        new_members: list[str],
+        rejoined: list[tuple[str, int]],
+        expected_generations: dict[str, datetime] | None = None,
+    ) -> None:
+        """(커밋 후) 현재 membership generation의 초대 효과만 반영한다.
 
+        소켓 write 는 room lock 커밋 이후 — _emit_room_joined 와 동일한 이유.
+        """
+        current_invited = await self._emit_invite_side_effects_locked(
+            room_id,
+            invited=invited,
+            new_members=new_members,
+            rejoined=rejoined,
+            expected_generations=expected_generations,
+        )
+        for uid in current_invited:
+            await self._fanout.fan_out_member_joined(uid, room_id)
 
     @transactional
-    async def leave_room(self, me_id: str, room_id: str) -> None:
-        """그룹 방 본인 퇴장. 순서: Redis SREM → RDB UPDATE → 구독 해제 → 시스템 메시지.
+    async def _emit_invite_side_effects_locked(
+        self,
+        room_id: str,
+        *,
+        invited: list[str],
+        new_members: list[str],
+        rejoined: list[tuple[str, int]],
+        expected_generations: dict[str, datetime] | None = None,
+    ) -> list[str]:
+        room = await ChatRoomRepository(self._session).find_by_id_for_update(room_id)
+        if room is None:
+            return []
+        member_repo = ChatRoomMemberRepository(self._session)
+        current_ids = await member_repo.lock_active_receiving_user_ids(
+            room_id, set(invited),
+        )
+        if expected_generations is not None:
+            current_ids &= await member_repo.lock_matching_membership_generations(
+                room_id, expected_generations, is_left=False,
+            )
+        current_invited = [uid for uid in invited if uid in current_ids]
+        if not current_invited:
+            return []
 
-        Redis SREM 이 먼저여야 in-flight 송신이 `_ensure_membership` 에서 즉시 거절된다.
+        redis = await get_redis_client()
+        message_repo = ChatMessageRepository(mongodb.database)
+
+        rejoin_unread: list[tuple[str, int]] = []
+        for uid, last_read in rejoined:
+            if uid not in current_ids:
+                continue
+            raw = await message_repo.count_after_seq(
+                chat_room_id=room_id,
+                after_seq=last_read,
+                exclude_sender_user_id=uid,
+                limit=UNREAD_COUNT_LIMIT,
+            )
+            rejoin_unread.append((uid, min(raw, UNREAD_COUNT_CAP)))
+
+        pipe = redis.pipeline(transaction=True)
+        pipe.incr(room_members_gen_key(room_id))
+        pipe.delete(room_members_key(room_id))
+        for uid, cnt in rejoin_unread:
+            pipe.hset(unread_key(uid), room_id, cnt)
+        for uid in new_members:
+            if uid in current_ids:
+                pipe.hset(unread_key(uid), room_id, 0)
+        await pipe.execute()
+
+        for uid in current_invited:
+            await self._fanout.subscribe_user_to_room(
+                uid, room_id, authorization_locked=True,
+            )
+        return current_invited
+
+    async def leave_room(self, me_id: str, room_id: str) -> None:
+        """그룹 방 본인 퇴장. 커밋(is_left=True) 후 Redis 정리 — 시스템 메시지 실패가 퇴장을
+        되돌리지 않는다. 캐시 부활 방지는 _emit_member_removed 의 gen 가드 참고.
         """
+        generation = await self._leave_room_tx(me_id=me_id, room_id=room_id)
+        await self._run_side_effect_safe(
+            self._emit_member_removed(room_id, me_id, generation),
+            room_id=room_id, label="member_removed:leave",
+        )
+        await self._send_system_message_safe(
+            room_id=room_id, action="leave", actor_id=me_id,
+            required_removed_user_id=me_id,
+            required_removed_generation=generation,
+        )
+        logger.info("그룹 방 퇴장: room_id={}, user_id={}", room_id, me_id)
+
+    @transactional
+    async def _leave_room_tx(self, *, me_id: str, room_id: str) -> datetime:
+        """퇴장 DB 파트 — 변경된 membership generation을 반환한다."""
         chat_room_repo = ChatRoomRepository(self._session)
         member_repo = ChatRoomMemberRepository(self._session)
 
+        if not await UserRepository(self._session).lock_if_active(me_id):
+            raise PermissionError("비활성 계정은 채팅방을 나갈 수 없습니다.")
         room = await chat_room_repo.find_by_id(room_id)
         if room is None:
             raise ChatRoomNotFoundError("존재하지 않는 방입니다.")
         if room.type != ChatRoomType.GROUP:
             raise ValueError("그룹 방만 퇴장할 수 있습니다.")
 
-        member = await member_repo.find(room_id, me_id)
+        member = await member_repo.find_for_update(room_id, me_id)
         if member is None or member.is_left:
             raise PermissionError("이 방의 활성 멤버가 아닙니다.")
 
-        redis = await get_redis_client()
-        pipe = redis.pipeline(transaction=True)
-        pipe.srem(room_members_key(room_id), me_id)
-        pipe.hdel(unread_key(me_id), room_id)
-        await pipe.execute()
-
         member.is_left = True
         await member_repo.update(member)
+        return cast(datetime, member.joined_at)
 
-        await self._fanout.fan_out_to_user(
-            me_id, {"type": "room_left", "room_id": room_id},
-        )
+    async def _emit_member_removed(
+        self, room_id: str, user_id: str, generation: datetime | None = None,
+    ) -> None:
+        """(커밋 후) 멤버 제거 부수효과 — SREM + unread HDEL + room_left fan-out + 구독 해제.
 
-        # 시스템 메시지 이전에 구독 해제 — leaver 가 자기 "방 나감" 메시지를 받지 않도록.
-        await self._fanout.unsubscribe_user_from_room(me_id, room_id)
+        구독 해제를 시스템 메시지보다 먼저 — 당사자가 자기 퇴장/강퇴 메시지를 받지 않도록.
+        소켓 write 는 room lock 커밋 이후 — _emit_room_joined 와 동일한 이유.
+        """
+        await self._fanout.unsubscribe_user_from_room(user_id, room_id)
 
-        await self._message_service.send_system_message(
-            room_id=room_id,
-            action="leave",
-            actor_id=me_id,
-        )
-
-        logger.info("그룹 방 퇴장: room_id={}, user_id={}", room_id, me_id)
-
+        applied = await self._emit_member_removed_locked(room_id, user_id, generation)
+        if applied:
+            await self._fanout.fan_out_member_removed(user_id, room_id)
 
     @transactional
+    async def _emit_member_removed_locked(
+        self, room_id: str, user_id: str, generation: datetime | None = None,
+    ) -> bool:
+        """정확한 leave generation의 side effect만 적용하고 적용 여부를 반환한다."""
+        room = await ChatRoomRepository(self._session).find_by_id_for_update(room_id)
+        if room is None:
+            return False
+        member_repo = ChatRoomMemberRepository(self._session)
+        if generation is not None:
+            matching = await member_repo.lock_matching_membership_generations(
+                room_id, {user_id: generation}, is_left=True,
+            )
+            if user_id not in matching:
+                return False
+        else:
+            member = await member_repo.find(room_id, user_id)
+            if member is None or not member.is_left:
+                return False
+
+        redis = await get_redis_client()
+        pipe = redis.pipeline(transaction=True)
+        # gen INCR + SREM 을 한 MULTI 로 원자 실행 — stale read-repair populate 가 gen 불일치로
+        # skip 되어 제거된 멤버가 캐시에 부활하지 않는다 (상세 불변식은 populate_members.lua).
+        pipe.incr(room_members_gen_key(room_id))
+        pipe.srem(room_members_key(room_id), user_id)
+        pipe.hdel(unread_key(user_id), room_id)
+        await pipe.execute()
+        return True
+
     async def kick_member(
         self, me_id: str, room_id: str, target_user_id: str,
     ) -> None:
-        """그룹 방 강퇴 — creator 전용. 탈퇴한 creator 는 권한 소멸."""
+        """그룹 방 강퇴 — creator 전용. 커밋 이후 캐시/구독/시스템 메시지 정리."""
+        generation = await self._kick_member_tx(
+            me_id=me_id, room_id=room_id, target_user_id=target_user_id,
+        )
+        await self._run_side_effect_safe(
+            self._emit_member_removed(room_id, target_user_id, generation),
+            room_id=room_id, label="member_removed:kick",
+        )
+        await self._send_system_message_safe(
+            room_id=room_id, action="kick", actor_id=me_id, target_ids=[target_user_id],
+            required_removed_user_id=target_user_id,
+            required_removed_generation=generation,
+        )
+        logger.info(
+            "멤버 강퇴: room_id={}, kicker={}, target={}",
+            room_id, me_id, target_user_id,
+        )
+
+    @transactional
+    async def _kick_member_tx(
+        self, *, me_id: str, room_id: str, target_user_id: str,
+    ) -> datetime:
+        """강퇴 DB 파트 — 제거된 membership generation을 반환한다."""
         if me_id == target_user_id:
             raise ValueError("자기 자신은 강퇴할 수 없습니다. 퇴장 API 를 사용하세요.")
 
         chat_room_repo = ChatRoomRepository(self._session)
         member_repo = ChatRoomMemberRepository(self._session)
 
+        if not await UserRepository(self._session).lock_if_active(me_id):
+            raise PermissionError("비활성 계정은 멤버를 강퇴할 수 없습니다.")
         room = await chat_room_repo.find_by_id(room_id)
         if room is None:
             raise ChatRoomNotFoundError("존재하지 않는 방입니다.")
@@ -343,42 +647,17 @@ class RoomService:
             raise ValueError("그룹 방에서만 강퇴할 수 있습니다.")
         if room.creator_id != me_id:
             raise PermissionError("방장만 강퇴할 수 있습니다.")
-        if not await member_repo.is_active_member(room_id, me_id):
+        if not await member_repo.is_active_member_for_share(room_id, me_id):
             raise PermissionError("방장이 이미 방을 떠난 상태입니다.")
 
-        target = await member_repo.find(room_id, target_user_id)
+        target = await member_repo.find_for_update(room_id, target_user_id)
         if target is None or target.is_left:
             raise ValueError("강퇴 대상이 활성 멤버가 아닙니다.")
 
-        redis = await get_redis_client()
-        pipe = redis.pipeline(transaction=True)
-        pipe.srem(room_members_key(room_id), target_user_id)
-        pipe.hdel(unread_key(target_user_id), room_id)
-        await pipe.execute()
-
         target.is_left = True
         await member_repo.update(target)
+        return cast(datetime, target.joined_at)
 
-        await self._fanout.fan_out_to_user(
-            target_user_id, {"type": "room_left", "room_id": room_id},
-        )
-
-        await self._fanout.unsubscribe_user_from_room(target_user_id, room_id)
-
-        await self._message_service.send_system_message(
-            room_id=room_id,
-            action="kick",
-            actor_id=me_id,
-            target_ids=[target_user_id],
-        )
-
-        logger.info(
-            "멤버 강퇴: room_id={}, kicker={}, target={}",
-            room_id, me_id, target_user_id,
-        )
-
-
-    @transactional
     async def mark_read(
         self,
         *,
@@ -387,35 +666,39 @@ class RoomService:
         room_id: str,
         up_to_server_seq: int,
     ) -> int:
-        """읽음 포인터 갱신 + unread 리셋 + fan-out. regress 는 DB GREATEST 가 차단.
+        """읽음 포인터 commit 후 unread 재계산 + fan-out. regress 는 DB GREATEST 가 차단.
 
         탈퇴자의 read 요청은 PermissionError. 반환값은 최종 반영된 seq.
         """
         if up_to_server_seq <= 0:
             raise ValueError("up_to_server_seq 는 1 이상이어야 합니다.")
 
-        chat_room_repo = ChatRoomRepository(self._session)
-        member_repo = ChatRoomMemberRepository(self._session)
-
-        room = await chat_room_repo.find_by_id(room_id)
-        if room is None:
-            raise ChatRoomNotFoundError("존재하지 않는 방입니다.")
-
-        final_seq = await member_repo.mark_read(room_id, me_id, up_to_server_seq)
-        if final_seq is None:
-            raise PermissionError("이 방의 활성 멤버가 아닙니다.")
-
         redis = await get_redis_client()
-        await redis.hset(unread_key(me_id), room_id, 0)
-
-        await self._fanout.fan_out_to_session(
-            me_session_id,
-            {
-                "type": "read_ack",
-                "room_id": room_id,
-                "up_to_server_seq": final_seq,
-            },
+        expected_generation = int(
+            await redis.get(room_members_gen_key(room_id)) or 0
         )
+        final_seq, clamped_seq = await self._mark_read_tx(
+            me_id=me_id,
+            room_id=room_id,
+            up_to_server_seq=up_to_server_seq,
+        )
+        sync_status, effective_seq = await self._sync_unread_under_room_lock(
+            me_id=me_id,
+            room_id=room_id,
+            final_seq=final_seq,
+            expected_generation=expected_generation,
+        )
+
+        if int(sync_status) == 3:
+            raise RuntimeError("읽음 처리 중 방 멤버십이 변경되었습니다. 다시 시도해주세요.")
+        if int(sync_status) == 0:
+            logger.info(
+                "늦은 읽음 fanout 승격: room_id={}, user_id={}, seq={}, applied_seq={}",
+                room_id, me_id, final_seq, effective_seq,
+            )
+            # 높은 요청의 publish 실패도 낮은 요청이 보완하도록 단조 seq로 fanout한다.
+            final_seq = int(effective_seq)
+
         await self._fanout.fan_out_to_room(
             room_id,
             {
@@ -428,17 +711,85 @@ class RoomService:
 
         logger.info(
             "읽음 마킹: room_id={}, user_id={}, up_to_seq={}, final_seq={}",
-            room_id, me_id, up_to_server_seq, final_seq,
+            room_id, me_id, clamped_seq, final_seq,
         )
         return final_seq
 
+    async def _sync_unread_under_room_lock(
+        self,
+        *,
+        me_id: str,
+        room_id: str,
+        final_seq: int,
+        expected_generation: int,
+    ) -> tuple[int, int]:
+        """send와 room X-lock으로 직렬화해 residual과 Redis delta의 경계를 고정한다."""
+        async with self.uow.session_factory() as session:
+            room_repo = ChatRoomRepository(session)
+            if await room_repo.find_by_id_for_update(room_id) is None:
+                raise ChatRoomNotFoundError("존재하지 않는 방입니다.")
+
+            redis = await get_redis_client()
+            unread_k = unread_key(me_id)
+            baseline = int(await redis.hget(unread_k, room_id) or 0)
+            residual = await ChatMessageRepository(mongodb.database).count_after_seq(
+                chat_room_id=room_id,
+                after_seq=final_seq,
+                exclude_sender_user_id=me_id,
+                limit=UNREAD_COUNT_LIMIT,
+            )
+            _, sync_status, effective_seq = await lua_scripts.mark_read_unread(
+                keys=[unread_k, read_sync_key(me_id), room_members_gen_key(room_id)],
+                args=[
+                    room_id, residual, baseline, UNREAD_COUNT_CAP, final_seq, 0,
+                    expected_generation,
+                ],
+            )
+            return int(sync_status), int(effective_seq)
+
+    @transactional
+    async def _mark_read_tx(
+        self,
+        *,
+        me_id: str,
+        room_id: str,
+        up_to_server_seq: int,
+    ) -> tuple[int, int]:
+        """읽음 포인터 DB 갱신 — 외부 부수효과는 호출자가 commit 이후 수행."""
+        chat_room_repo = ChatRoomRepository(self._session)
+        member_repo = ChatRoomMemberRepository(self._session)
+
+        room = await chat_room_repo.find_by_id(room_id)
+        if room is None:
+            raise ChatRoomNotFoundError("존재하지 않는 방입니다.")
+        if not await UserRepository(self._session).lock_if_active(me_id):
+            raise PermissionError("비활성 계정은 읽음 상태를 변경할 수 없습니다.")
+
+        # Redis seq는 Mongo insert 전에 예약되므로 읽음 상한으로 쓸 수 없다. 클라가 큰 값을
+        # 보내도 내구 저장된 최대 seq까지만 반영해 in-flight 메시지의 선행 읽음을 막는다.
+        message_repo = ChatMessageRepository(mongodb.database)
+        durable_seq = await self._get_durable_current_seq(message_repo, room_id)
+        clamped_seq = min(up_to_server_seq, durable_seq)
+
+        final_seq = await member_repo.mark_read(room_id, me_id, clamped_seq)
+        if final_seq is None:
+            raise PermissionError("이 방의 활성 멤버가 아닙니다.")
+        return final_seq, clamped_seq
 
     @staticmethod
-    async def _get_current_seq(
+    async def _get_durable_current_seq(
         message_repo: ChatMessageRepository,
         room_id: str,
     ) -> int:
-        """방의 현재 server_seq — Redis 우선, miss 시 Mongo `max(server_seq)` 폴백. 둘 다 비면 0."""
+        """Mongo에 내구 저장된 방의 최대 server_seq. 메시지가 없으면 0."""
+        return await message_repo.get_max_server_seq(room_id)
+
+    @staticmethod
+    async def _get_allocated_current_seq(
+        message_repo: ChatMessageRepository,
+        room_id: str,
+    ) -> int:
+        """초대 baseline용 Redis 예약 seq. cache miss/손상 시 Mongo max로 복구."""
         redis = await get_redis_client()
         raw = await redis.get(room_seq_key(room_id))
         if raw is not None:
@@ -447,7 +798,6 @@ class RoomService:
             except ValueError:
                 pass
         return await message_repo.get_max_server_seq(room_id)
-
 
     @staticmethod
     def _to_group_dto(room: ChatRoom) -> ChatRoomData:
@@ -463,7 +813,6 @@ class RoomService:
             effective_last_at=room.effective_last_at or room.created_at,
             notification_muted=False,
         )
-
 
     @staticmethod
     async def _to_dto(room: ChatRoom, me_id: str, peer) -> ChatRoomData:

@@ -4,21 +4,24 @@ contextvar 기반 task-local route 라벨로 query duration 을 도메인 단위
 pool gauge 는 query 직후 + event_loop 의 1초 폴링 양쪽에서 fresh 유지.
 """
 import time
+
 from sqlalchemy import event
 
+from app.core.context import db_route_var
 from app.core.metric import (
     DB_POOL_CHECKED_OUT,
     DB_POOL_SIZE,
     DB_QUERY_DURATION,
     DB_TRANSACTION_TOTAL,
 )
-from app.core.context import db_route_var
+from app.core.probe import PROBE_ROUTES
 
 
-# route 라벨 enum — endpoint 단위 X, 도메인 단위 ~10개로 카디널리티 통제.
+# route 라벨 enum — 도메인 단위 ~10개로 카디널리티 통제. 값은 실제 URL segment 와
+# 일치해야 한다 (menu_ai 경로는 /api/menu-ai 라 "menu-ai").
 _DB_ROUTE_DOMAINS = frozenset({
     "auth", "chat", "tour", "friend", "feed",
-    "notification", "tripmate", "menu_ai", "translation", "public",
+    "notification", "tripmate", "menu-ai", "translation", "public",
 })
 
 DB_TRANSACTION_RESULTS = ("commit", "rollback", "other")
@@ -41,7 +44,7 @@ def _reset_pool_engine() -> None:
 
 def db_route_for_path(path: str) -> str:
     """HTTP path → 도메인 라벨. /health 류는 'health', 화이트리스트 외는 'other'."""
-    if path == "/health" or path == "/health/deep" or path == "/ready":
+    if path in PROBE_ROUTES:
         return "health"
     if path.startswith("/api/"):
         # /api/{domain}/... → 세 번째 segment 가 domain.

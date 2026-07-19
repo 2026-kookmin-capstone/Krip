@@ -1,21 +1,20 @@
 """채팅 도메인 Redis 키 / TTL 상수.
 
 키 문자열을 코드 전체에 흩뿌리지 않기 위한 모듈 — 네이밍 실수로 키 공간이 어긋나는 사고 방지.
+
+키 스키마는 단일 Redis 노드 전제 (hash tag 미사용). 세션 Lua 스크립트가 ZSET 내용에서
+파생한 sess:/ws_route: 키에 KEYS 미선언으로 접근하므로 Cluster 이전 시 재설계가 필요하다.
 """
 
-# ─────────────────────────────────────────────────────────────
 # TTL (seconds)
-# ─────────────────────────────────────────────────────────────
 SESSION_TTL = 90            # sess / ws_route / sessions ZSET 갱신 주기와 동일
 ROOM_MEMBERS_TTL = 600      # RDB fallback 전제 — 짧아도 안전
-ROOM_BLOCKS_TTL = 600       # friend hook 미호출 시 stale 상한
 RATE_LIMIT_TTL = 1          # 1초 윈도우
 DEDUPE_TTL = 600            # 클라 재전송 최대 갭보다 충분히 길게
+ROOM_PENDING_MESSAGE_PREFIX = "room:pending_message:"
 NODE_TTL = 90               # chat:nodes ZSET — SESSION_TTL 과 동일 주기로 갱신
 
-# ─────────────────────────────────────────────────────────────
 # 임계값
-# ─────────────────────────────────────────────────────────────
 RATE_LIMIT_THRESHOLD = 10   # 초당 메시지 상한
 MAX_SESSIONS_PER_USER = 10  # 유저당 동시 세션 상한
 
@@ -25,15 +24,25 @@ SEQ_FORCE_JUMP_JITTER_MAX = 10000
 SEQ_RECOVER_GAP = 1000
 
 
-# ─────────────────────────────────────────────────────────────
 # 키 빌더 — DB 0 (hot)
-# ─────────────────────────────────────────────────────────────
 def sess_key(session_id: str) -> str:
     return f"sess:{session_id}"
 
 
 def sessions_key(user_id: str) -> str:
     return f"sessions:{user_id}"
+
+
+def session_create_result_key(session_id: str) -> str:
+    return f"session_create_result:{session_id}"
+
+
+def session_revoke_generation_key(user_id: str) -> str:
+    return f"session_revoke_generation:{user_id}"
+
+
+def session_revoke_result_key(user_id: str, operation_id: str) -> str:
+    return f"session_revoke_result:{user_id}:{operation_id}"
 
 
 def ws_route_key(session_id: str) -> str:
@@ -44,16 +53,41 @@ def unread_key(user_id: str) -> str:
     return f"unread:{user_id}"
 
 
+def unread_watermark_key(user_id: str) -> str:
+    """room별 최신 unread 증가 message seq HASH."""
+    return f"unread:watermark:{user_id}"
+
+
+def unread_recovery_required_key(user_id: str) -> str:
+    return f"unread:recovery_required:{user_id}"
+
+
+def read_sync_key(user_id: str) -> str:
+    """post-commit unread 반영의 room별 최종 read seq HASH."""
+    return f"unread:read_seq:{user_id}"
+
+
 def room_seq_key(room_id: str) -> str:
     return f"room:seq:{room_id}"
+
+
+def room_pending_message_key(room_id: str) -> str:
+    """Mongo outcome 미확정 message intent — process crash 후 다음 sender가 복구."""
+    return f"{ROOM_PENDING_MESSAGE_PREFIX}{room_id}"
 
 
 def room_members_key(room_id: str) -> str:
     return f"room:members:{room_id}"
 
 
-def room_blocks_key(room_id: str) -> str:
-    return f"room:blocks:{room_id}"
+def room_members_gen_key(room_id: str) -> str:
+    """멤버 캐시 generation 카운터 — 멤버십 변경마다 INCR.
+
+    read-repair 가 DB 스냅샷을 읽는 사이 커밋된 removal/invite 를 감지해, stale populate
+    가 제거된 멤버를 캐시에 부활시키는 것을 차단한다 (populate_members.lua 가드).
+    읽음 post-commit fence로도 사용하므로 cache TTL과 함께 만료시키지 않는다.
+    """
+    return f"room:members:gen:{room_id}"
 
 
 def rate_msg_key(user_id: str) -> str:
@@ -70,11 +104,12 @@ def node_channel_key(node_id: str) -> str:
 
 
 DIRTY_CHAT_ROOM_KEY = "dirty:chat_room"   # reconcile worker 가 소비하는 SET
+DIRTY_CHAT_ROOM_PROCESSING_KEY = "processing:dirty:chat_room"
+DIRTY_CHAT_ROOM_PROCESSING_OWNER_KEY = "processing:dirty:chat_room:owner"
+DIRTY_CHAT_ROOM_DEFERRED_KEY = "deferred:dirty:chat_room"
 NODES_ZSET_KEY = "chat:nodes"             # ZSET: score=만료시각ms, member=node_id
 
 
-# ─────────────────────────────────────────────────────────────
 # 키 빌더 — DB 1 (dedupe 격리)
-# ─────────────────────────────────────────────────────────────
 def dedupe_key(user_id: str, client_msg_id: str) -> str:
     return f"dedupe:{user_id}:{client_msg_id}"

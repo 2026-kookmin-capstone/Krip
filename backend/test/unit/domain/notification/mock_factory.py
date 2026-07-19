@@ -6,7 +6,6 @@ class FakeAsyncContextManager:
     async def __aenter__(self):
         return self
 
-
     async def __aexit__(self, exc_type, exc, tb):
         return False
 
@@ -17,10 +16,8 @@ class FakeUnitOfWork:
     def __init__(self, session):
         self._session = session
 
-
     async def __aenter__(self):
         return self._session
-
 
     async def __aexit__(self, exc_type, exc, tb):
         return False
@@ -28,11 +25,10 @@ class FakeUnitOfWork:
 
 def make_mock_session() -> MagicMock:
     session = MagicMock(name="session")
+    session.execute = AsyncMock()
     session.flush = AsyncMock()
     return session
 
-
-# ──────────────────── Repository mocks ────────────────────
 
 class FcmTokenRepositoryMockFactory:
     @classmethod
@@ -78,12 +74,10 @@ class InboxRepositoryMockFactory:
         mock.find_by_recipient.return_value = []
         mock.count_unread.return_value = 0
         mock.hide.return_value = False  # default: 미존재/타인소유
-        mock.mark_all_read.return_value = 0
+        mock.mark_read_by_ids.return_value = 0
         mock.delete_by_user.return_value = 0
         return mock
 
-
-# ──────────────────── FCM batch response helper ────────────────────
 
 def make_fcm_batch_response(
     success_results: list[bool],

@@ -7,10 +7,16 @@
 응답이 Pydantic 직렬화 단계에서 500 으로 터지는 버그가 있었다. 같은 회귀가 다시
 발생하지 않도록 스키마 단위에서 다형 입력을 직접 검증한다.
 """
-import pytest
 from datetime import datetime, timezone
 
-from app.domain.chat.schema.room import LastMessagePreviewResponse
+import pytest
+from pydantic import ValidationError
+
+from app.domain.chat.schema.room import (
+    CreateGroupRoomBody,
+    InviteMembersBody,
+    LastMessagePreviewResponse,
+)
 
 
 NOW = datetime(2026, 4, 22, 12, 0, 0, tzinfo=timezone.utc)
@@ -24,6 +30,8 @@ def _build(content):
         type="system",
         content=content,
         created_at=NOW,
+        edited_at=None,
+        deleted_at=None,
     )
 
 
@@ -35,13 +43,11 @@ class TestLastMessagePreviewResponseContent:
         resp = _build("hello")
         assert resp.content == "hello"
 
-
     def test_accepts_system_created_dict(self):
         """system.created — `{action, actor_id}`."""
         payload = {"action": "created", "actor_id": "U_A"}
         resp = _build(payload)
         assert resp.content == payload
-
 
     def test_accepts_system_join_dict_with_target_ids(self):
         """system.join — `target_ids` 까지 보존."""
@@ -49,17 +55,14 @@ class TestLastMessagePreviewResponseContent:
         resp = _build(payload)
         assert resp.content == payload
 
-
     def test_accepts_image_dict(self):
         payload = {"url": "https://cdn.example.com/p.jpg", "name": "p.jpg"}
         resp = _build(payload)
         assert resp.content == payload
 
-
     def test_accepts_null_for_deleted_message(self):
         resp = _build(None)
         assert resp.content is None
-
 
     def test_dict_content_serializes_as_object_not_string(self):
         """JSON 직렬화 시 dict 가 그대로 객체로 내려가야 함.
@@ -72,3 +75,32 @@ class TestLastMessagePreviewResponseContent:
         dumped = resp.model_dump()
         assert isinstance(dumped["content"], dict)
         assert dumped["content"] == payload
+
+    def test_revision_fields_are_required_but_nullable_in_openapi(self):
+        schema = LastMessagePreviewResponse.model_json_schema()
+        assert {"edited_at", "deleted_at"} <= set(schema["required"])
+        assert _build(None).edited_at is None
+        assert _build(None).deleted_at is None
+
+
+@pytest.mark.unit
+class TestGroupMemberRequestLimits:
+    @staticmethod
+    def _user_ids(count: int) -> list[str]:
+        return [f"U_{index}" for index in range(count)]
+
+    def test_create_group_accepts_99_invitees(self):
+        body = CreateGroupRoomBody(title="limit", member_ids=self._user_ids(99))
+        assert len(body.member_ids) == 99
+
+    def test_create_group_rejects_100_invitees(self):
+        with pytest.raises(ValidationError):
+            CreateGroupRoomBody(title="limit", member_ids=self._user_ids(100))
+
+    def test_invite_accepts_batch_of_50(self):
+        body = InviteMembersBody(user_ids=self._user_ids(50))
+        assert len(body.user_ids) == 50
+
+    def test_invite_rejects_batch_of_51(self):
+        with pytest.raises(ValidationError):
+            InviteMembersBody(user_ids=self._user_ids(51))

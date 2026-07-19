@@ -9,19 +9,20 @@
     - 비친구 → visibilities=[PUBLIC] 만 받아 그대로 repo 에 전달
     - viewer == owner / 친구 시나리오 — access stub 으로 visibilities 변경 후 검증
 """
-from unittest.mock import MagicMock
-from test.unit.domain.feed.mock_factory import make_user_with_profile_mock
-import pytest
 from datetime import datetime, timezone
+from unittest.mock import MagicMock
 
+import pytest
+
+from app.domain.auth.model.user_travel_style import TravelStyle
+from app.domain.feed.dto.feed_popup import POPUP_FEED_LIMIT
+from app.domain.feed.dto.feed_post import FeedPostWithCounts
+from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
 from app.domain.feed.service.exception import (
     FeedBlockedError,
     PopupTargetNotFoundError,
 )
-from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
-from app.domain.feed.dto.feed_post import FeedPostWithCounts
-from app.domain.feed.dto.feed_popup import POPUP_FEED_LIMIT
-from app.domain.auth.model.user_travel_style import TravelStyle
+from test.unit.domain.feed.mock_factory import make_user_with_profile_mock
 
 
 def _mk_feed_row(post_id="FDP_x", user_id="USER_owner", like_count=0, comment_count=0):
@@ -41,17 +42,13 @@ def _mk_feed_row(post_id="FDP_x", user_id="USER_owner", like_count=0, comment_co
     )
 
 
-# ──────────────────── user 미존재 / 결손 ────────────────────
-
 @pytest.mark.unit
 class TestUserMissing:
     async def test_user_not_found_raises(self, service, user_repo_mock, feed_repo_mock):
         user_repo_mock.find_by_id_with_profile.return_value = None
         with pytest.raises(PopupTargetNotFoundError):
             await service.get_popup(viewer_id="USER_v", owner_id="USER_ghost")
-        # 미존재면 feed 조회도 안 일어남 — 단순 404, 추가 비용 없음.
         feed_repo_mock.find_by_owner.assert_not_called()
-
 
     async def test_detail_missing_raises_same_error(
         self, service, user_repo_mock, feed_repo_mock,
@@ -64,8 +61,6 @@ class TestUserMissing:
             await service.get_popup(viewer_id="USER_v", owner_id="USER_x")
         feed_repo_mock.find_by_owner.assert_not_called()
 
-
-# ──────────────────── 차단 propagate ────────────────────
 
 @pytest.mark.unit
 class TestBlockedPropagation:
@@ -83,11 +78,8 @@ class TestBlockedPropagation:
 
         with pytest.raises(FeedBlockedError):
             await service.get_popup(viewer_id="USER_v", owner_id="USER_owner")
-        # 차단 시 feed 조회 안 일어남 — user 정보 노출도 차단됨.
         feed_repo_mock.find_by_owner.assert_not_called()
 
-
-# ──────────────────── 정상 합성 ────────────────────
 
 @pytest.mark.unit
 class TestPopupAssembly:
@@ -108,7 +100,6 @@ class TestPopupAssembly:
         assert result.profile_image_url == "https://x/p.jpg"
         assert result.feed_items == []
 
-
     async def test_feed_items_mapped_with_counts(
         self, service, user_repo_mock, feed_repo_mock,
     ):
@@ -128,8 +119,6 @@ class TestPopupAssembly:
         assert result.feed_items[1].comment_count == 3
 
 
-# ──────────────────── feed repo 호출 contract ────────────────────
-
 @pytest.mark.unit
 class TestFeedRepoContract:
     async def test_calls_find_by_owner_with_limit_9_no_cursor(
@@ -147,7 +136,6 @@ class TestFeedRepoContract:
         assert kwargs["limit"] == POPUP_FEED_LIMIT
         assert kwargs["limit"] == 9  # popup spec 회귀 가드 (사용자 명시 9개)
 
-
     async def test_passes_visibilities_from_resolver(
         self, service, user_repo_mock, feed_repo_mock, visibilities_stub,
     ):
@@ -158,7 +146,6 @@ class TestFeedRepoContract:
         await service.get_popup(viewer_id="USER_v", owner_id="USER_owner")
         kwargs = feed_repo_mock.find_by_owner.await_args.kwargs
         assert kwargs["visibilities"] == visibilities_stub
-
 
     async def test_forwards_viewer_id_to_repo(
         self, service, user_repo_mock, feed_repo_mock,
@@ -173,14 +160,13 @@ class TestFeedRepoContract:
         await service.get_popup(viewer_id="USER_v", owner_id="USER_owner")
         assert feed_repo_mock.find_by_owner.await_args.kwargs["viewer_id"] == "USER_v"
 
-
     async def test_response_propagates_is_liked_from_row(
         self, service, user_repo_mock, feed_repo_mock,
     ):
         """row.is_liked 가 popup 응답 DTO 까지 정확히 흘러가는지 — _to_feed_dto 누락 가드."""
         user_repo_mock.find_by_id_with_profile.return_value = make_user_with_profile_mock()
         feed_repo_mock.find_by_owner.return_value = [
-            _mk_feed_row(post_id="FDP_a"),  # default is_liked=False
+            _mk_feed_row(post_id="FDP_a"),
             FeedPostWithCounts(
                 post=_mk_feed_row(post_id="FDP_b").post,
                 like_count=0, comment_count=0, is_liked=True,
@@ -191,8 +177,6 @@ class TestFeedRepoContract:
         assert result.feed_items[0].is_liked is False
         assert result.feed_items[1].is_liked is True
 
-
-# ──────────────────── 본인 popup ────────────────────
 
 @pytest.mark.unit
 class TestSelfPopup:
@@ -205,7 +189,7 @@ class TestSelfPopup:
         )
 
         async def _resolve_self(session, *, viewer_id, owner_id):
-            assert viewer_id == owner_id  # 본인 fast-path
+            assert viewer_id == owner_id
             return list(FeedVisibility)
         monkeypatch.setattr(
             "app.domain.feed.service.feed_popup.resolve_viewer_visibilities", _resolve_self,

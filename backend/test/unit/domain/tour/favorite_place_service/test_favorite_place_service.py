@@ -5,14 +5,11 @@
     - `remove_favorite`: 존재 가드 → DELETE
     - `get_favorites`: RDB 즐겨찾기 + Mongo 장소 batch + 순서 유지 + Mongo 결손 row skip
 """
-from test.unit.domain.tour.place_service.model_factory import PlaceRawFactory
-from test.unit.domain.tour.favorite_place_service.model_factory import FavoritePlaceFactory
 import pytest
 
+from test.unit.domain.tour.favorite_place_service.model_factory import FavoritePlaceFactory
+from test.unit.domain.tour.place_service.model_factory import PlaceRawFactory
 
-# ──────────────────────────────────────────────────────────────────
-# add_favorite
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestAddFavorite:
@@ -33,7 +30,6 @@ class TestAddFavorite:
         assert saved.user_id == "USER_a"
         assert saved.place_id == "PLACE_x"
 
-
     async def test_raises_when_place_not_found(
         self, service, place_repo_mock, fav_repo_mock,
     ):
@@ -43,7 +39,6 @@ class TestAddFavorite:
             await service.add_favorite(user_id="USER_a", place_id="PLACE_x")
 
         fav_repo_mock.save.assert_not_awaited()
-
 
     async def test_raises_when_already_favorited(
         self, service, place_repo_mock, fav_repo_mock,
@@ -56,10 +51,19 @@ class TestAddFavorite:
 
         fav_repo_mock.save.assert_not_awaited()
 
+    async def test_concurrent_insert_race_maps_to_value_error(
+        self, service, place_repo_mock, fav_repo_mock,
+    ):
+        """check→insert 사이 동시 요청으로 unique 위반 시 500 이 아니라 400(ValueError)."""
+        from sqlalchemy.exc import IntegrityError
 
-# ──────────────────────────────────────────────────────────────────
-# remove_favorite
-# ──────────────────────────────────────────────────────────────────
+        place_repo_mock.find_by_place_ids.return_value = [PlaceRawFactory.create()]
+        fav_repo_mock.find_by_user_and_place.return_value = None
+        fav_repo_mock.save.side_effect = IntegrityError("mock", {}, Exception())
+
+        with pytest.raises(ValueError, match="이미 즐겨찾기"):
+            await service.add_favorite(user_id="USER_a", place_id="PLACE_x")
+
 
 @pytest.mark.unit
 class TestRemoveFavorite:
@@ -74,7 +78,6 @@ class TestRemoveFavorite:
             "USER_a", "PLACE_x",
         )
 
-
     async def test_raises_when_not_favorited(self, service, fav_repo_mock):
         fav_repo_mock.find_by_user_and_place.return_value = None
 
@@ -83,10 +86,6 @@ class TestRemoveFavorite:
 
         fav_repo_mock.delete_by_user_and_place.assert_not_awaited()
 
-
-# ──────────────────────────────────────────────────────────────────
-# get_favorites — RDB 즐겨찾기 + Mongo 장소 batch
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestGetFavorites:
@@ -101,9 +100,7 @@ class TestGetFavorites:
 
         assert result.favorites == []
         assert result.total_count == 0
-        # 빈 결과 → Mongo 조회 skip
         place_repo_mock.find_by_place_ids.assert_not_awaited()
-
 
     async def test_preserves_favorite_order(
         self, service, fav_repo_mock, place_repo_mock,
@@ -115,7 +112,6 @@ class TestGetFavorites:
             FavoritePlaceFactory.create(favorite_id="FAV_3", place_id="P_3"),
         ]
         fav_repo_mock.find_all_by_user.return_value = favorites
-        # Mongo 가 다른 순서로 반환해도 service 가 fav 순서대로 정렬
         place_repo_mock.find_by_place_ids.return_value = [
             PlaceRawFactory.create(place_id="P_3"),
             PlaceRawFactory.create(place_id="P_1"),
@@ -127,7 +123,6 @@ class TestGetFavorites:
         assert [f.favorite_id for f in result.favorites] == ["FAV_1", "FAV_2", "FAV_3"]
         assert [f.place.place_id for f in result.favorites] == ["P_1", "P_2", "P_3"]
         assert result.total_count == 3
-
 
     async def test_skips_favorite_when_place_missing_in_mongo(
         self, service, fav_repo_mock, place_repo_mock,

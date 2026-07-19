@@ -4,6 +4,8 @@
 TripmatePost / TripmatePostLike / UserDetailInform / InboxService 의 AsyncMock 을
 한 곳에서 관리한다. friend / notification 도메인의 `*RepositoryMockFactory` 패턴과 일관.
 """
+from contextlib import asynccontextmanager
+from typing import AsyncIterator
 from unittest.mock import AsyncMock, MagicMock
 
 
@@ -13,10 +15,8 @@ class FakeUnitOfWork:
     def __init__(self, session):
         self._session = session
 
-
     async def __aenter__(self):
         return self._session
-
 
     async def __aexit__(self, exc_type, exc, tb):
         return False
@@ -27,16 +27,21 @@ def make_mock_session() -> MagicMock:
     session.flush = AsyncMock()
     session.delete = AsyncMock()
     session.get = AsyncMock(return_value=None)
+
+    @asynccontextmanager
+    async def _nested():
+        yield
+
+    session.begin_nested = MagicMock(side_effect=lambda: _nested())
     return session
 
-
-# ──────────────────── Repository mocks ────────────────────
 
 class TripmatePostRepositoryMockFactory:
     @classmethod
     def create(cls) -> AsyncMock:
         mock = AsyncMock()
         mock.find_by_id.return_value = None
+        mock.find_by_id_for_update.return_value = None
         mock.find_by_id_with_detail.return_value = None
         mock.find_all_displayed.return_value = []
         mock.search.return_value = []
@@ -50,7 +55,7 @@ class TripmatePostLikeRepositoryMockFactory:
     @classmethod
     def create(cls) -> AsyncMock:
         mock = AsyncMock()
-        mock.find_by_user_and_post.return_value = None  # 기본: 안 누른 상태
+        mock.find_by_user_and_post.return_value = None
         mock.find_user_ids_by_post.return_value = []
         mock.count_by_post.return_value = 0
         mock.save.side_effect = lambda like: like
@@ -72,8 +77,6 @@ class UserDetailInformRepositoryMockFactory:
         return mock
 
 
-# ──────────────────── External service mocks ────────────────────
-
 def make_inbox_service_mock() -> AsyncMock:
     """인박스 fan-out 진입점 mock — 호출 검증용. 본인→본인 skip 가드는 service 가 처리."""
     mock = AsyncMock()
@@ -85,8 +88,6 @@ def make_inbox_service_mock() -> AsyncMock:
     return mock
 
 
-# ──────────────────── 추가 Repository / 보조 mocks ────────────────────
-
 class TripmatePostImageRepositoryMockFactory:
     @classmethod
     def create(cls) -> AsyncMock:
@@ -94,13 +95,16 @@ class TripmatePostImageRepositoryMockFactory:
         mock.find_by_post_id.return_value = []
         mock.save_all.return_value = None
         mock.delete_by_post_id.return_value = None
+        mock.find_urls_by_user_id.return_value = []
         return mock
 
 
 def make_tripmate_image_mongo_repo_mock() -> AsyncMock:
-    """`TripmateImageRepository` (Mongo beanie). delete_by_urls 만 사용됨."""
+    """`TripmateImageRepository` (Mongo beanie). delete_by_urls / find_owned_urls 사용."""
     mock = AsyncMock()
     mock.delete_by_urls.return_value = None
+    # 기본값: 요청 URL 전부 본인 소유로 간주 (소유권 검증 통과). 거부 케이스는 개별 테스트가 override.
+    mock.find_owned_urls.side_effect = lambda user_id, image_urls: set(image_urls)
     return mock
 
 
@@ -143,3 +147,11 @@ def make_draft_service_mock() -> AsyncMock:
     mock = AsyncMock()
     mock.delete_draft.return_value = None
     return mock
+
+
+class NoopTripmateImageReferenceMutex:
+    """@image_reference_locked 를 무력화하는 테스트 더블."""
+
+    @asynccontextmanager
+    async def hold(self, _user_id: str) -> AsyncIterator[None]:
+        yield

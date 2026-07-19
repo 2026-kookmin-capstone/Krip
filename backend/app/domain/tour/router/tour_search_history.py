@@ -1,21 +1,19 @@
-from typing import Optional
-from fastapi import APIRouter, Request, Depends, Query
 from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, Query, Request
 
-from app.schema.common import MessageResponse
-from app.domain.tour.service.tour_search_history import TourSearchHistoryService
-from app.domain.tour.schema.tour_search_history import (
-    TourSearchHistoryResponse, TourSearchHistoryListResponse,
-)
-from app.core.logger import get_logger
 from app.container import Container
+from app.core.logger import get_logger
+from app.domain.tour.schema.tour_search_history import (
+    TourSearchHistoryListResponse,
+    TourSearchHistoryResponse,
+)
+from app.domain.tour.service.tour_search_history import TourSearchHistoryService
+from app.schema.common import MessageResponse
 
 
 router = APIRouter(prefix="/search-history", tags=["관광 장소 검색 기록"])
 logger = get_logger("tour.search_history")
 
-
-# ──────────────────── 검색 기록 조회 ────────────────────
 
 @router.get("")
 @inject
@@ -38,8 +36,6 @@ async def get_search_histories(
     )
 
 
-# ──────────────────── 검색어 단건 삭제 ────────────────────
-
 @router.delete("/one")
 @inject
 async def delete_search(
@@ -53,8 +49,6 @@ async def delete_search(
     await search_service.delete_search(user_id=user_id, search_name=search_name)
     return MessageResponse(message="검색어가 삭제되었습니다.")
 
-
-# ──────────────────── 검색 기록 전체 삭제 ────────────────────
 
 @router.delete("")
 @inject

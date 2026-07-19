@@ -1,0 +1,108 @@
+// Loguru JSON file logs -> privacy pipeline -> Loki.
+// Only app, env, node_id, and level remain indexed labels.
+loki.process "backend" {
+  forward_to = [loki.write.default.receiver]
+
+  stage.json {
+    expressions = {
+      event        = "record.extra.event",
+      error_app_line = "record.extra.error_app_line",
+      error_app_location = "record.extra.error_app_location",
+      error_cause  = "record.extra.error_cause",
+      error_detail = "record.extra.error_detail",
+      error_line   = "record.extra.error_line",
+      error_location = "record.extra.error_location",
+      error_type   = "record.extra.error_type",
+      level        = "record.level.name",
+      logger_name  = "record.extra.logger_name",
+      message      = "record.message",
+      method       = "record.extra.method",
+      path         = "record.extra.path",
+      process_time = "record.extra.process_time",
+      request_id   = "record.extra.request_id",
+      route        = "record.extra.route",
+      status_code  = "record.extra.status_code",
+      timestamp    = "record.time.repr",
+      user_id      = "record.extra.user_id",
+      validation_errors = "record.extra.validation_errors",
+    }
+  }
+
+  stage.timestamp {
+    source = "timestamp"
+    format = "2006-01-02 15:04:05.999999-07:00"
+  }
+
+  stage.replace {
+    expression = "([\\w.+-]+@[\\w-]+\\.[\\w.-]+)"
+    replace    = "<email>"
+  }
+
+  stage.replace {
+    expression = "(eyJ[A-Za-z0-9_-]{16,}\\.[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+)"
+    replace    = "<jwt>"
+  }
+
+  stage.replace {
+    expression = "\\b(01[016789]-?\\d{3,4}-?\\d{4})\\b"
+    replace    = "<phone>"
+  }
+
+  stage.replace {
+    expression = "\\b(\\d{6}-?[1-4]\\d{6})\\b"
+    replace    = "<rrn>"
+  }
+
+  stage.labels {
+    values = {
+      level = null,
+    }
+  }
+
+  // File paths grow with every rotation and must never become indexed labels.
+  stage.label_drop {
+    values = ["filename"]
+  }
+}
+
+loki.source.file "current" {
+  targets = [{
+    __address__ = "localhost",
+    __path__    = "/backend/logs/app.log",
+    app         = "krip-backend",
+    env         = sys.env("ENV"),
+    node_id     = sys.env("NODE_ID"),
+  }]
+  forward_to = [loki.process.backend.receiver]
+
+  file_match {
+    enabled = true
+  }
+}
+
+loki.source.file "rotated" {
+  targets = [{
+    __address__ = "localhost",
+    __path__    = "/backend/logs/app.*.log.gz",
+    app         = "krip-backend",
+    env         = sys.env("ENV"),
+    node_id     = sys.env("NODE_ID"),
+  }]
+  forward_to = [loki.process.backend.receiver]
+
+  decompression {
+    enabled = true
+    format  = "gz"
+  }
+
+  file_match {
+    enabled = true
+  }
+}
+
+loki.write "default" {
+  endpoint {
+    url       = sys.env("LOKI_URL")
+    tenant_id = "krip"
+  }
+}

@@ -1,9 +1,9 @@
-from typing import List, Optional
-from datetime import date, datetime
 from dataclasses import dataclass
+from datetime import date, datetime
+from typing import List, Optional
 
-from app.domain.tripmate.model.tripmate_post import PreferredGender, CompanionType
 from app.domain.auth.model.user_detail_inform import Gender
+from app.domain.tripmate.model.tripmate_post import CompanionType, PreferredGender
 
 
 @dataclass

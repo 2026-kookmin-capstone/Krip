@@ -5,19 +5,21 @@
 
 feed 도메인의 conftest 와 패턴 일관 — 도메인별 격리 유지.
 """
-import pytest_asyncio
-import pytest
 import os
-from motor.motor_asyncio import AsyncIOMotorClient
 from datetime import date
 
-from app.domain.tripmate.service.tripmate_post_like import TripmatePostLikeService
-from app.domain.tripmate.service.tripmate_post_draft import TripmatePostDraftService
-from app.domain.tripmate.service.tripmate_image import TripmateImageService
-from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
-from app.domain.tripmate.model.tripmate_image import TripmateImage
-from app.domain.notification.service.inbox import InboxService
+import pytest
+import pytest_asyncio
+from motor.motor_asyncio import AsyncIOMotorClient
+
 from app.domain.notification.model.inbox import InboxItem
+from app.domain.notification.service.inbox import InboxService
+from app.domain.tripmate.model.tripmate_image import TripmateImage
+from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
+from app.domain.tripmate.service.image_reference_mutex import TripmateImageReferenceMutex
+from app.domain.tripmate.service.tripmate_image import TripmateImageService
+from app.domain.tripmate.service.tripmate_post_draft import TripmatePostDraftService
+from app.domain.tripmate.service.tripmate_post_like import TripmatePostLikeService
 
 
 def _require_mongo_url() -> str:
@@ -68,8 +70,6 @@ def tripmate_post_like_service(uow, inbox_service) -> TripmatePostLikeService:
     return TripmatePostLikeService(uow=uow, inbox_service=inbox_service)
 
 
-# ──────────────────── tripmate_post_service (S3 + Mongo image mock) ────────────────────
-
 @pytest.fixture
 def tripmate_storage_mock(monkeypatch):
     """S3 stub — post 삭제/수정 시 `delete_many` 만 사용."""
@@ -99,9 +99,16 @@ def tripmate_image_mongo_repo_mock(monkeypatch):
 
 
 @pytest.fixture
-def tripmate_post_draft_service(mongo_db) -> TripmatePostDraftService:
+def tripmate_image_reference_mutex(engine) -> TripmateImageReferenceMutex:
+    return TripmateImageReferenceMutex(engine)
+
+
+@pytest.fixture
+def tripmate_post_draft_service(
+    mongo_db, tripmate_image_reference_mutex,
+) -> TripmatePostDraftService:
     """draft service — Mongo 단독 (RDB 의존 없음). mongo_db init 만 필요."""
-    return TripmatePostDraftService()
+    return TripmatePostDraftService(image_mutex=tripmate_image_reference_mutex)
 
 
 @pytest.fixture
@@ -126,22 +133,26 @@ def _upload_perm_side_effect(file, file_name, content_type, *, prefix):
 
 
 @pytest.fixture
-def tripmate_image_service(mongo_db, uow, tripmate_image_storage_mock) -> TripmateImageService:
+def tripmate_image_service(
+    mongo_db, uow, tripmate_image_storage_mock, tripmate_image_reference_mutex,
+) -> TripmateImageService:
     """TripmateImageService — RDB + 실 Mongo + Storage mock."""
-    return TripmateImageService(uow=uow)
+    return TripmateImageService(uow=uow, image_mutex=tripmate_image_reference_mutex)
 
 
 @pytest.fixture
 def tripmate_post_service(
     uow, tripmate_storage_mock, tripmate_image_mongo_repo_mock, inbox_service,
+    tripmate_image_reference_mutex,
 ):
     """TripmatePostService — RDB + S3/Mongo image mock + 인박스 cascade 의존성."""
     from app.domain.tripmate.service.tripmate_post import TripmatePostService
     from app.domain.tripmate.service.tripmate_post_draft import TripmatePostDraftService
 
-    draft_service = TripmatePostDraftService()
+    draft_service = TripmatePostDraftService(image_mutex=tripmate_image_reference_mutex)
     return TripmatePostService(
         uow=uow, draft_service=draft_service, inbox_service=inbox_service,
+        image_mutex=tripmate_image_reference_mutex,
     )
 
 
@@ -149,7 +160,9 @@ def tripmate_post_service(
 async def seed_tripmate_post(session_factory, seed_users):
     """tripmate_post 1건 시드 — owner + 2명 유저. (post_id, owner_id) 반환."""
     from app.domain.tripmate.model.tripmate_post import (
-        CompanionType, PreferredGender, TripmatePost,
+        CompanionType,
+        PreferredGender,
+        TripmatePost,
     )
 
     async def _seed():

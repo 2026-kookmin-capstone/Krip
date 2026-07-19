@@ -1,8 +1,6 @@
-from test.unit.domain.chat.room_service.model_factory import (
-    ChatRoomFactory,
-    UserBlockFactory,
-    UserFactory,
-)
+import pytest
+
+from app.domain.chat.service.room import RoomService
 from test.unit.domain.chat.room_service.mock_factory import (
     FakeUnitOfWork,
     make_chat_member_repo_mock,
@@ -15,9 +13,11 @@ from test.unit.domain.chat.room_service.mock_factory import (
     make_user_block_repo_mock,
     make_user_repo_mock,
 )
-import pytest
-
-from app.domain.chat.service.room import RoomService
+from test.unit.domain.chat.room_service.model_factory import (
+    ChatRoomFactory,
+    UserBlockFactory,
+    UserFactory,
+)
 
 
 @pytest.fixture(autouse=True)
@@ -86,6 +86,15 @@ def redis_mock():
 
 
 @pytest.fixture
+def lua_mock():
+    """lua_scripts 대체 — mark_read 의 unread 재계산 스크립트만 사용."""
+    from types import SimpleNamespace
+    from unittest.mock import AsyncMock
+
+    return SimpleNamespace(mark_read_unread=AsyncMock(return_value=[0, 1, 0]))
+
+
+@pytest.fixture
 def service(
     monkeypatch,
     mock_session,
@@ -97,6 +106,7 @@ def service(
     message_repo_mock,
     fanout_mock,
     redis_mock,
+    lua_mock,
     message_service_mock,
 ):
     """Mock 레포 + Mock Redis / Fanout 이 주입된 RoomService."""
@@ -120,7 +130,6 @@ def service(
         "app.domain.chat.service.room.FriendshipRepository",
         lambda session: friendship_repo_mock,
     )
-    # invite 시 ChatMessageRepository(mongodb.database) 를 만들지만 mongo 연결은 불필요.
     monkeypatch.setattr(
         "app.domain.chat.service.room.ChatMessageRepository",
         lambda db: message_repo_mock,
@@ -132,6 +141,7 @@ def service(
         "app.domain.chat.service.room.get_redis_client",
         _get_client,
     )
+    monkeypatch.setattr("app.domain.chat.service.room.lua_scripts", lua_mock)
 
     uow = FakeUnitOfWork(mock_session)
     return RoomService(

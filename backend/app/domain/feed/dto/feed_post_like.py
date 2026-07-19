@@ -4,8 +4,8 @@
 `AddLikePayload` 는 service 내부 transfer — `recipient_id == actor_id` 면 outer 가 fan-out
 skip 하므로 snapshot 필드는 더미 값.
 """
-from typing import Optional
 from dataclasses import dataclass
+from typing import Optional
 
 
 @dataclass

@@ -12,16 +12,16 @@ startup race 차단: `start_fanout_dispatcher` 는 `pubsub.subscribe` 가 확정
 """
 from __future__ import annotations
 
-from typing import Optional
-import json
 import asyncio
+import json
+from typing import Optional
 
-from app.domain.chat.service.fanout import FanoutService
-from app.core.redis import get_redis_client
-from app.core.logger import get_logger
-from app.core.instrumentation import chat_fanout_dispatch_alive, worker_tick
-from app.core.chat.redis_key import node_channel_key
 from app.config.setting import settings
+from app.core.chat.redis_key import node_channel_key
+from app.core.instrumentation import chat_fanout_dispatch_alive, worker_tick
+from app.core.logger import get_logger
+from app.core.redis import get_redis_client
+from app.domain.chat.service.fanout import FanoutService
 
 
 logger = get_logger("chat.fanout_dispatcher")
@@ -92,6 +92,11 @@ async def _dispatch_loop(
                     "envelope 파싱 실패 (drop): err={}", type(e).__name__,
                 )
                 continue
+            if not isinstance(envelope, dict):
+                logger.warning(
+                    "envelope 형식 오류 (drop): type={}", type(envelope).__name__,
+                )
+                continue
 
             try:
                 async with worker_tick("fanout_dispatch"):
@@ -135,14 +140,30 @@ async def start_fanout_dispatcher(fanout: FanoutService) -> None:
     redis = await get_redis_client()
     pubsub = redis.pubsub()
     channel = node_channel_key(settings.NODE_ID)
-    await pubsub.subscribe(channel)
-    logger.info("fan-out 디스패처 시작: channel={}", channel)
+    dispatch_coro = None
+    try:
+        await pubsub.subscribe(channel)
+        logger.info("fan-out 디스패처 시작: channel={}", channel)
+        stop_event = asyncio.Event()
+        dispatch_coro = _dispatch_loop(pubsub, fanout, stop_event)
+        task = asyncio.create_task(
+            dispatch_coro,
+            name="chat-fanout-dispatch",
+        )
+    except BaseException:
+        if dispatch_coro is not None:
+            dispatch_coro.close()
+        try:
+            await pubsub.close()
+        except BaseException as close_error:
+            logger.warning(
+                "fan-out 디스패처 startup 실패 후 pubsub close 실패: {}",
+                type(close_error).__name__,
+            )
+        raise
 
-    _stop_event = asyncio.Event()
-    _dispatcher_task = asyncio.create_task(
-        _dispatch_loop(pubsub, fanout, _stop_event),
-        name="chat-fanout-dispatch",
-    )
+    _stop_event = stop_event
+    _dispatcher_task = task
 
 
 async def stop_fanout_dispatcher() -> None:

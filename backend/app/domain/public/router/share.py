@@ -1,17 +1,14 @@
-from fastapi import APIRouter, Depends, HTTPException
 from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException
 
-from app.util.share_token import ShareTokenError
-from app.domain.tour.service.exception import TourPlanNotFoundError
-from app.domain.public.service.share_plan import SharePlanService
-from app.domain.public.schema.share import PublicPlanItemResponse, PublicPlanResponse
 from app.container import Container
+from app.domain.public.schema.share import PublicPlanItemResponse, PublicPlanResponse
+from app.domain.public.service.share_plan import SharePlanService
+from app.domain.tour.service.exception import TourPlanNotFoundError
+from app.util.share_token import ShareTokenError
 
 
 router = APIRouter(prefix="/share", tags=["공개 공유"])
-
-
-# ──────────────────── 공유 토큰으로 플랜 조회 (인증 없음) ────────────────────
 
 
 @router.get("/plan/{share_token}")
@@ -34,9 +31,6 @@ async def get_shared_plan(
         raise HTTPException(status_code=404, detail=str(e))
 
     return _to_public_plan_response(result)
-
-
-# ──────────────────── 내부 변환 유틸 ────────────────────
 
 
 def _to_public_plan_response(plan) -> PublicPlanResponse:

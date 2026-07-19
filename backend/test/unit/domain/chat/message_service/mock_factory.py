@@ -1,12 +1,12 @@
 """MessageService 단위 테스트용 Mock 팩토리."""
-from unittest.mock import AsyncMock, MagicMock
+from datetime import datetime, timezone
 from types import SimpleNamespace
+from unittest.mock import AsyncMock, MagicMock
 
 
 class FakeAsyncContextManager:
     async def __aenter__(self):
         return self
-
 
     async def __aexit__(self, exc_type, exc, tb):
         return False
@@ -18,10 +18,8 @@ class RaisingAsyncContextManager:
     def __init__(self, exc: Exception):
         self._exc = exc
 
-
     async def __aenter__(self):
         return None
-
 
     async def __aexit__(self, exc_type, exc, tb):
         raise self._exc
@@ -31,10 +29,8 @@ class FakeUnitOfWork:
     def __init__(self, session):
         self._session = session
 
-
     async def __aenter__(self):
         return self._session
-
 
     async def __aexit__(self, exc_type, exc, tb):
         return False
@@ -42,6 +38,11 @@ class FakeUnitOfWork:
 
 def make_mock_session() -> MagicMock:
     session = MagicMock(name="session")
+
+    async def execute(*_args, **_kwargs):
+        return None
+
+    session.execute = execute
     session.flush = AsyncMock()
     session.refresh = AsyncMock()
     session.begin_nested = MagicMock(return_value=FakeAsyncContextManager())
@@ -54,21 +55,31 @@ def make_chat_room_repo_mock() -> AsyncMock:
     """
     from app.domain.chat.model.chat_room import ChatRoomType as _CRT
     mock = AsyncMock()
-    mock.update_last_message.return_value = None
-    mock.find_by_id.return_value = SimpleNamespace(
+    room = SimpleNamespace(
         chat_room_id="CR_1",
         type=_CRT.GROUP,
         creator_id=None,
         direct_user_a_id=None,
         direct_user_b_id=None,
     )
+    mock.find_by_id.return_value = room
+    mock.find_by_id_for_update.return_value = room
     return mock
 
 
 def make_chat_member_repo_mock() -> AsyncMock:
     mock = AsyncMock()
     mock.find_active_member_ids.return_value = ["U_A", "U_B"]
+    generation = datetime(2026, 1, 1, tzinfo=timezone.utc)
+    mock.find_active_membership_generations.return_value = {
+        "U_A": generation,
+        "U_B": generation,
+    }
     mock.is_active_member.return_value = True
+    mock.is_active_member_for_share.return_value = True
+    mock.lock_matching_membership_generations.side_effect = (
+        lambda _room_id, expected, **_kwargs: set(expected)
+    )
     return mock
 
 
@@ -77,6 +88,7 @@ def make_message_repo_mock() -> AsyncMock:
     mock.insert.return_value = None
     mock.get_max_server_seq.return_value = 0
     mock.find_by_id.return_value = None
+    mock.find_by_client_msg_id.return_value = None
     mock.update_content.return_value = True
     mock.soft_delete.return_value = True
     return mock
@@ -115,6 +127,10 @@ def make_redis_mock() -> MagicMock:
     redis.sismember = AsyncMock(return_value=True)
     redis.smembers = AsyncMock(return_value={"U_A", "U_B"})
     redis.sadd = AsyncMock(return_value=1)
+    redis.expire = AsyncMock(return_value=1)
+    redis.get = AsyncMock(return_value=None)
+    redis.set = AsyncMock(return_value=True)
+    redis.delete = AsyncMock(return_value=1)
 
     def _new_pipe(*_a, **_kw):
         p = _make_trackable_pipe()
@@ -128,7 +144,8 @@ def make_redis_mock() -> MagicMock:
 def make_dedupe_redis_mock(first_time: bool = True) -> MagicMock:
     """dedupe Redis — SET NX 반환값에 따라 dedupe 시나리오 제어."""
     redis = MagicMock(name="redis-dedupe")
-    redis.set = AsyncMock(return_value=first_time)  # SET NX 결과
+    redis.set = AsyncMock(return_value=first_time)
+    redis.get = AsyncMock(return_value=None)        # dedupe hit 시 ACK replay 조회 (기본 미기록)
     redis.delete = AsyncMock(return_value=1)
     return redis
 
@@ -146,4 +163,6 @@ def make_lua_mock(
         recover_and_incr=AsyncMock(return_value=recover_and_incr_return),
         force_jump=AsyncMock(return_value=force_jump_return),
         incr_with_ttl=AsyncMock(return_value=incr_with_ttl_return),
+        increment_unread=AsyncMock(return_value=1),
+        populate_members=AsyncMock(return_value=1),
     )

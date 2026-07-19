@@ -13,13 +13,14 @@
 
 디코딩/봄/미지원/해상도 초과는 모두 ValueError → 라우터 400.
 """
+import io
 import warnings
 from typing import Final
-import io
+
 from PIL import Image, ImageOps, UnidentifiedImageError
 
-from app.domain.feed.dto.image import ProcessedFeedImage, ProcessedVariant
 from app.core.logger import get_logger
+from app.domain.feed.dto.image import ProcessedFeedImage, ProcessedVariant
 
 
 logger = get_logger("feed.thumbnail")
@@ -30,9 +31,9 @@ THUMBNAIL_MEDIUM: Final[int] = 720
 ORIGINAL_MAX: Final[int] = 2048
 JPEG_QUALITY: Final[int] = 80
 
-# 50MP = ~7000×7000. RAW (~24MP) 안전 통과, 단색 PNG 폭탄은 차단.
-# Pillow 기본 ~89MP cap 은 89~178MP 구간을 경고만 주고 통과시키므로 명시 cap.
-MAX_DECODE_PIXELS: Final[int] = 50_000_000
+# 디코딩 픽셀 상한(30MP≈6700×4500) — RAW/DSLR(~24MP)은 통과, 그 이상 차단해 단일 디코딩을
+# ~90~120MB(RGBA)로 제한. Pillow 기본 ~89MP cap 은 경고만 하고 통과시키므로 명시 cap.
+MAX_DECODE_PIXELS: Final[int] = 30_000_000
 
 _RGBA_BG_COLOR: Final[tuple[int, int, int]] = (255, 255, 255)
 
@@ -62,20 +63,6 @@ def process_feed_image(src_bytes: bytes) -> ProcessedFeedImage:
         ),
         small=_crop_square_and_resize(src_image, THUMBNAIL_SMALL),
         medium=_crop_square_and_resize(src_image, THUMBNAIL_MEDIUM),
-    )
-
-
-def crop_square_and_resize(src_bytes: bytes, target_size: int) -> ProcessedVariant:
-    """단위 테스트 진입점 — small/medium 단독 호출."""
-    src_image, _, _ = _decode(src_bytes)
-    return _crop_square_and_resize(src_image, target_size)
-
-
-def shrink_original_if_needed(src_bytes: bytes) -> ProcessedVariant:
-    """단위 테스트 진입점 — original 단독 호출."""
-    src_image, src_format, was_rotated = _decode(src_bytes)
-    return _shrink_original(
-        src_image, src_bytes, src_format=src_format, was_rotated=was_rotated,
     )
 
 

@@ -1,14 +1,17 @@
 from typing import List
-from fastapi import APIRouter, HTTPException, Request, Depends, UploadFile, File
-from dependency_injector.wiring import Provide, inject
 
-from app.schema.common import MessageResponse
-from app.domain.tripmate.service.tripmate_image import TripmateImageService
-from app.domain.tripmate.schema.tripmate_image import (
-    ImageUploadResponse, ImageUploadListResponse, CleanupResponse,
-)
-from app.core.logger import get_logger
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, File, HTTPException, Request, UploadFile
+
 from app.container import Container
+from app.core.logger import get_logger
+from app.domain.tripmate.schema.tripmate_image import (
+    CleanupResponse,
+    ImageUploadListResponse,
+    ImageUploadResponse,
+)
+from app.domain.tripmate.service.tripmate_image import TripmateImageService
+from app.util.upload import enforce_upload_size
 
 
 router = APIRouter(prefix="/images", tags=["여행 메이트 이미지"])
@@ -18,8 +21,6 @@ _ALLOWED_CONTENT_TYPES = {"image/jpeg", "image/png", "image/webp", "image/gif"}
 _MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
 _MAX_FILE_COUNT = 10
 
-
-# ──────────────────── 이미지 업로드 ────────────────────
 
 @router.post("", status_code=201)
 @inject
@@ -40,13 +41,7 @@ async def upload_images(
                 status_code=400,
                 detail=f"허용되지 않는 파일 형식입니다: {f.content_type} (jpeg, png, webp, gif만 가능)",
             )
-        contents = await f.read()
-        if len(contents) > _MAX_FILE_SIZE:
-            raise HTTPException(
-                status_code=400,
-                detail=f"파일 크기가 10MB를 초과합니다: {f.filename}",
-            )
-        await f.seek(0)
+        await enforce_upload_size(f, _MAX_FILE_SIZE)
 
     file_tuples = [
         (f.file, f.filename or "image", f.content_type or "image/jpeg")
@@ -55,6 +50,10 @@ async def upload_images(
 
     try:
         results = await image_service.upload_images(user_id=user_id, files=file_tuples)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
     except Exception as e:
         logger.error("이미지 업로드 실패 (user_id={}): {}", user_id, e)
         raise HTTPException(status_code=500, detail="이미지 업로드에 실패했습니다.")
@@ -66,30 +65,6 @@ async def upload_images(
         ]
     )
 
-
-# # ──────────────────── 이미지 단건 삭제 ────────────────────
-# # 현재 미사용
-# @router.delete("/{image_id}")
-# @inject
-# async def delete_image(
-#     request: Request,
-#     image_id: str,
-#     image_service: TripmateImageService = Depends(Provide[Container.tripmate_image_service]),
-# ) -> MessageResponse:
-#     """이미지 단건 삭제 (Object Storage + MongoDB 메타데이터 동시 삭제)"""
-#     user_id: str = request.state.user_id
-
-#     try:
-#         await image_service.delete_image(user_id=user_id, image_id=image_id)
-#     except ValueError as e:
-#         raise HTTPException(status_code=404, detail=str(e))
-#     except PermissionError as e:
-#         raise HTTPException(status_code=403, detail=str(e))
-
-#     return MessageResponse(message="이미지가 삭제되었습니다.")
-
-
-# ──────────────────── 고아 이미지 정리 ────────────────────
 
 @router.post("/cleanup", status_code=200)
 @inject

@@ -3,14 +3,19 @@
 실 Mongo 에 메시지를 쓴 뒤 편집/삭제가 문서에 반영되고, 히스토리 조회 시 삭제된
 메시지는 content=None 으로 마스킹되는지까지 end-to-end 로 검증.
 """
-import pytest_asyncio
-import pytest
+import asyncio
+from datetime import datetime, timezone
 
-from app.domain.friend.model.friendship import Friendship, FriendshipStatus
-from app.domain.chat.service.room import RoomService
-from app.domain.chat.service.message_history import MessageHistoryService
-from app.domain.chat.service.message import MessageService
+import pytest
+import pytest_asyncio
+
+from app.database.session import UnitOfWork
 from app.domain.chat.model.chat_message import MessageType
+from app.domain.chat.repository.chat_message import ChatMessageRepository
+from app.domain.chat.service.message import MessageService
+from app.domain.chat.service.message_history import MessageHistoryService
+from app.domain.chat.service.room import RoomService
+from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 
 
 pytestmark = pytest.mark.integration
@@ -52,10 +57,6 @@ async def room_with_message(
     return room.chat_room_id, a, b, ack.message_id, ack.server_seq
 
 
-# ──────────────────────────────────────────────────────────────────
-# 편집
-# ──────────────────────────────────────────────────────────────────
-
 class TestEditMessageFlow:
     async def test_edit_updates_mongo_and_fans_out(
         self, room_with_message, message_service, mongo_db, chat_fanout_stub,
@@ -82,7 +83,6 @@ class TestEditMessageFlow:
         assert payload["content"] == "edited!"
         assert payload["message_id"] == message_id
 
-
     async def test_non_owner_cannot_edit(
         self, room_with_message, message_service, patch_external_clients,
     ):
@@ -92,7 +92,6 @@ class TestEditMessageFlow:
                 message_id=message_id, editor_user_id=b, editor_session_id="WS_B",
                 new_content="hacked",
             )
-
 
     async def test_edit_after_soft_delete_rejected(
         self, room_with_message, message_service, patch_external_clients,
@@ -108,10 +107,71 @@ class TestEditMessageFlow:
                 new_content="zombie",
             )
 
+    async def test_edit_and_delete_are_serialized_through_fanout(
+        self, room_with_message, session_factory, chat_fanout_stub, monkeypatch,
+    ):
+        _, a, _, message_id, _ = room_with_message
+        chat_fanout_stub.reset_mock()
+        edit_snapshot_read = asyncio.Event()
+        release_edit = asyncio.Event()
+        original_find = ChatMessageRepository.find_by_id
 
-# ──────────────────────────────────────────────────────────────────
-# 삭제 (soft)
-# ──────────────────────────────────────────────────────────────────
+        async def pause_edit_after_snapshot(repo, target_message_id):
+            doc = await original_find(repo, target_message_id)
+            task = asyncio.current_task()
+            if task is not None and task.get_name() == "stale-edit":
+                edit_snapshot_read.set()
+                await release_edit.wait()
+            return doc
+
+        monkeypatch.setattr(ChatMessageRepository, "find_by_id", pause_edit_after_snapshot)
+        edit_service = MessageService(
+            uow=UnitOfWork(session_factory),
+            fanout_service=chat_fanout_stub,
+            fcm_service_factory=lambda: None,
+        )
+        delete_service = MessageService(
+            uow=UnitOfWork(session_factory),
+            fanout_service=chat_fanout_stub,
+            fcm_service_factory=lambda: None,
+        )
+
+        edit_task = asyncio.create_task(
+            edit_service.edit_message(
+                message_id=message_id,
+                editor_user_id=a,
+                editor_session_id="WS_EDIT",
+                new_content="edited-before-delete",
+            ),
+            name="stale-edit",
+        )
+        await asyncio.wait_for(edit_snapshot_read.wait(), timeout=1)
+        delete_task = asyncio.create_task(
+            delete_service.delete_message(
+                message_id=message_id,
+                deleter_user_id=a,
+                deleter_session_id="WS_DELETE",
+            ),
+        )
+
+        delete_crossed_edit = False
+        try:
+            await asyncio.wait_for(asyncio.shield(delete_task), timeout=0.1)
+            delete_crossed_edit = True
+        except TimeoutError:
+            pass
+        finally:
+            release_edit.set()
+            results = await asyncio.gather(edit_task, delete_task, return_exceptions=True)
+
+        assert not delete_crossed_edit
+        assert not [result for result in results if isinstance(result, BaseException)]
+        event_types = [
+            call.args[1]["type"]
+            for call in chat_fanout_stub.fan_out_to_room.await_args_list
+        ]
+        assert event_types == ["message.updated", "message.deleted"]
+
 
 class TestDeleteMessageFlow:
     async def test_own_delete_masks_content_in_history(
@@ -124,12 +184,10 @@ class TestDeleteMessageFlow:
             message_id=message_id, deleter_user_id=a, deleter_session_id="WS_A",
         )
 
-        # Mongo 상태
         doc = await mongo_db.chat_message.find_one({"_id": message_id})
         assert doc["deleted_at"] is not None
         assert doc["content"] is None
 
-        # 히스토리 조회 → content 마스킹 (deleted_at 별도 포함)
         history = MessageHistoryService(uow=uow)
         page = await history.find_messages_after(
             me_id=a, room_id=room_id, after_server_seq=server_seq - 1, limit=10,
@@ -138,6 +196,51 @@ class TestDeleteMessageFlow:
         assert hit.content is None
         assert hit.deleted_at is not None
 
+    async def test_fanout_failure_is_recovered_by_retry(
+        self, room_with_message, message_service, mongo_db, chat_fanout_stub,
+    ):
+        _, a, _, message_id, _ = room_with_message
+        chat_fanout_stub.reset_mock()
+        chat_fanout_stub.fan_out_to_room.side_effect = RuntimeError("redis unavailable")
+
+        with pytest.raises(RuntimeError, match="redis unavailable"):
+            await message_service.delete_message(
+                message_id=message_id,
+                deleter_user_id=a,
+                deleter_session_id="WS_A",
+            )
+
+        doc = await mongo_db.chat_message.find_one({"_id": message_id})
+        assert doc["deleted_at"] is not None
+        assert doc["content"] is None
+
+        chat_fanout_stub.fan_out_to_room.side_effect = None
+        await message_service.delete_message(
+            message_id=message_id,
+            deleter_user_id=a,
+            deleter_session_id="WS_A",
+        )
+        assert chat_fanout_stub.fan_out_to_room.await_count == 2
+        retry_payload = chat_fanout_stub.fan_out_to_room.await_args_list[1].args[1]
+        assert retry_payload["deleted_at"] == doc["deleted_at"].isoformat()
+
+    async def test_fanout_cancellation_exposes_durable_delete(
+        self, room_with_message, message_service, mongo_db, chat_fanout_stub,
+    ):
+        _, a, _, message_id, _ = room_with_message
+        chat_fanout_stub.reset_mock()
+        chat_fanout_stub.fan_out_to_room.side_effect = asyncio.CancelledError
+
+        with pytest.raises(asyncio.CancelledError):
+            await message_service.delete_message(
+                message_id=message_id,
+                deleter_user_id=a,
+                deleter_session_id="WS_A",
+            )
+
+        doc = await mongo_db.chat_message.find_one({"_id": message_id})
+        assert doc["deleted_at"] is not None
+        assert doc["content"] is None
 
     async def test_group_creator_can_delete_others_message(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
@@ -149,7 +252,6 @@ class TestDeleteMessageFlow:
             uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
         )
         room = await room_svc.create_group_room(me_id=a, title="T", member_ids=[b])
-        # b 가 보낸 메시지를 방장 a 가 삭제
         ack = await message_service.send_message(
             sender_user_id=b, sender_session_id="WS_B", room_id=room.chat_room_id,
             client_msg_id="cm-b-1", msg_type=MessageType.TEXT, content="x",
@@ -157,7 +259,6 @@ class TestDeleteMessageFlow:
         await message_service.delete_message(
             message_id=ack.message_id, deleter_user_id=a, deleter_session_id="WS_A",
         )
-
 
     async def test_regular_member_cannot_delete_others(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
@@ -180,7 +281,6 @@ class TestDeleteMessageFlow:
                 message_id=ack.message_id, deleter_user_id=c, deleter_session_id="WS_C",
             )
 
-
     async def test_system_message_cannot_be_deleted(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
         mongo_db, patch_external_clients,
@@ -192,7 +292,6 @@ class TestDeleteMessageFlow:
         )
         room = await room_svc.create_group_room(me_id=a, title="T", member_ids=[b])
 
-        # 생성 시 자동 발행된 system 메시지 찾기
         sys_doc = await mongo_db.chat_message.find_one(
             {"chat_room_id": room.chat_room_id, "type": "system"},
         )
@@ -203,15 +302,60 @@ class TestDeleteMessageFlow:
                 message_id=sys_doc["_id"], deleter_user_id=a, deleter_session_id="WS_A",
             )
 
-
-    async def test_second_delete_is_rejected(
+    async def test_second_delete_is_idempotent_success(
         self, room_with_message, message_service, patch_external_clients,
     ):
         _, a, _, message_id, _ = room_with_message
         await message_service.delete_message(
             message_id=message_id, deleter_user_id=a, deleter_session_id="WS_A",
         )
-        with pytest.raises(ValueError, match="이미 삭제"):
-            await message_service.delete_message(
-                message_id=message_id, deleter_user_id=a, deleter_session_id="WS_A",
-            )
+        await message_service.delete_message(
+            message_id=message_id, deleter_user_id=a, deleter_session_id="WS_A",
+        )
+
+
+class TestMessageMutationPredicates:
+    async def test_edit_cas_cannot_resurrect_deleted_content(
+        self, room_with_message, mongo_db,
+    ):
+        _, _, _, message_id, _ = room_with_message
+        repo = ChatMessageRepository(mongo_db)
+        await mongo_db.chat_message.update_one(
+            {"_id": message_id},
+            {"$set": {"deleted_at": datetime.now(timezone.utc), "content": None}},
+        )
+
+        updated = await repo.update_content(
+            message_id,
+            "zombie",
+            edited_at=datetime.now(timezone.utc),
+            expected_edited_at=None,
+        )
+
+        doc = await mongo_db.chat_message.find_one({"_id": message_id})
+        assert updated is False
+        assert doc["content"] is None
+        assert doc["deleted_at"] is not None
+
+    async def test_delete_cas_rejects_stale_edit_generation(
+        self, room_with_message, mongo_db,
+    ):
+        _, _, _, message_id, _ = room_with_message
+        repo = ChatMessageRepository(mongo_db)
+        assert await repo.update_content(
+            message_id,
+            "new generation",
+            edited_at=datetime.now(timezone.utc),
+            expected_edited_at=None,
+        )
+
+        deleted = await repo.soft_delete(
+            message_id,
+            deleted_at=datetime.now(timezone.utc),
+            expected_edited_at=None,
+        )
+
+        doc = await mongo_db.chat_message.find_one({"_id": message_id})
+        assert deleted is False
+        assert doc["content"] == "new generation"
+        assert doc["deleted_at"] is None

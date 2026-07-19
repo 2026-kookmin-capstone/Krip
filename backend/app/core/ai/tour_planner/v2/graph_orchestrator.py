@@ -1,13 +1,20 @@
-from typing import Any, Dict, List, Optional, Tuple
-import time
-import math
-from langgraph.graph import StateGraph, START, END
-from functools import lru_cache
 import asyncio
+import math
+import time
+from functools import lru_cache
+from typing import Any, Dict, List, Optional, Tuple
 
-from app.domain.tour.repository.place import PlaceRepository
-from app.core.logger import get_logger
-from app.core.ai.tour_planner.v2.prompt_manager import CLUSTER_COORDINATES
+from langchain_core.exceptions import OutputParserException
+from langgraph.graph import END, START, StateGraph
+from pydantic import ValidationError as PydanticValidationError
+
+from app.core.ai.tour_planner.v2.category import (
+    GROUP_OTHER,
+    GROUPS,
+    classify,
+    compute_caps,
+)
+from app.core.ai.tour_planner.v2.chain_builder import get_tour_planner_chain_builder
 from app.core.ai.tour_planner.v2.data_state import (
     FoodPreference,
     TourBudgetItem,
@@ -16,17 +23,14 @@ from app.core.ai.tour_planner.v2.data_state import (
     TourMovementHop,
     TourPlaceDetail,
     TourPlanLocation,
-    TourPlanResult,
     TourPlannerGraphState,
+    TourPlannerOutputError,
+    TourPlanResult,
     TourTimelineSlot,
 )
-from app.core.ai.tour_planner.v2.chain_builder import get_tour_planner_chain_builder
-from app.core.ai.tour_planner.v2.category import (
-    GROUP_OTHER,
-    GROUPS,
-    classify,
-    compute_caps,
-)
+from app.core.ai.tour_planner.v2.prompt_manager import CLUSTER_COORDINATES
+from app.core.logger import get_logger
+from app.domain.tour.repository.place import PlaceRepository
 
 
 logger = get_logger("Tour Planner v2 Graph Orchestrator")
@@ -51,20 +55,14 @@ class TourPlannerGraphOrchestrator:
     후보 풀은 6개 카테고리 그룹으로 분류해 균형 분배한다.
     """
 
-
     def __init__(self):
         self._chain_manager = get_tour_planner_chain_builder()
         self._place_repo = PlaceRepository()
         self._graph: Any = None
 
-
     async def initialize(self) -> None:
         self._chain_manager.build_all_chains()
         self._build_graph()
-
-
-    # ──────────────────── 노드 ────────────────────
-
 
     async def _load_fixed_places(self, state: TourPlannerGraphState) -> Dict[str, Any]:
         """일자별 추가 장소 place_id를 DB에서 병렬 조회한다.
@@ -97,7 +95,6 @@ class TourPlannerGraphOrchestrator:
 
         return {"fixed_places": fixed_places}
 
-
     async def _search_places(self, state: TourPlannerGraphState) -> Dict[str, Any]:
         """출발/도착/추가 장소 좌표 기반 검색 + 카테고리 그룹 균형 분배.
 
@@ -118,7 +115,6 @@ class TourPlannerGraphOrchestrator:
                 fixed_places[i]["place_id"] if fixed_places[i] else None
             )
 
-            # 검색점마다 병렬 검색
             search_tasks = [
                 self._place_repo.find_nearby(
                     lat=lat,
@@ -131,7 +127,6 @@ class TourPlannerGraphOrchestrator:
             ]
             results = await asyncio.gather(*search_tasks)
 
-            # 그룹 균형 분배
             pool = self._build_balanced_pool(
                 results,
                 additional_pid=additional_pid,
@@ -148,7 +143,6 @@ class TourPlannerGraphOrchestrator:
             )
 
         return {"candidate_places": candidate_places}
-
 
     async def _build_day_plan(self, state: TourPlannerGraphState) -> Dict[str, Any]:
         """일자별로 LLM을 순차 호출하여 상세 플랜을 만든다.
@@ -172,24 +166,34 @@ class TourPlannerGraphOrchestrator:
             candidates_block = self._format_candidates_block(candidate_places[i])
             additional_block = self._format_additional_block(fixed_places[i])
 
-            day_plan: TourDayPlan = await chain.ainvoke({
-                "day": day_num,
-                "departure_cluster": day_input.departure_cluster,
-                "arrival_cluster": day_input.arrival_cluster,
-                "start_time": day_input.start_time,
-                "end_time": day_input.end_time,
-                "companion": day_input.companion,
-                "budget_per_person_krw": day_input.budget_per_person_krw,
-                "styles": ", ".join(day_input.styles),
-                "schedule_density": day_input.schedule_density,
-                "transport": day_input.transport,
-                "food_preference": food_preference,
-                "additional_place_block": additional_block,
-                "used_place_ids": (
-                    ", ".join(used_place_ids) if used_place_ids else "(none)"
-                ),
-                "candidates_block": candidates_block,
-            })
+            try:
+                day_plan: TourDayPlan = await chain.ainvoke({
+                    "day": day_num,
+                    "departure_cluster": day_input.departure_cluster,
+                    "arrival_cluster": day_input.arrival_cluster,
+                    "start_time": day_input.start_time,
+                    "end_time": day_input.end_time,
+                    "companion": day_input.companion,
+                    "budget_per_person_krw": day_input.budget_per_person_krw,
+                    "styles": ", ".join(day_input.styles),
+                    "schedule_density": day_input.schedule_density,
+                    "transport": day_input.transport,
+                    "food_preference": food_preference,
+                    "additional_place_block": additional_block,
+                    "used_place_ids": (
+                        ", ".join(used_place_ids) if used_place_ids else "(none)"
+                    ),
+                    "candidates_block": candidates_block,
+                })
+            except (OutputParserException, PydanticValidationError) as e:
+                # LLM 이 스키마를 위반/잘린 출력 — raw 출력을 노출하지 않고 도메인 예외로 변환.
+                logger.warning("Day {:d} LLM 구조화 출력 파싱 실패: {}", day_num, type(e).__name__)
+                raise TourPlannerOutputError(f"invalid LLM output (day={day_num})") from e
+
+            # with_structured_output 은 모델이 도구를 호출 안 하면 None 을 반환할 수 있다.
+            if day_plan is None:
+                logger.warning("Day {:d} LLM 구조화 출력 None", day_num)
+                raise TourPlannerOutputError(f"empty LLM output (day={day_num})")
 
             day_plan = self._enforce_constraints(
                 day_plan,
@@ -206,15 +210,11 @@ class TourPlannerGraphOrchestrator:
 
             day_plans.append(day_plan)
             logger.info(
-                "Day {:d} 플랜 생성 완료: 장소 {:d}, 슬롯 {:d}, 예산 {:d}원",
-                day_num, len(day_plan.places), len(day_plan.timeline), day_plan.budget_total_krw,
+                "Day {:d} 플랜 생성 완료: 장소 {:d}, 슬롯 {:d}",
+                day_num, len(day_plan.places), len(day_plan.timeline),
             )
 
         return {"tour_plan": TourPlanResult(tour_plan=day_plans)}
-
-
-    # ──────────────────── 후보 풀 빌드 헬퍼 ────────────────────
-
 
     @staticmethod
     def _build_search_points(
@@ -246,7 +246,6 @@ class TourPlannerGraphOrchestrator:
                 unique.append((lat, lng))
         return unique
 
-
     @staticmethod
     def _build_balanced_pool(
         search_results: List[List[dict]],
@@ -254,11 +253,7 @@ class TourPlannerGraphOrchestrator:
         additional_pid: Optional[str],
         styles: List[str],
     ) -> List[dict]:
-        """raw 검색 결과 → 그룹별 분류 → rating 정렬 → cap 적용 → 합친 후보 풀.
-
-        각 후보 dict에 ``_group`` 필드를 추가하여 포맷팅 시 GROUP 라벨로 노출한다.
-        """
-        # 1. 평탄화 + 추가 장소 제외 + 중복 제거 + 그룹 분류
+        """후보에 프롬프트용 ``_group``을 추가하고 그룹별 cap을 적용한다."""
         groups: Dict[str, List[dict]] = {g: [] for g in GROUPS}
         seen_ids: set[str] = set()
 
@@ -275,26 +270,19 @@ class TourPlannerGraphOrchestrator:
                 place["_group"] = group
                 groups[group].append(place)
 
-        # 2. 그룹별 rating 정렬
         for g in GROUPS:
             groups[g].sort(
                 key=lambda p: (p.get("rating") or 0, p.get("rating_count") or 0),
                 reverse=True,
             )
 
-        # 3. 스타일 가중치 적용한 cap 계산
         caps = compute_caps(styles)
 
-        # 4. 그룹별 top-N 추출
         pool: List[dict] = []
         for g, cap in caps.items():
             pool.extend(groups[g][:cap])
 
         return pool
-
-
-    # ──────────────────── 후처리 검증 ────────────────────
-
 
     @staticmethod
     def _enforce_constraints(
@@ -305,17 +293,7 @@ class TourPlannerGraphOrchestrator:
         candidates: List[dict],
         food_preference: str,
     ) -> TourDayPlan:
-        """LLM 출력에 대한 강제 제약을 적용한다.
-
-        1) 후보 풀 외 place_id 제거 (추가 장소는 예외)
-        2) 식당 음식 필터(types 기반) 위반 제거 (추가 장소는 예외)
-        3) is_additional 플래그 정합성 강제 (C4)
-        4) 추가 장소 누락 시 places + timeline에 강제 삽입
-        5) timeline place_id가 places와 일치하도록 정리 + 시각 보간(B7)
-        6) movements 정합성 검증 (B8)
-        7) budget_total 동기화 (β)
-        8) places가 비면 ValueError (B9)
-        """
+        """LLM 출력을 후보·고정 장소·timeline·movement·budget 계약에 맞춘다."""
         candidate_index = {p["place_id"]: p for p in candidates}
 
         allowed_food_types: Optional[set[str]] = None
@@ -326,7 +304,7 @@ class TourPlannerGraphOrchestrator:
 
         fixed_pid = fixed_place["place_id"] if fixed_place else None
 
-        # 1~3) 장소 정리 + is_additional 보정 + photos 주입 (LLM은 photos를 모름 → 서버가 DB 원본으로 강제 덮어쓰기)
+        # LLM이 모르는 photos는 DB 원본으로 덮고 fixed-place 표기를 정규화한다.
         kept_places: List[TourPlaceDetail] = []
         for place in day_plan.places:
             if fixed_pid and place.place_id == fixed_pid:
@@ -339,18 +317,16 @@ class TourPlannerGraphOrchestrator:
 
             source = candidate_index.get(place.place_id)
             if source is None:
-                logger.warning(
-                    "후보 풀 외 장소 제거: {} ({})",
-                    place.place_id, place.display_name,
+                logger.bind(reason="outside_candidate_pool").warning(
+                    "후보 풀 외 장소 제거"
                 )
                 continue
 
             if allowed_food_types is not None:
                 types = source.get("types") or []
                 if "restaurant" in types and not (set(types) & allowed_food_types):
-                    logger.warning(
-                        "음식 필터({}) 위반 식당 제거: {}",
-                        food_preference, place.display_name,
+                    logger.bind(food_filter_applied=True).warning(
+                        "음식 필터 위반 식당 제거"
                     )
                     continue
 
@@ -361,21 +337,17 @@ class TourPlannerGraphOrchestrator:
 
             kept_places.append(place)
 
-        # 4) 추가 장소 강제 포함
         if fixed_place and not any(p.place_id == fixed_pid for p in kept_places):
-            logger.warning("추가 장소 누락 → 강제 삽입: {}", fixed_pid)
+            logger.bind(fixed_place_inserted=True).warning("추가 장소 누락 → 강제 삽입")
             kept_places.append(_fixed_place_to_detail(fixed_place))
 
-        # 8) 빈 places 거부
         if not kept_places:
-            raise ValueError(
-                f"Day {day_plan.day}: no valid places remained after enforcement"
-            )
+            logger.warning("Day {} enforcement 후 유효 장소 0개 — LLM 출력 무효", day_plan.day)
+            raise TourPlannerOutputError(f"no valid places (day={day_plan.day})")
 
         kept_pids = {p.place_id for p in kept_places}
 
-        # 5) timeline 정리 + 추가 장소 누락 시 보강
-        # place_id가 없거나(null) 후보 풀에 없는 슬롯은 모두 제거 (transit/anchor 슬롯 차단)
+        # 후보 장소와 연결되지 않은 transit/anchor 슬롯은 응답에서 제외한다.
         kept_timeline = [
             slot for slot in day_plan.timeline
             if slot.place_id and slot.place_id in kept_pids
@@ -407,7 +379,6 @@ class TourPlannerGraphOrchestrator:
                 ),
             )
 
-        # 6) movements 정합성: from/to가 places.display_name 집합 안에 있어야 함
         place_names = {p.display_name for p in kept_places}
         kept_movements = [
             m for m in day_plan.movements
@@ -419,7 +390,6 @@ class TourPlannerGraphOrchestrator:
                 len(day_plan.movements), len(kept_movements),
             )
 
-        # ε. movements가 0건이면 timeline + 좌표 기반으로 fallback 자동 생성
         if not kept_movements and len(kept_places) >= 2:
             kept_movements = TourPlannerGraphOrchestrator._build_fallback_movements(
                 kept_timeline, kept_places,
@@ -430,19 +400,12 @@ class TourPlannerGraphOrchestrator:
                     len(kept_movements),
                 )
 
-        # 7) budget 동기화 — places의 비용과 breakdown/total을 한 방향으로 정합화
-        #
-        #    원칙: breakdown이 진실. budget_total은 항상 breakdown 합과 일치.
-        #    breakdown이 비어있으면 places.estimated_cost_krw 합으로 단일 항목을 합성한다
-        #    (장소 카드에는 비용이 표시되는데 합계는 0인 모순을 막기 위함).
+        # breakdown을 합계의 기준으로 삼고, 없으면 장소 비용으로 합성해 카드와 합계를 맞춘다.
         if day_plan.budget_breakdown:
             kept_breakdown = day_plan.budget_breakdown
             budget_total = sum(item.amount_krw for item in kept_breakdown)
             if budget_total != day_plan.budget_total_krw:
-                logger.warning(
-                    "budget_total 불일치 보정: LLM={} → 합산={}",
-                    day_plan.budget_total_krw, budget_total,
-                )
+                logger.warning("budget_total 불일치 보정")
         else:
             place_cost_sum = sum(p.estimated_cost_krw for p in kept_places)
             if place_cost_sum > 0:
@@ -453,24 +416,15 @@ class TourPlannerGraphOrchestrator:
                     )
                 ]
                 budget_total = place_cost_sum
-                logger.warning(
-                    "budget_breakdown 비어있음 → places 비용 합({}원)으로 단일 항목 합성",
-                    place_cost_sum,
-                )
+                logger.warning("budget_breakdown 비어있음 → places 비용 합으로 단일 항목 합성")
             else:
                 kept_breakdown = []
                 budget_total = 0
                 if day_plan.budget_total_krw > 0:
-                    logger.warning(
-                        "budget_breakdown·places 비용 모두 비어있음 → budget_total {} 무시하고 0으로 강제",
-                        day_plan.budget_total_krw,
-                    )
+                    logger.warning("budget_breakdown·places 비용 모두 비어있음 → 0으로 강제")
 
         if budget_total > day_input.budget_per_person_krw:
-            logger.warning(
-                "예산 초과 감지: 합계 {} > 입력 {} (응답 유지, 경고만)",
-                budget_total, day_input.budget_per_person_krw,
-            )
+            logger.warning("예산 초과 감지 (응답 유지, 경고만)")
 
         return TourDayPlan(
             day=day_plan.day,
@@ -481,10 +435,6 @@ class TourPlannerGraphOrchestrator:
             budget_total_krw=budget_total,
             summary=day_plan.summary,
         )
-
-
-    # ──────────────────── 그래프 빌드 ────────────────────
-
 
     def _build_graph(self) -> None:
         graph_builder = StateGraph(TourPlannerGraphState)
@@ -500,13 +450,8 @@ class TourPlannerGraphOrchestrator:
 
         self._graph = graph_builder.compile()
 
-
     def get_graph(self) -> Any:
         return self._graph
-
-
-    # ──────────────────── 실행 ────────────────────
-
 
     async def ainvoke(
         self,
@@ -535,26 +480,17 @@ class TourPlannerGraphOrchestrator:
 
         return response["tour_plan"]
 
-
-    # ──────────────────── movements fallback 헬퍼 ────────────────────
-
-
     @staticmethod
     def _build_fallback_movements(
         timeline: List[TourTimelineSlot],
         places: List[TourPlaceDetail],
     ) -> List[TourMovementHop]:
-        """timeline place_id 순서를 따라 인접 두 장소 사이의 movement를 자동 생성.
-
-        - 같은 place_id 연속 등장(체류 슬롯)은 한 번으로 압축
-        - 거리(haversine) 기준으로 method 텍스트를 휴리스틱 결정
-        """
+        """연속 체류 슬롯을 압축하고 인접 장소 movement를 거리 기반으로 합성한다."""
         if not timeline or len(places) < 2:
             return []
 
         place_by_pid = {p.place_id: p for p in places}
 
-        # timeline에서 유효 place_id만 순서대로 추출, 연속 중복 압축
         ordered_pids: List[str] = []
         for slot in timeline:
             pid = slot.place_id
@@ -584,7 +520,6 @@ class TourPlannerGraphOrchestrator:
             )
         return movements
 
-
     @staticmethod
     def _describe_movement(distance_m: float) -> str:
         """거리(미터)를 사용자에게 보여줄 영문 method 텍스트로 변환.
@@ -602,7 +537,6 @@ class TourPlannerGraphOrchestrator:
         km = max(1, round(distance_m / 1000))
         return f"Subway / bus (~{km} km)"
 
-
     @staticmethod
     def _haversine_m(lat1: float, lng1: float, lat2: float, lng2: float) -> float:
         """두 좌표 간 구면 거리 (m)."""
@@ -612,10 +546,6 @@ class TourPlannerGraphOrchestrator:
         dl = math.radians(lng2 - lng1)
         a = math.sin(dp / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2
         return 2 * R * math.asin(math.sqrt(a))
-
-
-    # ──────────────────── 시각 보간 헬퍼 ────────────────────
-
 
     @staticmethod
     def _interpolate_time(
@@ -644,10 +574,6 @@ class TourPlannerGraphOrchestrator:
             return fmt(n - 60)
         return default
 
-
-    # ──────────────────── 포맷팅 유틸 ────────────────────
-
-
     @staticmethod
     def _format_additional_block(fixed_place: Optional[dict]) -> str:
         if fixed_place is None:
@@ -670,7 +596,6 @@ class TourPlannerGraphOrchestrator:
         if summary:
             lines.append(f"- summary: {summary}")
         return "\n".join(lines)
-
 
     @staticmethod
     def _format_candidates_block(places: List[dict]) -> str:

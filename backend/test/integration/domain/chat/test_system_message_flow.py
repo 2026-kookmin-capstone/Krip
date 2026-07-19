@@ -7,15 +7,13 @@
 ※ 방 관리 자체 흐름은 `test_room_group_flow.py` 에서 커버. 여기서는 타임라인
 저장과 unread 미영향만.
 """
-from sqlalchemy import select
-import pytest_asyncio
 import pytest
+import pytest_asyncio
 
-from app.domain.friend.model.friendship import Friendship, FriendshipStatus
-from app.domain.chat.service.room import RoomService
-from app.domain.chat.model.chat_room_member import ChatRoomMember
-from app.domain.chat.model.chat_room import ChatRoom
 from app.core.chat.redis_key import unread_key
+from app.domain.chat.model.chat_room import ChatRoom
+from app.domain.chat.service.room import RoomService
+from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 
 
 pytestmark = pytest.mark.integration
@@ -64,12 +62,10 @@ class TestSystemMessageTimeline:
         assert m["content"] == {"action": "created", "actor_id": a}
         assert m["server_seq"] >= 1
 
-        # chat_room.last_message_* 에 해당 seq 반영
         async with session_factory() as s:
             fresh = await s.get(ChatRoom, room.chat_room_id)
             assert fresh.last_message_server_seq == m["server_seq"]
             assert fresh.last_message_id == m["_id"]
-
 
     async def test_invite_writes_join_system_message_with_target_ids(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
@@ -85,7 +81,6 @@ class TestSystemMessageTimeline:
         room = await service.create_group_room(
             me_id=a, title="T", member_ids=[b],
         )
-        # 방 생성 시점의 "created" 메시지는 이미 1건 있음
         await service.invite_members(
             me_id=a, room_id=room.chat_room_id, user_ids=[c],
         )
@@ -95,7 +90,6 @@ class TestSystemMessageTimeline:
         assert actions == ["created", "join"]
         assert msgs[-1]["content"]["target_ids"] == [c]
         assert msgs[-1]["content"]["actor_id"] == a
-
 
     async def test_leave_writes_leave_system_message(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
@@ -116,7 +110,6 @@ class TestSystemMessageTimeline:
         assert [m["content"]["action"] for m in msgs] == ["created", "leave"]
         assert msgs[-1]["content"]["actor_id"] == b
         assert "target_ids" not in msgs[-1]["content"]
-
 
     async def test_kick_writes_kick_system_message_with_target(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
@@ -140,7 +133,6 @@ class TestSystemMessageTimeline:
         assert msgs[-1]["content"]["actor_id"] == a
         assert msgs[-1]["content"]["target_ids"] == [b]
 
-
     async def test_system_messages_do_not_bump_unread(
         self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
         redis_hot, patch_external_clients,
@@ -161,12 +153,10 @@ class TestSystemMessageTimeline:
             me_id=a, title="T", member_ids=[b],
         )
 
-        # 방 생성 시 unread 전원 0
         for uid in (a, b):
             raw = await redis_hot.hget(unread_key(uid), room.chat_room_id)
             assert raw == "0"
 
-        # c 초대 → join 시스템 메시지가 발행되지만 a/b 의 unread 는 그대로 0
         await service.invite_members(
             me_id=a, room_id=room.chat_room_id, user_ids=[c],
         )

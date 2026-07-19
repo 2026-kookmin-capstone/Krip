@@ -1,1 +1,0 @@
-# Friend domain integration tests

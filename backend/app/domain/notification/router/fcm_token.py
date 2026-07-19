@@ -1,14 +1,14 @@
-from fastapi import APIRouter, Depends, Request
 from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, Request
 
-from app.schema.common import MessageResponse
-from app.domain.notification.service.fcm import FcmService
+from app.container import Container
 from app.domain.notification.schema.fcm_token import (
+    FcmTokenResponse,
     RegisterFcmTokenBody,
     UnregisterFcmTokenBody,
-    FcmTokenResponse,
 )
-from app.container import Container
+from app.domain.notification.service.fcm import FcmService
+from app.schema.common import MessageResponse
 
 
 router = APIRouter(prefix="/fcm-token", tags=["FCM 토큰"])

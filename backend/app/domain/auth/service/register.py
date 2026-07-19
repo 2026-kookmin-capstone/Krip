@@ -1,17 +1,18 @@
 from typing import List
 
-from app.domain.auth.repository.user_travel_style import UserTravelStyleRepository
-from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
-from app.domain.auth.repository.user import UserRepository
-from app.domain.auth.model.user_travel_style import UserTravelStyle, TravelStyle
-from app.domain.auth.model.user_detail_inform import UserDetailInform, Gender
+from sqlalchemy.exc import IntegrityError
+
 from app.database.session import UnitOfWork, transactional
+from app.domain.auth.model.user_detail_inform import Gender, UserDetailInform
+from app.domain.auth.model.user_travel_style import TravelStyle, UserTravelStyle
+from app.domain.auth.repository.user import UserRepository
+from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
+from app.domain.auth.repository.user_travel_style import UserTravelStyleRepository
 
 
 class RegisterService:
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
-
 
     @transactional
     async def register_detail(
@@ -40,6 +41,10 @@ class RegisterService:
         if user is None:
             raise ValueError("존재하지 않는 유저입니다.")
 
+        # withdrawal status update와 상세정보 commit을 user row share lock으로 직렬화.
+        if not await user_repo.lock_if_active(user_id):
+            raise ValueError("회원가입을 완료할 수 없는 계정 상태입니다.")
+
         existing = await detail_repo.find_by_user_id(user_id)
         if existing is not None:
             raise ValueError("이미 2차 회원가입이 완료된 유저입니다.")
@@ -53,7 +58,12 @@ class RegisterService:
             gender=gender,
             nationality=nationality,
         )
-        await detail_repo.save(detail)
+        # check→insert 사이 동시 요청(더블클릭/두 탭)이 끼면 user_detail PK 위반 → 500 대신
+        # 기존 중복 케이스와 동일 메시지로 매핑.
+        try:
+            await detail_repo.save(detail)
+        except IntegrityError as e:
+            raise ValueError("이미 2차 회원가입이 완료된 유저입니다.") from e
 
         styles = [
             UserTravelStyle(user_id=user_id, style=style)

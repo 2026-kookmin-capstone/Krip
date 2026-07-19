@@ -1,23 +1,23 @@
 from typing import Optional
 
-from app.domain.friend.repository.search import FriendSearchRepository, PAGE_SIZE
-from app.domain.friend.repository.friendship import FriendshipRepository
-from app.domain.friend.model.friendship import Friendship, FriendshipStatus
-from app.domain.friend.dto.search import FriendSearchData, FriendSearchListData
-from app.domain.auth.model.user import User
 from app.database.session import UnitOfWork, transactional
+from app.domain.auth.model.user import User
+from app.domain.friend.dto.search import FriendSearchData, FriendSearchListData
+from app.domain.friend.model.friendship import Friendship, FriendshipStatus
+from app.domain.friend.repository.friendship import FriendshipRepository
+from app.domain.friend.repository.search import PAGE_SIZE, FriendSearchRepository
+from app.util.cursor import encode_cursor
 
 
 class FriendSearchService:
     """친구 추가 화면 — 이름 / user_id 부분일치로 ACTIVE 유저 검색.
 
     - 본인 / 탈퇴·정지·휴면 / 내가 차단 / 나를 차단한 유저는 결과에서 제외
-    - 30개씩 커서 페이지네이션 (cursor = 마지막 항목의 user_id)
+    - 30개씩 커서 페이지네이션 (cursor = 이전 응답의 next_cursor)
     """
 
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
-
 
     @transactional
     async def search(
@@ -43,17 +43,19 @@ class FriendSearchService:
             keyword=keyword,
             cursor=cursor,
         )
+        has_more = len(users) > PAGE_SIZE
+        users = users[:PAGE_SIZE]
 
         # peer 별 friendship 을 1 쿼리로 일괄 조회 — N+1 방지
         peer_ids = [u.user_id for u in users]
         friendships = await friendship_repo.find_friendships_with(viewer_id, peer_ids)
 
         items = [self._to_dto(viewer_id, u, friendships.get(u.user_id)) for u in users]
-        next_cursor = users[-1].user_id if len(users) == PAGE_SIZE else None
+        next_cursor = (
+            encode_cursor(users[-1].created_at, users[-1].user_id)
+            if has_more else None
+        )
         return FriendSearchListData(items=items, next_cursor=next_cursor)
-
-
-    # ──────────────────── 내부 변환 유틸 ────────────────────
 
     @staticmethod
     def _to_dto(

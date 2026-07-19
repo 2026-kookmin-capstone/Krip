@@ -1,15 +1,16 @@
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Request, Depends, Query
-from dependency_injector.wiring import Provide, inject
 
-from app.domain.friend.service.search_history import FriendSearchHistoryService
-from app.domain.friend.service.search import FriendSearchService
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
+
+from app.container import Container
+from app.core.logger import get_logger
 from app.domain.friend.schema.search import (
     FriendSearchItemResponse,
     FriendSearchListResponse,
 )
-from app.core.logger import get_logger
-from app.container import Container
+from app.domain.friend.service.search import FriendSearchService
+from app.domain.friend.service.search_history import FriendSearchHistoryService
 
 
 router = APIRouter(prefix="/search", tags=["친구 추가 화면 유저 검색"])
@@ -20,8 +21,8 @@ logger = get_logger("friend.search")
 @inject
 async def search_users(
     request: Request,
-    keyword: str = Query(..., min_length=1, description="검색 키워드 (user_name / user_id 부분일치)"),
-    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (user_id)"),
+    keyword: str = Query(..., min_length=1, max_length=50, description="검색 키워드 (user_name / user_id 부분일치)"),
+    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (이전 응답의 next_cursor)"),
     service: FriendSearchService = Depends(Provide[Container.friend_search_service]),
     search_history_service: FriendSearchHistoryService = Depends(Provide[Container.friend_search_history_service]),
 ) -> FriendSearchListResponse:
@@ -40,8 +41,8 @@ async def search_users(
     if cursor is None:
         try:
             await search_history_service.save_search(user_id=viewer_id, search_name=keyword)
-        except Exception:
-            logger.warning("검색 기록 저장 실패: user_id={}, keyword={}", viewer_id, keyword)
+        except Exception as error:
+            logger.bind(user_id=viewer_id, error=error).warning("검색 기록 저장 실패")
 
     try:
         result = await service.search(viewer_id=viewer_id, keyword=keyword, cursor=cursor)
@@ -50,8 +51,6 @@ async def search_users(
 
     return _to_list_response(result)
 
-
-# ──────────────────── 내부 유틸 ────────────────────
 
 def _to_item_response(dto) -> FriendSearchItemResponse:
     return FriendSearchItemResponse(

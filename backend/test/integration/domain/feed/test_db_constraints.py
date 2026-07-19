@@ -23,19 +23,17 @@ friend 도메인의 `test_db_constraints.py` 패턴 차용 (raw DELETE FROM user
 으로 검증).
 """
 
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy import select, text
 import pytest
+from sqlalchemy import select, text
+from sqlalchemy.exc import IntegrityError
 
-from app.domain.feed.model.feed_post_like import FeedPostLike
-from app.domain.feed.model.feed_post_comment import FeedPostComment
 from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
+from app.domain.feed.model.feed_post_comment import FeedPostComment
+from app.domain.feed.model.feed_post_like import FeedPostLike
 
 
 pytestmark = pytest.mark.integration
 
-
-# ──────────────────── helpers ────────────────────
 
 def _mk_post(*, user_id: str, post_id: str = "FDP_it_x") -> FeedPost:
     """test 용 FeedPost — 모든 NOT NULL URL 필드를 dummy 로 채움."""
@@ -49,8 +47,6 @@ def _mk_post(*, user_id: str, post_id: str = "FDP_it_x") -> FeedPost:
         thumbnail_medium_url="https://x/m.jpg",
     )
 
-
-# ──────────────────── user 삭제 → cascade ────────────────────
 
 class TestUserDeleteCascadesOwnedFeed:
     """post owner 가 삭제되면 본인 feed_post + 그 post 에 매달린 like/comment 까지 정리."""
@@ -68,7 +64,6 @@ class TestUserDeleteCascadesOwnedFeed:
         async with session_factory() as s:
             rows = (await s.execute(select(FeedPost))).scalars().all()
         assert rows == []
-
 
     async def test_owner_delete_cascades_likes_on_own_post(
         self, seed_users, session_factory,
@@ -89,7 +84,6 @@ class TestUserDeleteCascadesOwnedFeed:
         async with session_factory() as s:
             rows = (await s.execute(select(FeedPostLike))).scalars().all()
         assert rows == []
-
 
     async def test_owner_delete_cascades_comments_on_own_post(
         self, seed_users, session_factory,
@@ -125,7 +119,6 @@ class TestUserDeleteCascadesActionsOnOthersPost:
             s.add(_mk_post(user_id=owner, post_id="FDP_it_a"))
             await s.commit()
         async with session_factory() as s:
-            # 두 명이 같은 post 에 좋아요
             s.add(FeedPostLike(user_id=liker, post_id="FDP_it_a"))
             s.add(FeedPostLike(user_id=bystander, post_id="FDP_it_a"))
             await s.commit()
@@ -135,12 +128,10 @@ class TestUserDeleteCascadesActionsOnOthersPost:
             await s.commit()
 
         async with session_factory() as s:
-            # liker 의 like 만 사라지고 bystander 의 like + post 자체는 보존
             likes = (await s.execute(select(FeedPostLike))).scalars().all()
             posts = (await s.execute(select(FeedPost))).scalars().all()
         assert {l.user_id for l in likes} == {bystander}
         assert len(posts) == 1
-
 
     async def test_commenter_delete_cascades_only_own_comment(
         self, seed_users, session_factory,
@@ -171,8 +162,6 @@ class TestUserDeleteCascadesActionsOnOthersPost:
         assert len(posts) == 1
 
 
-# ──────────────────── feed_post 삭제 → cascade ────────────────────
-
 class TestFeedPostDeleteCascade:
     """게시물 삭제 → 그 post 의 like + comment 정리. (좋아요/댓글 작성자 user 는 보존.)"""
 
@@ -194,7 +183,6 @@ class TestFeedPostDeleteCascade:
         async with session_factory() as s:
             likes = (await s.execute(select(FeedPostLike))).scalars().all()
         assert likes == []
-
 
     async def test_post_delete_cascades_comments(self, seed_users, session_factory):
         owner, commenter, _ = await seed_users(3)
@@ -218,8 +206,6 @@ class TestFeedPostDeleteCascade:
             comments = (await s.execute(select(FeedPostComment))).scalars().all()
         assert comments == []
 
-
-# ──────────────────── PK / CHECK constraint ────────────────────
 
 class TestLikeCompositePrimaryKey:
     """`feed_post_like(user_id, post_id)` composite PK — 같은 쌍 두 번 INSERT 거절."""

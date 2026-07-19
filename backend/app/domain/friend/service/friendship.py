@@ -1,21 +1,21 @@
 from typing import Optional
-from sqlalchemy.exc import IntegrityError
 
-from app.domain.friend.repository.user_block import UserBlockRepository
-from app.domain.friend.repository.friendship import FriendshipRepository, PAGE_SIZE
-from app.domain.friend.model.friendship import Friendship, FriendshipStatus
-from app.domain.friend.dto.friendship import FriendshipData, FriendshipListData, FriendPeerData
-from app.domain.auth.repository.user import UserRepository
-from app.domain.auth.model.user import User
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm.exc import StaleDataError
+
 from app.database.session import UnitOfWork, transactional
+from app.domain.auth.model.user import User, UserStatus
+from app.domain.auth.repository.user import UserRepository
+from app.domain.friend.dto.friendship import FriendPeerData, FriendshipData, FriendshipListData
+from app.domain.friend.model.friendship import Friendship, FriendshipStatus
+from app.domain.friend.repository.friendship import PAGE_SIZE, FriendshipRepository
+from app.domain.friend.repository.user_block import UserBlockRepository
+from app.util.cursor import encode_cursor
 
 
 class FriendshipService:
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
-
-
-    # ──────────────────── 친구 요청 ────────────────────
 
     @transactional
     async def send_request(self, requester_id: str, addressee_id: str) -> FriendshipData:
@@ -39,8 +39,12 @@ class FriendshipService:
         block_repo = UserBlockRepository(self._session)
         user_repo = UserRepository(self._session)
 
+        # pair advisory lock (read 보다 먼저) — 차단 검사~upsert 를 원자화해 차단-요청 TOCTOU 와
+        # REJECTED 재요청 lost update 를 차단.
+        await friendship_repo.acquire_pair_lock(requester_id, addressee_id)
+
         addressee = await user_repo.find_by_id_with_profile(addressee_id)
-        if addressee is None:
+        if addressee is None or addressee.status != UserStatus.ACTIVE:
             raise ValueError("존재하지 않는 유저입니다.")
 
         # 차단 관계 우선 검증 (양방향 1 쿼리 조회 후 방향별 메시지 분기)
@@ -50,6 +54,11 @@ class FriendshipService:
             raise ValueError("차단한 유저입니다. 먼저 차단을 해제해주세요.")
         if blocks:
             raise ValueError("해당 유저에게 친구 요청을 보낼 수 없습니다.")
+
+        # 2차 미완료(detail=None) addressee 는 400 으로 거부(프로필 구성 불가). 차단 검사 뒤에
+        # 두어 차단 유저의 존재를 노출하지 않는다.
+        if addressee.detail is None:
+            raise ValueError("2차 회원가입이 완료되지 않은 유저입니다.")
 
         existing = await friendship_repo.find_between(requester_id, addressee_id)
         if existing is not None:
@@ -63,9 +72,13 @@ class FriendshipService:
             existing.requester_id = requester_id
             existing.addressee_id = addressee_id
             existing.status = FriendshipStatus.PENDING
-            await friendship_repo.update(existing)
-            # onupdate=func.now() 로 updated_at 이 expire 되므로 명시 refresh 로 async 로드
-            await self._session.refresh(existing)
+            try:
+                await friendship_repo.update(existing)
+                # onupdate=func.now() 로 updated_at 이 expire 되므로 명시 refresh 로 async 로드
+                await self._session.refresh(existing)
+            except StaleDataError:
+                # 락으로 정상 경로엔 도달 불가 — 잔여 레이스로 UPDATE 대상이 사라지면 400 재시도.
+                raise ValueError("친구 요청 상태가 변경되었습니다. 다시 시도해주세요.")
             return self._to_dto(existing, viewer_id=requester_id, peer=addressee)
 
         friendship = Friendship(
@@ -92,8 +105,28 @@ class FriendshipService:
 
         return self._to_dto(friendship, viewer_id=requester_id, peer=addressee)
 
+    async def _lock_pair_and_fetch(
+        self,
+        friendship_repo: FriendshipRepository,
+        friendship_id: str,
+        *,
+        not_found_msg: str,
+    ) -> Friendship:
+        """friendship_id 기반 상태 전이의 표준 진입 — pair advisory lock 후 FOR UPDATE 재조회.
 
-    # ──────────────────── 친구 요청 수락 ────────────────────
+        friendship_id 만으로는 pair 를 모르므로: (1) 비잠금 조회로 pair 파악 → (2) pair
+        advisory lock(어떤 row lock 보다 먼저 잡아 block(advisory→row) 과 순서 통일, deadlock
+        회피) → (3) 락 하에서 FOR UPDATE 로 최신 상태 재조회. 락 획득 전 삭제됐다면 재조회에서
+        None 이 되어 not_found_msg 로 처리된다.
+        """
+        peek = await friendship_repo.find_by_id(friendship_id)
+        if peek is None:
+            raise ValueError(not_found_msg)
+        await friendship_repo.acquire_pair_lock(peek.requester_id, peek.addressee_id)
+        friendship = await friendship_repo.find_by_id(friendship_id, for_update=True)
+        if friendship is None:
+            raise ValueError(not_found_msg)
+        return friendship
 
     @transactional
     async def accept_request(self, friendship_id: str, user_id: str) -> None:
@@ -103,23 +136,30 @@ class FriendshipService:
         1. 친구 요청 존재 검증
         2. 수신자 본인 검증
         3. PENDING 상태 검증
-        4. ACCEPTED 로 변경
+        4. 차단 관계 재검증 (차단된 pair 는 ACCEPTED 로 전이 불가 — 불변식 보호)
+        5. ACCEPTED 로 변경
         """
         friendship_repo = FriendshipRepository(self._session)
+        block_repo = UserBlockRepository(self._session)
 
-        friendship = await friendship_repo.find_by_id(friendship_id)
-        if friendship is None:
-            raise ValueError("존재하지 않는 친구 요청입니다.")
+        # pair advisory lock + FOR UPDATE — accept/reject/cancel 및 block 과 pair 단위 직렬화
+        friendship = await self._lock_pair_and_fetch(
+            friendship_repo, friendship_id, not_found_msg="존재하지 않는 친구 요청입니다.",
+        )
         if friendship.addressee_id != user_id:
             raise PermissionError("요청 수락 권한이 없습니다.")
         if friendship.status != FriendshipStatus.PENDING:
             raise ValueError("대기 중인 요청만 수락할 수 있습니다.")
 
+        # 락 하 차단 재검증 — blocked pair 가 ACCEPTED 로 승격되는 것을 막는다.
+        blocks = await block_repo.find_blocks_between(
+            friendship.requester_id, friendship.addressee_id,
+        )
+        if blocks:
+            raise ValueError("차단 관계인 유저의 요청은 수락할 수 없습니다.")
+
         friendship.status = FriendshipStatus.ACCEPTED
         await friendship_repo.update(friendship)
-
-
-    # ──────────────────── 친구 요청 거절 ────────────────────
 
     @transactional
     async def reject_request(self, friendship_id: str, user_id: str) -> None:
@@ -129,13 +169,17 @@ class FriendshipService:
         1. 친구 요청 존재 검증
         2. 수신자 본인 검증
         3. PENDING 상태 검증
-        4. REJECTED 로 변경 (유니크 제약 유지 — 동일 방향 재요청 차단)
+        4. REJECTED 로 변경 (row 는 보존해 히스토리 유지)
+
+        주의: REJECTED 는 재요청을 영구 차단하지 않는다 — 거절당한 요청자는 send_request 로
+        다시 PENDING 을 만들 수 있다(정상 동작). 반복 요청(스팸)은 차단(block)으로 막는다.
         """
         friendship_repo = FriendshipRepository(self._session)
 
-        friendship = await friendship_repo.find_by_id(friendship_id)
-        if friendship is None:
-            raise ValueError("존재하지 않는 친구 요청입니다.")
+        # pair advisory lock + FOR UPDATE — block/accept 등과 pair 단위 직렬화
+        friendship = await self._lock_pair_and_fetch(
+            friendship_repo, friendship_id, not_found_msg="존재하지 않는 친구 요청입니다.",
+        )
         if friendship.addressee_id != user_id:
             raise PermissionError("요청 거절 권한이 없습니다.")
         if friendship.status != FriendshipStatus.PENDING:
@@ -143,9 +187,6 @@ class FriendshipService:
 
         friendship.status = FriendshipStatus.REJECTED
         await friendship_repo.update(friendship)
-
-
-    # ──────────────────── 친구 요청 취소 (보낸 쪽) ────────────────────
 
     @transactional
     async def cancel_request(self, friendship_id: str, user_id: str) -> None:
@@ -159,18 +200,16 @@ class FriendshipService:
         """
         friendship_repo = FriendshipRepository(self._session)
 
-        friendship = await friendship_repo.find_by_id(friendship_id)
-        if friendship is None:
-            raise ValueError("존재하지 않는 친구 요청입니다.")
+        # pair advisory lock + FOR UPDATE — block/accept 등과 pair 단위 직렬화
+        friendship = await self._lock_pair_and_fetch(
+            friendship_repo, friendship_id, not_found_msg="존재하지 않는 친구 요청입니다.",
+        )
         if friendship.requester_id != user_id:
             raise PermissionError("요청 취소 권한이 없습니다.")
         if friendship.status != FriendshipStatus.PENDING:
             raise ValueError("대기 중인 요청만 취소할 수 있습니다.")
 
         await friendship_repo.delete(friendship)
-
-
-    # ──────────────────── 친구 삭제 ────────────────────
 
     @transactional
     async def remove_friend(self, friendship_id: str, user_id: str) -> None:
@@ -181,18 +220,16 @@ class FriendshipService:
         """
         friendship_repo = FriendshipRepository(self._session)
 
-        friendship = await friendship_repo.find_by_id(friendship_id)
-        if friendship is None:
-            raise ValueError("존재하지 않는 친구 관계입니다.")
+        # pair advisory lock + FOR UPDATE — block/accept 등과 pair 단위 직렬화
+        friendship = await self._lock_pair_and_fetch(
+            friendship_repo, friendship_id, not_found_msg="존재하지 않는 친구 관계입니다.",
+        )
         if user_id not in (friendship.requester_id, friendship.addressee_id):
             raise PermissionError("친구 삭제 권한이 없습니다.")
         if friendship.status != FriendshipStatus.ACCEPTED:
             raise ValueError("친구 상태에서만 삭제할 수 있습니다.")
 
         await friendship_repo.delete(friendship)
-
-
-    # ──────────────────── 목록 조회 ────────────────────
 
     @transactional
     async def get_friends(self, user_id: str, cursor: Optional[str] = None) -> FriendshipListData:
@@ -201,14 +238,12 @@ class FriendshipService:
         items = await friendship_repo.find_friends(user_id, cursor)
         return self._to_list_dto(items, viewer_id=user_id)
 
-
     @transactional
     async def get_received_requests(self, user_id: str, cursor: Optional[str] = None) -> FriendshipListData:
         """내가 받은 PENDING 요청 목록"""
         friendship_repo = FriendshipRepository(self._session)
         items = await friendship_repo.find_received_requests(user_id, cursor)
         return self._to_list_dto(items, viewer_id=user_id)
-
 
     @transactional
     async def get_sent_requests(self, user_id: str, cursor: Optional[str] = None) -> FriendshipListData:
@@ -217,16 +252,12 @@ class FriendshipService:
         items = await friendship_repo.find_sent_requests(user_id, cursor)
         return self._to_list_dto(items, viewer_id=user_id)
 
-
-    # ──────────────────── 내부 변환 유틸 ────────────────────
-
     @staticmethod
     def _peer_of(friendship: Friendship, viewer_id: str) -> User:
         """친구 관계에서 viewer의 반대쪽 User 객체 반환 (relationship 로드 필요)"""
         if friendship.requester_id == viewer_id:
             return friendship.addressee
         return friendship.requester
-
 
     @staticmethod
     def _to_peer_dto(peer: User) -> FriendPeerData:
@@ -240,7 +271,6 @@ class FriendshipService:
             profile_image_url=detail.profile_image_url,
         )
 
-
     @classmethod
     def _to_dto(cls, friendship: Friendship, viewer_id: str, peer: User) -> FriendshipData:
         return FriendshipData(
@@ -252,11 +282,15 @@ class FriendshipService:
             updated_at=friendship.updated_at,
         )
 
-
     def _to_list_dto(self, items: list[Friendship], viewer_id: str) -> FriendshipListData:
+        has_more = len(items) > PAGE_SIZE
+        items = items[:PAGE_SIZE]
         dtos = [
             self._to_dto(f, viewer_id=viewer_id, peer=self._peer_of(f, viewer_id))
             for f in items
         ]
-        next_cursor = items[-1].friendship_id if len(items) == PAGE_SIZE else None
+        next_cursor = (
+            encode_cursor(items[-1].updated_at, items[-1].friendship_id)
+            if has_more else None
+        )
         return FriendshipListData(items=dtos, next_cursor=next_cursor)

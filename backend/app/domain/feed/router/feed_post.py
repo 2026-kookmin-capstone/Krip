@@ -1,19 +1,23 @@
 """피드 게시물 라우터 — 본인 피드 CRUD. 타 유저 피드는 `feed_user.py` 별도."""
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Request, Depends, UploadFile, File, Form, Query
-from dependency_injector.wiring import Provide, inject
 
-from app.schema.common import MessageResponse
-from app.domain.feed.service.feed_post import FeedPostService
-from app.domain.feed.service.exception import FeedNotFoundError
-from app.domain.feed.schema.feed_post import (
-    FeedPostResponse, FeedPostListResponse,
-    UpdateVisibilityRequest, UpdateCaptionRequest,
-)
-from app.domain.feed.model.feed_post import FeedVisibility, CAPTION_MAX_LENGTH
-from app.domain.feed.dto.feed_post import FeedPostData, FeedPostListData
-from app.core.logger import get_logger
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, Request, UploadFile
+
 from app.container import Container
+from app.core.logger import get_logger
+from app.domain.feed.dto.feed_post import FeedPostData, FeedPostListData
+from app.domain.feed.model.feed_post import CAPTION_MAX_LENGTH, FeedVisibility
+from app.domain.feed.schema.feed_post import (
+    FeedPostListResponse,
+    FeedPostResponse,
+    UpdateCaptionRequest,
+    UpdateVisibilityRequest,
+)
+from app.domain.feed.service.exception import FeedNotFoundError
+from app.domain.feed.service.feed_post import FeedPostService
+from app.schema.common import MessageResponse
+from app.util.upload import read_upload_capped
 
 
 router = APIRouter(tags=["내 소유 피드 CRUD"])
@@ -25,8 +29,6 @@ logger = get_logger("feed.post.router")
 _ALLOWED_CONTENT_TYPES = {"image/jpeg", "image/png", "image/webp"}
 _MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
 
-
-# ──────────────────── 업로드 ────────────────────
 
 @router.post("/posts", status_code=201)
 @inject
@@ -51,12 +53,7 @@ async def upload_post(
             detail=f"허용되지 않는 파일 형식입니다: {file.content_type} (jpeg, png, webp만 가능)",
         )
 
-    contents = await file.read()
-    if len(contents) > _MAX_FILE_SIZE:
-        raise HTTPException(
-            status_code=400,
-            detail=f"파일 크기가 {_MAX_FILE_SIZE // (1024 * 1024)}MB 를 초과합니다.",
-        )
+    contents = await read_upload_capped(file, _MAX_FILE_SIZE)
 
     try:
         post = await feed_service.upload_post(
@@ -75,18 +72,19 @@ async def upload_post(
     return _to_response(post)
 
 
-# ──────────────────── 조회 ────────────────────
-
 @router.get("/me")
 @inject
 async def get_my_feed(
     request: Request,
-    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (post_id)"),
+    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (이전 응답의 next_cursor)"),
     feed_service: FeedPostService = Depends(Provide[Container.feed_post_service]),
 ) -> FeedPostListResponse:
     """본인 피드 — 모든 visibility, 커서 페이지네이션."""
     user_id: str = request.state.user_id
-    result = await feed_service.get_my_feed(user_id=user_id, cursor=cursor)
+    try:
+        result = await feed_service.get_my_feed(user_id=user_id, cursor=cursor)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     return _to_list_response(result)
 
 
@@ -108,8 +106,6 @@ async def get_post(
 
     return _to_response(post)
 
-
-# ──────────────────── 변경 ────────────────────
 
 @router.patch("/posts/{post_id}/visibility")
 @inject
@@ -155,8 +151,6 @@ async def update_caption(
     return _to_response(post)
 
 
-# ──────────────────── 삭제 ────────────────────
-
 @router.delete("/posts/{post_id}")
 @inject
 async def delete_post(
@@ -175,8 +169,6 @@ async def delete_post(
 
     return MessageResponse(message="피드 게시물이 삭제되었습니다.")
 
-
-# ──────────────────── 내부 유틸 ────────────────────
 
 def _to_response(post: FeedPostData) -> FeedPostResponse:
     """DTO → Response 1:1."""

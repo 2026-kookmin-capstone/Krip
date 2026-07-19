@@ -19,21 +19,16 @@ import pytest
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── add_like + count ────────────────────
-
 class TestAddLikeWithCount:
     async def test_multiple_users_increment_count(
         self, mongo_db, tripmate_post_like_service, seed_tripmate_post, session_factory,
     ):
         """N 명이 좋아요 → count == N. RDB SELECT count(*) 정확성."""
         post_id, owner_id = await seed_tripmate_post()
-        # 추가로 2명 시드 (총 4명: owner + 1 from seed_tripmate_post + 2 추가)
-        from test.integration.conftest import seed_users  # type: ignore  # noqa: F401
-
-        # seed_users 를 한 번 더 호출해서 user 2명 추가
-        from app.domain.auth.model.user import User, UserStatus
         from app.config.oauth import OAuthProvider
+        from app.domain.auth.model.user import User, UserStatus
         from app.domain.auth.model.user_detail_inform import Gender, UserDetailInform
+        from test.integration.conftest import seed_users  # type: ignore  # noqa: F401
 
         extra_ids = ["USER_extra_a", "USER_extra_b"]
         async with session_factory() as session:
@@ -60,7 +55,6 @@ class TestAddLikeWithCount:
         assert c2 == 2
         assert c3 == 3
 
-
     async def test_duplicate_add_raises_value_error(
         self, mongo_db, tripmate_post_like_service, seed_tripmate_post,
     ):
@@ -73,8 +67,6 @@ class TestAddLikeWithCount:
         with pytest.raises(ValueError, match="이미 좋아요"):
             await tripmate_post_like_service.add_like(user_id=actor_id, post_id=post_id)
 
-
-# ──────────────────── remove_like + count 감소 ────────────────────
 
 class TestRemoveLikeWithCount:
     async def test_remove_decrements_count(
@@ -91,8 +83,6 @@ class TestRemoveLikeWithCount:
         assert new_count == 0
 
 
-# ──────────────────── get_liked_user_ids ────────────────────
-
 class TestGetLikedUserIds:
     async def test_returns_all_likers_in_recent_first_order(
         self, mongo_db, tripmate_post_like_service, seed_tripmate_post,
@@ -102,21 +92,24 @@ class TestGetLikedUserIds:
 
         await tripmate_post_like_service.add_like(user_id=actor_id, post_id=post_id)
 
-        liked = await tripmate_post_like_service.get_liked_user_ids(post_id=post_id)
+        liked = await tripmate_post_like_service.get_liked_user_ids(
+            post_id=post_id, user_id=owner_id,
+        )
         assert actor_id in liked
 
-
     async def test_raises_when_post_not_found(
-        self, mongo_db, tripmate_post_like_service,
+        self, mongo_db, tripmate_post_like_service, seed_users,
     ):
+        [viewer_id] = await seed_users(1)
         with pytest.raises(ValueError, match="존재하지 않는"):
-            await tripmate_post_like_service.get_liked_user_ids(post_id="TMP_ghost")
+            await tripmate_post_like_service.get_liked_user_ids(
+                post_id="TMP_ghost", user_id=viewer_id,
+            )
 
-
-# ──────────────────── helpers ────────────────────
 
 async def _find_other_user(uow, exclude_user_id: str) -> str:
     from sqlalchemy import select
+
     from app.domain.auth.model.user import User, UserStatus
 
     async with uow as session:

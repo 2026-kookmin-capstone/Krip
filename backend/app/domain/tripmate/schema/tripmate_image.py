@@ -1,8 +1,7 @@
 from typing import List
+
 from pydantic import BaseModel, Field
 
-
-# ──────────────────── Response ────────────────────
 
 class ImageUploadResponse(BaseModel):
     image_id: str = Field(..., description="이미지 고유 ID")

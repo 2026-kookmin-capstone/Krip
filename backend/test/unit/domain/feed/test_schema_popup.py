@@ -5,14 +5,15 @@
     - profile_image_url Optional
     - nested feed.items 가 FeedPostResponse 형태
 """
-import pytest
-from pydantic import ValidationError
 from datetime import datetime, timezone
 
-from app.domain.feed.schema.feed_post import FeedPostResponse
-from app.domain.feed.schema.feed_popup import FeedPopupResponse, PopupFeedSection
-from app.domain.feed.model.feed_post import FeedVisibility
+import pytest
+from pydantic import ValidationError
+
 from app.domain.auth.model.user_travel_style import TravelStyle
+from app.domain.feed.model.feed_post import FeedVisibility
+from app.domain.feed.schema.feed_popup import FeedPopupResponse, PopupFeedSection
+from app.domain.feed.schema.feed_post import FeedPostResponse
 
 
 def _mk_feed_item(post_id="FDP_x"):
@@ -42,19 +43,15 @@ class TestFeedPopupResponse:
         base.update(overrides)
         return base
 
-
     def test_full_payload_validates(self):
         FeedPopupResponse(**self._payload())
-
 
     def test_profile_image_optional(self):
         FeedPopupResponse(**self._payload(profile_image_url=None))
 
-
     def test_empty_feed_section_valid(self):
         resp = FeedPopupResponse(**self._payload(feed=PopupFeedSection(items=[])))
         assert resp.feed.items == []
-
 
     def test_feed_section_with_items(self):
         items = [_mk_feed_item(post_id=f"FDP_{i}") for i in range(9)]
@@ -63,7 +60,6 @@ class TestFeedPopupResponse:
         )
         assert len(resp.feed.items) == 9
         assert resp.feed.items[0].post_id == "FDP_0"
-
 
     @pytest.mark.parametrize(
         "missing",
@@ -81,7 +77,6 @@ class TestPopupFeedSection:
     def test_items_required(self):
         with pytest.raises(ValidationError):
             PopupFeedSection()
-
 
     def test_empty_items_allowed(self):
         PopupFeedSection(items=[])

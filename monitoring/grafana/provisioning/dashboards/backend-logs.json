@@ -1,0 +1,184 @@
+{
+  "title": "백엔드 로그",
+  "uid": "krip-logs",
+  "description": "docker logs 대신 보는 백엔드 로그. 실시간 tail 이 필요하면 Explore → Loki → {app=\"krip-backend\"} → 우측 상단 Live. API 실패 시 응답의 request_id 를 상단 변수에 붙여넣으면 해당 요청의 로그만 추려진다.",
+  "schemaVersion": 39,
+  "version": 1,
+  "editable": true,
+  "graphTooltip": 1,
+  "timezone": "browser",
+  "time": {"from": "now-1h", "to": "now"},
+  "refresh": "10s",
+  "tags": ["krip", "logs", "loki"],
+  "annotations": {"list": []},
+  "templating": {
+    "list": [
+      {
+        "name": "level",
+        "label": "레벨",
+        "type": "query",
+        "datasource": {"type": "loki", "uid": "loki"},
+        "query": {"label": "level", "stream": "{app=\"krip-backend\"}", "type": 1, "refId": "LokiVariableQueryEditor-VariableQuery"},
+        "refresh": 2,
+        "multi": true,
+        "includeAll": true,
+        "allValue": ".+",
+        "current": {"selected": true, "text": ["All"], "value": ["$__all"]}
+      },
+      {
+        "name": "search",
+        "label": "검색어",
+        "description": "로그 라인에 이 문자열이 포함된 것만 표시 (대소문자 구분, 비우면 전체)",
+        "type": "textbox",
+        "query": "",
+        "current": {"selected": false, "text": "", "value": ""}
+      },
+      {
+        "name": "request_id",
+        "label": "request_id",
+        "description": "실패한 API 응답의 request_id 를 붙여넣으면 그 요청의 로그만 표시",
+        "type": "textbox",
+        "query": "",
+        "current": {"selected": false, "text": "", "value": ""}
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "title": "에러 (ERROR+CRITICAL)",
+      "type": "stat",
+      "description": "선택한 시간 범위 내 에러 로그 수. 검색어/request_id 필터를 따른다.",
+      "datasource": {"type": "loki", "uid": "loki"},
+      "gridPos": {"h": 4, "w": 6, "x": 0, "y": 0},
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 0,
+          "noValue": "0",
+          "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}, {"color": "red", "value": 1}]},
+          "color": {"mode": "thresholds"}
+        }
+      },
+      "options": {"colorMode": "background", "graphMode": "none", "textMode": "value", "reduceOptions": {"calcs": ["lastNotNull"]}},
+      "targets": [{"expr": "sum(count_over_time({app=\"krip-backend\", level=~\"ERROR|CRITICAL\"} |= \"$search\" |= \"$request_id\" [$__range]))", "queryType": "instant", "refId": "A"}]
+    },
+    {
+      "id": 2,
+      "title": "경고 (WARNING)",
+      "type": "stat",
+      "description": "선택한 시간 범위 내 경고 로그 수. 검색어/request_id 필터를 따른다.",
+      "datasource": {"type": "loki", "uid": "loki"},
+      "gridPos": {"h": 4, "w": 6, "x": 6, "y": 0},
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 0,
+          "noValue": "0",
+          "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}, {"color": "yellow", "value": 1}]},
+          "color": {"mode": "thresholds"}
+        }
+      },
+      "options": {"colorMode": "background", "graphMode": "none", "textMode": "value", "reduceOptions": {"calcs": ["lastNotNull"]}},
+      "targets": [{"expr": "sum(count_over_time({app=\"krip-backend\", level=\"WARNING\"} |= \"$search\" |= \"$request_id\" [$__range]))", "queryType": "instant", "refId": "A"}]
+    },
+    {
+      "id": 3,
+      "title": "HTTP 4xx",
+      "type": "stat",
+      "description": "중앙 4xx 로거가 기록한 클라이언트 오류 응답 수. 라우터별 중복 로그를 포함하지 않는다.",
+      "datasource": {"type": "loki", "uid": "loki"},
+      "gridPos": {"h": 4, "w": 6, "x": 12, "y": 0},
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 0,
+          "noValue": "0",
+          "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}, {"color": "orange", "value": 1}]},
+          "color": {"mode": "thresholds"}
+        }
+      },
+      "options": {"colorMode": "background", "graphMode": "none", "textMode": "value", "reduceOptions": {"calcs": ["lastNotNull"]}},
+      "targets": [{"expr": "sum(count_over_time({app=\"krip-backend\", level=\"WARNING\"} |= \"$search\" |= \"$request_id\" | json event=\"record.extra.event\" | event=\"http_client_error\" [$__range]))", "queryType": "instant", "refId": "A"}]
+    },
+    {
+      "id": 4,
+      "title": "HTTP 5xx",
+      "type": "stat",
+      "description": "중앙 5xx 로거가 기록한 서버 오류 응답 수. 라우터별 진단 로그를 포함하지 않는다.",
+      "datasource": {"type": "loki", "uid": "loki"},
+      "gridPos": {"h": 4, "w": 6, "x": 18, "y": 0},
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 0,
+          "noValue": "0",
+          "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}, {"color": "red", "value": 1}]},
+          "color": {"mode": "thresholds"}
+        }
+      },
+      "options": {"colorMode": "background", "graphMode": "none", "textMode": "value", "reduceOptions": {"calcs": ["lastNotNull"]}},
+      "targets": [{"expr": "sum(count_over_time({app=\"krip-backend\", level=\"ERROR\"} |= \"$search\" |= \"$request_id\" | json event=\"record.extra.event\" | event=\"http_server_error\" [$__range]))", "queryType": "instant", "refId": "A"}]
+    },
+    {
+      "id": 10,
+      "title": "레벨별 로그 발생량 (INFO / WARNING / ERROR / CRITICAL)",
+      "type": "timeseries",
+      "description": "언제 에러가 몰렸는지 시간대를 먼저 찾고, 아래 로그 패널에서 해당 구간을 드래그해 좁혀 본다. 레벨 변수와 무관하게 INFO/WARNING/ERROR/CRITICAL 고정.",
+      "datasource": {"type": "loki", "uid": "loki"},
+      "gridPos": {"h": 6, "w": 24, "x": 0, "y": 4},
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {"drawStyle": "bars", "fillOpacity": 70, "lineWidth": 0, "stacking": {"mode": "normal"}}
+        },
+        "overrides": [
+          {"matcher": {"id": "byName", "options": "CRITICAL"}, "properties": [{"id": "color", "value": {"mode": "fixed", "fixedColor": "dark-red"}}]},
+          {"matcher": {"id": "byName", "options": "ERROR"}, "properties": [{"id": "color", "value": {"mode": "fixed", "fixedColor": "red"}}]},
+          {"matcher": {"id": "byName", "options": "WARNING"}, "properties": [{"id": "color", "value": {"mode": "fixed", "fixedColor": "yellow"}}]},
+          {"matcher": {"id": "byName", "options": "INFO"}, "properties": [{"id": "color", "value": {"mode": "fixed", "fixedColor": "blue"}}]}
+        ]
+      },
+      "options": {"legend": {"displayMode": "list", "placement": "bottom"}, "tooltip": {"mode": "multi", "sort": "desc"}},
+      "targets": [{"expr": "sum by (level) (count_over_time({app=\"krip-backend\", level=~\"INFO|WARNING|ERROR|CRITICAL\"} |= \"$search\" |= \"$request_id\" [$__auto]))", "legendFormat": "{{level}}", "refId": "A"}]
+    },
+    {
+      "id": 20,
+      "title": "에러 로그",
+      "type": "logs",
+      "description": "ERROR/CRITICAL 만. 예외 원문 대신 error_type/error_location과 request_id로 안전하게 진단한다.",
+      "datasource": {"type": "loki", "uid": "loki"},
+      "gridPos": {"h": 9, "w": 24, "x": 0, "y": 10},
+      "options": {
+        "showTime": true,
+        "showLabels": false,
+        "showCommonLabels": false,
+        "wrapLogMessage": true,
+        "prettifyLogMessage": false,
+        "enableLogDetails": true,
+        "dedupStrategy": "none",
+        "sortOrder": "Descending"
+      },
+      "targets": [{"expr": "{app=\"krip-backend\", level=~\"ERROR|CRITICAL\"} |= \"$search\" |= \"$request_id\" | json txt=\"text\", logger=\"record.extra.logger_name\", req=\"record.extra.request_id\", method=\"record.extra.method\", route=\"record.extra.route\", status=\"record.extra.status_code\", etype=\"record.extra.error_type\", eloc=\"record.extra.error_location\", eline=\"record.extra.error_line\", ealoc=\"record.extra.error_app_location\", ealine=\"record.extra.error_app_line\", ecause=\"record.extra.error_cause\", verr=\"record.extra.validation_errors\", detail=\"record.extra.error_detail\" | line_format \"{{if .req}}[{{.req}}] {{end}}{{if .status}}{{.method}} {{.route}} {{.status}} {{end}}{{if .logger}}{{.logger}} — {{end}}{{if .txt}}{{.txt}}{{else}}{{__line__}}{{end}}{{if and .etype (ne .etype \\\"null\\\")}} [{{.etype}}{{if and .ecause (ne .ecause \\\"null\\\")}}({{.ecause}}){{end}} @ {{if and .ealoc (ne .ealoc \\\"null\\\")}}{{.ealoc}}:{{.ealine}}{{else}}{{.eloc}}:{{.eline}}{{end}}]{{end}}{{if .verr}} [{{.verr}}]{{end}}{{if .detail}} — {{.detail}}{{end}}\"", "maxLines": 500, "refId": "A"}]
+    },
+    {
+      "id": 21,
+      "title": "전체 로그",
+      "type": "logs",
+      "description": "docker logs -f 대응. 상단 변수로 레벨/검색어/request_id 를 좁혀 본다. 최대 1000 라인 — 더 필요하면 시간 범위를 좁힐 것.",
+      "datasource": {"type": "loki", "uid": "loki"},
+      "gridPos": {"h": 14, "w": 24, "x": 0, "y": 19},
+      "options": {
+        "showTime": true,
+        "showLabels": false,
+        "showCommonLabels": false,
+        "wrapLogMessage": true,
+        "prettifyLogMessage": false,
+        "enableLogDetails": true,
+        "dedupStrategy": "none",
+        "sortOrder": "Descending"
+      },
+      "targets": [{"expr": "{app=\"krip-backend\", level=~\"$level\"} |= \"$search\" |= \"$request_id\" | json txt=\"text\", logger=\"record.extra.logger_name\", req=\"record.extra.request_id\", method=\"record.extra.method\", route=\"record.extra.route\", status=\"record.extra.status_code\", etype=\"record.extra.error_type\", eloc=\"record.extra.error_location\", eline=\"record.extra.error_line\", ealoc=\"record.extra.error_app_location\", ealine=\"record.extra.error_app_line\", ecause=\"record.extra.error_cause\", verr=\"record.extra.validation_errors\", detail=\"record.extra.error_detail\" | line_format \"{{if .req}}[{{.req}}] {{end}}{{if .status}}{{.method}} {{.route}} {{.status}} {{end}}{{if .logger}}{{.logger}} — {{end}}{{if .txt}}{{.txt}}{{else}}{{__line__}}{{end}}{{if and .etype (ne .etype \\\"null\\\")}} [{{.etype}}{{if and .ecause (ne .ecause \\\"null\\\")}}({{.ecause}}){{end}} @ {{if and .ealoc (ne .ealoc \\\"null\\\")}}{{.ealoc}}:{{.ealine}}{{else}}{{.eloc}}:{{.eline}}{{end}}]{{end}}{{if .verr}} [{{.verr}}]{{end}}{{if .detail}} — {{.detail}}{{end}}\"", "maxLines": 1000, "refId": "A"}]
+    }
+  ]
+}

@@ -1,9 +1,9 @@
-from fastapi import APIRouter, HTTPException, Request, Depends
 from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Request
 
-from app.domain.friend.service.friend_detail import FriendDetailService, UserNotFoundError
-from app.domain.friend.schema.friend_detail import FriendDetailResponse
 from app.container import Container
+from app.domain.friend.schema.friend_detail import FriendDetailResponse
+from app.domain.friend.service.friend_detail import FriendDetailService, UserNotFoundError
 
 
 router = APIRouter(prefix="/detail", tags=["친구 상세 조회"])

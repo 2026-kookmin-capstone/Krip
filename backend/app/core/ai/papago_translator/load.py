@@ -1,12 +1,12 @@
 import time
 
-from app.core.instrumentation import ai_inference, ai_model_load_duration_set
 from app.core.ai.papago_translator.v1.model import (
     DetectResult,
     LangCode,
     PapagoTranslatorModel,
     TranslateResult,
 )
+from app.core.instrumentation import ai_inference, ai_model_load_duration_set
 
 
 class PapagoTranslator:
@@ -20,7 +20,6 @@ class PapagoTranslator:
             cls._instance._initialized = False
         return cls._instance
 
-
     def load(self) -> None:
         """서버 시작 시 한 번 호출된다."""
         if self._initialized:
@@ -31,14 +30,13 @@ class PapagoTranslator:
         ai_model_load_duration_set("papago", time.perf_counter() - started)
         self._initialized = True
 
-
     async def close(self) -> None:
         """서버 종료 시 호출. 외부 HTTP 커넥션을 정리한다."""
-        if not self._initialized:
+        model = getattr(self, "_model", None)
+        if model is None:
             return
-        await self._model.close_client()
+        await model.close_client()
         self._initialized = False
-
 
     async def detect(self, text: str) -> DetectResult:
         """언어 감지 진입점.
@@ -53,7 +51,6 @@ class PapagoTranslator:
             raise RuntimeError("모델이 로드되지 않았습니다.")
         async with ai_inference("papago"):
             return await self._model.detect(text)
-
 
     async def translate(
         self,

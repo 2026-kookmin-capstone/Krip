@@ -1,32 +1,31 @@
 from typing import Optional
+
 from sqlalchemy.exc import IntegrityError
 
-from app.domain.friend.repository.user_block import UserBlockRepository, PAGE_SIZE
-from app.domain.friend.repository.friendship import FriendshipRepository
-from app.domain.friend.model.user_block import UserBlock
-from app.domain.friend.dto.user_block import UserBlockData, UserBlockListData
-from app.domain.friend.dto.friendship import FriendPeerData
-from app.domain.auth.repository.user import UserRepository
-from app.domain.auth.model.user import User
 from app.database.session import UnitOfWork, transactional
+from app.domain.auth.model.user import User
+from app.domain.auth.repository.user import UserRepository
+from app.domain.friend.dto.friendship import FriendPeerData
+from app.domain.friend.dto.user_block import UserBlockData, UserBlockListData
+from app.domain.friend.model.user_block import UserBlock
+from app.domain.friend.repository.friendship import FriendshipRepository
+from app.domain.friend.repository.user_block import PAGE_SIZE, UserBlockRepository
+from app.util.cursor import encode_cursor
 
 
 class UserBlockService:
-    def __init__(self, uow: UnitOfWork, block_cache_service):
-        # block_cache_service 는 chat 도메인 서비스 — type hint 생략으로 순환 import 회피
+    def __init__(self, uow: UnitOfWork):
         self.uow = uow
-        self._block_cache = block_cache_service
 
-
-    # ──────────────────── 차단 ────────────────────
+    async def block_user(self, user_id: str, target_user_id: str) -> UserBlockData:
+        """유저 차단 — 송신 권한은 RDB pair-lock 으로 판정하므로 캐시 훅 없음."""
+        return await self._block_user_tx(user_id, target_user_id)
 
     @transactional
-    async def block_user(self, user_id: str, target_user_id: str) -> UserBlockData:
+    async def _block_user_tx(self, user_id: str, target_user_id: str) -> UserBlockData:
         """
-        유저 차단
-
         1. 자기 자신 차단 불가
-        2. 대상 유저 존재 검증
+        2. 대상 유저 존재 + 2차 회원가입 완료 검증
         3. 이미 차단한 상태면 에러
         4. 두 유저 간의 friendship 관계는 모두 정리
            (PENDING/ACCEPTED는 즉시 끊어야 하고, REJECTED도 삭제해 재요청 경로가 깔끔하게 새로 시작되도록)
@@ -39,9 +38,16 @@ class UserBlockService:
         friendship_repo = FriendshipRepository(self._session)
         user_repo = UserRepository(self._session)
 
+        # pair advisory lock (read 보다 먼저) — friendship 정리~block 삽입을 원자화해
+        # 차단-친구요청 TOCTOU 를 차단.
+        await friendship_repo.acquire_pair_lock(user_id, target_user_id)
+
         target = await user_repo.find_by_id_with_profile(target_user_id)
         if target is None:
             raise ValueError("존재하지 않는 유저입니다.")
+        # 2차 미완료(detail=None)는 400 으로 거부(프로필 구성 불가). 정상 UI 로는 노출 안 돼 도달 불가.
+        if target.detail is None:
+            raise ValueError("2차 회원가입이 완료되지 않은 유저입니다.")
 
         if await block_repo.has_blocker_blocked(user_id, target_user_id):
             raise ValueError("이미 차단한 유저입니다.")
@@ -63,34 +69,24 @@ class UserBlockService:
                 raise ValueError("이미 차단한 유저입니다.")
             raise ValueError("차단을 처리하지 못했습니다. 잠시 후 다시 시도해주세요.")
 
-        # DB INSERT 뒤 chat 의 stale 캐시 제거. fail-closed:
-        # 캐시 무효화 실패해도 DB 상태(차단 확정) 가 최종 진실이므로 다음 송신 miss 시 자연히 올바른 상태로 재구성된다.
-        await self._block_cache.invalidate_block_cache(user_id, target_user_id)
-
         return self._to_dto(block, target)
 
-
-    # ──────────────────── 차단 해제 ────────────────────
+    async def unblock_user(self, user_id: str, target_user_id: str) -> None:
+        """차단 해제 — 송신 권한은 RDB pair-lock 으로 판정하므로 캐시 훅 없음."""
+        await self._unblock_user_tx(user_id, target_user_id)
 
     @transactional
-    async def unblock_user(self, user_id: str, target_user_id: str) -> None:
-        """
-        차단 해제 — (blocker=user_id, blocked=target) 레코드 삭제
-        """
+    async def _unblock_user_tx(self, user_id: str, target_user_id: str) -> None:
+        """(blocker=user_id, blocked=target) 레코드 삭제."""
         block_repo = UserBlockRepository(self._session)
+
+        await block_repo.acquire_pair_lock(user_id, target_user_id)
 
         block = await block_repo.find_by_pair(blocker_id=user_id, blocked_id=target_user_id)
         if block is None:
             raise ValueError("차단 상태가 아닙니다.")
 
-        # fail-open: 캐시 먼저 지우고 DB DELETE. 캐시 무효화 실패는
-        # 최대 `ROOM_BLOCKS_TTL` 후 자연 만료되므로 사용자 의도(해제) 를 막지 않는다.
-        await self._block_cache.invalidate_block_cache(user_id, target_user_id)
-
         await block_repo.delete(block)
-
-
-    # ──────────────────── 목록 조회 ────────────────────
 
     @transactional
     async def get_blocked_users(self, user_id: str, cursor: Optional[str] = None) -> UserBlockListData:
@@ -98,9 +94,6 @@ class UserBlockService:
         block_repo = UserBlockRepository(self._session)
         items = await block_repo.find_blocks_by_user(user_id, cursor)
         return self._to_list_dto(items)
-
-
-    # ──────────────────── 내부 변환 유틸 ────────────────────
 
     @staticmethod
     def _to_peer_dto(user: User) -> FriendPeerData:
@@ -114,7 +107,6 @@ class UserBlockService:
             profile_image_url=detail.profile_image_url,
         )
 
-
     @classmethod
     def _to_dto(cls, block: UserBlock, blocked_user: User) -> UserBlockData:
         return UserBlockData(
@@ -123,8 +115,12 @@ class UserBlockService:
             created_at=block.created_at,
         )
 
-
     def _to_list_dto(self, items: list[UserBlock]) -> UserBlockListData:
+        has_more = len(items) > PAGE_SIZE
+        items = items[:PAGE_SIZE]
         dtos = [self._to_dto(b, b.blocked) for b in items]
-        next_cursor = items[-1].block_id if len(items) == PAGE_SIZE else None
+        next_cursor = (
+            encode_cursor(items[-1].created_at, items[-1].block_id)
+            if has_more else None
+        )
         return UserBlockListData(items=dtos, next_cursor=next_cursor)

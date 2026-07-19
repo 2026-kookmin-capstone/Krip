@@ -6,13 +6,10 @@
     - `get_draft`: 정상 / None
     - `delete_draft`: repo 호출
 """
-import pytest
 from datetime import date
 
+import pytest
 
-# ──────────────────────────────────────────────────────────────────
-# save_draft
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestSaveDraft:
@@ -39,7 +36,6 @@ class TestSaveDraft:
         assert saved.title == "여행"
         assert saved.image_urls == ["https://img/1"]
 
-
     async def test_normalizes_none_image_urls_to_empty_list(
         self, service, draft_repo_mock,
     ):
@@ -49,10 +45,20 @@ class TestSaveDraft:
         saved = draft_repo_mock.upsert.await_args.args[0]
         assert saved.image_urls == []
 
+    async def test_rejects_image_without_owned_metadata(
+        self, service, draft_repo_mock,
+    ):
+        service.image_repo.find_owned_urls.side_effect = None
+        service.image_repo.find_owned_urls.return_value = set()
 
-# ──────────────────────────────────────────────────────────────────
-# get_draft / delete_draft
-# ──────────────────────────────────────────────────────────────────
+        with pytest.raises(ValueError, match="본인이 업로드한 이미지"):
+            await service.save_draft(
+                user_id="USER_a",
+                image_urls=["https://img/deleted"],
+            )
+
+        draft_repo_mock.upsert.assert_not_awaited()
+
 
 @pytest.mark.unit
 class TestGetDraft:
@@ -66,7 +72,6 @@ class TestGetDraft:
 
         assert result is not None
         assert result.user_id == "USER_a"
-
 
     async def test_returns_none_when_no_draft(self, service, draft_repo_mock):
         draft_repo_mock.find_by_user_id.return_value = None

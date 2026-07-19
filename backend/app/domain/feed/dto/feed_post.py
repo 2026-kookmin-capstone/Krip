@@ -3,9 +3,9 @@
 - `FeedPostData` / `FeedPostListData` : service → router 응답 (SQLAlchemy 모델 격리).
 - `FeedPostWithCounts`                 : repository → service row (post + 카운트 + viewer 좋아요).
 """
-from typing import List, Optional
-from datetime import datetime
 from dataclasses import dataclass
+from datetime import datetime
+from typing import List, Optional
 
 from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
 

@@ -1,17 +1,16 @@
-from typing import Callable, Optional, Sequence, Tuple
-from starlette.types import ASGIApp
-from starlette.middleware.base import BaseHTTPMiddleware
-import jwt
 import hmac
-from fastapi.responses import JSONResponse
-from fastapi import Request, Response
+from typing import Callable, Optional, Sequence, Tuple
 
-from app.core.redis import RedisClient
-from app.core.metric import AUTH_FAILURES
-from app.core.logger import get_logger
-from app.core.cache.redis_cache import get_redis_cache_manager
-from app.core.cache.key_category import KeyCategory
+import jwt
+from fastapi import Request, Response
+from fastapi.responses import JSONResponse
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.types import ASGIApp
+
 from app.config.setting import settings
+from app.core.logger import get_logger
+from app.core.metric import AUTH_FAILURES
+from app.core.probe import PROBE_ROUTES
 
 
 class BearerTokenMiddleware(BaseHTTPMiddleware):
@@ -23,9 +22,7 @@ class BearerTokenMiddleware(BaseHTTPMiddleware):
 
     # 인증을 건너뛸 경로
     EXCLUDE_PATHS: Sequence[str] = (
-        "/health",
-        "/health/deep",      # EXCLUDE_PATHS 는 정확 매칭이라 deep 도 별도 명시한다.
-        "/ready",            # k8s readinessProbe 와 blackbox 내부 probe 가 호출한다.
+        *PROBE_ROUTES,
         "/docs",
         "/redoc",
         "/openapi.json",
@@ -37,18 +34,15 @@ class BearerTokenMiddleware(BaseHTTPMiddleware):
         "/api/public",  # 외부 사용자 공개 endpoint (share 토큰 등)
     )
 
-
     def __init__(self, app: ASGIApp) -> None:
         super().__init__(app)
         self.logger = get_logger("middleware.auth")
-
 
     def _is_excluded(self, path: str) -> bool:
         """인증 제외 대상 경로인지 확인"""
         if path in self.EXCLUDE_PATHS:
             return True
         return any(path.startswith(prefix) for prefix in self.EXCLUDE_PREFIXES)
-
 
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
         if self._is_excluded(request.url.path):
@@ -58,7 +52,6 @@ class BearerTokenMiddleware(BaseHTTPMiddleware):
         auth_logger = self.logger.bind(
             request_id=request_id,
             method=request.method,
-            path=request.url.path,
         )
 
         # Authorization 헤더 확인
@@ -83,8 +76,9 @@ class BearerTokenMiddleware(BaseHTTPMiddleware):
 
         token = parts[1]
 
-        # 토큰 검증 (타이밍 공격 방지)
-        if not hmac.compare_digest(token, settings.ACCESS_TOKEN):
+        # 토큰 검증 (타이밍 공격 방지). str 끼리 compare_digest 는 non-ASCII 문자가 있으면
+        # TypeError → 미들웨어 밖으로 전파돼 401 대신 500 이 된다.
+        if not hmac.compare_digest(token.encode("utf-8"), settings.ACCESS_TOKEN.encode("utf-8")):
             AUTH_FAILURES.labels(kind="bearer_token_invalid").inc()
             auth_logger.warning("유효하지 않은 Bearer Token 토큰")
             return JSONResponse(
@@ -108,9 +102,7 @@ class LoginAuthMiddleware(BaseHTTPMiddleware):
 
     # 인증을 건너뛸 경로
     EXCLUDE_PATHS: Sequence[str] = (
-        "/health",
-        "/health/deep",      # EXCLUDE_PATHS 는 정확 매칭이라 deep 도 별도 명시한다.
-        "/ready",            # k8s readinessProbe 와 blackbox 내부 probe 가 호출한다.
+        *PROBE_ROUTES,
         "/docs",
         "/redoc",
         "/openapi.json",
@@ -122,18 +114,15 @@ class LoginAuthMiddleware(BaseHTTPMiddleware):
         "/api/public",  # 외부 사용자 공개 endpoint (share 토큰 등)
     )
 
-
     def __init__(self, app: ASGIApp) -> None:
         super().__init__(app)
         self.logger = get_logger("middleware.login_auth")
-
 
     def _is_excluded(self, path: str) -> bool:
         """인증 제외 대상 경로인지 확인"""
         if path in self.EXCLUDE_PATHS:
             return True
         return any(path.startswith(prefix) for prefix in self.EXCLUDE_PREFIXES)
-
 
     def _extract_token(self, request: Request) -> Tuple[Optional[str], Optional[str]]:
         """X-Auth-Token 헤더 → 쿠키 순으로 JWT 를 찾는다.
@@ -153,7 +142,6 @@ class LoginAuthMiddleware(BaseHTTPMiddleware):
 
         return None, None
 
-
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
         if self._is_excluded(request.url.path):
             return await call_next(request)
@@ -162,7 +150,6 @@ class LoginAuthMiddleware(BaseHTTPMiddleware):
         auth_logger = self.logger.bind(
             request_id=request_id,
             method=request.method,
-            path=request.url.path,
         )
 
         token, source = self._extract_token(request)
@@ -205,6 +192,18 @@ class LoginAuthMiddleware(BaseHTTPMiddleware):
                 content={"detail": "유효하지 않은 토큰입니다."},
             )
 
+        expected_user_id = request.headers.get("X-Krip-Expected-User-ID")
+        if expected_user_id and not hmac.compare_digest(
+            expected_user_id.encode("utf-8"),
+            str(user_id).encode("utf-8"),
+        ):
+            AUTH_FAILURES.labels(kind="login_principal_mismatch").inc()
+            auth_logger.warning("요청 principal lifecycle 불일치")
+            return JSONResponse(
+                status_code=401,
+                content={"detail": "로그인 계정이 변경되었습니다."},
+            )
+
         request.state.user_id = user_id
         auth_logger.debug("로그인 인증 성공: {}", user_id)
         return await call_next(request)
@@ -220,21 +219,14 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
         - 유저 존재 → 401
         - status == INACTIVE (탈퇴 유예 중) → 419 (커스텀)
         - 2차 회원가입 미완료 → 403
-        - 그 외 정상 → REGISTERED 플래그 캐싱 후 통과
+        - 그 외 정상 → 통과
 
-    Redis 캐시(`REGISTERED:{uid}`) 는 "ACTIVE & 2차 회원가입 완료" 의 양성 결과만 저장한다.
-    탈퇴 요청 시 `WithdrawService` 가 같은 키를 invalidate 하므로, INACTIVE 전환 직후
-    다음 보호 경로 요청에서 DB 재조회 → 419 응답으로 자연스럽게 전환된다.
+    계정 상태는 권한 회수 경계이므로 양성 캐시를 신뢰하지 않고 매 요청 SQL에서 확인한다.
     """
-
-    REDIS_KEY_PREFIX = KeyCategory.REGISTERED
-    CACHE_TTL = RedisClient.DEFAULT_CACHE_TTL  # 24시간
 
     # 검증을 건너뛸 경로
     EXCLUDE_PATHS: Sequence[str] = (
-        "/health",
-        "/health/deep",      # EXCLUDE_PATHS 는 정확 매칭이라 deep 도 별도 명시한다.
-        "/ready",            # k8s readinessProbe 와 blackbox 내부 probe 가 호출한다.
+        *PROBE_ROUTES,
         "/docs",
         "/redoc",
         "/openapi.json",
@@ -249,18 +241,15 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
         "/api/public",  # 외부 사용자 공개 endpoint (share 토큰 등)
     )
 
-
     def __init__(self, app: ASGIApp) -> None:
         super().__init__(app)
         self.logger = get_logger("middleware.register_check")
-
 
     def _is_excluded(self, path: str) -> bool:
         """검증 제외 대상 경로인지 확인"""
         if path in self.EXCLUDE_PATHS:
             return True
         return any(path.startswith(prefix) for prefix in self.EXCLUDE_PREFIXES)
-
 
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
         if self._is_excluded(request.url.path):
@@ -274,25 +263,15 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
         reg_logger = self.logger.bind(
             request_id=request_id,
             method=request.method,
-            path=request.url.path,
             user_id=user_id,
         )
 
-        # 1. Redis 캐시 조회
-        cache = get_redis_cache_manager()
-        cache_key = f"{self.REDIS_KEY_PREFIX}:{user_id}"
-
-        if await cache.exists(cache_key):
-            reg_logger.debug("2차 회원가입 캐시 히트")
-            return await call_next(request)
-
-        # 2. DB 조회 (캐시 미스) — 유저 존재 + 2차 회원가입 완료 여부를 한 번에 확인
         try:
             container = request.app.container
             async with container.uow() as session:
                 from app.domain.auth.repository.user import UserRepository
                 user_repo = UserRepository(session)
-                user = await user_repo.find_by_id_with_profile(user_id)
+                access_state = await user_repo.find_access_state(user_id)
         except Exception as e:
             AUTH_FAILURES.labels(kind="register_db_error").inc()
             reg_logger.error("DB 조회 실패: {}", e)
@@ -301,7 +280,7 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
                 content={"detail": "회원가입 상태 확인 중 오류가 발생했습니다."},
             )
 
-        if user is None:
+        if access_state is None:
             AUTH_FAILURES.labels(kind="register_user_not_found").inc()
             reg_logger.warning("존재하지 않는 유저")
             return JSONResponse(
@@ -312,7 +291,8 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
         # 탈퇴 유예 중인 유저 — detail 존재 여부와 무관하게 즉시 차단.
         # 419 는 비표준이지만 "회원이 탈퇴 처리 중" 시그널로 프론트가 분기.
         from app.domain.auth.model.user import UserStatus
-        if user.status == UserStatus.INACTIVE:
+        user_status, is_registered = access_state
+        if user_status == UserStatus.INACTIVE:
             AUTH_FAILURES.labels(kind="register_withdrawal_pending").inc()
             reg_logger.warning("탈퇴 유예 중 유저 접근 차단")
             return JSONResponse(
@@ -323,15 +303,24 @@ class RegisterCheckMiddleware(BaseHTTPMiddleware):
                 },
             )
 
-        if user.detail is None:
+        # 정지(SUSPENDED) 유저 차단.
+        if user_status == UserStatus.SUSPENDED:
+            AUTH_FAILURES.labels(kind="register_suspended").inc()
+            reg_logger.warning("정지 유저 접근 차단")
+            return JSONResponse(
+                status_code=403,
+                content={
+                    "detail": "계정이 정지되었습니다.",
+                    "status": "suspended",
+                },
+            )
+
+        if not is_registered:
             AUTH_FAILURES.labels(kind="register_incomplete").inc()
             reg_logger.warning("2차 회원가입 미완료")
             return JSONResponse(
                 status_code=403,
                 content={"detail": "2차 회원가입이 필요합니다."},
             )
-
-        # 3. Redis 캐시 저장 — ACTIVE & 2차 가입 완료된 양성 결과만 캐싱
-        await cache.set_flag(cache_key, self.CACHE_TTL)
 
         return await call_next(request)

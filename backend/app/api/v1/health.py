@@ -12,19 +12,20 @@
 라우팅: app/main.py 가 app.include_router(health_router) 로 등록한다.
 api_router 의 /api prefix 를 우회해 k8s probe 와 blackbox 가 직접 도달할 수 있게 한다.
 """
-import time
-from sqlalchemy import text
-from fastapi.responses import JSONResponse
-from fastapi import APIRouter, Request
 import asyncio
+import time
 
-from app.database.session import mongodb
-from app.core.redis import get_redis_client, get_redis_dedupe_client
-from app.core.metric import DEEP_CANARY_DURATION
-from app.core.logger import get_logger
-from app.core.ai.tour_planner.load import TourPlanner
-from app.core.ai.papago_translator.load import PapagoTranslator
+from fastapi import APIRouter, Request
+from fastapi.responses import JSONResponse
+from sqlalchemy import text
+
 from app.core.ai.menu_ocr.load import MenuOcr
+from app.core.ai.papago_translator.load import PapagoTranslator
+from app.core.ai.tour_planner.load import TourPlanner
+from app.core.logger import get_logger
+from app.core.metric import DEEP_CANARY_DURATION
+from app.core.redis import get_redis_client, get_redis_dedupe_client
+from app.database.session import mongodb
 
 
 logger = get_logger("health")
@@ -37,16 +38,10 @@ router = APIRouter(tags=["health"])
 _PING_TIMEOUT_SECONDS = 2.0
 
 
-# ──────────────────── liveness ────────────────────
-
-
 @router.get("/health")
 async def liveness() -> JSONResponse:
     """프로세스 기동 여부만 확인한다. 모델 로드가 끝나지 않아도 200 을 반환한다."""
     return JSONResponse(status_code=200, content={"status": "ok"})
-
-
-# ──────────────────── deep canary (4-ping 병렬) ────────────────────
 
 
 async def _pg_ping(request: Request) -> bool:
@@ -148,14 +143,16 @@ async def deep_health(request: Request) -> JSONResponse:
     body = _summarize(results)
     if body["failed"]:
         DEEP_CANARY_DURATION.labels(result="fail").observe(elapsed)
-        logger.warning("health/deep 실패: {}", body)
+        store_status = body["summary"]
+        failed_stores = body["failed"]
+        logger.bind(
+            failed_store_count=len(failed_stores),
+            store_status=store_status,
+        ).warning("health/deep 실패")
         return JSONResponse(status_code=503, content={"status": "fail", **body})
 
     DEEP_CANARY_DURATION.labels(result="ok").observe(elapsed)
     return JSONResponse(status_code=200, content={"status": "ok", **body})
-
-
-# ──────────────────── readiness ────────────────────
 
 
 def _ai_models_ready() -> tuple[bool, dict[str, bool]]:

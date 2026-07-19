@@ -1,16 +1,16 @@
-from typing import List
 import time
+from typing import List
 
-from app.core.instrumentation import ai_inference, ai_model_load_duration_set
-from app.core.ai.tour_planner.v2.graph_orchestrator import (
-    TourPlannerGraphOrchestrator,
-    get_tour_planner_graph,
-)
 from app.core.ai.tour_planner.v2.data_state import (
     FoodPreference,
     TourDayInput,
     TourPlanResult,
 )
+from app.core.ai.tour_planner.v2.graph_orchestrator import (
+    TourPlannerGraphOrchestrator,
+    get_tour_planner_graph,
+)
+from app.core.instrumentation import ai_inference, ai_model_load_duration_set
 
 
 class TourPlanner:
@@ -24,7 +24,6 @@ class TourPlanner:
             cls._instance._initialized = False
         return cls._instance
 
-
     async def load(self) -> None:
         """서버 시작 시 한 번 호출된다."""
         if self._initialized:
@@ -34,7 +33,6 @@ class TourPlanner:
         await self._orchestrator.initialize()
         ai_model_load_duration_set("tour_planner", time.perf_counter() - started)
         self._initialized = True
-
 
     async def invoke(
         self,

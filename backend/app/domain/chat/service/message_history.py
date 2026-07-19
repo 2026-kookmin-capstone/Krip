@@ -4,12 +4,14 @@
 """
 from typing import Optional
 
-from app.domain.friend.repository.friendship import FriendshipRepository
-from app.domain.chat.service.exception import ChatRoomNotFoundError
-from app.domain.chat.repository.chat_room import ChatRoomRepository
-from app.domain.chat.repository.chat_message import ChatMessageRepository
-from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
-from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
+from app.core.chat.redis_key import unread_key
+from app.core.logger import get_logger
+from app.core.redis import get_redis_client
+from app.database.session import UnitOfWork, mongodb, transactional
+from app.domain.auth.model.user import User
+from app.domain.auth.repository.user import UserRepository
+from app.domain.chat.constants import UNREAD_COUNT_CAP
+from app.domain.chat.dto.message import ChatMessageData, MessageListData
 from app.domain.chat.dto.room import (
     ChatRoomData,
     ChatRoomListData,
@@ -18,16 +20,20 @@ from app.domain.chat.dto.room import (
     RoomMemberData,
     RoomMemberListData,
 )
-from app.domain.chat.dto.message import ChatMessageData, MessageListData
-from app.domain.auth.repository.user import UserRepository
-from app.domain.auth.model.user import User
-from app.database.session import UnitOfWork, mongodb, transactional
-from app.core.redis import get_redis_client
-from app.core.logger import get_logger
-from app.core.chat.redis_key import unread_key
+from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
+from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
+from app.domain.chat.repository.chat_message import ChatMessageRepository
+from app.domain.chat.repository.chat_room import PAGE_SIZE, ChatRoomRepository
+from app.domain.chat.service.exception import ChatRoomNotFoundError
+from app.domain.friend.repository.friendship import FriendshipRepository
+from app.util.cursor import encode_cursor
 
 
 logger = get_logger("chat.history")
+
+
+def _clamp_unread(value: int) -> int:
+    return value if value < UNREAD_COUNT_CAP else UNREAD_COUNT_CAP
 
 
 class MessageHistoryService:
@@ -36,22 +42,27 @@ class MessageHistoryService:
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
 
-
     @transactional
-    async def list_rooms(self, me_id: str) -> ChatRoomListData:
-        """내가 속한 활성 방을 effective_last_at DESC 로 PAGE_SIZE 까지."""
+    async def list_rooms(
+        self, me_id: str, cursor: Optional[str] = None,
+    ) -> ChatRoomListData:
+        """내가 속한 활성 방을 `(effective_last_at, chat_room_id)` DESC 로 조회."""
         chat_room_repo = ChatRoomRepository(self._session)
         user_repo = UserRepository(self._session)
         message_repo = ChatMessageRepository(mongodb.database)
         redis_hot = await get_redis_client()
 
-        rows = await chat_room_repo.find_rooms_of_user(me_id)
+        rows = await chat_room_repo.find_rooms_of_user(
+            me_id, cursor=cursor, limit=PAGE_SIZE + 1,
+        )
+        has_more = len(rows) > PAGE_SIZE
+        rows = rows[:PAGE_SIZE]
 
         peer_ids = [pid for _, pid, _ in rows if pid is not None]
         peer_map = await user_repo.find_by_ids_with_profile(peer_ids)
 
         unread_raw = await redis_hot.hgetall(unread_key(me_id))
-        unread_map = {k: int(v) for k, v in unread_raw.items()}
+        unread_map = {k: _clamp_unread(int(v)) for k, v in unread_raw.items()}
 
         message_ids = [r.last_message_id for r, _, _ in rows if r.last_message_id]
         messages_by_id = await message_repo.find_by_ids(message_ids)
@@ -70,8 +81,14 @@ class MessageHistoryService:
             for room, peer_user_id, mute in rows
         ]
 
-        return ChatRoomListData(items=items, next_cursor=None)
-
+        next_cursor = None
+        if has_more and rows:
+            last_room = rows[-1][0]
+            next_cursor = encode_cursor(
+                last_room.effective_last_at,
+                last_room.chat_room_id,
+            )
+        return ChatRoomListData(items=items, next_cursor=next_cursor)
 
     @transactional
     async def get_room(self, *, me_id: str, room_id: str) -> ChatRoomData:
@@ -104,7 +121,7 @@ class MessageHistoryService:
         )
 
         unread_raw = await redis_hot.hget(unread_key(me_id), room_id)
-        unread_count = int(unread_raw) if unread_raw is not None else 0
+        unread_count = _clamp_unread(int(unread_raw)) if unread_raw is not None else 0
 
         last_message_doc: Optional[dict] = None
         if room.last_message_id:
@@ -118,7 +135,6 @@ class MessageHistoryService:
             last_message_doc=last_message_doc,
             notification_muted=member.notification_muted is True,
         )
-
 
     @transactional
     async def list_room_members(
@@ -138,7 +154,6 @@ class MessageHistoryService:
 
         users = await member_repo.find_active_member_users(room_id)
         return RoomMemberListData(items=[self._user_to_member_dto(u) for u in users])
-
 
     @transactional
     async def list_invitable_friends(
@@ -175,7 +190,6 @@ class MessageHistoryService:
         ]
         return RoomMemberListData(items=items)
 
-
     @transactional
     async def find_messages_before(
         self,
@@ -191,7 +205,6 @@ class MessageHistoryService:
         message_repo = ChatMessageRepository(mongodb.database)
         raw = await message_repo.find_before(room_id, before_server_seq, limit)
         return self._to_message_list_dto(raw, limit=limit)
-
 
     @transactional
     async def find_messages_after(
@@ -209,19 +222,16 @@ class MessageHistoryService:
         raw = await message_repo.find_after(room_id, after_server_seq, limit)
         return self._to_message_list_dto(raw, limit=limit)
 
-
     async def get_unread_counts(self, me_id: str) -> dict[str, int]:
         """Redis `unread:{user_id}` HASH 를 dict 로 반환. WS 연결 직후 동기화 송신용."""
         redis_hot = await get_redis_client()
         raw = await redis_hot.hgetall(unread_key(me_id))
-        return {k: int(v) for k, v in raw.items()}
-
+        return {k: _clamp_unread(int(v)) for k, v in raw.items()}
 
     async def _assert_room_member(self, room_id: str, user_id: str) -> None:
         member_repo = ChatRoomMemberRepository(self._session)
         if not await member_repo.is_active_member(room_id, user_id):
             raise PermissionError("이 방의 멤버가 아닙니다.")
-
 
     @staticmethod
     def _user_to_member_dto(user: User) -> RoomMemberData:
@@ -232,7 +242,6 @@ class MessageHistoryService:
             user_name=detail.user_name if detail else "",
             profile_image_url=detail.profile_image_url if detail else None,
         )
-
 
     @staticmethod
     def _room_to_dto(
@@ -273,6 +282,8 @@ class MessageHistoryService:
                 type=last_message_doc.get("type", "text"),
                 content=last_message_doc.get("content") if last_message_doc.get("deleted_at") is None else None,
                 created_at=last_message_doc["created_at"],
+                edited_at=last_message_doc.get("edited_at"),
+                deleted_at=last_message_doc.get("deleted_at"),
             )
 
         return ChatRoomData(
@@ -286,7 +297,6 @@ class MessageHistoryService:
             effective_last_at=room.effective_last_at or room.created_at,
             notification_muted=notification_muted,
         )
-
 
     @staticmethod
     def _to_message_list_dto(raw: list[dict], *, limit: int) -> MessageListData:

@@ -20,8 +20,6 @@ from app.domain.notification.model.inbox import InboxItem, InboxItemType
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── 정상 fan-out ────────────────────
-
 class TestCreateCommentFanout:
     """`create_comment` 가 RDB INSERT 후 Mongo 에 댓글 인박스 적재."""
 
@@ -43,7 +41,6 @@ class TestCreateCommentFanout:
         assert doc["comment_id"] == comment.comment_id
         assert doc["comment_preview"] == "좋은 글이네요"
 
-
     async def test_self_comment_does_not_create_inbox_item(
         self, mongo_db, feed_post_comment_service, seed_feed_post,
     ):
@@ -56,8 +53,6 @@ class TestCreateCommentFanout:
         coll = InboxItem.get_motor_collection()
         assert await coll.count_documents({}) == 0
 
-
-# ──────────────────── 멀티 댓글 (comment_id 자연 unique) ────────────────────
 
 class TestMultipleCommentsCreateMultipleInboxItems:
     """같은 actor 가 여러 댓글 — comment_id 가 매번 달라 인박스 항목도 매번 새로 적재.
@@ -80,8 +75,6 @@ class TestMultipleCommentsCreateMultipleInboxItems:
         assert await coll.count_documents({"recipient_id": owner_id}) == 3
 
 
-# ──────────────────── delete_comment — 인박스 보존 정책 ────────────────────
-
 class TestDeleteCommentPreservesInboxItem:
     """댓글 삭제 시 인박스 cascade 안 함 — 좋아요 취소 인박스 보존 정책과 대칭."""
 
@@ -98,12 +91,9 @@ class TestDeleteCommentPreservesInboxItem:
             user_id=actor_id, post_id=post_id, comment_id=comment.comment_id,
         )
 
-        # 인박스 항목 보존 — 이벤트 발생 사실의 기록
         coll = InboxItem.get_motor_collection()
         assert await coll.count_documents({"recipient_id": owner_id}) == 1
 
-
-# ──────────────────── comment_preview ellipsis ────────────────────
 
 class TestCommentPreviewTruncation:
     """100자 초과 댓글 → ellipsis 추가된 snapshot."""
@@ -121,14 +111,13 @@ class TestCommentPreviewTruncation:
 
         coll = InboxItem.get_motor_collection()
         doc = await coll.find_one({"recipient_id": owner_id})
-        assert len(doc["comment_preview"]) == 101  # 100 + "…"
+        assert len(doc["comment_preview"]) == 101
         assert doc["comment_preview"].endswith("…")
 
 
-# ──────────────────── helpers ────────────────────
-
 async def _find_other_user(uow, exclude_user_id: str) -> str:
     from sqlalchemy import select
+
     from app.domain.auth.model.user import User, UserStatus
 
     async with uow as session:

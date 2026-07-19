@@ -1,7 +1,7 @@
 """인박스 DTO. `read_at` → `is_read` 평탄화 (정확한 read 시각은 클라가 거의 안 씀)."""
-from typing import List, Optional
-from datetime import datetime
 from dataclasses import dataclass
+from datetime import datetime
+from typing import List, Optional
 
 from app.domain.notification.model.inbox import InboxItemType, TargetType
 

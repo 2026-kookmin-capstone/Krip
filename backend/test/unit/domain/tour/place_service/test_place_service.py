@@ -5,15 +5,11 @@
     - `get_place_by_id`: 정상, 미존재 None
     - `search_nearby_places`: keyword 전달
 """
-from test.unit.domain.tour.place_service.model_factory import PlaceRawFactory
 import pytest
 
-from app.domain.tour.repository.place import PAGE_SIZE
+from app.domain.tour.repository.place import PAGE_SIZE, PlaceRepository
+from test.unit.domain.tour.place_service.model_factory import PlaceRawFactory
 
-
-# ──────────────────────────────────────────────────────────────────
-# get_nearby_places
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestGetNearbyPlaces:
@@ -28,9 +24,7 @@ class TestGetNearbyPlaces:
 
         assert result.places == []
         assert result.next_cursor is None
-        # 빈 결과 → favorited 조회 skip
         fav_repo_mock.find_favorited_place_ids.assert_not_awaited()
-
 
     async def test_returns_places_with_distance_and_favorite(
         self, service, place_repo_mock, fav_repo_mock,
@@ -50,9 +44,7 @@ class TestGetNearbyPlaces:
         assert result.places[0].place_id == "PLACE_1"
         assert result.places[0].is_favorite is True
         assert result.places[0].distance == 50.0
-        # favorited set 에 없으면 None
         assert result.places[1].is_favorite is None
-
 
     async def test_no_favorited_when_user_id_empty(
         self, service, place_repo_mock, fav_repo_mock,
@@ -64,7 +56,6 @@ class TestGetNearbyPlaces:
 
         fav_repo_mock.find_favorited_place_ids.assert_not_awaited()
         assert result.places[0].is_favorite is None
-
 
     async def test_no_next_cursor_when_partial_page(
         self, service, place_repo_mock,
@@ -78,9 +69,8 @@ class TestGetNearbyPlaces:
 
         assert result.next_cursor is None
 
-
-    async def test_next_cursor_when_full_page(self, service, place_repo_mock):
-        """fetch == PAGE_SIZE → 마지막 (distance, place_id) 인코딩이 next_cursor."""
+    async def test_no_next_cursor_when_exact_page(self, service, place_repo_mock):
+        """fetch == PAGE_SIZE → 초과 row가 없으므로 마지막 페이지."""
         places = [
             PlaceRawFactory.create(place_id=f"PLACE_{i}", distance=float(i))
             for i in range(PAGE_SIZE)
@@ -89,18 +79,26 @@ class TestGetNearbyPlaces:
 
         result = await service.get_nearby_places(lat=37.5, lng=127.0, user_id="")
 
-        assert result.next_cursor is not None
-        # 마지막 row 의 distance/place_id 가 인코딩되었는지 (PlaceRepository.build_cursor 출력)
+        assert len(result.places) == PAGE_SIZE
+        assert result.next_cursor is None
+
+    async def test_next_cursor_when_page_overflows(self, service, place_repo_mock):
+        places = [
+            PlaceRawFactory.create(place_id=f"PLACE_{i}", distance=float(i))
+            for i in range(PAGE_SIZE + 1)
+        ]
+        place_repo_mock.find_nearby.return_value = places
+
+        result = await service.get_nearby_places(lat=37.5, lng=127.0, user_id="")
+
+        assert len(result.places) == PAGE_SIZE
         from app.domain.tour.repository.place import PlaceRepository
         expected = PlaceRepository.build_cursor(
             float(PAGE_SIZE - 1), f"PLACE_{PAGE_SIZE - 1}",
         )
         assert result.next_cursor == expected
+        assert place_repo_mock.find_nearby.await_args.kwargs["limit"] == PAGE_SIZE + 1
 
-
-# ──────────────────────────────────────────────────────────────────
-# get_place_by_id
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestGetPlaceById:
@@ -119,7 +117,6 @@ class TestGetPlaceById:
         assert result.place_id == "PLACE_x"
         assert result.display_name == "Custom"
 
-
     async def test_returns_none_when_not_found(self, service, place_repo_mock):
         """미존재 → None (router 가 404 매핑)."""
         place_repo_mock.find_by_place_id.return_value = None
@@ -128,10 +125,6 @@ class TestGetPlaceById:
 
         assert result is None
 
-
-# ──────────────────────────────────────────────────────────────────
-# search_nearby_places
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestSearchNearbyPlaces:
@@ -149,4 +142,46 @@ class TestSearchNearbyPlaces:
 
         place_repo_mock.search_nearby.assert_awaited_once_with(
             37.5, 127.0, "피자", cursor="abc", max_distance=500.0,
+            limit=PAGE_SIZE + 1,
         )
+
+    async def test_exact_and_overflow_cursor_boundaries(self, service, place_repo_mock):
+        exact = [
+            PlaceRawFactory.create(place_id=f"PLACE_{i}", distance=float(i))
+            for i in range(PAGE_SIZE)
+        ]
+        place_repo_mock.search_nearby.return_value = exact
+        result = await service.search_nearby_places(37.5, 127.0, "피자")
+        assert len(result.places) == PAGE_SIZE
+        assert result.next_cursor is None
+
+        place_repo_mock.search_nearby.return_value = exact + [
+            PlaceRawFactory.create(place_id="PLACE_extra", distance=float(PAGE_SIZE)),
+        ]
+        result = await service.search_nearby_places(37.5, 127.0, "피자")
+        assert len(result.places) == PAGE_SIZE
+        expected = PlaceRepository.build_cursor(
+            float(PAGE_SIZE - 1), f"PLACE_{PAGE_SIZE - 1}",
+        )
+        assert result.next_cursor == expected
+
+
+@pytest.mark.unit
+class TestMalformedGeoDocs:
+    """location 결손/null 문서는 500 대신 기존 (0,0) 폴백으로 응답한다."""
+
+    @pytest.mark.parametrize(
+        "location",
+        [None, {}, {"coordinates": None}, {"coordinates": []}, {"coordinates": [127.0]}],
+    )
+    def test_build_common_fields_survives_missing_coordinates(self, location):
+        from app.domain.tour.service.place import PlaceService
+        from test.unit.domain.tour.place_service.model_factory import PlaceRawFactory
+
+        raw = PlaceRawFactory.create()
+        raw["location"] = location
+
+        fields = PlaceService._build_common_fields(raw)
+
+        assert fields["location"].lat == 0.0
+        assert fields["location"].lng == 0.0

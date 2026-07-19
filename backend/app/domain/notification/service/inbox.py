@@ -11,29 +11,31 @@ cascade:
 - post_deleted  : `(target_type, target_id)` soft hide. 좋아요 *취소* 는 보존 정책과 비대칭 —
   원본 소멸 시 deep link 404 가 확정이라 stale 알림이 작성자 본인 인박스에 남는 UX 손해를 막는다.
 """
+from datetime import timezone
 from typing import Optional
-from pymongo.errors import DuplicateKeyError
-from datetime import datetime, timezone
-from bson.errors import InvalidId
-from beanie import PydanticObjectId
 
-from app.domain.notification.service.exception import InboxItemNotFoundError
-from app.domain.notification.repository.inbox import (
-    InboxRepository,
-    PAGE_SIZE,
-    UNREAD_COUNT_CAP,
-)
-from app.domain.notification.model.inbox import (
-    InboxItem,
-    InboxItemType,
-    TargetType,
-    COMMENT_PREVIEW_MAX_LENGTH,
-)
+from beanie import PydanticObjectId
+from bson.errors import InvalidId
+from pymongo.errors import DuplicateKeyError
+
+from app.core.logger import get_logger
 from app.domain.notification.dto.inbox import (
     InboxItemData,
     InboxListData,
 )
-from app.core.logger import get_logger
+from app.domain.notification.model.inbox import (
+    COMMENT_PREVIEW_MAX_LENGTH,
+    InboxItem,
+    InboxItemType,
+    TargetType,
+)
+from app.domain.notification.repository.inbox import (
+    PAGE_SIZE,
+    UNREAD_COUNT_CAP,
+    InboxRepository,
+)
+from app.domain.notification.service.exception import InboxItemNotFoundError
+from app.util.cursor import decode_cursor, encode_cursor
 
 
 logger = get_logger("inbox.service")
@@ -42,7 +44,6 @@ logger = get_logger("inbox.service")
 class InboxService:
     def __init__(self):
         self.repo = InboxRepository()
-
 
     async def notify_feed_like(
         self,
@@ -68,7 +69,6 @@ class InboxService:
             target_preview=post_preview,
         )
         await self._safe_insert(item)
-
 
     async def notify_feed_comment(
         self,
@@ -99,7 +99,6 @@ class InboxService:
         )
         await self._safe_insert(item)
 
-
     async def notify_tripmate_like(
         self,
         *,
@@ -125,35 +124,36 @@ class InboxService:
         )
         await self._safe_insert(item)
 
-
     async def list_items(
         self,
         recipient_id: str,
         cursor: Optional[str] = None,
         mark_as_read: bool = False,
     ) -> InboxListData:
-        """display=true 항목 최신순 페이지네이션. cursor 는 마지막 항목의 ISO created_at.
-
-        `mark_as_read=True` 면 응답 dto 변환 *후* 미읽음 일괄 read 처리 → 응답의 `is_read` 는
-        read 전 상태 유지 (클라가 "방금 본 항목" 강조 가능). 실패는 swallow (다음 진입에 재시도).
-        """
-        cursor_dt = None
+        """display=true 항목 최신순 페이지네이션."""
+        cursor_key = None
         if cursor is not None:
-            try:
-                cursor_dt = datetime.fromisoformat(cursor)
-            except ValueError:
-                raise ValueError("cursor 형식이 올바르지 않습니다.") from None
-            # naive datetime 방어 — 외부 클라가 tz 누락 ISO 를 보내면 UTC 가정. 서버 반환 cursor 는 항상 tz-aware.
+            decoded = decode_cursor(cursor)
+            if decoded is None:
+                raise ValueError("cursor 형식이 올바르지 않습니다.")
+            cursor_dt, cursor_id_str = decoded
+            # naive datetime 방어 — 외부/구버전 클라가 tz 누락 ISO 를 담았으면 UTC 가정.
             if cursor_dt.tzinfo is None:
                 cursor_dt = cursor_dt.replace(tzinfo=timezone.utc)
+            try:
+                cursor_oid = PydanticObjectId(cursor_id_str)
+            except (InvalidId, TypeError, ValueError):
+                raise ValueError("cursor 형식이 올바르지 않습니다.") from None
+            cursor_key = (cursor_dt, cursor_oid)
 
         items = await self.repo.find_by_recipient(
-            recipient_id=recipient_id, cursor=cursor_dt, limit=PAGE_SIZE,
+            recipient_id=recipient_id, cursor=cursor_key, limit=PAGE_SIZE,
         )
         has_more = len(items) > PAGE_SIZE
         items = items[:PAGE_SIZE]
         next_cursor = (
-            items[-1].created_at.isoformat() if has_more and items else None
+            encode_cursor(items[-1].created_at, str(items[-1].id))
+            if has_more and items else None
         )
         result = InboxListData(
             items=[self._to_dto(i) for i in items],
@@ -162,7 +162,10 @@ class InboxService:
 
         if mark_as_read:
             try:
-                modified = await self.repo.mark_all_read(recipient_id)
+                # 이번 페이지에 실제로 담긴 항목만 read — fetch 이후 도착분은 건드리지 않음.
+                modified = await self.repo.mark_read_by_ids(
+                    recipient_id, [i.id for i in items],
+                )
                 if modified > 0:
                     logger.info(
                         "인박스 자동 읽음 처리 (recipient_id={}, count={})",
@@ -176,12 +179,10 @@ class InboxService:
 
         return result
 
-
     async def count_unread(self, recipient_id: str) -> int:
         """미읽음 뱃지 — 999+ 캡."""
         raw = await self.repo.count_unread(recipient_id, cap=UNREAD_COUNT_CAP)
         return min(raw, UNREAD_COUNT_CAP)
-
 
     async def hide_item(
         self, recipient_id: str, inbox_item_id: str,
@@ -196,7 +197,6 @@ class InboxService:
         if not modified:
             raise InboxItemNotFoundError("존재하지 않는 인박스 항목입니다.")
         logger.info("인박스 항목 hide (recipient_id={}, inbox_item_id={})", recipient_id, inbox_item_id)
-
 
     async def cascade_post_deleted(
         self, *, target_type: TargetType, target_id: str,
@@ -221,7 +221,6 @@ class InboxService:
             )
             return 0
 
-
     async def cascade_user_withdrawn(self, user_id: str) -> int:
         """유저 탈퇴 cascade — recipient/actor 매칭 hard delete. best-effort (실패 시 TTL 정리)."""
         try:
@@ -239,7 +238,6 @@ class InboxService:
             )
             return 0
 
-
     async def _safe_insert(self, item: InboxItem) -> None:
         """fan-out 공통 insert — `DuplicateKeyError` 멱등 skip, 그 외는 로그만 + 응답 정상."""
         try:
@@ -251,7 +249,6 @@ class InboxService:
                 "인박스 fan-out 실패 (type={}, recipient_id={}, target_id={}, error={})",
                 item.type.value, item.recipient_id, item.target_id, e,
             )
-
 
     @staticmethod
     def _to_dto(item: InboxItem) -> InboxItemData:

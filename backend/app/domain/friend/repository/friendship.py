@@ -1,22 +1,32 @@
 from typing import Iterable, Optional
-from sqlalchemy.orm import joinedload
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, or_, and_, case, func
 
+from sqlalchemy import and_, case, exists, func, or_, select
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import joinedload
+
+from app.domain.auth.model.user import User, UserStatus
 from app.domain.friend.model.friendship import Friendship, FriendshipStatus
-from app.domain.auth.model.user import User
+from app.domain.friend.repository.pair_lock import acquire_pair_lock
+from app.util.cursor import decode_cursor, keyset_where
 
 
 # 친구/요청 목록 페이지 크기
 PAGE_SIZE = 30
 
 
+def _counterpart_is_active(counterpart_id):
+    """탈퇴 진행 중(INACTIVE)/정지 계정을 목록에서 숨긴다 — 검색·상세와 동일 정책."""
+    return exists(
+        select(User.user_id).where(
+            User.user_id == counterpart_id,
+            User.status == UserStatus.ACTIVE,
+        )
+    )
+
+
 class FriendshipRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
-
-
-    # ──────────────────── Create ────────────────────
 
     async def save(self, friendship: Friendship) -> Friendship:
         """친구 관계 저장"""
@@ -24,13 +34,33 @@ class FriendshipRepository:
         await self.session.flush()
         return friendship
 
+    async def acquire_pair_lock(self, user_a_id: str, user_b_id: str) -> None:
+        """두 유저 PAIR 트랜잭션 advisory lock (방향 무관).
 
-    # ──────────────────── Read (단건) ────────────────────
+        canonical (least:greatest) 키로 A→B/B→A 가 같은 락을 잡아 pair 상태 전이를 직렬화
+        → block-vs-request TOCTOU 와 REJECTED 재요청 lost update 차단. 모든 경로에서 어떤
+        read/row lock 보다 먼저 호출해 순서를 통일(데드락 회피). 트랜잭션 종료 시 자동 해제.
+        """
+        await acquire_pair_lock(self.session, user_a_id, user_b_id)
 
-    async def find_by_id(self, friendship_id: str) -> Optional[Friendship]:
-        """friendship_id로 단건 조회"""
+    async def find_by_id(
+        self, friendship_id: str, *, for_update: bool = False,
+    ) -> Optional[Friendship]:
+        """friendship_id 단건 조회. for_update=True 면 FOR UPDATE 행 잠금(상태 전이 원자성용).
+
+        populate_existing=True — 선행 비잠금 peek(_lock_pair_and_fetch)가 적재한 stale
+        identity-map 인스턴스를 잠금 후 최신 커밋 값으로 덮어쓴다.
+        """
+        if for_update:
+            stmt = (
+                select(Friendship)
+                .where(Friendship.friendship_id == friendship_id)
+                .with_for_update()
+                .execution_options(populate_existing=True)
+            )
+            result = await self.session.execute(stmt)
+            return result.scalar_one_or_none()
         return await self.session.get(Friendship, friendship_id)
-
 
     async def count_accepted_for(self, user_id: str) -> int:
         """`user_id` 의 ACCEPTED 친구 수 — 마이페이지 stats 용.
@@ -38,7 +68,8 @@ class FriendshipRepository:
         `(requester_id, status)` / `(addressee_id, status)` 두 부분 인덱스가 모두 존재해
         PG planner 가 BitmapOr 로 처리. PENDING/REJECTED 는 제외.
 
-        탈퇴 유저는 `users` FK CASCADE 로 친구 관계 row 가 함께 삭제되므로 dangling 없음.
+        탈퇴 유예(INACTIVE)/정지 상대는 목록(find_friends)과 동일하게 제외 — 카운트와
+        목록이 어긋나 숨긴 계정의 존재가 유추되지 않게 한다. 하드 삭제는 FK CASCADE.
         """
         stmt = select(func.count()).select_from(Friendship).where(
             Friendship.status == FriendshipStatus.ACCEPTED,
@@ -46,10 +77,13 @@ class FriendshipRepository:
                 Friendship.requester_id == user_id,
                 Friendship.addressee_id == user_id,
             ),
+            _counterpart_is_active(case(
+                (Friendship.requester_id == user_id, Friendship.addressee_id),
+                else_=Friendship.requester_id,
+            )),
         )
         result = await self.session.execute(stmt)
         return result.scalar_one()
-
 
     async def find_accepted_friend_ids(self, me_id: str) -> set[str]:
         """`me_id` 의 모든 ACCEPTED 친구 user_id 집합.
@@ -67,10 +101,10 @@ class FriendshipRepository:
                 Friendship.requester_id == me_id,
                 Friendship.addressee_id == me_id,
             ),
+            _counterpart_is_active(peer_id),
         )
         result = await self.session.execute(stmt)
         return set(result.scalars().all())
-
 
     async def find_accepted_friend_ids_with(
         self, me_id: str, target_ids: Iterable[str],
@@ -105,7 +139,6 @@ class FriendshipRepository:
         result = await self.session.execute(stmt)
         return set(result.scalars().all())
 
-
     async def find_friendships_with(
         self,
         me_id: str,
@@ -139,7 +172,6 @@ class FriendshipRepository:
             for f in result.scalars().all()
         }
 
-
     async def find_between(
         self,
         user_a_id: str,
@@ -160,9 +192,6 @@ class FriendshipRepository:
         )
         result = await self.session.execute(stmt)
         return result.scalar_one_or_none()
-
-
-    # ──────────────────── Read (목록 — 커서 페이지네이션) ────────────────────
 
     async def find_friends(
         self,
@@ -185,22 +214,25 @@ class FriendshipRepository:
                     Friendship.requester_id == user_id,
                     Friendship.addressee_id == user_id,
                 ),
+                _counterpart_is_active(case(
+                    (Friendship.requester_id == user_id, Friendship.addressee_id),
+                    else_=Friendship.requester_id,
+                )),
             )
         )
 
         if cursor:
-            cursor_sub = select(Friendship.updated_at).where(Friendship.friendship_id == cursor).scalar_subquery()
-            stmt = stmt.where(
-                or_(
-                    Friendship.updated_at < cursor_sub,
-                    (Friendship.updated_at == cursor_sub) & (Friendship.friendship_id < cursor),
-                )
-            )
+            decoded = decode_cursor(cursor)
+            if decoded is None:
+                raise ValueError("유효하지 않은 커서입니다.")
+            cur_ts, cur_id = decoded
+            stmt = stmt.where(keyset_where(
+                Friendship.updated_at, Friendship.friendship_id, cur_ts, cur_id,
+            ))
 
-        stmt = stmt.order_by(Friendship.updated_at.desc(), Friendship.friendship_id.desc()).limit(PAGE_SIZE)
+        stmt = stmt.order_by(Friendship.updated_at.desc(), Friendship.friendship_id.desc()).limit(PAGE_SIZE + 1)
         result = await self.session.execute(stmt)
         return list(result.unique().scalars().all())
-
 
     async def find_received_requests(
         self,
@@ -214,22 +246,22 @@ class FriendshipRepository:
             .where(
                 Friendship.addressee_id == user_id,
                 Friendship.status == FriendshipStatus.PENDING,
+                _counterpart_is_active(Friendship.requester_id),
             )
         )
 
         if cursor:
-            cursor_sub = select(Friendship.updated_at).where(Friendship.friendship_id == cursor).scalar_subquery()
-            stmt = stmt.where(
-                or_(
-                    Friendship.updated_at < cursor_sub,
-                    (Friendship.updated_at == cursor_sub) & (Friendship.friendship_id < cursor),
-                )
-            )
+            decoded = decode_cursor(cursor)
+            if decoded is None:
+                raise ValueError("유효하지 않은 커서입니다.")
+            cur_ts, cur_id = decoded
+            stmt = stmt.where(keyset_where(
+                Friendship.updated_at, Friendship.friendship_id, cur_ts, cur_id,
+            ))
 
-        stmt = stmt.order_by(Friendship.updated_at.desc(), Friendship.friendship_id.desc()).limit(PAGE_SIZE)
+        stmt = stmt.order_by(Friendship.updated_at.desc(), Friendship.friendship_id.desc()).limit(PAGE_SIZE + 1)
         result = await self.session.execute(stmt)
         return list(result.unique().scalars().all())
-
 
     async def find_sent_requests(
         self,
@@ -243,32 +275,27 @@ class FriendshipRepository:
             .where(
                 Friendship.requester_id == user_id,
                 Friendship.status == FriendshipStatus.PENDING,
+                _counterpart_is_active(Friendship.addressee_id),
             )
         )
 
         if cursor:
-            cursor_sub = select(Friendship.updated_at).where(Friendship.friendship_id == cursor).scalar_subquery()
-            stmt = stmt.where(
-                or_(
-                    Friendship.updated_at < cursor_sub,
-                    (Friendship.updated_at == cursor_sub) & (Friendship.friendship_id < cursor),
-                )
-            )
+            decoded = decode_cursor(cursor)
+            if decoded is None:
+                raise ValueError("유효하지 않은 커서입니다.")
+            cur_ts, cur_id = decoded
+            stmt = stmt.where(keyset_where(
+                Friendship.updated_at, Friendship.friendship_id, cur_ts, cur_id,
+            ))
 
-        stmt = stmt.order_by(Friendship.updated_at.desc(), Friendship.friendship_id.desc()).limit(PAGE_SIZE)
+        stmt = stmt.order_by(Friendship.updated_at.desc(), Friendship.friendship_id.desc()).limit(PAGE_SIZE + 1)
         result = await self.session.execute(stmt)
         return list(result.unique().scalars().all())
-
-
-    # ──────────────────── Update ────────────────────
 
     async def update(self, friendship: Friendship) -> Friendship:
         """변경사항 flush"""
         await self.session.flush()
         return friendship
-
-
-    # ──────────────────── Delete ────────────────────
 
     async def delete(self, friendship: Friendship) -> None:
         """친구 관계 삭제"""

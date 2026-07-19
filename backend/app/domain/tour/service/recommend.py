@@ -4,11 +4,15 @@ from google.api_core.exceptions import (
     ResourceExhausted,
     Unauthenticated,
 )
+from langchain_google_genai.chat_models import ChatGoogleGenerativeAIError
 
-from app.domain.tour.service.exception import (
-    TourRecommendCredentialExpiredError,
-    TourRecommendQuotaExceededError,
-    TourRecommendVendorError,
+from app.core.ai.tour_planner.load import TourPlanner
+from app.core.ai.tour_planner.v2.data_state import (
+    TourDayInput as PlannerTourDayInput,
+)
+from app.core.ai.tour_planner.v2.data_state import (
+    TourPlannerOutputError,
+    TourPlanResult,
 )
 from app.domain.tour.schema.recommend import (
     TourBudgetItemResponse,
@@ -20,11 +24,11 @@ from app.domain.tour.schema.recommend import (
     TourRecommendResponse,
     TourTimelineSlotResponse,
 )
-from app.core.ai.tour_planner.v2.data_state import (
-    TourDayInput as PlannerTourDayInput,
-    TourPlanResult,
+from app.domain.tour.service.exception import (
+    TourRecommendCredentialExpiredError,
+    TourRecommendQuotaExceededError,
+    TourRecommendVendorError,
 )
-from app.core.ai.tour_planner.load import TourPlanner
 
 
 class RecommendService:
@@ -39,10 +43,6 @@ class RecommendService:
     def __init__(self) -> None:
         self._planner = TourPlanner()
 
-
-    # ──────────────────── 진입점 ────────────────────
-
-
     async def recommend(self, body: TourRecommendRequest) -> TourRecommendResponse:
         """여행 코스 추천."""
         planner_days = self._to_planner_input(body)
@@ -54,17 +54,18 @@ class RecommendService:
                 days=planner_days,
             )
         except (Unauthenticated, PermissionDenied) as e:
-            raise TourRecommendCredentialExpiredError(str(e)) from e
+            raise TourRecommendCredentialExpiredError("vendor credentials rejected") from e
         except ResourceExhausted as e:
-            raise TourRecommendQuotaExceededError(str(e)) from e
-        except GoogleAPICallError as e:
-            raise TourRecommendVendorError(str(e)) from e
+            raise TourRecommendQuotaExceededError("vendor quota exceeded") from e
+        # ChatGoogleGenerativeAIError 는 GoogleAPICallError 비상속 → 미매핑 시 500 누출.
+        # 토큰 한도 초과 등 vendor 입력 거부이므로 502 로 매핑.
+        except (GoogleAPICallError, ChatGoogleGenerativeAIError) as e:
+            raise TourRecommendVendorError("vendor request failed") from e
+        except TourPlannerOutputError as e:
+            # LLM 출력 파싱 실패/누락 — 입력 오류(400)가 아닌 vendor 출력 문제이므로 502.
+            raise TourRecommendVendorError("invalid planner output") from e
 
         return self._to_response(result)
-
-
-    # ──────────────────── Request → Planner 입력 ────────────────────
-
 
     @staticmethod
     def _to_planner_input(body: TourRecommendRequest) -> list[PlannerTourDayInput]:
@@ -84,10 +85,6 @@ class RecommendService:
             )
             for d in body.days
         ]
-
-
-    # ──────────────────── Planner 결과 → Response ────────────────────
-
 
     @staticmethod
     def _to_response(result: TourPlanResult) -> TourRecommendResponse:

@@ -1,27 +1,34 @@
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Request, Depends, Query
-from dependency_injector.wiring import Provide, inject
 
-from app.schema.common import MessageResponse
-from app.domain.tripmate.service.tripmate_search_history import TripmateSearchHistoryService
-from app.domain.tripmate.service.tripmate_post_like import TripmatePostLikeService
-from app.domain.tripmate.service.tripmate_post_draft import TripmatePostDraftService
-from app.domain.tripmate.service.tripmate_post import TripmatePostService
-from app.domain.tripmate.schema.tripmate_post import (
-    CreatePostRequest, UpdatePostRequest, SaveDraftRequest,
-    PostCreateResponse, PostDetailResponse, PostListResponse,
-    ToggleDisplayResponse, LikeResponse, LikedUsersResponse,
-    DraftResponse, AuthorResponse,
-)
-from app.core.logger import get_logger
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
+
 from app.container import Container
+from app.core.logger import get_logger
+from app.domain.tripmate.schema.tripmate_post import (
+    AuthorResponse,
+    CreatePostRequest,
+    DraftResponse,
+    LikedUsersResponse,
+    LikeResponse,
+    PostCreateResponse,
+    PostDetailResponse,
+    PostListResponse,
+    SaveDraftRequest,
+    ToggleDisplayResponse,
+    UpdatePostRequest,
+)
+from app.domain.tripmate.service.exception import TripmatePostNotFoundError
+from app.domain.tripmate.service.tripmate_post import TripmatePostService
+from app.domain.tripmate.service.tripmate_post_draft import TripmatePostDraftService
+from app.domain.tripmate.service.tripmate_post_like import TripmatePostLikeService
+from app.domain.tripmate.service.tripmate_search_history import TripmateSearchHistoryService
+from app.schema.common import MessageResponse
 
 
 router = APIRouter(prefix="/posts", tags=["여행 메이트 게시글"])
 logger = get_logger("tripmate.post")
 
-
-# ──────────────────── 게시글 CRUD ────────────────────
 
 @router.post("", status_code=201)
 @inject
@@ -80,7 +87,10 @@ async def get_posts(
     """게시글 목록 조회 (최신순 30개, 커서 페이지네이션)"""
     user_id: str = request.state.user_id
 
-    result = await post_service.get_posts(cursor=cursor, user_id=user_id)
+    try:
+        result = await post_service.get_posts(cursor=cursor, user_id=user_id)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     return PostListResponse(
         posts=[_to_post_response(p) for p in result.posts],
         next_cursor=result.next_cursor,
@@ -91,7 +101,7 @@ async def get_posts(
 @inject
 async def search_posts(
     request: Request,
-    keyword: str = Query(..., min_length=1, description="검색 키워드 (제목, 내용, 작성자)"),
+    keyword: str = Query(..., min_length=1, max_length=50, description="검색 키워드 (제목, 내용, 작성자)"),
     cursor: Optional[str] = Query(None, description="다음 페이지 커서 (post_id)"),
     post_service: TripmatePostService = Depends(Provide[Container.tripmate_post_service]),
     search_history_service: TripmateSearchHistoryService = Depends(Provide[Container.tripmate_search_history_service]),
@@ -101,17 +111,18 @@ async def search_posts(
 
     try:
         await search_history_service.save_search(user_id=user_id, search_name=keyword)
-    except Exception:
-        logger.warning("검색 기록 저장 실패: user_id={}, keyword={}", user_id, keyword)
+    except Exception as error:
+        logger.bind(user_id=user_id, error=error).warning("검색 기록 저장 실패")
 
-    result = await post_service.search_posts(keyword=keyword, cursor=cursor, user_id=user_id)
+    try:
+        result = await post_service.search_posts(keyword=keyword, cursor=cursor, user_id=user_id)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     return PostListResponse(
         posts=[_to_post_response(p) for p in result.posts],
         next_cursor=result.next_cursor,
     )
 
-
-# ──────────────────── 임시저장 ────────────────────
 
 @router.put("/draft")
 @inject
@@ -123,19 +134,22 @@ async def save_draft(
     """게시글 임시저장 (30초마다 자동 호출)"""
     user_id: str = request.state.user_id
 
-    result = await draft_service.save_draft(
-        user_id=user_id,
-        title=body.title,
-        content=body.content,
-        preferred_age_min=body.preferred_age_min,
-        preferred_age_max=body.preferred_age_max,
-        preferred_gender=body.preferred_gender,
-        region=body.region,
-        travel_start_date=body.travel_start_date,
-        travel_end_date=body.travel_end_date,
-        companion_type=body.companion_type,
-        image_urls=body.image_urls,
-    )
+    try:
+        result = await draft_service.save_draft(
+            user_id=user_id,
+            title=body.title,
+            content=body.content,
+            preferred_age_min=body.preferred_age_min,
+            preferred_age_max=body.preferred_age_max,
+            preferred_gender=body.preferred_gender,
+            region=body.region,
+            travel_start_date=body.travel_start_date,
+            travel_end_date=body.travel_end_date,
+            companion_type=body.companion_type,
+            image_urls=body.image_urls,
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     return _to_draft_response(result)
 
 
@@ -167,8 +181,6 @@ async def delete_draft(
     return MessageResponse(message="임시저장이 삭제되었습니다.")
 
 
-# ──────────────────── 게시글 단건/수정/삭제 ────────────────────
-
 @router.get("/{post_id}")
 @inject
 async def get_post(
@@ -181,8 +193,10 @@ async def get_post(
 
     try:
         result = await post_service.get_post(post_id=post_id, user_id=user_id)
-    except ValueError as e:
+    except TripmatePostNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
     return _to_post_response(result)
 
@@ -213,8 +227,10 @@ async def update_post(
             companion_type=body.companion_type,
             image_urls=body.image_urls,
         )
-    except ValueError as e:
+    except TripmatePostNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     except PermissionError as e:
         raise HTTPException(status_code=403, detail=str(e))
 
@@ -233,15 +249,15 @@ async def delete_post(
 
     try:
         await post_service.delete_post(post_id=post_id, user_id=user_id)
-    except ValueError as e:
+    except TripmatePostNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     except PermissionError as e:
         raise HTTPException(status_code=403, detail=str(e))
 
     return MessageResponse(message="게시글이 삭제되었습니다.")
 
-
-# ──────────────────── Display 토글 ────────────────────
 
 @router.patch("/{post_id}/display")
 @inject
@@ -255,15 +271,15 @@ async def toggle_display(
 
     try:
         is_displayed = await post_service.toggle_display(post_id=post_id, user_id=user_id)
-    except ValueError as e:
+    except TripmatePostNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     except PermissionError as e:
         raise HTTPException(status_code=403, detail=str(e))
 
     return ToggleDisplayResponse(post_id=post_id, is_displayed=is_displayed)
 
-
-# ──────────────────── 좋아요 ─────────────────────
 
 @router.post("/{post_id}/like", status_code=201)
 @inject
@@ -277,6 +293,8 @@ async def add_like(
 
     try:
         like_count = await like_service.add_like(user_id=user_id, post_id=post_id)
+    except TripmatePostNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -295,6 +313,8 @@ async def remove_like(
 
     try:
         like_count = await like_service.remove_like(user_id=user_id, post_id=post_id)
+    except TripmatePostNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -304,19 +324,21 @@ async def remove_like(
 @router.get("/{post_id}/likes")
 @inject
 async def get_liked_users(
+    request: Request,
     post_id: str,
     like_service: TripmatePostLikeService = Depends(Provide[Container.tripmate_post_like_service]),
 ) -> LikedUsersResponse:
     """게시글 좋아요 누른 유저 목록"""
+    user_id: str = request.state.user_id
     try:
-        user_ids = await like_service.get_liked_user_ids(post_id=post_id)
-    except ValueError as e:
+        user_ids = await like_service.get_liked_user_ids(post_id=post_id, user_id=user_id)
+    except TripmatePostNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
     return LikedUsersResponse(post_id=post_id, user_ids=user_ids)
 
-
-# ──────────────────── 내부 유틸 ────────────────────
 
 def _to_post_response(dto) -> PostDetailResponse:
     return PostDetailResponse(

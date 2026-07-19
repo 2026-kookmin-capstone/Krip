@@ -1,19 +1,22 @@
-"""워커 tick liveness 관측 — reconcile / node_heartbeat / fanout_dispatch / withdraw_purge."""
+"""백그라운드 worker tick liveness 관측."""
+import asyncio
 import time
 from contextlib import asynccontextmanager
-import asyncio
 
+from app.config.setting import settings
+from app.core.context import db_route_var
 from app.core.metric import (
     WITHDRAW_PURGE_LAST_RUN_DURATION,
     WORKER_LAST_TICK_TIMESTAMP,
     WORKER_TICK_DURATION,
     WORKER_TICK_TOTAL,
 )
-from app.core.context import db_route_var
-from app.config.setting import settings
 
 
-WORKER_NAMES = ("reconcile", "node_heartbeat", "fanout_dispatch", "withdraw_purge")
+WORKER_NAMES = (
+    "reconcile", "pending_recovery", "node_heartbeat", "fanout_dispatch",
+    "withdraw_purge",
+)
 
 # FANOUT_MODE=node_channel 일 때만 실제로 도는 워커.
 # in_process 모드에서 prime 만 해두면 startup 시각이 박힌 채 갱신되지 않아 NODE_TTL 후
@@ -25,6 +28,7 @@ _NODE_CHANNEL_ONLY_WORKERS = frozenset({"node_heartbeat", "fanout_dispatch"})
 # 도메인 라벨로 db_query_duration_seconds 에 합쳐진다 (워커 enum 추가 없이 카디널리티 통제).
 _WORKER_TO_ROUTE = {
     "reconcile": "chat",
+    "pending_recovery": "chat",
     "node_heartbeat": "chat",
     "fanout_dispatch": "chat",
     "withdraw_purge": "auth",

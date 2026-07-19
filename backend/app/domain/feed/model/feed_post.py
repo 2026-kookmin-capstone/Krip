@@ -6,13 +6,14 @@
 - storage prefix: `uploads/perm/{user_id}/feed/{post_id}/{variant}.{ext}`
   → 단건 삭제 = `delete_by_prefix` 한 호출로 변형 3종 일괄.
 """
-from sqlalchemy.sql import func
-from sqlalchemy.orm import relationship
-from sqlalchemy import Column, String, DateTime, Enum, ForeignKey, Index
 import enum
 
-from app.util.id_generator import generate_feed_post_id
+from sqlalchemy import Column, DateTime, Enum, ForeignKey, Index, String
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
+
 from app.database.session import Base
+from app.util.id_generator import generate_feed_post_id
 
 
 class FeedVisibility(str, enum.Enum):

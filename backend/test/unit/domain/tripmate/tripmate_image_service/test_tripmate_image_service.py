@@ -11,20 +11,44 @@
         - draft 미존재 → draft set 빈
         - 일부 고아 → storage / mongo bulk delete
 """
+import asyncio
+import io
 from types import SimpleNamespace
+from unittest.mock import MagicMock
+
+import pytest
+from fastapi import HTTPException, Request, UploadFile
+from starlette.datastructures import Headers
+
+from app.core.object_storage import ObjectStorage
+from app.domain.tripmate.router.tripmate_image import upload_images
 from test.unit.domain.tripmate.tripmate_image_service.model_factory import (
     TripmateImageFactory,
 )
-import pytest
 
-
-# ──────────────────────────────────────────────────────────────────
-# upload_image
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestUploadImage:
     """Tests for TripmateImageService.upload_image."""
+
+    async def test_withdrawn_account_upload_rejected_and_compensated(
+        self, service, storage_mock, image_repo_mock, user_repo_mock,
+    ):
+        """S3 업로드 중 탈퇴가 commit 되면(fence 거부) 메타데이터 저장 없이 업로드를
+        보상 삭제한다 — 미들웨어 검사와 저장 사이의 TOCTOU 창을 닫는 회귀."""
+        storage_mock.upload_perm.return_value = "https://img/uploaded.jpg"
+        user_repo_mock.lock_if_active.return_value = False
+
+        with pytest.raises(PermissionError, match="비활성 계정"):
+            await service.upload_image(
+                user_id="USER_withdrawn",
+                file=b"binary",
+                file_name="test.jpg",
+                content_type="image/jpeg",
+            )
+
+        image_repo_mock.save.assert_not_awaited()
+        storage_mock.delete.assert_awaited_once_with("https://img/uploaded.jpg")
 
     async def test_uploads_to_storage_and_saves_metadata(
         self, service, storage_mock, image_repo_mock,
@@ -46,10 +70,57 @@ class TestUploadImage:
         assert saved.image_url == "https://img/uploaded.jpg"
         assert result.image_url == "https://img/uploaded.jpg"
 
+    async def test_router_rejects_non_image_before_public_upload(self, service):
+        storage = object.__new__(ObjectStorage)
+        storage.bucket = "bucket"
+        storage.endpoint = "https://storage.example.com"
+        storage._client = MagicMock()
+        service.storage = storage
+        request = Request({"type": "http"})
+        request.state.user_id = "USER_a"
+        upload = UploadFile(
+            file=io.BytesIO(b"not-an-image"),
+            filename="payload.jpg",
+            headers=Headers({"content-type": "image/jpeg"}),
+        )
 
-# ──────────────────────────────────────────────────────────────────
-# upload_images — bulk
-# ──────────────────────────────────────────────────────────────────
+        with pytest.raises(HTTPException) as error:
+            await upload_images(request=request, files=[upload], image_service=service)
+
+        assert error.value.status_code == 400
+        storage._client.upload_fileobj.assert_not_called()
+
+    async def test_cancellation_drains_upload_and_compensates_object(
+        self, service, storage_mock, image_repo_mock,
+    ):
+        started = asyncio.Event()
+        release = asyncio.Event()
+
+        async def delayed_upload(*_args, **_kwargs):
+            started.set()
+            await release.wait()
+            return "https://img/cancelled.jpg"
+
+        storage_mock.upload_perm.side_effect = delayed_upload
+        task = asyncio.create_task(service.upload_image(
+            user_id="USER_a",
+            file=b"binary",
+            file_name="cancelled.jpg",
+            content_type="image/jpeg",
+        ))
+        await started.wait()
+        task.cancel()
+        await asyncio.sleep(0)
+        assert not task.done()
+        release.set()
+
+        with pytest.raises(asyncio.CancelledError):
+            await task
+
+        image_repo_mock.save.assert_not_awaited()
+        image_repo_mock.delete_by_image_id.assert_awaited_once()
+        storage_mock.delete.assert_awaited_once_with("https://img/cancelled.jpg")
+
 
 @pytest.mark.unit
 class TestUploadImages:
@@ -74,17 +145,40 @@ class TestUploadImages:
         assert storage_mock.upload_perm.await_count == 3
         assert image_repo_mock.save.await_count == 3
 
-
     async def test_empty_files_returns_empty_list(self, service, storage_mock):
         result = await service.upload_images(user_id="USER_a", files=[])
 
         assert result == []
         storage_mock.upload_perm.assert_not_awaited()
 
+    async def test_partial_failure_cleans_up_succeeded_siblings(
+        self, service, storage_mock, image_repo_mock,
+    ):
+        """1건 실패 시 이미 성공한 형제 업로드를 보상 삭제하고 예외 전파 (고아 방지).
 
-# ──────────────────────────────────────────────────────────────────
-# get_images
-# ──────────────────────────────────────────────────────────────────
+        gather 는 첫 예외에 형제를 취소하지 않아, cleanup 없이는 성공분이 S3 에 고아로
+        남는다. 메타데이터 저장은 전부 성공한 뒤에만 수행되므로 Mongo 보상은 불필요.
+        """
+        storage_mock.upload_perm.side_effect = [
+            "https://img/1.jpg", RuntimeError("boom"), "https://img/3.jpg",
+        ]
+
+        with pytest.raises(RuntimeError):
+            await service.upload_images(
+                user_id="USER_a",
+                files=[
+                    (b"f1", "1.jpg", "image/jpeg"),
+                    (b"f2", "2.jpg", "image/jpeg"),
+                    (b"f3", "3.jpg", "image/jpeg"),
+                ],
+            )
+
+        # 성공한 형제(1, 3) 만 S3 보상 삭제 — Mongo 는 저장 전이라 보상 대상 아님
+        assert storage_mock.delete.await_count == 2
+        deleted = {c.args[0] for c in storage_mock.delete.await_args_list}
+        assert deleted == {"https://img/1.jpg", "https://img/3.jpg"}
+        image_repo_mock.save.assert_not_awaited()
+
 
 @pytest.mark.unit
 class TestGetImages:
@@ -99,10 +193,6 @@ class TestGetImages:
         assert result == images
         image_repo_mock.find_by_user_id.assert_awaited_once_with("USER_a")
 
-
-# ──────────────────────────────────────────────────────────────────
-# delete_image — 권한 + Storage + Mongo
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestDeleteImage:
@@ -119,7 +209,6 @@ class TestDeleteImage:
         storage_mock.delete.assert_not_awaited()
         image_repo_mock.delete_by_image_id.assert_not_awaited()
 
-
     async def test_raises_when_not_owner(
         self, service, image_repo_mock, storage_mock,
     ):
@@ -132,7 +221,6 @@ class TestDeleteImage:
 
         storage_mock.delete.assert_not_awaited()
         image_repo_mock.delete_by_image_id.assert_not_awaited()
-
 
     async def test_deletes_storage_and_metadata_in_order(
         self, service, image_repo_mock, storage_mock,
@@ -149,10 +237,6 @@ class TestDeleteImage:
         image_repo_mock.delete_by_image_id.assert_awaited_once_with("IMG_x")
 
 
-# ──────────────────────────────────────────────────────────────────
-# cleanup_orphaned_images — post / draft 참조 합집합으로 고아 식별
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.mark.unit
 class TestCleanupOrphanedImages:
     """Tests for TripmateImageService.cleanup_orphaned_images."""
@@ -166,11 +250,9 @@ class TestCleanupOrphanedImages:
         result = await service.cleanup_orphaned_images(user_id="USER_a")
 
         assert result == 0
-        # post / draft 조회 자체 skip
         post_image_repo_mock.find_urls_by_user_id.assert_not_awaited()
         storage_mock.delete_many.assert_not_awaited()
         image_repo_mock.delete_by_image_ids.assert_not_awaited()
-
 
     async def test_returns_zero_when_all_referenced(
         self, service, image_repo_mock, storage_mock,
@@ -192,7 +274,6 @@ class TestCleanupOrphanedImages:
         storage_mock.delete_many.assert_not_awaited()
         image_repo_mock.delete_by_image_ids.assert_not_awaited()
 
-
     async def test_handles_no_draft(
         self, service, image_repo_mock, storage_mock,
         post_image_repo_mock, draft_find_one_mock,
@@ -203,7 +284,7 @@ class TestCleanupOrphanedImages:
             TripmateImageFactory.create(image_id="IMG_b", image_url="https://img/b.jpg"),
         ]
         post_image_repo_mock.find_urls_by_user_id.return_value = ["https://img/a.jpg"]
-        draft_find_one_mock.return_value = None  # draft 없음
+        draft_find_one_mock.return_value = None
 
         result = await service.cleanup_orphaned_images(user_id="USER_a")
 
@@ -211,7 +292,6 @@ class TestCleanupOrphanedImages:
         assert result == 1
         storage_mock.delete_many.assert_awaited_once_with(["https://img/b.jpg"])
         image_repo_mock.delete_by_image_ids.assert_awaited_once_with(["IMG_b"])
-
 
     async def test_deletes_only_orphans_from_union(
         self, service, image_repo_mock, storage_mock,

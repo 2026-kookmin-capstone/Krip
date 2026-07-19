@@ -1,20 +1,21 @@
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Request, Depends, Query
-from dependency_injector.wiring import Provide, inject
 
-from app.schema.common import MessageResponse
-from app.domain.friend.service.friendship import FriendshipService
-from app.domain.friend.schema.friendship import (
-    SendFriendRequestBody,
-    FriendshipResponse, FriendshipListResponse, FriendPeerResponse,
-)
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
+
 from app.container import Container
+from app.domain.friend.schema.friendship import (
+    FriendPeerResponse,
+    FriendshipListResponse,
+    FriendshipResponse,
+    SendFriendRequestBody,
+)
+from app.domain.friend.service.friendship import FriendshipService
+from app.schema.common import MessageResponse
 
 
 router = APIRouter(prefix="/friendships", tags=["친구 추가,삭제,조회 기본 관리 - 차단 X"])
 
-
-# ──────────────────── 친구 요청 ────────────────────
 
 @router.post("/requests", status_code=201)
 @inject
@@ -38,13 +39,16 @@ async def send_friend_request(
 @inject
 async def get_received_requests(
     request: Request,
-    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (friendship_id)"),
+    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (이전 응답의 next_cursor)"),
     service: FriendshipService = Depends(Provide[Container.friendship_service]),
 ) -> FriendshipListResponse:
     """내가 받은 PENDING 친구 요청 목록"""
     user_id: str = request.state.user_id
 
-    result = await service.get_received_requests(user_id=user_id, cursor=cursor)
+    try:
+        result = await service.get_received_requests(user_id=user_id, cursor=cursor)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     return _to_list_response(result)
 
 
@@ -52,13 +56,16 @@ async def get_received_requests(
 @inject
 async def get_sent_requests(
     request: Request,
-    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (friendship_id)"),
+    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (이전 응답의 next_cursor)"),
     service: FriendshipService = Depends(Provide[Container.friendship_service]),
 ) -> FriendshipListResponse:
     """내가 보낸 PENDING 친구 요청 목록"""
     user_id: str = request.state.user_id
 
-    result = await service.get_sent_requests(user_id=user_id, cursor=cursor)
+    try:
+        result = await service.get_sent_requests(user_id=user_id, cursor=cursor)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     return _to_list_response(result)
 
 
@@ -122,19 +129,20 @@ async def cancel_friend_request(
     return MessageResponse(message="친구 요청을 취소했습니다.")
 
 
-# ──────────────────── 친구 목록/삭제 ────────────────────
-
 @router.get("")
 @inject
 async def get_friends(
     request: Request,
-    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (friendship_id)"),
+    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (이전 응답의 next_cursor)"),
     service: FriendshipService = Depends(Provide[Container.friendship_service]),
 ) -> FriendshipListResponse:
     """친구 목록 조회 (ACCEPTED, 최신 수락순 30개)"""
     user_id: str = request.state.user_id
 
-    result = await service.get_friends(user_id=user_id, cursor=cursor)
+    try:
+        result = await service.get_friends(user_id=user_id, cursor=cursor)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     return _to_list_response(result)
 
 
@@ -157,8 +165,6 @@ async def remove_friend(
 
     return MessageResponse(message="친구를 삭제했습니다.")
 
-
-# ──────────────────── 내부 유틸 ────────────────────
 
 def _to_friendship_response(dto) -> FriendshipResponse:
     return FriendshipResponse(

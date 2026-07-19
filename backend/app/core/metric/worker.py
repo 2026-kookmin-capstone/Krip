@@ -6,7 +6,7 @@ withdraw_purge 는 일일 1 회 — Histogram 대신 Gauge 로 마지막 사이�
 from prometheus_client import Counter, Gauge, Histogram
 
 
-# 4 종 워커 (reconcile, node_heartbeat, fanout_dispatch, withdraw_purge) 의 tick 관측.
+# 백그라운드 worker별 tick 관측.
 WORKER_LAST_TICK_TIMESTAMP = Gauge(
     "worker_last_tick_timestamp",
     "Last tick wall-clock timestamp (seconds since epoch). WorkerStale alert source.",

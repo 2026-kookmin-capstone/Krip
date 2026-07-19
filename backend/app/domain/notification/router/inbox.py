@@ -1,56 +1,48 @@
-"""인박스 라우터.
-
-자동 읽음 처리는 첫 페이지(`cursor` 미지정) 진입 시에만 `mark_as_read=True` — 응답의
-`is_read` 는 read 전 상태 그대로라 클라가 "방금 본 항목" 강조 가능.
-"""
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Request, Depends, Query
-from dependency_injector.wiring import Provide, inject
 
-from app.schema.common import MessageResponse
-from app.domain.notification.service.inbox import InboxService
-from app.domain.notification.service.exception import InboxItemNotFoundError
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
+
+from app.container import Container
+from app.domain.notification.dto.inbox import (
+    InboxItemData,
+    InboxListData,
+)
 from app.domain.notification.schema.inbox import (
     InboxItemResponse,
     InboxListResponse,
     UnreadCountResponse,
 )
-from app.domain.notification.dto.inbox import (
-    InboxItemData,
-    InboxListData,
-)
-from app.container import Container
+from app.domain.notification.service.exception import InboxItemNotFoundError
+from app.domain.notification.service.inbox import InboxService
+from app.schema.common import MessageResponse
 
 
 router = APIRouter(prefix="/inbox", tags=["인박스"])
 
-
-# ──────────────────── 목록 ────────────────────
 
 @router.get("")
 @inject
 async def list_inbox(
     request: Request,
     cursor: Optional[str] = Query(
-        None, description="다음 페이지 커서 (마지막 항목의 created_at ISO string)",
+        None, description="다음 페이지 커서",
     ),
     service: InboxService = Depends(Provide[Container.inbox_service]),
 ) -> InboxListResponse:
-    """display=true 항목 최신순 페이지네이션. 첫 페이지 진입 시 미읽음 자동 read 처리."""
+    """display=true 항목 최신순 페이지네이션. 각 페이지의 표시된 항목을 자동 read 처리."""
     user_id: str = request.state.user_id
     try:
         result = await service.list_items(
             recipient_id=user_id,
             cursor=cursor,
-            mark_as_read=(cursor is None),
+            mark_as_read=True,
         )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
     return _to_list_response(result)
 
-
-# ──────────────────── 미읽음 카운트 ────────────────────
 
 @router.get("/unread-count")
 @inject
@@ -63,8 +55,6 @@ async def get_unread_count(
     count = await service.count_unread(recipient_id=user_id)
     return UnreadCountResponse(unread_count=count)
 
-
-# ──────────────────── X 버튼 (숨기기) ────────────────────
 
 @router.patch("/{inbox_item_id}/hide")
 @inject
@@ -84,8 +74,6 @@ async def hide_inbox_item(
 
     return MessageResponse(message="인박스 항목이 숨겨졌습니다.")
 
-
-# ──────────────────── 내부 유틸 ────────────────────
 
 def _to_response(item: InboxItemData) -> InboxItemResponse:
     return InboxItemResponse(

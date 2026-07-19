@@ -3,13 +3,18 @@
 `load_viewable_post` 의 가시성/차단 로직은 `access/test_load_viewable_post.py` 가 cover —
 본 모듈은 helper 자체를 stub 으로 치환하고 좋아요 비즈니스 로직 (중복/취소/카운트) 만 검증.
 """
-from unittest.mock import AsyncMock, MagicMock
-from test.unit.domain.feed.mock_factory import FakeUnitOfWork, make_mock_session
-import pytest
 from datetime import datetime, timezone
+from unittest.mock import AsyncMock, MagicMock
 
-from app.domain.feed.service.feed_post_like import FeedPostLikeService
+import pytest
+
 from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
+from app.domain.feed.service.feed_post_like import FeedPostLikeService
+from test.unit.domain.feed.mock_factory import (
+    FakeUnitOfWork,
+    make_mock_session,
+    make_user_block_repo_mock,
+)
 
 
 def _mk_post(post_id="FDP_x", user_id="USER_owner"):
@@ -31,7 +36,7 @@ def mock_session():
 @pytest.fixture
 def like_repo_mock():
     mock = AsyncMock()
-    mock.find_by_user_and_post.return_value = None  # 기본: 안 누른 상태
+    mock.find_by_user_and_post.return_value = None
     mock.count_by_post.return_value = 0
     mock.find_with_user_by_post.return_value = []
     mock.save.side_effect = lambda like: like
@@ -61,9 +66,24 @@ def viewable_post_stub():
 
 
 @pytest.fixture
+def block_repo_mock():
+    """UserBlockRepository mock — 좋아요 목록 차단 필터용. 기본 "차단 관계 없음"."""
+    return make_user_block_repo_mock()
+
+
+@pytest.fixture
+def feed_post_repo_mock(viewable_post_stub):
+    """IntegrityError 분류용 재조회 — 기본 "게시물 존재" (PK 중복 케이스)."""
+    mock = AsyncMock()
+    mock.find_by_post_id.return_value = viewable_post_stub
+    return mock
+
+
+@pytest.fixture
 def service(
     monkeypatch, mock_session,
     like_repo_mock, detail_repo_mock, viewable_post_stub, inbox_service_mock,
+    block_repo_mock, feed_post_repo_mock,
 ):
     """가시성 통과 default 로 주입된 like service.
 
@@ -78,7 +98,15 @@ def service(
         "app.domain.feed.service.feed_post_like.UserDetailInformRepository",
         lambda session: detail_repo_mock,
     )
-    # 기본: load_viewable_post 가 stub post 반환 (가시성 통과)
+    monkeypatch.setattr(
+        "app.domain.feed.service.feed_post_like.UserBlockRepository",
+        lambda session: block_repo_mock,
+    )
+    monkeypatch.setattr(
+        "app.domain.feed.service.feed_post_like.FeedPostRepository",
+        lambda session: feed_post_repo_mock,
+    )
+
     async def _stub_load(session, *, viewer_id, post_id):
         return viewable_post_stub
     monkeypatch.setattr(

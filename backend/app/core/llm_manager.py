@@ -1,11 +1,19 @@
-from typing import Dict, List
-from langchain_google_genai import ChatGoogleGenerativeAI
-import httpx
-from functools import lru_cache
 from enum import Enum
+from functools import lru_cache
+from typing import Dict, List
 
-from app.core.instrumentation import GeminiInstrumentationHandler
+from langchain_google_genai import ChatGoogleGenerativeAI
+
 from app.config.setting import settings
+from app.core.instrumentation import GeminiInstrumentationHandler
+
+
+# 호출당 데드라인 (미설정 시 무한 대기).
+_LLM_TIMEOUT_SECONDS = 180
+# 재시도 없음 — langchain-google-genai 3.2.0 이 429 재시도를 동기 time.sleep 으로 처리하는 문제 발견.
+# 이벤트 루프를 블로킹하기 때문. 쿼터 소진은 429 로 표면화해 클라가 백오프 필요.
+# 1 은 HttpRetryOptions.attempts(원 요청 포함 총 시도 횟수)로 전달된다 — 0 으로 "수정" 금지.
+_LLM_MAX_RETRIES = 1
 
 
 class ModelName(str, Enum):
@@ -27,7 +35,6 @@ class LLMManager:
         self._models: Dict[str, ChatGoogleGenerativeAI] = {}
         self._initialized = False
 
-
     def initialize(self) -> bool:
         """모든 Gemini 모델을 초기화합니다.
 
@@ -42,11 +49,12 @@ class LLMManager:
                     model=model.value,
                     google_api_key=settings.GOOGLE_GEMINI_API_KEY,
                     callbacks=[handler],
+                    timeout=_LLM_TIMEOUT_SECONDS,
+                    max_retries=_LLM_MAX_RETRIES,
                 )
             self._initialized = True
 
         return self._initialized
-
 
     def get_model(self, model_name: str) -> ChatGoogleGenerativeAI:
         """모델 이름으로 Gemini 모델을 반환합니다."""
@@ -60,25 +68,6 @@ class LLMManager:
             )
 
         return self._models[model_name]
-
-
-    async def check_connection(self) -> bool:
-        """Google Gemini API 연결 상태를 확인합니다."""
-        try:
-            async with httpx.AsyncClient() as client:
-                response = await client.get(
-                    f"https://generativelanguage.googleapis.com/v1beta/models"
-                    f"?key={settings.GOOGLE_GEMINI_API_KEY}",
-                    timeout=5.0,
-                )
-                return response.status_code == 200
-        except Exception:
-            return False
-
-
-    def is_initialized(self) -> bool:
-        """초기화 상태를 반환합니다."""
-        return self._initialized
 
 
 @lru_cache(maxsize=1)

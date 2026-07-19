@@ -1,10 +1,11 @@
-from typing import List, Optional
-from types import SimpleNamespace
 from datetime import datetime, timezone
+from types import SimpleNamespace
+from typing import List, Optional
 
-from app.domain.friend.model.friendship import FriendshipStatus
-from app.domain.auth.model.user_travel_style import TravelStyle
+from app.domain.auth.model.user import UserStatus
 from app.domain.auth.model.user_detail_inform import Gender
+from app.domain.auth.model.user_travel_style import TravelStyle
+from app.domain.friend.model.friendship import FriendshipStatus
 
 
 class UserFactory:
@@ -27,11 +28,14 @@ class UserFactory:
         nationality: str = "KR",
         travel_styles: Optional[List[TravelStyle]] = None,
         detail: object = "default",
+        created_at: Optional[datetime] = None,
+        status: UserStatus = UserStatus.ACTIVE,
     ) -> SimpleNamespace:
         """detail=None 을 전달하면 2차 회원가입 미완료 케이스를 재현할 수 있다."""
         cls._counter += 1
         uid = user_id or f"USER_test_{cls._counter:04d}"
         uname = user_name or f"user{cls._counter}"
+        created = created_at or datetime(2026, 1, 1, tzinfo=timezone.utc)
 
         if detail == "default":
             detail_obj = SimpleNamespace(
@@ -43,11 +47,13 @@ class UserFactory:
                 profile_image_url=None,
             )
         else:
-            detail_obj = detail  # None 또는 사용자 지정
+            detail_obj = detail
 
         styles = [SimpleNamespace(style=s) for s in (travel_styles or [])]
-        return SimpleNamespace(user_id=uid, detail=detail_obj, travel_styles=styles)
-
+        return SimpleNamespace(
+            user_id=uid, detail=detail_obj, travel_styles=styles, created_at=created,
+            status=status,
+        )
 
     @classmethod
     def reset_counter(cls) -> None:
@@ -88,7 +94,6 @@ class FriendshipFactory:
             addressee=addressee,
         )
 
-
     @classmethod
     def reset_counter(cls) -> None:
         cls._counter = 0
@@ -117,7 +122,6 @@ class UserBlockFactory:
             created_at=created_at or now,
             blocked=blocked,
         )
-
 
     @classmethod
     def reset_counter(cls) -> None:

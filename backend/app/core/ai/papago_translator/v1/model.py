@@ -1,10 +1,11 @@
 from typing import Literal
-from pydantic import BaseModel, Field
-import httpx
 
-from app.core.logger import get_logger
-from app.core.instrumentation import ai_external_call
+import httpx
+from pydantic import BaseModel, Field
+
 from app.config.setting import settings
+from app.core.instrumentation import ai_external_call
+from app.core.logger import get_logger
 
 
 logger = get_logger("papago_translator")
@@ -43,7 +44,6 @@ class PapagoTranslatorModel:
         self._client_secret = client_secret or settings.PAPAGO_CLIENT_SECRET
         self._client: httpx.AsyncClient | None = None
 
-
     def load_client(self) -> None:
         """공용 비동기 HTTP 클라이언트를 메모리에 보관합니다.
 
@@ -61,14 +61,12 @@ class PapagoTranslatorModel:
         )
         logger.info("Papago HTTP 클라이언트 초기화 완료")
 
-
     async def close_client(self) -> None:
         """서버 종료 시 호출. 열려있는 커넥션을 정리합니다."""
         if self._client is None:
             return
         await self._client.aclose()
         self._client = None
-
 
     async def detect(self, text: str) -> DetectResult:
         """입력 문장의 언어를 감지합니다.
@@ -88,7 +86,6 @@ class PapagoTranslatorModel:
 
         payload = response.json()
         return DetectResult(lang_code=payload["langCode"])
-
 
     async def translate(
         self,

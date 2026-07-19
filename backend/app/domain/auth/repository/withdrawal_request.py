@@ -1,8 +1,8 @@
-from typing import List
 from datetime import datetime
+from typing import List
 
-from app.domain.auth.model.withdrawal_request import WithdrawalRequest
 from app.core.instrumentation import measure_mongo_op
+from app.domain.auth.model.withdrawal_request import WithdrawalRequest
 
 
 class WithdrawalRequestRepository:
@@ -12,12 +12,11 @@ class WithdrawalRequestRepository:
     유예 기간 내 재요청 가드는 RDB `users.status` 에서 수행하므로 여기서는 무조건 갱신.
     """
 
-    # ──────────────────── Upsert ────────────────────
-
     @measure_mongo_op("update", "withdrawal_request")
     async def upsert(
         self,
         user_id: str,
+        generation_id: str,
         requested_at: datetime,
         scheduled_purge_at: datetime,
     ) -> None:
@@ -31,15 +30,13 @@ class WithdrawalRequestRepository:
             {
                 "$set": {
                     "user_id": user_id,
+                    "generation_id": generation_id,
                     "requested_at": requested_at,
                     "scheduled_purge_at": scheduled_purge_at,
                 },
             },
             upsert=True,
         )
-
-
-    # ──────────────────── Read ────────────────────
 
     @measure_mongo_op("find", "withdrawal_request")
     async def find_due(self, now: datetime) -> List[WithdrawalRequest]:
@@ -52,8 +49,31 @@ class WithdrawalRequestRepository:
             WithdrawalRequest.scheduled_purge_at <= now,
         ).to_list()
 
+    @measure_mongo_op("find", "withdrawal_request")
+    async def find_by_user_id(self, user_id: str) -> WithdrawalRequest | None:
+        return await WithdrawalRequest.find_one(WithdrawalRequest.user_id == user_id)
 
-    # ──────────────────── Delete ────────────────────
+    @measure_mongo_op("delete", "withdrawal_request")
+    async def delete_if_generation(
+        self,
+        user_id: str,
+        generation_id: str | None,
+        requested_at: datetime,
+    ) -> bool:
+        generation_filter: dict = {"generation_id": generation_id}
+        if generation_id is None:
+            generation_filter = {
+                "$or": [
+                    {"generation_id": {"$exists": False}},
+                    {"generation_id": None},
+                ],
+            }
+        result = await WithdrawalRequest.get_motor_collection().delete_one({
+            "user_id": user_id,
+            "requested_at": requested_at,
+            **generation_filter,
+        })
+        return result.deleted_count == 1
 
     @measure_mongo_op("delete", "withdrawal_request")
     async def delete_by_user_id(self, user_id: str) -> None:

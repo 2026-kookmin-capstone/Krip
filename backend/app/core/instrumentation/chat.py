@@ -5,6 +5,7 @@
 import time
 from contextlib import asynccontextmanager
 
+from app.config.setting import settings
 from app.core.metric import (
     CHAT_ACTIVE_NODES,
     CHAT_FANOUT_DISPATCH_DURATION,
@@ -22,12 +23,9 @@ from app.core.metric import (
     CHAT_WS_OP_TOTAL,
     WORKER_LAST_TICK_TIMESTAMP,
 )
-from app.config.setting import settings
 
 
-# ────────────────────────────────────────────────────────────────────
 # WS 연결 / op
-# ────────────────────────────────────────────────────────────────────
 
 CHAT_WS_CONNECT_RESULTS = ("ok", "origin_denied", "auth_expired", "auth_inactive", "session_failed", "other")
 
@@ -111,9 +109,7 @@ async def chat_message_send_timer(fanout_path: str):
         CHAT_MESSAGE_SEND_DURATION.labels(fanout_path=fanout_path).observe(elapsed)
 
 
-# ────────────────────────────────────────────────────────────────────
 # Fan-out publish / dispatch
-# ────────────────────────────────────────────────────────────────────
 
 # 다른 노드 envelope 도 받아 unknown op 가능 → 'other' 통합.
 _KNOWN_FANOUT_OPS = frozenset({"room", "user", "session", "subscribe", "unsubscribe"})
@@ -163,34 +159,38 @@ def chat_node_heartbeat_failure() -> None:
     CHAT_NODE_HEARTBEAT_FAILURES.labels(node_id=settings.NODE_ID).inc()
 
 
-# ────────────────────────────────────────────────────────────────────
 # Reconcile / Unread recover
-# ────────────────────────────────────────────────────────────────────
 
-# batch_pop result:
-# - empty        : SET 비어 0건 pop
-# - ok           : Mongo aggregate + RDB commit 모두 성공 (partial UPDATE 실패는 outcome=failed)
-# - mongo_failed : Mongo 실패 → 배치 통째 재적재
-# - rdb_failed   : commit 실패 → 배치 통째 재적재
+# lease-claim batch result (metric name의 `pop`은 호환성을 위해 유지):
+# - empty        : ready/deferred에서 claim한 room 없음
+# - ok           : Mongo aggregate + RDB commit 후 성공 room token-safe ACK
+# - mongo_failed : Mongo 실패 → processing lease 유지, 만료 후 reclaim
+# - rdb_failed   : commit 실패 → processing lease 유지, 만료 후 reclaim
 # - other        : catch-all
 CHAT_RECONCILE_BATCH_RESULTS = ("empty", "ok", "mongo_failed", "rdb_failed", "other")
 
 # rooms_processed outcome:
 # - updated : UPDATE 성공
 # - skipped : Mongo hit 0 (방 생성 직후 삭제 등)
-# - failed  : 단일 방 UPDATE 실패 → 그 방만 재적재
+# - failed  : 단일 방 UPDATE 실패 → ACK하지 않고 lease 만료 후 reclaim
 CHAT_RECONCILE_OUTCOMES = ("updated", "skipped", "failed")
 
 # unread_recover result:
 # - ok             : 정상 종료 (활성 방 없음 또는 counts 반영 완료)
-# - redis_failed   : pipeline 실패 후 DEL 정리 성공
-# - cleanup_failed : DEL 도 실패 — partial state 잔존 (관측 필요)
+# - redis_failed   : marker/generation/Lua 등 Redis 연산 실패
+# - sql_failed     : room lock 또는 membership SQL 조회 실패
+# - mongo_failed   : residual count 실패
+# - cancelled      : cancellation 전 retry marker 보존/복원 성공
+# - cleanup_failed : 실패 후 retry marker 복원 실패
 # - other          : catch-all
-CHAT_UNREAD_RECOVER_RESULTS = ("ok", "redis_failed", "cleanup_failed", "other")
+CHAT_UNREAD_RECOVER_RESULTS = (
+    "ok", "redis_failed", "sql_failed", "mongo_failed", "cancelled",
+    "cleanup_failed", "other",
+)
 
 
 def chat_reconcile_dirty_set_size_set(value: int) -> None:
-    """매 tick 시작 시 SCARD 결과 set."""
+    """매 tick 시작 시 ready + processing + deferred 전체 backlog를 기록."""
     CHAT_RECONCILE_DIRTY_SET_SIZE.set(value)
 
 

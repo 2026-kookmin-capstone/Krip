@@ -5,25 +5,21 @@ PlaceRepository 는 MongoDB 의존이라 Mock 으로 대체 (RDB 플로우만 �
 """
 
 from unittest.mock import AsyncMock, MagicMock
-from sqlalchemy import select
-import pytest
 
-from app.domain.tour.service.tour_plan import TourPlanService
+import pytest
+from sqlalchemy import select
+
+from app.domain.tour.dto.tour_plan import TourPlanItemCreateInput
+from app.domain.tour.model.tour_plan import TourPlan
+from app.domain.tour.model.tour_plan_item import TourPlanItem
 from app.domain.tour.service.exception import (
     TourPlanItemNotFoundError,
     TourPlanNotFoundError,
 )
-from app.domain.tour.model.tour_plan_item import TourPlanItem
-from app.domain.tour.model.tour_plan import TourPlan
-from app.domain.tour.dto.tour_plan import TourPlanItemCreateInput
+from app.domain.tour.service.tour_plan import TourPlanService
 
 
 pytestmark = pytest.mark.integration
-
-
-# ──────────────────────────────────────────────────────────────────
-# Fixtures
-# ──────────────────────────────────────────────────────────────────
 
 
 @pytest.fixture
@@ -50,11 +46,6 @@ def plan_service(uow, monkeypatch, fake_place_doc):
     return TourPlanService(uow=uow)
 
 
-# ──────────────────────────────────────────────────────────────────
-# create_plan
-# ──────────────────────────────────────────────────────────────────
-
-
 class TestCreatePlanFlow:
     async def test_creates_plan_and_items(self, plan_service, seed_users, session_factory):
         (a,) = await seed_users(1)
@@ -73,7 +64,6 @@ class TestCreatePlanFlow:
         assert result.travel_days == 2
         assert len(result.items) == 2
 
-        # DB 검증
         async with session_factory() as s:
             plan_rows = (await s.execute(select(TourPlan))).scalars().all()
             assert len(plan_rows) == 1
@@ -83,11 +73,6 @@ class TestCreatePlanFlow:
             assert len(item_rows) == 2
             day_numbers = sorted(i.day_number for i in item_rows)
             assert day_numbers == [1, 2]
-
-
-# ──────────────────────────────────────────────────────────────────
-# get_plan / get_plans
-# ──────────────────────────────────────────────────────────────────
 
 
 class TestGetPlanFlow:
@@ -102,14 +87,12 @@ class TestGetPlanFlow:
 
         assert result.plan_id == created.plan_id
         assert len(result.items) == 1
-        assert result.items[0].rating == 4.5  # MongoDB 라이브 매핑
-
+        assert result.items[0].rating == 4.5
 
     async def test_raises_not_found(self, plan_service, seed_users):
         (a,) = await seed_users(1)
         with pytest.raises(TourPlanNotFoundError):
             await plan_service.get_plan(plan_id="TP_ghost", user_id=a)
-
 
     async def test_raises_permission_for_other_user(self, plan_service, seed_users):
         a, b, _ = await seed_users(3)
@@ -130,7 +113,6 @@ class TestGetPlansFlow:
 
         assert result.plans == []
 
-
     async def test_returns_only_own_plans(self, plan_service, seed_users):
         a, b, _ = await seed_users(3)
         await plan_service.create_plan(
@@ -148,11 +130,6 @@ class TestGetPlansFlow:
         assert result.plans[0].title == "A1"
 
 
-# ──────────────────────────────────────────────────────────────────
-# update_plan_title / delete_plan
-# ──────────────────────────────────────────────────────────────────
-
-
 class TestUpdatePlanTitleFlow:
     async def test_changes_title_and_updated_at(self, plan_service, seed_users, session_factory):
         (a,) = await seed_users(1)
@@ -167,8 +144,7 @@ class TestUpdatePlanTitleFlow:
         async with session_factory() as s:
             row = (await s.execute(select(TourPlan).where(TourPlan.plan_id == created.plan_id))).scalar_one()
             assert row.title == "New"
-            assert row.updated_at >= original_updated_at  # 갱신됨
-
+            assert row.updated_at >= original_updated_at
 
     async def test_clears_title(self, plan_service, seed_users, session_factory):
         (a,) = await seed_users(1)
@@ -199,12 +175,7 @@ class TestDeletePlanFlow:
 
         async with session_factory() as s:
             assert (await s.execute(select(TourPlan))).scalars().all() == []
-            assert (await s.execute(select(TourPlanItem))).scalars().all() == []  # cascade
-
-
-# ──────────────────────────────────────────────────────────────────
-# add_day / remove_day
-# ──────────────────────────────────────────────────────────────────
+            assert (await s.execute(select(TourPlanItem))).scalars().all() == []
 
 
 class TestAddDayFlow:
@@ -240,13 +211,11 @@ class TestRemoveDayFlow:
 
         async with session_factory() as s:
             plan_row = (await s.execute(select(TourPlan).where(TourPlan.plan_id == created.plan_id))).scalar_one()
-            # travel_days 유지 (gap 보존)
             assert plan_row.travel_days == 3
 
             items = (await s.execute(select(TourPlanItem).where(TourPlanItem.plan_id == created.plan_id))).scalars().all()
             day_numbers = sorted(i.day_number for i in items)
-            assert day_numbers == [1, 3]  # day=2 만 사라짐 (gap)
-
+            assert day_numbers == [1, 3]
 
     async def test_then_add_day_assigns_max_plus_one(
         self, plan_service, seed_users, session_factory,
@@ -267,9 +236,7 @@ class TestRemoveDayFlow:
 
         async with session_factory() as s:
             row = (await s.execute(select(TourPlan).where(TourPlan.plan_id == created.plan_id))).scalar_one()
-            # travel_days = 4 (3+1, gap 재사용 X)
             assert row.travel_days == 4
-
 
     async def test_idempotent_for_empty_day(self, plan_service, seed_users):
         (a,) = await seed_users(1)
@@ -278,13 +245,7 @@ class TestRemoveDayFlow:
             items=[TourPlanItemCreateInput(day_number=1, place_id="PLACE_INT_001", visit_time=None)],
         )
 
-        # day=2 는 비어있음 — 에러 없이 정상
         await plan_service.remove_day(plan_id=created.plan_id, user_id=a, day_number=2)
-
-
-# ──────────────────────────────────────────────────────────────────
-# add_item / remove_item / move_item / update_item
-# ──────────────────────────────────────────────────────────────────
 
 
 class TestAddItemFlow:
@@ -309,7 +270,6 @@ class TestAddItemFlow:
                 )
             ).scalars().all()
             assert len(items) == 2
-            # 새로 추가된 카드의 position 이 더 큼
             assert items[-1].item_id == added.item_id
             assert items[-1].position > items[0].position
 
@@ -332,7 +292,6 @@ class TestUpdateItemFlow:
         async with session_factory() as s:
             row = (await s.execute(select(TourPlanItem).where(TourPlanItem.item_id == item_id))).scalar_one()
             assert row.visit_time == "15:30"
-
 
     async def test_url_mismatch_raises_404_equivalent(self, plan_service, seed_users):
         (a,) = await seed_users(1)

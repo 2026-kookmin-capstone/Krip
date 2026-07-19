@@ -7,17 +7,28 @@
 """
 from __future__ import annotations
 
-from typing import Optional
-from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
-import os
 import asyncio
+import os
+import uuid
+from collections import deque
+from typing import Optional
 
-from app.domain.chat.repository.chat_room import ChatRoomRepository
-from app.domain.chat.repository.chat_message import ChatMessageRepository
-from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
-from app.database.session import mongodb
-from app.core.redis import get_redis_client
-from app.core.logger import get_logger
+from sqlalchemy import text
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
+
+from app.core.chat.lua_script import lua_scripts
+from app.core.chat.redis_key import (
+    DIRTY_CHAT_ROOM_DEFERRED_KEY,
+    DIRTY_CHAT_ROOM_KEY,
+    DIRTY_CHAT_ROOM_PROCESSING_KEY,
+    DIRTY_CHAT_ROOM_PROCESSING_OWNER_KEY,
+    ROOM_PENDING_MESSAGE_PREFIX,
+    read_sync_key,
+    room_members_gen_key,
+    unread_key,
+    unread_recovery_required_key,
+    unread_watermark_key,
+)
 from app.core.instrumentation import (
     chat_reconcile_batch_pop_inc,
     chat_reconcile_dirty_set_size_set,
@@ -26,7 +37,17 @@ from app.core.instrumentation import (
     chat_unread_recover_inc,
     worker_tick,
 )
-from app.core.chat.redis_key import DIRTY_CHAT_ROOM_KEY, unread_key
+from app.core.logger import get_logger
+from app.core.redis import get_redis_client, get_redis_dedupe_client
+from app.database.session import mongodb
+from app.domain.chat.constants import UNREAD_COUNT_CAP, UNREAD_COUNT_LIMIT
+from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
+from app.domain.chat.repository.chat_message import ChatMessageRepository
+from app.domain.chat.repository.chat_room import ChatRoomRepository
+from app.domain.chat.service.message import (
+    _clear_pending_message,
+    _recover_pending_message,
+)
 
 
 logger = get_logger("chat.reconcile")
@@ -34,25 +55,86 @@ logger = get_logger("chat.reconcile")
 
 # 너무 크면 Mongo aggregate 페이로드 비대 + tick 길어져 shutdown 반응 느려짐.
 RECONCILE_BATCH_SIZE = 500
+RECONCILE_CLAIM_LEASE_MS = 60_000
+RECONCILE_MAX_BATCHES_PER_TICK = 20
+PENDING_SWEEP_BATCH_SIZE = 100
+PENDING_SCAN_MAX_CALLS_PER_TICK = 100
+PENDING_RECOVERY_MAX_ROOMS_PER_TICK = 5
+PENDING_RECOVERY_CANCEL_AFTER_SEC = 5.0
+PENDING_DISCOVERY_BACKLOG_LIMIT = 100
 
 # alarm SLO 15분보다 충분히 짧게. env 로 override (smoke/개발에서 1~2초로 줄임).
 RECONCILE_INTERVAL_SEC = int(os.getenv("CHAT_RECONCILE_INTERVAL_SEC", "300"))
+PENDING_RECOVERY_INTERVAL_SEC = int(
+    os.getenv("CHAT_PENDING_RECOVERY_INTERVAL_SEC", "5"),
+)
 
 RECONCILE_SHUTDOWN_GRACE_SEC = 10.0
 
 # 재접속당 방 수십 개 × 동시 재접속이면 Mongo 부하 폭주 — semaphore 로 제한.
 UNREAD_MONGO_CONCURRENCY = 10
 
-# 카톡 관례 — 999+ 캡.
-UNREAD_COUNT_CAP = 999
-UNREAD_COUNT_LIMIT = UNREAD_COUNT_CAP + 1
-
 
 # main.py lifespan 에서 1회 주입.
 _session_factory: Optional[async_sessionmaker[AsyncSession]] = None
 
 _reconcile_task: Optional[asyncio.Task] = None
+_pending_recovery_task: Optional[asyncio.Task] = None
 _stop_event: Optional[asyncio.Event] = None
+_pending_scan_cursor = 0
+_pending_key_backlog: deque[str] = deque()
+_pending_key_backlog_set: set[str] = set()
+_pending_page_offset = 0
+
+
+class PendingRecoveryBatchError(RuntimeError):
+    pass
+
+
+class UnreadRecoveryApplyError(RuntimeError):
+    pass
+
+
+class UnreadRecoverySqlError(RuntimeError):
+    pass
+
+
+class UnreadRecoveryTerminalError(RuntimeError):
+    def __init__(self, result: str, message: str) -> None:
+        super().__init__(message)
+        self.result = result
+
+
+async def get_unread_snapshot_if_recovered(
+    user_id: str,
+) -> Optional[tuple[dict[str, int], dict[str, int], dict[str, int]]]:
+    """marker 확인과 unread snapshot을 원자적으로 읽는다. recovery 중이면 None."""
+    script = lua_scripts.get_unread_snapshot
+    if script is None:
+        raise RuntimeError("get_unread_snapshot Lua not loaded")
+    result = await script(
+        keys=[
+            unread_recovery_required_key(user_id), unread_key(user_id),
+            unread_watermark_key(user_id),
+            read_sync_key(user_id),
+        ],
+        args=[],
+    )
+    if int(result[0]) == 0:
+        return None
+
+    def _decode(value: object) -> str:
+        return value.decode("utf-8") if isinstance(value, bytes) else str(value)
+
+    counts: dict[str, int] = {}
+    watermarks: dict[str, int] = {}
+    read_watermarks: dict[str, int] = {}
+    for index in range(1, len(result), 4):
+        room_id = _decode(result[index])
+        counts[room_id] = int(result[index + 1])
+        watermarks[room_id] = int(result[index + 2])
+        read_watermarks[room_id] = int(result[index + 3])
+    return counts, watermarks, read_watermarks
 
 
 def _require_factory() -> async_sessionmaker[AsyncSession]:
@@ -65,26 +147,69 @@ def _require_factory() -> async_sessionmaker[AsyncSession]:
     return _session_factory
 
 
+def _as_room_list(value) -> list[str]:
+    if not value:
+        return []
+    if isinstance(value, (list, set, tuple)):
+        return list(value)
+    return [value]
+
+
+async def _claim_dirty_rooms(redis_hot, claim_token: str) -> tuple[list[str], bool]:
+    """dirty room 한 배치를 lease token으로 원자 claim한다."""
+    script = lua_scripts.claim_dirty_rooms
+    if script is None:
+        raise RuntimeError("claim_dirty_rooms Lua script가 로드되지 않았습니다.")
+    result = _as_room_list(await script(
+        keys=[
+            DIRTY_CHAT_ROOM_KEY,
+            DIRTY_CHAT_ROOM_PROCESSING_KEY,
+            DIRTY_CHAT_ROOM_PROCESSING_OWNER_KEY,
+            DIRTY_CHAT_ROOM_DEFERRED_KEY,
+        ],
+        args=[RECONCILE_BATCH_SIZE, RECONCILE_CLAIM_LEASE_MS, claim_token],
+    ))
+    if not result:
+        return [], False
+    return result[1:], bool(int(result[0]))
+
+
+async def _ack_dirty_rooms(claim_token: str, room_ids: list[str]) -> int:
+    if not room_ids:
+        return 0
+    script = lua_scripts.ack_dirty_rooms
+    if script is None:
+        raise RuntimeError("ack_dirty_rooms Lua script가 로드되지 않았습니다.")
+    return int(await script(
+        keys=[
+            DIRTY_CHAT_ROOM_PROCESSING_KEY,
+            DIRTY_CHAT_ROOM_PROCESSING_OWNER_KEY,
+            DIRTY_CHAT_ROOM_DEFERRED_KEY,
+            DIRTY_CHAT_ROOM_KEY,
+        ],
+        args=[claim_token, *room_ids],
+    ))
+
+
 async def reconcile_last_message_once() -> int:
-    """`dirty:chat_room` 에서 한 배치 pop 후 RDB `last_message_*` 를 Mongo 값으로 갱신.
+    """dirty room 한 배치를 claim 후 RDB `last_message_*` 를 Mongo 값으로 갱신.
 
     Returns:
-        이번 호출에서 pop 한 방 개수. `< BATCH_SIZE` 면 drain 중단 신호로 사용.
+        이번 호출에서 claim 한 방 개수. `< BATCH_SIZE` 면 drain 중단 신호로 사용.
     """
     redis_hot = await get_redis_client()
 
-    chat_reconcile_dirty_set_size_set(await redis_hot.scard(DIRTY_CHAT_ROOM_KEY))
+    dirty_size = await redis_hot.scard(DIRTY_CHAT_ROOM_KEY)
+    processing_size = await redis_hot.zcard(DIRTY_CHAT_ROOM_PROCESSING_KEY)
+    deferred_size = await redis_hot.scard(DIRTY_CHAT_ROOM_DEFERRED_KEY)
+    chat_reconcile_dirty_set_size_set(dirty_size + processing_size + deferred_size)
 
     async with chat_reconcile_tick():
-        # SPOP count — redis-py 는 count 인자가 있으면 list 반환.
-        popped = await redis_hot.spop(DIRTY_CHAT_ROOM_KEY, RECONCILE_BATCH_SIZE)
-        if not popped:
-            chat_reconcile_batch_pop_inc("empty")
-            return 0
-        room_ids: list[str] = list(popped) if isinstance(popped, (list, set)) else [popped]
+        claim_token = uuid.uuid4().hex
+        room_ids, has_more_ready = await _claim_dirty_rooms(redis_hot, claim_token)
         if not room_ids:
             chat_reconcile_batch_pop_inc("empty")
-            return 0
+            return RECONCILE_BATCH_SIZE if has_more_ready else 0
 
         message_repo = ChatMessageRepository(mongodb.database)
         try:
@@ -92,21 +217,21 @@ async def reconcile_last_message_once() -> int:
         except Exception as e:
             chat_reconcile_batch_pop_inc("mongo_failed")
             logger.warning(
-                "reconcile: Mongo aggregate 실패 → {} 개 방 재적재: {}",
+                "reconcile: Mongo aggregate 실패 → {} 개 processing 유지: {}",
                 len(room_ids), type(e).__name__,
             )
-            await redis_hot.sadd(DIRTY_CHAT_ROOM_KEY, *room_ids)
             return 0
 
         if not last_by_room:
             # Mongo 메시지 0 — 방 생성 직후 삭제 등의 이상 상태. UPDATE 없이 결과만 흘려보냄.
+            await _ack_dirty_rooms(claim_token, room_ids)
             chat_reconcile_batch_pop_inc("ok")
             chat_reconcile_rooms_processed_inc("skipped", len(room_ids))
             logger.info(
-                "reconcile: pop={} 이지만 Mongo hit 0 — last_message 없는 방으로 간주하고 skip",
+                "reconcile: claimed={} 이지만 Mongo hit 0 — last_message 없는 방으로 간주하고 ACK",
                 len(room_ids),
             )
-            return len(room_ids)
+            return RECONCILE_BATCH_SIZE if has_more_ready else len(room_ids)
 
         factory = _require_factory()
         failed: list[str] = []
@@ -125,7 +250,7 @@ async def reconcile_last_message_once() -> int:
                     updated += 1
                 except Exception as e:
                     logger.warning(
-                        "reconcile: 방 {} UPDATE 실패 — 재적재: {}",
+                        "reconcile: 방 {} UPDATE 실패 — processing lease 유지: {}",
                         room_id, type(e).__name__,
                     )
                     failed.append(room_id)
@@ -135,7 +260,7 @@ async def reconcile_last_message_once() -> int:
                 # commit 실패 시 명시 rollback — `async with` 가 자동 rollback 하지 않으면
                 # 커넥션이 aborted 트랜잭션 상태로 풀에 반납될 위험.
                 logger.warning(
-                    "reconcile: commit 실패 → 배치 전체 재적재 ({} 개): {}",
+                    "reconcile: commit 실패 → 배치 processing lease 유지 ({} 개): {}",
                     len(last_by_room), type(e).__name__,
                 )
                 try:
@@ -149,21 +274,137 @@ async def reconcile_last_message_once() -> int:
                 updated = 0
                 commit_failed = True
 
-        if failed:
-            await redis_hot.sadd(DIRTY_CHAT_ROOM_KEY, *failed)
-
         if commit_failed:
             chat_reconcile_batch_pop_inc("rdb_failed")
         else:
+            acknowledged = list(set(room_ids) - set(failed))
+            await _ack_dirty_rooms(claim_token, acknowledged)
             chat_reconcile_batch_pop_inc("ok")
             chat_reconcile_rooms_processed_inc("updated", updated)
             chat_reconcile_rooms_processed_inc("failed", len(failed))
 
         logger.info(
-            "reconcile: pop={}, mongo_hit={}, updated={}, requeued={}",
+            "reconcile: claimed={}, mongo_hit={}, updated={}, retained={}",
             len(room_ids), len(last_by_room), updated, len(failed),
         )
-        return len(room_ids)
+        if commit_failed or failed:
+            return 0
+        return RECONCILE_BATCH_SIZE if has_more_ready else len(room_ids)
+
+
+def _force_invalidate_session(session: AsyncSession, room_id: str) -> bool:
+    try:
+        # greenlet 밖의 sync invalidate는 asyncpg connection을 await 없이 force-close한다.
+        session.sync_session.invalidate()
+    except BaseException as exc:
+        logger.error(
+            "pending sweep connection 강제 invalidate 실패: room_id={}, err={}",
+            room_id, type(exc).__name__,
+        )
+        return False
+    return True
+
+
+async def _recover_pending_room(
+    factory: async_sessionmaker[AsyncSession],
+    redis_hot,
+    redis_dedupe,
+    message_repo: ChatMessageRepository,
+    room_id: str,
+) -> bool:
+    session = factory()
+    connection_invalidated = False
+    try:
+        room_repo = ChatRoomRepository(session)
+        room = await room_repo.find_by_id_for_update(room_id)
+        if room is None:
+            await _clear_pending_message(redis_hot, room_id)
+            await session.commit()
+            logger.warning("pending sweep: 존재하지 않는 room intent 폐기: room_id={}", room_id)
+            return False
+
+        await _recover_pending_message(
+            redis_hot, redis_dedupe, message_repo, room_id,
+            # Motor executor는 asyncio cancel 뒤에도 동작할 수 있어 현재 operation은 drain한다.
+            defer_cancellation=True,
+        )
+        await session.commit()
+        return True
+    except BaseException:
+        connection_invalidated = _force_invalidate_session(session, room_id)
+        raise
+    finally:
+        if not connection_invalidated:
+            session.sync_session.close()
+
+
+async def recover_pending_messages_once() -> int:
+    """후속 sender가 없는 orphan pending을 room X-lock 아래 제한적으로 복구한다."""
+    global _pending_page_offset, _pending_scan_cursor
+
+    redis_hot = await get_redis_client()
+    redis_dedupe = await get_redis_dedupe_client()
+    factory = _require_factory()
+    message_repo = ChatMessageRepository(mongodb.database)
+    resolved = 0
+    failures = 0
+
+    for _ in range(PENDING_SCAN_MAX_CALLS_PER_TICK):
+        if len(_pending_key_backlog) >= PENDING_RECOVERY_MAX_ROOMS_PER_TICK:
+            break
+        next_cursor, page = await redis_hot.scan(
+            cursor=_pending_scan_cursor,
+            match=f"{ROOM_PENDING_MESSAGE_PREFIX}*",
+            count=PENDING_SWEEP_BATCH_SIZE,
+        )
+        _pending_scan_cursor = int(next_cursor)
+        candidates: list[str] = []
+        for raw_key in page:
+            key = raw_key.decode() if isinstance(raw_key, bytes) else str(raw_key)
+            if key not in _pending_key_backlog_set:
+                candidates.append(key)
+        capacity = PENDING_DISCOVERY_BACKLOG_LIMIT - len(_pending_key_backlog)
+        if candidates and capacity > 0:
+            start = _pending_page_offset % len(candidates)
+            selected = (candidates[start:] + candidates[:start])[:capacity]
+            _pending_page_offset = (start + len(selected)) % len(candidates)
+            for key in selected:
+                _pending_key_backlog.append(key)
+                _pending_key_backlog_set.add(key)
+        if _pending_scan_cursor == 0:
+            break
+
+    rooms_this_tick = min(
+        len(_pending_key_backlog), PENDING_RECOVERY_MAX_ROOMS_PER_TICK,
+    )
+    for _ in range(rooms_this_tick):
+        key = _pending_key_backlog.popleft()
+        _pending_key_backlog_set.discard(key)
+        if not key.startswith(ROOM_PENDING_MESSAGE_PREFIX):
+            continue
+        room_id = key[len(ROOM_PENDING_MESSAGE_PREFIX):]
+        if not room_id:
+            continue
+
+        try:
+            recovered = await asyncio.wait_for(
+                _recover_pending_room(
+                    factory, redis_hot, redis_dedupe, message_repo, room_id,
+                ),
+                timeout=PENDING_RECOVERY_CANCEL_AFTER_SEC,
+            )
+            resolved += int(recovered)
+        except Exception as exc:
+            logger.warning(
+                "pending sweep 복구 실패 (intent 유지): room_id={}, err={}",
+                room_id, type(exc).__name__,
+            )
+            failures += 1
+    if failures:
+        raise PendingRecoveryBatchError(
+            f"pending recovery failed for {failures} room(s)",
+        )
+    return resolved
 
 
 async def _reconcile_loop(stop_event: asyncio.Event) -> None:
@@ -175,14 +416,20 @@ async def _reconcile_loop(stop_event: asyncio.Event) -> None:
     while not stop_event.is_set():
         try:
             async with worker_tick("reconcile"):
-                while True:
+                for _ in range(RECONCILE_MAX_BATCHES_PER_TICK):
                     processed = await reconcile_last_message_once()
                     if processed < RECONCILE_BATCH_SIZE:
                         break
                     if stop_event.is_set():
                         break
+                    await asyncio.sleep(0)
+                else:
+                    logger.warning(
+                        "reconcile tick 작업 예산 소진: batches={}",
+                        RECONCILE_MAX_BATCHES_PER_TICK,
+                    )
         except Exception as e:
-            logger.exception("reconcile tick 전역 실패 (계속 진행): {}", e)
+            logger.error("reconcile tick 전역 실패 (계속 진행): {}", e)
 
         try:
             await asyncio.wait_for(stop_event.wait(), timeout=RECONCILE_INTERVAL_SEC)
@@ -193,10 +440,80 @@ async def _reconcile_loop(stop_event: asyncio.Event) -> None:
     logger.info("reconcile 루프 종료")
 
 
+async def _pending_recovery_loop(stop_event: asyncio.Event) -> None:
+    """ambiguous pending 복구를 projection reconcile과 격리한다."""
+    logger.info("pending recovery 루프 시작: interval={}s", PENDING_RECOVERY_INTERVAL_SEC)
+    while not stop_event.is_set():
+        try:
+            async with worker_tick("pending_recovery"):
+                await recover_pending_messages_once()
+        except Exception as exc:
+            logger.error("pending recovery tick 전역 실패 (계속 진행): {}", exc)
+
+        try:
+            await asyncio.wait_for(
+                stop_event.wait(), timeout=PENDING_RECOVERY_INTERVAL_SEC,
+            )
+            break
+        except asyncio.TimeoutError:
+            pass
+    logger.info("pending recovery 루프 종료")
+
+
+async def recover_unread_snapshot_for_user(
+    user_id: str,
+    only_room: Optional[str] = None,
+) -> tuple[dict[str, int], dict[str, int], dict[str, int]]:
+    """동일 사용자의 unread recovery를 DB advisory lock으로 직렬화한다."""
+    try:
+        factory = _require_factory()
+        async with factory() as lock_session:
+            try:
+                await lock_session.execute(
+                    text("SELECT pg_advisory_xact_lock(hashtextextended(:user_id, 0))"),
+                    {"user_id": user_id},
+                )
+            except Exception as exc:
+                raise UnreadRecoveryTerminalError(
+                    "sql_failed", "unread recovery advisory lock failed",
+                ) from exc
+            snapshot, result = await _recover_unread_for_user_locked(user_id, only_room)
+    except asyncio.CancelledError:
+        try:
+            redis_hot = await get_redis_client()
+            await redis_hot.set(
+                unread_recovery_required_key(user_id), uuid.uuid4().hex, nx=True,
+            )
+            chat_unread_recover_inc("cancelled")
+        except Exception:
+            chat_unread_recover_inc("cleanup_failed")
+        raise
+    except UnreadRecoveryTerminalError as exc:
+        chat_unread_recover_inc(exc.result)
+        raise
+    except Exception:
+        chat_unread_recover_inc("sql_failed")
+        raise
+    else:
+        chat_unread_recover_inc(result)
+        return snapshot
+
+
 async def recover_unread_for_user(
     user_id: str,
     only_room: Optional[str] = None,
 ) -> dict[str, int]:
+    """호환용 counts-only recovery API."""
+    counts, _watermarks, _read_watermarks = await recover_unread_snapshot_for_user(
+        user_id, only_room,
+    )
+    return counts
+
+
+async def _recover_unread_for_user_locked(
+    user_id: str,
+    only_room: Optional[str] = None,
+) -> tuple[tuple[dict[str, int], dict[str, int], dict[str, int]], str]:
     """DB 기준으로 `unread:{user_id}` HASH 재계산 후 HSET.
 
     Redis flush/장애 또는 재초대 후 호출. ws.py 가 백그라운드 태스크로 트리거.
@@ -208,85 +525,204 @@ async def recover_unread_for_user(
         Redis 에 반영된 `{room_id: count}` (0 포함). 실패 시 빈 dict.
     """
     factory = _require_factory()
+    retry_key = unread_recovery_required_key(user_id)
+    recovery_token = uuid.uuid4().hex
+    try:
+        redis_hot = await get_redis_client()
+        if only_room is not None:
+            claimed = await redis_hot.set(retry_key, recovery_token, nx=True)
+            if not claimed:
+                only_room = None
+                await redis_hot.set(retry_key, recovery_token)
+        else:
+            await redis_hot.set(retry_key, recovery_token)
+    except Exception as exc:
+        raise UnreadRecoveryTerminalError(
+            "redis_failed", "unread recovery marker creation failed",
+        ) from exc
 
-    async with factory() as session:
-        member_repo = ChatRoomMemberRepository(session)
-        last_reads = await member_repo.find_last_read_seqs(
-            user_id,
-            room_ids=[only_room] if only_room else None,
+    async def _clear_owned_retry_marker() -> None:
+        script = lua_scripts.clear_unread_recovery_required
+        if script is None:
+            raise UnreadRecoveryTerminalError(
+                "cleanup_failed", "clear_unread_recovery_required Lua not loaded",
+            )
+        try:
+            await script(keys=[retry_key], args=[recovery_token])
+        except Exception as exc:
+            raise UnreadRecoveryTerminalError(
+                "cleanup_failed", "unread recovery marker cleanup failed",
+            ) from exc
+
+    async def _ensure_retry_marker() -> bool:
+        try:
+            await redis_hot.set(retry_key, recovery_token, nx=True)
+            return True
+        except Exception as marker_error:
+            logger.warning(
+                "recover_unread: retry marker 복원 실패: user_id={}, err={}",
+                user_id, type(marker_error).__name__,
+            )
+            return False
+
+    generation_error: Optional[Exception] = None
+    generations: dict[str, int] = {}
+    try:
+        async with factory() as session:
+            member_repo = ChatRoomMemberRepository(session)
+            last_reads = await member_repo.find_last_read_seqs(
+                user_id,
+                room_ids=[only_room] if only_room else None,
+                for_share=True,
+            )
+            if last_reads:
+                try:
+                    redis_hot = await get_redis_client()
+                    values = await asyncio.gather(*(
+                        redis_hot.get(room_members_gen_key(room_id))
+                        for room_id in last_reads
+                    ))
+                    generations = {
+                        room_id: int(value or 0)
+                        for room_id, value in zip(last_reads, values)
+                    }
+                except Exception as e:
+                    generation_error = e
+    except Exception as exc:
+        raise UnreadRecoveryTerminalError(
+            "sql_failed", "unread recovery membership snapshot failed",
+        ) from exc
+
+    if generation_error is not None:
+        logger.warning(
+            "recover_unread: generation snapshot 실패 — user_id={}, err={}",
+            user_id, generation_error,
         )
+        marker_ok = await _ensure_retry_marker()
+        return ({}, {}, {}), "redis_failed" if marker_ok else "cleanup_failed"
 
     if not last_reads:
-        chat_unread_recover_inc("ok")
+        await _clear_owned_retry_marker()
         logger.info(
             "recover_unread: user_id={}, only_room={} — 활성 방 없음, skip",
             user_id, only_room,
         )
-        return {}
+        return ({}, {}, {}), "ok"
 
     sem = asyncio.Semaphore(UNREAD_MONGO_CONCURRENCY)
     message_repo = ChatMessageRepository(mongodb.database)
 
-    async def _count(room_id: str, last_read: int) -> tuple[str, int]:
-        async with sem:
-            raw = await message_repo.count_after_seq(
+    async def _recover_one_in_session(
+        session: AsyncSession,
+        room_id: str,
+        last_read: int,
+    ) -> tuple[str, int]:
+        room_repo = ChatRoomRepository(session)
+        try:
+            room = await room_repo.find_by_id_for_update(room_id)
+        except Exception as exc:
+            raise UnreadRecoverySqlError from exc
+        if room is None:
+            raise UnreadRecoverySqlError(
+                f"recover_unread: room not found: {room_id}",
+            )
+
+        try:
+            redis_hot = await get_redis_client()
+            baseline = int(
+                await redis_hot.hget(unread_key(user_id), room_id) or 0
+            )
+        except Exception as exc:
+            raise UnreadRecoveryApplyError from exc
+        raw, latest_message_seq = await asyncio.gather(
+            message_repo.count_after_seq(
                 chat_room_id=room_id,
                 after_seq=last_read,
+                exclude_sender_user_id=user_id,
                 limit=UNREAD_COUNT_LIMIT,
+            ),
+            message_repo.get_max_server_seq(room_id),
+        )
+        try:
+            final, sync_status, _ = await lua_scripts.mark_read_unread(
+                keys=[
+                    unread_key(user_id), read_sync_key(user_id),
+                    room_members_gen_key(room_id),
+                    unread_watermark_key(user_id),
+                ],
+                args=[
+                    room_id, min(raw, UNREAD_COUNT_CAP), baseline,
+                    UNREAD_COUNT_CAP, last_read, 1, generations[room_id],
+                    latest_message_seq,
+                ],
             )
-            return room_id, min(raw, UNREAD_COUNT_CAP)
+            if int(sync_status) == 3:
+                raise RuntimeError("membership changed during unread recovery")
+        except Exception as exc:
+            raise UnreadRecoveryApplyError from exc
+        return room_id, int(final)
+
+    async def _recover_one(room_id: str, last_read: int) -> tuple[str, int]:
+        async with sem:
+            session_context = factory()
+            try:
+                session = await session_context.__aenter__()
+            except Exception as exc:
+                raise UnreadRecoverySqlError from exc
+            try:
+                result = await _recover_one_in_session(session, room_id, last_read)
+            except BaseException as body_error:
+                try:
+                    await session_context.__aexit__(
+                        type(body_error), body_error, body_error.__traceback__,
+                    )
+                except Exception as exc:
+                    raise UnreadRecoverySqlError from exc
+                raise
+            try:
+                await session_context.__aexit__(None, None, None)
+            except Exception as exc:
+                raise UnreadRecoverySqlError from exc
+            return result
 
     results = await asyncio.gather(
-        *(_count(rid, seq) for rid, seq in last_reads.items()),
+        *(_recover_one(rid, seq) for rid, seq in last_reads.items()),
         return_exceptions=True,
     )
 
-    counts: dict[str, int] = {}
-    for item in results:
-        if isinstance(item, BaseException):
-            logger.warning("recover_unread: user_id={} 방 count 실패: {}", user_id, item)
-            continue
-        room_id, cnt = item
-        counts[room_id] = cnt
+    count_errors = [item for item in results if isinstance(item, BaseException)]
+    if count_errors:
+        for error in count_errors:
+            logger.warning("recover_unread: user_id={} 방 count 실패: {}", user_id, error)
+        redis_failed = any(
+            isinstance(error, UnreadRecoveryApplyError) for error in count_errors
+        )
+        sql_failed = any(
+            isinstance(error, UnreadRecoverySqlError) for error in count_errors
+        )
+        result = (
+            "redis_failed" if redis_failed
+            else "sql_failed" if sql_failed
+            else "mongo_failed"
+        )
+        marker_ok = await _ensure_retry_marker()
+        return ({}, {}, {}), result if marker_ok else "cleanup_failed"
 
-    if counts:
-        redis_hot = await get_redis_client()
-        pipe = redis_hot.pipeline(transaction=False)
-        for rid, cnt in counts.items():
-            pipe.hset(unread_key(user_id), rid, cnt)
-        try:
-            await pipe.execute()
-        except Exception as e:
-            # pipeline 중간 실패해도 이전 명령은 이미 반영됨 — partial state 로 남으면 다음
-            # 재연결 시 `get_unread_counts` 가 non-empty 라 복구 재시도가 안 됨. DEL 로
-            # 전체 쓸어 EXISTS=0 을 강제해야 재trigger 된다.
-            logger.warning(
-                "recover_unread: Redis 반영 실패 — partial state 정리 후 counts 취소: "
-                "user_id={}, err={}",
-                user_id, e,
-            )
-            cleanup_ok = True
-            try:
-                await redis_hot.delete(unread_key(user_id))
-            except Exception as del_err:
-                cleanup_ok = False
-                logger.warning(
-                    "recover_unread: cleanup DEL 실패 — partial state 잔존 위험: {}",
-                    type(del_err).__name__,
-                )
-            chat_unread_recover_inc("redis_failed" if cleanup_ok else "cleanup_failed")
-            logger.info(
-                "recover_unread: user_id={}, rooms={}, recovered=0 (redis 실패)",
-                user_id, len(last_reads),
-            )
-            return {}
-
-    chat_unread_recover_inc("ok")
+    await _clear_owned_retry_marker()
+    try:
+        snapshot = await get_unread_snapshot_if_recovered(user_id)
+    except Exception:
+        marker_ok = await _ensure_retry_marker()
+        return ({}, {}, {}), "redis_failed" if marker_ok else "cleanup_failed"
+    if snapshot is None:
+        marker_ok = await _ensure_retry_marker()
+        return ({}, {}, {}), "redis_failed" if marker_ok else "cleanup_failed"
+    counts, _watermarks, _read_watermarks = snapshot
     logger.info(
         "recover_unread: user_id={}, rooms={}, recovered={}, only_room={}",
         user_id, len(last_reads), len(counts), only_room,
     )
-    return counts
+    return snapshot, "ok"
 
 
 def start_reconcile_scheduler(
@@ -296,11 +732,14 @@ def start_reconcile_scheduler(
 
     `recover_unread_for_user` 도 같은 factory 를 공유하므로 ws.py 호출보다 먼저 실행되어야 한다.
     """
-    global _session_factory, _reconcile_task, _stop_event
+    global _session_factory, _reconcile_task, _pending_recovery_task, _stop_event
 
     _session_factory = session_factory
 
-    if _reconcile_task is not None and not _reconcile_task.done():
+    if any(
+        task is not None and not task.done()
+        for task in (_reconcile_task, _pending_recovery_task)
+    ):
         logger.warning("reconcile 스케줄러 중복 시작 무시")
         return
 
@@ -309,6 +748,10 @@ def start_reconcile_scheduler(
         _reconcile_loop(_stop_event),
         name="chat-reconcile",
     )
+    _pending_recovery_task = asyncio.create_task(
+        _pending_recovery_loop(_stop_event),
+        name="chat-pending-recovery",
+    )
 
 
 async def stop_reconcile_scheduler() -> None:
@@ -316,25 +759,30 @@ async def stop_reconcile_scheduler() -> None:
 
     Mongo aggregate 중이면 짧게 기다리고 강제 취소 — 무한 대기는 배포 블로킹.
     """
-    global _reconcile_task, _stop_event
+    global _reconcile_task, _pending_recovery_task, _stop_event
 
     task = _reconcile_task
+    pending_task = _pending_recovery_task
     event = _stop_event
     _reconcile_task = None
+    _pending_recovery_task = None
     _stop_event = None
 
-    if task is None or event is None:
-        return
-
-    event.set()
-    try:
-        await asyncio.wait_for(task, timeout=RECONCILE_SHUTDOWN_GRACE_SEC)
-    except asyncio.TimeoutError:
-        logger.warning(
-            "reconcile 루프가 {}s 내에 종료되지 않아 강제 취소",
-            RECONCILE_SHUTDOWN_GRACE_SEC,
-        )
-        task.cancel()
-        await asyncio.gather(task, return_exceptions=True)
-    except Exception as e:
-        logger.warning("reconcile 루프 종료 대기 중 예외: {}", e)
+    if event is not None:
+        event.set()
+        tasks = {
+            candidate for candidate in (task, pending_task)
+            if candidate is not None
+        }
+        if tasks:
+            _done, still_running = await asyncio.wait(
+                tasks, timeout=RECONCILE_SHUTDOWN_GRACE_SEC,
+            )
+            if still_running:
+                logger.warning(
+                    "chat recovery 루프 {}개가 {}s 내에 종료되지 않아 강제 취소",
+                    len(still_running), RECONCILE_SHUTDOWN_GRACE_SEC,
+                )
+                for running in still_running:
+                    running.cancel()
+                await asyncio.gather(*still_running, return_exceptions=True)

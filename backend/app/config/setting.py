@@ -1,7 +1,9 @@
-from typing import Literal, Optional
 import socket
+from typing import Literal, Optional
+from urllib.parse import quote_plus
+
+from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import Field
 
 
 class Settings(BaseSettings):
@@ -29,11 +31,11 @@ class Settings(BaseSettings):
     LOG_FORMAT: str = Field("console", description="로그 포맷 (json/console)")
     LOG_FILE_PATH: Optional[str] = Field(
         "/backend/logs/app.log",
-        description=".env 누락 시에도 Promtail 이 정상 tail 하도록 default 명시. "
+        description=".env 누락 시에도 Alloy가 정상 tail 하도록 default 명시. "
                     "console 출력만 원하면 .env 에서 LOG_FILE_PATH= 빈 값으로 override.",
     )
     LOG_ROTATION: str = Field("100 MB", description="로그 로테이션")
-    LOG_RETENTION: str = Field("30 days", description="로그 보관 기준")
+    LOG_RETENTION: str = Field("14 days", description="로그 보관 기준")
     LOG_COMPRESSION: str = Field("gz", description="로그 롤테이션 파일 압축")
     
     # POSTGRES 정보
@@ -42,7 +44,16 @@ class Settings(BaseSettings):
     POSTGRES_USER: str = Field("cho", description="POSTGRES USER")
     POSTGRES_PASSWORD: str = Field("hyeonsang", description="POSTGRES PASSWORD")
     POSTGRES_NAME: str = Field("chohyeonsang", description="POSTGRES NAME")
-    
+
+    # POSTGRES 커넥션 풀 (SQLAlchemy async engine — asyncpg 드라이버)
+    DB_POOL_SIZE: int = Field(20, description="상시 유지 커넥션 수 (SQLAlchemy pool_size)")
+    DB_MAX_OVERFLOW: int = Field(20, description="풀 초과 시 추가 허용 커넥션 수 (max_overflow)")
+    DB_POOL_TIMEOUT: int = Field(30, description="풀 고갈 시 커넥션 대기 상한 (초, pool_timeout)")
+    DB_POOL_RECYCLE: int = Field(
+        1800,
+        description="커넥션 재생성 주기 (초). DB idle-kill/방화벽 타임아웃보다 짧게 유지.",
+    )
+
     # MongoDB 정보
     MONGODB_HOST: str = Field("hyeonsang-mongodb", description="MONGODB HOST")
     MONGODB_PORT: int = Field(27017, description="MONGODB PORT")
@@ -116,23 +127,26 @@ class Settings(BaseSettings):
     
     @property
     def POSTGRES_URL(self) -> str:
-        return f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_NAME}"
-
+        # user/password 는 URL-encode — `@ : / # ?` 등 특수문자 포함 시 접속 URL 파싱이 깨진다.
+        user = quote_plus(self.POSTGRES_USER)
+        pw = quote_plus(self.POSTGRES_PASSWORD)
+        return f"postgresql+asyncpg://{user}:{pw}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_NAME}"
 
     @property
     def SYNC_POSTGRES_URL(self) -> str:
-        return f"postgresql://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_NAME}"
-
+        user = quote_plus(self.POSTGRES_USER)
+        pw = quote_plus(self.POSTGRES_PASSWORD)
+        return f"postgresql://{user}:{pw}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_NAME}"
 
     @property
     def MONGODB_URL(self) -> str:
-        return f"mongodb://{self.MONGODB_USER}:{self.MONGODB_PASSWORD}@{self.MONGODB_HOST}:{self.MONGODB_PORT}/{self.MONGODB_NAME}?authSource=admin"
-
+        user = quote_plus(self.MONGODB_USER)
+        pw = quote_plus(self.MONGODB_PASSWORD)
+        return f"mongodb://{user}:{pw}@{self.MONGODB_HOST}:{self.MONGODB_PORT}/{self.MONGODB_NAME}?authSource=admin"
 
     @property
     def REDIS_URL(self) -> str:
         return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}/{self.REDIS_DB}"
-
 
     @property
     def REDIS_URL_DEDUPE(self) -> str:
@@ -140,18 +154,37 @@ class Settings(BaseSettings):
         세션/시퀀스 등 핫 데이터에 영향을 주지 않도록 격리한다."""
         return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}/{self.REDIS_DB_DEDUPE}"
 
-
     @property
     def app_allowed_origins(self) -> set[str]:
         """APP_ALLOWED_ORIGINS 쉼표 구분 문자열을 set 으로 파싱."""
         return {s.strip() for s in self.APP_ALLOWED_ORIGINS.split(",") if s.strip()}
 
-
     @property
     def is_production(self) -> bool:
         """프로덕션 환경 여부"""
         return self.ENVIRONMENT == "PROD"
-    
+
+    @property
+    def trusted_web_origins(self) -> set[str]:
+        """신뢰하는 웹 origin — CORS/WS 공용. localhost 는 비프로덕션에서만 포함."""
+        origins = {self.FRONTEND_URL}
+        if not self.is_production:
+            origins.add(self.LOCAL_FRONTEND_URL)
+        return origins
+
+    @model_validator(mode="after")
+    def _validate_signing_secrets(self):
+        """PROD 기동 시 JWT 서명키 검증 — 기본값/누락/취약키면 즉시 실패."""
+        if self.is_production:
+            placeholders = {"", "your-secret-key-here", "your-share-secret-here"}
+            for name in ("USER_LOGIN_JWT_SECRET_KEY", "SHARE_JWT_SECRET_KEY"):
+                value = getattr(self, name)
+                if value in placeholders or len(value) < 32:
+                    raise ValueError(
+                        f"{name}: PROD 에서는 32자 이상의 고유 서명키가 필요합니다 (기본값/누락 감지)."
+                    )
+        return self
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

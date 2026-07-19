@@ -1,13 +1,14 @@
-from typing import Optional
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, update, case, or_
 from datetime import datetime
+from typing import Optional
 
-from app.domain.chat.model.chat_room_member import ChatRoomMember
+from sqlalchemy import case, or_, select, update
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
+from app.domain.chat.model.chat_room_member import ChatRoomMember
+from app.util.cursor import decode_cursor, keyset_where
 
 
-# 정식 커서 페이지네이션 도입 전 폭주 방어 상한.
 PAGE_SIZE = 500
 
 
@@ -15,22 +16,25 @@ class ChatRoomRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-
-    # ──────────────────── Create ────────────────────
-
     async def save(self, chat_room: ChatRoom) -> ChatRoom:
         """채팅방 insert. DIRECT 동시 생성 race 는 UNIQUE 위반 → 호출측 SAVEPOINT + 재조회."""
         self.session.add(chat_room)
         await self.session.flush()
         return chat_room
 
-
-    # ──────────────────── Read (단건) ────────────────────
-
     async def find_by_id(self, chat_room_id: str) -> Optional[ChatRoom]:
         """chat_room_id 로 단건 조회"""
         return await self.session.get(ChatRoom, chat_room_id)
 
+    async def find_by_id_for_update(self, chat_room_id: str) -> Optional[ChatRoom]:
+        """membership mutation과 메시지 seq commit 순서 직렬화용 room row X-lock."""
+        stmt = (
+            select(ChatRoom)
+            .where(ChatRoom.chat_room_id == chat_room_id)
+            .with_for_update()
+        )
+        result = await self.session.execute(stmt)
+        return result.scalar_one_or_none()
 
     async def find_direct_by_pair(
         self,
@@ -49,15 +53,13 @@ class ChatRoomRepository:
         result = await self.session.execute(stmt)
         return result.scalar_one_or_none()
 
-
-    # ──────────────────── Read (목록) ────────────────────
-
     async def find_rooms_of_user(
         self,
         user_id: str,
+        cursor: Optional[str] = None,
         limit: int = PAGE_SIZE,
     ) -> list[tuple[ChatRoom, Optional[str], Optional[bool]]]:
-        """유저의 활성 방 목록 (effective_last_at DESC).
+        """유저의 활성 방 목록 (`effective_last_at`, `chat_room_id`) DESC.
 
         반환: `(ChatRoom, peer_user_id, notification_muted)` — JOIN 으로 mute 까지 N+1 없이 한 번에.
         1:1 의 peer 는 함께 계산, 그룹은 None.
@@ -81,38 +83,31 @@ class ChatRoomRepository:
                 ChatRoomMember.user_id == user_id,
                 ChatRoomMember.is_left.is_(False),
             )
-            .order_by(ChatRoom.effective_last_at.desc())
-            .limit(limit)
         )
+
+        if cursor:
+            decoded = decode_cursor(cursor)
+            if (
+                decoded is None
+                or decoded[0].tzinfo is None
+                or decoded[0].utcoffset() is None
+            ):
+                raise ValueError("유효하지 않은 커서입니다.")
+            sort_value, room_id = decoded
+            stmt = stmt.where(keyset_where(
+                ChatRoom.effective_last_at,
+                ChatRoom.chat_room_id,
+                sort_value,
+                room_id,
+            ))
+
+        stmt = stmt.order_by(
+            ChatRoom.effective_last_at.desc(),
+            ChatRoom.chat_room_id.desc(),
+        ).limit(limit)
 
         result = await self.session.execute(stmt)
         return [(row[0], row[1], row[2]) for row in result.all()]
-
-
-    # ──────────────────── Update ────────────────────
-
-    async def update_last_message(
-        self,
-        chat_room_id: str,
-        message_id: str,
-        server_seq: int,
-        at: datetime,
-    ) -> None:
-        """최신 메시지 역정규화 필드 갱신. 실패 시 호출측이 `dirty:chat_room` 에 적재."""
-        # synchronize_session=False — UPDATE 후 메모리의 ChatRoom 인스턴스를 expire 시키지
-        # 않아 뒤따르는 `_to_dto` 가 GENERATED 컬럼 lazy load (MissingGreenlet) 를 안 만든다.
-        stmt = (
-            update(ChatRoom)
-            .where(ChatRoom.chat_room_id == chat_room_id)
-            .values(
-                last_message_id=message_id,
-                last_message_server_seq=server_seq,
-                last_message_at=at,
-            )
-            .execution_options(synchronize_session=False)
-        )
-        await self.session.execute(stmt)
-
 
     async def update_last_message_if_greater(
         self,

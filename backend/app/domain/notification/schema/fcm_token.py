@@ -1,8 +1,7 @@
-from pydantic import BaseModel, ConfigDict, Field
 from datetime import datetime
 
+from pydantic import BaseModel, ConfigDict, Field
 
-# ──────────────────── Request ────────────────────
 
 class RegisterFcmTokenBody(BaseModel):
     model_config = ConfigDict(
@@ -27,8 +26,6 @@ class UnregisterFcmTokenBody(BaseModel):
 
     token: str = Field(..., min_length=1, max_length=512, description="해제할 FCM 디바이스 토큰")
 
-
-# ──────────────────── Response ────────────────────
 
 class FcmTokenResponse(BaseModel):
     fcm_token_id: str = Field(..., description="등록된 토큰 row 의 서버 ID")

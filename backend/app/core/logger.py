@@ -1,168 +1,393 @@
-""" 
-로깅 설정
+"""로깅 설정 (loguru)
 
-- 예시:
-  LOG_LEVEL=DEBUG
-  LOG_FORMAT=console
-  LOG_FILE_PATH=/backend/logs/app.log
+환경변수:
+  LOG_LEVEL       최소 출력 레벨 (TRACE<DEBUG<INFO<SUCCESS<WARNING<ERROR<CRITICAL)
+  LOG_FORMAT      "json"(수집/분석용) | "console"(로컬 디버깅용). PROD 는 항상 json 강제.
+  LOG_FILE_PATH   None 이면 콘솔만, 경로 지정 시 파일에도 기록
+  LOG_ROTATION    "100 MB" 등 용량/시간 기준으로 롤테이션 (loguru 규칙)
+  LOG_RETENTION   "14 days" 등 경과 후 자동 삭제
+  LOG_COMPRESSION "gz" 등 롤테이션 파일 압축
 
-필드 설명:
-  LOG_LEVEL:
-    - 최소 출력 로그 레벨
-    - TRACE < DEBUG < INFO < SUCCESS < WARNING < ERROR < CRITICAL
-    - 여기서 설정한 레벨 "이상" 만 출력됨
+사용:
+  logger = get_logger("service_name")
+  logger.bind(user_id=123).info("서비스 완료")
 
-  LOG_FORMAT:
-    - "json"   : serialize=True 로 JSON 구조화 로그 출력 (로그 수집/분석용)
-    - "console": 사람이 읽기 좋은 컬러 콘솔 로그 출력 (로컬 디버깅용)
-
-  LOG_FILE_PATH:
-    - None 이면 콘솔에만 출력
-    - 경로를 지정하면 해당 파일로도 로그를 남김
-
-  LOG_ROTATION:
-    - "100 MB" → 로그 파일이 100MB를 넘으면 새 파일로 롤테이션
-    - 용량/시간 기준 문자열 모두 사용 가능 (Loguru 규칙 따름)
-
-  LOG_RETENTION:
-    - "30 days" → 생성된 지 30일이 지난 롤테이션된 로그 파일은 자동 삭제
-
-  LOG_COMPRESSION:
-    - "gz" → 롤테이션된 로그 파일을 gzip(.gz)으로 압축
-
-
-로깅 시스템
-
-from core.exception.logger import get_logger
-
-logger = get_logger("service_name")
-
-logger.bind(user_id=123).bind(user_type="he").info("서비스 완료")
-logger.bind(user_id=123, user_type="he").info("서비스 완료")
-
-
-포맷팅 컨벤션:
-  - f-string 대신 loguru의 {} 포맷 사용
-  - 로그 레벨이 비활성화된 경우 문자열 조합을 건너뛰어 불필요한 연산 방지
-
-  사용법:
-    logger.info("유저: {}", user_id)               # {} : 범용 (str() 호출)
-    logger.info("처리 시간: {:.2f}초", elapsed)     # {:.2f} : 소수점 2자리 실수
-    logger.debug("입력값: {!r}", some_input)        # {!r} : repr() 출력 (타입 확인용)
-    logger.info("개수: {:d}개", count)              # {:d} : 정수
-
-  주의:
-    logger.info(f"유저: {user_id}")                # (X) 레벨 비활성이어도 f-string 항상 평가됨
-    logger.info("유저: {}", user_id)               # (O) 레벨 비활성이면 포맷팅 생략
+포맷팅: f-string 대신 loguru {} 포맷을 써 레벨 비활성 시 문자열 조합을 생략한다.
+  logger.info("유저: {}", user_id)      # (O)
+  logger.info(f"유저: {user_id}")       # (X) 항상 평가됨
 """
-import sys
-from pathlib import Path
-from loguru._logger import Logger
-from loguru import logger  
 import logging
+import os
+import sys
+from collections.abc import Callable
+from pathlib import Path
+from typing import Any
+
+from loguru import logger as _logger
+from loguru._file_sink import FileSink
 
 from app.config.setting import settings
+from app.core.context import request_id_var
+
+
+_APP_MODULE_PREFIX = "app."
+
+
+def exception_context(error: BaseException) -> dict[str, str | int | None]:
+    location = line = app_location = app_line = None
+    traceback = error.__traceback__
+    while traceback is not None:
+        module = traceback.tb_frame.f_globals.get("__name__", "<unknown>")
+        location = f"{module}:{traceback.tb_frame.f_code.co_name}"
+        line = traceback.tb_lineno
+        if module == "app" or module.startswith(_APP_MODULE_PREFIX):
+            app_location = location
+            app_line = line
+        traceback = traceback.tb_next
+
+    cause = error.__cause__
+    if isinstance(cause, BaseExceptionGroup):
+        cause = None
+    return {
+        "error_type": type(error).__name__,
+        "error_location": location,
+        "error_line": line,
+        "error_app_location": app_location,
+        "error_app_line": app_line,
+        "error_cause": type(cause).__name__ if cause is not None else None,
+    }
+
+
+_MAX_SANITIZE_DEPTH = 8
+
+
+def _sanitize_log_value(
+    value: Any,
+    errors: list[BaseException],
+    active: set[int] | None = None,
+    depth: int = 0,
+) -> Any:
+    if isinstance(value, BaseException):
+        errors.append(value)
+        return type(value).__name__
+    if isinstance(value, (str, int, float, bool, type(None))):
+        return value
+    if not isinstance(value, (dict, list, tuple, set, frozenset)):
+        return type(value).__name__
+    if depth >= _MAX_SANITIZE_DEPTH:
+        return "<max-depth>"
+
+    active = active or set()
+    identity = id(value)
+    if identity in active:
+        return "<recursive>"
+    active.add(identity)
+    try:
+        if isinstance(value, dict):
+            sanitized = {}
+            for key, item in value.items():
+                safe_key = _sanitize_log_value(key, errors, active, depth + 1)
+                try:
+                    hash(safe_key)
+                except TypeError:
+                    safe_key = f"<{type(key).__name__}>"
+                sanitized[safe_key] = _sanitize_log_value(item, errors, active, depth + 1)
+            return sanitized
+        items = [
+            _sanitize_log_value(item, errors, active, depth + 1) for item in value
+        ]
+        if isinstance(value, tuple):
+            return tuple(items)
+        return items
+    finally:
+        active.remove(identity)
+
+
+def _bind_request_context(record) -> None:
+    """요청 컨텍스트를 주입하고 예외 payload/traceback을 안전한 메타데이터로 축약."""
+    request_id = request_id_var.get()
+    if request_id:
+        record["extra"].setdefault("request_id", request_id)
+    errors = []
+    record["extra"] = {
+        key: _sanitize_log_value(value, errors)
+        for key, value in record["extra"].items()
+    }
+    exception = record.get("exception")
+    if exception is not None:
+        if isinstance(exception.value, BaseException):
+            errors.insert(0, exception.value)
+        record["exception"] = None
+    if errors:
+        record["extra"].update(exception_context(errors[0]))
+
+
+class SafeLogger:
+    """예외 객체가 format argument를 통해 원문으로 직렬화되지 않게 하는 Loguru adapter."""
+
+    _LEVEL_METHODS = {
+        "trace", "debug", "info", "success", "warning", "error", "critical", "exception",
+    }
+
+    def __init__(self, wrapped: Any, depth: int = 0) -> None:
+        self._wrapped = wrapped
+        self._depth = depth
+
+    @staticmethod
+    def _safe_values(values):
+        errors = []
+        sanitized = tuple(_sanitize_log_value(value, errors) for value in values)
+        return sanitized, errors[0] if errors else None
+
+    @staticmethod
+    def _safe_message(message: Any) -> tuple[str, BaseException | None]:
+        errors = []
+        sanitized = _sanitize_log_value(message, errors)
+        safe_message = sanitized if isinstance(sanitized, str) else str(sanitized)
+        return safe_message, errors[0] if errors else None
+
+    def bind(self, **kwargs) -> "SafeLogger":
+        errors = []
+        sanitized = {
+            key: _sanitize_log_value(value, errors)
+            for key, value in kwargs.items()
+        }
+        if errors:
+            sanitized.update(exception_context(errors[0]))
+        return SafeLogger(self._wrapped.bind(**sanitized), self._depth)
+
+    def opt(self, *args, **kwargs) -> "SafeLogger":
+        unsupported = set(kwargs) - {"depth", "exception"}
+        if args or unsupported:
+            names = sorted(unsupported) if unsupported else ["positional arguments"]
+            raise ValueError(f"unsupported SafeLogger.opt options: {', '.join(names)}")
+
+        depth = kwargs.get("depth", 0)
+        if type(depth) is not int or depth < 0:
+            raise ValueError("SafeLogger.opt depth must be a non-negative integer")
+        exception = kwargs.get("exception")
+        error = None
+        if isinstance(exception, BaseException):
+            error = exception
+        elif (
+            isinstance(exception, tuple)
+            and len(exception) > 1
+            and isinstance(exception[1], BaseException)
+        ):
+            error = exception[1]
+        elif exception is True:
+            error = sys.exception()
+
+        wrapped = self._wrapped.bind(**exception_context(error)) if error else self._wrapped
+        return SafeLogger(wrapped, self._depth + depth)
+
+    def _emit(self, method: str, message: Any, *args, **kwargs) -> Any:
+        safe_message, message_error = self._safe_message(message)
+        safe_args, positional_error = self._safe_values(args)
+        keyword_errors = []
+        safe_kwargs = {
+            key: _sanitize_log_value(value, keyword_errors)
+            for key, value in kwargs.items()
+        }
+        error = message_error or positional_error or (
+            keyword_errors[0] if keyword_errors else None
+        )
+        wrapped = self._wrapped.bind(**exception_context(error)) if error else self._wrapped
+        wrapped = wrapped.opt(depth=2 + self._depth)
+        return getattr(wrapped, method)(safe_message, *safe_args, **safe_kwargs)
+
+    def log(self, level: str | int, message: Any, *args, **kwargs) -> Any:
+        safe_message, message_error = self._safe_message(message)
+        safe_args, positional_error = self._safe_values(args)
+        keyword_errors = []
+        safe_kwargs = {
+            key: _sanitize_log_value(value, keyword_errors)
+            for key, value in kwargs.items()
+        }
+        error = message_error or positional_error or (
+            keyword_errors[0] if keyword_errors else None
+        )
+        wrapped = self._wrapped.bind(**exception_context(error)) if error else self._wrapped
+        return wrapped.opt(depth=1 + self._depth).log(
+            level, safe_message, *safe_args, **safe_kwargs
+        )
+
+    def __getattr__(self, name: str):
+        if name in self._LEVEL_METHODS:
+            return lambda message, *args, **kwargs: self._emit(
+                name, message, *args, **kwargs
+            )
+        raise AttributeError(f"SafeLogger does not expose Loguru.{name}()")
+
+
+def _private_file_opener(path: str, flags: int) -> int:
+    return os.open(path, flags, 0o600)
+
+
+def _private_compression(compression: str) -> Callable[[str], None]:
+    compress = FileSink._make_compression_function(compression)
+    if compress is None:
+        raise ValueError("LOG_COMPRESSION must not be empty")
+    suffix = f".{compression.strip().lstrip('.')}"
+
+    def compress_private(path: str) -> None:
+        compress(path)
+        Path(f"{path}{suffix}").chmod(0o600)
+
+    return compress_private
 
 
 def setup_logging() -> None:
     """로깅 시스템 설정"""
 
-    # PROD 환경에서 console 포맷이면 Promtail 의 JSON parser 가 깨져 라벨이
-    # 모두 unknown 으로 들어가고 14일치 로그 검색 불가가 된다. 운영자가 .env 에서
-    # LOG_FORMAT 을 잊거나 잘못 설정해도 안전하도록 fail-safe 로 json 강제.
-    #
-    # 결정과 적용을 분리하는 이유:
-    #   logger.remove() 와 logger.add() 사이에서 logger.warning() 을 호출하면 sink
-    #   부재 구간이라 메시지가 어디에도 남지 않아 fail-safe 발화 자체가 silent 가
-    #   된다 — 본 보호 로직의 의도(운영자 알림)가 깨지는 결함. 결정만 먼저 하고
-    #   sink 가 모두 ready 된 뒤 함수 끝에서 emit.
+    # PROD + console 포맷은 Alloy JSON parser를 깨뜨리므로 json으로 강제한다.
+    # 발화 알림은 sink 가 준비된 함수 끝에서 emit (remove~add 사이엔 sink 부재).
     requested_format = settings.LOG_FORMAT
     forced_json = settings.is_production and requested_format != "json"
     log_format = "json" if forced_json else requested_format
 
-    logger.remove()
+    _logger.remove()
+    _logger.configure(patcher=_bind_request_context)
 
-    # 콘솔 출력 설정
+    # 콘솔 출력
     if log_format == "json":
-        # JSON 포맷
-        logger.add(
+        _logger.add(
             sys.stdout,
             format="{message}",
             serialize=True,
             level=settings.LOG_LEVEL,
+            diagnose=False,
+            backtrace=False,
             enqueue=True
         )
     else:
-        # 읽기 쉬운 콘솔 포맷
-        logger.add(
+        _logger.add(
             sys.stdout,
             format="<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level> | {extra}",
             level=settings.LOG_LEVEL,
             colorize=True,
+            diagnose=False,
+            backtrace=False,
             enqueue=True
         )
-    
-    # 파일 출력 설정
+
+    # 파일 출력
+    # LOG_FILE_PATH 기본값이 컨테이너 절대경로라 로컬/CI 에서 mkdir 이 OSError 로 부팅을 막을 수 있음.
     if settings.LOG_FILE_PATH:
-        log_path = Path(settings.LOG_FILE_PATH)
-        log_path.parent.mkdir(parents=True, exist_ok=True)
-        
-        logger.add(
-            settings.LOG_FILE_PATH,
-            rotation=settings.LOG_ROTATION,
-            retention=settings.LOG_RETENTION,
-            compression=settings.LOG_COMPRESSION,
-            format="{message}",
-            serialize=True,
-            level="INFO",
-            encoding="utf-8",
-            enqueue=True
-        )
+        try:
+            log_path = Path(settings.LOG_FILE_PATH)
+            log_path.parent.mkdir(parents=True, exist_ok=True)
+            log_path.touch(mode=0o600, exist_ok=True)
+            log_path.chmod(0o600)
+            archive_pattern = f"{log_path.stem}.*{log_path.suffix}*"
+            for archived_path in log_path.parent.glob(archive_pattern):
+                if archived_path.is_file():
+                    archived_path.chmod(0o600)
+
+            _logger.add(
+                settings.LOG_FILE_PATH,
+                rotation=settings.LOG_ROTATION,
+                retention=settings.LOG_RETENTION,
+                compression=_private_compression(settings.LOG_COMPRESSION),
+                format="{message}",
+                serialize=True,
+                level=settings.LOG_LEVEL,
+                diagnose=False,
+                backtrace=False,
+                encoding="utf-8",
+                opener=_private_file_opener,
+                enqueue=True
+            )
+        except OSError as e:
+            # 이미 등록된 콘솔 sink 로 경고만 남기고 파일 sink 없이 진행 (부팅 차단 방지).
+            _logger.warning(
+                "파일 sink 초기화 실패({}) — 콘솔 출력만으로 계속합니다.",
+                type(e).__name__,
+            )
     
-    # 표준 logging 라이브러리와 통합
+    # 표준 logging 을 loguru 로 흘려보내는 핸들러
     class InterceptHandler(logging.Handler):
         def emit(self, record: logging.LogRecord) -> None:
-            # loguru 레벨로 변환
             try:
-                level = logger.level(record.levelname).name
+                level = _logger.level(record.levelname).name
             except ValueError:
                 level = record.levelno
-            
-            # 해당 로거에서 발생한 로그 찾기
-            frame, depth = logging.currentframe(), 2
-            while frame and frame.f_code.co_filename == logging.__file__:
+
+            # logging 내부 프레임을 건너뛰어 실제 호출 지점의 depth 를 찾는다.
+            frame, depth = logging.currentframe(), 0
+            while frame and (depth == 0 or frame.f_code.co_filename == logging.__file__):
                 frame = frame.f_back
                 depth += 1
-            
-            logger.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage())
-    
-    # 표준 로거 설정
+
+            error = None
+            if isinstance(record.args, tuple):
+                error = next(
+                    (value for value in record.args if isinstance(value, BaseException)),
+                    None,
+                )
+            elif isinstance(record.args, dict):
+                error = next(
+                    (value for value in record.args.values() if isinstance(value, BaseException)),
+                    None,
+                )
+
+            if record.exc_info and record.exc_info[1] is not None:
+                error = record.exc_info[1]
+            target = _logger.bind(
+                event="stdlib_log",
+                source_logger=record.name,
+                source_level=record.levelname,
+                **(exception_context(error) if error else {}),
+            )
+            target.opt(depth=depth, exception=record.exc_info).log(
+                level, "Standard library log event"
+            )
+
     logging.basicConfig(handlers=[InterceptHandler()], level=0, force=True)
-    
-    # 주요 라이브러리 로거 레벨 설정.
-    # uvicorn.access 는 DEBUG — RED 메트릭이 path/method/status/duration 제공하므로
-    # 매 요청 INFO 출력은 중복 + PROD 로그 비용.
+
+    # uvicorn CLI 는 자기 로거에 plain-text 핸들러를 propagate=False 로 심는다.
+    # basicConfig(force=True) 는 root 만 건드리므로 그대로 두면 JSON stdout 에
+    # plain-text가 섞여 Alloy parsing이 깨진다. 핸들러를 비우고 propagate를 살려
+    # loguru 단일 경로로 통합한다.
+    for _name in ("uvicorn", "uvicorn.error", "uvicorn.access"):
+        _uvicorn_logger = logging.getLogger(_name)
+        _uvicorn_logger.handlers.clear()
+        _uvicorn_logger.propagate = True
+
     logging.getLogger("uvicorn").setLevel(logging.INFO)
-    logging.getLogger("uvicorn.access").setLevel(logging.DEBUG)
+    logging.getLogger("uvicorn.access").disabled = True
+    # 기존 logging config 가 만든 child level/handler 도 초기화해 INFO 우회와
+    # WARNING 유실 없이 root SafeLogger 단일 경로로 통합한다.
+    client_roots = ("httpx", "httpcore")
+    client_prefixes = tuple(f"{root}." for root in client_roots)
+    for logger_name in client_roots:
+        client_logger = logging.getLogger(logger_name)
+        client_logger.handlers.clear()
+        client_logger.propagate = True
+        client_logger.disabled = False
+        client_logger.setLevel(logging.WARNING)
+    for logger_name, candidate in logging.Logger.manager.loggerDict.items():
+        if isinstance(candidate, logging.Logger) and logger_name.startswith(client_prefixes):
+            candidate.handlers.clear()
+            candidate.propagate = True
+            candidate.disabled = False
+            candidate.setLevel(logging.NOTSET)
     logging.getLogger("sqlalchemy.engine").setLevel(logging.WARNING)
 
-    # fail-safe 발화 알림 — sink 가 모두 ready 된 시점이라 stdout/JSON sink 와
-    # LOG_FILE_PATH 양쪽에 동시에 남는다. requested_format 을 박는 이유는 운영자가
-    # .env 에 실제로 박은 값을 보여줘야 진단 가치가 있기 때문 (log_format 변수는
-    # 이미 "json" 으로 덮어쓴 상태).
+    # json 강제 알림 — 운영자가 .env 에 박은 원래 값(requested_format)을 보여준다.
     if forced_json:
-        logger.warning(
+        _logger.warning(
             "PROD 환경에서 LOG_FORMAT={} 가 지정되어 있어 json 으로 강제 변환했습니다. "
-            "Promtail JSON parser 호환 보호.",
+            "Alloy JSON parser 호환 보호.",
             requested_format,
         )
 
-    logger.info("Logging system initialized with level: {}", settings.LOG_LEVEL)
+    _logger.info("Logging system initialized with level: {}", settings.LOG_LEVEL)
 
 
-def get_logger(name: str) -> Logger:
+def get_logger(name: str) -> SafeLogger:
     """이름이 지정된 로거 가져오기"""
-    return logger.bind(logger_name=name)
+    return SafeLogger(_logger.bind(logger_name=name))
 
 
 # 전역 로거 인스턴스

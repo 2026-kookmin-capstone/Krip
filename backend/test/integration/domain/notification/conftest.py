@@ -7,21 +7,22 @@ fcm-token / mute 흐름은 RDB 만 터치 (실 Mongo 불필요). 인박스 (`inb
 흐름은 실 Mongo 가 필요하므로 `mongo_db` / `inbox_service` fixture 가 opt-in 으로
 제공됨 — chat 도메인의 ``patch_external_clients`` 패턴과 일관.
 """
-from unittest.mock import AsyncMock, MagicMock
-from sqlalchemy import select
-import pytest_asyncio
-import pytest
 import os
-from motor.motor_asyncio import AsyncIOMotorClient
+from unittest.mock import MagicMock
 
-from app.domain.notification.service.mute import MuteService
-from app.domain.notification.service.inbox import InboxService
-from app.domain.notification.service.fcm import FcmService
-from app.domain.notification.model.inbox import InboxItem
-from app.domain.notification.model.fcm_token import FcmToken
-from app.domain.chat.model.chat_room_member import ChatRoomMember
-from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
+import pytest
+import pytest_asyncio
+from motor.motor_asyncio import AsyncIOMotorClient
+from sqlalchemy import select
+
 from app.domain.auth.model.user import User
+from app.domain.chat.model.chat_room import ChatRoom, ChatRoomType
+from app.domain.chat.model.chat_room_member import ChatRoomMember
+from app.domain.notification.model.fcm_token import FcmToken
+from app.domain.notification.model.inbox import InboxItem
+from app.domain.notification.service.fcm import FcmService
+from app.domain.notification.service.inbox import InboxService
+from app.domain.notification.service.mute import MuteService
 
 
 def _require_mongo_url() -> str:
@@ -59,7 +60,7 @@ async def seed_room_with_members(session_factory, seed_users):
                 creator_id=user_ids[0],
             )
             session.add(room)
-            await session.flush()  # chat_room_id 생성
+            await session.flush()
             for uid in user_ids:
                 session.add(ChatRoomMember(
                     chat_room_id=room.chat_room_id,
@@ -77,14 +78,14 @@ async def fcm_messaging_stub(monkeypatch):
 
     테스트마다 `set_responses(success=[...], errors=[...])` 로 응답 시나리오 주입.
     """
-    state = {"calls": [], "responses": [], "errors": []}
+    state = {"calls": [], "messages": [], "responses": [], "errors": []}
 
     def _set_responses(success: list[bool], errors: list | None = None):
         state["responses"] = success
         state["errors"] = errors or [None] * len(success)
 
     def _fake_send_each_for_multicast(message, app=None):
-        # SDK 가 동기 함수 — service 가 asyncio.to_thread 로 감싸 호출.
+        state["messages"].append(message)
         state["calls"].append(list(message.tokens))
         responses = []
         for ok, err in zip(state["responses"], state["errors"]):
@@ -109,10 +110,9 @@ async def fcm_messaging_stub(monkeypatch):
     return type("FcmStub", (), {
         "set_responses": staticmethod(_set_responses),
         "calls": state["calls"],
+        "messages": state["messages"],
     })()
 
-
-# ──────────────────── 검증 helper ────────────────────
 
 async def fetch_user(session_factory, user_id: str) -> User | None:
     async with session_factory() as session:
@@ -134,8 +134,6 @@ async def fetch_tokens_by_user(session_factory, user_id: str) -> list[FcmToken]:
         )
         return list(result.scalars().all())
 
-
-# ──────────────────── 인박스 (Mongo) — opt-in fixtures ────────────────────
 
 @pytest_asyncio.fixture
 async def mongo_db():

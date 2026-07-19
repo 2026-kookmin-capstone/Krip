@@ -10,8 +10,10 @@ Router 가 HTTPException 으로 매핑 (§에러 처리 컨벤션):
     TourRecommendVendorError                → 502 (Gemini 일시 장애 / 기타 GoogleAPICallError)
 """
 
+from app.core.exception import NotFoundError
 
-class TourPlanNotFoundError(ValueError):
+
+class TourPlanNotFoundError(NotFoundError, ValueError):
     """플랜을 찾을 수 없음 — Router 에서 404 로 매핑.
 
     plan_id 로 직접 조회했는데 row 가 없는 경우 (혹은 race 로 사라짐).
@@ -20,7 +22,7 @@ class TourPlanNotFoundError(ValueError):
     """
 
 
-class TourPlanItemNotFoundError(ValueError):
+class TourPlanItemNotFoundError(NotFoundError, ValueError):
     """카드를 찾을 수 없음 — Router 에서 404 로 매핑.
 
     다음 세 케이스를 통합:
@@ -32,8 +34,6 @@ class TourPlanItemNotFoundError(ValueError):
     """
 
 
-# ──────────────────── 여행 추천 (Gemini LLM 기반) ────────────────────
-#
 # Service 가 vendor SDK (langchain_google_genai → google.api_core) 의 예외를 아래
 # 도메인 예외로 변환해 던진다. Router 는 도메인 예외만 알면 되므로 vendor 교체 시
 # router 변경 불필요. menu_ai 와 동일 컨벤션.

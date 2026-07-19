@@ -1,18 +1,22 @@
 from typing import List
-from fastapi import APIRouter, HTTPException, Request, Depends, UploadFile, File
-from dependency_injector.wiring import Provide, inject
 
-from app.domain.menu_ai.service.menu_ocr import MenuOcrService
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, File, HTTPException, Request, UploadFile
+
+from app.container import Container
+from app.core.logger import get_logger
+from app.domain.menu_ai.schema.menu_ocr import (
+    MenuOcrBatchResponse,
+    MenuOcrResponse,
+    MenuResponse,
+)
 from app.domain.menu_ai.service.exception import (
     MenuOcrCredentialExpiredError,
     MenuOcrQuotaExceededError,
     MenuOcrVendorError,
 )
-from app.domain.menu_ai.schema.menu_ocr import (
-    MenuResponse, MenuOcrResponse, MenuOcrBatchResponse,
-)
-from app.core.logger import get_logger
-from app.container import Container
+from app.domain.menu_ai.service.menu_ocr import MenuOcrService
+from app.util.upload import read_upload_capped
 
 
 router = APIRouter(prefix="/ocr", tags=["메뉴 OCR"])
@@ -23,8 +27,6 @@ _MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
 _MAX_FILE_COUNT = 5
 
 
-# ──────────────────── 단건 OCR ────────────────────
-
 @router.post("", status_code=200)
 @inject
 async def ocr_menu(
@@ -34,8 +36,7 @@ async def ocr_menu(
 ) -> MenuOcrResponse:
     """메뉴 이미지 1장에서 메뉴 정보를 추출합니다."""
     _validate_file(file)
-    image_bytes = await file.read()
-    _validate_file_size(image_bytes, file.filename)
+    image_bytes = await read_upload_capped(file, _MAX_FILE_SIZE)
 
     try:
         result = await ocr_service.ocr_single(image_bytes, file.content_type)
@@ -54,8 +55,6 @@ async def ocr_menu(
     return _to_ocr_response(result)
 
 
-# ──────────────────── 다건 OCR ────────────────────
-
 @router.post("/batch", status_code=200)
 @inject
 async def ocr_menu_batch(
@@ -73,8 +72,7 @@ async def ocr_menu_batch(
     images = []
     for f in files:
         _validate_file(f)
-        image_bytes = await f.read()
-        _validate_file_size(image_bytes, f.filename)
+        image_bytes = await read_upload_capped(f, _MAX_FILE_SIZE)
         images.append((image_bytes, f.content_type))
 
     try:
@@ -96,22 +94,12 @@ async def ocr_menu_batch(
     )
 
 
-# ──────────────────── 내부 유틸 ────────────────────
-
 def _validate_file(file: UploadFile) -> None:
     if file.content_type not in _ALLOWED_CONTENT_TYPES:
         raise HTTPException(
             status_code=400,
             detail=f"허용되지 않는 파일 형식입니다: {file.content_type} "
                    f"(jpeg, png, gif, bmp, webp, tiff만 가능)",
-        )
-
-
-def _validate_file_size(image_bytes: bytes, filename: str | None) -> None:
-    if len(image_bytes) > _MAX_FILE_SIZE:
-        raise HTTPException(
-            status_code=400,
-            detail=f"파일 크기가 10MB를 초과합니다: {filename}",
         )
 
 

@@ -1,13 +1,4 @@
-# Krip 모니터링 스택 — Makefile
-#
-# 위치: monitoring/Makefile (자체 self-contained)
-# 호출 패턴:
-#   make -C monitoring up        # 어디서든 (-C 는 make 의 chdir 플래그)
-#   cd monitoring && make up     # 디렉토리 진입 후
-#
-# Path 처리: -f 첫 번째 파일이 ../docker-compose.yml 이라 docker-compose 의
-# project_directory = 프로젝트 루트로 결정. 양쪽 compose 의 모든 volume path 가
-# 프로젝트 루트 기준으로 정상 해결됨.
+# 첫 Compose 파일을 루트 파일로 두어 양쪽 상대 경로를 프로젝트 루트 기준으로 해석한다.
 
 COMPOSE_FILES = -f ../docker-compose.yml -f docker-compose.monitoring.yml
 COMPOSE = docker-compose --env-file .env $(COMPOSE_FILES)
@@ -25,7 +16,7 @@ help:
 	@echo "  make reload      — Prometheus config hot reload (룰 변경 시)"
 	@echo "  make health      — backend health endpoint 3종 검증"
 	@echo "  make metrics     — backend:9090/metrics 샘플 조회"
-	@echo "  make logql       — Loki / Promtail ready 검증 + 최근 라벨 목록"
+	@echo "  make logql       — Loki / Alloy ready 검증 + 최근 라벨 목록"
 	@echo "  make net-create  — monitoring-network 생성 (사전 1회, up 이 자동 호출)"
 
 net-create:
@@ -39,7 +30,8 @@ up-prod: net-create
 	COMPOSE_PROFILES=linux-host $(COMPOSE) up -d
 
 up-build: net-create
-	$(COMPOSE) up -d --build backend
+	$(COMPOSE) build backend
+	$(COMPOSE) up -d
 
 down:
 	$(COMPOSE) down
@@ -55,12 +47,20 @@ reload:
 		&& echo "Prometheus reloaded"
 
 health:
-	@echo "=== /health (liveness) ==="
-	@curl -sw "  HTTP %{http_code}\n" http://localhost:8000/health
-	@echo "=== /health/deep (4-ping) ==="
-	@curl -sw "  HTTP %{http_code}\n" http://localhost:8000/health/deep
-	@echo "=== /ready (deep + AI models) ==="
-	@curl -sw "  HTTP %{http_code}\n" http://localhost:8000/ready
+	@check() { \
+		echo "=== $$1 ==="; \
+		body=$$(mktemp) || return; \
+		status=$$(curl --silent --show-error --output "$$body" --write-out "%{http_code}" "$$2"); \
+		curl_status=$$?; \
+		cat "$$body"; \
+		rm -f "$$body"; \
+		printf "  HTTP %s\n" "$$status"; \
+		[ "$$curl_status" -eq 0 ] || return "$$curl_status"; \
+		case "$$status" in 2??) return 0 ;; *) return 22 ;; esac; \
+	}; \
+	check '/health (liveness)' http://localhost:8000/health \
+		&& check '/health/deep (4-ping)' http://localhost:8000/health/deep \
+		&& check '/ready (deep + AI models)' http://localhost:8000/ready
 
 metrics:
 	@docker exec krip-prometheus wget -qO- http://backend:9090/metrics 2>/dev/null \
@@ -69,8 +69,8 @@ metrics:
 logql:
 	@echo "=== Loki ready ==="
 	@docker exec krip-prometheus wget -qO- http://loki:3100/ready 2>/dev/null && echo "" || echo "FAIL"
-	@echo "=== Promtail ready ==="
-	@docker exec krip-prometheus wget -qO- http://promtail:9080/ready 2>/dev/null && echo "" || echo "FAIL"
+	@echo "=== Alloy ready ==="
+	@docker exec krip-prometheus wget -qO- http://alloy:12345/-/ready 2>/dev/null && echo "" || echo "FAIL"
 	@echo "=== Loki 라벨 목록 ==="
 	@docker exec krip-prometheus wget -qO- 'http://loki:3100/loki/api/v1/labels' 2>/dev/null | python3 -m json.tool
 	@echo "=== app=krip-backend 라벨 값 (env / node_id / level) ==="

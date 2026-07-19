@@ -1,6 +1,7 @@
-from pydantic import Field
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta, timezone
+
 from beanie import Document, Indexed
+from pydantic import Field
 
 
 WITHDRAWAL_GRACE_PERIOD_DAYS = 30
@@ -22,6 +23,7 @@ class WithdrawalRequest(Document):
     """
 
     user_id: Indexed(str, unique=True) = Field(..., description="탈퇴 요청한 유저 ID")  # type: ignore
+    generation_id: str | None = Field(default=None, description="탈퇴 요청 세대 UUID")
     requested_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc),
         description="탈퇴 요청 시각",

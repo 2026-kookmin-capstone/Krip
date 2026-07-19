@@ -15,9 +15,6 @@ Google Places `types` 배열을 6개 그룹으로 분류하여, 후보 풀이 �
 from typing import Dict, List, Set
 
 
-# ──────────────────── 그룹별 type 매핑 ────────────────────
-
-
 NIGHTLIFE_TYPES: Set[str] = {
     "bar", "night_club", "wine_bar", "cocktail_bar", "pub", "lounge_bar",
     "brewery", "gastropub", "irish_pub", "sports_bar", "beer_garden",
@@ -73,9 +70,6 @@ GROUPS: List[str] = [
 ]
 
 
-# ──────────────────── 분류 ────────────────────
-
-
 def classify(types: List[str]) -> str:
     """Google Places types 배열 → 6개 그룹 중 하나 (or 'other').
 
@@ -95,9 +89,6 @@ def classify(types: List[str]) -> str:
     if type_set & SHOPPING_TYPES:
         return GROUP_SHOPPING
     return GROUP_OTHER
-
-
-# ──────────────────── 그룹별 cap (균형 분배) ────────────────────
 
 
 # 기본 cap (스타일 무관) — 합 67

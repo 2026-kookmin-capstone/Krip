@@ -7,16 +7,13 @@
 
 fan-out 은 `inbox_service_mock` 으로 호출 인자 검증, 실 Mongo 비접근.
 """
+import pytest
+
 from test.unit.domain.tripmate.tripmate_post_like_service.model_factory import (
     TripmatePostFactory,
     UserDetailInformFactory,
 )
-import pytest
 
-
-# ──────────────────────────────────────────────────────────────────
-# get_liked_user_ids
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestGetLikedUserIds:
@@ -29,11 +26,10 @@ class TestGetLikedUserIds:
         post_repo_mock.find_by_id.return_value = post
         like_repo_mock.find_user_ids_by_post.return_value = ["USER_a", "USER_b"]
 
-        result = await service.get_liked_user_ids(post_id="TMP_x")
+        result = await service.get_liked_user_ids(post_id="TMP_x", user_id="USER_viewer")
 
         assert result == ["USER_a", "USER_b"]
         like_repo_mock.find_user_ids_by_post.assert_awaited_once_with("TMP_x")
-
 
     async def test_raises_when_post_not_found(
         self, service, post_repo_mock, like_repo_mock,
@@ -41,14 +37,36 @@ class TestGetLikedUserIds:
         post_repo_mock.find_by_id.return_value = None
 
         with pytest.raises(ValueError, match="존재하지 않는"):
-            await service.get_liked_user_ids(post_id="TMP_x")
+            await service.get_liked_user_ids(post_id="TMP_x", user_id="USER_viewer")
 
         like_repo_mock.find_user_ids_by_post.assert_not_awaited()
 
+    async def test_hidden_post_likes_hidden_from_non_owner(
+        self, service, post_repo_mock, like_repo_mock,
+    ):
+        """숨김 게시글의 좋아요 목록은 작성자 본인이 아니면 404(존재하지 않음)."""
+        post_repo_mock.find_by_id.return_value = TripmatePostFactory.create(
+            post_id="TMP_x", user_id="USER_owner", is_displayed=False,
+        )
 
-# ──────────────────────────────────────────────────────────────────
-# add_like — 트랜잭션 + 알림 fan-out 통합
-# ──────────────────────────────────────────────────────────────────
+        with pytest.raises(ValueError, match="존재하지 않는"):
+            await service.get_liked_user_ids(post_id="TMP_x", user_id="USER_other")
+
+        like_repo_mock.find_user_ids_by_post.assert_not_awaited()
+
+    async def test_hidden_post_likes_visible_to_owner(
+        self, service, post_repo_mock, like_repo_mock,
+    ):
+        """숨김 게시글이어도 작성자 본인은 좋아요 목록을 조회할 수 있다."""
+        post_repo_mock.find_by_id.return_value = TripmatePostFactory.create(
+            post_id="TMP_x", user_id="USER_owner", is_displayed=False,
+        )
+        like_repo_mock.find_user_ids_by_post.return_value = ["USER_a"]
+
+        result = await service.get_liked_user_ids(post_id="TMP_x", user_id="USER_owner")
+
+        assert result == ["USER_a"]
+
 
 @pytest.mark.unit
 class TestAddLike:
@@ -70,6 +88,34 @@ class TestAddLike:
         assert result == 7
         like_repo_mock.save.assert_awaited_once()
 
+    async def test_hidden_post_like_blocked_for_non_owner(
+        self, service, post_repo_mock, like_repo_mock, inbox_service_mock,
+    ):
+        """숨김 게시글은 타인이 좋아요 불가 — 존재 오라클(좋아요 수) + 알림 발송 차단."""
+        post_repo_mock.find_by_id.return_value = TripmatePostFactory.create(
+            post_id="TMP_x", user_id="USER_owner", is_displayed=False,
+        )
+
+        with pytest.raises(ValueError, match="존재하지 않는"):
+            await service.add_like(user_id="USER_other", post_id="TMP_x")
+
+        like_repo_mock.save.assert_not_awaited()
+        inbox_service_mock.notify_tripmate_like.assert_not_awaited()
+
+    async def test_hidden_post_like_allowed_for_owner(
+        self, service, post_repo_mock, like_repo_mock,
+    ):
+        """작성자 본인은 숨김 게시글에도 좋아요 가능 (self-like — 알림 없음)."""
+        post = TripmatePostFactory.create(
+            post_id="TMP_x", user_id="USER_owner", is_displayed=False,
+        )
+        post_repo_mock.find_by_id.return_value = post
+        like_repo_mock.count_by_post.return_value = 1
+
+        result = await service.add_like(user_id="USER_owner", post_id="TMP_x")
+
+        assert result == 1
+        like_repo_mock.save.assert_awaited_once()
 
     async def test_external_like_calls_fanout_with_actor_snapshot(
         self, service, post_repo_mock, detail_repo_mock, inbox_service_mock,
@@ -93,9 +139,26 @@ class TestAddLike:
             actor_name="요한",
             actor_profile_image_url="https://img/p.jpg",
             post_id="TMP_x",
-            post_preview="제주 동행 구함",  # post.title 이 preview
+            post_preview="제주 동행 구함",
         )
 
+    async def test_blocked_actor_like_rejected_as_not_found(
+        self, service, post_repo_mock, like_repo_mock, block_repo_mock, inbox_service_mock,
+    ):
+        """차단 관계면 게시글이 목록/조회에서 숨겨지므로 좋아요도 존재하지 않는 것으로 거부."""
+        from types import SimpleNamespace
+
+        post = TripmatePostFactory.create(post_id="TMP_x", user_id="USER_owner")
+        post_repo_mock.find_by_id.return_value = post
+        block_repo_mock.find_blocks_between.return_value = [
+            SimpleNamespace(blocker_id="USER_owner", blocked_id="USER_actor"),
+        ]
+
+        with pytest.raises(ValueError, match="존재하지 않는"):
+            await service.add_like(user_id="USER_actor", post_id="TMP_x")
+
+        like_repo_mock.save.assert_not_awaited()
+        inbox_service_mock.notify_tripmate_like.assert_not_awaited()
 
     async def test_self_like_skips_fanout_but_inserts_rdb(
         self, service, post_repo_mock, like_repo_mock, inbox_service_mock,
@@ -109,7 +172,6 @@ class TestAddLike:
         like_repo_mock.save.assert_awaited_once()
         inbox_service_mock.notify_tripmate_like.assert_not_awaited()
 
-
     async def test_self_like_skips_detail_fetch(
         self, service, post_repo_mock, detail_repo_mock,
     ):
@@ -121,7 +183,6 @@ class TestAddLike:
 
         detail_repo_mock.find_by_user_id.assert_not_awaited()
 
-
     async def test_external_like_falls_back_when_detail_missing(
         self, service, post_repo_mock, detail_repo_mock, inbox_service_mock,
     ):
@@ -131,14 +192,13 @@ class TestAddLike:
         """
         post = TripmatePostFactory.create(post_id="TMP_x", user_id="USER_owner")
         post_repo_mock.find_by_id.return_value = post
-        detail_repo_mock.find_by_user_id.return_value = None  # 결손
+        detail_repo_mock.find_by_user_id.return_value = None
 
         await service.add_like(user_id="USER_actor", post_id="TMP_x")
 
         call = inbox_service_mock.notify_tripmate_like.await_args.kwargs
         assert call["actor_name"] == ""
         assert call["actor_profile_image_url"] is None
-
 
     async def test_raises_when_post_not_found(
         self, service, post_repo_mock, like_repo_mock, inbox_service_mock,
@@ -151,14 +211,13 @@ class TestAddLike:
         like_repo_mock.save.assert_not_awaited()
         inbox_service_mock.notify_tripmate_like.assert_not_awaited()
 
-
     async def test_raises_when_already_liked(
         self, service, post_repo_mock, like_repo_mock, inbox_service_mock,
     ):
         """중복 좋아요 — 400 매핑용 ValueError. RDB INSERT / fan-out 모두 skip."""
         post = TripmatePostFactory.create()
         post_repo_mock.find_by_id.return_value = post
-        like_repo_mock.find_by_user_and_post.return_value = object()  # 이미 누름
+        like_repo_mock.find_by_user_and_post.return_value = object()
 
         with pytest.raises(ValueError, match="이미 좋아요"):
             await service.add_like(user_id="USER_a", post_id=post.post_id)
@@ -166,10 +225,41 @@ class TestAddLike:
         like_repo_mock.save.assert_not_awaited()
         inbox_service_mock.notify_tripmate_like.assert_not_awaited()
 
+    async def test_double_tap_race_maps_to_value_error(
+        self, service, mock_session, post_repo_mock, like_repo_mock, inbox_service_mock,
+    ):
+        """check→insert 사이 동시 요청(더블탭)으로 PK 위반 시 재조회로 게시글 존재를
+        확인한 뒤 500 이 아니라 400(ValueError)."""
+        from sqlalchemy.exc import IntegrityError
 
-# ──────────────────────────────────────────────────────────────────
-# remove_like — 좋아요 취소는 알림 변경 없음
-# ──────────────────────────────────────────────────────────────────
+        post = TripmatePostFactory.create(user_id="USER_owner")
+        post_repo_mock.find_by_id.return_value = post
+        mock_session.get.return_value = post
+        like_repo_mock.find_by_user_and_post.return_value = None
+        like_repo_mock.save.side_effect = IntegrityError("mock", {}, Exception())
+
+        with pytest.raises(ValueError, match="이미 좋아요"):
+            await service.add_like(user_id="USER_actor", post_id=post.post_id)
+
+        inbox_service_mock.notify_tripmate_like.assert_not_awaited()
+
+    async def test_race_with_deleted_post_maps_to_not_found(
+        self, service, mock_session, post_repo_mock, like_repo_mock, inbox_service_mock,
+    ):
+        """검증과 INSERT 사이 게시글이 삭제되면 FK 위반 → '이미 좋아요' 가 아니라 존재하지 않음."""
+        from sqlalchemy.exc import IntegrityError
+
+        post = TripmatePostFactory.create(user_id="USER_owner")
+        post_repo_mock.find_by_id.return_value = post
+        mock_session.get.return_value = None
+        like_repo_mock.find_by_user_and_post.return_value = None
+        like_repo_mock.save.side_effect = IntegrityError("mock", {}, Exception())
+
+        with pytest.raises(ValueError, match="존재하지 않는"):
+            await service.add_like(user_id="USER_actor", post_id=post.post_id)
+
+        inbox_service_mock.notify_tripmate_like.assert_not_awaited()
+
 
 @pytest.mark.unit
 class TestRemoveLike:
@@ -178,14 +268,13 @@ class TestRemoveLike:
     async def test_removes_existing_like_and_returns_count(
         self, service, like_repo_mock,
     ):
-        like_repo_mock.find_by_user_and_post.return_value = object()  # 누름
+        like_repo_mock.find_by_user_and_post.return_value = object()
         like_repo_mock.count_by_post.return_value = 3
 
         result = await service.remove_like(user_id="USER_a", post_id="TMP_x")
 
         assert result == 3
         like_repo_mock.delete_by_user_and_post.assert_awaited_once_with("USER_a", "TMP_x")
-
 
     async def test_raises_when_not_liked(
         self, service, like_repo_mock,
@@ -196,7 +285,6 @@ class TestRemoveLike:
             await service.remove_like(user_id="USER_a", post_id="TMP_x")
 
         like_repo_mock.delete_by_user_and_post.assert_not_awaited()
-
 
     async def test_does_not_call_fanout(
         self, service, like_repo_mock, inbox_service_mock,

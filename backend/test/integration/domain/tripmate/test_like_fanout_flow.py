@@ -25,8 +25,6 @@ from app.domain.notification.model.inbox import (
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── 정상 fan-out ────────────────────
-
 class TestAddLikeFanout:
     """`add_like` 가 RDB INSERT 후 Mongo 에 인박스 적재 — `target_preview` = post.title."""
 
@@ -45,9 +43,7 @@ class TestAddLikeFanout:
         assert doc["type"] == InboxItemType.TRIPMATE_LIKE.value
         assert doc["target_type"] == TargetType.TRIPMATE_POST.value
         assert doc["target_id"] == post_id
-        # tripmate 의 target_preview 는 post.title
         assert doc["target_preview"] == "여행 같이 가실 분"
-
 
     async def test_self_like_does_not_create_inbox_item(
         self, mongo_db, tripmate_post_like_service, seed_tripmate_post,
@@ -62,8 +58,6 @@ class TestAddLikeFanout:
         coll = InboxItem.get_motor_collection()
         assert await coll.count_documents({}) == 0
 
-
-# ──────────────────── 멱등성 ────────────────────
 
 class TestLikeIdempotency:
     async def test_like_cancel_like_keeps_single_inbox_item(
@@ -80,8 +74,6 @@ class TestLikeIdempotency:
         assert await coll.count_documents({"recipient_id": owner_id}) == 1
 
 
-# ──────────────────── remove_like — 인박스 보존 ────────────────────
-
 class TestRemoveLikePreservesInboxItem:
     async def test_remove_does_not_delete_inbox_item(
         self, mongo_db, tripmate_post_like_service, seed_tripmate_post,
@@ -96,10 +88,9 @@ class TestRemoveLikePreservesInboxItem:
         assert await coll.count_documents({"recipient_id": owner_id}) == 1
 
 
-# ──────────────────── helpers ────────────────────
-
 async def _find_other_user(uow, exclude_user_id: str) -> str:
     from sqlalchemy import select
+
     from app.domain.auth.model.user import User, UserStatus
 
     async with uow as session:

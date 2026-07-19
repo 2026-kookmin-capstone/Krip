@@ -1,10 +1,23 @@
-from sqlalchemy.sql import func
-from sqlalchemy.orm import relationship
-from sqlalchemy import Column, String, Integer, Date, DateTime, Enum, Boolean, ForeignKey, Index, CheckConstraint
 import enum
 
-from app.util.id_generator import generate_tripmate_post_id
+from sqlalchemy import (
+    Boolean,
+    CheckConstraint,
+    Column,
+    Date,
+    DateTime,
+    Enum,
+    ForeignKey,
+    Index,
+    Integer,
+    String,
+    literal_column,
+)
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
+
 from app.database.session import Base
+from app.util.id_generator import generate_tripmate_post_id
 
 
 class PreferredGender(str, enum.Enum):
@@ -27,20 +40,20 @@ class TripmatePost(Base):
     # async 환경에서 lazy-load (MissingGreenlet) 회피 표준 패턴.
     __mapper_args__ = {"eager_defaults": True}
 
-    post_id = Column(String(50), primary_key=True, default=generate_tripmate_post_id)  # 게시글 고유 ID
-    user_id = Column(String(50), ForeignKey("users.user_id", ondelete="CASCADE"), nullable=False)  # 작성자 ID
-    title = Column(String(100), nullable=False)  # 게시글 제목
-    content = Column(String(500), nullable=False)  # 게시글 내용 (10자 ~ 500자)
-    preferred_age_min = Column(Integer, nullable=False)  # 선호 나이 하한
-    preferred_age_max = Column(Integer, nullable=False)  # 선호 나이 상한
-    preferred_gender = Column(Enum(PreferredGender), nullable=False)  # 선호 성별 (male, female, any)
-    region = Column(String(100), nullable=False)  # 여행 지역
-    travel_start_date = Column(Date, nullable=False)  # 여행 시작일
-    travel_end_date = Column(Date, nullable=False)  # 여행 종료일
-    companion_type = Column(Enum(CompanionType), nullable=False)  # 선호 동행 타입 (friend, family, couple, sole)
-    is_displayed = Column(Boolean, nullable=False, default=True)  # 게시글 표시 여부
-    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())  # 게시글 작성일
-    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())  # 게시글 수정일
+    post_id = Column(String(50), primary_key=True, default=generate_tripmate_post_id)
+    user_id = Column(String(50), ForeignKey("users.user_id", ondelete="CASCADE"), nullable=False)
+    title = Column(String(100), nullable=False)
+    content = Column(String(500), nullable=False)
+    preferred_age_min = Column(Integer, nullable=False)
+    preferred_age_max = Column(Integer, nullable=False)
+    preferred_gender = Column(Enum(PreferredGender), nullable=False)
+    region = Column(String(100), nullable=False)
+    travel_start_date = Column(Date, nullable=False)
+    travel_end_date = Column(Date, nullable=False)
+    companion_type = Column(Enum(CompanionType), nullable=False)
+    is_displayed = Column(Boolean, nullable=False, default=True)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())
 
     user = relationship("User", backref="tripmate_posts")
     images = relationship("TripmatePostImage", back_populates="post", cascade="all, delete-orphan")
@@ -50,6 +63,14 @@ class TripmatePost(Base):
         Index("ix_tripmate_post_user_id", "user_id"),
         Index("ix_tripmate_post_region", "region"),
         Index("ix_tripmate_post_travel_dates", "travel_start_date", "travel_end_date"),
+        # 브라우즈 피드 keyset (created_at DESC, post_id DESC) 용 — ASC 인덱스의
+        # backward scan 으로 커버. 숨김 글 제외 부분 인덱스로 크기 최소화.
+        Index(
+            "ix_tripmate_post_displayed_created",
+            "created_at",
+            "post_id",
+            postgresql_where=literal_column("is_displayed = true"),
+        ),
         CheckConstraint("preferred_age_min <= preferred_age_max", name="ck_preferred_age_range"),
         CheckConstraint("travel_start_date <= travel_end_date", name="ck_travel_date_range"),
         CheckConstraint("char_length(content) >= 10", name="ck_content_min_length"),

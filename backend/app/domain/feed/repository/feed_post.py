@@ -4,37 +4,59 @@
 visibility 분기는 service 가 결정 — 본 리포지토리는 visibility 정책을 모름.
 """
 from typing import Optional
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, or_, func, literal, exists
 
-from app.domain.feed.model.feed_post_like import FeedPostLike
-from app.domain.feed.model.feed_post_comment import FeedPostComment
-from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
+from sqlalchemy import and_, exists, func, literal, or_, select
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.domain.feed.dto.feed_post import FeedPostWithCounts
+from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
+from app.domain.feed.model.feed_post_comment import FeedPostComment
+from app.domain.feed.model.feed_post_like import FeedPostLike
+from app.domain.friend.model.user_block import UserBlock
+from app.util.cursor import decode_cursor, keyset_where
 
 
 # 그리드 3열 × 10행.
 PAGE_SIZE = 30
 
 
-def _like_count_subquery():
-    return (
+def _no_block_between(viewer_id: str, other_user_id):
+    return ~exists(
+        select(UserBlock.block_id).where(or_(
+            and_(
+                UserBlock.blocker_id == viewer_id,
+                UserBlock.blocked_id == other_user_id,
+            ),
+            and_(
+                UserBlock.blocked_id == viewer_id,
+                UserBlock.blocker_id == other_user_id,
+            ),
+        ))
+    )
+
+
+def _like_count_subquery(viewer_id: Optional[str]):
+    """댓글/좋아요 목록과 동일한 차단 필터를 적용해 카운트-목록 불일치로 인한
+    차단 유저 활동 유추를 막는다."""
+    stmt = (
         select(func.count())
         .select_from(FeedPostLike)
         .where(FeedPostLike.post_id == FeedPost.post_id)
-        .correlate(FeedPost)
-        .scalar_subquery()
     )
+    if viewer_id is not None:
+        stmt = stmt.where(_no_block_between(viewer_id, FeedPostLike.user_id))
+    return stmt.correlate(FeedPost).scalar_subquery()
 
 
-def _comment_count_subquery():
-    return (
+def _comment_count_subquery(viewer_id: Optional[str]):
+    stmt = (
         select(func.count())
         .select_from(FeedPostComment)
         .where(FeedPostComment.post_id == FeedPost.post_id)
-        .correlate(FeedPost)
-        .scalar_subquery()
     )
+    if viewer_id is not None:
+        stmt = stmt.where(_no_block_between(viewer_id, FeedPostComment.user_id))
+    return stmt.correlate(FeedPost).scalar_subquery()
 
 
 def _is_liked_subquery(viewer_id: Optional[str]):
@@ -59,22 +81,15 @@ class FeedPostRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-
-    # ──────────────────── Create / Update ────────────────────
-
     async def save(self, post: FeedPost) -> FeedPost:
         self.session.add(post)
         await self.session.flush()
         return post
 
-
     async def update(self, post: FeedPost) -> FeedPost:
         """변경 필드 flush — 호출측이 attached post 필드를 직접 mutate 후 호출."""
         await self.session.flush()
         return post
-
-
-    # ──────────────────── Read (단건) ────────────────────
 
     async def find_by_post_id(
         self,
@@ -85,8 +100,8 @@ class FeedPostRepository:
 
         access check 경로는 카운트 미사용 (~0.5ms) 이지만 메서드 분화 회피 — 단일 진입점 우선.
         """
-        like_count = _like_count_subquery()
-        comment_count = _comment_count_subquery()
+        like_count = _like_count_subquery(viewer_id)
+        comment_count = _comment_count_subquery(viewer_id)
         is_liked = _is_liked_subquery(viewer_id)
         stmt = (
             select(
@@ -108,9 +123,6 @@ class FeedPostRepository:
             is_liked=bool(row.is_liked),
         )
 
-
-    # ──────────────────── Read (목록 — 커서 페이지네이션) ────────────────────
-
     async def find_by_owner(
         self,
         *,
@@ -123,14 +135,14 @@ class FeedPostRepository:
         """owner + visibility IN-list 로 커서 페이지네이션 + 카운트 합성.
 
         `(created_at DESC, post_id DESC)` — 컴파운드 인덱스 reverse-scan.
-        cursor 는 마지막 row 의 post_id — scalar_subquery 로 created_at 인라인 lookup 후 튜플 비교.
+        cursor 는 (created_at, post_id) 를 담은 opaque 토큰 — keyset_where 로 튜플 비교.
         `limit` 은 popup 등 고정 N 케이스를 위해 override 가능.
         """
         if not visibilities:
             return []
 
-        like_count = _like_count_subquery()
-        comment_count = _comment_count_subquery()
+        like_count = _like_count_subquery(viewer_id)
+        comment_count = _comment_count_subquery(viewer_id)
         is_liked = _is_liked_subquery(viewer_id)
         stmt = select(
             FeedPost,
@@ -143,18 +155,13 @@ class FeedPostRepository:
         )
 
         if cursor is not None:
-            # (created_at < cur) OR (created_at == cur AND post_id < cur_id) 튜플 비교 — 안정 페이지네이션.
-            cursor_sub = (
-                select(FeedPost.created_at)
-                .where(FeedPost.post_id == cursor)
-                .scalar_subquery()
-            )
-            stmt = stmt.where(
-                or_(
-                    FeedPost.created_at < cursor_sub,
-                    (FeedPost.created_at == cursor_sub) & (FeedPost.post_id < cursor),
-                )
-            )
+            decoded = decode_cursor(cursor)
+            if decoded is None:
+                raise ValueError("유효하지 않은 커서입니다.")
+            cur_ts, cur_id = decoded
+            stmt = stmt.where(keyset_where(
+                FeedPost.created_at, FeedPost.post_id, cur_ts, cur_id,
+            ))
 
         stmt = (
             stmt.order_by(FeedPost.created_at.desc(), FeedPost.post_id.desc())
@@ -170,9 +177,6 @@ class FeedPostRepository:
             )
             for row in result.all()
         ]
-
-
-    # ──────────────────── Delete ────────────────────
 
     async def delete(self, post: FeedPost) -> None:
         """단건 삭제. like/comment 는 ORM cascade + FK CASCADE 로 자동 정리."""

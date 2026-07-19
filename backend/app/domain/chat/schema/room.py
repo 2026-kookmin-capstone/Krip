@@ -1,16 +1,14 @@
-from typing import Any, List, Optional
-from pydantic import BaseModel, ConfigDict, Field
 from datetime import datetime
+from typing import Any, List, Optional
 
+from pydantic import BaseModel, ConfigDict, Field
+
+from app.domain.chat.constants import (
+    MAX_GROUP_CREATE_INVITEES,
+    MAX_INVITE_BATCH,
+)
 from app.domain.chat.model.chat_room import ChatRoomType
 
-
-# 본인 포함 100명. fan-out 지연 + SADD 크기 고려한 협의 값.
-_MAX_GROUP_MEMBERS = 99
-_MAX_INVITE_BATCH = 50
-
-
-# ──────────────────── Request ────────────────────
 
 class CreateDirectRoomBody(BaseModel):
     model_config = ConfigDict(
@@ -41,7 +39,7 @@ class CreateGroupRoomBody(BaseModel):
     member_ids: List[str] = Field(
         ...,
         min_length=1,
-        max_length=_MAX_GROUP_MEMBERS,
+        max_length=MAX_GROUP_CREATE_INVITEES,
         description="초대할 유저 ID 목록 (본인 제외, 친구만 허용)",
     )
 
@@ -58,7 +56,7 @@ class InviteMembersBody(BaseModel):
     user_ids: List[str] = Field(
         ...,
         min_length=1,
-        max_length=_MAX_INVITE_BATCH,
+        max_length=MAX_INVITE_BATCH,
         description="초대할 유저 ID 목록 (친구만 허용)",
     )
 
@@ -75,8 +73,6 @@ class KickMemberBody(BaseModel):
     user_id: str = Field(..., description="강퇴할 유저 ID (요청자는 creator 여야 함)")
 
 
-# ──────────────────── Response — 그룹 관리 액션 ────────────────────
-
 class InviteMembersResponse(BaseModel):
     """invite 엔드포인트 응답 — 실제로 초대된 user_id 만 반환 (이미 멤버/비친구 제외)."""
     invited_user_ids: List[str] = Field(..., description="이번 호출로 초대된 user_id 목록")
@@ -85,8 +81,6 @@ class InviteMembersResponse(BaseModel):
         description="이미 활성 멤버라 skip 된 user_id 목록",
     )
 
-
-# ──────────────────── Response — 내부 구성요소 ────────────────────
 
 class ChatRoomPeerResponse(BaseModel):
     """1:1 방 상대방 프로필. 탈퇴한 경우 필드가 모두 null — 클라는 '탈퇴한 사용자' 로 표시."""
@@ -109,9 +103,9 @@ class LastMessagePreviewResponse(BaseModel):
         ),
     )
     created_at: datetime = Field(..., description="보낸 시각")
+    edited_at: Optional[datetime] = Field(..., description="마지막 수정 시각")
+    deleted_at: Optional[datetime] = Field(..., description="삭제 시각")
 
-
-# ──────────────────── Response — 방 본체 ────────────────────
 
 class ChatRoomResponse(BaseModel):
     chat_room_id: str = Field(..., description="방 고유 ID")
@@ -139,8 +133,6 @@ class ChatRoomListResponse(BaseModel):
         None, description="다음 페이지 커서 (마지막 페이지면 null)"
     )
 
-
-# ──────────────────── Response — 참여자 / 초대 가능 친구 ────────────────────
 
 class RoomMemberResponse(BaseModel):
     """그룹 방 참여자 / 초대 가능 친구 목록의 공통 미리보기 응답."""

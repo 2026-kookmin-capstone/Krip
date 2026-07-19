@@ -1,13 +1,18 @@
 from typing import List
 
-from app.domain.tripmate.repository.tripmate_post_like import TripmatePostLikeRepository
-from app.domain.tripmate.repository.tripmate_post import TripmatePostRepository
-from app.domain.tripmate.model.tripmate_post_like import TripmatePostLike
-from app.domain.tripmate.dto.tripmate_post_like import AddLikePayload
-from app.domain.notification.service.inbox import InboxService
-from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
-from app.database.session import UnitOfWork, transactional
+from sqlalchemy.exc import IntegrityError
+
 from app.core.logger import get_logger
+from app.database.session import UnitOfWork, transactional
+from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
+from app.domain.friend.repository.user_block import UserBlockRepository
+from app.domain.notification.service.inbox import InboxService
+from app.domain.tripmate.dto.tripmate_post_like import AddLikePayload
+from app.domain.tripmate.model.tripmate_post import TripmatePost
+from app.domain.tripmate.model.tripmate_post_like import TripmatePostLike
+from app.domain.tripmate.repository.tripmate_post import TripmatePostRepository
+from app.domain.tripmate.repository.tripmate_post_like import TripmatePostLikeRepository
+from app.domain.tripmate.service.exception import TripmatePostNotFoundError
 
 
 logger = get_logger("tripmate.post.like.service")
@@ -18,28 +23,30 @@ class TripmatePostLikeService:
         self.uow = uow
         self.inbox_service = inbox_service
 
-
-    # ──────────────────── 좋아요 누른 유저 조회 ────────────────────
-
     @transactional
-    async def get_liked_user_ids(self, post_id: str) -> List[str]:
+    async def get_liked_user_ids(self, post_id: str, user_id: str) -> List[str]:
         """
         게시글에 좋아요 누른 유저 ID 목록 조회
 
         1. 게시글 존재 검증
-        2. 좋아요 누른 유저 ID 목록 반환 (최신순)
+        2. 숨김 게시글은 작성자 본인만 조회 가능
+        3. 좋아요 누른 유저 ID 목록 반환 (최신순)
         """
         post_repo = TripmatePostRepository(self._session)
         like_repo = TripmatePostLikeRepository(self._session)
 
         post = await post_repo.find_by_id(post_id)
         if post is None:
-            raise ValueError("존재하지 않는 게시글입니다.")
+            raise TripmatePostNotFoundError("존재하지 않는 게시글입니다.")
+        # 숨김 게시글의 좋아요 목록은 작성자 본인에게만 노출 — 타인에겐 존재 자체를 숨긴다.
+        if not post.is_displayed and post.user_id != user_id:
+            raise TripmatePostNotFoundError("존재하지 않는 게시글입니다.")
+        if post.user_id != user_id:
+            block_repo = UserBlockRepository(self._session)
+            if await block_repo.find_blocks_between(user_id, post.user_id):
+                raise TripmatePostNotFoundError("존재하지 않는 게시글입니다.")
 
         return await like_repo.find_user_ids_by_post(post_id)
-
-
-    # ──────────────────── 좋아요 추가 ────────────────────
 
     async def add_like(self, user_id: str, post_id: str) -> int:
         """좋아요 추가 — 트랜잭션 내 INSERT 후, 트랜잭션 밖에서 인박스 fan-out (best-effort).
@@ -59,7 +66,6 @@ class TripmatePostLikeService:
             )
         return payload.like_count
 
-
     @transactional
     async def _add_like_tx(self, *, user_id: str, post_id: str) -> AddLikePayload:
         """좋아요 추가 트랜잭션 — 게시글 검증 → 중복 검사 → INSERT → count → payload 합성.
@@ -71,14 +77,33 @@ class TripmatePostLikeService:
 
         post = await post_repo.find_by_id(post_id)
         if post is None:
-            raise ValueError("존재하지 않는 게시글입니다.")
+            raise TripmatePostNotFoundError("존재하지 않는 게시글입니다.")
+        # 숨김 게시글은 작성자 본인에게만 노출 — 조회 경로와 동일 정책. 타인의 좋아요를 막아
+        # 존재 오라클(좋아요 수 노출)과 작성자에게 가는 알림 발송을 차단한다.
+        if not post.is_displayed and post.user_id != user_id:
+            raise TripmatePostNotFoundError("존재하지 않는 게시글입니다.")
+        # 차단 관계(양방향)면 게시글이 목록/조회에서 숨겨지므로 좋아요도 동일하게 거부한다.
+        if post.user_id != user_id:
+            block_repo = UserBlockRepository(self._session)
+            if await block_repo.find_blocks_between(user_id, post.user_id):
+                raise TripmatePostNotFoundError("존재하지 않는 게시글입니다.")
 
         existing = await like_repo.find_by_user_and_post(user_id, post_id)
         if existing is not None:
             raise ValueError("이미 좋아요를 누른 게시글입니다.")
 
         like = TripmatePostLike(user_id=user_id, post_id=post_id)
-        await like_repo.save(like)
+        # SAVEPOINT 로 감싸 IntegrityError 후에도 세션을 살리고, fresh SELECT 재조회로
+        # PK 중복(더블탭)과 FK 위반(동시 삭제)을 구분한다.
+        try:
+            async with self._session.begin_nested():
+                await like_repo.save(like)
+        except IntegrityError:
+            if await self._session.get(
+                TripmatePost, post_id, populate_existing=True,
+            ) is None:
+                raise TripmatePostNotFoundError("존재하지 않는 게시글입니다.") from None
+            raise ValueError("이미 좋아요를 누른 게시글입니다.") from None
         like_count = await like_repo.count_by_post(post_id)
 
         # 본인→본인 — outer 가 fan-out skip
@@ -101,9 +126,6 @@ class TripmatePostLikeService:
             actor_profile_image_url=detail.profile_image_url if detail is not None else None,
             post_preview=post.title,
         )
-
-
-    # ──────────────────── 좋아요 삭제 ────────────────────
 
     @transactional
     async def remove_like(self, user_id: str, post_id: str) -> int:

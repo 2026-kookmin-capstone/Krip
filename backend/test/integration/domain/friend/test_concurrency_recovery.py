@@ -5,15 +5,15 @@ Service 는 `begin_nested()` 로 INSERT 를 SAVEPOINT 로 감싸고, race 로 �
 쿼리를 돌린다. 이 동작이 실제로 DB 레벨에서 성립하는지 확인한다.
 """
 
-from sqlalchemy import select
 import pytest
+from sqlalchemy import select
 
-from app.domain.friend.service.user_block import UserBlockService
-from app.domain.friend.service.friendship import FriendshipService
-from app.domain.friend.repository.user_block import UserBlockRepository
-from app.domain.friend.repository.friendship import FriendshipRepository
-from app.domain.friend.model.user_block import UserBlock
 from app.domain.friend.model.friendship import Friendship, FriendshipStatus
+from app.domain.friend.model.user_block import UserBlock
+from app.domain.friend.repository.friendship import FriendshipRepository
+from app.domain.friend.repository.user_block import UserBlockRepository
+from app.domain.friend.service.friendship import FriendshipService
+from app.domain.friend.service.user_block import UserBlockService
 
 
 pytestmark = pytest.mark.integration
@@ -59,7 +59,6 @@ class TestSendRequestSavepointRecovery:
         # 복구 쿼리가 성공했다는 것 = SAVEPOINT rollback 이 외부 TX 를 깨뜨리지 않았다는 증거
         assert call_count["n"] == 2
 
-        # 최종 상태는 원래 row 1건만
         async with session_factory() as s:
             rows = (await s.execute(select(Friendship))).scalars().all()
         assert len(rows) == 1
@@ -76,24 +75,20 @@ class TestBlockUserTransactionIntegrity:
     async def test_friendship_preserved_when_block_insert_fails(
         self, uow, seed_users, session_factory, monkeypatch
     ):
-        from unittest.mock import AsyncMock, MagicMock
         a, b, _ = await seed_users(3)
 
-        # 사전 세팅: 친구관계(ACCEPTED) + 차단 row 둘 다 이미 존재
         async with session_factory() as s:
             s.add(Friendship(requester_id=a, addressee_id=b, status=FriendshipStatus.ACCEPTED))
             s.add(UserBlock(blocker_id=a, blocked_id=b))
             await s.commit()
 
-        # race: pre-check 를 우회 (has_blocker_blocked → False 로 고정)
+        # 기존 block을 숨겨 pre-check와 INSERT 사이의 race를 재현한다.
         async def fake_check(self, blocker_id, blocked_id):
             return False
 
         monkeypatch.setattr(UserBlockRepository, "has_blocker_blocked", fake_check)
 
-        block_cache_stub = MagicMock()
-        block_cache_stub.invalidate_block_cache = AsyncMock()
-        service = UserBlockService(uow=uow, block_cache_service=block_cache_stub)
+        service = UserBlockService(uow=uow)
         with pytest.raises(ValueError, match="이미 차단"):
             await service.block_user(user_id=a, target_user_id=b)
 

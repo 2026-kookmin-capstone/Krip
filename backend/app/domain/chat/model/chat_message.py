@@ -6,6 +6,7 @@
         "chat_room_id":   str,
         "server_seq":     int,              # 방 내부 단조 증가 시퀀스
         "sender_id":      str | None,       # 시스템 메시지는 None
+        "client_msg_id":  str,              # user message idempotency key (system 은 없음)
         "type":           str,              # text | image | file | system
         "content":        Any,              # type 에 따라 다름 (system 은 {action, actor_id, target_ids?})
         "created_at":     datetime,
@@ -13,9 +14,10 @@
         "deleted_at":     datetime | None,
     }
 """
-from pymongo import ASCENDING, DESCENDING
-from motor.motor_asyncio import AsyncIOMotorDatabase
 import enum
+
+from motor.motor_asyncio import AsyncIOMotorDatabase
+from pymongo import ASCENDING, DESCENDING
 
 
 COLLECTION_NAME = "chat_message"
@@ -33,6 +35,7 @@ async def create_indexes(db: AsyncIOMotorDatabase) -> None:
     """앱 startup 1회.
 
     - `{chat_room_id, server_seq}` UNIQUE — seq 중복 insert 의 DB 레벨 최종 방어선.
+    - `{sender_id, client_msg_id}` partial UNIQUE — dedupe Redis 유실 후에도 user message 멱등.
     - `{chat_room_id, created_at DESC}` — 시간 기반 페이징/검색용 보조.
     """
     collection = db[COLLECTION_NAME]
@@ -45,4 +48,10 @@ async def create_indexes(db: AsyncIOMotorDatabase) -> None:
     await collection.create_index(
         [("chat_room_id", ASCENDING), ("created_at", DESCENDING)],
         name="ix_chat_message_room_created_at",
+    )
+    await collection.create_index(
+        [("sender_id", ASCENDING), ("client_msg_id", ASCENDING)],
+        name="uq_chat_message_sender_client_msg",
+        unique=True,
+        partialFilterExpression={"client_msg_id": {"$type": "string"}},
     )

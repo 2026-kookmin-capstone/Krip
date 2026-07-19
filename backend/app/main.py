@@ -1,137 +1,151 @@
-import uvicorn
-import random
-from prometheus_client import start_http_server
+import asyncio
 import os
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI
-from contextlib import asynccontextmanager
+import random
+from contextlib import AsyncExitStack, asynccontextmanager
 
-from app.middleware.tracking import (
-    RequestIDMiddleware,
-    ErrorTrackingMiddleware,
-    SecurityHeadersMiddleware,
-)
-from app.middleware.auth import BearerTokenMiddleware, LoginAuthMiddleware, RegisterCheckMiddleware
-from app.domain.chat.worker.reconcile import (
-    start_reconcile_scheduler,
-    stop_reconcile_scheduler,
-)
-from app.domain.chat.worker.node_registry import (
-    start_node_registry,
-    stop_node_registry,
-)
-from app.domain.chat.worker.fanout_dispatcher import (
-    start_fanout_dispatcher,
-    stop_fanout_dispatcher,
-)
-from app.domain.auth.worker.withdraw_purge import (
-    start_withdraw_purge_scheduler,
-    stop_withdraw_purge_scheduler,
-)
-from app.database.session import init_mongodb, close_mongodb
-import app.database.model # Relation Lazy Load 문제 해결하기 위한 import!
-from app.core.redis import get_redis_client, get_redis_dedupe_client, close_redis
-from app.core.metric import build_instrumentator
-from app.core.logger import setup_logging, get_logger
+import uvicorn
+from fastapi import FastAPI
+from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
+from prometheus_client import start_http_server
+from starlette.exceptions import HTTPException as StarletteHTTPException
+
+import app.database.model  # ORM relationship registry side effect
+from app.api.v1.health import router as health_router
+from app.api.v1.router import api_router
+from app.config.setting import settings
+from app.container import Container
+from app.core.ai.menu_ocr.load import MenuOcr
+from app.core.ai.papago_translator.load import PapagoTranslator
+from app.core.ai.tour_planner.load import TourPlanner
+from app.core.background_tasks import background_tasks
+from app.core.chat.lua_script import lua_scripts
+from app.core.exception import DomainError
+from app.core.fcm import close_fcm, init_fcm
 from app.core.instrumentation import (
     attach_db_instrumentation,
     prime_worker_gauges,
     start_event_loop_monitor,
     stop_event_loop_monitor,
 )
-from app.core.fcm import init_fcm, close_fcm
-from app.core.chat.lua_script import lua_scripts
-from app.core.ai.tour_planner.load import TourPlanner
-from app.core.ai.papago_translator.load import PapagoTranslator
-from app.core.ai.menu_ocr.load import MenuOcr
-from app.container import Container
-from app.config.setting import settings
-from app.api.v1.router import api_router
-from app.api.v1.health import router as health_router
+from app.core.logger import get_logger, setup_logging
+from app.core.metric import build_instrumentator
+from app.core.redis import close_redis, get_redis_client, get_redis_dedupe_client
+from app.database.session import close_mongodb, init_mongodb
+from app.domain.auth.worker.withdraw_purge import (
+    start_withdraw_purge_scheduler,
+    stop_withdraw_purge_scheduler,
+)
+from app.domain.chat.worker.fanout_dispatcher import (
+    start_fanout_dispatcher,
+    stop_fanout_dispatcher,
+)
+from app.domain.chat.worker.node_registry import (
+    start_node_registry,
+    stop_node_registry,
+)
+from app.domain.chat.worker.reconcile import (
+    start_reconcile_scheduler,
+    stop_reconcile_scheduler,
+)
+from app.middleware.auth import BearerTokenMiddleware, LoginAuthMiddleware, RegisterCheckMiddleware
+from app.middleware.tracking import (
+    ErrorTrackingMiddleware,
+    RequestIDMiddleware,
+    SecurityHeadersMiddleware,
+    UnhandledExceptionMiddleware,
+    handle_domain_error,
+    handle_http_exception,
+    handle_validation_error,
+)
 
 
 logger = get_logger("main")
+
+
+async def _stop_metrics_server(server, thread) -> None:
+    """Prometheus WSGI server를 event loop를 막지 않고 종료한다."""
+    def stop() -> None:
+        try:
+            server.shutdown()
+        finally:
+            try:
+                server.server_close()
+            finally:
+                thread.join()
+
+    await asyncio.to_thread(stop)
 
 
 def create_app() -> FastAPI:
     """FastAPI 애플리케이션 팩토리"""
     @asynccontextmanager
     async def lifespan(app: FastAPI):
-        # startup
-        setup_logging()
+        async with AsyncExitStack() as stack:
+            setup_logging()
 
-        # /metrics 를 별도 포트로 노출한다.
-        # 데몬 스레드로 동작하며 같은 프로세스의 default registry 를 그대로 사용한다.
-        # FastAPI 미들웨어를 우회하므로 사용자 트래픽과 scrape 가 서로 영향을 주지 않는다.
-        # 외부 노출은 NetworkPolicy 로 monitoring 영역에서만 도달하도록 막는다.
-        start_http_server(settings.METRICS_PORT)
-        logger.info("Prometheus /metrics on :{}", settings.METRICS_PORT)
+            # handle을 보존해 startup rollback과 shutdown 모두에서 metrics socket을 닫는다.
+            metrics_server, metrics_thread = start_http_server(settings.METRICS_PORT)
+            stack.push_async_callback(
+                _stop_metrics_server, metrics_server, metrics_thread,
+            )
+            logger.info("Prometheus /metrics on :{}", settings.METRICS_PORT)
 
-        # 워커 last_tick_timestamp 를 startup 시각으로 priming.
-        # 첫 tick 전까지 false-negative WorkerStale 알람이 발생하지 않도록 한다.
-        prime_worker_gauges()
+            # 첫 tick 전 WorkerStale 오탐을 막는다.
+            prime_worker_gauges()
 
-        # SQLAlchemy 이벤트 리스너 부착 — query duration / pool gauge 자동 관측.
-        # Container singleton engine 인스턴스를 강제 생성한 뒤 sync_engine 에 listen.
-        attach_db_instrumentation(app.container.engine())
+            # Container singleton engine은 instrumentation 전에 이미 생성된다.
+            engine = app.container.engine()
+            stack.push_async_callback(engine.dispose)
+            lock_engine = app.container.image_reference_lock_engine()
+            stack.push_async_callback(lock_engine.dispose)
+            # instrumentation이 전역 pool state를 일부 설정한 뒤 실패해도 초기화한다.
+            stack.push_async_callback(stop_event_loop_monitor)
+            attach_db_instrumentation(engine)
 
-        # 이벤트 루프 lag 측정 백그라운드 태스크 시작.
-        # 1초 주기로 sleep 깨어남 지연을 관측해 이벤트 루프 포화 신호로 사용.
-        start_event_loop_monitor()
+            start_event_loop_monitor()
 
-        # force_jump Lua 호출 시 사용할 jitter 엔트로피 보강
-        random.seed(int.from_bytes(os.urandom(16), "big"))
+            random.seed(int.from_bytes(os.urandom(16), "big"))
 
-        await init_mongodb()
+            # index 초기화 실패 전 생성된 client도 rollback한다.
+            stack.push_async_callback(close_mongodb)
+            await init_mongodb()
 
-        # Redis 양쪽 DB 커넥션 pre-warm 후 hot 클라이언트에 Lua 스크립트 등록.
-        hot_redis = await get_redis_client()
-        await get_redis_dedupe_client()
-        lua_scripts.load(hot_redis)
+            stack.push_async_callback(close_redis)
+            hot_redis = await get_redis_client()
+            await get_redis_dedupe_client()
+            lua_scripts.load(hot_redis)
 
-        # FCM Admin SDK 초기화 — 워커가 푸시를 보낼 수 있어야 하므로 워커 시작 전에 호출.
-        init_fcm()
+            stack.callback(close_fcm)
+            init_fcm()
 
-        # 채팅 reconcile 워커 — last_message_* 정합성 복구 + unread 복구 entry point 주입
-        # (ws.py 의 recover_unread 경로도 같은 session_factory 공유)
-        start_reconcile_scheduler(app.container.session_factory())
+            stack.push_async_callback(stop_reconcile_scheduler)
+            start_reconcile_scheduler(app.container.session_factory())
 
-        # 채팅 멀티 노드 fan-out 인프라 — FANOUT_MODE=in_process 면 둘 다 no-op.
-        # 순서 중요 (race window 차단):
-        #   1) dispatcher 가 먼저 `node:{NODE_ID}` 채널 SUBSCRIBE 까지 await
-        #   2) 그 다음 node_registry 가 ZSET 에 자기 노드 등록 → 다른 노드의 publisher 가
-        #      list_active_nodes 로 우리를 인지한 시점엔 이미 채널 활성. 반대 순서면 ZSET
-        #      등록 ~ SUBSCRIBE 사이 publish 가 누락됨.
-        await start_fanout_dispatcher(app.container.fanout_service())
-        await start_node_registry()
+            # SUBSCRIBE 후 registry 등록, 종료는 LIFO로 역순을 보장한다.
+            stack.push_async_callback(stop_fanout_dispatcher)
+            await start_fanout_dispatcher(app.container.fanout_service())
+            stack.push_async_callback(stop_node_registry)
+            await start_node_registry()
 
-        # 탈퇴 영구 삭제 워커 — 매일 KST 04:00 발화. RDB / Mongo / S3 / Redis 모두 사용하므로
-        # init_mongodb / Redis pre-warm 이후에 시작.
-        start_withdraw_purge_scheduler(app.container.session_factory())
+            stack.push_async_callback(stop_withdraw_purge_scheduler)
+            start_withdraw_purge_scheduler(app.container.session_factory())
 
-        MenuOcr().load()
-        PapagoTranslator().load()
-        await TourPlanner().load()
-        logger.info("Application started in {} mode", settings.ENVIRONMENT)
+            MenuOcr().load()
+            papago = PapagoTranslator()
+            stack.push_async_callback(papago.close)
+            papago.load()
+            await TourPlanner().load()
 
-        yield
+            background_tasks.start()
+            # shutdown 첫 단계에서 admission을 닫고 drain한 뒤 shared resource를 해제한다.
+            stack.push_async_callback(background_tasks.stop)
+            logger.info("Application started in {} mode", settings.ENVIRONMENT)
 
-        # shutdown — 워커들이 Mongo/Redis 를 쓰므로 이 둘을 닫기 전에 먼저 멈춘다.
-        # 순서 중요 (startup 의 거울): node_registry 를 먼저 정리해 다른 노드의 publisher
-        # 가 다음 list_active_nodes 호출부터 우리를 즉시 제외하게 한 뒤, 디스패처가 안전히
-        # unsubscribe. 반대 순서면 디스패처 정지 ~ ZSET deregister 사이 publish 가 drop.
-        await stop_event_loop_monitor()
-        await stop_withdraw_purge_scheduler()
-        await stop_reconcile_scheduler()
-        await stop_node_registry()
-        await stop_fanout_dispatcher()
-        await PapagoTranslator().close()
-        close_fcm()
-        await close_mongodb()
-        await close_redis()
+            yield
+
         logger.info("Application shut down")
 
-    # DI Container 초기화 및 wiring
     container = Container()
     container.wire(modules=[
         "app.domain.auth.router.login",
@@ -167,10 +181,7 @@ def create_app() -> FastAPI:
         "app.domain.feed.router.feed_popup",
     ])
 
-
-    # PROD 에서는 Swagger / ReDoc / OpenAPI 스키마를 모두 비활성화하여 API 명세 노출을 차단.
-    # docs_url=None 이면 FastAPI 가 해당 라우트를 등록하지 않아 404 반환된다.
-    # openapi_url=None 시 Swagger 도 동작 불가하므로 셋이 함께 토글된다.
+    # PROD에서는 API 명세 라우트를 등록하지 않는다.
     app = FastAPI(
         title="Krip API",
         description="Krip 서버",
@@ -181,43 +192,40 @@ def create_app() -> FastAPI:
         lifespan=lifespan,
     )
 
-    # 미들웨어 (등록 역순으로 실행됨 → CORS가 가장 먼저 실행)
-    app.add_middleware(SecurityHeadersMiddleware)
+    # 422 사유(loc/type)를 4xx 추적 로그에 싣는다 — msg/input 은 PII 로 금지.
+    app.add_exception_handler(RequestValidationError, handle_validation_error)
+    # 도메인 예외 안전망 — 라우터가 except 를 빠뜨려도 500 누출 대신 선언된 status.
+    app.add_exception_handler(DomainError, handle_domain_error)
+    # 4xx detail 을 추적 로그 필드(error_detail)로 — Grafana 로그 패널에서 사유 확인용.
+    app.add_exception_handler(StarletteHTTPException, handle_http_exception)
+
+    # Starlette middleware는 등록 역순으로 실행된다.
     app.add_middleware(RegisterCheckMiddleware)
     app.add_middleware(LoginAuthMiddleware)
     app.add_middleware(BearerTokenMiddleware)
-    app.add_middleware(ErrorTrackingMiddleware)
-    app.add_middleware(RequestIDMiddleware)
+    app.add_middleware(UnhandledExceptionMiddleware)
 
-    # CORS (가장 마지막에 등록 → 가장 바깥쪽에서 실행되어 모든 응답에 CORS 헤더 추가)
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=[
-            settings.FRONTEND_URL,
-            settings.LOCAL_FRONTEND_URL,
-        ],
+        allow_origins=sorted(settings.trusted_web_origins),
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
+        expose_headers=["X-Request-ID", "X-Process-Time"],
     )
+    app.add_middleware(ErrorTrackingMiddleware)
+    app.add_middleware(RequestIDMiddleware)
+    app.add_middleware(SecurityHeadersMiddleware)
 
-    # 메트릭 계측은 모든 미들웨어 등록 이후에 부착한다.
-    # Starlette 의 add_middleware 는 LIFO 라 마지막에 등록된 것이 가장 바깥쪽에 위치한다.
-    # 그래야 인증 실패로 401, 403, 419 가 반환되는 요청까지 RED 메트릭에 잡힌다.
-    # instrument(app) 만 호출하고 expose(app) 는 호출하지 않는다.
-    # /metrics 노출은 lifespan 의 start_http_server 가 별도 포트에서 처리한다.
+    # 가장 바깥쪽에서 인증 실패까지 계측한다. /metrics는 별도 포트에서 노출한다.
     build_instrumentator().instrument(app)
 
-    # 라우터
     app.include_router(api_router)
 
-    # 헬스체크 — `/api` prefix 우회. k8s probe / Watchdog / blackbox 가 직접 `/health`, `/health/deep`, `/ready` 호출.
+    # 인프라 probe용이라 `/api` prefix를 적용하지 않는다.
     app.include_router(health_router)
 
-    # Swagger Authorize 버튼 (DEV 한정) — BearerTokenMiddleware 가 Starlette 미들웨어라
-    # OpenAPI 스키마에 노출되지 않아 `/docs` 에서 토큰 입력 칸이 없다. securitySchemes 만
-    # 얹어 Swagger UI 가 Authorize 버튼을 렌더하도록 한다. 실제 검증은 미들웨어가 그대로 수행.
-    # PROD 에서는 패치하지 않아 명세 노출을 최소화한다.
+    # DEV Swagger에만 middleware 인증 scheme을 노출한다.
     if not settings.is_production:
         _default_openapi = app.openapi
 
@@ -242,8 +250,9 @@ app = create_app()
 
 
 if __name__ == "__main__":
+    # reload=True는 app 객체가 아닌 import 문자열을 요구한다.
     uvicorn.run(
-        app,
+        "app.main:app",
         host=settings.HOST,
         port=settings.PORT,
         reload=not settings.is_production,

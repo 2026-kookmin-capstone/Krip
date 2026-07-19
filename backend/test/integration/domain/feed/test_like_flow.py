@@ -9,7 +9,7 @@ user_block 테이블과 정확히 결합하는지 검증. fan-out 측면은 Phas
     | post visibility | viewer 관계      | 기대 결과              |
     |---|---|---|
     | PUBLIC          | 비친구           | ✅ 좋아요 가능          |
-    | PUBLIC          | 차단              | ❌ FeedBlockedError    |
+    | PUBLIC          | 차단              | ❌ FeedNotFoundError   |
     | FRIENDS         | ACCEPTED 친구    | ✅ 좋아요 가능          |
     | FRIENDS         | 비친구           | ❌ FeedNotFoundError   |
     | PRIVATE         | 본인              | ✅ 좋아요 가능          |
@@ -19,14 +19,12 @@ user_block 테이블과 정확히 결합하는지 검증. fan-out 측면은 Phas
 """
 import pytest
 
-from app.domain.feed.service.exception import FeedBlockedError, FeedNotFoundError
 from app.domain.feed.model.feed_post import FeedVisibility
+from app.domain.feed.service.exception import FeedNotFoundError
 
 
 pytestmark = pytest.mark.integration
 
-
-# ──────────────────── PUBLIC ────────────────────
 
 class TestPublicVisibility:
     """PUBLIC 게시물 — 차단 외 누구나 좋아요."""
@@ -43,21 +41,40 @@ class TestPublicVisibility:
 
         assert like_count == 1
 
-
-    async def test_blocked_user_raises_blocked_error(
+    async def test_blocked_user_gets_not_found(
         self, mongo_db, feed_post_like_service, seed_feed_post, seed_block,
     ):
-        """owner ↔ actor 차단 관계 → FeedBlockedError. 좋아요 자체 차단."""
+        """owner ↔ actor 차단 관계 → 404 로 존재 은닉. 좋아요 자체 차단."""
         post_id, owner_id = await seed_feed_post(visibility=FeedVisibility.PUBLIC)
         actor_id = await _find_other_user(feed_post_like_service.uow, owner_id)
 
         await seed_block(blocker=owner_id, blocked=actor_id)
 
-        with pytest.raises(FeedBlockedError):
+        with pytest.raises(FeedNotFoundError):
             await feed_post_like_service.add_like(user_id=actor_id, post_id=post_id)
 
+    async def test_counts_exclude_blocked_user_activity(
+        self, mongo_db, feed_post_like_service, seed_feed_post, seed_block,
+        session_factory,
+    ):
+        """차단 이전에 남긴 좋아요는 목록 필터와 동일하게 카운트에서도 제외 —
+        카운트-목록 불일치로 차단 유저 활동이 유추되지 않아야 한다."""
+        from app.domain.feed.repository.feed_post import FeedPostRepository
 
-# ──────────────────── FRIENDS ────────────────────
+        post_id, owner_id = await seed_feed_post(visibility=FeedVisibility.PUBLIC)
+        actor_id = await _find_other_user(feed_post_like_service.uow, owner_id)
+        await feed_post_like_service.add_like(user_id=actor_id, post_id=post_id)
+
+        await seed_block(blocker=owner_id, blocked=actor_id)
+
+        async with session_factory() as session:
+            repo = FeedPostRepository(session)
+            owner_view = await repo.find_by_post_id(post_id, viewer_id=owner_id)
+            unfiltered = await repo.find_by_post_id(post_id)
+
+        assert owner_view.like_count == 0
+        assert unfiltered.like_count == 1
+
 
 class TestFriendsVisibility:
     """FRIENDS 게시물 — ACCEPTED 친구만 좋아요. 비친구 → 404 (정보 누출 회피)."""
@@ -76,7 +93,6 @@ class TestFriendsVisibility:
 
         assert like_count == 1
 
-
     async def test_non_friend_raises_not_found(
         self, mongo_db, feed_post_like_service, seed_feed_post,
     ):
@@ -87,8 +103,6 @@ class TestFriendsVisibility:
         with pytest.raises(FeedNotFoundError):
             await feed_post_like_service.add_like(user_id=actor_id, post_id=post_id)
 
-
-# ──────────────────── PRIVATE ────────────────────
 
 class TestPrivateVisibility:
     """PRIVATE 게시물 — 본인만 좋아요. 타인 → 404."""
@@ -104,7 +118,6 @@ class TestPrivateVisibility:
 
         assert like_count == 1
 
-
     async def test_stranger_raises_not_found(
         self, mongo_db, feed_post_like_service, seed_feed_post,
     ):
@@ -115,10 +128,9 @@ class TestPrivateVisibility:
             await feed_post_like_service.add_like(user_id=actor_id, post_id=post_id)
 
 
-# ──────────────────── helpers ────────────────────
-
 async def _find_other_user(uow, exclude_user_id: str) -> str:
     from sqlalchemy import select
+
     from app.domain.auth.model.user import User, UserStatus
 
     async with uow as session:

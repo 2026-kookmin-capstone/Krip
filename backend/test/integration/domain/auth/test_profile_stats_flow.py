@@ -17,15 +17,13 @@ unit 으론 잡히지 않는다. friendship OR-조건의 BitmapOr 인덱스 사�
 """
 import pytest
 
-from app.domain.friend.model.friendship import Friendship, FriendshipStatus
-from app.domain.feed.model.feed_post_like import FeedPostLike
 from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
+from app.domain.feed.model.feed_post_like import FeedPostLike
+from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 
 
 pytestmark = pytest.mark.integration
 
-
-# ──────────────────── helpers ────────────────────
 
 async def _insert_post(
     session_factory,
@@ -67,8 +65,6 @@ async def _insert_friendship(
         await session.commit()
 
 
-# ──────────────────── happy path / 빈 케이스 ────────────────────
-
 class TestEmptyActivity:
     async def test_no_posts_no_friends_returns_zero(
         self, profile_service, seed_users,
@@ -81,8 +77,6 @@ class TestEmptyActivity:
         assert result.total_friends == 0
 
 
-# ──────────────────── total_feed_likes 정합성 ────────────────────
-
 class TestFeedLikeAggregation:
     async def test_counts_likes_on_my_posts(
         self, profile_service, seed_users, session_factory,
@@ -91,14 +85,12 @@ class TestFeedLikeAggregation:
         me_id, liker1, liker2, liker3 = await seed_users(4)
         post_a = await _insert_post(session_factory, me_id)
         post_b = await _insert_post(session_factory, me_id)
-        # post_a 에 2건, post_b 에 1건 — 총 3건
         await _insert_like(session_factory, liker1, post_a)
         await _insert_like(session_factory, liker2, post_a)
         await _insert_like(session_factory, liker3, post_b)
 
         result = await profile_service.get_my_stats(me_id)
         assert result.total_feed_likes == 3
-
 
     async def test_does_not_count_likes_on_other_users_posts(
         self, profile_service, seed_users, session_factory,
@@ -107,12 +99,10 @@ class TestFeedLikeAggregation:
         me_id, other_id, liker = await seed_users(3)
         other_post = await _insert_post(session_factory, other_id)
         await _insert_like(session_factory, liker, other_post)
-        # 나는 내 글에 받은 좋아요가 없음 + 다른 사람 글의 좋아요는 누락돼야 함
         await _insert_like(session_factory, me_id, other_post)
 
         result = await profile_service.get_my_stats(me_id)
         assert result.total_feed_likes == 0
-
 
     async def test_private_visibility_likes_also_counted(
         self, profile_service, seed_users, session_factory,
@@ -127,7 +117,6 @@ class TestFeedLikeAggregation:
         result = await profile_service.get_my_stats(me_id)
         assert result.total_feed_likes == 1
 
-
     async def test_self_like_on_own_post_counted(
         self, profile_service, seed_users, session_factory,
     ):
@@ -139,8 +128,6 @@ class TestFeedLikeAggregation:
         result = await profile_service.get_my_stats(me_id)
         assert result.total_feed_likes == 1
 
-
-# ──────────────────── total_friends 정합성 ────────────────────
 
 class TestFriendshipCount:
     async def test_counts_only_accepted_status(
@@ -158,17 +145,14 @@ class TestFriendshipCount:
         result = await profile_service.get_my_stats(me_id)
         assert result.total_friends == 1
 
-
     async def test_counts_friendship_in_both_directions(
         self, profile_service, seed_users, session_factory,
     ):
         """내가 requester 인 친구와 addressee 인 친구 모두 합산 (방향 무관)."""
         me_id, friend_a, friend_b = await seed_users(3)
-        # 내가 requester
         await _insert_friendship(
             session_factory, me_id, friend_a, FriendshipStatus.ACCEPTED,
         )
-        # 내가 addressee
         await _insert_friendship(
             session_factory, friend_b, me_id, FriendshipStatus.ACCEPTED,
         )
@@ -176,13 +160,11 @@ class TestFriendshipCount:
         result = await profile_service.get_my_stats(me_id)
         assert result.total_friends == 2
 
-
     async def test_does_not_count_unrelated_friendships(
         self, profile_service, seed_users, session_factory,
     ):
         """다른 두 유저 사이의 친구 관계는 내 카운트와 무관."""
         me_id, u1, u2 = await seed_users(3)
-        # 나와 무관한 친구 관계
         await _insert_friendship(
             session_factory, u1, u2, FriendshipStatus.ACCEPTED,
         )
@@ -191,16 +173,12 @@ class TestFriendshipCount:
         assert result.total_friends == 0
 
 
-# ──────────────────── 권한 / 에러 ────────────────────
-
 class TestErrors:
     async def test_unknown_user_id_raises_value_error(self, profile_service):
         """존재하지 않는 user_id → ValueError (라우터에서 404 매핑)."""
         with pytest.raises(ValueError):
             await profile_service.get_my_stats("USER_does_not_exist")
 
-
-# ──────────────────── 통합 — 좋아요/친구 같이 ────────────────────
 
 class TestCombined:
     async def test_likes_and_friends_aggregated_independently(

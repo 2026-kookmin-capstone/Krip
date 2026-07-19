@@ -1,12 +1,11 @@
-from typing import List, Optional
-from pydantic import BaseModel, ConfigDict, Field
 from datetime import datetime
+from typing import List, Optional
 
-from app.domain.friend.model.friendship import FriendshipStatus
+from pydantic import BaseModel, ConfigDict, Field
+
 from app.domain.auth.model.user_detail_inform import Gender
+from app.domain.friend.model.friendship import FriendshipStatus
 
-
-# ──────────────────── Request ────────────────────
 
 class SendFriendRequestBody(BaseModel):
     model_config = ConfigDict(
@@ -19,8 +18,6 @@ class SendFriendRequestBody(BaseModel):
 
     addressee_id: str = Field(..., description="친구 요청을 받을 유저 ID")
 
-
-# ──────────────────── Response ────────────────────
 
 class FriendPeerResponse(BaseModel):
     user_id: str = Field(..., description="상대 유저 ID")

@@ -5,19 +5,19 @@ OAuth 콜백 후 1차 가입 / 상태 분기 (NEW / WITHDRAWAL_PENDING / IN_PROG
 default=generate_user_id 가 instance 시점이 아닌 INSERT 시점에 부여되기 때문에 stub 이 더
 명료. save 시점에 user_id 부여하는 side_effect 로 신규 가입 흐름 시뮬레이션.
 """
-from test.unit.domain.auth.signup_service.model_factory import (
-    UserDetailInformFactory,
-    UserFactory,
-)
+import pytest
+
+from app.domain.auth.service.signup import SignupService
 from test.unit.domain.auth.mock_factory import (
     FakeUnitOfWork,
     make_mock_session,
     make_user_detail_repo_mock,
     make_user_repo_mock,
 )
-import pytest
-
-from app.domain.auth.service.signup import SignupService
+from test.unit.domain.auth.signup_service.model_factory import (
+    UserDetailInformFactory,
+    UserFactory,
+)
 
 
 class _UserStub:
@@ -44,11 +44,9 @@ def user_repo_mock():
     mock = make_user_repo_mock()
     mock.find_by_provider = mock.find_by_id  # 동일 AsyncMock 재사용은 안 됨 — 별도
 
-    # find_by_provider 는 별도 AsyncMock 로 명시적 부여
     from unittest.mock import AsyncMock
     mock.find_by_provider = AsyncMock(return_value=None)
 
-    # save side_effect: user_id 가 None 이면 새 ID 부여 → 신규 가입 흐름 시뮬레이션
     def _save_with_id(user):
         if getattr(user, "user_id", None) is None:
             user.user_id = "USER_new_001"

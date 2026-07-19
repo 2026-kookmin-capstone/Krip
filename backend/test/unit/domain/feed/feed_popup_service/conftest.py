@@ -5,11 +5,12 @@
 검증 — `resolve_viewer_visibilities` 를 stub 으로 치환.
 """
 from unittest.mock import AsyncMock
-from test.unit.domain.feed.mock_factory import FakeUnitOfWork, make_mock_session
+
 import pytest
 
-from app.domain.feed.service.feed_popup import FeedPopupService
 from app.domain.feed.model.feed_post import FeedVisibility
+from app.domain.feed.service.feed_popup import FeedPopupService
+from test.unit.domain.feed.mock_factory import FakeUnitOfWork, make_mock_session
 
 
 @pytest.fixture
@@ -20,7 +21,7 @@ def mock_session():
 @pytest.fixture
 def user_repo_mock():
     mock = AsyncMock()
-    mock.find_by_id_with_profile.return_value = None  # 기본: 미존재
+    mock.find_by_id_with_profile.return_value = None
     return mock
 
 

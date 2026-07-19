@@ -1,6 +1,6 @@
-from typing import Any, List, Optional
-from datetime import datetime
 from dataclasses import dataclass
+from datetime import datetime
+from typing import Any, List, Optional
 
 from app.domain.chat.model.chat_room import ChatRoomType
 
@@ -22,6 +22,8 @@ class LastMessagePreviewData:
     type: str
     content: Any
     created_at: datetime
+    edited_at: Optional[datetime] = None
+    deleted_at: Optional[datetime] = None
 
 
 @dataclass

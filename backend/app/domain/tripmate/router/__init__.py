@@ -1,8 +1,6 @@
 from fastapi import APIRouter
 
-from app.domain.tripmate.router import tripmate_post
-from app.domain.tripmate.router import tripmate_search_history
-from app.domain.tripmate.router import tripmate_image
+from app.domain.tripmate.router import tripmate_image, tripmate_post, tripmate_search_history
 
 
 tripmate_router = APIRouter(prefix="/tripmate")

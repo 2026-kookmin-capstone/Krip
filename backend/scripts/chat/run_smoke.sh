@@ -1,19 +1,4 @@
 #!/usr/bin/env bash
-# 채팅 Phase 1 E2E smoke runner.
-#
-# 사용법:
-#   cd backend
-#   ./scripts/chat/run_smoke.sh
-#
-# 단계:
-#   1) docker compose up  (postgres / redis / mongo, healthcheck 대기)
-#   2) .env.smoke 를 export 후 alembic 마이그레이션
-#   3) 테스트 유저 2명 DB 시드
-#   4) FastAPI 서버를 백그라운드로 기동 → /docs 헬스체크
-#   5) Python E2E (smoke_test.py) 실행 — Phase 1+2 시나리오
-#   6) Python E2E (smoke_phase3.py) 실행 — reconcile job + unread recovery
-#   (종료) FastAPI kill + docker compose down -v
-#
 # 환경변수:
 #   KEEP_STACK=1  테스트 후에도 컨테이너/서버 유지 (디버깅용)
 #   VERBOSE=1     FastAPI 로그를 stdout 으로 직접 출력
@@ -38,7 +23,6 @@ fi
 
 mkdir -p "$LOG_DIR"
 
-# ─────────────────── 정리 핸들러 ───────────────────
 APP_PID=""
 
 cleanup() {
@@ -65,12 +49,10 @@ cleanup() {
 trap cleanup EXIT INT TERM
 
 
-# ─────────────────── 1) docker compose up ───────────────────
 echo "[1/5] docker compose up (postgres + redis + mongo)..."
 docker compose -f "$COMPOSE_FILE" up -d --wait
 echo "      ready"
 
-# ─────────────────── 2) env + alembic ───────────────────
 echo "[2/5] alembic upgrade head..."
 set -a
 # shellcheck disable=SC1090
@@ -83,11 +65,9 @@ python -m alembic upgrade head >"$LOG_DIR/alembic.log" 2>&1 || {
 }
 echo "      done"
 
-# ─────────────────── 3) seed users ───────────────────
 echo "[3/5] seed test users..."
 python scripts/chat/seed_users.py
 
-# ─────────────────── 4) FastAPI 기동 ───────────────────
 # SMOKE_PORT override — 로컬에서 8100 이 점유됐을 때 `SMOKE_PORT=8110 ./run_smoke.sh` 로 피할 수 있게.
 # smoke_test.py / smoke_phase3.py 도 같은 env 를 읽는다.
 SMOKE_PORT="${SMOKE_PORT:-8100}"
@@ -116,10 +96,8 @@ for i in {1..40}; do
   sleep 0.5
 done
 
-# ─────────────────── 5) smoke test (Phase 1+2) ───────────────────
 echo "[5/6] run smoke_test.py (Phase 1+2)..."
 SMOKE_PORT="$SMOKE_PORT" python scripts/chat/smoke_test.py
 
-# ─────────────────── 6) smoke test (Phase 3) ───────────────────
 echo "[6/6] run smoke_phase3.py (reconcile + unread recovery)..."
 SMOKE_PORT="$SMOKE_PORT" python scripts/chat/smoke_phase3.py

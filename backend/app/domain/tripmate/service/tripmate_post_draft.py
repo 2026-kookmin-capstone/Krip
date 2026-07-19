@@ -1,17 +1,21 @@
-from typing import Optional, List
 from datetime import date
+from typing import List, Optional
 
-from app.domain.tripmate.repository.tripmate_post_draft import TripmatePostDraftRepository
 from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
+from app.domain.tripmate.repository.tripmate_image import TripmateImageRepository
+from app.domain.tripmate.repository.tripmate_post_draft import TripmatePostDraftRepository
+from app.domain.tripmate.service.image_reference_mutex import (
+    image_reference_locked,
+)
 
 
 class TripmatePostDraftService:
-    def __init__(self):
+    def __init__(self, image_mutex):
+        self.image_mutex = image_mutex
         self.draft_repo = TripmatePostDraftRepository()
+        self.image_repo = TripmateImageRepository()
 
-
-    # ──────────────────── 임시저장 저장/갱신 ────────────────────
-
+    @image_reference_locked
     async def save_draft(
         self,
         user_id: str,
@@ -29,9 +33,16 @@ class TripmatePostDraftService:
         """
         임시저장 upsert (30초마다 프론트에서 호출)
 
-        - 기존 임시저장이 있으면 덮어쓰기
-        - 없으면 새로 생성
+        - 전체 스냅샷 계약: 클라가 매 호출 폼 전체 상태를 보내므로 문서 통째 덮어쓰기가
+          올바른 시맨틱이다 (생략 필드 = 비운 필드). 부분 병합으로 "고치지" 말 것.
+        - 기존 임시저장이 있으면 덮어쓰기, 없으면 새로 생성
         """
+        normalized_image_urls = image_urls or []
+        if normalized_image_urls:
+            owned = await self.image_repo.find_owned_urls(user_id, normalized_image_urls)
+            if any(url not in owned for url in normalized_image_urls):
+                raise ValueError("본인이 업로드한 이미지만 첨부할 수 있습니다.")
+
         draft = TripmatePostDraft(
             user_id=user_id,
             title=title,
@@ -43,12 +54,9 @@ class TripmatePostDraftService:
             travel_start_date=travel_start_date,
             travel_end_date=travel_end_date,
             companion_type=companion_type,
-            image_urls=image_urls or [],
+            image_urls=normalized_image_urls,
         )
         return await self.draft_repo.upsert(draft)
-
-
-    # ──────────────────── 임시저장 조회 ────────────────────
 
     async def get_draft(self, user_id: str) -> Optional[TripmatePostDraft]:
         """
@@ -59,9 +67,7 @@ class TripmatePostDraftService:
         """
         return await self.draft_repo.find_by_user_id(user_id)
 
-
-    # ──────────────────── 임시저장 삭제 ────────────────────
-
+    @image_reference_locked
     async def delete_draft(self, user_id: str) -> None:
         """
         유저의 임시저장 삭제 (게시글 발행 시 또는 수동 삭제 시 호출)

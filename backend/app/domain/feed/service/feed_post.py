@@ -12,29 +12,55 @@ idle hold 되어 풀 압박. 의미 손해 없이 점유 시간 30~50× 감소.
 삭제 순서 — DB 먼저, S3 best-effort: S3 가 먼저 사라지면 broken URL 노출, DB 가 먼저
 지워지면 orphan 만 invisible 하게 남음.
 """
-from typing import Optional
 import asyncio
+from typing import Final, Optional, cast
 
-from app.util.storage_prefix import feed_post_prefix
-from app.util.id_generator import generate_feed_post_id
-from app.domain.notification.service.inbox import InboxService
-from app.domain.notification.model.inbox import TargetType
-from app.domain.feed.service.thumbnail import process_feed_image
-from app.domain.feed.service.exception import FeedNotFoundError
-from app.domain.feed.service.access import resolve_viewer_visibilities
-from app.domain.feed.repository.feed_post import FeedPostRepository, PAGE_SIZE
-from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.core.logger import get_logger
+from app.core.object_storage import get_object_storage
+from app.database.session import UnitOfWork, transactional
 from app.domain.feed.dto.feed_post import (
     FeedPostData,
     FeedPostListData,
     FeedPostWithCounts,
 )
-from app.database.session import UnitOfWork, transactional
-from app.core.object_storage import get_object_storage
-from app.core.logger import get_logger
+from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
+from app.domain.feed.repository.feed_post import PAGE_SIZE, FeedPostRepository
+from app.domain.feed.service.access import resolve_viewer_visibilities
+from app.domain.feed.service.exception import FeedNotFoundError
+from app.domain.feed.service.thumbnail import process_feed_image
+from app.domain.notification.model.inbox import TargetType
+from app.domain.notification.service.inbox import InboxService
+from app.util.cancellation import (
+    drain_on_cancellation,
+    drain_thread_on_cancellation,
+    gather_on_cancellation,
+)
+from app.util.cursor import encode_cursor
+from app.util.id_generator import generate_feed_post_id
+from app.util.storage_prefix import feed_post_prefix
 
 
 logger = get_logger("feed.post.service")
+
+
+# 동시 Pillow 처리 상한 — to_thread 는 캡이 없어 대형 업로드가 겹치면 OOM. 피크 메모리 상한용.
+IMAGE_PROCESSING_CONCURRENCY: Final[int] = 4
+
+# lazy 생성 — 최초 사용 루프에 귀속(테스트마다 새 루프면 재생성해 "different loop" 회피).
+_image_semaphore: Optional[asyncio.Semaphore] = None
+_image_semaphore_loop: Optional[asyncio.AbstractEventLoop] = None
+
+
+def _get_image_semaphore() -> asyncio.Semaphore:
+    """실행 중인 이벤트 루프에 귀속된 이미지 처리 세마포어를 lazy 하게 반환."""
+    global _image_semaphore, _image_semaphore_loop
+    loop = asyncio.get_running_loop()
+    if _image_semaphore is None or _image_semaphore_loop is not loop:
+        _image_semaphore = asyncio.Semaphore(IMAGE_PROCESSING_CONCURRENCY)
+        _image_semaphore_loop = loop
+    return _image_semaphore
 
 
 def _normalize_caption(caption: Optional[str]) -> Optional[str]:
@@ -48,11 +74,12 @@ def _normalize_caption(caption: Optional[str]) -> Optional[str]:
 
 
 class FeedPostService:
+    _session: AsyncSession
+
     def __init__(self, uow: UnitOfWork, inbox_service: InboxService):
         self.uow = uow
         self.inbox_service = inbox_service
         self.storage = get_object_storage()
-
 
     async def upload_post(
         self,
@@ -62,8 +89,13 @@ class FeedPostService:
         caption: Optional[str] = None,
     ) -> FeedPostData:
         """피드 업로드. Pillow → S3 병렬 → PG INSERT. 어떤 단계든 실패 시 prefix cleanup."""
-        # ValueError 면 라우터에서 400 — S3/DB 자원 미접근.
-        processed = await asyncio.to_thread(process_feed_image, file_bytes)
+        # 세마포어로 동시 Pillow 처리를 상한 (OOM 방지). ValueError → 라우터 400.
+        async with _get_image_semaphore():
+            processed, cancelled = await drain_thread_on_cancellation(
+                process_feed_image, file_bytes,
+            )
+            if cancelled:
+                raise asyncio.CancelledError
 
         # post_id / prefix 는 트랜잭션 밖에서 발급 — 어떤 실패 경로에서도 cleanup 호출 가능.
         post_id = generate_feed_post_id()
@@ -71,10 +103,9 @@ class FeedPostService:
 
         caption = _normalize_caption(caption)
 
-        # S3 + INSERT — 외부 try 가 cleanup 단일 진입점. `_insert_post` 의 commit 은
-        # `__aexit__` 에서 일어나므로 commit 실패도 여기서 catch.
+        # 수락된 업로드를 모두 drain한 뒤에만 cleanup 여부를 판정한다.
         try:
-            original_url, small_url, medium_url = await asyncio.gather(
+            uploads, cancelled = await gather_on_cancellation(
                 self.storage.upload_to_key(
                     processed.original.data,
                     prefix=prefix,
@@ -94,7 +125,19 @@ class FeedPostService:
                     content_type=processed.medium.content_type,
                 ),
             )
+            if cancelled:
+                raise asyncio.CancelledError
+            upload_errors = [u for u in uploads if isinstance(u, BaseException)]
+            if upload_errors:
+                raise upload_errors[0]
+            original_url, small_url, medium_url = cast(
+                tuple[str, str, str], tuple(uploads),
+            )
+        except BaseException:
+            await self._safe_cleanup(prefix)
+            raise
 
+        try:
             post = await self._insert_post(
                 user_id=user_id,
                 post_id=post_id,
@@ -104,15 +147,18 @@ class FeedPostService:
                 small_url=small_url,
                 medium_url=medium_url,
             )
-        except Exception:
-            await self._safe_cleanup(prefix)
+        except BaseException:
+            await self._cleanup_after_insert_failure(
+                post_id=post_id,
+                prefix=prefix,
+                urls=(original_url, small_url, medium_url),
+            )
             raise
 
         # 신규 업로드 → 카운트 0 명백. reload 없이 row 합성 (round-trip 절약).
         return self._to_dto(
             FeedPostWithCounts(post=post, like_count=0, comment_count=0, is_liked=False)
         )
-
 
     @transactional
     async def _insert_post(
@@ -141,7 +187,6 @@ class FeedPostService:
         logger.info("피드 게시물 업로드 완료 (user_id={}, post_id={})", user_id, post_id)
         return saved
 
-
     @transactional
     async def get_my_feed(
         self,
@@ -154,21 +199,25 @@ class FeedPostService:
             owner_id=user_id,
             visibilities=list(FeedVisibility),
             cursor=cursor,
+            limit=PAGE_SIZE + 1,
             viewer_id=user_id,
         )
-        next_cursor = rows[-1].post.post_id if len(rows) == PAGE_SIZE else None
+        has_more = len(rows) > PAGE_SIZE
+        rows = rows[:PAGE_SIZE]
+        next_cursor = (
+            encode_cursor(rows[-1].post.created_at, rows[-1].post.post_id)
+            if has_more else None
+        )
         return FeedPostListData(
             posts=[self._to_dto(r) for r in rows],
             next_cursor=next_cursor,
         )
-
 
     @transactional
     async def get_my_post(self, user_id: str, post_id: str) -> FeedPostData:
         """본인 게시물 단건 — 권한 검증 포함."""
         row = await self._load_owned_post(user_id, post_id)
         return self._to_dto(row)
-
 
     @transactional
     async def get_user_feed(
@@ -190,14 +239,19 @@ class FeedPostService:
             owner_id=owner_id,
             visibilities=visibilities,
             cursor=cursor,
+            limit=PAGE_SIZE + 1,
             viewer_id=viewer_id,
         )
-        next_cursor = rows[-1].post.post_id if len(rows) == PAGE_SIZE else None
+        has_more = len(rows) > PAGE_SIZE
+        rows = rows[:PAGE_SIZE]
+        next_cursor = (
+            encode_cursor(rows[-1].post.created_at, rows[-1].post.post_id)
+            if has_more else None
+        )
         return FeedPostListData(
             posts=[self._to_dto(r) for r in rows],
             next_cursor=next_cursor,
         )
-
 
     @transactional
     async def update_visibility(
@@ -213,7 +267,6 @@ class FeedPostService:
         await repo.update(row.post)
         return self._to_dto(row)
 
-
     @transactional
     async def update_caption(
         self,
@@ -228,7 +281,6 @@ class FeedPostService:
         await repo.update(row.post)
         return self._to_dto(row)
 
-
     async def delete_post(self, user_id: str, post_id: str) -> None:
         """본인 게시물 삭제. 순서: DB → S3 best-effort → 인박스 cascade.
 
@@ -240,9 +292,8 @@ class FeedPostService:
         try:
             await self.storage.delete_by_prefix(prefix)
         except Exception as e:
-            logger.warning(
-                "S3 prefix 삭제 실패 — orphan 객체 잔존 (prefix={}): {}",
-                prefix, e,
+            logger.bind(operation="delete_prefix", error=e).warning(
+                "S3 orphan cleanup failed"
             )
 
         # 해당 게시글의 LIKE/COMMENT 알림 일괄 soft hide. 내부에서 예외 swallow.
@@ -250,7 +301,6 @@ class FeedPostService:
             target_type=TargetType.FEED_POST,
             target_id=post_id,
         )
-
 
     @transactional
     async def _delete_post_row(self, user_id: str, post_id: str) -> str:
@@ -264,32 +314,60 @@ class FeedPostService:
         logger.info("피드 게시물 삭제 완료 (user_id={}, post_id={})", user_id, post_id)
         return prefix
 
-
     async def _load_owned_post(self, user_id: str, post_id: str) -> FeedPostWithCounts:
-        """post 로드 + 본인 소유 검증. 미존재 → 404, 본인 아님 → 403.
+        """post 로드 + 본인 소유 검증. 미존재 / 타인 소유 모두 404 일원화.
 
         반환은 카운트 포함 row — 호출처 (`get_my_post` / `update_*` / `_delete_post_row`) 가
         `_to_dto` 그대로 사용하거나 `.post` 로 unwrap.
         """
         repo = FeedPostRepository(self._session)
         row = await repo.find_by_post_id(post_id, viewer_id=user_id)
-        if row is None:
+        if row is None or row.post.user_id != user_id:
             raise FeedNotFoundError("존재하지 않는 게시물입니다.")
-        if row.post.user_id != user_id:
-            raise PermissionError("게시물에 대한 권한이 없습니다.")
         return row
 
+    async def _cleanup_after_insert_failure(
+        self,
+        *,
+        post_id: str,
+        prefix: str,
+        urls: tuple[str, str, str],
+    ) -> None:
+        try:
+            referenced, _ = await drain_on_cancellation(
+                self._uploaded_post_is_referenced(post_id, urls),
+            )
+        except BaseException as error:
+            logger.bind(post_id=post_id, error=error).warning(
+                "Feed upload commit reconciliation failed; preserving objects"
+            )
+            return
+        if not referenced:
+            await self._safe_cleanup(prefix)
+
+    @transactional
+    async def _uploaded_post_is_referenced(
+        self, post_id: str, urls: tuple[str, str, str],
+    ) -> bool:
+        post = await self._session.get(FeedPost, post_id)
+        if post is None:
+            return False
+        return (
+            post.original_url,
+            post.thumbnail_small_url,
+            post.thumbnail_medium_url,
+        ) == urls
 
     async def _safe_cleanup(self, prefix: str) -> None:
         """업로드 실패 경로 best-effort cleanup — 실패해도 원 예외 가리지 않도록 swallow."""
         try:
             await self.storage.delete_by_prefix(prefix)
+        except asyncio.CancelledError:
+            return
         except Exception as e:
-            logger.warning(
-                "업로드 실패 경로 cleanup 실패 — orphan 객체 잔존 (prefix={}): {}",
-                prefix, e,
+            logger.bind(operation="delete_prefix", error=e).warning(
+                "S3 failed-upload cleanup failed"
             )
-
 
     @staticmethod
     def _to_dto(row: FeedPostWithCounts) -> FeedPostData:

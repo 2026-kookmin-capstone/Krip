@@ -1,37 +1,58 @@
 from typing import Optional
-from sqlalchemy.orm import joinedload
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func, or_, case, literal, exists
 
-from app.domain.tripmate.model.tripmate_post_like import TripmatePostLike
-from app.domain.tripmate.model.tripmate_post import TripmatePost
-from app.domain.auth.model.user_detail_inform import UserDetailInform
+from sqlalchemy import and_, case, exists, func, literal, or_, select
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import joinedload
+
 from app.domain.auth.model.user import User
+from app.domain.auth.model.user_detail_inform import UserDetailInform
+from app.domain.friend.model.user_block import UserBlock
+from app.domain.tripmate.model.tripmate_post import TripmatePost
+from app.domain.tripmate.model.tripmate_post_like import TripmatePostLike
+from app.util.cursor import decode_cursor, keyset_where
 
 
 # 게시글 조회 개수
 PAGE_SIZE = 30
 
 
+def _no_block_with_viewer(viewer_id: str):
+    """차단 관계(양방향) 작성자의 게시글 제외 — friend/feed 도메인과 동일 정책."""
+    return ~exists(
+        select(UserBlock.block_id).where(or_(
+            and_(
+                UserBlock.blocker_id == viewer_id,
+                UserBlock.blocked_id == TripmatePost.user_id,
+            ),
+            and_(
+                UserBlock.blocked_id == viewer_id,
+                UserBlock.blocker_id == TripmatePost.user_id,
+            ),
+        ))
+    )
+
+
 class TripmatePostRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
-
-
-    # ──────────────────── Create ────────────────────
 
     async def save(self, post: TripmatePost) -> TripmatePost:
         self.session.add(post)
         await self.session.flush()
         return post
 
-
-    # ──────────────────── Read (단건) ────────────────────
-
     async def find_by_id(self, post_id: str) -> Optional[TripmatePost]:
         """게시글 단건 조회 (게시글 데이터만, 수정/삭제 시 검증용)"""
         return await self.session.get(TripmatePost, post_id)
 
+    async def find_by_id_for_update(self, post_id: str) -> Optional[TripmatePost]:
+        stmt = (
+            select(TripmatePost)
+            .where(TripmatePost.post_id == post_id)
+            .with_for_update()
+        )
+        result = await self.session.execute(stmt)
+        return result.scalar_one_or_none()
 
     async def find_by_id_with_detail(self, post_id: str, user_id: Optional[str] = None) -> Optional[TripmatePost]:
         """게시글 단건 조회 (이미지 + 좋아요 수 + is_liked 포함, 상세 조회용임 display 없는 거 주의)"""
@@ -62,9 +83,6 @@ class TripmatePostRepository:
         post.is_liked = bool(row[2])
         return post
 
-
-    # ──────────────────── Read (목록 — 커서 기반 페이지네이션) ────────────────────
-
     async def find_all_displayed(self, cursor: Optional[str] = None, user_id: Optional[str] = None) -> list[TripmatePost]:
         """최신순 30개 조회, cursor(post_id) 이후부터 다음 페이지"""
         stmt = (
@@ -83,30 +101,29 @@ class TripmatePostRepository:
             )
             .where(TripmatePost.is_displayed == True)
         )
+        if user_id:
+            stmt = stmt.where(_no_block_with_viewer(user_id))
 
         if cursor:
             # cursor로 받은 post_id의 created_at 기준으로 다음 페이지
-            cursor_sub = select(TripmatePost.created_at).where(TripmatePost.post_id == cursor).scalar_subquery()
-            stmt = stmt.where(
-                or_(
-                    TripmatePost.created_at < cursor_sub,
-                    (TripmatePost.created_at == cursor_sub) & (TripmatePost.post_id < cursor),
-                )
-            )
+            decoded = decode_cursor(cursor)
+            if decoded is None:
+                raise ValueError("유효하지 않은 커서입니다.")
+            cur_ts, cur_id = decoded
+            stmt = stmt.where(keyset_where(
+                TripmatePost.created_at, TripmatePost.post_id, cur_ts, cur_id,
+            ))
 
         stmt = (
             stmt
             .group_by(TripmatePost.post_id)
             .order_by(TripmatePost.created_at.desc(), TripmatePost.post_id.desc())
-            .limit(PAGE_SIZE)
+            .limit(PAGE_SIZE + 1)
         )
 
         result = await self.session.execute(stmt)
         rows = result.unique().all()
         return self._attach_extras(rows)
-
-
-    # ──────────────────── Read (검색) ────────────────────
 
     async def search(
         self,
@@ -115,7 +132,9 @@ class TripmatePostRepository:
         user_id: Optional[str] = None,
     ) -> list[TripmatePost]:
         """제목, 내용, 작성자 닉네임으로 검색 (최신순, 커서 페이지네이션)"""
-        escaped = keyword.replace("%", "\\%").replace("_", "\\_")
+        # `\` 를 먼저 이스케이프해야 뒤의 `\%`/`\_` 가 깨지지 않는다 (끝의 `\` 하나로 패턴이
+        # escape 문자로 끝나 오검색/DB 에러). 순서 중요.
+        escaped = keyword.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
         like_pattern = f"%{escaped}%"
 
         stmt = (
@@ -135,53 +154,46 @@ class TripmatePostRepository:
             .where(
                 TripmatePost.is_displayed == True,
                 or_(
-                    TripmatePost.title.ilike(like_pattern),
-                    TripmatePost.content.ilike(like_pattern),
+                    TripmatePost.title.ilike(like_pattern, escape="\\"),
+                    TripmatePost.content.ilike(like_pattern, escape="\\"),
                     exists(
                         select(UserDetailInform.user_id).where(
                             UserDetailInform.user_id == TripmatePost.user_id,
-                            UserDetailInform.user_name.ilike(like_pattern),
+                            UserDetailInform.user_name.ilike(like_pattern, escape="\\"),
                         )
                     ),
                 ),
             )
         )
+        if user_id:
+            stmt = stmt.where(_no_block_with_viewer(user_id))
 
         if cursor:
-            cursor_sub = select(TripmatePost.created_at).where(TripmatePost.post_id == cursor).scalar_subquery()
-            stmt = stmt.where(
-                or_(
-                    TripmatePost.created_at < cursor_sub,
-                    (TripmatePost.created_at == cursor_sub) & (TripmatePost.post_id < cursor),
-                )
-            )
+            decoded = decode_cursor(cursor)
+            if decoded is None:
+                raise ValueError("유효하지 않은 커서입니다.")
+            cur_ts, cur_id = decoded
+            stmt = stmt.where(keyset_where(
+                TripmatePost.created_at, TripmatePost.post_id, cur_ts, cur_id,
+            ))
 
         stmt = (
             stmt
             .group_by(TripmatePost.post_id)
             .order_by(TripmatePost.created_at.desc(), TripmatePost.post_id.desc())
-            .limit(PAGE_SIZE)
+            .limit(PAGE_SIZE + 1)
         )
 
         result = await self.session.execute(stmt)
         rows = result.unique().all()
         return self._attach_extras(rows)
 
-
-    # ──────────────────── Update ────────────────────
-
     async def update(self, post: TripmatePost) -> TripmatePost:
         await self.session.flush()
         return post
 
-
-    # ──────────────────── Delete ────────────────────
-
     async def delete(self, post: TripmatePost) -> None:
         await self.session.delete(post)
-
-
-    # ──────────────────── 내부 유틸 ────────────────────
 
     @staticmethod
     def _attach_extras(rows) -> list[TripmatePost]:

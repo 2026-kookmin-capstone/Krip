@@ -1,12 +1,27 @@
-from typing import List, Optional
-from pydantic import BaseModel, Field
 from datetime import date, datetime
+from typing import Annotated, List, Optional
 
-from app.domain.tripmate.model.tripmate_post import PreferredGender, CompanionType
+from pydantic import BaseModel, Field, StringConstraints, model_validator
+
 from app.domain.auth.model.user_detail_inform import Gender
+from app.domain.tripmate.model.tripmate_post import CompanionType, PreferredGender
 
 
-# ──────────────────── Request ────────────────────
+# 첨부 이미지 상한 — 무제한이면 Mongo draft 문서 팽창(수백만 URL) + 목록 조회 폭증 가능.
+# 개수는 업로드 배치(10개) × 여유, URL 1건 길이는 거대 문자열 주입 차단.
+_MAX_POST_IMAGES = 20
+_MAX_IMAGE_URL_LEN = 2048
+_ImageUrl = Annotated[str, StringConstraints(max_length=_MAX_IMAGE_URL_LEN)]
+
+
+def _validate_post_ranges(model):
+    """나이/여행일 범위 교차 검증 — 위반 시 DB CheckConstraint(500) 대신 422 로 매핑."""
+    if model.preferred_age_min > model.preferred_age_max:
+        raise ValueError("선호 나이 하한이 상한보다 클 수 없습니다.")
+    if model.travel_start_date > model.travel_end_date:
+        raise ValueError("여행 시작일이 종료일보다 늦을 수 없습니다.")
+    return model
+
 
 class CreatePostRequest(BaseModel):
     title: str = Field(..., min_length=1, max_length=100, description="게시글 제목")
@@ -18,7 +33,9 @@ class CreatePostRequest(BaseModel):
     travel_start_date: date = Field(..., description="여행 시작일")
     travel_end_date: date = Field(..., description="여행 종료일")
     companion_type: CompanionType = Field(..., description="동행 타입 (friend / family / couple / sole)")
-    image_urls: Optional[List[str]] = Field(None, description="첨부 이미지 URL 목록 (이미지 업로드 API로 받은 URL)")
+    image_urls: Optional[List[_ImageUrl]] = Field(None, max_length=_MAX_POST_IMAGES, description="첨부 이미지 URL 목록 (이미지 업로드 API로 받은 URL)")
+
+    _validate_ranges = model_validator(mode="after")(_validate_post_ranges)
 
     class Config:
         json_schema_extra = {
@@ -47,10 +64,10 @@ class UpdatePostRequest(BaseModel):
     travel_start_date: date = Field(..., description="여행 시작일")
     travel_end_date: date = Field(..., description="여행 종료일")
     companion_type: CompanionType = Field(..., description="동행 타입 (friend / family / couple / sole)")
-    image_urls: Optional[List[str]] = Field(None, description="첨부 이미지 URL 목록 (이미지 업로드 API로 받은 URL)")
+    image_urls: Optional[List[_ImageUrl]] = Field(None, max_length=_MAX_POST_IMAGES, description="첨부 이미지 URL 목록 (이미지 업로드 API로 받은 URL)")
 
+    _validate_ranges = model_validator(mode="after")(_validate_post_ranges)
 
-# ──────────────────── Response ────────────────────
 
 class AuthorResponse(BaseModel):
     user_name: str = Field(..., description="작성자 닉네임")
@@ -120,19 +137,17 @@ class LikedUsersResponse(BaseModel):
     user_ids: List[str] = Field(..., description="좋아요 누른 유저 ID 목록")
 
 
-# ──────────────────── Draft (임시저장) ────────────────────
-
 class SaveDraftRequest(BaseModel):
     title: Optional[str] = Field(None, max_length=100, description="게시글 제목")
     content: Optional[str] = Field(None, max_length=500, description="게시글 내용")
     preferred_age_min: Optional[int] = Field(None, ge=1, description="선호 나이 하한")
     preferred_age_max: Optional[int] = Field(None, ge=1, description="선호 나이 상한")
-    preferred_gender: Optional[str] = Field(None, description="선호 성별 (male / female / any)")
+    preferred_gender: Optional[PreferredGender] = Field(None, description="선호 성별 (male / female / any)")
     region: Optional[str] = Field(None, max_length=100, description="여행 지역")
     travel_start_date: Optional[date] = Field(None, description="여행 시작일")
     travel_end_date: Optional[date] = Field(None, description="여행 종료일")
-    companion_type: Optional[str] = Field(None, description="동행 타입 (friend / family / couple / sole)")
-    image_urls: Optional[List[str]] = Field(None, description="첨부 이미지 URL 목록")
+    companion_type: Optional[CompanionType] = Field(None, description="동행 타입 (friend / family / couple / sole)")
+    image_urls: Optional[List[_ImageUrl]] = Field(None, max_length=_MAX_POST_IMAGES, description="첨부 이미지 URL 목록")
 
 
 class DraftResponse(BaseModel):

@@ -1,17 +1,17 @@
-from typing import List
-from pymongo import ReturnDocument, ASCENDING
 from datetime import datetime, timezone
+from typing import List
 
-from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHistory
+from pymongo import ASCENDING, ReturnDocument
+from pymongo.errors import DuplicateKeyError
+
 from app.core.instrumentation import measure_mongo_op
+from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHistory
 
 
 MAX_SEARCH_HISTORY = 10
 
 
 class TripmateSearchHistoryRepository:
-
-    # ──────────────────── Create ────────────────────
 
     @measure_mongo_op("update", "tripmate_search_history")
     async def save(self, user_id: str, search_name: str) -> TripmateSearchHistory:
@@ -24,18 +24,25 @@ class TripmateSearchHistoryRepository:
         now = datetime.now(timezone.utc)
 
         # 동일 검색어가 있으면 시간만 갱신, 없으면 새로 생성
-        result = await collection.find_one_and_update(
-            {"user_id": user_id, "search_name": search_name},
-            {"$set": {"created_at": now}},
-            upsert=True,
-            return_document=ReturnDocument.AFTER,
-        )
+        try:
+            result = await collection.find_one_and_update(
+                {"user_id": user_id, "search_name": search_name},
+                {"$set": {"created_at": now}},
+                upsert=True,
+                return_document=ReturnDocument.AFTER,
+            )
+        except DuplicateKeyError:
+            # 동시 upsert 경합 — 상대가 먼저 insert. 재조회+갱신하면 기존 doc 매칭 (unique 인덱스).
+            result = await collection.find_one_and_update(
+                {"user_id": user_id, "search_name": search_name},
+                {"$set": {"created_at": now}},
+                return_document=ReturnDocument.AFTER,
+            )
 
         # 최대 개수 초과 시 가장 오래된 검색어 삭제
         await self._trim_oldest(user_id)
 
         return TripmateSearchHistory.model_validate(result)
-
 
     async def _trim_oldest(self, user_id: str) -> None:
         """유저의 검색 기록이 MAX_SEARCH_HISTORY를 초과하면 오래된 것부터 삭제"""
@@ -52,16 +59,12 @@ class TripmateSearchHistoryRepository:
             if old_ids:
                 await collection.delete_many({"_id": {"$in": old_ids}})
 
-    # ──────────────────── Read ────────────────────
-
     @measure_mongo_op("find", "tripmate_search_history")
     async def find_by_user_id(self, user_id: str) -> List[TripmateSearchHistory]:
         """유저의 검색 기록 조회 (최신순, 최대 10개)"""
         return await TripmateSearchHistory.find(
             {"user_id": user_id}
         ).sort("-created_at").limit(MAX_SEARCH_HISTORY).to_list()
-
-    # ──────────────────── Delete ────────────────────
 
     @measure_mongo_op("delete", "tripmate_search_history")
     async def delete_one(self, user_id: str, search_name: str) -> None:
@@ -71,7 +74,6 @@ class TripmateSearchHistoryRepository:
         )
         if doc:
             await doc.delete()
-
 
     @measure_mongo_op("delete", "tripmate_search_history")
     async def delete_all_by_user_id(self, user_id: str) -> None:

@@ -1,4 +1,8 @@
 from unittest.mock import AsyncMock
+
+import pytest
+
+from app.domain.feed.service.feed_post import FeedPostService
 from test.unit.domain.feed.mock_factory import (
     FakeUnitOfWork,
     make_feed_post_repo_mock,
@@ -7,9 +11,6 @@ from test.unit.domain.feed.mock_factory import (
     make_object_storage_mock,
     make_user_block_repo_mock,
 )
-import pytest
-
-from app.domain.feed.service.feed_post import FeedPostService
 
 
 @pytest.fixture

@@ -13,19 +13,21 @@ beanie Document 들은 `init_beanie` 미호출 환경에서 인스턴스화 / cl
 attribute 직접 치환으로 mock 주입.
 """
 from unittest.mock import AsyncMock
-from test.unit.domain.tripmate.tripmate_image_service.model_factory import (
-    TripmateImageFactory,
-)
+
+import pytest
+
+from app.domain.tripmate.service.tripmate_image import TripmateImageService
 from test.unit.domain.tripmate.mock_factory import (
     FakeUnitOfWork,
+    NoopTripmateImageReferenceMutex,
     make_mock_session,
     make_object_storage_mock,
     make_tripmate_image_mongo_repo_full_mock,
     make_tripmate_post_image_repo_mock,
 )
-import pytest
-
-from app.domain.tripmate.service.tripmate_image import TripmateImageService
+from test.unit.domain.tripmate.tripmate_image_service.model_factory import (
+    TripmateImageFactory,
+)
 
 
 class _ImageStub:
@@ -77,9 +79,18 @@ def draft_find_one_mock(monkeypatch):
 
 
 @pytest.fixture
+def user_repo_mock():
+    """탈퇴 fence — 기본 ACTIVE. 거부 케이스는 lock_if_active 를 False 로 override."""
+    mock = AsyncMock()
+    mock.lock_if_active.return_value = True
+    return mock
+
+
+@pytest.fixture
 def service(
     monkeypatch, mock_session,
     image_repo_mock, post_image_repo_mock, storage_mock, draft_find_one_mock,
+    user_repo_mock,
 ):
     """모든 외부 의존성 mock 치환 후 service 인스턴스화.
 
@@ -95,7 +106,14 @@ def service(
         "app.domain.tripmate.service.tripmate_image.TripmatePostImageRepository",
         lambda session: post_image_repo_mock,
     )
-    service = TripmateImageService(uow=FakeUnitOfWork(mock_session))
+    monkeypatch.setattr(
+        "app.domain.tripmate.service.tripmate_image.UserRepository",
+        lambda session: user_repo_mock,
+    )
+    service = TripmateImageService(
+        uow=FakeUnitOfWork(mock_session),
+        image_mutex=NoopTripmateImageReferenceMutex(),
+    )
     service.image_repo = image_repo_mock
     service.storage = storage_mock
     return service

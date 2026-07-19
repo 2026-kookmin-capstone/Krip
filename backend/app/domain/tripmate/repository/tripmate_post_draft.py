@@ -1,14 +1,14 @@
-from typing import Optional
-from pymongo import ReturnDocument
 from datetime import date, datetime, timezone
+from typing import Optional
 
-from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
+from pymongo import ReturnDocument
+from pymongo.errors import DuplicateKeyError
+
 from app.core.instrumentation import measure_mongo_op
+from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
 
 
 class TripmatePostDraftRepository:
-
-    # ──────────────────── Upsert (저장/갱신) ────────────────────
 
     @measure_mongo_op("update", "tripmate_post_draft")
     async def upsert(self, draft: TripmatePostDraft) -> TripmatePostDraft:
@@ -21,25 +21,30 @@ class TripmatePostDraftRepository:
             if isinstance(value, date) and not isinstance(value, datetime):
                 doc[key] = datetime(value.year, value.month, value.day)
 
-        result = await TripmatePostDraft.get_motor_collection().find_one_and_update(
-            {"user_id": draft.user_id},
-            {"$set": doc},
-            upsert=True,
-            return_document=ReturnDocument.AFTER,
-        )
+        collection = TripmatePostDraft.get_motor_collection()
+
+        # user_id unique upsert — 동시 자동/수동 저장 경합 시 둘 다 insert 시도 → unique 위반.
+        try:
+            result = await collection.find_one_and_update(
+                {"user_id": draft.user_id},
+                {"$set": doc},
+                upsert=True,
+                return_document=ReturnDocument.AFTER,
+            )
+        except DuplicateKeyError:
+            # 동시 upsert 경합 — 상대가 먼저 insert. upsert 없이 재조회+갱신 (unique 인덱스).
+            result = await collection.find_one_and_update(
+                {"user_id": draft.user_id},
+                {"$set": doc},
+                return_document=ReturnDocument.AFTER,
+            )
 
         return TripmatePostDraft.model_validate(result)
-
-
-    # ──────────────────── Read ────────────────────
 
     @measure_mongo_op("find_one", "tripmate_post_draft")
     async def find_by_user_id(self, user_id: str) -> Optional[TripmatePostDraft]:
         """유저의 임시저장 조회"""
         return await TripmatePostDraft.find_one({"user_id": user_id})
-
-
-    # ──────────────────── Delete ────────────────────
 
     @measure_mongo_op("delete", "tripmate_post_draft")
     async def delete_by_user_id(self, user_id: str) -> None:

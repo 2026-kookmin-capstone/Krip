@@ -16,17 +16,15 @@ unit 으로 검증 못 하는 영역:
     | get_favorites 순서 유지          | RDB 최신순 그대로                    |
     | get_favorites Mongo 결손         | 해당 row skip (전체는 통과)          |
 """
-from sqlalchemy import select
 import pytest
+from sqlalchemy import select
 
-from app.domain.tour.model.place import Place
 from app.domain.tour.model.favorite_place import FavoritePlace
+from app.domain.tour.model.place import Place
 
 
 pytestmark = pytest.mark.integration
 
-
-# ──────────────────── add_favorite ────────────────────
 
 class TestAddFavorite:
     async def test_persists_when_place_exists(
@@ -45,7 +43,6 @@ class TestAddFavorite:
             assert len(favorites) == 1
             assert favorites[0].place_id == place_id
 
-
     async def test_raises_when_place_not_found_in_mongo(
         self, favorite_place_service, seed_users, session_factory,
     ):
@@ -57,11 +54,9 @@ class TestAddFavorite:
                 user_id=user_id, place_id="PLACE_ghost",
             )
 
-        # RDB 에 INSERT 안 됨
         async with session_factory() as session:
             result = await session.execute(select(FavoritePlace))
             assert list(result.scalars().all()) == []
-
 
     async def test_raises_when_already_favorited(
         self, favorite_place_service, seed_users, seed_place,
@@ -76,8 +71,6 @@ class TestAddFavorite:
                 user_id=user_id, place_id=place_id,
             )
 
-
-# ──────────────────── remove_favorite ────────────────────
 
 class TestRemoveFavorite:
     async def test_deletes_existing(
@@ -95,7 +88,6 @@ class TestRemoveFavorite:
             result = await session.execute(select(FavoritePlace))
             assert list(result.scalars().all()) == []
 
-
     async def test_raises_when_not_favorited(
         self, favorite_place_service, seed_users,
     ):
@@ -107,30 +99,24 @@ class TestRemoveFavorite:
             )
 
 
-# ──────────────────── get_favorites — RDB↔Mongo 합성 ────────────────────
-
 class TestGetFavorites:
     async def test_preserves_recent_first_order(
         self, favorite_place_service, seed_users, seed_place,
     ):
         [user_id] = await seed_users(1)
-        # 3개 place 시드
         p1 = await seed_place(place_id="P_1", display_name="First")
         p2 = await seed_place(place_id="P_2", display_name="Second")
         p3 = await seed_place(place_id="P_3", display_name="Third")
 
-        # 즐겨찾기 순서대로 추가 (P_1 → P_2 → P_3)
         await favorite_place_service.add_favorite(user_id=user_id, place_id=p1)
         await favorite_place_service.add_favorite(user_id=user_id, place_id=p2)
         await favorite_place_service.add_favorite(user_id=user_id, place_id=p3)
 
         result = await favorite_place_service.get_favorites(user_id=user_id)
 
-        # 최신순 — P_3 가 첫 번째
         place_ids = [f.place.place_id for f in result.favorites]
         assert place_ids == ["P_3", "P_2", "P_1"]
         assert result.total_count == 3
-
 
     async def test_skips_favorite_when_place_missing_in_mongo(
         self, favorite_place_service, seed_users, seed_place, session_factory,
@@ -143,16 +129,13 @@ class TestGetFavorites:
         await favorite_place_service.add_favorite(user_id=user_id, place_id=p1)
         await favorite_place_service.add_favorite(user_id=user_id, place_id=p2)
 
-        # Mongo 에서 P_will_disappear 만 직접 삭제 (RDB favorite 은 잔존)
         coll = Place.get_motor_collection()
         await coll.delete_one({"place_id": "P_will_disappear"})
 
         result = await favorite_place_service.get_favorites(user_id=user_id)
 
-        # Mongo 결손 row 는 skip — total_count = 매칭된 1건
         assert result.total_count == 1
         assert result.favorites[0].place.place_id == "P_alive"
-
 
     async def test_returns_empty_when_no_favorites(
         self, favorite_place_service, seed_users,

@@ -2,9 +2,7 @@
 from prometheus_client import Counter, Gauge, Histogram
 
 
-# ────────────────────────────────────────────────────────────────────
 # WebSocket
-# ────────────────────────────────────────────────────────────────────
 
 CHAT_WS_ACTIVE_CONNECTIONS = Gauge(
     "chat_ws_active_connections",
@@ -32,9 +30,7 @@ CHAT_MESSAGE_SEND_DURATION = Histogram(
 )
 
 
-# ────────────────────────────────────────────────────────────────────
 # Fan-out publish / dispatch
-# ────────────────────────────────────────────────────────────────────
 
 CHAT_FANOUT_PUBLISH_TOTAL = Counter(
     "chat_fanout_publish_total",
@@ -67,18 +63,16 @@ CHAT_NODE_HEARTBEAT_FAILURES = Counter(
 )
 
 
-# ────────────────────────────────────────────────────────────────────
 # Reconcile / Unread recover
-# ────────────────────────────────────────────────────────────────────
 
 CHAT_RECONCILE_DIRTY_SET_SIZE = Gauge(
     "chat_reconcile_dirty_set_size",
-    "dirty:chat_room SET cardinality measured at start of every tick (SCARD). Backlog signal.",
+    "Total reconcile backlog across ready SET, processing ZSET, and deferred SET at tick start.",
 )
 
 CHAT_RECONCILE_BATCH_POP_TOTAL = Counter(
     "chat_reconcile_batch_pop_total",
-    "Reconcile batch pop attempts grouped by terminal result.",
+    "Reconcile lease-claim batches grouped by terminal result.",
     labelnames=("result",),
 )
 

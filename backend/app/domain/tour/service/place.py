@@ -1,22 +1,20 @@
-from app.domain.tour.repository.place import PlaceRepository, PAGE_SIZE
-from app.domain.tour.repository.favorite_place import FavoritePlaceRepository
+from app.database.session import UnitOfWork, transactional
 from app.domain.tour.dto.place import (
-    PlaceDetailData,
     PlaceData,
+    PlaceDetailData,
     PlaceListData,
     PlaceLocationData,
     PlacePriceRangeData,
     PlaceReviewData,
 )
-from app.database.session import UnitOfWork, transactional
+from app.domain.tour.repository.favorite_place import FavoritePlaceRepository
+from app.domain.tour.repository.place import PAGE_SIZE, PlaceRepository
 
 
 class PlaceService:
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
         self.place_repo = PlaceRepository()
-
-    # ──────────────────── 거리순 장소 조회 ────────────────────
 
     @transactional
     async def get_nearby_places(
@@ -28,11 +26,13 @@ class PlaceService:
         user_id: str = "",
     ) -> PlaceListData:
         """현재 위치 기준 가까운 장소 목록 조회 (거리순, 30개 페이지네이션)"""
-        places = await self.place_repo.find_nearby(lat, lng, cursor=cursor, max_distance=max_distance)
+        places = await self.place_repo.find_nearby(
+            lat, lng, cursor=cursor, max_distance=max_distance, limit=PAGE_SIZE + 1,
+        )
+        has_more = len(places) > PAGE_SIZE
+        places = places[:PAGE_SIZE]
         favorited = await self._get_favorited_set(places, user_id)
-        return self._to_list_dto(places, favorited)
-
-    # ──────────────────── place_id 단건 조회 ────────────────────
+        return self._to_list_dto(places, favorited, has_more=has_more)
 
     @transactional
     async def get_place_by_id(
@@ -47,8 +47,6 @@ class PlaceService:
         favorited = await self._get_favorited_set([raw], user_id)
         return self._to_dto(raw, favorited)
 
-    # ──────────────────── 키워드 검색 + 거리순 ────────────────────
-
     @transactional
     async def search_nearby_places(
         self,
@@ -60,11 +58,14 @@ class PlaceService:
         user_id: str = "",
     ) -> PlaceListData:
         """키워드 검색 + 거리순 정렬 (display_name, category 매칭)"""
-        places = await self.place_repo.search_nearby(lat, lng, keyword, cursor=cursor, max_distance=max_distance)
+        places = await self.place_repo.search_nearby(
+            lat, lng, keyword, cursor=cursor, max_distance=max_distance,
+            limit=PAGE_SIZE + 1,
+        )
+        has_more = len(places) > PAGE_SIZE
+        places = places[:PAGE_SIZE]
         favorited = await self._get_favorited_set(places, user_id)
-        return self._to_list_dto(places, favorited)
-
-    # ──────────────────── 즐겨찾기 배치 조회 ────────────────────
+        return self._to_list_dto(places, favorited, has_more=has_more)
 
     async def _get_favorited_set(self, places: list[dict], user_id: str) -> set[str]:
         """유저의 즐겨찾기 place_id set 반환"""
@@ -74,24 +75,26 @@ class PlaceService:
         place_ids = [p["place_id"] for p in places]
         return await fav_repo.find_favorited_place_ids(user_id, place_ids)
 
-    # ──────────────────── 내부 변환 유틸 ────────────────────
-
-    def _to_list_dto(self, places: list[dict], favorited: set[str]) -> PlaceListData:
+    def _to_list_dto(
+        self, places: list[dict], favorited: set[str], *, has_more: bool,
+    ) -> PlaceListData:
         """raw dict 목록 → PlaceListData 변환 + 다음 커서 생성"""
         place_dtos = [self._to_dto(p, favorited) for p in places]
 
         next_cursor = None
-        if len(places) == PAGE_SIZE:
+        if has_more:
             last = places[-1]
             next_cursor = PlaceRepository.build_cursor(last["distance"], last["place_id"])
 
         return PlaceListData(places=place_dtos, next_cursor=next_cursor)
 
-
     @staticmethod
     def _build_common_fields(raw: dict) -> dict:
         """MongoDB raw dict → 공통 필드 dict 변환"""
-        coords = raw.get("location", {}).get("coordinates", [0.0, 0.0])
+        # location 이 null 이거나 coordinates 결손인 문서에서 500 대신 기존 (0,0) 폴백 유지.
+        coords = (raw.get("location") or {}).get("coordinates") or [0.0, 0.0]
+        if len(coords) < 2:
+            coords = [0.0, 0.0]
 
         pr = raw.get("price_range")
 
@@ -132,12 +135,10 @@ class PlaceService:
             photos=raw.get("photos") or [],
         )
 
-
     @staticmethod
     def to_detail_dto(raw: dict) -> PlaceDetailData:
         """MongoDB raw dict → PlaceDetailData DTO 변환 (장소 상세만)"""
         return PlaceDetailData(**PlaceService._build_common_fields(raw))
-
 
     @staticmethod
     def _to_dto(raw: dict, favorited: set[str]) -> PlaceData:

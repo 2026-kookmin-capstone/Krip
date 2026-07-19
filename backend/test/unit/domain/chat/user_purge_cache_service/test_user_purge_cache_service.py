@@ -4,17 +4,17 @@
     - `revoke_all_sessions`: SessionService 위임 + 실패 swallow (fail-open, TTL fallback)
     - `cleanup_user_data` : `unread:{uid}` DEL + 실패 swallow (best-effort)
 
-`BlockCacheService` 와 동일한 cross-domain hook 패턴 — auth 도메인에서 호출되는 facade
-이므로 본 테스트는 위임/예외 정책 위주.
+auth 도메인에서 호출되는 cross-domain hook facade 이므로 본 테스트는 위임/예외 정책 위주.
 """
 import pytest
 
-from app.core.chat.redis_key import unread_key
+from app.core.chat.redis_key import (
+    read_sync_key,
+    unread_key,
+    unread_recovery_required_key,
+    unread_watermark_key,
+)
 
-
-# ──────────────────────────────────────────────────────────────────
-# revoke_all_sessions — 탈퇴 요청 commit 후 호출
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestRevokeAllSessions:
@@ -30,7 +30,6 @@ class TestRevokeAllSessions:
 
         session_service_mock.revoke_all_sessions.assert_awaited_once_with("USER_a")
 
-
     async def test_swallows_exception_fail_open(
         self, service, session_service_mock,
     ):
@@ -40,13 +39,8 @@ class TestRevokeAllSessions:
         """
         session_service_mock.revoke_all_sessions.side_effect = RuntimeError("redis down")
 
-        # 예외 없이 정상 반환
         await service.revoke_all_sessions("USER_a")
 
-
-# ──────────────────────────────────────────────────────────────────
-# cleanup_user_data — 영구 삭제 시점 (purge worker) 호출
-# ──────────────────────────────────────────────────────────────────
 
 @pytest.mark.unit
 class TestCleanupUserData:
@@ -54,10 +48,15 @@ class TestCleanupUserData:
 
     async def test_deletes_unread_key(self, service, redis_mock):
         """TTL 없는 unread HASH 명시 정리 — purge 시점에만 호출."""
-        await service.cleanup_user_data("USER_a")
+        result = await service.cleanup_user_data("USER_a")
 
-        redis_mock.delete.assert_awaited_once_with(unread_key("USER_a"))
-
+        assert result is True
+        redis_mock.delete.assert_awaited_once_with(
+            unread_key("USER_a"),
+            read_sync_key("USER_a"),
+            unread_watermark_key("USER_a"),
+            unread_recovery_required_key("USER_a"),
+        )
 
     async def test_does_not_call_session_revoke(
         self, service, redis_mock, session_service_mock,
@@ -67,10 +66,8 @@ class TestCleanupUserData:
 
         session_service_mock.revoke_all_sessions.assert_not_awaited()
 
-
-    async def test_swallows_exception_best_effort(self, service, redis_mock):
-        """Redis 장애 시에도 swallow — 전체 purge 흐름은 영향받지 않음."""
+    async def test_returns_false_when_redis_cleanup_fails(self, service, redis_mock):
+        """Redis 장애를 호출자에 결과로 전달해 durable purge 표식을 유지하게 한다."""
         redis_mock.delete.side_effect = RuntimeError("redis down")
 
-        # 예외 없이 정상 반환 (best-effort)
-        await service.cleanup_user_data("USER_a")
+        assert await service.cleanup_user_data("USER_a") is False

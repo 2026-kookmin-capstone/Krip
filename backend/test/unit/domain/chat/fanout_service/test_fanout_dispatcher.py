@@ -3,14 +3,15 @@
 핵심 보장:
     `start_fanout_dispatcher` 가 반환될 때엔 이미 `pubsub.subscribe` 가 await 까지
     완료된 상태여야 한다. 이 보장이 깨지면 main.py 의 다음 라인 (`start_node_registry`)
-    이 ZSET 등록을 끝낸 사이 다른 노드의 publish 가 SUBSCRIBE 전 채널에 도달해 누락.
+    이 ZSET 등록을 끝낸 사이 다른 노드의 publish 가 SUBSCRIBE 전에 도달해 누락.
 
 `_dispatch_loop` 자체는 비결정적 (pubsub 폴링 루프) 이라 통합 테스트 영역에 가깝고,
 여기선 진입 / 종료 / cleanup 까지의 결정적 경로만 다룬다.
 """
-from unittest.mock import AsyncMock, MagicMock
-import pytest
 import asyncio
+from unittest.mock import AsyncMock, MagicMock
+
+import pytest
 
 
 @pytest.fixture
@@ -26,7 +27,6 @@ async def stub_pubsub_redis(monkeypatch):
     """
     pubsub = MagicMock(name="pubsub")
     pubsub.subscribe = AsyncMock()
-    # 디스패처 루프가 즉시 None 만 받게 해 cancel/stop 시 정리 빠름.
     pubsub.get_message = AsyncMock(return_value=None)
     pubsub.unsubscribe = AsyncMock()
     pubsub.close = AsyncMock()
@@ -79,6 +79,49 @@ class TestStartFanoutDispatcher:
 
         await stop_fanout_dispatcher()
 
+    async def test_subscribe_failure_closes_partially_started_pubsub(
+        self, stub_pubsub_redis,
+    ):
+        from app.domain.chat.worker.fanout_dispatcher import start_fanout_dispatcher
+
+        pubsub, _ = stub_pubsub_redis
+        pubsub.subscribe.side_effect = RuntimeError("subscribe failed")
+        fanout = MagicMock(name="fanout-stub")
+
+        with pytest.raises(RuntimeError, match="subscribe failed"):
+            await start_fanout_dispatcher(fanout)
+
+        pubsub.close.assert_awaited_once()
+
+    async def test_cleanup_cancellation_does_not_replace_subscribe_error(
+        self, stub_pubsub_redis,
+    ):
+        from app.domain.chat.worker.fanout_dispatcher import start_fanout_dispatcher
+
+        pubsub, _ = stub_pubsub_redis
+        pubsub.subscribe.side_effect = RuntimeError("subscribe failed")
+        pubsub.close.side_effect = asyncio.CancelledError("cleanup cancelled")
+
+        with pytest.raises(RuntimeError, match="subscribe failed"):
+            await start_fanout_dispatcher(MagicMock(name="fanout-stub"))
+
+    async def test_task_spawn_failure_closes_subscribed_pubsub(
+        self, stub_pubsub_redis, monkeypatch,
+    ):
+        from app.domain.chat.worker import fanout_dispatcher as fd
+
+        pubsub, _ = stub_pubsub_redis
+
+        def fail_create_task(coro, **_kwargs):
+            coro.close()
+            raise RuntimeError("task spawn failed")
+
+        monkeypatch.setattr(fd.asyncio, "create_task", fail_create_task)
+
+        with pytest.raises(RuntimeError, match="task spawn failed"):
+            await fd.start_fanout_dispatcher(MagicMock(name="fanout-stub"))
+
+        pubsub.close.assert_awaited_once()
 
     async def test_in_process_mode_is_noop(self, monkeypatch):
         """`in_process` 모드에선 pubsub 자체를 만들지 않는다 (Redis 호출 0)."""
@@ -102,7 +145,6 @@ class TestStartFanoutDispatcher:
 
         assert called is False, "in_process 모드인데 Redis 클라이언트가 호출됨"
 
-
     async def test_duplicate_start_is_warned_and_skipped(self, stub_pubsub_redis):
         """이미 떠있으면 두 번째 호출은 no-op — subscribe 추가 호출 없음."""
         from app.domain.chat.worker.fanout_dispatcher import (
@@ -115,11 +157,43 @@ class TestStartFanoutDispatcher:
         fanout.dispatch_envelope = AsyncMock()
 
         await start_fanout_dispatcher(fanout)
-        await start_fanout_dispatcher(fanout)   # 두 번째
+        await start_fanout_dispatcher(fanout)
 
         assert pubsub.subscribe.await_count == 1
 
         await stop_fanout_dispatcher()
+
+
+@pytest.mark.unit
+async def test_non_object_envelope_is_dropped_without_stopping_dispatch_loop(
+    stub_pubsub_redis,
+):
+    from app.domain.chat.worker.fanout_dispatcher import _dispatch_loop
+
+    pubsub, _ = stub_pubsub_redis
+    messages = [
+        {"type": "message", "data": "[]"},
+        {"type": "message", "data": '{"op":"room"}'},
+    ]
+    stop_event = asyncio.Event()
+
+    async def get_message(**_kwargs):
+        return messages.pop(0) if messages else None
+
+    fanout = MagicMock(name="fanout-stub")
+    fanout.dispatch_envelope = AsyncMock()
+
+    async def dispatch(envelope):
+        if not isinstance(envelope, dict):
+            raise AttributeError("non-object envelope")
+        stop_event.set()
+
+    pubsub.get_message.side_effect = get_message
+    fanout.dispatch_envelope.side_effect = dispatch
+
+    await asyncio.wait_for(_dispatch_loop(pubsub, fanout, stop_event), timeout=1)
+
+    fanout.dispatch_envelope.assert_awaited_once_with({"op": "room"})
 
 
 @pytest.mark.unit

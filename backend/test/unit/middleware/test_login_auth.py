@@ -6,22 +6,19 @@
 EXCLUDE_PATHS / EXCLUDE_PREFIXES 도 1 case 만 확인 — 클래스 상수라 회귀 시 즉시 표면화.
 """
 
-import pytest
-import jwt
-from fastapi.testclient import TestClient
-from fastapi import FastAPI, Request
 from datetime import datetime, timedelta, timezone
 
-from app.middleware.auth import LoginAuthMiddleware
+import jwt
+import pytest
+from fastapi import FastAPI, Request
+from fastapi.testclient import TestClient
+
 from app.config.setting import settings
+from app.middleware.auth import LoginAuthMiddleware
 
 
 pytestmark = pytest.mark.unit
 
-
-# ──────────────────────────────────────────────────────────────────
-# 토큰 헬퍼
-# ──────────────────────────────────────────────────────────────────
 
 def _make_token(
     user_id: str | None = "USER_a",
@@ -42,10 +39,6 @@ def _make_token(
     )
 
 
-# ──────────────────────────────────────────────────────────────────
-# 최소 ASGI 앱 — 미들웨어만 부착하고 보호 라우트 하나만 둔다
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.fixture
 def client():
     app = FastAPI()
@@ -53,24 +46,19 @@ def client():
 
     @app.get("/protected")
     async def protected(request: Request):
-        # 미들웨어가 통과시키면 user_id 가 request.state 에 심어진다
         return {"user_id": request.state.user_id}
 
     @app.get("/health")
-    async def health():  # EXCLUDE_PATHS 검증용
+    async def health():
         return {"ok": True}
 
     @app.get("/api/auth/login/anything")
-    async def login_like():  # EXCLUDE_PREFIXES (`/api/auth/login`) 검증용
+    async def login_like():
         return {"ok": True}
 
     with TestClient(app) as c:
         yield c
 
-
-# ──────────────────────────────────────────────────────────────────
-# 성공 경로
-# ──────────────────────────────────────────────────────────────────
 
 class TestTokenSources:
     def test_accepts_x_auth_token_header(self, client):
@@ -81,7 +69,6 @@ class TestTokenSources:
         assert resp.status_code == 200
         assert resp.json() == {"user_id": "USER_app"}
 
-
     def test_accepts_cookie(self, client):
         token = _make_token("USER_web")
         client.cookies.set(settings.USER_LOGIN_COOKIE_NAME, token)
@@ -91,6 +78,32 @@ class TestTokenSources:
         assert resp.status_code == 200
         assert resp.json() == {"user_id": "USER_web"}
 
+    def test_accepts_matching_expected_principal(self, client):
+        token = _make_token("USER_web")
+
+        resp = client.get(
+            "/protected",
+            headers={
+                "X-Auth-Token": token,
+                "X-Krip-Expected-User-ID": "USER_web",
+            },
+        )
+
+        assert resp.status_code == 200
+
+    def test_rejects_cross_tab_principal_replacement(self, client):
+        token = _make_token("USER_B")
+
+        resp = client.get(
+            "/protected",
+            headers={
+                "X-Auth-Token": token,
+                "X-Krip-Expected-User-ID": "USER_A",
+            },
+        )
+
+        assert resp.status_code == 401
+        assert resp.json()["detail"] == "로그인 계정이 변경되었습니다."
 
     def test_header_wins_when_both_present(self, client):
         """헤더 → 쿠키 우선순위 — stale 쿠키가 살아 있어도 앱은 헤더로 정확한 user 를 본다."""
@@ -104,10 +117,6 @@ class TestTokenSources:
         assert resp.json() == {"user_id": "USER_from_header"}
 
 
-# ──────────────────────────────────────────────────────────────────
-# 실패 분기 — login_missing / login_no_user_id / login_expired / login_invalid
-# ──────────────────────────────────────────────────────────────────
-
 class TestFailureBranches:
     def test_returns_401_when_no_token_anywhere(self, client):
         resp = client.get("/protected")
@@ -115,15 +124,13 @@ class TestFailureBranches:
         assert resp.status_code == 401
         assert resp.json()["detail"] == "로그인이 필요합니다."
 
-
     def test_returns_401_when_token_has_no_user_id(self, client):
-        token = _make_token(user_id=None)  # payload 에 user_id 누락
+        token = _make_token(user_id=None)
 
         resp = client.get("/protected", headers={"X-Auth-Token": token})
 
         assert resp.status_code == 401
         assert "유효하지 않은" in resp.json()["detail"]
-
 
     def test_returns_401_when_token_expired(self, client):
         expired = _make_token("USER_x", expires_in=timedelta(seconds=-10))
@@ -133,7 +140,6 @@ class TestFailureBranches:
         assert resp.status_code == 401
         assert "만료" in resp.json()["detail"]
 
-
     def test_returns_401_when_signature_invalid(self, client):
         token = _make_token("USER_x", secret="not-the-real-secret")
 
@@ -142,7 +148,6 @@ class TestFailureBranches:
         assert resp.status_code == 401
         assert "유효하지 않은" in resp.json()["detail"]
 
-
     def test_returns_401_on_garbage_token(self, client):
         resp = client.get("/protected", headers={"X-Auth-Token": "not-a-jwt"})
 
@@ -150,16 +155,11 @@ class TestFailureBranches:
         assert "유효하지 않은" in resp.json()["detail"]
 
 
-# ──────────────────────────────────────────────────────────────────
-# 인증 우회 경로 — EXCLUDE_PATHS / EXCLUDE_PREFIXES
-# ──────────────────────────────────────────────────────────────────
-
 class TestExcludedPaths:
     def test_health_bypasses_auth(self, client):
         """EXCLUDE_PATHS 정확 매칭 — 토큰 없이도 200."""
         resp = client.get("/health")
         assert resp.status_code == 200
-
 
     def test_login_prefix_bypasses_auth(self, client):
         """EXCLUDE_PREFIXES `/api/auth/login` 이 `/app`, `/app/callback` 까지 자동 커버."""

@@ -8,8 +8,8 @@ outer (`add_like`) 가 fan-out 호출에 사용. router 에 노출되지는 않�
 feed 도메인의 `AddLikePayload` 와 동일 시그니처지만 도메인 결합도 회피 위해 별도 정의 —
 향후 도메인별 진화 (예: tripmate 가 추가 snapshot 필드 필요) 여지 보존.
 """
-from typing import Optional
 from dataclasses import dataclass
+from typing import Optional
 
 
 @dataclass

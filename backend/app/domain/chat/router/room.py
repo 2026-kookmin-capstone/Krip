@@ -1,10 +1,10 @@
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Request, Depends, Query
-from dependency_injector.wiring import Provide, inject
 
-from app.domain.chat.service.room import RoomService
-from app.domain.chat.service.message_history import MessageHistoryService
-from app.domain.chat.service.exception import ChatRoomNotFoundError
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
+
+from app.container import Container
+from app.domain.chat.schema.message import ChatMessageResponse, MessageHistoryResponse
 from app.domain.chat.schema.room import (
     ChatRoomListResponse,
     ChatRoomPeerResponse,
@@ -18,14 +18,13 @@ from app.domain.chat.schema.room import (
     RoomMemberListResponse,
     RoomMemberResponse,
 )
-from app.domain.chat.schema.message import ChatMessageResponse, MessageHistoryResponse
-from app.container import Container
+from app.domain.chat.service.exception import ChatRoomNotFoundError
+from app.domain.chat.service.message_history import MessageHistoryService
+from app.domain.chat.service.room import RoomService
 
 
 router = APIRouter(prefix="/rooms", tags=["채팅 - 방/메시지"])
 
-
-# ──────────────────── 방 생성 ────────────────────
 
 @router.post("/direct", status_code=201)
 @inject
@@ -47,8 +46,6 @@ async def create_direct_room(
     return _to_room_response(result)
 
 
-# ──────────────────── 그룹 방 생성 ────────────────────
-
 @router.post("/group", status_code=201)
 @inject
 async def create_group_room(
@@ -68,8 +65,6 @@ async def create_group_room(
 
     return _to_room_response(result)
 
-
-# ──────────────────── 멤버 초대 ────────────────────
 
 @router.post("/{chat_room_id}/invite")
 @inject
@@ -99,8 +94,6 @@ async def invite_members(
     )
 
 
-# ──────────────────── 퇴장 ────────────────────
-
 @router.post("/{chat_room_id}/leave", status_code=204)
 @inject
 async def leave_room(
@@ -120,8 +113,6 @@ async def leave_room(
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-
-# ──────────────────── 강퇴 ────────────────────
 
 @router.post("/{chat_room_id}/kick", status_code=204)
 @inject
@@ -146,21 +137,21 @@ async def kick_member(
         raise HTTPException(status_code=400, detail=str(e))
 
 
-# ──────────────────── 방 리스트 ────────────────────
-
 @router.get("")
 @inject
 async def list_rooms(
     request: Request,
+    cursor: Optional[str] = Query(None, description="다음 페이지 커서"),
     service: MessageHistoryService = Depends(Provide[Container.message_history_service]),
 ) -> ChatRoomListResponse:
-    """내가 속한 활성 방 리스트 (effective_last_at 최신순, 최대 500개)."""
+    """내가 속한 활성 방 리스트 (effective_last_at 최신순, 페이지당 최대 500개)."""
     user_id: str = request.state.user_id
-    result = await service.list_rooms(me_id=user_id)
+    try:
+        result = await service.list_rooms(me_id=user_id, cursor=cursor)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     return _to_list_response(result)
 
-
-# ──────────────────── 단건 방 조회 ────────────────────
 
 @router.get("/{chat_room_id}")
 @inject
@@ -184,8 +175,6 @@ async def get_room(
     return _to_room_response(result)
 
 
-# ──────────────────── 그룹 방 참여자 목록 ────────────────────
-
 @router.get("/{chat_room_id}/members")
 @inject
 async def list_room_members(
@@ -208,8 +197,6 @@ async def list_room_members(
     return _to_member_list_response(result)
 
 
-# ──────────────────── 그룹 방 초대 가능 친구 목록 ────────────────────
-
 @router.get("/{chat_room_id}/invitable-friends")
 @inject
 async def list_invitable_friends(
@@ -231,8 +218,6 @@ async def list_invitable_friends(
 
     return _to_member_list_response(result)
 
-
-# ──────────────────── 메시지 히스토리 ────────────────────
 
 @router.get("/{chat_room_id}/messages")
 @inject
@@ -282,8 +267,6 @@ async def get_messages(
     return _to_message_history_response(result)
 
 
-# ──────────────────── 내부 변환 유틸 ────────────────────
-
 def _to_room_response(dto) -> ChatRoomResponse:
     peer = (
         ChatRoomPeerResponse(
@@ -301,6 +284,8 @@ def _to_room_response(dto) -> ChatRoomResponse:
             type=dto.last_message.type,
             content=dto.last_message.content,
             created_at=dto.last_message.created_at,
+            edited_at=dto.last_message.edited_at,
+            deleted_at=dto.last_message.deleted_at,
         )
         if dto.last_message is not None else None
     )

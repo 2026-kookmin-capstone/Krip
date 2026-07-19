@@ -12,7 +12,7 @@
     |---|---|
     | PRIVATE post 타인 댓글             | FeedNotFoundError                 |
     | FRIENDS post 비친구 댓글           | FeedNotFoundError                 |
-    | 차단 관계 댓글                     | FeedBlockedError                  |
+    | 차단 관계 댓글                     | FeedNotFoundError (존재 은닉)      |
     | 빈 content                         | ValueError (strip 후 빈)          |
     | 공백만 content                     | ValueError                        |
     | 다른 작성자 delete                 | PermissionError                   |
@@ -21,18 +21,16 @@
 """
 import pytest
 
+from app.domain.feed.model.feed_post import FeedVisibility
+from app.domain.feed.repository.feed_post_comment import PAGE_SIZE
 from app.domain.feed.service.exception import (
-    FeedBlockedError,
     FeedNotFoundError,
     FeedPostCommentNotFoundError,
 )
-from app.domain.feed.model.feed_post import FeedVisibility
 
 
 pytestmark = pytest.mark.integration
 
-
-# ──────────────────── visibility / 차단 가드 ────────────────────
 
 class TestVisibilityGuards:
     async def test_friends_post_non_friend_cannot_comment(
@@ -46,7 +44,6 @@ class TestVisibilityGuards:
                 user_id=actor_id, post_id=post_id, content="hi",
             )
 
-
     async def test_private_post_stranger_cannot_comment(
         self, mongo_db, feed_post_comment_service, seed_feed_post,
     ):
@@ -58,8 +55,7 @@ class TestVisibilityGuards:
                 user_id=actor_id, post_id=post_id, content="hi",
             )
 
-
-    async def test_blocked_user_raises_blocked_error(
+    async def test_blocked_user_gets_not_found(
         self, mongo_db, feed_post_comment_service, seed_feed_post, seed_block,
     ):
         post_id, owner_id = await seed_feed_post(visibility=FeedVisibility.PUBLIC)
@@ -67,13 +63,11 @@ class TestVisibilityGuards:
 
         await seed_block(blocker=owner_id, blocked=actor_id)
 
-        with pytest.raises(FeedBlockedError):
+        with pytest.raises(FeedNotFoundError):
             await feed_post_comment_service.create_comment(
                 user_id=actor_id, post_id=post_id, content="hi",
             )
 
-
-# ──────────────────── content 정규화 — 다단계 방어선 ────────────────────
 
 class TestContentNormalization:
     """schema(min_length=1) → service(strip 후 빈 거절) → DB CHECK 의 다단계 방어선."""
@@ -89,7 +83,6 @@ class TestContentNormalization:
                 user_id=owner_id, post_id=post_id, content="   ",
             )
 
-
     async def test_strips_leading_trailing_whitespace(
         self, mongo_db, feed_post_comment_service, seed_feed_post,
     ):
@@ -103,8 +96,6 @@ class TestContentNormalization:
         assert comment.content == "hello"
 
 
-# ──────────────────── delete — 작성자 본인만 ────────────────────
-
 class TestDeleteAuthorOnly:
     async def test_other_author_raises_permission_error(
         self, mongo_db, feed_post_comment_service, seed_feed_post,
@@ -117,12 +108,10 @@ class TestDeleteAuthorOnly:
             user_id=actor_id, post_id=post_id, content="hello",
         )
 
-        # owner 가 actor 의 댓글 삭제 시도 → 거절
         with pytest.raises(PermissionError):
             await feed_post_comment_service.delete_comment(
                 user_id=owner_id, post_id=post_id, comment_id=comment.comment_id,
             )
-
 
     async def test_post_mismatch_raises_not_found(
         self, mongo_db, feed_post_comment_service, seed_feed_post,
@@ -139,7 +128,6 @@ class TestDeleteAuthorOnly:
                 user_id=owner_id, post_id="FDP_other", comment_id=comment.comment_id,
             )
 
-
     async def test_author_can_delete_own_comment(
         self, mongo_db, feed_post_comment_service, seed_feed_post,
     ):
@@ -149,15 +137,51 @@ class TestDeleteAuthorOnly:
             user_id=owner_id, post_id=post_id, content="my comment",
         )
 
-        # raise 없이 정상 종료
         await feed_post_comment_service.delete_comment(
             user_id=owner_id, post_id=post_id, comment_id=comment.comment_id,
         )
 
 
-# ──────────────────── list_comments — 최신순 ────────────────────
-
 class TestListComments:
+    async def test_exact_page_has_no_next_cursor(
+        self, mongo_db, feed_post_comment_service, seed_feed_post,
+    ):
+        post_id, owner_id = await seed_feed_post()
+        for i in range(PAGE_SIZE):
+            await feed_post_comment_service.create_comment(
+                user_id=owner_id, post_id=post_id, content=f"comment-{i}",
+            )
+
+        result = await feed_post_comment_service.list_comments(
+            viewer_id=owner_id, post_id=post_id,
+        )
+
+        assert len(result.comments) == PAGE_SIZE
+        assert result.next_cursor is None
+
+    async def test_blocked_commenter_is_excluded_before_page_limit(
+        self, mongo_db, feed_post_comment_service, seed_feed_post, seed_block,
+    ):
+        post_id, owner_id = await seed_feed_post()
+        actor_id = await _find_other_user(feed_post_comment_service.uow, owner_id)
+        for i in range(PAGE_SIZE):
+            await feed_post_comment_service.create_comment(
+                user_id=owner_id, post_id=post_id, content=f"visible-{i}",
+            )
+        for i in range(PAGE_SIZE + 1):
+            await feed_post_comment_service.create_comment(
+                user_id=actor_id, post_id=post_id, content=f"blocked-{i}",
+            )
+        await seed_block(blocker=owner_id, blocked=actor_id)
+
+        result = await feed_post_comment_service.list_comments(
+            viewer_id=owner_id, post_id=post_id,
+        )
+
+        assert len(result.comments) == PAGE_SIZE
+        assert {comment.user_id for comment in result.comments} == {owner_id}
+        assert result.next_cursor is None
+
     async def test_lists_in_recent_first_order(
         self, mongo_db, feed_post_comment_service, seed_feed_post,
     ):
@@ -178,15 +202,13 @@ class TestListComments:
         )
 
         assert len(result.comments) == 3
-        # 최신순 — 마지막에 작성한 게 먼저
         assert result.comments[0].content == "third"
         assert result.comments[2].content == "first"
 
 
-# ──────────────────── helpers ────────────────────
-
 async def _find_other_user(uow, exclude_user_id: str) -> str:
     from sqlalchemy import select
+
     from app.domain.auth.model.user import User, UserStatus
 
     async with uow as session:

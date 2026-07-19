@@ -6,43 +6,59 @@ readme = "README.md"
 requires-python = ">=3.11,<3.12"
 dependencies = [
     # backend
-    "aiofiles==24.1.0",
-    "aiosmtplib==5.0.0",
     "alembic==1.16.4",
-    "apscheduler==3.11.0",
     "asyncpg==0.30.0",
-    "beanie==1.26.0",
+    "beanie==1.30.0",
+    "cryptography==48.0.1",
     "dependency-injector==4.48.2",
-    "fastapi[standard]==0.118.0",
-    "httpx==0.27.2",
+    "fastapi[standard]==0.139.0",
+    "httpx==0.28.1",
     "loguru==0.7.3",
-    "motor==3.3.2",
-    "passlib[argon2]==1.7.4",
+    "motor==3.7.1",
     "psycopg2-binary==2.9.10",
     "pydantic-settings==2.10.1",
-    "pyjwt[crypto]==2.10.1",
-    "pymongo==4.6.3",
-    "pytest==8.4.2",
-    "pytest-asyncio==1.2.0",
-    "python-socketio==5.13.0",
-    "pytz==2024.1",
+    "pyjwt[crypto]==2.13.0",
+    "pymongo==4.17.0",
     "redis==6.4.0",
-    "openpyxl==3.1.5",
-    "pytest-cov==6.1.1",
+    "sqlalchemy==2.0.48",
     "boto3==1.35.0",
-    "pillow==12.1.1",
+    "pillow==12.3.0",
     "firebase-admin>=6.5.0",
     # Monitoring
     "prometheus-client>=0.21.0",
     "prometheus-fastapi-instrumentator>=7.0.0",
     # LLM
-    "langchain==1.0.0",
-    "langchain-chroma==1.0.0",
-    "langchain-community==0.4.1",
-    "langchain-google-genai>=3.2.0",
-    # Test
+    "langchain-google-genai==4.2.7",
+    "langgraph==1.2.9",
     "greenlet>=3.3.2",
 ]
+
+# Ruff — lint 전용 (ruff format 은 쓰지 않는다: 수동 줄바꿈/코드 형태를 보존하기 위해)
+#   - I  : import 오름차순 정렬
+#   - F  : 미사용 import/심볼 검출
+#   - E3 : 빈 줄 정규화(top-level 2줄 / 메서드 1줄) — 빈 줄만 조정, 코드 줄바꿈은 안 건드림
+#          (E3 는 현재 ruff preview 기능이라 preview=true 필요. ruff 버전 핀으로 동작 고정)
+#   - line-length 는 import 줄바꿈 판단에만 영향(포매터 미사용).
+#   - target-version 은 런타임(.python-version=3.11.11)에 맞춘 py311.
+#     팀 표준은 py312 이나, 이 프로젝트는 3.11 고정이라 일치시킴(3.12 전환은 별도 마이그레이션).
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+extend-exclude = [".venv", "migration", "migrations", "__pycache__"]
+
+[tool.ruff.lint]
+preview = true
+select = ["F", "I", "E3"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app", "test"]
+lines-after-imports = 2   # import 블록 ↔ 다음 코드(전역 변수 등) 사이 2줄
+
+[tool.ruff.lint.per-file-ignores]
+# 패키지 재노출(router 집계 등)·부작용 import 는 "미사용"이 아니다 — F401 제외.
+"__init__.py" = ["F401"]
+# database/model.py 는 SQLAlchemy relationship 등록용 모델 aggregator(전부 부작용 import).
+"app/database/model.py" = ["F401"]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
@@ -53,4 +69,65 @@ markers = [
     "unit: marks tests as unit tests",
     "integration: marks tests as integration tests",
     "slow: marks tests as slow running",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::PendingDeprecationWarning",
+]
+
+# Coverage Configuration
+[tool.coverage.run]
+source = ["app"]
+branch = true
+parallel = true
+# greenlet 은 SQLAlchemy async 브리지 — 통합 라우터 테스트 경로 추적.
+concurrency = ["thread", "greenlet"]
+data_file = ".coverage"
+omit = [
+    "*/test/*",
+    "*/__pycache__/*",
+    "*/.venv/*",
+    "*/migration/*",
+    "*/migrations/*",
+    "*/__init__.py",
+    "*/conftest.py",
+]
+
+[tool.coverage.paths]
+source = ["app/"]
+
+[tool.coverage.report]
+show_missing = true
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "@abstractmethod",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+    "raise AssertionError",
+    "if __name__ == .__main__.:",
+]
+partial_branches = [
+    "pragma: no branch",
+]
+precision = 2
+# fail_under = 80
+
+[tool.coverage.html]
+directory = "htmlcov"
+title = "Krip Backend - Coverage Report"
+
+[tool.coverage.xml]
+output = "coverage.xml"
+
+[tool.coverage.json]
+output = "coverage.json"
+
+[dependency-groups]
+dev = [
+    "pytest==9.1.1",
+    "pytest-asyncio==1.4.0",
+    "pytest-cov==6.1.1",
+    "ruff==0.15.19",
+    "testcontainers>=4.14.2",
 ]

@@ -1,7 +1,8 @@
-from typing import List
-from pydantic import BaseModel, Field
-from langchain_core.messages import HumanMessage, SystemMessage
 import base64
+from typing import List
+
+from langchain_core.messages import HumanMessage, SystemMessage
+from pydantic import BaseModel, Field
 
 from app.core.llm_manager import ModelName, get_llm_manager
 
@@ -46,13 +47,11 @@ class MenuOcrModel:
     def __init__(self):
         self._llm = None
 
-
     def load_model(self) -> None:
         """LLMManager에서 Gemini 모델을 가져와 structured output을 설정합니다."""
         manager = get_llm_manager()
         base_llm = manager.get_model(ModelName.GEMINI_2_5_FLASH.value)
         self._llm = base_llm.with_structured_output(MenuOcrResult)
-
 
     async def predict(self, image_data: str, mime_type: str) -> MenuOcrResult:
         """
@@ -81,7 +80,6 @@ class MenuOcrModel:
         ]
 
         return await self._llm.ainvoke(messages)
-
 
     async def predict_batch(
         self, images: List[tuple[str, str]]
@@ -114,7 +112,6 @@ class MenuOcrModel:
         ]
 
         return await self._llm.abatch(batch_inputs)
-
 
     @staticmethod
     def encode_bytes(image_bytes: bytes, content_type: str) -> tuple[str, str]:

@@ -13,17 +13,18 @@ SessionService / RoomService 를 조립한다. Redis / Mongo 연결은 다음 �
 기존 ``test_room_flow.py`` / ``test_db_constraints.py`` 는 Redis 를 자체 stub 하므로
 영향이 없다.
 """
-from unittest.mock import AsyncMock, MagicMock
-import redis.asyncio as aioredis
-import pytest_asyncio
-import pytest
 import os
+from unittest.mock import AsyncMock, MagicMock
+
+import pytest
+import pytest_asyncio
+import redis.asyncio as aioredis
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from app.domain.chat.service.session import SessionService
-from app.domain.chat.service.message import MessageService
-from app.domain.chat.model.chat_message import create_indexes as create_chat_message_indexes
 from app.core.chat.lua_script import lua_scripts
+from app.domain.chat.model.chat_message import create_indexes as create_chat_message_indexes
+from app.domain.chat.service.message import MessageService
+from app.domain.chat.service.session import SessionService
 
 
 def _require_env(name: str) -> str:
@@ -42,17 +43,12 @@ def _require_env(name: str) -> str:
     return url
 
 
-# ──────────────────────────────────────────────────────────────────
-# 실 연결 fixture (function scope — 매 테스트 fresh)
-# ──────────────────────────────────────────────────────────────────
-
 @pytest_asyncio.fixture
 async def redis_hot():
     """hot Redis (DB 0). Lua 스크립트 로드 후 반환. 매 테스트 전/후 FLUSHDB."""
     base = _require_env("REDIS_TEST_URL")
     client = aioredis.from_url(f"{base}/0", decode_responses=True, encoding="utf-8")
     await client.flushdb()
-    # lua_scripts 는 모듈 싱글톤. 테스트마다 새 client 로 rebind.
     lua_scripts.load(client)
     try:
         yield client
@@ -89,10 +85,6 @@ async def mongo_db():
         client.close()
 
 
-# ──────────────────────────────────────────────────────────────────
-# 서비스 조립 (opt-in — 이 fixture 를 주입하는 테스트만 실 연결 요구)
-# ──────────────────────────────────────────────────────────────────
-
 @pytest.fixture
 def patch_external_clients(monkeypatch, redis_hot, redis_dedupe, mongo_db):
     """MessageService / SessionService / RoomService 가 참조하는 전역 의존성을 실 연결로 교체.
@@ -123,9 +115,11 @@ def patch_external_clients(monkeypatch, redis_hot, redis_dedupe, mongo_db):
         "app.domain.chat.service.message_history.get_redis_client", _hot,
     )
     monkeypatch.setattr(
-        "app.domain.chat.service.block_cache.get_redis_client", _hot,
+        "app.domain.chat.worker.reconcile.get_redis_client", _hot,
     )
-    # mongodb 싱글톤의 database 속성 교체 (최초엔 None 이므로 raising=False)
+    monkeypatch.setattr(
+        "app.domain.chat.worker.reconcile.get_redis_dedupe_client", _dedupe,
+    )
     monkeypatch.setattr(
         "app.database.session.mongodb.database", mongo_db, raising=False,
     )
@@ -142,6 +136,8 @@ def chat_fanout_stub() -> MagicMock:
     """
     mock = MagicMock(name="chat-fanout")
     mock.fan_out_to_user = AsyncMock()
+    mock.fan_out_member_joined = AsyncMock()
+    mock.fan_out_member_removed = AsyncMock()
     mock.fan_out_to_session = AsyncMock()
     mock.fan_out_to_room = AsyncMock()
     mock.subscribe_user_to_room = AsyncMock()
@@ -163,7 +159,9 @@ def chat_fcm_stub() -> MagicMock:
 def message_service(uow, chat_fanout_stub, chat_fcm_stub, patch_external_clients) -> MessageService:
     """공유 서비스 인스턴스. 동시 호출 테스트에서는 task 별 신규 인스턴스를 만들어야
     한다 (``@transactional`` 이 ``self._session`` 을 변경하므로 인스턴스 공유 시 race)."""
-    return MessageService(uow=uow, fanout_service=chat_fanout_stub, fcm_service=chat_fcm_stub)
+    return MessageService(
+        uow=uow, fanout_service=chat_fanout_stub, fcm_service_factory=lambda: chat_fcm_stub,
+    )
 
 
 @pytest.fixture
@@ -189,5 +187,5 @@ async def direct_room(
         uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
     )
     result = await room_svc.create_direct_room(me_id=user_a, peer_user_id=user_b)
-    chat_fanout_stub.reset_mock()  # 방 생성으로 찍힌 호출 제거
+    chat_fanout_stub.reset_mock()
     return result.chat_room_id, user_a, user_b

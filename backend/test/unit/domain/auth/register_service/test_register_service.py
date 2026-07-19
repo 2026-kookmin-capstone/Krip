@@ -6,14 +6,14 @@
     - 인자 검증: detail 의 모든 field 가 입력대로 매핑
     - 빈 travel_styles 도 허용 (save_all 빈 리스트 호출)
 """
+import pytest
+
+from app.domain.auth.model.user_detail_inform import Gender
+from app.domain.auth.model.user_travel_style import TravelStyle
 from test.unit.domain.auth.register_service.model_factory import (
     UserDetailInformFactory,
     UserFactory,
 )
-import pytest
-
-from app.domain.auth.model.user_travel_style import TravelStyle
-from app.domain.auth.model.user_detail_inform import Gender
 
 
 def _kwargs_baseline(**overrides):
@@ -40,13 +40,44 @@ class TestRegisterDetail:
         self, service, user_repo_mock, detail_repo_mock, style_repo_mock,
     ):
         user_repo_mock.find_by_id.return_value = UserFactory.create(user_id="USER_a")
-        detail_repo_mock.find_by_user_id.return_value = None  # 미가입
+        detail_repo_mock.find_by_user_id.return_value = None
 
         await service.register_detail(**_kwargs_baseline())
 
         detail_repo_mock.save.assert_awaited_once()
         style_repo_mock.save_all.assert_awaited_once()
 
+    async def test_raises_when_user_not_active(
+        self, service, user_repo_mock, detail_repo_mock, style_repo_mock,
+    ):
+        """INACTIVE(탈퇴 유예) 유저는 2차 가입 완료를 수행할 수 없다."""
+        from app.domain.auth.model.user import UserStatus
+
+        user_repo_mock.find_by_id.return_value = UserFactory.create(
+            user_id="USER_a", status=UserStatus.INACTIVE,
+        )
+        user_repo_mock.lock_if_active.return_value = False
+
+        with pytest.raises(ValueError, match="계정 상태"):
+            await service.register_detail(**_kwargs_baseline())
+
+        detail_repo_mock.save.assert_not_awaited()
+        style_repo_mock.save_all.assert_not_awaited()
+
+    async def test_concurrent_second_signup_race_maps_to_value_error(
+        self, service, user_repo_mock, detail_repo_mock, style_repo_mock,
+    ):
+        """check→insert 사이 동시 2차 가입으로 user_detail PK 위반 시 500 대신 중복 ValueError."""
+        from sqlalchemy.exc import IntegrityError
+
+        user_repo_mock.find_by_id.return_value = UserFactory.create(user_id="USER_a")
+        detail_repo_mock.find_by_user_id.return_value = None
+        detail_repo_mock.save.side_effect = IntegrityError("mock", {}, Exception())
+
+        with pytest.raises(ValueError, match="이미 2차 회원가입"):
+            await service.register_detail(**_kwargs_baseline())
+
+        style_repo_mock.save_all.assert_not_awaited()
 
     async def test_detail_fields_mapped_correctly(
         self, service, user_repo_mock, detail_repo_mock,
@@ -71,7 +102,6 @@ class TestRegisterDetail:
         assert saved_detail.gender == Gender.FEMALE
         assert saved_detail.nationality == "JP"
 
-
     async def test_saves_multiple_travel_styles(
         self, service, user_repo_mock, detail_repo_mock, style_repo_mock,
     ):
@@ -87,7 +117,6 @@ class TestRegisterDetail:
         assert [s.style for s in saved_styles] == styles_input
         assert all(s.user_id == "USER_a" for s in saved_styles)
 
-
     async def test_saves_empty_travel_styles(
         self, service, user_repo_mock, detail_repo_mock, style_repo_mock,
     ):
@@ -99,7 +128,6 @@ class TestRegisterDetail:
 
         style_repo_mock.save_all.assert_awaited_once_with([])
 
-
     async def test_raises_when_user_not_found(
         self, service, user_repo_mock, detail_repo_mock, style_repo_mock,
     ):
@@ -110,7 +138,6 @@ class TestRegisterDetail:
 
         detail_repo_mock.save.assert_not_awaited()
         style_repo_mock.save_all.assert_not_awaited()
-
 
     async def test_raises_when_already_registered(
         self, service, user_repo_mock, detail_repo_mock, style_repo_mock,

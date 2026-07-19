@@ -19,7 +19,6 @@ from alembic import op
 import sqlalchemy as sa
 
 
-# revision identifiers, used by Alembic.
 revision: str = 'e8a5c1f2b937'
 down_revision: Union[str, Sequence[str], None] = 'f3a1c8d4e2b9'
 branch_labels: Union[str, Sequence[str], None] = None
@@ -28,7 +27,6 @@ depends_on: Union[str, Sequence[str], None] = None
 
 def upgrade() -> None:
     """Upgrade schema."""
-    # ── feed_post ─────────────────────────────────────────
     op.create_table(
         'feed_post',
         sa.Column('post_id', sa.String(length=50), nullable=False),
@@ -56,7 +54,6 @@ def upgrade() -> None:
         unique=False,
     )
 
-    # ── feed_post_like ────────────────────────────────────
     op.create_table(
         'feed_post_like',
         sa.Column('user_id', sa.String(length=50), nullable=False),
@@ -68,7 +65,6 @@ def upgrade() -> None:
     )
     op.create_index('ix_feed_post_like_post_id', 'feed_post_like', ['post_id'], unique=False)
 
-    # ── feed_post_comment ─────────────────────────────────
     op.create_table(
         'feed_post_comment',
         sa.Column('comment_id', sa.String(length=50), nullable=False),

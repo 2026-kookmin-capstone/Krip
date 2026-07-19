@@ -1,20 +1,16 @@
 from typing import List, Optional
 
-from app.domain.tripmate.model.tripmate_image import TripmateImage
 from app.core.instrumentation import measure_mongo_op
+from app.domain.tripmate.model.tripmate_image import TripmateImage
 
 
 class TripmateImageRepository:
-
-    # ──────────────────── Create ────────────────────
 
     @measure_mongo_op("insert", "tripmate_image")
     async def save(self, image: TripmateImage) -> TripmateImage:
         """이미지 단건 저장"""
         await image.insert()
         return image
-
-    # ──────────────────── Read ────────────────────
 
     @measure_mongo_op("find", "tripmate_image")
     async def find_by_user_id(self, user_id: str) -> list[TripmateImage]:
@@ -23,13 +19,20 @@ class TripmateImageRepository:
             {"user_id": user_id}
         ).sort("-timestamp").to_list()
 
-
     @measure_mongo_op("find_one", "tripmate_image")
     async def find_by_image_id(self, image_id: str) -> Optional[TripmateImage]:
         """이미지 ID로 단건 조회"""
         return await TripmateImage.find_one({"image_id": image_id})
 
-    # ──────────────────── Delete ────────────────────
+    @measure_mongo_op("find", "tripmate_image")
+    async def find_owned_urls(self, user_id: str, image_urls: List[str]) -> set[str]:
+        """주어진 URL 중 해당 유저가 업로드한 것만 set 으로 반환 (소유권 검증용)."""
+        if not image_urls:
+            return set()
+        rows = await TripmateImage.find(
+            {"user_id": user_id, "image_url": {"$in": image_urls}}
+        ).to_list()
+        return {row.image_url for row in rows}
 
     @measure_mongo_op("delete", "tripmate_image")
     async def delete_by_image_id(self, image_id: str) -> None:
@@ -38,7 +41,6 @@ class TripmateImageRepository:
         if image:
             await image.delete()
 
-
     @measure_mongo_op("delete", "tripmate_image")
     async def delete_by_image_ids(self, image_ids: List[str]) -> None:
         """이미지 ID 목록으로 일괄 삭제"""
@@ -46,14 +48,12 @@ class TripmateImageRepository:
             return
         await TripmateImage.find({"image_id": {"$in": image_ids}}).delete()
 
-
     @measure_mongo_op("delete", "tripmate_image")
     async def delete_by_urls(self, image_urls: List[str]) -> None:
         """이미지 URL 목록으로 일괄 삭제"""
         if not image_urls:
             return
         await TripmateImage.find({"image_url": {"$in": image_urls}}).delete()
-
 
     @measure_mongo_op("delete", "tripmate_image")
     async def delete_by_user_id(self, user_id: str) -> None:

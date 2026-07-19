@@ -15,17 +15,48 @@ visibility/caption 정규화, 권한 가드, S3 prefix cleanup 호출까지 cove
     | delete_post 본인              | RDB row 삭제 + S3 cleanup 호출        |
     | delete_post 미존재            | FeedNotFoundError                     |
 """
-from sqlalchemy import select
-import pytest
+import asyncio
+from typing import Any, cast
 
-from app.domain.feed.service.exception import FeedNotFoundError
+import pytest
+from sqlalchemy import select
+
+from app.database.session import UnitOfWork
 from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
+from app.domain.feed.service.exception import FeedNotFoundError
 
 
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── upload_post ────────────────────
+class _CommitOutcomeFactory:
+    def __init__(self, session_factory, *, applied: bool):
+        self._session_factory = session_factory
+        self._applied = applied
+        self._intercept_next_commit = True
+
+    def __call__(self):
+        return _CommitOutcomeSession(self._session_factory(), self)
+
+
+class _CommitOutcomeSession:
+    def __init__(self, session, owner):
+        self._session = session
+        self._owner = owner
+
+    def __getattr__(self, name):
+        return getattr(self._session, name)
+
+    async def commit(self):
+        if not self._owner._intercept_next_commit:
+            await self._session.commit()
+            return
+        self._owner._intercept_next_commit = False
+        if self._owner._applied:
+            await self._session.commit()
+            raise asyncio.CancelledError
+        raise RuntimeError("commit rejected")
+
 
 class TestUploadPost:
     """업로드 흐름 — Pillow / S3 mock + 실 RDB INSERT."""
@@ -42,10 +73,8 @@ class TestUploadPost:
             caption="my first post",
         )
 
-        # S3 3회 (original / small / medium)
         assert feed_storage_mock.upload_to_key.await_count == 3
 
-        # RDB row 검증
         async with session_factory() as session:
             post = await session.get(FeedPost, result.post_id)
             assert post is not None
@@ -53,7 +82,6 @@ class TestUploadPost:
             assert post.caption == "my first post"
             assert post.visibility == FeedVisibility.PUBLIC
             assert post.original_url.startswith("https://x/")
-
 
     async def test_normalizes_blank_caption_to_null(
         self, feed_post_service, seed_users, session_factory,
@@ -70,8 +98,48 @@ class TestUploadPost:
             post = await session.get(FeedPost, result.post_id)
             assert post.caption is None
 
+    async def test_commit_applied_then_cancelled_preserves_uploaded_objects(
+        self, feed_post_service, seed_users, session_factory, feed_storage_mock,
+    ):
+        [user_id] = await seed_users(1)
+        feed_post_service.uow = UnitOfWork(session=cast(
+            Any, _CommitOutcomeFactory(session_factory, applied=True),
+        ))
 
-# ──────────────────── get_my_post ────────────────────
+        with pytest.raises(asyncio.CancelledError):
+            await feed_post_service.upload_post(
+                user_id=user_id, file_bytes=b"img",
+                visibility=FeedVisibility.PUBLIC,
+            )
+
+        async with session_factory() as session:
+            post = await session.scalar(
+                select(FeedPost).where(FeedPost.user_id == user_id),
+            )
+            assert post is not None
+        feed_storage_mock.delete_by_prefix.assert_not_awaited()
+
+    async def test_rejected_commit_cleans_uploaded_objects(
+        self, feed_post_service, seed_users, session_factory, feed_storage_mock,
+    ):
+        [user_id] = await seed_users(1)
+        feed_post_service.uow = UnitOfWork(session=cast(
+            Any, _CommitOutcomeFactory(session_factory, applied=False),
+        ))
+
+        with pytest.raises(RuntimeError, match="commit rejected"):
+            await feed_post_service.upload_post(
+                user_id=user_id, file_bytes=b"img",
+                visibility=FeedVisibility.PUBLIC,
+            )
+
+        async with session_factory() as session:
+            post = await session.scalar(
+                select(FeedPost).where(FeedPost.user_id == user_id),
+            )
+            assert post is None
+        feed_storage_mock.delete_by_prefix.assert_awaited_once()
+
 
 class TestGetMyPost:
     async def test_owner_can_get_own_post(
@@ -85,16 +153,14 @@ class TestGetMyPost:
 
         assert result.post_id == post_id
 
-
-    async def test_other_user_raises_permission_error(
+    async def test_other_user_raises_not_found(
         self, feed_post_service, seed_feed_post,
     ):
         post_id, owner_id = await seed_feed_post()
         other_id = await _find_other_user(feed_post_service.uow, owner_id)
 
-        with pytest.raises(PermissionError):
+        with pytest.raises(FeedNotFoundError):
             await feed_post_service.get_my_post(user_id=other_id, post_id=post_id)
-
 
     async def test_missing_post_raises_not_found(
         self, feed_post_service, seed_users,
@@ -104,8 +170,6 @@ class TestGetMyPost:
         with pytest.raises(FeedNotFoundError):
             await feed_post_service.get_my_post(user_id=user_id, post_id="FDP_ghost")
 
-
-# ──────────────────── update_visibility / update_caption ────────────────────
 
 class TestUpdateMetadata:
     async def test_update_visibility_persists(
@@ -121,7 +185,6 @@ class TestUpdateMetadata:
             post = await session.get(FeedPost, post_id)
             assert post.visibility == FeedVisibility.PRIVATE
 
-
     async def test_update_caption_normalizes_blank_to_null(
         self, feed_post_service, seed_feed_post, session_factory,
     ):
@@ -135,20 +198,17 @@ class TestUpdateMetadata:
             post = await session.get(FeedPost, post_id)
             assert post.caption is None
 
-
-    async def test_update_other_user_raises_permission_error(
+    async def test_update_other_user_raises_not_found(
         self, feed_post_service, seed_feed_post,
     ):
         post_id, owner_id = await seed_feed_post()
         other_id = await _find_other_user(feed_post_service.uow, owner_id)
 
-        with pytest.raises(PermissionError):
+        with pytest.raises(FeedNotFoundError):
             await feed_post_service.update_visibility(
                 user_id=other_id, post_id=post_id, visibility=FeedVisibility.PRIVATE,
             )
 
-
-# ──────────────────── delete_post ────────────────────
 
 class TestDeletePost:
     async def test_deletes_rdb_and_calls_s3_cleanup(
@@ -162,9 +222,7 @@ class TestDeletePost:
             post = await session.get(FeedPost, post_id)
             assert post is None
 
-        # S3 prefix cleanup 호출
         feed_storage_mock.delete_by_prefix.assert_awaited_once()
-
 
     async def test_delete_missing_raises_not_found(
         self, feed_post_service, seed_users,
@@ -174,18 +232,15 @@ class TestDeletePost:
         with pytest.raises(FeedNotFoundError):
             await feed_post_service.delete_post(user_id=user_id, post_id="FDP_ghost")
 
-
-    async def test_delete_other_user_raises_permission_error(
+    async def test_delete_other_user_raises_not_found(
         self, feed_post_service, seed_feed_post,
     ):
         post_id, owner_id = await seed_feed_post()
         other_id = await _find_other_user(feed_post_service.uow, owner_id)
 
-        with pytest.raises(PermissionError):
+        with pytest.raises(FeedNotFoundError):
             await feed_post_service.delete_post(user_id=other_id, post_id=post_id)
 
-
-# ──────────────────── helpers ────────────────────
 
 async def _find_other_user(uow, exclude_user_id: str) -> str:
     from app.domain.auth.model.user import User, UserStatus

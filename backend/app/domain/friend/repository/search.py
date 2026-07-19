@@ -1,11 +1,13 @@
 from typing import Optional
-from sqlalchemy.orm import contains_eager, selectinload
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, or_
 
-from app.domain.friend.model.user_block import UserBlock
-from app.domain.auth.model.user_detail_inform import UserDetailInform
+from sqlalchemy import or_, select
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import contains_eager, selectinload
+
 from app.domain.auth.model.user import User, UserStatus
+from app.domain.auth.model.user_detail_inform import UserDetailInform
+from app.domain.friend.model.user_block import UserBlock
+from app.util.cursor import decode_cursor, keyset_where
 
 
 # 검색 결과 페이지 크기
@@ -15,9 +17,6 @@ PAGE_SIZE = 30
 class FriendSearchRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
-
-
-    # ──────────────────── Read (검색 — 커서 페이지네이션) ────────────────────
 
     async def search_active_users(
         self,
@@ -37,7 +36,9 @@ class FriendSearchRepository:
         - travel_styles 는 1:N 이라 joinedload + LIMIT 의 cardinality 충돌을 피해
           `selectinload` 로 별도 IN 쿼리 로드
         """
-        escaped = keyword.replace("%", "\\%").replace("_", "\\_")
+        # `\` 를 먼저 이스케이프해야 뒤의 `\%`/`\_` 가 깨지지 않는다. 끝의 `\` 하나만으로도
+        # 패턴이 escape 문자로 끝나 오검색/DB 에러가 나므로 순서가 중요.
+        escaped = keyword.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
         like_pattern = f"%{escaped}%"
 
         blocked_by_me = (
@@ -60,21 +61,21 @@ class FriendSearchRepository:
                 User.user_id.notin_(blocked_by_me),
                 User.user_id.notin_(blocked_me),
                 or_(
-                    User.user_id.ilike(like_pattern),
-                    UserDetailInform.user_name.ilike(like_pattern),
+                    User.user_id.ilike(like_pattern, escape="\\"),
+                    UserDetailInform.user_name.ilike(like_pattern, escape="\\"),
                 ),
             )
         )
 
         if cursor:
-            cursor_sub = select(User.created_at).where(User.user_id == cursor).scalar_subquery()
-            stmt = stmt.where(
-                or_(
-                    User.created_at < cursor_sub,
-                    (User.created_at == cursor_sub) & (User.user_id < cursor),
-                )
-            )
+            decoded = decode_cursor(cursor)
+            if decoded is None:
+                raise ValueError("유효하지 않은 커서입니다.")
+            cur_ts, cur_id = decoded
+            stmt = stmt.where(keyset_where(
+                User.created_at, User.user_id, cur_ts, cur_id,
+            ))
 
-        stmt = stmt.order_by(User.created_at.desc(), User.user_id.desc()).limit(PAGE_SIZE)
+        stmt = stmt.order_by(User.created_at.desc(), User.user_id.desc()).limit(PAGE_SIZE + 1)
         result = await self.session.execute(stmt)
         return list(result.unique().scalars().all())

@@ -1,6 +1,6 @@
-from typing import List, Optional
-from datetime import datetime
 from dataclasses import dataclass
+from datetime import datetime
+from typing import List
 
 from app.domain.tour.dto.place import PlaceDetailData
 

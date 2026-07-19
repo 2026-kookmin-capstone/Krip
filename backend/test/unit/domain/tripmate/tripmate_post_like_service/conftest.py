@@ -3,21 +3,21 @@
 좋아요 가시성 / 차단 검증은 본 service 책임이 아니므로 (tripmate 는 visibility 모델 없음),
 post 존재 여부 + 중복 가드 + fan-out 통합 검증에 집중.
 """
-from test.unit.domain.tripmate.tripmate_post_like_service.model_factory import (
-    TripmatePostFactory,
-    UserDetailInformFactory,
-)
+import pytest
+
+from app.domain.tripmate.service.tripmate_post_like import TripmatePostLikeService
 from test.unit.domain.tripmate.mock_factory import (
     FakeUnitOfWork,
     TripmatePostLikeRepositoryMockFactory,
     TripmatePostRepositoryMockFactory,
     UserDetailInformRepositoryMockFactory,
-    make_mock_session,
     make_inbox_service_mock,
+    make_mock_session,
 )
-import pytest
-
-from app.domain.tripmate.service.tripmate_post_like import TripmatePostLikeService
+from test.unit.domain.tripmate.tripmate_post_like_service.model_factory import (
+    TripmatePostFactory,
+    UserDetailInformFactory,
+)
 
 
 @pytest.fixture
@@ -46,9 +46,20 @@ def inbox_service_mock():
 
 
 @pytest.fixture
+def block_repo_mock():
+    """UserBlockRepository — 기본 차단 없음. 차단 알림 억제 테스트가 override."""
+    from unittest.mock import AsyncMock
+
+    mock = AsyncMock()
+    mock.find_blocks_between.return_value = []
+    return mock
+
+
+@pytest.fixture
 def service(
     monkeypatch, mock_session,
     post_repo_mock, like_repo_mock, detail_repo_mock, inbox_service_mock,
+    block_repo_mock,
 ):
     """service 가 RDB 트랜잭션 안에서 인스턴스화하는 모든 repo 를 mock 으로 치환.
 
@@ -65,6 +76,10 @@ def service(
     monkeypatch.setattr(
         "app.domain.tripmate.service.tripmate_post_like.UserDetailInformRepository",
         lambda session: detail_repo_mock,
+    )
+    monkeypatch.setattr(
+        "app.domain.tripmate.service.tripmate_post_like.UserBlockRepository",
+        lambda session: block_repo_mock,
     )
     return TripmatePostLikeService(
         uow=FakeUnitOfWork(mock_session),

@@ -71,7 +71,7 @@
         }
       },
       "options": {"colorMode": "background", "graphMode": "area", "textMode": "value", "reduceOptions": {"calcs": ["lastNotNull"]}},
-      "targets": [{"expr": "sum(rate(db_transaction_total{result=\"rollback\"}[5m])) / clamp_min(sum(rate(db_transaction_total[5m])), 1)", "legendFormat": "rollback %", "refId": "A"}]
+      "targets": [{"expr": "((sum(rate(db_transaction_total{result=\"rollback\"}[5m])) / sum(rate(db_transaction_total[5m]))) unless (sum(rate(db_transaction_total[5m])) == 0)) or vector(0)", "legendFormat": "rollback %", "refId": "A"}]
     },
     {
       "id": 10,
@@ -122,14 +122,14 @@
     },
     {
       "id": 31,
-      "title": "Redis 메모리 사용량 (DB 별)",
+      "title": "Redis 메모리 사용량 (인스턴스 전체)",
       "type": "timeseries",
-      "description": "hot / dedupe 두 DB 의 메모리 사용량. dedupe 가 너무 크면 TTL 누락 의심.",
+      "description": "redis_memory_used_bytes 는 INFO memory 기반 인스턴스 전체 값 — hot/dedupe exporter 는 같은 Redis 서버(논리 DB0/DB1)를 보므로 동일 총량이 2번 잡힌다. 과거처럼 db=hot/dedupe 로 쪼개면 서버 총량을 2번 표시하는 가짜 per-DB 분해라, 인스턴스 총량 단일 시리즈로 정정. (논리 DB 별 세부는 redis_db_keys 등 실제 per-DB 지표 필요.)",
       "datasource": {"type": "prometheus", "uid": "prometheus"},
       "gridPos": {"h": 8, "w": 12, "x": 12, "y": 23},
       "fieldConfig": {"defaults": {"unit": "bytes", "custom": {"drawStyle": "line", "fillOpacity": 10, "lineWidth": 2}}},
-      "options": {"legend": {"displayMode": "list", "placement": "bottom"}, "tooltip": {"mode": "multi"}},
-      "targets": [{"expr": "redis_memory_used_bytes", "legendFormat": "{{db}}", "refId": "A"}]
+      "options": {"legend": {"displayMode": "list", "placement": "bottom"}, "tooltip": {"mode": "single"}},
+      "targets": [{"expr": "max(redis_memory_used_bytes)", "legendFormat": "인스턴스 메모리", "refId": "A"}]
     },
     {
       "id": 40,

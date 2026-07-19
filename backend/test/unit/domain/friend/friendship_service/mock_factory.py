@@ -7,7 +7,6 @@ class FakeAsyncContextManager:
     async def __aenter__(self):
         return self
 
-
     async def __aexit__(self, exc_type, exc, tb):
         return False
 
@@ -18,10 +17,8 @@ class FakeUnitOfWork:
     def __init__(self, session):
         self._session = session
 
-
     async def __aenter__(self):
         return self._session
-
 
     async def __aexit__(self, exc_type, exc, tb):
         return False
@@ -41,6 +38,7 @@ class FriendshipRepositoryMockFactory:
     def create(cls) -> AsyncMock:
         mock = AsyncMock()
         mock.save.return_value = None
+        mock.acquire_pair_lock.return_value = None
         mock.find_by_id.return_value = None
         mock.find_between.return_value = None
         mock.find_friendships_with.return_value = {}
@@ -57,6 +55,8 @@ class UserBlockRepositoryMockFactory:
     def create(cls) -> AsyncMock:
         mock = AsyncMock()
         mock.save.return_value = None
+        mock.acquire_pair_lock.return_value = None
+        mock.acquire_pair_lock_shared.return_value = None
         mock.find_by_id.return_value = None
         mock.find_by_pair.return_value = None
         mock.find_blocks_between.return_value = []

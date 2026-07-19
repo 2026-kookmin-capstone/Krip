@@ -1,27 +1,27 @@
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.ext.asyncio import async_sessionmaker
-from functools import wraps
+import asyncio
 from contextvars import ContextVar
+from functools import wraps
 
-from app.core.instrumentation import db_transaction_inc
+from sqlalchemy.ext.asyncio import async_sessionmaker
+from sqlalchemy.orm import declarative_base
+
 from app.core.context import db_route_var
+from app.core.instrumentation import db_transaction_inc
 
-
-# ──────────────────── RDB ────────────────────
 
 # 트랜잭션 전파용 — `@transactional` 이 nested 호출 시 같은 session 재사용 여부 판정.
 _current_session: ContextVar = ContextVar('_current_session', default=None)
+# 세션을 연 task — gather/create_task 로 상속된 세션에 다른 task 가 join 하는 사고 감지용.
+_session_owner: ContextVar = ContextVar('_session_owner', default=None)
 
 
 class UnitOfWork:
     def __init__(self, session: async_sessionmaker):
         self.session_factory = session
 
-
     async def __aenter__(self):
         self.session = self.session_factory()
         return self.session
-
 
     async def __aexit__(self, exc_type, exc, tb):
         # commit 자체가 실패할 수 있어 try/except 로 'other' 라벨을 분리.
@@ -42,56 +42,62 @@ class UnitOfWork:
 
 
 def transactional(fn):
-    """nested 호출은 기존 트랜잭션에 참여, 최상위 호출만 새 UoW 를 연다."""
+    """nested 호출은 기존 트랜잭션에 참여, 최상위 호출만 새 UoW 를 연다.
+
+    세션을 인스턴스 상태(self._session)에 보관하므로, 한 인스턴스를 여러 task 에서 동시
+    실행하면 세션이 덮어써진다 → 동시 실행 경로는 task 마다 새 인스턴스를 써야 한다.
+    """
     @wraps(fn)
     async def wrapper(self, *args, **kwargs):
         existing = _current_session.get()
         if existing is not None:
+            if _session_owner.get() is not asyncio.current_task():
+                raise RuntimeError(
+                    "@transactional 세션은 task 간 공유할 수 없습니다 — 트랜잭션 "
+                    "메서드를 gather/create_task 로 동시 실행하지 마세요."
+                )
             self._session = existing
             return await fn(self, *args, **kwargs)
 
         async with self.uow as session:
             token = _current_session.set(session)
+            owner_token = _session_owner.set(asyncio.current_task())
             self._session = session
             try:
                 return await fn(self, *args, **kwargs)
             finally:
                 _current_session.reset(token)
+                _session_owner.reset(owner_token)
                 self._session = None
     return wrapper
+
 
 Base = declarative_base()
 
 
-# ──────────────────── NoSQL ────────────────────
-
 from typing import Optional
-from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
-from beanie import init_beanie
 
-from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
-from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHistory
-from app.domain.tripmate.model.tripmate_image import TripmateImage
+from beanie import init_beanie
+from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
+from pymongo.errors import DuplicateKeyError
+
+from app.config.setting import settings
+from app.core.logger import get_logger
+from app.domain.auth.model.withdrawal_request import WithdrawalRequest
+from app.domain.chat.model.chat_message import create_indexes as create_chat_message_indexes
+from app.domain.friend.model.search_history import FriendSearchHistory
+from app.domain.notification.model.inbox import InboxItem
 from app.domain.tour.model.place import Place
 from app.domain.tour.model.tour_search_history import TourSearchHistory
-from app.domain.friend.model.search_history import FriendSearchHistory
-from app.domain.chat.model.chat_message import create_indexes as create_chat_message_indexes
-from app.domain.auth.model.withdrawal_request import WithdrawalRequest
-from app.domain.notification.model.inbox import InboxItem
-from app.config.setting import settings
+from app.domain.tripmate.model.tripmate_image import TripmateImage
+from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
+from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHistory
 
 
-# Mongo socket-level timeout — Mongo hang 시 코루틴 영구 stuck 차단.
-#
-# Motor 기본값 (socketTimeoutMS=None) 은 무한 대기 → primary step-down / disk sync /
-# 네트워크 partition 시 await 영원히 정지. measure_mongo_op 의 try/finally 도 도달 못 해
-# 메트릭 침묵 (장애인데 안 보이는 무관측 상태) → 명시 cap 필수.
-#
-# socketTimeoutMS 10s — aggregate / 복잡한 find 까지 여유. 그보다 긴 query 는 호출처에서
-# maxTimeMS 로 별도 제어.
-# serverSelectionTimeoutMS 5s — 기본 30s 는 failover 중 사용자 30초 hang. 정상 failover 는
-# ms 단위라 5s 면 빠른 fail + retry.
-# health.py 의 _mongo_ping (asyncio.wait_for 2s) 가 항상 먼저 발화 — 두 timeout 이 layer 별로 동작.
+logger = get_logger("database.mongo")
+
+# Motor 기본값의 무한 socket 대기와 30초 server selection 대기를 제한한다.
+# 장기 query는 호출처의 maxTimeMS로 별도 제어한다.
 _MONGO_SERVER_SELECTION_TIMEOUT_MS = 5000
 _MONGO_CONNECT_TIMEOUT_MS = 5000
 _MONGO_SOCKET_TIMEOUT_MS = 10000
@@ -101,7 +107,6 @@ class MongoDB:
     def __init__(self):
         self.client: Optional[AsyncIOMotorClient] = None # type: ignore
         self.database: Optional[AsyncIOMotorDatabase] = None # type: ignore
-
 
     async def connect(self):
         self.client = AsyncIOMotorClient(
@@ -129,13 +134,70 @@ class MongoDB:
             ]
         )
 
-        # 채팅 메시지는 motor 네이티브 — beanie document 대신 인덱스만 초기화.
+        # 채팅 메시지는 Motor native라 인덱스만 초기화한다.
         await create_chat_message_indexes(self.database)
 
+        await _ensure_search_history_unique_indexes()
 
     async def disconnect(self):
         if self.client:
             self.client.close()
+
+
+_SEARCH_HISTORY_UNIQUE_INDEX = "uq_user_search_name"
+_SEARCH_HISTORY_INDEX_ATTEMPTS = 3
+
+
+async def _ensure_search_history_unique_indexes() -> None:
+    """검색기록 컬렉션에 `(user_id, search_name)` unique 인덱스 보장.
+
+    모델에 인덱스를 선언하지 않고 여기서 만든다 — init_beanie 가 unique 인덱스를 먼저
+    만들면 기존 중복 데이터로 startup 이 크래시하기 때문. 인덱스 생성 전에 중복을 먼저
+    정리(dedup: 그룹당 최신 1건 유지)해 안전하게 유니크화한다.
+
+    dedup 은 unique 인덱스가 아직 없는 컬렉션(=최초 부팅)에 대해서만 실행한다. 인덱스가
+    이미 있으면($sort+$group 전체 스캔은 컬렉션이 커질수록 100MB in-memory 한계 초과나
+    socketTimeoutMS 초과로 connect() 크래시·배포 crash-loop 유발) aggregate 를 통째로
+    건너뛰어 부팅을 저렴하게 유지한다. 정상 상태(steady state)에서 idempotent.
+
+    dedup 과 create_index 사이에 동시 부팅 replica 나 구버전 pod 의 insert 가 중복을
+    만들면 DuplicateKeyError 가 난다 — 재시도 후에도 실패하면 crash-loop 대신 인덱스
+    없이 부팅한다 (저장 경로가 upsert 라 1차 방어는 유지, 다음 재시작이 재시도).
+    """
+    for model in (FriendSearchHistory, TourSearchHistory, TripmateSearchHistory):
+        collection = model.get_motor_collection()
+
+        existing = await collection.index_information()
+        if _SEARCH_HISTORY_UNIQUE_INDEX in existing:
+            continue
+
+        pipeline = [
+            {"$sort": {"created_at": -1}},
+            {"$group": {
+                "_id": {"user_id": "$user_id", "search_name": "$search_name"},
+                "ids": {"$push": "$_id"},
+            }},
+            {"$match": {"ids.1": {"$exists": True}}},
+        ]
+        for _ in range(_SEARCH_HISTORY_INDEX_ATTEMPTS):
+            # 최초 dedup이 Mongo의 in-memory 한계를 넘을 수 있다.
+            async for group in collection.aggregate(pipeline, allowDiskUse=True):
+                await collection.delete_many({"_id": {"$in": group["ids"][1:]}})
+            try:
+                await collection.create_index(
+                    [("user_id", 1), ("search_name", 1)],
+                    unique=True,
+                    name=_SEARCH_HISTORY_UNIQUE_INDEX,
+                )
+                break
+            except DuplicateKeyError:
+                continue
+        else:
+            logger.error(
+                "검색기록 unique 인덱스 생성 실패 — 인덱스 없이 부팅: collection={}",
+                collection.name,
+            )
+
 
 mongodb = MongoDB()
 

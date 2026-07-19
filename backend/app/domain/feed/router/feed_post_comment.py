@@ -1,30 +1,29 @@
 """피드 댓글 라우터."""
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Request, Depends, Query
-from dependency_injector.wiring import Provide, inject
 
-from app.schema.common import MessageResponse
-from app.domain.feed.service.feed_post_comment import FeedPostCommentService
-from app.domain.feed.service.exception import (
-    FeedNotFoundError,
-    FeedPostCommentNotFoundError,
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
+
+from app.container import Container
+from app.domain.feed.dto.feed_post_comment import (
+    FeedPostCommentData,
+    FeedPostCommentListData,
 )
 from app.domain.feed.schema.feed_post_comment import (
     CommentListResponse,
     CommentResponse,
     CreateCommentRequest,
 )
-from app.domain.feed.dto.feed_post_comment import (
-    FeedPostCommentData,
-    FeedPostCommentListData,
+from app.domain.feed.service.exception import (
+    FeedNotFoundError,
+    FeedPostCommentNotFoundError,
 )
-from app.container import Container
+from app.domain.feed.service.feed_post_comment import FeedPostCommentService
+from app.schema.common import MessageResponse
 
 
 router = APIRouter(tags=["피드 댓글"])
 
-
-# ──────────────────── 작성 ────────────────────
 
 @router.post("/posts/{post_id}/comments", status_code=201)
 @inject
@@ -52,14 +51,12 @@ async def create_comment(
     return _to_response(comment)
 
 
-# ──────────────────── 목록 ────────────────────
-
 @router.get("/posts/{post_id}/comments")
 @inject
 async def list_comments(
     request: Request,
     post_id: str,
-    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (comment_id)"),
+    cursor: Optional[str] = Query(None, description="다음 페이지 커서 (이전 응답의 next_cursor)"),
     comment_service: FeedPostCommentService = Depends(
         Provide[Container.feed_post_comment_service]
     ),
@@ -74,11 +71,11 @@ async def list_comments(
         raise HTTPException(status_code=404, detail=str(e))
     except PermissionError as e:
         raise HTTPException(status_code=403, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
     return _to_list_response(result)
 
-
-# ──────────────────── 삭제 ────────────────────
 
 @router.delete("/posts/{post_id}/comments/{comment_id}")
 @inject
@@ -103,8 +100,6 @@ async def delete_comment(
 
     return MessageResponse(message="댓글이 삭제되었습니다.")
 
-
-# ──────────────────── 내부 유틸 ────────────────────
 
 def _to_response(c: FeedPostCommentData) -> CommentResponse:
     return CommentResponse(

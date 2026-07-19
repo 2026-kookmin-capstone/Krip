@@ -5,21 +5,17 @@
 """
 
 from unittest.mock import AsyncMock, MagicMock
+
 import pytest
 
-from app.util.share_token import ShareTokenError, encode_share_token
-from app.domain.tour.service.tour_plan import TourPlanService
-from app.domain.tour.service.exception import TourPlanNotFoundError
-from app.domain.tour.dto.tour_plan import TourPlanItemCreateInput
 from app.domain.public.service.share_plan import SharePlanService
+from app.domain.tour.dto.tour_plan import TourPlanItemCreateInput
+from app.domain.tour.service.exception import TourPlanNotFoundError
+from app.domain.tour.service.tour_plan import TourPlanService
+from app.util.share_token import ShareTokenError, encode_share_token
 
 
 pytestmark = pytest.mark.integration
-
-
-# ──────────────────────────────────────────────────────────────────
-# Fixtures
-# ──────────────────────────────────────────────────────────────────
 
 
 @pytest.fixture
@@ -50,17 +46,11 @@ def services(uow, monkeypatch, fake_place_doc):
     return TourPlanService(uow=uow), SharePlanService(uow=uow)
 
 
-# ──────────────────────────────────────────────────────────────────
-# Share token 발급 → 공개 조회 플로우
-# ──────────────────────────────────────────────────────────────────
-
-
 class TestShareFlow:
     async def test_owner_generates_token_then_anyone_reads(self, services, seed_users):
         plan_service, share_service = services
         (a,) = await seed_users(1)
 
-        # 소유자가 plan 생성 + 토큰 발급
         created = await plan_service.create_plan(
             user_id=a, title="Shared Trip", travel_days=2,
             items=[
@@ -72,15 +62,12 @@ class TestShareFlow:
             plan_id=created.plan_id, user_id=a,
         )
 
-        # 토큰만으로 (인증 없이) 공개 조회
         result = await share_service.get_plan_by_token(share_token=token_data.share_token)
 
         assert result.plan_id == created.plan_id
         assert result.title == "Shared Trip"
         assert len(result.items) == 2
-        # 노출 응답에 user_id 필드 없음
         assert not hasattr(result, "user_id")
-
 
     async def test_token_for_other_users_plan_works(self, services, seed_users):
         """발급은 본인 plan 만 가능하지만, 발급된 토큰은 누구나 사용 가능."""
@@ -95,10 +82,8 @@ class TestShareFlow:
             plan_id=created.plan_id, user_id=a,
         )
 
-        # b 가 토큰만 가지고 조회 (소유자가 아니지만 OK)
         result = await share_service.get_plan_by_token(share_token=token_data.share_token)
         assert result.plan_id == created.plan_id
-
 
     async def test_other_user_cannot_generate_token(self, services, seed_users):
         plan_service, _ = services
@@ -112,14 +97,12 @@ class TestShareFlow:
         with pytest.raises(PermissionError):
             await plan_service.generate_share_token(plan_id=created.plan_id, user_id=b)
 
-
     async def test_invalid_token_rejected(self, services, seed_users):
         _, share_service = services
         await seed_users(1)
 
         with pytest.raises(ShareTokenError):
             await share_service.get_plan_by_token(share_token="not-a-valid-jwt")
-
 
     async def test_token_for_deleted_plan_returns_not_found(self, services, seed_users):
         plan_service, share_service = services
@@ -133,18 +116,15 @@ class TestShareFlow:
             plan_id=created.plan_id, user_id=a,
         )
 
-        # 토큰 발급 후 plan 삭제 — 토큰 자체는 여전히 valid 한 JWT
         await plan_service.delete_plan(plan_id=created.plan_id, user_id=a)
 
         with pytest.raises(TourPlanNotFoundError):
             await share_service.get_plan_by_token(share_token=token_data.share_token)
 
-
     async def test_token_for_nonexistent_plan_returns_not_found(self, services, seed_users):
         _, share_service = services
         await seed_users(1)
 
-        # 임의 plan_id 로 토큰 발급 (직접 인코드 — 해당 plan 은 DB 에 없음)
         token, _ = encode_share_token("TP_ghost_xxx")
 
         with pytest.raises(TourPlanNotFoundError):

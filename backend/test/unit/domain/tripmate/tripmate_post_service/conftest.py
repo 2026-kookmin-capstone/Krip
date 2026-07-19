@@ -6,11 +6,12 @@
     - get_object_storage() (init 시점 + delete_post 안에서 재호출)
     - TripmateImageRepository (Mongo beanie, init 시점 + delete_post 안에서 재호출)
 """
-from test.unit.domain.tripmate.tripmate_post_service.model_factory import (
-    TripmatePostFactory,
-)
+import pytest
+
+from app.domain.tripmate.service.tripmate_post import TripmatePostService
 from test.unit.domain.tripmate.mock_factory import (
     FakeUnitOfWork,
+    NoopTripmateImageReferenceMutex,
     TripmatePostImageRepositoryMockFactory,
     TripmatePostRepositoryMockFactory,
     UserDetailInformRepositoryMockFactory,
@@ -20,9 +21,9 @@ from test.unit.domain.tripmate.mock_factory import (
     make_object_storage_mock,
     make_tripmate_image_mongo_repo_mock,
 )
-import pytest
-
-from app.domain.tripmate.service.tripmate_post import TripmatePostService
+from test.unit.domain.tripmate.tripmate_post_service.model_factory import (
+    TripmatePostFactory,
+)
 
 
 @pytest.fixture
@@ -67,11 +68,37 @@ def inbox_service_mock():
 
 
 @pytest.fixture
+def draft_find_one_mock(monkeypatch):
+    """`TripmatePostDraft.find_one(...)` — 이미지 정리 시 참조 검사에서 호출. 기본값 None (draft 없음)."""
+    from unittest.mock import AsyncMock
+
+    mock = AsyncMock(return_value=None)
+
+    class _FakeDraftCls:
+        find_one = staticmethod(mock)
+
+    monkeypatch.setattr(
+        "app.domain.tripmate.service.tripmate_post.TripmatePostDraft",
+        _FakeDraftCls,
+    )
+    return mock
+
+
+@pytest.fixture
+def block_repo_mock():
+    from unittest.mock import AsyncMock
+
+    mock = AsyncMock()
+    mock.find_blocks_between.return_value = []
+    return mock
+
+
+@pytest.fixture
 def service(
     monkeypatch, mock_session,
     post_repo_mock, image_repo_mock, detail_repo_mock,
     draft_service_mock, storage_mock, mongo_image_repo_mock,
-    inbox_service_mock,
+    inbox_service_mock, draft_find_one_mock, block_repo_mock,
 ):
     """모든 외부 의존성 mock 치환 후 service 인스턴스화.
 
@@ -92,6 +119,10 @@ def service(
         lambda session: detail_repo_mock,
     )
     monkeypatch.setattr(
+        "app.domain.tripmate.service.tripmate_post.UserBlockRepository",
+        lambda session: block_repo_mock,
+    )
+    monkeypatch.setattr(
         "app.domain.tripmate.service.tripmate_post.get_object_storage",
         lambda: storage_mock,
     )
@@ -104,6 +135,7 @@ def service(
         uow=FakeUnitOfWork(mock_session),
         draft_service=draft_service_mock,
         inbox_service=inbox_service_mock,
+        image_mutex=NoopTripmateImageReferenceMutex(),
     )
 
 

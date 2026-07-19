@@ -16,23 +16,19 @@ unit 의 mock 검증은 service↔repo 경계만 — SQL 정합성은 본 파일
 """
 import pytest
 
-from app.domain.feed.repository.feed_post import FeedPostRepository
-from app.domain.feed.model.feed_post_like import FeedPostLike
 from app.domain.feed.model.feed_post import FeedVisibility
+from app.domain.feed.model.feed_post_like import FeedPostLike
+from app.domain.feed.repository.feed_post import FeedPostRepository
 
 
 pytestmark = pytest.mark.integration
 
-
-# ──────────────────── helpers ────────────────────
 
 async def _insert_like(session_factory, user_id: str, post_id: str) -> None:
     async with session_factory() as session:
         session.add(FeedPostLike(user_id=user_id, post_id=post_id))
         await session.commit()
 
-
-# ──────────────────── find_by_post_id ────────────────────
 
 class TestFindByPostIdIsLiked:
     """단건 조회 경로 — get_my_post / update_* / load_viewable_post 가 공통 사용."""
@@ -51,7 +47,6 @@ class TestFindByPostIdIsLiked:
         assert row is not None
         assert row.is_liked is True
 
-
     async def test_viewer_not_liked_returns_false(
         self, session_factory, seed_feed_post,
     ):
@@ -65,7 +60,6 @@ class TestFindByPostIdIsLiked:
         assert row is not None
         assert row.is_liked is False
 
-
     async def test_other_users_like_does_not_leak_to_viewer(
         self, session_factory, seed_feed_post, seed_users,
     ):
@@ -73,9 +67,7 @@ class TestFindByPostIdIsLiked:
         privacy 회귀 가드 — 누가 누른 좋아요든 viewer 자신의 좋아요 여부만 반영해야 함.
         """
         post_id, owner_id = await seed_feed_post()
-        # owner 가 누름. viewer 는 안 누름.
         await _insert_like(session_factory, user_id=owner_id, post_id=post_id)
-        # viewer 는 별개 user
         [viewer_id, *_] = await seed_users(1)
 
         async with session_factory() as session:
@@ -85,13 +77,11 @@ class TestFindByPostIdIsLiked:
         assert row is not None
         assert row.is_liked is False, "다른 사람의 좋아요가 viewer 응답에 누출됨"
 
-
     async def test_viewer_id_none_returns_false(
         self, session_factory, seed_feed_post,
     ):
         """viewer_id=None — SQL 측 literal(false) 로 단락 평가. 실 PG 컴파일 검증."""
         post_id, owner_id = await seed_feed_post()
-        # owner 가 좋아요를 눌러도, viewer_id=None 이라면 is_liked 는 False 여야 함.
         await _insert_like(session_factory, user_id=owner_id, post_id=post_id)
 
         async with session_factory() as session:
@@ -100,7 +90,6 @@ class TestFindByPostIdIsLiked:
 
         assert row is not None
         assert row.is_liked is False
-
 
     async def test_self_like_on_own_post_is_visible(
         self, session_factory, seed_feed_post,
@@ -115,8 +104,6 @@ class TestFindByPostIdIsLiked:
 
         assert row.is_liked is True
 
-
-# ──────────────────── find_by_owner ────────────────────
 
 class TestFindByOwnerIsLiked:
     """목록 조회 경로 — get_my_feed / get_user_feed / popup 이 공통 사용.
@@ -165,7 +152,6 @@ class TestFindByOwnerIsLiked:
         assert by_post_id[liked_id] is True
         assert by_post_id[unliked_id] is False
 
-
     async def test_viewer_id_none_yields_all_false(
         self, session_factory, seed_users,
     ):
@@ -196,8 +182,6 @@ class TestFindByOwnerIsLiked:
         assert all(r.is_liked is False for r in rows)
 
 
-# ──────────────────── service 레이어 e2e ────────────────────
-
 class TestServiceLayerIsLiked:
     """service → repo → SQL → response DTO 전체 경로의 is_liked 합성."""
 
@@ -213,7 +197,6 @@ class TestServiceLayerIsLiked:
         )
         assert result.is_liked is True
 
-
     async def test_get_my_post_no_like_is_false(
         self, feed_post_service, seed_feed_post,
     ):
@@ -224,12 +207,11 @@ class TestServiceLayerIsLiked:
         )
         assert result.is_liked is False
 
-
     async def test_get_user_feed_shows_viewer_like_on_other_owner_post(
         self, feed_post_service, seed_feed_post, session_factory, seed_users,
     ):
         """다른 유저 글에 viewer 가 좋아요 — get_user_feed 응답 is_liked=True."""
-        post_id, owner_id = await seed_feed_post()  # PUBLIC default
+        post_id, owner_id = await seed_feed_post()
         [viewer_id, *_] = await seed_users(1)
         await _insert_like(session_factory, user_id=viewer_id, post_id=post_id)
 
@@ -240,13 +222,12 @@ class TestServiceLayerIsLiked:
         assert result.posts[0].post_id == post_id
         assert result.posts[0].is_liked is True
 
-
     async def test_get_user_feed_other_viewers_like_does_not_leak(
         self, feed_post_service, seed_feed_post, session_factory, seed_users,
     ):
         """owner 자기 글에 좋아요 누른 상태에서 비친구 viewer 가 조회 →
         viewer 응답의 is_liked 는 False (privacy)."""
-        post_id, owner_id = await seed_feed_post()  # PUBLIC
+        post_id, owner_id = await seed_feed_post()
         await _insert_like(session_factory, user_id=owner_id, post_id=post_id)
         [viewer_id, *_] = await seed_users(1)
 

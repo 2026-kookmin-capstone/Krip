@@ -5,24 +5,32 @@
 
 discriminator 필드명을 분리해야 union 해상이 가능.
 """
-from typing import Annotated, Any, Literal, Optional, Union
-from pydantic import BaseModel, Field
 from datetime import datetime
+from typing import Annotated, Any, Literal, Optional, Union
+
+from pydantic import BaseModel, Field, field_validator
 
 from app.domain.chat.model.chat_message import MessageType
 
 
-# ════════════════════════════════════════════════════════════════════
 # 클라 → 서버 요청 (`op` discriminator)
-# ════════════════════════════════════════════════════════════════════
 
 class SendOp(BaseModel):
     """메시지 송신 요청."""
     op: Literal["send"]
     room_id: str = Field(..., description="보낼 방 ID")
     client_msg_id: str = Field(..., description="클라 UUID — 동일 ID 재전송은 dedupe 차단")
-    type: MessageType = Field(MessageType.TEXT, description="메시지 종류")
-    content: str = Field(..., max_length=2000, description="본문 (2000자 제한)")
+    type: MessageType = Field(MessageType.TEXT, description="메시지 종류 (현재 text 만 허용)")
+    content: str = Field(..., min_length=1, max_length=2000, description="본문 (2000자 제한)")
+
+    @field_validator("type")
+    @classmethod
+    def _reject_non_text(cls, v: MessageType) -> MessageType:
+        # SYSTEM 은 서버 전용(위조 시 unread/푸시 우회 스텔스 메시지). IMAGE/FILE 은 미구현 —
+        # 업로드 인프라·클라 렌더 부재 상태의 저장을 fail-closed 로 막고, 출시 시 검증과 함께 개방.
+        if v != MessageType.TEXT:
+            raise ValueError("text 메시지만 보낼 수 있습니다.")
+        return v
 
 
 class RefreshOp(BaseModel):
@@ -47,9 +55,7 @@ ClientRequest = Annotated[
 ]
 
 
-# ════════════════════════════════════════════════════════════════════
 # 서버 → 클라 이벤트 (`type` discriminator)
-# ════════════════════════════════════════════════════════════════════
 
 class ConnectedEvent(BaseModel):
     """WS 연결 직후 서버가 첫 번째로 내려주는 세션 정보."""
@@ -78,6 +84,8 @@ class MessageBody(BaseModel):
         description="type 별 다형. text=str / image·file=dict / system=SystemContent / 삭제=null",
     )
     created_at: datetime
+    edited_at: Optional[datetime] = Field(...)
+    deleted_at: Optional[datetime] = Field(...)
 
 
 class MessageNewEvent(BaseModel):
@@ -99,8 +107,10 @@ class AuthExpiredEvent(BaseModel):
 
 
 class ServerErrorEvent(BaseModel):
-    """일시적 서버 에러 — 클라는 backoff 후 재접속(1012)."""
+    """요청 처리 실패 — send는 client_msg_id/retryable로 재시도 정책을 상관시킨다."""
     type: Literal["server_error"]
+    client_msg_id: Optional[str] = Field(None, description="실패한 send 요청 ID")
+    retryable: bool = Field(False, description="동일 client_msg_id 재시도 가능 여부")
     reason: Optional[str] = Field(None, description="디버깅용 사유 (내부 로그와 매칭)")
 
 
@@ -156,6 +166,7 @@ class ReadAckEvent(BaseModel):
     """read op 처리 성공 — 발신 세션 직송."""
     type: Literal["read_ack"]
     room_id: str = Field(..., description="읽음 처리된 방 ID")
+    requested_up_to_server_seq: int = Field(..., description="ACK 대상 read 요청의 server seq")
     up_to_server_seq: int = Field(..., description="최종 반영된 last_read_message_server_seq")
 
 
@@ -163,6 +174,7 @@ class ReadFailedEvent(BaseModel):
     """read op 처리 실패 — 발신 세션 직송. 사유는 reason 문자열."""
     type: Literal["read_failed"]
     room_id: str = Field(..., description="실패한 방 ID")
+    up_to_server_seq: int = Field(..., description="실패한 read 요청의 server seq")
     reason: str = Field(..., description="실패 사유")
 
 
@@ -170,6 +182,14 @@ class UnreadSyncedEvent(BaseModel):
     """WS 연결 직후 또는 백그라운드 복구 완료 시 unread 카운트 동기화."""
     type: Literal["unread_synced"]
     counts: dict[str, int] = Field(..., description="{room_id: count}. 값은 0..999 (999+ 캡)")
+    watermarks: dict[str, int] = Field(
+        default_factory=dict,
+        description="snapshot의 room별 최신 unread 증가 message server_seq",
+    )
+    read_watermarks: dict[str, int] = Field(
+        default_factory=dict,
+        description="snapshot의 room별 applied read server_seq",
+    )
 
 
 ServerEvent = Annotated[
@@ -194,9 +214,7 @@ ServerEvent = Annotated[
 ]
 
 
-# ════════════════════════════════════════════════════════════════════
 # 시스템 메시지 content payload (`action` discriminator)
-# ════════════════════════════════════════════════════════════════════
 # `message.type == "system"` 일 때의 `content` 모양. actor 가 탈퇴하면 null (SET NULL 정책).
 # `target_ids` 는 join/kick 에만 — created/leave 는 actor 본인이 곧 대상이라 생략.
 

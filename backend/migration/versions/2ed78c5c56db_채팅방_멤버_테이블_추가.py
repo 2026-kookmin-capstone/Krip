@@ -11,7 +11,6 @@ from alembic import op
 import sqlalchemy as sa
 
 
-# revision identifiers, used by Alembic.
 revision: str = '2ed78c5c56db'
 down_revision: Union[str, Sequence[str], None] = '6cd14a395ef3'
 branch_labels: Union[str, Sequence[str], None] = None
@@ -20,7 +19,6 @@ depends_on: Union[str, Sequence[str], None] = None
 
 def upgrade() -> None:
     """Upgrade schema."""
-    # chat_room 테이블
     op.create_table(
         'chat_room',
         sa.Column('chat_room_id', sa.String(length=50), nullable=False),
@@ -82,7 +80,6 @@ def upgrade() -> None:
         ")"
     )
 
-    # chat_room_member 테이블
     op.create_table(
         'chat_room_member',
         sa.Column('chat_room_id', sa.String(length=50), nullable=False),

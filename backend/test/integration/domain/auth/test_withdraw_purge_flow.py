@@ -15,22 +15,64 @@
     | 미존재 user (NO_USER)   | -           | drop          | cascade 호출 (idempotent) |
     | STALE_DOC (ACTIVE)      | 보존        | doc 만 청소   | cascade 호출 안 함 |
 """
-from sqlalchemy import select
-import pytest
+import asyncio
 
+import pytest
+from sqlalchemy import select
+
+from app.database.session import UnitOfWork
+from app.domain.auth.model.user import User, UserStatus
+from app.domain.auth.model.withdrawal_request import WithdrawalRequest
+from app.domain.auth.service import withdraw as withdraw_module
+from app.domain.auth.service.withdraw import WithdrawService
 from app.domain.notification.model.inbox import (
     InboxItem,
     InboxItemType,
     TargetType,
 )
-from app.domain.auth.model.withdrawal_request import WithdrawalRequest
-from app.domain.auth.model.user import User, UserStatus
 
 
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── 정상 purge — INACTIVE → DELETED ────────────────────
+class TestWithdrawalRevocationFence:
+    async def test_cancel_waits_until_inactive_session_revocation_finishes(
+        self, withdraw_service, session_factory, seed_users,
+    ):
+        user_id, *_ = await seed_users(1)
+        await _set_inactive(session_factory, user_id)
+        revoke_started = asyncio.Event()
+        release_revoke = asyncio.Event()
+
+        async def blocking_revoke(_user_id: str) -> None:
+            revoke_started.set()
+            await release_revoke.wait()
+
+        withdraw_service._chat_purge.revoke_all_sessions = blocking_revoke
+        cancel_service = WithdrawService(
+            uow=UnitOfWork(session=session_factory),
+            inbox_service=withdraw_service.inbox_service,
+            user_purge_cache_service=withdraw_service._chat_purge,
+        )
+        revoke_task = asyncio.create_task(
+            withdraw_service.revoke_user_chat_state(user_id),
+        )
+        await revoke_started.wait()
+        cancel_task = asyncio.create_task(cancel_service.cancel_withdraw(user_id=user_id))
+        try:
+            await asyncio.sleep(0.05)
+            cancel_was_blocked = not cancel_task.done()
+        finally:
+            release_revoke.set()
+            await revoke_task
+            await cancel_task
+        assert cancel_was_blocked
+
+        async with session_factory() as session:
+            user = await session.get(User, user_id)
+            assert user is not None
+            assert user.status == UserStatus.ACTIVE
+
 
 class TestPurgeDeletedOutcome:
     """status=INACTIVE 인 user 의 영구 삭제 — RDB hard delete + Mongo 정리 + 인박스 cascade."""
@@ -49,7 +91,6 @@ class TestPurgeDeletedOutcome:
             )
             assert result.scalar_one_or_none() is None
 
-
     async def test_cascade_deletes_recipient_and_actor_inbox_items(
         self, withdraw_service, session_factory, seed_users, mongo_db,
     ):
@@ -57,21 +98,18 @@ class TestPurgeDeletedOutcome:
         target_user, other_user = await seed_users(2)
         await _set_inactive(session_factory, target_user)
 
-        # target 이 받은 항목
         await InboxItem(
             recipient_id=target_user, actor_id=other_user,
             type=InboxItemType.FEED_LIKE,
             target_type=TargetType.FEED_POST,
             target_id="FDP_1", actor_name="x",
         ).insert()
-        # target 이 보낸 항목
         await InboxItem(
             recipient_id=other_user, actor_id=target_user,
             type=InboxItemType.FEED_LIKE,
             target_type=TargetType.FEED_POST,
             target_id="FDP_2", actor_name="x",
         ).insert()
-        # 무관한 항목 (보존되어야)
         await InboxItem(
             recipient_id=other_user, actor_id="USER_unrelated",
             type=InboxItemType.FEED_LIKE,
@@ -82,11 +120,9 @@ class TestPurgeDeletedOutcome:
         await withdraw_service.purge(user_id=target_user)
 
         coll = InboxItem.get_motor_collection()
-        # target 관련 2건 삭제, 무관한 1건 보존
         assert await coll.count_documents({}) == 1
         remaining = await coll.find_one({})
         assert remaining["actor_id"] == "USER_unrelated"
-
 
     async def test_cleans_withdrawal_request_doc(
         self, withdraw_service, session_factory, seed_users,
@@ -94,8 +130,7 @@ class TestPurgeDeletedOutcome:
         user_id, *_ = await seed_users(1)
         await _set_inactive(session_factory, user_id)
 
-        # withdrawal_request doc 시드
-        from datetime import datetime, timezone, timedelta
+        from datetime import datetime, timedelta, timezone
         await WithdrawalRequest(
             user_id=user_id,
             requested_at=datetime.now(timezone.utc),
@@ -104,12 +139,9 @@ class TestPurgeDeletedOutcome:
 
         await withdraw_service.purge(user_id=user_id)
 
-        # doc 도 청소됨
         coll = WithdrawalRequest.get_motor_collection()
         assert await coll.count_documents({"user_id": user_id}) == 0
 
-
-# ──────────────────── STALE_DOC outcome — cancel 복구 ────────────────────
 
 class TestPurgeStaleDocOutcome:
     """status != INACTIVE (cancel 복구 또는 dual-write 잔존) → 외부 리소스 보존, doc 만 청소.
@@ -124,9 +156,7 @@ class TestPurgeStaleDocOutcome:
     ):
         """status=ACTIVE → RDB hard delete / Storage cleanup / 인박스 cascade 모두 skip."""
         user_id, other_user = await seed_users(2)
-        # status 는 ACTIVE 그대로 (cancel 한 직후 가정)
 
-        # 인박스 1건 시드 (cascade 안 되어야)
         await InboxItem(
             recipient_id=user_id, actor_id=other_user,
             type=InboxItemType.FEED_LIKE,
@@ -134,8 +164,7 @@ class TestPurgeStaleDocOutcome:
             target_id="FDP_1", actor_name="x",
         ).insert()
 
-        # withdrawal_request doc 시드
-        from datetime import datetime, timezone, timedelta
+        from datetime import datetime, timedelta, timezone
         await WithdrawalRequest(
             user_id=user_id,
             requested_at=datetime.now(timezone.utc),
@@ -144,7 +173,6 @@ class TestPurgeStaleDocOutcome:
 
         await withdraw_service.purge(user_id=user_id)
 
-        # RDB user 보존
         async with session_factory() as session:
             result = await session.execute(
                 select(User).where(User.user_id == user_id)
@@ -153,39 +181,197 @@ class TestPurgeStaleDocOutcome:
             assert user is not None
             assert user.status == UserStatus.ACTIVE
 
-        # 인박스 보존 (cascade 안 함)
         inbox_coll = InboxItem.get_motor_collection()
         assert await inbox_coll.count_documents({"recipient_id": user_id}) == 1
 
-        # Storage cleanup 호출 안 됨
         storage_mock.delete_by_prefix.assert_not_awaited()
 
-        # withdrawal_request doc 만 청소
         wr_coll = WithdrawalRequest.get_motor_collection()
         assert await wr_coll.count_documents({"user_id": user_id}) == 0
 
-
-# ──────────────────── NO_USER outcome — idempotent 재시도 ────────────────────
 
 class TestPurgeNoUserOutcome:
     """RDB 에 user 없음 (이전 사이클 외부 정리 잔존) → 외부 정리만 idempotent 진행."""
 
     async def test_runs_external_cleanup_idempotently(
-        self, withdraw_service, mongo_db, storage_mock, redis_cache_mock,
+        self, withdraw_service, mongo_db, storage_mock,
     ):
-        # RDB 에 user 없는 상태 — 외부 정리만 진행
         await withdraw_service.purge(user_id="USER_ghost")
 
-        # 인박스 cascade 호출 (idempotent — 0건 삭제)
         inbox_coll = InboxItem.get_motor_collection()
         assert await inbox_coll.count_documents({}) == 0
 
-        # 외부 cleanup 도 호출됨
         storage_mock.delete_by_prefix.assert_awaited_once_with("USER_ghost")
-        redis_cache_mock.assert_awaited_once_with("USER_ghost")
 
 
-# ──────────────────── helpers ────────────────────
+class TestPurgeRetryMarker:
+    async def test_real_redis_failure_retains_marker_then_retry_removes_all_chat_keys(
+        self, withdraw_service, session_factory, seed_users, monkeypatch,
+    ):
+        import os
+        from datetime import datetime, timedelta, timezone
+        from unittest.mock import AsyncMock
+
+        from redis import asyncio as aioredis
+
+        from app.core.chat.redis_key import (
+            read_sync_key,
+            unread_key,
+            unread_recovery_required_key,
+            unread_watermark_key,
+        )
+        from app.domain.chat.service import user_purge_cache as chat_purge_module
+        from app.domain.chat.service.user_purge_cache import UserPurgeCacheService
+
+        [user_id] = await seed_users(1)
+        await _set_inactive(session_factory, user_id)
+        await WithdrawalRequest(
+            user_id=user_id,
+            requested_at=datetime.now(timezone.utc),
+            scheduled_purge_at=datetime.now(timezone.utc) - timedelta(days=1),
+        ).insert()
+        redis = aioredis.from_url(os.environ["REDIS_TEST_URL"], decode_responses=True)
+        keys = (
+            unread_key(user_id),
+            read_sync_key(user_id),
+            unread_watermark_key(user_id),
+            unread_recovery_required_key(user_id),
+        )
+        for key in keys:
+            await redis.hset(key, mapping={"room": "1"})
+        withdraw_service._chat_purge = UserPurgeCacheService(AsyncMock())
+
+        async def unavailable_redis():
+            raise RuntimeError("injected redis outage")
+
+        async def actual_redis():
+            return redis
+
+        monkeypatch.setattr(chat_purge_module, "get_redis_client", unavailable_redis)
+        with pytest.raises(RuntimeError, match="외부 정리 미완료"):
+            await withdraw_service.purge(user_id=user_id)
+
+        assert await WithdrawalRequest.get_motor_collection().count_documents({"user_id": user_id}) == 1
+        assert all([await redis.exists(key) for key in keys])
+
+        monkeypatch.setattr(chat_purge_module, "get_redis_client", actual_redis)
+        await withdraw_service.purge(user_id=user_id)
+
+        assert await WithdrawalRequest.get_motor_collection().count_documents({"user_id": user_id}) == 0
+        assert not any([await redis.exists(key) for key in keys])
+        await redis.aclose()
+
+    async def test_stale_worker_preserves_new_withdrawal_generation_and_rdb_user(
+        self, withdraw_service, session_factory, seed_users, storage_mock,
+    ):
+        from datetime import datetime, timedelta, timezone
+
+        [user_id] = await seed_users(1)
+        await _set_inactive(session_factory, user_id)
+        old_requested_at = datetime.now(timezone.utc).replace(microsecond=0)
+        await WithdrawalRequest(
+            user_id=user_id,
+            generation_id="G1",
+            requested_at=old_requested_at,
+            scheduled_purge_at=old_requested_at - timedelta(days=1),
+        ).insert()
+
+        await withdraw_service.cancel_withdraw(user_id=user_id)
+        await withdraw_service.request_withdraw(user_id=user_id)
+        new_marker = await WithdrawalRequest.find_one(WithdrawalRequest.user_id == user_id)
+        assert new_marker is not None
+        assert new_marker.generation_id not in (None, "G1")
+        await WithdrawalRequest.get_motor_collection().update_one(
+            {"user_id": user_id},
+            {"$set": {"requested_at": old_requested_at}},
+        )
+
+        await withdraw_service.purge(
+            user_id=user_id,
+            expected_generation_id="G1",
+            expected_requested_at=old_requested_at,
+        )
+
+        async with session_factory() as session:
+            user = await session.scalar(select(User).where(User.user_id == user_id))
+        current_marker = await WithdrawalRequest.find_one(WithdrawalRequest.user_id == user_id)
+        assert user is not None
+        assert user.status == UserStatus.INACTIVE
+        assert current_marker is not None
+        assert current_marker.generation_id == new_marker.generation_id
+        assert current_marker.requested_at == old_requested_at
+        storage_mock.delete_by_prefix.assert_not_awaited()
+
+    async def test_mongo_failure_retains_marker_and_next_attempt_finishes_cleanup(
+        self, withdraw_service, session_factory, seed_users, mongo_db, monkeypatch,
+    ):
+        from datetime import datetime, timedelta, timezone
+
+        [user_id] = await seed_users(1)
+        await _set_inactive(session_factory, user_id)
+        await WithdrawalRequest(
+            user_id=user_id,
+            requested_at=datetime.now(timezone.utc),
+            scheduled_purge_at=datetime.now(timezone.utc) - timedelta(days=1),
+        ).insert()
+        await mongo_db["tripmate_image"].insert_one({
+            "user_id": user_id,
+            "image_id": "TMI_retry",
+            "image_url": "https://storage.example.com/retry.jpg",
+            "timestamp": datetime.now(timezone.utc),
+        })
+
+        original_document = withdraw_module.TripmateImage
+
+        class FailingTripmateImage:
+            @staticmethod
+            def find(_query):
+                return _RaisingDeleteQuery()
+
+        monkeypatch.setattr(withdraw_module, "TripmateImage", FailingTripmateImage)
+
+        with pytest.raises(RuntimeError, match="외부 정리 미완료"):
+            await withdraw_service.purge(user_id=user_id)
+
+        assert await WithdrawalRequest.get_motor_collection().count_documents({"user_id": user_id}) == 1
+        assert await mongo_db["tripmate_image"].count_documents({"user_id": user_id}) == 1
+
+        monkeypatch.setattr(withdraw_module, "TripmateImage", original_document)
+        await withdraw_service.purge(user_id=user_id)
+
+        assert await WithdrawalRequest.get_motor_collection().count_documents({"user_id": user_id}) == 0
+        assert await mongo_db["tripmate_image"].count_documents({"user_id": user_id}) == 0
+
+    async def test_storage_failure_retains_marker_until_idempotent_retry_succeeds(
+        self, withdraw_service, session_factory, seed_users, storage_mock,
+    ):
+        from datetime import datetime, timedelta, timezone
+
+        [user_id] = await seed_users(1)
+        await _set_inactive(session_factory, user_id)
+        await WithdrawalRequest(
+            user_id=user_id,
+            requested_at=datetime.now(timezone.utc),
+            scheduled_purge_at=datetime.now(timezone.utc) - timedelta(days=1),
+        ).insert()
+        storage_mock.delete_by_prefix.side_effect = RuntimeError("injected storage outage")
+
+        with pytest.raises(RuntimeError, match="외부 정리 미완료"):
+            await withdraw_service.purge(user_id=user_id)
+
+        assert await WithdrawalRequest.get_motor_collection().count_documents({"user_id": user_id}) == 1
+
+        storage_mock.delete_by_prefix.side_effect = None
+        await withdraw_service.purge(user_id=user_id)
+
+        assert await WithdrawalRequest.get_motor_collection().count_documents({"user_id": user_id}) == 0
+        assert storage_mock.delete_by_prefix.await_count == 2
+
+
+class _RaisingDeleteQuery:
+    async def delete(self):
+        raise RuntimeError("injected mongo outage")
+
 
 async def _set_inactive(session_factory, user_id: str) -> None:
     """seed_users 가 만든 ACTIVE user 를 INACTIVE 로 전환."""

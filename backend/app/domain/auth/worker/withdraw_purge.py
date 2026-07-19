@@ -15,24 +15,26 @@ shutdown 시 `stop_withdraw_purge_scheduler()` 호출. 패턴은 `chat.worker.re
 """
 from __future__ import annotations
 
-from typing import Optional
-from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
-import os
-from datetime import datetime, timezone, timedelta
 import asyncio
+import os
+from datetime import datetime, timedelta, timezone
+from typing import Optional
 
-from app.domain.notification.service.inbox import InboxService
-from app.domain.auth.service.withdraw import WithdrawService
-from app.domain.auth.repository.withdrawal_request import WithdrawalRequestRepository
-from app.database.session import UnitOfWork
-from app.core.logger import get_logger
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
+
 from app.core.instrumentation import withdraw_purge_run
+from app.core.logger import get_logger
+from app.database.session import UnitOfWork
+from app.domain.auth.repository.withdrawal_request import WithdrawalRequestRepository
+from app.domain.auth.service.withdraw import WithdrawService
+from app.domain.chat.service.fanout import FanoutAuthorizationService, FanoutService
+from app.domain.chat.service.session import SessionService
+from app.domain.chat.service.user_purge_cache import UserPurgeCacheService
+from app.domain.notification.service.inbox import InboxService
 
 
 logger = get_logger("auth.withdraw_purge")
 
-
-# ──────────────────── 튜닝 상수 ────────────────────
 
 KST = timezone(timedelta(hours=9))
 
@@ -50,8 +52,6 @@ PURGE_PER_USER_TIMEOUT_SEC = 30 * 60
 PURGE_SHUTDOWN_GRACE_SEC = 30.0
 
 
-# ──────────────────── 모듈 상태 ────────────────────
-
 _session_factory: Optional[async_sessionmaker[AsyncSession]] = None
 _purge_task: Optional[asyncio.Task] = None
 _stop_event: Optional[asyncio.Event] = None
@@ -66,8 +66,6 @@ def _require_factory() -> async_sessionmaker[AsyncSession]:
     return _session_factory
 
 
-# ──────────────────── 스케줄 계산 ────────────────────
-
 def _seconds_until_next_fire(now_utc: datetime) -> float:
     """현재 시각에서 다음 KST 04:00 까지의 초. 이미 지났다면 다음날 04:00."""
     now_kst = now_utc.astimezone(KST)
@@ -78,8 +76,6 @@ def _seconds_until_next_fire(now_utc: datetime) -> float:
         next_fire_kst += timedelta(days=1)
     return (next_fire_kst - now_kst).total_seconds()
 
-
-# ──────────────────── 핵심 로직 ────────────────────
 
 async def purge_due_withdrawals_once() -> int:
     """`scheduled_purge_at <= now` 인 모든 탈퇴 요청을 1 명씩 영구 삭제.
@@ -99,18 +95,30 @@ async def purge_due_withdrawals_once() -> int:
 
     logger.info("withdraw purge: 사이클 시작 — 대상 {} 명", len(due))
 
+    # WithdrawService 필수 의존성. purge 는 Redis 단독 cleanup 만 써 stateless → 사이클당 1회 재사용.
+    chat_purge = UserPurgeCacheService(
+        session_service=SessionService(fanout_service=FanoutService(
+            authorization_service=FanoutAuthorizationService(factory),
+        )),
+    )
+
     succeeded = 0
     failed = 0
     for req in due:
-        # 매 유저마다 새 UoW 로 isolated. 한 유저의 RDB 트랜잭션이 다른 유저로 leak 되지 않게.
-        # InboxService 는 stateless (Mongo 단독) 라 매 사이클 새로 만들어도 비용 0.
-        service = WithdrawService(
-            uow=UnitOfWork(session=factory),
-            inbox_service=InboxService(),
-        )
         try:
+            # 유저마다 새 UoW 로 격리(트랜잭션 leak 방지). 생성을 try 안에 둬 구성 오류가
+            # 사이클 전체를 죽이지 않게 한다.
+            service = WithdrawService(
+                uow=UnitOfWork(session=factory),
+                inbox_service=InboxService(),
+                user_purge_cache_service=chat_purge,
+            )
             await asyncio.wait_for(
-                service.purge(req.user_id),
+                service.purge(
+                    req.user_id,
+                    expected_generation_id=req.generation_id,
+                    expected_requested_at=req.requested_at,
+                ),
                 timeout=PURGE_PER_USER_TIMEOUT_SEC,
             )
             succeeded += 1
@@ -122,7 +130,7 @@ async def purge_due_withdrawals_once() -> int:
             )
         except Exception as e:
             failed += 1
-            logger.exception(
+            logger.error(
                 "withdraw purge: 유저 처리 실패 (user_id={}): {}", req.user_id, e,
             )
 
@@ -132,8 +140,6 @@ async def purge_due_withdrawals_once() -> int:
     )
     return len(due)
 
-
-# ──────────────────── 주기 루프 ────────────────────
 
 async def _purge_loop(stop_event: asyncio.Event) -> None:
     """주기 루프 — stop_event 가 set 될 때까지 무한 반복.
@@ -169,12 +175,10 @@ async def _purge_loop(stop_event: asyncio.Event) -> None:
                 await purge_due_withdrawals_once()
         except Exception as e:
             # 사이클 전역 실패는 다음 사이클로 흘려보냄. 단일 유저 실패는 위에서 이미 격리.
-            logger.exception("withdraw purge 사이클 전역 실패 (계속 진행): {}", e)
+            logger.error("withdraw purge 사이클 전역 실패 (계속 진행): {}", e)
 
     logger.info("withdraw purge 루프 종료")
 
-
-# ──────────────────── 스케줄러 훅 ────────────────────
 
 def start_withdraw_purge_scheduler(
     session_factory: async_sessionmaker[AsyncSession],

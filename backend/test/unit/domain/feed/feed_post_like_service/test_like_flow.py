@@ -11,15 +11,12 @@
     - 모든 진입점이 `load_viewable_post` 를 호출 (가시성 transitive 적용)
     - 가시성 raise 는 catch 안 함 (그대로 propagate → router 가 매핑)
 """
-from unittest.mock import AsyncMock
-from test.unit.domain.feed.mock_factory import make_feed_post_like_mock
-from sqlalchemy.exc import IntegrityError
 import pytest
+from sqlalchemy.exc import IntegrityError
 
 from app.domain.feed.service.exception import FeedNotFoundError
+from test.unit.domain.feed.mock_factory import make_feed_post_like_mock
 
-
-# ──────────────────── add ────────────────────
 
 @pytest.mark.unit
 class TestAddLike:
@@ -30,35 +27,43 @@ class TestAddLike:
         count = await service.add_like(user_id="USER_v", post_id="FDP_x")
         assert count == 5
         like_repo_mock.save.assert_awaited_once()
-        # save 의 첫 인자가 FeedPostLike(user_id, post_id)
         saved = like_repo_mock.save.await_args.args[0]
         assert saved.user_id == "USER_v"
         assert saved.post_id == "FDP_x"
 
-
     async def test_duplicate_raises_value_error(self, service, like_repo_mock):
-        like_repo_mock.find_by_user_and_post.return_value = object()  # 이미 누름
+        like_repo_mock.find_by_user_and_post.return_value = object()
         with pytest.raises(ValueError, match="이미 좋아요"):
             await service.add_like(user_id="USER_v", post_id="FDP_x")
         like_repo_mock.save.assert_not_called()
 
-
     async def test_race_integrity_error_treated_as_duplicate(
-        self, service, like_repo_mock,
+        self, service, like_repo_mock, feed_post_repo_mock,
     ):
         """find 통과 직후 INSERT 에서 composite PK 충돌 (동시 두 번 클릭) →
-        일반 중복 케이스와 동일한 ValueError 로 일원화 (라우터에서 400)."""
-        like_repo_mock.find_by_user_and_post.return_value = None  # find 분기 통과
+        재조회로 게시물 존재 확인 후 일반 중복과 동일한 ValueError (라우터에서 400)."""
+        like_repo_mock.find_by_user_and_post.return_value = None
         like_repo_mock.save.side_effect = IntegrityError(
             statement="INSERT", params=None, orig=Exception("duplicate key"),
         )
         with pytest.raises(ValueError, match="이미 좋아요"):
             await service.add_like(user_id="USER_v", post_id="FDP_x")
-        # IntegrityError 후엔 같은 session 으로 추가 쿼리 안 함 (PendingRollbackError 회피)
+        feed_post_repo_mock.find_by_post_id.assert_awaited_once()
         like_repo_mock.count_by_post.assert_not_called()
 
+    async def test_race_integrity_error_on_deleted_post_maps_to_not_found(
+        self, service, like_repo_mock, feed_post_repo_mock,
+    ):
+        """가시성 검증과 INSERT 사이 게시물이 삭제되면 FK 위반 → '이미 좋아요' 가 아니라 404."""
+        like_repo_mock.find_by_user_and_post.return_value = None
+        like_repo_mock.save.side_effect = IntegrityError(
+            statement="INSERT", params=None, orig=Exception("fk violation"),
+        )
+        feed_post_repo_mock.find_by_post_id.return_value = None
+        with pytest.raises(FeedNotFoundError):
+            await service.add_like(user_id="USER_v", post_id="FDP_x")
+        like_repo_mock.count_by_post.assert_not_called()
 
-# ──────────────────── remove ────────────────────
 
 @pytest.mark.unit
 class TestRemoveLike:
@@ -70,15 +75,12 @@ class TestRemoveLike:
         assert count == 4
         like_repo_mock.delete_by_user_and_post.assert_awaited_once_with("USER_v", "FDP_x")
 
-
     async def test_not_liked_raises_value_error(self, service, like_repo_mock):
         like_repo_mock.find_by_user_and_post.return_value = None
         with pytest.raises(ValueError, match="좋아요를 누르지 않은"):
             await service.remove_like(user_id="USER_v", post_id="FDP_x")
         like_repo_mock.delete_by_user_and_post.assert_not_called()
 
-
-# ──────────────────── list ────────────────────
 
 @pytest.mark.unit
 class TestGetLikedUsers:
@@ -103,7 +105,6 @@ class TestGetLikedUsers:
         assert result[1].user_name == "Bob"
         assert result[1].profile_image_url is None
 
-
     async def test_missing_detail_falls_back_to_empty(self, service, like_repo_mock):
         """detail 결손 (회원가입 미완료) → user_name='' / profile_image_url=None.
 
@@ -117,12 +118,28 @@ class TestGetLikedUsers:
         assert result[0].user_name == ""
         assert result[0].profile_image_url is None
 
-
     async def test_empty_list_when_no_likes(self, service, like_repo_mock):
         like_repo_mock.find_with_user_by_post.return_value = []
         result = await service.get_liked_users(viewer_id="USER_v", post_id="FDP_x")
         assert result == []
 
+    async def test_blocked_liker_excluded_from_list(
+        self, service, like_repo_mock, block_repo_mock,
+    ):
+        """viewer 와 차단 관계인 liker 의 닉네임/프로필은 목록에서 제외 (양방향)."""
+        like_repo_mock.find_with_user_by_post.return_value = [
+            make_feed_post_like_mock(user_id="USER_a", user_name="Alice"),
+            make_feed_post_like_mock(user_id="USER_blocked", user_name="Blocked"),
+        ]
+        block_repo_mock.find_block_related_ids.return_value = {"USER_blocked"}
+
+        result = await service.get_liked_users(viewer_id="USER_v", post_id="FDP_x")
+
+        assert [u.user_id for u in result] == ["USER_a"]
+        block_repo_mock.find_block_related_ids.assert_awaited_once()
+        called_viewer, called_ids = block_repo_mock.find_block_related_ids.await_args.args
+        assert called_viewer == "USER_v"
+        assert set(called_ids) == {"USER_a", "USER_blocked"}
 
     async def test_repo_call_uses_resolved_post_id(self, service, like_repo_mock):
         """service 가 viewable post 의 post_id 로 repo 호출 (path post_id 그대로 X)."""
@@ -130,8 +147,6 @@ class TestGetLikedUsers:
         await service.get_liked_users(viewer_id="USER_v", post_id="FDP_x")
         like_repo_mock.find_with_user_by_post.assert_awaited_once_with("FDP_x")
 
-
-# ──────────────────── 가시성 propagate ────────────────────
 
 @pytest.mark.unit
 class TestVisibilityPropagation:
@@ -145,9 +160,7 @@ class TestVisibilityPropagation:
         )
         with pytest.raises(FeedNotFoundError):
             await service.add_like(user_id="USER_v", post_id="FDP_missing")
-        # 가시성 실패 시 좋아요 INSERT 자체 안 일어남
         like_repo_mock.save.assert_not_called()
-
 
     async def test_remove_propagates_not_found(
         self, monkeypatch, service, like_repo_mock,

@@ -1,3 +1,8 @@
+from unittest.mock import AsyncMock, MagicMock
+
+import pytest
+
+from app.domain.chat.service.message import MessageService
 from test.unit.domain.chat.message_service.mock_factory import (
     FakeUnitOfWork,
     make_chat_member_repo_mock,
@@ -10,14 +15,18 @@ from test.unit.domain.chat.message_service.mock_factory import (
     make_mock_session,
     make_redis_mock,
 )
-import pytest
-
-from app.domain.chat.service.message import MessageService
 
 
 @pytest.fixture
 def mock_session():
     return make_mock_session()
+
+
+@pytest.fixture
+def user_repo_mock():
+    mock = MagicMock()
+    mock.lock_if_active = AsyncMock(return_value=True)
+    return mock
 
 
 @pytest.fixture
@@ -65,6 +74,7 @@ def lua_mock():
 def service(
     monkeypatch,
     mock_session,
+    user_repo_mock,
     chat_room_repo_mock,
     chat_member_repo_mock,
     message_repo_mock,
@@ -87,7 +97,10 @@ def service(
         "app.domain.chat.service.message.ChatMessageRepository",
         lambda db: message_repo_mock,
     )
-    # mongodb.database 참조 회피 — Repository 가 mock 이라 db 인자는 무시됨
+    monkeypatch.setattr(
+        "app.domain.chat.service.message.UserRepository",
+        lambda session: user_repo_mock,
+    )
     monkeypatch.setattr(
         "app.domain.chat.service.message.mongodb",
         type("FakeMongo", (), {"database": None})(),
@@ -95,14 +108,16 @@ def service(
 
     async def _hot():
         return redis_mock
+
     async def _dedupe():
         return redis_dedupe_mock
 
     monkeypatch.setattr("app.domain.chat.service.message.get_redis_client", _hot)
     monkeypatch.setattr("app.domain.chat.service.message.get_redis_dedupe_client", _dedupe)
 
-    # lua_scripts 전체 교체
     monkeypatch.setattr("app.domain.chat.service.message.lua_scripts", lua_mock)
 
     uow = FakeUnitOfWork(mock_session)
-    return MessageService(uow=uow, fanout_service=fanout_mock, fcm_service=fcm_mock)
+    return MessageService(
+        uow=uow, fanout_service=fanout_mock, fcm_service_factory=lambda: fcm_mock,
+    )

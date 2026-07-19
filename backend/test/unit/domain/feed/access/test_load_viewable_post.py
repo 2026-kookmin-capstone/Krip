@@ -6,22 +6,23 @@
 검증:
     - 미존재 post                 → FeedNotFoundError (404)
     - 본인 글 fast-path           → block / friendship 조회 자체 안 함
-    - 차단 관계                    → FeedBlockedError (403)
+    - 차단 관계                    → FeedNotFoundError (404, 열거 차단)
     - PUBLIC + 비친구             → 통과
     - FRIENDS + 친구              → 통과
     - FRIENDS + 비친구            → FeedNotFoundError (정보 누출 회피로 404)
     - PRIVATE + 비owner           → FeedNotFoundError (404)
 """
-from unittest.mock import AsyncMock, MagicMock
-from types import SimpleNamespace
-from test.unit.domain.feed.mock_factory import make_feed_post_with_counts
-import pytest
 from datetime import datetime, timezone
+from types import SimpleNamespace
+from unittest.mock import AsyncMock, MagicMock
 
-from app.domain.friend.model.friendship import FriendshipStatus
-from app.domain.feed.service.exception import FeedBlockedError, FeedNotFoundError
-from app.domain.feed.service.access import load_viewable_post
+import pytest
+
 from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
+from app.domain.feed.service.access import load_viewable_post
+from app.domain.feed.service.exception import FeedNotFoundError
+from app.domain.friend.model.friendship import FriendshipStatus
+from test.unit.domain.feed.mock_factory import make_feed_post_with_counts
 
 
 def _mk_row(post_id="FDP_x", user_id="USER_owner", visibility=FeedVisibility.PUBLIC):
@@ -80,8 +81,6 @@ def _patch_repos(monkeypatch, feed_repo_mock, block_repo_mock, friendship_repo_m
     )
 
 
-# ──────────────────── 미존재 ────────────────────
-
 @pytest.mark.unit
 class TestMissingPost:
     async def test_raises_not_found(self, session, feed_repo_mock):
@@ -89,8 +88,6 @@ class TestMissingPost:
         with pytest.raises(FeedNotFoundError):
             await load_viewable_post(session, viewer_id="USER_a", post_id="FDP_missing")
 
-
-# ──────────────────── 본인 fast-path ────────────────────
 
 @pytest.mark.unit
 class TestOwnerFastPath:
@@ -104,28 +101,23 @@ class TestOwnerFastPath:
         )
         result = await load_viewable_post(session, viewer_id="USER_a", post_id="FDP_x")
         assert result.user_id == "USER_a"
-        # 본인은 차단/친구 조회 자체를 안 함
         block_repo_mock.find_blocks_between.assert_not_called()
         friendship_repo_mock.find_between.assert_not_called()
 
 
-# ──────────────────── 차단 ────────────────────
-
 @pytest.mark.unit
 class TestBlocked:
-    async def test_either_direction_block_raises(
+    async def test_either_direction_block_maps_to_not_found(
         self, session, feed_repo_mock, block_repo_mock, friendship_repo_mock,
     ):
+        """차단도 404 — 403 을 주면 차단당한 쪽이 post_id 존재를 열거할 수 있다."""
         feed_repo_mock.find_by_post_id.return_value = _mk_row(user_id="USER_owner")
         block_repo_mock.find_blocks_between.return_value = [object()]
 
-        with pytest.raises(FeedBlockedError):
+        with pytest.raises(FeedNotFoundError):
             await load_viewable_post(session, viewer_id="USER_v", post_id="FDP_x")
-        # 차단 후 friend 조회 안 함 (불필요)
         friendship_repo_mock.find_between.assert_not_called()
 
-
-# ──────────────────── visibility 분기 (비owner) ────────────────────
 
 @pytest.mark.unit
 class TestVisibilityDecision:
@@ -135,7 +127,6 @@ class TestVisibilityDecision:
         feed_repo_mock.find_by_post_id.return_value = _mk_row(visibility=FeedVisibility.PUBLIC)
         result = await load_viewable_post(session, viewer_id="USER_v", post_id="FDP_x")
         assert result.visibility == FeedVisibility.PUBLIC
-
 
     async def test_friends_only_visible_to_friend(
         self, session, feed_repo_mock, friendship_repo_mock,
@@ -147,7 +138,6 @@ class TestVisibilityDecision:
         result = await load_viewable_post(session, viewer_id="USER_v", post_id="FDP_x")
         assert result.visibility == FeedVisibility.FRIENDS
 
-
     async def test_friends_only_invisible_to_non_friend_returns_not_found(
         self, session, feed_repo_mock, friendship_repo_mock,
     ):
@@ -156,7 +146,6 @@ class TestVisibilityDecision:
         friendship_repo_mock.find_between.return_value = None
         with pytest.raises(FeedNotFoundError):
             await load_viewable_post(session, viewer_id="USER_v", post_id="FDP_x")
-
 
     async def test_pending_friendship_treated_as_non_friend(
         self, session, feed_repo_mock, friendship_repo_mock,
@@ -169,7 +158,6 @@ class TestVisibilityDecision:
         with pytest.raises(FeedNotFoundError):
             await load_viewable_post(session, viewer_id="USER_v", post_id="FDP_x")
 
-
     async def test_private_invisible_to_non_owner(
         self, session, feed_repo_mock, friendship_repo_mock,
     ):
@@ -177,6 +165,5 @@ class TestVisibilityDecision:
         friendship_repo_mock.find_between.return_value = SimpleNamespace(
             status=FriendshipStatus.ACCEPTED,
         )
-        # 친구라도 PRIVATE 은 본인 외 못 봄
         with pytest.raises(FeedNotFoundError):
             await load_viewable_post(session, viewer_id="USER_v", post_id="FDP_x")

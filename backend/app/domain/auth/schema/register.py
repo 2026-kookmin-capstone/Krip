@@ -1,8 +1,9 @@
 from typing import List
+
 from pydantic import BaseModel, EmailStr, Field
 
-from app.domain.auth.model.user_travel_style import TravelStyle
 from app.domain.auth.model.user_detail_inform import Gender
+from app.domain.auth.model.user_travel_style import TravelStyle
 
 
 class RegisterRequest(BaseModel):

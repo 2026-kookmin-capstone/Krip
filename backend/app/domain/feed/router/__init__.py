@@ -1,10 +1,6 @@
 from fastapi import APIRouter
 
-from app.domain.feed.router import feed_post
-from app.domain.feed.router import feed_user
-from app.domain.feed.router import feed_post_like
-from app.domain.feed.router import feed_post_comment
-from app.domain.feed.router import feed_popup
+from app.domain.feed.router import feed_popup, feed_post, feed_post_comment, feed_post_like, feed_user
 
 
 feed_router = APIRouter(prefix="/feed")

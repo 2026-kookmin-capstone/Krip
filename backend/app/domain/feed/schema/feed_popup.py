@@ -3,10 +3,11 @@
 필드 복제는 도메인 자율성 우선 — auth schema 변경 시 두 곳 갱신 부담 감수.
 """
 from typing import List, Optional
+
 from pydantic import BaseModel, Field
 
-from app.domain.feed.schema.feed_post import FeedPostResponse
 from app.domain.auth.model.user_travel_style import TravelStyle
+from app.domain.feed.schema.feed_post import FeedPostResponse
 
 
 class PopupFeedSection(BaseModel):

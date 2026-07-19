@@ -8,24 +8,25 @@ cleanup + Redis 캐시 무효화를 단계별로 수행한다. 통합 테스트�
 
 `MONGODB_TEST_URL` 미설정 시 skip — 인박스 cascade 가 Mongo 의존이라 통합 테스트의 핵심.
 """
-from unittest.mock import AsyncMock, MagicMock
-import pytest_asyncio
-import pytest
 import os
+from unittest.mock import AsyncMock, MagicMock
+
+import pytest
+import pytest_asyncio
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHistory
-from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
-from app.domain.tripmate.model.tripmate_image import TripmateImage
-from app.domain.tour.model.tour_search_history import TourSearchHistory
-from app.domain.notification.service.inbox import InboxService
-from app.domain.notification.model.inbox import InboxItem
-from app.domain.friend.model.search_history import FriendSearchHistory
-from app.domain.auth.service.withdraw import WithdrawService
-from app.domain.auth.service.signup import SignupService
-from app.domain.auth.service.register import RegisterService
-from app.domain.auth.service.profile import ProfileService
 from app.domain.auth.model.withdrawal_request import WithdrawalRequest
+from app.domain.auth.service.profile import ProfileService
+from app.domain.auth.service.register import RegisterService
+from app.domain.auth.service.signup import SignupService
+from app.domain.auth.service.withdraw import WithdrawService
+from app.domain.friend.model.search_history import FriendSearchHistory
+from app.domain.notification.model.inbox import InboxItem
+from app.domain.notification.service.inbox import InboxService
+from app.domain.tour.model.tour_search_history import TourSearchHistory
+from app.domain.tripmate.model.tripmate_image import TripmateImage
+from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
+from app.domain.tripmate.model.tripmate_search_history import TripmateSearchHistory
 
 
 def _require_mongo_url() -> str:
@@ -50,7 +51,6 @@ async def mongo_db():
     client = AsyncIOMotorClient(url, tz_aware=True)
     db = client.get_default_database()
 
-    # withdraw 가 정리 대상으로 호출하는 컬렉션 + 인박스 컬렉션 모두 drop
     for col in [
         "inbox",
         "withdrawal_request",
@@ -104,17 +104,6 @@ def storage_mock(monkeypatch) -> MagicMock:
 
 
 @pytest.fixture
-def redis_cache_mock(monkeypatch) -> AsyncMock:
-    """Redis 캐시 무효화 mock — `invalidate_registered_cache` 모듈 함수 직접 치환."""
-    mock = AsyncMock(return_value=None)
-    monkeypatch.setattr(
-        "app.domain.auth.service.withdraw.invalidate_registered_cache",
-        mock,
-    )
-    return mock
-
-
-@pytest.fixture
 def inbox_service(mongo_db) -> InboxService:
     return InboxService()
 
@@ -132,13 +121,13 @@ def chat_purge_service_mock() -> AsyncMock:
     """
     mock = AsyncMock()
     mock.revoke_all_sessions = AsyncMock(return_value=None)
-    mock.cleanup_user_data = AsyncMock(return_value=None)
+    mock.cleanup_user_data = AsyncMock(return_value=True)
     return mock
 
 
 @pytest.fixture
 def withdraw_service(
-    uow, inbox_service, storage_mock, redis_cache_mock, chat_purge_service_mock,
+    uow, inbox_service, storage_mock, chat_purge_service_mock,
 ) -> WithdrawService:
     return WithdrawService(
         uow=uow,
@@ -146,8 +135,6 @@ def withdraw_service(
         user_purge_cache_service=chat_purge_service_mock,
     )
 
-
-# ──────────────────── RDB 전용 service (mongo 의존 X) ────────────────────
 
 @pytest.fixture
 def signup_service(uow) -> SignupService:

@@ -5,17 +5,19 @@
       올바른 visibility IN-list 를 만들어 repo 에 전달하는지
     - 차단 관계에서 `FeedBlockedError` raise + repo 호출 자체 안 일어남
     - 본인 fast-path 에서 friend / block 조회 자체를 건너뜀 (DB hit 절약)
-    - 페이지네이션 next_cursor 가 페이지 가득 찰 때만 채워짐 (get_my_feed 와 동일 약속)
+    - 실제 초과 row가 있을 때만 next_cursor가 채워짐 (get_my_feed와 동일 계약)
 """
-from unittest.mock import MagicMock
-from types import SimpleNamespace
-from test.unit.domain.feed.mock_factory import make_feed_post_with_counts
-import pytest
 from datetime import datetime, timezone
+from types import SimpleNamespace
+from unittest.mock import MagicMock
 
-from app.domain.friend.model.friendship import FriendshipStatus
-from app.domain.feed.service.exception import FeedBlockedError
+import pytest
+
 from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
+from app.domain.feed.service.exception import FeedBlockedError
+from app.domain.friend.model.friendship import FriendshipStatus
+from app.util.cursor import decode_cursor
+from test.unit.domain.feed.mock_factory import make_feed_post_with_counts
 
 
 def _mk_row(
@@ -51,8 +53,6 @@ def _pending_friendship() -> SimpleNamespace:
     return SimpleNamespace(status=FriendshipStatus.PENDING)
 
 
-# ──────────────────── visibilities 부분집합 결정 ────────────────────
-
 @pytest.mark.unit
 class TestVisibilityResolution:
     async def test_self_passes_all_visibilities_without_db_hit(
@@ -67,7 +67,6 @@ class TestVisibilityResolution:
         friendship_repo_mock.find_between.assert_not_called()
         block_repo_mock.find_blocks_between.assert_not_called()
 
-
     async def test_friend_sees_friends_and_public(
         self, service, repo_mock, friendship_repo_mock, block_repo_mock,
     ):
@@ -79,7 +78,6 @@ class TestVisibilityResolution:
 
         passed = set(repo_mock.find_by_owner.await_args.kwargs["visibilities"])
         assert passed == {FeedVisibility.FRIENDS, FeedVisibility.PUBLIC}
-
 
     async def test_pending_friendship_treated_as_non_friend(
         self, service, repo_mock, friendship_repo_mock, block_repo_mock,
@@ -94,7 +92,6 @@ class TestVisibilityResolution:
         passed = set(repo_mock.find_by_owner.await_args.kwargs["visibilities"])
         assert passed == {FeedVisibility.PUBLIC}
 
-
     async def test_non_friend_sees_only_public(
         self, service, repo_mock, friendship_repo_mock, block_repo_mock,
     ):
@@ -108,29 +105,24 @@ class TestVisibilityResolution:
         assert passed == {FeedVisibility.PUBLIC}
 
 
-# ──────────────────── 차단 거부 ────────────────────
-
 @pytest.mark.unit
 class TestBlockedRaisesAndDoesNotQueryFeed:
     async def test_either_direction_block_raises(
         self, service, repo_mock, block_repo_mock, friendship_repo_mock,
     ):
         """차단 어느 방향이든 (`viewer→owner` or `owner→viewer`) 한 row 만 있어도 거절."""
-        block_repo_mock.find_blocks_between.return_value = [object()]  # 방향 무관 1+ row
+        block_repo_mock.find_blocks_between.return_value = [object()]
 
         with pytest.raises(FeedBlockedError):
             await service.get_user_feed(viewer_id="USER_a", owner_id="USER_b")
 
-        # 차단이면 friend 조회도, feed 조회도 모두 일어나면 안 됨
         friendship_repo_mock.find_between.assert_not_called()
         repo_mock.find_by_owner.assert_not_called()
 
 
-# ──────────────────── 페이지네이션 ────────────────────
-
 @pytest.mark.unit
 class TestPagination:
-    async def test_next_cursor_when_full_page(
+    async def test_next_cursor_none_when_exact_page(
         self, service, repo_mock, friendship_repo_mock, block_repo_mock, monkeypatch,
     ):
         monkeypatch.setattr("app.domain.feed.service.feed_post.PAGE_SIZE", 2)
@@ -142,8 +134,25 @@ class TestPagination:
         ]
 
         result = await service.get_user_feed(viewer_id="USER_a", owner_id="USER_b")
-        assert result.next_cursor == "FDP_1"
+        assert result.next_cursor is None
 
+    async def test_next_cursor_when_page_overflows(
+        self, service, repo_mock, friendship_repo_mock, block_repo_mock, monkeypatch,
+    ):
+        monkeypatch.setattr("app.domain.feed.service.feed_post.PAGE_SIZE", 2)
+        block_repo_mock.find_blocks_between.return_value = []
+        friendship_repo_mock.find_between.return_value = None
+        repo_mock.find_by_owner.return_value = [
+            _mk_row(post_id="FDP_0"),
+            _mk_row(post_id="FDP_1"),
+            _mk_row(post_id="FDP_2"),
+        ]
+
+        result = await service.get_user_feed(viewer_id="USER_a", owner_id="USER_b")
+
+        assert [post.post_id for post in result.posts] == ["FDP_0", "FDP_1"]
+        assert decode_cursor(result.next_cursor)[1] == "FDP_1"
+        assert repo_mock.find_by_owner.await_args.kwargs["limit"] == 3
 
     async def test_next_cursor_none_when_partial_page(
         self, service, repo_mock, friendship_repo_mock, block_repo_mock, monkeypatch,
@@ -156,7 +165,6 @@ class TestPagination:
         result = await service.get_user_feed(viewer_id="USER_a", owner_id="USER_b")
         assert result.next_cursor is None
 
-
     async def test_cursor_passes_through_to_repo(
         self, service, repo_mock, friendship_repo_mock, block_repo_mock,
     ):
@@ -167,8 +175,6 @@ class TestPagination:
         await service.get_user_feed(viewer_id="USER_a", owner_id="USER_b", cursor="FDP_seed")
         assert repo_mock.find_by_owner.await_args.kwargs["cursor"] == "FDP_seed"
 
-
-# ──────────────────── viewer_id 전파 + is_liked 매핑 ────────────────────
 
 @pytest.mark.unit
 class TestViewerIdPropagation:
@@ -186,7 +192,6 @@ class TestViewerIdPropagation:
         await service.get_user_feed(viewer_id="USER_v", owner_id="USER_b")
 
         assert repo_mock.find_by_owner.await_args.kwargs["viewer_id"] == "USER_v"
-
 
     async def test_self_view_passes_self_as_viewer_id(
         self, service, repo_mock, friendship_repo_mock, block_repo_mock,
@@ -218,7 +223,6 @@ class TestIsLikedMappedFromRow:
         result = await service.get_user_feed(viewer_id="USER_v", owner_id="USER_b")
 
         assert result.posts[0].is_liked is True
-
 
     async def test_row_is_liked_false_propagates_to_dto(
         self, service, repo_mock, friendship_repo_mock, block_repo_mock,

@@ -10,30 +10,28 @@ OAuth provider 호출은 fake client 로, SignupService 도 mock 으로 격리�
 이 파일의 핵심 목적이다 — state 파싱, deep link 형식, JWT payload, status 분기.
 """
 
-from urllib.parse import parse_qs, urlparse
 from unittest.mock import AsyncMock
-import pytest
-import jwt
-from fastapi.testclient import TestClient
-from fastapi import FastAPI
-from dependency_injector import providers
+from urllib.parse import parse_qs, urlparse
 
-from app.domain.auth.router.app_login import APP_DEEP_LINK, router as app_login_router
-from app.domain.auth.dto.signup import SignupResult, SignupStatus
+import jwt
+import pytest
+from dependency_injector import providers
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
+
 import app.database.model  # noqa: F401 — 매퍼 선 등록 (dto 가 enum 참조)
-from app.core.oauth.base import OAuthClient, OAuthUser
-from app.core.oauth import OAUTH_CLIENTS
-from app.container import Container
-from app.config.setting import settings
 from app.config.oauth import OAuthProvider
+from app.config.setting import settings
+from app.container import Container
+from app.core.oauth import OAUTH_CLIENTS
+from app.core.oauth.base import OAuthClient, OAuthUser
+from app.domain.auth.dto.signup import SignupResult, SignupStatus
+from app.domain.auth.router.app_login import APP_DEEP_LINK
+from app.domain.auth.router.app_login import router as app_login_router
 
 
 pytestmark = pytest.mark.integration
 
-
-# ──────────────────────────────────────────────────────────────────
-# Fake OAuth client — 외부 HTTP 호출 차단
-# ──────────────────────────────────────────────────────────────────
 
 class _FakeGoogleClient(OAuthClient):
     """OAuth provider 호출을 격리하는 fake client.
@@ -49,10 +47,8 @@ class _FakeGoogleClient(OAuthClient):
     def __init__(self, config):
         super().__init__(config, OAuthProvider.GOOGLE)
 
-
     async def get_access_token(self, code: str, user_type: str) -> str:
         return f"fake-access-token:{code}"
-
 
     async def get_user_info(self, access_token: str) -> OAuthUser:
         return OAuthUser(
@@ -63,9 +59,22 @@ class _FakeGoogleClient(OAuthClient):
         )
 
 
-# ──────────────────────────────────────────────────────────────────
-# 공통 fixture
-# ──────────────────────────────────────────────────────────────────
+class _FakeRedis:
+    """oauth_state 가 쓰는 최소 인터페이스(set ex / delete)만 구현한 인메모리 stub.
+
+    앱 흐름은 nonce 를 Redis 에 단발성으로 저장/소비하므로, 실 Redis 없이 store→consume
+    왕복과 1회용 소비를 그대로 재현한다.
+    """
+
+    def __init__(self):
+        self._store: dict[str, str] = {}
+
+    async def set(self, key, value, ex=None):
+        self._store[key] = value
+
+    async def delete(self, *keys) -> int:
+        return sum(1 for k in keys if self._store.pop(k, None) is not None)
+
 
 @pytest.fixture
 def app_http(monkeypatch):
@@ -75,6 +84,13 @@ def app_http(monkeypatch):
     fake 로 치환하면 라우터가 ``OAUTH_CLIENTS.get(type)`` 으로 받아오는 클래스가 자동 교체.
     """
     monkeypatch.setitem(OAUTH_CLIENTS, OAuthProvider.GOOGLE, _FakeGoogleClient)
+
+    fake_redis = _FakeRedis()
+
+    async def _fake_get_client():
+        return fake_redis
+
+    monkeypatch.setattr("app.util.oauth_state.get_redis_client", _fake_get_client)
 
     container = Container()
     signup_mock = AsyncMock()
@@ -101,9 +117,15 @@ def _decode_utk(token: str) -> dict:
     )
 
 
-# ──────────────────────────────────────────────────────────────────
-# GET /api/auth/login/app — 인증 URL redirect
-# ──────────────────────────────────────────────────────────────────
+def _start_login(client) -> str:
+    """로그인 시작 호출 → provider redirect 의 state 반환.
+
+    이 호출로 nonce 가 (fake) Redis 에 단발성 저장되고, 이어지는 콜백에서 consume 된다."""
+    resp = client.get(
+        "/api/auth/login/app", params={"type": "google"}, follow_redirects=False,
+    )
+    return parse_qs(urlparse(resp.headers["location"]).query)["state"][0]
+
 
 class TestAppLoginRedirect:
     """provider 인증 페이지로의 redirect 가 웹 흐름과 동등하게 구성되는지 검증."""
@@ -122,14 +144,13 @@ class TestAppLoginRedirect:
         assert url.netloc == "accounts.google.com"
 
         params = parse_qs(url.query)
-        # state 는 콜백에서 provider 추출 키 — `app:` prefix 가 웹의 `local:` / `server:` 와 분리됨.
-        assert params["state"] == ["app:google"]
-        # redirect_uri 는 앱 전용 경로 (`/api/auth/login/app/callback`) — 웹 redirect 와 분리.
+        state = params["state"][0]
+        assert state.startswith("app:google:")
+        assert len(state.split(":")[2]) > 0  # CSRF nonce 존재 (Redis 단발성 저장)
         expected = f"{settings.OAUTH_REDIRECT_BASE_URL}/api/auth/login/app/callback"
         assert params["redirect_uri"] == [expected]
         # Google 은 `select_account` 강제 (base 클래스 분기) — 캐시된 세션 자동 로그인 방지.
         assert params["prompt"] == ["select_account"]
-
 
     def test_returns_422_when_provider_is_unknown(self, app_http):
         """OAuthProvider enum 에 없는 값은 FastAPI Query 검증 단계에서 422."""
@@ -144,10 +165,6 @@ class TestAppLoginRedirect:
         assert resp.status_code == 422
 
 
-# ──────────────────────────────────────────────────────────────────
-# GET /api/auth/login/app/callback — JWT 발급 + 딥링크
-# ──────────────────────────────────────────────────────────────────
-
 class TestAppLoginCallbackSuccess:
     """정상 콜백 — signup status 에 따라 딥링크 query 가 분기되는지 검증."""
 
@@ -157,15 +174,15 @@ class TestAppLoginCallbackSuccess:
             user_id="USER_app_1", status=SignupStatus.NEW,
         )
 
+        state = _start_login(client)
         resp = client.get(
             "/api/auth/login/app/callback",
-            params={"code": "auth_code_xyz", "state": "app:google"},
+            params={"code": "auth_code_xyz", "state": state},
             follow_redirects=False,
         )
 
         assert resp.status_code == 307
         url = urlparse(resp.headers["location"])
-        # 딥링크 — 안드/iOS 가 앱으로 복귀시키는 custom scheme
         assert f"{url.scheme}://{url.netloc}{url.path}" == APP_DEEP_LINK
 
         params = parse_qs(url.query)
@@ -173,17 +190,14 @@ class TestAppLoginCallbackSuccess:
         assert params["email"] == [_FakeGoogleClient.USER_EMAIL]
         assert params["name"] == [_FakeGoogleClient.USER_NAME]
 
-        # utk 는 보호 경로 진입 시 앱이 X-Auth-Token 헤더로 다시 보낼 raw JWT
         decoded = _decode_utk(params["utk"][0])
         assert decoded["user_id"] == "USER_app_1"
         assert "exp" in decoded and "iat" in decoded
 
-        # signup_service 호출 인자 검증 — provider value + provider_id 둘 다 전달
         signup_mock.check_and_register.assert_awaited_once_with(
             auth_provider=OAuthProvider.GOOGLE.value,
             auth_provider_id=_FakeGoogleClient.USER_ID,
         )
-
 
     def test_still_issues_token_on_withdrawal_pending(self, app_http):
         """탈퇴 유예 유저도 토큰을 발급한다 — 프론트가 status 로 cancel 화면 라우팅.
@@ -195,18 +209,17 @@ class TestAppLoginCallbackSuccess:
             user_id="USER_pending", status=SignupStatus.WITHDRAWAL_PENDING,
         )
 
+        state = _start_login(client)
         resp = client.get(
             "/api/auth/login/app/callback",
-            params={"code": "c1", "state": "app:google"},
+            params={"code": "c1", "state": state},
             follow_redirects=False,
         )
 
         assert resp.status_code == 307
         params = parse_qs(urlparse(resp.headers["location"]).query)
         assert params["status"] == ["withdrawal_pending"]
-        # 토큰은 발급되어야 한다 (프론트가 cancel 흐름에서 사용)
         assert _decode_utk(params["utk"][0])["user_id"] == "USER_pending"
-
 
     def test_omits_optional_user_fields_when_provider_returns_none(self, app_http, monkeypatch):
         """provider 가 email/name 을 안 주는 경우 query 에 키 자체가 빠진다 (빈 문자열 X)."""
@@ -225,9 +238,10 @@ class TestAppLoginCallbackSuccess:
             user_id="USER_bare", status=SignupStatus.COMPLETE,
         )
 
+        state = _start_login(client)
         resp = client.get(
             "/api/auth/login/app/callback",
-            params={"code": "c", "state": "app:google"},
+            params={"code": "c", "state": state},
             follow_redirects=False,
         )
 
@@ -235,7 +249,7 @@ class TestAppLoginCallbackSuccess:
         assert "email" not in params
         assert "name" not in params
         assert params["status"] == ["complete"]
-        assert params["utk"]  # 토큰은 무조건 발급
+        assert params["utk"]
 
 
 class TestAppLoginCallbackErrors:
@@ -254,16 +268,50 @@ class TestAppLoginCallbackErrors:
         assert "state" in resp.json()["detail"]
         signup_mock.check_and_register.assert_not_called()
 
-
     def test_returns_400_when_state_provider_unknown(self, app_http):
         client, signup_mock = app_http
 
+        nonce = _start_login(client).split(":")[2]
         resp = client.get(
             "/api/auth/login/app/callback",
-            params={"code": "c", "state": "app:facebook"},
+            params={"code": "c", "state": f"app:facebook:{nonce}"},
             follow_redirects=False,
         )
 
         assert resp.status_code == 400
         assert "OAuth" in resp.json()["detail"]
         signup_mock.check_and_register.assert_not_called()
+
+    def test_returns_400_when_nonce_not_in_store(self, app_http):
+        """저장된 적 없는(위조) nonce → CSRF 방어로 400 (로그인 CSRF 차단)."""
+        client, signup_mock = app_http
+
+        resp = client.get(
+            "/api/auth/login/app/callback",
+            params={"code": "c", "state": "app:google:forged-nonce-never-stored"},
+            follow_redirects=False,
+        )
+
+        assert resp.status_code == 400
+        signup_mock.check_and_register.assert_not_called()
+
+    def test_nonce_is_single_use_replay_rejected(self, app_http):
+        """같은 nonce 재사용(replay) → 두 번째 콜백은 400 (1회용 소비)."""
+        client, signup_mock = app_http
+        signup_mock.check_and_register.return_value = SignupResult(
+            user_id="USER_replay", status=SignupStatus.COMPLETE,
+        )
+
+        state = _start_login(client)
+        first = client.get(
+            "/api/auth/login/app/callback",
+            params={"code": "c", "state": state}, follow_redirects=False,
+        )
+        assert first.status_code == 307
+
+        second = client.get(
+            "/api/auth/login/app/callback",
+            params={"code": "c", "state": state}, follow_redirects=False,
+        )
+        assert second.status_code == 400
+        signup_mock.check_and_register.assert_awaited_once()

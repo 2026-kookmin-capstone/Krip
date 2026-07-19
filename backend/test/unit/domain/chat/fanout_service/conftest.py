@@ -1,5 +1,6 @@
+from contextlib import asynccontextmanager
 from unittest.mock import AsyncMock, MagicMock
-from types import SimpleNamespace
+
 import pytest
 
 from app.domain.chat.service.fanout import FanoutService
@@ -16,7 +17,18 @@ def make_ws(session_id: str, user_id: str) -> MagicMock:
     ws.user_id = user_id
     ws.subscribed_rooms = set()
     ws.send_json = AsyncMock()
+    ws.close = AsyncMock()
     return ws
+
+
+def authorization_scope(value=None, *, error: Exception | None = None):
+    @asynccontextmanager
+    async def scope():
+        if error is not None:
+            raise error
+        yield value
+
+    return scope()
 
 
 @pytest.fixture
@@ -26,4 +38,15 @@ def fanout(monkeypatch) -> FanoutService:
     """
     from app.config import setting as setting_module
     monkeypatch.setattr(setting_module.settings, "FANOUT_MODE", "in_process")
-    return FanoutService()
+    authorization = MagicMock()
+    authorization.lock_room_delivery = MagicMock(
+        side_effect=lambda _room_id, user_ids, **_kwargs: authorization_scope(set(user_ids)),
+    )
+    authorization.lock_user_delivery = MagicMock(
+        side_effect=lambda _user_id: authorization_scope(True),
+    )
+    authorization.lock_room_subscription = MagicMock(
+        side_effect=lambda _room_id, _user_id: authorization_scope(True),
+    )
+    authorization.prepare_current_message_event = AsyncMock(return_value=True)
+    return FanoutService(authorization_service=authorization)

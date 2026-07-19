@@ -6,7 +6,6 @@ class FakeAsyncContextManager:
     async def __aenter__(self):
         return self
 
-
     async def __aexit__(self, exc_type, exc, tb):
         return False
 
@@ -14,11 +13,10 @@ class FakeAsyncContextManager:
 class FakeUnitOfWork:
     def __init__(self, session):
         self._session = session
-
+        self.session_factory = lambda: session
 
     async def __aenter__(self):
         return self._session
-
 
     async def __aexit__(self, exc_type, exc, tb):
         return False
@@ -36,9 +34,9 @@ def make_chat_room_repo_mock() -> AsyncMock:
     mock = AsyncMock()
     mock.save.return_value = None
     mock.find_by_id.return_value = None
+    mock.find_by_id_for_update.side_effect = lambda _room_id: mock.find_by_id.return_value
     mock.find_direct_by_pair.return_value = None
     mock.find_rooms_of_user.return_value = []
-    mock.update_last_message.return_value = None
     return mock
 
 
@@ -47,12 +45,22 @@ def make_chat_member_repo_mock() -> AsyncMock:
     mock.save.return_value = None
     mock.save_all.return_value = None
     mock.find.return_value = None
+    mock.find_for_update.side_effect = lambda _room_id, _user_id: mock.find.return_value
     mock.update.return_value = None
     mock.find_active_member_ids.return_value = []
+    mock.count_active_members.return_value = 0
     mock.is_active_member.return_value = False
+    mock.is_active_member_for_share.side_effect = (
+        lambda _room_id, _user_id: mock.is_active_member.return_value
+    )
+    mock.lock_active_receiving_user_ids.side_effect = (
+        lambda _room_id, user_ids: set(user_ids)
+    )
+    mock.lock_matching_membership_generations.side_effect = (
+        lambda _room_id, expected, **_kwargs: set(expected)
+    )
     mock.find_user_room_ids.return_value = []
     mock.mark_read.return_value = None
-    mock.count_readers_up_to.return_value = 0
     return mock
 
 
@@ -64,6 +72,8 @@ def make_user_block_repo_mock() -> AsyncMock:
 
 def make_user_repo_mock() -> AsyncMock:
     mock = AsyncMock()
+    mock.lock_if_active.return_value = True
+    mock.lock_active_user_ids.side_effect = lambda user_ids: set(user_ids)
     mock.find_by_id_with_profile.return_value = None
     return mock
 
@@ -77,9 +87,10 @@ def make_friendship_repo_mock() -> AsyncMock:
 
 
 def make_chat_message_repo_mock() -> AsyncMock:
-    """Phase 2 invite 시 current_seq fallback 용. 기본 0 (빈 방)."""
+    """invite seq fallback과 mark_read durable max/잔여 unread 계산용. 기본 0 (빈 방)."""
     mock = AsyncMock()
     mock.get_max_server_seq.return_value = 0
+    mock.count_after_seq.return_value = 0
     return mock
 
 
@@ -87,9 +98,9 @@ def make_fanout_mock() -> MagicMock:
     fanout = MagicMock(name="fanout")
     fanout.fan_out_to_session = AsyncMock()
     fanout.fan_out_to_user = AsyncMock()
+    fanout.fan_out_member_removed = AsyncMock()
+    fanout.fan_out_member_joined = AsyncMock()
     fanout.fan_out_to_room = AsyncMock()
-    # Phase 4 (node_channel) 진입 후 subscribe/unsubscribe 도 async — RoomService 가
-    # await 로 호출하므로 AsyncMock 으로 매칭.
     fanout.subscribe_user_to_room = AsyncMock()
     fanout.unsubscribe_user_from_room = AsyncMock()
     return fanout
@@ -97,8 +108,7 @@ def make_fanout_mock() -> MagicMock:
 
 def _make_pipeline(parent) -> MagicMock:
     p = MagicMock(name="pipeline")
-    # 체이닝 가능한 명령들
-    for cmd in ("sadd", "srem", "expire", "hset", "hdel"):
+    for cmd in ("incr", "sadd", "srem", "expire", "hset", "hdel"):
         setattr(p, cmd, MagicMock(return_value=p))
     p.execute = AsyncMock()
     parent._pipes.append(p)
@@ -111,12 +121,13 @@ def make_redis_mock() -> MagicMock:
 
     redis.pipeline = MagicMock(side_effect=lambda *_a, **_kw: _make_pipeline(redis))
 
-    # 직접 호출 메서드들 (Phase 2 invite 에서 `redis.get(room_seq_key)` 등)
     redis.get = AsyncMock(return_value=None)
     redis.srem = AsyncMock(return_value=1)
     redis.hdel = AsyncMock(return_value=1)
     redis.sadd = AsyncMock(return_value=0)
     redis.expire = AsyncMock(return_value=True)
     redis.hset = AsyncMock(return_value=0)
+    redis.hget = AsyncMock(return_value=None)
+    redis.eval = AsyncMock(return_value=0)
 
     return redis

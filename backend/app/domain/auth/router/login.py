@@ -1,17 +1,25 @@
-from urllib.parse import urlencode
-from typing import Optional
-import jwt
-from fastapi.responses import RedirectResponse
-from fastapi import APIRouter, Query, HTTPException, Request, Depends
-from dependency_injector.wiring import Provide, inject
 from datetime import datetime, timedelta, timezone
+from typing import Optional
+from urllib.parse import urlencode
 
-from app.domain.auth.service.signup import SignupService
-from app.core.oauth import OAUTH_CLIENTS
-from app.core.logger import get_logger
-from app.container import Container
+import jwt
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
+from fastapi.responses import RedirectResponse
+
+from app.config.oauth import OAUTH_CONFIGS, OAuthProvider
 from app.config.setting import settings
-from app.config.oauth import OAuthProvider, OAUTH_CONFIGS
+from app.container import Container
+from app.core.logger import get_logger
+from app.core.oauth import OAUTH_CLIENTS
+from app.core.oauth.exception import OAuthInvalidGrantError, OAuthVendorError
+from app.domain.auth.service.signup import SignupService
+from app.util.oauth_state import (
+    clear_state_cookie,
+    generate_state_nonce,
+    set_state_cookie,
+    verify_state_nonce,
+)
 
 
 router = APIRouter(prefix="/login", tags=["로그인"])
@@ -31,26 +39,31 @@ async def login(type: OAuthProvider = Query(..., description="OAuth 제공자 �
 
     redirect_url = 'local' if is_local else 'server'
 
-    state = f"{redirect_url}:{type.value}"
+    nonce = generate_state_nonce()
+    state = f"{redirect_url}:{type.value}:{nonce}"
 
     async with client_class(config) as client:
         authorization_url = client.get_authorization_url(state=state, user_type="callback")
 
-    return RedirectResponse(url=authorization_url)
+    response = RedirectResponse(url=authorization_url)
+    set_state_cookie(response, nonce)
+    return response
 
 
 @router.get("/callback")
 @inject
 async def login_callback(
+    request: Request,
     code: str = Query(...), state: str = Query(...),
     signup_service: SignupService = Depends(Provide[Container.signup_service])
 ):
     """OAuth 콜백 - 인증 코드로 사용자 정보를 가져와 JWT 쿠키 발급"""
-    parts = state.rsplit(":", 1)
-    if len(parts) != 2:
+    parts = state.split(":")
+    if len(parts) != 3:
         raise HTTPException(status_code=400, detail="잘못된 state 값")
 
-    redirect_url, provider_value = parts
+    redirect_url, provider_value, nonce = parts
+    verify_state_nonce(request, nonce)
 
     try:
         provider = OAuthProvider(provider_value)
@@ -63,11 +76,19 @@ async def login_callback(
     if not client_class:
         raise HTTPException(status_code=400, detail=f"지원하지 않는 OAuth 제공자: {provider}")
 
-    async with client_class(config) as client:
-        access_token = await client.get_access_token(code=code, user_type="callback")
-        user_info = await client.get_user_info(access_token=access_token)
+    # Back/새로고침으로 이미 소비된 code 로 콜백을 재요청하면 vendor 가 4xx 를 반환한다.
+    # httpx 예외가 그대로 새면 500 + 스택트레이스가 노출되므로 도메인 예외로 매핑한다.
+    try:
+        async with client_class(config) as client:
+            access_token = await client.get_access_token(code=code, user_type="callback")
+            user_info = await client.get_user_info(access_token=access_token)
+    except OAuthInvalidGrantError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except OAuthVendorError as e:
+        raise HTTPException(status_code=502, detail=str(e))
 
-    logger.info("OAuth 로그인 성공: {} / {} / {} / {}", user_info.id, user_info.email, user_info.name, provider.value)
+    # PII(email·실명)는 로그에 남기지 않는다 — Alloy 수집 파이프라인에 개인정보 축적 방지.
+    logger.bind(provider=provider.value).info("OAuth 로그인 성공")
     
     result = await signup_service.check_and_register(
         auth_provider=provider.value,
@@ -103,5 +124,6 @@ async def login_callback(
         path="/",
         max_age=settings.USER_LOGIN_JWT_EXPIRATION_DAYS * 24 * 60 * 60,
     )
+    clear_state_cookie(response)
 
     return response

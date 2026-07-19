@@ -5,16 +5,17 @@ FeedPostRepository / ObjectStorage 의 AsyncMock + 도메인 모델의 spec'd Ma
 에서 만든다. 테스트 파일이 직접 conftest 에서 helper 를 import 하지 않도록 cross-test
 재사용 가능한 helper 는 모두 본 모듈에 모은다.
 """
-from unittest.mock import AsyncMock, MagicMock
-from typing import Optional
+from contextlib import asynccontextmanager
 from datetime import datetime, timezone
+from typing import Optional
+from unittest.mock import AsyncMock, MagicMock
 
-from app.domain.feed.model.feed_post_like import FeedPostLike
-from app.domain.feed.model.feed_post_comment import FeedPostComment
-from app.domain.feed.dto.feed_post import FeedPostWithCounts
-from app.domain.auth.model.user_travel_style import TravelStyle, UserTravelStyle
-from app.domain.auth.model.user_detail_inform import UserDetailInform
 from app.domain.auth.model.user import User
+from app.domain.auth.model.user_detail_inform import UserDetailInform
+from app.domain.auth.model.user_travel_style import TravelStyle, UserTravelStyle
+from app.domain.feed.dto.feed_post import FeedPostWithCounts
+from app.domain.feed.model.feed_post_comment import FeedPostComment
+from app.domain.feed.model.feed_post_like import FeedPostLike
 
 
 class FakeUnitOfWork:
@@ -23,10 +24,8 @@ class FakeUnitOfWork:
     def __init__(self, session):
         self._session = session
 
-
     async def __aenter__(self):
         return self._session
-
 
     async def __aexit__(self, exc_type, exc, tb):
         return False
@@ -37,6 +36,12 @@ def make_mock_session() -> MagicMock:
     session.flush = AsyncMock()
     session.delete = AsyncMock()
     session.get = AsyncMock(return_value=None)
+
+    @asynccontextmanager
+    async def _nested():
+        yield
+
+    session.begin_nested = MagicMock(side_effect=lambda: _nested())
     return session
 
 
@@ -61,18 +66,21 @@ def make_object_storage_mock() -> MagicMock:
 def make_friendship_repo_mock() -> AsyncMock:
     """FriendshipRepository — `_resolve_viewer_visibilities` 가 `find_between` 만 사용."""
     mock = AsyncMock()
-    mock.find_between.return_value = None  # 기본: 관계 없음
+    mock.find_between.return_value = None
     return mock
 
 
 def make_user_block_repo_mock() -> AsyncMock:
-    """UserBlockRepository — `_resolve_viewer_visibilities` 가 `find_blocks_between` 만 사용."""
+    """UserBlockRepository mock.
+
+    `access` 는 `find_blocks_between`, 댓글/좋아요 목록 필터는 `find_block_related_ids` 사용.
+    기본은 둘 다 "차단 없음".
+    """
     mock = AsyncMock()
-    mock.find_blocks_between.return_value = []  # 기본: 차단 없음
+    mock.find_blocks_between.return_value = []
+    mock.find_block_related_ids.return_value = set()
     return mock
 
-
-# ──────────────────── 모델 인스턴스 helper ────────────────────
 
 def make_feed_post_with_counts(
     post,

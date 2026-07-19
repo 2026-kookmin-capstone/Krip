@@ -29,8 +29,6 @@ from app.domain.notification.model.inbox import (
 pytestmark = pytest.mark.integration
 
 
-# ──────────────────── 정상 fan-out ────────────────────
-
 class TestAddLikeFanout:
     """`add_like` 가 RDB INSERT 후 Mongo 에 인박스 항목 적재."""
 
@@ -38,11 +36,6 @@ class TestAddLikeFanout:
         self, mongo_db, feed_post_like_service, seed_feed_post,
     ):
         post_id, owner_id = await seed_feed_post()
-        # owner 가 아닌 다른 user 가 시드됐으니 두 번째를 actor 로 사용
-        from sqlalchemy import select
-        from app.domain.auth.model.user import User
-        # seed_feed_post 가 2 명 시드 (owner + 다른 1명) — actor 는 다른 사람
-        # owner_id 가 첫 번째라 두 번째 user 가 actor
 
         actor_id = await _find_other_user(feed_post_like_service.uow, owner_id)
 
@@ -56,7 +49,6 @@ class TestAddLikeFanout:
         assert doc["target_type"] == TargetType.FEED_POST.value
         assert doc["target_id"] == post_id
 
-
     async def test_self_like_does_not_create_inbox_item(
         self, mongo_db, feed_post_like_service, seed_feed_post,
     ):
@@ -67,13 +59,10 @@ class TestAddLikeFanout:
             user_id=owner_id, post_id=post_id,
         )
 
-        assert like_count == 1  # RDB 좋아요는 들어감
-        # Mongo 에는 항목 없음
+        assert like_count == 1
         coll = InboxItem.get_motor_collection()
         assert await coll.count_documents({}) == 0
 
-
-# ──────────────────── 멱등성 (partial unique 실 동작) ────────────────────
 
 class TestLikeIdempotency:
     """좋아요-취소-좋아요 race 시 인박스 무한 폭증 방지 — partial unique 실 동작."""
@@ -98,8 +87,6 @@ class TestLikeIdempotency:
         assert await coll.count_documents({"recipient_id": owner_id}) == 1
 
 
-# ──────────────────── remove_like — 인박스 보존 정책 ────────────────────
-
 class TestRemoveLikePreservesInboxItem:
     """좋아요 취소 정책 (Q1): 인박스 변경 없음 — 이벤트 사실의 기록."""
 
@@ -112,16 +99,14 @@ class TestRemoveLikePreservesInboxItem:
         await feed_post_like_service.add_like(user_id=actor_id, post_id=post_id)
         await feed_post_like_service.remove_like(user_id=actor_id, post_id=post_id)
 
-        # 인박스 항목 그대로 — 이벤트 발생 사실의 기록
         coll = InboxItem.get_motor_collection()
         assert await coll.count_documents({"recipient_id": owner_id}) == 1
 
 
-# ──────────────────── helpers ────────────────────
-
 async def _find_other_user(uow, exclude_user_id: str) -> str:
     """seed_users 가 만든 두 번째 user 찾기 — `exclude_user_id` 외 첫 번째 active user."""
     from sqlalchemy import select
+
     from app.domain.auth.model.user import User, UserStatus
 
     async with uow as session:

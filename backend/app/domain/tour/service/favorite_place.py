@@ -1,17 +1,17 @@
-from app.domain.tour.service.place import PlaceService
-from app.domain.tour.repository.place import PlaceRepository
-from app.domain.tour.repository.favorite_place import FavoritePlaceRepository
-from app.domain.tour.model.favorite_place import FavoritePlace
-from app.domain.tour.dto.favorite_place import FavoritePlaceData, FavoritePlaceListData
+from sqlalchemy.exc import IntegrityError
+
 from app.database.session import UnitOfWork, transactional
+from app.domain.tour.dto.favorite_place import FavoritePlaceData, FavoritePlaceListData
+from app.domain.tour.model.favorite_place import FavoritePlace
+from app.domain.tour.repository.favorite_place import FavoritePlaceRepository
+from app.domain.tour.repository.place import PlaceRepository
+from app.domain.tour.service.place import PlaceService
 
 
 class FavoritePlaceService:
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
         self.place_repo = PlaceRepository()
-
-    # ──────────────────── 즐겨찾기 추가 ────────────────────
 
     @transactional
     async def add_favorite(self, user_id: str, place_id: str) -> None:
@@ -34,9 +34,11 @@ class FavoritePlaceService:
             raise ValueError("이미 즐겨찾기한 장소입니다.")
 
         favorite = FavoritePlace(user_id=user_id, place_id=place_id)
-        await fav_repo.save(favorite)
-
-    # ──────────────────── 즐겨찾기 삭제 ────────────────────
+        # check→insert 사이 동시 요청(더블클릭)이 끼면 unique 제약 위반 → 500 대신 400 으로.
+        try:
+            await fav_repo.save(favorite)
+        except IntegrityError as e:
+            raise ValueError("이미 즐겨찾기한 장소입니다.") from e
 
     @transactional
     async def remove_favorite(self, user_id: str, place_id: str) -> None:
@@ -53,8 +55,6 @@ class FavoritePlaceService:
             raise ValueError("즐겨찾기하지 않은 장소입니다.")
 
         await fav_repo.delete_by_user_and_place(user_id, place_id)
-
-    # ──────────────────── 즐겨찾기 목록 조회 ────────────────────
 
     @transactional
     async def get_favorites(self, user_id: str) -> FavoritePlaceListData:

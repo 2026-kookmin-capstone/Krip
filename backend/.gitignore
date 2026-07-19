@@ -23,3 +23,6 @@ krip-firebase-secret-key.json
 htmlcov/
 coverage.xml
 coverage.json
+
+# Ruff
+.ruff_cache/

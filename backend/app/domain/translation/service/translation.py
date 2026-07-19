@@ -1,12 +1,24 @@
+import re
+
 from httpx import HTTPStatusError, RequestError
 
+from app.core.ai.papago_translator.load import PapagoTranslator
+from app.domain.translation.dto.translation import DetectData, TranslateData
+from app.domain.translation.schema.translation import LangCode
 from app.domain.translation.service.exception import (
+    TranslationQuotaExceededError,
     TranslationUnreachableError,
     TranslationVendorError,
 )
-from app.domain.translation.schema.translation import LangCode
-from app.domain.translation.dto.translation import DetectData, TranslateData
-from app.core.ai.papago_translator.load import PapagoTranslator
+
+
+# Papago 오류 응답의 errorCode 필드만 추출 — body 원문은 로그·예외에 싣지 않는다.
+_VENDOR_CODE_PATTERN = re.compile(r'"errorCode"\s*:\s*"([0-9A-Za-z_]{1,16})"')
+
+
+def _vendor_code(response) -> str | None:
+    match = _VENDOR_CODE_PATTERN.search(response.text or "")
+    return match.group(1) if match else None
 
 
 class TranslationService:
@@ -19,19 +31,23 @@ class TranslationService:
     def __init__(self):
         self._translator = PapagoTranslator()
 
-    # ──────────────────── 언어 감지 ────────────────────
-
     async def detect(self, text: str) -> DetectData:
         """입력 문장의 언어를 감지합니다."""
         try:
             result = await self._translator.detect(text)
         except HTTPStatusError as e:
-            raise TranslationVendorError(e.response.status_code, e.response.text) from e
+            if e.response.status_code == 429:
+                raise TranslationQuotaExceededError from e
+            raise TranslationVendorError(e.response.status_code, _vendor_code(e.response)) from e
         except RequestError as e:
-            raise TranslationUnreachableError(str(e)) from e
+            raise TranslationUnreachableError from e
+        except (KeyError, ValueError, TypeError) as e:
+            # 200 이지만 payload 스키마가 어긋남(JSONDecodeError=ValueError / KeyError) —
+            # 벤더 응답 이상이므로 502 로 매핑 (자체 500 오분류 방지).
+            # TypeError: 200 body 가 dict 가 아니거나(JSON null/list/str) 중간 노드가 None/str
+            # 이라 payload["message"]["result"] 접근이 터지는 경우까지 502 로 흡수.
+            raise TranslationVendorError(200) from e
         return DetectData(lang_code=result.lang_code)
-
-    # ──────────────────── 번역 ────────────────────
 
     async def translate(
         self,
@@ -43,7 +59,15 @@ class TranslationService:
         try:
             result = await self._translator.translate(text, source, target)
         except HTTPStatusError as e:
-            raise TranslationVendorError(e.response.status_code, e.response.text) from e
+            if e.response.status_code == 429:
+                raise TranslationQuotaExceededError from e
+            raise TranslationVendorError(e.response.status_code, _vendor_code(e.response)) from e
         except RequestError as e:
-            raise TranslationUnreachableError(str(e)) from e
+            raise TranslationUnreachableError from e
+        except (KeyError, ValueError, TypeError) as e:
+            # 200 이지만 payload 스키마가 어긋남(JSONDecodeError=ValueError / KeyError) —
+            # 벤더 응답 이상이므로 502 로 매핑 (자체 500 오분류 방지).
+            # TypeError: 200 body 가 dict 가 아니거나(JSON null/list/str) 중간 노드가 None/str
+            # 이라 payload["message"]["result"] 접근이 터지는 경우까지 502 로 흡수.
+            raise TranslationVendorError(200) from e
         return TranslateData(translated_text=result.translated_text)

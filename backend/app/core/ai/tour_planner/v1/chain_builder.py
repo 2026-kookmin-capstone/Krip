@@ -1,10 +1,11 @@
-from typing import Dict, Any, Optional, List
-from pydantic import BaseModel, Field
-from langchain_core.prompts import ChatPromptTemplate
 from functools import lru_cache
+from typing import Any, Dict, List, Optional
 
-from app.core.llm_manager import ModelName, get_llm_manager
+from langchain_core.prompts import ChatPromptTemplate
+from pydantic import BaseModel, Field
+
 from app.core.ai.tour_planner.v1.prompt_manager import get_tour_planner_prompt_manager
+from app.core.llm_manager import ModelName, get_llm_manager
 
 
 class PlaceRecommendation(BaseModel):
@@ -65,7 +66,6 @@ class TourPlannerChainManager:
         self._llm_manager = get_llm_manager()
         self._chains: Dict[str, Any] = {}
 
-
     def build_recommend_destinations_chain(self) -> Any:
         """여행지 추천 체인을 생성합니다."""
         if 'recommend_destinations' not in self._chains:
@@ -77,7 +77,6 @@ class TourPlannerChainManager:
             self._chains['recommend_destinations'] = prompt | model.with_structured_output(TourRecommendationResult)
 
         return self._chains['recommend_destinations']
-
 
     def build_tour_plan_chain(self) -> Any:
         """실제 장소 데이터 기반 여행 플랜 생성 체인을 생성합니다."""
@@ -91,11 +90,9 @@ class TourPlannerChainManager:
 
         return self._chains['build_tour_plan']
 
-
     def get_chain(self, chain_name: str) -> Optional[Any]:
         """특정 체인을 반환합니다."""
         return self._chains.get(chain_name)
-
 
     def build_all_chains(self) -> None:
         """모든 체인을 생성합니다."""

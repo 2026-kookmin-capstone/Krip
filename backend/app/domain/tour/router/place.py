@@ -1,24 +1,25 @@
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Query, Depends, Request
-from dependency_injector.wiring import Provide, inject
 
-from app.schema.common import MessageResponse
-from app.domain.tour.service.tour_search_history import TourSearchHistoryService
-from app.domain.tour.service.place import PlaceService
-from app.domain.tour.service.favorite_place import FavoritePlaceService
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
+
+from app.container import Container
+from app.core.logger import get_logger
 from app.domain.tour.schema.place import (
+    FavoritePlaceListResponse,
+    FavoritePlaceRequest,
+    FavoritePlaceResponse,
     PlaceDetailResponse,
-    PlaceResponse,
     PlaceListResponse,
     PlaceLocationResponse,
     PlacePriceRangeResponse,
+    PlaceResponse,
     PlaceReviewResponse,
-    FavoritePlaceRequest,
-    FavoritePlaceResponse,
-    FavoritePlaceListResponse,
 )
-from app.core.logger import get_logger
-from app.container import Container
+from app.domain.tour.service.favorite_place import FavoritePlaceService
+from app.domain.tour.service.place import PlaceService
+from app.domain.tour.service.tour_search_history import TourSearchHistoryService
+from app.schema.common import MessageResponse
 
 
 router = APIRouter(prefix="/places", tags=["관광 장소"])
@@ -29,16 +30,13 @@ DEFAULT_LAT = 37.57594
 DEFAULT_LNG = 126.97688
 
 
-# ──────────────────── 장소 조회 ────────────────────
-
-
 @router.get("")
 @inject
 async def get_places(
     request: Request,
     lat: Optional[float] = Query(None, description="위도 (미입력 시 광화문 기준)"),
     lng: Optional[float] = Query(None, description="경도 (미입력 시 광화문 기준)"),
-    keyword: Optional[str] = Query(None, min_length=1, description="검색 키워드 (장소명, 카테고리)"),
+    keyword: Optional[str] = Query(None, min_length=1, max_length=50, description="검색 키워드 (장소명, 카테고리)"),
     cursor: Optional[str] = Query(None, description="다음 페이지 커서"),
     max_distance: Optional[float] = Query(None, gt=0, description="최대 검색 반경 (미터)"),
     place_service: PlaceService = Depends(Provide[Container.place_service]),
@@ -61,7 +59,9 @@ async def get_places(
                 try:
                     await search_history_service.save_search(user_id=user_id, search_name=keyword)
                 except Exception as e:
-                    logger.warning("검색어 저장 키워드({}) 실패 (무시) - 에러: {}", keyword, e)
+                    logger.bind(user_id=user_id, error=e).warning(
+                        "검색 기록 저장 실패 (무시)"
+                    )
 
             result = await place_service.search_nearby_places(
                 lat=actual_lat,
@@ -89,9 +89,6 @@ async def get_places(
         places=[_to_place_response(p) for p in result.places],
         next_cursor=result.next_cursor,
     )
-
-
-# ──────────────────── 내부 변환 유틸 ────────────────────
 
 
 def _to_place_response(place) -> PlaceResponse:
@@ -136,9 +133,6 @@ def _to_place_response(place) -> PlaceResponse:
         distance=place.distance,
         is_favorite=place.is_favorite,
     )
-
-
-# ──────────────────── 즐겨찾기 ────────────────────
 
 
 @router.get("/favorites")
@@ -198,9 +192,6 @@ async def remove_favorite(
     return MessageResponse(message="즐겨찾기가 해제되었습니다.")
 
 
-# ──────────────────── 장소 단건 조회 ────────────────────
-
-
 @router.get("/{place_id}")
 @inject
 async def get_place(
@@ -221,9 +212,6 @@ async def get_place(
         raise HTTPException(status_code=404, detail="장소를 찾을 수 없습니다.")
 
     return _to_place_response(result)
-
-
-# ──────────────────── 내부 변환 유틸 (즐겨찾기) ────────────────────
 
 
 def _to_favorite_response(fav) -> FavoritePlaceResponse:

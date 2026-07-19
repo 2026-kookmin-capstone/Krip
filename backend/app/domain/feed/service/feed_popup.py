@@ -4,14 +4,14 @@
 
 user 미존재 / detail 결손은 같은 404 로 일원화 (회원가입 상태 enumeration 차단).
 """
-from app.domain.feed.service.exception import PopupTargetNotFoundError
-from app.domain.feed.service.access import resolve_viewer_visibilities
-from app.domain.feed.repository.feed_post import FeedPostRepository
-from app.domain.feed.dto.feed_post import FeedPostData
-from app.domain.feed.dto.feed_popup import POPUP_FEED_LIMIT, FeedPopupData
-from app.domain.auth.repository.user import UserRepository
-from app.database.session import UnitOfWork, transactional
 from app.core.logger import get_logger
+from app.database.session import UnitOfWork, transactional
+from app.domain.auth.repository.user import UserRepository
+from app.domain.feed.dto.feed_popup import POPUP_FEED_LIMIT, FeedPopupData
+from app.domain.feed.dto.feed_post import FeedPostData
+from app.domain.feed.repository.feed_post import FeedPostRepository
+from app.domain.feed.service.access import resolve_viewer_visibilities
+from app.domain.feed.service.exception import PopupTargetNotFoundError
 
 
 logger = get_logger("feed.popup.service")
@@ -20,7 +20,6 @@ logger = get_logger("feed.popup.service")
 class FeedPopupService:
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
-
 
     @transactional
     async def get_popup(self, viewer_id: str, owner_id: str) -> FeedPopupData:
@@ -57,7 +56,6 @@ class FeedPopupService:
             profile_image_url=owner.detail.profile_image_url,
             feed_items=[self._to_feed_dto(r) for r in rows],
         )
-
 
     @staticmethod
     def _to_feed_dto(row) -> FeedPostData:

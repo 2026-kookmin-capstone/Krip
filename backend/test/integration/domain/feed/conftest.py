@@ -6,15 +6,16 @@
 `feed_post_like_service` / `feed_post_comment_service` 는 InboxService 의존성을 받기
 때문에 fan-out 통합 시 실 mongo 컬렉션에 인박스 항목이 적재되는 흐름까지 e2e 로 검증 가능.
 """
-import pytest_asyncio
-import pytest
 import os
+
+import pytest
+import pytest_asyncio
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from app.domain.notification.service.inbox import InboxService
-from app.domain.notification.model.inbox import InboxItem
-from app.domain.feed.service.feed_post_like import FeedPostLikeService
 from app.domain.feed.service.feed_post_comment import FeedPostCommentService
+from app.domain.feed.service.feed_post_like import FeedPostLikeService
+from app.domain.notification.model.inbox import InboxItem
+from app.domain.notification.service.inbox import InboxService
 
 
 def _require_mongo_url() -> str:
@@ -59,8 +60,6 @@ def inbox_service(mongo_db) -> InboxService:
 def feed_post_like_service(uow, inbox_service) -> FeedPostLikeService:
     return FeedPostLikeService(uow=uow, inbox_service=inbox_service)
 
-
-# ──────────────────── feed_post_service (S3 + Pillow mock) ────────────────────
 
 @pytest.fixture
 def feed_storage_mock(monkeypatch):
@@ -157,7 +156,7 @@ async def seed_friendship(session_factory):
 
 @pytest_asyncio.fixture
 async def seed_block(session_factory):
-    """blocker → blocked 차단 관계 시드. FeedBlockedError 검증용."""
+    """blocker → blocked 차단 관계 시드. 차단 시나리오 검증용."""
     from app.domain.friend.model.user_block import UserBlock
 
     async def _seed(blocker: str, blocked: str):

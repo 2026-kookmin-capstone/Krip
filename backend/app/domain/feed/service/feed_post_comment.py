@@ -17,19 +17,25 @@ delete 는 cascade 안 함 (정책상 보존, deep link 404 + TTL 30일로 자�
 """
 from typing import Optional
 
-from app.util.id_generator import generate_feed_post_comment_id
-from app.domain.notification.service.inbox import InboxService
-from app.domain.feed.service.exception import FeedPostCommentNotFoundError
-from app.domain.feed.service.access import load_viewable_post
-from app.domain.feed.repository.feed_post_comment import FeedPostCommentRepository, PAGE_SIZE
-from app.domain.feed.model.feed_post_comment import FeedPostComment
+from sqlalchemy.exc import IntegrityError
+
+from app.core.logger import get_logger
+from app.database.session import UnitOfWork, transactional
 from app.domain.feed.dto.feed_post_comment import (
+    CreateCommentResult,
     FeedPostCommentData,
     FeedPostCommentListData,
-    CreateCommentResult,
 )
-from app.database.session import UnitOfWork, transactional
-from app.core.logger import get_logger
+from app.domain.feed.model.feed_post_comment import FeedPostComment
+from app.domain.feed.repository.feed_post_comment import PAGE_SIZE, FeedPostCommentRepository
+from app.domain.feed.service.access import load_viewable_post
+from app.domain.feed.service.exception import (
+    FeedNotFoundError,
+    FeedPostCommentNotFoundError,
+)
+from app.domain.notification.service.inbox import InboxService
+from app.util.cursor import encode_cursor
+from app.util.id_generator import generate_feed_post_comment_id
 
 
 logger = get_logger("feed.post.comment.service")
@@ -47,7 +53,6 @@ class FeedPostCommentService:
     def __init__(self, uow: UnitOfWork, inbox_service: InboxService):
         self.uow = uow
         self.inbox_service = inbox_service
-
 
     async def create_comment(
         self,
@@ -75,7 +80,6 @@ class FeedPostCommentService:
             )
         return result.dto
 
-
     @transactional
     async def _create_comment_tx(
         self,
@@ -98,7 +102,11 @@ class FeedPostCommentService:
             user_id=user_id,
             content=normalized,
         )
-        saved = await repo.save(comment)
+        # load_viewable_post 와 INSERT 사이 게시물이 동시 삭제되면 FK 위반 — 404 로 매핑.
+        try:
+            saved = await repo.save(comment)
+        except IntegrityError:
+            raise FeedNotFoundError("존재하지 않는 게시물입니다.") from None
         logger.info(
             "피드 댓글 작성 (user_id={}, post_id={}, comment_id={})",
             user_id, post.post_id, saved.comment_id,
@@ -119,7 +127,6 @@ class FeedPostCommentService:
             notify_post_preview=post.thumbnail_small_url,
         )
 
-
     @transactional
     async def list_comments(
         self,
@@ -130,13 +137,19 @@ class FeedPostCommentService:
         """댓글 목록 (최신순 PAGE_SIZE). 가시성 검증 후 cursor 페이지네이션."""
         post = await load_viewable_post(self._session, viewer_id=viewer_id, post_id=post_id)
         repo = FeedPostCommentRepository(self._session)
-        comments = await repo.find_by_post(post_id=post.post_id, cursor=cursor)
-        next_cursor = comments[-1].comment_id if len(comments) == PAGE_SIZE else None
+        comments = await repo.find_by_post(
+            post_id=post.post_id, viewer_id=viewer_id, cursor=cursor,
+        )
+        has_more = len(comments) > PAGE_SIZE
+        comments = comments[:PAGE_SIZE]
+        next_cursor = (
+            encode_cursor(comments[-1].created_at, comments[-1].comment_id)
+            if has_more else None
+        )
         return FeedPostCommentListData(
             comments=[self._to_dto(c) for c in comments],
             next_cursor=next_cursor,
         )
-
 
     @transactional
     async def delete_comment(
@@ -158,7 +171,6 @@ class FeedPostCommentService:
             "피드 댓글 삭제 (user_id={}, post_id={}, comment_id={})",
             user_id, post_id, comment_id,
         )
-
 
     @staticmethod
     def _to_dto(c: FeedPostComment) -> FeedPostCommentData:

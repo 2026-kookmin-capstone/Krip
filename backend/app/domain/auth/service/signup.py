@@ -1,14 +1,15 @@
-from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
-from app.domain.auth.repository.user import UserRepository
-from app.domain.auth.model.user import User, UserStatus
-from app.domain.auth.dto.signup import SignupStatus, SignupResult
+from sqlalchemy.exc import IntegrityError
+
 from app.database.session import UnitOfWork, transactional
+from app.domain.auth.dto.signup import SignupResult, SignupStatus
+from app.domain.auth.model.user import User, UserStatus
+from app.domain.auth.repository.user import UserRepository
+from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
 
 
 class SignupService:
     def __init__(self, uow: UnitOfWork):
         self.uow = uow
-
 
     @transactional
     async def check_and_register(self, auth_provider: str, auth_provider_id: str) -> SignupResult:
@@ -31,12 +32,20 @@ class SignupService:
         user = await user_repo.find_by_provider(auth_provider, auth_provider_id)
 
         if user is None:
-            user = User(
-                auth_provider=auth_provider,
-                auth_provider_id=auth_provider_id,
-            )
-            await user_repo.save(user)
-            return SignupResult(user_id=user.user_id, status=SignupStatus.NEW)
+            # 동시 콜백(더블클릭/두 탭)이 둘 다 신규로 판단해 INSERT 하면 uq_provider_account
+            # 위반. SAVEPOINT 로 감싸 패자만 롤백하고 승자 row 로 수렴 → 500 회피.
+            try:
+                async with self._session.begin_nested():
+                    user = User(
+                        auth_provider=auth_provider,
+                        auth_provider_id=auth_provider_id,
+                    )
+                    await user_repo.save(user)
+                return SignupResult(user_id=user.user_id, status=SignupStatus.NEW)
+            except IntegrityError:
+                user = await user_repo.find_by_provider(auth_provider, auth_provider_id)
+                if user is None:
+                    raise
 
         if user.status == UserStatus.INACTIVE:
             return SignupResult(user_id=user.user_id, status=SignupStatus.WITHDRAWAL_PENDING)
