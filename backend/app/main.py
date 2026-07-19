@@ -8,6 +8,7 @@ from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from prometheus_client import start_http_server
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 import app.database.model  # ORM relationship registry side effect
 from app.api.v1.health import router as health_router
@@ -54,6 +55,7 @@ from app.middleware.tracking import (
     SecurityHeadersMiddleware,
     UnhandledExceptionMiddleware,
     handle_domain_error,
+    handle_http_exception,
     handle_validation_error,
 )
 
@@ -194,6 +196,8 @@ def create_app() -> FastAPI:
     app.add_exception_handler(RequestValidationError, handle_validation_error)
     # 도메인 예외 안전망 — 라우터가 except 를 빠뜨려도 500 누출 대신 선언된 status.
     app.add_exception_handler(DomainError, handle_domain_error)
+    # 4xx detail 을 추적 로그 필드(error_detail)로 — Grafana 로그 패널에서 사유 확인용.
+    app.add_exception_handler(StarletteHTTPException, handle_http_exception)
 
     # Starlette middleware는 등록 역순으로 실행된다.
     app.add_middleware(RegisterCheckMiddleware)

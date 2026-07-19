@@ -4,7 +4,10 @@ import uuid
 from typing import Callable, Optional
 
 from fastapi import Request, Response
-from fastapi.exception_handlers import request_validation_exception_handler
+from fastapi.exception_handlers import (
+    http_exception_handler,
+    request_validation_exception_handler,
+)
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -90,12 +93,28 @@ def _validation_error_summary(exc: RequestValidationError) -> str:
     return "; ".join(parts)
 
 
+# 4xx 추적 로그에 싣는 detail 상한 — 서버 작성 문자열이지만 id 목록 등이 섞여 길어질 수 있다.
+_ERROR_DETAIL_MAX_LEN = 200
+
+
+def _stamp_error_detail(request: Request, detail: object) -> None:
+    if isinstance(detail, str) and detail:
+        request.state.error_detail = detail[:_ERROR_DETAIL_MAX_LEN]
+
+
 async def handle_domain_error(request: Request, exc: Exception) -> Response:
     """except 를 등록하지 않은 엔드포인트의 도메인 예외를 500 대신 선언된 status 로 응답."""
+    _stamp_error_detail(request, str(exc))
     return JSONResponse(
         status_code=getattr(exc, "status_code", 400),
         content={"detail": str(exc)},
     )
+
+
+async def handle_http_exception(request: Request, exc: Exception) -> Response:
+    """라우터가 던진 HTTPException 의 detail 을 4xx 추적 로그 필드로 노출한다."""
+    _stamp_error_detail(request, getattr(exc, "detail", None))
+    return await http_exception_handler(request, exc)  # type: ignore[arg-type]
 
 
 async def handle_validation_error(
@@ -248,6 +267,9 @@ class ErrorTrackingMiddleware(BaseHTTPMiddleware):
             validation_errors = getattr(request.state, "validation_errors", None)
             if validation_errors:
                 context["validation_errors"] = validation_errors
+            error_detail = getattr(request.state, "error_detail", None)
+            if error_detail:
+                context["error_detail"] = error_detail
             self.logger.bind(event="http_client_error", **context).warning(
                 "HTTP client error response"
             )

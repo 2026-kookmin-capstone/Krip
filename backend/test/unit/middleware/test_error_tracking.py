@@ -837,3 +837,55 @@ def test_logs_full_safe_route_template_across_mounts(
     assert client_errors[0]["extra"]["path"] == expected_route
     assert client_errors[0]["extra"]["route"] == expected_route
     assert "MOUNT_SECRET" not in repr(client_errors)
+
+
+async def test_client_error_log_includes_stamped_error_detail(log_records):
+    """handle_http_exception/handle_domain_error 가 심은 detail 이 4xx 로그 필드로 노출된다."""
+    from app.middleware.tracking import handle_http_exception
+
+    request = Request({
+        "type": "http",
+        "method": "POST",
+        "path": "/api/auth/register",
+        "query_string": b"",
+        "headers": [],
+        "client": ("127.0.0.1", 1234),
+        "scheme": "http",
+        "server": ("testserver", 80),
+        "state": {"request_id": "RID_1", "user_id": "USER_1"},
+        "route": SimpleNamespace(path="/api/auth/register"),
+    })
+    exc = HTTPException(status_code=409, detail="이미 2차 회원가입이 완료된 유저입니다.")
+    await handle_http_exception(request, exc)
+
+    middleware = ErrorTrackingMiddleware(_unused_app)
+    response = await middleware.dispatch(
+        request,
+        _respond(409, {"detail": "이미 2차 회원가입이 완료된 유저입니다."}),
+    )
+
+    client_errors = _client_errors(log_records)
+    assert response.status_code == 409
+    assert len(client_errors) == 1
+    assert client_errors[0]["extra"]["error_detail"] == (
+        "이미 2차 회원가입이 완료된 유저입니다."
+    )
+
+
+async def test_stamped_error_detail_is_truncated(log_records):
+    from app.middleware.tracking import _ERROR_DETAIL_MAX_LEN, _stamp_error_detail
+
+    request = Request({
+        "type": "http",
+        "method": "GET",
+        "path": "/x",
+        "query_string": b"",
+        "headers": [],
+        "client": ("127.0.0.1", 1234),
+        "scheme": "http",
+        "server": ("testserver", 80),
+        "state": {},
+    })
+    _stamp_error_detail(request, "가" * 500)
+
+    assert len(request.state.error_detail) == _ERROR_DETAIL_MAX_LEN
