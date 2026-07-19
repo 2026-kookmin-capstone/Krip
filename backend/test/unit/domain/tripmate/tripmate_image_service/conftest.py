@@ -79,9 +79,18 @@ def draft_find_one_mock(monkeypatch):
 
 
 @pytest.fixture
+def user_repo_mock():
+    """탈퇴 fence — 기본 ACTIVE. 거부 케이스는 lock_if_active 를 False 로 override."""
+    mock = AsyncMock()
+    mock.lock_if_active.return_value = True
+    return mock
+
+
+@pytest.fixture
 def service(
     monkeypatch, mock_session,
     image_repo_mock, post_image_repo_mock, storage_mock, draft_find_one_mock,
+    user_repo_mock,
 ):
     """모든 외부 의존성 mock 치환 후 service 인스턴스화.
 
@@ -96,6 +105,10 @@ def service(
     monkeypatch.setattr(
         "app.domain.tripmate.service.tripmate_image.TripmatePostImageRepository",
         lambda session: post_image_repo_mock,
+    )
+    monkeypatch.setattr(
+        "app.domain.tripmate.service.tripmate_image.UserRepository",
+        lambda session: user_repo_mock,
     )
     service = TripmateImageService(
         uow=FakeUnitOfWork(mock_session),

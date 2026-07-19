@@ -4,6 +4,7 @@ from typing import BinaryIO, List
 from app.core.logger import get_logger
 from app.core.object_storage import get_object_storage
 from app.database.session import UnitOfWork, transactional
+from app.domain.auth.repository.user import UserRepository
 from app.domain.tripmate.model.tripmate_image import TripmateImage
 from app.domain.tripmate.model.tripmate_post_draft import TripmatePostDraft
 from app.domain.tripmate.repository.tripmate_image import TripmateImageRepository
@@ -34,21 +35,18 @@ class TripmateImageService:
         file_name: str,
         content_type: str,
     ) -> TripmateImage:
-        return await self._upload_image(user_id, file, file_name, content_type)
+        image = await self._upload_to_storage(user_id, file, file_name, content_type)
+        saved = await self._persist_uploads(user_id, [image])
+        return saved[0]
 
-    async def _upload_image(
+    async def _upload_to_storage(
         self,
         user_id: str,
         file: BinaryIO,
         file_name: str,
         content_type: str,
     ) -> TripmateImage:
-        """
-        이미지 업로드
-
-        1. Object Storage 영구 경로에 업로드
-        2. MongoDB 이미지 테이블에 메타데이터 저장
-        """
+        """S3 업로드만 수행 — 메타데이터 저장은 _persist_uploads 가 fence 아래에서."""
         image_id = generate_tripmate_image_id()
         prefix = post_prefix(user_id)
 
@@ -59,24 +57,49 @@ class TripmateImageService:
             await self._compensate_upload(image_id, image_url)
             raise asyncio.CancelledError
 
-        image = TripmateImage(
+        return TripmateImage(
             user_id=user_id,
             image_id=image_id,
             image_url=image_url,
         )
+
+    async def _persist_uploads(
+        self, user_id: str, images: List[TripmateImage],
+    ) -> List[TripmateImage]:
+        """fence 통과 시 메타데이터 저장, 거부/실패 시 업로드 전체를 보상 삭제한다."""
         try:
             saved, cancelled = await drain_on_cancellation(
-                self.image_repo.save(image),
+                self._save_images_if_active(user_id, images),
             )
         except BaseException:
-            await self._compensate_upload(image_id, image_url)
+            for image in images:
+                await self._compensate_upload(image.image_id, image.image_url)
             raise
-        if cancelled:
-            await self._compensate_upload(image_id, image_url)
-            raise asyncio.CancelledError
+        if cancelled or saved is None:
+            for image in images:
+                await self._compensate_upload(image.image_id, image.image_url)
+            if cancelled:
+                raise asyncio.CancelledError
+            raise PermissionError("비활성 계정은 이미지를 업로드할 수 없습니다.")
 
-        logger.info("이미지 업로드 완료 (user_id={}, image_id={})", user_id, image_id)
+        for image in saved:
+            logger.info(
+                "이미지 업로드 완료 (user_id={}, image_id={})", user_id, image.image_id,
+            )
         return saved
+
+    @transactional
+    async def _save_images_if_active(
+        self, user_id: str, images: List[TripmateImage],
+    ) -> List[TripmateImage] | None:
+        """account FOR SHARE 를 Mongo 저장 완료까지 유지해 탈퇴 commit 과 직렬화한다.
+
+        S3 업로드(수 초) 동안 미들웨어 검사가 stale 해지는 TOCTOU 를 닫는다 —
+        탈퇴가 먼저 commit 됐으면 None 을 반환해 호출측이 업로드를 보상 삭제한다.
+        """
+        if not await UserRepository(self._session).lock_if_active(user_id):
+            return None
+        return [await self.image_repo.save(image) for image in images]
 
     async def _compensate_upload(self, image_id: str, image_url: str) -> None:
         try:
@@ -98,11 +121,12 @@ class TripmateImageService:
 
         files: [(file, file_name, content_type), ...]
 
-        all-or-nothing: gather 가 형제를 취소하지 않아 1건 실패 시 나머지가 고아로 남으므로,
-        전부 완료를 기다린 뒤 실패가 있으면 성공분을 보상 삭제하고 원 예외를 올린다.
+        all-or-nothing: S3 업로드는 병렬, 메타데이터 저장은 전부 성공한 뒤 단일
+        트랜잭션(account fence) 아래에서 일괄 수행한다. 업로드 1건이라도 실패하면
+        성공분을 보상 삭제하고 원 예외를 올린다.
         """
         results = await asyncio.gather(
-            *(self._upload_image(user_id, file, file_name, content_type)
+            *(self._upload_to_storage(user_id, file, file_name, content_type)
               for file, file_name, content_type in files),
             return_exceptions=True,
         )
@@ -111,7 +135,6 @@ class TripmateImageService:
             succeeded = [r for r in results if isinstance(r, TripmateImage)]
             for img in succeeded:
                 try:
-                    await self.image_repo.delete_by_image_id(img.image_id)
                     await self.storage.delete(img.image_url)
                 except Exception as cleanup_err:
                     logger.warning(
@@ -119,7 +142,7 @@ class TripmateImageService:
                         img.image_id, cleanup_err,
                     )
             raise errors[0]
-        return list(results)
+        return await self._persist_uploads(user_id, list(results))
 
     async def get_images(self, user_id: str) -> List[TripmateImage]:
         """

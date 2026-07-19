@@ -31,6 +31,25 @@ from test.unit.domain.tripmate.tripmate_image_service.model_factory import (
 class TestUploadImage:
     """Tests for TripmateImageService.upload_image."""
 
+    async def test_withdrawn_account_upload_rejected_and_compensated(
+        self, service, storage_mock, image_repo_mock, user_repo_mock,
+    ):
+        """S3 업로드 중 탈퇴가 commit 되면(fence 거부) 메타데이터 저장 없이 업로드를
+        보상 삭제한다 — 미들웨어 검사와 저장 사이의 TOCTOU 창을 닫는 회귀."""
+        storage_mock.upload_perm.return_value = "https://img/uploaded.jpg"
+        user_repo_mock.lock_if_active.return_value = False
+
+        with pytest.raises(PermissionError, match="비활성 계정"):
+            await service.upload_image(
+                user_id="USER_withdrawn",
+                file=b"binary",
+                file_name="test.jpg",
+                content_type="image/jpeg",
+            )
+
+        image_repo_mock.save.assert_not_awaited()
+        storage_mock.delete.assert_awaited_once_with("https://img/uploaded.jpg")
+
     async def test_uploads_to_storage_and_saves_metadata(
         self, service, storage_mock, image_repo_mock,
     ):
@@ -137,8 +156,8 @@ class TestUploadImages:
     ):
         """1건 실패 시 이미 성공한 형제 업로드를 보상 삭제하고 예외 전파 (고아 방지).
 
-        gather 는 첫 예외에 형제를 취소하지 않아, cleanup 없이는 성공분이 S3+Mongo 에
-        고아로 남는다.
+        gather 는 첫 예외에 형제를 취소하지 않아, cleanup 없이는 성공분이 S3 에 고아로
+        남는다. 메타데이터 저장은 전부 성공한 뒤에만 수행되므로 Mongo 보상은 불필요.
         """
         storage_mock.upload_perm.side_effect = [
             "https://img/1.jpg", RuntimeError("boom"), "https://img/3.jpg",
@@ -154,11 +173,11 @@ class TestUploadImages:
                 ],
             )
 
-        # 성공한 형제(1, 3) 만 S3 + Mongo 보상 삭제
+        # 성공한 형제(1, 3) 만 S3 보상 삭제 — Mongo 는 저장 전이라 보상 대상 아님
         assert storage_mock.delete.await_count == 2
         deleted = {c.args[0] for c in storage_mock.delete.await_args_list}
         assert deleted == {"https://img/1.jpg", "https://img/3.jpg"}
-        assert image_repo_mock.delete_by_image_id.await_count == 2
+        image_repo_mock.save.assert_not_awaited()
 
 
 @pytest.mark.unit
