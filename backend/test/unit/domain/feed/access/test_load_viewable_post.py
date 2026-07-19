@@ -6,7 +6,7 @@
 검증:
     - 미존재 post                 → FeedNotFoundError (404)
     - 본인 글 fast-path           → block / friendship 조회 자체 안 함
-    - 차단 관계                    → FeedBlockedError (403)
+    - 차단 관계                    → FeedNotFoundError (404, 열거 차단)
     - PUBLIC + 비친구             → 통과
     - FRIENDS + 친구              → 통과
     - FRIENDS + 비친구            → FeedNotFoundError (정보 누출 회피로 404)
@@ -20,7 +20,7 @@ import pytest
 
 from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
 from app.domain.feed.service.access import load_viewable_post
-from app.domain.feed.service.exception import FeedBlockedError, FeedNotFoundError
+from app.domain.feed.service.exception import FeedNotFoundError
 from app.domain.friend.model.friendship import FriendshipStatus
 from test.unit.domain.feed.mock_factory import make_feed_post_with_counts
 
@@ -107,13 +107,14 @@ class TestOwnerFastPath:
 
 @pytest.mark.unit
 class TestBlocked:
-    async def test_either_direction_block_raises(
+    async def test_either_direction_block_maps_to_not_found(
         self, session, feed_repo_mock, block_repo_mock, friendship_repo_mock,
     ):
+        """차단도 404 — 403 을 주면 차단당한 쪽이 post_id 존재를 열거할 수 있다."""
         feed_repo_mock.find_by_post_id.return_value = _mk_row(user_id="USER_owner")
         block_repo_mock.find_blocks_between.return_value = [object()]
 
-        with pytest.raises(FeedBlockedError):
+        with pytest.raises(FeedNotFoundError):
             await load_viewable_post(session, viewer_id="USER_v", post_id="FDP_x")
         friendship_repo_mock.find_between.assert_not_called()
 

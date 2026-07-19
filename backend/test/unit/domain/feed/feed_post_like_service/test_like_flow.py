@@ -38,17 +38,30 @@ class TestAddLike:
         like_repo_mock.save.assert_not_called()
 
     async def test_race_integrity_error_treated_as_duplicate(
-        self, service, like_repo_mock,
+        self, service, like_repo_mock, feed_post_repo_mock,
     ):
         """find 통과 직후 INSERT 에서 composite PK 충돌 (동시 두 번 클릭) →
-        일반 중복 케이스와 동일한 ValueError 로 일원화 (라우터에서 400)."""
+        재조회로 게시물 존재 확인 후 일반 중복과 동일한 ValueError (라우터에서 400)."""
         like_repo_mock.find_by_user_and_post.return_value = None
         like_repo_mock.save.side_effect = IntegrityError(
             statement="INSERT", params=None, orig=Exception("duplicate key"),
         )
         with pytest.raises(ValueError, match="이미 좋아요"):
             await service.add_like(user_id="USER_v", post_id="FDP_x")
-        # IntegrityError 후엔 같은 session 으로 추가 쿼리 안 함 (PendingRollbackError 회피)
+        feed_post_repo_mock.find_by_post_id.assert_awaited_once()
+        like_repo_mock.count_by_post.assert_not_called()
+
+    async def test_race_integrity_error_on_deleted_post_maps_to_not_found(
+        self, service, like_repo_mock, feed_post_repo_mock,
+    ):
+        """가시성 검증과 INSERT 사이 게시물이 삭제되면 FK 위반 → '이미 좋아요' 가 아니라 404."""
+        like_repo_mock.find_by_user_and_post.return_value = None
+        like_repo_mock.save.side_effect = IntegrityError(
+            statement="INSERT", params=None, orig=Exception("fk violation"),
+        )
+        feed_post_repo_mock.find_by_post_id.return_value = None
+        with pytest.raises(FeedNotFoundError):
+            await service.add_like(user_id="USER_v", post_id="FDP_x")
         like_repo_mock.count_by_post.assert_not_called()
 
 

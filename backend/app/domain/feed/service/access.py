@@ -64,7 +64,9 @@ async def load_viewable_post(
 ) -> FeedPost:
     """단건 로드 + viewer 의 가시성 검증.
 
-    매핑: 미존재 → 404, 양방향 차단 → 403, visibility 미충족 → 404 (enumeration 차단).
+    매핑: 미존재 → 404, 양방향 차단 → 404, visibility 미충족 → 404.
+    post 단위 경로는 차단도 404 로 통일한다 — 403 을 돌려주면 차단당한 쪽이
+    403/404 차이로 post_id 존재 여부를 열거할 수 있다.
     """
     repo = FeedPostRepository(session)
     # access check 만 필요해도 viewer_id 전달 — 단일 진입점 유지 (subquery 비용 ~0.3ms 무시).
@@ -77,9 +79,12 @@ async def load_viewable_post(
     if post.user_id == viewer_id:
         return post
 
-    visibilities = await resolve_viewer_visibilities(
-        session, viewer_id=viewer_id, owner_id=post.user_id,
-    )
+    try:
+        visibilities = await resolve_viewer_visibilities(
+            session, viewer_id=viewer_id, owner_id=post.user_id,
+        )
+    except FeedBlockedError:
+        raise FeedNotFoundError("존재하지 않는 게시물입니다.") from None
     if post.visibility not in visibilities:
         raise FeedNotFoundError("존재하지 않는 게시물입니다.")
     return post

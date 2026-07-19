@@ -12,7 +12,7 @@
     |---|---|
     | PRIVATE post 타인 댓글             | FeedNotFoundError                 |
     | FRIENDS post 비친구 댓글           | FeedNotFoundError                 |
-    | 차단 관계 댓글                     | FeedBlockedError                  |
+    | 차단 관계 댓글                     | FeedNotFoundError (존재 은닉)      |
     | 빈 content                         | ValueError (strip 후 빈)          |
     | 공백만 content                     | ValueError                        |
     | 다른 작성자 delete                 | PermissionError                   |
@@ -24,7 +24,6 @@ import pytest
 from app.domain.feed.model.feed_post import FeedVisibility
 from app.domain.feed.repository.feed_post_comment import PAGE_SIZE
 from app.domain.feed.service.exception import (
-    FeedBlockedError,
     FeedNotFoundError,
     FeedPostCommentNotFoundError,
 )
@@ -56,7 +55,7 @@ class TestVisibilityGuards:
                 user_id=actor_id, post_id=post_id, content="hi",
             )
 
-    async def test_blocked_user_raises_blocked_error(
+    async def test_blocked_user_gets_not_found(
         self, mongo_db, feed_post_comment_service, seed_feed_post, seed_block,
     ):
         post_id, owner_id = await seed_feed_post(visibility=FeedVisibility.PUBLIC)
@@ -64,7 +63,7 @@ class TestVisibilityGuards:
 
         await seed_block(blocker=owner_id, blocked=actor_id)
 
-        with pytest.raises(FeedBlockedError):
+        with pytest.raises(FeedNotFoundError):
             await feed_post_comment_service.create_comment(
                 user_id=actor_id, post_id=post_id, content="hi",
             )

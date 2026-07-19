@@ -19,8 +19,10 @@ from app.database.session import UnitOfWork, transactional
 from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
 from app.domain.feed.dto.feed_post_like import AddLikePayload, LikedUserData
 from app.domain.feed.model.feed_post_like import FeedPostLike
+from app.domain.feed.repository.feed_post import FeedPostRepository
 from app.domain.feed.repository.feed_post_like import FeedPostLikeRepository
 from app.domain.feed.service.access import load_viewable_post
+from app.domain.feed.service.exception import FeedNotFoundError
 from app.domain.friend.repository.user_block import UserBlockRepository
 from app.domain.notification.service.inbox import InboxService
 
@@ -61,9 +63,18 @@ class FeedPostLikeService:
         if existing is not None:
             raise ValueError("이미 좋아요를 누른 게시물입니다.")
 
+        # SAVEPOINT 로 감싸 IntegrityError 후에도 세션을 살리고, 게시물 재조회로
+        # PK 중복(더블탭)과 FK 위반(동시 삭제)을 구분한다.
         try:
-            await like_repo.save(FeedPostLike(user_id=user_id, post_id=post.post_id))
+            async with self._session.begin_nested():
+                await like_repo.save(
+                    FeedPostLike(user_id=user_id, post_id=post.post_id),
+                )
         except IntegrityError:
+            if await FeedPostRepository(self._session).find_by_post_id(
+                post.post_id,
+            ) is None:
+                raise FeedNotFoundError("존재하지 않는 게시물입니다.") from None
             raise ValueError("이미 좋아요를 누른 게시물입니다.") from None
         like_count = await like_repo.count_by_post(post.post_id)
         logger.info("피드 좋아요 추가 (user_id={}, post_id={})", user_id, post.post_id)

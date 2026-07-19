@@ -72,10 +72,18 @@ def block_repo_mock():
 
 
 @pytest.fixture
+def feed_post_repo_mock(viewable_post_stub):
+    """IntegrityError 분류용 재조회 — 기본 "게시물 존재" (PK 중복 케이스)."""
+    mock = AsyncMock()
+    mock.find_by_post_id.return_value = viewable_post_stub
+    return mock
+
+
+@pytest.fixture
 def service(
     monkeypatch, mock_session,
     like_repo_mock, detail_repo_mock, viewable_post_stub, inbox_service_mock,
-    block_repo_mock,
+    block_repo_mock, feed_post_repo_mock,
 ):
     """가시성 통과 default 로 주입된 like service.
 
@@ -93,6 +101,10 @@ def service(
     monkeypatch.setattr(
         "app.domain.feed.service.feed_post_like.UserBlockRepository",
         lambda session: block_repo_mock,
+    )
+    monkeypatch.setattr(
+        "app.domain.feed.service.feed_post_like.FeedPostRepository",
+        lambda session: feed_post_repo_mock,
     )
 
     async def _stub_load(session, *, viewer_id, post_id):

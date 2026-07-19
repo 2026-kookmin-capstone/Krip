@@ -17,6 +17,8 @@ delete 는 cascade 안 함 (정책상 보존, deep link 404 + TTL 30일로 자�
 """
 from typing import Optional
 
+from sqlalchemy.exc import IntegrityError
+
 from app.core.logger import get_logger
 from app.database.session import UnitOfWork, transactional
 from app.domain.feed.dto.feed_post_comment import (
@@ -27,7 +29,10 @@ from app.domain.feed.dto.feed_post_comment import (
 from app.domain.feed.model.feed_post_comment import FeedPostComment
 from app.domain.feed.repository.feed_post_comment import PAGE_SIZE, FeedPostCommentRepository
 from app.domain.feed.service.access import load_viewable_post
-from app.domain.feed.service.exception import FeedPostCommentNotFoundError
+from app.domain.feed.service.exception import (
+    FeedNotFoundError,
+    FeedPostCommentNotFoundError,
+)
 from app.domain.notification.service.inbox import InboxService
 from app.util.cursor import encode_cursor
 from app.util.id_generator import generate_feed_post_comment_id
@@ -97,7 +102,11 @@ class FeedPostCommentService:
             user_id=user_id,
             content=normalized,
         )
-        saved = await repo.save(comment)
+        # load_viewable_post 와 INSERT 사이 게시물이 동시 삭제되면 FK 위반 — 404 로 매핑.
+        try:
+            saved = await repo.save(comment)
+        except IntegrityError:
+            raise FeedNotFoundError("존재하지 않는 게시물입니다.") from None
         logger.info(
             "피드 댓글 작성 (user_id={}, post_id={}, comment_id={})",
             user_id, post.post_id, saved.comment_id,

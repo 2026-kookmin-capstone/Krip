@@ -5,6 +5,7 @@ FeedPostRepository / ObjectStorage 의 AsyncMock + 도메인 모델의 spec'd Ma
 에서 만든다. 테스트 파일이 직접 conftest 에서 helper 를 import 하지 않도록 cross-test
 재사용 가능한 helper 는 모두 본 모듈에 모은다.
 """
+from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from typing import Optional
 from unittest.mock import AsyncMock, MagicMock
@@ -35,6 +36,12 @@ def make_mock_session() -> MagicMock:
     session.flush = AsyncMock()
     session.delete = AsyncMock()
     session.get = AsyncMock(return_value=None)
+
+    @asynccontextmanager
+    async def _nested():
+        yield
+
+    session.begin_nested = MagicMock(side_effect=lambda: _nested())
     return session
 
 

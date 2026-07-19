@@ -156,7 +156,7 @@ async def seed_friendship(session_factory):
 
 @pytest_asyncio.fixture
 async def seed_block(session_factory):
-    """blocker → blocked 차단 관계 시드. FeedBlockedError 검증용."""
+    """blocker → blocked 차단 관계 시드. 차단 시나리오 검증용."""
     from app.domain.friend.model.user_block import UserBlock
 
     async def _seed(blocker: str, blocked: str):
