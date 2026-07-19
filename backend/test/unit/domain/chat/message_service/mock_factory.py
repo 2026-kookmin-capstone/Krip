@@ -55,7 +55,6 @@ def make_chat_room_repo_mock() -> AsyncMock:
     """
     from app.domain.chat.model.chat_room import ChatRoomType as _CRT
     mock = AsyncMock()
-    mock.update_last_message.return_value = None
     room = SimpleNamespace(
         chat_room_id="CR_1",
         type=_CRT.GROUP,

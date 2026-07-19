@@ -109,28 +109,6 @@ class ChatRoomRepository:
         result = await self.session.execute(stmt)
         return [(row[0], row[1], row[2]) for row in result.all()]
 
-    async def update_last_message(
-        self,
-        chat_room_id: str,
-        message_id: str,
-        server_seq: int,
-        at: datetime,
-    ) -> None:
-        """최신 메시지 역정규화 필드 갱신. 실패 시 호출측이 `dirty:chat_room` 에 적재."""
-        # synchronize_session=False — UPDATE 후 메모리의 ChatRoom 인스턴스를 expire 시키지
-        # 않아 뒤따르는 `_to_dto` 가 GENERATED 컬럼 lazy load (MissingGreenlet) 를 안 만든다.
-        stmt = (
-            update(ChatRoom)
-            .where(ChatRoom.chat_room_id == chat_room_id)
-            .values(
-                last_message_id=message_id,
-                last_message_server_seq=server_seq,
-                last_message_at=at,
-            )
-            .execution_options(synchronize_session=False)
-        )
-        await self.session.execute(stmt)
-
     async def update_last_message_if_greater(
         self,
         chat_room_id: str,

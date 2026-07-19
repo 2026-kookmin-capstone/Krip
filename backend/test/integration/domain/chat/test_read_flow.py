@@ -425,34 +425,3 @@ class TestMarkReadFlow:
                 me_id=b, me_session_id="WS_B", room_id=room.chat_room_id,
                 up_to_server_seq=5,
             )
-
-    async def test_count_readers_up_to_excludes_sender_and_left(
-        self, uow, seed_users, seed_friendship, chat_fanout_stub, message_service,
-        session_factory, redis_hot, mongo_db, patch_external_clients,
-    ):
-        """카톡 숫자 뱃지 계산용 집계 — 탈퇴자/발신자 본인 제외, seq 이상 읽은 멤버만."""
-        from app.domain.chat.repository.chat_member import ChatRoomMemberRepository
-
-        a, b, c = await seed_users(3)
-        await seed_friendship(a, b)
-        await seed_friendship(a, c)
-
-        service = RoomService(
-            uow=uow, fanout_service=chat_fanout_stub, message_service=message_service,
-        )
-        room = await service.create_group_room(me_id=a, title="T", member_ids=[b, c])
-        await _insert_message(mongo_db, room.chat_room_id, 10)
-
-        await redis_hot.set(room_seq_key(room.chat_room_id), 10)
-        await service.mark_read(
-            me_id=b, me_session_id="WS_B", room_id=room.chat_room_id,
-            up_to_server_seq=10,
-        )
-
-        async with session_factory() as s:
-            repo = ChatRoomMemberRepository(s)
-            count = await repo.count_readers_up_to(room.chat_room_id, 10, a)
-            assert count == 1
-
-            count2 = await repo.count_readers_up_to(room.chat_room_id, 100, a)
-            assert count2 == 0

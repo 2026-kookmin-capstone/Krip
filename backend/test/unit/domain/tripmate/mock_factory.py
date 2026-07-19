@@ -5,6 +5,7 @@ TripmatePost / TripmatePostLike / UserDetailInform / InboxService 의 AsyncMock 
 한 곳에서 관리한다. friend / notification 도메인의 `*RepositoryMockFactory` 패턴과 일관.
 """
 from contextlib import asynccontextmanager
+from typing import AsyncIterator
 from unittest.mock import AsyncMock, MagicMock
 
 
@@ -146,3 +147,11 @@ def make_draft_service_mock() -> AsyncMock:
     mock = AsyncMock()
     mock.delete_draft.return_value = None
     return mock
+
+
+class NoopTripmateImageReferenceMutex:
+    """@image_reference_locked 를 무력화하는 테스트 더블."""
+
+    @asynccontextmanager
+    async def hold(self, _user_id: str) -> AsyncIterator[None]:
+        yield

@@ -24,10 +24,24 @@ from app.domain.feed.service.thumbnail import (
     ORIGINAL_MAX,
     THUMBNAIL_MEDIUM,
     THUMBNAIL_SMALL,
-    crop_square_and_resize,
+    ProcessedVariant,
+    _crop_square_and_resize,
+    _decode,
+    _shrink_original,
     process_feed_image,
-    shrink_original_if_needed,
 )
+
+
+def crop_square_and_resize(src_bytes: bytes, target_size: int) -> ProcessedVariant:
+    src_image, _, _ = _decode(src_bytes)
+    return _crop_square_and_resize(src_image, target_size)
+
+
+def shrink_original_if_needed(src_bytes: bytes) -> ProcessedVariant:
+    src_image, src_format, was_rotated = _decode(src_bytes)
+    return _shrink_original(
+        src_image, src_bytes, src_format=src_format, was_rotated=was_rotated,
+    )
 
 
 def _save(img: Image.Image, fmt: str, **save_kwargs) -> bytes:

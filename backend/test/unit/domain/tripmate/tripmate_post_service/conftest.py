@@ -8,10 +8,10 @@
 """
 import pytest
 
-from app.domain.tripmate.service.image_reference_mutex import NoopTripmateImageReferenceMutex
 from app.domain.tripmate.service.tripmate_post import TripmatePostService
 from test.unit.domain.tripmate.mock_factory import (
     FakeUnitOfWork,
+    NoopTripmateImageReferenceMutex,
     TripmatePostImageRepositoryMockFactory,
     TripmatePostRepositoryMockFactory,
     UserDetailInformRepositoryMockFactory,

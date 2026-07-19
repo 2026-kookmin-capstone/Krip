@@ -37,7 +37,6 @@ def make_chat_room_repo_mock() -> AsyncMock:
     mock.find_by_id_for_update.side_effect = lambda _room_id: mock.find_by_id.return_value
     mock.find_direct_by_pair.return_value = None
     mock.find_rooms_of_user.return_value = []
-    mock.update_last_message.return_value = None
     return mock
 
 
@@ -62,7 +61,6 @@ def make_chat_member_repo_mock() -> AsyncMock:
     )
     mock.find_user_room_ids.return_value = []
     mock.mark_read.return_value = None
-    mock.count_readers_up_to.return_value = 0
     return mock
 
 

@@ -69,12 +69,6 @@ class TripmateImageReferenceMutex:
             logger.error("이미지 참조 잠금 정리 실패: user_id={}, err={}", user_id, error)
 
 
-class NoopTripmateImageReferenceMutex:
-    @asynccontextmanager
-    async def hold(self, _user_id: str) -> AsyncIterator[None]:
-        yield
-
-
 def image_reference_locked(func: Callable) -> Callable:
     func_signature = signature(func)
 

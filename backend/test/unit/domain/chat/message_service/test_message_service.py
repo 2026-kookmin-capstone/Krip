@@ -1233,7 +1233,6 @@ class TestSendSystemMessage:
         await service.send_system_message(
             room_id="CR_1", action="created", actor_id="U_A",
         )
-        chat_room_repo_mock.update_last_message.assert_not_awaited()
         chat_room_repo_mock.update_last_message_if_greater.assert_awaited_once()
         kwargs = chat_room_repo_mock.update_last_message_if_greater.call_args.kwargs
         assert kwargs["chat_room_id"] == "CR_1"

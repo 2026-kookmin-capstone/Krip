@@ -329,22 +329,3 @@ class ChatRoomMemberRepository:
         )
         result = await self.session.execute(stmt)
         return result.scalar_one_or_none()
-
-    async def count_readers_up_to(
-        self,
-        chat_room_id: str,
-        server_seq: int,
-        exclude_user_id: str,
-    ) -> int:
-        """`server_seq` 이상 읽은 활성 멤버 수 (발신자 제외).
-
-        카톡 뱃지 = "활성 멤버 수 - (이 카운트 + 1)". 권위있는 unread 값이 필요할 때 사용.
-        """
-        stmt = select(func.count()).select_from(ChatRoomMember).where(
-            ChatRoomMember.chat_room_id == chat_room_id,
-            ChatRoomMember.is_left.is_(False),
-            ChatRoomMember.user_id != exclude_user_id,
-            ChatRoomMember.last_read_message_server_seq >= server_seq,
-        )
-        result = await self.session.execute(stmt)
-        return int(result.scalar_one())

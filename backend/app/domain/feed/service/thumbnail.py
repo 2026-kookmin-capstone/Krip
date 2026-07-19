@@ -66,20 +66,6 @@ def process_feed_image(src_bytes: bytes) -> ProcessedFeedImage:
     )
 
 
-def crop_square_and_resize(src_bytes: bytes, target_size: int) -> ProcessedVariant:
-    """단위 테스트 진입점 — small/medium 단독 호출."""
-    src_image, _, _ = _decode(src_bytes)
-    return _crop_square_and_resize(src_image, target_size)
-
-
-def shrink_original_if_needed(src_bytes: bytes) -> ProcessedVariant:
-    """단위 테스트 진입점 — original 단독 호출."""
-    src_image, src_format, was_rotated = _decode(src_bytes)
-    return _shrink_original(
-        src_image, src_bytes, src_format=src_format, was_rotated=was_rotated,
-    )
-
-
 def _decode(src_bytes: bytes) -> tuple[Image.Image, str, bool]:
     """bytes → (EXIF 회전 정상화된 Image, 입력 포맷, 회전 적용 여부).
 
