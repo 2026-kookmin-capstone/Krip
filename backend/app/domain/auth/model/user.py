@@ -16,6 +16,8 @@ class UserStatus(str, enum.Enum):
 
 
 class User(Base):
+    # 테이블 단수형 규칙의 유일한 의도적 예외 — `user` 는 PG 예약어라 raw SQL 마다
+    # 따옴표가 필요해져 복수형을 유지한다.
     __tablename__ = "users"
 
     # `eager_defaults=True` — server-eval `updated_at` 을 RETURNING 으로 즉시 ORM 반영.
