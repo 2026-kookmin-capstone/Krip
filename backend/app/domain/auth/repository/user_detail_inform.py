@@ -22,11 +22,6 @@ class UserDetailInformRepository:
         result = await self.session.execute(stmt)
         return result.scalar_one_or_none()
 
-    async def find_by_email(self, email: str) -> Optional[UserDetailInform]:
-        stmt = select(UserDetailInform).where(UserDetailInform.email == email)
-        result = await self.session.execute(stmt)
-        return result.scalar_one_or_none()
-
     async def save(self, detail: UserDetailInform) -> UserDetailInform:
         self.session.add(detail)
         await self.session.flush()

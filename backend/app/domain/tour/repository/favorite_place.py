@@ -1,6 +1,6 @@
 from typing import Optional
 
-from sqlalchemy import delete, func, select
+from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.domain.tour.model.favorite_place import FavoritePlace
@@ -33,26 +33,6 @@ class FavoritePlaceRepository:
         )
         result = await self.session.execute(stmt)
         return list(result.scalars().all())
-
-    async def find_place_ids_by_user(self, user_id: str) -> list[str]:
-        """유저의 즐겨찾기 place_id 목록만 조회"""
-        stmt = (
-            select(FavoritePlace.place_id)
-            .where(FavoritePlace.user_id == user_id)
-            .order_by(FavoritePlace.created_at.desc())
-        )
-        result = await self.session.execute(stmt)
-        return list(result.scalars().all())
-
-    async def count_by_user(self, user_id: str) -> int:
-        """유저의 즐겨찾기 개수 조회"""
-        stmt = (
-            select(func.count())
-            .select_from(FavoritePlace)
-            .where(FavoritePlace.user_id == user_id)
-        )
-        result = await self.session.execute(stmt)
-        return result.scalar_one()
 
     async def find_favorited_place_ids(self, user_id: str, place_ids: list[str]) -> set[str]:
         """주어진 place_id 목록 중 유저가 즐겨찾기한 것만 반환 (배치 조회)"""

@@ -17,11 +17,6 @@ def post_prefix(user_id: str) -> str:
     return f"{user_id}/posts"
 
 
-def thread_prefix(user_id: str) -> str:
-    """채팅 쓰레드 이미지 prefix"""
-    return f"{user_id}/threads"
-
-
 def profile_prefix(user_id: str) -> str:
     """프로필 이미지 prefix (유저당 1장 정책)"""
     return f"{user_id}/profile"

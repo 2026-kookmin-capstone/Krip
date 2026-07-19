@@ -22,10 +22,6 @@ class RedisClient:
     _client: "redis.Redis | None" = None
     _dedupe_client: "redis.Redis | None" = None
 
-    DEFAULT_CACHE_TTL = 86400
-    SHORT_CACHE_TTL = 3600
-    MEDIUM_CACHE_TTL = 43200
-
     @classmethod
     async def get_client(cls) -> redis.Redis:
         """hot Redis 클라이언트(DB 0)"""

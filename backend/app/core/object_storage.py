@@ -19,7 +19,6 @@ from app.util.public_image import process_public_image
 
 logger = get_logger("object_storage")
 
-_PREFIX_TMP = "uploads/tmp"
 _PREFIX_PERM = "uploads/perm"
 
 
@@ -50,11 +49,6 @@ class ObjectStorage:
             cls._instance = cls()
         return cls._instance
 
-    async def upload_temp(self, file: BinaryIO, file_name: str, content_type: str) -> str:
-        """임시 경로에 업로드 → URL 반환"""
-        key = self._make_key(file_name, _PREFIX_TMP)
-        return await asyncio.to_thread(self._upload, file, key, content_type)
-
     async def upload_perm(self, file: BinaryIO, file_name: str, content_type: str, *, prefix: str) -> str:
         """검증·재인코딩한 정적 이미지를 영구 경로에 업로드 → URL 반환."""
         return await asyncio.to_thread(self._upload_public_image, file, prefix)
@@ -83,24 +77,6 @@ class ObjectStorage:
         if cancelled:
             raise asyncio.CancelledError
         return uploaded_url
-
-    async def move_to_perm(self, temp_url: str, *, prefix: str) -> str:
-        """임시 파일 1개를 영구 경로로 이동 → 새 URL 반환"""
-        src_key = self._url_to_key(temp_url)
-        filename = src_key.rsplit("/", 1)[-1]
-        dst_key = f"{_PREFIX_PERM}/{prefix}/{filename}"
-
-        await asyncio.to_thread(self._copy, src_key, dst_key)
-        await asyncio.to_thread(self._delete, src_key)
-
-        logger.bind(operation="move").info("Object storage operation completed")
-        return self._key_to_url(dst_key)
-
-    async def move_many_to_perm(self, temp_urls: List[str], *, prefix: str) -> List[str]:
-        """임시 파일 여러 개를 영구 경로로 이동 → 새 URL 목록 반환"""
-        return list(await asyncio.gather(
-            *(self.move_to_perm(url, prefix=prefix) for url in temp_urls)
-        ))
 
     async def delete(self, file_url: str) -> None:
         """URL로 파일 삭제"""
@@ -139,10 +115,6 @@ class ObjectStorage:
             "Object storage operation completed"
         )
         return deleted
-
-    def get_url(self, file_key: str) -> str:
-        """파일 키 → URL"""
-        return self._key_to_url(file_key)
 
     def _make_key(self, file_name: str, prefix: str) -> str:
         ext = self._sanitize_ext(file_name)
@@ -199,20 +171,6 @@ class ObjectStorage:
             key,
             processed.content_type,
         )
-
-    def _copy(self, src_key: str, dst_key: str) -> None:
-        try:
-            self._client.copy_object(
-                Bucket=self.bucket,
-                CopySource={"Bucket": self.bucket, "Key": src_key},
-                Key=dst_key,
-                ACL="public-read",
-            )
-        except ClientError as e:
-            logger.bind(operation="copy", error=e).error(
-                "Object storage operation failed"
-            )
-            raise
 
     def _delete_by_prefix_sync(self, full_prefix: str) -> int:
         paginator = self._client.get_paginator("list_objects_v2")
