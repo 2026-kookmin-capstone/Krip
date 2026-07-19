@@ -13,6 +13,7 @@ from app.core.instrumentation import GeminiInstrumentationHandler
 _LLM_TIMEOUT_SECONDS = 180
 # 재시도 없음 — langchain-google-genai 3.2.0 이 429 재시도를 동기 time.sleep 으로 처리하는 문제 발견.
 # 이벤트 루프를 블로킹하기 때문. 쿼터 소진은 429 로 표면화해 클라가 백오프 필요.
+# 1 은 HttpRetryOptions.attempts(원 요청 포함 총 시도 횟수)로 전달된다 — 0 으로 "수정" 금지.
 _LLM_MAX_RETRIES = 1
 
 
