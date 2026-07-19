@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 from types import SimpleNamespace
 from typing import List, Optional
 
+from app.domain.auth.model.user import UserStatus
 from app.domain.auth.model.user_detail_inform import Gender
 from app.domain.auth.model.user_travel_style import TravelStyle
 from app.domain.friend.model.friendship import FriendshipStatus
@@ -28,6 +29,7 @@ class UserFactory:
         travel_styles: Optional[List[TravelStyle]] = None,
         detail: object = "default",
         created_at: Optional[datetime] = None,
+        status: UserStatus = UserStatus.ACTIVE,
     ) -> SimpleNamespace:
         """detail=None 을 전달하면 2차 회원가입 미완료 케이스를 재현할 수 있다."""
         cls._counter += 1
@@ -50,6 +52,7 @@ class UserFactory:
         styles = [SimpleNamespace(style=s) for s in (travel_styles or [])]
         return SimpleNamespace(
             user_id=uid, detail=detail_obj, travel_styles=styles, created_at=created,
+            status=status,
         )
 
     @classmethod

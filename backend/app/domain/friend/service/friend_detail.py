@@ -1,4 +1,5 @@
 from app.database.session import UnitOfWork, transactional
+from app.domain.auth.model.user import UserStatus
 from app.domain.auth.repository.user import UserRepository
 from app.domain.friend.dto.friend_detail import FriendDetailData
 from app.domain.friend.repository.friendship import FriendshipRepository
@@ -33,7 +34,8 @@ class FriendDetailService:
         block_repo = UserBlockRepository(self._session)
 
         peer = await user_repo.find_by_id_with_profile(peer_id)
-        if peer is None:
+        # 탈퇴 진행 중/정지 계정도 404 — 검색(ACTIVE 필터)과 동일하게 존재를 숨긴다.
+        if peer is None or peer.status != UserStatus.ACTIVE:
             raise UserNotFoundError("존재하지 않는 유저입니다.")
 
         # 차단 검사(404)를 2차 가입 미완료(400) 검사보다 먼저 — 400 이 차단 유저의 존재를 노출하지 않게.

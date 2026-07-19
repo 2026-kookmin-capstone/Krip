@@ -25,6 +25,17 @@ class TestSendRequest:
         with pytest.raises(ValueError, match="존재하지 않는 유저"):
             await service.send_request(requester_id="USER_a", addressee_id="USER_b")
 
+    async def test_inactive_addressee_rejected_as_missing(self, service, user_repo_mock):
+        """탈퇴 진행 중/정지 계정에는 친구 요청을 만들 수 없다 — 존재하지 않는 유저와 동일 응답."""
+        from app.domain.auth.model.user import UserStatus
+
+        user_repo_mock.find_by_id_with_profile.return_value = UserFactory.create(
+            user_id="USER_b", status=UserStatus.SUSPENDED,
+        )
+
+        with pytest.raises(ValueError, match="존재하지 않는 유저"):
+            await service.send_request(requester_id="USER_a", addressee_id="USER_b")
+
     async def test_raises_when_addressee_incomplete_signup(self, service, user_repo_mock):
         """detail=None(2차 미완료) addressee 는 AttributeError(500) 대신 400 으로 거부."""
         user_repo_mock.find_by_id_with_profile.return_value = UserFactory.create(

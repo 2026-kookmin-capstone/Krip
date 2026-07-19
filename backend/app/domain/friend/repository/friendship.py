@@ -1,10 +1,10 @@
 from typing import Iterable, Optional
 
-from sqlalchemy import and_, case, func, or_, select
+from sqlalchemy import and_, case, exists, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 
-from app.domain.auth.model.user import User
+from app.domain.auth.model.user import User, UserStatus
 from app.domain.friend.model.friendship import Friendship, FriendshipStatus
 from app.domain.friend.repository.pair_lock import acquire_pair_lock
 from app.util.cursor import decode_cursor, keyset_where
@@ -12,6 +12,16 @@ from app.util.cursor import decode_cursor, keyset_where
 
 # 친구/요청 목록 페이지 크기
 PAGE_SIZE = 30
+
+
+def _counterpart_is_active(counterpart_id):
+    """탈퇴 진행 중(INACTIVE)/정지 계정을 목록에서 숨긴다 — 검색·상세와 동일 정책."""
+    return exists(
+        select(User.user_id).where(
+            User.user_id == counterpart_id,
+            User.status == UserStatus.ACTIVE,
+        )
+    )
 
 
 class FriendshipRepository:
@@ -198,6 +208,10 @@ class FriendshipRepository:
                     Friendship.requester_id == user_id,
                     Friendship.addressee_id == user_id,
                 ),
+                _counterpart_is_active(case(
+                    (Friendship.requester_id == user_id, Friendship.addressee_id),
+                    else_=Friendship.requester_id,
+                )),
             )
         )
 
@@ -226,6 +240,7 @@ class FriendshipRepository:
             .where(
                 Friendship.addressee_id == user_id,
                 Friendship.status == FriendshipStatus.PENDING,
+                _counterpart_is_active(Friendship.requester_id),
             )
         )
 
@@ -254,6 +269,7 @@ class FriendshipRepository:
             .where(
                 Friendship.requester_id == user_id,
                 Friendship.status == FriendshipStatus.PENDING,
+                _counterpart_is_active(Friendship.addressee_id),
             )
         )
 

@@ -28,6 +28,17 @@ class TestGetFriendDetail:
         with pytest.raises(UserNotFoundError, match="존재하지 않는 유저"):
             await service.get_friend_detail(viewer_id="USER_a", peer_id="USER_b")
 
+    async def test_inactive_peer_hidden_as_not_found(self, service, user_repo_mock):
+        """탈퇴 진행 중/정지 계정은 검색(ACTIVE 필터)과 동일하게 존재를 숨긴다."""
+        from app.domain.auth.model.user import UserStatus
+
+        user_repo_mock.find_by_id_with_profile.return_value = UserFactory.create(
+            user_id="USER_b", status=UserStatus.INACTIVE,
+        )
+
+        with pytest.raises(UserNotFoundError, match="존재하지 않는 유저"):
+            await service.get_friend_detail(viewer_id="USER_a", peer_id="USER_b")
+
     async def test_raises_value_error_when_profile_incomplete(self, service, user_repo_mock):
         user_repo_mock.find_by_id_with_profile.return_value = UserFactory.create(
             user_id="USER_b", detail=None,

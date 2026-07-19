@@ -4,7 +4,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import StaleDataError
 
 from app.database.session import UnitOfWork, transactional
-from app.domain.auth.model.user import User
+from app.domain.auth.model.user import User, UserStatus
 from app.domain.auth.repository.user import UserRepository
 from app.domain.friend.dto.friendship import FriendPeerData, FriendshipData, FriendshipListData
 from app.domain.friend.model.friendship import Friendship, FriendshipStatus
@@ -44,7 +44,7 @@ class FriendshipService:
         await friendship_repo.acquire_pair_lock(requester_id, addressee_id)
 
         addressee = await user_repo.find_by_id_with_profile(addressee_id)
-        if addressee is None:
+        if addressee is None or addressee.status != UserStatus.ACTIVE:
             raise ValueError("존재하지 않는 유저입니다.")
 
         # 차단 관계 우선 검증 (양방향 1 쿼리 조회 후 방향별 메시지 분기)
