@@ -36,6 +36,14 @@ def _upload_args():
     return dict(file=object(), file_name="p.jpg", content_type="image/jpeg")
 
 
+async def _release_and_drain(task: asyncio.Task, *events: asyncio.Event) -> None:
+    for event in events:
+        event.set()
+    if not task.done():
+        task.cancel()
+    await asyncio.wait_for(asyncio.gather(task, return_exceptions=True), timeout=2)
+
+
 def _actual_storage() -> ObjectStorage:
     storage = object.__new__(ObjectStorage)
     storage.bucket = "bucket"
@@ -130,14 +138,17 @@ class TestAddProfileImage:
 
         storage_mock.upload_perm.side_effect = delayed_upload
         task = asyncio.create_task(service.add_profile_image(user_id="USER_a", **_upload_args()))
-        await started.wait()
-        task.cancel()
-        await asyncio.sleep(0)
-        assert not task.done()
-        release.set()
+        try:
+            await asyncio.wait_for(started.wait(), timeout=2)
+            task.cancel()
+            await asyncio.sleep(0)
+            assert not task.done()
+            release.set()
 
-        with pytest.raises(asyncio.CancelledError):
-            await task
+            with pytest.raises(asyncio.CancelledError):
+                await asyncio.wait_for(task, timeout=2)
+        finally:
+            await _release_and_drain(task, release)
 
         storage_mock.delete.assert_awaited_once_with(_NEW_URL)
         user_detail_repo_mock.update.assert_not_awaited()
@@ -155,11 +166,14 @@ class TestAddProfileImage:
         storage_mock.upload_perm.return_value = _NEW_URL
         service._attach_profile_image = blocked_attach
         task = asyncio.create_task(service.add_profile_image(user_id="USER_a", **_upload_args()))
-        await started.wait()
-        task.cancel()
+        try:
+            await asyncio.wait_for(started.wait(), timeout=2)
+            task.cancel()
 
-        with pytest.raises(asyncio.CancelledError):
-            await task
+            with pytest.raises(asyncio.CancelledError):
+                await asyncio.wait_for(task, timeout=2)
+        finally:
+            await _release_and_drain(task, never_finish)
 
         storage_mock.delete.assert_awaited_once_with(_NEW_URL)
 

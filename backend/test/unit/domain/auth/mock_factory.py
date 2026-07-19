@@ -46,6 +46,9 @@ def make_user_repo_mock() -> AsyncMock:
 def make_user_detail_repo_mock() -> AsyncMock:
     mock = AsyncMock()
     mock.find_by_user_id.return_value = None
+    mock.find_by_user_id_for_update.side_effect = (
+        lambda _user_id: mock.find_by_user_id.return_value
+    )
     mock.update.return_value = None
     mock.save.side_effect = lambda d: d
     return mock

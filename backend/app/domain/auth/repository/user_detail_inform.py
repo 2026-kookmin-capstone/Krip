@@ -13,6 +13,15 @@ class UserDetailInformRepository:
     async def find_by_user_id(self, user_id: str) -> Optional[UserDetailInform]:
         return await self.session.get(UserDetailInform, user_id)
 
+    async def find_by_user_id_for_update(self, user_id: str) -> Optional[UserDetailInform]:
+        stmt = (
+            select(UserDetailInform)
+            .where(UserDetailInform.user_id == user_id)
+            .with_for_update()
+        )
+        result = await self.session.execute(stmt)
+        return result.scalar_one_or_none()
+
     async def find_by_email(self, email: str) -> Optional[UserDetailInform]:
         stmt = select(UserDetailInform).where(UserDetailInform.email == email)
         result = await self.session.execute(stmt)

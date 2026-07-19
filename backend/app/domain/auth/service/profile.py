@@ -179,7 +179,7 @@ class ProfileService:
         프로필 이미지 추가 (유저당 1장 정책)
 
         1. (트랜잭션 밖) Object Storage 업로드
-        2. (트랜잭션) detail 검증 + 기존 이미지 없음 확인 + DB 컬럼 갱신
+        2. (트랜잭션) detail row 잠금 + 기존 이미지 없음 확인 + DB 컬럼 갱신
         3. 검증/DB 실패 시 업로드한 S3 파일 보상 삭제 (orphan 방지)
 
         S3 업로드를 트랜잭션 안에서 하면 업로드 왕복(수백 ms~초) 동안 pool 커넥션이
@@ -203,10 +203,10 @@ class ProfileService:
 
     @transactional
     async def _attach_profile_image(self, user_id: str, new_url: str) -> None:
-        """추가 흐름의 트랜잭션 부분 — detail 검증 후 새 URL 기록."""
+        """detail row를 잠가 동시 이미지 mutation과 직렬화한 뒤 새 URL 기록."""
         detail_repo = UserDetailInformRepository(self._session)
 
-        detail = await detail_repo.find_by_user_id(user_id)
+        detail = await detail_repo.find_by_user_id_for_update(user_id)
         if detail is None:
             raise ProfileNotRegisteredError("2차 회원가입이 완료되지 않은 유저입니다.")
         if detail.profile_image_url is not None:
@@ -226,7 +226,7 @@ class ProfileService:
         프로필 이미지 수정 (기존 1장 → 새 1장)
 
         1. (트랜잭션 밖) S3 새 파일 업로드
-        2. (트랜잭션) detail 검증 + DB 갱신 → 이전 URL 반환
+        2. (트랜잭션) detail row 잠금 + DB 갱신 → 이전 URL 반환
         3. 검증/DB 실패 시 새로 업로드한 파일 보상 삭제 (orphan 방지)
         4. (트랜잭션 밖) 이전 S3 파일 삭제 (best-effort)
 
@@ -290,10 +290,10 @@ class ProfileService:
 
     @transactional
     async def _replace_profile_image(self, user_id: str, new_url: str) -> str:
-        """수정 흐름의 트랜잭션 부분 — detail 검증 후 새 URL 기록, 이전 URL 반환."""
+        """detail row를 잠가 새 URL을 기록하고 직전 URL을 반환."""
         detail_repo = UserDetailInformRepository(self._session)
 
-        detail = await detail_repo.find_by_user_id(user_id)
+        detail = await detail_repo.find_by_user_id_for_update(user_id)
         if detail is None:
             raise ProfileNotRegisteredError("2차 회원가입이 완료되지 않은 유저입니다.")
         if detail.profile_image_url is None:
@@ -309,7 +309,7 @@ class ProfileService:
         """
         프로필 이미지 삭제
 
-        1. (트랜잭션) detail 검증 + DB 컬럼 NULL 처리 → 이전 URL 반환
+        1. (트랜잭션) detail row 잠금 + DB 컬럼 NULL 처리 → 이전 URL 반환
         2. (트랜잭션 밖) S3 파일 삭제 (best-effort)
         """
         old_url = await self._null_profile_image(user_id)
@@ -323,10 +323,10 @@ class ProfileService:
 
     @transactional
     async def _null_profile_image(self, user_id: str) -> str:
-        """삭제 흐름의 트랜잭션 부분 — 이전 URL 반환."""
+        """detail row를 잠가 URL을 비우고 직전 URL을 반환."""
         detail_repo = UserDetailInformRepository(self._session)
 
-        detail = await detail_repo.find_by_user_id(user_id)
+        detail = await detail_repo.find_by_user_id_for_update(user_id)
         if detail is None:
             raise ProfileNotRegisteredError("2차 회원가입이 완료되지 않은 유저입니다.")
         if detail.profile_image_url is None:
