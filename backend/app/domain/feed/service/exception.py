@@ -8,18 +8,20 @@ FeedPostCommentNotFoundError → 404
 PopupTargetNotFoundError     → 404
 """
 
+from app.core.exception import ForbiddenError, NotFoundError
 
-class FeedNotFoundError(ValueError):
+
+class FeedNotFoundError(NotFoundError, ValueError):
     """존재하지 않는 게시물. visibility 미충족도 본 예외로 일원화 (정보 누출 회피)."""
 
 
-class FeedBlockedError(PermissionError):
+class FeedBlockedError(ForbiddenError, PermissionError):
     """양방향 차단. PermissionError 하위라 기존 `except PermissionError` 가 그대로 catch."""
 
 
-class FeedPostCommentNotFoundError(ValueError):
+class FeedPostCommentNotFoundError(NotFoundError, ValueError):
     """존재하지 않는 댓글 또는 post_id mismatch (enumeration 차단)."""
 
 
-class PopupTargetNotFoundError(ValueError):
+class PopupTargetNotFoundError(NotFoundError, ValueError):
     """popup 대상 user 미존재 / 회원가입 미완료 일원화 (enumeration 차단)."""

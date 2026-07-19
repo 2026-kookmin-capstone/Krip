@@ -1,3 +1,4 @@
+from app.core.exception import NotFoundError
 from app.database.session import UnitOfWork, transactional
 from app.domain.auth.model.user import UserStatus
 from app.domain.auth.repository.user import UserRepository
@@ -6,7 +7,7 @@ from app.domain.friend.repository.friendship import FriendshipRepository
 from app.domain.friend.repository.user_block import UserBlockRepository
 
 
-class UserNotFoundError(ValueError):
+class UserNotFoundError(NotFoundError, ValueError):
     """URL 경로로 지정된 유저가 DB 에 존재하지 않음 — 라우터에서 404 로 매핑."""
 
 

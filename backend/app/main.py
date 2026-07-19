@@ -19,6 +19,7 @@ from app.core.ai.papago_translator.load import PapagoTranslator
 from app.core.ai.tour_planner.load import TourPlanner
 from app.core.background_tasks import background_tasks
 from app.core.chat.lua_script import lua_scripts
+from app.core.exception import DomainError
 from app.core.fcm import close_fcm, init_fcm
 from app.core.instrumentation import (
     attach_db_instrumentation,
@@ -52,6 +53,7 @@ from app.middleware.tracking import (
     RequestIDMiddleware,
     SecurityHeadersMiddleware,
     UnhandledExceptionMiddleware,
+    handle_domain_error,
     handle_validation_error,
 )
 
@@ -190,6 +192,8 @@ def create_app() -> FastAPI:
 
     # 422 사유(loc/type)를 4xx 추적 로그에 싣는다 — msg/input 은 PII 로 금지.
     app.add_exception_handler(RequestValidationError, handle_validation_error)
+    # 도메인 예외 안전망 — 라우터가 except 를 빠뜨려도 500 누출 대신 선언된 status.
+    app.add_exception_handler(DomainError, handle_domain_error)
 
     # Starlette middleware는 등록 역순으로 실행된다.
     app.add_middleware(RegisterCheckMiddleware)

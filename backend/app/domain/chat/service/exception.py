@@ -1,7 +1,9 @@
 """채팅 도메인 커스텀 예외 — Router 가 HTTP status 로 매핑."""
 
+from app.core.exception import NotFoundError
 
-class ChatRoomNotFoundError(ValueError):
+
+class ChatRoomNotFoundError(NotFoundError, ValueError):
     """요청한 chat_room 이 존재하지 않거나 삭제됨 — 404 매핑."""
     # error_kind 는 WS op 라벨 분류용. instrumentation 이 isinstance 보다 먼저 읽는다.
     error_kind = "not_found"

@@ -90,6 +90,14 @@ def _validation_error_summary(exc: RequestValidationError) -> str:
     return "; ".join(parts)
 
 
+async def handle_domain_error(request: Request, exc: Exception) -> Response:
+    """except 를 등록하지 않은 엔드포인트의 도메인 예외를 500 대신 선언된 status 로 응답."""
+    return JSONResponse(
+        status_code=getattr(exc, "status_code", 400),
+        content={"detail": str(exc)},
+    )
+
+
 async def handle_validation_error(
     request: Request, exc: RequestValidationError,
 ) -> Response:
