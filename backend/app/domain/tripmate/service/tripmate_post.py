@@ -6,6 +6,7 @@ from app.core.object_storage import get_object_storage
 from app.database.session import UnitOfWork, transactional
 from app.domain.auth.model.user_detail_inform import Gender
 from app.domain.auth.repository.user_detail_inform import UserDetailInformRepository
+from app.domain.friend.repository.user_block import UserBlockRepository
 from app.domain.notification.model.inbox import TargetType
 from app.domain.notification.service.inbox import InboxService
 from app.domain.tripmate.dto.tripmate_post import (
@@ -152,6 +153,11 @@ class TripmatePostService:
         # 숨김(is_displayed=False) 게시글은 작성자 본인에게만 노출 — 타인에겐 존재 자체를 숨긴다.
         if not post.is_displayed and post.user_id != user_id:
             raise ValueError("존재하지 않는 게시글입니다.")
+        # 차단 관계(양방향)도 동일하게 존재를 숨긴다 — 목록/검색 필터와 일관.
+        if user_id is not None and user_id != post.user_id:
+            block_repo = UserBlockRepository(self._session)
+            if await block_repo.find_blocks_between(user_id, post.user_id):
+                raise ValueError("존재하지 않는 게시글입니다.")
 
         return self._to_dto(
             post,

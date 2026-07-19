@@ -26,5 +26,3 @@ class AddLikePayload:
     actor_name: str
     actor_profile_image_url: Optional[str]
     post_preview: Optional[str]
-    # 차단 관계 등으로 알림을 억제해야 하면 False — outer 가 fan-out skip.
-    notify: bool = True

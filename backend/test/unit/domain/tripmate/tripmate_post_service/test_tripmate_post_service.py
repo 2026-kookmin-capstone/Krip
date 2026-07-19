@@ -182,6 +182,21 @@ class TestGetPost:
         assert result.is_liked is True
         assert result.image_urls == ["https://img/1", "https://img/2"]
 
+    async def test_blocked_viewer_gets_not_found(
+        self, service, post_repo_mock, block_repo_mock,
+    ):
+        """차단 관계(양방향)면 목록/검색 필터와 동일하게 존재를 숨긴다."""
+        from types import SimpleNamespace
+
+        post = TripmatePostFactory.create(post_id="TMP_x", user_id="USER_owner")
+        post_repo_mock.find_by_id_with_detail.return_value = post
+        block_repo_mock.find_blocks_between.return_value = [
+            SimpleNamespace(blocker_id="USER_owner", blocked_id="USER_viewer"),
+        ]
+
+        with pytest.raises(ValueError, match="존재하지 않는"):
+            await service.get_post(post_id="TMP_x", user_id="USER_viewer")
+
     async def test_orders_images_by_image_order(
         self, service, post_repo_mock,
     ):

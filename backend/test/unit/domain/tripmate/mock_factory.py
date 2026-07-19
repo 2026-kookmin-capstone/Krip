@@ -4,6 +4,7 @@
 TripmatePost / TripmatePostLike / UserDetailInform / InboxService 의 AsyncMock 을
 한 곳에서 관리한다. friend / notification 도메인의 `*RepositoryMockFactory` 패턴과 일관.
 """
+from contextlib import asynccontextmanager
 from unittest.mock import AsyncMock, MagicMock
 
 
@@ -25,6 +26,12 @@ def make_mock_session() -> MagicMock:
     session.flush = AsyncMock()
     session.delete = AsyncMock()
     session.get = AsyncMock(return_value=None)
+
+    @asynccontextmanager
+    async def _nested():
+        yield
+
+    session.begin_nested = MagicMock(side_effect=lambda: _nested())
     return session
 
 

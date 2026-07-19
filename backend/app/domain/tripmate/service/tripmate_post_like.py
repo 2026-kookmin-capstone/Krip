@@ -8,6 +8,7 @@ from app.domain.auth.repository.user_detail_inform import UserDetailInformReposi
 from app.domain.friend.repository.user_block import UserBlockRepository
 from app.domain.notification.service.inbox import InboxService
 from app.domain.tripmate.dto.tripmate_post_like import AddLikePayload
+from app.domain.tripmate.model.tripmate_post import TripmatePost
 from app.domain.tripmate.model.tripmate_post_like import TripmatePostLike
 from app.domain.tripmate.repository.tripmate_post import TripmatePostRepository
 from app.domain.tripmate.repository.tripmate_post_like import TripmatePostLikeRepository
@@ -39,6 +40,10 @@ class TripmatePostLikeService:
         # 숨김 게시글의 좋아요 목록은 작성자 본인에게만 노출 — 타인에겐 존재 자체를 숨긴다.
         if not post.is_displayed and post.user_id != user_id:
             raise ValueError("존재하지 않는 게시글입니다.")
+        if post.user_id != user_id:
+            block_repo = UserBlockRepository(self._session)
+            if await block_repo.find_blocks_between(user_id, post.user_id):
+                raise ValueError("존재하지 않는 게시글입니다.")
 
         return await like_repo.find_user_ids_by_post(post_id)
 
@@ -49,7 +54,7 @@ class TripmatePostLikeService:
         Mongo 일시 장애로 인박스 누락되어도 사용자 응답 정상.
         """
         payload = await self._add_like_tx(user_id=user_id, post_id=post_id)
-        if payload.notify and payload.recipient_id != user_id:
+        if payload.recipient_id != user_id:
             await self.inbox_service.notify_tripmate_like(
                 recipient_id=payload.recipient_id,
                 actor_id=user_id,
@@ -76,17 +81,28 @@ class TripmatePostLikeService:
         # 존재 오라클(좋아요 수 노출)과 작성자에게 가는 알림 발송을 차단한다.
         if not post.is_displayed and post.user_id != user_id:
             raise ValueError("존재하지 않는 게시글입니다.")
+        # 차단 관계(양방향)면 게시글이 목록/조회에서 숨겨지므로 좋아요도 동일하게 거부한다.
+        if post.user_id != user_id:
+            block_repo = UserBlockRepository(self._session)
+            if await block_repo.find_blocks_between(user_id, post.user_id):
+                raise ValueError("존재하지 않는 게시글입니다.")
 
         existing = await like_repo.find_by_user_and_post(user_id, post_id)
         if existing is not None:
             raise ValueError("이미 좋아요를 누른 게시글입니다.")
 
         like = TripmatePostLike(user_id=user_id, post_id=post_id)
-        # check→insert 사이 동시 요청(더블탭)이 끼면 composite PK 위반 → 500 대신 400 으로.
+        # SAVEPOINT 로 감싸 IntegrityError 후에도 세션을 살리고, fresh SELECT 재조회로
+        # PK 중복(더블탭)과 FK 위반(동시 삭제)을 구분한다.
         try:
-            await like_repo.save(like)
-        except IntegrityError as e:
-            raise ValueError("이미 좋아요를 누른 게시글입니다.") from e
+            async with self._session.begin_nested():
+                await like_repo.save(like)
+        except IntegrityError:
+            if await self._session.get(
+                TripmatePost, post_id, populate_existing=True,
+            ) is None:
+                raise ValueError("존재하지 않는 게시글입니다.") from None
+            raise ValueError("이미 좋아요를 누른 게시글입니다.") from None
         like_count = await like_repo.count_by_post(post_id)
 
         # 본인→본인 — outer 가 fan-out skip
@@ -97,18 +113,6 @@ class TripmatePostLikeService:
                 actor_name="",
                 actor_profile_image_url=None,
                 post_preview=None,
-            )
-
-        # 차단 관계(양방향)면 좋아요는 허용하되 알림만 억제 — 괴롭힘 벡터 차단.
-        block_repo = UserBlockRepository(self._session)
-        if await block_repo.find_blocks_between(user_id, post.user_id):
-            return AddLikePayload(
-                like_count=like_count,
-                recipient_id=post.user_id,
-                actor_name="",
-                actor_profile_image_url=None,
-                post_preview=None,
-                notify=False,
             )
 
         # 외부 actor — 같은 트랜잭션 안에서 detail fetch (round-trip 1회).

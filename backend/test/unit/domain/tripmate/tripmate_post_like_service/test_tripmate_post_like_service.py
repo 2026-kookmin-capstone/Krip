@@ -142,23 +142,22 @@ class TestAddLike:
             post_preview="제주 동행 구함",
         )
 
-    async def test_blocked_actor_like_suppresses_notification(
+    async def test_blocked_actor_like_rejected_as_not_found(
         self, service, post_repo_mock, like_repo_mock, block_repo_mock, inbox_service_mock,
     ):
-        """차단 관계면 좋아요 자체는 성공하되 알림은 억제 (괴롭힘 벡터 차단)."""
+        """차단 관계면 게시글이 목록/조회에서 숨겨지므로 좋아요도 존재하지 않는 것으로 거부."""
         from types import SimpleNamespace
 
         post = TripmatePostFactory.create(post_id="TMP_x", user_id="USER_owner")
         post_repo_mock.find_by_id.return_value = post
-        like_repo_mock.count_by_post.return_value = 4
         block_repo_mock.find_blocks_between.return_value = [
             SimpleNamespace(blocker_id="USER_owner", blocked_id="USER_actor"),
         ]
 
-        result = await service.add_like(user_id="USER_actor", post_id="TMP_x")
+        with pytest.raises(ValueError, match="존재하지 않는"):
+            await service.add_like(user_id="USER_actor", post_id="TMP_x")
 
-        assert result == 4
-        like_repo_mock.save.assert_awaited_once()
+        like_repo_mock.save.assert_not_awaited()
         inbox_service_mock.notify_tripmate_like.assert_not_awaited()
 
     async def test_self_like_skips_fanout_but_inserts_rdb(
@@ -227,17 +226,36 @@ class TestAddLike:
         inbox_service_mock.notify_tripmate_like.assert_not_awaited()
 
     async def test_double_tap_race_maps_to_value_error(
-        self, service, post_repo_mock, like_repo_mock, inbox_service_mock,
+        self, service, mock_session, post_repo_mock, like_repo_mock, inbox_service_mock,
     ):
-        """check→insert 사이 동시 요청(더블탭)으로 PK 위반 시 500 이 아니라 400(ValueError)."""
+        """check→insert 사이 동시 요청(더블탭)으로 PK 위반 시 재조회로 게시글 존재를
+        확인한 뒤 500 이 아니라 400(ValueError)."""
         from sqlalchemy.exc import IntegrityError
 
         post = TripmatePostFactory.create(user_id="USER_owner")
         post_repo_mock.find_by_id.return_value = post
+        mock_session.get.return_value = post
         like_repo_mock.find_by_user_and_post.return_value = None
         like_repo_mock.save.side_effect = IntegrityError("mock", {}, Exception())
 
         with pytest.raises(ValueError, match="이미 좋아요"):
+            await service.add_like(user_id="USER_actor", post_id=post.post_id)
+
+        inbox_service_mock.notify_tripmate_like.assert_not_awaited()
+
+    async def test_race_with_deleted_post_maps_to_not_found(
+        self, service, mock_session, post_repo_mock, like_repo_mock, inbox_service_mock,
+    ):
+        """검증과 INSERT 사이 게시글이 삭제되면 FK 위반 → '이미 좋아요' 가 아니라 존재하지 않음."""
+        from sqlalchemy.exc import IntegrityError
+
+        post = TripmatePostFactory.create(user_id="USER_owner")
+        post_repo_mock.find_by_id.return_value = post
+        mock_session.get.return_value = None
+        like_repo_mock.find_by_user_and_post.return_value = None
+        like_repo_mock.save.side_effect = IntegrityError("mock", {}, Exception())
+
+        with pytest.raises(ValueError, match="존재하지 않는"):
             await service.add_like(user_id="USER_actor", post_id=post.post_id)
 
         inbox_service_mock.notify_tripmate_like.assert_not_awaited()

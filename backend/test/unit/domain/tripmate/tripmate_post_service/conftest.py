@@ -85,11 +85,20 @@ def draft_find_one_mock(monkeypatch):
 
 
 @pytest.fixture
+def block_repo_mock():
+    from unittest.mock import AsyncMock
+
+    mock = AsyncMock()
+    mock.find_blocks_between.return_value = []
+    return mock
+
+
+@pytest.fixture
 def service(
     monkeypatch, mock_session,
     post_repo_mock, image_repo_mock, detail_repo_mock,
     draft_service_mock, storage_mock, mongo_image_repo_mock,
-    inbox_service_mock, draft_find_one_mock,
+    inbox_service_mock, draft_find_one_mock, block_repo_mock,
 ):
     """모든 외부 의존성 mock 치환 후 service 인스턴스화.
 
@@ -108,6 +117,10 @@ def service(
     monkeypatch.setattr(
         "app.domain.tripmate.service.tripmate_post.UserDetailInformRepository",
         lambda session: detail_repo_mock,
+    )
+    monkeypatch.setattr(
+        "app.domain.tripmate.service.tripmate_post.UserBlockRepository",
+        lambda session: block_repo_mock,
     )
     monkeypatch.setattr(
         "app.domain.tripmate.service.tripmate_post.get_object_storage",

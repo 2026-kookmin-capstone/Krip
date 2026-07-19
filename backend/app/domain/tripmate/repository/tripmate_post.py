@@ -1,11 +1,12 @@
 from typing import Optional
 
-from sqlalchemy import case, exists, func, literal, or_, select
+from sqlalchemy import and_, case, exists, func, literal, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 
 from app.domain.auth.model.user import User
 from app.domain.auth.model.user_detail_inform import UserDetailInform
+from app.domain.friend.model.user_block import UserBlock
 from app.domain.tripmate.model.tripmate_post import TripmatePost
 from app.domain.tripmate.model.tripmate_post_like import TripmatePostLike
 from app.util.cursor import decode_cursor, keyset_where
@@ -13,6 +14,22 @@ from app.util.cursor import decode_cursor, keyset_where
 
 # 게시글 조회 개수
 PAGE_SIZE = 30
+
+
+def _no_block_with_viewer(viewer_id: str):
+    """차단 관계(양방향) 작성자의 게시글 제외 — friend/feed 도메인과 동일 정책."""
+    return ~exists(
+        select(UserBlock.block_id).where(or_(
+            and_(
+                UserBlock.blocker_id == viewer_id,
+                UserBlock.blocked_id == TripmatePost.user_id,
+            ),
+            and_(
+                UserBlock.blocked_id == viewer_id,
+                UserBlock.blocker_id == TripmatePost.user_id,
+            ),
+        ))
+    )
 
 
 class TripmatePostRepository:
@@ -75,6 +92,8 @@ class TripmatePostRepository:
             )
             .where(TripmatePost.is_displayed == True)
         )
+        if user_id:
+            stmt = stmt.where(_no_block_with_viewer(user_id))
 
         if cursor:
             # cursor로 받은 post_id의 created_at 기준으로 다음 페이지
@@ -137,6 +156,8 @@ class TripmatePostRepository:
                 ),
             )
         )
+        if user_id:
+            stmt = stmt.where(_no_block_with_viewer(user_id))
 
         if cursor:
             decoded = decode_cursor(cursor)
