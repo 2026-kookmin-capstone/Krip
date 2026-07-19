@@ -164,6 +164,14 @@ class Settings(BaseSettings):
         """프로덕션 환경 여부"""
         return self.ENVIRONMENT == "PROD"
 
+    @property
+    def trusted_web_origins(self) -> set[str]:
+        """신뢰하는 웹 origin — CORS/WS 공용. localhost 는 비프로덕션에서만 포함."""
+        origins = {self.FRONTEND_URL}
+        if not self.is_production:
+            origins.add(self.LOCAL_FRONTEND_URL)
+        return origins
+
     @model_validator(mode="after")
     def _validate_signing_secrets(self):
         """PROD 기동 시 JWT 서명키 검증 — 기본값/누락/취약키면 즉시 실패."""

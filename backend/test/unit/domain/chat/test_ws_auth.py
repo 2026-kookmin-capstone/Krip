@@ -467,6 +467,12 @@ class TestIsAllowedOrigin:
     def test_allows_local_frontend_origin(self):
         assert _is_allowed_origin(settings.LOCAL_FRONTEND_URL) is True
 
+    def test_rejects_local_frontend_origin_in_production(self, monkeypatch):
+        """localhost origin 은 비프로덕션에서만 신뢰 — CORS 와 동일 정책 (trusted_web_origins)."""
+        monkeypatch.setattr(settings, "ENVIRONMENT", "PROD")
+        assert _is_allowed_origin(settings.LOCAL_FRONTEND_URL) is False
+        assert _is_allowed_origin(settings.FRONTEND_URL) is True
+
     def test_allows_app_origin_from_whitelist(self, monkeypatch):
         """APP_ALLOWED_ORIGINS 쉼표 리스트가 set 으로 파싱되어 합집합에 들어가는지 확인."""
         monkeypatch.setattr(

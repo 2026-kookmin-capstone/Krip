@@ -326,8 +326,7 @@ def _is_allowed_origin(origin: str | None) -> bool:
     """웹 + 앱 origin 화이트리스트 검증."""
     if origin is None:
         return False
-    allowed = {settings.FRONTEND_URL, settings.LOCAL_FRONTEND_URL} | settings.app_allowed_origins
-    return origin in allowed
+    return origin in settings.trusted_web_origins | settings.app_allowed_origins
 
 
 def _ws_subprotocols(websocket: WebSocket) -> list[str]:
