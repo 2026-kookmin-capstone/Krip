@@ -15,14 +15,47 @@ visibility/caption 정규화, 권한 가드, S3 prefix cleanup 호출까지 cove
     | delete_post 본인              | RDB row 삭제 + S3 cleanup 호출        |
     | delete_post 미존재            | FeedNotFoundError                     |
 """
+import asyncio
+from typing import Any, cast
+
 import pytest
 from sqlalchemy import select
 
+from app.database.session import UnitOfWork
 from app.domain.feed.model.feed_post import FeedPost, FeedVisibility
 from app.domain.feed.service.exception import FeedNotFoundError
 
 
 pytestmark = pytest.mark.integration
+
+
+class _CommitOutcomeFactory:
+    def __init__(self, session_factory, *, applied: bool):
+        self._session_factory = session_factory
+        self._applied = applied
+        self._intercept_next_commit = True
+
+    def __call__(self):
+        return _CommitOutcomeSession(self._session_factory(), self)
+
+
+class _CommitOutcomeSession:
+    def __init__(self, session, owner):
+        self._session = session
+        self._owner = owner
+
+    def __getattr__(self, name):
+        return getattr(self._session, name)
+
+    async def commit(self):
+        if not self._owner._intercept_next_commit:
+            await self._session.commit()
+            return
+        self._owner._intercept_next_commit = False
+        if self._owner._applied:
+            await self._session.commit()
+            raise asyncio.CancelledError
+        raise RuntimeError("commit rejected")
 
 
 class TestUploadPost:
@@ -64,6 +97,48 @@ class TestUploadPost:
         async with session_factory() as session:
             post = await session.get(FeedPost, result.post_id)
             assert post.caption is None
+
+    async def test_commit_applied_then_cancelled_preserves_uploaded_objects(
+        self, feed_post_service, seed_users, session_factory, feed_storage_mock,
+    ):
+        [user_id] = await seed_users(1)
+        feed_post_service.uow = UnitOfWork(session=cast(
+            Any, _CommitOutcomeFactory(session_factory, applied=True),
+        ))
+
+        with pytest.raises(asyncio.CancelledError):
+            await feed_post_service.upload_post(
+                user_id=user_id, file_bytes=b"img",
+                visibility=FeedVisibility.PUBLIC,
+            )
+
+        async with session_factory() as session:
+            post = await session.scalar(
+                select(FeedPost).where(FeedPost.user_id == user_id),
+            )
+            assert post is not None
+        feed_storage_mock.delete_by_prefix.assert_not_awaited()
+
+    async def test_rejected_commit_cleans_uploaded_objects(
+        self, feed_post_service, seed_users, session_factory, feed_storage_mock,
+    ):
+        [user_id] = await seed_users(1)
+        feed_post_service.uow = UnitOfWork(session=cast(
+            Any, _CommitOutcomeFactory(session_factory, applied=False),
+        ))
+
+        with pytest.raises(RuntimeError, match="commit rejected"):
+            await feed_post_service.upload_post(
+                user_id=user_id, file_bytes=b"img",
+                visibility=FeedVisibility.PUBLIC,
+            )
+
+        async with session_factory() as session:
+            post = await session.scalar(
+                select(FeedPost).where(FeedPost.user_id == user_id),
+            )
+            assert post is None
+        feed_storage_mock.delete_by_prefix.assert_awaited_once()
 
 
 class TestGetMyPost:

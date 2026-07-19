@@ -13,7 +13,9 @@ idle hold 되어 풀 압박. 의미 손해 없이 점유 시간 30~50× 감소.
 지워지면 orphan 만 invisible 하게 남음.
 """
 import asyncio
-from typing import Final, Optional
+from typing import Final, Optional, cast
+
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.logger import get_logger
 from app.core.object_storage import get_object_storage
@@ -30,6 +32,11 @@ from app.domain.feed.service.exception import FeedNotFoundError
 from app.domain.feed.service.thumbnail import process_feed_image
 from app.domain.notification.model.inbox import TargetType
 from app.domain.notification.service.inbox import InboxService
+from app.util.cancellation import (
+    drain_on_cancellation,
+    drain_thread_on_cancellation,
+    gather_on_cancellation,
+)
 from app.util.cursor import encode_cursor
 from app.util.id_generator import generate_feed_post_id
 from app.util.storage_prefix import feed_post_prefix
@@ -67,6 +74,8 @@ def _normalize_caption(caption: Optional[str]) -> Optional[str]:
 
 
 class FeedPostService:
+    _session: AsyncSession
+
     def __init__(self, uow: UnitOfWork, inbox_service: InboxService):
         self.uow = uow
         self.inbox_service = inbox_service
@@ -82,7 +91,11 @@ class FeedPostService:
         """피드 업로드. Pillow → S3 병렬 → PG INSERT. 어떤 단계든 실패 시 prefix cleanup."""
         # 세마포어로 동시 Pillow 처리를 상한 (OOM 방지). ValueError → 라우터 400.
         async with _get_image_semaphore():
-            processed = await asyncio.to_thread(process_feed_image, file_bytes)
+            processed, cancelled = await drain_thread_on_cancellation(
+                process_feed_image, file_bytes,
+            )
+            if cancelled:
+                raise asyncio.CancelledError
 
         # post_id / prefix 는 트랜잭션 밖에서 발급 — 어떤 실패 경로에서도 cleanup 호출 가능.
         post_id = generate_feed_post_id()
@@ -90,12 +103,9 @@ class FeedPostService:
 
         caption = _normalize_caption(caption)
 
-        # S3 + INSERT — 외부 try 가 cleanup 단일 진입점. `_insert_post` 의 commit 은
-        # `__aexit__` 에서 일어나므로 commit 실패도 여기서 catch.
+        # 수락된 업로드를 모두 drain한 뒤에만 cleanup 여부를 판정한다.
         try:
-            # gather 는 첫 예외 시 형제를 취소 안 해 in-flight 업로드가 cleanup 스캔 후
-            # 완료되면 고아가 된다. return_exceptions 로 전부 완료 후 raise → 완전한 cleanup.
-            uploads = await asyncio.gather(
+            uploads, cancelled = await gather_on_cancellation(
                 self.storage.upload_to_key(
                     processed.original.data,
                     prefix=prefix,
@@ -114,15 +124,20 @@ class FeedPostService:
                     filename=f"medium.{processed.medium.file_ext}",
                     content_type=processed.medium.content_type,
                 ),
-                return_exceptions=True,
             )
-            # return_exceptions 는 CancelledError(BaseException) 도 결과에 담으므로
-            # Exception 만 보면 취소된 업로드를 놓쳐 고아가 남는다 → BaseException 전체 검사.
+            if cancelled:
+                raise asyncio.CancelledError
             upload_errors = [u for u in uploads if isinstance(u, BaseException)]
             if upload_errors:
                 raise upload_errors[0]
-            original_url, small_url, medium_url = uploads
+            original_url, small_url, medium_url = cast(
+                tuple[str, str, str], tuple(uploads),
+            )
+        except BaseException:
+            await self._safe_cleanup(prefix)
+            raise
 
+        try:
             post = await self._insert_post(
                 user_id=user_id,
                 post_id=post_id,
@@ -133,9 +148,11 @@ class FeedPostService:
                 medium_url=medium_url,
             )
         except BaseException:
-            # BaseException 으로 잡아 CancelledError(취소) 경로에서도 cleanup. shield 로
-            # cleanup 이 취소로 중단되지 않게 하고, 원 예외를 재던져 취소 신호를 삼키지 않는다.
-            await asyncio.shield(self._safe_cleanup(prefix))
+            await self._cleanup_after_insert_failure(
+                post_id=post_id,
+                prefix=prefix,
+                urls=(original_url, small_url, medium_url),
+            )
             raise
 
         # 신규 업로드 → 카운트 0 명백. reload 없이 row 합성 (round-trip 절약).
@@ -309,10 +326,44 @@ class FeedPostService:
             raise FeedNotFoundError("존재하지 않는 게시물입니다.")
         return row
 
+    async def _cleanup_after_insert_failure(
+        self,
+        *,
+        post_id: str,
+        prefix: str,
+        urls: tuple[str, str, str],
+    ) -> None:
+        try:
+            referenced, _ = await drain_on_cancellation(
+                self._uploaded_post_is_referenced(post_id, urls),
+            )
+        except BaseException as error:
+            logger.bind(post_id=post_id, error=error).warning(
+                "Feed upload commit reconciliation failed; preserving objects"
+            )
+            return
+        if not referenced:
+            await self._safe_cleanup(prefix)
+
+    @transactional
+    async def _uploaded_post_is_referenced(
+        self, post_id: str, urls: tuple[str, str, str],
+    ) -> bool:
+        post = await self._session.get(FeedPost, post_id)
+        if post is None:
+            return False
+        return (
+            post.original_url,
+            post.thumbnail_small_url,
+            post.thumbnail_medium_url,
+        ) == urls
+
     async def _safe_cleanup(self, prefix: str) -> None:
         """업로드 실패 경로 best-effort cleanup — 실패해도 원 예외 가리지 않도록 swallow."""
         try:
             await self.storage.delete_by_prefix(prefix)
+        except asyncio.CancelledError:
+            return
         except Exception as e:
             logger.bind(operation="delete_prefix", error=e).warning(
                 "S3 failed-upload cleanup failed"

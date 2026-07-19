@@ -9,9 +9,12 @@ happy path 전체 (실 Pillow + 실 S3 + 실 INSERT) 는 통합 테스트 영역
 `@transactional` 가 실제 commit 까지 호출하므로 mock_session 의 close/commit 도 정상 동작.
 """
 import asyncio
+import threading
+from types import SimpleNamespace
 
 import pytest
 
+from app.core.object_storage import ObjectStorage
 from app.domain.feed.dto.image import ProcessedFeedImage, ProcessedVariant
 from app.domain.feed.model.feed_post import FeedVisibility
 
@@ -130,6 +133,44 @@ class TestUploadCleanupOnFailure:
             )
         storage_mock.delete_by_prefix.assert_awaited_once()
 
+    async def test_commit_applied_then_cancelled_preserves_referenced_upload(
+        self, service, mock_session, storage_mock, stub_thumbnail,
+    ):
+        storage_mock.upload_to_key.return_value = "https://x/url"
+        mock_session.get.return_value = SimpleNamespace(
+            original_url="https://x/url",
+            thumbnail_small_url="https://x/url",
+            thumbnail_medium_url="https://x/url",
+        )
+
+        async def committed_then_cancelled(**_kwargs):
+            raise asyncio.CancelledError
+
+        service._insert_post = committed_then_cancelled
+
+        with pytest.raises(asyncio.CancelledError):
+            await service.upload_post(
+                user_id="USER_a", file_bytes=b"x",
+                visibility=FeedVisibility.PUBLIC, caption="hi",
+            )
+
+        storage_mock.delete_by_prefix.assert_not_awaited()
+
+    async def test_insert_reconciliation_failure_preserves_upload(
+        self, service, mock_session, repo_mock, storage_mock, stub_thumbnail,
+    ):
+        storage_mock.upload_to_key.return_value = "https://x/url"
+        repo_mock.save.side_effect = RuntimeError("commit outcome unknown")
+        mock_session.get.side_effect = RuntimeError("database unavailable")
+
+        with pytest.raises(RuntimeError, match="commit outcome unknown"):
+            await service.upload_post(
+                user_id="USER_a", file_bytes=b"x",
+                visibility=FeedVisibility.PUBLIC, caption="hi",
+            )
+
+        storage_mock.delete_by_prefix.assert_not_awaited()
+
     async def test_cleanup_failure_does_not_mask_original_error(
         self, service, repo_mock, storage_mock, stub_thumbnail,
     ):
@@ -162,3 +203,177 @@ class TestUploadCleanupOnFailure:
         storage_mock.delete_by_prefix.assert_awaited_once()
         called_prefix = storage_mock.delete_by_prefix.await_args.args[0]
         assert called_prefix.startswith("USER_a/feed/FDP_")
+
+    async def test_cancellation_drains_accepted_uploads_before_prefix_cleanup(
+        self, service, repo_mock, storage_mock, stub_thumbnail,
+    ):
+        started = asyncio.Event()
+        release = asyncio.Event()
+        workers: list[asyncio.Task[str]] = []
+        objects: set[str] = set()
+        cleanup_started = asyncio.Event()
+        accepted = 0
+
+        async def upload_finishes_after_coroutine_cancellation(
+            _data, *, prefix, filename, content_type,
+        ):
+            nonlocal accepted
+            accepted += 1
+            if accepted == 3:
+                started.set()
+
+            async def worker() -> str:
+                await release.wait()
+                objects.add(filename)
+                return f"https://storage/{prefix}/{filename}"
+
+            worker_task = asyncio.create_task(worker())
+            workers.append(worker_task)
+            return await asyncio.shield(worker_task)
+
+        async def delete_prefix(_prefix: str) -> int:
+            cleanup_started.set()
+            deleted = len(objects)
+            objects.clear()
+            return deleted
+
+        storage_mock.upload_to_key.side_effect = upload_finishes_after_coroutine_cancellation
+        storage_mock.delete_by_prefix.side_effect = delete_prefix
+        task = asyncio.create_task(service.upload_post(
+            user_id="USER_a",
+            file_bytes=b"x",
+            visibility=FeedVisibility.PUBLIC,
+            caption="cancelled",
+        ))
+        await asyncio.wait_for(started.wait(), timeout=1)
+        task.cancel()
+        cleanup_crossed_uploads = False
+        try:
+            await asyncio.wait_for(cleanup_started.wait(), timeout=0.1)
+            cleanup_crossed_uploads = True
+        except TimeoutError:
+            pass
+        finally:
+            release.set()
+
+        with pytest.raises(asyncio.CancelledError):
+            await task
+        await asyncio.gather(*workers)
+
+        assert not cleanup_crossed_uploads
+        assert objects == set()
+        storage_mock.delete_by_prefix.assert_awaited_once()
+        repo_mock.save.assert_not_awaited()
+
+
+@pytest.mark.unit
+class TestImageProcessingCancellation:
+    async def test_cancelled_processing_holds_semaphore_until_thread_finishes(
+        self, service, storage_mock, monkeypatch,
+    ):
+        from app.domain.feed.service import feed_post as feed_post_module
+
+        first_started = threading.Event()
+        second_started = threading.Event()
+        release = threading.Event()
+        calls = 0
+        calls_lock = threading.Lock()
+
+        def blocking_process(_data):
+            nonlocal calls
+            with calls_lock:
+                calls += 1
+                current = calls
+            (first_started if current == 1 else second_started).set()
+            assert release.wait(timeout=2)
+            return _stub_processed()
+
+        monkeypatch.setattr(feed_post_module, "process_feed_image", blocking_process)
+        monkeypatch.setattr(feed_post_module, "_image_semaphore", asyncio.Semaphore(1))
+        monkeypatch.setattr(
+            feed_post_module, "_image_semaphore_loop", asyncio.get_running_loop(),
+        )
+        storage_mock.upload_to_key.return_value = "https://x/url"
+
+        first = asyncio.create_task(service.upload_post(
+            user_id="USER_a", file_bytes=b"first",
+            visibility=FeedVisibility.PUBLIC,
+        ))
+        assert await asyncio.to_thread(first_started.wait, 1)
+        first.cancel()
+        for task in asyncio.all_tasks():
+            if task is not asyncio.current_task() and "to_thread" in repr(task.get_coro()):
+                task.cancel()
+        second = asyncio.create_task(service.upload_post(
+            user_id="USER_a", file_bytes=b"second",
+            visibility=FeedVisibility.PUBLIC,
+        ))
+
+        try:
+            assert not await asyncio.to_thread(second_started.wait, 0.1)
+        finally:
+            release.set()
+
+        with pytest.raises(asyncio.CancelledError):
+            await first
+        await second
+
+    async def test_forced_all_task_cancellation_drains_upload_threads_before_cleanup(
+        self, service, stub_thumbnail,
+    ):
+        storage = object.__new__(ObjectStorage)
+        storage.endpoint = "https://storage.example.com"
+        storage.bucket = "bucket"
+        started = threading.Event()
+        release = threading.Event()
+        cleanup_started = asyncio.Event()
+        objects: set[str] = set()
+        accepted = 0
+        lock = threading.Lock()
+
+        def blocking_upload(file, key: str, content_type: str) -> str:
+            nonlocal accepted
+            del file, content_type
+            with lock:
+                accepted += 1
+                if accepted == 3:
+                    started.set()
+            assert release.wait(timeout=2)
+            objects.add(key)
+            return f"https://storage.example.com/bucket/{key}"
+
+        async def delete_prefix(prefix: str) -> int:
+            del prefix
+            cleanup_started.set()
+            objects.clear()
+            return 0
+
+        storage._upload = blocking_upload
+        storage.delete_by_prefix = delete_prefix
+        service.storage = storage
+        request = asyncio.create_task(service.upload_post(
+            user_id="USER_a", file_bytes=b"image",
+            visibility=FeedVisibility.PUBLIC,
+        ))
+        assert await asyncio.to_thread(started.wait, 1)
+
+        owned_names = ("upload_post", "upload_variants", "upload_to_key", "to_thread")
+        for task in asyncio.all_tasks():
+            if task is asyncio.current_task():
+                continue
+            if task is request or any(name in repr(task.get_coro()) for name in owned_names):
+                task.cancel()
+
+        cleanup_crossed_uploads = False
+        try:
+            await asyncio.wait_for(cleanup_started.wait(), timeout=0.1)
+            cleanup_crossed_uploads = True
+        except TimeoutError:
+            pass
+        finally:
+            release.set()
+
+        with pytest.raises(asyncio.CancelledError):
+            await request
+        assert not cleanup_crossed_uploads
+        assert objects == set()

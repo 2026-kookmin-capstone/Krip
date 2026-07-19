@@ -13,6 +13,7 @@ from botocore.exceptions import ClientError
 
 from app.config.setting import settings
 from app.core.logger import get_logger
+from app.util.cancellation import drain_thread_on_cancellation
 from app.util.public_image import process_public_image
 
 
@@ -76,7 +77,12 @@ class ObjectStorage:
         if isinstance(file, (bytes, bytearray)):
             import io
             file = io.BytesIO(file)
-        return await asyncio.to_thread(self._upload, file, key, content_type)
+        uploaded_url, cancelled = await drain_thread_on_cancellation(
+            self._upload, file, key, content_type,
+        )
+        if cancelled:
+            raise asyncio.CancelledError
+        return uploaded_url
 
     async def move_to_perm(self, temp_url: str, *, prefix: str) -> str:
         """임시 파일 1개를 영구 경로로 이동 → 새 URL 반환"""
@@ -124,7 +130,11 @@ class ObjectStorage:
     async def delete_by_prefix(self, prefix: str) -> int:
         """특정 경로(prefix) 하위 파일 전체 삭제 → 삭제 건수 반환"""
         full_prefix = f"{_PREFIX_PERM}/{prefix}"
-        deleted = await asyncio.to_thread(self._delete_by_prefix_sync, full_prefix)
+        deleted, cancelled = await drain_thread_on_cancellation(
+            self._delete_by_prefix_sync, full_prefix,
+        )
+        if cancelled:
+            raise asyncio.CancelledError
         logger.bind(operation="delete_prefix", object_count=deleted).info(
             "Object storage operation completed"
         )
