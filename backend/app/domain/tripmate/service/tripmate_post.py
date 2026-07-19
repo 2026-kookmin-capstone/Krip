@@ -21,6 +21,7 @@ from app.domain.tripmate.model.tripmate_post_image import TripmatePostImage
 from app.domain.tripmate.repository.tripmate_image import TripmateImageRepository
 from app.domain.tripmate.repository.tripmate_post import PAGE_SIZE, TripmatePostRepository
 from app.domain.tripmate.repository.tripmate_post_image import TripmatePostImageRepository
+from app.domain.tripmate.service.exception import TripmatePostNotFoundError
 from app.domain.tripmate.service.image_reference_mutex import image_reference_locked
 from app.domain.tripmate.service.tripmate_post_draft import TripmatePostDraftService
 from app.util.cursor import encode_cursor
@@ -149,15 +150,15 @@ class TripmatePostService:
 
         post = await post_repo.find_by_id_with_detail(post_id, user_id=user_id)
         if post is None:
-            raise ValueError("존재하지 않는 게시글입니다.")
+            raise TripmatePostNotFoundError("존재하지 않는 게시글입니다.")
         # 숨김(is_displayed=False) 게시글은 작성자 본인에게만 노출 — 타인에겐 존재 자체를 숨긴다.
         if not post.is_displayed and post.user_id != user_id:
-            raise ValueError("존재하지 않는 게시글입니다.")
+            raise TripmatePostNotFoundError("존재하지 않는 게시글입니다.")
         # 차단 관계(양방향)도 동일하게 존재를 숨긴다 — 목록/검색 필터와 일관.
         if user_id is not None and user_id != post.user_id:
             block_repo = UserBlockRepository(self._session)
             if await block_repo.find_blocks_between(user_id, post.user_id):
-                raise ValueError("존재하지 않는 게시글입니다.")
+                raise TripmatePostNotFoundError("존재하지 않는 게시글입니다.")
 
         return self._to_dto(
             post,
@@ -244,7 +245,7 @@ class TripmatePostService:
 
         post = await post_repo.find_by_id(post_id)
         if post is None:
-            raise ValueError("존재하지 않는 게시글입니다.")
+            raise TripmatePostNotFoundError("존재하지 않는 게시글입니다.")
         if post.user_id != user_id:
             raise PermissionError("게시글 수정 권한이 없습니다.")
 
@@ -323,7 +324,7 @@ class TripmatePostService:
 
         post = await post_repo.find_by_id(post_id)
         if post is None:
-            raise ValueError("존재하지 않는 게시글입니다.")
+            raise TripmatePostNotFoundError("존재하지 않는 게시글입니다.")
         if post.user_id != user_id:
             raise PermissionError("게시글 삭제 권한이 없습니다.")
 
@@ -352,7 +353,7 @@ class TripmatePostService:
 
         post = await post_repo.find_by_id_for_update(post_id)
         if post is None:
-            raise ValueError("존재하지 않는 게시글입니다.")
+            raise TripmatePostNotFoundError("존재하지 않는 게시글입니다.")
         if post.user_id != user_id:
             raise PermissionError("게시글 표시 상태 변경 권한이 없습니다.")
 

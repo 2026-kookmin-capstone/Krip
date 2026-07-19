@@ -33,8 +33,9 @@ class TripmatePostDraftService:
         """
         임시저장 upsert (30초마다 프론트에서 호출)
 
-        - 기존 임시저장이 있으면 덮어쓰기
-        - 없으면 새로 생성
+        - 전체 스냅샷 계약: 클라가 매 호출 폼 전체 상태를 보내므로 문서 통째 덮어쓰기가
+          올바른 시맨틱이다 (생략 필드 = 비운 필드). 부분 병합으로 "고치지" 말 것.
+        - 기존 임시저장이 있으면 덮어쓰기, 없으면 새로 생성
         """
         normalized_image_urls = image_urls or []
         if normalized_image_urls:

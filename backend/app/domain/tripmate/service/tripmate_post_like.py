@@ -12,6 +12,7 @@ from app.domain.tripmate.model.tripmate_post import TripmatePost
 from app.domain.tripmate.model.tripmate_post_like import TripmatePostLike
 from app.domain.tripmate.repository.tripmate_post import TripmatePostRepository
 from app.domain.tripmate.repository.tripmate_post_like import TripmatePostLikeRepository
+from app.domain.tripmate.service.exception import TripmatePostNotFoundError
 
 
 logger = get_logger("tripmate.post.like.service")
@@ -36,14 +37,14 @@ class TripmatePostLikeService:
 
         post = await post_repo.find_by_id(post_id)
         if post is None:
-            raise ValueError("존재하지 않는 게시글입니다.")
+            raise TripmatePostNotFoundError("존재하지 않는 게시글입니다.")
         # 숨김 게시글의 좋아요 목록은 작성자 본인에게만 노출 — 타인에겐 존재 자체를 숨긴다.
         if not post.is_displayed and post.user_id != user_id:
-            raise ValueError("존재하지 않는 게시글입니다.")
+            raise TripmatePostNotFoundError("존재하지 않는 게시글입니다.")
         if post.user_id != user_id:
             block_repo = UserBlockRepository(self._session)
             if await block_repo.find_blocks_between(user_id, post.user_id):
-                raise ValueError("존재하지 않는 게시글입니다.")
+                raise TripmatePostNotFoundError("존재하지 않는 게시글입니다.")
 
         return await like_repo.find_user_ids_by_post(post_id)
 
@@ -76,16 +77,16 @@ class TripmatePostLikeService:
 
         post = await post_repo.find_by_id(post_id)
         if post is None:
-            raise ValueError("존재하지 않는 게시글입니다.")
+            raise TripmatePostNotFoundError("존재하지 않는 게시글입니다.")
         # 숨김 게시글은 작성자 본인에게만 노출 — 조회 경로와 동일 정책. 타인의 좋아요를 막아
         # 존재 오라클(좋아요 수 노출)과 작성자에게 가는 알림 발송을 차단한다.
         if not post.is_displayed and post.user_id != user_id:
-            raise ValueError("존재하지 않는 게시글입니다.")
+            raise TripmatePostNotFoundError("존재하지 않는 게시글입니다.")
         # 차단 관계(양방향)면 게시글이 목록/조회에서 숨겨지므로 좋아요도 동일하게 거부한다.
         if post.user_id != user_id:
             block_repo = UserBlockRepository(self._session)
             if await block_repo.find_blocks_between(user_id, post.user_id):
-                raise ValueError("존재하지 않는 게시글입니다.")
+                raise TripmatePostNotFoundError("존재하지 않는 게시글입니다.")
 
         existing = await like_repo.find_by_user_and_post(user_id, post_id)
         if existing is not None:
@@ -101,7 +102,7 @@ class TripmatePostLikeService:
             if await self._session.get(
                 TripmatePost, post_id, populate_existing=True,
             ) is None:
-                raise ValueError("존재하지 않는 게시글입니다.") from None
+                raise TripmatePostNotFoundError("존재하지 않는 게시글입니다.") from None
             raise ValueError("이미 좋아요를 누른 게시글입니다.") from None
         like_count = await like_repo.count_by_post(post_id)
 

@@ -18,6 +18,7 @@ from app.domain.tripmate.schema.tripmate_post import (
     ToggleDisplayResponse,
     UpdatePostRequest,
 )
+from app.domain.tripmate.service.exception import TripmatePostNotFoundError
 from app.domain.tripmate.service.tripmate_post import TripmatePostService
 from app.domain.tripmate.service.tripmate_post_draft import TripmatePostDraftService
 from app.domain.tripmate.service.tripmate_post_like import TripmatePostLikeService
@@ -133,19 +134,22 @@ async def save_draft(
     """게시글 임시저장 (30초마다 자동 호출)"""
     user_id: str = request.state.user_id
 
-    result = await draft_service.save_draft(
-        user_id=user_id,
-        title=body.title,
-        content=body.content,
-        preferred_age_min=body.preferred_age_min,
-        preferred_age_max=body.preferred_age_max,
-        preferred_gender=body.preferred_gender,
-        region=body.region,
-        travel_start_date=body.travel_start_date,
-        travel_end_date=body.travel_end_date,
-        companion_type=body.companion_type,
-        image_urls=body.image_urls,
-    )
+    try:
+        result = await draft_service.save_draft(
+            user_id=user_id,
+            title=body.title,
+            content=body.content,
+            preferred_age_min=body.preferred_age_min,
+            preferred_age_max=body.preferred_age_max,
+            preferred_gender=body.preferred_gender,
+            region=body.region,
+            travel_start_date=body.travel_start_date,
+            travel_end_date=body.travel_end_date,
+            companion_type=body.companion_type,
+            image_urls=body.image_urls,
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     return _to_draft_response(result)
 
 
@@ -189,8 +193,10 @@ async def get_post(
 
     try:
         result = await post_service.get_post(post_id=post_id, user_id=user_id)
-    except ValueError as e:
+    except TripmatePostNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
     return _to_post_response(result)
 
@@ -221,8 +227,10 @@ async def update_post(
             companion_type=body.companion_type,
             image_urls=body.image_urls,
         )
-    except ValueError as e:
+    except TripmatePostNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     except PermissionError as e:
         raise HTTPException(status_code=403, detail=str(e))
 
@@ -241,8 +249,10 @@ async def delete_post(
 
     try:
         await post_service.delete_post(post_id=post_id, user_id=user_id)
-    except ValueError as e:
+    except TripmatePostNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     except PermissionError as e:
         raise HTTPException(status_code=403, detail=str(e))
 
@@ -261,8 +271,10 @@ async def toggle_display(
 
     try:
         is_displayed = await post_service.toggle_display(post_id=post_id, user_id=user_id)
-    except ValueError as e:
+    except TripmatePostNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     except PermissionError as e:
         raise HTTPException(status_code=403, detail=str(e))
 
@@ -281,6 +293,8 @@ async def add_like(
 
     try:
         like_count = await like_service.add_like(user_id=user_id, post_id=post_id)
+    except TripmatePostNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -299,6 +313,8 @@ async def remove_like(
 
     try:
         like_count = await like_service.remove_like(user_id=user_id, post_id=post_id)
+    except TripmatePostNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -316,8 +332,10 @@ async def get_liked_users(
     user_id: str = request.state.user_id
     try:
         user_ids = await like_service.get_liked_user_ids(post_id=post_id, user_id=user_id)
-    except ValueError as e:
+    except TripmatePostNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
     return LikedUsersResponse(post_id=post_id, user_ids=user_ids)
 

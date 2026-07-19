@@ -164,3 +164,24 @@ class TestSearchNearbyPlaces:
             float(PAGE_SIZE - 1), f"PLACE_{PAGE_SIZE - 1}",
         )
         assert result.next_cursor == expected
+
+
+@pytest.mark.unit
+class TestMalformedGeoDocs:
+    """location 결손/null 문서는 500 대신 기존 (0,0) 폴백으로 응답한다."""
+
+    @pytest.mark.parametrize(
+        "location",
+        [None, {}, {"coordinates": None}, {"coordinates": []}, {"coordinates": [127.0]}],
+    )
+    def test_build_common_fields_survives_missing_coordinates(self, location):
+        from app.domain.tour.service.place import PlaceService
+        from test.unit.domain.tour.place_service.model_factory import PlaceRawFactory
+
+        raw = PlaceRawFactory.create()
+        raw["location"] = location
+
+        fields = PlaceService._build_common_fields(raw)
+
+        assert fields["location"].lat == 0.0
+        assert fields["location"].lng == 0.0

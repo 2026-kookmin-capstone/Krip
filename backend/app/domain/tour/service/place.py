@@ -91,7 +91,10 @@ class PlaceService:
     @staticmethod
     def _build_common_fields(raw: dict) -> dict:
         """MongoDB raw dict → 공통 필드 dict 변환"""
-        coords = raw.get("location", {}).get("coordinates", [0.0, 0.0])
+        # location 이 null 이거나 coordinates 결손인 문서에서 500 대신 기존 (0,0) 폴백 유지.
+        coords = (raw.get("location") or {}).get("coordinates") or [0.0, 0.0]
+        if len(coords) < 2:
+            coords = [0.0, 0.0]
 
         pr = raw.get("price_range")
 
