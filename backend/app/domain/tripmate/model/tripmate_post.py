@@ -1,6 +1,18 @@
 import enum
 
-from sqlalchemy import Boolean, CheckConstraint, Column, Date, DateTime, Enum, ForeignKey, Index, Integer, String
+from sqlalchemy import (
+    Boolean,
+    CheckConstraint,
+    Column,
+    Date,
+    DateTime,
+    Enum,
+    ForeignKey,
+    Index,
+    Integer,
+    String,
+    literal_column,
+)
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
@@ -51,6 +63,14 @@ class TripmatePost(Base):
         Index("ix_tripmate_post_user_id", "user_id"),
         Index("ix_tripmate_post_region", "region"),
         Index("ix_tripmate_post_travel_dates", "travel_start_date", "travel_end_date"),
+        # 브라우즈 피드 keyset (created_at DESC, post_id DESC) 용 — ASC 인덱스의
+        # backward scan 으로 커버. 숨김 글 제외 부분 인덱스로 크기 최소화.
+        Index(
+            "ix_tripmate_post_displayed_created",
+            "created_at",
+            "post_id",
+            postgresql_where=literal_column("is_displayed = true"),
+        ),
         CheckConstraint("preferred_age_min <= preferred_age_max", name="ck_preferred_age_range"),
         CheckConstraint("travel_start_date <= travel_end_date", name="ck_travel_date_range"),
         CheckConstraint("char_length(content) >= 10", name="ck_content_min_length"),
