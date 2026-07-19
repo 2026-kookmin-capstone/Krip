@@ -1,5 +1,7 @@
 -- Atomically add a session and revoke exactly the excess oldest sessions.
 -- KEYS: sessions ZSET, per-session result, user revoke generation.
+-- NOTE: evicted sess:/ws_route: keys are derived from ZSET contents and cannot be
+-- declared in KEYS — single-node Redis assumption (redis_key.py module docstring).
 -- ARGV: session id, expiry ms, now ms, max sessions, result TTL, expected generation.
 local sessions_key = KEYS[1]
 local new_session_id = ARGV[1]

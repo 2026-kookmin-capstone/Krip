@@ -1,6 +1,9 @@
 """채팅 도메인 Redis 키 / TTL 상수.
 
 키 문자열을 코드 전체에 흩뿌리지 않기 위한 모듈 — 네이밍 실수로 키 공간이 어긋나는 사고 방지.
+
+키 스키마는 단일 Redis 노드 전제 (hash tag 미사용). 세션 Lua 스크립트가 ZSET 내용에서
+파생한 sess:/ws_route: 키에 KEYS 미선언으로 접근하므로 Cluster 이전 시 재설계가 필요하다.
 """
 
 # TTL (seconds)

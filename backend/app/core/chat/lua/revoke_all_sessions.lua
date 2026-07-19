@@ -1,5 +1,7 @@
 -- Atomically advance the user revoke generation and remove authoritative sessions.
 -- KEYS: sessions ZSET, revoke generation, idempotent operation result.
+-- NOTE: evicted sess:/ws_route: keys are derived from ZSET contents and cannot be
+-- declared in KEYS — single-node Redis assumption (redis_key.py module docstring).
 -- ARGV[1]: result TTL seconds.
 local prior_result = redis.call("GET", KEYS[3])
 if prior_result then
