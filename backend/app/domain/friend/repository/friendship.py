@@ -68,7 +68,8 @@ class FriendshipRepository:
         `(requester_id, status)` / `(addressee_id, status)` 두 부분 인덱스가 모두 존재해
         PG planner 가 BitmapOr 로 처리. PENDING/REJECTED 는 제외.
 
-        탈퇴 유저는 `users` FK CASCADE 로 친구 관계 row 가 함께 삭제되므로 dangling 없음.
+        탈퇴 유예(INACTIVE)/정지 상대는 목록(find_friends)과 동일하게 제외 — 카운트와
+        목록이 어긋나 숨긴 계정의 존재가 유추되지 않게 한다. 하드 삭제는 FK CASCADE.
         """
         stmt = select(func.count()).select_from(Friendship).where(
             Friendship.status == FriendshipStatus.ACCEPTED,
@@ -76,6 +77,10 @@ class FriendshipRepository:
                 Friendship.requester_id == user_id,
                 Friendship.addressee_id == user_id,
             ),
+            _counterpart_is_active(case(
+                (Friendship.requester_id == user_id, Friendship.addressee_id),
+                else_=Friendship.requester_id,
+            )),
         )
         result = await self.session.execute(stmt)
         return result.scalar_one()
@@ -96,6 +101,7 @@ class FriendshipRepository:
                 Friendship.requester_id == me_id,
                 Friendship.addressee_id == me_id,
             ),
+            _counterpart_is_active(peer_id),
         )
         result = await self.session.execute(stmt)
         return set(result.scalars().all())
