@@ -45,6 +45,15 @@ class TripmatePostRepository:
         """게시글 단건 조회 (게시글 데이터만, 수정/삭제 시 검증용)"""
         return await self.session.get(TripmatePost, post_id)
 
+    async def find_by_id_for_update(self, post_id: str) -> Optional[TripmatePost]:
+        stmt = (
+            select(TripmatePost)
+            .where(TripmatePost.post_id == post_id)
+            .with_for_update()
+        )
+        result = await self.session.execute(stmt)
+        return result.scalar_one_or_none()
+
     async def find_by_id_with_detail(self, post_id: str, user_id: Optional[str] = None) -> Optional[TripmatePost]:
         """게시글 단건 조회 (이미지 + 좋아요 수 + is_liked 포함, 상세 조회용임 display 없는 거 주의)"""
         stmt = (

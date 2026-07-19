@@ -344,13 +344,13 @@ class TripmatePostService:
         """
         게시글 표시 여부 토글 (활성화 ↔ 비활성화)
 
-        1. 게시글 존재 및 작성자 검증
+        1. 게시글 존재 및 작성자 검증 (행 잠금 — 동시 토글의 lost update 방지)
         2. is_displayed 반전
         3. 변경된 is_displayed 값 반환
         """
         post_repo = TripmatePostRepository(self._session)
 
-        post = await post_repo.find_by_id(post_id)
+        post = await post_repo.find_by_id_for_update(post_id)
         if post is None:
             raise ValueError("존재하지 않는 게시글입니다.")
         if post.user_id != user_id:

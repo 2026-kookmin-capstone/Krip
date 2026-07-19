@@ -465,7 +465,7 @@ class TestToggleDisplay:
 
     async def test_toggles_true_to_false(self, service, post_repo_mock):
         post = TripmatePostFactory.create(user_id="USER_a", is_displayed=True)
-        post_repo_mock.find_by_id.return_value = post
+        post_repo_mock.find_by_id_for_update.return_value = post
 
         result = await service.toggle_display(post_id=post.post_id, user_id="USER_a")
 
@@ -474,7 +474,7 @@ class TestToggleDisplay:
 
     async def test_toggles_false_to_true(self, service, post_repo_mock):
         post = TripmatePostFactory.create(user_id="USER_a", is_displayed=False)
-        post_repo_mock.find_by_id.return_value = post
+        post_repo_mock.find_by_id_for_update.return_value = post
 
         result = await service.toggle_display(post_id=post.post_id, user_id="USER_a")
 
@@ -482,14 +482,14 @@ class TestToggleDisplay:
         assert post.is_displayed is True
 
     async def test_raises_when_not_found(self, service, post_repo_mock):
-        post_repo_mock.find_by_id.return_value = None
+        post_repo_mock.find_by_id_for_update.return_value = None
 
         with pytest.raises(ValueError, match="존재하지 않는"):
             await service.toggle_display(post_id="TMP_x", user_id="USER_a")
 
     async def test_raises_when_not_author(self, service, post_repo_mock):
         post = TripmatePostFactory.create(user_id="USER_owner")
-        post_repo_mock.find_by_id.return_value = post
+        post_repo_mock.find_by_id_for_update.return_value = post
 
         with pytest.raises(PermissionError, match="권한"):
             await service.toggle_display(post_id=post.post_id, user_id="USER_other")

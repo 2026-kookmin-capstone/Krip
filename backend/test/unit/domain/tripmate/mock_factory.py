@@ -40,6 +40,7 @@ class TripmatePostRepositoryMockFactory:
     def create(cls) -> AsyncMock:
         mock = AsyncMock()
         mock.find_by_id.return_value = None
+        mock.find_by_id_for_update.return_value = None
         mock.find_by_id_with_detail.return_value = None
         mock.find_all_displayed.return_value = []
         mock.search.return_value = []
