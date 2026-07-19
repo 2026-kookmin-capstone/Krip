@@ -197,12 +197,12 @@ def create_app() -> FastAPI:
     app.add_middleware(BearerTokenMiddleware)
     app.add_middleware(UnhandledExceptionMiddleware)
 
+    cors_origins = [settings.FRONTEND_URL]
+    if not settings.is_production:
+        cors_origins.append(settings.LOCAL_FRONTEND_URL)
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=[
-            settings.FRONTEND_URL,
-            settings.LOCAL_FRONTEND_URL,
-        ],
+        allow_origins=cors_origins,
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
