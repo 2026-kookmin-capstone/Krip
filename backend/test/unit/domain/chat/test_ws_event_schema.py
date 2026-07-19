@@ -42,18 +42,22 @@ class TestSendOpTypeGuard:
         op = SendOp(**self._kwargs())
         assert op.type == MessageType.TEXT
 
-    @pytest.mark.parametrize("t", [MessageType.TEXT, MessageType.IMAGE, MessageType.FILE])
-    def test_accepts_non_system_types(self, t):
-        op = SendOp(**self._kwargs(type=t))
-        assert op.type == t
+    def test_accepts_text_type(self):
+        op = SendOp(**self._kwargs(type=MessageType.TEXT))
+        assert op.type == MessageType.TEXT
 
-    def test_rejects_system_enum(self):
+    @pytest.mark.parametrize(
+        "t", [MessageType.SYSTEM, MessageType.IMAGE, MessageType.FILE, "system", "image"],
+    )
+    def test_rejects_non_text_types(self, t):
+        """SYSTEM 위조 차단 + 미구현 IMAGE/FILE fail-closed."""
         with pytest.raises(ValidationError):
-            SendOp(**self._kwargs(type=MessageType.SYSTEM))
+            SendOp(**self._kwargs(type=t))
 
-    def test_rejects_system_string(self):
+    def test_rejects_empty_content(self):
+        """빈 메시지는 unread 증가·빈 FCM 푸시를 유발하므로 edit 과 동일하게 거부."""
         with pytest.raises(ValidationError):
-            SendOp(**self._kwargs(type="system"))
+            SendOp(**self._kwargs(content=""))
 
 
 def test_read_ack_requires_request_correlation_separate_from_applied_watermark():

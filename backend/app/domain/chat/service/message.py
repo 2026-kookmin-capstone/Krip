@@ -904,8 +904,8 @@ class MessageService:
             raise ValueError("존재하지 않는 메시지입니다.")
         if doc.get("deleted_at") is not None:
             raise ValueError("삭제된 메시지는 편집할 수 없습니다.")
-        if doc.get("type") == MessageType.SYSTEM.value:
-            raise PermissionError("시스템 메시지는 편집할 수 없습니다.")
+        if doc.get("type") != MessageType.TEXT.value:
+            raise PermissionError("text 메시지만 편집할 수 있습니다.")
         if doc.get("sender_id") != editor_user_id:
             raise PermissionError("본인 메시지만 편집할 수 있습니다.")
 

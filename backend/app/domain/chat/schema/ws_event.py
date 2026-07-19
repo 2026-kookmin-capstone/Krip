@@ -20,15 +20,16 @@ class SendOp(BaseModel):
     op: Literal["send"]
     room_id: str = Field(..., description="보낼 방 ID")
     client_msg_id: str = Field(..., description="클라 UUID — 동일 ID 재전송은 dedupe 차단")
-    type: MessageType = Field(MessageType.TEXT, description="메시지 종류 (system 불가)")
-    content: str = Field(..., max_length=2000, description="본문 (2000자 제한)")
+    type: MessageType = Field(MessageType.TEXT, description="메시지 종류 (현재 text 만 허용)")
+    content: str = Field(..., min_length=1, max_length=2000, description="본문 (2000자 제한)")
 
     @field_validator("type")
     @classmethod
-    def _reject_system(cls, v: MessageType) -> MessageType:
-        # SYSTEM 은 서버만 발행 — 클라가 위조하면 unread/푸시를 우회하는 스텔스 메시지가 되므로 거부.
-        if v == MessageType.SYSTEM:
-            raise ValueError("system 메시지는 클라이언트가 보낼 수 없습니다.")
+    def _reject_non_text(cls, v: MessageType) -> MessageType:
+        # SYSTEM 은 서버 전용(위조 시 unread/푸시 우회 스텔스 메시지). IMAGE/FILE 은 미구현 —
+        # 업로드 인프라·클라 렌더 부재 상태의 저장을 fail-closed 로 막고, 출시 시 검증과 함께 개방.
+        if v != MessageType.TEXT:
+            raise ValueError("text 메시지만 보낼 수 있습니다.")
         return v
 
 

@@ -1317,11 +1317,13 @@ class TestEditMessage:
                 new_content="new",
             )
 
-    async def test_raises_on_system_message(self, service, message_repo_mock):
+    @pytest.mark.parametrize("msg_type", ["system", "image", "file"])
+    async def test_raises_on_non_text_message(self, service, message_repo_mock, msg_type):
+        """text 외 타입은 편집 불가 — system 위조 방지 + 미구현 image/file fail-closed."""
         message_repo_mock.find_by_id.return_value = _mk_text_doc(
-            msg_type="system", sender_id=None,
+            msg_type=msg_type, sender_id=None,
         )
-        with pytest.raises(PermissionError, match="시스템"):
+        with pytest.raises(PermissionError, match="text 메시지만"):
             await service.edit_message(
                 message_id="MSG_1", editor_user_id="U_A", editor_session_id="WS_A",
                 new_content="new",
